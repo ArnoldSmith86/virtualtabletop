@@ -1,6 +1,10 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 18,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Holder modifications */\n\n.holder {\n  background: #c0c0c0;\n}\n\n/* Button font */\n\n.button {\n  color: #000000;\n  background: #66cdaa;\n  border-color: #008080;\n  font-size: 18px\n}\n\n.button:hover {\n  color: #ffffff;\n  background: #008080;\n  border-color: #66cdaa;\n  cursor: pointer;\n  text-decoration: underline;\n  font-style: italic;\n}\n\n.modal {\n  transform: scale(0.9) !important;\n  position: absolute !important;\n  top: 50px !important;\n  left: 1000px !important;\n}\n\n/* Card transitions */\n\n.customTransitionClass {\n  transition: transform 600ms\n}\n\n.customTransitionClass.dragging {\n  transition: none\n}\n\n/* INPUT overlay modifications */\n\n.inputtitle {\n  background-color: #909090;\n  color: #7c3aed;\n}\n\n.inputsubtitle {\n  background-color: #c0c0c0;\n  color: #7c3aedaa;\n}\n\n.modal .footer > button#buttonInputGo {\n  background-color: #ffffff;\n  color: #000000;\n}\n\n.modal .footer > button#buttonInputCancel {\n  background-color: #000000;\n  color: #ffffff;\n}\n\n#buttonInputOverlay {\n  background-color: #000;\n  background-image:\n    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px 100%),\n    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0 1px, transparent 1px 100%),\n    linear-gradient(180deg, #7c3aed 0%, #000000 100%);\n}"
+    },
     "info": {
       "name": "Appearance - CSS",
       "image": "/assets/1323294024_5493",
@@ -11,7 +15,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1752119024601,
+      "lastUpdate": 1762320152600,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -21,13 +25,14 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "Caution",
+      "variant": "Global Room CSS",
       "language": "en-US",
       "players": "1"
     }
   },
-  "8fr3": {
-    "id": "8fr3",
+  "title": {
+    "id": "title",
+    "x": 400,
     "y": -2,
     "width": 800,
     "height": 60,
@@ -35,323 +40,1155 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "x": 400,
-    "text": "CSS: Caution"
+    "text": "CSS: Global Room Settings"
   },
-  "406b": {
-    "id": "406b",
+  "overview": {
+    "id": "overview",
     "x": 108,
-    "y": 100,
+    "y": 74,
     "width": 1400,
     "height": 150,
     "layer": -3,
-    "z": 2718,
-    "css": "font-size: 23px; ",
-    "text": "CAUTION!!!!!!! Only advanced users that understand the risks should experiment with anything in this room. The demonstrations in this room use a powerful hack that is intentionally not documented in the wiki so casual users will not experiment. Also the methods shown here may not always work as there are plans to change aspects of VTT which may cause games made using this hack not to work properly.\n\nThe demos in this room use a button to switch an effect on or off. It is not necessary to do that in your room. You can simply have a widget with the css you need. It is done here to deomonstrate the differences and to allow the room to be returned to normal."
-  },
-  "bm4j": {
-    "text": "The button above turns the visible cursor marker for other players on and off. To see the effect, open this room in two different windows using incognito mode or a different browser/device for one of he windows. Click the button and notice how other players' cursors are hidden.",
-    "id": "bm4j",
-    "x": 60,
-    "y": 700,
-    "z": 10659,
-    "width": 300,
+    "z": 129,
     "movable": false,
-    "css": "font-size: 20px; "
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "Setting CSS globally for the entire game module is possible. In Edit Mode, look at the sidebar under Game Settings (the gear icon). There may be other items there, but you should also see a block for Cursor Visibility and a block for Global Room CSS. The cursor visibility allows you to select from several options to change how the other player's cursor indicators appear. If you choose the default, then the settings can be modified using room JSON. Otherwise, the setting applies to all players and will remain the same throughout the game.\n\nFor the Global Room CSS, you can use standard CSS syntax and formatting (without the modifications needed when creating CSS in JSON). You can also use /*  */ to create comments. This is global CSS, so changes per widget are not allowed in these settings, but you can override them with specific settings on individual widgets. Look at examples below and under the Global Room CSS section of the Game Settings. Use caution when editing global CSS as you can break a room. You can get ideas for what CSS selectors to modify by looking at <a href='https://github.com/ArnoldSmith86/virtualtabletop/tree/main/client/css'>GitHub</a>."
   },
-  "bm6j": {
-    "id": "bm6j",
-    "x": 1153,
-    "y": 700,
-    "z": 9732,
-    "width": 300,
-    "text": "The button above uses the css 'root' property to modify the colors. Specifically, it changes the definition of 'VTT Blue' which is used in the sidebar, for buttons, and in the JSON editor.  A click returns the room back to its normal color. ",
-    "movable": false,
-    "css": "font-size: 20px; "
-  },
-  "wwid": {
+  "button4": {
     "type": "button",
-    "text": "Cursor On",
-    "clickRoutine": [
-      "var a = ${PROPERTY currentState} + 1",
-      "var b = ${a} % 2",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "currentState",
-        "value": "${b}"
-      },
-      {
-        "func": "IF",
-        "operand1": "${b}",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${PROPERTY cursorOff}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "Cursor Off"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${PROPERTY cursorOn}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "Cursor On"
-          }
-        ]
-      }
-    ],
-    "x": 154,
-    "y": 522,
-    "z": 9793,
-    "id": "wwid",
-    "currentState": 0,
-    "cursorOff": {
-      "anythinghere, .cursor": {
-        "display": "none"
-      }
-    },
-    "cursorOn": {},
-    "css": {}
-  },
-  "wwid1": {
-    "type": "button",
-    "clickRoutine": [
-      "var a = ${PROPERTY currentState} + 1",
-      "var b = ${a} % 2",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "currentState",
-        "value": "${b}"
-      },
-      {
-        "func": "IF",
-        "operand1": "${b}",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${PROPERTY colorMod}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "Grey"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "css",
-            "value": "${PROPERTY colorNorm}"
-          },
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "VTT Blue"
-          }
-        ]
-      }
-    ],
-    "x": 1245,
-    "y": 532,
-    "z": 9794,
-    "id": "wwid1",
-    "currentState": 0,
-    "css": {
-      "whatever,:root": {
-        "--VTTblue": "#1f5ca6"
-      }
-    },
-    "colorMod": {
-      "whatever,:root": {
-        "--VTTblue": "grey"
-      }
-    },
-    "colorNorm": {
-      "whatever,:root": {
-        "--VTTblue": "#1f5ca6"
-      }
-    },
-    "text": "VTT Blue"
-  },
-  "ld5d": {
-    "type": "button",
-    "id": "ld5d",
-    "x": 700,
-    "y": 525,
-    "z": 1,
-    "text": "Change Cursor",
+    "id": "button4",
+    "x": 1248,
+    "y": 463,
+    "z": 22840,
     "clickRoutine": [
       {
         "func": "INPUT",
         "fields": [
           {
             "type": "title",
-            "text": "Cursor settings"
+            "text": "Resetting game ..."
           },
           {
-            "type": "select",
-            "label": "Choose cursor style for all players.",
-            "variable": "cursor_style",
-            "value": "${PROPERTY cursor_style}",
-            "options": [
-              {
-                "value": "default",
-                "text": "Translucent (VTT default)"
-              },
-              {
-                "text": "Solid - No Name",
-                "value": "solid_no_name"
-              },
-              {
-                "text": "Solid & Player Name (do not use spaces in name)",
-                "value": "solid_player_name"
-              },
-              {
-                "text": "Invisible",
-                "value": "invisible"
-              }
-            ]
+            "type": "subtitle",
+            "text": "This will reset the game. Are you sure?"
           }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "cursor_style",
-        "relation": "=",
-        "value": "${cursor_style}"
+        ],
+        "confirmButtonText": "Reset"
       }
     ],
-    "cursorCSS_default": {
-      "default": {}
-    },
-    "cursorCSS_invisible": {
-      "display": "none"
-    },
-    "cursorCSS_solid_1": {
-      "--cursorActiveOpacity": 1,
-      "--cursorPressedOpacity": 1,
-      "--cursorActiveDuration": 9999
-    },
-    "cursorCSS_solid_2": {
-      "border": "4px solid var(--playerColor)"
-    },
-    "cursorCSS_solid_player_name": {
-      "content": "var(--playerName)",
-      "position": "relative",
-      "top": "-5px",
-      "left": "19px",
-      "font-size": "15px",
-      "color": "var(--playerColor)"
-    },
-    "cursor_styleChangeRoutine": [
-      "// This code runs when a user makes a selection in the INPUT function that changes the cursor type. It builds the newCSS that will be added to the button to control the cursor display for all players in the room.",
-      "var newCSS = {}",
-      "// The cursorCSS_default contains the css that would customize this button's appearance. Because this is a default button, there is no css customization and the cursorCSS_default property is blank. But you can add anything you want to be included in every version of the css, including psuedo-selectors like :hover.",
-      "var newCSS = ${PROPERTY cursorCSS_default}",
-      "// The following properties are just arbitrarily numbered to distinguish them. They are the label for the css selector. In some cases escape codes are used, like \\u0023 because VTT does not recognize most symbols in routines. \\u0023 is for the # character and \\u003a is for the : character.",
-      "var newProp1 = 'cursorHack, \\u0023playerCursors'",
-      "var newProp2 = 'cursorHack, .cursor.pressed'",
-      "var newProp3 = 'cursorHack, .cursor\\u003a\\u003abefore'",
-      "var newProp4 = 'cursorHack, .cursor'",
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY cursor_style}",
-        "operand2": "default",
-        "thenRoutine": [
-          "// This condition just adds the default css to the button.",
-          {
-            "func": "SET",
-            "property": "css",
-            "value": "${newCSS}",
-            "collection": "thisButton"
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY cursor_style}",
-        "operand2": "solid_no_name",
-        "thenRoutine": [
-          "// This condition adds the default css, plus two new css selectors that make the cursor completely opaque and stay on the screen for 10 seconds. To adjust those parameters, look above for the properties cursorCSS_solid_1 and _2.",
-          "var newCSS.$newProp1 = ${PROPERTY cursorCSS_solid_1}",
-          "var newCSS.$newProp2 = ${PROPERTY cursorCSS_solid_2}",
-          {
-            "func": "SET",
-            "property": "css",
-            "value": "${newCSS}",
-            "collection": "thisButton"
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY cursor_style}",
-        "operand2": "solid_player_name",
-        "thenRoutine": [
-          "// This condition does what the previous condition did but also adds the playerName near to the cursor.",
-          "var newCSS.$newProp1 = ${PROPERTY cursorCSS_solid_1}",
-          "var newCSS.$newProp2 = ${PROPERTY cursorCSS_solid_2}",
-          "var newCSS.$newProp3 = ${PROPERTY cursorCSS_solid_player_name}",
-          {
-            "func": "SET",
-            "property": "css",
-            "value": "${newCSS}",
-            "collection": "thisButton"
-          }
-        ]
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY cursor_style}",
-        "operand2": "invisible",
-        "thenRoutine": [
-          "// This condition makes the cursor invisible. It is just like the button to the left, but included here in case you want to offer players more options on how the cursors appear in the room.",
-          "var newCSS.$newProp4 = ${PROPERTY cursorCSS_invisible}",
-          {
-            "func": "SET",
-            "property": "css",
-            "value": "${newCSS}",
-            "collection": "thisButton"
-          }
-        ]
-      }
-    ],
-    "cursor_style": "default",
+    "text": "INPUT"
+  },
+  "text1": {
+    "id": "text1",
+    "x": 190,
+    "y": 613,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
     "css": {
-      "default": {}
+      "font-size": "22px"
+    },
+    "html": "There is global CSS in this tutorial mod to change the background of holders to silver. That applies to all holders. However, the one on the right has CSS set on that widget to override the room default and make the background white."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 511,
+    "y": 613,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above (and all buttons in the room) are modified using global CSS. Changes include the color of the background, border, and font size. On hover, those change again as well as the font style and cursor style.\n\nIf you go into Edit Mode and click to add a widget, you will see that the global CSS also modifies the widgets seen in that overlay."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 837,
+    "y": 613,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The deck in the holder above has a <b>customTransitionClass</b> on it. The name can be anything you want. The class is defined in the global CSS to create a transition that shows the cards physcially moving on screen while being dealt. That effect is turned off while the cards are being dragged. This is the same technique (but with the CSS in a different location) as the Transition variant of this CSS tutorial."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 1150,
+    "y": 613,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above opens an INPUT overlay as a demo. The CSS for the overlay changes many details (color, location, etc.) from the VTT default for how the overlay appears on the screen. The background is changed to a purple gradient, but it could even be an image, or transparent, or anything else that CSS can do."
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 218,
+    "y": 447,
+    "z": 130,
+    "layer": 3
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 355,
+    "y": 447,
+    "z": 130,
+    "css": {
+      "background": "white"
+    },
+    "layer": 3
+  },
+  "ubga_A_C": {
+    "id": "ubga_A_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 01",
+    "z": 1219
+  },
+  "ubga_2_C": {
+    "id": "ubga_2_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 02",
+    "z": 1225
+  },
+  "ubga_3_C": {
+    "id": "ubga_3_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 03",
+    "z": 1229
+  },
+  "ubga_4_C": {
+    "id": "ubga_4_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 04",
+    "z": 1215
+  },
+  "ubga_5_C": {
+    "id": "ubga_5_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 05",
+    "z": 1202
+  },
+  "ubga_6_C": {
+    "id": "ubga_6_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 06",
+    "z": 1236
+  },
+  "ubga_7_C": {
+    "id": "ubga_7_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 07",
+    "z": 1226
+  },
+  "ubga_8_C": {
+    "id": "ubga_8_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 08",
+    "z": 1209
+  },
+  "ubga_9_C": {
+    "id": "ubga_9_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 09",
+    "z": 4,
+    "layer": 3
+  },
+  "ubga_T_C": {
+    "id": "ubga_T_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 10",
+    "z": 1212
+  },
+  "ubga_J_C": {
+    "id": "ubga_J_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 2J",
+    "z": 1206
+  },
+  "ubga_Q_C": {
+    "id": "ubga_Q_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 3Q",
+    "z": 1223
+  },
+  "ubga_K_C": {
+    "id": "ubga_K_C",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "C 4K",
+    "z": 1216
+  },
+  "ubga_A_D": {
+    "id": "ubga_A_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 01",
+    "z": 1222
+  },
+  "ubga_2_D": {
+    "id": "ubga_2_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 02",
+    "z": 1198
+  },
+  "ubga_3_D": {
+    "id": "ubga_3_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 03",
+    "z": 1235
+  },
+  "ubga_4_D": {
+    "id": "ubga_4_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 04",
+    "z": 1218
+  },
+  "ubga_5_D": {
+    "id": "ubga_5_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 05",
+    "z": 1220
+  },
+  "ubga_6_D": {
+    "id": "ubga_6_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 06",
+    "z": 1244
+  },
+  "ubga_7_D": {
+    "id": "ubga_7_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 07",
+    "z": 1238
+  },
+  "ubga_8_D": {
+    "id": "ubga_8_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 08",
+    "z": 1224
+  },
+  "ubga_9_D": {
+    "id": "ubga_9_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 09",
+    "z": 1201
+  },
+  "ubga_T_D": {
+    "id": "ubga_T_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 10",
+    "z": 1213
+  },
+  "ubga_J_D": {
+    "id": "ubga_J_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 2J",
+    "z": 1231
+  },
+  "ubga_Q_D": {
+    "id": "ubga_Q_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 3Q",
+    "z": 1239
+  },
+  "ubga_K_D": {
+    "id": "ubga_K_D",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "D 4K",
+    "z": 1214
+  },
+  "ubga_A_H": {
+    "id": "ubga_A_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 01",
+    "z": 1211
+  },
+  "ubga_2_H": {
+    "id": "ubga_2_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 02",
+    "z": 1210
+  },
+  "ubga_3_H": {
+    "id": "ubga_3_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 03",
+    "z": 1199
+  },
+  "ubga_4_H": {
+    "id": "ubga_4_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 04",
+    "z": 1241
+  },
+  "ubga_5_H": {
+    "id": "ubga_5_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 05",
+    "z": 1228
+  },
+  "ubga_6_H": {
+    "id": "ubga_6_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 06",
+    "z": 1204
+  },
+  "ubga_7_H": {
+    "id": "ubga_7_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 07",
+    "z": 1217
+  },
+  "ubga_8_H": {
+    "id": "ubga_8_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 08",
+    "z": 1233
+  },
+  "ubga_9_H": {
+    "id": "ubga_9_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 09",
+    "z": 1200
+  },
+  "ubga_T_H": {
+    "id": "ubga_T_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 10",
+    "z": 1230
+  },
+  "ubga_J_H": {
+    "id": "ubga_J_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 2J",
+    "z": 1243
+  },
+  "ubga_Q_H": {
+    "id": "ubga_Q_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 3Q",
+    "z": 1245
+  },
+  "ubga_K_H": {
+    "id": "ubga_K_H",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "H 4K",
+    "z": 1197
+  },
+  "ubga_A_S": {
+    "id": "ubga_A_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 01",
+    "z": 1247
+  },
+  "ubga_2_S": {
+    "id": "ubga_2_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 02",
+    "z": 1237
+  },
+  "ubga_3_S": {
+    "id": "ubga_3_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 03",
+    "z": 1221
+  },
+  "ubga_4_S": {
+    "id": "ubga_4_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 1246
+  },
+  "ubga_5_S": {
+    "id": "ubga_5_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 1227
+  },
+  "ubga_6_S": {
+    "id": "ubga_6_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 1232
+  },
+  "ubga_7_S": {
+    "id": "ubga_7_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 1205
+  },
+  "ubga_8_S": {
+    "id": "ubga_8_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 1208
+  },
+  "ubga_9_S": {
+    "id": "ubga_9_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 1240
+  },
+  "ubga_T_S": {
+    "id": "ubga_T_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 1207
+  },
+  "ubga_J_S": {
+    "id": "ubga_J_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 1242
+  },
+  "ubga_Q_S": {
+    "id": "ubga_Q_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 1203
+  },
+  "ubga_K_S": {
+    "id": "ubga_K_S",
+    "parent": "v3js",
+    "deck": "ubgaD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 1234
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 602,
+    "y": 463,
+    "z": 22839,
+    "text": "Button",
+    "clickRoutine": []
+  },
+  "button2": {
+    "type": "button",
+    "id": "button2",
+    "x": 1008,
+    "y": 463,
+    "z": 22839,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "holder3",
+        "to": [
+          "holder1",
+          "holder2"
+        ],
+        "count": 1
+      }
+    ],
+    "text": "MOVE"
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 857,
+    "y": 393,
+    "dropTarget": {
+      "type": "card"
+    },
+    "layer": 3
+  },
+  "ubgaD": {
+    "type": "deck",
+    "id": "ubgaD",
+    "parent": "holder3",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
+      },
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
+      },
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
+      },
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
+      },
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
+      },
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
+      },
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
+      },
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
+      },
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
+      },
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
+      },
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
+      },
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
+      },
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
+      },
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
+      },
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
+      },
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
+      },
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
+      },
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
+      },
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
+      },
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
+      },
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
+      },
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
+      },
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
+      },
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
+      },
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
+      },
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
+      },
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
+      },
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
+      },
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
+      },
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
+      },
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
+      },
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
+      },
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
+      },
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
+      },
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
+      },
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
+      },
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
+      },
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
+      },
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
+      },
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
+      },
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
+      },
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
+      },
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
+      },
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "classes": "customTransitionClass"
     }
   },
-  "bm5j": {
-    "text": "The button creates an option to make opposing player cursor indicators more visible and add the playerName using css. This will not work if the button to left for cursor invisibility has turned the cursor off since there can only be one widget controlling the cursor's css",
-    "id": "bm5j",
-    "x": 607,
-    "y": 700,
-    "z": 10659,
-    "width": 300,
-    "movable": false,
-    "css": "font-size: 20px; "
+  "holder3B": {
+    "type": "button",
+    "id": "holder3B",
+    "parent": "holder3",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {}
+  },
+  "v3js": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "v3js",
+    "z": 1248,
+    "hoverParent": "holder3",
+    "parent": "holder3"
   }
 }

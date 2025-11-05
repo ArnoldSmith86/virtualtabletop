@@ -499,7 +499,6 @@ function receiveStateFromServer(args) {
   resetZoomAndPan();
 
 
-
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
@@ -611,7 +610,7 @@ onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
   onMessage('meta', (args) => {
-    if (args.meta) {
+    if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
     }
   });
