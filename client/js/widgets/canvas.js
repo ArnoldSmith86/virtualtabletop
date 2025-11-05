@@ -13,11 +13,12 @@ class Canvas extends Widget {
 
       resolution: 100,
       activeColor: 1,
+      lineWidth: 1,
       colorMap: Canvas.defaultColors
     };
 
-    for(let x=0; x<10; ++x)
-      for(let y=0; y<10; ++y)
+    for (let x = 0; x < 10; ++x)
+      for (let y = 0; y < 10; ++y)
         defaults[`c${x}${y}`] = "0";
 
     this.addDefaults(defaults);
@@ -29,26 +30,26 @@ class Canvas extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
-    if(this.context) {
-      if(delta.resolution !== undefined) {
+    if (this.context) {
+      if (delta.resolution !== undefined) {
         this.canvas.width = this.getResolution();
         this.canvas.height = this.getResolution();
       }
 
       const colors = this.getColorMap();
-      const regionRes = Math.floor(this.getResolution()/10);
+      const regionRes = Math.floor(this.getResolution() / 10);
 
-      for(let x=0; x<10; ++x) {
-        for(let y=0; y<10; ++y) {
-          if(delta[`c${x}${y}`] !== undefined || delta.colorMap !== undefined || delta.resolution !== undefined) {
+      for (let x = 0; x < 10; ++x) {
+        for (let y = 0; y < 10; ++y) {
+          if (delta[`c${x}${y}`] !== undefined || delta.colorMap !== undefined || delta.resolution !== undefined) {
             let region = this.decompress(this.get(`c${x}${y}`));
-            for(let px=0; px<regionRes; ++px) {
-              for(let py=0; py<regionRes; ++py) {
-                this.context.fillStyle = colors[region.charCodeAt(py*regionRes+px)-48] || 'white';
-                if(colors[region.charCodeAt(py*regionRes+px)-48] != 'transparent')
-                  this.context.fillRect(x*regionRes+px, y*regionRes+py, 1, 1);
+            for (let px = 0; px < regionRes; ++px) {
+              for (let py = 0; py < regionRes; ++py) {
+                this.context.fillStyle = colors[region.charCodeAt(py * regionRes + px) - 48] || 'white';
+                if (colors[region.charCodeAt(py * regionRes + px) - 48] != 'transparent')
+                  this.context.fillRect(x * regionRes + px, y * regionRes + py, 1, 1);
                 else
-                  this.context.clearRect(x*regionRes+px, y*regionRes+py, 1, 1);
+                  this.context.clearRect(x * regionRes + px, y * regionRes + py, 1, 1);
               }
             }
           }
@@ -60,11 +61,11 @@ class Canvas extends Widget {
   compress(str) {
     const startStr = str;
     str = str.replace(/(.)\1+/g, (match, char, offset, str) => {
-      if(match.length + offset == str.length) {
+      if (match.length + offset == str.length) {
         return char;
-      } else if(char == "0") {
+      } else if (char == "0") {
         return this.encodeLength(48, match.length, 7);
-      } else if(match.length == 2 && char.charCodeAt(0) < 128) {
+      } else if (match.length == 2 && char.charCodeAt(0) < 128) {
         return match;
       } else {
         return char + this.encodeLength(41, match.length - 1, 7);
@@ -81,19 +82,19 @@ class Canvas extends Widget {
         return color.repeat(this.decodeLength(colorLength, 41, 7) + 1);
       }
     });
-    str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
+    str = str.padEnd(this.getResolution() ** 2 / 100, str.slice(-1));
     return str;
   }
 
   decodeLength(str, baseCode, base) {
-    return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base**index , 0);
+    return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base ** index, 0);
   }
 
   encodeLength(baseCode, length, base) {
     let n = length;
     let c = 0;
     let code = "";
-    while(n > 0) {
+    while (n > 0) {
       c = (n - 1) % base;
       code += String.fromCharCode(baseCode - c);
       n = Math.floor((n - c) / base);
@@ -102,39 +103,60 @@ class Canvas extends Widget {
   }
 
   getColorMap() {
-    if(Array.isArray(this.get('colorMap')))
+    if (Array.isArray(this.get('colorMap')))
       return this.get('colorMap');
     else
       return Canvas.defaultColors;
   }
 
   getResolution() {
-    return Math.max(Math.min(Math.round(parseInt(this.get('resolution'))/10)*10, 500), 10);
+    return Math.max(Math.min(Math.round(parseInt(this.get('resolution')) / 10) * 10, 500), 10);
   }
 
   async mouseRaw(state, coord) {
-    if(!this.get('clickable'))
+    if (!this.get('clickable'))
       return;
 
-    if(this.get('artist') && asArray(this.get('artist')).indexOf(playerName) == -1)
+    if (this.get('artist') && asArray(this.get('artist')).indexOf(playerName) == -1)
       return;
 
     const resolution = this.getResolution();
-    const regionRes = Math.floor(resolution/10);
-    const coordLocal = this.coordLocalFromCoordClient({x: coord.clientX, y: coord.clientY});
+    const regionRes = Math.floor(resolution / 10);
+    const coordLocal = this.coordLocalFromCoordClient({ x: coord.clientX, y: coord.clientY });
 
-    let pixelX = coordLocal.x/this.get('width')*resolution;
-    let pixelY = coordLocal.y/this.get('height')*resolution;
+    let pixelX = coordLocal.x / this.get('width') * resolution;
+    let pixelY = coordLocal.y / this.get('height') * resolution;
 
-    if(pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution)
+    if (pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution)
       return;
 
-    if(this.lastPixelX !== undefined && state != 'down') {
-      const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
-      for(let i=0; i<steps; ++i)
-        await this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+    if (this.lastPixelX !== undefined && state != 'down') {
+      const steps = Math.max(Math.abs(pixelX - this.lastPixelX), Math.abs(pixelY - this.lastPixelY)) * 2;
+      for (let i = 0; i < steps; ++i)
+        this.setPixel(this.lastPixelX + (pixelX - this.lastPixelX) / steps * i, this.lastPixelY + (pixelY - this.lastPixelY) / steps * i);
     } else {
-      await this.setPixel(pixelX, pixelY);
+      this.setPixel(pixelX, pixelY);
+    }
+
+    if (state == 'down') {
+      this.updateInterval = setInterval(async () => {
+        if (this.regionCache) {
+          for (const key in this.regionCache) {
+            await this.set(key, this.compress(this.regionCache[key]));
+          }
+          this.regionCache = {};
+        }
+      }, 100);
+    }
+
+    if (state == 'up') {
+      clearInterval(this.updateInterval);
+      if (this.regionCache) {
+        for (const key in this.regionCache) {
+          await this.set(key, this.compress(this.regionCache[key]));
+        }
+        this.regionCache = null;
+      }
     }
 
     this.lastPixelX = pixelX;
@@ -142,27 +164,49 @@ class Canvas extends Widget {
   }
 
   async reset() {
-    for(let x=0; x<10; ++x)
-      for(let y=0; y<10; ++y)
+    for (let x = 0; x < 10; ++x)
+      for (let y = 0; y < 10; ++y)
         await this.set(`c${x}${y}`, null);
   }
 
-  async setPixel(x, y, colorIndex, regionRes) {
-    if(!regionRes)
-      regionRes = Math.floor(this.getResolution()/10);
+  setPixel(x, y, colorIndex, regionRes) {
+    const lineWidth = this.get('lineWidth');
+    for (let i = -lineWidth; i < lineWidth; ++i) {
+      for (let j = -lineWidth; j < lineWidth; ++j) {
+        if (Math.sqrt(i * i + j * j) < lineWidth)
+          this.setSinglePixel(x + i, y + j, colorIndex, regionRes);
+      }
+    }
+  }
 
-    const regionX = Math.floor(x/regionRes);
-    const regionY = Math.floor(y/regionRes);
+  setSinglePixel(x, y, colorIndex, regionRes) {
+    if (!this.regionCache)
+      this.regionCache = {};
 
-    const pX = Math.floor(x%regionRes);
-    const pY = Math.floor(y%regionRes);
+    if (!regionRes)
+      regionRes = Math.floor(this.getResolution() / 10);
 
-    const color = String.fromCharCode(48+(colorIndex !== undefined ? colorIndex : this.get('activeColor')));
+    const resolution = this.getResolution();
+    if (x < 0 || x >= resolution || y < 0 || y >= resolution)
+      return;
 
-    let currentState = this.decompress(this.get(`c${regionX}${regionY}`));
-    currentState = currentState.substring(0,pY*regionRes+pX) + color + currentState.substring(pY*regionRes+pX+1);
-    this.set(`c${regionX}${regionY}`, this.compress(currentState));
+    const regionX = Math.floor(x / regionRes);
+    const regionY = Math.floor(y / regionRes);
+
+    const pX = Math.floor(x % regionRes);
+    const pY = Math.floor(y % regionRes);
+
+    const color = String.fromCharCode(48 + (colorIndex !== undefined ? colorIndex : this.get('activeColor')));
+
+    const key = `c${regionX}${regionY}`;
+    if (!this.regionCache[key]) {
+      const data = this.get(key);
+      if (data == null) return;
+      this.regionCache[key] = this.decompress(data);
+    }
+
+    this.regionCache[key] = this.regionCache[key].substring(0, pY * regionRes + pX) + color + this.regionCache[key].substring(pY * regionRes + pX + 1);
   }
 }
 
-Canvas.defaultColors = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
+Canvas.defaultColors = ["#F0F0F0", "#1F5CA6", "#000000", "#FF0000", "#008000", "#FFFF00", "#FFA500", "#FFC0CB", "#800080", "#A52A2A"];
