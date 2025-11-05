@@ -3,6 +3,7 @@
     {
       "name": "Pawn",
       "id": "pawn",
+      "preview": "i/icons/pawn.svg",
       "widgets": [
         {
           "id": "pawn",
@@ -84,7 +85,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/pin.svg"
     },
     {
       "name": "Marble",
@@ -129,7 +131,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/marble.svg"
     },
     {
       "name": "Cube",
@@ -174,7 +177,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/cube_3d.svg"
     },
     {
       "name": "Settlement",
@@ -217,7 +221,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "/i/game-pieces/3D/Building-3D.svg"
     },
     {
       "name": "Checker",
@@ -273,7 +278,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/checker.svg"
     },
     {
       "name": "Checker (3D)",
@@ -329,7 +335,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/checker_3d.svg"
     },
     {
       "name": "Meeple (3D)",
@@ -385,7 +392,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/meeple_3d.svg"
     },
     {
       "name": "Piggy",
@@ -428,7 +436,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/game-pieces/2D/Pig-2D.svg"
     },
     {
       "name": "Meeple",
@@ -471,7 +480,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/meeple.svg"
     },
     {
       "name": "Piggy (3D)",
@@ -514,7 +524,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/game-pieces/3D/Pig-3D.svg"
     },
     {
       "name": "House",
@@ -558,7 +569,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/house_3d.svg"
     },
     {
       "name": "Beam",
@@ -620,7 +632,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/game-pieces/3D/Road-3D.svg"
     },
     {
       "name": "Hex (flat)",
@@ -663,7 +676,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/game-pieces/2D/Hex-Flat.svg"
     },
     {
       "name": "Hex (point)",
@@ -706,7 +720,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/game-pieces/2D/Hex-Point.svg"
     },
     {
       "name": "Hex (zoom in)",
@@ -756,7 +771,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": ""
     },
     {
       "name": "Hex (zoom out)",
@@ -834,7 +850,8 @@
           "borderWidth": 2,
           "labelColor": "#00000022"
         }
-      ]
+      ],
+      "preview": "i/icons/poker_chip.svg"
     },
     {
       "name": "Chip (3D)",
@@ -863,7 +880,8 @@
           "borderWidth": 2,
           "labelColor": "#00000022"
         }
-      ]
+      ],
+      "preview": "i/icons/poker_chip_3d.svg"
     },
     {
       "name": "Dealer Chip",
@@ -894,7 +912,8 @@
           "labelColor": "#ffffff",
           "primaryColor": "#55bb66"
         }
-      ]
+      ],
+      "preview": "i/icons/dealer_chip.svg"
     },
     {
       "name": "Dealer Chip (3D)",
@@ -926,7 +945,8 @@
           "labelColor": "#ffffff",
           "primaryColor": "#55bb66"
         }
-      ]
+      ],
+      "preview": "i/icons/dealer_chip_3d.svg"
     },
     {
       "name": "Stacks of Chips",
@@ -1233,7 +1253,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/poker_chip_stack_3d.svg"
     },
     {
       "name": "Stacks of Chips (3D)",
@@ -1541,7 +1562,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/poker_chip_stacks.svg"
     },
     {
       "name": "Die",
@@ -1599,7 +1621,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/die.svg"
     },
     {
       "name": "Die (3D)",
@@ -1661,7 +1684,8 @@
           "pipSymbols": false,
           "shape3d": true
         }
-      ]
+      ],
+      "preview": "i/icons/die.svg"
     },
     {
       "name": "Die (image)",
@@ -1785,7 +1809,8 @@
           "cR": "#999999",
           "cT": "#ffffff"
         }
-      ]
+      ],
+      "preview": "i/icons/die.svg"
     },
     {
       "name": "Holder & Standard Deck",
@@ -2744,7 +2769,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/cards.svg"
     },
     {
       "name": "Holder & Blank Deck",
@@ -2827,7 +2853,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/deck.svg"
     },
     {
       "name": "Holder",
@@ -2840,7 +2867,8 @@
           "y": 150,
           "z": 1
         }
-      ]
+      ],
+      "preview": "i/icons/holder.svg"
     },
     {
       "name": "Hand",
@@ -2867,7 +2895,8 @@
           "id": "hand"
         }
       ],
-      "unique": true
+      "unique": true,
+      "preview": "i/icons/holder_hand.svg"
     },
     {
       "name": "Canvas",
@@ -2973,7 +3002,8 @@
           "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
           "borderRadius": "0% 0% 0% 50%"
         }
-      ]
+      ],
+      "preview": "i/icons/color.svg"
     },
     {
       "name": "Seat with Counter",
@@ -3002,7 +3032,7 @@
               "property": "index",
               "value": "${numSeats}",
               "collection": "thisButton"
-            }        
+            }
           ]
         },
         {
@@ -3054,7 +3084,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/chair.svg"
     },
     {
       "name": "Seat",
@@ -3083,10 +3114,11 @@
               "property": "index",
               "value": "${numSeats}",
               "collection": "thisButton"
-            }        
+            }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/seat.svg"
     },
     {
       "name": "Scoreboard",
@@ -3098,7 +3130,8 @@
           "x": 1000,
           "y": 660
         }
-      ]
+      ],
+      "preview": "i/icons/scoreboard.svg"
     },
     {
       "name": "Spinner",
@@ -3157,7 +3190,8 @@
           ],
           "value": "6"
         }
-      ]
+      ],
+      "preview": "i/icons/spinner.svg"
     },
     {
       "name": "Button",
@@ -3172,7 +3206,8 @@
           "text": "DEAL",
           "clickRoutine": []
         }
-      ]
+      ],
+      "preview": "i/icons/check_round.svg"
     },
     {
       "name": "Counter",
@@ -3233,7 +3268,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/counter.svg"
     },
     {
       "name": "Timer",
@@ -3286,7 +3322,8 @@
           "css": "font-size: 28px",
           "text": "reload"
         }
-      ]
+      ],
+      "preview": "i/icons/timer.svg"
     },
     {
       "name": "Label",
@@ -3335,7 +3372,8 @@
             "border": "3px solid #666"
           }
         }
-      ]
+      ],
+      "preview": "i/icons/width.svg"
     },
     {
       "name": "Vertical Rule",
@@ -3353,7 +3391,8 @@
             "border": "3px solid #666"
           }
         }
-      ]
+      ],
+      "preview": "i/icons/height.svg"
     },
     {
       "name": "Basic Widget",
@@ -3363,7 +3402,8 @@
           "text": "Basic widget",
           "id": "basicWidget"
         }
-      ]
+      ],
+      "preview": "i/icons/widget.svg"
     },
     {
       "name": "Upload Token",
@@ -3396,7 +3436,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/upload.svg"
     },
     {
       "name": "Upload Board",
@@ -3433,7 +3474,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/icons/upload.svg"
     }
   ],
   "groups": [
@@ -3493,8 +3535,8 @@
       "name": "Interactive",
       "widgets": [
         "canvas",
-        "seatWithCounter",
         "seat",
+        "seatWithCounter",
         "scoreboard",
         "spinner",
         "button",

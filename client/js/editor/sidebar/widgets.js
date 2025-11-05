@@ -64,12 +64,13 @@ class WidgetsModule extends SidebarModule {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>: Is a unique widget. Recommended one per room.
       </div>
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <span class="widgetFilerIcon">search</span>
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
         <div class="segmented-control">
-          <button id="listViewButton" class="sidebarButton active" icon="list"><span>List</span></button>
-          <button id="gridViewButton" class="sidebarButton" icon="grid_view"><span>Grid</span></button>
+          <button id="listViewButton" class="sidebarButton active" icon="list"><span>View as List</span></button>
+          <button id="gridViewButton" class="sidebarButton" icon="grid_view"><span>View as Grid</span></button>
         </div>
-        <button icon="bookmark_add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widgets</span></button>
+        <button icon="bookmark_add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widget</span></button>
         <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
@@ -1084,7 +1085,7 @@ class WidgetsModule extends SidebarModule {
     return `
           <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
               <span class="drag-handle"></span>
-              <div class="widget-preview" style="width: 64px; height: 64px; flex-shrink: 0; margin-right: 10px; background-color: #222; border: 1px solid #555; display: flex; justify-content: center; align-items: center;">
+              <div class="widget-preview">
                 ${state.preview ? `<img src="${state.preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;">` : ''}
               </div>
               <div class="widget-info" style="flex-grow: 1;">
