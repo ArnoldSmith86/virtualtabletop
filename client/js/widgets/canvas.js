@@ -40,6 +40,14 @@ class Canvas extends Widget {
       this.cursor.style.left = `${coordLocal.x - lineWidth}px`;
       this.cursor.style.top = `${coordLocal.y - lineWidth}px`;
     });
+
+    this.canvas.addEventListener('mouseenter', () => {
+      this.cursor.style.display = 'block';
+    });
+
+    this.canvas.addEventListener('mouseleave', () => {
+      this.cursor.style.display = 'none';
+    });
   }
 
   applyDeltaToDOM(delta) {
