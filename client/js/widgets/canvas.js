@@ -25,6 +25,21 @@ class Canvas extends Widget {
 
     this.passthroughMouse = true;
     this.domElement.appendChild(this.canvas);
+
+    this.cursor = document.createElement('div');
+    this.cursor.style.position = 'absolute';
+    this.cursor.style.pointerEvents = 'none';
+    this.cursor.style.display = 'none';
+    this.cursor.style.borderRadius = '50%';
+    this.cursor.style.border = '1px solid white';
+    this.domElement.appendChild(this.cursor);
+
+    this.canvas.addEventListener('mousemove', (e) => {
+      const coordLocal = this.coordLocalFromCoordClient({ x: e.clientX, y: e.clientY });
+      const lineWidth = this.get('lineWidth');
+      this.cursor.style.left = `${coordLocal.x - lineWidth}px`;
+      this.cursor.style.top = `${coordLocal.y - lineWidth}px`;
+    });
   }
 
   applyDeltaToDOM(delta) {
@@ -127,9 +142,23 @@ class Canvas extends Widget {
     let pixelX = coordLocal.x / this.get('width') * resolution;
     let pixelY = coordLocal.y / this.get('height') * resolution;
 
-    if (pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution)
+    if (pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution) {
+      this.canvas.style.cursor = 'auto';
+      this.cursor.style.display = 'none';
       return;
+    }
 
+    this.canvas.style.cursor = 'none';
+    const colors = this.getColorMap();
+    const color = colors[this.get('activeColor')] || 'white';
+    const lineWidth = this.get('lineWidth');
+
+    this.cursor.style.display = 'block';
+    this.cursor.style.width = `${2 * lineWidth}px`;
+    this.cursor.style.height = `${2 * lineWidth}px`;
+    this.cursor.style.backgroundColor = color;
+    this.cursor.style.left = `${coordLocal.x - lineWidth}px`;
+    this.cursor.style.top = `${coordLocal.y - lineWidth}px`;
     if (this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX - this.lastPixelX), Math.abs(pixelY - this.lastPixelY)) * 2;
       for (let i = 0; i < steps; ++i)
