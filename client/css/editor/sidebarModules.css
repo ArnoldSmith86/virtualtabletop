@@ -707,13 +707,14 @@ div.widget-name {
   line-height: 1;
   background-color: #fffb;
   z-index: 1;
+  color: black;
 }
 
 .editorModule.widgets .widget-preview {
   height: 75px;
   width: 75px;
   max-width: 75px;
-  background-color: #3335;
+  background-color: #bbbbbb;
   border-radius: 3px;
   position: relative;
   display: flex;
