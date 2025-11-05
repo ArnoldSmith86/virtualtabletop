@@ -256,7 +256,7 @@ class GameSettingsModule extends SidebarModule {
     target.append(p1);
 
     const gameSettings = getCurrentGameSettings();
-    const currentCss = gameSettings ? gameSettings.globalCss : '';
+    const currentCss = gameSettings?.globalCss || '';
     const textarea = document.createElement('textarea');
     textarea.value = currentCss;
     textarea.spellcheck = false;

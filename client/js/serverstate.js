@@ -498,7 +498,6 @@ function receiveStateFromServer(args) {
 
   resetZoomAndPan();
 
-  applyCustomCss(args._meta.gameSettings);
 
 
   if(isLoading) {
