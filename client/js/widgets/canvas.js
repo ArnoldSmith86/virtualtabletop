@@ -31,7 +31,7 @@ class Canvas extends Widget {
     this.cursor.style.pointerEvents = 'none';
     this.cursor.style.display = 'none';
     this.cursor.style.borderRadius = '50%';
-    this.cursor.style.border = '1px solid gray';
+    this.cursor.style.border = '2px solid gray';
     this.domElement.appendChild(this.cursor);
 
     this.canvas.addEventListener('mousemove', (e) => {
