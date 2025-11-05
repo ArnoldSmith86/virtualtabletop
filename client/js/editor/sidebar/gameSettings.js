@@ -1,6 +1,6 @@
 class GameSettingsModule extends SidebarModule {
   constructor() {
-    super('settings', 'Game Settings', 'Settings like legacy modes for the current game.');
+    super('settings', 'Game Settings', 'Settings like legacy modes and global game options.');
   }
 
   addCheckbox(text, name, description, target) {
@@ -252,7 +252,7 @@ class GameSettingsModule extends SidebarModule {
     this.addSubHeader('Global Room CSS');
 
     const p1 = document.createElement('p');
-    p1.textContent = 'You can add custom CSS to your room. This is an advanced feature and should be used with care.';
+    p1.textContent = 'You can add custom CSS to your game. This is an advanced feature and should be used with care.';
     target.append(p1);
 
     const gameSettings = getCurrentGameSettings();
