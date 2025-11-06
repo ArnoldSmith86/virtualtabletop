@@ -884,7 +884,7 @@ export class Widget extends StateManaged {
       if(Array.isArray(collections[collection]))
         newCollection = collection
       else if (Array.isArray(collection)) {
-        newCollection = '$collection_' + batchDepth;
+        newCollection = '$collection_' + this.surface.batchDepth;
         collections[newCollection] = this.widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
         problems.push(`Collection ${collection} does not exist or is not an array.`);

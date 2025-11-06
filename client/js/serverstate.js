@@ -521,9 +521,9 @@ function cancelInputOverlay() {
     if($('#buttonInputOverlay').style.display == 'flex')
       showOverlay();
 
-    delta = { s: {} };
-    deltaChanged = false;
-    batchDepth = 0;
+    topSurface.delta = { s: {} };
+    topSurface.deltaChanged = false;
+    topSurface.batchDepth = 0;
   }
 }
 
