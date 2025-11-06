@@ -3,7 +3,7 @@
     "version": 18,
     "gameSettings": {
       "legacyModes": {},
-      "globalCss": "/* Holder modifications */\n\n.holder {\n  background: #c0c0c0;\n}\n\n/* Button font */\n\n.button {\n  color: #000000;\n  background: #66cdaa;\n  border-color: #008080;\n  font-size: 18px\n}\n\n.button:hover {\n  color: #ffffff;\n  background: #008080;\n  border-color: #66cdaa;\n  cursor: pointer;\n  text-decoration: underline;\n  font-style: italic;\n}\n\n.modal {\n  transform: scale(0.9) !important;\n  position: absolute !important;\n  top: 50px !important;\n  right: 50px !important;\n}\n\n/* Card transitions */\n\n.customTransitionClass {\n  transition: transform 600ms\n}\n\n.customTransitionClass.dragging {\n  transition: none\n}\n\n/* INPUT overlay modifications */\n\n.inputtitle {\n  background-color: #909090;\n  color: #7c3aed;\n}\n\n.inputsubtitle {\n  background-color: #c0c0c0;\n  color: #7c3aedaa;\n}\n\n.modal .footer > button#buttonInputGo {\n  background-color: #ffffff;\n  color: #000000;\n}\n\n.modal .footer > button#buttonInputCancel {\n  background-color: #000000;\n  color: #ffffff;\n}\n\n#buttonInputOverlay {\n  background-color: #000;\n  background-image:\n    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px 100%),\n    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0 1px, transparent 1px 100%),\n    linear-gradient(180deg, #7c3aed 0%, #000000 100%);\n}"
+      "globalCss": "/* Holder modifications */\n\n.holder {\n  background: #c0c0c0;\n}\n\n/* Button font */\n\n.button {\n  color: #000000;\n  background: #66cdaa;\n  border-color: #008080;\n  font-size: 18px\n}\n\n.button:hover {\n  color: #ffffff;\n  background: #008080;\n  border-color: #66cdaa;\n  cursor: pointer;\n  text-decoration: underline;\n  font-style: italic;\n}\n\n\n/* Card transitions */\n\n.customTransitionClass {\n  transition: transform 600ms\n}\n\n.customTransitionClass.dragging {\n  transition: none\n}\n\n/* INPUT overlay modifications */\n\n.modal {\n  transform: scale(0.9) !important;\n  position: absolute !important;\n  top: 50px !important;\n  right: 50px !important;\n}\n\n.inputtitle {\n  background-color: #909090;\n  color: #7c3aed;\n}\n\n.inputsubtitle {\n  background-color: #c0c0c0;\n  color: #7c3aedaa;\n}\n\n.modal .footer > button#buttonInputGo {\n  background-color: #ffffff;\n  color: #000000;\n}\n\n.modal .footer > button#buttonInputCancel {\n  background-color: #000000;\n  color: #ffffff;\n}\n\n#buttonInputOverlay {\n  background-color: #000;\n  background-image:\n    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px 100%),\n    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0 1px, transparent 1px 100%),\n    linear-gradient(180deg, #7c3aed 0%, #000000 100%);\n}"
     },
     "info": {
       "name": "Appearance - CSS",
@@ -15,7 +15,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762320152600,
+      "lastUpdate": 1762439294512,
       "skill": "",
       "description": "",
       "similarImage": "",
