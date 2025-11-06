@@ -1535,10 +1535,7 @@ export function initializeEditMode(currentMetaData) {
               "relation": "+",
               "value": 10
             },
-            "var lineWidth = ${PROPERTY lineWidth OF $parent}",
-            "var resolution = ${PROPERTY resolution OF $parent}",
-            "var resolutionModifier = (${resolution} / 100) * 0.5",
-            "var newLineWidth = ${lineWidth} + ${resolutionModifier}",
+            "var newLineWidth = ${PROPERTY lineWidth OF $parent} + (${PROPERTY resolution OF $parent} / 200)",
             {
               "func": "SET",
               "collection": [
