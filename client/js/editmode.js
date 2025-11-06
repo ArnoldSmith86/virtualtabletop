@@ -1508,9 +1508,9 @@ export function initializeEditMode(currentMetaData) {
       fixedParent: true,
 
       x: -50,
-      y: 50,
+      y: 60,
       width: 50,
-      height: 50,
+      height: 40,
 
       movable: false,
       movableInEdit: false,
@@ -1573,20 +1573,20 @@ export function initializeEditMode(currentMetaData) {
           "--wcBorderOH": "black ",
           "background": "transparent",
           "background-repeat": "no-repeat",
-          "background-position": "50% 60%",
+          "background-position": "50% 50%",
           "background-size": "${PROPERTY lineSize}%"
         },
         "::after": {
           "content": "\"Line Width\"",
           "position": "absolute",
-          "margin-top": "-4em",
+          "margin-top": "-5.1em",
           "color": "white",
           "background-color": "#0d2f5e",
-          "width": "100%",
+          "width": "50px",
           "font-size": "0.6em"
         }
       },
-      borderRadius: '0',
+      borderRadius: 0,
       image: "/i/game-icons.net/delapouite/plain-circle.svg",
       lineSize: 10,
     })
