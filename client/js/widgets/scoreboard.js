@@ -2,8 +2,8 @@ import { $, $a, removeFromDOM, asArray, escapeID } from '../domhelpers.js';
 import { Widget } from './widget.js';
 
 class Scoreboard extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       movable: true,
@@ -166,7 +166,7 @@ class Scoreboard extends Widget {
       } else if (typeof seats == 'object') { // Getting team totals
         const teamTotals = [null];
         for (const team in seats) {
-          const seatsInTeam = widgetFilter(w => w.get('type') == 'seat' && seats[team].includes(w));
+          const seatsInTeam = this.widgetFilter(w => w.get('type') == 'seat' && seats[team].includes(w));
           const seatsScores = seats[team].map(w => w.get(this.get('scoreProperty')));
           const seatsTotals = asArray(seatsScores).map( s => this.getTotal(s) );
           teamTotals.push(this.getTotal(seatsTotals));
@@ -195,7 +195,7 @@ class Scoreboard extends Widget {
     if(typeof seats == 'string') // Allow "seats": "Seat1"
       seats = asArray(seats);
     if(Array.isArray(seats) || seats === null) { // Scoreboard just using seats
-      const seatList = [...widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))];
+      const seatList = [...this.widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && (!seats || seats.includes(w.get('id'))))];
       // Sort player scores as requested
       if(sortField == 'total' && !showTotals) // Use default sort if no totals
         sortField = 'index';
@@ -213,7 +213,7 @@ class Scoreboard extends Widget {
     } else if(typeof seats == 'object') { // Scoreboard using teams
       const teamList = {};
       for (const team in seats) {
-        teamList[team] = [... widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && asArray(seats[team]).includes(w.get('id')))];
+        teamList[team] = [... this.widgetFilter(w => w.get('type') == 'seat' && (this.get('showAllSeats') || w.get('player')) && asArray(seats[team]).includes(w.get('id')))];
         teamList[team].sort((a,b) => a.get('index') - b.get('index'));
         if (!this.get('sortAscending'))
           teamList[team].reverse()

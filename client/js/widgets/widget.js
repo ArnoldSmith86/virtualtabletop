@@ -22,19 +22,23 @@ const readOnlyProperties = new Set([
 let lastExecutedOperation = null;
 
 export class Widget extends StateManaged {
-  constructor(id) {
+  constructor(surface, id) {
     const div = document.createElement('div');
     div.id = 'w_' + escapeID(id);
     super();
     this.id = id;
+
+    this.surface = surface;
+    this.widgets = surface.widgets;
+
     this.domElement = div;
     this.dropShadowWidget = null;
     this.targetTransform = '';
     this.childArray = [];
     this.propertiesUsedInProperty = {};
 
-    if(StateManaged.inheritFromMapping[id] === undefined)
-      StateManaged.inheritFromMapping[id] = [];
+    if(this.surface.inheritFromMapping[id] === undefined)
+      this.surface.inheritFromMapping[id] = [];
 
     this.addDefaults({
       display: true,
@@ -180,8 +184,8 @@ export class Widget extends StateManaged {
     let fromTransform = null;
     let newParent = undefined;
     if(delta.parent !== undefined) {
-      newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
-      this.setLimbo(delta.parent && !widgets.has(delta.parent));
+      newParent = delta.parent && this.widgets.has(delta.parent) ? this.widgets.get(delta.parent).domElement : $('#topSurface');
+      this.setLimbo(delta.parent && !this.widgets.has(delta.parent));
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
@@ -210,8 +214,8 @@ export class Widget extends StateManaged {
         this.domElement.style.transform = this.targetTransform;
       }
 
-      if(delta.parent !== null && widgets.has(delta.parent)) {
-        this.parent = widgets.get(delta.parent);
+      if(delta.parent !== null && this.widgets.has(delta.parent)) {
+        this.parent = this.widgets.get(delta.parent);
         this.parent.applyChildAdd(this);
       } else {
         delete this.parent;
@@ -248,11 +252,11 @@ export class Widget extends StateManaged {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
         const property = isGlobalUpdateRoutine[1] || '*';
-        if(StateManaged.globalUpdateListeners[property] === undefined)
-          StateManaged.globalUpdateListeners[property] = [];
-        StateManaged.globalUpdateListeners[property] = StateManaged.globalUpdateListeners[property].filter(x=>x[0]!=this);
+        if(this.surface.globalUpdateListeners[property] === undefined)
+          this.surface.globalUpdateListeners[property] = [];
+        this.surface.globalUpdateListeners[property] = this.surface.globalUpdateListeners[property].filter(x=>x[0]!=this);
         if(Array.isArray(delta[key]))
-          StateManaged.globalUpdateListeners[property].push([ this, key ]);
+          this.surface.globalUpdateListeners[property].push([ this, key ]);
       }
     }
 
@@ -265,7 +269,7 @@ export class Widget extends StateManaged {
       this.isDraggable = delta.movable;
     }
 
-    for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
+    for(const inheriting of this.surface.inheritFromMapping[this.id]) {
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
       inheriting.applyInheritedDeltaToDOM(inheritedDelta);
@@ -276,8 +280,8 @@ export class Widget extends StateManaged {
       for(const key in delta)
         if(this.state[key] === undefined && (!this.inheritedProperties || this.inheritedProperties[key] === undefined))
           for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-            if(this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined && widgets.get(id).get(key) !== delta[key])
-              this.applyInheritedDeltaToDOM({[key]: widgets.get(id).get(key)});
+            if(this.inheritFromIsValid(properties, key) && this.widgets.has(id) && this.widgets.get(id).get(key) !== undefined && this.widgets.get(id).get(key) !== delta[key])
+              this.applyInheritedDeltaToDOM({[key]: this.widgets.get(id).get(key)});
     }
 
     if($('#enlarged').dataset.id == this.id && !$('#enlarged').className.match(/hidden/)) {
@@ -306,17 +310,17 @@ export class Widget extends StateManaged {
   applyInheritedValuesToDOM(inheritFrom, pushasArray) {
     const delta = {};
     for(const [ id, properties ] of Object.entries(inheritFrom).reverse()) {
-      if(widgets.has(id)) {
-        const w = widgets.get(id);
+      if(this.widgets.has(id)) {
+        const w = this.widgets.get(id);
         if(w.state.inheritFrom)
           this.applyInheritedValuesToDOM(w.inheritFrom());
         this.applyInheritedValuesToObject(properties, w.state, delta, this);
       }
 
       if(pushasArray) {
-        if(StateManaged.inheritFromMapping[id] === undefined)
-          StateManaged.inheritFromMapping[id] = [];
-        StateManaged.inheritFromMapping[id].push(this);
+        if(this.surface.inheritFromMapping[id] === undefined)
+          this.surface.inheritFromMapping[id] = [];
+        this.surface.inheritFromMapping[id].push(this);
       }
     }
     this.applyInheritedDeltaToDOM(delta);
@@ -328,10 +332,10 @@ export class Widget extends StateManaged {
   }
 
   applyRemove() {
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      widgets.get(this.get('parent')).applyChildRemove(this);
-    if(this.get('deck') && widgets.has(this.get('deck')))
-      widgets.get(this.get('deck')).removeCard(this);
+    if(this.get('parent') && this.widgets.has(this.get('parent')))
+      this.widgets.get(this.get('parent')).applyChildRemove(this);
+    if(this.get('deck') && this.widgets.has(this.get('deck')))
+      this.widgets.get(this.get('deck')).removeCard(this);
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
@@ -352,7 +356,7 @@ export class Widget extends StateManaged {
   }
 
   async bringToFront() {
-    await this.set('z', getMaxZ(this.get('layer')) + 1);
+    await this.set('z', this.surface.getMaxZ(this.get('layer')) + 1);
   }
 
   calculateZ() {
@@ -362,8 +366,8 @@ export class Widget extends StateManaged {
       for(const child of this.childrenOwned())
         this.z = Math.max(this.z, child.z);
     if (this.z != pZ) {
-      if(this.get('parent') && widgets.has(this.get('parent')))
-        widgets.get(this.get('parent')).applyChildZ(this, pZ);
+      if(this.get('parent') && this.widgets.has(this.get('parent')))
+        this.widgets.get(this.get('parent')).applyChildZ(this, pZ);
     }
     return this.z;
   }
@@ -400,13 +404,13 @@ export class Widget extends StateManaged {
     let onlyVisibleForSeat = this.get('onlyVisibleForSeat');
 
     // If the element is currently being dragged we may inherit restricted seat visibility.
-    const hoverTarget = this.get('hoverTarget') && widgets.has(this.get('hoverTarget')) ? widgets.get(this.get('hoverTarget')) : null;
+    const hoverTarget = this.get('hoverTarget') && this.widgets.has(this.get('hoverTarget')) ? this.widgets.get(this.get('hoverTarget')) : null;
     if (hoverTarget)
       onlyVisibleForSeat = hoverTarget.inheritSeatVisibility(onlyVisibleForSeat);
 
     let invisible = onlyVisibleForSeat !== null;
     for(const seatID of asArray(onlyVisibleForSeat) || []) {
-      if(widgets.has(seatID) && widgets.get(seatID).get('player') == playerName) {
+      if(this.widgets.has(seatID) && this.widgets.get(seatID).get('player') == playerName) {
         invisible = false;
         break;
       }
@@ -415,13 +419,13 @@ export class Widget extends StateManaged {
       className += ' foreign';
 
     const linkedToSeat = this.get('linkedToSeat');
-    if(linkedToSeat && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
-      if(!widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
+    if(linkedToSeat && this.widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+      if(!this.widgetFilter(w=>asArray(linkedToSeat).indexOf(w.get('id')) != -1 && w.get('player')).length)
         className += ' foreign';
 
     if(this.isLimbo)
       className += ' limbo';
-    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')) && widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
+    if(this.get('hoverParent') && this.widgets.has(this.get('hoverParent')) && this.widgets.get(this.get('hoverParent')).domElement.classList.contains('showCardBack'))
       className += ' showCardBack';
 
     if(typeof this.get('dragging') == 'string')
@@ -485,11 +489,11 @@ export class Widget extends StateManaged {
     const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
     const parent = clone.parent;
     const inheritFrom = clone.inheritFrom;
-    if(parent !== undefined && parent !== null && !widgets.has(parent))
+    if(parent !== undefined && parent !== null && !this.widgets.has(parent))
       return null;
 
     clone.clonedFrom = this.get('id');
-    if(widgets.has(clone.id)) {
+    if(this.widgets.has(clone.id)) {
       delete clone.id;
       if(problems && overrideProperties.id !== undefined)
         problems.push(`There is already a widget with id:${overrideProperties.id}, generating new ID.`);
@@ -497,18 +501,18 @@ export class Widget extends StateManaged {
     delete clone.parent;
     delete clone.inheritFrom;
     const newID = await addWidgetLocal(clone);
-    if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
-      const cWidget = widgets.get(newID);
+    if(this.widgets.has(newID)) { // cloning can fail for example with invalid cardType
+      const cWidget = this.widgets.get(newID);
 
       // use moveToHolder so that CLONE triggers onEnter and similar features
       cWidget.movedByButton = problems != null;
       if(parent)
-        await cWidget.moveToHolder(widgets.get(parent));
+        await cWidget.moveToHolder(this.widgets.get(parent));
       if(inheritFrom)
         await cWidget.set('inheritFrom', inheritFrom);
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
-      if(!parent || !widgets.get(parent).get('alignChildren')) {
+      if(!parent || !this.widgets.get(parent).get('alignChildren')) {
         await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
         await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
         await cWidget.updatePiles();
@@ -531,7 +535,7 @@ export class Widget extends StateManaged {
   }
   coordGlobalFromCoordParent(coord) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
+    return (this.widgets.has(p)) ? this.widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
   }
   coordGlobalInside(coord) {
     const coordLocal = this.coordLocalFromCoordGlobal(coord);
@@ -550,7 +554,7 @@ export class Widget extends StateManaged {
   }
   coordParentFromCoordGlobal(coord) {
     const p = this.get('parent');
-    return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
+    return (this.widgets.has(p)) ? this.widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
   coordParentFromCoordLocal(coord) {
     const transform = getElementTransform(this.domElement);
@@ -745,7 +749,7 @@ export class Widget extends StateManaged {
           variables[field.variable] = $(':checked', dom) ? $(':checked', dom).value : null;
         } else if(field.type == 'choose') {
           variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>w.dataset.source);
-          collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>widgets.get(w));
+          collections[field.collection || 'DEFAULT'] = variables[field.variable].map(w=>this.widgets.get(w));
           if(field.mode == 'faces')
             variables[field.variable] = [...$a('.selected .widget', dom)].map(w=>(isSingleWidget?w.dataset.face:{ widget: w.dataset.source, face: w.dataset.face }));
           if(variables[field.variable].length == 1 && (field.max || 1) === 1)
@@ -848,7 +852,7 @@ export class Widget extends StateManaged {
           const id = evaluateIdentifier(match[7], match[8]);
           if(Array.isArray(id) || !this.isValidID(id, problems))
             return null;
-          widget = widgets.get(id);
+          widget = this.widgets.get(id);
         }
         return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
       }
@@ -880,22 +884,23 @@ export class Widget extends StateManaged {
       if(Array.isArray(collections[collection]))
         newCollection = collection
       else if (Array.isArray(collection)) {
-        newCollection = '$collection_' + batchDepth;
-        collections[newCollection] = widgetFilter(w=>collection.indexOf(w.id)!=-1);
+        newCollection = '$collection_' + this.surface.batchDepth;
+        collections[newCollection] = this.widgetFilter(w=>collection.indexOf(w.id)!=-1);
       } else
         problems.push(`Collection ${collection} does not exist or is not an array.`);
       return newCollection;
     }
 
+    const wF = this.widgetFilter.bind(this);
     async function w(ids, callback) {
-      for(const a of widgetFilter(w=>asArray(ids).indexOf(w.get('id')) != -1))
+      for(const a of wF(w=>asArray(ids).indexOf(w.get('id')) != -1))
         await callback(a);
     }
 
     if(!depth && (this.isBeingRemoved || this.inRemovalQueue))
       return;
 
-    batchStart();
+    this.surface.batchStart();
 
     let abortRoutine = false; // Set for CALL with 'return=false' or when INPUT is cancelled.
 
@@ -907,8 +912,8 @@ export class Widget extends StateManaged {
     let variables = initialVariables;
     let collections = initialCollections;
     if(!byReference) {
-      const playerSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
-      const activeSeats = widgetFilter(w=>w.get('type')=='seat'&&w.get('player')!='');
+      const playerSeats = this.widgetFilter(w=>w.get('type')=='seat'&&w.get('player')==playerName);
+      const activeSeats = this.widgetFilter(w=>w.get('type')=='seat'&&w.get('player')!='');
       variables = Object.assign({
         activeColors,
         mouseCoords,
@@ -1072,7 +1077,7 @@ export class Widget extends StateManaged {
         } else if(this.isValidID(a.widget, problems)) {
           if(Array.isArray(a.widget))
             a.widget = a.widget[0];
-          if(!Array.isArray(widgets.get(a.widget).get(a.routine))) {
+          if(!Array.isArray(this.widgets.get(a.widget).get(a.routine))) {
             problems.push(`Widget ${a.widget} does not contain ${a.routine} (or it is no array).`);
           } else {
             // make sure everything is passed in a way that the variables and collections of this routine won't be changed
@@ -1081,7 +1086,7 @@ export class Widget extends StateManaged {
             for(const c in collections)
               inheritCollections[c] = [ ...collections[c] ];
             inheritCollections['caller'] = [ this ];
-            const result = await widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
+            const result = await this.widgets.get(a.widget).evaluateRoutine(a.routine, inheritVariables, inheritCollections, (depth || 0) + 1);
             variables[a.variable] = result.variable;
             collections[a.collection] = result.collection;
 
@@ -1234,7 +1239,7 @@ export class Widget extends StateManaged {
           variables[a.variable] = 0;
           for (const h of asArray(a.holder)) {
             if(this.isValidID(h,problems)) {
-              const children = widgets.get(h).children();
+              const children = this.widgets.get(h).children();
               if(a.owner === null) {
                 variables[a.variable] += children.length;
               } else {
@@ -1549,8 +1554,8 @@ export class Widget extends StateManaged {
             c.movedByButton = true;
             if(target.get('type') == 'seat') {
               if(target.get('hand') && target.get('player')) {
-                if(widgets.has(target.get('hand'))) {
-                  const targetHand = widgets.get(target.get('hand'));
+                if(this.widgets.has(target.get('hand'))) {
+                  const targetHand = this.widgets.get(target.get('hand'));
                   await applyFlip();
                   if (targetHand == source) {
                     // cards are already in hand: only an owner update is needed
@@ -1596,7 +1601,7 @@ export class Widget extends StateManaged {
             let offset = 0;
             await w(a.to, async target=>{
               for(const c of collections[collection].slice(offset, offset+count))
-                offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
+                offset += await applyMove(c.get('parent') && this.widgets.has(c.get('parent')) ? this.widgets.get(c.get('parent')) : null, target, c);
               if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
@@ -1640,7 +1645,7 @@ export class Widget extends StateManaged {
         let excludeCollection = null;
         if(a.excludeCollection) {
           if(excludeCollection = getCollection(a.excludeCollection)) {
-            excludeCollection = collections[excludeCollection].map(e => widgets.get(e.id));
+            excludeCollection = collections[excludeCollection].map(e => this.widgets.get(e.id));
           } else {
             problems.push(`The collection ${a.excludeCollection} you want to exclude does not exist.`);
           }
@@ -1648,10 +1653,10 @@ export class Widget extends StateManaged {
 
         if(this.isValidID(a.holder, problems)) {
           for(const holder of asArray(a.holder)) {
-            const decks = widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
+            const decks = this.widgetFilter(w=>w.get('type')=='deck'&&w.get('parent')==holder);
             if(decks.length) {
               for(const deck of decks) {
-                let cards = widgetFilter(w=>w.get('deck')==deck.get('id'));
+                let cards = this.widgetFilter(w=>w.get('deck')==deck.get('id'));
                 if(!a.owned)
                   cards = cards.filter(c=>!c.get('owner'));
                 if(!a.inHolder)
@@ -1678,7 +1683,7 @@ export class Widget extends StateManaged {
                   if(c.get('_ancestor') == holder && !c.get('owner'))
                     await c.bringToFront();
                   else
-                    await c.moveToHolder(widgets.get(holder));
+                    await c.moveToHolder(this.widgets.get(holder));
                 }
               }
             } else {
@@ -1693,9 +1698,9 @@ export class Widget extends StateManaged {
 
       if (a.func == 'RESET') {
         setDefaults(a, { property: 'resetProperties' });      
-        for(const widget of widgets.values()) {
+        for(const widget of this.widgets.values()) {
           for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
-            if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
+            if((key == 'parent' || key == 'deck') && value !== null && !this.widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
             } else {
               await widget.set(key, value);
@@ -1757,7 +1762,7 @@ export class Widget extends StateManaged {
           round = null;
         }
 
-        const seats = widgetFilter(w => w.get('type')=='seat' && (a.seats===null || asArray(a.seats).includes(w.get('id'))));
+        const seats = this.widgetFilter(w => w.get('type')=='seat' && (a.seats===null || asArray(a.seats).includes(w.get('id'))));
 
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
@@ -1785,7 +1790,7 @@ export class Widget extends StateManaged {
         if(a.source == 'all' || (source = getCollection(a.source))) {
           if([ 'add', 'set', 'remove', 'intersect' ].indexOf(a.mode) == -1)
             problems.push(`Warning: Mode ${a.mode} interpreted as set.`);
-          let c = (a.source == 'all' ? Array.from(widgets.values()) : collections[source]).filter(function(w) {
+          let c = (a.source == 'all' ? Array.from(this.widgets.values()) : collections[source]).filter(function(w) {
             if(w.isBeingRemoved)
               return false;
             if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
@@ -1845,7 +1850,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: Relation == interpreted as =`);
           a.relation = '=';
         }
-        if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !widgets.has(a.value)) {
+        if((a.property == 'parent' || a.property == 'deck') && a.value !== null && !this.widgets.has(a.value)) {
           problems.push(`Tried setting ${a.property} to ${a.value} which doesn't exist.`);
         } else if (collection = getCollection(a.collection)) {
           if (a.property == 'id') {
@@ -1854,14 +1859,14 @@ export class Widget extends StateManaged {
               let newState = JSON.parse(JSON.stringify(oldWidget.state));
               newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
 
-              if(widgets.has(newState.id)) {
+              if(this.widgets.has(newState.id)) {
                 problems.push(`id ${newState.id} already in use, ignored.`);
               } else if(typeof newState.id != 'string' || newState.id.length == 0) {
                 problems.push(`id ${newState.id} is not a string or empty, ignored.`);
               } else {
                 await updateWidgetId(newState, oldID);
                 for(const c in collections)
-                  collections[c] = collections[c].map(w=>w.id==oldID ? widgets.get(newState.id) : w);
+                  collections[c] = collections[c].map(w=>w.id==oldID ? this.widgets.get(newState.id) : w);
               }
             }
           } else {
@@ -1948,7 +1953,7 @@ export class Widget extends StateManaged {
           problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
           a.direction = 'forward'
         }
-        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
+        let allSeats = Array.from(this.widgets.values()).filter(w=>w.get('type')=='seat');
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
         if (c.length > 1) {
           if(a.direction == 'forward') {
@@ -1967,8 +1972,8 @@ export class Widget extends StateManaged {
             let target = c[(i + a.interval) % c.length];
             let hand = source.get('hand');
             if (this.isValidID(hand, problems)) {
-              let perOwner = widgets.get(hand).get('childrenPerOwner');
-              let contents = widgets.get(hand).children().reduce(
+              let perOwner = this.widgets.get(hand).get('childrenPerOwner');
+              let contents = this.widgets.get(hand).children().reduce(
                 function (collect, w) {
                   if (!perOwner || w.get('owner') == source.get('player')) {
                     collect.unshift(w.get('id'));
@@ -2056,7 +2061,7 @@ export class Widget extends StateManaged {
           a.turnCycle = 'forward'
         }
         
-        let allSeats = Array.from(widgets.values()).filter(w=>w.get('type')=='seat');
+        let allSeats = Array.from(this.widgets.values()).filter(w=>w.get('type')=='seat');
         let c = (a.source=='all' ? allSeats : collections[getCollection(a.source)].filter(w=>w.get('type')=='seat')).filter(w=>w.get('player'));
 
         if (c.length == 0) {
@@ -2153,7 +2158,8 @@ export class Widget extends StateManaged {
 
     if(jeRoutineLogging) jeLoggingRoutineEnd(variables, collections);
 
-    batchEnd();
+    this.surface.batchEnd();
+
 
     if(variables.playerColor != playerColor && typeof variables.playerColor == 'string') {
       const hexColor = toHex(variables.playerColor);
@@ -2175,15 +2181,15 @@ export class Widget extends StateManaged {
       const p = this.get('parent');
       switch(property) {
         case '_absoluteRotation':
-          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+          return this.get('rotation') + (this.widgets.has(p)? this.widgets.get(p).get('_absoluteRotation') : 0);
         case '_absoluteScale':
-          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+          return this.get('scale') * (this.widgets.has(p)? this.widgets.get(p).get('_absoluteScale') : 1);
         case '_absoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
         case '_absoluteY':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
         case '_ancestor':
-          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+          return (this.widgets.has(p) && this.widgets.get(p).get('type')=='pile') ? this.widgets.get(p).get('_ancestor') : p;
         case '_centerAbsoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
         case '_centerAbsoluteY':
@@ -2257,8 +2263,8 @@ export class Widget extends StateManaged {
       }
     }
     const thisParent = this.get('parent');
-    if (thisParent && widgets.has(thisParent))
-      seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
+    if (thisParent && this.widgets.has(thisParent))
+      seatVisibility = this.widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
     return seatVisibility;
   }
 
@@ -2266,8 +2272,8 @@ export class Widget extends StateManaged {
     if (this.get('parent') == widget.get('id')) {
       return true;
     }
-    if (widgets.has(this.get('parent'))) {
-      return widgets.get(this.get('parent')).isDescendantOf(widget);
+    if (this.widgets.has(this.get('parent'))) {
+      return this.widgets.get(this.get('parent')).isDescendantOf(widget);
     }
     return false;
   }
@@ -2275,7 +2281,7 @@ export class Widget extends StateManaged {
   isValidID(id, problems) {
     if(Array.isArray(id))
       return !id.map(i=>this.isValidID(i, problems)).filter(r=>r!==true).length;
-    if(widgets.has(id))
+    if(this.widgets.has(id))
       return true;
     problems.push(`Widget ID ${id} does not exist.`);
     return false;
@@ -2315,7 +2321,7 @@ export class Widget extends StateManaged {
 
     await this.bringToFront();
     if(this.get('parent') && !this.currentParent)
-      this.currentParent = widgets.get(this.get('parent'));
+      this.currentParent = this.widgets.get(this.get('parent'));
     if(this.currentParent != holder)
       await this.checkParent(true);
 
@@ -2332,7 +2338,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
-      this.currentParent = widgets.get(this.get('_ancestor'));
+      this.currentParent = this.widgets.get(this.get('_ancestor'));
       if(this.currentParent)
         await this.set('hoverParent', this.get('_ancestor'));
       this.hoverTarget = null;
@@ -2381,7 +2387,7 @@ export class Widget extends StateManaged {
 
       // First, check for elements under the midpoint in order in which they were hit.
       for (let i = 0; i < hitElements.length; i++) {
-        let widget = widgets.get(unescapeID(hitElements[i].id.slice(2)));
+        let widget = this.widgets.get(unescapeID(hitElements[i].id.slice(2)));
         if (hitElements[i].classList.contains('droppable') && widget) {
           this.hoverTarget = widget;
           break;
@@ -2428,13 +2434,13 @@ export class Widget extends StateManaged {
       }
 
       // If we currently have a shadow widget, position it and place it in the holder.
-      if (this.hoverTarget && this.get('dropShadowWidget') && widgets.has(this.get('dropShadowWidget'))) {
-        const shadowWidget = widgets.get(this.get('dropShadowWidget'));
+      if (this.hoverTarget && this.get('dropShadowWidget') && this.widgets.has(this.get('dropShadowWidget'))) {
+        const shadowWidget = this.widgets.get(this.get('dropShadowWidget'));
 
         const globalPoint = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         const shadowParentId = shadowWidget.get('parent');
         if (shadowParentId != this.hoverTarget.get('id')) {
-          shadowWidget.currentParent = widgets.get(shadowParentId);
+          shadowWidget.currentParent = this.widgets.get(shadowParentId);
           await shadowWidget.set('parent', null);
           await shadowWidget.setPosition(globalPoint.x, globalPoint.y, globalPoint.z);
           await shadowWidget.checkParent(true);
@@ -2480,9 +2486,9 @@ export class Widget extends StateManaged {
   async hideShadowWidget() {
     if (!this.get('dropShadowWidget'))
       return;
-    if (widgets.has(this.get('dropShadowWidget'))) {
-      const shadowWidget = widgets.get(this.get('dropShadowWidget'));
-      const holder = widgets.get(shadowWidget.get('parent'));
+    if (this.widgets.has(this.get('dropShadowWidget'))) {
+      const shadowWidget = this.widgets.get(this.get('dropShadowWidget'));
+      const holder = this.widgets.get(shadowWidget.get('parent'));
       const preventRearrange = shadowWidget.get('parent') == this.get('hoverTarget');
       shadowWidget.currentParent = holder;
       if (preventRearrange)
@@ -2524,13 +2530,13 @@ export class Widget extends StateManaged {
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
       if(oldValue) {
-        const oldParent = widgets.get(oldValue);
+        const oldParent = this.widgets.get(oldValue);
         await oldParent.onChildRemove(this);
         if(this.get('type') != 'holder' && Array.isArray(oldParent.get('leaveRoutine')))
           await oldParent.evaluateRoutine('leaveRoutine', {}, { child: [ this ] });
       }
       if(newValue) {
-        const newParent = widgets.get(newValue);
+        const newParent = this.widgets.get(newValue);
         await newParent.onChildAdd(this, oldValue);
         if(Array.isArray(newParent.get('enterRoutine')))
           await newParent.evaluateRoutine('enterRoutine', { oldParentID: oldValue === undefined ? null : oldValue }, { child: [ this ] });
@@ -2565,11 +2571,11 @@ export class Widget extends StateManaged {
   }
 
   renderReadonlyCopy(propertyOverride, target, includeChildren=false, isChild=false) {
-    const newID = generateUniqueWidgetID();
+    const newID = this.surface.generateUniqueWidgetID();
     const newWidget = new this.constructor(newID);
     newWidget.renderReadonlyCopyRaw(Object.assign({}, this.state, propertyOverride), target, isChild);
     if(includeChildren)
-      for(const child of widgetFilter(w=>w.get('parent') == this.id))
+      for(const child of this.widgetFilter(w=>w.get('parent') == this.id))
         if(this.get('type') != 'holder' || !compareDropTarget(child, this) || includeChildren == 'all')
           child.renderReadonlyCopy({}, newWidget.domElement, includeChildren, true);
     return newWidget;
@@ -2578,10 +2584,10 @@ export class Widget extends StateManaged {
   requiresHiddenCursor() {
     if(this.get('hidePlayerCursors'))
       return true;
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      return widgets.get(this.get('parent')).requiresHiddenCursor();
-    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')))
-      return widgets.get(this.get('hoverParent')).requiresHiddenCursor();
+    if(this.get('parent') && this.widgets.has(this.get('parent')))
+      return this.widgets.get(this.get('parent')).requiresHiddenCursor();
+    if(this.get('hoverParent') && this.widgets.has(this.get('hoverParent')))
+      return this.widgets.get(this.get('hoverParent')).requiresHiddenCursor();
     return false;
   }
 
@@ -2665,7 +2671,7 @@ export class Widget extends StateManaged {
       e.className = this.domElement.className;
       e.dataset.id = id;
 
-      if(this.get('_ancestor') && widgets.has(this.get('_ancestor')) && widgets.get(this.get('_ancestor')).domElement.classList.contains('showCardBack'))
+      if(this.get('_ancestor') && this.widgets.has(this.get('_ancestor')) && this.widgets.get(this.get('_ancestor')).domElement.classList.contains('showCardBack'))
         e.classList.add('showCardBack');
 
       for(const clone of $a('canvas', e)) {
@@ -2720,7 +2726,7 @@ export class Widget extends StateManaged {
         const dom = document.createElement('div');
         dom.className = "inputtitle";
         const thisheader = {label: o.header}
-        formField(thisheader, dom, null);
+        formField(this.surface, thisheader, dom, null);
         $('#buttonInputFields').appendChild(dom);
       }
       if(!o.confirmButtonText && !o.confirmButtonIcon){
@@ -2745,7 +2751,7 @@ export class Widget extends StateManaged {
         if(field.type == 'choose') {
           let collection;
           if(field.holder) {
-            field.widgets = [].concat(...asArray(field.holder).map(w=>widgets.has(w)?widgets.get(w).children():[])).map(w=>w.id);
+            field.widgets = [].concat(...asArray(field.holder).map(w=>this.widgets.has(w)?this.widgets.get(w).children():[])).map(w=>w.id);
           } else if(collection = collections[getCollection(field.source || 'DEFAULT')]) {
             field.widgets = collection.map(w=>w.id);
           } else {
@@ -2753,7 +2759,7 @@ export class Widget extends StateManaged {
           }
         }
 
-        formField(field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
+        formField(this.surface, field, dom, 'INPUT_' + escapeID(this.get('id')) + ';' + field.variable);
         $('#buttonInputFields').appendChild(dom);
       }
 
@@ -2856,7 +2862,7 @@ export class Widget extends StateManaged {
       return;
 
     const thisParent = this.get('parent');
-    if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+    if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && this.widgets.has(thisParent) && !this.widgets.get(thisParent).supportsPiles())
       return;
 
     const thisX = this.get('x');
@@ -2864,7 +2870,7 @@ export class Widget extends StateManaged {
     const thisOwner = this.get('owner');
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
-    for(const [ widgetID, widget ] of widgets) {
+    for(const [ widgetID, widget ] of this.widgets) {
       if(widget == this)
         continue;
       const widgetType = widget.get('type');
@@ -2930,5 +2936,9 @@ export class Widget extends StateManaged {
 
   validDropTargets() {
     return getValidDropTargets(this);
+  }
+
+  widgetFilter(callback) {
+    return this.surface.widgetFilter(callback);
   }
 }

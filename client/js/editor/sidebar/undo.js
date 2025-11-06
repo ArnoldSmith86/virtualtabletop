@@ -34,7 +34,7 @@ class UndoModule extends SidebarModule {
     setUndoProtocol(this.protocol.slice(0, index+1));
     this.resetOnNextDelta = true;
 
-    setSelection([...selectedWidgets].filter(w=>widgets.has(w.id)));
+    setSelection([...selectedWidgets].filter(w=>topSurface.widgets.has(w.id)));
   }
 
   renderModule(target) {

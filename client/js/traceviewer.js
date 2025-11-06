@@ -132,11 +132,11 @@ function replayMoveFromTrace() {
   const startPlayer = loadedTrace[tracingActiveIndex].player;
   for(let i=tracingActiveIndex; i<loadedTrace.length; ++i) {
     if(loadedTrace[i].type == 'moveStart' && startPlayer == loadedTrace[i].player)
-      setTimeout(_=>widgets.get(loadedTrace[i].payload.id).moveStart(), loadedTrace[i].servertime-startTime);
+      setTimeout(_=>topSurface.widgets.get(loadedTrace[i].payload.id).moveStart(), loadedTrace[i].servertime-startTime);
     if(loadedTrace[i].type == 'move' && startPlayer == loadedTrace[i].player)
-      setTimeout(_=>widgets.get(loadedTrace[i].payload.id).move(loadedTrace[i].payload.newX + widgets.get(loadedTrace[i].payload.id).get('width')/2, loadedTrace[i].payload.newY + widgets.get(loadedTrace[i].payload.id).get('height')/2), loadedTrace[i].servertime-startTime);
+      setTimeout(_=>topSurface.widgets.get(loadedTrace[i].payload.id).move(loadedTrace[i].payload.newX + topSurface.widgets.get(loadedTrace[i].payload.id).get('width')/2, loadedTrace[i].payload.newY + topSurface.widgets.get(loadedTrace[i].payload.id).get('height')/2), loadedTrace[i].servertime-startTime);
     if(loadedTrace[i].type == 'moveEnd' && startPlayer == loadedTrace[i].player) {
-      setTimeout(_=>widgets.get(loadedTrace[i].payload.id).moveEnd(), loadedTrace[i].servertime-startTime);
+      setTimeout(_=>topSurface.widgets.get(loadedTrace[i].payload.id).moveEnd(), loadedTrace[i].servertime-startTime);
       break;
     }
   }

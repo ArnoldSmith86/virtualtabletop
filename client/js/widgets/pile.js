@@ -1,8 +1,8 @@
 const defaultPileSnapRange = 10;
 
 class Pile extends Widget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
     this.handle = document.createElement('div');
     this.handle.className = 'handle';
 
@@ -92,14 +92,14 @@ class Pile extends Widget {
       flipButton.className = 'ui-button';
       let z=1;
       flipButton.addEventListener('click', async e=>{
-        batchStart();
+        this.surface.batchStart();
         for(const c of this.children()) {
           await c.set('z', z++);
           if(c.flip)
             await c.flip();
         };
         showOverlay();
-        batchEnd();
+        this.surface.batchEnd();
       });
       buttonBar1.appendChild(flipButton);
 
@@ -112,10 +112,10 @@ class Pile extends Widget {
       shuffleButton.textContent = 'Shuffle the pile';
       shuffleButton.className = 'ui-button';
       shuffleButton.addEventListener('click', async e=>{
-        batchStart();
+        this.surface.batchStart();
         shuffleWidgets(this.children())
         showOverlay();
-        batchEnd();
+        this.surface.batchEnd();
       });
       buttonBar2.appendChild(shuffleButton);
 
@@ -178,7 +178,7 @@ class Pile extends Widget {
       const splitButton = document.createElement('button');
       splitButton.textContent = 'Split the pile';
       splitButton.addEventListener('click', async e=>{
-        batchStart();
+        this.surface.batchStart();
         for(const c of this.children().reverse().slice(childCount-splitInput.value)) {
           await c.set('parent', null);
           await c.set('x', this.absoluteCoord('x'));
@@ -188,7 +188,7 @@ class Pile extends Widget {
           await c.bringToFront();
         };
         showOverlay();
-        batchEnd();
+        this.surface.batchEnd();
       });
       splitButton.className = 'ui-button';
       buttonBar3.appendChild(splitButton);

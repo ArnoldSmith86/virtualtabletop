@@ -1,8 +1,8 @@
 import { Widget } from './widget.js';
 
 export class Label extends Widget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
     this.input = document.createElement('textarea');
 
     this.addDefaults({

@@ -184,7 +184,7 @@ export function unescapeID(id) {
     });
 }
 
-export function formField(field, dom, id) {
+export function formField(surface, field, dom, id) {
   const label = document.createElement('label');
   dom.appendChild(label);
   label.htmlFor = id;
@@ -309,7 +309,7 @@ export function formField(field, dom, id) {
   if(field.type == 'choose') {
     const input = document.createElement('div');
     for (const widgetID of field.widgets) {
-      const widget = widgets.get(widgetID);
+      const widget = surface.widgets.get(widgetID);
       for(let face=0; face<(field.mode == 'faces'?widget.getFaceCount():1); ++face) {
         if(Array.isArray(field.faces) && field.faces.indexOf(face) == -1)
           continue;

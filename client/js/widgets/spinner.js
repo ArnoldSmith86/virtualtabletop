@@ -1,6 +1,6 @@
 class Spinner extends Widget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       width: 110,

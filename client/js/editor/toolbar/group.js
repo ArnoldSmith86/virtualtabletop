@@ -30,7 +30,7 @@ class GroupButton extends ToolbarToggleButton {
     for(const widget of selectedWidgets)
       await widget.set('parent', newParent);
 
-    setSelection([ widgets.get(newParent) ]);
+    setSelection([ topSurface.widgets.get(newParent) ]);
   }
 
   async deactivate() {

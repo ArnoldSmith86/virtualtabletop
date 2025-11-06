@@ -1,6 +1,6 @@
 class Seat extends Widget {
-  constructor(id) {
-    super(id);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       typeClasses: 'widget seat',
@@ -46,8 +46,8 @@ class Seat extends Widget {
   }
 
   children() {
-    if(this.get('hand') && this.get('player') && widgets.has(this.get('hand')))
-      return widgetFilter(w=>w.get('parent')==this.get('hand')&&w.get('owner')==this.get('player'));
+    if(this.get('hand') && this.get('player') && this.widgets.has(this.get('hand')))
+      return this.widgetFilter(w=>w.get('parent')==this.get('hand')&&w.get('owner')==this.get('player'));
     return [];
   }
 
@@ -58,7 +58,7 @@ class Seat extends Widget {
       className += ' seated';
     if(this.get('turn') && !this.get('hideTurn'))
       className += ' turn';
-    if(this.get('hideWhenUnused') && !this.get('player') && widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
+    if(this.get('hideWhenUnused') && !this.get('player') && this.widgetFilter(w=>w.get('type') == 'seat' && w.get('player') == playerName).length)
       className += ' foreign';
 
     return className;
@@ -102,13 +102,13 @@ class Seat extends Widget {
   }
 
   updateAfterShuffle() {
-    if(this.get('hand') && widgets.has(this.get('hand')))
-      widgets.get(this.get('hand')).updateAfterShuffle();
+    if(this.get('hand') && this.widgets.has(this.get('hand')))
+      this.widgets.get(this.get('hand')).updateAfterShuffle();
   }
 
   updateScoreboards(delta) {
     const seatID = this.get('id');
-    const scoreboard = widgetFilter(w => w.get('type') == 'scoreboard');
+    const scoreboard = this.widgetFilter(w => w.get('type') == 'scoreboard');
     const deltaProps = Object.keys(delta);
     for(const board of scoreboard) {
       const boardProps = board.seatProperties(seatID);
@@ -118,6 +118,6 @@ class Seat extends Widget {
   }
 
   updateLinkedWidgets() {
-    widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('showInactiveFaceToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
+    this.widgetFilter(w=>w.get('onlyVisibleForSeat') || w.get('linkedToSeat') || w.get('showInactiveFaceToSeat') || w.get('type') == 'seat').forEach(wc=>wc.updateOwner());
   }
 }

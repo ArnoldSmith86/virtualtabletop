@@ -134,7 +134,7 @@ const jeCommands = [
         try {
           const macro = new Function(`"use strict";return (function(w, v) {${jeGetEditorContent()}})`)();
           const variableState = {};
-          for(const w of [...widgets.values()]) { // shallow copy because we might create new widgets by changing the id
+          for(const w of [...topSurface.widgets.values()]) { // shallow copy because we might create new widgets by changing the id
             const s = JSON.stringify(w.state);
             const newState = JSON.parse(s);
             macro(newState, variableState);
@@ -194,7 +194,7 @@ const jeCommands = [
     call: async function(options) {
       for(const id of jeSelectedIDs()) {
         const problems = [];
-        const clonedWidget = (await duplicateWidget(widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems))[0];
+        const clonedWidget = (await duplicateWidget(topSurface.widgets.get(id), options['Copy recursively'], options['Copy using inheritFrom'], options['Inherit properties'].split(',').map(e => e.trim()),options['Increment IDs'], options['Increment In'].split(','), options['X offset'], options['Y offset'], options['# Copies X'], options['# Copies Y'], problems))[0];
         if(problems.length)
           jeJSONerror = problems.join('\n');
         if(clonedWidget) {
@@ -211,9 +211,9 @@ const jeCommands = [
     name: 'Open parent',
     icon: '[up_one_level]',
     forceKey: 'ArrowUp',
-    show: _=>jeStateNow && widgets.has(jeStateNow.parent),
+    show: _=>jeStateNow && topSurface.widgets.has(jeStateNow.parent),
     call: async function() {
-      const p = widgets.get(jeStateNow.parent);
+      const p = topSurface.widgets.get(jeStateNow.parent);
       setSelection([ p ]);
       jeSelectWidget(p);
     }
@@ -277,13 +277,13 @@ const jeCommands = [
     context: '.*"([^"]+)"',
     call: async function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      const w = widgets.get(m[1]);
+      const w = topSurface.widgets.get(m[1]);
       setSelection([ w ]);
       jeSelectWidget(w);
     },
     show: function() {
       const m = jeContext.join('').match(/"([^"]+)"/);
-      return widgets.has(m[1]);
+      return topSurface.widgets.has(m[1]);
     }
   },
   {
@@ -535,20 +535,20 @@ const jeCommands = [
       if(css)
         cardType.css = css;
       jeStateNow.cardTypes['###SELECT ME###'] = cardType;
-      jeSetAndSelect(generateUniqueWidgetID());
+      jeSetAndSelect(topSurface.generateUniqueWidgetID());
     }
   },
   {
     id: 'je_addCard',
-    name: _=>`add card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length + 1}`,
+    name: _=>`add card ${topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length + 1}`,
     context: '^deck ↦ cardTypes ↦ [^"↦]+',
     call: async function() {
       const card = { deck:jeStateNow.id, type:'card', cardType:jeContext[2] };
-      await addWidgetLocal(card);
+      await topSurface.addWidgetLocal(card);
       if(jeStateNow.parent)
-        await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+        await topSurface.widgets.get(card.id).moveToHolder(topSurface.widgets.get(jeStateNow.parent));
       else
-        await widgets.get(card.id).updatePiles();
+        await topSurface.widgets.get(card.id).updatePiles();
     }
   },
   {
@@ -559,32 +559,32 @@ const jeCommands = [
     call: async function() {
       for(const cardType in jeStateNow.cardTypes) {
         const card = { deck:jeStateNow.id, type:'card', cardType };
-        await addWidgetLocal(card);
+        await topSurface.addWidgetLocal(card);
         if(jeStateNow.parent)
-          await widgets.get(card.id).moveToHolder(widgets.get(jeStateNow.parent));
+          await topSurface.widgets.get(card.id).moveToHolder(topSurface.widgets.get(jeStateNow.parent));
         else
-          await widgets.get(card.id).updatePiles();
+          await topSurface.widgets.get(card.id).updatePiles();
       }
     }
   },
   {
     id: 'je_removeCard',
-    name: _=>`remove card ${widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length}`,
+    name: _=>`remove card ${topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length}`,
     context: '^deck ↦ cardTypes ↦ [^"↦]+',
-    show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length,
+    show: _=>topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2]).length,
     call: async function() {
-      const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2])[0];
-      await removeWidgetLocal(card.get('id'));
+      const card = topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==jeContext[2])[0];
+      await topSurface.removeWidgetLocal(card.get('id'));
     }
   },
   {
     id: 'je_removeAllCards',
-    name: _=>`remove all ${widgetFilter(w=>w.get('deck')==jeStateNow.id).length} cards`,
+    name: _=>`remove all ${topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id).length} cards`,
     context: '^deck ↦ cardTypes',
-    show: _=>widgetFilter(w=>w.get('deck')==jeStateNow.id).length,
+    show: _=>topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id).length,
     call: async function() {
-      for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id))
-        await removeWidgetLocal(card.get('id'));
+      for(const card of topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id))
+        await topSurface.removeWidgetLocal(card.get('id'));
     }
   },
   {
@@ -618,7 +618,7 @@ const jeCommands = [
       const allProperties = [...new Set(Object.values(jeStateNow.cardTypes).reduce((a,t)=>a.concat(...Object.keys(t)), []))];
       let csvText = `id::INTERNAL${options["separator"]}${allProperties.map(escapeField).join(options["separator"])}${options["separator"]}cardCount::INTERNAL\n`;
       for(const [ id, type ] of Object.entries(jeStateNow.cardTypes)) {
-        const cardCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        const cardCount = topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
         csvText += `${escapeField(id)}${options["separator"]}${allProperties.map(p=>escapeField(type[p])).join(options["separator"])}${options["separator"]}${cardCount}\n`;
       }
       downloadCSV(csvText, `${jeStateNow.id} cardTypes.csv`);
@@ -700,21 +700,21 @@ const jeCommands = [
 
       for(const oldID of oldCardTypeIDs)
         if(!jeStateNow.cardTypes[oldID])
-          for(const card of widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==oldID))
+          for(const card of topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==oldID))
             await removeWidgetLocal(card.get('id'));
 
       jeSetAndSelect();
       await jeApplyChanges();
 
       for(const [ id, targetCount ] of Object.entries(targetCounts)) {
-        const currentCount = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
+        const currentCount = topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id).length;
         for(let i=0; i<targetCount-currentCount; ++i) {
           const cardId = await addWidgetLocal({ deck:jeStateNow.id, type:'card', cardType:id });
           if(jeStateNow.parent)
-            await widgets.get(cardId).moveToHolder(widgets.get(jeStateNow.parent));
+            await topSurface.widgets.get(cardId).moveToHolder(topSurface.widgets.get(jeStateNow.parent));
         }
         for(let i=0; i<currentCount-targetCount; ++i) {
-          const card = widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id)[0];
+          const card = topSurface.widgetFilter(w=>w.get('deck')==jeStateNow.id&&w.get('cardType')==id)[0];
           await removeWidgetLocal(card.get('id'));
         }
       }
@@ -738,7 +738,7 @@ const jeCommands = [
     name: 'grid element',
     context: '^[^ ]* ↦ grid',
     call: async function() {
-      const w = widgets.get(jeStateNow.id);
+      const w = topSurface.widgets.get(jeStateNow.id);
       jeStateNow.grid.push({
         x: '###SELECT ME###',
         y: w.get('height')
@@ -751,7 +751,7 @@ const jeCommands = [
     name: 'calculated hex grid',
     context: '^[^ ]* ↦ grid',
     call: async function() {
-      const w = widgets.get(jeStateNow.id);
+      const w = topSurface.widgets.get(jeStateNow.id);
       let hexType = w.get('hexType');
       let isFlat = hexType === 'flat';
       let hexSide = isFlat ? w.get('height') : w.get('width');
@@ -1027,9 +1027,9 @@ const jeCommands = [
     icon: '[deck]',
     forceKey: 'ArrowDown',
     context: '^card',
-    show: _=>widgets.has(jeStateNow.deck),
+    show: _=>topSurface.widgets.has(jeStateNow.deck),
     call: async function() {
-      const d = widgets.get(jeStateNow.deck);
+      const d = topSurface.widgets.get(jeStateNow.deck);
       setSelection([ d ]);
       jeSelectWidget(d);
     }
@@ -1092,8 +1092,8 @@ const jeCommands = [
     context: '^Multi-Selection',
     options: [ { type: 'string', label: 'Parent ID', value: '' } ],
     call: async function(options) {
-      if(widgets.has(options['Parent ID'])) {
-        const newParent = widgets.get(options['Parent ID']);
+      if(topSurface.widgets.has(options['Parent ID'])) {
+        const newParent = topSurface.widgets.get(options['Parent ID']);
         for(const widget of jeMultiSelectedWidgets()) {
           if(widget !== newParent) {
             const oldX = widget.get('x');
@@ -1265,23 +1265,24 @@ function jeAddRoutineOperationCommands(command, defaults) {
 }
 
 function jeAddCommands() {
+  const surface = new Surface(document.createElement('div'));
   const widgetTypes = [ 'all' ];
   const collectionNames = [ 'all', 'DEFAULT', 'thisButton', 'child', 'widget', 'playerSeats', 'activeSeats' ];
 
-  const widgetBase = new Widget();
-  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Button(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Card(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Label(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(), widgetBase));
-  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(), widgetBase));
+  const widgetBase = new Widget(surface);
+  widgetTypes.push(jeAddWidgetPropertyCommands(new BasicWidget(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Button(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Canvas(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Card(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Deck(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Dice(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Holder(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Label(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Pile(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Scoreboard(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Seat(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Spinner(surface), widgetBase));
+  widgetTypes.push(jeAddWidgetPropertyCommands(new Timer(surface), widgetBase));
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
@@ -1434,9 +1435,9 @@ function jeAddAlignmentCommands() {
     call: async function() {
       const key = jeGetLastKey();
       const sizeKey = key == 'x' ? 'width' : 'height';
-      const parentSize = jeStateNow.parent ? widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
+      const parentSize = jeStateNow.parent ? topSurface.widgets.get(jeStateNow.parent).get(sizeKey) : (sizeKey == 'width' ? 1600 : 1000);
       jeStateNow[key] = '###SELECT ME###';
-      jeSetAndSelect((parentSize-widgets.get(jeStateNow.id).get(sizeKey))/2);
+      jeSetAndSelect((parentSize-topSurface.widgets.get(jeStateNow.id).get(sizeKey))/2);
     }
   });
   jeCommands.push({
@@ -1461,7 +1462,7 @@ function jeAddAlignmentCommands() {
       if(options.Reference == 'Center of all')
         target = (Math.max(...coords) + Math.min(...coords)) / 2;
       for(const w of selected)
-        await w.set(key, target - w.get(sizeKey)*options.Coordinate - (w.get('parent') ? widgets.get(w.get('parent')).absoluteCoord(key) : 0));
+        await w.set(key, target - w.get(sizeKey)*options.Coordinate - (w.get('parent') ? topSurface.widgets.get(w.get('parent')).absoluteCoord(key) : 0));
       jeUpdateMulti();
     }
   });
@@ -1481,7 +1482,7 @@ function jeAddAlignmentCommands() {
       selected.sort((a,b)=>a.absoluteCoord(key) - b.absoluteCoord(key));
       for(const widget of selected) {
         const before = selected.slice(0, selected.findIndex(w=>w.id == widget.id));
-        await widget.set(key, Math.round(min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? widgets.get(widget.get('parent')).absoluteCoord(key) : 0)));
+        await widget.set(key, Math.round(min + before.map(w=>w.get(sizeKey) + spacing).reduce((a,b)=>a + b, 0) - (widget.get('parent') ? topSurface.widgets.get(widget.get('parent')).absoluteCoord(key) : 0)));
       }
       jeUpdateMulti();
     }
@@ -1661,7 +1662,7 @@ function jeAddLimitCommand(key, value) {
     context: '^[^ ]* ↦ dragLimit',
     show: _=>typeof jeStateNow.dragLimit == "object" && jeStateNow.dragLimit !== null && !(key in jeStateNow.dragLimit),
     call: async function() {
-      const w = widgets.get(jeStateNow.id);
+      const w = topSurface.widgets.get(jeStateNow.id);
       jeStateNow.dragLimit[key] = '###SELECT ME###';
       let limit = value;
       if (key == 'maxX')
@@ -1695,7 +1696,7 @@ function jeAddResetPropertiesCommand(key) {
     context: '^[^ ]* ↦ resetProperties',
     show: _=>typeof jeStateNow.resetProperties == "object" && jeStateNow.resetProperties !== null && !(key in jeStateNow.resetProperties),
     call: async function() {
-      const w = widgets.get(jeStateNow.id);
+      const w = topSurface.widgets.get(jeStateNow.id);
       jeStateNow.resetProperties[key] = '###SELECT ME###';
       let rProp = w.get(key);
       jeSetAndSelect(rProp);
@@ -1714,7 +1715,7 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     context: 'No widget selected.',
     onEmpty: true,
     call: async function() {
-      const newWidget = widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type}));
+      const newWidget = topSurface.widgets.get(await topSurface.addWidgetLocal(type == 'basic' ? {} : {type}));
       setSelection([ newWidget ]);
       jeSelectWidget(newWidget);
     }
@@ -1786,9 +1787,9 @@ async function jeApplyChanges() {
     jeStateBefore = currentState;
     await updateWidget(currentState, oldState); // in editmode.js
     if(idChanged) {
-      setSelection([ widgets.get(cur.id) ]);
-      if(widgets.has(cur.id))
-        widgets.get(cur.id).setHighlighted(true);
+      setSelection([ topSurface.widgets.get(cur.id) ]);
+      if(topSurface.widgets.has(cur.id))
+        topSurface.widgets.get(cur.id).setHighlighted(true);
     }
     jeDeltaIsOurs = false;
   }
@@ -1814,7 +1815,7 @@ async function jeApplyChangesMulti() {
     setDeltaCause(`${getPlayerDetails().playerName} edited properties on multiple widgets in editor`);
     jeDeltaIsOurs = true;
     const widgets = jeMultiSelectedWidgets();
-    const widgetIDs = widgets.map(w=>w.get('id'));
+    const widgetIDs = topSurface.widgets.map(w=>w.get('id'));
     for(const key in currentState) {
       if(key != 'widgets') {
         for(const w of widgets) {
@@ -1833,7 +1834,7 @@ async function jeApplyChangesMulti() {
 function jeApplyDelta(delta) {
   if(jeMode == 'widget') {
     if(delta.s[jeWidget.id] && delta.s[jeWidget.id].type !== undefined) {
-      const w = widgets.get(jeWidget.id);
+      const w = topSurface.widgets.get(jeWidget.id);
       jePlainWidget = new w.constructor();
       jeColorize();
     }
@@ -1848,7 +1849,7 @@ function jeApplyDelta(delta) {
             return;
           }
 
-          jeSelectWidget(widgets.get(jeStateNow.id), false, true);
+          jeSelectWidget(topSurface.widgets.get(jeStateNow.id), false, true);
         }
       }
     }
@@ -1896,15 +1897,15 @@ export function jeApplyState(state) {
 async function jeApplyExternalChanges(state) {
   const before = JSON.parse(jeStateBefore);
   if(state.type == 'card' && state.deck === before.deck) {
-    const cardDefaults = { ...widgets.get(state.deck).get('cardDefaults') };
+    const cardDefaults = { ...topSurface.widgets.get(state.deck).get('cardDefaults') };
     if(state['cardDefaults (in deck)'] && JSON.stringify(state['cardDefaults (in deck)']) != JSON.stringify(cardDefaults))
-      await widgets.get(state.deck).set('cardDefaults', state['cardDefaults (in deck)']);
+      await topSurface.widgets.get(state.deck).set('cardDefaults', state['cardDefaults (in deck)']);
 
     if(state.cardType === before.cardType) {
-      const cardTypes = { ...widgets.get(state.deck).get('cardTypes') };
+      const cardTypes = { ...topSurface.widgets.get(state.deck).get('cardTypes') };
       if(state['cardType ['+ state.cardType + '] (in deck)'] && JSON.stringify(state['cardType ['+ state.cardType + '] (in deck)']) != JSON.stringify(cardTypes[state.cardType])) {
         cardTypes[state.cardType] = state['cardType ['+ state.cardType + '] (in deck)'];
-        await widgets.get(state.deck).set('cardTypes', cardTypes);
+        await topSurface.widgets.get(state.deck).set('cardTypes', cardTypes);
       }
     }
   }
@@ -1927,7 +1928,7 @@ function jeCommandOptions() {
   $('#jeCommands').insertBefore(div, $('#jeTopButtons').nextSibling);
 
   for(const option of jeCommandWithOptions.options) {
-    formField(option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
+    formField(topSurface, option, $('#jeCommandOptions div'), `${jeCommandWithOptions.id}_${option.label}`);
     $('#jeCommandOptions div').append(document.createElement('br'));
     const firstInput = $('input,select', div);
     if(firstInput)
@@ -2054,7 +2055,7 @@ function jeSelectWidgetMulti(widget) {
     jeStateNow.widgets.push(wID);
 
   if(jeStateNow.widgets.length == 1 || jeStateNow.widgets[0] == jeStateNow.widgets[1])
-    return jeSelectWidget(widgets.get(jeStateNow.widgets[0]));
+    return jeSelectWidget(topSurface.widgets.get(jeStateNow.widgets[0]));
 
   jeWidget = null;
   jeMode = 'multi';
@@ -2062,7 +2063,7 @@ function jeSelectWidgetMulti(widget) {
 }
 
 function jeSelectSetMulti(widgets) {
-  const wIDs = widgets.map(w=>w.get('id'));
+  const wIDs = topSurface.widgets.map(w=>w.get('id'));
 
   jeStateNow = { widgets: wIDs };
 
@@ -2077,7 +2078,7 @@ function jeMultiSelectedWidgets() {
   for(const search of jeStateNow.widgets) {
     const isRegex = search.match(/^\/(.*)\/([a-z]+)?$/);
     const isProperty = search.match(/^([a-zA-Z0-9_-]+):(.*)$/);
-    selected = selected.concat(widgetFilter(function(w) {
+    selected = selected.concat(topSurface.widgetFilter(function(w) {
       try {
         if(isRegex && String(w.get('id')).match(new RegExp(isRegex[1], isRegex[2])))
           return true;
@@ -2266,7 +2267,7 @@ function jeColorize() {
 
 const isNodeCollapsed = {};
 function jeDisplayTree() {
-  const allWidgets = Array.from(widgets.values());
+  const allWidgets = Array.from(topSurface.widgets.values());
   const oldFilterValue = $('#jeWidgetSearchBox') && $('#jeWidgetSearchBox').value;
   $('#jeTree').innerHTML = '<div><input id="jeWidgetSearchBox" placeholder="🔍 Filter"><button>Collapse</button></div><ul class=jeTreeDisplay>' + jeDisplayTreeAddWidgets(allWidgets, null, jeSelectedIDs()) + '</ul>';
 
@@ -2289,7 +2290,7 @@ function jeDisplayTree() {
   on('#jeWidgetSearchBox + button', 'click', e=>$a('.jeTreeExpander-down').forEach(e=>e.click()));
 
   on('.jeTreeWidget', 'click', function(e) {
-    const widget = widgets.get($('.key', e.currentTarget).innerText);
+    const widget = topSurface.widgets.get($('.key', e.currentTarget).innerText);
 
     if(!e.shiftKey) {
       setSelection([ widget ]);
@@ -2362,7 +2363,7 @@ function jeTreeGetWidgetHTML(widget) {
 function jeUpdateTree(delta) {
   for(const id in delta) {
     if(typeof treeNodes[id] != 'undefined' && delta[id] != null && typeof delta[id].parent == 'undefined') {
-      treeNodes[id].innerHTML = jeTreeGetWidgetHTML(widgets.get(id));
+      treeNodes[id].innerHTML = jeTreeGetWidgetHTML(topSurface.widgets.get(id));
     } else if(!jeInMacroExecution) {
       jeDisplayTree();
       if(jeDeltaIsOurs && delta[id] != null && typeof delta[id].id == 'string')
@@ -2380,7 +2381,7 @@ function jeDisplayFilteredWidgets(e) {
   for(const node of $a('#jeTree li.jeTreeWidget')) {
     let nodeMatchesFilter = !subtext || node.dataset.filter && node.dataset.filter.includes(subtext);
     if(propertyFilter) {
-      const value = String(widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
+      const value = String(topSurface.widgets.get(node.dataset.id).get(propertyFilter[1])).toLowerCase();
       if(!propertyFilter[2] && value != 'null' && value != '' || propertyFilter[2] && value.includes(propertyFilter[2]))
         nodeMatchesFilter = true;
     }
@@ -2428,15 +2429,15 @@ function jeGetContext() {
       jeJSONerror = 'No ID given.';
     else if(typeof jeStateNow.id != 'string')
       jeJSONerror = 'ID has to be a string.';
-    else if(JSON.parse(jeStateBefore).id != jeStateNow.id && widgets.has(jeStateNow.id))
+    else if(JSON.parse(jeStateBefore).id != jeStateNow.id && topSurface.widgets.has(jeStateNow.id))
       jeJSONerror = `ID ${jeStateNow.id} is already in use.`;
-    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !widgets.has(jeStateNow.parent))
+    else if(jeStateNow.parent !== undefined && jeStateNow.parent !== null && !topSurface.widgets.has(jeStateNow.parent))
       jeJSONerror = `Parent ${jeStateNow.parent} does not exist.`;
-    else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !widgets.has(jeStateNow.deck)))
+    else if(jeStateNow.type == 'card' && (!jeStateNow.deck || !topSurface.widgets.has(jeStateNow.deck)))
       jeJSONerror = `Deck ${jeStateNow.deck} does not exist.`;
-    else if(jeStateNow.type == 'card' && !widgets.get(jeStateNow.deck).get('cardTypes'))
+    else if(jeStateNow.type == 'card' && !topSurface.widgets.get(jeStateNow.deck).get('cardTypes'))
       jeJSONerror = `Given widget ${jeStateNow.deck} is not a deck or doesn't define cardTypes.`;
-    else if(jeStateNow.type == 'card' && (!jeStateNow.cardType || !widgets.get(jeStateNow.deck).get('cardTypes')[jeStateNow.cardType]))
+    else if(jeStateNow.type == 'card' && (!jeStateNow.cardType || !topSurface.widgets.get(jeStateNow.deck).get('cardTypes')[jeStateNow.cardType]))
       jeJSONerror = `Card type ${jeStateNow.cardType} does not exist in deck ${jeStateNow.deck}.`;
     else
       jeJSONerror = null;
@@ -2819,10 +2820,10 @@ function jePreProcessObject(o) {
 
   try {
     if(copy.type == 'card') {
-      if(widgets.get(copy.deck).state.cardDefaults && typeof copy['cardDefaults (in deck)'] === 'undefined')
-        copy['cardDefaults (in deck)'] = widgets.get(copy.deck).get('cardDefaults');
-      if(widgets.get(copy.deck).state.cardTypes && typeof copy['cardType ['+ o.cardType + '] (in deck)'] === 'undefined')
-        copy['cardType ['+ o.cardType + '] (in deck)'] = widgets.get(copy.deck).get('cardTypes')[copy.cardType];
+      if(topSurface.widgets.get(copy.deck).state.cardDefaults && typeof copy['cardDefaults (in deck)'] === 'undefined')
+        copy['cardDefaults (in deck)'] = topSurface.widgets.get(copy.deck).get('cardDefaults');
+      if(topSurface.widgets.get(copy.deck).state.cardTypes && typeof copy['cardType ['+ o.cardType + '] (in deck)'] === 'undefined')
+        copy['cardType ['+ o.cardType + '] (in deck)'] = topSurface.widgets.get(copy.deck).get('cardTypes')[copy.cardType];
     }
   } catch(e) {}
 
@@ -3056,7 +3057,7 @@ export function jeToggle() {
   jeLoggingHTML = '';
   if(jeEnabled) {
     $('body').classList.add('jsonEdit');
-    if(jeWidget && !widgets.has(jeWidget.id))
+    if(jeWidget && !topSurface.widgets.has(jeWidget.id))
       jeEmpty();
     if(jeDebugViewing) {
       jeCallCommand(jeCommands.find(o => o.id == 'je_toggleDebug'));
@@ -3106,7 +3107,7 @@ function jeInitEventListeners() {
 
     if(!widgetCoordCache) {
       widgetCoordCache = [];
-      for(const widget of widgets.values()) {
+      for(const widget of topSurface.widgets.values()) {
         const coords = widget.coordGlobalFromCoordParent({x:widget.get('x'),y:widget.get('y')});
         coords.r = coords.x + widget.get('width');
         coords.b = coords.y + widget.get('height');
@@ -3117,12 +3118,12 @@ function jeInitEventListeners() {
 
     // Adding hitTest makes foreign elements temporarily hittable.
     document.body.classList.add('hitTest');
-    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => topSurface.widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
     document.body.classList.remove('hitTest');
 
     hoveredWidgets.sort(function(w1,w2) {
       const hiddenParent =  function(widget) {
-        return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
+        return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(topSurface.widgets.get(widget.get('parent'))) : false;
       };
       const w1card = w1.get('type') == 'card';
       const w2card = w2.get('type') == 'card';

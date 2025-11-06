@@ -94,9 +94,9 @@ async function setCardCount(deck, cardType, count) {
             await addWidgetLocal(card);
 
             if (deck.get('parent')) {
-                await widgets.get(card.id).moveToHolder(widgets.get(deck.get('parent')));
+                await topSurface.widgets.get(card.id).moveToHolder(topSurface.widgets.get(deck.get('parent')));
             } else {
-                await widgets.get(card.id).updatePiles();
+                await topSurface.widgets.get(card.id).updatePiles();
             }
         }
     }
@@ -1308,14 +1308,14 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader(`Card properties`);
     this.renderGenericProperties(widget, [ 'deck', 'x', 'y', 'z' ]);
     this.addSubHeader(`Card type`);
-    this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
+    this.renderCardTypes(topSurface.widgets.get(widget.get('deck')), widget.get('cardType'));
     div(this.moduleDOM, '', `
       <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
       <div class=buttonBar>
         <button icon=style>Open deck</button>
       </div>
     `);
-    $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
+    $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ topSurface.widgets.get(widget.get('deck')) ]);
   }
 
   renderForDeck(widget) {
@@ -1631,7 +1631,7 @@ class PropertiesModule extends SidebarModule {
     if(widget.get('type') == 'deck') {
       const parent = new BasicWidget().renderReadonlyCopyRaw({}, button).domElement;
       const faceTemplates = widget.get('faceTemplates');
-      widgets.set(widget.id, widget);
+      topSurface.widgets.set(widget.id, widget);
       for(const cardType of shuffleArray(Object.keys(widget.get('cardTypes'))).slice(0, 5)) {
         new Card().renderReadonlyCopyRaw(Object.assign({
           deck: widget.id,
@@ -1639,7 +1639,7 @@ class PropertiesModule extends SidebarModule {
           activeFace: Array.isArray(faceTemplates) && faceTemplates.length > 1 ? 1 : 0
         }, state), parent);
       }
-      widgets.delete(widget.id, widget);
+      topSurface.widgets.delete(widget.id, widget);
       if (parent.children[0]) 
         positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {

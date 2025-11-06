@@ -40,7 +40,7 @@ async function inputHandler(name, e) {
     document.activeElement.blur();
   }
   let target = e.target;
-  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !widgets.has(unescapeID(target.id.slice(2))))) {
+  while(target && (!target.id || target.id.slice(0,2) != 'w_' || !topSurface.widgets.has(unescapeID(target.id.slice(2))))) {
     if(target.id == 'editor')
       return;
     target = target.parentNode;
@@ -61,7 +61,7 @@ async function inputHandler(name, e) {
     target = mouseTarget;
 
   if(target && target.id) {
-    let widget = widgets.get(unescapeID(target.id.slice(2)));
+    let widget = topSurface.widgets.get(unescapeID(target.id.slice(2)));
     batchStart();
     if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
@@ -82,8 +82,8 @@ async function inputHandler(name, e) {
       let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
       while (ms.moveTarget && !movable) {
         let parent = ms.moveTarget.get('parent');
-        if(parent && widgets.has(parent)) {
-          ms.moveTarget = widgets.get(parent);
+        if(parent && topSurface.widgets.has(parent)) {
+          ms.moveTarget = topSurface.widgets.get(parent);
           movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
         } else {
           ms.moveTarget = null;
@@ -150,7 +150,7 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
+  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => topSurface.widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
 
   if(hoveredWidgetsWithHiddenCursor.length) {
     toServer('mouse', { hidden: true });
@@ -170,7 +170,7 @@ async function keyHandler(e) {
     return;
 
   batchStart();
-  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
+  for(const widget of topSurface.widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
     await widget.click();
   batchEnd();
 }

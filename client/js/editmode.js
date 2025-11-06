@@ -1,5 +1,5 @@
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
-function generateCardDeckWidgets(id, x, y, addCards) {
+function generateCardDeckWidgets(surface, id, x, y, addCards) {
   const widgets = [
     { type:'holder', id, x, y, dropTarget: { type: 'card' } },
     {
@@ -308,18 +308,18 @@ function generateTimerWidgets(id, x, y) {
   ];
 }
 
-function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
+function addCompositeWidgetToAddWidgetOverlay(surface, widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
-    if(wi.type == 'button') w = new Button(wi.id);
-    if(wi.type == 'canvas') w = new Canvas(wi.id);
-    if(wi.type == 'card')   w = new Card(wi.id);
-    if(wi.type == 'deck')   w = new Deck(wi.id);
-    if(wi.type == 'holder') w = new Holder(wi.id);
-    if(wi.type == 'label')  w = new Label(wi.id);
-    if(wi.type == 'pile')   w = new Pile(wi.id);
-    if(wi.type == 'timer')  w = new Timer(wi.id);
-    widgets.set(wi.id, w);
+    if(wi.type == 'button') w = new Button(surface, wi.id);
+    if(wi.type == 'canvas') w = new Canvas(surface, wi.id);
+    if(wi.type == 'card')   w = new Card(surface, wi.id);
+    if(wi.type == 'deck')   w = new Deck(surface, wi.id);
+    if(wi.type == 'holder') w = new Holder(surface, wi.id);
+    if(wi.type == 'label')  w = new Label(surface, wi.id);
+    if(wi.type == 'pile')   w = new Pile(surface, wi.id);
+    if(wi.type == 'timer')  w = new Timer(surface, wi.id);
+    surface.widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
     w.domElement.id = w.id;
     if(!wi.parent) {
@@ -333,13 +333,13 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     }
   }
   for(const wi of widgetsToAdd) {
-    widgets.delete(wi.id)
+    surface.widgets.delete(wi.id)
   }
 }
 
 const VTTblue = '#1f5ca6';
 
-function addPieceToAddWidgetOverlay(w, wi) {
+function addPieceToAddWidgetOverlay(surface, w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     try {
@@ -354,10 +354,10 @@ function addPieceToAddWidgetOverlay(w, wi) {
         ]
       });
       const toAdd = {...wi};
-      toAdd.z = getMaxZ(w.get('layer')) + 1;
+      toAdd.z = surface.getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
-      const id = await addWidgetLocal(toAdd);
+      const id = await surface.addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {
       console.log(e);
@@ -371,8 +371,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
-    toAdd.z = getMaxZ(w.get('layer')) + 1;
-    const id = await addWidgetLocal(toAdd);
+    toAdd.z = topSurface.getMaxZ(w.get('layer')) + 1;
+    const id = await topSurface.addWidgetLocal(toAdd);
     overlayDone(id);
   });
   w.domElement.id = w.id;
@@ -383,35 +383,37 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 // call a routine in the JSON editor to clean up. Then hide the add widget overlay.
 function overlayDone(id) {
   if(getEdit())
-    setSelection([ widgets.get(id) ]);
+    setSelection([ topSurface.widgets.get(id) ]);
   showOverlay();
 }
 
 function populateAddWidgetOverlay() {
+  const surface = new Surface($('#addOverlay'));
+
   // Populate the Cards panel in the add widget overlay
   const x = 115;
-  addWidgetToAddWidgetOverlay(new Holder('add-holder'), {
+  addWidgetToAddWidgetOverlay(new Holder(surface, 'add-holder'), {
     type: 'holder',
     x,
     y: 150
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 340, false))
-      await addWidgetLocal(w);
+  addCompositeWidgetToAddWidgetOverlay(surface, generateCardDeckWidgets(surface, 'add-empty-deck', x, 340, false), async function() {
+    const id = surface.generateUniqueWidgetID();
+    for(const w of generateCardDeckWidgets(surface, id, x, 340, false))
+      await surface.addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
-    const id = generateUniqueWidgetID();
-    for(const w of generateCardDeckWidgets(id, x, 570, true))
-      await addWidgetLocal(w);
+  addCompositeWidgetToAddWidgetOverlay(surface, generateCardDeckWidgets(surface, 'add-deck', x, 570, true), async function() {
+    const id = surface.generateUniqueWidgetID();
+    for(const w of generateCardDeckWidgets(surface, id, x, 570, true))
+      await surface.addWidgetLocal(w);
     return id
   });
 
   //Add svg game pieces
   // First row
-  addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Pawn3DSVG'), {
     x: 390,
     y: 79,
     width: 50.4,
@@ -431,7 +433,7 @@ function populateAddWidgetOverlay() {
   });
 
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Pin3DSVG'), {
     x: 390+75,
     y: 111,
     width: 35,
@@ -450,7 +452,7 @@ function populateAddWidgetOverlay() {
     borderWidth: "1"
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Marble3DSVG'), {
     x: 390+2*75,
     y: 114,
     width: 35,
@@ -471,7 +473,7 @@ function populateAddWidgetOverlay() {
     secondaryColor: "#000000"
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Cube3DSVG'), {
     x: 390+3*75,
     y: 110,
     width: 36,
@@ -494,7 +496,7 @@ function populateAddWidgetOverlay() {
 
   // Second row
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Checker2DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Checker2DSVG'), {
     x: 445,
     y: 190,
     width: 75,
@@ -526,7 +528,7 @@ function populateAddWidgetOverlay() {
     secondaryColor: "#ffffff"
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Checker3DSVG'), {
     x: 445+100,
     y: 200,
     width: 75,
@@ -560,7 +562,7 @@ function populateAddWidgetOverlay() {
 
   //Third row
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Meeple2DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Meeple2DSVG'), {
     x: 450,
     y: 303,
     width: 56,
@@ -579,7 +581,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 3
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Meeple3DSVG'), {
     x: 450+100,
     y: 300,
     width: 66.5,
@@ -613,7 +615,7 @@ function populateAddWidgetOverlay() {
 
   //Fourth row
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Pig2DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Pig2DSVG'), {
     x: 450,
     y: 412,
     width: 68.56,
@@ -632,7 +634,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 2
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Pig3DSVG'), {
     x: 450+100,
     y: 408,
     width: 85.7,
@@ -653,7 +655,7 @@ function populateAddWidgetOverlay() {
 
   //Fifth row
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Building3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Building3DSVG'), {
     x: 390,
     y: 494,
     width: 69,
@@ -672,7 +674,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('House3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'House3DSVG'), {
     x: 490,
     y: 507,
     width: 60,
@@ -692,7 +694,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 2
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('Road3DSVG'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'Road3DSVG'), {
     x: 610,
     y: 480,
     width: 26,
@@ -733,7 +735,7 @@ function populateAddWidgetOverlay() {
 
    //Sixth row (hexagons)
 
-   addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
+   addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'HexFlat'), {
     x: 390,
     y: 600,
     width: 50,
@@ -750,7 +752,7 @@ function populateAddWidgetOverlay() {
     hexType: "flat"
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexPoint'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'HexPoint'), {
     x: 465,
     y: 600,
     width: 50,
@@ -769,7 +771,7 @@ function populateAddWidgetOverlay() {
 
   //This is added only to provide a visual background for the actual piece "HexFlatImage" since the css there does not show on the overlay
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'HexFlatImageBack'), {
     x: 530,
     y: 590,
     width: 70,
@@ -781,7 +783,7 @@ function populateAddWidgetOverlay() {
     }
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImage'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'HexFlatImage'), {
     x: 540,
     y: 600,
     width: 50,
@@ -806,7 +808,7 @@ function populateAddWidgetOverlay() {
 
   //This is added only to provide a visual background for the actual piece "HexPointImage" since the css there does not show on the overlay
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlatImageBack'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'HexFlatImageBack'), {
     x: 605,
     y: 590,
     width: 70,
@@ -818,7 +820,7 @@ function populateAddWidgetOverlay() {
     }
   });
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexPointImage'), {
+  addPieceToAddWidgetOverlay(surface, new BasicWidget(surface, 'HexPointImage'), {
     x: 615,
     y: 600,
     width: 50,
@@ -843,7 +845,7 @@ function populateAddWidgetOverlay() {
 
   //Poker chips
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker2DSVG'), {
+  addWidgetToAddWidgetOverlay(new BasicWidget(surface, 'EmptyPoker2DSVG'), {
     x: 920,
     y: 114,
     width: 73,
@@ -866,7 +868,7 @@ function populateAddWidgetOverlay() {
     labelColor: "#00000022"
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
+  addWidgetToAddWidgetOverlay(new BasicWidget(surface, 'DealerPoker2DSVG'), {
     x: 920,
     y: 207,
     width: 73,
@@ -893,14 +895,14 @@ function populateAddWidgetOverlay() {
 
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
-    const id = generateUniqueWidgetID();
+  addCompositeWidgetToAddWidgetOverlay(surface, generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
+    const id = surface.generateUniqueWidgetID();
     for(const w of generateChipPileWidgets(id, 916, 300, 2))
-      await addWidgetLocal(w);
+      await surface.addWidgetLocal(w);
     return id
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('EmptyPoker3DSVG'), {
+  addWidgetToAddWidgetOverlay(new BasicWidget(surface, 'EmptyPoker3DSVG'), {
     x: 1010,
     y: 123,
     width: 75,
@@ -924,7 +926,7 @@ function populateAddWidgetOverlay() {
     labelColor: "#00000022"
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
+  addWidgetToAddWidgetOverlay(new BasicWidget(surface, 'DealerPoker3DSVG'), {
     x: 1010,
     y: 216,
     width: 75,
@@ -951,15 +953,15 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
-    const id = generateUniqueWidgetID();
+  addCompositeWidgetToAddWidgetOverlay(surface, generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
+    const id = surface.generateUniqueWidgetID();
     for(const w of generateChipPileWidgets(id, 1010, 309, 3))
-      await addWidgetLocal(w);
+      await surface.addWidgetLocal(w);
     return id
   });
 
   // Populate the dice. The real dice choosing happens in a popup.
-  const dice2D = new Dice('add-dice2D0');
+  const dice2D = new Dice(surface, 'add-dice2D0');
   const dice2DAttrs = {
     type: 'dice',
     x: 930,
@@ -982,19 +984,19 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice2DAttrs};
-      toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
+      toAdd.z = topSurface.getMaxZ(dice2D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
         toAdd.pipSymbols = false;
 
-      const id = await addWidgetLocal(toAdd);
+      const id = await topSurface.addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
   });
   dice2D.domElement.id = dice2D.id;
   $('#addOverlay').appendChild(dice2D.domElement);
 
-  const dice2DCube = new Dice('add-dice2DCube0');
+  const dice2DCube = new Dice(surface, 'add-dice2DCube0');
   const dice2DCubeAttrs = {
     type: 'dice',
     x: 930,
@@ -1053,20 +1055,20 @@ function populateAddWidgetOverlay() {
         ]
       });
       const toAdd = {...dice2DCubeAttrs};
-      toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
+      toAdd.z = topSurface.getMaxZ(dice2DCube.get('layer')) + 1;
       toAdd.cT = result.variables.color;
       toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
       toAdd.cR = contrastAnyColor(result.variables.color, 0.4);
       toAdd.cP = contrastAnyColor(result.variables.color, 1);
 
-      const id = await addWidgetLocal(toAdd);
+      const id = await topSurface.addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
   });
   dice2DCube.domElement.id = dice2DCube.id;
   $('#addOverlay').appendChild(dice2DCube.domElement);
 
-  const dice3D = new Dice('add-dice3D0');
+  const dice3D = new Dice(surface, 'add-dice3D0');
   const dice3DAttrs = {
     type: 'dice',
     x: 1020,
@@ -1091,12 +1093,12 @@ function populateAddWidgetOverlay() {
       });
       const sides = result.variables.sides;
       const toAdd = {...dice3DAttrs};
-      toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
+      toAdd.z = topSurface.getMaxZ(dice3D.get('layer')) + 1;
       toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
       if(sides != 6)
         toAdd.pipSymbols = false;
       toAdd.shape3d = sides == 2 ? 'd2-flip' : true;
-      const id = await addWidgetLocal(toAdd);
+      const id = await topSurface.addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
   });
@@ -1107,7 +1109,7 @@ function populateAddWidgetOverlay() {
   // Note that the Add Canvas, Add Seat, and Add Scoreboard buttons are in room.html.
 
   // Populate the spinners. The real spinner choosing happens in a popup.
-  const spinner = new Spinner('add-spinner0');
+  const spinner = new Spinner(surface, 'add-spinner0');
   const spinAttrs = {
     type: 'spinner',
     value: 6,
@@ -1132,18 +1134,18 @@ function populateAddWidgetOverlay() {
       });
       const values = result.variables.values;
       const toAdd = {...spinAttrs};
-      toAdd.z = getMaxZ(spinner.get('layer')) + 1;
+      toAdd.z = surface.getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
       toAdd.options = Array.from({length: values}, (_, i) => i + 1);
 
-      const id = await addWidgetLocal(toAdd);
+      const id = await surface.addWidgetLocal(toAdd);
       overlayDone(id);
     } catch(e) {}
   });
   spinner.domElement.id = spinner.id;
   $('#addOverlay').appendChild(spinner.domElement);
 
-  addWidgetToAddWidgetOverlay(new Button('add-button'), {
+  addWidgetToAddWidgetOverlay(new Button(surface, 'add-button'), {
     type: 'button',
     text: 'DEAL',
     clickRoutine: [],
@@ -1152,30 +1154,30 @@ function populateAddWidgetOverlay() {
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
-    const id = generateUniqueWidgetID();
+  addCompositeWidgetToAddWidgetOverlay(surface, generateTimerWidgets('add-timer', 1005, 825), async function() {
+    const id = surface.generateUniqueWidgetID();
     for(const w of generateTimerWidgets(id, 1005, 825))
-      await addWidgetLocal(w);
+      await surface.addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
-    const id = generateUniqueWidgetID();
+  addCompositeWidgetToAddWidgetOverlay(surface, generateCounterWidgets('add-counter', 1058, 890), async function() {
+    const id = surface.generateUniqueWidgetID();
     for(const w of generateCounterWidgets(id, 1058, 890))
-      await addWidgetLocal(w);
+      await surface.addWidgetLocal(w);
     return id
   });
 
   // Populate the Decorative panel in the add widget overlay
-  addWidgetToAddWidgetOverlay(new Label('add-label'), {
+  addWidgetToAddWidgetOverlay(new Label(surface, 'add-label'), {
     type: 'label',
     text: 'Label',
     x: 1385,
     y: 100
   });
 
-  addWidgetToAddWidgetOverlay(new Label('add-heading'), {
+  addWidgetToAddWidgetOverlay(new Label(surface, 'add-heading'), {
     type: 'label',
     text: 'Heading',
     css: 'font-size: 30px',
@@ -1184,7 +1186,7 @@ function populateAddWidgetOverlay() {
     x: 1335,
     y: 150
   });
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
+  addWidgetToAddWidgetOverlay(new BasicWidget(surface, 'LineVertical'), {
     x: 1300,
     y: 325,
     width: 200,
@@ -1194,7 +1196,7 @@ function populateAddWidgetOverlay() {
     css: { "border": "3px solid #666" }
   });
 
-  addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
+  addWidgetToAddWidgetOverlay(new BasicWidget(surface, 'LineHorizontal'), {
     x: 1535,
     y: 190,
     width: 0,
@@ -1210,7 +1212,7 @@ function uploadWidget(preset) {
   uploadAsset().then(async function(asset) {
     let id;
     if(asset && preset == 'board') {
-      id = await addWidgetLocal({
+      id = await topSurface.addWidgetLocal({
         image: asset,
         movable: false,
         width: 1600,
@@ -1219,7 +1221,7 @@ function uploadWidget(preset) {
       });
     }
     if(asset && preset == 'token') {
-      id = await addWidgetLocal({
+      id = await topSurface.addWidgetLocal({
         image: asset
       });
     }
@@ -1228,15 +1230,15 @@ function uploadWidget(preset) {
 }
 
 async function updateWidget(currentState, oldState, applyChangesFromUI) {
-  batchStart();
+  topSurface.batchStart();
 
   const previousState = JSON.parse(oldState);
   try {
     var widget = JSON.parse(currentState);
-    setDeltaCause(`${getPlayerDetails().playerName} updated ${widget.id} in editor`);
+    topSurface.setDeltaCause(`${getPlayerDetails().playerName} updated ${widget.id} in editor`);
   } catch(e) {
     alert(e.toString());
-    batchEnd();
+    topSurface.batchEnd();
     return;
   }
 
@@ -1244,9 +1246,9 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     if(widget[key] === null)
       delete widget[key];
 
-  if(widget.parent !== undefined && !widgets.has(widget.parent)) {
+  if(widget.parent !== undefined && !topSurface.widgets.has(widget.parent)) {
     alert(`Parent widget ${widget.parent} does not exist.`);
-    batchEnd();
+    topSurface.batchEnd();
     return;
   }
 
@@ -1254,37 +1256,37 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     await applyEditOptions(widget);
 
   if(widget.id !== previousState.id) {
-    await updateWidgetId(widget, previousState.id);
+    await topSurface.updateWidgetId(widget, previousState.id);
   } else if (widget.type !== previousState.type) {
-    await removeWidgetLocal(previousState.id, true);
-    const id = await addWidgetLocal(widget);
+    await topSurface.removeWidgetLocal(previousState.id, true);
+    const id = await topSurface.addWidgetLocal(widget);
 
     // Handle special case where type is removed
     if(widget.type === undefined)
-      sendPropertyUpdate(id, 'type', null);
+      topSurface.sendPropertyUpdate(id, 'type', null);
   } else {
     for(const key in previousState)
       if(widget[key] === undefined)
         widget[key] = null;
     for(const key in widget) {
       if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
-        widgets.get(widget.id).state[key] = widget[key];
-        sendPropertyUpdate(widget.id, key, widget[key]);
+        topSurface.widgets.get(widget.id).state[key] = widget[key];
+        topSurface.sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
   }
 
-  batchEnd();
+  topSurface.batchEnd();
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
-  await updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
+  await topSurface.updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
 
   showOverlay();
 }
 
 async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
-
+  const surface = widget.surface;
   const incrementCaps = function(l) {
     const m = l.match(/Z+$/);
     const zs = m ? m[0].length : 0;
@@ -1320,7 +1322,7 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       let targetNumber = sourceNumber;
       const idHead = match ? match[1] : widget.id;
       const idTail = match && match[3] ? match[3] : '';
-      while(widgets.has(currentWidget.id)) {
+      while(surface.widgets.has(currentWidget.id)) {
         if(incrementKind=='Letters') {
           targetNumber = incrementCaps(targetNumber);
           currentWidget.id = `${idHead}${targetNumber}${idTail}`;
@@ -1344,21 +1346,21 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
     if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    if(currentWidget.parent && !widgets.has(currentWidget.parent)) {
+    if(currentWidget.parent && !surface.widgets.has(currentWidget.parent)) {
       if(Array.isArray(problems))
         problems.push(`Could not add duplicate of widget ${widget.id} to non-existent parent ${currentWidget.parent}.`);
-    } else if(currentWidget.type == 'card' && !widgets.has(currentWidget.deck)) {
+    } else if(currentWidget.type == 'card' && !surface.widgets.has(currentWidget.deck)) {
       if(Array.isArray(problems))
         problems.push(`Could not add duplicate of card ${widget.id} with non-existent deck ${currentWidget.deck}.`);
-    } else if(currentWidget.type == 'card' && !widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
+    } else if(currentWidget.type == 'card' && !surface.widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
       if(Array.isArray(problems))
         problems.push(`Could not add duplicate of card ${widget.id} with non-existent cardType ${currentWidget.cardType}.`);
     } else {
-      const currentId = await addWidgetLocal(currentWidget);
+      const currentId = await surface.addWidgetLocal(currentWidget);
 
-      const clonedWidgets = [ widgets.get(currentId) ];
+      const clonedWidgets = [ surface.widgets.get(currentId) ];
       if(recursive)
-        for(const child of widgetFilter(w=>w.get('parent')==widget.id))
+        for(const child of surface.widgetFilter(w=>w.get('parent')==widget.id))
           clonedWidgets.push(...await clone(child, true, currentId, 0, 0));
 
       return clonedWidgets;
@@ -1420,7 +1422,7 @@ export function initializeEditMode(currentMetaData) {
       width: 1500,
       height: 180
     }
-    if(!widgets.has('hand'))
+    if(!topSurface.widgets.has('hand'))
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
   });
@@ -1604,7 +1606,7 @@ export function initializeEditMode(currentMetaData) {
   });
 
   on('#addScoreboard', 'click', async function() {
-    await addWidgetLocal({
+    await topSurface.addWidgetLocal({
       type: 'scoreboard',
       x: 1000,
       y:660
@@ -1622,12 +1624,12 @@ export function initializeEditMode(currentMetaData) {
       if(widget[key] === null)
         delete widget[key];
 
-    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
+    if(widget.parent !== undefined && !topSurface.widgets.has(widget.parent)) {
       alert(`Parent widget ${widget.parent} does not exist.`);
       return;
     }
 
-    const id = await addWidgetLocal(widget);
+    const id = await topSurface.addWidgetLocal(widget);
     overlayDone(id);
   });
 

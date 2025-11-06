@@ -1,6 +1,6 @@
 class Holder extends Widget {
-  constructor(object, surface) {
-    super(object, surface);
+  constructor(surface, id) {
+    super(surface, id);
 
     this.addDefaults({
       width: 111,
@@ -47,7 +47,7 @@ class Holder extends Widget {
     let className = super.classes();
 
     if(this.get('showInactiveFaceToSeat'))
-      if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
+      if(this.widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
         className += ' showCardBack';
 
     return className;

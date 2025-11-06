@@ -53,7 +53,7 @@ class ToolboxModule extends SidebarModule {
 
   async button_loadWidgetsFromBuffer() {
     const widgetBuffer = JSON.parse(localStorage.getItem('widgetBuffer') || '[]');
-    const duplicates = widgetBuffer.filter(state=>widgets.has(state.id)).map(state=>state.id);
+    const duplicates = widgetBuffer.filter(state=>topSurface.widgets.has(state.id)).map(state=>state.id);
     if (duplicates.length) {
       const duplicatesList = duplicates.join(', ');
       const overwriteAll = confirm(`The following widget IDs already exist: ${duplicatesList}\n\nPress OK to overwrite these widgets, or Cancel to abort loading.`);
@@ -62,12 +62,12 @@ class ToolboxModule extends SidebarModule {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
     for(const state of widgetBuffer) {
-      if(state.parent && !widgetBuffer.filter(w=>w.id==state.parent).length && !widgets.has(state.parent)) {
+      if(state.parent && !widgetBuffer.filter(w=>w.id==state.parent).length && !topSurface.widgets.has(state.parent)) {
         delete state.parent;
         delete state.x;
         delete state.y;
       }
-      if(state.type == 'card' && !widgetBuffer.filter(w=>w.id==state.deck).length && !widgets.has(state.deck))
+      if(state.type == 'card' && !widgetBuffer.filter(w=>w.id==state.deck).length && !topSurface.widgets.has(state.deck))
         alert(`Widget ${state.id} references a deck that is not in the buffer and is not already in the room. It will not be loaded.`);
       else
         await addWidgetLocal(state);
@@ -99,7 +99,7 @@ class ToolboxModule extends SidebarModule {
 
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} searched and replaced text in widgets in editor`);
-    for(const widget of [...widgets.values()]) {
+    for(const widget of [...topSurface.widgets.values()]) {
       const oldState = JSON.stringify(widget.state);
       let newState = oldState.replace(regex, globalReplaceText);
       try {
