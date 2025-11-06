@@ -47,9 +47,11 @@ export default async function minifyHTML() {
     'client/js/domhelpers.js',
     'client/js/connection.js',
     'client/js/serverstate.js',
+    'client/js/legacymodes.js',
     'client/js/geometry.js',
     'client/js/compute.js',
     'client/js/mousehandling.js',
+    'client/js/zoom.js',
     'client/js/tracing.js',
     'client/js/statemanaged.js',
     'client/js/color.js',
@@ -124,6 +126,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/json.js',
     'client/js/editor/sidebar/assets.js',
     'client/js/editor/sidebar/toolbox.js',
+    'client/js/editor/sidebar/gameSettings.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
@@ -185,6 +188,7 @@ async function compress(htmlFile, cssFiles, jsFiles) {
   let htmlString = fs.readFileSync(path.resolve() + '/' + htmlFile, {encoding:'utf8'});
   htmlString = htmlString.replace(/\ \/\*\*\*\ TITLE\ \*\*\*\/\ /g, _=>Config.get('serverName'));
   htmlString = htmlString.replace(/\ \/\*\*\*\ EXTERNAL_URL\ \*\*\*\/\ /g, _=>Config.get('externalURL'));
+  htmlString = htmlString.replace(/\ \/\*\*\*\ URL_PREFIX\ \*\*\*\/\ /g, _=>Config.get('urlPrefix'));
 
   const css = await compressCSS(cssFiles);
   htmlString = htmlString.replace(/\ \/\*\*\*\ CSS\ \*\*\*\/\ /, _=>css).replace(/\ \/\/\*\*\*\ CONFIG\ \*\*\*\/\/\ /, _=>`const config = ${JSON.stringify(Config.getClientConfig())};`);

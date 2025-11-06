@@ -316,6 +316,14 @@ const jeCommands = [
     id: 'je_symbolPickerAsset',
     name: 'pick an asset from the symbol picker',
     context: '.*"(/assets/[0-9_-]+|/i/[^"]+)"|^.* ↦ image$|^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+ ↦ value$',
+    show: function() {
+      const current = jeGetValueAt('objects');
+      if(Array.isArray(current)) {
+        const index = jeGetKeyAfter('objects') || 0;
+        return typeof current[index] == 'object' && current[index] !== null && current[index].type == 'image';
+      }
+      return true;
+    },
     call: async function() {
       const a = await pickSymbol('images');
       if(a) {
@@ -344,7 +352,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerIcon',
     name: 'pick an icon from the symbol picker',
-    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
     call: async function() {
       const a = await pickSymbol();
       if(a) {
@@ -383,7 +391,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerCustom',
     name: 'upload a custom icon asset',
-    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
     call: async function() {
       const a = await uploadAsset();
       if(a) {
@@ -408,7 +416,7 @@ const jeCommands = [
   {
     id: 'je_iconToArray',
     name: 'add another icon',
-    context: '^.* ↦ icon',
+    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
     call: async function() {
       const a = await pickSymbol();
       if(a) {
@@ -426,7 +434,7 @@ const jeCommands = [
   {
     id: 'je_iconToObject',
     name: 'show advanced options',
-    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
     call: async function() {
       const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
       if(Array.isArray(jeGetValueAt('icon'))) {
@@ -443,7 +451,7 @@ const jeCommands = [
   {
     id: 'je_iconToString',
     name: 'use default options',
-    context: '^.* ↦ icon( ↦ [0-9]+)?',
+    context: '^.* ↦ icon ↦',
     call: async function() {
       const current = jeGetValueAt('icon');
       if(Array.isArray(current)) {
@@ -1281,6 +1289,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
+  jeAddRoutineOperationCommands('DELAY', { milliseconds: 0 });
   jeAddRoutineOperationCommands('DELETE', { collection: 'DEFAULT'});
   jeAddRoutineOperationCommands('FLIP', { count: 'all', face: null, faceCycle: 'forward', holder: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
@@ -2060,6 +2069,7 @@ function jeSelectSetMulti(widgets) {
   jeWidget = null;
   jeMode = 'multi';
   jeUpdateMulti();
+  jeGetContext();
 }
 
 function jeMultiSelectedWidgets() {
@@ -2524,7 +2534,8 @@ function jeInsert(context, key, value) {
 function jeGetValueAt(key) {
   let pointer = jeStateNow;
   for(const k of jeContext.slice(1)) {
-    pointer = pointer[k];
+    if(typeof pointer[k] != 'undefined')
+      pointer = pointer[k];
     if(key == k)
       return pointer;
   }
@@ -2535,7 +2546,8 @@ async function jeSetValueAt(key, value, selectValue) {
   for(const k of jeContext.slice(1)) {
     if(key == k)
       break;
-    pointer = pointer[k];
+    if(typeof pointer[k] != 'undefined')
+      pointer = pointer[k];
   }
   if(selectValue !== undefined) {
     pointer[key] = value;
@@ -2623,7 +2635,7 @@ export function jeLoggingRoutineEnd(variables, collections) {
       }
     }
   }
-  if($('#jeLogFilter'))
+  if($('#jeLogFilter') && $('#jeLogFilter').value)
     jeLoggingFilterLog($('#jeLogFilter').value);
 }
 
@@ -3082,8 +3094,12 @@ function jeInitEventListeners() {
   window.addEventListener('mousemove', function(e) {
     if(!jeEnabled)
       return;
-    const x = jeState.mouseX = Math.floor((e.clientX - getRoomRectangle().left) / getScale());
-    const y = jeState.mouseY = Math.floor((e.clientY - getRoomRectangle().top ) / getScale());
+    const surfaceRect = $('#topSurface').getBoundingClientRect();
+    const scaleX = 1600 / surfaceRect.width;
+    const scaleY = 1000 / surfaceRect.height;
+
+    jeState.mouseX = Math.floor((e.clientX - surfaceRect.left) * scaleX);
+    jeState.mouseY = Math.floor((e.clientY - surfaceRect.top ) * scaleY);
 
     if(jeMouseButtonIsDown)
       return;
@@ -3137,7 +3153,7 @@ function jeInitEventListeners() {
 
     $('#jeWidgetLayer1').parentNode.scrollTop = $('#jeWidgetLayer1').offsetTop;
 
-    if((getRoomRectangle().left <= e.clientX && e.clientX <= getRoomRectangle().right && getRoomRectangle().top <= e.clientY && e.clientY <= getRoomRectangle().bottom)) {
+    if((surfaceRect.left <= e.clientX && e.clientX <= surfaceRect.right && surfaceRect.top <= e.clientY && e.clientY <= surfaceRect.bottom)) {
       $('#jeMouseCoords').innerHTML = "Cursor at " + jeState.mouseX + ", " + jeState.mouseY;
     } else {
       $('#jeMouseCoords').innerHTML = ""

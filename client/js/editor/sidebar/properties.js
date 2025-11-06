@@ -227,6 +227,10 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
+  addDeltaListener(updater) {
+    this.globalInputUpdaters.push(updater);
+  }
+
   addPropertyListener(widget, property, updater) {
     updater(widget);
 
@@ -249,11 +253,14 @@ class PropertiesModule extends SidebarModule {
           if(this.inputUpdaters[widgetID][property])
             for(const updater of this.inputUpdaters[widgetID][property])
               updater(delta.s[widgetID][property]);
+    for(const updater of this.globalInputUpdaters)
+      updater(delta.s);
   }
 
   onSelectionChangedWhileActive(newSelection) {
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
+    this.globalInputUpdaters = [];
 
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
@@ -1230,6 +1237,12 @@ class PropertiesModule extends SidebarModule {
         setCardCount(deck, cardType, cardCount);
       }
 
+      this.addDeltaListener(delta => {
+        for(const props of Object.values(delta))
+          if(props === null || props.deck || props.cardType)
+            return input.setValue(widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length);
+      });
+
       $('[icon=remove]', cardTypeDiv).onclick = e => updateCount(-1);
       $('[icon=add]', cardTypeDiv).onclick = e => updateCount(1);
 
@@ -1313,13 +1326,24 @@ class PropertiesModule extends SidebarModule {
       <button icon=add class=addAll>All</button>
     `);
     this.renderCardTypes(widget);
-    $('.removeAll', this.moduleDOM).onclick = _=>{
-      for(const b of $a('.cardCountDiv [icon=remove]', this.moduleDOM))
-        b.click();
+    $('.removeAll', this.moduleDOM).onclick = async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} removed one card of each type from deck ${widget.id} in editor`);
+      for(const cardType in widget.get('cardTypes')) {
+        const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
+        if(cards.length)
+          await setCardCount(widget, cardType, cards.length - 1);
+      }
+      batchEnd();
     };
-    $('.addAll', this.moduleDOM).onclick = _=>{
-      for(const b of $a('.cardCountDiv [icon=add]', this.moduleDOM))
-        b.click();
+    $('.addAll', this.moduleDOM).onclick = async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} added one card of each type to deck ${widget.id} in editor`);
+      for(const cardType in widget.get('cardTypes')) {
+        const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
+        await setCardCount(widget, cardType, cards.length + 1);
+      }
+      batchEnd();
     };
 
     this.addSubHeader(`Card layers`);

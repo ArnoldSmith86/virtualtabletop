@@ -2,7 +2,7 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { compute_ops } from '../../client/js/compute.js';
 import { escapeID } from '../../client/js/domhelpers.js';
-import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
+import { compareState, prepareClient, setName, setRoomState, setupTestEnvironment, setLegacyMode } from './test-util.js';
 
 setupTestEnvironment();
 
@@ -17,6 +17,8 @@ test('Compute', async t => {
 
   await ClientFunction(prepareClient)();
   await setName(t);
+  await setLegacyMode('convertNumericVarParametersToNumbers', true);
+  await setLegacyMode('useOneAsDefaultForVarParameters', true);
 
   for(const index in compute_ops) {
     const op = compute_ops[index];
@@ -150,10 +152,10 @@ test('Dynamic expressions', async t => {
     .click('#editButton')
     .click('#editorToolbar > div > [icon=add]')
     .click('#addBasicWidget')
-    .click(Selector('button').withAttribute('icon', 'data_object'))
+    .click('button[icon="data_object"]')
     .typeText('#jeText', button, { replace: true, paste: true })
+    .click('button[icon="pest_control"]')
     .rightClick('#w_jyo6')
-    .click(Selector('button').withAttribute('icon', 'pest_control'))
   const log = await Selector('#jeLog').textContent
   for (let i=0; i<ops.length; i++) {
     const logContains = log.includes('"'+ops[i][1]+'": '+ops[i][2]);

@@ -55,6 +55,7 @@ const COMMON_PROPERTIES = {
     borderRadius: 'any',
     rotation: 'number',
     scale: 'number',
+    ignoreZoom: 'boolean',
     dragLimit: 'any',
     classes: 'string',
     css: 'any',
@@ -85,6 +86,7 @@ const COMMON_PROPERTIES = {
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
     clickRoutine: 'routine',
+    doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
     enterRoutine: getRoutineValidator({}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
@@ -318,6 +320,7 @@ function validateRoutine(routine, context, propertyPath = []) {
 
         context.operation = operation;
         const operationPath = [...propertyPath, i];
+        customRoutineChecks(operation, problems, context, operationPath);
         
         if (typeof operation === 'string') {
             if(operation.startsWith('//'))
@@ -610,6 +613,9 @@ const operationProps = {
         'owner':      'string',
         'variable':   'string'
     },
+    'DELAY': {
+        'milliseconds': 'positiveNumber'
+    },
     'DELETE': { 
         'collection': 'inCollection'
     },
@@ -764,6 +770,16 @@ const operationProps = {
         'variables': 'object'
     }
 };
+
+function customRoutineChecks(operation, problems, context, operationPath) {
+    if(operation.func === 'IF' && operation.operand1 && operation.condition) {
+        problems.push({
+            widget: context.widgetId,
+            property: operationPath,
+            message: 'IF uses both operand1 and condition - did you mean to use relation instead?'
+        });
+    }
+}
 
 function customWidgetChecks(widget, widgets, problems) {
     if(widget.type === 'deck') {

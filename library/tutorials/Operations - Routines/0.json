@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 18,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Routines",
       "image": "/assets/786542630_8010",
@@ -11,7 +17,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748991421602,
+      "lastUpdate": 1761183848057,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -21,7 +27,7 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "Intro and clickRoutine",
+      "variant": "Intro, clickRoutine, and doubleClickRoutine",
       "language": "en-US",
       "players": "1"
     }
@@ -44,12 +50,12 @@
     "height": 180,
     "z": 26445,
     "css": "font-size:18px",
-    "text": "Routines are the key to automation.  They perform functions, computations, and execute dynamic expressions:\n    - Functions include things such as moving, rotating, shuffling, and counting widgets.\n    - Computations include math operations, alphanumeric and logical comparison, string operations, and array operations.\n    - Dynamic expressions are used to declare variables or modify existing variables and take a basic form that looks like 'var my_count = 10'.\n\nRoutines appear in many forms:\n    - clickRoutines execute when a widget is clicked. Typically, buttons are used for clickRoutines, but any widget (including cards) can have one.\n    - changeRoutines execute automatically when a specified property (or if none is specified then every property) on the widget with the routine changes.\n    - globalUpdateRoutines execute automatically when a specified property (of if none is specified, then every property) on any widget changes.\n    - enterRoutines execute automatically whenever a widget becomes a child of the widget with the routine.  Typically, these are on holders, but any widget can have one.\n    - leaveRoutines execute automatically whenever a widget that is the child of the widget with the routine changes its parent to null or a different parent.\n    - loopRoutines appear within the FOREACH function and allow iteration over a collection, object, array, or string. See the Functions - FOREACH tutorial for more.\n    - thenRoutines and elseRoutines appear within the IF function and form the alternative branches after evaluating the IF statement. See the Functions - IF tutorial for more.\n    - Custom routines (for example, doThisNextRoutine) are analgous to programming subroutines for frequently used code snippets. See the Functions - CALL tutorial for more.",
+    "text": "Routines are the key to automation.  They perform functions, computations, and execute dynamic expressions:\n    - Functions include things such as moving, rotating, shuffling, and counting widgets.\n    - Computations include math operations, alphanumeric and logical comparison, string operations, and array operations.\n    - Dynamic expressions are used to declare variables or modify existing variables and take a basic form that looks like 'var my_count = 10'.\n\nRoutines appear in many forms:\n    - clickRoutines execute when a widget is clicked. Typically, buttons are used for clickRoutines, but any widget (including cards) can have one.\n    - doubleClickRoutines execute if the user clicks the same widget twice within 350 milliseconds.\n    - changeRoutines execute automatically when a specified property (or if none is specified then every property) on the widget with the routine changes.\n    - globalUpdateRoutines execute automatically when a specified property (of if none is specified, then every property) on any widget changes.\n    - enterRoutines execute automatically whenever a widget becomes a child of the widget with the routine.  Typically, these are on holders, but any widget can have one.\n    - leaveRoutines execute automatically whenever a widget that is the child of the widget with the routine changes its parent to null or a different parent.\n    - loopRoutines appear within the FOREACH function and allow iteration over a collection, object, array, or string. See the Functions - FOREACH tutorial for more.\n    - thenRoutines and elseRoutines appear within the IF function and form the alternative branches after evaluating the IF statement. See the Functions - IF tutorial for more.\n    - Custom routines (for example, doThisNextRoutine) are analgous to programming subroutines for frequently used code snippets. See the Functions - CALL tutorial for more.",
     "width": 1500
   },
   "gpn1": {
     "id": "gpn1",
-    "x": 205,
+    "x": 41,
     "y": 562,
     "width": 350,
     "height": 50,
@@ -77,7 +83,7 @@
         "value": "${pawnX}"
       }
     ],
-    "x": 207,
+    "x": 43,
     "y": 792,
     "z": 54,
     "id": "9n3g"
@@ -94,24 +100,24 @@
     "color": "#23ca5b",
     "width": 73.5,
     "height": 73.5,
-    "x": 330.25,
-    "y": 746.25,
+    "x": 166,
+    "y": 746,
     "z": 26467,
     "id": "kqme"
   },
   "hgmk": {
     "classes": "classicPiece",
     "color": "#4c5fea",
-    "width": 90,
-    "height": 90,
-    "x": 321,
-    "y": 847,
+    "width": 56,
+    "height": 84,
+    "x": 174,
+    "y": 850,
     "z": 26466,
     "id": "hgmk"
   },
   "gpn2": {
     "id": "gpn2",
-    "x": 896,
+    "x": 623,
     "y": 540,
     "width": 350,
     "height": 50,
@@ -1054,7 +1060,7 @@
     "type": "card",
     "cardType": "S 4K",
     "z": 7,
-    "x": 1005.5,
+    "x": 732,
     "y": 801,
     "clickRoutine": [
       "var cardRotation = ${PROPERTY rotation} + 90",
@@ -1074,12 +1080,50 @@
   "8fr4": {
     "type": "label",
     "id": "8fr4",
-    "x": 279,
-    "y": 430,
-    "width": 1000,
+    "x": 92,
+    "y": 450,
+    "width": 1400,
     "height": 80,
     "z": 26447,
     "css": "font-size: 60px",
-    "text": "Routines: clickRoutines"
+    "text": "Routines: clickRoutines and doubleClickRoutines"
+  },
+  "gpn3": {
+    "id": "gpn3",
+    "x": 1171,
+    "y": 540,
+    "width": 350,
+    "height": 50,
+    "z": 26462,
+    "css": "font-size: 18px; ",
+    "text": "The card below has a doubleClickRoutine that rotates the card each time it is doubleClicked. It also has a clickRoutine that shifts the card 5 pixels to the right (overriding the normal card behavior that would flip the card over)."
+  },
+  "8cyo_K_S": {
+    "id": "8cyo_K_S",
+    "deck": "7cyoD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 7,
+    "x": 1280,
+    "y": 801,
+    "doubleClickRoutine": [
+      "var cardRotation = ${PROPERTY rotation} + 90",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "rotation",
+        "value": "${cardRotation}"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": 5,
+        "relation": "+"
+      }
+    ],
+    "activeFace": 1
   }
 }

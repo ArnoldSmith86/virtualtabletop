@@ -51,21 +51,22 @@
     "@node-minify/html-minifier": "^9.0.1",
     "@node-minify/no-compress": "^9.0.1",
     "@node-minify/uglify-es": "^9.0.1",
-    "bson": "^6.10.3",
-    "crawler-user-agents": "^1.2.0",
+    "bson": "^6.10.4",
     "crc-32": "^1.2.2",
-    "dompurify": "^3.2.5",
+    "dompurify": "^3.3.0",
     "express": "^5.1.0",
     "jszip": "^3.10.1",
-    "node-fetch": "^2.7.0",
-    "ws": "^8.18.2"
+    "node-fetch": "^3.3.2",
+    "ws": "^8.18.3"
+  },
+  "optionalDependencies": {
+    "crawler-user-agents": "^1.21.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest-environment-jsdom-global": "^4.0.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "json-diff": "^1.0.6",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "testcafe": "^3.7.2"
   }
 }

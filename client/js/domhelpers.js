@@ -534,3 +534,7 @@ export function funhash(s) {
   h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
   return (h ^ h >>> 16) >>> 0;
 }
+
+export function getBaseURL() {
+  return `${location.origin}${config.urlPrefix || ''}`;
+}

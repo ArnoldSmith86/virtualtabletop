@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
 import crypto from 'crypto';
 
 import { diffString, diff } from 'json-diff';
@@ -41,8 +40,14 @@ export async function setRoomState(state) {
   });
 }
 
+export async function setLegacyMode(name, value) {
+  await fetch(`${server}/setLegacyMode/testcafe-testing/${name}/${value === true ? 'true' : 'false'}`, {
+    method: 'PUT'
+  });
+}
+
 export async function getState() {
-  const response = await fetch(`${server}/state/testcafe-testing`);
+  const response = await fetch(`${server}/state/testcafe-testing/false`);
   return await response.text();
 }
 
@@ -54,12 +59,12 @@ export async function compareState(t, md5) {
     state = await getState();
     hash = crypto.createHash('md5').update(state).digest('hex');
 
-    // hardcoded hash difference because of https://github.com/ArnoldSmith86/virtualtabletop/issues/1553 - can hopefully be removed if Chrome changes this back
-    if(hash == md5 || hash == 'a1c9e538ab6e1bf3296e4e90cffa0cfb' && md5 == '4403a094826913c3d883dedc619e4924') {
+    // hardcoded hash difference because of https://github.com/ArnoldSmith86/virtualtabletop/pull/2668 - can hopefully be removed if Chrome changes this back
+    if(hash == md5 || hash == 'aa8d738dfc1eb7886540315e78e42aae' && md5 == '1a6e301d6510998fa27abeb75bcf0371') {
       if(!fs.existsSync(refFile))
         fs.writeFileSync(refFile, state);
 
-      if(hash == 'a1c9e538ab6e1bf3296e4e90cffa0cfb' && md5 == '4403a094826913c3d883dedc619e4924')
+      if(hash == 'aa8d738dfc1eb7886540315e78e42aae' && md5 == '1a6e301d6510998fa27abeb75bcf0371')
         await t.expect(md5).eql(md5);
       else
         await t.expect(hash).eql(md5);

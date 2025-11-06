@@ -18,10 +18,7 @@ class SaveButton extends ToolbarButtonWithContent {
     loadJSZip();
     updateProgress('Fetching state...');
     const state = await (await fetch(`state/${roomID}`)).json();
-    state._meta = {
-      version: this.currentVersion,
-      info: this.currentMetadata
-    }
+    state._meta.info = this.currentMetadata;
     updateProgress('Loading JSZip...');
     await waitForJSZip();
     updateProgress('Building file...');

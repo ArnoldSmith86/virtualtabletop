@@ -288,6 +288,16 @@ export function batchEnd() {
   sendDelta();
 }
 
+export function flushDelta() {
+  const currentBatchDepth = batchDepth;
+  const currentDeltaCause = delta.c;
+  batchDepth = 0;
+  sendDelta();
+  if(currentDeltaCause)
+    delta.c = currentDeltaCause;
+  batchDepth = currentBatchDepth;
+}
+
 function setDeltaCause(cause) {
   if(!delta.c)
     delta.c = cause;
@@ -471,6 +481,8 @@ function receiveStateFromServer(args) {
         console.error(`Could not add widget "${widget.id}" because its parent "${deckID}" does not exist!`);
     deferredChildren = {};
   }
+
+  resetZoomAndPan();
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();

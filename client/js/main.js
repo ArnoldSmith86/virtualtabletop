@@ -228,6 +228,7 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
+  refreshIgnoreZoomWidgets();
 }
 
 function getScale() {
@@ -482,7 +483,7 @@ async function loadEditMode() {
     edit = false;
     Object.assign(window, {
       $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
-      setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
+      setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
@@ -493,7 +494,8 @@ async function loadEditMode() {
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
       asArray, compute_ops,
-      eventCoords
+      eventCoords,
+      getCurrentGameSettings, legacyMode, getEnabledLegacyModes
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');
@@ -526,6 +528,7 @@ async function toggleEditMode() {
   else
     $('body').classList.add('edit');
   edit = !edit;
+  resetZoomAndPan();
   if(edit)
     openEditor();
   showOverlay();
