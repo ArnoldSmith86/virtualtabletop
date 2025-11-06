@@ -362,18 +362,19 @@ class GameSettingsModule extends SidebarModule {
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
 
-   this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of the cursor in the room.', [
-     { value: 'default', text: 'Default (Can modify in JSON)' },
-     { value: 'translucent-fade', text: 'Translucent (fadeout)' },
-     { value: 'solid-no-name-fade', text: 'Solid (fadeout)' },
-     { value: 'solid-player-name-fade', text: 'Solid + Player Name (fadeout)' },
-     { value: 'translucent-noFade', text: 'Translucent (indefinite)' },
-     { value: 'solid-no-name-noFade', text: 'Solid (indefinite)' },
-     { value: 'solid-player-name-noFade', text: 'Solid + Player Name (indefinite)' },
-     { value: 'invisible', text: 'Invisible' },
-   ], target);
+    this.addSubHeader('UI Settings');
+    this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of the cursor in the room.', [
+      { value: 'default', text: 'Default (Can modify in JSON)' },
+      { value: 'translucent-fade', text: 'Translucent (fadeout)' },
+      { value: 'solid-no-name-fade', text: 'Solid (fadeout)' },
+      { value: 'solid-player-name-fade', text: 'Solid + Player Name (fadeout)' },
+      { value: 'translucent-noFade', text: 'Translucent (indefinite)' },
+      { value: 'solid-no-name-noFade', text: 'Solid (indefinite)' },
+      { value: 'solid-player-name-noFade', text: 'Solid + Player Name (indefinite)' },
+      { value: 'invisible', text: 'Invisible' },
+    ], target);
 
-   this.addCssEditor(target);
+    this.addCssEditor(target);
   }
 
   updateBadge() {
