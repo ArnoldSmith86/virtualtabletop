@@ -1502,13 +1502,103 @@ export function initializeEditMode(currentMetaData) {
     })
     await addWidgetLocal({
       type: "button",
-      id: id+"-Color",
+      id: id+"-Size",
 
       parent: id,
       fixedParent: true,
 
       x: -50,
       y: 50,
+      width: 50,
+      height: 50,
+
+      movable: false,
+      movableInEdit: false,
+
+      clickRoutine: [
+        "var parent = ${PROPERTY parent}",
+        {
+          "func": "GET",
+          "collection": "thisButton",
+          "property": "lineSize"
+        },
+        {
+          "func": "IF",
+          "operand1": "${lineSize}",
+          "operand2": 100,
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "lineSize",
+              "value": 10
+            },
+            {
+              "func": "SET",
+              "collection": [
+                "${parent}"
+              ],
+              "property": "lineWidth",
+              "value": 1
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "lineSize",
+              "relation": "+",
+              "value": 10
+            },
+            "var lineWidth = ${PROPERTY lineWidth OF $parent}",
+            "var resolution = ${PROPERTY resolution OF $parent}",
+            "var resolutionModifier = (${resolution} / 100) * 0.5",
+            "var newLineWidth = ${lineWidth} + ${resolutionModifier}",
+            {
+              "func": "SET",
+              "collection": [
+                "${parent}"
+              ],
+              "property": "lineWidth",
+              "value": "${newLineWidth}"
+            }
+          ]
+        }
+      ],
+      "css": {
+        "default": {
+          "border-width": "1px",
+          "background-color": "var(--color)",
+          "--wcBorder": "#555",
+          "--wcBorderOH": "black ",
+          "background": "transparent",
+          "background-repeat": "no-repeat",
+          "background-position": "50% 60%",
+          "background-size": "${PROPERTY lineSize}%"
+        },
+        "::after": {
+          "content": "\"Line Width\"",
+          "position": "absolute",
+          "margin-top": "-4em",
+          "color": "white",
+          "background-color": "#0d2f5e",
+          "width": "100%",
+          "font-size": "0.6em"
+        }
+      },
+      borderRadius: '0',
+      image: "/i/game-icons.net/delapouite/plain-circle.svg",
+      lineSize: 10,
+    })
+    await addWidgetLocal({
+      type: "button",
+      id: id+"-Color",
+
+      parent: id,
+      fixedParent: true,
+
+      x: -50,
+      y: 100,
       width: 50,
       height: 50,
 
