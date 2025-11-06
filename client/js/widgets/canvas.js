@@ -17,11 +17,9 @@ class Canvas extends Widget {
       colorMap: Canvas.defaultColors
     };
 
-    for(let x=0; x<10; ++x) {
-      for(let y=0; y<10; ++y) {
+    for(let x=0; x<10; ++x)
+      for(let y=0; y<10; ++y)
         defaults[`c${x}${y}`] = "0";
-      }
-    }
 
     this.addDefaults(defaults);
 
@@ -71,11 +69,10 @@ class Canvas extends Widget {
             for(let px=0; px<regionRes; ++px) {
               for(let py=0; py<regionRes; ++py) {
                 this.context.fillStyle = colors[region.charCodeAt(py*regionRes+px)-48] || 'white';
-                if (colors[region.charCodeAt(py*regionRes+px)-48] != 'transparent') {
+                if(colors[region.charCodeAt(py*regionRes+px)-48] != 'transparent')
                   this.context.fillRect(x*regionRes+px, y*regionRes+py, 1, 1);
-                } else {
+                else
                   this.context.clearRect(x*regionRes+px, y*regionRes+py, 1, 1);
-                }
               }
             }
           }
@@ -108,12 +105,12 @@ class Canvas extends Widget {
         return color.repeat(this.decodeLength(colorLength, 41, 7) + 1);
       }
     });
-    str = str.padEnd(this.getResolution()**2/100, str.slice(-1));
+    str = str.padEnd(this.getResolution()**2/100,str.slice(-1));
     return str;
   }
 
   decodeLength(str, baseCode, base) {
-    return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base**index, 0);
+    return str.split("").reduce((length, char, index) => length + (baseCode - char.charCodeAt(0) + 1) * base**index , 0);
   }
 
   encodeLength(baseCode, length, base) {
@@ -140,9 +137,8 @@ class Canvas extends Widget {
   }
 
   async mouseRaw(state, coord) {
-    if(!this.get('clickable')) {
+    if(!this.get('clickable'))
       return;
-    }
 
     if(this.get('artist') && asArray(this.get('artist')).indexOf(playerName) == -1)
       return;
@@ -154,7 +150,7 @@ class Canvas extends Widget {
     let pixelX = coordLocal.x/this.get('width')*resolution;
     let pixelY = coordLocal.y/this.get('height')*resolution;
 
-    if (pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution) {
+    if(pixelX < 0 || pixelX >= resolution || pixelY < 0 || pixelY >= resolution) {
       this.canvas.style.cursor = 'auto';
       this.cursor.style.display = 'none';
       return;
@@ -174,9 +170,8 @@ class Canvas extends Widget {
 
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY))*2;
-      for(let i=0; i<steps; ++i) {
+      for(let i=0; i<steps; ++i)
         this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
-      }
     } else {
       this.setPixel(pixelX, pixelY);
     }
@@ -215,11 +210,9 @@ class Canvas extends Widget {
   }
 
   async reset() {
-    for(let x=0; x<10; ++x) {
-      for(let y=0; y<10; ++y) {
+    for(let x=0; x<10; ++x)
+      for(let y=0; y<10; ++y)
         await this.set(`c${x}${y}`, null);
-      }
-    }
   }
 
   setPixel(x, y, colorIndex, regionRes) {
