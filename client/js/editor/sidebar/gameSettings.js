@@ -265,7 +265,7 @@ class GameSettingsModule extends SidebarModule {
       min-height: 200px;
       white-space: pre;
       font-family: monospace;
-      border-width: 1px 0;
+      box-sizing: border-box;
     `;
     target.append(textarea);
 
