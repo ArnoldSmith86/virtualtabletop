@@ -177,7 +177,7 @@ label.ui-line::before{
 }
 .cursor.pressed {
   --cursorOpacity: var(--cursorPressedOpacity);
-  border: none;
+  border: 4px solid transparent;
   background-color: var(--playerColor);
 }
 .cursor.hidden {

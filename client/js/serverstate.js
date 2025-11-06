@@ -20,6 +20,20 @@ let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
 
+function applyCustomCss(gameSettings) {
+  let style = document.getElementById('globalCss');
+  if (style)
+    style.innerHTML = '';
+  if (gameSettings && (gameSettings.globalCss || gameSettings.cursorCss)) {
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'globalCss';
+      document.head.appendChild(style);
+    }
+    style.appendChild(document.createTextNode((gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '')));
+  }
+}
+
 function generateUniqueWidgetID() {
   let id;
   do {
@@ -594,5 +608,10 @@ export function widgetFilter(callback) {
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('meta', (args) => {
+    if(args.meta) {
+      applyCustomCss(args.meta.gameSettings);
+    }
+  });
   setScale();
 });
