@@ -22,15 +22,15 @@ let undoProtocol = [];
 
 function applyCustomCss(gameSettings) {
   let style = document.getElementById('globalCss');
+  if (style)
+    style.innerHTML = '';
   if (gameSettings && gameSettings.globalCss) {
     if (!style) {
       style = document.createElement('style');
       style.id = 'globalCss';
       document.head.appendChild(style);
     }
-    style.innerHTML = gameSettings.globalCss;
-  } else if (style) {
-    style.innerHTML = '';
+    style.appendChild(document.createTextNode(gameSettings.globalCss));
   }
 }
 
@@ -497,7 +497,6 @@ function receiveStateFromServer(args) {
   }
 
   resetZoomAndPan();
-
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
