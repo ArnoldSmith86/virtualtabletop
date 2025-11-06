@@ -252,7 +252,7 @@ class GameSettingsModule extends SidebarModule {
     this.addSubHeader('Global Room CSS');
 
     const p1 = document.createElement('p');
-    p1.textContent = 'You can add custom CSS to your game. This is an advanced feature and should be used with care.';
+    p1.textContent = 'You can add custom CSS to your game. This is an advanced feature and should be used with care. VTT updates may break your custom CSS.';
     target.append(p1);
 
     const gameSettings = getCurrentGameSettings();
