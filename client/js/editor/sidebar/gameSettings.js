@@ -363,7 +363,7 @@ class GameSettingsModule extends SidebarModule {
       `, target);
 
     this.addSubHeader('UI Settings');
-    this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of the cursor in the room.', [
+    this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of other players\' cursor indicators in the room.', [
       { value: 'default', text: 'Default (Can modify in JSON)' },
       { value: 'translucent-fade', text: 'Translucent (fadeout)' },
       { value: 'solid-no-name-fade', text: 'Solid (fadeout)' },
