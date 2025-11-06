@@ -53,7 +53,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "Setting CSS globally for the entire game module is possible. In Edit Mode, look at the sidebar under Game Settings (the gear icon). There may be other items there, but you should also see a block for Cursor Visibility and a block for Global Room CSS. The cursor visibility allows you to select from several options to change how the other player's cursor indicators appear. If you choose the default, then the settings can be modified using room JSON. Otherwise, the setting applies to all players and will remain the same throughout the game.\n\nFor the Global Room CSS, you can use standard CSS syntax and formatting (without the modifications needed when creating CSS in JSON). You can also use /*  */ to create comments. This is global CSS, so changes per widget are not allowed in these settings, but you can override them with specific settings on individual widgets. Look at examples below and under the Global Room CSS section of the Game Settings. Use caution when editing global CSS as you can break a room. You can get ideas for what CSS selectors to modify by looking at <a href='https://github.com/ArnoldSmith86/virtualtabletop/tree/main/client/css'>GitHub</a>."
+    "html": "Setting CSS globally for the entire game module is possible. In Edit Mode, look at the sidebar under Game Settings (the gear icon). There may be other items there, but you should also see a block for Cursor Visibility and a block for Global Room CSS. The cursor visibility allows you to select from several options to change how the other players' cursor indicators appear. If you choose the default, then the settings can be modified using room JSON. Otherwise, the setting applies to all players and will remain the same throughout the game.\n\nFor the Global Room CSS, you can use standard CSS syntax and formatting (without the modifications needed when creating CSS in JSON). You can also use /*  */ to create comments. This is global CSS, so changes per widget are not allowed in these settings, but you can override them with specific settings on individual widgets. Look at examples below and under the Global Room CSS section of the Game Settings. Use caution when editing global CSS as you can break a room. You can get ideas for what CSS selectors to modify by looking at <a href='https://github.com/ArnoldSmith86/virtualtabletop/tree/main/client/css'>GitHub</a>."
   },
   "button4": {
     "type": "button",
@@ -116,7 +116,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The deck in the holder above has a <b>customTransitionClass</b> on it. The name can be anything you want. The class is defined in the global CSS to create a transition that shows the cards physcially moving on screen while being dealt. That effect is turned off while the cards are being dragged. This is the same technique (but with the CSS in a different location) as the Transition variant of this CSS tutorial."
+    "html": "The deck in the holder above has a <b>customTransitionClass</b> on it. The name can be anything you want. The class is defined in the global CSS to create a transition that shows the cards physically moving on screen while being dealt. That effect is turned off while the cards are being dragged. This is the same technique (but with the CSS in a different location) as the Transition variant of this CSS tutorial."
   },
   "text4": {
     "id": "text4",
