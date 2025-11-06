@@ -24,13 +24,13 @@ function applyCustomCss(gameSettings) {
   let style = document.getElementById('globalCss');
   if (style)
     style.innerHTML = '';
-  if (gameSettings && gameSettings.globalCss) {
+  if (gameSettings && (gameSettings.globalCss || gameSettings.cursorCss)) {
     if (!style) {
       style = document.createElement('style');
       style.id = 'globalCss';
       document.head.appendChild(style);
     }
-    style.appendChild(document.createTextNode(gameSettings.globalCss));
+    style.appendChild(document.createTextNode((gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '')));
   }
 }
 
