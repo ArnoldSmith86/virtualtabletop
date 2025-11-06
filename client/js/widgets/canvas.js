@@ -17,9 +17,11 @@ class Canvas extends Widget {
       colorMap: Canvas.defaultColors
     };
 
-    for (let x = 0; x < 10; ++x)
-      for (let y = 0; y < 10; ++y)
+    for (let x = 0; x < 10; ++x) {
+      for (let y = 0; y < 10; ++y) {
         defaults[`c${x}${y}`] = "0";
+      }
+    }
 
     this.addDefaults(defaults);
 
@@ -31,7 +33,7 @@ class Canvas extends Widget {
     this.cursor.style.pointerEvents = 'none';
     this.cursor.style.display = 'none';
     this.cursor.style.borderRadius = '50%';
-    this.cursor.style.border = '2px solid gray';
+    this.cursor.style.border = '1px solid white';
     this.domElement.appendChild(this.cursor);
 
     this.canvas.addEventListener('mousemove', (e) => {
@@ -69,10 +71,11 @@ class Canvas extends Widget {
             for (let px = 0; px < regionRes; ++px) {
               for (let py = 0; py < regionRes; ++py) {
                 this.context.fillStyle = colors[region.charCodeAt(py * regionRes + px) - 48] || 'white';
-                if (colors[region.charCodeAt(py * regionRes + px) - 48] != 'transparent')
+                if (colors[region.charCodeAt(py * regionRes + px) - 48] != 'transparent') {
                   this.context.fillRect(x * regionRes + px, y * regionRes + py, 1, 1);
-                else
+                } else {
                   this.context.clearRect(x * regionRes + px, y * regionRes + py, 1, 1);
+                }
               }
             }
           }
@@ -126,10 +129,11 @@ class Canvas extends Widget {
   }
 
   getColorMap() {
-    if (Array.isArray(this.get('colorMap')))
+    if (Array.isArray(this.get('colorMap'))) {
       return this.get('colorMap');
-    else
+    } else {
       return Canvas.defaultColors;
+    }
   }
 
   getResolution() {
@@ -137,11 +141,13 @@ class Canvas extends Widget {
   }
 
   async mouseRaw(state, coord) {
-    if (!this.get('clickable'))
+    if (!this.get('clickable')) {
       return;
+    }
 
-    if (this.get('artist') && asArray(this.get('artist')).indexOf(playerName) == -1)
+    if (this.get('artist') && asArray(this.get('artist')).indexOf(playerName) == -1) {
       return;
+    }
 
     const resolution = this.getResolution();
     const regionRes = Math.floor(resolution / 10);
@@ -167,10 +173,12 @@ class Canvas extends Widget {
     this.cursor.style.backgroundColor = color;
     this.cursor.style.left = `${coordLocal.x - lineWidth}px`;
     this.cursor.style.top = `${coordLocal.y - lineWidth}px`;
+
     if (this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX - this.lastPixelX), Math.abs(pixelY - this.lastPixelY)) * 2;
-      for (let i = 0; i < steps; ++i)
+      for (let i = 0; i < steps; ++i) {
         this.setPixel(this.lastPixelX + (pixelX - this.lastPixelX) / steps * i, this.lastPixelY + (pixelY - this.lastPixelY) / steps * i);
+      }
     } else {
       this.setPixel(pixelX, pixelY);
     }
@@ -201,31 +209,37 @@ class Canvas extends Widget {
   }
 
   async reset() {
-    for (let x = 0; x < 10; ++x)
-      for (let y = 0; y < 10; ++y)
+    for (let x = 0; x < 10; ++x) {
+      for (let y = 0; y < 10; ++y) {
         await this.set(`c${x}${y}`, null);
+      }
+    }
   }
 
   setPixel(x, y, colorIndex, regionRes) {
     const lineWidth = this.get('lineWidth');
     for (let i = -lineWidth; i < lineWidth; ++i) {
       for (let j = -lineWidth; j < lineWidth; ++j) {
-        if (Math.sqrt(i * i + j * j) < lineWidth)
+        if (Math.sqrt(i * i + j * j) < lineWidth) {
           this.setSinglePixel(x + i, y + j, colorIndex, regionRes);
+        }
       }
     }
   }
 
   setSinglePixel(x, y, colorIndex, regionRes) {
-    if (!this.regionCache)
+    if (!this.regionCache) {
       this.regionCache = {};
+    }
 
-    if (!regionRes)
+    if (!regionRes) {
       regionRes = Math.floor(this.getResolution() / 10);
+    }
 
     const resolution = this.getResolution();
-    if (x < 0 || x >= resolution || y < 0 || y >= resolution)
+    if (x < 0 || x >= resolution || y < 0 || y >= resolution) {
       return;
+    }
 
     const regionX = Math.floor(x / regionRes);
     const regionY = Math.floor(y / regionRes);
