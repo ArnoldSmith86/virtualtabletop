@@ -184,6 +184,14 @@ class Canvas extends Widget {
     }
 
     if (state == 'down') {
+      const resolution = this.getResolution();
+      const minInterval = 10;
+      const maxInterval = 100;
+      const minRes = 100;
+      const maxRes = 500;
+      const interval = minInterval + (maxInterval - minInterval) * (resolution - minRes) / (maxRes - minRes);
+      const clampedInterval = Math.max(minInterval, Math.min(maxInterval, interval));
+
       this.updateInterval = setInterval(async () => {
         if (this.regionCache) {
           for (const key in this.regionCache) {
@@ -191,7 +199,7 @@ class Canvas extends Widget {
           }
           this.regionCache = {};
         }
-      }, 100);
+      }, clampedInterval);
     }
 
     if (state == 'up') {
