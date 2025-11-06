@@ -1285,7 +1285,7 @@ function jeAddCommands() {
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
-  jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
+  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
