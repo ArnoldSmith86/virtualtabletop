@@ -171,9 +171,9 @@ class Canvas extends Widget {
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY))*2;
       for(let i=0; i<steps; ++i)
-        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i, undefined, undefined, false);
     } else {
-      this.setPixel(pixelX, pixelY);
+      this.setPixel(pixelX, pixelY, undefined, undefined, false);
     }
 
     if (state == 'down') {
@@ -216,7 +216,7 @@ class Canvas extends Widget {
         await this.set(`c${x}${y}`, null);
   }
 
-  async setPixel(x, y, colorIndex, regionRes) {
+  async setPixel(x, y, colorIndex, regionRes, flush=true) {
     const lineWidth = this.get('lineWidth');
     for (let i = -lineWidth; i < lineWidth; ++i) {
       for (let j = -lineWidth; j < lineWidth; ++j) {
@@ -226,7 +226,8 @@ class Canvas extends Widget {
       }
     }
 
-    await this._flushPixelCache();
+    if(flush)
+      await this._flushPixelCache();
   }
 
   setSinglePixel(x, y, colorIndex, regionRes) {
@@ -270,6 +271,7 @@ class Canvas extends Widget {
     } else {
       this.context.clearRect(x, y, 1, 1);
     }
+
   }
 
   async _flushPixelCache() {
