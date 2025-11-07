@@ -31,7 +31,8 @@ class Canvas extends Widget {
     this.cursor.style.pointerEvents = 'none';
     this.cursor.style.display = 'none';
     this.cursor.style.borderRadius = '50%';
-    this.cursor.style.border = '1px solid white';
+    this.cursor.style.border = '2px solid white';
+    this.cursor.style.boxSizing = 'content-box';
     this.domElement.appendChild(this.cursor);
 
     this.canvas.addEventListener('mousemove', (e) => {
@@ -52,6 +53,18 @@ class Canvas extends Widget {
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
+
+    if (delta.lineWidth !== undefined) {
+      const lineWidth = this.get('lineWidth');
+      this.cursor.style.width = `${2 * lineWidth}px`;
+      this.cursor.style.height = `${2 * lineWidth}px`;
+    }
+
+    if (delta.activeColor !== undefined || delta.colorMap !== undefined) {
+      const colors = this.getColorMap();
+      const color = colors[this.get('activeColor')] || 'white';
+      this.cursor.style.backgroundColor = color;
+    }
 
     if(this.context) {
       if(delta.resolution !== undefined) {
