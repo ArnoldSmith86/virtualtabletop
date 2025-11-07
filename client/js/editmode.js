@@ -1550,10 +1550,9 @@ export function initializeEditMode(currentMetaData) {
       "css": {
         "default": {
           "border-width": "1px",
-          "background-color": "var(--color)",
+          "background-color": "#f0f0f0",
           "--wcBorder": "#555",
           "--wcBorderOH": "black ",
-          "background": "transparent",
           "background-repeat": "no-repeat",
           "background-position": "50% 50%",
           "background-size": "${PROPERTY lineSize}%"
