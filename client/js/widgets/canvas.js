@@ -224,6 +224,8 @@ class Canvas extends Widget {
         }
       }
     }
+
+    this.flushPixelCache();
   }
 
   setSinglePixel(x, y, colorIndex, regionRes) {
@@ -257,6 +259,16 @@ class Canvas extends Widget {
 
     this.regionCache[key] = this.regionCache[key].substring(0, pY * regionRes + pX) + color + this.regionCache[key].substring(pY * regionRes + pX + 1);
   }
+
+  _flushPixelCache() {
+    if (this.regionCache) {
+      for (const key in this.regionCache) {
+        this.set(key, this.compress(this.regionCache[key]));
+      }
+      this.regionCache = {};
+    }
+  }
 }
 
+Canvas.prototype.flushPixelCache = debounce(Canvas.prototype._flushPixelCache, 100);
 Canvas.defaultColors = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
