@@ -1,6 +1,8 @@
 class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
+    // if legacy mode disableHolderImageWidget is enabled, skip the intermediary ImageWidget prototype and use the Widget prototype instead so that image/icon/text properties "work" like they did before the change
+    this.base = legacyMode('disableHolderImageWidget') ? Widget.prototype : ImageWidget.prototype;
 
     this.addDefaults({
       width: 111,
@@ -27,6 +29,10 @@ class Holder extends ImageWidget {
     });
   }
 
+  applyDeltaToDOM(delta) {
+    this.base.applyDeltaToDOM.call(this, delta);
+  }
+
   children() {
     let children = this.childrenFilter(super.children(), true);
     if(children.length == 1 && children[0].get('type') == 'pile')
@@ -44,7 +50,7 @@ class Holder extends ImageWidget {
   }
 
   classes() {
-    let className = super.classes();
+    let className = this.base.classes.call(this);
 
     if(this.get('showInactiveFaceToSeat'))
       if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
@@ -54,9 +60,17 @@ class Holder extends ImageWidget {
   }
 
   classesProperties() {
-    const p = super.classesProperties();
+    const p = this.base.classesProperties.call(this);
     p.push('showInactiveFaceToSeat');
     return p;
+  }
+
+  css() {
+    return this.base.css.call(this);
+  }
+
+  cssProperties() {
+    return this.base.cssProperties.call(this);
   }
 
   async dispenseCard(card) {
@@ -188,7 +202,10 @@ class Holder extends ImageWidget {
     }
   }
 
-    updateIcon() {
+  updateIcon() {
+    if(legacyMode('disableHolderImageWidget'))
+      return;
+
     if (this.get('text') && !this.get('icon')) {
       if (this.symbolWrapper) this.symbolWrapper.remove();
       if (this.textWrapper) this.textWrapper.remove();
