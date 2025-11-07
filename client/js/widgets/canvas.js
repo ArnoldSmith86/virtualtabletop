@@ -210,6 +210,7 @@ class Canvas extends Widget {
   }
 
   async reset() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
         await this.set(`c${x}${y}`, null);
