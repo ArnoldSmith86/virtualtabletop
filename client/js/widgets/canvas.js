@@ -1,5 +1,3 @@
-import { debounce } from '../domhelpers.js';
-
 class Canvas extends Widget {
   constructor(id) {
     super(id);
@@ -218,7 +216,7 @@ class Canvas extends Widget {
         await this.set(`c${x}${y}`, null);
   }
 
-  setPixel(x, y, colorIndex, regionRes) {
+  async setPixel(x, y, colorIndex, regionRes) {
     const lineWidth = this.get('lineWidth');
     for (let i = -lineWidth; i < lineWidth; ++i) {
       for (let j = -lineWidth; j < lineWidth; ++j) {
@@ -228,7 +226,7 @@ class Canvas extends Widget {
       }
     }
 
-    this.flushPixelCache();
+    await this._flushPixelCache();
   }
 
   setSinglePixel(x, y, colorIndex, regionRes) {
@@ -284,5 +282,4 @@ class Canvas extends Widget {
   }
 }
 
-Canvas.prototype.flushPixelCache = debounce(Canvas.prototype._flushPixelCache, 100);
 Canvas.defaultColors = ["#F0F0F0","#1F5CA6","#000000","#FF0000","#008000","#FFFF00","#FFA500","#FFC0CB","#800080","#A52A2A"];
