@@ -233,6 +233,9 @@ class Canvas extends Widget {
 
   async setPixel(x, y, colorIndex, regionRes, flush=true) {
     const lineWidth = this.get('lineWidth');
+    if (lineWidth < 1) {
+      this.set('lineWidth', 1);
+    }
     for (let i = -lineWidth; i < lineWidth; ++i) {
       for (let j = -lineWidth; j < lineWidth; ++j) {
         if (Math.sqrt(i * i + j * j) < lineWidth) {
