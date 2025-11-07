@@ -1380,7 +1380,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^[a-z]+ ↦ classes', ['transparent', 'transition', 'symbols', 'material-symbols', 'material-symbols-nofill', 'standard_font', 'handwriting_font', 'handwriting_casual_font', 'condensed_font', 'serif_font', 'fantasy_font', 'gothic_font', 'horror_font', 'tech_font']);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ player', [ '${}', '${getPlayerDetails().playerName}' ]);
   jeAddEnumCommands('^.*\\(AUDIO\\) ↦ count', [ 1, 'loop' ]);
-  jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel', 'setWidth' ]);
+  jeAddEnumCommands('^.*\\(CANVAS\\) ↦ mode', [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ]);
   jeAddEnumCommands('^.*\\(CLICK\\) ↦ mode', [ 'respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ faceCycle', [ 'forward', 'backward', 'random' ]);
   jeAddEnumCommands('^.*\\(FLIP\\) ↦ count', [ 1, 'all' ]);

@@ -1105,9 +1105,9 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'CANVAS') {
-        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6", lineWidth: 1, collection: 'DEFAULT' });
+        setDefaults(a, { mode: 'reset', x: 0, y: 0, value: 1, color: "#1F5CA6" });
 
-        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel', 'setWidth' ].indexOf(a.mode) == -1) {
+        if([ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ].indexOf(a.mode) == -1) {
           problems.push(`Warning: Mode ${a.mode} will be interpreted as inc.`);
           a.mode = 'inc'
         }
@@ -1121,12 +1121,6 @@ export class Widget extends StateManaged {
                 await widget.setPixel(a.x, a.y, a.value);
               } else {
                 problems.push(`Pixel coordinate: (${a.x}, ${a.y}) out of range for resolution: ${res}.`);
-              }
-            } else if (a.mode == 'setWidth') {
-              if (typeof a.value === 'number' && a.value > 0) {
-                await widget.set('lineWidth', a.value);
-              } else {
-                problems.push(`setWidth: ${a.value} must be a positive number.`);
               }
             } else if(a.mode == 'set')
               await widget.set('activeColor', a.value % cm.length);
@@ -1170,8 +1164,6 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`color index of ${phrase}`, `0`)
           else if(a.mode == 'setPixel')
             jeLoggingRoutineOperationSummary(`(${a.x}, ${a.y}) of ${phrase} to index ${JSON.stringify(a.value)}`, `${JSON.stringify(a.color)}`)
-          else if(a.mode == 'seWidth')
-            jeLoggingRoutineOperationSummary(`lineWidth of ${phrase}`, `${JSON.stringify(a.value)}`);
         }
       }
 
