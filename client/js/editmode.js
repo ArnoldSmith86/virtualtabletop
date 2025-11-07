@@ -1434,30 +1434,57 @@ export function initializeEditMode(currentMetaData) {
       width: 800,
       height: 800,
 
-     c13: "+-01$/10",
-     c14: "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
-     c15: ".1$0",
-     c23: ".-01()0",
-     c24: "./1/1+1-101/11010110101/101-1/101-1/101,10",
-     c25: "1()0",
-     c33: ".-01()0",
-     c34: "/-1/101(/1/1-101/101'01/101/1/11.1(0",
-     c35: "1()0",
-     c43: ".-01()0",
-     c44: "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
-     c45: "1()0",
-     c53: ".-01()0",
-     c54: ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
-     c55: "1()0",
-     c63: ".-01()0",
-     c64: "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
-     c65: "1()0",
-     c73: ".-01()0",
-     c74: "/-1/1(,101/1-101/1-101(/101/1/01/010",
-     c75: "110101&0",
-     c83: ".-01%.010",
-     c84: "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
-     c85: "1%0"
+      activeColorChangeRoutine: [
+        {
+          "func": "SELECT",
+          "type": "button",
+          "property": "parent",
+          "value": "${PROPERTY id}"
+        },
+        {
+          "func": "FOREACH",
+          "loopRoutine": [
+            "var isColor = ${widgetID} endsWith '-Color'",
+            {
+              "func": "IF",
+              "condition": "${isColor}",
+              "thenRoutine": [
+                "var buttonID = ${widgetID}"
+              ]
+            }
+          ]
+        },
+        {
+          "func": "CALL",
+          "widget": "${buttonID}",
+          "routine": "colorRoutine"
+        }
+      ],
+
+      c13: "+-01$/10",
+      c14: "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
+      c15: ".1$0",
+      c23: ".-01()0",
+      c24: "./1/1+1-101/11010110101/101-1/101-1/101,10",
+      c25: "1()0",
+      c33: ".-01()0",
+      c34: "/-1/101(/1/1-101/101'01/101/1/11.1(0",
+      c35: "1()0",
+      c43: ".-01()0",
+      c44: "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
+      c45: "1()0",
+      c53: ".-01()0",
+      c54: ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
+      c55: "1()0",
+      c63: ".-01()0",
+      c64: "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
+      c65: "1()0",
+      c73: ".-01()0",
+      c74: "/-1/1(,101/1-101/1-101(/101/1/01/010",
+      c75: "110101&0",
+      c83: ".-01%.010",
+      c84: "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
+      c85: "1%0"
     })
     await addWidgetLocal({
       type: "button",
@@ -1589,17 +1616,24 @@ export function initializeEditMode(currentMetaData) {
       clickRoutine: [
         "var parent = ${PROPERTY parent}",
         {
-          func: "CANVAS",
-          canvas: '${parent}',
-          mode: "inc",
-          value: 1
+          "func": "CANVAS",
+          "canvas": "${parent}",
+          "mode": "inc",
+          "value": 1
         },
+        {
+          "func": "CALL",
+          "routine": "colorRoutine"
+        }
+      ],
+      colorRoutine: [
+        "var parent = ${PROPERTY parent}",
         "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
         {
-          func: "SET",
-          collection: "thisButton",
-          property: "color",
-          value: "${color}"
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "color",
+          "value": "${color}"
         }
       ],
       color: "#1F5CA6",
