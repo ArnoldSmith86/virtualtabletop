@@ -588,7 +588,7 @@ const operationProps = {
         'canvas':     'idArray', 
         'collection': 'inCollection', 
         'color':      v=>typeof v === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test(v) || 'color expected (format: #RGB, #RGBA, #RRGGBB or #RRGGBBAA)',
-        'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel']),
+        'mode':       getEnumValidator(['set', 'inc', 'dec', 'change', 'reset', 'setPixel', 'setWidth']),
         'value':      'positiveNumber',
         'x':          'positiveNumber',
         'y':          'positiveNumber'
