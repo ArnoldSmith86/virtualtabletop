@@ -1,3 +1,5 @@
+import { debounce } from '../domhelpers.js';
+
 class Canvas extends Widget {
   constructor(id) {
     super(id);
@@ -210,6 +212,7 @@ class Canvas extends Widget {
   }
 
   async reset() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
         await this.set(`c${x}${y}`, null);
@@ -238,6 +241,8 @@ class Canvas extends Widget {
     }
 
     const resolution = this.getResolution();
+    x = Math.floor(x);
+    y = Math.floor(y);
     if (x < 0 || x >= resolution || y < 0 || y >= resolution) {
       return;
     }
@@ -248,7 +253,8 @@ class Canvas extends Widget {
     const pX = Math.floor(x%regionRes);
     const pY = Math.floor(y%regionRes);
 
-    const color = String.fromCharCode(48+(colorIndex !== undefined ? colorIndex : this.get('activeColor')));
+    const finalColorIndex = colorIndex !== undefined ? colorIndex : this.get('activeColor');
+    const color = String.fromCharCode(48 + finalColorIndex);
 
     const key = `c${regionX}${regionY}`;
     if (!this.regionCache[key]) {
@@ -258,12 +264,20 @@ class Canvas extends Widget {
     }
 
     this.regionCache[key] = this.regionCache[key].substring(0, pY * regionRes + pX) + color + this.regionCache[key].substring(pY * regionRes + pX + 1);
+
+    const colors = this.getColorMap();
+    this.context.fillStyle = colors[finalColorIndex] || 'white';
+    if (colors[finalColorIndex] !== 'transparent') {
+      this.context.fillRect(x, y, 1, 1);
+    } else {
+      this.context.clearRect(x, y, 1, 1);
+    }
   }
 
-  _flushPixelCache() {
+  async _flushPixelCache() {
     if (this.regionCache) {
       for (const key in this.regionCache) {
-        this.set(key, this.compress(this.regionCache[key]));
+        await this.set(key, this.compress(this.regionCache[key]));
       }
       this.regionCache = {};
     }
