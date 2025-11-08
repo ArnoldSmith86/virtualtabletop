@@ -31,6 +31,10 @@ class Holder extends ImageWidget {
 
   applyDeltaToDOM(delta) {
     this.base.applyDeltaToDOM.call(this, delta, true);
+    if(!this.get('text') && this.textWrapper) {
+      this.textWrapper.remove();
+      this.textWrapper = null;
+    }
   }
 
   children() {
@@ -206,9 +210,10 @@ class Holder extends ImageWidget {
     if(legacyMode('disableHolderImageWidget'))
       return;
 
+    if (this.textWrapper) { this.textWrapper.remove(); this.textWrapper = null; }
+
     if (this.get('text') && !this.get('icon')) {
       if (this.symbolWrapper) this.symbolWrapper.remove();
-      if (this.textWrapper) this.textWrapper.remove();
       this.textWrapper = document.createElement('div');
       this.textWrapper.className = 'holderTextOnly';
       this.textWrapper.textContent = this.get('text');
