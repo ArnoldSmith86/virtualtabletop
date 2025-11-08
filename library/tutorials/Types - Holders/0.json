@@ -14,7 +14,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1762574950101,
+      "lastUpdate": 1762575272752,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -132,7 +132,7 @@
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 04",
-    "z": 390,
+    "z": 393,
     "parent": "9qwrP"
   },
   "9qwr_5_C": {
@@ -1427,18 +1427,33 @@
     "x": 1341,
     "y": 621,
     "z": 9734,
-    "icon": {
-      "name": "[trash]",
-      "scale": 1,
-      "offsetX": -0.1,
-      "offsetY": -0.2,
-      "rotation": 10,
-      "color": "red",
-      "strokeColor": "",
-      "strokeWidth": 0,
-      "hoverColor": "pink",
-      "hoverStrokeColor": "",
-      "hoverStrokeWidth": null
-    }
+    "icon": [
+      {
+        "name": "[trash]",
+        "scale": 1,
+        "offsetX": -0.3,
+        "offsetY": -0.1,
+        "rotation": 10,
+        "color": "red",
+        "strokeColor": "",
+        "strokeWidth": 0,
+        "hoverColor": "pink",
+        "hoverStrokeColor": "",
+        "hoverStrokeWidth": null
+      },
+      {
+        "name": "[cards]",
+        "scale": 1,
+        "offsetX": 0.2,
+        "offsetY": 0.1,
+        "rotation": 10,
+        "color": "silver",
+        "strokeColor": "",
+        "strokeWidth": 0,
+        "hoverColor": "",
+        "hoverStrokeColor": "",
+        "hoverStrokeWidth": null
+      }
+    ]
   }
 }
