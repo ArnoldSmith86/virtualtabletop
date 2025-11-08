@@ -63,7 +63,7 @@ class ImageWidget extends Widget {
   }
 
   getDefaultIconScale() {
-    return 1;
+    return this.get('type') === 'holder' ? 0.85 : 1;
   }
 
   getIconDetails() {
