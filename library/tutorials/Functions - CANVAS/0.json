@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 18,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - CANVAS",
       "image": "/assets/-61205848_4168",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1762563509663,
+      "lastUpdate": 1762569880580,
       "showName": false,
       "skill": "",
       "description": "",
@@ -24,9 +27,6 @@
       "variant": "",
       "language": "en-US",
       "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
     }
   },
   "title": {
@@ -225,7 +225,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This button replaces the existing index of the <b>colorMap</b> in position <b>value</b> with the color in the <b>color</b> parameter. The button uses an INPUT to let the player choose the color and position to replace. If index 0 is chosen, that will be the new background color. Pressing 'Reset' will fill the canvas with that new color.",
+    "html": "This button replaces the existing index of the <b>colorMap</b> in position <b>value</b> with the color in the <b>color</b> parameter. The button uses an INPUT to let the player choose the color and position to replace. If index 0 is chosen, that will be the new background color. Using this mode immediately changes all existing pixels of the selected color on the canvas.",
     "layer": -3
   },
   "e4ht-Reset": {
