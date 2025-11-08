@@ -1436,6 +1436,24 @@ export function initializeEditMode(currentMetaData) {
 
       activeColorChangeRoutine: [
         {
+          "func": "CALL",
+          "routine": "selectButtonRoutine",
+          "arguments": {
+            "buttonType": "-Color"
+          }
+        }
+      ],
+      lineWidthChangeRoutine: [
+        {
+          "func": "CALL",
+          "routine": "selectButtonRoutine",
+          "arguments": {
+            "buttonType": "-Size"
+          }
+        }
+      ],
+      selectButtonRoutine: [
+        {
           "func": "SELECT",
           "type": "button",
           "property": "parent",
@@ -1444,7 +1462,7 @@ export function initializeEditMode(currentMetaData) {
         {
           "func": "FOREACH",
           "loopRoutine": [
-            "var isColor = ${widgetID} endsWith '-Color'",
+            "var isColor = ${widgetID} endsWith ${buttonType}",
             {
               "func": "IF",
               "condition": "${isColor}",
@@ -1457,7 +1475,7 @@ export function initializeEditMode(currentMetaData) {
         {
           "func": "CALL",
           "widget": "${buttonID}",
-          "routine": "colorRoutine"
+          "routine": "canvasRoutine"
         }
       ],
 
@@ -1527,51 +1545,39 @@ export function initializeEditMode(currentMetaData) {
       movable: false,
       movableInEdit: false,
 
+      canvasRoutine: [
+        "var parent = ${PROPERTY parent}",
+        "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+        "var step = floor ${step}",
+        "var percentage = 10 + ${step} * 10",
+        "var percentage = min ${percentage} 100",
+        "var percentage = max ${percentage} 10",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "lineSize",
+          "value": "${percentage}"
+        }
+      ],
       clickRoutine: [
         "var parent = ${PROPERTY parent}",
+        "var lineSize = ${PROPERTY lineSize} + 10",
+        "var lineSize = ${lineSize} % 110",
         {
-          "func": "GET",
+          "func": "SET",
           "collection": "thisButton",
-          "property": "lineSize"
+          "property": "lineSize",
+          "value": "${lineSize}"
         },
+        "var newSize = max ${lineSize} 10",
+        "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
         {
-          "func": "IF",
-          "operand1": "${lineSize}",
-          "operand2": 100,
-          "thenRoutine": [
-            {
-              "func": "SET",
-              "collection": "thisButton",
-              "property": "lineSize",
-              "value": 10
-            },
-            {
-              "func": "SET",
-              "collection": [
-                "${parent}"
-              ],
-              "property": "lineWidth",
-              "value": 1
-            }
+          "func": "SET",
+          "collection": [
+            "${parent}"
           ],
-          "elseRoutine": [
-            {
-              "func": "SET",
-              "collection": "thisButton",
-              "property": "lineSize",
-              "relation": "+",
-              "value": 10
-            },
-            "var newLineWidth = ${PROPERTY lineWidth OF $parent} + (${PROPERTY resolution OF $parent} / 200)",
-            {
-              "func": "SET",
-              "collection": [
-                "${parent}"
-              ],
-              "property": "lineWidth",
-              "value": "${newLineWidth}"
-            }
-          ]
+          "property": "lineWidth",
+          "value": "${newWidth}"
         }
       ],
       "css": {
