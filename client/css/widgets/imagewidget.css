@@ -22,6 +22,7 @@
   color: var(--color);
   transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
   background-image: var(--image);
+  opacity: var(--opacity, 1);
   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
 }
 .widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolWrapper > div {
