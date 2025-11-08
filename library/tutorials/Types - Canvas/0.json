@@ -14,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762569266185,
+      "lastUpdate": 1762570288465,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -119,7 +119,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The canvas widget contains a <b>resolution</b> property that controls the size of the lines. Larger numbers give better resolution. It defaults to 100 and generally should not be above about 500. The canvas above is set to 15 so it has large blocky lines. The <b>colorMap</b> property can be used to customize the colors available, like the red palette above.",
+    "html": "The canvas widget contains a <b>resolution</b> property that controls the size of the lines. Larger numbers give better resolution. It defaults to 100 and generally should not be above about 500. The canvas above is set to 15 so it has large blocky lines. The <b>colorMap</b> property can be used to customize the colors available, like the red palette above. If the 0 index of the <b>colorMap</b> is set to 'transparent' then the canvas widget background is transparent.",
     "layer": -3
   },
   "text2": {
