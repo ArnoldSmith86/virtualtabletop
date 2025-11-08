@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder",
       "image": "/assets/-1144102332_4316",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1748992077634,
+      "lastUpdate": 1762574950101,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -26,49 +29,50 @@
       "players": "1"
     }
   },
-  "gaup": {
-    "type": "holder",
-    "x": 108.5,
-    "y": 383,
-    "z": 9,
-    "id": "gaup"
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Holders: Appearance",
+    "layer": -3
   },
-  "1svp": {
-    "type": "holder",
-    "x": 451.5,
-    "y": 395,
-    "z": 12,
-    "id": "1svp",
-    "classes": "transparent"
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This variant of the tutorial shows how to use widget properties, including css and classes, to modify holder appearance. Move cards around to the holders to see how some of them change when cards are being dragged. The examples in the bottom row work the same as for other widgets that use <b>icon</b> and <b>image</b>. See the <a href='https://virtualtabletop.io/tutorial/properties-icon'>Icon Tutorial</a>.",
+    "width": 1300
   },
-  "3ew8": {
-    "type": "holder",
-    "x": 882.5,
-    "y": 406,
-    "z": 13,
-    "id": "3ew8",
-    "css": "background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);"
-  },
-  "x80k": {
-    "type": "holder",
-    "id": "x80k",
-    "x": 702.5,
-    "y": 729,
-    "dropTarget": {
-      "deck": "x80kD"
+  "text1": {
+    "id": "text1",
+    "x": 20,
+    "y": 391,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
     },
-    "z": 6
+    "html": "This is a standard holder with no changes.",
+    "layer": -3
   },
-  "x80kP": {
-    "type": "pile",
-    "id": "x80kP",
-    "parent": "x80k",
-    "width": 103,
-    "height": 160
-  },
-  "x80kB": {
-    "id": "x80kB",
-    "parent": "x80k",
+  "9qwrB": {
+    "id": "9qwrB",
+    "parent": "deckHolder",
+    "fixedParent": true,
     "y": 171.36,
     "width": 111,
     "height": 40,
@@ -78,191 +82,968 @@
     "clickRoutine": [
       {
         "func": "RECALL",
-        "holder": "x80k"
+        "holder": "${PROPERTY parent}"
       },
       {
         "func": "FLIP",
-        "holder": "x80k",
+        "holder": "${PROPERTY parent}",
         "face": 0
       },
       {
         "func": "SHUFFLE",
-        "holder": "x80k"
+        "holder": "${PROPERTY parent}"
       }
     ]
   },
-  "x80kD": {
+  "9qwrP": {
+    "type": "pile",
+    "id": "9qwrP",
+    "width": 103,
+    "height": 160,
+    "z": 325,
+    "parent": "deckHolder"
+  },
+  "9qwr_A_C": {
+    "id": "9qwr_A_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 01",
+    "z": 310
+  },
+  "9qwr_2_C": {
+    "id": "9qwr_2_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 02",
+    "z": 311
+  },
+  "9qwr_3_C": {
+    "id": "9qwr_3_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 03",
+    "z": 305
+  },
+  "9qwr_4_C": {
+    "id": "9qwr_4_C",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 04",
+    "z": 390,
+    "parent": "9qwrP"
+  },
+  "9qwr_5_C": {
+    "id": "9qwr_5_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 05",
+    "z": 318
+  },
+  "9qwr_6_C": {
+    "id": "9qwr_6_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 06",
+    "z": 313
+  },
+  "9qwr_7_C": {
+    "id": "9qwr_7_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 07",
+    "z": 286
+  },
+  "9qwr_8_C": {
+    "id": "9qwr_8_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 08",
+    "z": 295
+  },
+  "9qwr_9_C": {
+    "id": "9qwr_9_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 09",
+    "z": 282
+  },
+  "9qwr_T_C": {
+    "id": "9qwr_T_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 10",
+    "z": 315
+  },
+  "9qwr_J_C": {
+    "id": "9qwr_J_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 2J",
+    "z": 284
+  },
+  "9qwr_Q_C": {
+    "id": "9qwr_Q_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 3Q",
+    "z": 304
+  },
+  "9qwr_K_C": {
+    "id": "9qwr_K_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "C 4K",
+    "z": 319
+  },
+  "9qwr_A_D": {
+    "id": "9qwr_A_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 01",
+    "z": 301
+  },
+  "9qwr_2_D": {
+    "id": "9qwr_2_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 02",
+    "z": 296
+  },
+  "9qwr_3_D": {
+    "id": "9qwr_3_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 03",
+    "z": 309
+  },
+  "9qwr_4_D": {
+    "id": "9qwr_4_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 04",
+    "z": 290
+  },
+  "9qwr_5_D": {
+    "id": "9qwr_5_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 05",
+    "z": 280
+  },
+  "9qwr_6_D": {
+    "id": "9qwr_6_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 06",
+    "z": 316
+  },
+  "9qwr_7_D": {
+    "id": "9qwr_7_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 07",
+    "z": 303
+  },
+  "9qwr_8_D": {
+    "id": "9qwr_8_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 08",
+    "z": 293
+  },
+  "9qwr_9_D": {
+    "id": "9qwr_9_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 09",
+    "z": 283
+  },
+  "9qwr_T_D": {
+    "id": "9qwr_T_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 10",
+    "z": 291
+  },
+  "9qwr_J_D": {
+    "id": "9qwr_J_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 2J",
+    "z": 292
+  },
+  "9qwr_Q_D": {
+    "id": "9qwr_Q_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 3Q",
+    "z": 276
+  },
+  "9qwr_K_D": {
+    "id": "9qwr_K_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "D 4K",
+    "z": 289
+  },
+  "9qwr_A_H": {
+    "id": "9qwr_A_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 01",
+    "z": 273
+  },
+  "9qwr_2_H": {
+    "id": "9qwr_2_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 02",
+    "z": 317
+  },
+  "9qwr_3_H": {
+    "id": "9qwr_3_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 03",
+    "z": 321
+  },
+  "9qwr_4_H": {
+    "id": "9qwr_4_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 04",
+    "z": 299
+  },
+  "9qwr_5_H": {
+    "id": "9qwr_5_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 05",
+    "z": 294
+  },
+  "9qwr_6_H": {
+    "id": "9qwr_6_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 06",
+    "z": 288
+  },
+  "9qwr_7_H": {
+    "id": "9qwr_7_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 07",
+    "z": 281
+  },
+  "9qwr_8_H": {
+    "id": "9qwr_8_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 08",
+    "z": 287
+  },
+  "9qwr_9_H": {
+    "id": "9qwr_9_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 09",
+    "z": 274
+  },
+  "9qwr_T_H": {
+    "id": "9qwr_T_H",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 10",
+    "z": 362,
+    "parent": "9qwrP"
+  },
+  "9qwr_J_H": {
+    "id": "9qwr_J_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 2J",
+    "z": 275
+  },
+  "9qwr_Q_H": {
+    "id": "9qwr_Q_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 3Q",
+    "z": 278
+  },
+  "9qwr_K_H": {
+    "id": "9qwr_K_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "H 4K",
+    "z": 302
+  },
+  "9qwr_A_S": {
+    "id": "9qwr_A_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 01",
+    "z": 307
+  },
+  "9qwr_2_S": {
+    "id": "9qwr_2_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 02",
+    "z": 297
+  },
+  "9qwr_3_S": {
+    "id": "9qwr_3_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 03",
+    "z": 308
+  },
+  "9qwr_4_S": {
+    "id": "9qwr_4_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 314
+  },
+  "9qwr_5_S": {
+    "id": "9qwr_5_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 298
+  },
+  "9qwr_6_S": {
+    "id": "9qwr_6_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 279
+  },
+  "9qwr_7_S": {
+    "id": "9qwr_7_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 285
+  },
+  "9qwr_8_S": {
+    "id": "9qwr_8_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 312
+  },
+  "9qwr_9_S": {
+    "id": "9qwr_9_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 277
+  },
+  "9qwr_T_S": {
+    "id": "9qwr_T_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 320
+  },
+  "9qwr_J_S": {
+    "id": "9qwr_J_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 300
+  },
+  "9qwr_Q_S": {
+    "id": "9qwr_Q_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 306
+  },
+  "9qwr_K_S": {
+    "id": "9qwr_K_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 272
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1470,
+    "y": 18,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "mainDeck": {
     "type": "deck",
-    "id": "x80kD",
-    "parent": "x80k",
+    "id": "mainDeck",
+    "parent": "deckHolder",
+    "x": 12,
+    "y": 41,
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
       },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
       },
-      "AC": {
-        "image": "/i/cards-default/AC.svg"
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
       },
-      "2C": {
-        "image": "/i/cards-default/2C.svg"
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
       },
-      "3C": {
-        "image": "/i/cards-default/3C.svg"
+      "C 01": {
+        "image": "/i/cards-default/AC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 C"
       },
-      "4C": {
-        "image": "/i/cards-default/4C.svg"
+      "C 02": {
+        "image": "/i/cards-default/2C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 C"
       },
-      "5C": {
-        "image": "/i/cards-default/5C.svg"
+      "C 03": {
+        "image": "/i/cards-default/3C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 C"
       },
-      "6C": {
-        "image": "/i/cards-default/6C.svg"
+      "C 04": {
+        "image": "/i/cards-default/4C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 C"
       },
-      "7C": {
-        "image": "/i/cards-default/7C.svg"
+      "C 05": {
+        "image": "/i/cards-default/5C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 C"
       },
-      "8C": {
-        "image": "/i/cards-default/8C.svg"
+      "C 06": {
+        "image": "/i/cards-default/6C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 C"
       },
-      "9C": {
-        "image": "/i/cards-default/9C.svg"
+      "C 07": {
+        "image": "/i/cards-default/7C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 C"
       },
-      "TC": {
-        "image": "/i/cards-default/TC.svg"
+      "C 08": {
+        "image": "/i/cards-default/8C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 C"
       },
-      "JC": {
-        "image": "/i/cards-default/JC.svg"
+      "C 09": {
+        "image": "/i/cards-default/9C.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 C"
       },
-      "QC": {
-        "image": "/i/cards-default/QC.svg"
+      "C 10": {
+        "image": "/i/cards-default/TC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 C"
       },
-      "KC": {
-        "image": "/i/cards-default/KC.svg"
+      "C 2J": {
+        "image": "/i/cards-default/JC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J C"
       },
-      "AD": {
-        "image": "/i/cards-default/AD.svg"
+      "C 3Q": {
+        "image": "/i/cards-default/QC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q C"
       },
-      "2D": {
-        "image": "/i/cards-default/2D.svg"
+      "C 4K": {
+        "image": "/i/cards-default/KC.svg",
+        "suit": "C",
+        "suitColor": "♣",
+        "suitAlt": "1♣",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K C"
       },
-      "3D": {
-        "image": "/i/cards-default/3D.svg"
+      "D 01": {
+        "image": "/i/cards-default/AD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 D"
       },
-      "4D": {
-        "image": "/i/cards-default/4D.svg"
+      "D 02": {
+        "image": "/i/cards-default/2D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 D"
       },
-      "5D": {
-        "image": "/i/cards-default/5D.svg"
+      "D 03": {
+        "image": "/i/cards-default/3D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 D"
       },
-      "6D": {
-        "image": "/i/cards-default/6D.svg"
+      "D 04": {
+        "image": "/i/cards-default/4D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 D"
       },
-      "7D": {
-        "image": "/i/cards-default/7D.svg"
+      "D 05": {
+        "image": "/i/cards-default/5D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 D"
       },
-      "8D": {
-        "image": "/i/cards-default/8D.svg"
+      "D 06": {
+        "image": "/i/cards-default/6D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 D"
       },
-      "9D": {
-        "image": "/i/cards-default/9D.svg"
+      "D 07": {
+        "image": "/i/cards-default/7D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 D"
       },
-      "TD": {
-        "image": "/i/cards-default/TD.svg"
+      "D 08": {
+        "image": "/i/cards-default/8D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 D"
       },
-      "JD": {
-        "image": "/i/cards-default/JD.svg"
+      "D 09": {
+        "image": "/i/cards-default/9D.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 D"
       },
-      "QD": {
-        "image": "/i/cards-default/QD.svg"
+      "D 10": {
+        "image": "/i/cards-default/TD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 D"
       },
-      "KD": {
-        "image": "/i/cards-default/KD.svg"
+      "D 2J": {
+        "image": "/i/cards-default/JD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J D"
       },
-      "AH": {
-        "image": "/i/cards-default/AH.svg"
+      "D 3Q": {
+        "image": "/i/cards-default/QD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q D"
       },
-      "2H": {
-        "image": "/i/cards-default/2H.svg"
+      "D 4K": {
+        "image": "/i/cards-default/KD.svg",
+        "suit": "D",
+        "suitColor": "♦",
+        "suitAlt": "4♦",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K D"
       },
-      "3H": {
-        "image": "/i/cards-default/3H.svg"
+      "H 01": {
+        "image": "/i/cards-default/AH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 H"
       },
-      "4H": {
-        "image": "/i/cards-default/4H.svg"
+      "H 02": {
+        "image": "/i/cards-default/2H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 H"
       },
-      "5H": {
-        "image": "/i/cards-default/5H.svg"
+      "H 03": {
+        "image": "/i/cards-default/3H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 H"
       },
-      "6H": {
-        "image": "/i/cards-default/6H.svg"
+      "H 04": {
+        "image": "/i/cards-default/4H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 H"
       },
-      "7H": {
-        "image": "/i/cards-default/7H.svg"
+      "H 05": {
+        "image": "/i/cards-default/5H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 H"
       },
-      "8H": {
-        "image": "/i/cards-default/8H.svg"
+      "H 06": {
+        "image": "/i/cards-default/6H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 H"
       },
-      "9H": {
-        "image": "/i/cards-default/9H.svg"
+      "H 07": {
+        "image": "/i/cards-default/7H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 H"
       },
-      "TH": {
-        "image": "/i/cards-default/TH.svg"
+      "H 08": {
+        "image": "/i/cards-default/8H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 H"
       },
-      "JH": {
-        "image": "/i/cards-default/JH.svg"
+      "H 09": {
+        "image": "/i/cards-default/9H.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 H"
       },
-      "QH": {
-        "image": "/i/cards-default/QH.svg"
+      "H 10": {
+        "image": "/i/cards-default/TH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 H"
       },
-      "KH": {
-        "image": "/i/cards-default/KH.svg"
+      "H 2J": {
+        "image": "/i/cards-default/JH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J H"
       },
-      "AS": {
-        "image": "/i/cards-default/AS.svg"
+      "H 3Q": {
+        "image": "/i/cards-default/QH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q H"
       },
-      "2S": {
-        "image": "/i/cards-default/2S.svg"
+      "H 4K": {
+        "image": "/i/cards-default/KH.svg",
+        "suit": "H",
+        "suitColor": "♥",
+        "suitAlt": "2♥",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K H"
       },
-      "3S": {
-        "image": "/i/cards-default/3S.svg"
+      "S 01": {
+        "image": "/i/cards-default/AS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "01",
+        "rankA": "5A",
+        "rankFixed": "01 S"
       },
-      "4S": {
-        "image": "/i/cards-default/4S.svg"
+      "S 02": {
+        "image": "/i/cards-default/2S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "02",
+        "rankA": "02",
+        "rankFixed": "02 S"
       },
-      "5S": {
-        "image": "/i/cards-default/5S.svg"
+      "S 03": {
+        "image": "/i/cards-default/3S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "03",
+        "rankA": "03",
+        "rankFixed": "03 S"
       },
-      "6S": {
-        "image": "/i/cards-default/6S.svg"
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
       },
-      "7S": {
-        "image": "/i/cards-default/7S.svg"
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
       },
-      "8S": {
-        "image": "/i/cards-default/8S.svg"
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
       },
-      "9S": {
-        "image": "/i/cards-default/9S.svg"
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
       },
-      "TS": {
-        "image": "/i/cards-default/TS.svg"
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
       },
-      "JS": {
-        "image": "/i/cards-default/JS.svg"
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
       },
-      "QS": {
-        "image": "/i/cards-default/QS.svg"
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
       },
-      "KS": {
-        "image": "/i/cards-default/KS.svg"
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
       }
     },
     "faceTemplates": [
       {
         "border": false,
-        "radius": 8,
+        "radius": false,
         "objects": [
           {
             "type": "image",
@@ -270,13 +1051,14 @@
             "y": 0,
             "width": 103,
             "height": 160,
+            "color": "transparent",
             "value": "/i/cards-default/2B.svg"
           }
         ]
       },
       {
         "border": false,
-        "radius": 8,
+        "radius": false,
         "objects": [
           {
             "type": "image",
@@ -284,6 +1066,7 @@
             "y": 0,
             "width": 103,
             "height": 160,
+            "color": "transparent",
             "dynamicProperties": {
               "value": "image"
             }
@@ -292,496 +1075,370 @@
       }
     ]
   },
-  "x80kAC": {
-    "id": "x80kAC",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "AC",
-    "z": 166
-  },
-  "x80k2C": {
-    "id": "x80k2C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "2C",
-    "z": 163
-  },
-  "x80k3C": {
-    "id": "x80k3C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "3C",
-    "z": 179
-  },
-  "x80k4C": {
-    "id": "x80k4C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "4C",
-    "z": 162
-  },
-  "x80k5C": {
-    "id": "x80k5C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "5C",
-    "z": 190
-  },
-  "x80k6C": {
-    "id": "x80k6C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "6C",
-    "z": 161
-  },
-  "x80k7C": {
-    "id": "x80k7C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "7C",
-    "z": 188
-  },
-  "x80k8C": {
-    "id": "x80k8C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "8C",
-    "z": 203
-  },
-  "x80k9C": {
-    "id": "x80k9C",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "9C",
-    "z": 197
-  },
-  "x80kTC": {
-    "id": "x80kTC",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "TC",
-    "z": 191
-  },
-  "x80kJC": {
-    "id": "x80kJC",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "JC",
-    "z": 2,
-    "x": 49,
-    "y": 4,
-    "parent": "k9yg",
-    "activeFace": 1
-  },
-  "x80kQC": {
-    "id": "x80kQC",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "QC",
-    "z": 199
-  },
-  "x80kKC": {
-    "id": "x80kKC",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "KC",
-    "z": 204
-  },
-  "x80kAD": {
-    "id": "x80kAD",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "AD",
-    "z": 172
-  },
-  "x80k2D": {
-    "id": "x80k2D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "2D",
-    "z": 169
-  },
-  "x80k3D": {
-    "id": "x80k3D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "3D",
-    "z": 201
-  },
-  "x80k4D": {
-    "id": "x80k4D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "4D",
-    "z": 164
-  },
-  "x80k5D": {
-    "id": "x80k5D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "5D",
-    "z": 171
-  },
-  "x80k6D": {
-    "id": "x80k6D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "6D",
-    "z": 184
-  },
-  "x80k7D": {
-    "id": "x80k7D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "7D",
-    "z": 185
-  },
-  "x80k8D": {
-    "id": "x80k8D",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "8D",
-    "z": 180
-  },
-  "x80k9D": {
-    "id": "x80k9D",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "9D",
-    "z": 1,
-    "x": 4,
-    "y": 4,
-    "parent": "k9yg",
-    "activeFace": 1
-  },
-  "x80kTD": {
-    "id": "x80kTD",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "TD",
-    "z": 192
-  },
-  "x80kJD": {
-    "id": "x80kJD",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "JD",
-    "z": 157
-  },
-  "x80kQD": {
-    "id": "x80kQD",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "QD",
-    "z": 193
-  },
-  "x80kKD": {
-    "id": "x80kKD",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "KD",
-    "z": 176
-  },
-  "x80kAH": {
-    "id": "x80kAH",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "AH",
-    "z": 165
-  },
-  "x80k2H": {
-    "id": "x80k2H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "2H",
-    "z": 194
-  },
-  "x80k3H": {
-    "id": "x80k3H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "3H",
-    "z": 182
-  },
-  "x80k4H": {
-    "id": "x80k4H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "4H",
-    "z": 181
-  },
-  "x80k5H": {
-    "id": "x80k5H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "5H",
-    "z": 189
-  },
-  "x80k6H": {
-    "id": "x80k6H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "6H",
-    "z": 174
-  },
-  "x80k7H": {
-    "id": "x80k7H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "7H",
-    "z": 195
-  },
-  "x80k8H": {
-    "id": "x80k8H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "8H",
-    "z": 177
-  },
-  "x80k9H": {
-    "id": "x80k9H",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "9H",
-    "z": 196
-  },
-  "x80kTH": {
-    "id": "x80kTH",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "TH",
-    "z": 186
-  },
-  "x80kJH": {
-    "id": "x80kJH",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "JH",
-    "z": 173
-  },
-  "x80kQH": {
-    "id": "x80kQH",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "QH",
-    "z": 3,
-    "x": 94,
-    "y": 4,
-    "parent": "k9yg",
-    "activeFace": 1
-  },
-  "x80kKH": {
-    "id": "x80kKH",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "KH",
-    "z": 175
-  },
-  "x80kAS": {
-    "id": "x80kAS",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "AS",
-    "z": 178
-  },
-  "x80k2S": {
-    "id": "x80k2S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "2S",
-    "z": 187
-  },
-  "x80k3S": {
-    "id": "x80k3S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "3S",
-    "z": 158
-  },
-  "x80k4S": {
-    "id": "x80k4S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "4S",
-    "z": 198
-  },
-  "x80k5S": {
-    "id": "x80k5S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "5S",
-    "z": 159
-  },
-  "x80k6S": {
-    "id": "x80k6S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "6S",
-    "z": 168
-  },
-  "x80k7S": {
-    "id": "x80k7S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "7S",
-    "z": 183
-  },
-  "x80k8S": {
-    "id": "x80k8S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "8S",
-    "z": 170
-  },
-  "x80k9S": {
-    "id": "x80k9S",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "9S",
-    "z": 200
-  },
-  "x80kTS": {
-    "id": "x80kTS",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "TS",
-    "z": 160
-  },
-  "x80kJS": {
-    "id": "x80kJS",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "JS",
-    "z": 202
-  },
-  "x80kQS": {
-    "id": "x80kQS",
-    "parent": "x80kP",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "QS",
-    "z": 167
-  },
-  "x80kKS": {
-    "id": "x80kKS",
-    "deck": "x80kD",
-    "type": "card",
-    "cardType": "KS",
-    "z": 4,
-    "x": 139,
-    "y": 4,
-    "activeFace": 1,
-    "parent": "k9yg"
-  },
-  "z5lb": {
-    "type": "label",
-    "text": "Normal",
-    "x": 116,
-    "y": 270,
-    "z": 7,
-    "id": "z5lb"
-  },
-  "12w6": {
-    "type": "label",
-    "text": "Transparent using 'classes': 'transparent'. It will still show a border when hovering a card over it. You should always make sure to highlight this position in the game board underneath.",
-    "x": 352,
-    "y": 249,
-    "z": 10,
-    "id": "12w6",
-    "width": 320,
-    "height": 120
-  },
-  "qzvk": {
-    "type": "label",
-    "text": "You can use the 'css' property to change pretty much anything about the looks.",
-    "x": 797,
-    "y": 273,
-    "z": 12,
-    "id": "qzvk",
-    "width": 300,
-    "height": 60
-  },
-  "8fr3": {
-    "type": "label",
-    "text": "Holders: Appearance",
-    "css": "font-size: 60px",
-    "height": 160,
-    "width": 1000,
-    "x": 287,
-    "y": -6,
-    "z": 75,
-    "id": "8fr3"
-  },
-  "k9yg": {
+  "holder1": {
     "type": "holder",
-    "id": "k9yg",
-    "x": 109,
-    "y": 726,
-    "width": 511,
-    "height": 168,
-    "z": 15,
-    "movable": false,
-    "dropShadow": true,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "stackOffsetX": 45
+    "id": "holder1",
+    "x": 59,
+    "y": 193,
+    "z": 9733
   },
-  "1kvg": {
-    "id": "1kvg",
-    "x": 177,
-    "y": 669,
-    "width": 400,
-    "height": 50,
-    "z": 4,
+  "text2": {
+    "id": "text2",
+    "x": 235,
+    "y": 391,
+    "width": 200,
+    "z": 185,
     "movable": false,
-    "text": "This holder has dropShadow: true. You can modify the shadow using css with '.dragging-shadow'."
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "There is an invisible holder above with <b>classes</b> transparent.",
+    "layer": -3
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 273,
+    "y": 193,
+    "z": 9733,
+    "classes": "transparent"
+  },
+  "text3": {
+    "id": "text3",
+    "x": 450,
+    "y": 391,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses css to change color when a card is being dragged. It changes again when a card is dragged directly over it.",
+    "layer": -3
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 486,
+    "y": 193,
+    "z": 9733,
+    "css": {
+      ".droppable": {
+        "background": "#00000050"
+      },
+      ".droptarget": {
+        "background": "#000000aa"
+      }
+    }
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 699,
+    "y": 193,
+    "z": 9734,
+    "css": {
+      "default": {
+        "background": "#ffffff80"
+      }
+    }
+  },
+  "text4": {
+    "id": "text4",
+    "x": 665,
+    "y": 391,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses changes the default color to semi-transparent to allow an image behind the holder to show through.",
+    "layer": -3
+  },
+  "basic4": {
+    "id": "basic4",
+    "x": 699,
+    "y": 193,
+    "layer": -4,
+    "width": 111,
+    "height": 168,
+    "icon": "[vtt_logo]",
+    "color": "#152f5f",
+    "movable": false
+  },
+  "text5": {
+    "id": "text5",
+    "x": 880,
+    "y": 391,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses opacity to allow the lower widget to be seen. But this also applies to child cards.",
+    "layer": -3
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 914,
+    "y": 193,
+    "z": 9734,
+    "css": {
+      "default": {
+        "opacity": 0.5
+      }
+    }
+  },
+  "basic5": {
+    "id": "basic5",
+    "x": 914,
+    "y": 193,
+    "layer": -4,
+    "width": 111,
+    "height": 168,
+    "icon": "[vtt_logo]",
+    "color": "#152f5f",
+    "z": 9735,
+    "movable": false
+  },
+  "text6": {
+    "id": "text6",
+    "x": 1096,
+    "y": 391,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses css to create a pattern.",
+    "layer": -3
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 1127,
+    "y": 193,
+    "z": 9734,
+    "css": {
+      "background": "repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px)"
+    }
+  },
+  "text7": {
+    "id": "text7",
+    "x": 1311,
+    "y": 391,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses css to eliminate the border that shows when a card is dragged over it.",
+    "layer": -3
+  },
+  "holder7": {
+    "type": "holder",
+    "id": "holder7",
+    "x": 1341,
+    "y": 193,
+    "z": 9734,
+    "css": {
+      "border": "transparent"
+    }
+  },
+  "text8": {
+    "id": "text8",
+    "x": 20,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The font is auto-sized and centered.",
+    "layer": -3
+  },
+  "holder8": {
+    "type": "holder",
+    "id": "holder8",
+    "x": 59,
+    "y": 621,
+    "z": 9733,
+    "text": "Holders can have text"
+  },
+  "text9": {
+    "id": "text9",
+    "x": 235,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Holders use a special <b>--color</b> property for text",
+    "layer": -3
+  },
+  "holder9": {
+    "type": "holder",
+    "id": "holder9",
+    "x": 273,
+    "y": 621,
+    "z": 9733,
+    "text": "Change color with css",
+    "css": {
+      "--color": "red"
+    }
+  },
+  "text10": {
+    "id": "text10",
+    "x": 450,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Use special <b>.holderTextOnly</b> class to limit changes to a holder and not impact child widgets.",
+    "layer": -3
+  },
+  "holder10": {
+    "type": "holder",
+    "id": "holder10",
+    "x": 486,
+    "y": 621,
+    "z": 9733,
+    "css": {
+      " .holderTextOnly": {
+        "color": "purple",
+        "top": "-105px",
+        "font-size": "20px !important"
+      }
+    },
+    "text": "CSS Tips"
+  },
+  "holder11": {
+    "type": "holder",
+    "id": "holder11",
+    "x": 699,
+    "y": 621,
+    "z": 9734,
+    "css": {
+      "background-repeat": "no-repeat",
+      "background-position": "center"
+    },
+    "image": "/i/game-icons.net/lorc/snowflake-1.svg",
+    "svgReplaces": {
+      "#000": "newColor"
+    },
+    "newColor": "blue"
+  },
+  "text11": {
+    "id": "text11",
+    "x": 665,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Add images and adjust using css and <b>svgReplaces</b>.",
+    "layer": -3
+  },
+  "text12": {
+    "id": "text12",
+    "x": 880,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The <b>icon</b> property works similar to images, but formatting and positioning is automated.",
+    "layer": -3
+  },
+  "holder12": {
+    "type": "holder",
+    "id": "holder12",
+    "x": 914,
+    "y": 621,
+    "z": 9734,
+    "icon": "🤞"
+  },
+  "text13": {
+    "id": "text13",
+    "x": 1096,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Easily combine icons with text or multiple icons.",
+    "layer": -3
+  },
+  "holder13": {
+    "type": "holder",
+    "id": "holder13",
+    "x": 1127,
+    "y": 621,
+    "z": 9734,
+    "icon": "👣",
+    "text": "Bigfoot"
+  },
+  "text14": {
+    "id": "text14",
+    "x": 1311,
+    "y": 819,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The <b>icon</b> property has several parameters built in to allow flexibility.",
+    "layer": -3
+  },
+  "holder14": {
+    "type": "holder",
+    "id": "holder14",
+    "x": 1341,
+    "y": 621,
+    "z": 9734,
+    "icon": {
+      "name": "[trash]",
+      "scale": 1,
+      "offsetX": -0.1,
+      "offsetY": -0.2,
+      "rotation": 10,
+      "color": "red",
+      "strokeColor": "",
+      "strokeWidth": 0,
+      "hoverColor": "pink",
+      "hoverStrokeColor": "",
+      "hoverStrokeWidth": null
+    }
   }
 }
