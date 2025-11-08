@@ -361,13 +361,13 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
-    this.addCheckbox('Disable holder image widget', 'disableHolderImageWidget', `
+    this.addCheckbox('Disable holder image support', 'disableHolderImageWidget', `
       <b>Problem</b>: Holders now support image, icon, and text properties natively, but some games manually implemented this functionality before it was supported and may break with the new behavior.
       <br><br>
       <b>Old behavior</b>: Holders did not natively support image/icon/text properties, requiring manual workarounds.<br>
-      <b>New behavior</b>: Holders inherit from ImageWidget and support image, icon, and text properties directly.
+      <b>New behavior</b>: Holders support image, icon, and text properties directly.
       <br><br>
-      This legacy mode disables the native image/widget support for holders, restoring the old behavior where holders inherit from Widget instead of ImageWidget.
+      This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2634">pull request #2634</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
