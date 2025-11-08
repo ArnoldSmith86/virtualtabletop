@@ -316,7 +316,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   element.textContent = text; // Set the text
 
   // Start with a large font size and decrease until it fits
-  let fontSize = 100; // Start with a large multiple of 10px
+  let fontSize = 25;
 
   // Set the font size and measure the height and width of the element
   while (fontSize >= 10) {
@@ -330,7 +330,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
       break; // The element fits, exit the loop
     }
 
-    fontSize -= 10; // Reduce the font size by 10px
+    fontSize -= 1; // Reduce the font size by 1px
   }
 
   element.style.setProperty('--maxWidth', `${maxWidth}px`);
