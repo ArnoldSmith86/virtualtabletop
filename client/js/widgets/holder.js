@@ -30,7 +30,7 @@ class Holder extends ImageWidget {
   }
 
   applyDeltaToDOM(delta) {
-    this.base.applyDeltaToDOM.call(this, delta);
+    this.base.applyDeltaToDOM.call(this, delta, true);
   }
 
   children() {
