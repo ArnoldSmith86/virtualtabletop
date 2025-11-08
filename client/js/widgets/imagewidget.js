@@ -41,10 +41,15 @@ class ImageWidget extends Widget {
 
   css() {
     let css = super.css();
-
-    if(this.get('image'))
-      css += '; background-image: url("' + this.getImage() + '")';
-
+    if(this.get('image')) {
+      if(this.get('type') === 'holder') {
+        this.cssToStylesheet({
+          '${THIS}.holder.hasImage::before': `background-image: url("${this.getImage()}")`
+        }, new Set());
+      } else {
+        css += '; background-image: url("' + this.getImage() + '")';
+      }
+    }
     return css;
   }
 
