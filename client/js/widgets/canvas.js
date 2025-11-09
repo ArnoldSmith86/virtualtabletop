@@ -36,6 +36,7 @@ class Canvas extends Widget {
     this.domElement.appendChild(this.cursor);
 
     this.canvas.addEventListener('mousemove', (e) => {
+      if (document.body.classList.contains('edit')) return;
       const coordLocal = this.coordLocalFromCoordClient({ x: e.clientX, y: e.clientY });
       const lineWidth = this.get('lineWidth');
       const resolution = this.getResolution();
@@ -46,6 +47,7 @@ class Canvas extends Widget {
     });
 
     this.canvas.addEventListener('mouseenter', () => {
+      if (document.body.classList.contains('edit')) return;
       this.cursor.style.display = 'block';
     });
 
@@ -175,19 +177,24 @@ class Canvas extends Widget {
       return;
     }
 
-    this.canvas.style.cursor = 'none';
+    const inEditMode = document.body.classList.contains('edit');
+    this.canvas.style.cursor = inEditMode ? 'auto' : 'none';
     const colors = this.getColorMap();
     const color = colors[this.get('activeColor')] || 'white';
     const lineWidth = this.get('lineWidth');
     const scaleX = this.get('width') / resolution;
     const scaleY = this.get('height') / resolution;
 
-    this.cursor.style.display = 'block';
-    this.cursor.style.width = `${2 * lineWidth * scaleX}px`;
-    this.cursor.style.height = `${2 * lineWidth * scaleY}px`;
-    this.cursor.style.backgroundColor = color;
-    this.cursor.style.left = `${coordLocal.x - lineWidth * scaleX}px`;
-    this.cursor.style.top = `${coordLocal.y - lineWidth * scaleY}px`;
+    if (!inEditMode) {
+      this.cursor.style.display = 'block';
+      this.cursor.style.width = `${2 * lineWidth * scaleX}px`;
+      this.cursor.style.height = `${2 * lineWidth * scaleY}px`;
+      this.cursor.style.backgroundColor = color;
+      this.cursor.style.left = `${coordLocal.x - lineWidth * scaleX}px`;
+      this.cursor.style.top = `${coordLocal.y - lineWidth * scaleY}px`;
+    } else {
+      this.cursor.style.display = 'none';
+    }
 
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY))*2;
