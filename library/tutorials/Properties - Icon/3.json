@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1762658505574,
+      "lastUpdate": 1762664585756,
       "showName": false,
       "skill": "",
       "description": "",
@@ -50,7 +50,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees and opacity is 50%",
+    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees, opacity is 0.5 and hoverOpacity is 1.",
     "x": 489
   },
   "notes3": {
@@ -63,7 +63,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "The widget above combines aspects of rotation, scale, and offset to create a custom look."
+    "text": "The widget above combines aspects of rotation, scale, offset, and hoverColor to create a custom look."
   },
   "notes9": {
     "id": "notes9",
@@ -74,7 +74,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works.",
+    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works. This example changes hoverColor.",
     "x": 781
   },
   "example1": {
@@ -100,7 +100,8 @@
       "name": "build",
       "rotation": 45,
       "color": "purple",
-      "opacity": 0.5
+      "opacity": 0.5,
+      "hoverOpacity": 1
     },
     "text": "Settings",
     "color": "Red"
@@ -132,7 +133,7 @@
       "font-size": "25px",
       "color": "black"
     },
-    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to several properties: scale, offset location, rotation, color, strokeColor, strokeWidth, hoverColor, hoverStrokeColor, hoverStrokeWidth, and opacity. Those settings apply individually to each icon."
+    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to several properties: scale, offset location, rotation, color, opacity, strokeColor, strokeWidth, hoverColor, hoverStrokeColor, hoverStrokeWidth, and hoverOpacity. Those settings apply individually to each icon."
   },
   "example4": {
     "id": "example4",

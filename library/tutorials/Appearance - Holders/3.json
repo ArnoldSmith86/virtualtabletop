@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Holders",
       "image": "/assets/-1027054583_6051",
@@ -10,23 +13,20 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1762659126048,
+      "lastUpdate": 1762664693063,
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Icons",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Icons",
+      "language": "en-US",
+      "players": "1"
     }
   },
   "title": {
@@ -1105,10 +1105,9 @@
         "color": "red",
         "strokeColor": "",
         "strokeWidth": 0,
-        "hoverColor": "pink",
         "hoverStrokeColor": "",
         "hoverStrokeWidth": null,
-        "opacity": 0.2
+        "hoverOpacity": 1
       },
       {
         "name": "[cards]",
@@ -1117,9 +1116,10 @@
         "offsetY": 0.1,
         "rotation": 10,
         "color": "silver",
+        "opacity": 1,
         "strokeColor": "",
         "strokeWidth": 0,
-        "hoverColor": "",
+        "hoverColor": "gold",
         "hoverStrokeColor": "",
         "hoverStrokeWidth": null
       }

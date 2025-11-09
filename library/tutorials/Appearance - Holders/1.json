@@ -10,20 +10,20 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1762659126042,
+      "lastUpdate": 1762664693061,
       "showName": false,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "Text",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Text",
+      "language": "en-US",
+      "players": "1"
     },
     "gameSettings": {
       "legacyModes": {}
