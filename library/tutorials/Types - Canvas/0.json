@@ -14,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762570288465,
+      "lastUpdate": 1762718292082,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -133,7 +133,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The <b>lineWidth</b> property works in connection with <b>resolution</b> to control the size of the brush. The 'Line Width' button above cycles through 10 different brush sizes. The size of the dot in the button generally represents relative sizes but does represent the exact brush size.",
+    "html": "The <b>lineWidth</b> property works in connection with <b>resolution</b> to control the size of the brush. The 'Line Width' button above cycles through 10 different brush sizes. The size of the dot in the button generally represents relative sizes but does not represent the exact brush size.",
     "layer": -3
   },
   "text3": {
