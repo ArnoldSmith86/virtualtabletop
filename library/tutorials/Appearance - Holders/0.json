@@ -1,139 +1,78 @@
 {
-  "ch6o": {
-    "type": "label",
-    "text": "dropOffsetX:",
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 213,
-    "z": 19,
-    "id": "ch6o",
-    "css": {
-      "font-size": "30px",
-      "color": "black"
+  "_meta": {
+    "version": 19,
+    "info": {
+      "name": "Appearance - Holders",
+      "image": "/assets/-1027054583_6051",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1762659126037,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
-  "8pd4": {
-    "type": "label",
-    "text": "dropOffsetY:",
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "height": 42,
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "layer": -3,
+    "text": "Holder Appearance: Basic"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This variant of the tutorial shows how to use widget css and classes to modify holder appearance. Move cards around to the holders to see how some of them change when cards are being dragged.",
+    "width": 1300
+  },
+  "text1": {
+    "id": "text1",
+    "x": 20,
+    "y": 445,
     "width": 200,
-    "x": 354,
-    "y": 272.25,
-    "z": 21,
-    "id": "8pd4"
-  },
-  "cekh": {
-    "type": "button",
-    "text": "Set values",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Card Area",
-        "collection": "layout"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "dropOffsetX",
-        "value": "${PROPERTY text OF doX}"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "dropOffsetY",
-        "value": "${PROPERTY text OF doY}"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "stackOffsetX",
-        "value": "${PROPERTY text OF soX}"
-      },
-      {
-        "func": "SET",
-        "collection": "layout",
-        "property": "stackOffsetY",
-        "value": "${PROPERTY text OF soY}"
-      },
-      {
-        "func": "SELECT",
-        "property": "deck",
-        "value": "Deck",
-        "mode": "add"
-      },
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY text OF ovlp}",
-        "operand2": "True",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "property": "overlap",
-            "value": true
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "property": "overlap",
-            "value": false
-          }
-        ]
-      }
-    ],
-    "x": 697,
-    "y": 330,
-    "z": 4946,
-    "id": "cekh",
-    "height": 40,
-    "width": 100
-  },
-  "7bvt": {
-    "type": "label",
-    "text": "stackOffsetX:",
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
     "css": {
-      "font-size": "30px",
-      "color": "black"
+      "font-size": "22px"
     },
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 331.5,
-    "z": 23,
-    "id": "7bvt"
+    "html": "This is a standard holder with no changes.",
+    "layer": -3
   },
-  "9trg": {
-    "type": "label",
-    "text": "stackOffsetY:",
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 390.75,
-    "z": 25,
-    "id": "9trg"
-  },
-  "doX": {
-    "type": "label",
-    "text": 100,
-    "x": 562,
-    "y": 225,
-    "z": 39,
-    "id": "doX",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black"
-  },
-  "ig98B": {
-    "id": "ig98B",
+  "9qwrB": {
+    "id": "9qwrB",
+    "parent": "deckHolder",
+    "fixedParent": true,
     "y": 171.36,
     "width": 111,
     "height": 40,
@@ -143,562 +82,475 @@
     "clickRoutine": [
       {
         "func": "RECALL",
-        "holder": "Deck Holder"
+        "holder": "${PROPERTY parent}"
       },
       {
         "func": "FLIP",
-        "holder": "Deck Holder",
+        "holder": "${PROPERTY parent}",
         "face": 0
       },
       {
         "func": "SHUFFLE",
-        "holder": "Deck Holder"
+        "holder": "${PROPERTY parent}"
       }
-    ],
-    "parent": "Deck Holder"
+    ]
   },
-  "ig98_A_C": {
-    "id": "ig98_A_C",
-    "parent": "ywce",
+  "9qwrP": {
+    "type": "pile",
+    "id": "9qwrP",
+    "width": 103,
+    "height": 160,
+    "z": 325,
+    "parent": "deckHolder"
+  },
+  "9qwr_A_C": {
+    "id": "9qwr_A_C",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 01",
-    "z": 10722,
-    "deck": "Deck"
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder9",
+    "activeFace": 1
   },
-  "ig98_2_C": {
-    "id": "ig98_2_C",
+  "9qwr_2_C": {
+    "id": "9qwr_2_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 02",
-    "z": 10711,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 811
   },
-  "ig98_3_C": {
-    "id": "ig98_3_C",
+  "9qwr_3_C": {
+    "id": "9qwr_3_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 03",
-    "z": 10731,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 827
   },
-  "ig98_4_C": {
-    "id": "ig98_4_C",
+  "9qwr_4_C": {
+    "id": "9qwr_4_C",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 04",
-    "z": 10709,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 808,
+    "parent": "9qwrP"
   },
-  "ig98_5_C": {
-    "id": "ig98_5_C",
+  "9qwr_5_C": {
+    "id": "9qwr_5_C",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 05",
-    "z": 10732,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 2,
+    "x": 49,
+    "y": 4,
+    "activeFace": 1,
+    "hoverParent": "holder8",
+    "parent": "holder8"
   },
-  "ig98_6_C": {
-    "id": "ig98_6_C",
-    "parent": "ywce",
+  "9qwr_6_C": {
+    "id": "9qwr_6_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 06",
-    "z": 10694,
-    "deck": "Deck"
+    "z": 824
   },
-  "ig98_7_C": {
-    "id": "ig98_7_C",
+  "9qwr_7_C": {
+    "id": "9qwr_7_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 07",
-    "z": 10688,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 826
   },
-  "ig98_8_C": {
-    "id": "ig98_8_C",
+  "9qwr_8_C": {
+    "id": "9qwr_8_C",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 08",
-    "z": 10698,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 806,
+    "parent": "9qwrP"
   },
-  "ig98_9_C": {
-    "id": "ig98_9_C",
+  "9qwr_9_C": {
+    "id": "9qwr_9_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 09",
-    "z": 10700,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 830
   },
-  "ig98_T_C": {
-    "id": "ig98_T_C",
-    "parent": "ywce",
+  "9qwr_T_C": {
+    "id": "9qwr_T_C",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 10",
-    "z": 10724,
-    "deck": "Deck"
+    "z": 891,
+    "parent": "9qwrP"
   },
-  "ig98_J_C": {
-    "id": "ig98_J_C",
-    "parent": "ywce",
+  "9qwr_J_C": {
+    "id": "9qwr_J_C",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 2J",
-    "z": 10718,
-    "deck": "Deck"
+    "z": 839,
+    "parent": "9qwrP"
   },
-  "ig98_Q_C": {
-    "id": "ig98_Q_C",
+  "9qwr_Q_C": {
+    "id": "9qwr_Q_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 10695,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 833
   },
-  "ig98_K_C": {
-    "id": "ig98_K_C",
+  "9qwr_K_C": {
+    "id": "9qwr_K_C",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "C 4K",
-    "z": 10692,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 821
   },
-  "ig98_A_D": {
-    "id": "ig98_A_D",
-    "parent": "ywce",
+  "9qwr_A_D": {
+    "id": "9qwr_A_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 01",
-    "z": 10684,
-    "deck": "Deck"
+    "z": 815
   },
-  "ig98_2_D": {
-    "id": "ig98_2_D",
-    "parent": "ywce",
+  "9qwr_2_D": {
+    "id": "9qwr_2_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 02",
-    "z": 10687,
-    "deck": "Deck"
+    "z": 819
   },
-  "ig98_3_D": {
-    "id": "ig98_3_D",
+  "9qwr_3_D": {
+    "id": "9qwr_3_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 03",
-    "z": 10705,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 813
   },
-  "ig98_4_D": {
-    "id": "ig98_4_D",
-    "parent": "ywce",
+  "9qwr_4_D": {
+    "id": "9qwr_4_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 04",
-    "z": 10730,
-    "deck": "Deck"
+    "z": 840
   },
-  "ig98_5_D": {
-    "id": "ig98_5_D",
-    "parent": "ywce",
+  "9qwr_5_D": {
+    "id": "9qwr_5_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 05",
-    "z": 10725,
-    "deck": "Deck"
+    "z": 841
   },
-  "ig98_6_D": {
-    "id": "ig98_6_D",
-    "parent": "ywce",
+  "9qwr_6_D": {
+    "id": "9qwr_6_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 06",
-    "z": 10713,
-    "deck": "Deck"
+    "z": 814
   },
-  "ig98_7_D": {
-    "id": "ig98_7_D",
+  "9qwr_7_D": {
+    "id": "9qwr_7_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 07",
-    "z": 10716,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 843
   },
-  "ig98_8_D": {
-    "id": "ig98_8_D",
+  "9qwr_8_D": {
+    "id": "9qwr_8_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 08",
-    "z": 10706,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 831
   },
-  "ig98_9_D": {
-    "id": "ig98_9_D",
+  "9qwr_9_D": {
+    "id": "9qwr_9_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 09",
-    "z": 10703,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 838
   },
-  "ig98_T_D": {
-    "id": "ig98_T_D",
+  "9qwr_T_D": {
+    "id": "9qwr_T_D",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 10",
-    "z": 10696,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 818,
+    "parent": "9qwrP"
   },
-  "ig98_J_D": {
-    "id": "ig98_J_D",
+  "9qwr_J_D": {
+    "id": "9qwr_J_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 2J",
-    "z": 10691,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 812
   },
-  "ig98_Q_D": {
-    "id": "ig98_Q_D",
-    "parent": "ywce",
+  "9qwr_Q_D": {
+    "id": "9qwr_Q_D",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 10714,
-    "deck": "Deck"
+    "z": 832,
+    "parent": "9qwrP"
   },
-  "ig98_K_D": {
-    "id": "ig98_K_D",
-    "parent": "ywce",
+  "9qwr_K_D": {
+    "id": "9qwr_K_D",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "D 4K",
-    "z": 10729,
-    "deck": "Deck"
+    "z": 835
   },
-  "ig98_A_H": {
-    "id": "ig98_A_H",
+  "9qwr_A_H": {
+    "id": "9qwr_A_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 01",
-    "z": 10686,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 817
   },
-  "ig98_2_H": {
-    "id": "ig98_2_H",
+  "9qwr_2_H": {
+    "id": "9qwr_2_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 02",
-    "z": 10697,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 842
   },
-  "ig98_3_H": {
-    "id": "ig98_3_H",
-    "parent": "ywce",
+  "9qwr_3_H": {
+    "id": "9qwr_3_H",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 03",
-    "z": 10682,
-    "deck": "Deck"
+    "z": 809,
+    "parent": "9qwrP"
   },
-  "ig98_4_H": {
-    "id": "ig98_4_H",
-    "parent": "ywce",
+  "9qwr_4_H": {
+    "id": "9qwr_4_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 04",
-    "z": 10683,
-    "deck": "Deck"
+    "z": 822
   },
-  "ig98_5_H": {
-    "id": "ig98_5_H",
+  "9qwr_5_H": {
+    "id": "9qwr_5_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 05",
-    "z": 10712,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 807
   },
-  "ig98_6_H": {
-    "id": "ig98_6_H",
+  "9qwr_6_H": {
+    "id": "9qwr_6_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 06",
-    "z": 10685,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 829
   },
-  "ig98_7_H": {
-    "id": "ig98_7_H",
-    "parent": "ywce",
+  "9qwr_7_H": {
+    "id": "9qwr_7_H",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 07",
-    "z": 10728,
-    "deck": "Deck"
+    "z": 3,
+    "x": 94,
+    "y": 4,
+    "parent": "holder8",
+    "activeFace": 1
   },
-  "ig98_8_H": {
-    "id": "ig98_8_H",
+  "9qwr_8_H": {
+    "id": "9qwr_8_H",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 08",
-    "z": 10704,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 2,
+    "x": 49,
+    "y": 4,
+    "parent": "holder9",
+    "activeFace": 1
   },
-  "ig98_9_H": {
-    "id": "ig98_9_H",
-    "parent": "ywce",
+  "9qwr_9_H": {
+    "id": "9qwr_9_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 09",
-    "z": 10726,
-    "deck": "Deck"
+    "z": 836
   },
-  "ig98_T_H": {
-    "id": "ig98_T_H",
+  "9qwr_T_H": {
+    "id": "9qwr_T_H",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 10",
-    "z": 10710,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "holder8",
+    "activeFace": 1
   },
-  "ig98_J_H": {
-    "id": "ig98_J_H",
+  "9qwr_J_H": {
+    "id": "9qwr_J_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 2J",
-    "z": 10701,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 825
   },
-  "ig98_Q_H": {
-    "id": "ig98_Q_H",
+  "9qwr_Q_H": {
+    "id": "9qwr_Q_H",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 10699,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 888,
+    "parent": "9qwrP"
   },
-  "ig98_K_H": {
-    "id": "ig98_K_H",
+  "9qwr_K_H": {
+    "id": "9qwr_K_H",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "H 4K",
-    "z": 10720,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 805
   },
-  "ig98_A_S": {
-    "id": "ig98_A_S",
+  "9qwr_A_S": {
+    "id": "9qwr_A_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 01",
-    "z": 10708,
-    "deck": "Deck",
-    "parent": "ywce"
+    "z": 846
   },
-  "ig98_2_S": {
-    "id": "ig98_2_S",
-    "parent": "ywce",
+  "9qwr_2_S": {
+    "id": "9qwr_2_S",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 02",
-    "z": 10707,
-    "deck": "Deck"
+    "z": 894,
+    "parent": "9qwrP"
   },
-  "ig98_3_S": {
-    "id": "ig98_3_S",
-    "parent": "ywce",
+  "9qwr_3_S": {
+    "id": "9qwr_3_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 03",
-    "z": 10733,
-    "deck": "Deck"
+    "z": 820
   },
-  "ig98_4_S": {
-    "id": "ig98_4_S",
-    "parent": "ywce",
+  "9qwr_4_S": {
+    "id": "9qwr_4_S",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 04",
-    "z": 10723,
-    "deck": "Deck"
+    "z": 3,
+    "x": 94,
+    "y": 4,
+    "parent": "holder9",
+    "activeFace": 1
   },
-  "ig98_5_S": {
-    "id": "ig98_5_S",
-    "parent": "ywce",
+  "9qwr_5_S": {
+    "id": "9qwr_5_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 05",
-    "z": 10717,
-    "deck": "Deck"
+    "z": 828
   },
-  "ig98_6_S": {
-    "id": "ig98_6_S",
-    "parent": "ywce",
+  "9qwr_6_S": {
+    "id": "9qwr_6_S",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 06",
-    "z": 10690,
-    "deck": "Deck"
+    "z": 845,
+    "parent": "9qwrP"
   },
-  "ig98_7_S": {
-    "id": "ig98_7_S",
+  "9qwr_7_S": {
+    "id": "9qwr_7_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 07",
-    "z": 10721,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 804
   },
-  "ig98_8_S": {
-    "id": "ig98_8_S",
-    "parent": "ywce",
+  "9qwr_8_S": {
+    "id": "9qwr_8_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 08",
-    "z": 10727,
-    "deck": "Deck"
+    "z": 810
   },
-  "ig98_9_S": {
-    "id": "ig98_9_S",
-    "parent": "ywce",
+  "9qwr_9_S": {
+    "id": "9qwr_9_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 09",
-    "z": 10719,
-    "deck": "Deck"
+    "z": 823
   },
-  "ig98_T_S": {
-    "id": "ig98_T_S",
-    "parent": "ywce",
+  "9qwr_T_S": {
+    "id": "9qwr_T_S",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 10",
-    "z": 10702,
-    "deck": "Deck"
+    "z": 816,
+    "parent": "9qwrP"
   },
-  "ig98_J_S": {
-    "id": "ig98_J_S",
-    "parent": "ywce",
+  "9qwr_J_S": {
+    "id": "9qwr_J_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 2J",
-    "z": 10693,
-    "deck": "Deck"
+    "z": 837
   },
-  "ig98_Q_S": {
-    "id": "ig98_Q_S",
+  "9qwr_Q_S": {
+    "id": "9qwr_Q_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 10689,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 834
   },
-  "ig98_K_S": {
-    "id": "ig98_K_S",
+  "9qwr_K_S": {
+    "id": "9qwr_K_S",
+    "parent": "9qwrP",
+    "deck": "mainDeck",
     "type": "card",
     "cardType": "S 4K",
-    "z": 10715,
-    "parent": "ywce",
-    "deck": "Deck"
+    "z": 844
   },
-  "Deck Holder": {
+  "deckHolder": {
     "type": "holder",
-    "id": "Deck Holder",
-    "x": 445.5,
-    "y": 557,
+    "id": "deckHolder",
+    "x": 1470,
+    "y": 18,
     "dropTarget": {
       "type": "card"
-    },
-    "z": 17
+    }
   },
-  "Card Area": {
-    "type": "holder",
-    "x": 844,
-    "y": 214,
-    "z": 16,
-    "id": "Card Area",
-    "width": 600,
-    "height": 500,
-    "dropOffsetX": 100,
-    "dropOffsetY": 100,
-    "stackOffsetY": 20,
-    "stackOffsetX": 20
-  },
-  "doY": {
-    "type": "label",
-    "x": 562,
-    "y": 286,
-    "z": 22,
-    "id": "doY",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 100
-  },
-  "soX": {
-    "type": "label",
-    "x": 562,
-    "y": 344,
-    "z": 35,
-    "id": "soX",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 20
-  },
-  "soY": {
-    "type": "label",
-    "x": 562,
-    "y": 405,
-    "z": 26,
-    "id": "soY",
-    "editable": 1,
-    "css": "background-color: #CCCCCC; color:black",
-    "text": 20
-  },
-  "x946": {
-    "type": "button",
-    "text": "Deal a card",
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "Deck Holder",
-        "to": "Card Area",
-        "face": 1
-      }
-    ],
-    "x": 697,
-    "y": 621,
-    "z": 4947,
-    "id": "x946",
-    "height": 40,
-    "width": 100
-  },
-  "yqen": {
-    "type": "label",
-    "text": "overlap:",
-    "css": {
-      "font-size": "30px",
-      "color": "black"
-    },
-    "height": 42,
-    "width": 200,
-    "x": 354,
-    "y": 450,
-    "z": 30,
-    "id": "yqen"
-  },
-  "ovlp": {
-    "x": 562,
-    "y": 464,
-    "z": 47,
-    "css": {
-      "background-color": "#CCCCCC",
-      "color": "black",
-      "text-align": "center"
-    },
-    "id": "ovlp",
-    "text": "True",
-    "height": 20,
-    "clickRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY text}",
-        "operand2": "True",
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "False"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "text",
-            "value": "True"
-          }
-        ]
-      }
-    ],
-    "movable": false,
-    "layer": -2
-  },
-  "Deck": {
+  "mainDeck": {
     "type": "deck",
-    "id": "Deck",
+    "id": "mainDeck",
+    "parent": "deckHolder",
     "x": 12,
     "y": 41,
     "cardTypes": {
@@ -719,6 +571,24 @@
         "rank": "J2",
         "rankA": "J2",
         "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
       },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
@@ -1200,8 +1070,8 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "value": "/i/cards-default/2B.svg",
-            "color": "transparent"
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
           }
         ]
       },
@@ -1222,98 +1092,247 @@
           }
         ]
       }
-    ],
-    "parent": "Deck Holder"
+    ]
   },
-  "66fe": {
-    "type": "label",
-    "text": "dropOffsetX and dropOffsetY are holder properties that specify the placement of the first card in a holder.\n\nstackOffsetX and stackOffsetY are holder properties that specify the relative placement subsequent cards in the holder.\n\noverlap is a boolean property of individual cards that specifies whether they should be overlapped with previous cards in a holder. See below for more details; the interactions are complex.",
-    "x": 40,
-    "y": 212,
-    "z": 80,
-    "id": "66fe",
-    "width": 250,
-    "height": 350,
-    "css": {
-      "text-align": "left",
-      "color": "black"
-    }
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 59,
+    "y": 247,
+    "z": 9733
   },
-  "955e": {
-    "type": "label",
-    "text": "1. If overlap is True for that card (that is, if its value is nonzero), then the values of stackOffsetX and stackOffsetY will govern placement of the card.\n\n2. If overlap is False (or if the property has no value), then the card will be stacked directly on top of the previous card in the X (or Y) direction if stackOffsetX (or stackOffsetY) is zero. So to get complete stacking, set stackOffsetX=stackOffsetY=0 and remove the overlap property from all cards. This is the default behavior.\n\n3. Finally, if overlap is False but stackOffsetX is nonzero, the cards will be separated by four pixels in the X direction, and similarly for Y.",
-    "x": 570,
-    "y": 813,
-    "z": 88,
-    "id": "955e",
-    "width": 1000,
+  "text2": {
+    "id": "text2",
+    "x": 235,
+    "y": 445,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
     "css": {
-      "text-align": "left",
-      "color": "black"
+      "font-size": "22px"
     },
-    "height": 180
+    "html": "There is an invisible holder above with <b>classes</b> transparent.",
+    "layer": -3
   },
-  "b89s": {
-    "type": "label",
-    "text": "When placing a card:",
-    "x": 566,
-    "y": 782,
-    "z": 89,
-    "id": "b89s",
-    "width": 800,
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 273,
+    "y": 247,
+    "z": 9733,
+    "classes": "transparent"
+  },
+  "text3": {
+    "id": "text3",
+    "x": 450,
+    "y": 445,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
     "css": {
-      "text-align": "left",
-      "font-weight": "bold",
-      "color": "black"
-    }
-  },
-  "_meta": {
-    "version": 17,
-    "info": {
-      "name": "Types - Holder",
-      "image": "/assets/-1144102332_4316",
-      "rules": "",
-      "bgg": "",
-      "year": "2020",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "<div>Look at the \"Appearance\" series of tutorials for a demo on how to modify the appearance of holders.</div><div><br></div>The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
-      "showName": false,
-      "lastUpdate": 1762658851802,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Offset: Advanced",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
-  "8fr3": {
-    "type": "label",
-    "text": "Holders: Offset\nAdvanced",
-    "css": {
-      "font-size": "60px",
-      "color": "black"
+      "font-size": "22px"
     },
-    "height": 160,
-    "width": 1000,
-    "x": 287,
-    "y": -6,
-    "z": 75,
-    "id": "8fr3"
+    "html": "This holder uses css to change color when a card is being dragged. It changes again when a card is dragged directly over it.",
+    "layer": -3
   },
-  "ywce": {
-    "type": "pile",
-    "width": 103,
-    "height": 160,
-    "id": "ywce",
-    "z": 10378,
-    "parent": "Deck Holder"
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 486,
+    "y": 247,
+    "z": 9733,
+    "css": {
+      ".droppable": {
+        "background": "#00000050"
+      },
+      ".droptarget": {
+        "background": "#000000aa"
+      }
+    }
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 699,
+    "y": 247,
+    "z": 9734,
+    "css": {
+      "default": {
+        "background": "#ffffff80"
+      }
+    }
+  },
+  "text4": {
+    "id": "text4",
+    "x": 665,
+    "y": 445,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder changes the default color to semi-transparent to allow an image behind the holder to show through.",
+    "layer": -3
+  },
+  "basic4": {
+    "id": "basic4",
+    "x": 699,
+    "y": 247,
+    "layer": -4,
+    "width": 111,
+    "height": 168,
+    "icon": "[vtt_logo]",
+    "color": "#152f5f",
+    "movable": false
+  },
+  "text5": {
+    "id": "text5",
+    "x": 880,
+    "y": 445,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses opacity to allow the lower widget to be seen. But this also applies to child cards. Drop one in to see.",
+    "layer": -3
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 914,
+    "y": 247,
+    "z": 9734,
+    "css": {
+      "default": {
+        "opacity": 0.5
+      }
+    }
+  },
+  "basic5": {
+    "id": "basic5",
+    "x": 914,
+    "y": 247,
+    "layer": -4,
+    "width": 111,
+    "height": 168,
+    "icon": "[vtt_logo]",
+    "color": "#152f5f",
+    "z": 9735,
+    "movable": false
+  },
+  "text6": {
+    "id": "text6",
+    "x": 1096,
+    "y": 445,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses css to create a pattern.",
+    "layer": -3
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 1127,
+    "y": 247,
+    "z": 9734,
+    "css": {
+      "background": "repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px)"
+    }
+  },
+  "text7": {
+    "id": "text7",
+    "x": 1311,
+    "y": 445,
+    "width": 200,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses css to eliminate the border that shows when a card is dragged over it.",
+    "layer": -3
+  },
+  "holder7": {
+    "type": "holder",
+    "id": "holder7",
+    "x": 1341,
+    "y": 247,
+    "z": 9734,
+    "css": {
+      "border": "transparent"
+    }
+  },
+  "holder8": {
+    "type": "holder",
+    "id": "holder8",
+    "x": 59,
+    "y": 710,
+    "width": 300,
+    "z": 9738,
+    "dropShadow": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 45
+  },
+  "text8": {
+    "id": "text8",
+    "x": 19,
+    "y": 882,
+    "width": 400,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder has <b>dropShadow</b> set to true and the shadow acts as a temporary card placeholder while dragging over the holder.",
+    "layer": -3
+  },
+  "holder9": {
+    "type": "holder",
+    "id": "holder9",
+    "x": 595,
+    "y": 710,
+    "width": 300,
+    "z": 9738,
+    "dropShadow": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 45,
+    "css": {
+      " .dragging-shadow": {
+        "filter": "brightness(80%)",
+        "opacity": "60%"
+      }
+    }
+  },
+  "text9": {
+    "id": "text9",
+    "x": 573,
+    "y": 882,
+    "width": 400,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "This holder uses css to change the appearance of the drop shadow to show a semi-transparent version of the face.",
+    "layer": -3
   }
 }
