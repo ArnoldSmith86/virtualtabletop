@@ -1635,7 +1635,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'RECALL') {
-        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null, byDistance: false });
+        setDefaults(a, { owned: true, inHolder: true, excludeCollection: null, byDistance: false, eraseLabel: true });
 
         let excludeCollection = null;
         if(a.excludeCollection) {
@@ -1675,6 +1675,13 @@ export class Widget extends StateManaged {
                 }
                 
                 for(const c of cards) {
+                  if (a.eraseLabel) {
+                    const labels = { ...(c.get('labels') || {}) };
+                    for (const key in labels) {
+                      labels[key] = '';
+                    }
+                    await c.set('labels', labels);
+                  }
                   if(c.get('_ancestor') == holder && !c.get('owner'))
                     await c.bringToFront();
                   else

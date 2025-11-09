@@ -12,6 +12,8 @@ class Card extends Widget {
 
       deck: null,
       cardType: null,
+      editable: true,
+      labels: null,
       onPileCreation: {}
     });
 
@@ -98,6 +100,7 @@ class Card extends Widget {
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
     for(const face of faceTemplates) {
+      let labelIndex = 1;
       const faceDiv = document.createElement('div');
 
       faceDiv.classList.add('cardFace');
@@ -110,7 +113,7 @@ class Card extends Widget {
 
       if(Array.isArray(face.objects)) {
         for(const original of face.objects) {
-          const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : 'div');
+          const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : (original.type == 'label' ? 'textarea' : 'div'));
           objectDiv.classList.add('cardFaceObject');
 
           const setValue = _=>{
@@ -173,6 +176,48 @@ class Card extends Widget {
                   `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
                   `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
               objectDiv.srcdoc = html;
+            } else if (object.type == 'label') {
+              if (!original.labelName) {
+                original.labelName = `label${labelIndex++}`;
+              }
+
+              const key = object.labelName;
+              const savedLabels = this.get('labels') || {};
+              
+              objectDiv.value = savedLabels[key] !== undefined ? savedLabels[key] : (object.value || '');
+              objectDiv.classList.add('label');
+              objectDiv.setAttribute('spellcheck', 'false');
+              
+              const isEditable = this.get('editable') !== false;
+              objectDiv.readOnly = !isEditable;
+              objectDiv.tabIndex = isEditable ? 0 : -1;
+              objectDiv.style.pointerEvents = isEditable ? 'auto' : 'none';
+              objectDiv.style.color = object.color || 'black';
+              
+              // Auto-resize font to fit content
+              const autoResizeFont = () => {
+                let fontSize = object.fontSize || 16;
+                objectDiv.style.fontSize = fontSize + 'px';
+                
+                while ((objectDiv.scrollHeight > objectDiv.clientHeight || objectDiv.scrollWidth > objectDiv.clientWidth) && fontSize > 12) {
+                  fontSize -= 0.5;
+                  objectDiv.style.fontSize = fontSize + 'px';
+                }
+              };
+              setTimeout(autoResizeFont, 0);
+              
+              if (isEditable) {
+                const updateLabel = async e => {
+                  const newValue = e.target.value;
+                  const labels = { ...(this.get('labels') || {}) };
+                  labels[key] = newValue;
+                  await this.set('labels', labels);
+                  autoResizeFont();
+                };
+                
+                objectDiv.addEventListener('input', updateLabel);
+                objectDiv.addEventListener('blur', updateLabel);
+              }
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
@@ -189,6 +234,8 @@ class Card extends Widget {
             for(const dp of Object.keys(original.dynamicProperties))
               if(original[dp] === undefined)
                 properties.add(original.dynamicProperties[dp]);
+          properties.add('editable');
+          properties.add('labels');
           for(const p of properties) {
             if(!this.dynamicProperties[p])
               this.dynamicProperties[p] = [];
