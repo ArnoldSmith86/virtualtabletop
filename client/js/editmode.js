@@ -1526,7 +1526,7 @@ export function initializeEditMode(currentMetaData) {
           mode: "reset"
         }
       ],
-      css: "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      css: "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
       borderRadius: '50% 0% 0% 0%',
       text: "Reset"
     })
@@ -1597,7 +1597,7 @@ export function initializeEditMode(currentMetaData) {
           "color": "white",
           "background-color": "#0d2f5e",
           "width": "50px",
-          "font-size": "0.6em"
+          "font-size": "0.6rem"
         }
       },
       borderRadius: 0,
