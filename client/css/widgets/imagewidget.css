@@ -29,6 +29,7 @@
   background-image: var(--hoverImage);
   color: var(--hoverColor);
   -webkit-text-stroke: var(--hoverStrokeWidth) var(--hoverStrokeColor);
+  opacity: var(--hoverOpacity, var(--opacity, 1));
 }
 
 .symbolOuterWrapper > .symbolText {

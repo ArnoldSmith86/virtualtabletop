@@ -375,6 +375,10 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
 
   outerWrapper.style.setProperty('--count', 1);
 
+  // Determine default opacity based on widget type (holders are dimmer by default)
+  const isHolderWidget = !!(outerWrapper.closest && outerWrapper.closest('.widget.holder'));
+  const defaultOpacity = isHolderWidget ? 0.2 : 1;
+
   for(let symbol of asArray(symbols)) {
     if(!symbol)
       continue;
@@ -393,7 +397,8 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       hoverColor: symbol.hoverColor || symbol.color || defaultHoverColor || defaultColor,
       hoverStrokeColor: asArray(symbol.hoverStrokeColor || symbol.strokeColor || "transparent"),
       hoverStrokeWidth: asArray(symbol.hoverStrokeWidth !== null && symbol.hoverStrokeWidth !== undefined ? symbol.hoverStrokeWidth : symbol.strokeWidth || 0),
-      opacity: (symbol.opacity === 0 || symbol.opacity) ? symbol.opacity : 1,
+      opacity: (symbol.opacity === 0 || symbol.opacity) ? symbol.opacity : defaultOpacity,
+      hoverOpacity: (symbol.hoverOpacity === 0 || symbol.hoverOpacity) ? symbol.hoverOpacity : ((symbol.opacity === 0 || symbol.opacity) ? symbol.opacity : defaultOpacity),
     };
 
     const details = getIconDetails(symbol.name);
@@ -435,6 +440,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth[0])/512*maxSize}px`);
     icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth[0])/512*maxSize}px`);
     icon.style.setProperty('--opacity', `${symbol.opacity}`);
+    icon.style.setProperty('--hoverOpacity', `${symbol.hoverOpacity}`);
   }
 
   return outerWrapper;
