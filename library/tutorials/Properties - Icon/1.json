@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Icon",
       "image": "/assets/1481362664_5448",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1752115985150,
+      "lastUpdate": 1762658505572,
       "showName": false,
       "skill": "",
       "description": "",
@@ -253,7 +256,7 @@
       "font-size": "25px",
       "color": "black"
     },
-    "text": "Several widget types have an 'icon' property: buttons, dice, and basic widgets. Card faceTemplate objects also accept a type 'icon'. Icons (other than for cards) can be selected by using the blue and white buttons in the JSON Editor to either choose from an included VTT icon or to upload a custom image. The VTT icon sets include icons custom made for VTT, icons from the game-icons.net website, Google Material Symbols, and emojis. "
+    "text": "Several widget types have an 'icon' property: buttons, dice, holders, and basic widgets. Card faceTemplate objects also accept a type 'icon'. Icons (other than for cards) can be selected by using the blue and white buttons in the JSON Editor to either choose from an included VTT icon or to upload a custom image. The VTT icon sets include icons custom made for VTT, icons from the game-icons.net website, Google Material Symbols, and emojis. "
   },
   "notes7": {
     "id": "notes7",
@@ -314,5 +317,25 @@
       "font-size": "19px"
     },
     "text": "This is a die with pips on the first four faces and emojis on the last two."
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 674,
+    "y": 621,
+    "z": 1,
+    "icon": "🐷"
+  },
+  "notes8": {
+    "id": "notes8",
+    "x": 601,
+    "y": 813,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Icons work the same way on holders."
   }
 }

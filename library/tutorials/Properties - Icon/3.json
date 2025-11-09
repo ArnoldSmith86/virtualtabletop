@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Icon",
       "image": "/assets/1481362664_5448",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1752115985153,
+      "lastUpdate": 1762658505574,
       "showName": false,
       "skill": "",
       "description": "",
@@ -47,7 +50,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees.",
+    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees and opacity is 50%",
     "x": 489
   },
   "notes3": {
@@ -96,7 +99,8 @@
     "icon": {
       "name": "build",
       "rotation": 45,
-      "color": "purple"
+      "color": "purple",
+      "opacity": 0.5
     },
     "text": "Settings",
     "color": "Red"
@@ -128,7 +132,7 @@
       "font-size": "25px",
       "color": "black"
     },
-    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, and rotation. Those settings apply individually to each icon."
+    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to several properties: scale, offset location, rotation, color, strokeColor, strokeWidth, hoverColor, hoverStrokeColor, hoverStrokeWidth, and opacity. Those settings apply individually to each icon."
   },
   "example4": {
     "id": "example4",
