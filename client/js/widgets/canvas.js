@@ -38,8 +38,11 @@ class Canvas extends Widget {
     this.canvas.addEventListener('mousemove', (e) => {
       const coordLocal = this.coordLocalFromCoordClient({ x: e.clientX, y: e.clientY });
       const lineWidth = this.get('lineWidth');
-      this.cursor.style.left = `${coordLocal.x - lineWidth}px`;
-      this.cursor.style.top = `${coordLocal.y - lineWidth}px`;
+      const resolution = this.getResolution();
+      const scaleX = this.get('width') / resolution;
+      const scaleY = this.get('height') / resolution;
+      this.cursor.style.left = `${coordLocal.x - lineWidth * scaleX}px`;
+      this.cursor.style.top = `${coordLocal.y - lineWidth * scaleY}px`;
     });
 
     this.canvas.addEventListener('mouseenter', () => {
@@ -54,10 +57,13 @@ class Canvas extends Widget {
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
 
-    if (delta.lineWidth !== undefined) {
+    if (delta.lineWidth !== undefined || delta.width !== undefined || delta.height !== undefined || delta.resolution !== undefined) {
       const lineWidth = this.get('lineWidth');
-      this.cursor.style.width = `${2 * lineWidth}px`;
-      this.cursor.style.height = `${2 * lineWidth}px`;
+      const resolution = this.getResolution();
+      const scaleX = this.get('width') / resolution;
+      const scaleY = this.get('height') / resolution;
+      this.cursor.style.width = `${2 * lineWidth * scaleX}px`;
+      this.cursor.style.height = `${2 * lineWidth * scaleY}px`;
     }
 
     if (delta.activeColor !== undefined || delta.colorMap !== undefined) {
@@ -173,13 +179,15 @@ class Canvas extends Widget {
     const colors = this.getColorMap();
     const color = colors[this.get('activeColor')] || 'white';
     const lineWidth = this.get('lineWidth');
+    const scaleX = this.get('width') / resolution;
+    const scaleY = this.get('height') / resolution;
 
     this.cursor.style.display = 'block';
-    this.cursor.style.width = `${2 * lineWidth}px`;
-    this.cursor.style.height = `${2 * lineWidth}px`;
+    this.cursor.style.width = `${2 * lineWidth * scaleX}px`;
+    this.cursor.style.height = `${2 * lineWidth * scaleY}px`;
     this.cursor.style.backgroundColor = color;
-    this.cursor.style.left = `${coordLocal.x - lineWidth}px`;
-    this.cursor.style.top = `${coordLocal.y - lineWidth}px`;
+    this.cursor.style.left = `${coordLocal.x - lineWidth * scaleX}px`;
+    this.cursor.style.top = `${coordLocal.y - lineWidth * scaleY}px`;
 
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY))*2;
