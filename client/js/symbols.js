@@ -315,8 +315,10 @@ function optimalSquareSize(count, width, height) {
 function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   element.textContent = text; // Set the text
 
-  // Start with a large font size and decrease until it fits
-  let fontSize = 25;
+  // Holder different because it was added later and this prevents comptability problems.
+  const isHolder = element.classList.contains('holderTextOnly') || (element.closest && element.closest('.widget.holder'));
+  let fontSize = isHolder ? 25 : 100;
+  const step = isHolder ? 1 : 10;
 
   // Set the font size and measure the height and width of the element
   while (fontSize >= 10) {
@@ -330,7 +332,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
       break; // The element fits, exit the loop
     }
 
-    fontSize -= 1; // Reduce the font size by 1px
+    fontSize -= step; // Reduce the font size by the chosen step
   }
 
   element.style.setProperty('--maxWidth', `${maxWidth}px`);
