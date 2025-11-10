@@ -593,7 +593,7 @@ body.jsonEdit #toolbar {
 
 #jeContextButtons > button > b{
   text-decoration: underline;
-  color: var(--textHighlightColor1);
+  color: yellow;
 }
 
 #je_toggleZoom{
