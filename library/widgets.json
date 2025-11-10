@@ -3378,7 +3378,8 @@
           "z": 2,
           "text": "Label"
         }
-      ]
+      ],
+      "preview": "symbol:text_fields"
     },
     {
       "name": "Heading",
@@ -3395,7 +3396,8 @@
           "css": "font-size: 30px",
           "text": "Heading"
         }
-      ]
+      ],
+      "preview": "symbol:format_h1"
     },
     {
       "name": "Horizontal Rule",
