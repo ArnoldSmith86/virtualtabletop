@@ -724,11 +724,11 @@
       "preview": "i/game-pieces/2D/Hex-Point.svg"
     },
     {
-      "name": "Hex (zoom in)",
-      "id": "hexZoomIn",
+      "name": "Hex (flat image)",
+      "id": "hexFlatImage",
       "widgets": [
         {
-          "id": "hexZoomIn",
+          "id": "hexFlat",
           "x": 540,
           "y": 600,
           "width": 50,
@@ -772,14 +772,14 @@
           ]
         }
       ],
-      "preview": ""
+      "preview": "i/game-pieces/2D/Hex-Flat.svg"
     },
     {
-      "name": "Hex (zoom out)",
-      "id": "hexZoomOut",
+      "name": "Hex (point image)",
+      "id": "hexPointImage",
       "widgets": [
         {
-          "id": "hexZoomOut",
+          "id": "hexPoint",
           "x": 615,
           "y": 600,
           "width": 50,
@@ -822,7 +822,8 @@
             }
           ]
         }
-      ]
+      ],
+      "preview": "i/game-pieces/2D/Hex-Point.svg"
     },
     {
       "name": "Chip",
@@ -3547,8 +3548,8 @@
         "beam",
         "hexFlat",
         "hexPoint",
-        "hexZoomIn",
-        "hexZoomOut",
+        "hexFlatImage",
+        "hexPointImage",
         "chip",
         "chip3D",
         "dealerChip",
