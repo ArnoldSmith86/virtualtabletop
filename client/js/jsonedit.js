@@ -3087,7 +3087,7 @@ function jeShowCommands() {
             commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
           const highlightClass = shouldHighlight ? ' jeHighlight' : '';
           commandText += `<button class="jeComputeOp${highlightClass}" data-sample="${html(op.sample)}" data-desc="${html(op.desc)}">${html(op.name)}: ${html(op.sample)}</button>\n`;
-          commandText += `<div style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; margin-bottom: 4px;">${html(op.desc)}</div>\n`;
+          commandText += `<div class="jeComputeOpDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; margin-bottom: 4px;">${html(op.desc)}</div>\n`;
           commandIndex++;
         }
       }
@@ -3104,7 +3104,28 @@ function jeShowCommands() {
   if(jeSecondaryWidget)
     commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;
+  const scrollContainer = $('#jeContextButtons');
+  const previousScrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
   $('#jeCommands').innerHTML = commandText;
+  
+  if (jeTabSearchActive && jeTabSearchHighlightIndex >= 0) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+        if (buttons.length > 0) {
+          const highlightedButton = buttons[0];
+          highlightedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          const description = highlightedButton.nextElementSibling;
+          if (description && description.classList && description.classList.contains('jeComputeOpDesc')) {
+            setTimeout(() => description.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+          }
+        }
+      });
+    });
+  } else if (scrollContainer) {
+    scrollContainer.scrollTop = previousScrollTop;
+  }
+  
   on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp)', 'click', clickButton);
   on('#jeCommands button.jeWidgetSearch', 'click', async function(e) {
     e.stopPropagation();
