@@ -2945,7 +2945,11 @@ function jeShowCommands() {
       commandText += `<button class='top ${material} ${classes}' id='${command.id}' title='${name}' ${!command.show || command.show() ? '' : 'disabled'}>${icon}</button>`;
     }
   }
-  commandText += `</div><div id='jeContextButtons'>`;
+  commandText += `</div>`;
+  if (!jeTabSearchActive) {
+    commandText += `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">Hold <span class="key">Tab</span> to search</div>`;
+  }
+  commandText += `<div id='jeContextButtons'>`;
 
   // Next figure out which context commands are active here.
   const activeCommands = {};
