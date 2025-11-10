@@ -1086,7 +1086,7 @@ class WidgetsModule extends SidebarModule {
           <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
               <span class="drag-handle"></span>
               <div class="widget-preview">
-                ${state.preview ? `<img src="${state.preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;">` : ''}
+                ${state.preview ? `<img src="${state.preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;" draggable="false">` : ''}
               </div>
               <div class="widget-info" style="flex-grow: 1;">
                   <label class="name-widget-label widget-label"><span style="font-size: 10px; color: #ccc;">Name</span><input value="${html(state.name || state.id)}" readonly></label>
@@ -1106,7 +1106,7 @@ class WidgetsModule extends SidebarModule {
     return `
       <div class="widget-grid-item" data-id="${state.id}" data-source="${source}" draggable="true">
         <div class="widget-preview">
-          ${state.preview ? `<img src="${state.preview}">` : ''}
+          ${state.preview ? `<img src="${state.preview}" draggable="false">` : ''}
           <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>
         </div>
         <div class="widget-name">${html(state.name || state.id)}</div>
