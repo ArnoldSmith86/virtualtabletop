@@ -582,19 +582,18 @@ body.jsonEdit #toolbar {
 }
 
 #jeContextButtons > button.jeHighlight {
-  background-color: rgba(255, 255, 0, 0.3);
-  outline: 2px solid yellow;
+  background-color: var(--VTTblueDark)
 }
 
 #jeContextButtons .jeEditorLineDesc mark {
-  background-color: yellow;
-  color: black;
+  background-color: var(--textHighlightColor1);
+  color: var(--backgroundColor);
   font-weight: bold;
 }
 
 #jeContextButtons > button > b{
   text-decoration: underline;
-  color: yellow;
+  color: var(--textHighlightColor1);
 }
 
 #je_toggleZoom{
