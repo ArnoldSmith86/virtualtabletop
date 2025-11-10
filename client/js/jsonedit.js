@@ -3194,7 +3194,7 @@ function jeShowCommands() {
     jeTabSearchFilter = '';
     jeTabSearchHighlightIndex = -1;
     jeTabArrowKeysUsed = false;
-    jeShowCommands();
+    jeGetContext();
   });
   on('#jeCommands button.jeWidgetSearch', 'click', async function(e) {
     e.stopPropagation();
