@@ -1699,6 +1699,46 @@
           "z": 18,
           "borderColor": "transparent",
           "color": "transparent",
+          "addToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose die color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#ffffff",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "cT",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            },
+            "var cL = colorContrast ${PROPERTY cT} 0.2",
+            "var cR = colorContrast ${PROPERTY cT} 0.4",
+            "var cP = colorContrast ${PROPERTY cT} 1",
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "cL",
+              "value": "${cL}"
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "cR",
+              "value": "${cR}"
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "cP",
+              "value": "${cP}"
+            }
+          ],
           "faces": [
             {
               "value": 1,
