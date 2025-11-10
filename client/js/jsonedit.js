@@ -3442,18 +3442,21 @@ function jeInitEventListeners() {
 
   window.addEventListener('keydown', async function(e) {
     if(e.key == 'Tab' && jeEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      if (!jeTabSearchActive) {
-        jeTabKeyHeld = true;
-        jeTabSearchActive = true;
-        jeTabSearchFilter = '';
-        jeTabSearchHighlightIndex = -1;
-        jeTabArrowKeysUsed = false;
-        jeShowCommands();
+      const jeTextElement = $('#jeText');
+      if (jeTextElement && document.activeElement === jeTextElement) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        if (!jeTabSearchActive) {
+          jeTabKeyHeld = true;
+          jeTabSearchActive = true;
+          jeTabSearchFilter = '';
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+          jeShowCommands();
+        }
+        return;
       }
-      return;
     }
     if(!jeEnabled)
       return;
@@ -3563,15 +3566,18 @@ function jeInitEventListeners() {
       e.preventDefault();
     }
     if (e.key == 'Tab' && jeEnabled) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (!jeTabSearchActive) {
-        jeTabKeyHeld = true;
-        jeTabSearchActive = true;
-        jeTabSearchFilter = '';
-        jeTabSearchHighlightIndex = -1;
-        jeTabArrowKeysUsed = false;
-        jeShowCommands();
+      const jeTextElement = $('#jeText');
+      if (jeTextElement && document.activeElement === jeTextElement) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!jeTabSearchActive) {
+          jeTabKeyHeld = true;
+          jeTabSearchActive = true;
+          jeTabSearchFilter = '';
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+          jeShowCommands();
+        }
       }
     }
     if (jeTabSearchActive) {
