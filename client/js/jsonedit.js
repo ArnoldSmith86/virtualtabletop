@@ -3423,23 +3423,6 @@ function jeInitEventListeners() {
   });
 
   window.addEventListener('keydown', async function(e) {
-    if(e.key == 'Tab' && jeEnabled) {
-      const jeTextElement = $('#jeText');
-      if (jeTextElement && document.activeElement === jeTextElement) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        if (!jeTabSearchActive) {
-          jeTabKeyHeld = true;
-          jeTabSearchActive = true;
-          jeTabSearchFilter = '';
-          jeTabSearchHighlightIndex = -1;
-          jeTabArrowKeysUsed = false;
-          jeShowCommands();
-        }
-        return;
-      }
-    }
     if(!jeEnabled)
       return;
 
