@@ -2948,6 +2948,16 @@ function jeShowCommands() {
   commandText += `</div>`;
   if (!jeTabSearchActive) {
     commandText += `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">Hold <span class="key">Tab</span> to search</div>`;
+  } else {
+    let searchHint = `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">`;
+    if (jeTabSearchFilter.length > 0) {
+      searchHint += `Search: <span style="color: var(--textColor); font-weight: bold;">${html(jeTabSearchFilter)}</span><br>`;
+    } else {
+      searchHint += `Type letters to filter<br>`;
+    }
+    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>Release <span class="key">Tab</span> to execute`;
+    searchHint += `</div>`;
+    commandText += searchHint;
   }
   commandText += `<div id='jeContextButtons'>`;
 
