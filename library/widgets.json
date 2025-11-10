@@ -993,7 +993,7 @@
         },
         {
           "type": "pile",
-          "id": "pile_stacksOfChips",
+          "id": "pile",
           "parent": "stacksOfChips",
           "width": 73,
           "height": 73,
@@ -1035,7 +1035,7 @@
         {
           "type": "card",
           "id": "1000c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 1000,
           "x": 0,
@@ -1044,7 +1044,7 @@
         {
           "type": "card",
           "id": "500c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 500,
           "x": 0,
@@ -1053,7 +1053,7 @@
         {
           "type": "card",
           "id": "100c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 100,
           "x": 0,
@@ -1062,7 +1062,7 @@
         {
           "type": "card",
           "id": "25c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 25,
           "x": 0,
@@ -1071,7 +1071,7 @@
         {
           "type": "card",
           "id": "10c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 10,
           "x": 0,
@@ -1080,7 +1080,7 @@
         {
           "type": "card",
           "id": "5c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 5,
           "x": 0,
@@ -1089,7 +1089,7 @@
         {
           "type": "card",
           "id": "1c",
-          "parent": "pile_stacksOfChips",
+          "parent": "pile",
           "deck": "chipDeck",
           "cardType": 1,
           "x": 0,
@@ -1302,7 +1302,7 @@
         },
         {
           "type": "pile",
-          "id": "pile_stacksOfChips3D",
+          "id": "pile",
           "parent": "stacksOfChips3D",
           "width": 73,
           "height": 73,
@@ -1344,7 +1344,7 @@
         {
           "type": "card",
           "id": "3D1000c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 1000,
           "x": 0,
@@ -1353,7 +1353,7 @@
         {
           "type": "card",
           "id": "3D500c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 500,
           "x": 0,
@@ -1362,7 +1362,7 @@
         {
           "type": "card",
           "id": "3D100c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 100,
           "x": 0,
@@ -1371,7 +1371,7 @@
         {
           "type": "card",
           "id": "3D25c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 25,
           "x": 0,
@@ -1380,7 +1380,7 @@
         {
           "type": "card",
           "id": "3D10c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 10,
           "x": 0,
@@ -1389,7 +1389,7 @@
         {
           "type": "card",
           "id": "3D5c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 5,
           "x": 0,
@@ -1398,7 +1398,7 @@
         {
           "type": "card",
           "id": "3D1c",
-          "parent": "pile_stacksOfChips3D",
+          "parent": "pile",
           "deck": "chipDeck3D",
           "cardType": 1,
           "x": 0,
@@ -1859,7 +1859,7 @@
       "widgets": [
         {
           "type": "holder",
-          "id": "holderStandardDeckOfCards",
+          "id": "deckHolder",
           "x": 115,
           "y": 570,
           "dropTarget": {
@@ -1867,8 +1867,8 @@
           }
         },
         {
-          "id": "recall_holderStandardDeckOfCards",
-          "parent": "holderStandardDeckOfCards",
+          "id": "recall_deckHolder",
+          "parent": "deckHolder",
           "fixedParent": true,
           "y": 171.36,
           "width": 111,
@@ -1894,379 +1894,379 @@
         },
         {
           "type": "pile",
-          "id": "pile_holderStandardDeckOfCards",
-          "parent": "holderStandardDeckOfCards",
+          "id": "pile",
+          "parent": "deckHolder",
           "width": 103,
           "height": 160
         },
         {
           "id": "A_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 01"
         },
         {
           "id": "2_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 02"
         },
         {
           "id": "3_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 03"
         },
         {
           "id": "4_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 04"
         },
         {
           "id": "5_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 05"
         },
         {
           "id": "6_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 06"
         },
         {
           "id": "7_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 07"
         },
         {
           "id": "8_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 08"
         },
         {
           "id": "9_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 09"
         },
         {
           "id": "T_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 10"
         },
         {
           "id": "J_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 2J"
         },
         {
           "id": "Q_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 3Q"
         },
         {
           "id": "K_C",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "C 4K"
         },
         {
           "id": "A_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 01"
         },
         {
           "id": "2_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 02"
         },
         {
           "id": "3_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 03"
         },
         {
           "id": "4_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 04"
         },
         {
           "id": "5_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 05"
         },
         {
           "id": "6_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 06"
         },
         {
           "id": "7_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 07"
         },
         {
           "id": "8_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 08"
         },
         {
           "id": "9_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 09"
         },
         {
           "id": "T_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 10"
         },
         {
           "id": "J_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 2J"
         },
         {
           "id": "Q_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 3Q"
         },
         {
           "id": "K_D",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "D 4K"
         },
         {
           "id": "A_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 01"
         },
         {
           "id": "2_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 02"
         },
         {
           "id": "3_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 03"
         },
         {
           "id": "4_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 04"
         },
         {
           "id": "5_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 05"
         },
         {
           "id": "6_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 06"
         },
         {
           "id": "7_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 07"
         },
         {
           "id": "8_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 08"
         },
         {
           "id": "9_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 09"
         },
         {
           "id": "T_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 10"
         },
         {
           "id": "J_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 2J"
         },
         {
           "id": "Q_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 3Q"
         },
         {
           "id": "K_H",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "H 4K"
         },
         {
           "id": "A_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 01"
         },
         {
           "id": "2_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 02"
         },
         {
           "id": "3_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 03"
         },
         {
           "id": "4_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 04"
         },
         {
           "id": "5_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 05"
         },
         {
           "id": "6_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 06"
         },
         {
           "id": "7_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 07"
         },
         {
           "id": "8_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 08"
         },
         {
           "id": "9_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 09"
         },
         {
           "id": "T_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 10"
         },
         {
           "id": "J_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 2J"
         },
         {
           "id": "Q_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 3Q"
         },
         {
           "id": "K_S",
-          "parent": "pile_holderStandardDeckOfCards",
-          "deck": "mnznD",
+          "parent": "pile",
+          "deck": "deck",
           "type": "card",
           "cardType": "S 4K"
         },
         {
           "type": "deck",
-          "id": "mnznD",
-          "parent": "holderStandardDeckOfCards",
+          "id": "deck",
+          "parent": "deckHolder",
           "x": 12,
           "y": 41,
           "cardTypes": {
@@ -2992,7 +2992,7 @@
         },
         {
           "type": "button",
-          "id": "oqcf-Reset",
+          "id": "canvas-Reset",
           "parent": "canvas",
           "fixedParent": true,
           "x": -50,
@@ -3014,7 +3014,7 @@
         },
         {
           "type": "button",
-          "id": "oqcf-Color",
+          "id": "canvas-Color",
           "parent": "canvas",
           "fixedParent": true,
           "x": -50,
