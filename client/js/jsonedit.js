@@ -3006,6 +3006,28 @@ function jeShowCommands() {
       }
     }
 
+    if (jeTabSearchActive && jeTabSearchFilter.length >= 3) {
+      const filterLower = jeTabSearchFilter.toLowerCase();
+      
+      const matchingWidgets = widgetFilter(w => w.get('id').toLowerCase().includes(filterLower))
+        .slice(0, 10)
+        .sort((a, b) => a.get('id').localeCompare(b.get('id')));
+      
+      for (const widget of matchingWidgets) {
+        allFilteredCommands.push({ command: { id: 'widget_' + widget.get('id') }, name: widget.get('id'), contextMatch: 'Matching Widgets' });
+      }
+
+      const matchingOps = compute_ops.filter(op => 
+        op.name.toLowerCase().includes(filterLower) || 
+        op.desc.toLowerCase().includes(filterLower)
+      ).slice(0, 10)
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+      for (const op of matchingOps) {
+        allFilteredCommands.push({ command: { id: 'compute_' + op.name }, name: op.name + ': ' + op.sample, contextMatch: 'Compute Operations' });
+      }
+    }
+
     let commandIndex = 0;
     for(const contextMatch of Object.keys(filteredActiveCommands)) {
       commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
@@ -3029,6 +3051,47 @@ function jeShowCommands() {
         commandIndex++;
       }
     }
+
+    if (jeTabSearchActive && jeTabSearchFilter.length >= 3) {
+      const filterLower = jeTabSearchFilter.toLowerCase();
+      
+      const matchingWidgets = widgetFilter(w => w.get('id').toLowerCase().includes(filterLower))
+        .slice(0, 10)
+        .sort((a, b) => a.get('id').localeCompare(b.get('id')));
+      
+      if (matchingWidgets.length > 0) {
+        commandText += `\n  <div class="context">Matching Widgets</div>\n`;
+        for (const widget of matchingWidgets) {
+          const shouldHighlight = jeTabSearchActive && 
+            (jeTabSearchFilter.length > 0 || jeTabArrowKeysUsed) &&
+            jeTabSearchHighlightIndex >= 0 &&
+            commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
+          const highlightClass = shouldHighlight ? ' jeHighlight' : '';
+          commandText += `<button class="jeWidgetSearch${highlightClass}" data-widget-id="${html(widget.get('id'))}">${html(widget.get('id'))}</button>\n`;
+          commandIndex++;
+        }
+      }
+
+      const matchingOps = compute_ops.filter(op => 
+        op.name.toLowerCase().includes(filterLower) || 
+        op.desc.toLowerCase().includes(filterLower)
+      ).slice(0, 10)
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+      if (matchingOps.length > 0) {
+        commandText += `\n  <div class="context">Compute Operations</div>\n`;
+        for (const op of matchingOps) {
+          const shouldHighlight = jeTabSearchActive && 
+            (jeTabSearchFilter.length > 0 || jeTabArrowKeysUsed) &&
+            jeTabSearchHighlightIndex >= 0 &&
+            commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
+          const highlightClass = shouldHighlight ? ' jeHighlight' : '';
+          commandText += `<button class="jeComputeOp${highlightClass}" data-sample="${html(op.sample)}" data-desc="${html(op.desc)}">${html(op.name)}: ${html(op.sample)}</button>\n`;
+          commandText += `<div style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; margin-bottom: 4px;">${html(op.desc)}</div>\n`;
+          commandIndex++;
+        }
+      }
+    }
   }
   commandText += `\n\n${html(context)}\n`;
   if(jeJSONerror) {
@@ -3042,7 +3105,76 @@ function jeShowCommands() {
     commandText += `\n\n<pre>${html(jeSecondaryWidget)}</pre>\n`;
   commandText += `</div>`;
   $('#jeCommands').innerHTML = commandText;
-  on('#jeCommands button', 'click', clickButton);
+  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp)', 'click', clickButton);
+  on('#jeCommands button.jeWidgetSearch', 'click', async function(e) {
+    e.stopPropagation();
+    const widgetId = e.currentTarget.dataset.widgetId;
+    const widget = widgets.get(widgetId);
+    if (widget) {
+      jeSelectWidget(widget);
+      jeTabSearchActive = false;
+      jeTabSearchFilter = '';
+      jeTabSearchHighlightIndex = -1;
+      jeTabArrowKeysUsed = false;
+      jeShowCommands();
+    }
+  });
+  on('#jeCommands button.jeComputeOp', 'click', async function(e) {
+    e.stopPropagation();
+    const sample = e.currentTarget.dataset.sample;
+    let routineIndex = -1;
+    for(let i=jeContext.length-1; i>=0; --i) {
+      if(String(jeContext[i]).match(/Routine$/)) {
+        routineIndex = i;
+        break;
+      }
+    }
+    if (routineIndex >= 0) {
+      const routine = jeGetValue(jeContext.slice(1, routineIndex+1));
+      if (Array.isArray(routine)) {
+        const operationIndex = jeContext.length >= routineIndex + 1 ? jeContext[routineIndex+1] : null;
+        const varName = sample.match(/var\s+(\w+)\s*=/);
+        let expressionToInsert = sample;
+        if (varName) {
+          expressionToInsert = sample.replace(new RegExp(`var\\s+${varName[1]}\\s*=`), 'var ###SELECT ME### =');
+        }
+        if(operationIndex === null) {
+          routine.push(expressionToInsert);
+        } else {
+          routine.splice(operationIndex+1, 0, expressionToInsert);
+        }
+        jeStateBefore = JSON.stringify(jePreProcessObject(jeStateNow));
+        jeStateBeforeRaw = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
+        jeSet(jeStateBeforeRaw);
+        if (varName) {
+          jeSetAndSelect(varName[1], true);
+        } else {
+          jeSetAndSelect('###SELECT ME###', true);
+        }
+        if(jeMode != 'macro' && jeMode != 'empty') {
+          if((jeWidget || jeMode == 'multi') && !jeJSONerror)
+            await jeApplyChanges();
+        }
+        jeGetContext();
+      }
+    } else if (jeContext && jeContext[jeContext.length - 1] == '(var expression)') {
+      const v = jeGetEditorContent();
+      const aO = getSelection().anchorOffset;
+      const s = Math.min(aO, getSelection().focusOffset);
+      const before = v.substr(0, s);
+      const after = v.substr(s);
+      const newContent = before + sample + after;
+      jeSet(newContent);
+      const newPos = s + sample.length;
+      jeSelect(newPos, newPos, true);
+      jeGetContext();
+    }
+    jeTabSearchActive = false;
+    jeTabSearchFilter = '';
+    jeTabSearchHighlightIndex = -1;
+    jeTabArrowKeysUsed = false;
+    jeShowCommands();
+  });
 
   on('#var_search', 'input', displayComputeOps);
   if ($('#var_results') && jeKeyword !='') {
