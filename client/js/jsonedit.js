@@ -3160,27 +3160,9 @@ function jeShowCommands() {
   $('#jeCommands').innerHTML = commandText;
   
   if (jeTabSearchActive && jeTabSearchHighlightIndex >= 0) {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
-        if (buttons.length > 0) {
-          const highlightedButton = buttons[0];
-          highlightedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          let description = highlightedButton.nextElementSibling;
-          if (description && description.classList) {
-            if (description.classList.contains('jeComputeOpDesc')) {
-              setTimeout(() => description.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-            } else if (description.classList.contains('jeEditorLineDesc')) {
-              let lastDesc = description;
-              while (lastDesc && lastDesc.nextElementSibling && lastDesc.nextElementSibling.classList && lastDesc.nextElementSibling.classList.contains('jeEditorLineDesc')) {
-                lastDesc = lastDesc.nextElementSibling;
-              }
-              setTimeout(() => lastDesc.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-            }
-          }
-        }
-      });
-    });
+    const buttons = $a('#jeContextButtons button.jeHighlight');
+    if (buttons.length > 0)
+      buttons[0].scrollIntoView({ block: 'center' });
   } else if (scrollContainer) {
     scrollContainer.scrollTop = previousScrollTop;
   }
