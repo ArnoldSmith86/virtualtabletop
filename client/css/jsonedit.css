@@ -538,6 +538,11 @@ body.jsonEdit #toolbar {
   margin-top: 8px;
 }
 
+#jeContextButtons > button.jeHighlight {
+  background-color: rgba(255, 255, 0, 0.3);
+  outline: 2px solid yellow;
+}
+
 #jeContextButtons > button > b{
   text-decoration: underline;
   color: yellow;

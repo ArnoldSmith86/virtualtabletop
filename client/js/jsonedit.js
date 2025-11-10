@@ -21,6 +21,11 @@ let jeMouseButtonIsDown = false;
 let jeKeyIsDown = false;
 let jeKeyIsDownDeltas = [];
 let jeKeyword = '';
+let jeTabSearchActive = false;
+let jeTabSearchFilter = '';
+let jeTabSearchHighlightIndex = -1;
+let jeTabKeyHeld = false;
+let jeTabArrowKeysUsed = false;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -2920,6 +2925,13 @@ function jeSetEditorContent(content) {
   $('#jeText').textContent = content.replace(/\u00a0/g, ' ');
 }
 
+function jeMatchCommandName(name, filter) {
+  if (!filter) return true;
+  const words = name.toLowerCase().split(/\s+/);
+  const filterWords = filter.toLowerCase().split(/\s+/);
+  return filterWords.every(fw => words.some(w => w.startsWith(fw)));
+}
+
 function jeShowCommands() {
 
   // First set up top buttons
@@ -2967,29 +2979,50 @@ function jeShowCommands() {
       return { ArrowUp: '⬆', ArrowDown: '⬇'} [k] || k;
     }
 
+    const allFilteredCommands = [];
+    const filteredActiveCommands = {};
+
     for(const contextMatch of (Object.keys(activeCommands).sort((a,b)=>b.length-a.length).sort((a,b)=>a==='widget'?1:(b==='widget'?-1:0)))) {
-      commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
+      const filteredCommands = [];
       for(const command of activeCommands[contextMatch].sort(sortByName)) {
         try {
           if(context.match(new RegExp(command.context)) && (!command.show || command.show())) {
             const name = typeof command.name == 'function' ? command.name() : command.name;
-            if(command.forceKey && !usedKeys[command.forceKey])
-              command.currentKey = command.forceKey;
-            for(const key of name.split(''))
-              if(key != ' ' && !command.currentKey && !usedKeys[key.toLowerCase()])
-                command.currentKey = key.toLowerCase();
-            for(const key of 'abcdefghijklmnopqrstuvwxyz1234567890'.split(''))
-              if(!command.currentKey && !usedKeys[key])
-                command.currentKey = key;
-            usedKeys[command.currentKey] = true;
-            let keyName = displayKey(command.currentKey);
-            // commandText += (keyName !== undefined)? `Ctrl-${keyName}: ` : `no key  `;
-            // ${name.replace(keyName, '<b>' + keyName + '</b>')}
-            commandText += `<button id="${command.id}">${name}</button>\n`;
+            if (!jeTabSearchActive || jeMatchCommandName(name, jeTabSearchFilter)) {
+              filteredCommands.push({ command, name });
+              allFilteredCommands.push({ command, name, contextMatch });
+            }
           }
         } catch(e) {
           console.error(`Failed to show command ${command.id}`, e);
         }
+      }
+      if (filteredCommands.length > 0) {
+        filteredActiveCommands[contextMatch] = filteredCommands;
+      }
+    }
+
+    let commandIndex = 0;
+    for(const contextMatch of Object.keys(filteredActiveCommands)) {
+      commandText += `\n  <div class="context">${html(contextMatch)}</div>\n`;
+      for(const { command, name } of filteredActiveCommands[contextMatch]) {
+        if(command.forceKey && !usedKeys[command.forceKey])
+          command.currentKey = command.forceKey;
+        for(const key of name.split(''))
+          if(key != ' ' && !command.currentKey && !usedKeys[key.toLowerCase()])
+            command.currentKey = key.toLowerCase();
+        for(const key of 'abcdefghijklmnopqrstuvwxyz1234567890'.split(''))
+          if(!command.currentKey && !usedKeys[key])
+            command.currentKey = key;
+        usedKeys[command.currentKey] = true;
+        let keyName = displayKey(command.currentKey);
+        const shouldHighlight = jeTabSearchActive && 
+          (jeTabSearchFilter.length > 0 || jeTabArrowKeysUsed) &&
+          jeTabSearchHighlightIndex >= 0 &&
+          commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
+        const highlightClass = shouldHighlight ? ' jeHighlight' : '';
+        commandText += `<button id="${command.id}" class="${highlightClass}">${name}</button>\n`;
+        commandIndex++;
       }
     }
   }
@@ -3172,6 +3205,20 @@ function jeInitEventListeners() {
   });
 
   window.addEventListener('keydown', async function(e) {
+    if(e.key == 'Tab' && jeEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      if (!jeTabSearchActive) {
+        jeTabKeyHeld = true;
+        jeTabSearchActive = true;
+        jeTabSearchFilter = '';
+        jeTabSearchHighlightIndex = -1;
+        jeTabArrowKeysUsed = false;
+        jeShowCommands();
+      }
+      return;
+    }
     if(!jeEnabled)
       return;
 
@@ -3179,6 +3226,49 @@ function jeInitEventListeners() {
       jeState.ctrl = true;
     if(e.key == 'Shift')
       jeState.shift = true;
+
+    if (jeTabSearchActive && jeTabKeyHeld && e.target != $('#jeText')) {
+      if (e.key == 'ArrowUp') {
+        e.preventDefault();
+        if (jeTabSearchHighlightIndex > 0) {
+          jeTabSearchHighlightIndex--;
+          jeTabArrowKeysUsed = true;
+          jeShowCommands();
+        } else if (jeTabSearchHighlightIndex < 0) {
+          const buttons = $('#jeContextButtons').querySelectorAll('button');
+          jeTabSearchHighlightIndex = Math.max(0, buttons.length - 1);
+          jeTabArrowKeysUsed = true;
+          jeShowCommands();
+        }
+      } else if (e.key == 'ArrowDown') {
+        e.preventDefault();
+        const buttons = $('#jeContextButtons').querySelectorAll('button');
+        const maxIndex = buttons.length - 1;
+        if (jeTabSearchHighlightIndex < 0) {
+          jeTabSearchHighlightIndex = 0;
+        } else if (jeTabSearchHighlightIndex < maxIndex) {
+          jeTabSearchHighlightIndex++;
+        }
+        jeTabArrowKeysUsed = true;
+        jeShowCommands();
+      } else if (e.key.length == 1 && !e.ctrlKey && !e.altKey && !e.metaKey && e.key != 'Tab') {
+        jeTabSearchFilter += e.key;
+        jeTabSearchHighlightIndex = 0;
+        jeTabArrowKeysUsed = false;
+        jeShowCommands();
+        e.preventDefault();
+      } else if (e.key == 'Backspace') {
+        jeTabSearchFilter = jeTabSearchFilter.slice(0, -1);
+        if (jeTabSearchFilter.length > 0) {
+          jeTabSearchHighlightIndex = 0;
+        } else {
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+        }
+        jeShowCommands();
+        e.preventDefault();
+      }
+    }
 
     if(e.ctrlKey) {
       if(e.key == ' ' && jeMode == 'widget') {
@@ -3236,6 +3326,60 @@ function jeInitEventListeners() {
       jeNewline();
       e.preventDefault();
     }
+    if (e.key == 'Tab' && jeEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!jeTabSearchActive) {
+        jeTabKeyHeld = true;
+        jeTabSearchActive = true;
+        jeTabSearchFilter = '';
+        jeTabSearchHighlightIndex = -1;
+        jeTabArrowKeysUsed = false;
+        jeShowCommands();
+      }
+    }
+    if (jeTabSearchActive) {
+      if (e.key == 'ArrowUp') {
+        e.preventDefault();
+        if (jeTabSearchHighlightIndex > 0) {
+          jeTabSearchHighlightIndex--;
+          jeTabArrowKeysUsed = true;
+          jeShowCommands();
+        } else if (jeTabSearchHighlightIndex < 0) {
+          const buttons = $('#jeContextButtons').querySelectorAll('button');
+          jeTabSearchHighlightIndex = Math.max(0, buttons.length - 1);
+          jeTabArrowKeysUsed = true;
+          jeShowCommands();
+        }
+      } else if (e.key == 'ArrowDown') {
+        e.preventDefault();
+        const buttons = $('#jeContextButtons').querySelectorAll('button');
+        const maxIndex = buttons.length - 1;
+        if (jeTabSearchHighlightIndex < 0) {
+          jeTabSearchHighlightIndex = 0;
+        } else if (jeTabSearchHighlightIndex < maxIndex) {
+          jeTabSearchHighlightIndex++;
+        }
+        jeTabArrowKeysUsed = true;
+        jeShowCommands();
+      } else if (e.key.length == 1 && !e.ctrlKey && !e.altKey && !e.metaKey && e.key != 'Enter') {
+        jeTabSearchFilter += e.key;
+        jeTabSearchHighlightIndex = 0;
+        jeTabArrowKeysUsed = false;
+        jeShowCommands();
+        e.preventDefault();
+      } else if (e.key == 'Backspace') {
+        jeTabSearchFilter = jeTabSearchFilter.slice(0, -1);
+        if (jeTabSearchFilter.length > 0) {
+          jeTabSearchHighlightIndex = 0;
+        } else {
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+        }
+        jeShowCommands();
+        e.preventDefault();
+      }
+    }
   });
 
   window.addEventListener('keydown', function(e) {
@@ -3246,8 +3390,29 @@ function jeInitEventListeners() {
   });
 
   window.addEventListener('keyup', function(e) {
+    if (e.key == 'Tab' && jeEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      if (jeTabKeyHeld && jeTabSearchActive) {
+        const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+        if (buttons.length > 0) {
+          buttons[0].click();
+        }
+      }
+      if (jeTabSearchActive) {
+        jeTabSearchActive = false;
+        jeTabSearchFilter = '';
+        jeTabSearchHighlightIndex = -1;
+        jeTabArrowKeysUsed = false;
+        jeShowCommands();
+      }
+      jeTabKeyHeld = false;
+      return;
+    }
     if(!jeEnabled)
       return;
+
     if(e.key == 'Control')
       jeState.ctrl = false;
     if(e.key == 'Shift')
