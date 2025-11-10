@@ -3448,49 +3448,6 @@ function jeInitEventListeners() {
     if(e.key == 'Shift')
       jeState.shift = true;
 
-    if (jeTabSearchActive && jeTabKeyHeld && e.target != $('#jeText')) {
-      if (e.key == 'ArrowUp') {
-        e.preventDefault();
-        if (jeTabSearchHighlightIndex > 0) {
-          jeTabSearchHighlightIndex--;
-          jeTabArrowKeysUsed = true;
-          jeShowCommands();
-        } else if (jeTabSearchHighlightIndex < 0) {
-          const buttons = $('#jeContextButtons').querySelectorAll('button');
-          jeTabSearchHighlightIndex = Math.max(0, buttons.length - 1);
-          jeTabArrowKeysUsed = true;
-          jeShowCommands();
-        }
-      } else if (e.key == 'ArrowDown') {
-        e.preventDefault();
-        const buttons = $('#jeContextButtons').querySelectorAll('button');
-        const maxIndex = buttons.length - 1;
-        if (jeTabSearchHighlightIndex < 0) {
-          jeTabSearchHighlightIndex = 0;
-        } else if (jeTabSearchHighlightIndex < maxIndex) {
-          jeTabSearchHighlightIndex++;
-        }
-        jeTabArrowKeysUsed = true;
-        jeShowCommands();
-      } else if (e.key.length == 1 && !e.ctrlKey && !e.altKey && !e.metaKey && e.key != 'Tab') {
-        jeTabSearchFilter += e.key;
-        jeTabSearchHighlightIndex = 0;
-        jeTabArrowKeysUsed = false;
-        jeShowCommands();
-        e.preventDefault();
-      } else if (e.key == 'Backspace') {
-        jeTabSearchFilter = jeTabSearchFilter.slice(0, -1);
-        if (jeTabSearchFilter.length > 0) {
-          jeTabSearchHighlightIndex = 0;
-        } else {
-          jeTabSearchHighlightIndex = -1;
-          jeTabArrowKeysUsed = false;
-        }
-        jeShowCommands();
-        e.preventDefault();
-      }
-    }
-
     if(e.ctrlKey) {
       if(e.key == ' ' && jeMode == 'widget') {
         const locationLine = String(jeJSONerror).match(/line ([0-9]+) column ([0-9]+)/);
@@ -3502,18 +3459,6 @@ function jeInitEventListeners() {
         const locationPostion = String(jeJSONerror).match(/position ([0-9]+)/);
         if(locationPostion)
           jeSelect(+locationPostion[1], +locationPostion[1], true);
-      // } else {
-      //   for(const command of jeCommands) {
-      //     if(command.currentKey == e.key) {
-      //       e.preventDefault();
-      //       try {
-      //         jeCommandError = null;
-      //         await jeCallCommand(command);
-      //       } catch(e) {
-      //         jeCommandError = e;
-      //       }
-      //     }
-      //   }
       }
     }
 
