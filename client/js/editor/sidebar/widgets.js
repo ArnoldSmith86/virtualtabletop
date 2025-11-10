@@ -20,7 +20,7 @@ function deepReplace(obj, idMap) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = obj[key];
-      if (typeof value === 'string' && idMap[value]) {
+      if (key !== 'type' && typeof value === 'string' && idMap[value]) {
         obj[key] = idMap[value];
       } else {
         deepReplace(value, idMap);
