@@ -586,6 +586,12 @@ body.jsonEdit #toolbar {
   outline: 2px solid yellow;
 }
 
+#jeContextButtons .jeEditorLineDesc mark {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+}
+
 #jeContextButtons > button > b{
   text-decoration: underline;
   color: yellow;

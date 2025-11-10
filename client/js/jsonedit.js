@@ -3026,6 +3026,18 @@ function jeShowCommands() {
       for (const op of matchingOps) {
         allFilteredCommands.push({ command: { id: 'compute_' + op.name }, name: op.name + ': ' + op.sample, contextMatch: 'Compute Operations' });
       }
+
+      const editorContent = jeGetEditorContent();
+      const lines = editorContent.split('\n');
+      const matchingLines = [];
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].toLowerCase().includes(filterLower)) {
+          matchingLines.push({ lineNumber: i + 1, line: lines[i], index: i });
+        }
+      }
+      matchingLines.slice(0, 10).forEach(match => {
+        allFilteredCommands.push({ command: { id: 'editor_line_' + match.lineNumber }, name: 'jump to line ' + match.lineNumber, contextMatch: 'Editor Content', lineData: match });
+      });
     }
 
     let commandIndex = 0;
@@ -3091,6 +3103,35 @@ function jeShowCommands() {
           commandIndex++;
         }
       }
+
+      const editorContent = jeGetEditorContent();
+      const lines = editorContent.split('\n');
+      const matchingLines = [];
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].toLowerCase().includes(jeTabSearchFilter.toLowerCase())) {
+          matchingLines.push({ lineNumber: i + 1, line: lines[i], index: i });
+        }
+      }
+      if (matchingLines.length > 0) {
+        commandText += `\n  <div class="context">Editor Content</div>\n`;
+        for (const match of matchingLines.slice(0, 10)) {
+          const shouldHighlight = jeTabSearchActive && 
+            (jeTabSearchFilter.length > 0 || jeTabArrowKeysUsed) &&
+            jeTabSearchHighlightIndex >= 0 &&
+            commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
+          const highlightClass = shouldHighlight ? ' jeHighlight' : '';
+          const prevLine = match.index > 0 ? lines[match.index - 1] : '';
+          const nextLine = match.index < lines.length - 1 ? lines[match.index + 1] : '';
+          const highlightedLine = match.line.replace(new RegExp(`(${jeTabSearchFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
+          commandText += `<button class="jeEditorLine${highlightClass}" data-line="${match.lineNumber}" data-line-index="${match.index}">jump to line ${match.lineNumber}</button>\n`;
+          let contextHtml = '';
+          if (prevLine) contextHtml += `<div class="jeEditorLineDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; font-family: monospace;">${html(prevLine)}</div>\n`;
+          contextHtml += `<div class="jeEditorLineDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; font-family: monospace;">${highlightedLine}</div>\n`;
+          if (nextLine) contextHtml += `<div class="jeEditorLineDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; font-family: monospace;">${html(nextLine)}</div>\n`;
+          commandText += contextHtml;
+          commandIndex++;
+        }
+      }
     }
   }
   commandText += `\n\n${html(context)}\n`;
@@ -3115,9 +3156,17 @@ function jeShowCommands() {
         if (buttons.length > 0) {
           const highlightedButton = buttons[0];
           highlightedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          const description = highlightedButton.nextElementSibling;
-          if (description && description.classList && description.classList.contains('jeComputeOpDesc')) {
-            setTimeout(() => description.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+          let description = highlightedButton.nextElementSibling;
+          if (description && description.classList) {
+            if (description.classList.contains('jeComputeOpDesc')) {
+              setTimeout(() => description.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+            } else if (description.classList.contains('jeEditorLineDesc')) {
+              let lastDesc = description;
+              while (lastDesc && lastDesc.nextElementSibling && lastDesc.nextElementSibling.classList && lastDesc.nextElementSibling.classList.contains('jeEditorLineDesc')) {
+                lastDesc = lastDesc.nextElementSibling;
+              }
+              setTimeout(() => lastDesc.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+            }
           }
         }
       });
@@ -3126,7 +3175,27 @@ function jeShowCommands() {
     scrollContainer.scrollTop = previousScrollTop;
   }
   
-  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp)', 'click', clickButton);
+  on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp):not(.jeEditorLine)', 'click', clickButton);
+  on('#jeCommands button.jeEditorLine', 'click', function(e) {
+    e.stopPropagation();
+    const lineNumber = parseInt(e.currentTarget.dataset.line);
+    const lineIndex = parseInt(e.currentTarget.dataset.lineIndex);
+    const editorContent = jeGetEditorContent();
+    const lines = editorContent.split('\n');
+    let charOffset = 0;
+    for (let i = 0; i < lineIndex; i++) {
+      charOffset += lines[i].length + 1;
+    }
+    jeSelect(charOffset, charOffset, true);
+    $('#jeText').scrollTop = $('#jeText').scrollHeight;
+    const lineHeight = $('#jeText').scrollHeight / lines.length;
+    $('#jeText').scrollTop = lineIndex * lineHeight - $('#jeText').clientHeight / 2;
+    jeTabSearchActive = false;
+    jeTabSearchFilter = '';
+    jeTabSearchHighlightIndex = -1;
+    jeTabArrowKeysUsed = false;
+    jeShowCommands();
+  });
   on('#jeCommands button.jeWidgetSearch', 'click', async function(e) {
     e.stopPropagation();
     const widgetId = e.currentTarget.dataset.widgetId;
