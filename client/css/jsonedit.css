@@ -313,7 +313,10 @@ i.error   { color: var(--textHighlightColor3); font-weight: bold; }
   transform: translate3d(0, 0, 5px);
   transform-style: preserve-3d;
   transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
 }
+
 
 #jeWidgetLayers .key::after {
   border-style: solid;
@@ -561,7 +564,10 @@ body.jsonEdit #toolbar {
   transform: translate3d(0, 0, 5px);
   transform-style: preserve-3d;
   transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
 }
+
 
 #jeCommands .key::after {
   border-style: solid;

@@ -26,6 +26,7 @@ let jeTabSearchFilter = '';
 let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
+let jeIgnoreBlurOnce = false;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -3168,6 +3169,52 @@ function jeShowCommands() {
   }
   
   on('#jeCommands button:not(.jeWidgetSearch):not(.jeComputeOp):not(.jeEditorLine)', 'click', clickButton);
+  // Make any keycap with text 'Tab' act as a press/release toggle
+  const keycaps = $a('#jeCommands .key');
+  if (keycaps && keycaps.length) {
+    keycaps.forEach(el => {
+      const label = (el.textContent || '').trim();
+      if (label.toLowerCase() === 'tab') {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const jeTextElement = $('#jeText');
+          if (jeTextElement) {
+            jeTextElement.focus();
+          }
+          if (!jeTabSearchActive) {
+            // Start Tab-hold search
+            jeTabKeyHeld = true;
+            jeTabSearchActive = true;
+            jeTabSearchFilter = '';
+            jeTabSearchHighlightIndex = -1;
+            jeTabArrowKeysUsed = false;
+            jeShowCommands();
+          } else {
+            // Release Tab: execute and close
+            jeIgnoreBlurOnce = true; // avoid blur handler double-executing
+            const jeTextElement2 = $('#jeText');
+            if (jeTextElement2) {
+              jeTextElement2.focus();
+            }
+            const highlighted = $('#jeContextButtons') && $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+            if (highlighted && highlighted.length > 0)
+              highlighted[0].click();
+            jeTabSearchActive = false;
+            jeTabSearchFilter = '';
+            jeTabSearchHighlightIndex = -1;
+            jeTabArrowKeysUsed = false;
+            jeTabKeyHeld = false;
+            jeShowCommands();
+          }
+        });
+      } else if (label === '↑' || label === '↓') {
+        // Do not make arrow keycaps clickable; keep default cursor
+        el.style.pointerEvents = 'none';
+        el.style.cursor = 'default';
+      }
+    });
+  }
   on('#jeCommands button.jeEditorLine', 'click', function(e) {
     e.stopPropagation();
     const lineNumber = parseInt(e.currentTarget.dataset.line);
@@ -3531,6 +3578,25 @@ function jeInitEventListeners() {
         jeShowCommands();
         e.preventDefault();
       }
+    }
+  });
+
+  // If editor loses focus during Tab-search, simulate releasing Tab
+  on('#jeText', 'blur', function() {
+    if (jeIgnoreBlurOnce) { jeIgnoreBlurOnce = false; return; }
+    if (jeTabSearchActive) {
+      if (jeTabKeyHeld) {
+        const buttons = $('#jeContextButtons') && $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+        if (buttons && buttons.length > 0) {
+          buttons[0].click();
+        }
+      }
+      jeTabSearchActive = false;
+      jeTabSearchFilter = '';
+      jeTabSearchHighlightIndex = -1;
+      jeTabArrowKeysUsed = false;
+      jeTabKeyHeld = false;
+      jeShowCommands();
     }
   });
 
