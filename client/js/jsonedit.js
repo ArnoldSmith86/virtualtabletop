@@ -3136,9 +3136,9 @@ function jeShowCommands() {
           const highlightedLine = match.line.replace(new RegExp(`(${jeTabSearchFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>');
           commandText += `<button class="jeEditorLine${highlightClass}" data-line="${match.lineNumber}" data-line-index="${match.index}">jump to line ${match.lineNumber}</button>\n`;
           let contextHtml = '';
-          if (prevLine) contextHtml += `<div class="jeEditorLineDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; font-family: monospace;">${html(prevLine)}</div>\n`;
-          contextHtml += `<div class="jeEditorLineDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; font-family: monospace;">${highlightedLine}</div>\n`;
-          if (nextLine) contextHtml += `<div class="jeEditorLineDesc" style="font-size: 11px; color: var(--textDimColor1); margin-left: 8px; font-family: monospace;">${html(nextLine)}</div>\n`;
+          if (prevLine) contextHtml += `<div class="jeEditorLineDesc">${html(prevLine)}</div>\n`;
+          contextHtml += `<div class="jeEditorLineDesc">${highlightedLine}</div>\n`;
+          if (nextLine) contextHtml += `<div class="jeEditorLineDesc">${html(nextLine)}</div>\n`;
           commandText += contextHtml;
           commandIndex++;
         }
