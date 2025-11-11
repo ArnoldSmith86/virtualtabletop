@@ -2948,7 +2948,7 @@ function jeShowCommands() {
   }
   commandText += `</div>`;
   if (!jeTabSearchActive) {
-    commandText += `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">Hold <span class="key">Tab</span> to search</div>`;
+    commandText += `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">Press or hold <span class="key">Tab</span> to search</div>`;
   } else {
     let searchHint = `<div style="margin-bottom: 8px; font-size: 12px; color: var(--textDimColor1);">`;
     if (jeTabSearchFilter.length > 0) {
@@ -2956,7 +2956,8 @@ function jeShowCommands() {
     } else {
       searchHint += `Type letters to filter<br>`;
     }
-    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>Release <span class="key">Tab</span> to execute`;
+    const executeText = jeTabKeyHeld ? 'Release' : 'Press';
+    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>${executeText} <span class="key">Tab</span> to execute`;
     searchHint += `</div>`;
     commandText += searchHint;
   }
@@ -3534,6 +3535,10 @@ function jeInitEventListeners() {
           jeTabSearchHighlightIndex = -1;
           jeTabArrowKeysUsed = false;
           jeShowCommands();
+        } else {
+          // Set jeTabKeyHeld when Tab is pressed while tabSearch is already active
+          jeTabKeyHeld = true;
+          jeShowCommands();
         }
       }
     }
@@ -3612,18 +3617,30 @@ function jeInitEventListeners() {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      if (jeTabKeyHeld && jeTabSearchActive) {
-        const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
-        if (buttons.length > 0) {
-          buttons[0].click();
-        }
-      }
       if (jeTabSearchActive) {
-        jeTabSearchActive = false;
-        jeTabSearchFilter = '';
-        jeTabSearchHighlightIndex = -1;
-        jeTabArrowKeysUsed = false;
-        jeShowCommands();
+        if (jeTabSearchFilter.length > 0) {
+          // Execute highlighted button when there's a search filter
+          const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+          if (buttons.length > 0) {
+            buttons[0].click();
+          }
+          jeTabSearchActive = false;
+          jeTabSearchFilter = '';
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+          jeShowCommands();
+        } else if (jeTabKeyHeld) {
+          // Keep tabSearch active when releasing without a search term (only if Tab was held)
+          jeTabKeyHeld = false;
+          jeShowCommands();
+        } else {
+          // Close tabSearch if Tab was pressed (not held) without a search term
+          jeTabSearchActive = false;
+          jeTabSearchFilter = '';
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+          jeShowCommands();
+        }
       }
       jeTabKeyHeld = false;
       return;
