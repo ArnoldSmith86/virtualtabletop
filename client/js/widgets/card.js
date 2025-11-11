@@ -161,6 +161,7 @@ class Card extends Widget {
               });
               objectDiv.innerHTML = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
               if (object.css) objectDiv.style.cssText += ';' + this.cssAsText(object.css, usedProperties, true);
+              if (object.classes) objectDiv.classList.add(object.classes);
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
