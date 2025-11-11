@@ -124,7 +124,7 @@ class Card extends Widget {
 
             const x = face.border ? object.x-face.border : object.x;
             const y = face.border ? object.y-face.border : object.y;
-            let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
+            let css = (object.type !== 'html' && object.css) ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
             css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
             css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
             if(typeof object.display !== 'undefined' && !object.display)
@@ -159,9 +159,52 @@ class Card extends Widget {
                 usedProperties.add(n);
                 return this.get(n) || '';
               });
-              objectDiv.innerHTML = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
-              if (object.css) objectDiv.style.cssText += ';' + this.cssAsText(object.css, usedProperties, true);
-              if (object.classes) objectDiv.classList.add(object.classes);
+
+              let inlineCSS = '';
+              let finalHTML = '';
+
+              if (object.css) {
+                  if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
+                      const faceIndex = faceTemplates.indexOf(face);
+                      const objectIndex = face.objects.indexOf(original);
+                      const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
+                      objectDiv.classList.add(uniqueScope);
+
+                      let styleString = '';
+                      for (const selector in object.css) {
+                          if (selector === 'inline') {
+                              inlineCSS = this.cssAsText(object.css.inline, usedProperties, true);
+                              continue;
+                          }
+                          const newSelector = selector.split(',').map(s => {
+                              const trimmed = s.trim();
+                              if (trimmed.startsWith('body')) {
+                                  return `.${uniqueScope}${trimmed.substring(4)}`;
+                              }
+                              return `.${uniqueScope} ${trimmed}`;
+                          }).join(', ');
+                          styleString += `${newSelector} { ${this.cssAsText(object.css[selector], usedProperties, true)} }\n`;
+                      }
+                      if (styleString) {
+                          const style = document.createElement('style');
+                          style.textContent = this.cssReplaceProperties(styleString, usedProperties);
+                          finalHTML += style.outerHTML;
+                      }
+                  } else {
+                      inlineCSS = this.cssAsText(object.css, usedProperties, true);
+                  }
+              }
+
+              let sanitizedContent = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
+              const bodyMatch = sanitizedContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+              if (bodyMatch) {
+                  sanitizedContent = bodyMatch;
+              }
+              finalHTML += sanitizedContent;
+              
+              objectDiv.innerHTML = finalHTML;
+
+              if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
