@@ -588,7 +588,9 @@ body.jsonEdit #toolbar {
 }
 
 #jeContextButtons > button.jeHighlight {
-  background-color: var(--VTTblueDark)
+  background-color: gold;
+  color: black;
+  font-weight: bold;
 }
 
 #jeContextButtons .jeEditorLineDesc mark {
