@@ -110,7 +110,7 @@ class Card extends Widget {
 
       if(Array.isArray(face.objects)) {
         for(const original of face.objects) {
-          const objectDiv = document.createElement(original.type == 'html' ? 'iframe' : 'div');
+          const objectDiv = document.createElement('div');
           objectDiv.classList.add('cardFaceObject');
 
           const setValue = _=>{
@@ -155,24 +155,11 @@ class Card extends Widget {
                 generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name:object.value }, object, { rotation: 0 }), object.text || '', 1, object.color);
               }
             } else if (object.type == 'html') {
-              // Prevent input from going to frame.
-              objectDiv.style.pointerEvents = 'none';
-              objectDiv.setAttribute('sandbox', 'allow-same-origin');
-              objectDiv.setAttribute('width', object.width);
-              objectDiv.setAttribute('height', object.height);
-              objectDiv.setAttribute('allow', 'autoplay');
               const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
                 usedProperties.add(n);
                 return this.get(n) || '';
               });
-              // Applies a template which fills available space, uses the same classes and applies
-              // nested CSS style rules.
-              const css = object['css'];
-              const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
-              const html = `<!DOCTYPE html>\n` +
-                  `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
-                  `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
-              objectDiv.srcdoc = html;
+              objectDiv.innerHTML = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
