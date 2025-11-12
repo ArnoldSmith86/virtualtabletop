@@ -1,0 +1,785 @@
+{
+  "_meta": {
+    "version": 18,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Fragrant Lilies",
+      "image": "/assets/-555948524_9648",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/334011/a-gentle-rain",
+      "year": "",
+      "mode": "solo",
+      "time": "15",
+      "attribution": "Game layout and scripting by ManIp, released to the the \npublic domain under CC0.&nbsp;<span>The following assets are available under the Freepik (</span>https://www.freepik.com/)<span>&nbsp;license:</span>\n\nPond Vector used: https://www.freepik.com/free-vector/flat-design-koi-fish-illustration_29301479.htm#fromView=search&amp;page=4&amp;position=4&amp;uuid=30fad6fb-8b6a-4608-be5a-a799b55b510d&amp;query=pond+top+down\n\nLilies Vector used: https://www.freepik.com/free-vector/nice-selection-flowers_912130.htm#fromView=search&amp;page=1&amp;position=11&amp;uuid=62fd74a7-57e6-49c9-97b6-c44f89588e60&amp;query=lilies+top+down",
+      "lastUpdate": 1762973154895,
+      "showName": true,
+      "skill": "Low Complexity",
+      "description": "Grow a peaceful pond by placing tiles so the lilies' edges match.",
+      "similarImage": "",
+      "similarName": "A Gentle Rain",
+      "similarDesigner": "Kevin Wilson",
+      "similarAwards": "2024 Origins Awards Best Co-Op/Solo Game Nominee",
+      "ruleText": "In <em>Fragrant Lilies</em>, you grow a peaceful pond by placing tiles so the flower edges match. Start with one tile in the center and draw a new one each turn, placing it so all touching edges align. When a placement completes a 2×2 square, it blooms — the four flowers in the center are all different, and you place the flower token for the one type not shown. Keep drawing and placing tiles until you’ve placed all eight flower tokens or run out of tiles. If you complete all eight blooms, you win; otherwise, your score is the number of flowers that bloomed. The game is calm and it is about creating balance and beauty.",
+      "helpText": "Click the New Game button to start a new game. Each turn, click the Draw button to reveal the next card. Drag the card to place it on the place you want.",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "1"
+    }
+  },
+  "qsgv card (1).png": {
+    "type": "card",
+    "id": "qsgv card (1).png",
+    "deck": "card-deck",
+    "cardType": "card (1).png",
+    "z": 3737,
+    "parent": "kd0c"
+  },
+  "qsgv card (2).png": {
+    "type": "card",
+    "id": "qsgv card (2).png",
+    "deck": "card-deck",
+    "cardType": "card (2).png",
+    "z": 3731,
+    "rotation": 90,
+    "parent": "kd0c"
+  },
+  "qsgv card (5).png": {
+    "type": "card",
+    "id": "qsgv card (5).png",
+    "deck": "card-deck",
+    "cardType": "card (5).png",
+    "z": 3739,
+    "parent": "kd0c"
+  },
+  "qsgv card (3).png": {
+    "type": "card",
+    "id": "qsgv card (3).png",
+    "deck": "card-deck",
+    "cardType": "card (3).png",
+    "z": 3734,
+    "rotation": 180,
+    "parent": "kd0c"
+  },
+  "qsgv card (8).png": {
+    "type": "card",
+    "id": "qsgv card (8).png",
+    "deck": "card-deck",
+    "cardType": "card (8).png",
+    "z": 3744,
+    "rotation": 180,
+    "parent": "kd0c"
+  },
+  "qsgv card (6).png": {
+    "type": "card",
+    "id": "qsgv card (6).png",
+    "deck": "card-deck",
+    "cardType": "card (6).png",
+    "z": 3743,
+    "parent": "kd0c"
+  },
+  "qsgv card (9).png": {
+    "type": "card",
+    "id": "qsgv card (9).png",
+    "deck": "card-deck",
+    "cardType": "card (9).png",
+    "z": 3747,
+    "parent": "kd0c"
+  },
+  "qsgv card (7).png": {
+    "type": "card",
+    "id": "qsgv card (7).png",
+    "deck": "card-deck",
+    "cardType": "card (7).png",
+    "z": 3746,
+    "rotation": 90,
+    "parent": "kd0c"
+  },
+  "qsgv card (11).png": {
+    "type": "card",
+    "id": "qsgv card (11).png",
+    "deck": "card-deck",
+    "cardType": "card (11).png",
+    "z": 3741,
+    "parent": "kd0c"
+  },
+  "qsgv card (4).png": {
+    "type": "card",
+    "id": "qsgv card (4).png",
+    "deck": "card-deck",
+    "cardType": "card (4).png",
+    "z": 3726,
+    "parent": "kd0c"
+  },
+  "qsgv card (10).png": {
+    "type": "card",
+    "id": "qsgv card (10).png",
+    "deck": "card-deck",
+    "cardType": "card (10).png",
+    "z": 3728,
+    "parent": "kd0c"
+  },
+  "qsgv card (12).png": {
+    "type": "card",
+    "id": "qsgv card (12).png",
+    "deck": "card-deck",
+    "cardType": "card (12).png",
+    "z": 3730,
+    "parent": "kd0c"
+  },
+  "qsgv card (13).png": {
+    "type": "card",
+    "id": "qsgv card (13).png",
+    "deck": "card-deck",
+    "cardType": "card (13).png",
+    "z": 3748,
+    "parent": "kd0c"
+  },
+  "qsgv card (16).png": {
+    "type": "card",
+    "id": "qsgv card (16).png",
+    "deck": "card-deck",
+    "cardType": "card (16).png",
+    "z": 3727,
+    "parent": "kd0c"
+  },
+  "qsgv card (17).png": {
+    "type": "card",
+    "id": "qsgv card (17).png",
+    "deck": "card-deck",
+    "cardType": "card (17).png",
+    "z": 3749,
+    "parent": "kd0c"
+  },
+  "qsgv card (24).png": {
+    "type": "card",
+    "id": "qsgv card (24).png",
+    "deck": "card-deck",
+    "cardType": "card (24).png",
+    "z": 3725,
+    "rotation": 90,
+    "parent": "kd0c"
+  },
+  "qsgv card (15).png": {
+    "type": "card",
+    "id": "qsgv card (15).png",
+    "deck": "card-deck",
+    "cardType": "card (15).png",
+    "z": 3735,
+    "parent": "kd0c"
+  },
+  "qsgv card (19).png": {
+    "type": "card",
+    "id": "qsgv card (19).png",
+    "deck": "card-deck",
+    "cardType": "card (19).png",
+    "z": 3729,
+    "parent": "kd0c"
+  },
+  "qsgv card (20).png": {
+    "type": "card",
+    "id": "qsgv card (20).png",
+    "deck": "card-deck",
+    "cardType": "card (20).png",
+    "z": 3736,
+    "parent": "kd0c"
+  },
+  "qsgv card (18).png": {
+    "type": "card",
+    "id": "qsgv card (18).png",
+    "deck": "card-deck",
+    "cardType": "card (18).png",
+    "z": 3733,
+    "parent": "kd0c"
+  },
+  "qsgv card (21).png": {
+    "type": "card",
+    "id": "qsgv card (21).png",
+    "deck": "card-deck",
+    "cardType": "card (21).png",
+    "z": 3732,
+    "parent": "kd0c"
+  },
+  "qsgv card (22).png": {
+    "type": "card",
+    "id": "qsgv card (22).png",
+    "deck": "card-deck",
+    "cardType": "card (22).png",
+    "z": 3742,
+    "parent": "kd0c"
+  },
+  "qsgv card (25).png": {
+    "type": "card",
+    "id": "qsgv card (25).png",
+    "deck": "card-deck",
+    "cardType": "card (25).png",
+    "z": 3750,
+    "parent": "kd0c"
+  },
+  "qsgv card (23).png": {
+    "type": "card",
+    "id": "qsgv card (23).png",
+    "deck": "card-deck",
+    "cardType": "card (23).png",
+    "z": 3745,
+    "rotation": 270,
+    "parent": "kd0c"
+  },
+  "qsgv card (26).png": {
+    "type": "card",
+    "id": "qsgv card (26).png",
+    "deck": "card-deck",
+    "cardType": "card (26).png",
+    "z": 3740,
+    "rotation": 90,
+    "parent": "kd0c"
+  },
+  "qsgv card (28).png": {
+    "type": "card",
+    "id": "qsgv card (28).png",
+    "deck": "card-deck",
+    "cardType": "card (28).png",
+    "z": 3751,
+    "parent": "kd0c"
+  },
+  "qsgv card (14).png": {
+    "type": "card",
+    "id": "qsgv card (14).png",
+    "deck": "card-deck",
+    "cardType": "card (14).png",
+    "z": 3724,
+    "parent": "kd0c"
+  },
+  "qsgv card (27).png": {
+    "type": "card",
+    "id": "qsgv card (27).png",
+    "deck": "card-deck",
+    "cardType": "card (27).png",
+    "z": 3738,
+    "parent": "kd0c"
+  },
+  "draw-label": {
+    "type": "label",
+    "id": "draw-label",
+    "z": 3,
+    "text": "Draw",
+    "y": 1,
+    "x": 6
+  },
+  "ldoa": {
+    "type": "button",
+    "text": "NEW GAME",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": [
+          "draw-holder",
+          "token-holder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "draw-holder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "draw-holder"
+      },
+      {
+        "func": "MOVE",
+        "to": [
+          "token-holder-1",
+          "token-holder-2",
+          "token-holder-3",
+          "token-holder-4",
+          "token-holder-4",
+          "token-holder-5",
+          "token-holder-6",
+          "token-holder-7",
+          "token-holder-8"
+        ],
+        "from": "token-holder"
+      }
+    ],
+    "y": 915,
+    "z": 1,
+    "id": "ldoa",
+    "x": 7,
+    "width": 70,
+    "height": 70
+  },
+  "draw-holder": {
+    "type": "holder",
+    "id": "draw-holder",
+    "x": 5,
+    "y": 20,
+    "width": 105,
+    "height": 105,
+    "z": 4,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "d3no": {
+    "type": "button",
+    "text": "Draw",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "draw-holder",
+        "to": "peek-holder",
+        "count": 1
+      }
+    ],
+    "x": 30,
+    "y": 130,
+    "z": 2,
+    "id": "d3no",
+    "width": 50,
+    "height": 50
+  },
+  "card-deck": {
+    "type": "deck",
+    "id": "card-deck",
+    "parent": "draw-holder",
+    "x": 12,
+    "y": 10,
+    "z": 13,
+    "cardDefaults": {
+      "width": 95,
+      "height": 95,
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "count": 1,
+          "angle": 90
+        }
+      ],
+      "grid": [
+        {
+          "x": 95,
+          "y": 95,
+          "offsetX": -17.5,
+          "offsetY": -47.5
+        }
+      ]
+    },
+    "cardTypes": {
+      "card (1).png": {
+        "image": "/assets/-1414422998_9746"
+      },
+      "card (2).png": {
+        "image": "/assets/1424353217_10502"
+      },
+      "card (5).png": {
+        "image": "/assets/-103087960_9710"
+      },
+      "card (3).png": {
+        "image": "/assets/361087277_10386"
+      },
+      "card (8).png": {
+        "image": "/assets/-1984091695_11686"
+      },
+      "card (6).png": {
+        "image": "/assets/1420785173_11186"
+      },
+      "card (9).png": {
+        "image": "/assets/1755749832_9808"
+      },
+      "card (7).png": {
+        "image": "/assets/-1098922534_11236"
+      },
+      "card (11).png": {
+        "image": "/assets/692942625_9538"
+      },
+      "card (4).png": {
+        "image": "/assets/-2033659592_10296"
+      },
+      "card (10).png": {
+        "image": "/assets/874100913_10662"
+      },
+      "card (12).png": {
+        "image": "/assets/1904584060_10788"
+      },
+      "card (13).png": {
+        "image": "/assets/-1102759030_12050"
+      },
+      "card (16).png": {
+        "image": "/assets/-1363357924_9702"
+      },
+      "card (17).png": {
+        "image": "/assets/-887011251_9626"
+      },
+      "card (24).png": {
+        "image": "/assets/431457690_9324"
+      },
+      "card (15).png": {
+        "image": "/assets/1752723149_11374"
+      },
+      "card (19).png": {
+        "image": "/assets/411931163_10014"
+      },
+      "card (20).png": {
+        "image": "/assets/-920019882_11080"
+      },
+      "card (18).png": {
+        "image": "/assets/1115388541_11276"
+      },
+      "card (21).png": {
+        "image": "/assets/1133692734_9366"
+      },
+      "card (22).png": {
+        "image": "/assets/-1158198419_10984"
+      },
+      "card (25).png": {
+        "image": "/assets/-1350303804_10016"
+      },
+      "card (23).png": {
+        "image": "/assets/-782311683_10116"
+      },
+      "card (26).png": {
+        "image": "/assets/1215030921_10116"
+      },
+      "card (28).png": {
+        "image": "/assets/1684554607_11286"
+      },
+      "card (14).png": {
+        "image": "/assets/836682552_11256"
+      },
+      "card (27).png": {
+        "image": "/assets/-1903435074_10970"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/assets/-2021118750_2094",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "peek-holder": {
+    "type": "holder",
+    "id": "peek-holder",
+    "x": 120,
+    "y": 20,
+    "width": 105,
+    "height": 105,
+    "z": 4,
+    "dropTarget": {
+      "type": "card"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "peek-label1": {
+    "type": "label",
+    "id": "peek-label1",
+    "x": 123,
+    "y": 1,
+    "z": 3,
+    "text": "Peek"
+  },
+  "kd0c": {
+    "type": "pile",
+    "parent": "draw-holder",
+    "x": 4,
+    "y": 4,
+    "width": 95,
+    "height": 95,
+    "id": "kd0c"
+  },
+  "62ek": {
+    "id": "62ek",
+    "type": "deck",
+    "cardTypes": {
+      "lily (1).png": {
+        "image": "/assets/859281531_8150"
+      },
+      "lily (2).png": {
+        "image": "/assets/-2013926178_4726"
+      },
+      "lily (3).png": {
+        "image": "/assets/-1229083410_5836"
+      },
+      "lily (4).png": {
+        "image": "/assets/1818335379_6626"
+      },
+      "lily (7).png": {
+        "image": "/assets/358127410_5786"
+      },
+      "lily (8).png": {
+        "image": "/assets/1875478680_7294"
+      },
+      "lily (5).png": {
+        "image": "/assets/-432675522_4602"
+      },
+      "lily (6).png": {
+        "image": "/assets/588791074_4888"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 50,
+      "height": 50
+    },
+    "width": 50,
+    "height": 50,
+    "parent": "token-holder"
+  },
+  "62ek lily (1).png": {
+    "type": "card",
+    "id": "62ek lily (1).png",
+    "deck": "62ek",
+    "cardType": "lily (1).png",
+    "activeFace": 1,
+    "z": 3759,
+    "x": 4,
+    "y": 4,
+    "parent": "token-holder-3"
+  },
+  "62ek lily (2).png": {
+    "type": "card",
+    "id": "62ek lily (2).png",
+    "deck": "62ek",
+    "cardType": "lily (2).png",
+    "activeFace": 1,
+    "z": 3758,
+    "parent": "token-holder-4",
+    "x": 4,
+    "y": 4
+  },
+  "62ek lily (3).png": {
+    "type": "card",
+    "id": "62ek lily (3).png",
+    "deck": "62ek",
+    "cardType": "lily (3).png",
+    "z": 3757,
+    "activeFace": 1,
+    "parent": "token-holder-8",
+    "x": 4,
+    "y": 4
+  },
+  "62ek lily (4).png": {
+    "type": "card",
+    "id": "62ek lily (4).png",
+    "deck": "62ek",
+    "cardType": "lily (4).png",
+    "activeFace": 1,
+    "z": 3756,
+    "parent": "token-holder-7",
+    "x": 4,
+    "y": 4
+  },
+  "62ek lily (7).png": {
+    "type": "card",
+    "id": "62ek lily (7).png",
+    "deck": "62ek",
+    "cardType": "lily (7).png",
+    "activeFace": 1,
+    "z": 3755,
+    "parent": "token-holder-6",
+    "x": 4,
+    "y": 4
+  },
+  "62ek lily (8).png": {
+    "type": "card",
+    "id": "62ek lily (8).png",
+    "deck": "62ek",
+    "cardType": "lily (8).png",
+    "z": 3754,
+    "activeFace": 1,
+    "parent": "token-holder-5",
+    "x": 4,
+    "y": 4
+  },
+  "62ek lily (5).png": {
+    "type": "card",
+    "id": "62ek lily (5).png",
+    "deck": "62ek",
+    "cardType": "lily (5).png",
+    "activeFace": 1,
+    "z": 3753,
+    "parent": "token-holder-2",
+    "x": 4,
+    "y": 4
+  },
+  "62ek lily (6).png": {
+    "type": "card",
+    "id": "62ek lily (6).png",
+    "deck": "62ek",
+    "cardType": "lily (6).png",
+    "activeFace": 1,
+    "z": 3752,
+    "x": 4,
+    "y": 4,
+    "parent": "token-holder-1"
+  },
+  "token-holder-1": {
+    "type": "holder",
+    "id": "token-holder-1",
+    "x": 7,
+    "y": 287,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder-2": {
+    "type": "holder",
+    "id": "token-holder-2",
+    "x": 7,
+    "y": 347,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder-5": {
+    "type": "holder",
+    "id": "token-holder-5",
+    "x": 7,
+    "y": 527,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder-6": {
+    "type": "holder",
+    "id": "token-holder-6",
+    "x": 7,
+    "y": 587,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder-7": {
+    "type": "holder",
+    "id": "token-holder-7",
+    "x": 7,
+    "y": 647,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder-8": {
+    "type": "holder",
+    "id": "token-holder-8",
+    "x": 7,
+    "y": 707,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder": {
+    "type": "holder",
+    "id": "token-holder",
+    "x": 9,
+    "y": 207,
+    "width": 50,
+    "height": 50,
+    "z": 8,
+    "classes": "transparent"
+  },
+  "token-holder-4": {
+    "type": "holder",
+    "id": "token-holder-4",
+    "x": 7,
+    "y": 467,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "token-holder-3": {
+    "type": "holder",
+    "id": "token-holder-3",
+    "x": 7,
+    "y": 407,
+    "width": 60,
+    "height": 60,
+    "z": 6,
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "card"
+    }
+  }
+}
