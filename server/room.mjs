@@ -937,7 +937,7 @@ export default class Room {
 
   setGameSettings(player, gameSettings) {
     this.state._meta.gameSettings = gameSettings;
-    this.sendMetaUpdate();
+    this.broadcast('state', this.state);
   }
 
   setLegacyMode(name, value) {
