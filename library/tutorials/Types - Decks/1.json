@@ -182,14 +182,14 @@
               },
               ".modifier": {
                 "position": "absolute",
-                "padding-left": "3px",
+                "padding": "0 5px 0 0",
                 "bottom": "3px",
                 "right": "-0.5px",
                 "line-height": "1.6",
                 "min-width": "1.6em",
                 "background": "#999",
                 "border-radius": "50px 0 0 50px",
-                "text-align": "center",
+                "text-align": "right",
                 "color": "white"
               },
               "img": {
