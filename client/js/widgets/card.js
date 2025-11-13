@@ -110,7 +110,7 @@ class Card extends Widget {
 
       if(Array.isArray(face.objects)) {
         for(const original of face.objects) {
-          const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
+          const useIframe = original.type == 'html' && (legacyMode('useIframeForHtmlCards') ?? false);
           const objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
 
