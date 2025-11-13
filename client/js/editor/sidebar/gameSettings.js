@@ -94,7 +94,7 @@ class GameSettingsModule extends SidebarModule {
     };
 
     tile.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A' || e.target === removeButton || removeButton.contains(e.target)) return;
+      if (e.target.tagName === 'A' || e.target.tagName === 'LABEL' || e.target === removeButton || removeButton.contains(e.target)) return;
       if (e.target !== checkbox) {
         checkbox.click();
       }
