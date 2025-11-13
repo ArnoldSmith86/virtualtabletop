@@ -361,6 +361,13 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+   this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
+     <b>Problem</b>: Card face objects with <code>type: 'html'</code> were rendered directly into the DOM. This could lead to CSS conflicts and unexpected behavior.
+     <br><br>
+     <b>New behavior</b>: These objects are now rendered in an iframe, isolating them from the rest of the page.
+     <br><br>
+     See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+     `, target);
 
     this.addSubHeader('UI Settings');
     this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of other players\' cursor indicators in the room.', [

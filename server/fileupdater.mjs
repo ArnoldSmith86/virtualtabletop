@@ -1,4 +1,4 @@
-export const VERSION = 18;
+export const VERSION = 19;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -71,6 +71,7 @@ function hasPropertyCondition(properties, condition) {
 
 function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
+  v<19 && v19useIframeForHtmlCards(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -491,6 +492,23 @@ function v16UpdateCountParameter(routine) {
               Object.assign({}, routine[key], { count: 'all' })
             ]
           };
+        }
+      }
+    }
+  }
+}
+
+function v19useIframeForHtmlCards(meta, state) {
+  for(const widget of Object.values(state)) {
+    if(widget.type == 'deck' && Array.isArray(widget.faceTemplates)) {
+      for(const face of widget.faceTemplates) {
+        if(Array.isArray(face.objects)) {
+          for(const object of face.objects) {
+            if(object.type == 'html') {
+              meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
+              return;
+            }
+          }
         }
       }
     }

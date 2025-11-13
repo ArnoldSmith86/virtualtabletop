@@ -110,7 +110,8 @@ class Card extends Widget {
 
       if(Array.isArray(face.objects)) {
         for(const original of face.objects) {
-          const objectDiv = document.createElement('div');
+          const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
+          const objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
 
           const setValue = _=>{
@@ -124,7 +125,7 @@ class Card extends Widget {
 
             const x = face.border ? object.x-face.border : object.x;
             const y = face.border ? object.y-face.border : object.y;
-            let css = (object.type !== 'html' && object.css) ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
+            let css = object.css ? this.cssAsText(object.css,usedProperties,true) + '; ' : '';
             css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
             css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
             if(typeof object.display !== 'undefined' && !object.display)
@@ -160,51 +161,68 @@ class Card extends Widget {
                 return this.get(n) || '';
               });
 
-              let inlineCSS = '';
-              let finalHTML = '';
+              if(useIframe) {
+                // Prevent input from going to frame.
+                objectDiv.style.pointerEvents = 'none';
+                objectDiv.setAttribute('sandbox', 'allow-same-origin');
+                objectDiv.setAttribute('width', object.width);
+                objectDiv.setAttribute('height', object.height);
+                objectDiv.setAttribute('allow', 'autoplay');
+                // Applies a template which fills available space, uses the same classes and applies
+                // nested CSS style rules.
+                const css = object['css'];
+                const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
+                const html = `<!DOCTYPE html>\n` +
+                    `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
+                    `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
+                objectDiv.srcdoc = html;
+              } else {
+                let inlineCSS = '';
+                let finalHTML = '';
 
-              if (object.css) {
-                  if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
-                      const faceIndex = faceTemplates.indexOf(face);
-                      const objectIndex = face.objects.indexOf(original);
-                      const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
-                      objectDiv.classList.add(uniqueScope);
+                if (object.css) {
+                    if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
+                        const faceIndex = faceTemplates.indexOf(face);
+                        const objectIndex = face.objects.indexOf(original);
+                        const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
+                        objectDiv.classList.add(uniqueScope);
 
-                      let styleString = '';
-                      for (const selector in object.css) {
-                          if (selector === 'inline') {
-                              inlineCSS = this.cssAsText(object.css.inline, usedProperties, true);
-                              continue;
-                          }
-                          const newSelector = selector.split(',').map(s => {
-                              const trimmed = s.trim();
-                              if (trimmed.startsWith('body')) {
-                                  return `.${uniqueScope}${trimmed.substring(4)}`;
-                              }
-                              return `.${uniqueScope} ${trimmed}`;
-                          }).join(', ');
-                          styleString += `${newSelector} { ${this.cssAsText(object.css[selector], usedProperties, true)} }\n`;
-                      }
-                      if (styleString) {
-                          const style = document.createElement('style');
-                          style.textContent = this.cssReplaceProperties(styleString, usedProperties);
-                          finalHTML += style.outerHTML;
-                      }
-                  } else {
-                      inlineCSS = this.cssAsText(object.css, usedProperties, true);
-                  }
+                        let styleString = '';
+                        for (const selector in object.css) {
+                            if (selector === 'inline') {
+                                inlineCSS = this.cssAsText(object.css.inline, usedProperties, true);
+                                continue;
+                            }
+                            const newSelector = selector.split(',').map(s => {
+                                const trimmed = s.trim();
+                                if (trimmed.startsWith('body')) {
+                                    return `.${uniqueScope}${trimmed.substring(4)}`;
+                                }
+                                return `.${uniqueScope} ${trimmed}`;
+                            }).join(', ');
+                            styleString += `${newSelector} { ${this.cssAsText(object.css[selector], usedProperties, true)} }\n`;
+                        }
+                        if (styleString) {
+                            const style = document.createElement('style');
+                            style.textContent = this.cssReplaceProperties(styleString, usedProperties);
+                            finalHTML += style.outerHTML;
+                        }
+                    } else {
+                        inlineCSS = this.cssAsText(object.css, usedProperties, true);
+                    }
+                }
+
+                let sanitizedContent = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
+                const bodyMatch = sanitizedContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+                if (bodyMatch) {
+                    sanitizedContent = bodyMatch;
+                }
+                finalHTML += sanitizedContent;
+                
+                objectDiv.innerHTML = finalHTML;
+
+                if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
               }
-
-              let sanitizedContent = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
-              const bodyMatch = sanitizedContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-              if (bodyMatch) {
-                  sanitizedContent = bodyMatch;
-              }
-              finalHTML += sanitizedContent;
-              
-              objectDiv.innerHTML = finalHTML;
-
-              if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
             } else {
               objectDiv.textContent = object.value;
               objectDiv.style.color = object.color;
