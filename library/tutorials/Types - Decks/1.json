@@ -93,6 +93,53 @@
     "y": 7,
     "z": 1,
     "cardDefaults": {
+      "css": {
+        " .html": {
+          "border-radius": "5px",
+          "border": "2px solid rgba(0, 0, 0, 0.4)",
+          "background": "white",
+          "display": "flex",
+          "flex-direction": "column",
+          "overflow": "hidden"
+        },
+        " .flex": {
+          "flex": 1,
+          "position": "relative"
+        },
+        " .title": {
+          "font-size": "21px",
+          "background": "${PROPERTY bgcolor}",
+          "font-weight": "bold",
+          "border-bottom": "1px solid #666",
+          "padding": "4px"
+        },
+        " p": {
+          "margin": "0",
+          "padding": "4px"
+        },
+        " .test": {
+          "color": "red"
+        },
+        " .footer": {
+          "border-top": "1px solid #666",
+          "text-align": "center"
+        },
+        " .modifier": {
+          "position": "absolute",
+          "padding": "0 5px 0 0",
+          "bottom": "3px",
+          "right": "-0.5px",
+          "line-height": "1.6",
+          "min-width": "1.6em",
+          "background": "#999",
+          "border-radius": "50px 0 0 50px",
+          "text-align": "right",
+          "color": "white"
+        },
+        " img": {
+          "vertical-align": "middle"
+        }
+      },
       "titlesize": "24px",
       "enlarge": 3
     },
@@ -119,7 +166,7 @@
       },
       "c5": {
         "title": "Font-size",
-        "content": "<p style='font-size: 14pt'>14pt</p>"
+        "content": "<p style='font-size: 16pt'>16pt</p><p style='font-size: 14pt'>14pt</p><p style='font-size: 12pt'>12pt</p><p style='font-size: 10pt'>10pt</p><p style='font-size: 8pt'>8pt</p>"
       }
     },
     "css": {
@@ -150,52 +197,6 @@
         "objects": [
           {
             "type": "html",
-            "css": {
-              "body": {
-                "background": "white",
-                "display": "flex",
-                "flex-direction": "column",
-                "border-radius": "5px",
-                "overflow": "hidden"
-              },
-              ".flex": {
-                "flex": 1,
-                "position": "relative"
-              },
-              ".title": {
-                "font-size": "21px",
-                "background": "${PROPERTY bgcolor}",
-                "font-weight": "bold",
-                "border-bottom": "1px solid #666",
-                "padding": "4px"
-              },
-              "p": {
-                "margin": "0",
-                "padding": "4px"
-              },
-              ".test": {
-                "color": "red"
-              },
-              ".footer": {
-                "border-top": "1px solid #666",
-                "text-align": "center"
-              },
-              ".modifier": {
-                "position": "absolute",
-                "padding": "0 5px 0 0",
-                "bottom": "3px",
-                "right": "-0.5px",
-                "line-height": "1.6",
-                "min-width": "1.6em",
-                "background": "#999",
-                "border-radius": "50px 0 0 50px",
-                "text-align": "right",
-                "color": "white"
-              },
-              "img": {
-                "vertical-align": "middle"
-              }
-            },
             "x": 0,
             "y": 0,
             "width": 103,
@@ -206,8 +207,7 @@
           }
         ]
       }
-    ]
-  },
+    ]  },
   "qdtp": {
     "deck": "deck1",
     "type": "card",
