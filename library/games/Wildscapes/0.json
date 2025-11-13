@@ -4068,7 +4068,7 @@
         "title": "Bear",
         "subTitle": "Families",
         "letter": "C",
-        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>2</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>8</td></tr></table><p style='line-height: 0.9em'>Score per group of adjacnet bears (any shape) with no other adjacent bears. <span style='color:red'>+3</span> points for having all group sizes.</p>",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>2</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>8</td></tr></table><p style='line-height: 0.9em'>Score per group of adjacent bears (any shape) with no other adjacent bears. <span style='color:red'>+3</span> points for having all group sizes.</p>",
         "bgTitleColor": "#603f1f",
         "textTitleColor": "#fff",
         "contentFontSize": "10px"
