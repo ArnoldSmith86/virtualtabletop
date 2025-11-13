@@ -498,23 +498,6 @@ function v16UpdateCountParameter(routine) {
   }
 }
 
-function v19useIframeForHtmlCards(meta, state) {
-  for(const widget of Object.values(state)) {
-    if(widget.type == 'deck' && Array.isArray(widget.faceTemplates)) {
-      for(const face of widget.faceTemplates) {
-        if(Array.isArray(face.objects)) {
-          for(const object of face.objects) {
-            if(object.type == 'html') {
-              meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
-              return;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 function v17MaterialSymbols(properties) {
   for (const key in properties) {
     if (typeof properties[key] === 'object' && properties[key] !== null) {
@@ -532,4 +515,14 @@ function v18RoutineLegacyModes(meta, state) {
     meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
     meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
   }
+}
+
+function v19useIframeForHtmlCards(meta, state) {
+  for(const widget of Object.values(state))
+    if(widget.type == 'deck' && Array.isArray(widget.faceTemplates))
+      for(const face of widget.faceTemplates)
+        if(Array.isArray(face.objects))
+          for(const object of face.objects)
+            if(object.type == 'html')
+              return meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
 }
