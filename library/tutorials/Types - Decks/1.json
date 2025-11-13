@@ -99,14 +99,17 @@
     "cardTypes": {
       "c1": {
         "title": "Title",
-        "content": "This is the <b>content</b> section.<br>Gives <img src=\"i/icons/village_3d.svg\" width=\"25px\" height=\"25px\">",
+        "content": "<p>This is the <b>content</b> section.</p>",
         "modifier": "+4",
-        "bgcolor": "#ccf"
+        "modifierColor": "green",
+        "bgcolor": "#ccf",
+        "footer": "Gain <img src=\"i/icons/village_3d.svg\" width=\"25px\" height=\"25px\">"
       },
       "c2": {
         "title": "Multi-line title",
-        "content": "This card auto reflows for the larger title",
+        "content": "<p>This card auto reflows for the larger title</p>",
         "modifier": "-1",
+        "modifierColor": "red",
         "bgcolor": "#ccf"
       },
       "c3": {
@@ -116,7 +119,7 @@
       },
       "c5": {
         "title": "Font-size",
-        "content": "<p style='font-size: 10pt'>10pt</p>"
+        "content": "<p style='font-size: 14pt'>14pt</p>"
       }
     },
     "css": {
@@ -151,20 +154,46 @@
               "body": {
                 "background": "white",
                 "display": "flex",
-                "flex-direction": "column"
+                "flex-direction": "column",
+                "border-radius": "5px",
+                "overflow": "hidden"
               },
               ".flex": {
-                "flex": 1
+                "flex": 1,
+                "position": "relative"
               },
               ".title": {
-                "font-size": "22px",
-                "background": "${PROPERTY bgcolor}"
+                "font-size": "21px",
+                "background": "${PROPERTY bgcolor}",
+                "font-weight": "bold",
+                "border-bottom": "1px solid #666",
+                "padding": "4px"
               },
-              "body > div": {
-                "padding": "8px"
+              "p": {
+                "margin": "0",
+                "padding": "4px"
               },
               ".test": {
                 "color": "red"
+              },
+              ".footer": {
+                "border-top": "1px solid #666",
+                "text-align": "center"
+              },
+              ".modifier": {
+                "position": "absolute",
+                "padding-left": "3px",
+                "bottom": "3px",
+                "right": "-0.5px",
+                "line-height": "1.6",
+                "min-width": "1.6em",
+                "background": "#999",
+                "border-radius": "50px 0 0 50px",
+                "text-align": "center",
+                "color": "white"
+              },
+              "img": {
+                "vertical-align": "middle"
               }
             },
             "x": 0,
@@ -173,7 +202,7 @@
             "height": 160,
             "classes": "html",
             "color": "black",
-            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"flex\">${PROPERTY content}</div>"
+            "value": "<div class=\"title\">${PROPERTY title}</div><div class=\"flex\">${PROPERTY content}<div class=\"modifier\" style=\"background-color: ${PROPERTY modifierColor}\">${PROPERTY modifier}</div></div><div class=\"footer\">${PROPERTY footer}</div>"
           }
         ]
       }
