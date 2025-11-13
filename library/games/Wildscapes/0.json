@@ -4086,19 +4086,19 @@
         "title": "Elk",
         "subTitle": "Lines",
         "letter": "A",
-        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr style='color:red'><td>2</td><td>5</td><td>9</td><td>12</td></tr></table><p style='line-height: 0.9em'>Score for number of elk in a straight line (flat side touching flat side) in any orientation. Count each elk only once. Groups may be adjacent.</p>",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Elk</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>2</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>9</td></tr><tr><td>4</td><td style='color:red'>13</td></tr></table><p style='line-height: 0.9em'>Score for number of elk in a straight line (flat side touching flat side) in any orientation. Count each elk only once. Groups may be adjacent.</p>",
         "bgTitleColor": "#d6ad84",
         "textTitleColor": "#fff",
-        "contentFontSize": "10px"
+        "contentFontSize": "9px"
       },
       "elkB": {
         "title": "Elk",
         "subTitle": "Formation",
         "letter": "B",
-        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td><img src='/assets/1227168721_15496' height='12'/></td><td><img src='/assets/1280254170_12896' height='20'/></td><td><img src='/assets/701974715_20032' height='20'/></td><td><img src='/assets/701974715_20032' height='20'/></td></tr><tr style='color:red'><td>2</td><td>5</td><td>9</td><td>13</td></tr></table><p style='line-height: 0.9em'>Score for each exact shape (any orientation). Count each elk only once. Groups may be adjacent.</p>",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Formation</td><td>Points</td></tr><tr><td><img src='/assets/1227168721_15496' height='12'/></td><td style='color:red'>2</td></tr><tr><td><img src='/assets/1280254170_12896' height='20'/></td><td style='color:red'>5</td></tr><tr><td><img src='/assets/701974715_20032' height='20'/></td><td style='color:red'>9</td></tr><tr><td><img src='/assets/-1780472910_21066' height='20'/></td><td style='color:red'>13</td></tr></table><div style='line-height: 0.9em'>Score for each exact shape (any orientation). Count each elk only once. Groups may be adjacent.</div>",
         "bgTitleColor": "#d6ad84",
         "textTitleColor": "#fff",
-        "contentFontSize": "10px"
+        "contentFontSize": "7px"
       },
       "elkC": {
         "title": "Elk",
@@ -4161,7 +4161,7 @@
         "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8+</td></tr><tr style='color:red'><td>2</td><td>5</td><td>8</td><td>11</td><td>14</td><td>18</td><td>22</td><td>26</td></tr></table><p style='line-height: 0.9em'>Score for each hawk not adjacent to another hawk.</p>",
         "bgTitleColor": "#c0e6f5",
         "textTitleColor": "#000",
-        "contentFontSize": "10px"
+        "contentFontSize": "9px"
       },
       "hawkB": {
         "title": "Hawk",
@@ -4170,7 +4170,7 @@
         "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr><tr style='color:red'><td>5</td><td>9</td><td>12</td><td>16</td><td>20</td><td>24</td><td>28</td></tr></table><p style='line-height: 0.9em'>Score for each hawk not adjacent to another hawk and that has a direct line of sight to another hawk.</p>",
         "bgTitleColor": "#c0e6f5",
         "textTitleColor": "#000",
-        "contentFontSize": "10px"
+        "contentFontSize": "9px"
       },
       "hawkC": {
         "title": "Hawk",
@@ -4197,7 +4197,7 @@
         "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7+</td></tr><tr style='color:red'><td>2</td><td>5</td><td>8</td><td>12</td><td>16</td><td>20</td><td>25</td></tr></table><p style='line-height: 0.9em'>Score for each group of adjacent salmon in any shape (where each salmon is adjacent to no more than two other salmon). Runs may not be adjacent.</p>",
         "bgTitleColor": "#ff7c80",
         "textTitleColor": "#000",
-        "contentFontSize": "10px"
+        "contentFontSize": "9px"
       },
       "salmonB": {
         "title": "Salmon",
@@ -4206,7 +4206,7 @@
         "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5+</td></tr><tr style='color:red'><td>2</td><td>4</td><td>9</td><td>11</td><td>17</td></tr></table><p style='line-height: 0.9em'>Score for each group of adjacent salmon in any shape (where each salmon is adjacent to no more than two other salmon). Runs may not be adjacent.</p>",
         "bgTitleColor": "#ff7c80",
         "textTitleColor": "#000",
-        "contentFontSize": "10px"
+        "contentFontSize": "9px"
       },
       "salmonC": {
         "title": "Salmon",
@@ -4276,23 +4276,6 @@
                 "background": "${PROPERTY bgTitleColor}",
                 "text-align": "center",
                 "color": "${PROPERTY textTitleColor}"
-              },
-              " .content": {
-                "display": "flex",
-                "flex-direction": "column",
-                "justify-content": "space-between",
-                "align-content": "space-between",
-                "font-size": "${PROPERTY contentFontSize}",
-                "padding": "4px"
-              },
-              " table": {
-                "table-layout": "fixed"
-              },
-              " table tr td": {
-                "border-right": "1px solid gray"
-              },
-              " table tr td:last-of-type": {
-                "border-right": "0px solid gray"
               }
             },
             "x": 0,
@@ -4301,7 +4284,7 @@
             "height": 160,
             "classes": "html",
             "color": "black",
-            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"subtitle\"> ${PROPERTY subTitle}</div><div class=\"content\">${PROPERTY content}</div>"
+            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"subtitle\"> ${PROPERTY subTitle}</div><div class=\"flex\">${PROPERTY content}</div>"
           },
           {
             "type": "text",
