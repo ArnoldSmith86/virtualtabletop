@@ -22,12 +22,14 @@
   color: var(--color);
   transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
   background-image: var(--image);
+  opacity: var(--opacity, 1);
   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
 }
 .widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolWrapper > div {
   background-image: var(--hoverImage);
   color: var(--hoverColor);
   -webkit-text-stroke: var(--hoverStrokeWidth) var(--hoverStrokeColor);
+  opacity: var(--hoverOpacity, var(--opacity, 1));
 }
 
 .symbolOuterWrapper > .symbolText {
@@ -83,4 +85,40 @@
 
 .autoIconAlignCustomAsset {
   background-size: contain;
+}
+
+.widget.holder > .holderTextOnly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--color);
+  overflow: hidden;
+  word-break: normal;
+  white-space: normal;
+  line-height: 1.1;
+}
+
+.widget.holder.hasImage {
+  background-image: none;
+}
+
+.widget.holder.hasImage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: var(--bgImageOpacity, 0.2);
+  border-radius: inherit;
+  pointer-events: none;
 }

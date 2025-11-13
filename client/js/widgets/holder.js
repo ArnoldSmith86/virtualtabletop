@@ -1,6 +1,8 @@
-class Holder extends Widget {
+class Holder extends ImageWidget {
   constructor(object, surface) {
     super(object, surface);
+    // if legacy mode disableHolderImageWidget is enabled, skip the intermediary ImageWidget prototype and use the Widget prototype instead so that image/icon/text properties "work" like they did before the change
+    this.base = legacyMode('disableHolderImageWidget') ? Widget.prototype : ImageWidget.prototype;
 
     this.addDefaults({
       width: 111,
@@ -27,6 +29,14 @@ class Holder extends Widget {
     });
   }
 
+  applyDeltaToDOM(delta) {
+    this.base.applyDeltaToDOM.call(this, delta, true);
+    if(!this.get('text') && this.textWrapper) {
+      this.textWrapper.remove();
+      this.textWrapper = null;
+    }
+  }
+
   children() {
     let children = this.childrenFilter(super.children(), true);
     if(children.length == 1 && children[0].get('type') == 'pile')
@@ -44,7 +54,7 @@ class Holder extends Widget {
   }
 
   classes() {
-    let className = super.classes();
+    let className = this.base.classes.call(this);
 
     if(this.get('showInactiveFaceToSeat'))
       if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
@@ -54,9 +64,17 @@ class Holder extends Widget {
   }
 
   classesProperties() {
-    const p = super.classesProperties();
+    const p = this.base.classesProperties.call(this);
     p.push('showInactiveFaceToSeat');
     return p;
+  }
+
+  css() {
+    return this.base.css.call(this);
+  }
+
+  cssProperties() {
+    return this.base.cssProperties.call(this);
   }
 
   async dispenseCard(card) {
@@ -185,6 +203,25 @@ class Holder extends Widget {
       await this.rearrangeChildren(children.filter(c=>!c.get('owner') || c.get('owner')===owner).sort((a, b)=>{
         return a.get('z') - b.get('z');
       }));
+    }
+  }
+
+  updateIcon() {
+    if(legacyMode('disableHolderImageWidget'))
+      return;
+
+    if (this.textWrapper) { this.textWrapper.remove(); this.textWrapper = null; }
+
+    if (this.get('text') && !this.get('icon')) {
+      if (this.symbolWrapper) this.symbolWrapper.remove();
+      this.textWrapper = document.createElement('div');
+      this.textWrapper.className = 'holderTextOnly';
+      this.textWrapper.textContent = this.get('text');
+      this.domElement.appendChild(this.textWrapper);
+      
+      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.get('width'), this.get('height'));
+    } else {
+      super.updateIcon();
     }
   }
 }

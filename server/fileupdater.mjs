@@ -1,4 +1,4 @@
-export const VERSION = 18;
+export const VERSION = 19;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -71,6 +71,7 @@ function hasPropertyCondition(properties, condition) {
 
 function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
+  v<19 && v19DisableHolderImageWidget(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -513,5 +514,17 @@ function v18RoutineLegacyModes(meta, state) {
   if(JSON.stringify(state).match(/"var |COMPUTE/)) {
     meta.gameSettings.legacyModes.convertNumericVarParametersToNumbers = true;
     meta.gameSettings.legacyModes.useOneAsDefaultForVarParameters = true;
+  }
+}
+
+function v19DisableHolderImageWidget(meta, state) {
+  for(const id in state) {
+    const properties = state[id];
+    if(properties && properties.type == 'holder') {
+      if(properties.image || properties.icon || properties.text) {
+        meta.gameSettings.legacyModes.disableHolderImageWidget = true;
+        return;
+      }
+    }
   }
 }
