@@ -2127,15 +2127,6 @@
     ],
     "parent": "startTileHolder"
   },
-  "yf3": {
-    "type": "card",
-    "id": "yf3",
-    "parent": "3305",
-    "deck": "startDeck",
-    "cardType": "start1-1",
-    "z": 1309,
-    "hoverParent": "floor"
-  },
   "start1-1": {
     "type": "card",
     "id": "start1-1",
@@ -2183,14 +2174,6 @@
     "movable": true,
     "parent": "xg9q"
   },
-  "xxw": {
-    "type": "card",
-    "id": "xxw",
-    "parent": "ueyr",
-    "deck": "startDeck",
-    "cardType": "start2-3",
-    "z": 1364
-  },
   "6y0h": {
     "deck": "startDeck",
     "type": "card",
@@ -2218,14 +2201,6 @@
     "z": 62085,
     "movable": true,
     "parent": "xg9q"
-  },
-  "ifu": {
-    "type": "card",
-    "id": "ifu",
-    "parent": "dnrj",
-    "deck": "startDeck",
-    "cardType": "start3-3",
-    "z": 1379
   },
   "start3-3": {
     "type": "card",
