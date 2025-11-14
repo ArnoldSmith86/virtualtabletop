@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "FS2",
     "id": "1637",
-    "z": 45248,
+    "z": 62000,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -14,11 +14,17 @@
     "type": "card",
     "cardType": "elkC",
     "id": "4950",
-    "z": 41696,
+    "z": 61979,
     "parent": "ywi2"
   },
   "_meta": {
-    "version": 15,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Wildscapes",
       "image": "/assets/592536752_48814",
@@ -28,7 +34,7 @@
       "mode": "vs, solo",
       "time": "30-45",
       "attribution": "The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.\n\nThe following items are available under the Pixabay license:<div><ul><li>Landscape background by 12019, https://pixabay.com/photos/river-mountains-sunset-dusk-1589616/</li><li>Raindrops background by Leohoho, https://pixabay.com/photos/rain-water-raindrops-droplets-5470471/</li></ul><div>The following items are available under the Flaticon license:<br></div></div><div><br></div><div><ul><li>Bear by Rikas Dzihab, https://www.flaticon.com/free-icon/bear_11957630</li><li>Elk by Bloodline Studios, https://www.flaticon.com/free-icon/animal_13272945</li><li>Fox by Smashicons, https://www.flaticon.com/free-icon/fox_3547065</li><li>Hawk by Meiliastudio, https://www.flaticon.com/free-icon/eagle_14099016</li><li>Fish by Cuputo, https://www.flaticon.com/free-icon/koi-fish_7309072</li><li>Pine cone colored by dreamicons, https://www.flaticon.com/free-icon/pine-cone_3373670</li><li>Pine cone outline by dreamicons, https://www.flaticon.com/free-icon/pine-cone_3373673</li></ul><div>The habitat tiles were created&nbsp;<span style=\"color: var(--overlayFontColor);\">using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"top down view of [type of habitat] style of Claude Monet\"</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The library image was generated using the following Midjourney prompt: \"</span>bear and hawk fighting over salmon, partly cloudy day, mountains in background, oil on canvas.\"</div></div>",
-      "lastUpdate": 1723466748764,
+      "lastUpdate": 1763132680488,
       "showName": true,
       "skill": "",
       "description": "Draft tokens and lay tiles to create the highest scoring wildlife habitat.",
@@ -1064,7 +1070,7 @@
     "type": "card",
     "cardType": "DF1",
     "id": "0u2o",
-    "z": 45166,
+    "z": 62012,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1074,7 +1080,7 @@
     "type": "card",
     "cardType": "DF2",
     "id": "0c1p",
-    "z": 45165,
+    "z": 62023,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1084,7 +1090,7 @@
     "type": "card",
     "cardType": "DF3",
     "id": "u0nx",
-    "z": 45195,
+    "z": 62018,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1094,7 +1100,7 @@
     "type": "card",
     "cardType": "DF4",
     "id": "sh2n",
-    "z": 45224,
+    "z": 61999,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1104,7 +1110,7 @@
     "type": "card",
     "cardType": "DF5",
     "id": "7fuz",
-    "z": 45220,
+    "z": 62061,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1114,7 +1120,7 @@
     "type": "card",
     "cardType": "DF6",
     "id": "pb78",
-    "z": 45191,
+    "z": 62054,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1124,7 +1130,7 @@
     "type": "card",
     "cardType": "DL1",
     "id": "r19j",
-    "z": 45243,
+    "z": 62001,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1134,7 +1140,7 @@
     "type": "card",
     "cardType": "DL2",
     "id": "le9a",
-    "z": 45212,
+    "z": 62076,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1144,7 +1150,7 @@
     "type": "card",
     "cardType": "DL3",
     "id": "0rih",
-    "z": 45174,
+    "z": 62027,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1154,7 +1160,7 @@
     "type": "card",
     "cardType": "DL4",
     "id": "eqvq",
-    "z": 45192,
+    "z": 62007,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1164,7 +1170,7 @@
     "type": "card",
     "cardType": "DL5",
     "id": "2z5m",
-    "z": 45184,
+    "z": 62036,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1174,7 +1180,7 @@
     "type": "card",
     "cardType": "DL6",
     "id": "11oj",
-    "z": 45186,
+    "z": 62028,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1184,7 +1190,7 @@
     "type": "card",
     "cardType": "DM1",
     "id": "n9v1",
-    "z": 45173,
+    "z": 62003,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1194,7 +1200,7 @@
     "type": "card",
     "cardType": "DM2",
     "id": "x15m",
-    "z": 45218,
+    "z": 62047,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1204,7 +1210,7 @@
     "type": "card",
     "cardType": "DM3",
     "id": "aq1a",
-    "z": 45241,
+    "z": 62029,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1214,7 +1220,7 @@
     "type": "card",
     "cardType": "DM4",
     "id": "a9vm",
-    "z": 45236,
+    "z": 62067,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1224,7 +1230,7 @@
     "type": "card",
     "cardType": "DM5",
     "id": "zn0j",
-    "z": 45247,
+    "z": 62045,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1234,7 +1240,7 @@
     "type": "card",
     "cardType": "DM6",
     "id": "bw94",
-    "z": 45242,
+    "z": 62025,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1244,7 +1250,7 @@
     "type": "card",
     "cardType": "DS1",
     "id": "klh9",
-    "z": 45223,
+    "z": 62048,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1254,7 +1260,7 @@
     "type": "card",
     "cardType": "DS2",
     "id": "0er7",
-    "z": 45189,
+    "z": 62035,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1264,7 +1270,7 @@
     "type": "card",
     "cardType": "DS3",
     "id": "y53x",
-    "z": 45187,
+    "z": 62022,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1274,7 +1280,7 @@
     "type": "card",
     "cardType": "DS4",
     "id": "47g7",
-    "z": 45168,
+    "z": 61998,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1284,7 +1290,7 @@
     "type": "card",
     "cardType": "DS5",
     "id": "3op7",
-    "z": 45188,
+    "z": 62005,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1294,7 +1300,7 @@
     "type": "card",
     "cardType": "DS6",
     "id": "utaq",
-    "z": 45169,
+    "z": 62020,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1304,7 +1310,7 @@
     "type": "card",
     "cardType": "D1",
     "id": "ji4q",
-    "z": 45172,
+    "z": 62075,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1314,7 +1320,7 @@
     "type": "card",
     "cardType": "D2",
     "id": "pxma",
-    "z": 45185,
+    "z": 62078,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1324,7 +1330,7 @@
     "type": "card",
     "cardType": "D3",
     "id": "bqxi",
-    "z": 45233,
+    "z": 62016,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1334,7 +1340,7 @@
     "type": "card",
     "cardType": "D4",
     "id": "ooij",
-    "z": 45198,
+    "z": 62051,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1344,7 +1350,7 @@
     "type": "card",
     "cardType": "D5",
     "id": "7kjb",
-    "z": 45227,
+    "z": 62032,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1354,7 +1360,7 @@
     "type": "card",
     "cardType": "FL1",
     "id": "nfwz",
-    "z": 45237,
+    "z": 62024,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1364,7 +1370,7 @@
     "type": "card",
     "cardType": "FL2",
     "id": "bs96",
-    "z": 45201,
+    "z": 62014,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1374,7 +1380,7 @@
     "type": "card",
     "cardType": "FL3",
     "id": "9g7s",
-    "z": 45171,
+    "z": 62037,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1384,7 +1390,7 @@
     "type": "card",
     "cardType": "FL4",
     "id": "1uyw",
-    "z": 45193,
+    "z": 62072,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1394,7 +1400,7 @@
     "type": "card",
     "cardType": "FL5",
     "id": "pmm3",
-    "z": 45202,
+    "z": 62042,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1404,7 +1410,7 @@
     "type": "card",
     "cardType": "FL6",
     "id": "jo88",
-    "z": 45196,
+    "z": 62039,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1414,7 +1420,7 @@
     "type": "card",
     "cardType": "FM1",
     "id": "eluf",
-    "z": 45176,
+    "z": 62026,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1424,7 +1430,7 @@
     "type": "card",
     "cardType": "FM2",
     "id": "ovro",
-    "z": 45234,
+    "z": 62038,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1434,7 +1440,7 @@
     "type": "card",
     "cardType": "FM3",
     "id": "abnz",
-    "z": 45178,
+    "z": 62041,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1444,17 +1450,17 @@
     "type": "card",
     "cardType": "FM4",
     "id": "63zb",
-    "z": 45217,
-    "parent": "tileBag",
+    "z": 62052,
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "tileBag"
   },
   "9dah": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "FM5",
     "id": "9dah",
-    "z": 45240,
+    "z": 62044,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1464,7 +1470,7 @@
     "type": "card",
     "cardType": "FM6",
     "id": "p1q9",
-    "z": 45229,
+    "z": 62031,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1474,7 +1480,7 @@
     "type": "card",
     "cardType": "FS1",
     "id": "sl2n",
-    "z": 45199,
+    "z": 62079,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1484,17 +1490,17 @@
     "type": "card",
     "cardType": "FS3",
     "id": "pvyd",
-    "z": 45228,
+    "z": 62064,
+    "parent": "tileBag",
     "x": 4,
-    "y": 4,
-    "parent": "tileBag"
+    "y": 4
   },
   "fshr": {
     "deck": "tileDeck",
     "type": "card",
     "cardType": "FS4",
     "id": "fshr",
-    "z": 45244,
+    "z": 62080,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1504,7 +1510,7 @@
     "type": "card",
     "cardType": "FS5",
     "id": "is35",
-    "z": 45230,
+    "z": 62004,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1514,7 +1520,7 @@
     "type": "card",
     "cardType": "FS6",
     "id": "y1fy",
-    "z": 45209,
+    "z": 62062,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1524,7 +1530,7 @@
     "type": "card",
     "cardType": "F1",
     "id": "g5c5",
-    "z": 45231,
+    "z": 62073,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1534,7 +1540,7 @@
     "type": "card",
     "cardType": "F2",
     "id": "ugwk",
-    "z": 45249,
+    "z": 62050,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1544,7 +1550,7 @@
     "type": "card",
     "cardType": "F3",
     "id": "eg13",
-    "z": 45211,
+    "z": 62074,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1554,7 +1560,7 @@
     "type": "card",
     "cardType": "F4",
     "id": "k534",
-    "z": 45177,
+    "z": 62070,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1564,7 +1570,7 @@
     "type": "card",
     "cardType": "F5",
     "id": "kwot",
-    "z": 45226,
+    "z": 62046,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1574,7 +1580,7 @@
     "type": "card",
     "cardType": "LM1",
     "id": "yngw",
-    "z": 45170,
+    "z": 62030,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1584,7 +1590,7 @@
     "type": "card",
     "cardType": "LM2",
     "id": "59vc",
-    "z": 45239,
+    "z": 62033,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1594,7 +1600,7 @@
     "type": "card",
     "cardType": "LM3",
     "id": "x3yn",
-    "z": 45221,
+    "z": 62060,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1604,7 +1610,7 @@
     "type": "card",
     "cardType": "LM4",
     "id": "oqcu",
-    "z": 45238,
+    "z": 61996,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1614,7 +1620,7 @@
     "type": "card",
     "cardType": "LM5",
     "id": "tjca",
-    "z": 45215,
+    "z": 62043,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1624,7 +1630,7 @@
     "type": "card",
     "cardType": "LM6",
     "id": "e0x1",
-    "z": 45213,
+    "z": 62006,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1634,7 +1640,7 @@
     "type": "card",
     "cardType": "LS1",
     "id": "eug6",
-    "z": 45210,
+    "z": 62010,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1644,7 +1650,7 @@
     "type": "card",
     "cardType": "LS2",
     "id": "bcjj",
-    "z": 45235,
+    "z": 62053,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1654,7 +1660,7 @@
     "type": "card",
     "cardType": "LS3",
     "id": "o9zv",
-    "z": 45183,
+    "z": 62008,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1664,7 +1670,7 @@
     "type": "card",
     "cardType": "LS4",
     "id": "7wh7",
-    "z": 45180,
+    "z": 62034,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1674,7 +1680,7 @@
     "type": "card",
     "cardType": "LS5",
     "id": "tdwl",
-    "z": 45207,
+    "z": 62063,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1684,7 +1690,7 @@
     "type": "card",
     "cardType": "LS6",
     "id": "sage",
-    "z": 45205,
+    "z": 62069,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1694,7 +1700,7 @@
     "type": "card",
     "cardType": "L1",
     "id": "1ot3",
-    "z": 45204,
+    "z": 62040,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1704,7 +1710,7 @@
     "type": "card",
     "cardType": "L2",
     "id": "ehmw",
-    "z": 45179,
+    "z": 62058,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1714,7 +1720,7 @@
     "type": "card",
     "cardType": "L3",
     "id": "5dcy",
-    "z": 45181,
+    "z": 62009,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1724,7 +1730,7 @@
     "type": "card",
     "cardType": "L4",
     "id": "n6kn",
-    "z": 45225,
+    "z": 62015,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1734,7 +1740,7 @@
     "type": "card",
     "cardType": "L5",
     "id": "tyk4",
-    "z": 45219,
+    "z": 62011,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1744,7 +1750,7 @@
     "type": "card",
     "cardType": "MS1",
     "id": "hkfn",
-    "z": 45206,
+    "z": 62057,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1754,7 +1760,7 @@
     "type": "card",
     "cardType": "MS2",
     "id": "yr89",
-    "z": 45216,
+    "z": 62002,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1764,7 +1770,7 @@
     "type": "card",
     "cardType": "MS3",
     "id": "jpfq",
-    "z": 45190,
+    "z": 61997,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1774,7 +1780,7 @@
     "type": "card",
     "cardType": "MS4",
     "id": "qihk",
-    "z": 45167,
+    "z": 62077,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1784,7 +1790,7 @@
     "type": "card",
     "cardType": "MS5",
     "id": "bs85",
-    "z": 45246,
+    "z": 62066,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1794,7 +1800,7 @@
     "type": "card",
     "cardType": "MS6",
     "id": "ma6v",
-    "z": 45232,
+    "z": 62013,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1804,7 +1810,7 @@
     "type": "card",
     "cardType": "M1",
     "id": "e5fu",
-    "z": 45222,
+    "z": 62049,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1814,7 +1820,7 @@
     "type": "card",
     "cardType": "M2",
     "id": "5v0y",
-    "z": 45203,
+    "z": 62056,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1824,7 +1830,7 @@
     "type": "card",
     "cardType": "M3",
     "id": "usos",
-    "z": 45245,
+    "z": 62065,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1834,7 +1840,7 @@
     "type": "card",
     "cardType": "M4",
     "id": "drq8",
-    "z": 45182,
+    "z": 62059,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1844,7 +1850,7 @@
     "type": "card",
     "cardType": "M5",
     "id": "zhe0",
-    "z": 45197,
+    "z": 62019,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1854,7 +1860,7 @@
     "type": "card",
     "cardType": "S1",
     "id": "x5cc",
-    "z": 45208,
+    "z": 62071,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1864,7 +1870,7 @@
     "type": "card",
     "cardType": "S2",
     "id": "ao8g",
-    "z": 45214,
+    "z": 62068,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1874,7 +1880,7 @@
     "type": "card",
     "cardType": "S3",
     "id": "my5x",
-    "z": 45175,
+    "z": 62055,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1884,7 +1890,7 @@
     "type": "card",
     "cardType": "S4",
     "id": "qyg2",
-    "z": 45200,
+    "z": 62021,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -1894,7 +1900,7 @@
     "type": "card",
     "cardType": "S5",
     "id": "b9ln",
-    "z": 45194,
+    "z": 62017,
     "parent": "tileBag",
     "x": 4,
     "y": 4
@@ -2135,7 +2141,7 @@
     "id": "start1-1",
     "deck": "startDeck",
     "cardType": "start1-1",
-    "z": 41486,
+    "z": 61970,
     "movable": true,
     "parent": "xg9q"
   },
@@ -2173,7 +2179,7 @@
     "id": "start2-1",
     "deck": "startDeck",
     "cardType": "start2-1",
-    "z": 41711,
+    "z": 61972,
     "movable": true,
     "parent": "xg9q"
   },
@@ -2209,7 +2215,7 @@
     "id": "start3-1",
     "deck": "startDeck",
     "cardType": "start3-1",
-    "z": 41484,
+    "z": 61969,
     "movable": true,
     "parent": "xg9q"
   },
@@ -2237,7 +2243,7 @@
     "deck": "startDeck",
     "cardType": "start4-1",
     "movable": true,
-    "z": 41483,
+    "z": 61971,
     "parent": "xg9q"
   },
   "start4-3": {
@@ -2265,7 +2271,7 @@
     "id": "start5-1",
     "deck": "startDeck",
     "cardType": "start5-1",
-    "z": 41485,
+    "z": 61973,
     "movable": true,
     "parent": "xg9q"
   },
@@ -2305,7 +2311,7 @@
     "id": "bear1",
     "width": 60,
     "height": 60,
-    "z": 19626,
+    "z": 23392,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2316,7 +2322,7 @@
   },
   "elk1": {
     "id": "elk1",
-    "z": 19632,
+    "z": 23324,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2329,7 +2335,7 @@
   },
   "fox1": {
     "id": "fox1",
-    "z": 19640,
+    "z": 23354,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2342,7 +2348,7 @@
   },
   "hawk1": {
     "id": "hawk1",
-    "z": 19629,
+    "z": 23353,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -2355,7 +2361,7 @@
   },
   "salmon1": {
     "id": "salmon1",
-    "z": 19621,
+    "z": 23320,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -2370,7 +2376,7 @@
     "id": "bear2",
     "width": 60,
     "height": 60,
-    "z": 19622,
+    "z": 23359,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2383,7 +2389,7 @@
     "id": "bear3",
     "width": 60,
     "height": 60,
-    "z": 19638,
+    "z": 23319,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2396,7 +2402,7 @@
     "id": "bear4",
     "width": 60,
     "height": 60,
-    "z": 19627,
+    "z": 23391,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2409,7 +2415,7 @@
     "id": "bear5",
     "width": 60,
     "height": 60,
-    "z": 19696,
+    "z": 23322,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2422,7 +2428,7 @@
     "id": "bear6",
     "width": 60,
     "height": 60,
-    "z": 19624,
+    "z": 23398,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2435,7 +2441,7 @@
     "id": "bear7",
     "width": 60,
     "height": 60,
-    "z": 19623,
+    "z": 23323,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2448,7 +2454,7 @@
     "id": "bear8",
     "width": 60,
     "height": 60,
-    "z": 19694,
+    "z": 23333,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2461,7 +2467,7 @@
     "id": "bear9",
     "width": 60,
     "height": 60,
-    "z": 19697,
+    "z": 23341,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2474,7 +2480,7 @@
     "id": "bear10",
     "width": 60,
     "height": 60,
-    "z": 19663,
+    "z": 23334,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2487,7 +2493,7 @@
     "id": "bear11",
     "width": 60,
     "height": 60,
-    "z": 19619,
+    "z": 23327,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2500,7 +2506,7 @@
     "id": "bear12",
     "width": 60,
     "height": 60,
-    "z": 19652,
+    "z": 23382,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2513,7 +2519,7 @@
     "id": "bear13",
     "width": 60,
     "height": 60,
-    "z": 19714,
+    "z": 23389,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2526,7 +2532,7 @@
     "id": "bear14",
     "width": 60,
     "height": 60,
-    "z": 19666,
+    "z": 23338,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2539,7 +2545,7 @@
     "id": "bear15",
     "width": 60,
     "height": 60,
-    "z": 19661,
+    "z": 23355,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2552,7 +2558,7 @@
     "id": "bear16",
     "width": 60,
     "height": 60,
-    "z": 19701,
+    "z": 23397,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2565,7 +2571,7 @@
     "id": "bear17",
     "width": 60,
     "height": 60,
-    "z": 19717,
+    "z": 23367,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2578,7 +2584,7 @@
     "id": "bear18",
     "width": 60,
     "height": 60,
-    "z": 19681,
+    "z": 23342,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "shift": true,
@@ -2591,7 +2597,7 @@
     "id": "bear19",
     "width": 60,
     "height": 60,
-    "z": 19649,
+    "z": 23373,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2604,7 +2610,7 @@
     "id": "bear20",
     "width": 60,
     "height": 60,
-    "z": 19716,
+    "z": 23386,
     "image": "/assets/-1916005357_3000",
     "token": true,
     "parent": "animalBag",
@@ -2615,20 +2621,20 @@
   },
   "elk2": {
     "id": "elk2",
-    "z": 19628,
+    "z": 23340,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
     "token": true,
     "shift": true,
-    "x": 4,
-    "y": 4,
     "parent": "animalBag",
-    "classes": "transition"
+    "classes": "transition",
+    "x": 4,
+    "y": 4
   },
   "elk3": {
     "id": "elk3",
-    "z": 19671,
+    "z": 23310,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2641,7 +2647,7 @@
   },
   "elk4": {
     "id": "elk4",
-    "z": 19687,
+    "z": 23360,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2654,7 +2660,7 @@
   },
   "elk5": {
     "id": "elk5",
-    "z": 19664,
+    "z": 23348,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2667,7 +2673,7 @@
   },
   "elk6": {
     "id": "elk6",
-    "z": 19691,
+    "z": 23368,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2680,7 +2686,7 @@
   },
   "elk7": {
     "id": "elk7",
-    "z": 19673,
+    "z": 23390,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2693,7 +2699,7 @@
   },
   "elk8": {
     "id": "elk8",
-    "z": 19699,
+    "z": 23331,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2706,7 +2712,7 @@
   },
   "elk9": {
     "id": "elk9",
-    "z": 19708,
+    "z": 23314,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2719,7 +2725,7 @@
   },
   "elk10": {
     "id": "elk10",
-    "z": 19620,
+    "z": 23400,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2732,7 +2738,7 @@
   },
   "elk11": {
     "id": "elk11",
-    "z": 19692,
+    "z": 23358,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2745,7 +2751,7 @@
   },
   "elk12": {
     "id": "elk12",
-    "z": 19678,
+    "z": 23378,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2758,7 +2764,7 @@
   },
   "elk13": {
     "id": "elk13",
-    "z": 19688,
+    "z": 23329,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2771,7 +2777,7 @@
   },
   "elk14": {
     "id": "elk14",
-    "z": 19713,
+    "z": 23380,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2784,20 +2790,20 @@
   },
   "elk15": {
     "id": "elk15",
-    "z": 19650,
+    "z": 23362,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
     "token": true,
-    "parent": "animalBag",
     "x": 4,
     "y": 4,
     "shift": true,
-    "classes": "transition"
+    "classes": "transition",
+    "parent": "animalBag"
   },
   "elk16": {
     "id": "elk16",
-    "z": 19669,
+    "z": 23371,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2810,7 +2816,7 @@
   },
   "elk17": {
     "id": "elk17",
-    "z": 19676,
+    "z": 23399,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2823,7 +2829,7 @@
   },
   "elk18": {
     "id": "elk18",
-    "z": 19658,
+    "z": 23306,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2836,20 +2842,20 @@
   },
   "elk19": {
     "id": "elk19",
-    "z": 19660,
+    "z": 23376,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
     "token": true,
     "shift": true,
     "classes": "transition",
+    "parent": "animalBag",
     "x": 4,
-    "y": 4,
-    "parent": "animalBag"
+    "y": 4
   },
   "elk20": {
     "id": "elk20",
-    "z": 19706,
+    "z": 23315,
     "image": "/assets/1002522787_3636",
     "width": 60,
     "height": 60,
@@ -2862,7 +2868,7 @@
   },
   "fox2": {
     "id": "fox2",
-    "z": 19683,
+    "z": 23308,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2875,7 +2881,7 @@
   },
   "fox3": {
     "id": "fox3",
-    "z": 19700,
+    "z": 23395,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2888,7 +2894,7 @@
   },
   "fox4": {
     "id": "fox4",
-    "z": 19685,
+    "z": 23381,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2901,7 +2907,7 @@
   },
   "fox5": {
     "id": "fox5",
-    "z": 19670,
+    "z": 23403,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2914,7 +2920,7 @@
   },
   "fox6": {
     "id": "fox6",
-    "z": 19711,
+    "z": 23326,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2927,7 +2933,7 @@
   },
   "fox7": {
     "id": "fox7",
-    "z": 19630,
+    "z": 23336,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2940,7 +2946,7 @@
   },
   "fox8": {
     "id": "fox8",
-    "z": 19674,
+    "z": 23384,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2953,20 +2959,20 @@
   },
   "fox9": {
     "id": "fox9",
-    "z": 19644,
+    "z": 23321,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
     "height": 60,
-    "parent": "animalBag",
     "shift": true,
+    "classes": "transition",
     "x": 4,
     "y": 4,
-    "classes": "transition"
+    "parent": "animalBag"
   },
   "fox10": {
     "id": "fox10",
-    "z": 19641,
+    "z": 23318,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2979,7 +2985,7 @@
   },
   "fox11": {
     "id": "fox11",
-    "z": 19659,
+    "z": 23312,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -2992,7 +2998,7 @@
   },
   "fox12": {
     "id": "fox12",
-    "z": 19668,
+    "z": 23361,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3005,7 +3011,7 @@
   },
   "fox13": {
     "id": "fox13",
-    "z": 19647,
+    "z": 23339,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3018,7 +3024,7 @@
   },
   "fox14": {
     "id": "fox14",
-    "z": 19665,
+    "z": 23402,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3031,7 +3037,7 @@
   },
   "fox15": {
     "id": "fox15",
-    "z": 19646,
+    "z": 23350,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3044,7 +3050,7 @@
   },
   "fox16": {
     "id": "fox16",
-    "z": 19634,
+    "z": 23335,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3057,7 +3063,7 @@
   },
   "fox17": {
     "id": "fox17",
-    "z": 19654,
+    "z": 23349,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3070,7 +3076,7 @@
   },
   "fox18": {
     "id": "fox18",
-    "z": 19655,
+    "z": 23365,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3083,7 +3089,7 @@
   },
   "fox19": {
     "id": "fox19",
-    "z": 19651,
+    "z": 23328,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3096,7 +3102,7 @@
   },
   "fox20": {
     "id": "fox20",
-    "z": 19684,
+    "z": 23363,
     "image": "/assets/1199843103_3990",
     "token": true,
     "width": 60,
@@ -3109,7 +3115,7 @@
   },
   "hawk2": {
     "id": "hawk2",
-    "z": 19702,
+    "z": 23396,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3122,7 +3128,7 @@
   },
   "hawk3": {
     "id": "hawk3",
-    "z": 19715,
+    "z": 23369,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3135,7 +3141,7 @@
   },
   "hawk4": {
     "id": "hawk4",
-    "z": 19677,
+    "z": 23356,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3148,7 +3154,7 @@
   },
   "hawk5": {
     "id": "hawk5",
-    "z": 19679,
+    "z": 23385,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3161,20 +3167,20 @@
   },
   "hawk6": {
     "id": "hawk6",
-    "z": 19710,
+    "z": 23305,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
     "height": 60,
     "parent": "animalBag",
     "shift": true,
+    "classes": "transition",
     "x": 4,
-    "y": 4,
-    "classes": "transition"
+    "y": 4
   },
   "hawk7": {
     "id": "hawk7",
-    "z": 19703,
+    "z": 23347,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3187,7 +3193,7 @@
   },
   "hawk8": {
     "id": "hawk8",
-    "z": 19631,
+    "z": 23372,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3200,7 +3206,7 @@
   },
   "hawk9": {
     "id": "hawk9",
-    "z": 19642,
+    "z": 23370,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3213,20 +3219,20 @@
   },
   "hawk10": {
     "id": "hawk10",
-    "z": 19704,
+    "z": 23330,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
     "height": 60,
-    "parent": "animalBag",
     "shift": true,
+    "classes": "transition",
     "x": 4,
     "y": 4,
-    "classes": "transition"
+    "parent": "animalBag"
   },
   "hawk11": {
     "id": "hawk11",
-    "z": 19705,
+    "z": 23379,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3239,7 +3245,7 @@
   },
   "hawk12": {
     "id": "hawk12",
-    "z": 19682,
+    "z": 23325,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3252,7 +3258,7 @@
   },
   "hawk13": {
     "id": "hawk13",
-    "z": 19707,
+    "z": 23357,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3265,7 +3271,7 @@
   },
   "hawk14": {
     "id": "hawk14",
-    "z": 19653,
+    "z": 23377,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3278,7 +3284,7 @@
   },
   "hawk15": {
     "id": "hawk15",
-    "z": 19686,
+    "z": 23311,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3291,7 +3297,7 @@
   },
   "hawk16": {
     "id": "hawk16",
-    "z": 19667,
+    "z": 23351,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3304,7 +3310,7 @@
   },
   "hawk17": {
     "id": "hawk17",
-    "z": 19657,
+    "z": 23383,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3317,7 +3323,7 @@
   },
   "hawk18": {
     "id": "hawk18",
-    "z": 19635,
+    "z": 23388,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3330,7 +3336,7 @@
   },
   "hawk19": {
     "id": "hawk19",
-    "z": 19690,
+    "z": 23332,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
@@ -3343,20 +3349,20 @@
   },
   "hawk20": {
     "id": "hawk20",
-    "z": 19618,
+    "z": 23313,
     "image": "/assets/-660565368_3656",
     "token": true,
     "width": 60,
     "height": 60,
-    "parent": "animalBag",
     "shift": true,
     "classes": "transition",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "animalBag"
   },
   "salmon2": {
     "id": "salmon2",
-    "z": 19695,
+    "z": 23394,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3369,7 +3375,7 @@
   },
   "salmon3": {
     "id": "salmon3",
-    "z": 19643,
+    "z": 23366,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3382,7 +3388,7 @@
   },
   "salmon4": {
     "id": "salmon4",
-    "z": 19633,
+    "z": 23309,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3395,7 +3401,7 @@
   },
   "salmon5": {
     "id": "salmon5",
-    "z": 19648,
+    "z": 23393,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3408,7 +3414,7 @@
   },
   "salmon6": {
     "id": "salmon6",
-    "z": 19689,
+    "z": 23317,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3421,7 +3427,7 @@
   },
   "salmon7": {
     "id": "salmon7",
-    "z": 19636,
+    "z": 23387,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3434,33 +3440,33 @@
   },
   "salmon8": {
     "id": "salmon8",
-    "z": 19675,
+    "z": 23346,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
     "height": 60,
     "parent": "animalBag",
     "shift": true,
-    "x": 4,
-    "y": 4,
-    "classes": "transition"
-  },
-  "salmon9": {
-    "id": "salmon9",
-    "z": 19625,
-    "image": "/assets/1901394317_3048",
-    "token": true,
-    "width": 60,
-    "height": 60,
-    "shift": true,
-    "parent": "animalBag",
     "classes": "transition",
     "x": 4,
     "y": 4
   },
+  "salmon9": {
+    "id": "salmon9",
+    "z": 23337,
+    "image": "/assets/1901394317_3048",
+    "token": true,
+    "width": 60,
+    "height": 60,
+    "shift": true,
+    "classes": "transition",
+    "x": 4,
+    "y": 4,
+    "parent": "animalBag"
+  },
   "salmon10": {
     "id": "salmon10",
-    "z": 19698,
+    "z": 23352,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3473,7 +3479,7 @@
   },
   "salmon11": {
     "id": "salmon11",
-    "z": 19709,
+    "z": 23374,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3486,7 +3492,7 @@
   },
   "salmon12": {
     "id": "salmon12",
-    "z": 19637,
+    "z": 23375,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3499,7 +3505,7 @@
   },
   "salmon13": {
     "id": "salmon13",
-    "z": 19656,
+    "z": 23316,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3512,7 +3518,7 @@
   },
   "salmon14": {
     "id": "salmon14",
-    "z": 19672,
+    "z": 23364,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3525,7 +3531,7 @@
   },
   "salmon15": {
     "id": "salmon15",
-    "z": 19639,
+    "z": 23344,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3538,7 +3544,7 @@
   },
   "salmon16": {
     "id": "salmon16",
-    "z": 19693,
+    "z": 23343,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3551,7 +3557,7 @@
   },
   "salmon17": {
     "id": "salmon17",
-    "z": 19662,
+    "z": 23345,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3564,7 +3570,7 @@
   },
   "salmon18": {
     "id": "salmon18",
-    "z": 19645,
+    "z": 23307,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3577,7 +3583,7 @@
   },
   "salmon19": {
     "id": "salmon19",
-    "z": 19712,
+    "z": 23401,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3590,7 +3596,7 @@
   },
   "salmon20": {
     "id": "salmon20",
-    "z": 19680,
+    "z": 23304,
     "image": "/assets/1901394317_3048",
     "token": true,
     "width": 60,
@@ -3606,7 +3612,7 @@
     "type": "card",
     "cardType": "bearA",
     "id": "addk",
-    "z": 41690,
+    "z": 61977,
     "parent": "ywi2"
   },
   "2svx": {
@@ -3614,7 +3620,7 @@
     "type": "card",
     "cardType": "bearB",
     "id": "2svx",
-    "z": 41687,
+    "z": 61982,
     "parent": "ywi2"
   },
   "15k9": {
@@ -3622,7 +3628,7 @@
     "type": "card",
     "cardType": "bearC",
     "id": "15k9",
-    "z": 41684,
+    "z": 61983,
     "parent": "ywi2"
   },
   "gfgk": {
@@ -3630,7 +3636,7 @@
     "type": "card",
     "cardType": "bearD",
     "id": "gfgk",
-    "z": 41693,
+    "z": 61995,
     "parent": "ywi2"
   },
   "i4nr": {
@@ -3638,7 +3644,7 @@
     "type": "card",
     "cardType": "foxA",
     "id": "i4nr",
-    "z": 41720,
+    "z": 61986,
     "parent": "ywi2"
   },
   "4n8s": {
@@ -3646,7 +3652,7 @@
     "type": "card",
     "cardType": "foxB",
     "id": "4n8s",
-    "z": 41714,
+    "z": 61992,
     "parent": "ywi2"
   },
   "kol2": {
@@ -3654,7 +3660,7 @@
     "type": "card",
     "cardType": "foxC",
     "id": "kol2",
-    "z": 41717,
+    "z": 61975,
     "parent": "ywi2"
   },
   "4qae": {
@@ -3662,7 +3668,7 @@
     "type": "card",
     "cardType": "foxD",
     "id": "4qae",
-    "z": 41708,
+    "z": 61980,
     "parent": "ywi2"
   },
   "ibq5": {
@@ -3670,7 +3676,7 @@
     "type": "card",
     "cardType": "hawkA",
     "id": "ibq5",
-    "z": 41732,
+    "z": 61989,
     "parent": "ywi2"
   },
   "s4w2": {
@@ -3678,7 +3684,7 @@
     "type": "card",
     "cardType": "hawkB",
     "id": "s4w2",
-    "z": 41726,
+    "z": 61993,
     "parent": "ywi2"
   },
   "v4jh": {
@@ -3686,7 +3692,7 @@
     "type": "card",
     "cardType": "hawkC",
     "id": "v4jh",
-    "z": 41729,
+    "z": 61987,
     "parent": "ywi2"
   },
   "qvzg": {
@@ -3694,7 +3700,7 @@
     "type": "card",
     "cardType": "hawkD",
     "id": "qvzg",
-    "z": 41723,
+    "z": 61990,
     "parent": "ywi2"
   },
   "aejv": {
@@ -3702,7 +3708,7 @@
     "type": "card",
     "cardType": "salmonA",
     "id": "aejv",
-    "z": 41744,
+    "z": 61994,
     "parent": "ywi2"
   },
   "tccy": {
@@ -3710,7 +3716,7 @@
     "type": "card",
     "cardType": "salmonB",
     "id": "tccy",
-    "z": 41741,
+    "z": 61985,
     "parent": "ywi2"
   },
   "p79c": {
@@ -3718,7 +3724,7 @@
     "type": "card",
     "cardType": "salmonC",
     "id": "p79c",
-    "z": 41738,
+    "z": 61981,
     "parent": "ywi2"
   },
   "854x": {
@@ -3726,7 +3732,7 @@
     "type": "card",
     "cardType": "salmonD",
     "id": "854x",
-    "z": 41735,
+    "z": 61976,
     "parent": "ywi2"
   },
   "wezg": {
@@ -3734,7 +3740,7 @@
     "type": "card",
     "cardType": "elkA",
     "id": "wezg",
-    "z": 41702,
+    "z": 61984,
     "parent": "ywi2"
   },
   "toqw": {
@@ -3742,7 +3748,7 @@
     "type": "card",
     "cardType": "elkB",
     "id": "toqw",
-    "z": 41705,
+    "z": 61978,
     "parent": "ywi2"
   },
   "khtu": {
@@ -3750,7 +3756,7 @@
     "type": "card",
     "cardType": "elkD",
     "id": "khtu",
-    "z": 41699,
+    "z": 61974,
     "parent": "ywi2"
   },
   "background": {
@@ -3771,7 +3777,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "85jb",
-    "z": 41331,
+    "z": 55590,
     "parent": "6zwi"
   },
   "sp68": {
@@ -3779,7 +3785,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "sp68",
-    "z": 41332,
+    "z": 55591,
     "parent": "6zwi"
   },
   "qrwk": {
@@ -3787,7 +3793,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "qrwk",
-    "z": 41333,
+    "z": 55592,
     "parent": "6zwi"
   },
   "kxwe": {
@@ -3795,7 +3801,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "kxwe",
-    "z": 41334,
+    "z": 55593,
     "parent": "6zwi"
   },
   "8nt9": {
@@ -3803,7 +3809,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "8nt9",
-    "z": 41335,
+    "z": 55594,
     "parent": "6zwi"
   },
   "j8fk": {
@@ -3811,7 +3817,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "j8fk",
-    "z": 41336,
+    "z": 55595,
     "parent": "6zwi"
   },
   "hiqo": {
@@ -3819,7 +3825,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "hiqo",
-    "z": 41337,
+    "z": 55596,
     "parent": "6zwi"
   },
   "k1g1": {
@@ -3827,7 +3833,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "k1g1",
-    "z": 41338,
+    "z": 55597,
     "parent": "6zwi"
   },
   "gxdu": {
@@ -3835,7 +3841,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "gxdu",
-    "z": 41339,
+    "z": 55598,
     "parent": "6zwi"
   },
   "nm14": {
@@ -3843,7 +3849,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "nm14",
-    "z": 41340,
+    "z": 55599,
     "parent": "6zwi"
   },
   "fzh1": {
@@ -3851,7 +3857,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "fzh1",
-    "z": 41341,
+    "z": 55600,
     "parent": "6zwi"
   },
   "tmbq": {
@@ -3859,7 +3865,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "tmbq",
-    "z": 41342,
+    "z": 55601,
     "parent": "6zwi"
   },
   "7xq5": {
@@ -3867,7 +3873,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "7xq5",
-    "z": 41343,
+    "z": 55602,
     "parent": "6zwi"
   },
   "iv5d": {
@@ -3875,7 +3881,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "iv5d",
-    "z": 41344,
+    "z": 55603,
     "parent": "6zwi"
   },
   "c3l0": {
@@ -3883,7 +3889,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "c3l0",
-    "z": 41345,
+    "z": 55604,
     "parent": "6zwi"
   },
   "vad9": {
@@ -3891,7 +3897,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "vad9",
-    "z": 41346,
+    "z": 55605,
     "parent": "6zwi"
   },
   "kuq6": {
@@ -3899,7 +3905,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "kuq6",
-    "z": 41347,
+    "z": 55606,
     "parent": "6zwi"
   },
   "kzuh": {
@@ -3907,7 +3913,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "kzuh",
-    "z": 41348,
+    "z": 55607,
     "parent": "6zwi"
   },
   "e6je": {
@@ -3915,7 +3921,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "e6je",
-    "z": 41349,
+    "z": 55608,
     "parent": "6zwi"
   },
   "rv8y": {
@@ -3923,7 +3929,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "rv8y",
-    "z": 41350,
+    "z": 55609,
     "parent": "6zwi"
   },
   "pku3": {
@@ -3931,7 +3937,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "pku3",
-    "z": 41351,
+    "z": 55610,
     "parent": "6zwi"
   },
   "ue8j": {
@@ -3939,7 +3945,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "ue8j",
-    "z": 41352,
+    "z": 55611,
     "parent": "6zwi"
   },
   "ukf0": {
@@ -3947,7 +3953,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "ukf0",
-    "z": 41353,
+    "z": 55612,
     "parent": "6zwi"
   },
   "zu3v": {
@@ -3955,7 +3961,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "zu3v",
-    "z": 41354,
+    "z": 55613,
     "parent": "6zwi"
   },
   "oxn9": {
@@ -3963,7 +3969,7 @@
     "type": "card",
     "cardType": "pineCone",
     "id": "oxn9",
-    "z": 41355,
+    "z": 55614,
     "parent": "6zwi"
   },
   "pineDeck": {
@@ -4080,7 +4086,7 @@
         "content": "<table style='border-spacing: 0px;line-height: 0.9em;width=100%'><tr><td>Group size</td><td>Points</td></tr><tr><td>2</td><td style='color:red'>5</td></tr><tr><td>3</td><td style='color:red'>8</td></tr><tr><td>4</td><td style='color:red'>13</td></tr></table><p style='line-height: 0.9em'>Score per group of adjacent bears (any shape) with no other adjacent bears.</p>",
         "bgTitleColor": "#603f1f",
         "textTitleColor": "#fff",
-        "contentFontSize": "12px"
+        "contentFontSize": "11px"
       },
       "elkA": {
         "title": "Elk",
@@ -4868,7 +4874,6 @@
       "#795548",
       "#607d8b"
     ],
-    "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "textColor": "#000000",
@@ -5251,8 +5256,7 @@
           }
         ]
       }
-    ],
-    "scale": 0
+    ]
   },
   "cover": {
     "id": "cover",
@@ -5280,7 +5284,6 @@
     "handleCSS": "background:#4a7a4a;color:white; border-radius:9px",
     "handleSize": "25",
     "handlePosition": "bottom center",
-    "elnarge": 3,
     "id": "6zwi"
   },
   "xg9q": {
@@ -5623,7 +5626,7 @@
     "type": "card",
     "cardType": "variantFamily",
     "id": "3lrm",
-    "z": 41376,
+    "z": 61991,
     "parent": "ywi2"
   },
   "u2n1": {
@@ -5631,7 +5634,7 @@
     "type": "card",
     "cardType": "variantIntermediate",
     "id": "u2n1",
-    "z": 41377,
+    "z": 61988,
     "parent": "ywi2"
   },
   "ywi2": {
@@ -5639,7 +5642,7 @@
     "width": 103,
     "height": 160,
     "id": "ywi2",
-    "z": 45252,
+    "z": 61968,
     "parent": "goalHolder"
   }
 }

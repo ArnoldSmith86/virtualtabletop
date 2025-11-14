@@ -15,7 +15,7 @@
       "time": "",
       "attribution": "The example cards in this room come from various public library games.  Attribution for the images in each deck follows.\n\n\nShape sorter deck:\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)\n\nTutti Frutti deck:\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.\n\nLost Temples deck:\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  -  By lorc): https://game-icons.net/1x1/lorc/cut-diamond.html\n\n  -  By faithtoken (gold ore): https://game-icons.net/1x1/faithtoken/ore.html",
       "showName": false,
-      "lastUpdate": 1763088930559,
+      "lastUpdate": 1763132005360,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -551,7 +551,7 @@
       },
       "c5": {
         "title": "Font-size",
-        "content": "<p style='font-size: 16pt'>16pt</p><p style='font-size: 14pt'>14pt</p><p style='font-size: 12pt'>12pt</p><p style='font-size: 10pt'>10pt</p><p style='font-size: 8pt'>8pt</p>"
+        "content": "<p style='font-size: 16pt'>16pt</p><p style='font-size: 14pt'>14pt</p><p style='font-size: 12pt'>12pt</p><p style='font-size: 10pt'>10pt</p>"
       }
     },
     "css": {
@@ -599,7 +599,7 @@
     "type": "card",
     "cardType": "c1",
     "id": "mc9q",
-    "z": 75859,
+    "z": 76085,
     "activeFace": 1,
     "x": 325,
     "y": 265
@@ -609,7 +609,7 @@
     "type": "card",
     "cardType": "c2",
     "id": "mked",
-    "z": 75860,
+    "z": 76086,
     "activeFace": 1,
     "x": 465,
     "y": 265
@@ -619,7 +619,7 @@
     "type": "card",
     "cardType": "c3",
     "id": "7l0e",
-    "z": 75861,
+    "z": 76087,
     "activeFace": 1,
     "x": 605,
     "y": 265
@@ -629,7 +629,7 @@
     "type": "card",
     "cardType": "c5",
     "id": "uco4",
-    "z": 75862,
+    "z": 76088,
     "x": 745,
     "y": 265,
     "activeFace": 1
@@ -639,32 +639,32 @@
     "type": "card",
     "cardType": "bearA",
     "id": "0lpz",
-    "z": 75816,
-    "parent": "o6n4"
+    "z": 76044,
+    "parent": "tj4g"
   },
   "p3wx": {
     "deck": "deck2",
     "type": "card",
     "cardType": "bearB",
     "id": "p3wx",
-    "z": 75818,
-    "parent": "o6n4"
+    "z": 76043,
+    "parent": "tj4g"
   },
   "bk5v": {
     "deck": "deck2",
     "type": "card",
     "cardType": "elkA",
     "id": "bk5v",
-    "z": 75815,
-    "parent": "o6n4"
+    "z": 76041,
+    "parent": "tj4g"
   },
   "6tqh": {
     "deck": "deck2",
     "type": "card",
     "cardType": "elkB",
     "id": "6tqh",
-    "z": 75817,
-    "parent": "o6n4"
+    "z": 76042,
+    "parent": "tj4g"
   },
   "deck2": {
     "type": "deck",
@@ -682,7 +682,7 @@
         "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Pairs</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>4</td></tr><tr><td>2</td><td style='color:red'>11</td></tr><tr><td>3</td><td style='color:red'>19</td></tr><tr><td>4</td><td style='color:red'>27</td></tr></table><p style='line-height: 0.9em'>Score for number of pairs of adjacent bears with no other adjacent bears.</p>",
         "bgTitleColor": "#603f1f",
         "textTitleColor": "#fff",
-        "contentFontSize": "11px"
+        "contentFontSize": "10.5px"
       },
       "bearB": {
         "title": "Bear",
@@ -917,32 +917,32 @@
     "type": "card",
     "cardType": "demo1",
     "id": "w9gq",
-    "z": 75823,
-    "parent": "me1l"
+    "z": 76051,
+    "parent": "9dyg"
   },
   "qlj6": {
     "deck": "deck3",
     "type": "card",
     "cardType": "demo2",
     "id": "qlj6",
-    "z": 75824,
-    "parent": "me1l"
+    "z": 76052,
+    "parent": "9dyg"
   },
   "eyh8": {
     "deck": "deck3",
     "type": "card",
     "cardType": "demo3",
     "id": "eyh8",
-    "z": 75825,
-    "parent": "me1l"
+    "z": 76049,
+    "parent": "9dyg"
   },
   "o6iy": {
     "deck": "deck3",
     "type": "card",
     "cardType": "demo4",
     "id": "o6iy",
-    "z": 75826,
-    "parent": "me1l"
+    "z": 76050,
+    "parent": "9dyg"
   },
   "example4": {
     "type": "holder",
@@ -1072,88 +1072,88 @@
     "type": "card",
     "cardType": "Blue Wizard",
     "id": "y7qt",
-    "z": 75852,
-    "parent": "j150"
+    "z": 76074,
+    "parent": "yvfz"
   },
   "gagt": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Lizard Man",
     "id": "gagt",
-    "z": 75850,
-    "parent": "j150"
+    "z": 76081,
+    "parent": "yvfz"
   },
   "ixbw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Alpaca Warrior",
     "id": "ixbw",
-    "z": 75855,
-    "parent": "j150"
+    "z": 76080,
+    "parent": "yvfz"
   },
   "miiw": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Goblin Sapper",
     "id": "miiw",
-    "z": 75851,
-    "parent": "j150"
+    "z": 76076,
+    "parent": "yvfz"
   },
   "36mf": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Rat Broodmother",
     "id": "36mf",
-    "z": 75856,
-    "parent": "j150"
+    "z": 76084,
+    "parent": "yvfz"
   },
   "jiwo": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Land Green",
     "id": "jiwo",
-    "z": 75857,
-    "parent": "j150"
+    "z": 76078,
+    "parent": "yvfz"
   },
   "fram": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Land Red",
     "id": "fram",
-    "z": 75858,
-    "parent": "j150"
+    "z": 76077,
+    "parent": "yvfz"
   },
   "ozn7": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Land Blue",
     "id": "ozn7",
-    "z": 75854,
-    "parent": "j150"
+    "z": 76079,
+    "parent": "yvfz"
   },
   "iu1r": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Land White",
     "id": "iu1r",
-    "z": 75853,
-    "parent": "j150"
+    "z": 76083,
+    "parent": "yvfz"
   },
   "hn98": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Land Black",
     "id": "hn98",
-    "z": 75849,
-    "parent": "j150"
+    "z": 76075,
+    "parent": "yvfz"
   },
   "vr7m": {
     "deck": "deck4",
     "type": "card",
     "cardType": "Land Hybrid",
     "id": "vr7m",
-    "z": 75848,
-    "parent": "j150"
+    "z": 76082,
+    "parent": "yvfz"
   },
   "example4Spread1": {
     "type": "holder",
@@ -1597,31 +1597,31 @@
       }
     ]
   },
-  "o6n4": {
+  "tj4g": {
     "type": "pile",
     "parent": "example2",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "o6n4"
+    "id": "tj4g"
   },
-  "me1l": {
+  "9dyg": {
     "type": "pile",
     "parent": "example3",
     "x": 4,
     "y": 4,
     "width": 200,
     "height": 300,
-    "id": "me1l"
+    "id": "9dyg"
   },
-  "j150": {
+  "yvfz": {
     "type": "pile",
     "parent": "example4",
     "x": 4,
     "y": 4,
     "width": 150,
     "height": 200,
-    "id": "j150"
+    "id": "yvfz"
   }
 }
