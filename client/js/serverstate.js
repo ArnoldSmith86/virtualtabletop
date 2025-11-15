@@ -462,6 +462,9 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
+  // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
+  currentGameSettings = args._meta.gameSettings || {};
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   room = args;
