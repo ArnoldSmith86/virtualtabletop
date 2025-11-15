@@ -75,10 +75,10 @@
 #playerList .myPlayerEntry input{
   font-size: 1.2rem;
 }
-#playerList label.me{
+#playerList label.me, .me {
   order: 1;
 }
-#playerList .myPlayerEntry{
+#playerList .myPlayerEntry, .me .myPlayerEntry {
   order: 2;
   width: 100%;
 }
@@ -108,43 +108,6 @@
   opacity: 0.5;
 }
 
-label.ui-line{
-  border-top: 1px solid rgb(31, 92, 166);
-  width: 100%;
-  font-size: 0.8rem;
-  line-height: 1rem;
-  margin: 1rem 0 0.75rem 0;
-  padding: 0;
-}
-label.ui-line::before{
-  background-color: rgb(31, 92, 166);
-  color: white;
-  display: inline-block;
-  content: attr(data-label);
-  padding: 0 0.5rem;
-  border-radius: 0 0 0.5rem;
-  font-weight: bold;
-}
-
-.overlay .heading{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;;
-}
-.overlay .heading h1{
-  margin: 0 0.5em 0 0;
-  padding: 0.25em 0.5em 0.25em 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.5);
-  line-height: 1em;
-  text-align: left;
-  max-width: 45%;
-}
-.overlay .heading .instructionalText{
-  display: block;
-  font-size: 16px;
-  text-align: left;
-  padding: 0.9rem 0;
-}
 #playerCursors {
   position: absolute;
   pointer-events: none;

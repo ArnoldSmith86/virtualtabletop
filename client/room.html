@@ -30,6 +30,7 @@
     <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton toolbarTab"><span class="tooltip">About</span></button>
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
+    <button id="meButton" data-overlay="meOverlay" class="toolbarButton toolbarTab"><span class="tooltip">Me</span></button>
     <div class="divider"></div>
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
@@ -87,6 +88,29 @@
         <h1>Invite</h1>
         <p>More players can join this game by visiting <span id="playerInviteURL"></span>.</p>
         <button icon="share" id="playersShareButton">Share room URL</button>
+      </div>
+    </div>
+
+    <div id="meOverlay" class="overlay">
+      <div class="heading">
+        <h1>User Profile</h1>
+      </div>
+      <div id="meSection">
+        <label class="me ui-line" data-label="Me »"> </label>
+        <div id="mePlayerEntry"><input type="color" class="teamColor"><input class="playerName"></div>
+      </div>
+      <div class="spacer"></div>
+      <div id="meLogin">
+        <label class="me ui-line" data-label="Sign In »"> </label>
+        <p>Log in to your account or create a new one.</p>
+        <label for="meUsername">Username</label>
+        <input id="meUsername" type="text">
+        <label for="mePassword">Password</label>
+        <input id="mePassword" type="password">
+      </div>
+      <div id="meButtons">
+        <button id="meLoginButton">Login / Create User</button>
+        <button id="meLogoutButton" style="display: none;">Log out</button>
       </div>
     </div>
 
