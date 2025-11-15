@@ -21,7 +21,7 @@
       "similarName": "A Gentle Rain",
       "similarDesigner": "Kevin Wilson",
       "similarAwards": "2024 Origins Awards Best Co-Op/Solo Game Nominee",
-      "ruleText": "In <em>Fragrant Lilies</em>, you grow a peaceful pond by placing tiles so the flower edges match. Start with one tile in the center and draw a new one each turn, placing it so all touching edges align. When a placement completes a 2×2 square, it blooms — the four flowers in the center are all different, and you place the flower token for the one type not shown. Keep drawing and placing tiles until you’ve placed all eight flower tokens or run out of tiles. If you complete all eight blooms, you win; otherwise, your score is the number of flowers that bloomed. The game is calm and it is about creating balance and beauty.",
+      "ruleText": "In <em>Fragrant Lilies</em>, you grow a peaceful pond by placing tiles so the flower edges match. Start with one tile in the center and draw a new one each turn, placing it so all touching edges align. If it is not possible for all of the edges to align anywhere, discard the tile. \n\nWhen a placement completes a 2×2 square, it blooms. Look at the 4 completed lilies, select one token that matches one of those lilies and place it in the hole between them. \n\nKeep drawing and placing tiles until you’ve placed all eight flower tokens or run out of tiles. If you complete all eight blooms, you win; otherwise, your score is the number of flowers that bloomed.",
       "helpText": "Click the New Game button to start a new game. Each turn, click the Draw button to reveal the next card. Drag the card to place it on the place you want.",
       "variantImage": "",
       "variant": "",
