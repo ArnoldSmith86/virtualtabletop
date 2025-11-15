@@ -55,9 +55,7 @@ function initUser() {
     }
   });
 
-  function updateLoggedInUI(userData) {
-    meOverlay.style.display = 'block';
-    
+  function updateLoggedInUI(userData) {    
     playerNameInput.value = userData.playerName;
     playerColorInput.value = userData.playerColor;
 
@@ -73,7 +71,7 @@ function initUser() {
       if (userData) {
         updateLoggedInUI(userData);
       } else {
-        meOverlay.style.display = 'block';
+        meOverlay.style.display = 'flex
         meUsername.value = getPlayerName();
         playerColorInput.value = toHex(getPlayerColor());
         document.getElementById('meSection').style.display = 'block';
