@@ -8,3 +8,4 @@ save
 *.tgz
 *.heapsnapshot
 .DS_Store
+library/widgets.json

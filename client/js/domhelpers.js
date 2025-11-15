@@ -474,38 +474,60 @@ export function onLoad(callback) {
   window.addEventListener('DOMContentLoaded', callback);
 }
 
-export function selectFile(getContents, multipleCallback) {
+export function selectFile(getContents, multipleCallback, fileTypes) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
     upload.type = 'file';
     if (typeof multipleCallback === 'function') upload.setAttribute('multiple', true);
-    upload.addEventListener('change', function(e) {
-      if(!getContents && typeof multipleCallback !== 'function')
-        return resolve(e.target.files[0]);
+    if (Array.isArray(fileTypes)) upload.setAttribute('accept', fileTypes.join(','));
 
-      for(const file of e.target.files) {
-        if(!getContents && typeof multipleCallback === 'function') {
-          multipleCallback(file);
-          continue;
+    const cancelHandler = () => {
+      window.removeEventListener('focus', cancelHandler);
+      setTimeout(() => {
+        if (upload.files.length === 0) {
+          reject(new Error('File selection cancelled.'));
         }
+      }, 300);
+    };
+    window.addEventListener('focus', cancelHandler);
 
-        const name = file.name;
+    upload.addEventListener('change', function(e) {
+      window.removeEventListener('focus', cancelHandler);
+      if (e.target.files.length === 0) {
+        return reject(new Error('File selection cancelled.'));
+      }
+
+      if (typeof multipleCallback === 'function') {
+        for (const file of e.target.files) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            multipleCallback({ content: event.target.result, name: file.name });
+          };
+          if (getContents === 'BINARY') {
+            reader.readAsArrayBuffer(file);
+          } else if (getContents === 'TEXT') {
+            reader.readAsText(file);
+          } else {
+            reader.readAsDataURL(file);
+          }
+        }
+        resolve(); // Resolve the promise once all files are being processed
+      } else {
+        const file = e.target.files[0];
         const reader = new FileReader();
-        reader.addEventListener('load', function(e) {
-          if(typeof multipleCallback === 'function')
-            multipleCallback({ content: e.target.result, name });
-          else
-            resolve({ content: e.target.result, name });
-        });
-        if(getContents == 'BINARY')
+        reader.onload = (event) => {
+          resolve({ content: event.target.result, name: file.name });
+        };
+        if (getContents === 'BINARY') {
           reader.readAsArrayBuffer(file);
-        else if(getContents == 'TEXT')
+        } else if (getContents === 'TEXT') {
           reader.readAsText(file);
-        else
+        } else {
           reader.readAsDataURL(file);
+        }
       }
     });
-    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    upload.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 }
 

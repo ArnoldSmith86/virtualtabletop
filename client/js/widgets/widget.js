@@ -939,13 +939,6 @@ export class Widget extends StateManaged {
       else
         a = original.trim();
 
-      lastExecutedOperation = {
-        original: original,
-        applied: a,
-        variables,
-        property: typeof property == 'string' ? property : 'literal'
-      };
-
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
@@ -1268,11 +1261,13 @@ export class Widget extends StateManaged {
         setDefaults(a, { collection: 'DEFAULT' });
         const collection = getCollection(a.collection);
         if(collection) {
+          const promises = [];
           for(const w of collections[collection]) {
-            await removeWidgetLocal(w.get('id'));
+            promises.push(removeWidgetLocal(w.get('id')));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
+          await Promise.all(promises);
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `'${a.collection}'`)
         }
@@ -2050,6 +2045,20 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'UPLOAD') {
+        setDefaults(a, { variable: 'uploadedFileName', fileTypes: null });
+        const uploadedAsset = await uploadAsset(null, a.fileTypes);
+        if(uploadedAsset === null) {
+          variables[a.variable] = false;
+          if(jeRoutineLogging)
+        jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        } else {
+          variables[a.variable] = uploadedAsset;
+          if(jeRoutineLogging)
+        jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
+        }
+      }
+
       if(a.func == 'TURN') {
         setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
         if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
@@ -2128,6 +2137,24 @@ export class Widget extends StateManaged {
             } else {
               jeLoggingRoutineOperationSummary(`All seats in collection '${a.source}' have 'skipTurn' set to true. No turn change.`);
             }
+          }
+        }
+      }
+
+
+      if(a.func == 'UPLOADIMAGE') {
+        setDefaults(a, { widget: null, property: 'image' });
+        if(this.isValidID(a.widget, problems)) {
+          const uploadedAsset = await uploadAsset();
+          if(uploadedAsset !== null) {
+            await w(a.widget, async widget=>{
+              await widget.set(a.property, uploadedAsset);
+            });
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary(`widget '${a.widget}' property '${a.property}'`, `${JSON.stringify(uploadedAsset)}`);
+          } else {
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationSummary("UPLOADIMAGE cancelled");
           }
         }
       }

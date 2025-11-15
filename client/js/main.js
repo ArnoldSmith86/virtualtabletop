@@ -394,15 +394,21 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   }
 }
 
-async function uploadAsset(multipleCallback) {
+async function uploadAsset(multipleCallback, fileTypes) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
-      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      let uploadPath = await _uploadAsset(f).catch(e=>{
+        console.error(`Uploading failed: ${e.toString()}`);
+        return null;
+      });
       multipleCallback(uploadPath, f.name)
     });
   }
   else {
-    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+    return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
+      console.error(`Uploading failed: ${e.toString()}`);
+      return null;
+    });
   }
 }
 
@@ -485,10 +491,10 @@ async function loadEditMode() {
       $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
       setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
-      addWidgetLocal, updateWidgetId, removeWidgetLocal,
+      addWidgetLocal, updateWidget, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
+      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload, uploadAsset,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
@@ -695,4 +701,54 @@ window.onkeyup = function(event) {
     else if($('#buttonInputCancel').style.visibility == 'visible')
       $('#buttonInputCancel').click();
   }
+}
+
+export async function updateWidget(currentState, oldState, applyChangesFromUI) {
+  batchStart();
+
+  const previousState = JSON.parse(oldState);
+  try {
+    var widget = JSON.parse(currentState);
+    setDeltaCause(`${getPlayerDetails().playerName} updated ${widget.id} in editor`);
+  } catch(e) {
+    alert(e.toString());
+    batchEnd();
+    return;
+  }
+
+  for(const key in widget)
+    if(widget[key] === null)
+      delete widget[key];
+
+  if(widget.parent !== undefined && !widgets.has(widget.parent)) {
+    alert(`Parent widget ${widget.parent} does not exist.`);
+    batchEnd();
+    return;
+  }
+
+  if(applyChangesFromUI)
+    await applyEditOptions(widget);
+
+  if(widget.id !== previousState.id) {
+    await updateWidgetId(widget, previousState.id);
+  } else if (widget.type !== previousState.type) {
+    await removeWidgetLocal(previousState.id, true);
+    const id = await addWidgetLocal(widget);
+
+    // Handle special case where type is removed
+    if(widget.type === undefined)
+      sendPropertyUpdate(id, 'type', null);
+  } else {
+    for(const key in previousState)
+      if(widget[key] === undefined)
+        widget[key] = null;
+    for(const key in widget) {
+      if(widget[key] !== previousState[key] && JSON.stringify(widget[key]) !== JSON.stringify(previousState[key])) {
+        widgets.get(widget.id).state[key] = widget[key];
+        sendPropertyUpdate(widget.id, key, widget[key]);
+      }
+    }
+  }
+
+  batchEnd();
 }

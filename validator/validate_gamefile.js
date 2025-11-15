@@ -92,6 +92,7 @@ const COMMON_PROPERTIES = {
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
+    addToRoomRoutine: 'routine',
     hotkey: 'string',
     animatePropertyChange: 'any',
     resetProperties: 'object',
@@ -513,6 +514,8 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
+        if(func === 'UPLOAD')
+            context.validVariables[operation.variable || 'UPLOAD'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
@@ -768,6 +771,9 @@ const operationProps = {
         'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
         'source': 'inCollection',
         'collection': 'string'
+    },
+    'UPLOAD': {
+        'variable': 'string'
     },
     'VAR': {
         'variables': 'object'

@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rm -rf coverage",
     "clobber": "npm clean && rm -rf save",
-    "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --inspect server.mjs",
+    "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --ignore library/widgets.json --inspect server.mjs",
     "start": "node server.mjs",
     "stresstest": "node tests/server/loadtest.js",
     "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage",
@@ -57,7 +57,8 @@
     "express": "^5.1.0",
     "jszip": "^3.10.1",
     "node-fetch": "^3.3.2",
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "express-rate-limit": "^7.1.5"
   },
   "optionalDependencies": {
     "crawler-user-agents": "^1.21.0"
