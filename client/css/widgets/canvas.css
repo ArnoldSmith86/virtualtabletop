@@ -9,4 +9,24 @@
   height: 100%;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
+  cursor: none;
+}
+
+body.edit .canvas > canvas {
+  cursor: auto;
+}
+
+.canvas > .canvasCursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: none;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-sizing: content-box;
+}
+
+body:not(.edit) .canvas:hover > .canvasCursor.visible {
+  display: block;
 }
