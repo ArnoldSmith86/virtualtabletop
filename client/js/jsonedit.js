@@ -2249,8 +2249,21 @@ function jeColorize() {
         for(let i=1; i<l.length; ++i) {
           if(l[i] && match[i]) {
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
-            if(l[i]=='string' || l[i]=='key')
+            if(l[i]=='string' || l[i]=='key') {
               match[i] = match[i].replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`)
+              // Highlight HTML tags and attributes
+              match[i] = match[i].replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9]*)([^&]*?)(&gt;)/g, (m, open, tag, attrs, close) => {
+                // Highlight tag name
+                let result = open + `<i class=htmltag>${tag}</i>`;
+                // Highlight attributes: attr="value" or attr='value'
+                attrs = attrs.replace(/(\s+)([a-zA-Z][a-zA-Z0-9-]*)(\s*=\s*)(["'])([^"']*)(\4)/g, 
+                  (m, ws, attr, eq, quote, value, quoteEnd) => 
+                    ws + `<i class=htmlattr>${attr}</i>${eq}${quote}<i class=htmlvalue>${value}</i>${quoteEnd}`
+                );
+                result += attrs + close;
+                return result;
+              });
+            }
           } else if(match[i])
             match[i] = html(match[i]);
         }
