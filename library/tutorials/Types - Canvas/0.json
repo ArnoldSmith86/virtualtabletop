@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 18,
+    "version": 19,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -14,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762718292082,
+      "lastUpdate": 1763219713967,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1018,7 +1018,6 @@
       "LawDawg"
     ],
     "movable": false,
-    "activeColor": 0,
     "clickable": false
   },
   "zme3-Reset": {
@@ -1147,7 +1146,7 @@
         "value": "${color}"
       }
     ],
-    "color": "#F0F0F0",
+    "color": "#1F5CA6",
     "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
     "borderRadius": "0% 0% 0% 50%"
   },
