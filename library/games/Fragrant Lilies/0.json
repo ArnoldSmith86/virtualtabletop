@@ -550,19 +550,6 @@
           {
             "type": "image",
             "color": "transparent",
-            "value": "/i/cards-plastic/1B.svg",
-            "dynamicProperties": {
-              "height": "height",
-              "width": "width"
-            }
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "color": "transparent",
             "dynamicProperties": {
               "value": "image",
               "height": "height",
