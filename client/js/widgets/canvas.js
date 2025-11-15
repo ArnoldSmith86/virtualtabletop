@@ -4,6 +4,7 @@ class Canvas extends Widget {
     this.canvas = document.createElement('canvas');
     this.canvas.dataset.id = id;
     this.context = this.canvas.getContext('2d');
+    this.regionCache = {};
 
     const defaults = {
       width: 400,
@@ -139,6 +140,16 @@ class Canvas extends Widget {
     return code;
   }
 
+  async flushPixelCache() {
+    if(this.regionCache) {
+      batchStart();
+      for(const key in this.regionCache)
+        await this.set(key, this.compress(this.regionCache[key]));
+      this.regionCache = {};
+      batchEnd();
+    }
+  }
+
   getColorMap() {
     if(Array.isArray(this.get('colorMap')))
       return this.get('colorMap');
@@ -170,12 +181,12 @@ class Canvas extends Widget {
     if(this.lastPixelX !== undefined && state != 'down') {
       const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY))*2;
       for(let i=0; i<steps; ++i)
-        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i, undefined, undefined, false);
+        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i, this.get('activeColor'), regionRes, false);
     } else {
-      this.setPixel(pixelX, pixelY, undefined, undefined, false);
+      this.setPixel(pixelX, pixelY, this.get('activeColor'), regionRes, false);
     }
 
-    if (state == 'down') {
+    if(state == 'down') {
       const resolution = this.getResolution();
       const minInterval = 10;
       const maxInterval = 100;
@@ -185,23 +196,13 @@ class Canvas extends Widget {
       const clampedInterval = Math.max(minInterval, Math.min(maxInterval, interval));
 
       this.updateInterval = setInterval(async () => {
-        if (this.regionCache) {
-          for (const key in this.regionCache) {
-            await this.set(key, this.compress(this.regionCache[key]));
-          }
-          this.regionCache = {};
-        }
+        await this.flushPixelCache();
       }, clampedInterval);
     }
 
-    if (state == 'up') {
+    if(state == 'up') {
       clearInterval(this.updateInterval);
-      if (this.regionCache) {
-        for (const key in this.regionCache) {
-          await this.set(key, this.compress(this.regionCache[key]));
-        }
-        this.regionCache = null;
-      }
+      await this.flushPixelCache();
     }
 
     this.lastPixelX = pixelX;
@@ -215,40 +216,31 @@ class Canvas extends Widget {
   }
 
   async setPixel(x, y, colorIndex, regionRes, flush=true) {
-    const lineWidth = this.get('lineWidth');
-    if (lineWidth < 1) {
-      this.set('lineWidth', 1);
-    }
-    for (let i = -lineWidth; i < lineWidth; ++i) {
-      for (let j = -lineWidth; j < lineWidth; ++j) {
-        if (Math.sqrt(i * i + j * j) < lineWidth) {
-          this.setSinglePixel(x + i, y + j, colorIndex, regionRes);
-        }
-      }
-    }
+    let lineWidth = this.get('lineWidth');
+    if(lineWidth < 1)
+      lineWidth = 1;
+
+    if(!regionRes)
+      regionRes = Math.floor(this.getResolution() / 10);  
+  
+    for(let i = -lineWidth; i < lineWidth; ++i)
+      for(let j = -lineWidth; j < lineWidth; ++j)
+        if(Math.sqrt(i * i + j * j) < lineWidth)
+          this.setSinglePixelInCache(x + i, y + j, colorIndex, regionRes);
 
     if(flush)
-      await this._flushPixelCache();
+      await this.flushPixelCache();
   }
 
-  setSinglePixel(x, y, colorIndex, regionRes) {
-    if (!this.regionCache) {
-      this.regionCache = {};
-    }
-
-    if (!regionRes) {
-      regionRes = Math.floor(this.getResolution() / 10);
-    }
-
+  setSinglePixelInCache(x, y, colorIndex, regionRes) {
     const resolution = this.getResolution();
     x = Math.floor(x);
     y = Math.floor(y);
-    if (x < 0 || x >= resolution || y < 0 || y >= resolution) {
+    if (x < 0 || x >= resolution || y < 0 || y >= resolution)
       return;
-    }
 
-    const regionX = Math.floor(x / regionRes);
-    const regionY = Math.floor(y / regionRes);
+    const regionX = Math.floor(x/regionRes);
+    const regionY = Math.floor(y/regionRes);
 
     const pX = Math.floor(x%regionRes);
     const pY = Math.floor(y%regionRes);
@@ -257,31 +249,10 @@ class Canvas extends Widget {
     const color = String.fromCharCode(48 + finalColorIndex);
 
     const key = `c${regionX}${regionY}`;
-    if (!this.regionCache[key]) {
-      const data = this.get(key);
-      if (data == null) return;
-      this.regionCache[key] = this.decompress(data);
-    }
+    if (!this.regionCache[key])
+      this.regionCache[key] = this.decompress(this.get(key));
 
     this.regionCache[key] = this.regionCache[key].substring(0, pY * regionRes + pX) + color + this.regionCache[key].substring(pY * regionRes + pX + 1);
-
-    const colors = this.getColorMap();
-    this.context.fillStyle = colors[finalColorIndex] || 'white';
-    if (colors[finalColorIndex] !== 'transparent') {
-      this.context.fillRect(x, y, 1, 1);
-    } else {
-      this.context.clearRect(x, y, 1, 1);
-    }
-
-  }
-
-  async _flushPixelCache() {
-    if (this.regionCache) {
-      for (const key in this.regionCache) {
-        await this.set(key, this.compress(this.regionCache[key]));
-      }
-      this.regionCache = {};
-    }
   }
 }
 
