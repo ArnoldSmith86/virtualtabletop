@@ -71,7 +71,7 @@ function initUser() {
       if (userData) {
         updateLoggedInUI(userData);
       } else {
-        meOverlay.style.display = 'flex
+        meOverlay.style.display = 'flex';
         meUsername.value = getPlayerName();
         playerColorInput.value = toHex(getPlayerColor());
         document.getElementById('meSection').style.display = 'block';
