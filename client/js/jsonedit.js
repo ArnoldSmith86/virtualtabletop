@@ -2252,13 +2252,21 @@ function jeColorize() {
             if(l[i]=='string' || l[i]=='key') {
               match[i] = match[i].replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`)
               // Highlight HTML tags and attributes
-              match[i] = match[i].replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9]*)([^&]*?)(&gt;)/g, (m, open, tag, attrs, close) => {
+              match[i] = match[i].replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9]*)(.*?)(&gt;)/g, (m, open, tag, attrs, close) => {
                 // Highlight tag name
                 let result = open + `<i class=htmltag>${tag}</i>`;
                 // Highlight attributes: attr="value" or attr='value'
-                attrs = attrs.replace(/(\s+)([a-zA-Z][a-zA-Z0-9-]*)(\s*=\s*)('|\\")([^"']*)(\4)/g, 
-                  (m, ws, attr, eq, quote, value, quoteEnd) => 
-                    ws + `<i class=htmlattr>${attr}</i>${eq}${quote}<i class=htmlvalue>${value}</i>${quoteEnd}`
+                attrs = attrs.replace(/(\s+)([a-zA-Z][a-zA-Z0-9-]*)(\s*=\s*)('|\\&quot;)([^&']*)(\4)/g, 
+                  (m, ws, attr, eq, quote, value, quoteEnd) => {
+                    if(attr === 'style') {
+                      // Highlight CSS properties and values separately
+                      value = value.replace(/([a-zA-Z-]+)(\s*:\s*)([^;]+)/g, 
+                        (m, prop, colon, val) => `<i class=csskey>${prop}</i>${colon}<i class=cssvalue>${val.trim()}</i>`
+                      );
+                      return ws + `<i class=htmlattr>${attr}</i>${eq}${quote}${value}${quoteEnd}`;
+                    }
+                    return ws + `<i class=htmlattr>${attr}</i>${eq}${quote}<i class=htmlvalue>${value}</i>${quoteEnd}`;
+                  }
                 );
                 result += attrs + close;
                 return result;
