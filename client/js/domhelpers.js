@@ -538,12 +538,3 @@ export function funhash(s) {
 export function getBaseURL() {
   return `${location.origin}${config.urlPrefix || ''}`;
 }
-
-export function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), wait);
-  };
-}
