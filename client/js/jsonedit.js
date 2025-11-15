@@ -358,7 +358,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerIcon',
     name: 'pick an icon from the symbol picker',
-    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
+    context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
       const a = await pickSymbol();
       if(a) {
@@ -397,7 +397,7 @@ const jeCommands = [
   {
     id: 'je_symbolPickerCustom',
     name: 'upload a custom icon asset',
-    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
+    context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
       const a = await uploadAsset();
       if(a) {
@@ -422,7 +422,7 @@ const jeCommands = [
   {
     id: 'je_iconToArray',
     name: 'add another icon',
-    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
+    context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
       const a = await pickSymbol();
       if(a) {
@@ -440,7 +440,7 @@ const jeCommands = [
   {
     id: 'je_iconToObject',
     name: 'show advanced options',
-    context: '^.* ↦ icon( ↦ [0-9]+| ↦ "|$)',
+    context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
       const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
       if(Array.isArray(jeGetValueAt('icon'))) {
@@ -457,7 +457,7 @@ const jeCommands = [
   {
     id: 'je_iconToString',
     name: 'use default options',
-    context: '^.* ↦ icon ↦',
+    context: '^.* ↦ icon ↦ ',
     call: async function() {
       const current = jeGetValueAt('icon');
       if(Array.isArray(current)) {
@@ -1291,7 +1291,7 @@ function jeAddCommands() {
 
   jeAddRoutineOperationCommands('AUDIO', { source: '', maxVolume: 1.0, length: null, player: null, silence: false, count: 1 });
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
-  jeAddRoutineOperationCommands('CANVAS', { canvas: null, mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
+  jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });

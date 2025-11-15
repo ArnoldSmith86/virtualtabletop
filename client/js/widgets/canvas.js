@@ -4,6 +4,7 @@ class Canvas extends Widget {
     this.canvas = document.createElement('canvas');
     this.canvas.dataset.id = id;
     this.context = this.canvas.getContext('2d');
+    this.regionCache = {};
 
     const defaults = {
       width: 400,
@@ -13,6 +14,7 @@ class Canvas extends Widget {
 
       resolution: 100,
       activeColor: 1,
+      lineWidth: 1,
       colorMap: Canvas.defaultColors
     };
 
@@ -24,10 +26,47 @@ class Canvas extends Widget {
 
     this.passthroughMouse = true;
     this.domElement.appendChild(this.canvas);
+
+    this.cursor = document.createElement('div');
+    this.cursor.className = 'canvasCursor';
+    this.domElement.appendChild(this.cursor);
+
+    this.canvas.addEventListener('mousemove', (e) => {
+      const coordLocal = this.coordLocalFromCoordClient({ x: e.clientX, y: e.clientY });
+      const lineWidth = this.get('lineWidth');
+      const resolution = this.getResolution();
+      const scaleX = this.get('width') / resolution;
+      const scaleY = this.get('height') / resolution;
+      this.cursor.style.left = `${coordLocal.x - lineWidth * scaleX}px`;
+      this.cursor.style.top = `${coordLocal.y - lineWidth * scaleY}px`;
+    });
+
+    this.canvas.addEventListener('mouseenter', () => {
+      this.cursor.classList.add('visible');
+    });
+
+    this.canvas.addEventListener('mouseleave', () => {
+      this.cursor.classList.remove('visible');
+    });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
+
+    if (delta.lineWidth !== undefined || delta.width !== undefined || delta.height !== undefined || delta.resolution !== undefined) {
+      const lineWidth = this.get('lineWidth');
+      const resolution = this.getResolution();
+      const scaleX = this.get('width') / resolution;
+      const scaleY = this.get('height') / resolution;
+      this.cursor.style.width = `${2 * lineWidth * scaleX}px`;
+      this.cursor.style.height = `${2 * lineWidth * scaleY}px`;
+    }
+
+    if (delta.activeColor !== undefined || delta.colorMap !== undefined) {
+      const colors = this.getColorMap();
+      const color = colors[this.get('activeColor')] || 'white';
+      this.cursor.style.backgroundColor = color;
+    }
 
     if(this.context) {
       if(delta.resolution !== undefined) {
@@ -101,6 +140,16 @@ class Canvas extends Widget {
     return code;
   }
 
+  async flushPixelCache() {
+    if(this.regionCache) {
+      batchStart();
+      for(const key in this.regionCache)
+        await this.set(key, this.compress(this.regionCache[key]));
+      this.regionCache = {};
+      batchEnd();
+    }
+  }
+
   getColorMap() {
     if(Array.isArray(this.get('colorMap')))
       return this.get('colorMap');
@@ -130,11 +179,30 @@ class Canvas extends Widget {
       return;
 
     if(this.lastPixelX !== undefined && state != 'down') {
-      const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY));
+      const steps = Math.max(Math.abs(pixelX-this.lastPixelX), Math.abs(pixelY-this.lastPixelY))*2;
       for(let i=0; i<steps; ++i)
-        await this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i);
+        this.setPixel(this.lastPixelX + (pixelX-this.lastPixelX)/steps*i, this.lastPixelY + (pixelY-this.lastPixelY)/steps*i, this.get('activeColor'), regionRes, false);
     } else {
-      await this.setPixel(pixelX, pixelY);
+      this.setPixel(pixelX, pixelY, this.get('activeColor'), regionRes, false);
+    }
+
+    if(state == 'down') {
+      const resolution = this.getResolution();
+      const minInterval = 10;
+      const maxInterval = 100;
+      const minRes = 100;
+      const maxRes = 500;
+      const interval = minInterval + (maxInterval - minInterval) * (resolution - minRes) / (maxRes - minRes);
+      const clampedInterval = Math.max(minInterval, Math.min(maxInterval, interval));
+
+      this.updateInterval = setInterval(async () => {
+        await this.flushPixelCache();
+      }, clampedInterval);
+    }
+
+    if(state == 'up') {
+      clearInterval(this.updateInterval);
+      await this.flushPixelCache();
     }
 
     this.lastPixelX = pixelX;
@@ -147,9 +215,29 @@ class Canvas extends Widget {
         await this.set(`c${x}${y}`, null);
   }
 
-  async setPixel(x, y, colorIndex, regionRes) {
+  async setPixel(x, y, colorIndex, regionRes, flush=true) {
+    let lineWidth = this.get('lineWidth');
+    if(lineWidth < 1)
+      lineWidth = 1;
+
     if(!regionRes)
-      regionRes = Math.floor(this.getResolution()/10);
+      regionRes = Math.floor(this.getResolution() / 10);  
+  
+    for(let i = -lineWidth; i < lineWidth; ++i)
+      for(let j = -lineWidth; j < lineWidth; ++j)
+        if(Math.sqrt(i * i + j * j) < lineWidth)
+          this.setSinglePixelInCache(x + i, y + j, colorIndex, regionRes);
+
+    if(flush)
+      await this.flushPixelCache();
+  }
+
+  setSinglePixelInCache(x, y, colorIndex, regionRes) {
+    const resolution = this.getResolution();
+    x = Math.floor(x);
+    y = Math.floor(y);
+    if (x < 0 || x >= resolution || y < 0 || y >= resolution)
+      return;
 
     const regionX = Math.floor(x/regionRes);
     const regionY = Math.floor(y/regionRes);
@@ -157,11 +245,14 @@ class Canvas extends Widget {
     const pX = Math.floor(x%regionRes);
     const pY = Math.floor(y%regionRes);
 
-    const color = String.fromCharCode(48+(colorIndex !== undefined ? colorIndex : this.get('activeColor')));
+    const finalColorIndex = colorIndex !== undefined ? colorIndex : this.get('activeColor');
+    const color = String.fromCharCode(48 + finalColorIndex);
 
-    let currentState = this.decompress(this.get(`c${regionX}${regionY}`));
-    currentState = currentState.substring(0,pY*regionRes+pX) + color + currentState.substring(pY*regionRes+pX+1);
-    this.set(`c${regionX}${regionY}`, this.compress(currentState));
+    const key = `c${regionX}${regionY}`;
+    if (!this.regionCache[key])
+      this.regionCache[key] = this.decompress(this.get(key));
+
+    this.regionCache[key] = this.regionCache[key].substring(0, pY * regionRes + pX) + color + this.regionCache[key].substring(pY * regionRes + pX + 1);
   }
 }
 
