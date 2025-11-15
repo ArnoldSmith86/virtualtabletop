@@ -936,8 +936,15 @@ export default class Room {
   }
 
   setGameSettings(player, gameSettings) {
+    const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
+    const newLegacyModes = gameSettings.legacyModes || {};
+  
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();
+
+    const legacyModesChanged = JSON.stringify(oldLegacyModes) !== JSON.stringify(newLegacyModes);
+    if(legacyModesChanged)
+      this.broadcast('state', this.state);
   }
 
   setLegacyMode(name, value) {
@@ -947,6 +954,7 @@ export default class Room {
       this.state._meta.gameSettings.legacyModes = {};
     this.state._meta.gameSettings.legacyModes[name] = value === 'true';
     this.sendMetaUpdate();
+    this.broadcast('state', this.state);
   }
 
   async setRedirect(player, target) {
