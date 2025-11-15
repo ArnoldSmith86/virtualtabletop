@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1763220225461,
+      "lastUpdate": 1763220413510,
       "showName": false,
       "skill": "",
       "description": "",
@@ -144,7 +144,7 @@
           "canvas1"
         ],
         "mode": "set",
-        "value": "${value}"
+        "value": "${number}"
       }
     ],
     "text": "change"
