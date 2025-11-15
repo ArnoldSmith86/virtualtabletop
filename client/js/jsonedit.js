@@ -2256,7 +2256,7 @@ function jeColorize() {
                 // Highlight tag name
                 let result = open + `<i class=htmltag>${tag}</i>`;
                 // Highlight attributes: attr="value" or attr='value'
-                attrs = attrs.replace(/(\s+)([a-zA-Z][a-zA-Z0-9-]*)(\s*=\s*)(["'])([^"']*)(\4)/g, 
+                attrs = attrs.replace(/(\s+)([a-zA-Z][a-zA-Z0-9-]*)(\s*=\s*)('|\\")([^"']*)(\4)/g, 
                   (m, ws, attr, eq, quote, value, quoteEnd) => 
                     ws + `<i class=htmlattr>${attr}</i>${eq}${quote}<i class=htmlvalue>${value}</i>${quoteEnd}`
                 );
