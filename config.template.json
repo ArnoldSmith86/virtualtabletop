@@ -10,7 +10,7 @@
 
   "allowPublicLibraryEdits": false,
   "adminURL": null,
-  "authenticateUsers": false,
+  "authenticateUsers": true
 
   "directories": {
     "library": "library",
