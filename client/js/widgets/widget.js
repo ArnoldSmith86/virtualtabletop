@@ -1122,9 +1122,10 @@ export class Widget extends StateManaged {
             else if(a.mode == 'dec')
               await widget.set('activeColor', (widget.get('activeColor')+cm.length - (a.value % cm.length)) % cm.length);
             else if(a.mode == 'change') {
-              const index = ((a.value || 1) % cm.length) || 0;
-              cm[index] = a.color || '#1f5ca6' ;
-              await widget.set('colorMap', cm);
+              const newMap = Array.isArray(cm) ? cm.slice() : [];
+              const index = ((a.value || 1) % newMap.length) || 0;
+              newMap[index] = a.color || '#1f5ca6';
+              await widget.set('colorMap', newMap);
             }
             else
               await widget.set('activeColor', (widget.get('activeColor')+ a.value) % cm.length);

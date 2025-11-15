@@ -168,7 +168,9 @@ const WIDGET_PROPERTIES = {
                 
                 // Check for $ in face-level properties
                 for(const [key, value] of Object.entries(face)) {
-                    problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, key]));
+                    if(key != 'objects') {
+                        problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, key]));
+                    }
                 }
                 
                 // Check for unused face-level properties
@@ -196,8 +198,9 @@ const WIDGET_PROPERTIES = {
                         }
                         
                         // Check for $ in object properties
-                        for(const [key, value] of Object.entries(obj)) {
-                            problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, 'objects', objIndex, key]));
+                        if(obj.type != 'html')
+                            for(const [key, value] of Object.entries(obj)) {
+                                problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, 'objects', objIndex, key]));
                         }
                         
                         // Check for properties defined both directly and through dynamicProperties
@@ -1171,8 +1174,9 @@ function validateGameFile(data, checkMeta) {
             }
         }
         
-        // BGG URL validation
-        if (!/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(info.bgg)) {
+        // BGG URL validation (skip for tutorials)
+        const metaMode = (info.mode || '').toLowerCase();
+        if (metaMode !== 'tutorial' && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(info.bgg)) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'bgg'],

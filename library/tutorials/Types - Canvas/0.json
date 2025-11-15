@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Canvas",
       "image": "/assets/-1072519153_5063",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748992044279,
+      "lastUpdate": 1763219713967,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -26,518 +29,44 @@
       "players": "1"
     }
   },
-  "k8ek": {
-    "type": "canvas",
-    "x": 75,
-    "y": 480,
-    "id": "k8ek",
-    "z": 36,
-    "colorMap": [
-      "#F0F0F0",
-      "#1F5CA6",
-      "#000000",
-      "#FF0000",
-      "#008000",
-      "#FFFF00",
-      "#FFA500",
-      "#FFC0CB",
-      "#800080",
-      "#A52A2A"
-    ],
-    "width": 300,
-    "height": 300,
-    "movable": false
-  },
-  "k8ek-Reset": {
-    "type": "button",
-    "id": "k8ek-Reset",
-    "parent": "k8ek",
-    "fixedParent": true,
-    "x": -50,
-    "width": 50,
-    "height": 50,
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "CANVAS",
-        "canvas": "${PROPERTY parent}",
-        "mode": "reset"
-      }
-    ],
-    "css": "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
-    "text": "Reset"
-  },
-  "k8ek-Color": {
-    "type": "button",
-    "id": "k8ek-Color",
-    "parent": "k8ek",
-    "fixedParent": true,
-    "x": -50,
-    "y": 50,
-    "width": 50,
-    "height": 50,
-    "movableInEdit": false,
-    "clickRoutine": [
-      "var parent = ${PROPERTY parent}",
-      {
-        "func": "CANVAS",
-        "canvas": "${parent}",
-        "mode": "inc",
-        "value": 1
-      },
-      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "color",
-        "value": "${color}"
-      }
-    ],
-    "color": "#1F5CA6",
-    "css": "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
-  },
-  "vyng": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "note": "Resets the canvas.  Same as pressing the 'Reset' button on the composed widget.",
-        "func": "CANVAS",
-        "canvas": "k8ek",
-        "mode": "reset"
-      }
-    ],
-    "x": 127,
-    "y": 800,
-    "z": 42,
-    "id": "vyng",
-    "text": "reset"
-  },
-  "vyng1": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "note": "Sets the cavas 'activeColor' (drawing color) to the index number of 'value' in the color map.  In this case, the 4th (start counting with 0) color in the array is red (#ff0000).",
-        "func": "CANVAS",
-        "canvas": "k8ek",
-        "mode": "set",
-        "value": 3
-      }
-    ],
-    "x": 183,
-    "y": 890,
-    "z": 40,
-    "id": "vyng1",
-    "text": "set"
-  },
-  "vyng2": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "note": "Increases the index of the drawing color in the color map by the increment amount in the 'value' parameter (1 in this case).  Same as clicking on the color change button below the 'Reset' button.",
-        "func": "CANVAS",
-        "canvas": "k8ek",
-        "mode": "inc",
-        "value": 1
-      }
-    ],
-    "x": 251,
-    "y": 800,
-    "z": 43,
-    "id": "vyng2",
-    "text": "inc"
-  },
-  "vyng3": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "note": "Replaces the existing index of the colorMap in position 'value' with the color in the 'color' parameter. If that color already exists on the canvas, this will replace all pixels of that color with the new color.",
-        "func": "CANVAS",
-        "canvas": "k8ek",
-        "mode": "change",
-        "color": "silver",
-        "value": 3
-      }
-    ],
-    "x": 63,
-    "y": 890,
-    "z": 39,
-    "id": "vyng3",
-    "text": "change"
-  },
-  "x1se": {
-    "type": "canvas",
-    "x": 475,
-    "y": 480,
-    "width": 300,
-    "height": 300,
-    "id": "x1se",
-    "z": 41,
-    "colorMap": [
-      "#F0F0F0",
-      "#750909",
-      "#ad0303",
-      "#ff0000",
-      "#Ff4a4a",
-      "#fa7070",
-      "#f69292"
-    ],
-    "resolution": 15,
-    "c00": "1",
-    "c10": "1",
-    "c20": "1",
-    "c30": "1",
-    "c40": "1",
-    "c50": "1",
-    "c60": "1",
-    "c70": "1",
-    "c80": "1",
-    "c90": "1",
-    "c01": "/2",
-    "c11": "/2",
-    "c21": "/2",
-    "c31": "/2",
-    "c41": "/2",
-    "c51": "/2",
-    "c61": "/2",
-    "c71": "/2",
-    "c81": "/2",
-    "c91": "/2",
-    "c02": "220",
-    "c12": "220",
-    "c22": "220",
-    "c32": "220",
-    "c42": "220",
-    "c52": "220",
-    "c62": "220",
-    "c72": "220",
-    "c82": "220",
-    "c92": "220",
-    "c03": "3",
-    "c13": "3",
-    "c23": "3",
-    "c33": "3",
-    "c43": "3",
-    "c53": "3",
-    "c63": "3",
-    "c73": "3",
-    "c83": "3",
-    "c93": "3",
-    "c04": "/4",
-    "c14": "/4",
-    "c24": "/4",
-    "c34": "/4",
-    "c44": "/4",
-    "c54": "/4",
-    "c64": "/4",
-    "c74": "/4",
-    "c84": "/4",
-    "c94": "/4",
-    "c05": "440",
-    "c15": "440",
-    "c25": "440",
-    "c35": "440",
-    "c45": "440",
-    "c55": "440",
-    "c65": "440",
-    "c75": "440",
-    "c85": "440",
-    "c95": "440",
-    "c06": "5",
-    "c16": "5",
-    "c26": "5",
-    "c36": "5",
-    "c46": "5",
-    "c56": "5",
-    "c66": "5",
-    "c76": "5",
-    "c86": "5",
-    "c96": "5",
-    "c07": "/6",
-    "c17": "/6",
-    "c27": "/6",
-    "c37": "/6",
-    "c47": "/6",
-    "c57": "/6",
-    "c67": "/6",
-    "c77": "/6",
-    "c87": "/6",
-    "c97": "/6",
-    "c08": "660",
-    "c18": "660",
-    "c28": "660",
-    "c38": "660",
-    "c48": "660",
-    "c58": "660",
-    "c68": "660",
-    "c78": "660",
-    "c88": "660",
-    "c98": "660",
-    "activeColor": 6,
-    "movable": false
-  },
-  "x1se-Reset": {
-    "type": "button",
-    "id": "x1se-Reset",
-    "parent": "x1se",
-    "fixedParent": true,
-    "x": -50,
-    "y": 0,
-    "width": 50,
-    "height": 50,
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
     "movable": false,
     "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "CANVAS",
-        "canvas": "${PROPERTY parent}",
-        "mode": "reset"
-      }
-    ],
-    "css": "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
-    "text": "Reset"
+    "css": "font-size: 60px;text-align:center",
+    "text": "Canvas",
+    "layer": -3
   },
-  "x1se-Color": {
-    "type": "button",
-    "id": "x1se-Color",
-    "parent": "x1se",
-    "fixedParent": true,
-    "x": -50,
-    "y": 50,
-    "width": 50,
-    "height": 50,
-    "movableInEdit": false,
-    "clickRoutine": [
-      "var parent = ${PROPERTY parent}",
-      {
-        "func": "CANVAS",
-        "canvas": "${parent}",
-        "mode": "inc",
-        "value": 1
-      },
-      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "color",
-        "value": "${color}"
-      }
-    ],
-    "color": "#f69292",
-    "css": "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
-  },
-  "vyng4": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "note": "Places one pixel of the color chosen from the index of 'value' from the colorMap. Position x andy y are coordinates on the canvas. Max x and y value is the same as 'resolution' which defaults to 0.",
-        "func": "CANVAS",
-        "canvas": "k8ek",
-        "mode": "setPixel",
-        "x": 50,
-        "y": 50,
-        "value": 3
-      }
-    ],
-    "x": 309,
-    "y": 890,
-    "z": 41,
-    "id": "vyng4",
-    "text": "setPixel"
-  },
-  "7143-Reset": {
-    "type": "button",
-    "id": "7143-Reset",
-    "fixedParent": true,
-    "x": -50,
-    "y": 0,
-    "width": 50,
-    "height": 50,
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "CANVAS",
-        "canvas": "${PROPERTY parent}",
-        "mode": "reset"
-      }
-    ],
-    "css": "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
-    "text": "Reset",
-    "parent": "g7ty"
+    "css": "font-size: 25px; ",
+    "html": "The term Canvas applies to both a CANVAS function and a composed widget. This tutorial explains the widget and its properties. When you add a default canvas widget, it is 800x800 and includes buttons for reset, line width, and color. The canvases below are reduced to 300x300. By default a canvas can be moved around the screen by clicking and dragging on the buttons, but the ones below are not movable. Clicking anywhere in the main canvas square will draw on it. The pixels that make up the drawing are stored in the canvas widget in properties <b>c00</b> to <b>c99</b> that are created on the fly as needed. You should not modify those properties. The main widget and the buttons have routines on them that are used to implement the drawing features described here. For more information about the CANVAS function, look at the <a href='https://virtualtabletop.io/tutorial/functions-canvas'>Canvas Function Tutorial</a>."
   },
-  "7143-Color": {
+  "button3": {
     "type": "button",
-    "id": "7143-Color",
-    "fixedParent": true,
-    "x": -50,
-    "y": 50,
-    "width": 50,
-    "height": 50,
-    "movableInEdit": false,
+    "id": "button3",
+    "x": 864,
+    "y": 905,
+    "z": 22840,
     "clickRoutine": [
-      "var parent = ${PROPERTY parent}",
+      "// Get the artist array information in the canvas and check to see if the playerName of the player pressing the button is in the array.",
       {
-        "func": "CANVAS",
-        "canvas": "${parent}",
-        "mode": "inc",
-        "value": 1
-      },
-      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "color",
-        "value": "${color}"
-      }
-    ],
-    "color": "#1F5CA6",
-    "css": "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
-    "parent": "g7ty"
-  },
-  "wsqz": {
-    "type": "seat",
-    "x": 1340,
-    "y": 815,
-    "id": "wsqz",
-    "z": 47,
-    "clickRoutine": [
-      {
-        "note": "Change the clickable status of the canvas to true when a player clicks the seat widget.",
-        "func": "SET",
-        "collection": [
-          "g7ty"
-        ],
-        "property": "clickable",
-        "value": true
-      },
-      {
-        "note": "This clicks the seat widget again, but this time ignoreing the clickRoutine and performing the normal behavior for a seat widget--adding the player name and color.",
-        "func": "CLICK",
-        "collection": "thisButton",
-        "mode": "ignoreClickRoutine"
-      }
-    ]
-  },
-  "yvo8": {
-    "type": "canvas",
-    "x": 881,
-    "y": 480,
-    "width": 300,
-    "height": 300,
-    "c00": "*01001001001/1%/1.01.010",
-    "c01": ",01&,1/0101*1/1+1.1'0",
-    "c10": ",,1()0",
-    "c11": "0*1()0",
-    "c13": "+-01$/10",
-    "c14": "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
-    "c15": ".1$0",
-    "c20": ",,1()0",
-    "c21": "0*1()0",
-    "c23": ".-01()0",
-    "c24": "./1/1+1-101/11010110101/101-1/101-1/101,10",
-    "c25": "1()0",
-    "c30": "+01(*1/1/1.1/10101101(/11.1/101-1/1/10",
-    "c31": "*011/1-1/101-1-11.1-101101-1-1/101,11/10",
-    "c33": ".-01()0",
-    "c34": "/-1/101(/1/1-101/101'01/101/1/11.1(0",
-    "c35": "1()0",
-    "c40": "+/1.1(/10101-101.11/11+10101/1(.10",
-    "c41": "/-1/1(/1101-101/101'01/101/101/1/1(010",
-    "c43": ".-01()0",
-    "c44": "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
-    "c45": "1()0",
-    "c50": ".1/01+1/11+101+1/1/01+1.10",
-    "c51": "/-1.1(/10101/101/101/10110101/101/1/1(/1+1*1(0",
-    "c53": ".-01()0",
-    "c54": ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
-    "c55": "1()0",
-    "c61": "0/11*1/1/1.1+1/1-1(/1-1-1/1011-110",
-    "c63": ".-01()0",
-    "c64": "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
-    "c65": "1()0",
-    "c71": "*01/01,11/1.11/101/1-101/1-101/1/11.1/110",
-    "c73": ".-01()0",
-    "c74": "/-1/1(,101/1-101/1-101(/101/1/01/010",
-    "c75": "110101&0",
-    "c81": "--101,101101-101*101/010",
-    "c83": ".-01%.010",
-    "c84": "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
-    "c85": "1%0",
-    "id": "yvo8",
-    "z": 40,
-    "artist": [],
-    "movable": false
-  },
-  "yvo8-Reset": {
-    "type": "button",
-    "id": "yvo8-Reset",
-    "parent": "yvo8",
-    "fixedParent": true,
-    "x": -50,
-    "y": 0,
-    "width": 50,
-    "height": 50,
-    "movable": false,
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "CANVAS",
-        "canvas": "${PROPERTY parent}",
-        "mode": "reset"
-      }
-    ],
-    "css": "border-radius: 50% 0% 0% 0%;  border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
-    "text": "Reset"
-  },
-  "yvo8-Color": {
-    "type": "button",
-    "id": "yvo8-Color",
-    "parent": "yvo8",
-    "fixedParent": true,
-    "x": -50,
-    "y": 50,
-    "width": 50,
-    "height": 50,
-    "movable": false,
-    "movableInEdit": false,
-    "clickRoutine": [
-      "var parent = ${PROPERTY parent}",
-      {
-        "func": "CANVAS",
-        "canvas": "${parent}",
-        "mode": "inc",
-        "value": 1
-      },
-      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "color",
-        "value": "${color}"
-      }
-    ],
-    "color": "#1F5CA6",
-    "css": "border-radius: 0% 0% 0% 50%;  border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  "
-  },
-  "g7ty": {
-    "type": "canvas",
-    "id": "g7ty",
-    "x": 1270,
-    "y": 480,
-    "width": 300,
-    "height": 300,
-    "z": 39,
-    "clickable": false,
-    "movable": false
-  },
-  "eqfd": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "note": "Get the artist array information in the canvas and check to see if the playerName of the player pressing the button is in the array.",
         "func": "GET",
         "collection": [
-          "yvo8"
+          "canvas3"
         ],
         "property": "artist",
         "variable": "artistArray"
@@ -549,98 +78,1109 @@
         "operand2": true,
         "relation": "!=",
         "thenRoutine": [
-          {
-            "note": "If player is not in the array, then add it."
-          },
+          "// If player is not in the array, then add it.",
           "var artistArray = push ${playerName}"
         ],
         "elseRoutine": [
-          {
-            "note": "If player is in the array, then get the index number and remove it."
-          },
+          "// If player is in the array, then get the index number and remove it.",
           "var artistIndex = ${artistArray} indexOf ${playerName}",
           "var artistArray = remove ${artistIndex} 1"
         ]
       },
+      "// Set the new array back into the canvas 'artist' property.",
       {
-        "note": "Set the new array back into the canvas 'artist' property.",
         "func": "SET",
         "collection": [
-          "yvo8"
+          "canvas3"
         ],
         "property": "artist",
         "value": "${artistArray}"
+      },
+      "// Update the label to show the artist",
+      {
+        "func": "SET",
+        "collection": [
+          "text3a"
+        ],
+        "property": "text",
+        "value": "${artistArray}"
       }
     ],
-    "x": 984,
-    "y": 800,
-    "z": 46,
-    "id": "eqfd",
     "text": "Artist"
   },
-  "8fr3": {
-    "type": "label",
-    "id": "8fr3",
-    "x": 279,
-    "y": 1,
-    "width": 1000,
-    "height": 80,
-    "z": 26447,
-    "css": "font-size: 60px",
-    "text": "Functions: CANVAS"
+  "text1": {
+    "id": "text1",
+    "x": 10,
+    "y": 651,
+    "width": 360,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The canvas widget contains a <b>resolution</b> property that controls the size of the lines. Larger numbers give better resolution. It defaults to 100 and generally should not be above about 500. The canvas above is set to 15 so it has large blocky lines. The <b>colorMap</b> property can be used to customize the colors available, like the red palette above. If the 0 index of the <b>colorMap</b> is set to 'transparent' then the canvas widget background is transparent.",
+    "layer": -3
   },
-  "10gpn": {
-    "id": "10gpn",
-    "x": 35,
-    "y": 275,
-    "width": 350,
+  "text2": {
+    "id": "text2",
+    "x": 437,
+    "y": 651,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The <b>lineWidth</b> property works in connection with <b>resolution</b> to control the size of the brush. The 'Line Width' button above cycles through 10 different brush sizes. The size of the dot in the button generally represents relative sizes but does not represent the exact brush size.",
+    "layer": -3
+  },
+  "text3": {
+    "id": "text3",
+    "x": 830,
+    "y": 651,
+    "width": 360,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The <b>artist</b> property controls which player or array of players can draw. The default lets anyone draw (but the canvas above starts with no one able to draw). Click the button below to add (or remove) the name of the player (<b>playerName</b>) pressing the button. Try drawing when the box is empty.",
+    "layer": -3
+  },
+  "text4": {
+    "id": "text4",
+    "x": 1299,
+    "y": 651,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The boolean <b>clickable</b> property controls whether any player can draw on the canvas. Try drawing on the canvas above, then click the seat button which will change the <b>clickable</b> property. The property does not limit player ability to use the other buttons on the canvas.",
+    "layer": -3
+  },
+  "wals-Reset": {
+    "type": "button",
+    "id": "wals-Reset",
+    "parent": "canvas1",
+    "fixedParent": true,
+    "x": -50,
+    "y": 0,
+    "width": 50,
     "height": 50,
-    "z": 26435,
-    "css": "font-size: 18px; ",
-    "text": "The CANVAS function has 6 modes, each of which is demonstrated in the buttons below except for 'dec' which is the opposite of 'inc'.  Check the JSON in each button for an explanation of what the button does and then use the canvas below to see the result of the button's action.",
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
+    "borderRadius": "50% 0% 0% 0%",
+    "text": "Reset"
+  },
+  "wals-Size": {
+    "type": "button",
+    "id": "wals-Size",
+    "parent": "canvas1",
+    "fixedParent": true,
+    "x": -50,
+    "y": 60,
+    "width": 50,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "canvasRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+      "var step = floor ${step}",
+      "var percentage = 10 + ${step} * 10",
+      "var percentage = min ${percentage} 100",
+      "var percentage = max ${percentage} 10",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${percentage}"
+      }
+    ],
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var lineSize = ${PROPERTY lineSize} + 10",
+      "var lineSize = ${lineSize} % 110",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${lineSize}"
+      },
+      "var newSize = max ${lineSize} 10",
+      "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
+      {
+        "func": "SET",
+        "collection": [
+          "${parent}"
+        ],
+        "property": "lineWidth",
+        "value": "${newWidth}"
+      }
+    ],
+    "css": {
+      "default": {
+        "border-width": "1px",
+        "background-color": "#f0f0f0",
+        "--wcBorder": "#555",
+        "--wcBorderOH": "black ",
+        "background-repeat": "no-repeat",
+        "background-position": "50% 50%",
+        "background-size": "${PROPERTY lineSize}%"
+      },
+      "::after": {
+        "content": "\"Line Width\"",
+        "position": "absolute",
+        "margin-top": "-5.1em",
+        "color": "white",
+        "background-color": "#0d2f5e",
+        "width": "50px",
+        "font-size": "0.6rem"
+      }
+    },
+    "borderRadius": 0,
+    "image": "/i/game-icons.net/delapouite/plain-circle.svg",
+    "lineSize": 10
+  },
+  "wals-Color": {
+    "type": "button",
+    "id": "wals-Color",
+    "parent": "canvas1",
+    "fixedParent": true,
+    "x": -50,
+    "y": 100,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
+      }
+    ],
+    "colorRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ],
+    "color": "#f69292",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "borderRadius": "0% 0% 0% 50%"
+  },
+  "canvas1": {
+    "type": "canvas",
+    "id": "canvas1",
+    "x": 57,
+    "y": 345,
+    "width": 300,
+    "height": 300,
+    "activeColorChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Color"
+        }
+      }
+    ],
+    "lineWidthChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Size"
+        }
+      }
+    ],
+    "selectButtonRoutine": [
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isColor = ${widgetID} endsWith ${buttonType}",
+          {
+            "func": "IF",
+            "condition": "${isColor}",
+            "thenRoutine": [
+              "var buttonID = ${widgetID}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "${buttonID}",
+        "routine": "canvasRoutine"
+      }
+    ],
+    "c14": "/4",
+    "c15": "440",
+    "c23": "3",
+    "c24": "/4",
+    "c25": "440",
+    "c33": "3",
+    "c34": "/4",
+    "c35": "440",
+    "c43": "3",
+    "c44": "/4",
+    "c45": "440",
+    "c53": "3",
+    "c54": "/4",
+    "c55": "440",
+    "c63": "3",
+    "c64": "/4",
+    "c65": "440",
+    "c73": "3",
+    "c74": "/4",
+    "c75": "440",
+    "c83": "3",
+    "c84": "/4",
+    "c85": "440",
+    "colorMap": [
+      "#F0F0F0",
+      "#750909",
+      "#ad0303",
+      "#ff0000",
+      "#Ff4a4a",
+      "#fa7070",
+      "#f69292"
+    ],
+    "resolution": 15,
+    "c00": "1",
+    "c01": "/2",
+    "c02": "220",
+    "c04": "/4",
+    "c05": "440",
+    "c06": "5",
+    "c07": "/6",
+    "c08": "660",
+    "c10": "1",
+    "c11": "/2",
+    "c12": "220",
+    "c16": "5",
+    "c17": "/6",
+    "c18": "660",
+    "c20": "1",
+    "c21": "/2",
+    "c22": "220",
+    "c26": "5",
+    "c27": "/6",
+    "c28": "660",
+    "c30": "1",
+    "c31": "/2",
+    "c32": "220",
+    "c36": "5",
+    "c37": "/6",
+    "c38": "660",
+    "c40": "1",
+    "c41": "/2",
+    "c42": "220",
+    "c46": "5",
+    "c47": "/6",
+    "c48": "660",
+    "c50": "1",
+    "c51": "/2",
+    "c52": "220",
+    "c56": "5",
+    "c57": "/6",
+    "c58": "660",
+    "c60": "1",
+    "c61": "/2",
+    "c62": "220",
+    "c66": "5",
+    "c67": "/6",
+    "c68": "660",
+    "c70": "1",
+    "c71": "/2",
+    "c72": "220",
+    "c76": "5",
+    "c77": "/6",
+    "c78": "660",
+    "c80": "1",
+    "c81": "/2",
+    "c82": "220",
+    "c86": "5",
+    "c87": "/6",
+    "c88": "660",
+    "c90": "1",
+    "c91": "/2",
+    "c92": "220",
+    "c93": "3",
+    "c94": "/4",
+    "c95": "440",
+    "c96": "5",
+    "c97": "/6",
+    "c98": "660",
+    "movable": false,
+    "activeColor": 6,
+    "c13": "3",
+    "c03": "3"
+  },
+  "zme1-Reset": {
+    "type": "button",
+    "id": "zme1-Reset",
+    "parent": "canvas2",
+    "fixedParent": true,
+    "x": -50,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
+    "borderRadius": "50% 0% 0% 0%",
+    "text": "Reset"
+  },
+  "zme1-Size": {
+    "type": "button",
+    "id": "zme1-Size",
+    "parent": "canvas2",
+    "fixedParent": true,
+    "x": -50,
+    "y": 60,
+    "width": 50,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "canvasRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+      "var step = floor ${step}",
+      "var percentage = 10 + ${step} * 10",
+      "var percentage = min ${percentage} 100",
+      "var percentage = max ${percentage} 10",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${percentage}"
+      }
+    ],
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var lineSize = ${PROPERTY lineSize} + 10",
+      "var lineSize = ${lineSize} % 110",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${lineSize}"
+      },
+      "var newSize = max ${lineSize} 10",
+      "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
+      {
+        "func": "SET",
+        "collection": [
+          "${parent}"
+        ],
+        "property": "lineWidth",
+        "value": "${newWidth}"
+      }
+    ],
+    "css": {
+      "default": {
+        "border-width": "1px",
+        "background-color": "#f0f0f0",
+        "--wcBorder": "#555",
+        "--wcBorderOH": "black ",
+        "background-repeat": "no-repeat",
+        "background-position": "50% 50%",
+        "background-size": "${PROPERTY lineSize}%"
+      },
+      "::after": {
+        "content": "\"Line Width\"",
+        "position": "absolute",
+        "margin-top": "-5.1em",
+        "color": "white",
+        "background-color": "#0d2f5e",
+        "width": "50px",
+        "font-size": "0.6rem"
+      }
+    },
+    "borderRadius": 0,
+    "image": "/i/game-icons.net/delapouite/plain-circle.svg",
+    "lineSize": 90
+  },
+  "zme1-Color": {
+    "type": "button",
+    "id": "zme1-Color",
+    "parent": "canvas2",
+    "fixedParent": true,
+    "x": -50,
+    "y": 100,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
+      }
+    ],
+    "colorRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ],
+    "color": "#1F5CA6",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "borderRadius": "0% 0% 0% 50%"
+  },
+  "canvas2": {
+    "type": "canvas",
+    "id": "canvas2",
+    "x": 435,
+    "y": 345,
+    "width": 300,
+    "height": 300,
+    "activeColorChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Color"
+        }
+      }
+    ],
+    "lineWidthChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Size"
+        }
+      }
+    ],
+    "selectButtonRoutine": [
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isColor = ${widgetID} endsWith ${buttonType}",
+          {
+            "func": "IF",
+            "condition": "${isColor}",
+            "thenRoutine": [
+              "var buttonID = ${widgetID}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "${buttonID}",
+        "routine": "canvasRoutine"
+      }
+    ],
+    "z": 2,
+    "movable": false,
+    "c00": "+/1()/-2%(0",
+    "c10": "+/1()/-2%(0",
+    "c20": "+/1()/-2%(0",
+    "c30": "+/1()/-2%(0",
+    "c40": "+/1()/-2%(0",
+    "c50": "+/1()/-2%(0",
+    "c60": "+/1()/-2%(0",
+    "c70": "+/1()/-2%(0",
+    "c80": "+/1()/-2%(0",
+    "c90": "+/1()/-2%(0",
+    "lineWidth": 5,
+    "c01": ".03)&,,4",
+    "c11": ".03)&,,4",
+    "c21": ".03)&,,4",
+    "c31": ".03)&,,4",
+    "c41": ".03)&,,4",
+    "c51": ".03)&,,4",
+    "c61": ".03)&,,4",
+    "c71": ".03)&,,4",
+    "c81": ".03)&,,4",
+    "c91": ".03)&,,4",
+    "c02": "4%(,,5",
+    "c12": "4%(,,5",
+    "c22": "4%(,,5",
+    "c32": "4%(,,5",
+    "c42": "4%(,,5",
+    "c52": "4%(,,5",
+    "c62": "4%(,,5",
+    "c72": "4%(,,5",
+    "c82": "4%(,,5",
+    "c92": "4%(,,5",
+    "c03": "5()/-6",
+    "c13": "5()/-6",
+    "c23": "5()/-6",
+    "c33": "5()/-6",
+    "c43": "5()/-6",
+    "c53": "5()/-6",
+    "c63": "5()/-6",
+    "c73": "5()/-6",
+    "c83": "5()/-6",
+    "c93": "5()/-6",
+    "c04": ",,7",
+    "c05": "7(),,8",
+    "c14": ",,7",
+    "c15": "7(),,8",
+    "c24": ",,7",
+    "c25": "7(),,8",
+    "c34": ",,7",
+    "c35": "7(),,8",
+    "c44": ",,7",
+    "c45": "7(),,8",
+    "c54": ",,7",
+    "c55": "7(),,8",
+    "c64": ",,7",
+    "c65": "7(),,8",
+    "c74": ",,7",
+    "c75": "7(),,8",
+    "c84": ",,7",
+    "c85": "7(),,8",
+    "c94": ",,7",
+    "c95": "7(),,8",
+    "c06": "8)&,,9",
+    "c16": "8)&,,9",
+    "c26": "8)&,,9",
+    "c36": "8)&,,9",
+    "c46": "8)&,,9",
+    "c56": "8)&,,9",
+    "c66": "8)&,,9",
+    "c76": "8)&,,9",
+    "c86": "8)&,,9",
+    "c96": "8)&,,9",
+    "c07": "9'))0",
+    "c17": "9'))0",
+    "c27": "9'))0",
+    "c37": "9'))0",
+    "c47": "9'))0",
+    "c57": "9'))0",
+    "c67": "9'))0",
+    "c77": "9'))0",
+    "c87": "9'))0",
+    "c97": "9'))0"
+  },
+  "canvas3": {
+    "type": "canvas",
+    "id": "canvas3",
+    "x": 865,
+    "y": 345,
+    "width": 300,
+    "height": 300,
+    "activeColorChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Color"
+        }
+      }
+    ],
+    "lineWidthChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Size"
+        }
+      }
+    ],
+    "selectButtonRoutine": [
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isColor = ${widgetID} endsWith ${buttonType}",
+          {
+            "func": "IF",
+            "condition": "${isColor}",
+            "thenRoutine": [
+              "var buttonID = ${widgetID}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "${buttonID}",
+        "routine": "canvasRoutine"
+      }
+    ],
+    "z": 1,
+    "c13": "+-01$/10",
+    "c14": "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
+    "c15": ".1$0",
+    "c23": ".-01()0",
+    "c24": "./1/1+1-101/11010110101/101-1/101-1/101,10",
+    "c25": "1()0",
+    "c33": ".-01()0",
+    "c34": "/-1/101(/1/1-101/101'01/101/1/11.1(0",
+    "c35": "1()0",
+    "c43": ".-01()0",
+    "c44": "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
+    "c45": "1()0",
+    "c53": ".-01()0",
+    "c54": ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
+    "c55": "1()0",
+    "c63": ".-01()0",
+    "c64": "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
+    "c65": "1()0",
+    "c73": ".-01()0",
+    "c74": "/-1/1(,101/1-101/1-101(/101/1/01/010",
+    "c75": "110101&0",
+    "c83": ".-01%.010",
+    "c84": "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
+    "c85": "1%0",
+    "artist": [],
     "movable": false
   },
-  "11gpn": {
-    "id": "11gpn",
-    "x": 446,
-    "y": 275,
-    "width": 350,
+  "zme2-Reset": {
+    "type": "button",
+    "id": "zme2-Reset",
+    "parent": "canvas3",
+    "fixedParent": true,
+    "x": -50,
+    "y": 0,
+    "width": 50,
     "height": 50,
-    "z": 26437,
-    "css": "font-size: 18px; ",
-    "text": "The canvas widget contains a 'resolution' property that controls the size of the lines. Larger numbers give better resolution.  It also has a 'colorMap' property which can be used to customize the colors available, like the red palette below. This canvas also has 'movable' set to false so it cannot be moved by dragging, but the other 3 examples can.",
-    "movable": false
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
+    "borderRadius": "50% 0% 0% 0%",
+    "text": "Reset"
   },
-  "12gpn": {
-    "id": "12gpn",
-    "x": 847,
-    "y": 275,
-    "width": 350,
+  "zme2-Size": {
+    "type": "button",
+    "id": "zme2-Size",
+    "parent": "canvas3",
+    "fixedParent": true,
+    "x": -50,
+    "y": 60,
+    "width": 50,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "canvasRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+      "var step = floor ${step}",
+      "var percentage = 10 + ${step} * 10",
+      "var percentage = min ${percentage} 100",
+      "var percentage = max ${percentage} 10",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${percentage}"
+      }
+    ],
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var lineSize = ${PROPERTY lineSize} + 10",
+      "var lineSize = ${lineSize} % 110",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${lineSize}"
+      },
+      "var newSize = max ${lineSize} 10",
+      "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
+      {
+        "func": "SET",
+        "collection": [
+          "${parent}"
+        ],
+        "property": "lineWidth",
+        "value": "${newWidth}"
+      }
+    ],
+    "css": {
+      "default": {
+        "border-width": "1px",
+        "background-color": "#f0f0f0",
+        "--wcBorder": "#555",
+        "--wcBorderOH": "black ",
+        "background-repeat": "no-repeat",
+        "background-position": "50% 50%",
+        "background-size": "${PROPERTY lineSize}%"
+      },
+      "::after": {
+        "content": "\"Line Width\"",
+        "position": "absolute",
+        "margin-top": "-5.1em",
+        "color": "white",
+        "background-color": "#0d2f5e",
+        "width": "50px",
+        "font-size": "0.6rem"
+      }
+    },
+    "borderRadius": 0,
+    "image": "/i/game-icons.net/delapouite/plain-circle.svg",
+    "lineSize": 10
+  },
+  "zme2-Color": {
+    "type": "button",
+    "id": "zme2-Color",
+    "parent": "canvas3",
+    "fixedParent": true,
+    "x": -50,
+    "y": 100,
+    "width": 50,
     "height": 50,
-    "z": 26438,
-    "css": "font-size: 18px; ",
-    "text": "The 'artist' property controls which player(s) can draw. It can be an individual player or an array of names. The default lets anyone draw (but the canvas below changes that to no one). Each click of the button below adds or removes the name of the player ('playerName') pressing the button.  Watch the JSON on the canvas when you press the button to see the change.",
-    "movable": false
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
+      }
+    ],
+    "colorRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ],
+    "color": "#1F5CA6",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "borderRadius": "0% 0% 0% 50%"
   },
-  "13gpn": {
-    "id": "13gpn",
-    "x": 1247,
-    "y": 275,
-    "width": 350,
+  "text3a": {
+    "id": "text3a",
+    "x": 982,
+    "y": 930,
+    "layer": -3,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px",
+      "border": "1px solid black"
+    },
+    "height": 30,
+    "text": [],
+    "width": 150
+  },
+  "canvas4": {
+    "type": "canvas",
+    "id": "canvas4",
+    "x": 1290,
+    "y": 345,
+    "width": 300,
+    "height": 300,
+    "activeColorChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Color"
+        }
+      }
+    ],
+    "lineWidthChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Size"
+        }
+      }
+    ],
+    "selectButtonRoutine": [
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isColor = ${widgetID} endsWith ${buttonType}",
+          {
+            "func": "IF",
+            "condition": "${isColor}",
+            "thenRoutine": [
+              "var buttonID = ${widgetID}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "${buttonID}",
+        "routine": "canvasRoutine"
+      }
+    ],
+    "z": 1,
+    "c13": "+-01$/10",
+    "c14": "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
+    "c15": ".1$0",
+    "c23": ".-01()0",
+    "c24": "./1/1+1-101/11010110101/101-1/101-1/101,10",
+    "c25": "1()0",
+    "c33": ".-01()0",
+    "c34": "/-1/101(/1/1-101/101'01/101/1/11.1(0",
+    "c35": "1()0",
+    "c43": ".-01()0",
+    "c44": "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
+    "c45": "1()0",
+    "c53": ".-01()0",
+    "c54": ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
+    "c55": "1()0",
+    "c63": ".-01()0",
+    "c64": "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
+    "c65": "1()0",
+    "c73": ".-01()0",
+    "c74": "/-1/1(,101/1-101/1-101(/101/1/01/010",
+    "c75": "110101&0",
+    "c83": ".-01%.010",
+    "c84": "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
+    "c85": "1%0",
+    "artist": [
+      "LawDawg"
+    ],
+    "movable": false,
+    "clickable": false
+  },
+  "zme3-Reset": {
+    "type": "button",
+    "id": "zme3-Reset",
+    "parent": "canvas4",
+    "fixedParent": true,
+    "x": -50,
+    "y": 0,
+    "width": 50,
     "height": 50,
-    "z": 26439,
-    "css": "font-size: 18px; ",
-    "text": "The true/false 'clickable' property controls whether any player can draw on the canvas. Try drawing on the canvas below, then click the seat button to change the 'clickable' property. The property does not limit player ability to use the Reset or change color buttons.",
-    "movable": false
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
+    "borderRadius": "50% 0% 0% 0%",
+    "text": "Reset"
   },
-  "ma9w": {
-    "id": "ma9w",
-    "x": 63,
-    "y": 110,
-    "height": 180,
-    "z": 26442,
-    "css": "font-size:18px",
-    "text": "The term canvas applies to both a `CANVAS` function and a composed widget.  When you add a canvas widget from the add widget screen, you get a default canvas of a size of 800x800 with a reset button and color changer button like you see in the examples below. By default a canvas can be moved around the screen by clicking and dragging on either of the buttons.  Clicking anywhere in the blue square will be part of the drawing. The pixels that make up the drawing are stored in the canvas widget in properties c00 to c99 that are created on the fly as needed. You should not modify those properties.",
-    "width": 1500
+  "zme3-Size": {
+    "type": "button",
+    "id": "zme3-Size",
+    "parent": "canvas4",
+    "fixedParent": true,
+    "x": -50,
+    "y": 60,
+    "width": 50,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "canvasRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+      "var step = floor ${step}",
+      "var percentage = 10 + ${step} * 10",
+      "var percentage = min ${percentage} 100",
+      "var percentage = max ${percentage} 10",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${percentage}"
+      }
+    ],
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var lineSize = ${PROPERTY lineSize} + 10",
+      "var lineSize = ${lineSize} % 110",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${lineSize}"
+      },
+      "var newSize = max ${lineSize} 10",
+      "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
+      {
+        "func": "SET",
+        "collection": [
+          "${parent}"
+        ],
+        "property": "lineWidth",
+        "value": "${newWidth}"
+      }
+    ],
+    "css": {
+      "default": {
+        "border-width": "1px",
+        "background-color": "#f0f0f0",
+        "--wcBorder": "#555",
+        "--wcBorderOH": "black ",
+        "background-repeat": "no-repeat",
+        "background-position": "50% 50%",
+        "background-size": "${PROPERTY lineSize}%"
+      },
+      "::after": {
+        "content": "\"Line Width\"",
+        "position": "absolute",
+        "margin-top": "-5.1em",
+        "color": "white",
+        "background-color": "#0d2f5e",
+        "width": "50px",
+        "font-size": "0.6rem"
+      }
+    },
+    "borderRadius": 0,
+    "image": "/i/game-icons.net/delapouite/plain-circle.svg",
+    "lineSize": 10
+  },
+  "zme3-Color": {
+    "type": "button",
+    "id": "zme3-Color",
+    "parent": "canvas4",
+    "fixedParent": true,
+    "x": -50,
+    "y": 100,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
+      }
+    ],
+    "colorRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ],
+    "color": "#1F5CA6",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "borderRadius": "0% 0% 0% 50%"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 1362,
+    "y": 933,
+    "playerChangeRoutine": [
+      "// If the seat is occupied, make the canvas clickable, otherwise it is not clickable.",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY player}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "canvas4"
+            ],
+            "property": "clickable",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "canvas4"
+            ],
+            "property": "clickable",
+            "value": false
+          }
+        ]
+      }
+    ]
   }
 }
