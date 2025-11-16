@@ -939,6 +939,13 @@ export class Widget extends StateManaged {
       else
         a = original.trim();
 
+      lastExecutedOperation = {
+        original: original,
+        applied: a,
+        variables,
+        property: typeof property == 'string' ? property : 'literal'
+      };
+
       if(jeRoutineLogging) jeLoggingRoutineOperationStart(original, a)
 
       if(a.skip) {
