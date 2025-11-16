@@ -266,6 +266,80 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_formatHTML',
+    name: 'format HTML',
+    context: '^.* ↦ ',
+    show: function() {
+      const value = jeGetValue();
+      if (!value || typeof value !== 'object') return false;
+      const key = jeGetLastKey();
+      const stringValue = value[key];
+      return typeof stringValue === 'string' && /<[^>]+>/.test(stringValue);
+    },
+    call: async function() {
+      const key = jeGetLastKey();
+      
+      // Get current indentation from the JSON structure
+      // Find the line with the property key
+      const aO = getSelection().anchorOffset;
+      const fO = getSelection().focusOffset;
+      const s = Math.min(aO, fO);
+      const v = jeGetEditorContent();
+      const lines = v.split('\n');
+      
+      // Find the line containing the property key
+      let propertyLineIndex = -1;
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].includes('"' + key + '"')) {
+          propertyLineIndex = i;
+          break;
+        }
+      }
+      
+      // If not found, use current line
+      if (propertyLineIndex === -1) {
+        propertyLineIndex = v.substr(0, s).split('\n').length - 1;
+      }
+      
+      const propertyLine = lines[propertyLineIndex] || '';
+      const indentMatch = propertyLine.match(/^(\s*)/);
+      const propertyIndent = indentMatch ? indentMatch[1] : '';
+      
+      // Format HTML with indentation (property indent + 2 spaces for HTML content)
+      const htmlIndent = propertyIndent + '  ';
+      
+      let stringStart = -1;
+      let stringEnd = -1;
+      
+      for (let i = s; i >= 0; i--) {
+        if (v[i] === '"' && (i === 0 || v[i-1] !== '\\')) {
+          stringStart = i;
+          break;
+        }
+      }
+      
+      for (let i = Math.max(s, stringStart + 1); i < v.length; i++) {
+        if (v[i] === '"' && v[i-1] !== '\\') {
+          stringEnd = i;
+          break;
+        }
+      }
+      
+      if (stringStart === -1 || stringEnd === -1) {
+        return;
+      }
+      
+      const htmlContent = v.substring(stringStart + 1, stringEnd);
+      const formattedHTML = jeFormatHTML(htmlContent, htmlIndent);
+      const newContent = v.substring(0, stringStart + 1) + '\n' + formattedHTML + '\n' + propertyIndent + v.substring(stringEnd);
+      
+      jeSetEditorContent(newContent);
+      jeColorize();
+      const newStringEnd = stringStart + 1 + formattedHTML.length + 2 + propertyIndent.length;
+      jeSelect(stringStart + 1, newStringEnd, false);
+    }
+  },
+  {
     id: 'je_colorPicker',
     name: 'change color',
     options: [ { type: 'color', label: 'color' } ],
@@ -2597,6 +2671,63 @@ function jeGetKeyAfter(key) {
     if(key == k)
       found = true;
   }
+}
+
+function jeFormatHTML(html, baseIndent) {
+  if (!html || !html.trim()) return html;
+  
+  const trimmed = html.replace(/\n\s*/g, ' ').trim();
+  const result = [];
+  let i = 0;
+  let depth = 0;
+  const selfClosingTags = ['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr'];
+  
+  while (i < trimmed.length) {
+    if (trimmed[i] === '<') {
+      const tagEnd = trimmed.indexOf('>', i);
+      if (tagEnd === -1) break;
+      
+      const tagContent = trimmed.substring(i + 1, tagEnd);
+      const isClosing = tagContent.trim().startsWith('/');
+      const tagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
+      const isSelfClosing = selfClosingTags.includes(tagName) || tagContent.trim().endsWith('/');
+      
+      if (isClosing) {
+        depth = Math.max(0, depth - 1);
+        result.push(baseIndent + '  '.repeat(depth) + '<' + tagContent + '>');
+      } else {
+        result.push(baseIndent + '  '.repeat(depth) + '<' + tagContent + '>');
+        if (!isSelfClosing) {
+          depth++;
+        }
+      }
+      
+      i = tagEnd + 1;
+      
+      while (i < trimmed.length && trimmed[i] !== '<') {
+        const nextTag = trimmed.indexOf('<', i);
+        if (nextTag === -1) {
+          const textContent = trimmed.substring(i).trim();
+          if (textContent) {
+            result.push(baseIndent + '  '.repeat(depth) + textContent);
+          }
+          i = trimmed.length;
+          break;
+        }
+        
+        const textContent = trimmed.substring(i, nextTag).trim();
+        if (textContent) {
+          result.push(baseIndent + '  '.repeat(depth) + textContent);
+        }
+        i = nextTag;
+        break;
+      }
+    } else {
+      i++;
+    }
+  }
+  
+  return result.join('\n');
 }
 
 // START routine logging
