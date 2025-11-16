@@ -398,7 +398,7 @@ async function uploadAsset(multipleCallback, fileTypes) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
       let uploadPath = await _uploadAsset(f).catch(e=>{
-        console.error(`Uploading failed: ${e.toString()}`);
+        alert(`Uploading failed: ${e.toString()}`);
         return null;
       });
       multipleCallback(uploadPath, f.name)
@@ -406,7 +406,7 @@ async function uploadAsset(multipleCallback, fileTypes) {
   }
   else {
     return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
-      console.error(`Uploading failed: ${e.toString()}`);
+      alert(`Uploading failed: ${e.toString()}`);
       return null;
     });
   }
