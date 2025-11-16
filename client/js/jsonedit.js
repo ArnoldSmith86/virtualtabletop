@@ -2677,57 +2677,101 @@ function jeFormatHTML(html, baseIndent) {
   if (!html || !html.trim()) return html;
   
   const trimmed = html.replace(/\n\s*/g, ' ').trim();
-  const result = [];
-  let i = 0;
-  let depth = 0;
   const selfClosingTags = ['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr'];
   
-  while (i < trimmed.length) {
-    if (trimmed[i] === '<') {
-      const tagEnd = trimmed.indexOf('>', i);
-      if (tagEnd === -1) break;
+  function findMatchingClosingTag(startPos, tagName) {
+    let pos = startPos;
+    let nestedDepth = 1;
+    
+    while (pos < trimmed.length) {
+      const nextTag = trimmed.indexOf('<', pos);
+      if (nextTag === -1) return { start: -1, end: -1 };
       
-      const tagContent = trimmed.substring(i + 1, tagEnd);
+      const tagEnd = trimmed.indexOf('>', nextTag);
+      if (tagEnd === -1) return { start: -1, end: -1 };
+      
+      const tagContent = trimmed.substring(nextTag + 1, tagEnd);
       const isClosing = tagContent.trim().startsWith('/');
-      const tagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
-      const isSelfClosing = selfClosingTags.includes(tagName) || tagContent.trim().endsWith('/');
+      const currentTagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
+      const isSelfClosing = selfClosingTags.includes(currentTagName) || tagContent.trim().endsWith('/');
       
-      if (isClosing) {
-        depth = Math.max(0, depth - 1);
-        result.push(baseIndent + '  '.repeat(depth) + '<' + tagContent + '>');
-      } else {
-        result.push(baseIndent + '  '.repeat(depth) + '<' + tagContent + '>');
-        if (!isSelfClosing) {
-          depth++;
+      if (!isClosing && currentTagName === tagName && !isSelfClosing) {
+        nestedDepth++;
+      } else if (isClosing && currentTagName === tagName) {
+        nestedDepth--;
+        if (nestedDepth === 0) {
+          return { start: nextTag, end: tagEnd + 1 };
         }
       }
       
-      i = tagEnd + 1;
-      
-      while (i < trimmed.length && trimmed[i] !== '<') {
-        const nextTag = trimmed.indexOf('<', i);
-        if (nextTag === -1) {
-          const textContent = trimmed.substring(i).trim();
-          if (textContent) {
-            result.push(baseIndent + '  '.repeat(depth) + textContent);
+      pos = tagEnd + 1;
+    }
+    
+    return { start: -1, end: -1 };
+  }
+  
+  function formatContent(startPos, endPos, currentDepth) {
+    const result = [];
+    let i = startPos;
+    
+    while (i < endPos) {
+      if (trimmed[i] === '<') {
+        const tagEnd = trimmed.indexOf('>', i);
+        if (tagEnd === -1 || tagEnd >= endPos) break;
+        
+        const tagContent = trimmed.substring(i + 1, tagEnd);
+        const isClosing = tagContent.trim().startsWith('/');
+        const tagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
+        const isSelfClosing = selfClosingTags.includes(tagName) || tagContent.trim().endsWith('/');
+        
+        if (isClosing) {
+          result.push(baseIndent + '  '.repeat(Math.max(0, currentDepth - 1)) + '<' + tagContent + '>');
+          i = tagEnd + 1;
+        } else if (isSelfClosing) {
+          result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
+          i = tagEnd + 1;
+        } else {
+          const closingTag = findMatchingClosingTag(tagEnd + 1, tagName);
+          if (closingTag.end !== -1 && closingTag.end <= endPos) {
+            const fullTagContent = trimmed.substring(i, closingTag.end).trim();
+            if (fullTagContent.length <= 60) {
+              result.push(baseIndent + '  '.repeat(currentDepth) + fullTagContent);
+              i = closingTag.end;
+            } else {
+              result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
+              const nestedResult = formatContent(tagEnd + 1, closingTag.start, currentDepth + 1);
+              result.push(...nestedResult);
+              const actualClosingTag = trimmed.substring(closingTag.start, closingTag.end);
+              result.push(baseIndent + '  '.repeat(currentDepth) + actualClosingTag);
+              i = closingTag.end;
+            }
+          } else {
+            result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
+            i = tagEnd + 1;
           }
-          i = trimmed.length;
+        }
+      } else {
+        const nextTag = trimmed.indexOf('<', i);
+        if (nextTag === -1 || nextTag >= endPos) {
+          const textContent = trimmed.substring(i, endPos).trim();
+          if (textContent) {
+            result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+          }
           break;
         }
         
         const textContent = trimmed.substring(i, nextTag).trim();
         if (textContent) {
-          result.push(baseIndent + '  '.repeat(depth) + textContent);
+          result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
         }
         i = nextTag;
-        break;
       }
-    } else {
-      i++;
     }
+    
+    return result;
   }
   
-  return result.join('\n');
+  return formatContent(0, trimmed.length, 0).join('\n');
 }
 
 // START routine logging
