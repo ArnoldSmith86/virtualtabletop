@@ -515,7 +515,7 @@ function validateRoutine(routine, context, propertyPath = []) {
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
         if(func === 'UPLOAD')
-            context.validVariables[operation.variable || 'UPLOAD'] = 1;
+            context.validVariables[operation.variable || 'uploadedFileName'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
