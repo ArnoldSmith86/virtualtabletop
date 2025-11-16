@@ -2148,24 +2148,6 @@ export class Widget extends StateManaged {
         }
       }
 
-
-      if(a.func == 'UPLOADIMAGE') {
-        setDefaults(a, { widget: null, property: 'image' });
-        if(this.isValidID(a.widget, problems)) {
-          const uploadedAsset = await uploadAsset();
-          if(uploadedAsset !== null) {
-            await w(a.widget, async widget=>{
-              await widget.set(a.property, uploadedAsset);
-            });
-            if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary(`widget '${a.widget}' property '${a.property}'`, `${JSON.stringify(uploadedAsset)}`);
-          } else {
-            if(jeRoutineLogging)
-              jeLoggingRoutineOperationSummary("UPLOADIMAGE cancelled");
-          }
-        }
-      }
-
       if(a.func == 'VAR') {
         setDefaults(a, { variables: {} });
         for(const [ key, value ] of Object.entries(a.variables||{}))
