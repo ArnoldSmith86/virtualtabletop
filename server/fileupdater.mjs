@@ -1,4 +1,4 @@
-export const VERSION = 19;
+export const VERSION = 20;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -106,6 +106,7 @@ function updateProperties(properties, v, globalProperties) {
   v<14 && v14HidePlayerCursors(properties);
   v<15 && v15SkipTurnProperty(properties);
   v<17 && v17MaterialSymbols(properties);
+  v<20 && v20WhiteSpacePreWrap(properties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -525,4 +526,51 @@ function v19useIframeForHtmlCards(meta, state) {
           for(const object of face.objects)
             if(object.type == 'html')
               return meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
+}
+
+function hasMultipleWhitespaceOrNewline(str) {
+  return typeof str == 'string' && (/[\r\n]|\s{2,}/.test(str));
+}
+
+function cssHasWhiteSpace(css) {
+  if(typeof css == 'string')
+    return /\bwhite-space(-collapse)?\s*:/i.test(css);
+  if(isNestedCSS(css))
+    return cssHasWhiteSpace(css['']) || cssHasWhiteSpace(css['inline']) || cssHasWhiteSpace(css['default']);
+  if(typeof css == 'object' && css !== null)
+    return css['white-space'] || css['white-space-collapse'];
+  return false;
+}
+
+function isNestedCSS(css) {
+  if(typeof css == 'object' && css !== null)
+    for(const key in css)
+      if(typeof css[key] == 'object' && css[key] !== null)
+        return true;
+  return false;
+}
+
+function addWhiteSpacePreWrapToCss(css) {
+  if(!css)
+    return 'white-space: pre-wrap';
+  if(typeof css == 'string')
+    return `${css}; white-space: pre-wrap`;
+  if(isNestedCSS(css))
+    return addWhiteSpacePreWrapToCss(css['default']);
+  if(typeof css == 'object' && css !== null)
+    css['white-space'] = 'pre-wrap';
+  return css;
+}
+
+function v20WhiteSpacePreWrap(properties) {
+  if(properties.type == 'deck' && Array.isArray(properties.faceTemplates))
+    for(const face of properties.faceTemplates)
+      if(Array.isArray(face.objects))
+        for(const object of face.objects)
+          if(object.type == 'html' && object.value && hasMultipleWhitespaceOrNewline(String(object.value)))
+            if(!cssHasWhiteSpace(object.css))
+              object.css = addWhiteSpacePreWrapToCss(object.css);
+
+  if(!properties.type && hasMultipleWhitespaceOrNewline(String(properties.html)) && !cssHasWhiteSpace(properties.css))
+    properties.css = addWhiteSpacePreWrapToCss(properties.css);
 }
