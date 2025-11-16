@@ -494,7 +494,7 @@ async function loadEditMode() {
       addWidgetLocal, updateWidget, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload, uploadAsset,
+      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
