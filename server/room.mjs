@@ -770,8 +770,8 @@ export default class Room {
   }
  
 
-   removeInvalidPublicLibraryLinks(player) {
-     for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+  removeInvalidPublicLibraryLinks(player) {
+    for(const [ id, state ] of Object.entries(this.state._meta.states)) {
       const operations = [];
       for(const [ variantID, variant ] of Object.entries(state.variants))
         if(variant.plStateID && (!this.state._meta.states[variant.plStateID] || !this.state._meta.states[variant.plStateID].variants[variant.plVariantID]))
