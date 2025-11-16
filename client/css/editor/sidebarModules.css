@@ -39,7 +39,7 @@
 .editorModule .widgetSelectionButton {
   height: 150px;
   width: 150px;
-  margin: 5px;
+  margin: 3px;
   position: relative;
   display: inline-flex;
   background: linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.0980392) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.0980392) 75%, rgba(0, 0, 0, 0.0980392) 0), white;
@@ -99,7 +99,7 @@
 }
 
 .tune.editorModule .suitProperties > div {
-  margin-left: 140px;
+  margin-left: 160px;
 }
 
 .tune.editorModule .suitProperties label {
