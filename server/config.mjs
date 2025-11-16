@@ -22,12 +22,7 @@ class Config {
 
   get(index) {
     const envVar = process.env[index.toUpperCase()];
-    if (envVar !== undefined) {
-      if (envVar.toLowerCase() === 'true') return true;
-      if (envVar.toLowerCase() === 'false') return false;
-      return envVar;
-    }
-    return this.config[index];
+    return envVar !== undefined ? envVar : this.config[index];
   }
 
   getClientConfig() {
