@@ -2037,7 +2037,9 @@ function jeSelectWidget(widget, addToSelection) {
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(newCursorState && newCursorState.defaultValueToAdd && jeStateNow[newCursorState.defaultValueToAdd] === undefined)
       jeStateNow[newCursorState.defaultValueToAdd] = jeWidget.getDefaultValue(newCursorState.defaultValueToAdd);
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')),);
+    const jsonString = JSON.stringify(jePreProcessObject(jeStateNow), null, '  ');
+    jeStateBefore = jePreProcessText(jsonString);
+    jeSet(jePreProcessText(jsonString, false));
     editPanel.style.setProperty('--treeHeight', "20%");
   }
 
@@ -2449,7 +2451,7 @@ function jeGetContext() {
   }
 
   try {
-    jeStateNow = JSON.parse(v.replace(/,(?=\n *[\]}],?$)/gm, ''));
+    jeStateNow = JSON.parse(jePostProcessText(v));
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
@@ -2812,7 +2814,46 @@ function jePostProcessObject(o) {
 }
 
 function jePostProcessText(t) {
-  return t;
+  // Convert actual newlines within JSON strings back to \n escape sequences
+  let result = '';
+  let inString = false;
+  let escapeNext = false;
+  
+  for (let i = 0; i < t.length; i++) {
+    const char = t[i];
+    
+    if (escapeNext) {
+      result += char;
+      escapeNext = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escapeNext = true;
+      result += char;
+      continue;
+    }
+    
+    if (char === '"') {
+      inString = !inString;
+      result += char;
+      continue;
+    }
+    
+    if (inString && char === '\n') {
+      // Replace actual newline with \n escape sequence
+      result += '\\n';
+    } else {
+      result += char;
+    }
+  }
+  
+  // Handle case where escapeNext is still true at end (shouldn't happen in valid JSON, but be safe)
+  if (escapeNext) {
+    result += '\\';
+  }
+  
+  return result;
 }
 
 function jePreProcessObject(o) {
@@ -2856,8 +2897,44 @@ function jePreProcessObject(o) {
   return copy;
 }
 
-function jePreProcessText(t) {
-  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
+function jePreProcessText(t, returnValidJSON=true) {
+  t = t.replace(/,(?=\n *[\]}],?$)/gm, '').replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
+  if(returnValidJSON)
+    return t;
+
+  // Convert \n escape sequences within JSON strings to actual newlines for display
+  let result = '';
+  let inString = false;
+  let escapeNext = false;
+  
+  for (let i = 0; i < t.length; i++) {
+    const char = t[i];
+    
+    if (escapeNext) {
+      if (inString && char === 'n') {
+        result += '\n';
+      } else {
+        result += '\\' + char;
+      }
+      escapeNext = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escapeNext = true;
+      continue;
+    }
+    
+    if (char === '"') {
+      inString = !inString;
+      result += char;
+      continue;
+    }
+    
+    result += char;
+  }
+  
+  return result;
 }
 
 // Select the characters in a given range in the text area.
@@ -2898,7 +2975,7 @@ function jeSelect(start, end, scrollToCursor) {
 // Set the text area to the formatted version of the given text and colorize.
 function jeSet(text) {
   try {
-    jeSetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  ')));
+    jeSetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '), false));
   } catch(e) {
     jeSetEditorContent(text);
   }
@@ -2913,7 +2990,7 @@ function jeSetAndSelect(replaceBy, insideString) {
   const dollar = replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
 
   if(jeMode == 'widget')
-    var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
+    var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '), false);
   else
     var jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');
