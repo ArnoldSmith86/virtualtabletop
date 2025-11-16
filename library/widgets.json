@@ -181,11 +181,11 @@
       "preview": "i/icons/cube_3d.svg"
     },
     {
-      "name": "Settlement",
-      "id": "settlement",
+      "name": "Village",
+      "id": "village",
       "widgets": [
         {
-          "id": "settlement",
+          "id": "village",
           "x": 390,
           "y": 494,
           "width": 69,
@@ -222,7 +222,7 @@
           ]
         }
       ],
-      "preview": "/i/game-pieces/3D/Building-3D.svg"
+      "preview": "i/icons/village_3d.svg"
     },
     {
       "name": "Checker",
@@ -3539,7 +3539,7 @@
         "pin",
         "marble",
         "cube",
-        "settlement",
+        "village",
         "house",
         "checker",
         "checker3D",
