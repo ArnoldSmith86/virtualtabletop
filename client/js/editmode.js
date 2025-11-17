@@ -1,9 +1,9 @@
 //This section holds the functions that generate the JSON of the widgets in the add widget overlay
 function generateCardDeckWidgets(id, x, y, addCards) {
   const widgets = [
-    { type: 'holder', id, x, y, dropTarget: { type: 'card' } },
+    { type:'holder', id, x, y, dropTarget: { type: 'card' } },
     {
-      id: id + 'B',
+      id: id+'B',
       parent: id,
       fixedParent: true,
       y: 171.36,
@@ -14,8 +14,8 @@ function generateCardDeckWidgets(id, x, y, addCards) {
       movableInEdit: false,
 
       clickRoutine: [
-        { func: 'RECALL', holder: '${PROPERTY parent}' },
-        { func: 'FLIP', holder: '${PROPERTY parent}', face: 0 },
+        { func: 'RECALL',  holder: '${PROPERTY parent}' },
+        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
         { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
       ]
     }
@@ -24,42 +24,42 @@ function generateCardDeckWidgets(id, x, y, addCards) {
   const types = {};
   const cards = [];
 
-  if (addCards) {
-    widgets.push({ type: 'pile', id: id + 'P', parent: id, width: 103, height: 160 });
+  if(addCards) {
+    widgets.push({ type:'pile', id: id+'P', parent: id, width:103, height:160 });
     [
-      { label: '1J', color: "🃏", suit: "T", alternating: "5J", rank: "J1", imageName: "1J" },
-      { label: '2J', color: "🃏", suit: "T", alternating: "5J", rank: "J2", imageName: "2J" },
-      { label: '3J', color: "🃏", suit: "T", alternating: "5J", rank: "J3", imageName: "3J" },
-      { label: '4J', color: "🃏", suit: "T", alternating: "5J", rank: "J4", imageName: "4J" }
-    ].forEach(c => types[c.suit + " " + c.label] = { image: `/i/cards-default/${c.imageName}.svg`, suit: c.suit, suitColor: c.color, suitAlt: c.alternating, rank: c.rank, rankA: c.rank, rankFixed: c.rank + " " + c.suit });
+      {label:'1J', color: "🃏", suit: "T", alternating:"5J", rank: "J1", imageName: "1J"},
+      {label:'2J', color: "🃏", suit: "T", alternating:"5J", rank: "J2", imageName: "2J"},
+      {label:'3J', color: "🃏", suit: "T", alternating:"5J", rank: "J3", imageName: "3J"},
+      {label:'4J', color: "🃏", suit: "T", alternating:"5J", rank: "J4", imageName: "4J"}
+    ].forEach(c=>types[c.suit+" "+c.label] = { image:`/i/cards-default/${c.imageName}.svg`, suit:c.suit, suitColor:c.color, suitAlt:c.alternating, rank:c.rank, rankA:c.rank, rankFixed:c.rank+" "+c.suit});
 
-    [{ label: 'C', color: "♣", alternating: "1♣" }, { label: 'D', color: "♦", alternating: "4♦" }, { label: 'H', color: "♥", alternating: "2♥" }, { label: 'S', color: "♠", alternating: "3♠" }].forEach(function (s) {
-      [{ label: 'A', rank: "01", rankA: "5A" }, { label: '2', rank: "02", rankA: "02" }, { label: '3', rank: "03", rankA: "03" }, { label: '4', rank: "04", rankA: "04" }, { label: '5', rank: "05", rankA: "05" }, { label: '6', rank: "06", rankA: "06" }, { label: '7', rank: "07", rankA: "07" }, { label: '8', rank: "08", rankA: "08" }, { label: '9', rank: "09", rankA: "09" }, { label: 'T', rank: "10", rankA: "10" }, { label: 'J', rank: "2J", rankA: "2J" }, { label: 'Q', rank: "3Q", rankA: "3Q" }, { label: 'K', rank: "4K", rankA: "4K" }].forEach(function (n) {
-        types[s.label + " " + n.rank] = { image: `/i/cards-default/${n.label}${s.label}.svg`, suit: s.label, suitColor: s.color, suitAlt: s.alternating, rank: n.rank, rankA: n.rankA, rankFixed: n.rank + " " + s.label };
-        cards.push({ id: id + "_" + n.label + "_" + s.label, parent: id + 'P', deck: id + 'D', type: 'card', cardType: s.label + " " + n.rank });
+    [ {label:'C', color: "♣", alternating:"1♣"}, {label:'D', color: "♦", alternating:"4♦"}, {label:'H', color: "♥", alternating:"2♥"}, {label:'S', color: "♠", alternating:"3♠"} ].forEach(function(s) {
+      [ {label:'A', rank: "01", rankA:"5A"}, {label:'2', rank: "02", rankA:"02"},{label:'3', rank: "03", rankA:"03"},{label:'4', rank: "04", rankA:"04"},{label:'5', rank: "05", rankA:"05"},{label:'6', rank: "06", rankA:"06"},{label:'7', rank: "07", rankA:"07"},{label:'8', rank: "08", rankA:"08"},{label:'9', rank: "09", rankA:"09"},{label:'T', rank: "10", rankA:"10"},{label:'J', rank: "2J", rankA:"2J"},{label:'Q', rank: "3Q", rankA:"3Q"},{label:'K', rank: "4K", rankA:"4K"}].forEach(function(n) {
+        types[s.label+" "+n.rank] = { image:`/i/cards-default/${n.label}${s.label}.svg`, suit:s.label, suitColor:s.color, suitAlt:s.alternating, rank:n.rank,rankA:n.rankA, rankFixed:n.rank+" "+s.label};
+        cards.push({ id:id+"_"+n.label+"_"+s.label, parent:id+'P', deck:id+'D', type:'card', cardType:s.label+" "+n.rank });
       });
     });
   }
 
-  const front = { type: 'image', x: 0, y: 0, width: 103, height: 160, color: 'transparent', dynamicProperties: { value: 'image' } };
-  const back = { ...front };
+  const front = { type:'image', x:0, y:0, width:103, height:160, color:'transparent', dynamicProperties:{value:'image'} };
+  const back  = { ...front };
   delete back.dynamicProperties;
   back.value = '/i/cards-default/2B.svg';
   widgets.push({
     type: 'deck',
-    id: id + 'D',
+    id: id+'D',
     parent: id,
     x: 12,
     y: 41,
     cardTypes: types,
-    faceTemplates: [{
-      border: false, radius: false, objects: [back]
+    faceTemplates: [ {
+      border: false, radius: false, objects: [ back  ]
     }, {
-      border: false, radius: false, objects: [front]
-    }]
+      border: false, radius: false, objects: [ front ]
+    } ]
   });
 
-  cards.forEach(function (c) {
+  cards.forEach(function(c) {
     widgets.push(c);
   });
 
@@ -68,16 +68,14 @@ function generateCardDeckWidgets(id, x, y, addCards) {
 
 function generateChipPileWidgets(id, x, y, type) {
   const widgets = [
-    {
-      type: 'holder', id, x, y, width: 81,
-      height: type == 2 ? 81 : 54, borderRadius: "100%", dropOffsetY: type == 2 ? 4 : -6, dropTarget: { classes: type == 2 ? 'pokerChip' : 'pokerChip3D' }
-    },
+    { type:'holder', id, x, y, width: 81,
+      height: type==2 ? 81 : 54, borderRadius: "100%", dropOffsetY: type==2 ? 4 : -6, dropTarget: { classes: type==2 ? 'pokerChip' : 'pokerChip3D' } },
     {
       type: 'button',
-      id: id + 'B',
+      id: id+'B',
       parent: id,
       fixedParent: true,
-      y: type == 2 ? 83 : 56,
+      y: type==2 ? 83: 56,
       width: 81,
       height: 35,
       movableInEdit: false,
@@ -90,13 +88,12 @@ function generateChipPileWidgets(id, x, y, type) {
         { func: 'SORT', holder: '${PROPERTY parent}', reverse: true }
       ]
     },
-    {
-      type: 'pile',
-      id: id + 'P',
+    { type:'pile',
+      id: id+'P',
       parent: id,
-      width: 73,
-      height: 73,
-      y: type == 2 ? 4 : -6,
+      width:73,
+      height:73,
+      y: type==2 ? 4 : -6,
       text: 1641,
       enterRoutine: [
         {
@@ -131,15 +128,14 @@ function generateChipPileWidgets(id, x, y, type) {
         }
       ]
     },
-    {
-      type: 'deck',
-      id: id + 'D',
+    { type: 'deck',
+      id: id+'D',
       parent: id,
       x: -2,
       y: -2,
       scale: 0.5,
       cardDefaults: {
-        classes: type == 2 ? 'pokerChip' : 'pokerChip3D',
+        classes: type==2 ? 'pokerChip' : 'pokerChip3D',
         width: 73,
         height: 73,
         onPileCreation: {
@@ -179,26 +175,19 @@ function generateChipPileWidgets(id, x, y, type) {
         }
       },
       cardTypes: {
-        1: {
-          value: 1, accentColor1: "#808080", accentColor2: "#add8e6", borderColor: "#000000", borderWidth: 2, labelColor: "#d3d3d3", primaryColor: "#ffffff"
+        1: { value: 1, accentColor1: "#808080", accentColor2: "#add8e6", borderColor: "#000000", borderWidth: 2, labelColor: "#d3d3d3", primaryColor: "#ffffff"
         },
-        5: {
-          value: 5, accentColor1: "#ffffff", accentColor2: "#ffff00", borderColor: "#000000", borderWidth: 2, labelColor: "#ed8080", primaryColor: "#ff0000"
+        5: { value: 5, accentColor1: "#ffffff", accentColor2: "#ffff00", borderColor: "#000000", borderWidth: 2, labelColor: "#ed8080", primaryColor: "#ff0000"
         },
-        10: {
-          value: 10, accentColor1: "#ffffff", accentColor2: "#87ceeb", borderColor: "#000000", borderWidth: 2, labelColor: "#b0c4de", primaryColor: "#000080"
+        10: { value: 10, accentColor1: "#ffffff", accentColor2: "#87ceeb", borderColor: "#000000", borderWidth: 2, labelColor: "#b0c4de", primaryColor: "#000080"
         },
-        25: {
-          value: 25, accentColor1: "#ffffff", accentColor2: "#000000", borderColor: "#000000", borderWidth: 2, labelColor: "#22ba22", primaryColor: "#008000"
+        25: { value: 25, accentColor1: "#ffffff", accentColor2: "#000000", borderColor: "#000000", borderWidth: 2, labelColor: "#22ba22", primaryColor: "#008000"
         },
-        100: {
-          value: 100, accentColor1: "#ffffff", accentColor2: "#ffc0cb", borderColor: "#000000", borderWidth: 2, labelColor: "#ee82ee", primaryColor: "#4b0082"
+        100: { value: 100, accentColor1: "#ffffff", accentColor2: "#ffc0cb", borderColor: "#000000", borderWidth: 2, labelColor: "#ee82ee", primaryColor: "#4b0082"
         },
-        500: {
-          value: 500, accentColor1: "#ffffff", accentColor2: "#808080", borderColor: "#000000", borderWidth: 2, labelColor: "#a9a9a9", primaryColor: "#000000"
+        500: { value: 500, accentColor1: "#ffffff", accentColor2: "#808080", borderColor: "#000000", borderWidth: 2, labelColor: "#a9a9a9", primaryColor: "#000000"
         },
-        1000: {
-          value: 1000, accentColor1: "#ff0000", accentColor2: "#daa520", borderColor: "#000000", borderWidth: 2, labelColor: "#ffff00", primaryColor: "#ffd700"
+        1000: { value: 1000, accentColor1: "#ff0000", accentColor2: "#daa520", borderColor: "#000000", borderWidth: 2, labelColor: "#ffff00", primaryColor: "#ffd700"
         }
       },
       faceTemplates: [
@@ -207,19 +196,17 @@ function generateChipPileWidgets(id, x, y, type) {
           radius: false,
           objects: [
             {
-              css: type == 2 ? "font-size:1.5rem" : "font-size:1.3rem",
+              css: type==2 ? "font-size:1.5rem" : "font-size:1.3rem",
               type: "image",
               x: 0,
               y: 0,
               width: 73,
               height: 73,
               color: "transparent",
-              value: type == 2 ? "i/game-pieces/2D/Poker-2D.svg" : "i/game-pieces/3D/Poker-3D.svg",
-              dynamicProperties: {
-                accentColor1: "accentColor1", accentColor2: "accentColor2", borderColor: "borderColor", borderWidth: "borderWidth", labelColor: "labelColor", primaryColor: "primaryColor"
+              value: type==2 ? "i/game-pieces/2D/Poker-2D.svg" : "i/game-pieces/3D/Poker-3D.svg",
+              dynamicProperties: { accentColor1: "accentColor1", accentColor2: "accentColor2", borderColor: "borderColor", borderWidth: "borderWidth", labelColor: "labelColor", primaryColor: "primaryColor"
               },
-              svgReplaces: {
-                "#accentColor1": "accentColor1", "#accentColor2": "accentColor2", "#borderColor": "borderColor", "#borderWidth": "borderWidth", "#labelColor": "labelColor", "#primaryColor": "primaryColor"
+              svgReplaces: { "#accentColor1": "accentColor1", "#accentColor2": "accentColor2", "#borderColor": "borderColor", "#borderWidth": "borderWidth", "#labelColor": "labelColor", "#primaryColor": "primaryColor"
               }
             },
             {
@@ -241,7 +228,7 @@ function generateChipPileWidgets(id, x, y, type) {
   ];
 
   for (const value of [1000, 500, 100, 25, 10, 5, 1]) {
-    widgets.push({ type: "card", id: `${id}C${value}`, parent: id + 'P', deck: id + 'D', cardType: value, x: 0, y: 0 })
+    widgets.push({ type: "card", id: `${id}C${value}`, parent: id + 'P', deck: id + 'D', cardType: value, x:0, y:0})
   }
 
   return widgets;
@@ -251,7 +238,7 @@ function generateCounterWidgets(id, x, y) {
   const r = { func: 'LABEL', label: '${PROPERTY parent}', mode: 'dec', value: 1 };
 
   const down = {
-    id: id + 'D',
+    id: id+'D',
     parent: id,
     fixedParent: true,
     x: -38,
@@ -264,23 +251,23 @@ function generateCounterWidgets(id, x, y) {
     css: 'font-size: 28px',
     text: 'remove',
 
-    clickRoutine: [r]
+    clickRoutine: [ r ]
   };
 
   return [
-    { type: 'label', text: 0, id, x, y, width: 65, height: 40, css: 'font-size: 30px;', editable: true },
+    { type:'label', text: 0, id, x, y, width: 65, height: 40, css:'font-size: 30px;', editable: true },
     down,
-    Object.assign({ ...down }, { id: id + 'U', text: 'add', x: 68, clickRoutine: [Object.assign({ ...r }, { mode: 'inc' })] })
+    Object.assign({ ...down }, { id: id+'U', text: 'add', x: 68, clickRoutine: [ Object.assign({ ...r }, { mode: 'inc' }) ] })
   ];
 }
 
 function generateTimerWidgets(id, x, y) {
   return [
-    { type: 'timer', id: id, x: x, y: y },
+    { type:'timer', id: id, x: x, y: y },
     {
       parent: id,
       fixedParent: true,
-      id: id + 'P',
+      id: id+'P',
       x: 120,
       y: -3,
       width: 36,
@@ -300,7 +287,7 @@ function generateTimerWidgets(id, x, y) {
     {
       parent: id,
       fixedParent: true,
-      id: id + 'R',
+      id: id+'R',
       x: 80,
       y: -3,
       width: 36,
@@ -322,21 +309,21 @@ function generateTimerWidgets(id, x, y) {
 }
 
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
-  for (const wi of widgetsToAdd) {
+  for(const wi of widgetsToAdd) {
     let w = null;
-    if (wi.type == 'button') w = new Button(wi.id);
-    if (wi.type == 'canvas') w = new Canvas(wi.id);
-    if (wi.type == 'card') w = new Card(wi.id);
-    if (wi.type == 'deck') w = new Deck(wi.id);
-    if (wi.type == 'holder') w = new Holder(wi.id);
-    if (wi.type == 'label') w = new Label(wi.id);
-    if (wi.type == 'pile') w = new Pile(wi.id);
-    if (wi.type == 'timer') w = new Timer(wi.id);
+    if(wi.type == 'button') w = new Button(wi.id);
+    if(wi.type == 'canvas') w = new Canvas(wi.id);
+    if(wi.type == 'card')   w = new Card(wi.id);
+    if(wi.type == 'deck')   w = new Deck(wi.id);
+    if(wi.type == 'holder') w = new Holder(wi.id);
+    if(wi.type == 'label')  w = new Label(wi.id);
+    if(wi.type == 'pile')   w = new Pile(wi.id);
+    if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
     w.applyInitialDelta(wi);
     w.domElement.id = w.id;
-    if (!wi.parent) {
-      w.domElement.addEventListener('click', async _ => {
+    if(!wi.parent) {
+      w.domElement.addEventListener('click', async _=>{
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} added new ${wi.type || 'basic widget'} in editor: ${w.id}`);
         overlayDone(await onClick());
@@ -345,7 +332,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
       $('#addOverlay').appendChild(w.domElement);
     }
   }
-  for (const wi of widgetsToAdd) {
+  for(const wi of widgetsToAdd) {
     widgets.delete(wi.id)
   }
 }
@@ -354,7 +341,7 @@ const VTTblue = '#1f5ca6';
 
 function addPieceToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
-  w.domElement.addEventListener('click', async _ => {
+  w.domElement.addEventListener('click', async _=>{
     try {
       const result = await w.showInputOverlay({
         header: 'Choose piece color',
@@ -366,13 +353,13 @@ function addPieceToAddWidgetOverlay(w, wi) {
           }
         ]
       });
-      const toAdd = { ...wi };
+      const toAdd = {...wi};
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch (e) {
+    } catch(e) {
       console.log(e);
     }
   });
@@ -382,8 +369,8 @@ function addPieceToAddWidgetOverlay(w, wi) {
 
 function addWidgetToAddWidgetOverlay(w, wi) {
   w.applyInitialDelta(wi);
-  w.domElement.addEventListener('click', async _ => {
-    const toAdd = { ...wi };
+  w.domElement.addEventListener('click', async _=>{
+    const toAdd = {...wi};
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
@@ -395,8 +382,8 @@ function addWidgetToAddWidgetOverlay(w, wi) {
 // Called by most routines that add widgets. If the widget add came from the JSON editor,
 // call a routine in the JSON editor to clean up. Then hide the add widget overlay.
 function overlayDone(id) {
-  if (getEdit())
-    setSelection([widgets.get(id)]);
+  if(getEdit())
+    setSelection([ widgets.get(id) ]);
   showOverlay();
 }
 
@@ -409,15 +396,15 @@ function populateAddWidgetOverlay() {
     y: 150
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function () {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
     const id = generateUniqueWidgetID();
-    for (const w of generateCardDeckWidgets(id, x, 340, false))
+    for(const w of generateCardDeckWidgets(id, x, 340, false))
       await addWidgetLocal(w);
     return id
   });
-  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function () {
+  addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
     const id = generateUniqueWidgetID();
-    for (const w of generateCardDeckWidgets(id, x, 570, true))
+    for(const w of generateCardDeckWidgets(id, x, 570, true))
       await addWidgetLocal(w);
     return id
   });
@@ -445,7 +432,7 @@ function populateAddWidgetOverlay() {
 
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pin3DSVG'), {
-    x: 390 + 75,
+    x: 390+75,
     y: 111,
     width: 35,
     height: 40,
@@ -464,7 +451,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Marble3DSVG'), {
-    x: 390 + 2 * 75,
+    x: 390+2*75,
     y: 114,
     width: 35,
     height: 35,
@@ -485,7 +472,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Cube3DSVG'), {
-    x: 390 + 3 * 75,
+    x: 390+3*75,
     y: 110,
     width: 36,
     height: 40,
@@ -540,7 +527,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Checker3DSVG'), {
-    x: 445 + 100,
+    x: 445+100,
     y: 200,
     width: 75,
     height: 54.75,
@@ -593,7 +580,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Meeple3DSVG'), {
-    x: 450 + 100,
+    x: 450+100,
     y: 300,
     width: 66.5,
     height: 70,
@@ -646,7 +633,7 @@ function populateAddWidgetOverlay() {
   });
 
   addPieceToAddWidgetOverlay(new BasicWidget('Pig3DSVG'), {
-    x: 450 + 100,
+    x: 450+100,
     y: 408,
     width: 85.7,
     height: 60,
@@ -744,9 +731,9 @@ function populateAddWidgetOverlay() {
     borderWidth: 1
   });
 
-  //Sixth row (hexagons)
+   //Sixth row (hexagons)
 
-  addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
+   addPieceToAddWidgetOverlay(new BasicWidget('HexFlat'), {
     x: 390,
     y: 600,
     width: 50,
@@ -906,9 +893,9 @@ function populateAddWidgetOverlay() {
 
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function () {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
     const id = generateUniqueWidgetID();
-    for (const w of generateChipPileWidgets(id, 916, 300, 2))
+    for(const w of generateChipPileWidgets(id, 916, 300, 2))
       await addWidgetLocal(w);
     return id
   });
@@ -964,9 +951,9 @@ function populateAddWidgetOverlay() {
     primaryColor: "#55bb66"
   });
 
-  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function () {
+  addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
     const id = generateUniqueWidgetID();
-    for (const w of generateChipPileWidgets(id, 1010, 309, 3))
+    for(const w of generateChipPileWidgets(id, 1010, 309, 3))
       await addWidgetLocal(w);
     return id
   });
@@ -979,7 +966,7 @@ function populateAddWidgetOverlay() {
     y: 455
   };
   dice2D.applyInitialDelta(dice2DAttrs);
-  dice2D.domElement.addEventListener('click', async _ => {
+  dice2D.domElement.addEventListener('click', async _=>{
     try {
       const result = await dice2D.showInputOverlay({
         header: 'Choose number of sides',
@@ -994,15 +981,15 @@ function populateAddWidgetOverlay() {
         ]
       });
       const sides = result.variables.sides;
-      const toAdd = { ...dice2DAttrs };
+      const toAdd = {...dice2DAttrs};
       toAdd.z = getMaxZ(dice2D.get('layer')) + 1;
-      toAdd.faces = Array.from({ length: sides }, (_, i) => i + 1);
-      if (sides != 6)
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
         toAdd.pipSymbols = false;
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch (e) { }
+    } catch(e) {}
   });
   dice2D.domElement.id = dice2D.id;
   $('#addOverlay').appendChild(dice2D.domElement);
@@ -1013,30 +1000,30 @@ function populateAddWidgetOverlay() {
     x: 930,
     y: 525,
     faces: [
-      { value: 1, image: "/i/dice/cube-1-1.svg" },
-      { value: 1, image: "/i/dice/cube-1-2.svg" },
-      { value: 1, image: "/i/dice/cube-1-3.svg" },
-      { value: 1, image: "/i/dice/cube-1-4.svg" },
-      { value: 2, image: "/i/dice/cube-2-1.svg" },
-      { value: 2, image: "/i/dice/cube-2-2.svg" },
-      { value: 2, image: "/i/dice/cube-2-3.svg" },
-      { value: 2, image: "/i/dice/cube-2-4.svg" },
-      { value: 3, image: "/i/dice/cube-3-1.svg" },
-      { value: 3, image: "/i/dice/cube-3-2.svg" },
-      { value: 3, image: "/i/dice/cube-3-3.svg" },
-      { value: 3, image: "/i/dice/cube-3-4.svg" },
-      { value: 4, image: "/i/dice/cube-4-1.svg" },
-      { value: 4, image: "/i/dice/cube-4-2.svg" },
-      { value: 4, image: "/i/dice/cube-4-3.svg" },
-      { value: 4, image: "/i/dice/cube-4-4.svg" },
-      { value: 5, image: "/i/dice/cube-5-1.svg" },
-      { value: 5, image: "/i/dice/cube-5-2.svg" },
-      { value: 5, image: "/i/dice/cube-5-3.svg" },
-      { value: 5, image: "/i/dice/cube-5-4.svg" },
-      { value: 6, image: "/i/dice/cube-6-1.svg" },
-      { value: 6, image: "/i/dice/cube-6-2.svg" },
-      { value: 6, image: "/i/dice/cube-6-3.svg" },
-      { value: 6, image: "/i/dice/cube-6-4.svg" }
+      {value:1,image:"/i/dice/cube-1-1.svg"},
+      {value:1,image:"/i/dice/cube-1-2.svg"},
+      {value:1,image:"/i/dice/cube-1-3.svg"},
+      {value:1,image:"/i/dice/cube-1-4.svg"},
+      {value:2,image:"/i/dice/cube-2-1.svg"},
+      {value:2,image:"/i/dice/cube-2-2.svg"},
+      {value:2,image:"/i/dice/cube-2-3.svg"},
+      {value:2,image:"/i/dice/cube-2-4.svg"},
+      {value:3,image:"/i/dice/cube-3-1.svg"},
+      {value:3,image:"/i/dice/cube-3-2.svg"},
+      {value:3,image:"/i/dice/cube-3-3.svg"},
+      {value:3,image:"/i/dice/cube-3-4.svg"},
+      {value:4,image:"/i/dice/cube-4-1.svg"},
+      {value:4,image:"/i/dice/cube-4-2.svg"},
+      {value:4,image:"/i/dice/cube-4-3.svg"},
+      {value:4,image:"/i/dice/cube-4-4.svg"},
+      {value:5,image:"/i/dice/cube-5-1.svg"},
+      {value:5,image:"/i/dice/cube-5-2.svg"},
+      {value:5,image:"/i/dice/cube-5-3.svg"},
+      {value:5,image:"/i/dice/cube-5-4.svg"},
+      {value:6,image:"/i/dice/cube-6-1.svg"},
+      {value:6,image:"/i/dice/cube-6-2.svg"},
+      {value:6,image:"/i/dice/cube-6-3.svg"},
+      {value:6,image:"/i/dice/cube-6-4.svg"}
     ],
     imageScale: 1,
     color: 'transparent',
@@ -1053,7 +1040,7 @@ function populateAddWidgetOverlay() {
     cP: '#000000'
   };
   dice2DCube.applyInitialDelta(dice2DCubeAttrs);
-  dice2DCube.domElement.addEventListener('click', async _ => {
+  dice2DCube.domElement.addEventListener('click', async _=>{
     try {
       const result = await dice2DCube.showInputOverlay({
         header: 'Choose die color',
@@ -1065,7 +1052,7 @@ function populateAddWidgetOverlay() {
           }
         ]
       });
-      const toAdd = { ...dice2DCubeAttrs };
+      const toAdd = {...dice2DCubeAttrs};
       toAdd.z = getMaxZ(dice2DCube.get('layer')) + 1;
       toAdd.cT = result.variables.color;
       toAdd.cL = contrastAnyColor(result.variables.color, 0.2);
@@ -1074,7 +1061,7 @@ function populateAddWidgetOverlay() {
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch (e) { }
+    } catch(e) {}
   });
   dice2DCube.domElement.id = dice2DCube.id;
   $('#addOverlay').appendChild(dice2DCube.domElement);
@@ -1085,10 +1072,10 @@ function populateAddWidgetOverlay() {
     x: 1020,
     y: 455,
     shape3d: true,
-    faces: ['1', '2', '3', '4', '5', '6', '7', '8']
+    faces: ['1','2','3','4','5','6','7','8']
   };
   dice3D.applyInitialDelta(dice3DAttrs);
-  dice3D.domElement.addEventListener('click', async _ => {
+  dice3D.domElement.addEventListener('click', async _=>{
     try {
       const result = await dice3D.showInputOverlay({
         header: 'Choose number of sides',
@@ -1103,15 +1090,15 @@ function populateAddWidgetOverlay() {
         ]
       });
       const sides = result.variables.sides;
-      const toAdd = { ...dice3DAttrs };
+      const toAdd = {...dice3DAttrs};
       toAdd.z = getMaxZ(dice3D.get('layer')) + 1;
-      toAdd.faces = Array.from({ length: sides }, (_, i) => i + 1);
-      if (sides != 6)
+      toAdd.faces = Array.from({length: sides}, (_, i) => i + 1);
+      if(sides != 6)
         toAdd.pipSymbols = false;
       toAdd.shape3d = sides == 2 ? 'd2-flip' : true;
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch (e) { }
+    } catch(e) {}
   });
   dice3D.domElement.id = dice3D.id;
   $('#addOverlay').appendChild(dice3D.domElement);
@@ -1124,12 +1111,12 @@ function populateAddWidgetOverlay() {
   const spinAttrs = {
     type: 'spinner',
     value: 6,
-    options: Array.from({ length: 6 }, (_, i) => i + 1),
+    options: Array.from({length: 6}, (_, i) => i + 1),
     x: 450,
     y: 835
   };
   spinner.applyInitialDelta(spinAttrs);
-  spinner.domElement.addEventListener('click', async _ => {
+  spinner.domElement.addEventListener('click', async _=>{
     try {
       const result = await spinner.showInputOverlay({
         header: 'Choose number of spinner values',
@@ -1144,14 +1131,14 @@ function populateAddWidgetOverlay() {
         ]
       });
       const values = result.variables.values;
-      const toAdd = { ...spinAttrs };
+      const toAdd = {...spinAttrs};
       toAdd.z = getMaxZ(spinner.get('layer')) + 1;
       toAdd.value = values;
-      toAdd.options = Array.from({ length: values }, (_, i) => i + 1);
+      toAdd.options = Array.from({length: values}, (_, i) => i + 1);
 
       const id = await addWidgetLocal(toAdd);
       overlayDone(id);
-    } catch (e) { }
+    } catch(e) {}
   });
   spinner.domElement.id = spinner.id;
   $('#addOverlay').appendChild(spinner.domElement);
@@ -1165,17 +1152,17 @@ function populateAddWidgetOverlay() {
   });
 
   // Add the composite timer widget
-  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function () {
+  addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
     const id = generateUniqueWidgetID();
-    for (const w of generateTimerWidgets(id, 1005, 825))
+    for(const w of generateTimerWidgets(id, 1005, 825))
       await addWidgetLocal(w);
     return id
   });
 
   // Add the composite counter widget
-  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function () {
+  addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
     const id = generateUniqueWidgetID();
-    for (const w of generateCounterWidgets(id, 1058, 890))
+    for(const w of generateCounterWidgets(id, 1058, 890))
       await addWidgetLocal(w);
     return id
   });
@@ -1220,9 +1207,9 @@ function populateAddWidgetOverlay() {
 // end of JSON generators
 
 function uploadWidget(preset) {
-  uploadAsset().then(async function (asset) {
+  uploadAsset().then(async function(asset) {
     let id;
-    if (asset && preset == 'board') {
+    if(asset && preset == 'board') {
       id = await addWidgetLocal({
         image: asset,
         movable: false,
@@ -1231,7 +1218,7 @@ function uploadWidget(preset) {
         layer: -4
       });
     }
-    if (asset && preset == 'token') {
+    if(asset && preset == 'token') {
       id = await addWidgetLocal({
         image: asset
       });
@@ -1240,7 +1227,7 @@ function uploadWidget(preset) {
   });
 }
 
-export async function updateWidget(currentState, oldState, applyChangesFromUI) {
+async function updateWidget(currentState, oldState, applyChangesFromUI) {
   batchStart();
 
   const previousState = JSON.parse(oldState);
@@ -1291,87 +1278,87 @@ export async function updateWidget(currentState, oldState, applyChangesFromUI) {
 }
 
 async function onClickUpdateWidget(applyChangesFromUI) {
-  await window.updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
+  await updateWidget($('#editWidgetJSON').value, $('#editWidgetJSON').dataset.previousState, applyChangesFromUI);
 
   showOverlay();
 }
 
 async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
 
-  const incrementCaps = function (l) {
+  const incrementCaps = function(l) {
     const m = l.match(/Z+$/);
     const zs = m ? m[0].length : 0;
-    if (m && zs == l.length)
-      return 'A' + [...Array(zs)].map(l => 'A').join('');
+    if(m && zs == l.length)
+      return 'A'+[...Array(zs)].map(l=>'A').join('');
     else
-      return l.substr(0, l.length - zs - 1) + String.fromCharCode(l.charCodeAt(l.length - zs - 1) + 1) + [...Array(zs)].map(l => 'A').join('');
+      return l.substr(0, l.length-zs-1) + String.fromCharCode(l.charCodeAt(l.length-zs-1)+1) + [...Array(zs)].map(l=>'A').join('');
   };
 
-  const clone = async function (widget, recursive, newParent, xOffset, yOffset) {
+  const clone = async function(widget, recursive, newParent, xOffset, yOffset) {
     let currentWidget = JSON.parse(JSON.stringify(widget.state))
 
-    if (inheritFrom) {
+    if(inheritFrom) {
       const inheritAll = JSON.stringify(inheritProperties) == '[""]';
       const inheritWidget = {};
       inheritWidget['inheritFrom'] = {};
       inheritWidget['inheritFrom'][widget.get('id')] = inheritAll ? "*" : inheritProperties;
 
       // Copy properties from source to new object unless inheritAll is set or the property is in the inherit list.
-      for (const key of Object.keys(currentWidget))
-        if (currentWidget[key] != undefined && (['id', 'type', 'deck', 'cardType'].includes(key) || !(inheritAll || inheritProperties.includes(key))))
+      for(const key of Object.keys(currentWidget))
+        if(currentWidget[key] != undefined && (['id','type','deck','cardType'].includes(key) || !(inheritAll || inheritProperties.includes(key))))
           inheritWidget[key] = currentWidget[key];
       currentWidget = inheritWidget;
     }
 
-    if (incrementKind) {
+    if(incrementKind) {
       let match = currentWidget.id.match(/^(.*?)([0-9]+)([^0-9]*)$/);
       let sourceNumber = match ? parseInt(match[2]) : 0;
-      if (incrementKind == 'Letters') {
+      if(incrementKind=='Letters') {
         match = currentWidget.id.match(/^(.*?)([A-Z]+)([^A-Z]*)$/);
         sourceNumber = match ? match[2] : "@"; // If no caps, insert A, which is @+1.
       }
       let targetNumber = sourceNumber;
       const idHead = match ? match[1] : widget.id;
       const idTail = match && match[3] ? match[3] : '';
-      while (widgets.has(currentWidget.id)) {
-        if (incrementKind == 'Letters') {
+      while(widgets.has(currentWidget.id)) {
+        if(incrementKind=='Letters') {
           targetNumber = incrementCaps(targetNumber);
           currentWidget.id = `${idHead}${targetNumber}${idTail}`;
         } else
           currentWidget.id = `${idHead}${++targetNumber}${idTail}`;
       }
-      for (const property of incrementIn) {
-        if (property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
+      for(const property of incrementIn) {
+        if(property == 'index' && widget.state.type == 'seat' && widget.state.index === undefined)
           currentWidget.index = 1;
-        if (currentWidget[property] !== undefined && (property != 'inheritFrom' || !inheritFrom)) // Don't change inheritFrom if it was just added to new widget
+        if(currentWidget[property] !== undefined && (property != 'inheritFrom' || !inheritFrom)) // Don't change inheritFrom if it was just added to new widget
           currentWidget[property] = JSON.parse(JSON.stringify(currentWidget[property]).replaceAll(sourceNumber, targetNumber));
       }
     } else {
       delete currentWidget.id;
     }
 
-    if (newParent)
+    if(newParent)
       currentWidget.parent = newParent;
-    if (xOffset || !newParent && inheritFrom)
+    if(xOffset || !newParent && inheritFrom)
       currentWidget.x = widget.get('x') + xOffset;
-    if (yOffset || !newParent && inheritFrom)
+    if(yOffset || !newParent && inheritFrom)
       currentWidget.y = widget.get('y') + yOffset;
 
-    if (currentWidget.parent && !widgets.has(currentWidget.parent)) {
-      if (Array.isArray(problems))
+    if(currentWidget.parent && !widgets.has(currentWidget.parent)) {
+      if(Array.isArray(problems))
         problems.push(`Could not add duplicate of widget ${widget.id} to non-existent parent ${currentWidget.parent}.`);
-    } else if (currentWidget.type == 'card' && !widgets.has(currentWidget.deck)) {
-      if (Array.isArray(problems))
+    } else if(currentWidget.type == 'card' && !widgets.has(currentWidget.deck)) {
+      if(Array.isArray(problems))
         problems.push(`Could not add duplicate of card ${widget.id} with non-existent deck ${currentWidget.deck}.`);
-    } else if (currentWidget.type == 'card' && !widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
-      if (Array.isArray(problems))
+    } else if(currentWidget.type == 'card' && !widgets.get(currentWidget.deck).get('cardTypes')[currentWidget.cardType]) {
+      if(Array.isArray(problems))
         problems.push(`Could not add duplicate of card ${widget.id} with non-existent cardType ${currentWidget.cardType}.`);
     } else {
       const currentId = await addWidgetLocal(currentWidget);
 
-      const clonedWidgets = [widgets.get(currentId)];
-      if (recursive)
-        for (const child of widgetFilter(w => w.get('parent') == widget.id))
+      const clonedWidgets = [ widgets.get(currentId) ];
+      if(recursive)
+        for(const child of widgetFilter(w=>w.get('parent')==widget.id))
           clonedWidgets.push(...await clone(child, true, currentId, 0, 0));
 
       return clonedWidgets;
@@ -1381,10 +1368,10 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
   const gridX = xCopies + 1;
   const gridY = yCopies + 1;
   const clonedWidgets = [];
-  for (let i = 1; i < gridX * gridY; ++i) {
-    let x = xOffset * (i % gridX);
-    let y = yOffset * Math.floor(i / gridX);
-    if (xCopies + yCopies == 1) { // If just one copy, use both offsets as given.
+  for(let i=1; i<gridX*gridY; ++i) {
+    let x = xOffset*(i%gridX);
+    let y = yOffset*Math.floor(i/gridX);
+    if(xCopies + yCopies == 1) { // If just one copy, use both offsets as given.
       x = xOffset;
       y = yOffset;
     }
@@ -1434,7 +1421,7 @@ export function initializeEditMode(currentMetaData) {
   style.appendChild(document.createTextNode(' //*** CSS ***// '));
   $('head').appendChild(style);
 
-  for (const overlay of $a('#editorOverlays > *'))
+  for(const overlay of $a('#editorOverlays > *'))
     $('#roomArea').append(overlay);
 
   jeInitEventListeners();
@@ -1461,14 +1448,14 @@ export function initializeEditMode(currentMetaData) {
   });
 
   // This now adds an empty basic widget
-  on('#addBasicWidget', 'click', async function () {
+  on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
       text: "Basic widget"
     });
     overlayDone(id);
   });
 
-  on('#addHand', 'click', async function () {
+  on('#addHand', 'click', async function() {
     const hand = {
       type: 'holder',
       onEnter: { activeFace: 1 },
@@ -1484,12 +1471,12 @@ export function initializeEditMode(currentMetaData) {
       width: 1500,
       height: 180
     }
-    if (!widgets.has('hand'))
+    if(!widgets.has('hand'))
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
   });
 
-  on('#addCanvas', 'click', async function () {
+  on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({
       type: "canvas",
 
@@ -1570,7 +1557,7 @@ export function initializeEditMode(currentMetaData) {
     })
     await addWidgetLocal({
       type: "button",
-      id: id + "-Reset",
+      id: id+"-Reset",
 
       parent: id,
       fixedParent: true,
@@ -1713,29 +1700,29 @@ export function initializeEditMode(currentMetaData) {
     overlayDone(id);
   });
 
-  on('#addSeat', 'click', async function () {
-    const seats = widgetFilter(w => w.get('type') == 'seat');
-    const maxIndex = Math.max(...seats.map(w => w.get('index')));
+  on('#addSeat', 'click', async function() {
+    const seats = widgetFilter(w=>w.get('type')=='seat');
+    const maxIndex = Math.max(...seats.map(w=>w.get('index')));
     const id = await addWidgetLocal({
       type: 'seat',
-      index: seats.length && maxIndex ? maxIndex + 1 : 1,
+      index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
       y: 90
     })
     overlayDone(id);
   });
 
-  on('#addSeatCounter', 'click', async function () {
-    const seats = widgetFilter(w => w.get('type') == 'seat');
-    const maxIndex = Math.max(...seats.map(w => w.get('index')));
+  on('#addSeatCounter', 'click', async function() {
+    const seats = widgetFilter(w=>w.get('type')=='seat');
+    const maxIndex = Math.max(...seats.map(w=>w.get('index')));
     const id = await addWidgetLocal({
       type: 'seat',
-      index: seats.length && maxIndex ? maxIndex + 1 : 1,
+      index: seats.length && maxIndex ? maxIndex+1 : 1,
       x: 840,
       y: 90
     })
     await addWidgetLocal({
-      id: id + 'C',
+      id: id+'C',
       parent: id,
       fixedParent: true,
       x: -20,
@@ -1746,7 +1733,7 @@ export function initializeEditMode(currentMetaData) {
       movable: false,
       movableInEdit: false,
       clickable: false,
-      css: { 'font-size': '18px', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center', 'color': '#6d6d6d', 'background': '#e4e4e4', 'border': '2px solid #999999' },
+      css: {'font-size':'18px', 'display':'flex','align-items':'center','justify-content':'center','color':'#6d6d6d','background':'#e4e4e4','border':'2px solid #999999'},
       text: '0',
       ownerGlobalUpdateRoutine: [
         'var parent = ${PROPERTY parent}',
@@ -1778,26 +1765,26 @@ export function initializeEditMode(currentMetaData) {
     overlayDone(id);
   });
 
-  on('#addScoreboard', 'click', async function () {
+  on('#addScoreboard', 'click', async function() {
     await addWidgetLocal({
       type: 'scoreboard',
       x: 1000,
-      y: 660
+      y:660
     });
     showOverlay();
   });
 
-  on('#uploadBoard', 'click', _ => uploadWidget('board'));
-  on('#uploadToken', 'click', _ => uploadWidget('token'));
+  on('#uploadBoard', 'click', _=>uploadWidget('board'));
+  on('#uploadToken', 'click', _=>uploadWidget('token'));
 
-  on('#addWidget', 'click', async function () {
+  on('#addWidget', 'click', async function() {
     const widget = JSON.parse($('#widgetText').value);
 
-    for (const key in widget)
-      if (widget[key] === null)
+    for(const key in widget)
+      if(widget[key] === null)
         delete widget[key];
 
-    if (widget.parent !== undefined && !widgets.has(widget.parent)) {
+    if(widget.parent !== undefined && !widgets.has(widget.parent)) {
       alert(`Parent widget ${widget.parent} does not exist.`);
       return;
     }
