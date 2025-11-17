@@ -769,7 +769,6 @@ export default class Room {
     this.sendMetaUpdate();
   }
  
-
   removeInvalidPublicLibraryLinks(player) {
     for(const [ id, state ] of Object.entries(this.state._meta.states)) {
       const operations = [];
