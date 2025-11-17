@@ -773,6 +773,7 @@ const operationProps = {
         'collection': 'string'
     },
     'UPLOAD': {
+        'fileTypes': v=>Array.isArray(v) && v.every(x=>typeof x === 'string'),
         'variable': 'string'
     },
     'VAR': {
