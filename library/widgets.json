@@ -2854,7 +2854,7 @@
         },
         {
           "type": "deck",
-          "id": "a5f4D",
+          "id": "deck",
           "parent": "holderBlankDeckOfCards",
           "x": 12,
           "y": 41,
