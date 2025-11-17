@@ -68,7 +68,7 @@
     "clickRoutine": [
       "// For some functions, you need to create a blank array. You do that by just adding square brackets",
       "var blankArray = []",
-      "// However, you cannot create an array with values using a var expression. The debug report shows a red arrow for an error. See the next variant in this tutorial for more on how to create array and object variables",
+      "// However, you cannot create an array with values using a var expression. The debug report shows a red arrow for an error and the validator table also lists an error. See the next variant in this tutorial for more on how to create array and object variables",
       "var invalidArray = [0,1,2]"
     ],
     "text": "Array"
@@ -163,7 +163,13 @@
     "html": "Objects are also useful, but a little more complex than arrays. Objects are key-value pairs. While an array has an index, an object has a key expressed as a string and the value linked to that key can be any type of data, including arrays and other objects. Read more at <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#variable-declarations'>Variable declarations wiki</a> and <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>. CSS is one of the most common uses for objects and there is a <a href='https://virtualtabletop.io/tutorial/appearance-css'>CSS tutorial</a>."
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "130 Variables and Collections",
       "image": "/assets/565198158_9346",
@@ -173,7 +179,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749054058278,
+      "lastUpdate": 1763354878085,
       "showName": false,
       "skill": "",
       "description": "",

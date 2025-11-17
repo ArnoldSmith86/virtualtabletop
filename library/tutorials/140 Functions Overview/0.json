@@ -89,13 +89,16 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "21px"
     },
-    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples.",
+    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. The validation table may report things that are not really problems. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples.",
     "height": 445
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "140 Functions Overview",
       "image": "/assets/-1101786700_7105",
@@ -105,7 +108,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749054237187,
+      "lastUpdate": 1763355837690,
       "showName": false,
       "skill": "",
       "description": "",
@@ -128,7 +131,11 @@
     "y": 402,
     "z": 22841,
     "clickRoutine": [
-      "// The most common and intuitive routine. Buttons are a typical example, but a `clickRoutine` can be on any widget except decks. As long as the widget is visible and the `clickable` property is true, then the routine will activate."
+      "// The most common and intuitive routine. Buttons are a typical example, but a `clickRoutine` can be on any widget except decks. As long as the widget is visible and the `clickable` property is true, then the routine will activate.",
+      {
+        "func": "CALL",
+        "routine": "customRoutine"
+      }
     ],
     "text": "Routines",
     "changeRoutine": [
@@ -148,7 +155,7 @@
       "// Activated whenever a child is removed from this widget. Warning: depending on how this happens, a `leaveRoutine` can be triggered from 1 to 4 times for a single widget. Most commonly it happens twice. So keep in mind that the `leaveRoutine` will usually trigger multiple times for each widget that will no longer be a child of this widget."
     ],
     "customRoutine": [
-      "// Like with custom properties, you can create any routine name you want as long as it ends with `Routine`. The limitation, however, is that these kinds of routines are only activated by using the CALL function within some other kind of routine."
+      "// Like with custom properties, you can create any routine name you want as long as it ends with `Routine`. The limitation, however, is that these kinds of routines are only activated by using the CALL function within some other kind of routine. For example the 'clickRoutine' CALLs this customRoutine."
     ],
     "layer": 2
   },
@@ -231,7 +238,7 @@
     "id": "button5",
     "z": 22847,
     "clickRoutine": [
-      "// The COUNT function below is identical to the first one in the Defaults button. It attempts to count the collection named `DEFAULT`. However, there is no collection so the debug report says the collection DEFAULT does not exist or is not an array. That is the explanation of the problem. COUNT needs a holder or a collection as input and there is not one.",
+      "// The COUNT function below is identical to the first one in the Defaults button. It attempts to count the collection named `DEFAULT`. However, there is no collection so the debug report says the collection DEFAULT does not exist or is not an array. That is the explanation of the problem. COUNT needs a holder or a collection as input and there is not one. The error also shows up in the validator table for this button and for button3.",
       {
         "func": "COUNT"
       },
@@ -358,42 +365,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",

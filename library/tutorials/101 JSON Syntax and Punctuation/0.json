@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "101 JSON Syntax and Punctuation",
       "image": "/assets/-586736647_8799",
@@ -10,7 +16,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051058124,
+      "lastUpdate": 1763354323448,
       "showName": false,
       "skill": "",
       "description": "",
@@ -55,6 +61,13 @@
         "property": "id",
         "relation": "!=",
         "value": null
+      },
+      {
+        "func": "VAR",
+        "variables": {
+          "exampleArray": "${PROPERTY exampleArray}",
+          "exampleObject": "${PROPERTY exampleObject}"
+        }
       }
     ],
     "text": "\" \"",

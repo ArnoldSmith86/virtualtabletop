@@ -90,7 +90,13 @@
     "html": "Seats are used in games to indicate which widgets belong to certain players, to limit visibility of certain widgets to certain players, and to indicate whose turn it is. Two default seats are available. They are identical except that the bottom one has a small round counter that shows the number of cards in that player's hand."
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "110 Widget Types",
       "image": "/assets/-1812256112_6351",
@@ -100,7 +106,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749053679655,
+      "lastUpdate": 1763354511340,
       "showName": false,
       "skill": "",
       "description": "",
@@ -504,42 +510,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",

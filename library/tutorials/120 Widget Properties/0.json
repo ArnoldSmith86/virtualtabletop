@@ -90,7 +90,10 @@
     "html": "Look at the seat's JSON in Edit Mode. Put the cursor on the <b>id</b> line. On the right below `seat` is a list of properties in clickable buttons. That shows properties unique to seats that have not yet been added to the widget. Click on some of the buttons. Properties with default values are added and the buttons disappear. In the JSON delete a property and the button reappears. Lower on the right are properties available for any widget type that work the same way."
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "120 Widget Properties Overview",
       "image": "/assets/1822363341_8988",
@@ -100,7 +103,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051091211,
+      "lastUpdate": 1763354677977,
       "showName": false,
       "skill": "",
       "description": "",
@@ -124,7 +127,6 @@
     "movable": false,
     "customNumber": -10.8,
     "customString": "This can be almost anything but some characters are not allowed.",
-    "cusstomBoolean": true,
     "customArray": [
       1,
       2,
@@ -134,7 +136,20 @@
     "customObject": {
       "key": "value",
       "anotherKey": "another value"
-    }
+    },
+    "clickRoutine": [
+      {
+        "func": "VAR",
+        "variables": {
+          "customBoolean": "${PROPERTY customBoolean}",
+          "customArray": "${PROPERTY customArray}",
+          "customNumber": "${PROPERTY customNumber}",
+          "customObject": "${PROPERTY customObject}",
+          "customString": "${PROPERTY customString}"
+        }
+      }
+    ],
+    "customBoolean": true
   },
   "button1": {
     "type": "button",
