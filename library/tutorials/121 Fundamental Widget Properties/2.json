@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "121 Fundamental Widget Properties",
       "image": "/assets/1251448927_9487",
@@ -10,7 +16,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051108627,
+      "lastUpdate": 1763354786796,
       "showName": false,
       "skill": "",
       "description": "",
@@ -89,7 +95,6 @@
     "y": 402,
     "z": 22841,
     "clickRoutine": [
-      "",
       {
         "func": "SET",
         "collection": "thisButton",
