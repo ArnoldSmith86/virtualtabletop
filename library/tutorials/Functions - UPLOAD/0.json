@@ -25,17 +25,6 @@
     "css": "font-size: 25px; ",
     "html": "This function allows users to upload files for use in a game. Only image, audio, and JSON files will be processed by VTT. UPLOAD only has two paramaeters. <b>fileTypes</b> is used to filter the list of file type extensions shown to the user when the file upload dialog prompt opens. It defaults to the most commmon types of image and audio file extension as well as .json. The <b>variable</b> parameter is used to store the file name as it will be used in VTT. It defaults to <b>uploadedFileName</b>. The value will be something like <b>/assets/607202618_223159</b>, which is a hash of the files contents and the file size following the underscore."
   },
-  "bjw6": {
-    "parent": null,
-    "x": 19,
-    "y": 372,
-    "width": 300,
-    "height": 274,
-    "layer": -3,
-    "editorGroup": true,
-    "movable": false,
-    "id": "bjw6"
-  },
   "_meta": {
     "version": 19,
     "gameSettings": {

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 18,
+    "version": 19,
     "gameSettings": {
       "legacyModes": {
         "convertNumericVarParametersToNumbers": true,
@@ -17,7 +17,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763347157183,
+      "lastUpdate": 1763352440080,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -164,9 +164,10 @@
   "7cyoP": {
     "type": "pile",
     "id": "7cyoP",
-    "parent": "7cyo",
     "width": 103,
-    "height": 160
+    "height": 160,
+    "z": 9,
+    "parent": "7cyo"
   },
   "7cyoD": {
     "type": "deck",
@@ -175,24 +176,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",

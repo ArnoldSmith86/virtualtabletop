@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 5,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Routines",
       "image": "/assets/786542630_8010",
@@ -11,7 +17,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763347157186,
+      "lastUpdate": 1763352440081,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -149,10 +155,10 @@
   "hgmk": {
     "classes": "classicPiece",
     "color": "#4c5fea",
-    "width": 90,
-    "height": 90,
-    "x": 1201,
-    "y": 385,
+    "width": 56,
+    "height": 84,
+    "x": 1218,
+    "y": 388,
     "z": 26504,
     "id": "hgmk"
   },
@@ -218,24 +224,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -830,11 +818,11 @@
   },
   "7cyo_Q_C": {
     "id": "7cyo_Q_C",
-    "parent": "7cyoP",
     "deck": "7cyoD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 9484
+    "z": 9856,
+    "parent": "7cyoP"
   },
   "7cyo_K_C": {
     "id": "7cyo_K_C",
@@ -854,11 +842,11 @@
   },
   "7cyo_2_D": {
     "id": "7cyo_2_D",
-    "parent": "7cyoP",
     "deck": "7cyoD",
     "type": "card",
     "cardType": "D 02",
-    "z": 9820
+    "z": 9859,
+    "parent": "7cyoP"
   },
   "7cyo_3_D": {
     "id": "7cyo_3_D",
@@ -1086,11 +1074,11 @@
   },
   "7cyo_5_S": {
     "id": "7cyo_5_S",
-    "parent": "7cyoP",
     "deck": "7cyoD",
     "type": "card",
     "cardType": "S 05",
-    "z": 9400
+    "z": 9853,
+    "parent": "7cyoP"
   },
   "7cyo_6_S": {
     "id": "7cyo_6_S",
@@ -1186,7 +1174,9 @@
     "y": 820,
     "width": 1500,
     "height": 180,
-    "id": "hand"
+    "id": "hand",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "y5uf": {
     "type": "holder",
@@ -1211,8 +1201,7 @@
       },
       {
         "note": "Count the group of cards selected in the previous steps.",
-        "func": "COUNT",
-        "holder": "${DEFAULT}"
+        "func": "COUNT"
       },
       {
         "note": "Set the value of the text (can be done through the LABEL function or by setting the text property) to the COUNT variable.",
@@ -1237,8 +1226,7 @@
         "value": "y5uf"
       },
       {
-        "func": "COUNT",
-        "holder": "${DEFAULT}"
+        "func": "COUNT"
       },
       {
         "func": "LABEL",
