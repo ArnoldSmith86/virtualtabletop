@@ -2325,6 +2325,9 @@ function jeColorize() {
       return result;
     });
 
+    // Highlight variables
+    line = line.replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`);
+
     out.push(`<div class=jeTextLine><span class=jeLineNumber>${nr}</span><span class=jeLineContent>${line}</span></div>`);
   }
   for(let line of jeGetEditorContent().split('\n')) {
@@ -2344,12 +2347,9 @@ function jeColorize() {
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i) {
-          if(l[i] && match[i]) {
+          if(l[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
-            if(l[i]=='string' || l[i]=='key') {
-              match[i] = match[i].replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`)
-            }
-          } else if(match[i])
+          else if(match[i])
             match[i] = html(match[i]);
         }
 
