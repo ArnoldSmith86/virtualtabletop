@@ -336,7 +336,7 @@ const jeCommands = [
       jeSetEditorContent(newContent);
       jeColorize();
       const newStringEnd = stringStart + 1 + formattedHTML.length + 2 + propertyIndent.length;
-      jeSelect(stringStart + 1, newStringEnd, false);
+      jeSelect(stringStart + 1, newStringEnd, true);
     }
   },
   {
