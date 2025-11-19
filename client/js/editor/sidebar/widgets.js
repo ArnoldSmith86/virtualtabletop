@@ -1394,7 +1394,7 @@ class WidgetsModule extends SidebarModule {
     fileInput.onchange = async e => {
       const files = e.target.files;
       if (!files || files.length === 0) return;
-      const file = files;
+      const file = files[0];
 
       const reader = new FileReader();
       reader.onload = async event => {
