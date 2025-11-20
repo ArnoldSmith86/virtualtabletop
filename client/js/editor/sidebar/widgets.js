@@ -29,7 +29,18 @@ function deepReplace(obj, idMap) {
   }
 
   // Then, rename keys. This is safer after values are processed.
-  const keysToRename = Object.keys(obj).filter(key => idMap[key]);
+  const protectedKeys = [
+    'id', 'type', 'parent', 'deck', 'hand',
+    'x', 'y', 'z', 'width', 'height', 'rotation', 'scale',
+    'color', 'text', 'html', 'css', 'class',
+    'faces', 'activeFace', 'faceCycle',
+    'locked', 'hidden', 'snap', 'fixed',
+    'name', 'widgets', 'groups', 'preview', 'inheritFrom',
+    'cardType', 'min', 'max', 'value', 'step',
+    'collection', 'source', 'dropTarget', 'dropLimit',
+    'linkedToSeat', 'onlyVisibleForSeat'
+  ];
+  const keysToRename = Object.keys(obj).filter(key => idMap[key] && !protectedKeys.includes(key));
   for (const oldKey of keysToRename) {
     const newKey = idMap[oldKey];
     if (oldKey !== newKey) {
