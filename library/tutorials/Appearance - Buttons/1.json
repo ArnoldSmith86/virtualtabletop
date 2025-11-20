@@ -14,7 +14,7 @@
       "time": "0",
       "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
       "showName": false,
-      "lastUpdate": 1763597068375,
+      "lastUpdate": 1763600323636,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1149,12 +1149,11 @@
   },
   "lmaz": {
     "type": "pile",
-    "parent": "v91x",
-    "x": 4,
-    "y": 4,
     "width": 103,
     "height": 160,
-    "id": "lmaz"
+    "id": "lmaz",
+    "z": 9757,
+    "parent": "v91x"
   },
   "v7s4": {
     "type": "label",
@@ -1195,5 +1194,18 @@
     "height": 150,
     "css": "font-size:18px",
     "id": "ma9w"
+  },
+  "jdwf": {
+    "type": "holder",
+    "id": "jdwf",
+    "x": 779.5,
+    "y": 745,
+    "width": 111,
+    "height": 168,
+    "z": 7,
+    "movable": false,
+    "onEnter": {
+      "activeFace": 1
+    }
   }
 }

@@ -29,15 +29,6 @@
     "id": "8fr3",
     "movableInEdit": false
   },
-  "lmaz": {
-    "type": "pile",
-    "parent": "v91x",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "lmaz"
-  },
   "070n": {
     "type": "button",
     "text": "DEAL",
@@ -546,7 +537,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763600084671,
+      "lastUpdate": 1763600448102,
       "skill": "",
       "description": "",
       "similarImage": "",
