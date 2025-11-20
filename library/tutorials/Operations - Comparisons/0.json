@@ -208,8 +208,8 @@
     "width": 300,
     "height": 60,
     "z": 26452,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "border: 2px dashed black; font-size:30px; color:black ",
     "text": false
   },

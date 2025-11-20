@@ -169,8 +169,8 @@
     "width": 250,
     "height": 50,
     "z": 13,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "font-size: 30px; ",
     "text": "Word Array"
   },
@@ -181,8 +181,8 @@
     "width": 250,
     "height": 50,
     "z": 12,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "font-size: 30px; ",
     "text": "Numerical Array"
   },
@@ -193,8 +193,8 @@
     "width": 250,
     "height": 50,
     "z": 15,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "font-size: 30px; ",
     "text": "Mixed Array"
   },
