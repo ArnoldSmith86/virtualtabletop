@@ -65,6 +65,19 @@ function fillPlayerList(players, active) {
       if(e.target.value)
         toServer('rename', { oldName: player, newName: e.target.value });
     });
+    $('.playerName', entry).addEventListener('focus', function(e) {
+      const sanitized = e.target.value.replace(/\u200b/g, '');
+      if (e.target.value !== sanitized) {
+        e.target.placeholder = sanitized;
+        e.target.value = '';
+      }
+    });
+    $('.playerName', entry).addEventListener('blur', function(e) {
+      if (e.target.value === '' && e.target.placeholder) {
+        e.target.value = e.target.placeholder;
+        e.target.placeholder = '';
+      }
+    });
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
