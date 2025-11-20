@@ -64,7 +64,10 @@ function fillPlayerList(players, active) {
       randomizeButton.innerText = '🎲';
       randomizeButton.title = 'Generate new name';
       randomizeButton.onclick = () => {
-        const newName = generateName();
+        let newName;
+        do {
+          newName = generateName();
+        } while (newName in players);
         toServer('rename', { oldName: playerName, newName: newName });
       };
       entry.appendChild(randomizeButton);
