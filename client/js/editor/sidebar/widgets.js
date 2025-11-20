@@ -1169,7 +1169,12 @@ class WidgetsModule extends SidebarModule {
       addRecursively(widget, widgetBuffer);
 
     const defaultTarget = config.allowPublicLibraryEdits ? 'server' : 'local';
-    const name = selectedWidgets.length > 0 ? selectedWidgets.id : undefined;
+    let name;
+    if (selectedWidgets.length > 0) {
+      const w = selectedWidgets[0];
+      const type = w.state.type || 'widget';
+      name = `${w.id} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+    }
     this.createWidget({ name, widgets: widgetBuffer }, defaultTarget)
       .then(() => this.renderWidgetBuffer());
   }
