@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 16,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Buttons",
       "image": "/assets/1091245433_5809",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
       "showName": false,
-      "lastUpdate": 1752119076256,
+      "lastUpdate": 1763597068375,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1672,13 +1675,6 @@
     "y": 493,
     "z": 35,
     "id": "8bos",
-    "clickRoutine": [
-      {
-        "func": "MOVE",
-        "from": "ck1d",
-        "to": "jdwf"
-      }
-    ],
     "layer": 2
   },
   "tpj8": {
@@ -1811,12 +1807,6 @@
     "id": "v91xD",
     "parent": "v91x",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },

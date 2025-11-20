@@ -1243,7 +1243,16 @@
     "id": "py7d",
     "movable": true,
     "text": "DEAL",
-    "clickRoutine": []
+    "clickRoutine": [
+      {
+        "func": "VAR",
+        "variables": {
+          "url1": "${PROPERTY website1 OF zdwu1}",
+          "url2": "${PROPERTY website2 OF zdwu1}",
+          "url3": "${PROPERTY website3 OF zdwu1}"
+        }
+      }
+    ]
   },
   "v91xAC": {
     "id": "v91xAC",
@@ -2175,7 +2184,10 @@
     "id": "zdwu"
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - CSS",
       "image": "/assets/1323294024_5493",
@@ -2186,7 +2198,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762711744354,
+      "lastUpdate": 1763597599935,
       "skill": "",
       "description": "",
       "similarImage": "",
