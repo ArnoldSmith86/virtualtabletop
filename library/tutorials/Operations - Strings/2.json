@@ -92,7 +92,6 @@
     "y": 250,
     "z": 287,
     "id": "l1ak",
-    "var": "string. ",
     "text": "slice"
   },
   "c9ee": {
@@ -115,7 +114,6 @@
     "y": 250,
     "z": 286,
     "id": "c9ee",
-    "var": "default",
     "x": 1374,
     "text": "split"
   },
@@ -141,7 +139,6 @@
     "y": 487,
     "z": 279,
     "id": "pc6t",
-    "var": "the",
     "text": "substr"
   },
   "0y6s": {
@@ -166,7 +163,6 @@
     "y": 487,
     "z": 280,
     "id": "0y6s",
-    "var": "e",
     "css": "font-size: 14px; ",
     "text": "toLowerCase"
   },
@@ -284,7 +280,13 @@
     "y": 1
   },
   "_meta": {
-    "version": 13,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Strings",
       "image": "/assets/-528541954_8494",
@@ -295,7 +297,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748991434055,
+      "lastUpdate": 1763602509707,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -512,7 +514,6 @@
     "y": 250,
     "z": 287,
     "id": "l2ak",
-    "var": "string. ",
     "text": "shuffle"
   }
 }
