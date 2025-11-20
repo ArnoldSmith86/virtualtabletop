@@ -52,11 +52,22 @@ function fillPlayerList(players, active) {
       toServer('playerColor', { player, color: toHex(e.target.value) });
     });
     $('.playerName', entry).addEventListener('change', function(e) {
-      toServer('rename', { oldName: player, newName: e.target.value });
+      if(e.target.value)
+        toServer('rename', { oldName: player, newName: e.target.value });
     });
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
+
+      const randomizeButton = document.createElement('button');
+      randomizeButton.className = 'randomizeNameButton';
+      randomizeButton.innerText = '🎲';
+      randomizeButton.title = 'Generate new name';
+      randomizeButton.onclick = () => {
+        const newName = generateName();
+        toServer('rename', { oldName: playerName, newName: newName });
+      };
+      entry.appendChild(randomizeButton);
     } else {
       entry.className = 'activePlayerEntry';
     }
@@ -122,7 +133,8 @@ onLoad(function() {
   });
   onMessage('rename', function(args) {
     const oldName = playerName;
-    playerName = args;
+    if(args)
+      playerName = args;
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();

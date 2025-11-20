@@ -183,3 +183,21 @@ label.ui-line::before{
 .cursor.hidden {
   display: none;
 }
+
+#playerList .randomizeNameButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 0 0.2em;
+  margin: 0;
+  line-height: 1;
+  color: inherit;
+  opacity: 0.6;
+  transition: opacity 0.1s, transform 0.1s;
+}
+
+#playerList .randomizeNameButton:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
