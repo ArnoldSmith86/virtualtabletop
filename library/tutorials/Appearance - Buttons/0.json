@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Buttons",
       "image": "/assets/1091245433_5809",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
       "showName": false,
-      "lastUpdate": 1752119076255,
+      "lastUpdate": 1763600323635,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -155,7 +158,6 @@
     "height": 250,
     "z": 73,
     "css": "font-size:20px",
-    "editable": true,
     "text": "Link between both approaches\n\nProperty                  -> CSS variable associated: Function\n\ntextColor                 -> --wcFont: Original font color\ntextColorOH           -> --wcFontOH: On hover font color\nbackgroundColor  -> --wcMain: Original background color\nborderColorOH      -> --wcMainOH: On hover background color\nborderColor            -> --wcBorder: Original border color\nborderColorOH      -> --wcBorderOH: On hover border color"
   }
 }

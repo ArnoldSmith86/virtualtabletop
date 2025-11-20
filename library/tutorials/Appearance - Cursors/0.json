@@ -1,6 +1,20 @@
 {
+  "8444": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "500",
+    "id": "8444",
+    "z": 83,
+    "parent": "swvx"
+  },
   "_meta": {
-    "version": 11,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Appearance - Cursors",
       "image": "/assets/-1585036984_5930",
@@ -10,7 +24,7 @@
       "mode": "",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749052198553,
+      "lastUpdate": 1763597950602,
       "showName": false,
       "skill": "",
       "description": "",
@@ -193,6 +207,12 @@
       {
         "func": "SHUFFLE",
         "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "VAR",
+        "variables": {
+          "cursorCSS": "${PROPERTY extraCursors of cursorCSS}"
+        }
       }
     ]
   },
@@ -565,50 +585,6 @@
       }
     ]
   },
-  "0fa6P": {
-    "type": "pile",
-    "id": "0fa6P",
-    "width": 73,
-    "height": 73,
-    "text": 1641,
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "property": "value",
-        "collection": "child",
-        "aggregation": "sum",
-        "variable": "value"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "relation": "+",
-        "value": "${value}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "GET",
-        "property": "value",
-        "collection": "child",
-        "aggregation": "sum",
-        "variable": "value"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "collection": "thisButton",
-        "relation": "-",
-        "value": "${value}"
-      }
-    ],
-    "handleCSS": {
-      "cursor": "help"
-    },
-    "z": 13,
-    "parent": "0fa6"
-  },
   "0fa6D": {
     "type": "deck",
     "id": "0fa6D",
@@ -770,62 +746,6 @@
         ]
       }
     ]
-  },
-  "0fa6C1000": {
-    "type": "card",
-    "id": "0fa6C1000",
-    "parent": "0fa6P",
-    "deck": "0fa6D",
-    "cardType": 1000,
-    "z": 2
-  },
-  "0fa6C500": {
-    "type": "card",
-    "id": "0fa6C500",
-    "parent": "0fa6P",
-    "deck": "0fa6D",
-    "cardType": 500,
-    "z": 3
-  },
-  "0fa6C100": {
-    "type": "card",
-    "id": "0fa6C100",
-    "parent": "0fa6P",
-    "deck": "0fa6D",
-    "cardType": 100,
-    "z": 4
-  },
-  "0fa6C25": {
-    "type": "card",
-    "id": "0fa6C25",
-    "parent": "0fa6P",
-    "deck": "0fa6D",
-    "cardType": 25,
-    "z": 5
-  },
-  "0fa6C10": {
-    "type": "card",
-    "id": "0fa6C10",
-    "deck": "0fa6D",
-    "cardType": 10,
-    "z": 6,
-    "parent": "0fa6P"
-  },
-  "0fa6C5": {
-    "type": "card",
-    "id": "0fa6C5",
-    "deck": "0fa6D",
-    "cardType": 5,
-    "z": 7,
-    "parent": "0fa6P"
-  },
-  "0fa6C1": {
-    "type": "card",
-    "id": "0fa6C1",
-    "deck": "0fa6D",
-    "cardType": 1,
-    "z": 55,
-    "parent": "0fa6P"
   },
   "uawy1": {
     "type": "canvas",
@@ -1003,5 +923,95 @@
     "z": 14,
     "id": "afh7",
     "text": "cursor set in widgets"
+  },
+  "wr9t": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "1",
+    "id": "wr9t",
+    "z": 73,
+    "parent": "swvx"
+  },
+  "os75": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "5",
+    "id": "os75",
+    "z": 75,
+    "parent": "swvx"
+  },
+  "swvx": {
+    "type": "pile",
+    "parent": "0fa6",
+    "x": 4,
+    "y": 4,
+    "width": 73,
+    "height": 73,
+    "text": 1641,
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "property": "value",
+        "collection": "child",
+        "aggregation": "sum",
+        "variable": "value"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "collection": "thisButton",
+        "relation": "+",
+        "value": "${value}"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "GET",
+        "property": "value",
+        "collection": "child",
+        "aggregation": "sum",
+        "variable": "value"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "collection": "thisButton",
+        "relation": "-",
+        "value": "${value}"
+      }
+    ],
+    "id": "swvx"
+  },
+  "4fb6": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "10",
+    "id": "4fb6",
+    "z": 77,
+    "parent": "swvx"
+  },
+  "ly35": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "25",
+    "id": "ly35",
+    "z": 79,
+    "parent": "swvx"
+  },
+  "9ejw": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "100",
+    "id": "9ejw",
+    "z": 81,
+    "parent": "swvx"
+  },
+  "b60l": {
+    "deck": "0fa6D",
+    "type": "card",
+    "cardType": "1000",
+    "id": "b60l",
+    "z": 88,
+    "parent": "swvx"
   }
 }

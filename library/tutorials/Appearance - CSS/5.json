@@ -39,24 +39,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1116,7 +1098,10 @@
     "z": 4
   },
   "_meta": {
-    "version": 9,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - CSS",
       "image": "/assets/1323294024_5493",
@@ -1127,7 +1112,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762711744356,
+      "lastUpdate": 1763600448103,
       "skill": "",
       "description": "",
       "similarImage": "",

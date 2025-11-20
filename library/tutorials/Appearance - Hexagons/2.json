@@ -10,103 +10,6 @@
     "z": 66,
     "id": "8fr3"
   },
-  "rn4t-copy001-copy001": {
-    "type": "button",
-    "text": "=",
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Input1",
-        "mode": "set"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "Num1"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Input2",
-        "mode": "set"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "Num2"
-      },
-      {
-        "func": "SELECT",
-        "property": "id",
-        "value": "Operation",
-        "mode": "set"
-      },
-      {
-        "func": "GET",
-        "property": "text",
-        "variable": "maththis"
-      },
-      {
-        "func": "COMPUTE",
-        "operation": "/",
-        "applyVariables": [
-          {
-            "variable": "maththis",
-            "parameter": "operation"
-          },
-          {
-            "variable": "Num1",
-            "parameter": "operand1"
-          },
-          {
-            "variable": "Num2",
-            "parameter": "operand2"
-          }
-        ]
-      },
-      {
-        "func": "LABEL",
-        "label": "Result-copy001-copy001",
-        "significantDigits": 3,
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "COMPUTE"
-          }
-        ]
-      }
-    ],
-    "x": 2298,
-    "y": 232,
-    "id": "rn4t-copy001-copy001",
-    "css": "font-size: 25px",
-    "z": 139
-  },
-  "Input1-copy001-copy001": {
-    "type": "label",
-    "css": "font-size: 25px; border: 2px solid blue",
-    "height": 35,
-    "width": 100,
-    "x": 1958,
-    "y": 256,
-    "id": "Input1-copy001-copy001",
-    "editable": true,
-    "text": 7.2,
-    "z": 140
-  },
-  "Input2-copy001-copy001": {
-    "type": "label",
-    "css": "font-size: 25px; border: 2px solid blue",
-    "height": 35,
-    "width": 100,
-    "x": 2179,
-    "y": 256,
-    "editable": true,
-    "id": "Input2-copy001-copy001",
-    "text": 1.7,
-    "z": 141
-  },
   "Result-copy001-copy001": {
     "type": "label",
     "text": 8.9,
@@ -118,20 +21,14 @@
     "id": "Result-copy001-copy001",
     "z": 142
   },
-  "Operation-copy001-copy001": {
-    "type": "label",
-    "css": "font-size: 25px; border: 2px solid red",
-    "height": 35,
-    "width": 70,
-    "x": 2085,
-    "y": 256,
-    "editable": true,
-    "id": "Operation-copy001-copy001",
-    "text": "+",
-    "z": 143
-  },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Appearance - Hexagons",
       "image": "/assets/583165380_6053",
@@ -142,7 +39,7 @@
       "time": "0",
       "attribution": "Calculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/",
       "showName": false,
-      "lastUpdate": 1749052212003,
+      "lastUpdate": 1763598270575,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -201,9 +98,10 @@
             "y": 0,
             "width": 86.6,
             "height": 100,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -220,15 +118,15 @@
         {
           "x": 88.6,
           "y": 152,
-          "offsetX": 0,
-          "offsetY": 0
+          "offsetX": -44.3,
+          "offsetY": -76
         },
         {
           "x": 88.6,
           "y": 152,
-          "offsetX": 44.3,
-          "offsetY": 76,
-          "maxY": 810
+          "offsetX": 0,
+          "offsetY": 0,
+          "maxY": 734
         }
       ]
     },
@@ -422,9 +320,10 @@
             "y": 0,
             "width": 100,
             "height": 86.6,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -441,14 +340,14 @@
         {
           "x": 150,
           "y": 86.6,
-          "offsetX": 0,
-          "offsetY": 0
+          "offsetX": -75,
+          "offsetY": -43.3
         },
         {
           "x": 150,
           "y": 86.6,
-          "offsetX": 75,
-          "offsetY": 43.3
+          "offsetX": 0,
+          "offsetY": 0
         }
       ]
     },
