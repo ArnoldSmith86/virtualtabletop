@@ -579,7 +579,13 @@
     "text": "addme"
   },
   "_meta": {
-    "version": 13,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Arrays",
       "image": "/assets/-2038908983_7396",
@@ -590,7 +596,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763604863985,
+      "lastUpdate": 1763605491580,
       "skill": "",
       "description": "",
       "similarImage": "",

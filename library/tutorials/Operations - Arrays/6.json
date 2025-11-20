@@ -544,7 +544,13 @@
     "id": "uttb"
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Arrays",
       "image": "/assets/-2038908983_7396",
@@ -555,7 +561,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763604863987,
+      "lastUpdate": 1763605491582,
       "skill": "",
       "description": "",
       "similarImage": "",

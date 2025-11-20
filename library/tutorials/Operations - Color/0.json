@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 8,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Color",
       "image": "/assets/-1573388835_8422",
@@ -18,7 +24,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1763601807817,
+      "lastUpdate": 1763605504901,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Basic",

@@ -84,7 +84,13 @@
     "text": "And new string with spaces and punctuation goes here."
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Strings",
       "image": "/assets/-528541954_8494",
@@ -95,7 +101,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763602509705,
+      "lastUpdate": 1763605575301,
       "skill": "",
       "description": "",
       "similarImage": "",

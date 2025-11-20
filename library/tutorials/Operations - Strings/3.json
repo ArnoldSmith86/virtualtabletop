@@ -11,7 +11,13 @@
     "y": 1
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Strings",
       "image": "/assets/-528541954_8494",
@@ -22,7 +28,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763602509708,
+      "lastUpdate": 1763605575304,
       "skill": "",
       "description": "",
       "similarImage": "",

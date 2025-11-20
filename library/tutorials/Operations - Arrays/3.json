@@ -494,7 +494,13 @@
     "height": 50
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Arrays",
       "image": "/assets/-2038908983_7396",
@@ -505,7 +511,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763604863984,
+      "lastUpdate": 1763605491579,
       "skill": "",
       "description": "",
       "similarImage": "",

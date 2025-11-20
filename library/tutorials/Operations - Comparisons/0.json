@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Comparisons",
       "image": "/assets/1894978492_9158",
@@ -11,7 +17,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1763601957869,
+      "lastUpdate": 1763605533691,
       "skill": "",
       "description": "",
       "similarImage": "",
