@@ -2685,6 +2685,10 @@ function jeGetKeyAfter(key) {
   }
 }
 
+function jeIsInlineTag(tagName) {
+  return [ 'a', 'abbr', 'acronym', 'b', 'bdo', 'big', 'br', 'button', 'cite', 'em', 'i', 'img', 'label', 'map', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'var', 'strike' ].indexOf(tagName.toLowerCase()) != -1;
+}
+
 function jeFormatHTML(html, baseIndent) {
   if (!html || !html.trim()) return html;
   
@@ -2722,9 +2726,61 @@ function jeFormatHTML(html, baseIndent) {
     return { start: -1, end: -1 };
   }
   
-  function formatContent(startPos, endPos, currentDepth) {
+  function containsBlockChild(contentStart, contentEnd) {
+    let pos = trimmed.indexOf('<', contentStart);
+    while (pos !== -1 && pos < contentEnd) {
+      const tagEnd = trimmed.indexOf('>', pos);
+      if (tagEnd === -1 || tagEnd > contentEnd) break;
+      const tagInner = trimmed.substring(pos + 1, tagEnd).trim();
+      const isClosing = tagInner.startsWith('/');
+      const tagName = (isClosing ? tagInner.substring(1) : tagInner).split(/\s/)[0].toLowerCase();
+      const isSelfClosing = selfClosingTags.includes(tagName) || tagInner.endsWith('/');
+      if (!isClosing && !isSelfClosing && !jeIsInlineTag(tagName)) {
+        return true;
+      }
+      pos = trimmed.indexOf('<', tagEnd + 1);
+    }
+    return false;
+  }
+
+  function formatContent(startPos, endPos, currentDepth, parentIsBlock) {
     const result = [];
     let i = startPos;
+    const currentIndent = baseIndent + '  '.repeat(currentDepth);
+    let lineBuffer = '';
+    let lineLength = 0;
+    
+    function flushLine() {
+      if (!parentIsBlock || !lineLength) return;
+      result.push(currentIndent + lineBuffer);
+      lineBuffer = '';
+      lineLength = 0;
+    }
+    
+    function appendToken(tokenText) {
+      if (!parentIsBlock) return;
+      const trimmedToken = tokenText.replace(/\s+/g, ' ').trim();
+      if (!trimmedToken) return;
+      const tokenLength = trimmedToken.length;
+      
+      if (tokenLength > 60) {
+        flushLine();
+        result.push(currentIndent + trimmedToken);
+        return;
+      }
+      
+      if (lineLength && lineLength + 1 + tokenLength > 60) {
+        flushLine();
+      }
+      
+      if (lineLength) {
+        lineBuffer += ' ';
+        lineLength += 1;
+      }
+      
+      lineBuffer += trimmedToken;
+      lineLength += tokenLength;
+    }
     
     while (i < endPos) {
       if (trimmed[i] === '<') {
@@ -2735,23 +2791,36 @@ function jeFormatHTML(html, baseIndent) {
         const isClosing = tagContent.trim().startsWith('/');
         const tagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
         const isSelfClosing = selfClosingTags.includes(tagName) || tagContent.trim().endsWith('/');
+        const isInlineTag = jeIsInlineTag(tagName);
         
         if (isClosing) {
+          flushLine();
           result.push(baseIndent + '  '.repeat(Math.max(0, currentDepth - 1)) + '<' + tagContent + '>');
           i = tagEnd + 1;
         } else if (isSelfClosing) {
+          flushLine();
           result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
           i = tagEnd + 1;
         } else {
           const closingTag = findMatchingClosingTag(tagEnd + 1, tagName);
           if (closingTag.end !== -1 && closingTag.end <= endPos) {
             const fullTagContent = trimmed.substring(i, closingTag.end).trim();
-            if (fullTagContent.length <= 60) {
+            const hasBlockChild = containsBlockChild(tagEnd + 1, closingTag.start);
+            if (isInlineTag) {
+              if (parentIsBlock) {
+                appendToken(fullTagContent);
+              } else {
+                result.push(baseIndent + '  '.repeat(currentDepth) + fullTagContent);
+              }
+              i = closingTag.end;
+            } else if (!hasBlockChild && fullTagContent.length <= 60) {
+              flushLine();
               result.push(baseIndent + '  '.repeat(currentDepth) + fullTagContent);
               i = closingTag.end;
             } else {
+              flushLine();
               result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
-              const nestedResult = formatContent(tagEnd + 1, closingTag.start, currentDepth + 1);
+              const nestedResult = formatContent(tagEnd + 1, closingTag.start, currentDepth + 1, true);
               result.push(...nestedResult);
               const actualClosingTag = trimmed.substring(closingTag.start, closingTag.end);
               result.push(baseIndent + '  '.repeat(currentDepth) + actualClosingTag);
@@ -2767,23 +2836,39 @@ function jeFormatHTML(html, baseIndent) {
         if (nextTag === -1 || nextTag >= endPos) {
           const textContent = trimmed.substring(i, endPos).trim();
           if (textContent) {
-            result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+            if (parentIsBlock) {
+              const words = textContent.split(/\s+/);
+              for (const word of words) {
+                appendToken(word);
+              }
+            } else {
+              result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+            }
           }
           break;
         }
         
         const textContent = trimmed.substring(i, nextTag).trim();
         if (textContent) {
-          result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+          if (parentIsBlock) {
+            const words = textContent.split(/\s+/);
+            for (const word of words) {
+              appendToken(word);
+            }
+          } else {
+            result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+          }
         }
         i = nextTag;
       }
     }
     
+    flushLine();
+    
     return result;
   }
   
-  return formatContent(0, trimmed.length, 0).join('\n');
+  return formatContent(0, trimmed.length, 0, false).join('\n');
 }
 
 // START routine logging
