@@ -1,8 +1,9 @@
 import { asArray, onLoad, rand } from '../domhelpers.js';
+import { generateName } from '../generatednames.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
-let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand()*1000);
+let playerName = localStorage.getItem('playerName') || generateName();
 let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
@@ -30,7 +31,8 @@ function getPlayerDetails() {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  playerCursors[playerName].style = `--playerName:"${playerName}";--playerColor:${playerColor};`;
+  // Remove zero-width space from player name for display
+  playerCursors[playerName].style = `--playerName:"${playerName.replace(/\u200b/g, '')}";--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   playerCursors[playerName].setAttribute("data-player",playerName);
   $('#playerCursors').appendChild(playerCursors[playerName]);
