@@ -2347,7 +2347,9 @@ function jeColorize() {
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i) {
-          if(l[i] && match[i])
+          if(c[i] === 'string' && /<[^>]+>/.test(match[i]))
+            c[i] = null;
+          if(c[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
           else if(match[i])
             match[i] = html(match[i]);
