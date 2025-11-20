@@ -90,12 +90,14 @@ class WidgetsModule extends SidebarModule {
       <div class="buttonBar" style="display: flex; align-items: center; margin-bottom: 10px;">
         <span class="widgetFilerIcon">search</span>
         <input type="text" id="widgetFilter" placeholder="Filter..." style="flex-grow: 1;flex-shrink: 1;margin-right: 5px;">
-        <div class="segmented-control">
-          <button id="listViewButton" class="sidebarButton active" icon="list"><span>View as List</span></button>
-          <button id="gridViewButton" class="sidebarButton" icon="grid_view"><span>View as Grid</span></button>
+        <div class="actions">
+          <div class="segmented-control">
+            <button id="listViewButton" class="sidebarButton active" icon="list"><span>View as List</span></button>
+            <button id="gridViewButton" class="sidebarButton" icon="grid_view"><span>View as Grid</span></button>
+          </div>
+          <button icon="bookmark_add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widget</span></button>
+          <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
         </div>
-        <button icon="bookmark_add" id="saveWidgetsToBuffer" class="sidebarButton"><span>Save selected widget</span></button>
-        <button icon="edit" id="editWidgetsButton" class="sidebarButton"><span>Edit widgets</span></button>
       </div>
     `);
 
@@ -747,7 +749,7 @@ class WidgetsModule extends SidebarModule {
         state.unique = e.target.checked;
         this.updateWidget(state, source);
       };
-      item.querySelector('.preview-widget-label').style.display = isEditing ? 'inline-block' : 'none';
+      item.querySelector('.widget-label').style.display = isEditing ? 'flex' : 'none';
       const previewInput = item.querySelector('.preview-url-input');
       previewInput.onchange = e => {
         if (source === 'server' && !config.allowPublicLibraryEdits) return;
@@ -1113,10 +1115,12 @@ class WidgetsModule extends SidebarModule {
                 ${this.renderPreviewHTML(state.preview)}
               </div>
               <div class="widget-info" style="flex-grow: 1;">
-                  <label class="name-widget-label widget-label"><span style="font-size: 10px; color: #ccc;">Name</span><input value="${html(state.name || state.id)}" readonly></label>
+                  <label class="name-widget-label widget-label" style="display: none;">Name</label>
+                  <input value="${html(state.name || state.id)}" readonly>
                   <div class="widget-type">${widgetTypes}${hasAddToRoomRoutine ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="hasRoutine" fill="currentColor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm-24 60v137q0 16 15 19.5t23-10.5l121-237q5-10-1-19.5t-17-9.5h-87v-139q0-16-15-20t-23 10L346-449q-5 11 .5 20t16.5 9h93Z"/></svg>' : ''}${state.unique ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="isUnique" fill="currentColor"><path d="M760-360q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28 12t-28-12l-64-63q-12-12-12-28.5t12-28.5Zm40-480q12 12 12 28.5T800-783l-63 63q-12 12-28.5 12T680-720q-12-12-12-28.5t12-28.5l64-63q12-12 28-12t28 12Zm-640 0q12-12 28.5-12t28.5 12l63 64q12 12 12 28t-12 28q-12 12-28.5 12T223-720l-63-63q-12-12-12-28.5t12-28.5Zm40 480q12 12 12 28.5T200-303l-63 63q-12 12-28.5 12T80-240q-12-12-12-28.5T80-297l64-63q12-12 28-12t28 12Zm154 73 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Zm126-194Zm0 212L314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z"/></svg>' : ''}</div>
-                  <label class="preview-widget-label widget-label" style="display: none;"><span style="font-size: 10px; color: #ccc;">Preview</span><input class="preview-url-input" type="text" value="${html(state.preview || '')}" placeholder="https://... or symbol:NAME"></label>
-                  <label class="unique-widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
+                  <label class="preview-widget-label widget-label">Preview</label>
+                  <input class="preview-url-input" type="text" value="${html(state.preview || '')}" placeholder="https://... or symbol:NAME">
+                  <label class="unique-widget-label widget-label"><input type="checkbox" ${state.unique ? 'checked' : ''}> Unique</label>
               </div>
               <div class="actions">
                   <button icon="add" class="sidebarButton"><span>Add widget to room</span></button>

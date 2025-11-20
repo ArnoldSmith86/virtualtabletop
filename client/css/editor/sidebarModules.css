@@ -20,6 +20,21 @@
   padding-left: 20px;
 }
 
+.editorModule.widgets .buttonBar {
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.editorModule.widgets .buttonBar .actions {
+  flex-grow: 0;
+  display: flex;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
 .editorModule .buttonBar {
   text-align: right;
   position: relative;
@@ -443,8 +458,10 @@
 }
 
 .widgets.editorModule li .widget-info {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  margin-left: 10px;
+  margin: 0 10px;
 }
 
 .widgets.editorModule li .widget-info .widget-type {
@@ -484,6 +501,7 @@
 .widgets.editorModule li .actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .widgets.editorModule #editWidgetsButton.active {
@@ -491,12 +509,12 @@
   background: var(--VTTblueDark);
 }
 
-.widgets.editorModule .unique-widget-label, .widgets.editorModule .name-widget-label span {
+.widgets.editorModule .widget-label, .widgets.editorModule .preview-url-input {
   display: none;
 }
 
-.widgets.editorModule .editing .name-widget-label span {
-  display: block;
+.widgets.editorModule .editing .widget-label, .widgets.editorModule .editing .preview-url-input {
+  display: flex;
 }
 
 .widget-label > span {
@@ -507,6 +525,8 @@
   display: inline-flex;
   align-items: center;
   margin-right: 5px;
+  color: var(--textColor);
+  font-size: 0.9em;
 }
 
 .widget-list-container{
@@ -794,13 +814,12 @@ div.widget-name {
   border-right: none;
 }
 
-.editing-widgets .widget-list li .preview-widget-label {
-  display: flex;
+.editing-widgets .widget-list li .widget-label {
+  display: block;
   align-items: center;
   font-size: 10px;
-  color: #ccc;
+  color: #888;
   margin-right: 5px;
-  border-top: 1px solid #ccc;
 }
 
 .widget-group {
