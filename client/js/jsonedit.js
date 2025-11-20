@@ -2552,11 +2552,21 @@ function jeGetContext() {
   // go through all the lines up until the cursor and use the indentation to figure out the context
   let keys = [ jeStateNow && jeStateNow.type || 'basic' ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
-    const m = line.match(/^( +)(["{ftn0-9-])([^"]*)/);
-    if(m) {
-      const depth = m[1].length/2;
-      keys[depth] = m[2]=='{' || line.match(/^ +("[^"]*"|false|true|null|-?[0-9]+\.?[0-9]*),?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
+    const keyMatch = line.match(/^(\s+)"((?:\\.|[^"\\])*)"\s*:/);
+    if(keyMatch) {
+      const depth = keyMatch[1].length/2;
+      keys[depth] = keyMatch[2];
       keys = keys.slice(0, depth+1);
+      continue;
+    }
+
+    const valueMatch = line.match(/^( +)(["{ftn0-9-])/);
+    if(valueMatch) {
+      const depth = valueMatch[1].length/2;
+      if(valueMatch[2]=='{' || line.match(/^ +("[^"]*"|false|true|null|-?[0-9]+\.?[0-9]*),?$/)) {
+        keys[depth] = (keys[depth] === undefined ? -1 : keys[depth]) + 1;
+        keys = keys.slice(0, depth+1);
+      }
     }
     const mClose = line.match(/^( *)[\]}]/);
     if(mClose)
