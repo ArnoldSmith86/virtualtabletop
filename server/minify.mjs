@@ -127,6 +127,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/assets.js',
     'client/js/editor/sidebar/toolbox.js',
     'client/js/editor/sidebar/gameSettings.js',
+    'client/js/editor/sidebar/widgets.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
