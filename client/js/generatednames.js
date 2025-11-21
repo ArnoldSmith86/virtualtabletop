@@ -10,8 +10,8 @@ const adjectives = [
 
 const nouns = [
   "Board", "Box", "Bag", "Card", "Coin", "Cube",
-  "Die", "Disk", "Hex", "Map", "Mat", "Pawn",
-  "Piece", "Tile", "Token"
+  "Die", "Disk", "Hex", "Map", "Mat", "Meeple", "Pawn",
+  "Piece", "Pin", "Spinner", "Tile", "Token"
 ];
 
 export function generateName() {

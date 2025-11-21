@@ -667,54 +667,6 @@ onLoad(function() {
     $('#playerInviteURL').innerText = location.href;
   });
 
-  document.addEventListener('focusin', function(e) {
-    const input = e.target;
-    let value;
-    const isContentEditable = input.isContentEditable;
-    
-    if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
-      value = input.value;
-    } else if (isContentEditable) {
-      value = input.textContent;
-    } else {
-      return;
-    }
-
-    if (value && value.includes('\u200B')) {
-      if (isContentEditable) {
-        input.dataset.originalValue = input.innerHTML;
-        input.textContent = '';
-      } else {
-        input.dataset.originalValue = value;
-        input.value = '';
-      }
-    }
-  });
-
-  document.addEventListener('focusout', function(e) {
-    const input = e.target;
-    if (input.dataset.originalValue === undefined) return;
-
-    let value;
-    const isContentEditable = input.isContentEditable;
-
-    if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
-      value = input.value;
-    } else if (isContentEditable) {
-      value = input.textContent;
-    } else {
-      return;
-    }
-
-    if (!value || value === '') {
-      if (isContentEditable) {
-        input.innerHTML = input.dataset.originalValue;
-      } else {
-        input.value = input.dataset.originalValue;
-      }
-    }
-    delete input.dataset.originalValue;
-  });
 });
 
 function getEdit() {

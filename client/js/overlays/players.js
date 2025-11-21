@@ -48,6 +48,17 @@ function fillPlayerList(players, active) {
   activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
+  function handlePlayerNameInput(e) {
+    const sanitized = e.target.value.replace(/\u200b/g, '');
+    if (e.type === 'focus' && e.target.value !== sanitized) {
+      e.target.placeholder = sanitized;
+      e.target.value = '';
+    } else if (e.type === 'blur' && e.target.value === '' && e.target.placeholder) {
+      e.target.value = e.target.placeholder;
+      e.target.placeholder = '';
+    }
+  }
+
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
     $('.teamColor', entry).value = players[player];
@@ -65,19 +76,9 @@ function fillPlayerList(players, active) {
       if(e.target.value)
         toServer('rename', { oldName: player, newName: e.target.value });
     });
-    $('.playerName', entry).addEventListener('focus', function(e) {
-      const sanitized = e.target.value.replace(/\u200b/g, '');
-      if (e.target.value !== sanitized) {
-        e.target.placeholder = sanitized;
-        e.target.value = '';
-      }
-    });
-    $('.playerName', entry).addEventListener('blur', function(e) {
-      if (e.target.value === '' && e.target.placeholder) {
-        e.target.value = e.target.placeholder;
-        e.target.placeholder = '';
-      }
-    });
+    $('.playerName', entry).addEventListener('focus', handlePlayerNameInput);
+    $('.playerName', entry).addEventListener('blur', handlePlayerNameInput);
+
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
