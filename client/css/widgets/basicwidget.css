@@ -3,3 +3,7 @@
   opacity: 0.3;
   pointer-events: none;
 }
+
+.basic.widget.html {
+  white-space: collapse;
+}
