@@ -555,8 +555,10 @@ function addWhiteSpacePreWrapToCss(css) {
     return 'white-space: pre-wrap';
   if(typeof css == 'string')
     return `${css}; white-space: pre-wrap`;
-  if(isNestedCSS(css))
-    return addWhiteSpacePreWrapToCss(css['default']);
+  if(isNestedCSS(css)) {
+    css['default'] = addWhiteSpacePreWrapToCss(css['default'] || {});
+    return css;
+  }
   if(typeof css == 'object' && css !== null)
     css['white-space'] = 'pre-wrap';
   return css;
