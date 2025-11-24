@@ -1,34 +1,4 @@
 {
-  "_meta": {
-    "version": 19,
-    "gameSettings": {
-      "legacyModes": {}
-    },
-    "info": {
-      "name": "Vara",
-      "image": "/assets/-845526543_68938",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/image/388198/diam",
-      "year": "2003",
-      "mode": "vs",
-      "time": "10",
-      "attribution": "Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.<br><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1763950053452,
-      "showName": true,
-      "skill": "",
-      "description": "Place, move, and stack tokens to align two of your own color at the same height on opposite sides of the board.",
-      "similarImage": "",
-      "similarName": "Diam",
-      "similarDesigner": "Alain Couchot",
-      "similarAwards": "1998 Concours International de Créateurs de Jeux de Société\n2005 As d'Or - Jeu de l'Année Nominee",
-      "ruleText": "<b>Objective:</b><div><br></div><div>Be the first to get two tokens of the same color at the same height on opposite sides of the board. The matching tokens must be on level two to four. Tokens on the first level do not count.</div><div><br></div><div><b>Setup:</b></div><div><b><br></b></div><div>Each player has a reserve of tokens off the board.</div><div><ul><li>2 players: Each player selects two colors.</li><li>3 players: One player selects two colors. The other players select one color each.</li><li>4 players: Each player selects a single color.</li></ul><div>Decide which player goes first.</div></div><div><br></div><div><b>Game Play:</b><br><div><br></div></div><div>During your turn either place a token from your reserve or move one of your tokens already on the board to an adjacent space. Stacks may never exceed 4 tokens high.</div><div><ul><li>Using the reserve. Place your token either</li><ul><li>On any empty space on the board or</li><li>On top of any stack on the board that is less than 4 tokens high.</li></ul><li>Moving tokens. Move one of your own tokens on the board to an adjacent space.</li><ul><li>The adjacent space may be empty or occupied. If occupied, stack your token on top of the tokens already in the space.</li><li>When moving a token that has pieces stacked above it, the entire stack moves with it. In this implementation, click and drag the lower token to move all the tokens above it.</li></ul></ul><div><div><b>Turns:</b></div><div><ul><li>2 players: Players alternate turns.</li><li>4 players: The players are in teams of two. Alternate turns between teams and players. A player may not place a token from the partner's reserve, but may move a partner's token already on the board.</li><li>3 players: The two single-color players form a team against the player controlling two colors. Use the same turn structure and team rules as the 4- player game.&nbsp;</li></ul><div><b>Winning:</b></div></div></div></div><div><br></div><div>The first player (or team) to get two tokens of the same color at the same height (level two to four) on opposite spaces on the board wins. If multiple players meet the win condition simultaneously, the win goes to the player (or team) whose matching pawns are on the highest level.</div>",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "2-4"
-    }
-  },
   "holder1": {
     "type": "holder",
     "id": "holder1",
@@ -43,7 +13,93 @@
     "dropTarget": {},
     "dropOffsetX": 25,
     "dropOffsetY": 80,
-    "dropLimit": 1
+    "dropLimit": 2,
+    "enterRoutine": [
+      "var stop = false",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "lastHolder"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${stop}",
+                "operand2": false,
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "${lastHolder}"
+                  },
+                  {
+                    "func": "COUNT"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "lastHolder"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${COUNT}",
+                    "operand2": 1,
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${value}",
+                        "relation": "<",
+                        "operand2": 4,
+                        "thenRoutine": [
+                          "var stop = true",
+                          {
+                            "func": "MOVE",
+                            "collection": "child",
+                            "from": "${PROPERTY id}",
+                            "to": "${lastHolder}"
+                          }
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "SET",
+                            "collection": "child",
+                            "property": "y",
+                            "value": 150
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   "holder2": {
     "inheritFrom": {
@@ -153,11 +209,11 @@
       "pieceMaster": "*"
     },
     "color": "%2301413c",
-    "z": 1279,
-    "parent": "piece2",
+    "z": 1666,
     "resetProperties": {
       "parent": "piece2"
-    }
+    },
+    "parent": "piece2"
   },
   "piece2": {
     "type": "holder",
@@ -168,7 +224,7 @@
       "pieceMaster": "*"
     },
     "color": "%2301413c",
-    "z": 1348,
+    "z": 1577,
     "resetProperties": {
       "parent": "piece3"
     },
@@ -183,11 +239,11 @@
       "pieceMaster": "*"
     },
     "color": "%23a58184",
-    "z": 1241,
-    "parent": "piece16",
+    "z": 1507,
     "resetProperties": {
       "parent": "piece16"
-    }
+    },
+    "parent": "piece16"
   },
   "piece16": {
     "type": "holder",
@@ -198,7 +254,7 @@
       "pieceMaster": "*"
     },
     "color": "%23a58184",
-    "z": 1323,
+    "z": 1521,
     "resetProperties": {
       "parent": null,
       "x": 1250,
@@ -214,7 +270,7 @@
       "pieceMaster": "*"
     },
     "color": "%23a58184",
-    "z": 1332,
+    "z": 1676,
     "resetProperties": {
       "parent": "piece15"
     },
@@ -229,7 +285,7 @@
       "pieceMaster": "*"
     },
     "color": "%23a58184",
-    "z": 1325,
+    "z": 1592,
     "resetProperties": {
       "parent": "piece14"
     },
@@ -244,7 +300,7 @@
       "pieceMaster": "*"
     },
     "color": "%236e4800",
-    "z": 1337,
+    "z": 1516,
     "resetProperties": {
       "parent": null,
       "x": 250,
@@ -260,7 +316,7 @@
       "pieceMaster": "*"
     },
     "color": "%236e4800",
-    "z": 1352,
+    "z": 1477,
     "resetProperties": {
       "parent": "piece12"
     },
@@ -275,7 +331,7 @@
       "pieceMaster": "*"
     },
     "color": "%236e4800",
-    "z": 1339,
+    "z": 1485,
     "resetProperties": {
       "parent": "piece11"
     },
@@ -290,7 +346,7 @@
       "pieceMaster": "*"
     },
     "color": "%236e4800",
-    "z": 1334,
+    "z": 1587,
     "resetProperties": {
       "parent": "piece10"
     },
@@ -305,7 +361,7 @@
       "pieceMaster": "*"
     },
     "color": "%233e175a",
-    "z": 1346,
+    "z": 1680,
     "resetProperties": {
       "parent": null,
       "x": 1250,
@@ -321,11 +377,11 @@
       "pieceMaster": "*"
     },
     "color": "%233e175a",
-    "z": 1268,
-    "parent": "piece8",
+    "z": 1656,
     "resetProperties": {
       "parent": "piece8"
-    }
+    },
+    "parent": "piece8"
   },
   "piece6": {
     "type": "holder",
@@ -336,11 +392,11 @@
       "pieceMaster": "*"
     },
     "color": "%233e175a",
-    "z": 1270,
-    "parent": "piece7",
+    "z": 1681,
     "resetProperties": {
       "parent": "piece7"
-    }
+    },
+    "parent": "piece7"
   },
   "piece5": {
     "type": "holder",
@@ -351,7 +407,7 @@
       "pieceMaster": "*"
     },
     "color": "%233e175a",
-    "z": 1344,
+    "z": 1686,
     "resetProperties": {
       "parent": "piece6"
     },
@@ -366,7 +422,7 @@
       "pieceMaster": "*"
     },
     "color": "%2301413c",
-    "z": 1342,
+    "z": 1513,
     "resetProperties": {
       "parent": null,
       "x": 250,
@@ -382,7 +438,7 @@
       "pieceMaster": "*"
     },
     "color": "%2301413c",
-    "z": 1350,
+    "z": 1517,
     "resetProperties": {
       "parent": "piece4"
     },
@@ -441,6 +497,36 @@
     "icon": {
       "name": "restart_alt",
       "scale": 1.2
+    }
+  },
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Vara",
+      "image": "/assets/-845526543_68938",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/image/388198/diam",
+      "year": "2003",
+      "mode": "vs",
+      "time": "10",
+      "attribution": "Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.<br><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "lastUpdate": 1764011815674,
+      "showName": true,
+      "skill": "",
+      "description": "Place, move, and stack tokens to align two of your own color at the same height on opposite sides of the board.",
+      "similarImage": "",
+      "similarName": "Diam",
+      "similarDesigner": "Alain Couchot",
+      "similarAwards": "1998 Concours International de Créateurs de Jeux de Société\n2005 As d'Or - Jeu de l'Année Nominee",
+      "ruleText": "<b>Objective:</b><div><br></div><div>Be the first to get two tokens of the same color at the same height on opposite sides of the board. The matching tokens must be on level two to four. Tokens on the first level do not count.</div><div><br></div><div><b>Setup:</b></div><div><b><br></b></div><div>Each player has a reserve of tokens off the board.</div><div><ul><li>2 players: Each player selects two colors.</li><li>3 players: One player selects two colors. The other players select one color each.</li><li>4 players: Each player selects a single color.</li></ul><div>Decide which player goes first.</div></div><div><br></div><div><b>Game Play:</b><br><div><br></div></div><div>During your turn either place a token from your reserve or move one of your tokens already on the board to an adjacent space. Stacks may never exceed 4 tokens high.</div><div><ul><li>Using the reserve. Place your token either</li><ul><li>On any empty space on the board or</li><li>On top of any stack on the board that is less than 4 tokens high.</li></ul><li>Moving tokens. Move one of your own tokens on the board to an adjacent space.</li><ul><li>The adjacent space may be empty or occupied. If occupied, stack your token on top of the tokens already in the space.</li><li>When moving a token that has pieces stacked above it, the entire stack moves with it. In this implementation, click and drag the lower token to move all the tokens above it.</li></ul></ul><div><div><b>Turns:</b></div><div><ul><li>2 players: Players alternate turns.</li><li>4 players: The players are in teams of two. Alternate turns between teams and players. A player may not place a token from the partner's reserve, but may move a partner's token already on the board.</li><li>3 players: The two single-color players form a team against the player controlling two colors. Use the same turn structure and team rules as the 4- player game.&nbsp;</li></ul><div><b>Winning:</b></div></div></div></div><div><br></div><div>The first player (or team) to get two tokens of the same color at the same height (level two to four) on opposite spaces on the board wins. If multiple players meet the win condition simultaneously, the win goes to the player (or team) whose matching pawns are on the highest level.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
     }
   }
 }
