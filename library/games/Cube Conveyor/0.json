@@ -1,0 +1,3788 @@
+{
+  "_meta": {
+    "version": 19,
+    "info": {
+      "name": "Cube Conveyor",
+      "image": "/assets/676772144_45694",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/173649/king-chocolate",
+      "year": "2015",
+      "mode": "vs",
+      "time": "30-60",
+      "attribution": "<div>Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br></div><div>Tile bag by mousewax available as CC0.</div>",
+      "lastUpdate": 1764372801234,
+      "showName": true,
+      "skill": "",
+      "description": "Control production areas on the board to earn points when cubes move through.",
+      "similarImage": "",
+      "similarName": "King Chocolate",
+      "similarDesigner": "Stefan Alexander",
+      "similarAwards": "",
+      "ruleText": "<div>Players sit in seats. Click the Restart button to set up the game and randomly select a player to begin.</div><b><div><b><br></b></div>Objective:</b><div><b><br></b></div><div>Earn victory points (VP) when cubes move from groups that are controlled by your player or when you move cubes from uncontrolled groups. The player with the most VPs at the end of the game wins.</div><div><br></div><div><b>Turns:</b></div><div><b><br></b></div><div>Turns consist of two steps.</div><div><ul><li><b><u>Place a tile</u></b></li></ul></div><div>During your turn, start by placing a tile from your hand on the board so that it touches any existing tile. Tiles do not have to match color. A tile can connect 2 groups unless both groups have workers on them (even if the workers are from the same player). Tiles may be played inside the starting ring and you may leave gaps in the board.</div><div><br></div><div>Click a tile to rotate it.</div><div><br></div><div>If you do not have a tile in your hand at the start of your turn, draw a tile and your turn ends immediately.</div><div><ul><li><b><u>Spend action points (AP)</u></b></li></ul><div>You have up to 3 AP to spend per turn. You do not have to spend them all, but unused APs do not carry over to the next turn.&nbsp; Choose from any of the following options in any order:</div></div><div><br></div><div>1. <u>Place a worker (2 APs)</u>. Take a worker from your supply and move it to any unoccupied group of one or more connected hexes of the same color. Fill all of the circles on that group with cubes.</div><div><br></div><div>2. <u>Production (1 AP)</u>. Move cubes on the board. Cubes must move through the board in sequential order, from tiles numbered 1 to 6. The groups do not have to be adjacent, you do not have to control either group, and the group can even be uncontrolled by any player. You can move as many cubes as there are unoccupied circles on the destination group.</div><div><br></div><div>To move to tiles numbered 1, drag cubes from the cube bag or double-click the tile to automatically place a cube there. Put one cube for each circle in the group of 1 tiles.</div><div><br></div><div>To move cubes from a group 1-5 to the next higher group, drag and drop the cubes according to the requirements in this section. It costs 1 AP per destination group, so if you split the move from a single group to multiple destination groups, use 1 AP for each.</div><div><br></div><div>To move cubes from a group of 6 tiles, drag and drop them back into the cube bag.</div><div><br></div><div>When a cube moves from a group controlled by a player, that player earns 1VP per cube moved. When a cube moves from a group not controlled by any player, the player that did the production earns 1 VP per cube moved.</div><div><br></div><div>Use the + button to add VPs to your score (or the - button if you make a mistake). Although exact VP scores are not public information, a colored token moves across the screen when adding or subtracting points so that other players can see that a score has been updated.</div><div><br></div><div>3. Draw a tile (1 AP). Draw a new tile from the face up bank of tiles or click the Take One button to get a random tile from the bag. If you take from the bank, use the Fill button to bring the bank back up to 4 tiles.</div><div><br></div><div>You cannot have more than 5 tiles in your hand at any time. You must end your turn with at least 1 tile or face the penalty of not being able to use APs on your next turn after drawing a single card.</div><div><br></div><div>4. Move a worker (1 AP). Move 1 of your workers on the board to any other unoccupied group. Leave any cubes that were on the vacated group where they were and do not fill the new group with cubes from the bag.</div><div><br></div><div>After a player's turn ends, click the Turn button to move the turn clockwise (top to bottom in the room) and the next player starts their turn.</div><div><br></div><div><b>End of Game</b></div><div><br></div><div>The game ends immediately when it is no longer possible to refill the bank of tiles to 4. Use the Show Score button to reveal all players' VP scores. The player with the most VPs wins.</div>",
+      "helpText": "<div>Use mouse wheel, pinch on mobile, or blue and white VTT menu buttons to zoom in and out on the screen. The pieces are intentionally small so that they can all fit without adjusting the position of the board. Once zoomed in, click and drag anywhere on the empty board to pan the view. Each player independently controls their own zoom and pan.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-5"
+    },
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ".seat {\n  gap: 5px;\n  font-size: 21px;\n  box-shadow: 0 2px 5px #00000066;\n  text-shadow:\n    2px 2px 2px #000000bb,\n    -2px 2px 2px #000000bb,\n    2px -2px 2px #000000bb,\n    -2px -2px 2px #000000bb;\n  color: white;\n  border: 2px solid #000000bb;\n  box-sizing: border-box;\n}\n\n.seated.turn {\n  box-shadow: 0px 0px 20px 5px #000000"
+    }
+  },
+  "b1s": {
+    "id": "b1s",
+    "x": -15,
+    "color": "rgb(230,159,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 1,
+    "y": -261,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "doubleClickRoutine": [
+      "var x = ${mouseCoords.0} - 10",
+      "var y = ${mouseCoords.1} - 10",
+      {
+        "func": "MOVEXY",
+        "from": "cubeBag",
+        "x": "${x}",
+        "y": "${y}"
+      }
+    ]
+  },
+  "b2s": {
+    "id": "b2s",
+    "x": 25,
+    "color": "rgb(86,180,233)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 2,
+    "y": -261,
+    "inheritFrom": {
+      "bMaster": "*"
+    }
+  },
+  "b3s": {
+    "id": "b3s",
+    "x": 65,
+    "color": "rgb(0,158,115)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 3,
+    "y": -261,
+    "inheritFrom": {
+      "bMaster": "*"
+    }
+  },
+  "b4s": {
+    "id": "b4s",
+    "x": 105,
+    "color": "rgb(0,114,178)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 4,
+    "y": -261,
+    "inheritFrom": {
+      "bMaster": "*"
+    }
+  },
+  "b5s": {
+    "id": "b5s",
+    "x": 145,
+    "color": "rgb(213,94,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 5,
+    "y": -261,
+    "inheritFrom": {
+      "bMaster": "*"
+    }
+  },
+  "b6s": {
+    "id": "b6s",
+    "x": 185,
+    "color": "rgb(204,121,167)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 6,
+    "y": -261,
+    "inheritFrom": {
+      "bMaster": "*"
+    }
+  },
+  "b1d": {
+    "id": "b1d",
+    "x": -15,
+    "y": -221,
+    "color": "rgb(230,159,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 1,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "symbol": "join_NOFILL",
+    "doubleClickRoutine": [
+      "var x = ${mouseCoords.0} - 10",
+      "var y = ${mouseCoords.1} - 10",
+      {
+        "func": "MOVEXY",
+        "from": "cubeBag",
+        "x": "${x}",
+        "y": "${y}"
+      }
+    ]
+  },
+  "b2d": {
+    "id": "b2d",
+    "x": 25,
+    "y": -221,
+    "color": "rgb(86,180,233)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 2,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "b3d": {
+    "id": "b3d",
+    "x": 65,
+    "y": -221,
+    "color": "rgb(0,158,115)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 3,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "b4d": {
+    "id": "b4d",
+    "x": 105,
+    "y": -221,
+    "color": "rgb(0,114,178)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 4,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "b5d": {
+    "id": "b5d",
+    "x": 145,
+    "y": -221,
+    "color": "rgb(213,94,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 5,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "b6d": {
+    "id": "b6d",
+    "x": 185,
+    "y": -221,
+    "color": "rgb(204,121,167)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 6,
+    "inheritFrom": {
+      "bMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "s1s": {
+    "id": "s1s",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 1,
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "x": 264,
+    "y": -261,
+    "color": "rgb(230,159,0)",
+    "doubleClickRoutine": [
+      "var x = ${mouseCoords.0} - 10",
+      "var y = ${mouseCoords.1} - 10",
+      {
+        "func": "MOVEXY",
+        "from": "cubeBag",
+        "x": "${x}",
+        "y": "${y}"
+      }
+    ]
+  },
+  "s2s": {
+    "id": "s2s",
+    "x": 305,
+    "y": -260,
+    "color": "rgb(86,180,233)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 2,
+    "inheritFrom": {
+      "sMaster": "*"
+    }
+  },
+  "s3s": {
+    "id": "s3s",
+    "x": 345,
+    "y": -260,
+    "color": "rgb(0,158,115)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 3,
+    "inheritFrom": {
+      "sMaster": "*"
+    }
+  },
+  "s4s": {
+    "id": "s4s",
+    "x": 385,
+    "y": -260,
+    "content": 4,
+    "color": "rgb(0,114,178)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "inheritFrom": {
+      "sMaster": "*"
+    }
+  },
+  "s5s": {
+    "id": "s5s",
+    "x": 425,
+    "y": -260,
+    "content": 5,
+    "color": "rgb(213,94,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "inheritFrom": {
+      "sMaster": "*"
+    }
+  },
+  "s6s": {
+    "id": "s6s",
+    "x": 465,
+    "y": -260,
+    "content": 6,
+    "color": "rgb(204,121,167)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "inheritFrom": {
+      "sMaster": "*"
+    }
+  },
+  "s1d": {
+    "id": "s1d",
+    "x": 265,
+    "y": -220,
+    "content": 1,
+    "color": "rgb(230,159,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "symbol": "join_NOFILL",
+    "doubleClickRoutine": [
+      "var x = ${mouseCoords.0} - 10",
+      "var y = ${mouseCoords.1} - 10",
+      {
+        "func": "MOVEXY",
+        "from": "cubeBag",
+        "x": "${x}",
+        "y": "${y}"
+      }
+    ]
+  },
+  "s2d": {
+    "id": "s2d",
+    "x": 305,
+    "y": -220,
+    "color": "rgb(86,180,233)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 2,
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "s3d": {
+    "id": "s3d",
+    "x": 345,
+    "y": -220,
+    "color": "rgb(0,158,115)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 3,
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "s4d": {
+    "id": "s4d",
+    "x": 385,
+    "y": -220,
+    "color": "rgb(0,114,178)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 4,
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "s5d": {
+    "id": "s5d",
+    "x": 425,
+    "y": -220,
+    "color": "rgb(213,94,0)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 5,
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "s6d": {
+    "id": "s6d",
+    "x": 465,
+    "y": -220,
+    "color": "rgb(204,121,167)",
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "content": 6,
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "symbol": "join_NOFILL"
+  },
+  "sA2": {
+    "id": "sA2",
+    "parent": "a2",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    }
+  },
+  "sA3": {
+    "id": "sA3",
+    "parent": "a3",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    },
+    "angle": 0
+  },
+  "sA1": {
+    "id": "sA1",
+    "x": 0,
+    "y": 34.5,
+    "z": 160,
+    "inheritFrom": {
+      "s4s": "*"
+    },
+    "angle": 0,
+    "parent": "a1"
+  },
+  "sMaster": {
+    "id": "sMaster",
+    "fixedParent": true,
+    "y": -223,
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false,
+    "color": "#1f5ca6",
+    "css": {
+      "default": {},
+      "::after": {
+        "color": "#ffffff80",
+        "font-size": "0.8rem",
+        "content": "\"${PROPERTY content}\"",
+        "position": "absolute",
+        "top": "20%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%) rotate(calc(-1 * ${PROPERTY angle}deg))"
+      }
+    },
+    "icon": {
+      "name": "${PROPERTY symbol}",
+      "scale": 0.75,
+      "offsetX": 0,
+      "offsetY": 0.12,
+      "rotation": 0,
+      "color": "#ffffff80",
+      "strokeColor": "",
+      "strokeWidth": 0,
+      "hoverColor": "",
+      "hoverStrokeColor": "",
+      "hoverStrokeWidth": null
+    },
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "angle": 0,
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "content": 2,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "${PROPERTY parent}"
+        ]
+      }
+    ],
+    "symbol": "fiber_manual_record_NOFILL",
+    "x": -96
+  },
+  "bMaster": {
+    "id": "bMaster",
+    "x": -97,
+    "y": -260,
+    "width": 40,
+    "height": 40,
+    "z": 89,
+    "color": "#1f5ca6",
+    "css": {
+      "default": {},
+      "::after": {
+        "color": "#ffffff80",
+        "font-size": "0.8rem",
+        "content": "\"${PROPERTY content}\"",
+        "position": "absolute",
+        "top": "20%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%) rotate(calc(-1 * ${PROPERTY rotation}deg))"
+      }
+    },
+    "grid": [
+      {
+        "x": 60,
+        "y": 34.64,
+        "offsetX": 30,
+        "offsetY": 17.32
+      },
+      {
+        "x": 60,
+        "y": 34.64,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "icon": {
+      "name": "${PROPERTY symbol}",
+      "scale": 0.75,
+      "offsetX": 0,
+      "offsetY": 0.12,
+      "rotation": 0,
+      "color": "#ffffff80",
+      "strokeColor": "",
+      "strokeWidth": 0,
+      "hoverColor": "",
+      "hoverStrokeColor": "",
+      "hoverStrokeWidth": null
+    },
+    "image": "i/game-pieces/2D/Hex-Flat.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "content": 3,
+    "hexType": "flat",
+    "clickRoutine": [
+      {
+        "func": "ROTATE",
+        "collection": "thisButton",
+        "mode": "add",
+        "angle": 60
+      }
+    ],
+    "symbol": "fiber_manual_record_NOFILL",
+    "rotationChangeRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "angle",
+        "value": "${PROPERTY rotation}"
+      }
+    ]
+  },
+  "a1": {
+    "id": "a1",
+    "x": 0,
+    "y": 0,
+    "rotation": 0,
+    "z": 1,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "start": 1,
+    "playTile": true,
+    "parent": "hand1"
+  },
+  "a2": {
+    "id": "a2",
+    "x": 60,
+    "y": 0,
+    "z": 2,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "start": 1,
+    "playTile": true,
+    "rotation": 0,
+    "parent": "hand1"
+  },
+  "a3": {
+    "id": "a3",
+    "x": 120,
+    "y": 0,
+    "rotation": 0,
+    "z": 3,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "start": 1,
+    "playTile": true,
+    "parent": "hand1"
+  },
+  "b1": {
+    "id": "b1",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "start": 2,
+    "playTile": true,
+    "rotation": 0,
+    "parent": "hand2"
+  },
+  "sB1": {
+    "id": "sB1",
+    "parent": "b1",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    }
+  },
+  "b2": {
+    "id": "b2",
+    "x": 60,
+    "y": 0,
+    "z": 2,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "start": 2,
+    "playTile": true,
+    "rotation": 0,
+    "parent": "hand2"
+  },
+  "sB2": {
+    "id": "sB2",
+    "parent": "b2",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4s": "*"
+    },
+    "angle": 0
+  },
+  "b3": {
+    "id": "b3",
+    "x": 120,
+    "y": 0,
+    "z": 3,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "start": 2,
+    "playTile": true,
+    "rotation": 0,
+    "parent": "hand2"
+  },
+  "sB3": {
+    "id": "sB3",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    },
+    "parent": "b3",
+    "angle": 0
+  },
+  "c1": {
+    "id": "c1",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "start": 3,
+    "playTile": true,
+    "parent": "hand3",
+    "rotation": 0
+  },
+  "sC1": {
+    "id": "sC1",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    },
+    "parent": "c1"
+  },
+  "sC2": {
+    "id": "sC2",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4s": "*"
+    },
+    "parent": "c2"
+  },
+  "c2": {
+    "id": "c2",
+    "x": 60,
+    "y": 0,
+    "z": 2,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "start": 3,
+    "playTile": true,
+    "parent": "hand3",
+    "rotation": 0
+  },
+  "c3": {
+    "id": "c3",
+    "x": 120,
+    "y": 0,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "z": 3,
+    "start": 3,
+    "playTile": true,
+    "rotation": 0,
+    "parent": "hand3"
+  },
+  "sC3": {
+    "id": "sC3",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    },
+    "parent": "c3"
+  },
+  "d1": {
+    "id": "d1",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "start": 4,
+    "playTile": true,
+    "parent": "hand4",
+    "rotation": 0
+  },
+  "sD2": {
+    "id": "sD2",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    },
+    "parent": "d2",
+    "angle": 0
+  },
+  "d2": {
+    "id": "d2",
+    "x": 60,
+    "y": 0,
+    "z": 2,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "rotation": 0,
+    "start": 4,
+    "playTile": true,
+    "parent": "hand4"
+  },
+  "s7s": {
+    "inheritFrom": {
+      "sMaster": "*"
+    },
+    "id": "s7s",
+    "x": 385,
+    "y": -260,
+    "color": "rgb(0,114,178)",
+    "content": 4
+  },
+  "d3": {
+    "id": "d3",
+    "x": 120,
+    "y": 0,
+    "z": 3,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "start": 4,
+    "playTile": true,
+    "parent": "hand4",
+    "rotation": 0
+  },
+  "sD1": {
+    "id": "sD1",
+    "parent": "d1",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3s": "*"
+    }
+  },
+  "sD3": {
+    "id": "sD3",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    },
+    "parent": "d3"
+  },
+  "e1": {
+    "id": "e1",
+    "x": 0,
+    "y": 0,
+    "z": 1,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "start": 5,
+    "rotation": 0,
+    "playTile": true,
+    "parent": "hand5"
+  },
+  "se1": {
+    "id": "se1",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s7s": "*"
+    },
+    "parent": "e1"
+  },
+  "e2": {
+    "id": "e2",
+    "x": 60,
+    "y": 0,
+    "z": 2,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "start": 5,
+    "rotation": 0,
+    "playTile": true,
+    "parent": "hand5"
+  },
+  "sE2": {
+    "id": "sE2",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    },
+    "parent": "e2"
+  },
+  "sE3": {
+    "id": "sE3",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    },
+    "parent": "e3"
+  },
+  "e3": {
+    "id": "e3",
+    "x": 120,
+    "y": 0,
+    "z": 3,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "start": 5,
+    "rotation": 0,
+    "playTile": true,
+    "parent": "hand5"
+  },
+  "tile1": {
+    "id": "tile1",
+    "x": 4,
+    "y": 4,
+    "z": 88328,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile1": {
+    "id": "sTile1",
+    "parent": "tile1",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2s": "*"
+    }
+  },
+  "tile2": {
+    "id": "tile2",
+    "x": 4,
+    "y": 4,
+    "z": 88323,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile2": {
+    "id": "sTile2",
+    "parent": "tile2",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2s": "*"
+    }
+  },
+  "tile3": {
+    "id": "tile3",
+    "x": 4,
+    "y": 4,
+    "z": 88318,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile3": {
+    "id": "sTile3",
+    "parent": "tile3",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3s": "*"
+    }
+  },
+  "tile4": {
+    "id": "tile4",
+    "x": 4,
+    "y": 4,
+    "z": 88319,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile4": {
+    "id": "sTile4",
+    "parent": "tile4",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3s": "*"
+    }
+  },
+  "tile5": {
+    "id": "tile5",
+    "x": 4,
+    "y": 4,
+    "z": 88311,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile5": {
+    "id": "sTile5",
+    "parent": "tile5",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4s": "*"
+    }
+  },
+  "tile6": {
+    "id": "tile6",
+    "x": 4,
+    "y": 4,
+    "z": 88312,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile6": {
+    "id": "sTile6",
+    "parent": "tile6",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4s": "*"
+    }
+  },
+  "tile7": {
+    "id": "tile7",
+    "x": 4,
+    "y": 4,
+    "z": 88320,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile7": {
+    "id": "sTile7",
+    "parent": "tile7",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3s": "*"
+    }
+  },
+  "tile8": {
+    "id": "tile8",
+    "x": 4,
+    "y": 4,
+    "z": 88313,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile8": {
+    "id": "sTile8",
+    "parent": "tile8",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    },
+    "angle": 0
+  },
+  "tile9": {
+    "id": "tile9",
+    "x": 4,
+    "y": 4,
+    "z": 88317,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile9": {
+    "id": "sTile9",
+    "parent": "tile9",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    }
+  },
+  "tile10": {
+    "id": "tile10",
+    "x": 4,
+    "y": 4,
+    "z": 88326,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "rotation": 0,
+    "playTile": true,
+    "parent": "tileBag"
+  },
+  "sTile10": {
+    "id": "sTile10",
+    "parent": "tile10",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4s": "*"
+    },
+    "angle": 0
+  },
+  "tile11": {
+    "id": "tile11",
+    "x": 4,
+    "y": 4,
+    "z": 88316,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile11": {
+    "id": "sTile11",
+    "parent": "tile11",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5s": "*"
+    },
+    "angle": 0
+  },
+  "tile12": {
+    "id": "tile12",
+    "x": 4,
+    "y": 4,
+    "z": 88338,
+    "inheritFrom": {
+      "b5s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile12": {
+    "id": "sTile12",
+    "parent": "tile12",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6s": "*"
+    },
+    "angle": 0
+  },
+  "tile13": {
+    "id": "tile13",
+    "x": 4,
+    "y": 4,
+    "z": 88308,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile13": {
+    "id": "sTile13",
+    "parent": "tile13",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2d": "*"
+    },
+    "angle": 0
+  },
+  "tile14": {
+    "id": "tile14",
+    "x": 4,
+    "y": 4,
+    "z": 88309,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile14": {
+    "id": "sTile14",
+    "parent": "tile14",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3d": "*"
+    }
+  },
+  "tile15": {
+    "id": "tile15",
+    "x": 4,
+    "y": 4,
+    "z": 88307,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile15": {
+    "id": "sTile15",
+    "parent": "tile15",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4d": "*"
+    }
+  },
+  "tile16": {
+    "id": "tile16",
+    "x": 4,
+    "y": 4,
+    "z": 88324,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "sTile16": {
+    "id": "sTile16",
+    "parent": "tile16",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5d": "*"
+    }
+  },
+  "tile17": {
+    "id": "tile17",
+    "x": 4,
+    "y": 4,
+    "z": 88331,
+    "inheritFrom": {
+      "b1s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile18": {
+    "id": "tile18",
+    "x": 4,
+    "y": 4,
+    "z": 88314,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile19": {
+    "id": "tile19",
+    "x": 4,
+    "y": 4,
+    "z": 88302,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile20": {
+    "id": "tile20",
+    "x": 4,
+    "y": 4,
+    "z": 88303,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile21": {
+    "id": "tile21",
+    "x": 4,
+    "y": 4,
+    "z": 88329,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile22": {
+    "id": "tile22",
+    "x": 4,
+    "y": 4,
+    "z": 88336,
+    "inheritFrom": {
+      "b2s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile23": {
+    "id": "tile23",
+    "x": 4,
+    "y": 4,
+    "z": 88300,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile24": {
+    "id": "tile24",
+    "x": 4,
+    "y": 4,
+    "z": 88325,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile25": {
+    "id": "tile25",
+    "x": 4,
+    "y": 4,
+    "z": 88301,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile26": {
+    "id": "tile26",
+    "x": 4,
+    "y": 4,
+    "z": 88321,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile27": {
+    "id": "tile27",
+    "x": 4,
+    "y": 4,
+    "z": 88315,
+    "inheritFrom": {
+      "b3s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile28": {
+    "id": "tile28",
+    "x": 4,
+    "y": 4,
+    "z": 88305,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile29": {
+    "id": "tile29",
+    "x": 4,
+    "y": 4,
+    "z": 88304,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile30": {
+    "id": "tile30",
+    "x": 4,
+    "y": 4,
+    "z": 88330,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile31": {
+    "id": "tile31",
+    "x": 4,
+    "y": 4,
+    "z": 88332,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile32": {
+    "id": "tile32",
+    "x": 4,
+    "y": 4,
+    "z": 88310,
+    "inheritFrom": {
+      "b4s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile33": {
+    "id": "tile33",
+    "x": 4,
+    "y": 4,
+    "z": 88322,
+    "inheritFrom": {
+      "b5s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile34": {
+    "id": "tile34",
+    "x": 4,
+    "y": 4,
+    "z": 88339,
+    "inheritFrom": {
+      "b5s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile35": {
+    "id": "tile35",
+    "x": 4,
+    "y": 4,
+    "z": 88337,
+    "inheritFrom": {
+      "b5s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile36": {
+    "id": "tile36",
+    "x": 4,
+    "y": 4,
+    "z": 88306,
+    "inheritFrom": {
+      "b5s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile37": {
+    "id": "tile37",
+    "x": 4,
+    "y": 4,
+    "z": 88333,
+    "inheritFrom": {
+      "b5s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile38": {
+    "id": "tile38",
+    "x": 4,
+    "y": 4,
+    "z": 88327,
+    "inheritFrom": {
+      "b6s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile39": {
+    "id": "tile39",
+    "x": 4,
+    "y": 4,
+    "z": 88335,
+    "inheritFrom": {
+      "b6s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile40": {
+    "id": "tile40",
+    "x": 4,
+    "y": 4,
+    "z": 88299,
+    "inheritFrom": {
+      "b6s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile41": {
+    "id": "tile41",
+    "x": 4,
+    "y": 4,
+    "z": 88334,
+    "inheritFrom": {
+      "b6s": "*"
+    },
+    "playTile": true,
+    "rotation": 0,
+    "parent": "tileBag"
+  },
+  "tile42": {
+    "id": "tile42",
+    "x": 4,
+    "y": 4,
+    "z": 88340,
+    "inheritFrom": {
+      "b6s": "*"
+    },
+    "rotation": 0,
+    "playTile": true,
+    "parent": "tileBag"
+  },
+  "sTile17": {
+    "id": "sTile17",
+    "parent": "tile17",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6d": "*"
+    }
+  },
+  "sTile18": {
+    "id": "sTile18",
+    "parent": "tile18",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s1d": "*"
+    },
+    "angle": 0
+  },
+  "sTile19": {
+    "id": "sTile19",
+    "parent": "tile19",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3d": "*"
+    }
+  },
+  "sTile20": {
+    "id": "sTile20",
+    "parent": "tile20",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4d": "*"
+    },
+    "angle": 0
+  },
+  "sTile21": {
+    "id": "sTile21",
+    "parent": "tile21",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5d": "*"
+    }
+  },
+  "sTile22": {
+    "id": "sTile22",
+    "parent": "tile22",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6d": "*"
+    }
+  },
+  "sTile23": {
+    "id": "sTile23",
+    "parent": "tile23",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s1d": "*"
+    },
+    "angle": 0
+  },
+  "sTile24": {
+    "id": "sTile24",
+    "parent": "tile24",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2d": "*"
+    },
+    "angle": 0
+  },
+  "sTile25": {
+    "id": "sTile25",
+    "parent": "tile25",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4d": "*"
+    }
+  },
+  "sTile26": {
+    "id": "sTile26",
+    "parent": "tile26",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5d": "*"
+    }
+  },
+  "sTile27": {
+    "id": "sTile27",
+    "parent": "tile27",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6d": "*"
+    },
+    "angle": 0
+  },
+  "sTile28": {
+    "id": "sTile28",
+    "parent": "tile28",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s1d": "*"
+    },
+    "angle": 0
+  },
+  "sTile29": {
+    "id": "sTile29",
+    "parent": "tile29",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2d": "*"
+    },
+    "angle": 0
+  },
+  "sTile30": {
+    "id": "sTile30",
+    "parent": "tile30",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3d": "*"
+    },
+    "angle": 0
+  },
+  "sTile31": {
+    "id": "sTile31",
+    "parent": "tile31",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5d": "*"
+    },
+    "angle": 0
+  },
+  "sTile32": {
+    "id": "sTile32",
+    "parent": "tile32",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6d": "*"
+    }
+  },
+  "sTile33": {
+    "id": "sTile33",
+    "parent": "tile33",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s1d": "*"
+    },
+    "angle": 0
+  },
+  "sTile34": {
+    "id": "sTile34",
+    "parent": "tile34",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2d": "*"
+    },
+    "angle": 0
+  },
+  "sTile35": {
+    "id": "sTile35",
+    "parent": "tile35",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3d": "*"
+    },
+    "angle": 0
+  },
+  "sTile36": {
+    "id": "sTile36",
+    "parent": "tile36",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4d": "*"
+    },
+    "angle": 0
+  },
+  "sTile37": {
+    "id": "sTile37",
+    "parent": "tile37",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s6d": "*"
+    }
+  },
+  "sTile38": {
+    "id": "sTile38",
+    "parent": "tile38",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s1d": "*"
+    },
+    "angle": 0
+  },
+  "sTile39": {
+    "id": "sTile39",
+    "parent": "tile39",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s2d": "*"
+    },
+    "angle": 0
+  },
+  "sTile40": {
+    "id": "sTile40",
+    "parent": "tile40",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s3d": "*"
+    },
+    "angle": 0
+  },
+  "sTile41": {
+    "id": "sTile41",
+    "parent": "tile41",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s4d": "*"
+    },
+    "angle": 0
+  },
+  "sTile42": {
+    "id": "sTile42",
+    "parent": "tile42",
+    "x": 0,
+    "y": 34.5,
+    "inheritFrom": {
+      "s5d": "*"
+    },
+    "angle": 0
+  },
+  "ring2": {
+    "id": "ring2",
+    "x": 90,
+    "y": 121.240234375,
+    "z": 279,
+    "inheritFrom": {
+      "b1d": "!clickRoutine"
+    },
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring1": {
+    "id": "ring1",
+    "x": 0,
+    "y": 34.6396484375,
+    "inheritFrom": {
+      "b1d": "!clickRoutine"
+    },
+    "z": 274,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 0
+  },
+  "ring3": {
+    "id": "ring3",
+    "x": 30,
+    "y": 121.240234375,
+    "inheritFrom": {
+      "b2d": "!clickRoutine"
+    },
+    "z": 277,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring4": {
+    "id": "ring4",
+    "x": 60,
+    "y": 0,
+    "inheritFrom": {
+      "b2d": "!clickRoutine"
+    },
+    "z": 285,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring5": {
+    "id": "ring5",
+    "x": 0,
+    "y": 69.2802734375,
+    "inheritFrom": {
+      "b3d": "!clickRoutine"
+    },
+    "z": 275,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 0
+  },
+  "ring6": {
+    "id": "ring6",
+    "x": 120,
+    "y": 34.6396484375,
+    "z": 283,
+    "inheritFrom": {
+      "b3d": "!clickRoutine"
+    },
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring7": {
+    "id": "ring7",
+    "x": 120,
+    "y": 103.919921875,
+    "inheritFrom": {
+      "b4d": "!clickRoutine"
+    },
+    "z": 281,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring8": {
+    "id": "ring8",
+    "x": 30,
+    "y": 17.3203125,
+    "inheritFrom": {
+      "b4d": "!clickRoutine"
+    },
+    "z": 286,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring9": {
+    "id": "ring9",
+    "x": 60,
+    "y": 138.5595703125,
+    "inheritFrom": {
+      "b5d": "!clickRoutine"
+    },
+    "z": 278,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring10": {
+    "id": "ring10",
+    "x": 90,
+    "y": 17.3203125,
+    "inheritFrom": {
+      "b5d": "!clickRoutine"
+    },
+    "z": 284,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring11": {
+    "id": "ring11",
+    "x": 0,
+    "y": 103.919921875,
+    "inheritFrom": {
+      "b6d": "!clickRoutine"
+    },
+    "z": 276,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "ring12": {
+    "id": "ring12",
+    "x": 120,
+    "y": 69.2802734375,
+    "inheritFrom": {
+      "b6d": "!clickRoutine"
+    },
+    "z": 282,
+    "parent": "ring",
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 0
+  },
+  "ring": {
+    "id": "ring",
+    "x": 690,
+    "y": 1363.72,
+    "width": 160,
+    "height": 178.56,
+    "layer": -3,
+    "grid": [
+      {
+        "x": 60,
+        "y": 34.64,
+        "offsetX": 30,
+        "offsetY": 17.32
+      },
+      {
+        "x": 60,
+        "y": 34.64,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "z": 26090,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214",
+    "movableInEdit": false
+  },
+  "tileBag": {
+    "type": "holder",
+    "id": "tileBag",
+    "x": 1490,
+    "y": 725,
+    "width": 120,
+    "height": 120,
+    "scale": 0.8,
+    "z": 26105,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "overflow": "clip",
+        "background-color": "${PROPERTY color}",
+        "background": "url(/assets/-1372554968_23131)",
+        "background-size": "cover"
+      },
+      "::before": {
+        "content": "'${PROPERTY widget-count}'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "120px",
+        "padding-left": "5px",
+        "white-space": "pre",
+        "font-size": "50px",
+        "font-weight": "900",
+        "color": "lightgrey"
+      },
+      "::after": {
+        "position": "absolute",
+        "bottom": "5px",
+        "content": "'Tiles'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "30px",
+        "padding-left": "3px",
+        "white-space": "pre",
+        "font-size": "22px",
+        "font-weight": "400",
+        "color": "lightgrey",
+        "width": "100%"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(10)!important"
+      }
+    },
+    "dropTarget": {
+      "playTile": true
+    },
+    "preventPiles": true,
+    "image": "/assets/-1372554968_23131",
+    "widget-count": 42,
+    "enterRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}",
+        "variable": "widgets"
+      },
+      {
+        "func": "SET",
+        "property": "widget-count",
+        "value": "${widgets}",
+        "collection": "thisButton"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "rotation",
+        "value": 0
+      }
+    ],
+    "ignoreZoom": true
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1535,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "SELECT",
+        "property": "playTile",
+        "value": true
+      },
+      {
+        "func": "MOVE",
+        "to": "tileBag"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ring"
+        ],
+        "property": "x",
+        "value": 690
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ring"
+        ],
+        "property": "y",
+        "value": 363.72
+      },
+      {
+        "func": "SELECT",
+        "property": "start",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "MOVE",
+        "to": "offHolder${value}"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "start",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "hand${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "score${value}"
+          },
+          {
+            "func": "SET",
+            "property": "onlyVisibleForSeat",
+            "value": "seat${value}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "showButton"
+        ],
+        "property": "text",
+        "value": "Show\nScores"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "tileBag"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "fillButton"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "vp",
+        "value": true
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "SELECT",
+        "property": "cube",
+        "value": true
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "pawn",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "to": "pawnHolder${value}"
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "ignoreZoom": true
+  },
+  "black1": {
+    "id": "black1",
+    "width": 24,
+    "height": 25,
+    "z": 1,
+    "color": "#000000",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 1,
+    "parent": "pawnHolder1"
+  },
+  "white1": {
+    "id": "white1",
+    "width": 24,
+    "height": 25,
+    "z": 1,
+    "color": "#ffffff",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 3,
+    "parent": "pawnHolder3"
+  },
+  "brown1": {
+    "id": "brown1",
+    "width": 24,
+    "height": 25,
+    "z": 1,
+    "color": "#8b450c",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 2,
+    "parent": "pawnHolder2"
+  },
+  "silver1": {
+    "id": "silver1",
+    "width": 24,
+    "height": 25,
+    "z": 1,
+    "color": "#59595b",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 5,
+    "parent": "pawnHolder5"
+  },
+  "offHolder": {
+    "type": "holder",
+    "id": "offHolder",
+    "x": 1475,
+    "y": 1054,
+    "z": 26096
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "z": 1,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "${PROPERTY mainColor}"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "2px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "#ffffff",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "hideWhenUnused": true,
+    "glowColor": "rgb(240,228,66)",
+    "mainColor": "#ffffff",
+    "outlineColor": "#000000bb",
+    "staticColor": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerName = ${result.0}"
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = 'red'",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#ffffff"
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${PROPERTY staticColor}"
+              },
+              "var result = push ${name}"
+            ]
+          }
+        ]
+      }
+    ],
+    "parent": "seatArea1",
+    "hand": "hand1",
+    "turn": true
+  },
+  "tan1": {
+    "id": "tan1",
+    "width": 24,
+    "height": 25,
+    "z": 1,
+    "color": "#b79183",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 4,
+    "parent": "pawnHolder4"
+  },
+  "seatArea1": {
+    "id": "seatArea1",
+    "width": 172,
+    "height": 48,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 93,
+    "x": 5,
+    "ignoreZoom": true
+  },
+  "score1": {
+    "type": "holder",
+    "id": "score1",
+    "width": 35,
+    "height": 35,
+    "css": {
+      "background": "${PROPERTY color}"
+    },
+    "parent": "seatArea1",
+    "y": -50,
+    "x": 75,
+    "fixedParent": true,
+    "dropTarget": {
+      "vp": true
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      }
+    ],
+    "countRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count${PROPERTY pID}"
+        ],
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "pID": 1,
+    "preventPiles": true,
+    "color": "#000000",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "score1U": {
+    "type": "button",
+    "id": "score1U",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": 58,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "${PROPERTY textColor}",
+        "background": "${PROPERTY backgroundColor}",
+        "border": "3px solid ${PROPERTY borderColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY backgroundColor}80"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "vpHolder",
+        "to": "${PROPERTY parent}"
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "score1D": {
+    "type": "button",
+    "id": "score1D",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": -58,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "${PROPERTY textColor}",
+        "background": "${PROPERTY backgroundColor}",
+        "border": "3px solid ${PROPERTY borderColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY backgroundColor}80"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "vpHolderOld"
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "black2": {
+    "id": "black2",
+    "width": 24,
+    "height": 25,
+    "z": 2,
+    "color": "#000000",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 1,
+    "x": 27,
+    "parent": "pawnHolder1"
+  },
+  "black3": {
+    "id": "black3",
+    "width": 24,
+    "height": 25,
+    "z": 3,
+    "color": "#000000",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 1,
+    "x": 54,
+    "parent": "pawnHolder1"
+  },
+  "black4": {
+    "id": "black4",
+    "width": 24,
+    "height": 25,
+    "z": 4,
+    "color": "#000000",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 1,
+    "x": 81,
+    "parent": "pawnHolder1"
+  },
+  "vpHolder": {
+    "type": "holder",
+    "id": "vpHolder",
+    "x": 1613,
+    "y": 388,
+    "width": 35,
+    "height": 35,
+    "z": 102,
+    "inheritChildZ": true,
+    "css": {
+      "default": {
+        "border-radius": "100px"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "transform 600ms"
+      }
+    },
+    "dropTarget": {
+      "vp": true
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${seatIndex}"
+        ],
+        "property": "staticColor"
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "color",
+        "value": "${staticColor}"
+      }
+    ],
+    "borderRadius": 100
+  },
+  "count1": {
+    "id": "count1",
+    "parent": "seatArea1",
+    "fixedParent": true,
+    "x": 75,
+    "y": -50,
+    "width": 35,
+    "height": 35,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "color": "${PROPERTY color}",
+      "font-size": "22px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "text": 0,
+    "onlyVisibleForSeat": "seat1",
+    "color": "#ffffff"
+  },
+  "vpHolderOld": {
+    "type": "holder",
+    "id": "vpHolderOld",
+    "x": 1613,
+    "y": 389,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 102,
+    "inheritChildZ": true,
+    "css": {
+      "default": {
+        "border-radius": "100px"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "transform 600ms"
+      }
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "vp": true
+    },
+    "enterRoutine": [
+      {
+        "func": "DELAY",
+        "milliseconds": 500
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "DELETE"
+      }
+    ]
+  },
+  "seatArea2": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea2",
+    "x": 5,
+    "y": 249
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "parent": "seatArea2",
+    "player": "",
+    "mainColor": "#ffffff",
+    "staticColor": "#8b450c",
+    "turn": false,
+    "hand": "hand1"
+  },
+  "score2": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "type": "holder",
+    "id": "score2",
+    "parent": "seatArea2",
+    "pID": 2,
+    "color": "#8b450c",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "score2U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score2U",
+    "parent": "score2",
+    "backgroundColor": "#8b450c",
+    "borderColor": "#ffffff",
+    "textColor": "#ffffff"
+  },
+  "score2D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score2D",
+    "parent": "score2",
+    "backgroundColor": "#8b450c",
+    "borderColor": "#ffffff"
+  },
+  "count2": {
+    "inheritFrom": {
+      "count1": "*"
+    },
+    "id": "count2",
+    "parent": "seatArea2",
+    "text": 0,
+    "onlyVisibleForSeat": "seat2",
+    "color": "#ffffff"
+  },
+  "seatArea3": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea3",
+    "x": 5,
+    "y": 406
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "parent": "seatArea3",
+    "staticColor": "#ffffff",
+    "player": "",
+    "mainColor": "#ffffff",
+    "turn": false,
+    "hand": "hand1"
+  },
+  "score3": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "type": "holder",
+    "id": "score3",
+    "parent": "seatArea3",
+    "pID": 3,
+    "color": "#ffffff",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "score3U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score3U",
+    "parent": "score3",
+    "backgroundColor": "#ffffff",
+    "borderColor": "#000000",
+    "textColor": "#000000"
+  },
+  "score3D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score3D",
+    "parent": "score3",
+    "backgroundColor": "#ffffff",
+    "borderColor": "#000000",
+    "textColor": "#000000"
+  },
+  "count3": {
+    "inheritFrom": {
+      "count1": "*"
+    },
+    "id": "count3",
+    "parent": "seatArea3",
+    "text": 0,
+    "onlyVisibleForSeat": "seat3",
+    "color": "#000000"
+  },
+  "seatArea4": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea4",
+    "x": 5,
+    "y": 562
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "parent": "seatArea4",
+    "player": "",
+    "mainColor": "#ffffff",
+    "staticColor": "#b79183",
+    "turn": false,
+    "hand": "hand1"
+  },
+  "score4": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "type": "holder",
+    "id": "score4",
+    "parent": "seatArea4",
+    "pID": 4,
+    "color": "#b79183",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "score4U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score4U",
+    "parent": "score4",
+    "backgroundColor": "#b79183",
+    "borderColor": "#000000",
+    "textColor": "#000000"
+  },
+  "score4D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score4D",
+    "parent": "score4",
+    "backgroundColor": "#b79183",
+    "borderColor": "#000000",
+    "textColor": "#000000"
+  },
+  "count4": {
+    "inheritFrom": {
+      "count1": "*"
+    },
+    "id": "count4",
+    "parent": "seatArea4",
+    "text": 0,
+    "onlyVisibleForSeat": "seat4",
+    "color": "#000000"
+  },
+  "seatArea5": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea5",
+    "x": 5,
+    "y": 719
+  },
+  "seat5": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat5",
+    "index": 5,
+    "parent": "seatArea5",
+    "player": "",
+    "mainColor": "#ffffff",
+    "staticColor": "#59595b",
+    "turn": false,
+    "hand": "hand1"
+  },
+  "score5": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "type": "holder",
+    "id": "score5",
+    "parent": "seatArea5",
+    "pID": 5,
+    "color": "#59595b",
+    "onlyVisibleForSeat": "seat5"
+  },
+  "score5U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score5U",
+    "parent": "score5",
+    "backgroundColor": "#59595b",
+    "borderColor": "#ffffff",
+    "textColor": "#ffffff"
+  },
+  "score5D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score5D",
+    "parent": "score5",
+    "backgroundColor": "#59595b",
+    "borderColor": "#ffffff",
+    "textColor": "#ffffff"
+  },
+  "count5": {
+    "inheritFrom": {
+      "count1": "*"
+    },
+    "id": "count5",
+    "parent": "seatArea5",
+    "text": 0,
+    "onlyVisibleForSeat": "seat5",
+    "color": "#000000"
+  },
+  "brown2": {
+    "id": "brown2",
+    "x": 27,
+    "width": 24,
+    "height": 25,
+    "z": 2,
+    "color": "#8b450c",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 2,
+    "parent": "pawnHolder2"
+  },
+  "brown3": {
+    "id": "brown3",
+    "x": 54,
+    "width": 24,
+    "height": 25,
+    "z": 3,
+    "color": "#8b450c",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 2,
+    "parent": "pawnHolder2"
+  },
+  "brown4": {
+    "id": "brown4",
+    "x": 81,
+    "width": 24,
+    "height": 25,
+    "z": 4,
+    "color": "#8b450c",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 2,
+    "parent": "pawnHolder2"
+  },
+  "white2": {
+    "id": "white2",
+    "x": 27,
+    "width": 24,
+    "height": 25,
+    "z": 2,
+    "color": "#ffffff",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 3,
+    "parent": "pawnHolder3"
+  },
+  "white3": {
+    "id": "white3",
+    "x": 54,
+    "width": 24,
+    "height": 25,
+    "z": 3,
+    "color": "#ffffff",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 3,
+    "parent": "pawnHolder3"
+  },
+  "white4": {
+    "id": "white4",
+    "x": 81,
+    "width": 24,
+    "height": 25,
+    "z": 4,
+    "color": "#ffffff",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 3,
+    "parent": "pawnHolder3"
+  },
+  "tan2": {
+    "id": "tan2",
+    "width": 24,
+    "height": 25,
+    "z": 2,
+    "color": "#b79183",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 4,
+    "x": 27,
+    "parent": "pawnHolder4"
+  },
+  "tan3": {
+    "id": "tan3",
+    "width": 24,
+    "height": 25,
+    "z": 3,
+    "color": "#b79183",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 4,
+    "x": 54,
+    "parent": "pawnHolder4"
+  },
+  "tan4": {
+    "id": "tan4",
+    "width": 24,
+    "height": 25,
+    "z": 4,
+    "color": "#b79183",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 4,
+    "x": 81,
+    "parent": "pawnHolder4"
+  },
+  "silver2": {
+    "id": "silver2",
+    "x": 27,
+    "width": 24,
+    "height": 25,
+    "z": 2,
+    "color": "#59595b",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 5,
+    "parent": "pawnHolder5"
+  },
+  "silver3": {
+    "id": "silver3",
+    "x": 54,
+    "width": 24,
+    "height": 25,
+    "z": 3,
+    "color": "#59595b",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 5,
+    "parent": "pawnHolder5"
+  },
+  "silver4": {
+    "id": "silver4",
+    "x": 81,
+    "width": 24,
+    "height": 25,
+    "z": 4,
+    "color": "#59595b",
+    "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "pawn": 5,
+    "parent": "pawnHolder5"
+  },
+  "pawnHolder1": {
+    "type": "holder",
+    "id": "pawnHolder1",
+    "parent": "seatArea1",
+    "fixedParent": true,
+    "x": 35,
+    "y": 60,
+    "width": 106,
+    "height": 25,
+    "z": 26106,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "pawn": 1
+    },
+    "stackOffsetX": 27,
+    "linkedToSeat": "seat1"
+  },
+  "pawnHolder2": {
+    "type": "holder",
+    "id": "pawnHolder2",
+    "parent": "seatArea2",
+    "dropTarget": {
+      "pawn": 2
+    },
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "linkedToSeat": "seat2"
+  },
+  "pawnHolder3": {
+    "type": "holder",
+    "id": "pawnHolder3",
+    "parent": "seatArea3",
+    "dropTarget": {
+      "pawn": 3
+    },
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "linkedToSeat": "seat3"
+  },
+  "pawnHolder4": {
+    "type": "holder",
+    "id": "pawnHolder4",
+    "parent": "seatArea4",
+    "dropTarget": {
+      "pawn": 4
+    },
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "linkedToSeat": "seat4"
+  },
+  "pawnHolder5": {
+    "type": "holder",
+    "id": "pawnHolder5",
+    "parent": "seatArea5",
+    "dropTarget": {
+      "pawn": 5
+    },
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "linkedToSeat": "seat5"
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 1535,
+    "y": 90,
+    "width": 50,
+    "height": 35,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ],
+    "ignoreZoom": true
+  },
+  "fillButton": {
+    "type": "button",
+    "id": "fillButton",
+    "x": 1518,
+    "y": 836,
+    "width": 70,
+    "height": 50,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "Fill\nBank",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "tileBag",
+        "to": "bankHolder",
+        "fillTo": 4
+      }
+    ],
+    "ignoreZoom": true
+  },
+  "bankHolder": {
+    "type": "holder",
+    "id": "bankHolder",
+    "x": 1350,
+    "y": 918,
+    "width": 220,
+    "height": 75,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropLimit": 4,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "playTile": true
+    },
+    "ignoreZoom": true,
+    "stackOffsetX": 60
+  },
+  "fillButton1": {
+    "type": "button",
+    "id": "fillButton1",
+    "x": 1518,
+    "y": 685,
+    "width": 70,
+    "height": 50,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "text": "Take\nOne",
+    "clickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "hand${seatIndex}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": "<",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "tileBag",
+            "to": "hand${seatIndex}"
+          }
+        ]
+      }
+    ],
+    "ignoreZoom": true
+  },
+  "hand1": {
+    "type": "holder",
+    "id": "hand1",
+    "x": 30,
+    "y": 918,
+    "width": 280,
+    "height": 75,
+    "z": 26091,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropLimit": 5,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "playTile": true
+    },
+    "ignoreZoom": true,
+    "stackOffsetX": 60,
+    "onlyVisibleForSeat": "seat1"
+  },
+  "hand2": {
+    "type": "holder",
+    "id": "hand2",
+    "x": 30,
+    "y": 918,
+    "width": 280,
+    "height": 75,
+    "z": 26091,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropLimit": 5,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "playTile": true
+    },
+    "ignoreZoom": true,
+    "stackOffsetX": 60,
+    "onlyVisibleForSeat": "seat2"
+  },
+  "hand3": {
+    "type": "holder",
+    "id": "hand3",
+    "x": 30,
+    "y": 918,
+    "width": 280,
+    "height": 75,
+    "z": 26091,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropLimit": 5,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "playTile": true
+    },
+    "ignoreZoom": true,
+    "stackOffsetX": 60,
+    "onlyVisibleForSeat": "seat3"
+  },
+  "hand4": {
+    "type": "holder",
+    "id": "hand4",
+    "x": 30,
+    "y": 918,
+    "width": 280,
+    "height": 75,
+    "z": 26091,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropLimit": 5,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "playTile": true
+    },
+    "ignoreZoom": true,
+    "stackOffsetX": 60,
+    "onlyVisibleForSeat": "seat4"
+  },
+  "hand5": {
+    "type": "holder",
+    "id": "hand5",
+    "x": 30,
+    "y": 918,
+    "width": 280,
+    "height": 75,
+    "z": 26091,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropLimit": 5,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "playTile": true
+    },
+    "ignoreZoom": true,
+    "stackOffsetX": 60,
+    "onlyVisibleForSeat": "seat5"
+  },
+  "cubeBag": {
+    "type": "holder",
+    "id": "cubeBag",
+    "x": 1490,
+    "y": 525,
+    "width": 120,
+    "height": 120,
+    "scale": 0.8,
+    "z": 26105,
+    "classes": "transparent",
+    "css": {
+      "": {
+        "overflow": "clip",
+        "background-color": "${PROPERTY color}",
+        "background": "url(/assets/-1372554968_23131)",
+        "background-size": "cover"
+      },
+      "::after": {
+        "position": "absolute",
+        "bottom": "35px",
+        "content": "'Cubes'",
+        "text-align": "center",
+        "display": "block",
+        "line-height": "30px",
+        "padding-left": "3px",
+        "white-space": "pre",
+        "font-size": "27px",
+        "font-weight": "400",
+        "color": "lightgrey",
+        "width": "100%"
+      },
+      " .widget": {
+        "opacity": 0,
+        "transform": "scale(10)!important"
+      }
+    },
+    "dropTarget": {
+      "cube": true
+    },
+    "ignoreZoom": true,
+    "preventPiles": true,
+    "image": "/assets/-1372554968_23131",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ]
+  },
+  "showButton": {
+    "type": "button",
+    "id": "showButton",
+    "x": 1518,
+    "y": 150,
+    "width": 70,
+    "height": 50,
+    "z": 2089,
+    "color": "white",
+    "css": "font-size: 15px; --wcMain: black; --wcBorder:white; --wcMainOH: grey; --wcBorderOH: black",
+    "ignoreZoom": true,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Show or hide scores ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will show (or alternately hide) player scores. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Show\nScores",
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "range": [
+              5
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "score${value}"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "text",
+                "value": "Hide\nScores"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "FOREACH",
+            "range": [
+              5
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "score${value}"
+              },
+              {
+                "func": "SET",
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "text",
+            "value": "Show\nScores"
+          }
+        ]
+      }
+    ],
+    "text": "Show\nScores"
+  },
+  "5wxi": {
+    "width": 35,
+    "height": 35,
+    "css": {
+      "background": "${PROPERTY color}"
+    },
+    "vp": true,
+    "z": 88148,
+    "dragging": "LawDawg",
+    "hoverTarget": "vpHolder",
+    "clonedFrom": "xm0o",
+    "hoverParent": "vpHolder",
+    "classes": "transition",
+    "movable": false,
+    "color": "blue",
+    "borderRadius": 8,
+    "id": "5wxi",
+    "parent": "vpHolder"
+  },
+  "rj57": {
+    "x": 4,
+    "width": 15.6,
+    "height": 24,
+    "z": 88150,
+    "css": {
+      "border-radius": "50%/35%"
+    },
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "secondaryColor": "black",
+    "cube": true,
+    "clonedFrom": "o9sp",
+    "color": "rgb(240,228,66)",
+    "y": 4,
+    "dragging": "LawDawg",
+    "hoverParent": "cubeBag",
+    "id": "rj57",
+    "parent": "cubeBag"
+  }
+}
