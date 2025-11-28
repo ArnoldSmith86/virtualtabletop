@@ -1,6 +1,10 @@
 {
   "_meta": {
     "version": 19,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ".seat {\n  gap: 5px;\n  font-size: 21px;\n  box-shadow: 0 2px 5px #00000066;\n  text-shadow:\n    2px 2px 2px #000000bb,\n    -2px 2px 2px #000000bb,\n    2px -2px 2px #000000bb,\n    -2px -2px 2px #000000bb;\n  color: white;\n  border: 2px solid #000000bb;\n  box-sizing: border-box;\n}\n\n.seated.turn {\n  box-shadow: 0px 0px 20px 5px #000000"
+    },
     "info": {
       "name": "Cube Conveyor",
       "image": "/assets/676772144_45694",
@@ -10,7 +14,7 @@
       "mode": "vs",
       "time": "30-60",
       "attribution": "<div>Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br></div><div>Tile bag by mousewax available as CC0.</div>",
-      "lastUpdate": 1764372801234,
+      "lastUpdate": 1764372936449,
       "showName": true,
       "skill": "",
       "description": "Control production areas on the board to earn points when cubes move through.",
@@ -24,10 +28,6 @@
       "variant": "",
       "language": "",
       "players": "2-5"
-    },
-    "gameSettings": {
-      "legacyModes": {},
-      "globalCss": ".seat {\n  gap: 5px;\n  font-size: 21px;\n  box-shadow: 0 2px 5px #00000066;\n  text-shadow:\n    2px 2px 2px #000000bb,\n    -2px 2px 2px #000000bb,\n    2px -2px 2px #000000bb,\n    -2px -2px 2px #000000bb;\n  color: white;\n  border: 2px solid #000000bb;\n  box-sizing: border-box;\n}\n\n.seated.turn {\n  box-shadow: 0px 0px 20px 5px #000000"
     }
   },
   "b1s": {
@@ -488,7 +488,6 @@
     "borderColor": "#000000",
     "borderWidth": 2,
     "content": 3,
-    "hexType": "flat",
     "clickRoutine": [
       {
         "func": "ROTATE",
@@ -1968,7 +1967,6 @@
       "playTile": true
     },
     "preventPiles": true,
-    "image": "/assets/-1372554968_23131",
     "widget-count": 42,
     "enterRoutine": [
       {
@@ -3597,7 +3595,6 @@
     },
     "ignoreZoom": true,
     "preventPiles": true,
-    "image": "/assets/-1372554968_23131",
     "enterRoutine": [
       {
         "func": "SELECT",
@@ -3766,7 +3763,6 @@
     "css": {
       "border-radius": "50%/35%"
     },
-    "image": "/i/game-pieces/3D/Cube-3D.svg",
     "svgReplaces": {
       "#primaryColor": "color",
       "#secondaryColor": "secondaryColor",
@@ -3783,6 +3779,7 @@
     "dragging": "LawDawg",
     "hoverParent": "cubeBag",
     "id": "rj57",
-    "parent": "cubeBag"
+    "parent": "cubeBag",
+    "image": "/i/game-pieces/3D/Cube-3D.svg"
   }
 }
