@@ -818,7 +818,6 @@
     "parent": "t3fc"
   },
   "i6gw": {
-    "parent": null,
     "x": 102,
     "y": 463,
     "width": 110,
@@ -826,7 +825,6 @@
     "id": "i6gw"
   },
   "t3fc": {
-    "parent": null,
     "x": 314,
     "y": 463,
     "width": 110,
@@ -834,7 +832,6 @@
     "id": "t3fc"
   },
   "j8k0": {
-    "parent": null,
     "x": 102,
     "y": 226,
     "width": 112,
@@ -842,7 +839,6 @@
     "id": "j8k0"
   },
   "vgdo": {
-    "parent": null,
     "x": 314,
     "y": 226,
     "width": 110,
