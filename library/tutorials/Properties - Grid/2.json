@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 2,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Grid",
       "image": "/assets/1094524990_4827",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1748991686625,
+      "lastUpdate": 1764391387201,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -73,12 +76,6 @@
     "id": "82slD",
     "parent": "82sl",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -247,7 +244,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -262,8 +258,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -273,10 +270,12 @@
         {
           "x": 103,
           "y": 160,
-          "minX": 400,
-          "maxX": 1200,
-          "minY": 300,
-          "maxY": 700
+          "minX": 348.5,
+          "maxX": 1148.5,
+          "minY": 220,
+          "maxY": 620,
+          "offsetX": -51.5,
+          "offsetY": -80
         }
       ]
     }
@@ -800,43 +799,43 @@
   "g4we": {
     "classes": "classicPiece",
     "color": "#bc5bee",
-    "width": 90,
-    "height": 90,
-    "x": 91,
-    "y": 288,
+    "width": 56,
+    "height": 84,
+    "x": 108,
+    "y": 291,
     "z": 772,
     "id": "g4we",
     "grid": [
       {
         "x": 100,
         "y": 100,
-        "minX": 400,
-        "maxX": 1200,
-        "minY": 50,
-        "maxY": 800,
-        "offsetX": -23,
-        "offsetY": 11
+        "minX": 350,
+        "maxX": 1150,
+        "minY": 0,
+        "maxY": 750,
+        "offsetX": -73,
+        "offsetY": -39
       }
     ]
   },
   "x928": {
     "classes": "classicPiece",
     "color": "#bc5bee",
-    "width": 90,
-    "height": 90,
-    "x": 160,
-    "y": 348,
+    "width": 56,
+    "height": 84,
+    "x": 177,
+    "y": 351,
     "z": 775,
     "grid": [
       {
         "x": 100,
         "y": 100,
-        "minX": 400,
-        "maxX": 1200,
-        "minY": 50,
-        "maxY": 800,
-        "offsetX": -23,
-        "offsetY": 11
+        "minX": 350,
+        "maxX": 1150,
+        "minY": 0,
+        "maxY": 750,
+        "offsetX": -73,
+        "offsetY": -39
       }
     ],
     "id": "x928"

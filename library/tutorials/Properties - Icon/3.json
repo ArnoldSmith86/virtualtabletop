@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Icon",
       "image": "/assets/1481362664_5448",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1752115985153,
+      "lastUpdate": 1764391590803,
       "showName": false,
       "skill": "",
       "description": "",
@@ -163,8 +166,7 @@
         "color": "green",
         "hoverColor": "black"
       }
-    ],
-    "iconColor": "blue"
+    ]
   },
   "example3": {
     "id": "example3",
