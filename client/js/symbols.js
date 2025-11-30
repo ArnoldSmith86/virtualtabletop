@@ -437,7 +437,6 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor[0]}`);
     icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth[0])/512*maxSize}px`);
     icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth[0])/512*maxSize}px`);
-    icon.style.transform = `translate(${(symbol.offsetX)*maxSize}px, ${(symbol.offsetY)*maxSize}px) rotate(${symbol.rotation}deg) scale(${symbol.scaleX}, ${symbol.scaleY})`;
   }
 
   return outerWrapper;
