@@ -1,4 +1,31 @@
 {
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1752115985154,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "CSS",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
   "header": {
     "id": "header",
     "x": 300,
@@ -21,7 +48,7 @@
     "z": 124,
     "css": "font-size: 25px; ",
     "movable": false,
-    "html": "Each group of items below represent the different types of icons in VTT. Depending on the type of icon, using the advanced icon parameters, you can change some aspects of the icons. CSS offers additional flexibility. In each group on the top row, the top left item has no css applied. The top right item uses a varierty of different drop-shadow techniques. The lower left image demonstrates borderRadius (a special VTT property) and box-shadow. The bottom right image is clickable and uses a transition to show the difference between filter attributes (from left to right): blur, brightness, contrast, saturation."
+    "html": "Each group of items below represent the different types of icons in VTT. Depending on the type of icon, using the advanced icon parameters, you can change some aspects of the icons. CSS offers additional flexibility. In each group, the top left item has no css applied. The top right item uses a varierty of different drop-shadow techniques. The lower left image demonstrates borderRadius (a special VTT property) and box-shadow. The bottom right image is clickable and uses a transition to show the difference between filter attributes (from left to right): blur, brightness, contrast, saturation."
   },
   "button1Text": {
     "id": "button1Text",
@@ -362,103 +389,5 @@
     ],
     "saturate": 0.5,
     "icon": "🐙"
-  },
-  "button5Text": {
-    "id": "button5Text",
-    "x": 410,
-    "y": 890,
-    "width": 650,
-    "z": 9732,
-    "movable": false,
-    "text": "You can also use css to horizontally and vertically invert the image like in the examples above. The css in these examples are specifically for icons and will not work on widgets using an image property. The top left image has two icons and no transformation. The top right flips the bucket horizontally. The bottom left flips the paint brush vertically. The bottom right flips both icons in both directions."
-  },
-  "example17": {
-    "id": "example17",
-    "x": 585,
-    "y": 690,
-    "z": 10097,
-    "movable": false,
-    "icon": [
-      "delapouite/paint-bucket",
-      "delapouite/paint-roller"
-    ]
-  },
-  "example18": {
-    "id": "example18",
-    "x": 782,
-    "y": 690,
-    "z": 10097,
-    "movable": false,
-    "icon": [
-      "delapouite/paint-bucket",
-      "delapouite/paint-roller"
-    ],
-    "css": {
-      ">.symbolOuterWrapper>div>div:nth-child(1)": {
-        "transform": "scaleX(-1)"
-      }
-    }
-  },
-  "example19": {
-    "id": "example19",
-    "x": 585,
-    "y": 790,
-    "z": 10097,
-    "movable": false,
-    "icon": [
-      "delapouite/paint-bucket",
-      "delapouite/paint-roller"
-    ],
-    "css": {
-      ">.symbolOuterWrapper>div>div:nth-child(2)": {
-        "transform": "scaleY(-1)"
-      }
-    }
-  },
-  "example20": {
-    "id": "example20",
-    "x": 782,
-    "y": 790,
-    "z": 10097,
-    "movable": false,
-    "icon": [
-      "delapouite/paint-bucket",
-      "delapouite/paint-roller"
-    ],
-    "css": {
-      ">.symbolOuterWrapper>div>div": {
-        "transform": "scale(-1, -1)"
-      }
-    }
-  },
-  "_meta": {
-    "version": 19,
-    "gameSettings": {
-      "legacyModes": {}
-    },
-    "info": {
-      "name": "Properties - Icon",
-      "image": "/assets/1481362664_5448",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "lastUpdate": 1764477827565,
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "variantImage": "",
-      "variant": "CSS",
-      "language": "en-US",
-      "players": "1"
-    }
   }
 }
