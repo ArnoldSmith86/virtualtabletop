@@ -382,6 +382,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     symbol = {
       name: symbol.name,
       scale: symbol.scale || 1,
+      flip: symbol.flip || "",
       offsetX: symbol.offsetX || 0,
       offsetY: symbol.offsetY || 0,
       rotation: symbol.rotation || 0,
@@ -419,6 +420,11 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
     }
+    const flip = (symbol.flip || '').toString().toLowerCase();
+    const flipX = flip == 'horizontal' || flip == 'both' ? -1 : 1;
+    const flipY = flip == 'vertical'   || flip == 'both' ? -1 : 1;
+    icon.style.setProperty('--flipX', flipX);
+    icon.style.setProperty('--flipY', flipY);
     icon.style.setProperty('--scale', symbol.scale);
     icon.style.setProperty('--width', `${maxSize}px`);
     icon.style.setProperty('--height', `${maxSize}px`);
@@ -431,6 +437,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor[0]}`);
     icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth[0])/512*maxSize}px`);
     icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth[0])/512*maxSize}px`);
+    icon.style.transform = `translate(${(symbol.offsetX)*maxSize}px, ${(symbol.offsetY)*maxSize}px) rotate(${symbol.rotation}deg) scale(${symbol.scaleX}, ${symbol.scaleY})`;
   }
 
   return outerWrapper;
