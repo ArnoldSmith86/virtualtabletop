@@ -1269,7 +1269,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "<b>Scale</b> can also be in the form of x/y representing horitzontal and vertical scale changes. For example, the first hand above has no <b>scale</b> applied. The second hand has <b>scale</b> of -1,1 and the last has a <b>scale</b> of 1,-1. The <b>scale</b> inverts the entire widget, so any text or other elements of the widget would also be scaled in the same way.",
+    "html": "<b>Scale</b> can also be in the form of x/y representing horitzontal and vertical scale changes. For example, the first hand above has no <b>scale</b> applied. The second hand has <b>scale</b> of -1,1 and the last has a <b>scale</b> of 1,-1. The <b>scale</b> inverts the entire widget, so any text, other elements, or children of the widget are also scaled in the same way.",
     "layer": -2
   },
   "example4-2": {
