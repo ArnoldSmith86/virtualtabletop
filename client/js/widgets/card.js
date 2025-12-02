@@ -20,13 +20,13 @@ class Card extends Widget {
   }
 
   applyDeltaToDOM(delta) {
-    if (delta.deck !== undefined) {
+    if(delta.deck !== undefined) {
       const childNodes = [...this.domElement.childNodes];
-      if (this.deck) {
+      if(this.deck) {
         this.domElement.innerHTML = '';
         this.deck.removeCard(this);
       }
-      if (delta.deck) {
+      if(delta.deck) {
         this.deck = widgets.get(delta.deck);
         this.deck.addCard(this);
         const faceTemplates = this.deck.get('faceTemplates');
@@ -34,58 +34,58 @@ class Card extends Widget {
       } else {
         this.deck = null;
       }
-      for (const child of childNodes)
-        if (!child.className.match(/cardFace/))
+      for(const child of childNodes)
+        if(!child.className.match(/cardFace/))
           this.domElement.appendChild(child);
     }
 
-    if ((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
+    if((delta.cardType !== undefined || delta.deck !== undefined) && this.deck) {
       const defaultsFromDeck = {}
       const applyDefaultsFromDeck = {};
-      if (delta.deck !== undefined)
+      if(delta.deck !== undefined)
         Object.assign(defaultsFromDeck, this.deck.get('cardDefaults') || {});
       Object.assign(defaultsFromDeck, this.deck.get('cardTypes')[this.get('cardType')] || {});
-      for (const [k, v] of Object.entries(defaultsFromDeck))
-        if (this.state[k] === undefined)
+      for(const [k, v] of Object.entries(defaultsFromDeck))
+        if(this.state[k] === undefined)
           applyDefaultsFromDeck[k] = v;
       this.applyDeltaToDOM(applyDefaultsFromDeck);
     }
 
-    if (delta.deck !== undefined || delta.activeFace !== undefined || delta.animateFlip !== undefined) {
-      if (delta.activeFace !== undefined && this.get('animateFlip')) {
+    if(delta.deck !== undefined || delta.activeFace !== undefined || delta.animateFlip !== undefined) {
+      if(delta.activeFace !== undefined && this.get('animateFlip')) {
         const oldFaceIndex = [...this.domElement.children].findIndex(c => c.classList.contains('active'));
         const newFaceIndex = this.getActiveFace();
-        if (oldFaceIndex !== -1 && oldFaceIndex !== newFaceIndex)
+        if(oldFaceIndex !== -1 && oldFaceIndex !== newFaceIndex)
           this.triggerFlipAnimation(oldFaceIndex, newFaceIndex, this.get('animateFlip'));
       }
 
-      for (let i = 0; i < this.domElement.children.length; ++i) {
-        if (i == this.getActiveFace())
+      for(let i = 0; i < this.domElement.children.length; ++i) {
+        if(i == this.getActiveFace())
           this.domElement.children[i].classList.add('active');
         else
           this.domElement.children[i].classList.remove('active');
 
-        if (this.get('animateFlip') === 'vertical' && i % 2 !== 0)
+        if(this.get('animateFlip') === 'vertical' && i % 2 !== 0)
           this.domElement.children[i].classList.add('rotated');
         else
           this.domElement.children[i].classList.remove('rotated');
       }
 
       const deltaForFaceChange = {};
-      if (this.previousFaceProperties)
-        for (const key in this.previousFaceProperties)
+      if(this.previousFaceProperties)
+        for(const key in this.previousFaceProperties)
           deltaForFaceChange[key] = this.get(key);
-      if (this.deck) {
+      if(this.deck) {
         this.previousFaceProperties = this.deck.getFaceProperties(this.getActiveFace());
-        for (const key in this.previousFaceProperties)
+        for(const key in this.previousFaceProperties)
           deltaForFaceChange[key] = this.get(key);
       }
       this.applyDeltaToDOM(deltaForFaceChange);
     }
 
-    if (this.dynamicProperties)
-      for (const p in delta)
-        for (const callback of (this.dynamicProperties[p] || []))
+    if(this.dynamicProperties)
+      for(const p in delta)
+        for(const callback of(this.dynamicProperties[p] || []))
           callback();
 
     super.applyDeltaToDOM(delta);
@@ -93,36 +93,36 @@ class Card extends Widget {
 
   applyInitialDelta(delta) {
     super.applyInitialDelta(delta);
-    if (!delta.deck)
+    if(!delta.deck)
       throw `card "${delta.id}" requires property deck`;
-    if (!delta.cardType)
+    if(!delta.cardType)
       throw `card "${delta.id}" requires property cardType`;
-    if (!(widgets.get(delta.deck) instanceof Deck))
+    if(!(widgets.get(delta.deck) instanceof Deck))
       throw `card "${delta.id}" has "${delta.deck}" as a deck which is not a deck`;
-    if (!widgets.get(delta.deck).get('cardTypes')[delta.cardType])
+    if(!widgets.get(delta.deck).get('cardTypes')[delta.cardType])
       throw `card type "${delta.cardType}" not found in deck "${delta.deck}"`;
   }
 
   async click(mode = 'respect') {
-    if (!await super.click(mode))
+    if(!await super.click(mode))
       await this.flip();
   }
 
   createFaces(faceTemplates) {
     this.dynamicProperties = {};
-    for (const face of faceTemplates) {
+    for(const face of faceTemplates) {
       const faceDiv = document.createElement('div');
 
       faceDiv.classList.add('cardFace');
-      if (face.css !== undefined)
+      if(face.css !== undefined)
         faceDiv.style.cssText = mapAssetURLs(this.cssAsText(face.css, null, true));
-      if (face.classes !== undefined)
+      if(face.classes !== undefined)
         faceDiv.classList.add(face.classes);
       faceDiv.style.border = face.border ? face.border + 'px black solid' : 'none';
       faceDiv.style.borderRadius = face.radius ? face.radius + 'px' : '0';
 
-      if (Array.isArray(face.objects)) {
-        for (const original of face.objects) {
+      if(Array.isArray(face.objects)) {
+        for(const original of face.objects) {
           const useIframe = original.type == 'html' && legacyMode('useIframeForHtmlCards');
           const objectDiv = document.createElement(useIframe ? 'iframe' : 'div');
           objectDiv.classList.add('cardFaceObject');
@@ -131,9 +131,9 @@ class Card extends Widget {
             const usedProperties = new Set();
             const object = JSON.parse(JSON.stringify(original));
 
-            if (typeof object.dynamicProperties == 'object')
-              for (const dp of Object.keys(object.dynamicProperties))
-                if (object[dp] === undefined)
+            if(typeof object.dynamicProperties == 'object')
+              for(const dp of Object.keys(object.dynamicProperties))
+                if(object[dp] === undefined)
                   object[dp] = this.get(object.dynamicProperties[dp]);
 
             const x = face.border ? object.x - face.border : object.x;
@@ -141,17 +141,17 @@ class Card extends Widget {
             let css = object.css ? this.cssAsText(object.css, usedProperties, true) + '; ' : '';
             css += `left: ${x}px; top: ${y}px; width: ${object.width}px; height: ${object.height}px; font-size: ${object.fontSize}px; text-align: ${object.textAlign}`;
             css += object.rotation ? `; transform: rotate(${object.rotation}deg)` : '';
-            if (typeof object.display !== 'undefined' && !object.display)
+            if(typeof object.display !== 'undefined' && !object.display)
               css += '; display: none';
             objectDiv.style.cssText = mapAssetURLs(css);
-            if (object.classes)
+            if(object.classes)
               objectDiv.classList.add(object.classes);
 
-            if (object.type == 'image') {
-              if (object.value) {
-                if (object.svgReplaces) {
+            if(object.type == 'image') {
+              if(object.value) {
+                if(object.svgReplaces) {
                   const replaces = { ...object.svgReplaces };
-                  for (const key in replaces)
+                  for(const key in replaces)
                     replaces[key] = this.get(replaces[key]);
                   const svgResult = getSVG(object.value, replaces, _ => {
                     objectDiv.style.backgroundImage = `url("${getSVG(object.value, replaces)}")`;
@@ -162,19 +162,19 @@ class Card extends Widget {
                 }
               }
               objectDiv.style.backgroundColor = object.color || 'white';
-            } else if (object.type == 'icon') {
-              if (object.value) {
-                if ($('.symbolOuterWrapper', objectDiv))
+            } else if(object.type == 'icon') {
+              if(object.value) {
+                if($('.symbolOuterWrapper', objectDiv))
                   $('.symbolOuterWrapper', objectDiv).remove();
                 generateSymbolsDiv(objectDiv, object.size || object.width, object.size || object.height, typeof object.value == 'object' ? object.value : Object.assign({ name: object.value }, object, { rotation: 0 }), object.text || '', 1, object.color);
               }
-            } else if (object.type == 'html') {
-              const content = String(object.value).replaceAll(/\$\{PROPERTY ([A-Za-z0-9_-]+)\}/g, (m, n) => {
+            } else if(object.type == 'html') {
+              const content = String(object.value).replaceAll(/\$\{PROPERTY([A-Za-z0-9_-]+)\}/g,(m, n) => {
                 usedProperties.add(n);
                 return this.get(n) || '';
               });
 
-              if (useIframe) {
+              if(useIframe) {
                 // Prevent input from going to frame.
                 objectDiv.style.pointerEvents = 'none';
                 objectDiv.setAttribute('sandbox', 'allow-same-origin');
@@ -193,29 +193,29 @@ class Card extends Widget {
                 let inlineCSS = '';
                 let finalHTML = '';
 
-                if (object.css) {
-                  if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
+                if(object.css) {
+                  if(typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
                     const faceIndex = faceTemplates.indexOf(face);
                     const objectIndex = face.objects.indexOf(original);
                     const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
                     objectDiv.classList.add(uniqueScope);
 
                     let styleString = '';
-                    for (const selector in object.css) {
-                      if (selector === 'inline') {
+                    for(const selector in object.css) {
+                      if(selector === 'inline') {
                         inlineCSS = this.cssAsText(object.css.inline, usedProperties, true);
                         continue;
                       }
                       const newSelector = selector.split(',').map(s => {
                         const trimmed = s.trim();
-                        if (trimmed.startsWith('body')) {
+                        if(trimmed.startsWith('body')) {
                           return `.${uniqueScope}${trimmed.substring(4)}`;
                         }
                         return `.${uniqueScope} ${trimmed}`;
                       }).join(', ');
                       styleString += `${newSelector} { ${this.cssAsText(object.css[selector], usedProperties, true)} }\n`;
                     }
-                    if (styleString) {
+                    if(styleString) {
                       const style = document.createElement('style');
                       style.textContent = this.cssReplaceProperties(styleString, usedProperties);
                       finalHTML += style.outerHTML;
@@ -227,14 +227,14 @@ class Card extends Widget {
 
                 let sanitizedContent = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
                 const bodyMatch = sanitizedContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-                if (bodyMatch) {
+                if(bodyMatch) {
                   sanitizedContent = bodyMatch;
                 }
                 finalHTML += sanitizedContent;
 
                 objectDiv.innerHTML = finalHTML;
 
-                if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
+                if(inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
               }
             } else {
               objectDiv.textContent = object.value;
@@ -245,15 +245,15 @@ class Card extends Widget {
 
           // add a callback that makes sure dynamic property changes are reflected on the DOM
           const properties = setValue();
-          if (original.svgReplaces)
-            for (const property of Object.values(original.svgReplaces))
+          if(original.svgReplaces)
+            for(const property of Object.values(original.svgReplaces))
               properties.add(property);
-          if (typeof original.dynamicProperties == 'object')
-            for (const dp of Object.keys(original.dynamicProperties))
-              if (original[dp] === undefined)
+          if(typeof original.dynamicProperties == 'object')
+            for(const dp of Object.keys(original.dynamicProperties))
+              if(original[dp] === undefined)
                 properties.add(original.dynamicProperties[dp]);
-          for (const p of properties) {
-            if (!this.dynamicProperties[p])
+          for(const p of properties) {
+            if(!this.dynamicProperties[p])
               this.dynamicProperties[p] = [];
             this.dynamicProperties[p].push(setValue);
           }
@@ -272,23 +272,23 @@ class Card extends Widget {
   }
 
   triggerFlipAnimation(oldFaceIndex, newFaceIndex, axis) {
-    if (this.animationTimeout) {
+    if(this.animationTimeout) {
       clearTimeout(this.animationTimeout);
       this.animationTimeout = null;
-      for (const child of this.domElement.children)
+      for(const child of this.domElement.children)
         child.classList.remove('animating', 'animate', 'flip-horizontal-out', 'flip-horizontal-in', 'flip-vertical-out', 'flip-vertical-in', 'reverse');
     }
 
     const children = this.domElement.children;
     const oldFace = children[oldFaceIndex];
     const newFace = children[newFaceIndex];
-    if (!oldFace || !newFace) return;
+    if(!oldFace || !newFace) return;
 
     const faceCycle = this.get('faceCycle');
     const isReverse = faceCycle === 'backward';
     const directionClass = axis === 'vertical' ? 'flip-vertical' : 'flip-horizontal';
 
-    if (axis === 'vertical') {
+    if(axis === 'vertical') {
       const oldIsOdd = oldFaceIndex % 2 !== 0;
       const newIsOdd = newFaceIndex % 2 !== 0;
       oldFace.classList.add('animating', `${directionClass}-out-${oldIsOdd ? 'odd' : 'even'}`);
@@ -298,7 +298,7 @@ class Card extends Widget {
       newFace.classList.add('animating', `${directionClass}-in`);
     }
 
-    if (isReverse) {
+    if(isReverse) {
       oldFace.classList.add('reverse');
       newFace.classList.add('reverse');
     }
@@ -322,27 +322,27 @@ class Card extends Widget {
   }
 
   async flip(setFlip, faceCycle) {
-    if (setFlip !== undefined && setFlip !== null)
+    if(setFlip !== undefined && setFlip !== null)
       await this.set('activeFace', setFlip);
     else {
-      const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
-      if (fC == 'backward')
+      const fC =(faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
+      if(fC == 'backward')
         await this.set('activeFace', this.getActiveFace() == 0 ? this.getFaceCount() - 1 : this.getActiveFace() - 1);
       else
-        await this.set('activeFace', Math.floor(this.getActiveFace() + (fC == 'random' ? rand() * 99999 : 1)) % this.getFaceCount());
+        await this.set('activeFace', Math.floor(this.getActiveFace() +(fC == 'random' ? rand() * 99999 : 1)) % this.getFaceCount());
     }
   }
 
   getActiveFace() {
     const face = +this.get('activeFace');
     const count = this.getFaceCount();
-    return (face % count + count) % count;
+    return(face % count + count) % count;
   }
 
   getDefaultValue(property) {
-    if (this.deck && property != 'cardType' && property != 'activeFace') {
+    if(this.deck && property != 'cardType' && property != 'activeFace') {
       const d = this.deck.cardPropertyGet(this.get('cardType'), this.getActiveFace(), property);
-      if (d !== undefined)
+      if(d !== undefined)
         return d;
     }
     return super.getDefaultValue(property);
@@ -350,7 +350,7 @@ class Card extends Widget {
 
   getFaceCount() {
     const faceTemplates = this.deck.get('faceTemplates');
-    if (Array.isArray(faceTemplates))
+    if(Array.isArray(faceTemplates))
       return faceTemplates.length;
     else
       return 0;
