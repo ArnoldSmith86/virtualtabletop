@@ -5062,42 +5062,6 @@
     "parent": "k703",
     "activeFace": 1
   },
-  "88j1": {
-    "deck": "deck-camels-green",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "88j1",
-    "z": 26935,
-    "parent": "r42j",
-    "activeFace": 1
-  },
-  "djjb": {
-    "deck": "deck-camels-green",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "djjb",
-    "z": 26937,
-    "parent": "r42j",
-    "activeFace": 1
-  },
-  "5dpu": {
-    "deck": "deck-camels-green",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "5dpu",
-    "z": 26939,
-    "parent": "r42j",
-    "activeFace": 1
-  },
-  "zdog": {
-    "deck": "deck-camels-green",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "zdog",
-    "z": 26941,
-    "parent": "r42j",
-    "activeFace": 1
-  },
   "j10g": {
     "deck": "deck-camels-blue",
     "type": "card",
@@ -5249,42 +5213,6 @@
     "z": 59045,
     "activeFace": 1,
     "parent": "k703"
-  },
-  "rn77": {
-    "deck": "deck-camels-purple",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "rn77",
-    "z": 26943,
-    "parent": "r42j",
-    "activeFace": 1
-  },
-  "4i9d": {
-    "deck": "deck-camels-purple",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "4i9d",
-    "z": 26945,
-    "parent": "r42j",
-    "activeFace": 1
-  },
-  "trez": {
-    "deck": "deck-camels-purple",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "trez",
-    "z": 26947,
-    "parent": "r42j",
-    "activeFace": 1
-  },
-  "6c3p": {
-    "deck": "deck-camels-purple",
-    "type": "card",
-    "cardType": "camel-blue",
-    "id": "6c3p",
-    "z": 26949,
-    "parent": "r42j",
-    "activeFace": 1
   },
   "image-icon-p1": {
     "id": "image-icon-p1",
