@@ -23,3 +23,133 @@
   background-position: center center;
   box-sizing: border-box;
 }
+
+/* Animation Styles */
+.card {
+  perspective: 1000px;
+}
+
+.cardFace {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.cardFace.animating {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Horizontal Flip */
+.cardFace.flip-horizontal-out {
+  transform: rotateY(0deg);
+}
+
+.cardFace.flip-horizontal-out.animate {
+  transform: rotateY(-180deg);
+}
+
+.cardFace.flip-horizontal-in {
+  transform: rotateY(180deg);
+}
+
+.cardFace.flip-horizontal-in.animate {
+  transform: rotateY(0deg);
+}
+
+.cardFace.flip-horizontal-out.reverse {
+  transform: rotateY(0deg);
+}
+
+.cardFace.flip-horizontal-out.reverse.animate {
+  transform: rotateY(180deg);
+}
+
+.cardFace.flip-horizontal-in.reverse {
+  transform: rotateY(-180deg);
+}
+
+.cardFace.flip-horizontal-in.reverse.animate {
+  transform: rotateY(0deg);
+}
+
+/* Vertical Flip */
+.cardFace.rotated {
+  transform: rotate(180deg);
+}
+
+/* Outgoing - Even (Upright) -> Back Upside Down */
+.cardFace.flip-vertical-out-even {
+  transform: rotateX(0deg);
+}
+
+.cardFace.flip-vertical-out-even.animate {
+  transform: rotateX(180deg);
+}
+
+/* Outgoing - Odd (Rotated) -> Back Upright */
+.cardFace.flip-vertical-out-odd {
+  transform: rotate(180deg) rotateX(0deg);
+}
+
+.cardFace.flip-vertical-out-odd.animate {
+  transform: rotate(180deg) rotateX(180deg);
+}
+
+/* Incoming - Even (Upright) <- Back Upside Down */
+.cardFace.flip-vertical-in-even {
+  transform: rotateX(-180deg);
+}
+
+.cardFace.flip-vertical-in-even.animate {
+  transform: rotateX(0deg);
+}
+
+/* Incoming - Odd (Rotated) <- Back Upright */
+.cardFace.flip-vertical-in-odd {
+  transform: rotate(180deg) rotateX(-180deg);
+}
+
+.cardFace.flip-vertical-in-odd.animate {
+  transform: rotate(180deg) rotateX(0deg);
+}
+
+/* Reverse Outgoing - Even -> Back Upright */
+.cardFace.flip-vertical-out-even.reverse {
+  transform: rotateX(0deg);
+}
+
+.cardFace.flip-vertical-out-even.reverse.animate {
+  transform: rotateX(-180deg);
+}
+
+/* Reverse Outgoing - Odd -> Back Upside Down */
+.cardFace.flip-vertical-out-odd.reverse {
+  transform: rotate(180deg) rotateX(0deg);
+}
+
+.cardFace.flip-vertical-out-odd.reverse.animate {
+  transform: rotate(180deg) rotateX(-180deg);
+}
+
+/* Reverse Incoming - Even <- Back Upright */
+.cardFace.flip-vertical-in-even.reverse {
+  transform: rotateX(180deg);
+}
+
+.cardFace.flip-vertical-in-even.reverse.animate {
+  transform: rotateX(0deg);
+}
+
+/* Reverse Incoming - Odd <- Back Upside Down */
+.cardFace.flip-vertical-in-odd.reverse {
+  transform: rotate(180deg) rotateX(180deg);
+}
+
+.cardFace.flip-vertical-in-odd.reverse.animate {
+  transform: rotate(180deg) rotateX(0deg);
+}
