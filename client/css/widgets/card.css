@@ -32,7 +32,7 @@
 .cardFace {
   backface-visibility: hidden;
   transform-style: preserve-3d;
-  transition: transform 0.6s;
+  transition: transform 0.2s;
 }
 
 .cardFace.animating {
