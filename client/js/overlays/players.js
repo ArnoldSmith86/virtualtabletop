@@ -1,12 +1,9 @@
 import { asArray, onLoad, rand } from '../domhelpers.js';
-import { generateName } from '../generatednames.js';
-import { randomHue, contrastAnyColor } from '../color.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
-let playerName = localStorage.getItem('playerName') || generateName();
+let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand()*1000);
 let playerColor = 'red';
-let playerContrastColor = contrastAnyColor(playerColor, 1);
 let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
@@ -15,7 +12,6 @@ localStorage.setItem('playerName', playerName);
 export {
   playerName,
   playerColor,
-  playerContrastColor,
   activePlayers,
   activeColors,
   mouseCoords
@@ -25,7 +21,6 @@ function getPlayerDetails() {
   return {
     playerName,
     playerColor,
-    playerContrastColor,
     activePlayers,
     activeColors,
     mouseCoords
@@ -35,8 +30,7 @@ function getPlayerDetails() {
 function addPlayerCursor(playerName, playerColor) {
   playerCursors[playerName] = document.createElement('div');
   playerCursors[playerName].className = 'cursor';
-  // Remove zero-width space from player name for display
-  playerCursors[playerName].style = `--playerName:"${playerName.replace(/\u200b/g, '')}";--playerColor:${playerColor};--playerContrastColor:${contrastAnyColor(playerColor, 1)};`;
+  playerCursors[playerName].style = `--playerName:"${playerName}";--playerColor:${playerColor};`;
   playerCursors[playerName].style.transform = `translate(-50px, -50px)`;
   playerCursors[playerName].setAttribute("data-player",playerName);
   $('#playerCursors').appendChild(playerCursors[playerName]);
@@ -48,56 +42,19 @@ function fillPlayerList(players, active) {
   activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
-  function handlePlayerNameInput(e) {
-    const sanitized = e.target.value.replace(/\u200b/g, '');
-    if (e.type === 'focus' && e.target.value !== sanitized) {
-      e.target.placeholder = sanitized;
-      e.target.value = '';
-    } else if (e.type === 'blur' && e.target.value === '' && e.target.placeholder) {
-      e.target.value = e.target.placeholder;
-      e.target.placeholder = '';
-    }
-  }
-
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
     $('.teamColor', entry).value = players[player];
-    $('.teamColor', entry).style.setProperty('--contrastColor', contrastAnyColor(players[player], 1));
-    $('.teamColor', entry).style.setProperty('--playerColor', players[player]);
     $('.playerName', entry).value = player;
-    $('.teamColor', entry).addEventListener('input', function(e) {
-      e.target.style.setProperty('--playerColor', e.target.value);
-      e.target.style.setProperty('--contrastColor', contrastAnyColor(e.target.value, 1));
-    });
     $('.teamColor', entry).addEventListener('change', function(e) {
       toServer('playerColor', { player, color: toHex(e.target.value) });
     });
     $('.playerName', entry).addEventListener('change', function(e) {
-      if(e.target.value)
-        toServer('rename', { oldName: player, newName: e.target.value });
+      toServer('rename', { oldName: player, newName: e.target.value });
     });
-    $('.playerName', entry).addEventListener('focus', handlePlayerNameInput);
-    $('.playerName', entry).addEventListener('blur', handlePlayerNameInput);
-
     if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
-      playerContrastColor = contrastAnyColor(playerColor, 1);
-
-      const randomizeButton = document.createElement('button');
-      randomizeButton.className = 'randomizeNameButton';
-      randomizeButton.innerText = '🎲';
-      randomizeButton.title = 'Generate new name and color';
-      randomizeButton.onclick = () => {
-        let newName;
-        do {
-          newName = generateName();
-        } while (newName in players);
-        const newColor = randomHue(players);
-        toServer('rename', { oldName: playerName, newName: newName });
-        toServer('playerColor', { player: newName, color: newColor });
-      };
-      entry.appendChild(randomizeButton);
     } else {
       entry.className = 'activePlayerEntry';
     }
@@ -163,8 +120,7 @@ onLoad(function() {
   });
   onMessage('rename', function(args) {
     const oldName = playerName;
-    if(args)
-      playerName = args;
+    playerName = args;
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();

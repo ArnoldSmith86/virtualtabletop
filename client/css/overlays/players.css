@@ -35,7 +35,6 @@
 .teamColor {
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none;
   border-radius: 100%;
   display: inline-block;
   margin: 0;
@@ -45,38 +44,32 @@
   border: 2px solid rgba(255, 255, 255, 0.25);
   flex-basis: 2em;
   flex-grow: 0;
-  background-color: var(--playerColor);
-  position: relative;
+  width: 2em;
+  height: 2em;
 }
-
-.teamColor::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-mask-image: url(i/icons-white/user-solid-svg.svg);
-    mask-image: url(i/icons-white/user-solid-svg.svg);
-    -webkit-mask-size: 1em;
-    mask-size: 1em;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    background-color: var(--contrastColor);
-    pointer-events: none;
-}
-
 .teamColor::-webkit-color-swatch-wrapper {
-  display: none;
+  padding: 0;
+  border: 0 none transparent;
 }
 .teamColor::-webkit-color-swatch {
-  display: none;
+  border-radius: 100%;
+  /* background properties broken up to avoid erasing the selected colors */
+  background-image: url(i/icons-white/user-solid-svg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1em;
 }
-.teamColor::-moz-color-swatch {
-  display: none;
+.teamColor::-moz-color-swatch-wrapper {
+  padding: 0;
+  border: 0 none transparent;
+}
+.teamColor::-moz-color-swatch  {
+  border-radius: 100%;
+  /* background properties broken up to avoid erasing the selected colors */
+  background-image: url(i/icons-white/user-solid-svg.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 1em;
 }
 
 #playerList .myPlayerEntry input{
@@ -88,7 +81,6 @@
 #playerList .myPlayerEntry{
   order: 2;
   width: 100%;
-  position: relative;
 }
 #playerList label.otherPlayers{
   order: 3;
@@ -190,24 +182,4 @@ label.ui-line::before{
 }
 .cursor.hidden {
   display: none;
-}
-
-#playerList .randomizeNameButton {
-  background: transparent;
-  position: absolute;
-  left: -40px;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5em;
-  padding: 0 0.2em;
-  margin: 0;
-  line-height: 1;
-  color: inherit;
-  opacity: 0.6;
-  transition: opacity 0.1s, transform 0.1s;
-}
-
-#playerList .randomizeNameButton:hover {
-  opacity: 1;
-  transform: scale(1.1);
 }

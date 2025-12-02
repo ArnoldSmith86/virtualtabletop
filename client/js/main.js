@@ -666,7 +666,6 @@ onLoad(function() {
     document.title = `${document.location.pathname.split('/').pop()} - ${tabSuffix}`;
     $('#playerInviteURL').innerText = location.href;
   });
-
 });
 
 function getEdit() {

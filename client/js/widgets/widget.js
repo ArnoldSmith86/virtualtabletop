@@ -1,10 +1,10 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
-import { playerName, playerColor, playerContrastColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
+import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
-import { toHex, contrastAnyColor } from '../color.js';
+import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
 const readOnlyProperties = new Set([
@@ -918,7 +918,6 @@ export class Widget extends StateManaged {
       }, initialVariables, {
         playerName,
         playerColor,
-        playerContrastColor,
         activePlayers,
         thisID : this.get('id')
       });
@@ -2161,9 +2160,8 @@ export class Widget extends StateManaged {
       const hexColor = toHex(variables.playerColor);
       toServer('playerColor', { player: playerName, color: hexColor });
       playerColor = hexColor;
-      playerContrastColor = contrastAnyColor(playerColor, 1);
     }
-    if(variables.playerName != playerName && typeof variables.playerName == 'string' && variables.playerName) {
+    if(variables.playerName != playerName && typeof variables.playerName == 'string') {
       toServer('rename', { oldName: playerName, newName: variables.playerName });
       playerName = variables.playerName;
     }

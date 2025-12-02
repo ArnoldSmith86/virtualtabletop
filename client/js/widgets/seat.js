@@ -19,7 +19,6 @@ class Seat extends Widget {
       hand: 'hand',
 
       color: '#999999',
-      contrastColor: null,
       colorEmpty: '#999999',
       layer: -1,
       borderRadius: 5
@@ -81,15 +80,13 @@ class Seat extends Widget {
 
     if(this.get('color'))
       css += '; --color:' + this.get('color');
-    if(this.get('contrastColor'))
-      css += '; --contrastColor:' + this.get('contrastColor');
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('color', 'contrastColor');
+    p.push('color');
     return p;
   }
 
@@ -98,13 +95,9 @@ class Seat extends Widget {
     if(this.get('player') == '') {
       await this.set('player', playerName);
       await this.set('color', playerColor);
-      if (typeof playerContrastColor !== 'undefined') {
-        await this.set('contrastColor', playerContrastColor);
-      }
     } else {
       await this.set('player', null);
       await this.set('color', this.get('colorEmpty'));
-      await this.set('contrastColor', null);
     }
   }
 

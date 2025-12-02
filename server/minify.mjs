@@ -57,7 +57,6 @@ export default async function minifyHTML() {
     'client/js/color.js',
     'client/js/symbols.js',
     'client/js/audio.js',
-    'client/js/generatednames.js',
 
     'client/js/overlays/players.js',
     'client/js/overlays/states.js',
@@ -128,7 +127,6 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/assets.js',
     'client/js/editor/sidebar/toolbox.js',
     'client/js/editor/sidebar/gameSettings.js',
-    'client/js/generatednames.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
