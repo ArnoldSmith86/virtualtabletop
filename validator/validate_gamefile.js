@@ -54,7 +54,7 @@ const COMMON_PROPERTIES = {
     layer: 'number',
     borderRadius: 'any',
     rotation: 'number',
-    scale: 'number',
+    scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
     dragLimit: 'any',
     classes: 'string',
