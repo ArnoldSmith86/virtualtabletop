@@ -1,4 +1,4 @@
-export const VERSION = 19;
+export const VERSION = 20;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -131,6 +131,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<20 && v20ReplaceGuestWithZeroWidthSpace(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -525,4 +526,35 @@ function v19useIframeForHtmlCards(meta, state) {
           for(const object of face.objects)
             if(object.type == 'html')
               return meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
+}
+
+function v20ReplaceGuestWithZeroWidthSpace(routine) {
+  if (!Array.isArray(routine)) return;
+
+  for (let i = 0; i < routine.length; i++) {
+    const operation = routine[i];
+    if (operation && operation.func === 'IF' && operation.operand2 === 'Guest') {
+      if (i > 0) {
+        const prevOp = routine[i - 1];
+        if (typeof prevOp === 'string') {
+          const match = prevOp.match(/var\s+([a-zA-Z0-9_]+)\s*=\s*substr\s+\${playerName}\s+0\s+5/);
+          if (match) {
+            const varName = match;
+            if (operation.operand1 === `\${${varName}}`) {
+              routine[i - 1] = prevOp.replace('0 5', '0 1');
+              operation.operand2 = '\u200B';
+            }
+          }
+        }
+      }
+    }
+
+    if (operation && operation.func === 'FOREACH') {
+      v20ReplaceGuestWithZeroWidthSpace(operation.loopRoutine);
+    }
+    if (operation && operation.func === 'IF') {
+      v20ReplaceGuestWithZeroWidthSpace(operation.thenRoutine);
+      v20ReplaceGuestWithZeroWidthSpace(operation.elseRoutine);
+    }
+  }
 }
