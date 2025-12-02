@@ -6,8 +6,6 @@
     "id": "7107",
     "z": 58889,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "7832": {
@@ -16,9 +14,7 @@
     "cardType": "camel-green",
     "id": "7832",
     "z": 58556,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "_meta": {
     "version": 19,
@@ -5415,8 +5411,6 @@
     "id": "uj7b",
     "z": 58919,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "nedh": {
@@ -5426,8 +5420,6 @@
     "id": "nedh",
     "z": 58920,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "2ebx": {
@@ -5447,8 +5439,6 @@
     "id": "dtwt",
     "z": 58921,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "ts7v": {
@@ -5458,8 +5448,6 @@
     "id": "ts7v",
     "z": 58922,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "p1za": {
@@ -5469,8 +5457,6 @@
     "id": "p1za",
     "z": 58923,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "d11q": {
@@ -5480,8 +5466,6 @@
     "id": "d11q",
     "z": 58924,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "euw3": {
@@ -5491,8 +5475,6 @@
     "id": "euw3",
     "z": 58925,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "lmau": {
@@ -5502,8 +5484,6 @@
     "id": "lmau",
     "z": 58926,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "rb2p": {
@@ -5513,8 +5493,6 @@
     "id": "rb2p",
     "z": 58927,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "unt9": {
@@ -5524,8 +5502,6 @@
     "id": "unt9",
     "z": 58928,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "sut5": {
@@ -5535,8 +5511,6 @@
     "id": "sut5",
     "z": 58929,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "vsdp": {
@@ -5546,8 +5520,6 @@
     "id": "vsdp",
     "z": 58930,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "xswm": {
@@ -5557,8 +5529,6 @@
     "id": "xswm",
     "z": 58931,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "g73d": {
@@ -5568,8 +5538,6 @@
     "id": "g73d",
     "z": 58932,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "jtrr": {
@@ -5579,8 +5547,6 @@
     "id": "jtrr",
     "z": 58933,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "54pc": {
@@ -5590,8 +5556,6 @@
     "id": "54pc",
     "z": 58934,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "o62z": {
@@ -5601,8 +5565,6 @@
     "id": "o62z",
     "z": 58935,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "5dk4": {
@@ -5612,8 +5574,6 @@
     "id": "5dk4",
     "z": 58936,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "jm4g": {
@@ -5623,8 +5583,6 @@
     "id": "jm4g",
     "z": 58937,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "dpmc": {
@@ -5634,8 +5592,6 @@
     "id": "dpmc",
     "z": 58938,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "v9m0": {
@@ -5645,8 +5601,6 @@
     "id": "v9m0",
     "z": 58939,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "ta5r": {
@@ -5656,8 +5610,6 @@
     "id": "ta5r",
     "z": 58940,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "sy4h": {
@@ -5667,8 +5619,6 @@
     "id": "sy4h",
     "z": 58941,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "0adi": {
@@ -5678,8 +5628,6 @@
     "id": "0adi",
     "z": 58942,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "820j": {
@@ -5689,8 +5637,6 @@
     "id": "820j",
     "z": 58943,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "k0tf": {
@@ -5700,8 +5646,6 @@
     "id": "k0tf",
     "z": 58944,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "w029": {
@@ -5711,8 +5655,6 @@
     "id": "w029",
     "z": 58945,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "5ygx": {
@@ -5722,8 +5664,6 @@
     "id": "5ygx",
     "z": 58946,
     "parent": "2ebx",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "8w2m": {
@@ -5787,8 +5727,6 @@
     "id": "26wb",
     "z": 58891,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "wspf": {
@@ -5798,8 +5736,6 @@
     "id": "wspf",
     "z": 58892,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "1fap": {
@@ -5819,8 +5755,6 @@
     "id": "gfn6",
     "z": 58893,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "7yus": {
@@ -5830,8 +5764,6 @@
     "id": "7yus",
     "z": 58894,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "w3is": {
@@ -5841,8 +5773,6 @@
     "id": "w3is",
     "z": 58895,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "0x58": {
@@ -5852,8 +5782,6 @@
     "id": "0x58",
     "z": 58896,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "k5fr": {
@@ -5863,8 +5791,6 @@
     "id": "k5fr",
     "z": 58897,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "4v5j": {
@@ -5874,8 +5800,6 @@
     "id": "4v5j",
     "z": 58898,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "wafe": {
@@ -5885,8 +5809,6 @@
     "id": "wafe",
     "z": 58899,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "os7h": {
@@ -5896,8 +5818,6 @@
     "id": "os7h",
     "z": 58900,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "pydl": {
@@ -5907,8 +5827,6 @@
     "id": "pydl",
     "z": 58901,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "dyc2": {
@@ -5918,8 +5836,6 @@
     "id": "dyc2",
     "z": 58902,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "1xig": {
@@ -5929,8 +5845,6 @@
     "id": "1xig",
     "z": 58903,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "7bn2": {
@@ -5940,8 +5854,6 @@
     "id": "7bn2",
     "z": 58904,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "2rtj": {
@@ -5951,8 +5863,6 @@
     "id": "2rtj",
     "z": 58905,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "uoox": {
@@ -5962,8 +5872,6 @@
     "id": "uoox",
     "z": 58906,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "n14y": {
@@ -5973,8 +5881,6 @@
     "id": "n14y",
     "z": 58907,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "d5ry": {
@@ -5984,8 +5890,6 @@
     "id": "d5ry",
     "z": 58908,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "nxja": {
@@ -5995,8 +5899,6 @@
     "id": "nxja",
     "z": 58909,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "xk1j": {
@@ -6006,8 +5908,6 @@
     "id": "xk1j",
     "z": 58910,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "qd8q": {
@@ -6017,8 +5917,6 @@
     "id": "qd8q",
     "z": 58911,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "0f1y": {
@@ -6028,8 +5926,6 @@
     "id": "0f1y",
     "z": 58912,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "2gpr": {
@@ -6039,8 +5935,6 @@
     "id": "2gpr",
     "z": 58913,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "04yn": {
@@ -6050,8 +5944,6 @@
     "id": "04yn",
     "z": 58914,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "xojo": {
@@ -6061,8 +5953,6 @@
     "id": "xojo",
     "z": 58915,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "4jnb": {
@@ -6072,8 +5962,6 @@
     "id": "4jnb",
     "z": 58916,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "n924": {
@@ -6083,8 +5971,6 @@
     "id": "n924",
     "z": 58917,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "1efr": {
@@ -6094,8 +5980,6 @@
     "id": "1efr",
     "z": 58918,
     "parent": "1fap",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "47a17B": {
@@ -6452,8 +6336,6 @@
     "id": "sds5",
     "z": 58859,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "5qns": {
@@ -6463,8 +6345,6 @@
     "id": "5qns",
     "z": 58860,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "4mlq": {
@@ -6484,8 +6364,6 @@
     "id": "ddex",
     "z": 58861,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "1g1h": {
@@ -6495,8 +6373,6 @@
     "id": "1g1h",
     "z": 58862,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "9rks": {
@@ -6506,8 +6382,6 @@
     "id": "9rks",
     "z": 58863,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "ea1w": {
@@ -6517,8 +6391,6 @@
     "id": "ea1w",
     "z": 58864,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "bzt1": {
@@ -6528,8 +6400,6 @@
     "id": "bzt1",
     "z": 58865,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "3jtj": {
@@ -6539,8 +6409,6 @@
     "id": "3jtj",
     "z": 58866,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "gcf4": {
@@ -6550,8 +6418,6 @@
     "id": "gcf4",
     "z": 58867,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "q4rt": {
@@ -6561,8 +6427,6 @@
     "id": "q4rt",
     "z": 58868,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "e6dx": {
@@ -6572,8 +6436,6 @@
     "id": "e6dx",
     "z": 58869,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "2z0y": {
@@ -6583,8 +6445,6 @@
     "id": "2z0y",
     "z": 58870,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "om63": {
@@ -6594,8 +6454,6 @@
     "id": "om63",
     "z": 58871,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "fe2j": {
@@ -6605,8 +6463,6 @@
     "id": "fe2j",
     "z": 58872,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "kp6w": {
@@ -6616,8 +6472,6 @@
     "id": "kp6w",
     "z": 58873,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "1npf": {
@@ -6627,8 +6481,6 @@
     "id": "1npf",
     "z": 58874,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "qsu9": {
@@ -6638,8 +6490,6 @@
     "id": "qsu9",
     "z": 58875,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "14kf": {
@@ -6649,8 +6499,6 @@
     "id": "14kf",
     "z": 58876,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "xrpq": {
@@ -6660,8 +6508,6 @@
     "id": "xrpq",
     "z": 58877,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "f5jb": {
@@ -6671,8 +6517,6 @@
     "id": "f5jb",
     "z": 58878,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "kfz0": {
@@ -6682,8 +6526,6 @@
     "id": "kfz0",
     "z": 58879,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "cnaj": {
@@ -6693,8 +6535,6 @@
     "id": "cnaj",
     "z": 58880,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "66f4": {
@@ -6704,8 +6544,6 @@
     "id": "66f4",
     "z": 58881,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "uzhk": {
@@ -6715,8 +6553,6 @@
     "id": "uzhk",
     "z": 58882,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "wck2": {
@@ -6726,8 +6562,6 @@
     "id": "wck2",
     "z": 58883,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "60sq": {
@@ -6737,8 +6571,6 @@
     "id": "60sq",
     "z": 58884,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "c26y": {
@@ -6748,8 +6580,6 @@
     "id": "c26y",
     "z": 58885,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "maks": {
@@ -6759,8 +6589,6 @@
     "id": "maks",
     "z": 58886,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "35fz": {
@@ -6770,8 +6598,6 @@
     "id": "35fz",
     "z": 58887,
     "parent": "4mlq",
-    "x": null,
-    "y": null,
     "activeFace": 1
   },
   "omrt": {
@@ -6824,9 +6650,7 @@
     "cardType": "camel-green",
     "id": "zbim",
     "z": 58557,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "8xyw": {
     "deck": "deck-camels-green",
@@ -6834,9 +6658,7 @@
     "cardType": "camel-green",
     "id": "8xyw",
     "z": 58558,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "5j2m": {
     "type": "pile",
@@ -6855,9 +6677,7 @@
     "cardType": "camel-green",
     "id": "eovb",
     "z": 58559,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "0kxk": {
     "deck": "deck-camels-green",
@@ -6865,9 +6685,7 @@
     "cardType": "camel-green",
     "id": "0kxk",
     "z": 58560,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "o68r": {
     "deck": "deck-camels-green",
@@ -6875,9 +6693,7 @@
     "cardType": "camel-green",
     "id": "o68r",
     "z": 58561,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "hwio": {
     "deck": "deck-camels-green",
@@ -6885,9 +6701,7 @@
     "cardType": "camel-green",
     "id": "hwio",
     "z": 58562,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "ctnm": {
     "deck": "deck-camels-green",
@@ -6895,9 +6709,7 @@
     "cardType": "camel-green",
     "id": "ctnm",
     "z": 58563,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "og4s": {
     "deck": "deck-camels-green",
@@ -6905,9 +6717,7 @@
     "cardType": "camel-green",
     "id": "og4s",
     "z": 58564,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "ej9x": {
     "deck": "deck-camels-green",
@@ -6915,9 +6725,7 @@
     "cardType": "camel-green",
     "id": "ej9x",
     "z": 58565,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "iok4": {
     "deck": "deck-camels-green",
@@ -6925,9 +6733,7 @@
     "cardType": "camel-green",
     "id": "iok4",
     "z": 58566,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "tngu": {
     "deck": "deck-camels-green",
@@ -6935,9 +6741,7 @@
     "cardType": "camel-green",
     "id": "tngu",
     "z": 58567,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "epvm": {
     "deck": "deck-camels-green",
@@ -6945,9 +6749,7 @@
     "cardType": "camel-green",
     "id": "epvm",
     "z": 58568,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "jnp2": {
     "deck": "deck-camels-green",
@@ -6955,9 +6757,7 @@
     "cardType": "camel-green",
     "id": "jnp2",
     "z": 58569,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "c6b7": {
     "deck": "deck-camels-green",
@@ -6965,9 +6765,7 @@
     "cardType": "camel-green",
     "id": "c6b7",
     "z": 58570,
-    "parent": "5j2m",
-    "x": null,
-    "y": null
+    "parent": "5j2m"
   },
   "himz": {
     "deck": "deck-camels-green",
@@ -7103,9 +6901,7 @@
     "cardType": "camel-purple",
     "id": "3qao",
     "z": 58643,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "j4n2": {
     "deck": "deck-camels-purple",
@@ -7113,9 +6909,7 @@
     "cardType": "camel-purple",
     "id": "j4n2",
     "z": 58644,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "vc4t": {
     "type": "pile",
@@ -7135,9 +6929,7 @@
     "cardType": "camel-purple",
     "id": "z2vt",
     "z": 58645,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "mij9": {
     "deck": "deck-camels-purple",
@@ -7145,9 +6937,7 @@
     "cardType": "camel-purple",
     "id": "mij9",
     "z": 58646,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "86x9": {
     "deck": "deck-camels-purple",
@@ -7155,9 +6945,7 @@
     "cardType": "camel-purple",
     "id": "86x9",
     "z": 58647,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "xoyb": {
     "deck": "deck-camels-purple",
@@ -7165,9 +6953,7 @@
     "cardType": "camel-purple",
     "id": "xoyb",
     "z": 58648,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "xjgd": {
     "deck": "deck-camels-purple",
@@ -7175,9 +6961,7 @@
     "cardType": "camel-purple",
     "id": "xjgd",
     "z": 58649,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "y6qt": {
     "deck": "deck-camels-purple",
@@ -7185,9 +6969,7 @@
     "cardType": "camel-purple",
     "id": "y6qt",
     "z": 58650,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "tsd1": {
     "deck": "deck-camels-purple",
@@ -7195,9 +6977,7 @@
     "cardType": "camel-purple",
     "id": "tsd1",
     "z": 58651,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "ermj": {
     "deck": "deck-camels-purple",
@@ -7205,9 +6985,7 @@
     "cardType": "camel-purple",
     "id": "ermj",
     "z": 58652,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "4rxk": {
     "deck": "deck-camels-purple",
@@ -7215,9 +6993,7 @@
     "cardType": "camel-purple",
     "id": "4rxk",
     "z": 58653,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "jho6": {
     "deck": "deck-camels-purple",
@@ -7225,9 +7001,7 @@
     "cardType": "camel-purple",
     "id": "jho6",
     "z": 58654,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "amq5": {
     "deck": "deck-camels-purple",
@@ -7235,9 +7009,7 @@
     "cardType": "camel-purple",
     "id": "amq5",
     "z": 58655,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "9gi0": {
     "deck": "deck-camels-purple",
@@ -7245,9 +7017,7 @@
     "cardType": "camel-purple",
     "id": "9gi0",
     "z": 58656,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "i2ye": {
     "deck": "deck-camels-purple",
@@ -7255,9 +7025,7 @@
     "cardType": "camel-purple",
     "id": "i2ye",
     "z": 58657,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "eied": {
     "deck": "deck-camels-purple",
@@ -7265,9 +7033,7 @@
     "cardType": "camel-purple",
     "id": "eied",
     "z": 58658,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "1kzx": {
     "deck": "deck-camels-purple",
@@ -7275,9 +7041,7 @@
     "cardType": "camel-purple",
     "id": "1kzx",
     "z": 58659,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "fefw": {
     "deck": "deck-camels-purple",
@@ -7285,9 +7049,7 @@
     "cardType": "camel-purple",
     "id": "fefw",
     "z": 58660,
-    "parent": "vc4t",
-    "x": null,
-    "y": null
+    "parent": "vc4t"
   },
   "l6kv": {
     "deck": "deck-camels-purple",
