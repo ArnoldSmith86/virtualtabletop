@@ -90,7 +90,10 @@
     "html": "This basic widget is like the previous, but the image is the public library image for this tutorial. Images you upload get a name like the one in the JSON for the widget above. You cannot change that name. It is unique to each image, but also once an image has been uploaded to the VTT servers for one game, it can be used in any game or room."
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "110 Widget Types",
       "image": "/assets/-1812256112_6351",
@@ -100,7 +103,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749053679653,
+      "lastUpdate": 1763354511339,
       "showName": false,
       "skill": "",
       "description": "",
@@ -162,7 +165,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "activeFace": 1
   },
