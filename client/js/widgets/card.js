@@ -9,6 +9,7 @@ class Card extends Widget {
 
       faceCycle: 'forward',
       activeFace: 0,
+      animateFlip: null,
 
       deck: null,
       cardType: null,
@@ -50,12 +51,24 @@ class Card extends Widget {
       this.applyDeltaToDOM(applyDefaultsFromDeck);
     }
 
-    if(delta.deck !== undefined || delta.activeFace !== undefined) {
+    if(delta.deck !== undefined || delta.activeFace !== undefined || delta.animateFlip !== undefined) {
+      if(delta.activeFace !== undefined && this.get('animateFlip')) {
+        const oldFaceIndex = [...this.domElement.children].findIndex(c=>c.classList.contains('active'));
+        const newFaceIndex = this.getActiveFace();
+        if(oldFaceIndex !== -1 && oldFaceIndex !== newFaceIndex)
+          this.triggerFlipAnimation(oldFaceIndex, newFaceIndex, this.get('animateFlip'));
+      }
+
       for(let i=0; i<this.domElement.children.length; ++i) {
         if(i == this.getActiveFace())
           this.domElement.children[i].classList.add('active');
         else
           this.domElement.children[i].classList.remove('active');
+
+        if(this.get('animateFlip') === 'vertical' && i % 2 !== 0)
+          this.domElement.children[i].classList.add('rotated');
+        else
+          this.domElement.children[i].classList.remove('rotated');
       }
 
       const deltaForFaceChange = {};
@@ -173,55 +186,55 @@ class Card extends Widget {
                 const css = object['css'];
                 const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
                 const html = `<!DOCTYPE html>\n` +
-                    `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
-                    `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
+                  `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
+                  `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
                 objectDiv.srcdoc = html;
               } else {
                 let inlineCSS = '';
                 let finalHTML = '';
 
-                if (object.css) {
-                    if (typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
-                        const faceIndex = faceTemplates.indexOf(face);
-                        const objectIndex = face.objects.indexOf(original);
-                        const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
-                        objectDiv.classList.add(uniqueScope);
+                if(object.css) {
+                  if(typeof object.css === 'object' && object.css !== null && !Array.isArray(object.css)) {
+                    const faceIndex = faceTemplates.indexOf(face);
+                    const objectIndex = face.objects.indexOf(original);
+                    const uniqueScope = `html-object-${this.id}-${faceIndex}-${objectIndex}`;
+                    objectDiv.classList.add(uniqueScope);
 
-                        let styleString = '';
-                        for (const selector in object.css) {
-                            if (selector === 'inline') {
-                                inlineCSS = this.cssAsText(object.css.inline, usedProperties, true);
-                                continue;
-                            }
-                            const newSelector = selector.split(',').map(s => {
-                                const trimmed = s.trim();
-                                if (trimmed.startsWith('body')) {
-                                    return `.${uniqueScope}${trimmed.substring(4)}`;
-                                }
-                                return `.${uniqueScope} ${trimmed}`;
-                            }).join(', ');
-                            styleString += `${newSelector} { ${this.cssAsText(object.css[selector], usedProperties, true)} }\n`;
+                    let styleString = '';
+                    for(const selector in object.css) {
+                      if(selector === 'inline') {
+                        inlineCSS = this.cssAsText(object.css.inline, usedProperties, true);
+                        continue;
+                      }
+                      const newSelector = selector.split(',').map(s => {
+                        const trimmed = s.trim();
+                        if(trimmed.startsWith('body')) {
+                          return `.${uniqueScope}${trimmed.substring(4)}`;
                         }
-                        if (styleString) {
-                            const style = document.createElement('style');
-                            style.textContent = this.cssReplaceProperties(styleString, usedProperties);
-                            finalHTML += style.outerHTML;
-                        }
-                    } else {
-                        inlineCSS = this.cssAsText(object.css, usedProperties, true);
+                        return `.${uniqueScope} ${trimmed}`;
+                      }).join(', ');
+                      styleString += `${newSelector} { ${this.cssAsText(object.css[selector], usedProperties, true)} }\n`;
                     }
+                    if(styleString) {
+                      const style = document.createElement('style');
+                      style.textContent = this.cssReplaceProperties(styleString, usedProperties);
+                      finalHTML += style.outerHTML;
+                    }
+                  } else {
+                    inlineCSS = this.cssAsText(object.css, usedProperties, true);
+                  }
                 }
 
                 let sanitizedContent = DOMPurify.sanitize(mapAssetURLs(content), { USE_PROFILES: { html: true } });
                 const bodyMatch = sanitizedContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-                if (bodyMatch) {
-                    sanitizedContent = bodyMatch;
+                if(bodyMatch) {
+                  sanitizedContent = bodyMatch;
                 }
                 finalHTML += sanitizedContent;
                 
                 objectDiv.innerHTML = finalHTML;
 
-                if (inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
+                if(inlineCSS) objectDiv.style.cssText += ';' + this.cssReplaceProperties(inlineCSS, usedProperties);
               }
             } else {
               objectDiv.textContent = object.value;
@@ -232,8 +245,8 @@ class Card extends Widget {
 
           // add a callback that makes sure dynamic property changes are reflected on the DOM
           const properties = setValue();
-          if (original.svgReplaces)
-            for (const property of Object.values(original.svgReplaces))
+          if(original.svgReplaces)
+            for(const property of Object.values(original.svgReplaces))
               properties.add(property);
           if(typeof original.dynamicProperties == 'object')
             for(const dp of Object.keys(original.dynamicProperties))
@@ -258,12 +271,62 @@ class Card extends Widget {
     return p;
   }
 
+  triggerFlipAnimation(oldFaceIndex, newFaceIndex, axis) {
+    if(this.animationTimeout) {
+      clearTimeout(this.animationTimeout);
+      this.animationTimeout = null;
+      for(const child of this.domElement.children)
+        child.classList.remove('animating', 'animate', 'flip-horizontal-out', 'flip-horizontal-in', 'flip-vertical-out', 'flip-vertical-in', 'reverse');
+    }
+
+    const children = this.domElement.children;
+    const oldFace = children[oldFaceIndex];
+    const newFace = children[newFaceIndex];
+    if(!oldFace || !newFace) return;
+
+    const faceCycle = this.get('faceCycle');
+    const isReverse = faceCycle === 'backward';
+    const directionClass = axis === 'vertical' ? 'flip-vertical' : 'flip-horizontal';
+
+    if(axis === 'vertical') {
+      const oldIsOdd = oldFaceIndex % 2 !== 0;
+      const newIsOdd = newFaceIndex % 2 !== 0;
+      oldFace.classList.add('animating', `${directionClass}-out-${oldIsOdd ? 'odd' : 'even'}`);
+      newFace.classList.add('animating', `${directionClass}-in-${newIsOdd ? 'odd' : 'even'}`);
+    } else {
+      oldFace.classList.add('animating', `${directionClass}-out`);
+      newFace.classList.add('animating', `${directionClass}-in`);
+    }
+
+    if(isReverse) {
+      oldFace.classList.add('reverse');
+      newFace.classList.add('reverse');
+    }
+
+    void oldFace.offsetWidth; // Force reflow
+
+    oldFace.classList.add('animate');
+    newFace.classList.add('animate');
+
+    this.animationTimeout = setTimeout(() => {
+      oldFace.classList.remove('animating', 'animate', 'reverse',
+        'flip-horizontal-out', 'flip-horizontal-in',
+        'flip-vertical-out-even', 'flip-vertical-out-odd',
+        'flip-vertical-in-even', 'flip-vertical-in-odd');
+      newFace.classList.remove('animating', 'animate', 'reverse',
+        'flip-horizontal-out', 'flip-horizontal-in',
+        'flip-vertical-out-even', 'flip-vertical-out-odd',
+        'flip-vertical-in-even', 'flip-vertical-in-odd');
+      this.animationTimeout = null;
+    }, 600);
+  }
+
   async flip(setFlip, faceCycle) {
     if(setFlip !== undefined && setFlip !== null)
       await this.set('activeFace', setFlip);
     else {
       const fC = (faceCycle !== undefined && faceCycle !== null) ? faceCycle : this.get('faceCycle');
-      if (fC == 'backward')
+      if(fC == 'backward')
         await this.set('activeFace', this.getActiveFace() == 0 ? this.getFaceCount()-1 : this.getActiveFace() -1);
       else
         await this.set('activeFace', Math.floor(this.getActiveFace() + (fC == 'random' ? rand()*99999 : 1)) % this.getFaceCount());
