@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 6,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - CSS",
       "image": "/assets/1323294024_5493",
@@ -11,7 +14,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762711744350,
+      "lastUpdate": 1763600448099,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -58,178 +61,6 @@
     "movable": false,
     "y": 650
   },
-  "fzoqB": {
-    "id": "fzoqB",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ],
-    "parent": "cardHolder"
-  },
-  "fzoqD": {
-    "type": "deck",
-    "id": "fzoqD",
-    "x": 12,
-    "y": 41,
-    "cardTypes": {
-      "S 10": {
-        "image": "/i/cards-default/TS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "10",
-        "rankA": "10",
-        "rankFixed": "10 S"
-      },
-      "S 2J": {
-        "image": "/i/cards-default/JS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "2J",
-        "rankA": "2J",
-        "rankFixed": "2J S"
-      },
-      "S 3Q": {
-        "image": "/i/cards-default/QS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "3Q",
-        "rankA": "3Q",
-        "rankFixed": "3Q S"
-      },
-      "S 4K": {
-        "image": "/i/cards-default/KS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "4K",
-        "rankA": "4K",
-        "rankFixed": "4K S"
-      }
-    },
-    "faceTemplates": [
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "transparent",
-            "value": "/i/cards-default/2B.svg"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "1",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "2",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "3",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "4",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "5",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "6",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      }
-    ],
-    "parent": "cardHolder"
-  },
   "bm5j": {
     "text": "This widget uses default css for its normal state, so nothing is specified in the 'default' selector. But then it uses 'hover' and 'after' selectors to create a tooltip effect.",
     "id": "bm5j",
@@ -247,16 +78,6 @@
     "text": "The holder above modifies the 'droppable' property in css. When you start moving a checker in this room, this holder will turn grey. When the checker enters the droptarget zone, the holder turns black. The holder below shows how to add text.",
     "movable": false,
     "y": 650
-  },
-  "cardHolder": {
-    "type": "holder",
-    "id": "cardHolder",
-    "x": 104.5,
-    "y": 1087,
-    "z": 127,
-    "dropTarget": {
-      "type": "card"
-    }
   },
   "bm7j": {
     "id": "bm7j",
