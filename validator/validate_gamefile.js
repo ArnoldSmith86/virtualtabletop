@@ -1170,11 +1170,11 @@ function validateGameFile(data, checkMeta) {
         
         // BGG URL validation (skip for tutorials)
         const metaMode = (info.mode || '').toLowerCase();
-        if (metaMode !== 'tutorial' && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(info.bgg)) {
+        if (metaMode !== 'tutorial' && !/^https?:\/\/(www\.)?boardgamegeek\.com\/boardgame\//.test(info.bgg)) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'bgg'],
-                message: 'does not look like a BoardGameGeek URL'
+                message: 'does not look like a BoardGameGeek boardgame URL'
             });
         }
     
