@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Properties - Icon",
       "image": "/assets/1481362664_5448",
@@ -819,7 +825,6 @@
         "routine": "updateColorRoutine"
       }
     ],
-    "slideLabel0": "#123456",
     "x": 45,
     "text": "hue",
     "y": 180

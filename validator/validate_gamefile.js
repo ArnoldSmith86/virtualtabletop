@@ -216,7 +216,7 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note'];
+                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note', 'size'];
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
                                 problems.push({
