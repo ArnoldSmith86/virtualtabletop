@@ -52,6 +52,19 @@ class BasicWidget extends ImageWidget {
       this.updateIcon();
   }
 
+  classes() {
+    let classes = super.classes();
+    if(this.get('html'))
+      classes += ' usesHTML';
+    return classes;
+  }
+
+  classesProperties() {
+    const p = super.classesProperties();
+    p.push('html');
+    return p;
+  }
+
   async click(mode='respect') {
     if(!await super.click(mode))
       await this.flip();
