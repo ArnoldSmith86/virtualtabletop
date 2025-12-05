@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
+import rateLimit from 'express-rate-limit';
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
@@ -23,9 +24,28 @@ const app = express();
 const server = http.Server(app);
 const router = express.Router();
 
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per window
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
+const assetCache = fs.existsSync(assetsdir + '/cache.json') ? JSON.parse(fs.readFileSync(assetsdir + '/cache.json')) : {};
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
+let customWidgets = (() => {
+  if (!fs.existsSync('library/widgets.json')) return { widgets: [], groups: [] };
+  try {
+    const raw = JSON.parse(fs.readFileSync('library/widgets.json'));
+    if (Array.isArray(raw)) return { widgets: raw, groups: [] };
+    if (typeof raw === 'object' && raw !== null) {
+      return { widgets: raw.widgets || [], groups: raw.groups || [] };
+    }
+  } catch (e) {}
+  return { widgets: [], groups: [] };
+})();
 
 const serverStart = +new Date();
 
@@ -297,6 +317,70 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  router.get('/api/widgets', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(customWidgets));
+  });
+
+  router.post('/api/widgets', apiLimiter, bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
+    const widget = req.body;
+    if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
+      return res.status(400).send('Invalid widget format.');
+    }
+    let id;
+    do {
+      id = Math.random().toString(36).substring(2, 10);
+    } while (customWidgets.widgets.find(w => w.id === id));
+    widget.id = id;
+    if (!widget.name) {
+      widget.name = id;
+    }
+    customWidgets.widgets.push(widget);
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send({ id });
+  });
+
+  router.put('/api/widgets', apiLimiter, bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
+    const data = req.body;
+    if (typeof data === 'object' && data !== null) {
+      customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
+      customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
+    }
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
+  });
+
+  router.put('/api/widgets/:id', apiLimiter, bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
+    const widget = req.body;
+    if (typeof widget !== 'object' || widget === null || !widget.id || !Array.isArray(widget.widgets)) {
+      return res.status(400).send('Invalid widget format.');
+    }
+    const index = customWidgets.widgets.findIndex(w => w.id === req.params.id);
+    if (index !== -1) {
+      customWidgets.widgets[index] = widget;
+    }
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
+  });
+
+  router.delete('/api/widgets/:id', apiLimiter, function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
+    customWidgets.widgets = customWidgets.widgets.filter(w => w.id !== req.params.id);
+    if (Array.isArray(customWidgets.groups)) {
+      customWidgets.groups.forEach(g => {
+        if (Array.isArray(g.widgets)) {
+          g.widgets = g.widgets.filter(id => id !== req.params.id);
+        }
+      });
+      customWidgets.groups = customWidgets.groups.filter(g => g.widgets && g.widgets.length > 0);
+    }
+    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
+  });
+
   router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
       return res.status(404).send('Invalid share.');
@@ -418,19 +502,26 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/asset/:link', async function(req, res) {
+  router.put('/asset/:link', apiLimiter, async function(req, res) {
     try {
+      if (assetCache[req.params.link]) {
+        res.send(`/assets${assetCache[req.params.link]}`);
+        return;
+      }
       const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
       const filename = `/${CRC32.buf(content)}_${content.length}`;
-      if(!Config.resolveAsset(filename.substr(1)))
+      if(!Config.resolveAsset(filename.substr(1))) {
         fs.writeFileSync(assetsdir + filename, content);
+      }
+      assetCache[req.params.link] = filename;
+      fs.writeFileSync(assetsdir + '/cache.json', JSON.stringify(assetCache));
       res.send(`/assets${filename}`);
     } catch(e) {
       res.status(404).send('Downloading external asset failed.');
     }
   });
 
-  router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
+  router.put('/asset', apiLimiter, bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
       fs.writeFileSync(assetsdir + filename, req.body);
