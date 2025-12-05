@@ -442,7 +442,7 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
+      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
       if(Array.isArray(jeGetValueAt('icon'))) {
         const current = jeGetValueAt('icon');
         const name = current[jeGetKeyAfter('icon')];

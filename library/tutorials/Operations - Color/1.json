@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 8,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Color",
       "image": "/assets/-1573388835_8422",
@@ -18,7 +24,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1748991371969,
+      "lastUpdate": 1763608795290,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Examples",
@@ -915,7 +921,6 @@
       "var c4 = colorContrast ${PROPERTY c1} 0.1",
       "var c5 = colorContrast ${PROPERTY c1} 0.2",
       "var c6 = colorContrast ${PROPERTY c1} 0.25",
-      "var c7 = colorContrast ${PROPERTY c1} -0.25",
       "var i = 2",
       {
         "func": "FOREACH",
@@ -924,8 +929,7 @@
           "${c3}",
           "${c4}",
           "${c5}",
-          "${c6}",
-          "${c7}"
+          "${c6}"
         ],
         "loopRoutine": [
           {
@@ -959,8 +963,7 @@
     "c4": "#458920",
     "c5": "#2b6f06",
     "c6": "#1e6200",
-    "c1": "#5ea239",
-    "c7": "#9ee279"
+    "c1": "#5ea239"
   },
   "notes9": {
     "id": "notes9",
