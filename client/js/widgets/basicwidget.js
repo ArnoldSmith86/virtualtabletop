@@ -55,7 +55,7 @@ class BasicWidget extends ImageWidget {
   classes() {
     let classes = super.classes();
     if(this.get('html'))
-      classes += ' html';
+      classes += ' usesHTML';
     return classes;
   }
 

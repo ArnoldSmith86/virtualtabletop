@@ -4,6 +4,6 @@
   pointer-events: none;
 }
 
-.basic.widget.html {
+.basic.widget.usesHTML {
   white-space: collapse;
 }
