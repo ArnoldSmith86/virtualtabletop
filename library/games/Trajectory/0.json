@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765398171799,
+      "lastUpdate": 1765405923378,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -820,8 +820,8 @@
     "pawn": 1,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder1",
-    "x": 27
+    "x": 27,
+    "parent": "pawnHolder1"
   },
   "black3": {
     "id": "black3",
@@ -1189,8 +1189,8 @@
     "pawn": 4,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder4",
-    "x": 27
+    "x": 27,
+    "parent": "pawnHolder4"
   },
   "silver3": {
     "id": "silver3",
@@ -1209,8 +1209,8 @@
     "pawn": 4,
     "pawns": true,
     "classes": "transitions",
-    "x": 54,
-    "parent": "pawnHolder4"
+    "parent": "pawnHolder4",
+    "x": 54
   },
   "silver4": {
     "id": "silver4",
@@ -1346,7 +1346,7 @@
     "inheritFrom": {
       "seatArea1": "*"
     },
-    "activeFace": 0
+    "activeFace": 1
   },
   "pawnHolder4": {
     "type": "holder",
@@ -5066,133 +5066,133 @@
     "type": "card",
     "cardType": "gem",
     "id": "lvy7",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "9cy7": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "9cy7",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "amff": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "amff",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "78nj": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "78nj",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "a6hc": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "a6hc",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "52gu": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "52gu",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "39c9": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "39c9",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "2fs9": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "2fs9",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "qsg5": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "qsg5",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "mv6e": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "mv6e",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "ex1u": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "ex1u",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "s3ft": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "s3ft",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "q3wl": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "q3wl",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "hpff": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "hpff",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "8qls": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "8qls",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "e3rj": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "e3rj",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "0jej": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "0jej",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "4a5h": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "4a5h",
-    "parent": "w6f8"
+    "parent": "c2cg"
   },
   "rfn1": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "plus15",
     "id": "rfn1",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+3",
     "vp": 3
   },
@@ -5201,7 +5201,7 @@
     "type": "card",
     "cardType": "plus15",
     "id": "7yim",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+3",
     "vp": 3
   },
@@ -5210,7 +5210,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "2ykw",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+2",
     "vp": 2
   },
@@ -5219,7 +5219,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "nsbm",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+2",
     "vp": 2
   },
@@ -5228,7 +5228,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "8av3",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+2",
     "vp": 2
   },
@@ -5237,7 +5237,7 @@
     "type": "card",
     "cardType": "plus5",
     "id": "vcqi",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+1",
     "vp": 1
   },
@@ -5246,7 +5246,7 @@
     "type": "card",
     "cardType": "plus5",
     "id": "9qsg",
-    "parent": "w6f8",
+    "parent": "c2cg",
     "text": "+1",
     "vp": 1
   },
@@ -5336,44 +5336,54 @@
     ],
     "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
     "leaveRoutine": [
-      "// Counteract leaving twice so history is updated only once.",
       {
         "func": "IF",
-        "operand1": "${PROPERTY doubleLeaveRoutineCompensation}",
+        "operand1": "${PROPERTY nextRound}",
+        "relation": "!=",
         "operand2": true,
         "thenRoutine": [
-          "// This branch of the IF is called directly after the card starts dragging",
+          "// Counteract leaving twice so history is updated only once.",
           {
-            "func": "SET",
-            "property": "doubleLeaveRoutineCompensation",
-            "collection": "thisButton",
-            "value": false
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "SET",
-            "property": "doubleLeaveRoutineCompensation",
-            "value": true,
-            "collection": "thisButton"
-          },
-          {
-            "func": "CALL",
-            "widget": "historyLabel",
-            "routine": "addendumRoutine",
-            "arguments": {
-              "addendum": "<b>${playerName}</b> took a discarded card"
-            }
-          },
-          {
-            "func": "CLICK",
-            "collection": [
-              "turnButton"
+            "func": "IF",
+            "operand1": "${PROPERTY doubleLeaveRoutineCompensation}",
+            "operand2": true,
+            "thenRoutine": [
+              "// This branch of the IF is called directly after the card starts dragging",
+              {
+                "func": "SET",
+                "property": "doubleLeaveRoutineCompensation",
+                "collection": "thisButton",
+                "value": false
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "property": "doubleLeaveRoutineCompensation",
+                "value": true,
+                "collection": "thisButton"
+              },
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "<b>${playerName}</b> took a discarded card"
+                }
+              },
+              {
+                "func": "CLICK",
+                "collection": [
+                  "turnButton"
+                ]
+              }
             ]
           }
         ]
       }
-    ]
+    ],
+    "nextRound": false,
+    "doubleLeaveRoutineCompensation": true
   },
   "acornDiscard": {
     "type": "holder",
@@ -5388,7 +5398,8 @@
     "dropTarget": {
       "suit": "/i/game-icons.net/lorc/acorn.svg"
     },
-    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg",
+    "doubleLeaveRoutineCompensation": true
   },
   "heartDiscard": {
     "type": "holder",
@@ -5403,7 +5414,8 @@
     },
     "bgColor": "#c679a8",
     "bgImage": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23ffffff80' d='M480.25 156.355c0 161.24-224.25 324.43-224.25 324.43S31.75 317.595 31.75 156.355c0-91.41 70.63-125.13 107.77-125.13 77.65 0 116.48 65.72 116.48 65.72s38.83-65.73 116.48-65.73c37.14.01 107.77 33.72 107.77 125.14z'/%3E%3C/svg%3E\")",
-    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg",
+    "doubleLeaveRoutineCompensation": true
   },
   "snowDiscard": {
     "type": "holder",
@@ -5697,6 +5709,17 @@
         "relation": "<",
         "operand2": 3,
         "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "abstractDiscard"
+            ],
+            "property": "nextRound",
+            "value": true
+          },
+          {
+            "func": "DELAY"
+          },
           "// If on round 1 or 2, then update the pawn scores and return pawn pieces",
           {
             "func": "INPUT",
@@ -5833,6 +5856,14 @@
           },
           {
             "func": "TURN"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "abstractDiscard"
+            ],
+            "property": "nextRound",
+            "value": false
           }
         ],
         "elseRoutine": [
@@ -6019,7 +6050,6 @@
       150,
       150
     ],
-    "clickable": false,
     "display": false
   },
   "scoreButton": {
@@ -6880,7 +6910,7 @@
       }
     ]
   },
-  "w6f8": {
+  "c2cg": {
     "type": "pile",
     "parent": "actionDeckHolder",
     "x": 4,
@@ -6889,6 +6919,6 @@
     "height": 30,
     "handleOffset": 5,
     "handlePosition": "top left",
-    "id": "w6f8"
+    "id": "c2cg"
   }
 }
