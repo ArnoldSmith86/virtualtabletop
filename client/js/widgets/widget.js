@@ -1113,8 +1113,8 @@ export class Widget extends StateManaged {
         }
 
         const execute = async function(widget) {
-          const cm = widget.getColorMap();
           if(widget.get('type') == 'canvas') {
+            const cm = widget.getColorMap();
             if(a.mode == 'setPixel') {
               const res = widget.getResolution();
               if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
