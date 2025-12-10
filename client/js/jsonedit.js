@@ -1714,7 +1714,7 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
-  if(type != 'card') {
+  if(type != 'card' && type != 'pile') {
     jeCommands.push({
       id: 'addWidget_' + type,
       name: `add ${type} widget`,
