@@ -7,6 +7,7 @@ class UndoModule extends SidebarModule {
 
   onClose() {
     this.lastRenderedIndex = -2;
+    this.latestEntryDOM = null;
   }
 
   onDeltaReceivedWhileActive(delta) {
