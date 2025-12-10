@@ -1714,17 +1714,19 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
-  jeCommands.push({
-    id: 'addWidget_' + type,
-    name: `add ${type} widget`,
-    context: 'No widget selected.',
-    onEmpty: true,
-    call: async function() {
-      const newWidget = widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type}));
-      setSelection([ newWidget ]);
-      jeSelectWidget(newWidget);
-    }
-  });
+  if(type != 'card') {
+    jeCommands.push({
+      id: 'addWidget_' + type,
+      name: `add ${type} widget`,
+      context: 'No widget selected.',
+      onEmpty: true,
+      call: async function() {
+        const newWidget = widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type}));
+        setSelection([ newWidget ]);
+        jeSelectWidget(newWidget);
+      }
+    });
+  }
   return type == 'basic' ? null : type;
 }
 
