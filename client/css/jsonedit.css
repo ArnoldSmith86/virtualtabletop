@@ -226,6 +226,11 @@ i.number  { color: var(--textHighlightColor5); }
 i.null    { color: var(--textHighlightColor6); }
 i.default { color: var(--textDimColor1);       }
 i.variable{ color: var(--textHighlightColor7); }
+i.htmltag { color: var(--textHighlightColor1); }
+i.htmlattr{ color: var(--textHighlightColor2); }
+i.htmlvalue{ color: var(--textHighlightColor5); }
+i.csskey  { color: var(--textHighlightColor5); }
+i.cssvalue{ color: var(--textHighlightColor7); }
 i.error   { color: var(--textHighlightColor3); font-weight: bold; }
 
 /**** End color formatting ****/
