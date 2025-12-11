@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1765415439809,
+      "lastUpdate": 1765415953763,
       "showName": false,
       "skill": "",
       "description": "",
@@ -126,15 +126,15 @@
   },
   "basicInfo": {
     "id": "basicInfo",
-    "x": 200,
     "y": 79,
-    "width": 1200,
+    "width": 1350,
     "z": 441,
     "movable": false,
     "css": {
       "font-size": "20px"
     },
-    "html": "You can use most html functions for formatting and stylying of basic widgets (but not buttons, labels, etc). You can also use inline css styling within the html and/or use the css property on the widget. There are many examples in this room. Open the JSON Editor and have a look. Some older examples have all of the html crammed into one long line. Later changes allowed more traditional formatting. For an old-style example, see the widget on the far left. The other examples use standard html formatting.  Everything you see in the first column of text on the left is a single widget. You can use the <q style='color:teal'>${PROPERTY}</q> feature anywhere."
+    "html": "You can use most html functions for formatting and stylying of basic widgets (but not buttons, labels, etc). You can also use inline css styling within the html and/or use the css property on the widget. There are many examples in this room. Open the JSON Editor and have a look. Some older examples have all of the html crammed into one long line. Later changes allowed more traditional formatting. For an old-style example, see the widget on the far left. Place the cursor on the html in the editor and there is a button that will automatically format it the new way. The other examples use standard html formatting.  Everything you see in the first column of text on the left is a single widget. You can use the <q style='color:teal'>${PROPERTY}</q> feature anywhere.",
+    "x": 125
   },
   "example5": {
     "id": "example5",
