@@ -26,7 +26,7 @@ Free. Open-source. No accounts. No ads. Easy to self-host.
 <details>
     <summary><b>🎥 Demo video</b></summary>
 
-<video src="readme_images/play.webm"></video>
+https://github.com/user-attachments/assets/10d61e5f-b483-453a-ac5f-ac5f1171d8dd
 
 </details>
 
