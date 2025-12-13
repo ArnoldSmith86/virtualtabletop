@@ -3,7 +3,7 @@
     "version": 20,
     "info": {
       "name": "Logicards",
-      "lastUpdate": 1765459159538,
+      "lastUpdate": 1765595428039,
       "image": "/assets/563010823_28494",
       "showName": false,
       "time": "5",
@@ -20,10 +20,10 @@
       "ruleText": "",
       "helpText": "",
       "attribution": "<div>Room layout and original cards by D. Teuber with tweaks by ArnoldSmith86. Available as&nbsp;<span>CC BY</span><span>-NC</span><span>-ND</span> 4.0.</div><div><br></div><div><span>Icons are used under the Noun Project subscription account program license</span><span></span>.</div>",
-      "players": "1",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Xmas",
-      "variantImage": ""
+      "language": "en-US",
+      "players": "1"
     },
     "gameSettings": {
       "legacyModes": {
