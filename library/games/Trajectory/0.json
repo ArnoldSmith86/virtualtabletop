@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 19,
+    "version": 20,
     "gameSettings": {
       "legacyModes": {},
       "globalCss": "/* Seat appearance */\n\n.seat {\n  gap: 5px;\n  font-size: 21px;\n  box-shadow: 0 2px 5px #00000066;\n  text-shadow:\n    2px 2px 2px #000000bb,\n    -2px 2px 2px #000000bb,\n    2px -2px 2px #000000bb,\n    -2px -2px 2px #000000bb;\n  color: white;\n  border: 2px solid #000000bb;\n  box-sizing: border-box;\n}\n\n.seated.turn {\n  box-shadow: 0px 0px 20px 5px #000000\n}\n\n/* Card transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}\n"
@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765405923378,
+      "lastUpdate": 1765661313634,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -420,8 +420,13 @@
     },
     "leaveRoutine": [
       {
-        "func": "COUNT",
-        "holder": "${PROPERTY id}"
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
       },
       {
         "func": "IF",
@@ -1346,7 +1351,7 @@
     "inheritFrom": {
       "seatArea1": "*"
     },
-    "activeFace": 1
+    "activeFace": 0
   },
   "pawnHolder4": {
     "type": "holder",
@@ -2566,770 +2571,770 @@
     "type": "card",
     "cardType": "abstract00",
     "id": "4h7h",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4m4n": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract01",
     "id": "4m4n",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dowc": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract02",
     "id": "dowc",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "xjzs": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract03",
     "id": "xjzs",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "kbko": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract04",
     "id": "kbko",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "c0nc": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract05",
     "id": "c0nc",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4eaa": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract06",
     "id": "4eaa",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qe8e": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract07",
     "id": "qe8e",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qurp": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract08",
     "id": "qurp",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "rrzf": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract09",
     "id": "rrzf",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "di5z": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract10",
     "id": "di5z",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "i921": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn00",
     "id": "i921",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "q83h": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn01",
     "id": "q83h",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zl23": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn02",
     "id": "zl23",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qkp9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn03",
     "id": "qkp9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "jowl": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn04",
     "id": "jowl",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "iblj": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn05",
     "id": "iblj",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zhlb": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn06",
     "id": "zhlb",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "axw1": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn07",
     "id": "axw1",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "oc57": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn08",
     "id": "oc57",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "d1jv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn09",
     "id": "d1jv",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "2bdq": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn10",
     "id": "2bdq",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "welj": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart00",
     "id": "welj",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "sugd": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart01",
     "id": "sugd",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "xlyv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart02",
     "id": "xlyv",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "f37y": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart03",
     "id": "f37y",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qumn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart04",
     "id": "qumn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "xjfm": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart05",
     "id": "xjfm",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "fhnb": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart06",
     "id": "fhnb",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "wnvq": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart07",
     "id": "wnvq",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "f7t9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart08",
     "id": "f7t9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zrci": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart09",
     "id": "zrci",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "6ohn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart10",
     "id": "6ohn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "g17q": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow00",
     "id": "g17q",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8a1h": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow01",
     "id": "8a1h",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "w7ll": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow02",
     "id": "w7ll",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "h7ma": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow03",
     "id": "h7ma",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "h7pn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow04",
     "id": "h7pn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "9g3f": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow05",
     "id": "9g3f",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "gl65": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow06",
     "id": "gl65",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "wb15": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow07",
     "id": "wb15",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "1p3b": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow08",
     "id": "1p3b",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "527e": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow09",
     "id": "527e",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "3m9k": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow10",
     "id": "3m9k",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "kfhd": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf00",
     "id": "kfhd",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "gq7w": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf01",
     "id": "gq7w",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "pm3g": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf02",
     "id": "pm3g",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "jeh7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf03",
     "id": "jeh7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "su5n": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf04",
     "id": "su5n",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "6jis": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf05",
     "id": "6jis",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "fedh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf06",
     "id": "fedh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "l9de": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf07",
     "id": "l9de",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "n4e3": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf08",
     "id": "n4e3",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dkxu": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf09",
     "id": "dkxu",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ka5y": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf10",
     "id": "ka5y",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4noi": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract00",
     "id": "4noi",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "i8na": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract01",
     "id": "i8na",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "1qvt": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract02",
     "id": "1qvt",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "je4w": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract03",
     "id": "je4w",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "092w": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract04",
     "id": "092w",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "wuns": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract05",
     "id": "wuns",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "t29q": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract06",
     "id": "t29q",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "mau5": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract07",
     "id": "mau5",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "hr5e": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract08",
     "id": "hr5e",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "tnqp": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract09",
     "id": "tnqp",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "d3em": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract10",
     "id": "d3em",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "s153": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn00",
     "id": "s153",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "rzp6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn01",
     "id": "rzp6",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "i9gw": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn02",
     "id": "i9gw",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dzs7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn03",
     "id": "dzs7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "3uq9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn04",
     "id": "3uq9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8ggv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn05",
     "id": "8ggv",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "d10m": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn06",
     "id": "d10m",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ig4u": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn07",
     "id": "ig4u",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8wef": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn08",
     "id": "8wef",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "tow7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn09",
     "id": "tow7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "t04k": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn10",
     "id": "t04k",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "k6cd": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart00",
     "id": "k6cd",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ukc1": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart01",
     "id": "ukc1",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x212": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart02",
     "id": "x212",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zsh9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart03",
     "id": "zsh9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "0obl": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart04",
     "id": "0obl",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4u9s": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart05",
     "id": "4u9s",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "jdtp": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart06",
     "id": "jdtp",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "tod2": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart07",
     "id": "tod2",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "22e7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart08",
     "id": "22e7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dqwh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart09",
     "id": "dqwh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "kybh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart10",
     "id": "kybh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "860b": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow00",
     "id": "860b",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "czwo": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow01",
     "id": "czwo",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "k3oa": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow02",
     "id": "k3oa",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "goxb": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow03",
     "id": "goxb",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ohh8": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow04",
     "id": "ohh8",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "2j88": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow05",
     "id": "2j88",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "104q": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow06",
     "id": "104q",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "27ge": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow07",
     "id": "27ge",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "bdao": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow08",
     "id": "bdao",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x6fz": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow09",
     "id": "x6fz",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x7rt": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow10",
     "id": "x7rt",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "vht6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf00",
     "id": "vht6",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "13yn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf01",
     "id": "13yn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zfct": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf02",
     "id": "zfct",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "oe39": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf03",
     "id": "oe39",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "2sg7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf04",
     "id": "2sg7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "na52": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf05",
     "id": "na52",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8reh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf06",
     "id": "8reh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "hbk0": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf07",
     "id": "hbk0",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zj8a": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf08",
     "id": "zj8a",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dth6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf09",
     "id": "dth6",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x7f8": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf10",
     "id": "x7f8",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "token1": {
     "id": "token1",
@@ -5066,133 +5071,133 @@
     "type": "card",
     "cardType": "gem",
     "id": "lvy7",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "9cy7": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "9cy7",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "amff": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "amff",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "78nj": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "78nj",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "a6hc": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "a6hc",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "52gu": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "52gu",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "39c9": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "39c9",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "2fs9": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "2fs9",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "qsg5": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "qsg5",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "mv6e": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "mv6e",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "ex1u": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "ex1u",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "s3ft": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "s3ft",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "q3wl": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "q3wl",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "hpff": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "hpff",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "8qls": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "8qls",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "e3rj": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "e3rj",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "0jej": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "0jej",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "4a5h": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "4a5h",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "rfn1": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "plus15",
     "id": "rfn1",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+3",
     "vp": 3
   },
@@ -5201,7 +5206,7 @@
     "type": "card",
     "cardType": "plus15",
     "id": "7yim",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+3",
     "vp": 3
   },
@@ -5210,7 +5215,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "2ykw",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+2",
     "vp": 2
   },
@@ -5219,7 +5224,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "nsbm",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+2",
     "vp": 2
   },
@@ -5228,7 +5233,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "8av3",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+2",
     "vp": 2
   },
@@ -5237,7 +5242,7 @@
     "type": "card",
     "cardType": "plus5",
     "id": "vcqi",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+1",
     "vp": 1
   },
@@ -5246,7 +5251,7 @@
     "type": "card",
     "cardType": "plus5",
     "id": "9qsg",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+1",
     "vp": 1
   },
@@ -5321,6 +5326,23 @@
         "collection": "thisButton"
       },
       {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}PileHandle"
+        ],
+        "property": "text",
+        "value": "${COUNT}"
+      },
+      {
         "func": "GET",
         "collection": "child",
         "property": "rank"
@@ -5335,6 +5357,9 @@
       }
     ],
     "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
+    "nextRound": false,
+    "doubleLeaveRoutineCompensation": false,
+    "preventPiles": true,
     "leaveRoutine": [
       {
         "func": "IF",
@@ -5354,6 +5379,23 @@
                 "property": "doubleLeaveRoutineCompensation",
                 "collection": "thisButton",
                 "value": false
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "_ancestor",
+                "value": "${PROPERTY id}"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${PROPERTY id}PileHandle"
+                ],
+                "property": "text",
+                "value": "${COUNT}"
               }
             ],
             "elseRoutine": [
@@ -5381,9 +5423,7 @@
           }
         ]
       }
-    ],
-    "nextRound": false,
-    "doubleLeaveRoutineCompensation": true
+    ]
   },
   "acornDiscard": {
     "type": "holder",
@@ -6482,6 +6522,7 @@
     },
     "html": "<table> <tr> <th>Gems</th> <td>0</td> <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5+</td> </tr> <tr> <th>Points</th> <td>-4</td> <td>-3</td> <td>2</td> <td>3</td> <td>6</td> <td>10</td> </tr> </table> </div>",
     "activeFace": 1,
+    "layer": -4,
     "display": false
   },
   "gemChart2": {
@@ -6660,7 +6701,7 @@
       {
         "func": "SET",
         "property": "html",
-        "value": "${addendum}\n${previousLedger}",
+        "value": "${addendum}<br>${previousLedger}",
         "collection": [
           "${PROPERTY id}"
         ]
@@ -6812,6 +6853,28 @@
         "property": "z",
         "value": 1
       },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "cardDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "deckPile"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "actionDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "actionPile"
+      },
       "// This just fixes validation errors for false positives on unused properties",
       {
         "func": "SELECT",
@@ -6835,15 +6898,6 @@
       }
     ],
     "text": "Save for PL"
-  },
-  "k32s": {
-    "type": "pile",
-    "parent": "cardDeckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "k32s"
   },
   "historyButton": {
     "type": "button",
@@ -6910,7 +6964,106 @@
       }
     ]
   },
-  "c2cg": {
+  "abstractDiscardPileHandle": {
+    "id": "abstractDiscardPileHandle",
+    "parent": "abstractDiscard",
+    "x": 91,
+    "y": -10,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "color": "#6d6d6d",
+      "font-size": "22px"
+    },
+    "text": 0,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": "<=",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "layer": 7,
+    "display": false
+  },
+  "acornDiscardPileHandle": {
+    "id": "acornDiscardPileHandle",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "parent": "acornDiscard",
+    "text": 0,
+    "display": false
+  },
+  "heartDiscardPileHandle": {
+    "id": "heartDiscardPileHandle",
+    "parent": "heartDiscard",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "text": 0,
+    "display": false
+  },
+  "leafDiscardPileHandle": {
+    "id": "leafDiscardPileHandle",
+    "parent": "leafDiscard",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "text": 0,
+    "display": false
+  },
+  "snowDiscardPileHandle": {
+    "id": "snowDiscardPileHandle",
+    "parent": "snowDiscard",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "text": 0,
+    "display": false
+  },
+  "deckPile": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "deckPile",
+    "z": 2,
+    "parent": "cardDeckHolder"
+  },
+  "actionPile": {
     "type": "pile",
     "parent": "actionDeckHolder",
     "x": 4,
@@ -6919,6 +7072,6 @@
     "height": 30,
     "handleOffset": 5,
     "handlePosition": "top left",
-    "id": "c2cg"
+    "id": "actionPile"
   }
 }
