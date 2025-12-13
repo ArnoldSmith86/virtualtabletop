@@ -1,9 +1,15 @@
 {
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Logicards",
-      "lastUpdate": 1765595428039,
+      "lastUpdate": 1765595605055,
       "image": "/assets/563010823_28494",
       "showName": false,
       "time": "5",
@@ -24,12 +30,6 @@
       "variant": "Xmas",
       "language": "en-US",
       "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
     }
   },
   "54084aab-132f-4ea1-b3b2-e42b7b2624d6": {
@@ -74,7 +74,7 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "value": "/assets/-1546853570_214630",
+            "value": "/assets/1324891691_87658",
             "color": "rgba(255, 255, 255, 0)",
             "width": 644,
             "height": 911
@@ -398,57 +398,57 @@
     },
     "cardTypes": {
       "type-37937d81-9fd3-4ef3-8094-c80b481fde5f": {
-        "image1": "/assets/1090622096_85834",
+        "image1": "/assets/-1113812947_9430",
         "label": "Slide1.JPG",
-        "image2": "/assets/-500790568_75970",
+        "image2": "/assets/-946964755_8202",
         "sortingOrder": 1
       },
       "type-f89ec174-fb77-43cd-b97d-828ba30da423": {
-        "image1": "/assets/-1065722637_122371",
+        "image1": "/assets/1735249634_13990",
         "label": "Slide2.JPG",
-        "image2": "/assets/223558342_77414",
+        "image2": "/assets/-1267271561_8000",
         "sortingOrder": 2
       },
       "type-2178a4bc-99bf-4b8f-804e-07dfdbe28879": {
-        "image1": "/assets/-1322617631_110878",
+        "image1": "/assets/589275342_12676",
         "label": "Slide3.JPG",
-        "image2": "/assets/176288624_80913",
+        "image2": "/assets/-913485487_9196",
         "sortingOrder": 3
       },
       "type-225b60c1-6b5c-4514-b996-8d3bf9246a6b": {
-        "image1": "/assets/-905382726_96050",
+        "image1": "/assets/-452476216_10730",
         "label": "Slide4.JPG",
-        "image2": "/assets/-1767370333_56303",
+        "image2": "/assets/1304377843_5878",
         "sortingOrder": 4
       },
       "type-504937fb-e939-4e9d-99d7-53bd7471d138": {
-        "image1": "/assets/717526175_87614",
+        "image1": "/assets/-116999469_9554",
         "label": "Slide5.JPG",
-        "image2": "/assets/2023892957_74843",
+        "image2": "/assets/1421400794_7542",
         "sortingOrder": 5
       },
       "type-072c75b4-88dd-49f9-b4f7-f204a709728f": {
-        "image1": "/assets/251909612_84667",
+        "image1": "/assets/-1429832633_8780",
         "label": "Slide6.JPG",
-        "image2": "/assets/237165196_80678",
+        "image2": "/assets/609870240_8282",
         "sortingOrder": 6
       },
       "type-0a89b475-222e-4f63-a648-7f06c70d1afa": {
-        "image1": "/assets/-646022220_74940",
+        "image1": "/assets/-833083459_7488",
         "label": "Slide7.JPG",
-        "image2": "/assets/-9628596_61547",
+        "image2": "/assets/2083231182_5990",
         "sortingOrder": 7
       },
       "type-cb40b156-4236-4940-9289-fd3889919e28": {
-        "image1": "/assets/1741825492_89871",
+        "image1": "/assets/-731595255_9490",
         "label": "Slide8.JPG",
-        "image2": "/assets/1133711044_59920",
+        "image2": "/assets/1522615147_5640",
         "sortingOrder": 8
       },
       "type-8204184f-5561-4a50-a568-e8f83d114b42": {
-        "image1": "/assets/664577884_102699",
+        "image1": "/assets/1129934748_11142",
         "label": "Slide9.JPG",
-        "image2": "/assets/471228357_75664",
+        "image2": "/assets/-330247122_7368",
         "sortingOrder": 9
       }
     },
@@ -526,80 +526,80 @@
     "type": "card",
     "cardType": "type-37937d81-9fd3-4ef3-8094-c80b481fde5f",
     "id": "zm48",
-    "z": 27458,
-    "activeFace": 1,
-    "parent": "a03ac30f-f074-4529-804b-4c9021211c68"
+    "z": 27546,
+    "activeFace": false,
+    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924"
   },
   "qb9g": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-f89ec174-fb77-43cd-b97d-828ba30da423",
     "id": "qb9g",
-    "z": 27465,
-    "activeFace": 1,
-    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9"
+    "z": 27542,
+    "activeFace": false,
+    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7"
   },
   "9pzh": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-2178a4bc-99bf-4b8f-804e-07dfdbe28879",
     "id": "9pzh",
-    "z": 27474,
+    "z": 27543,
     "activeFace": 1,
-    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924"
+    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b"
   },
   "hs6c": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-225b60c1-6b5c-4514-b996-8d3bf9246a6b",
     "id": "hs6c",
-    "z": 27481,
-    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b",
-    "activeFace": 1
+    "z": 27544,
+    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+    "activeFace": false
   },
   "n2s7": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-504937fb-e939-4e9d-99d7-53bd7471d138",
     "id": "n2s7",
-    "z": 27488,
-    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b",
-    "activeFace": 1
+    "z": 27541,
+    "parent": "83176346-78d7-4160-98d4-51a4d896a175",
+    "activeFace": false
   },
   "agzi": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-072c75b4-88dd-49f9-b4f7-f204a709728f",
     "id": "agzi",
-    "z": 27495,
-    "activeFace": 1,
-    "parent": "83176346-78d7-4160-98d4-51a4d896a175"
+    "z": 27547,
+    "activeFace": false,
+    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b"
   },
   "ydbn": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-0a89b475-222e-4f63-a648-7f06c70d1afa",
     "id": "ydbn",
-    "z": 27502,
-    "activeFace": 1,
-    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7"
+    "z": 27540,
+    "activeFace": false,
+    "parent": "dc111510-169a-461e-9ff0-102f1bd21333"
   },
   "vtna": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-cb40b156-4236-4940-9289-fd3889919e28",
     "id": "vtna",
-    "z": 27503,
+    "z": 27539,
     "parent": "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
-    "activeFace": 1
+    "activeFace": false
   },
   "l42l": {
     "deck": "39f77cd6-8ad0-42c4-bef8-02e756648de1",
     "type": "card",
     "cardType": "type-8204184f-5561-4a50-a568-e8f83d114b42",
     "id": "l42l",
-    "z": 27475,
-    "parent": "dc111510-169a-461e-9ff0-102f1bd21333",
-    "activeFace": 1
+    "z": 27545,
+    "parent": "a03ac30f-f074-4529-804b-4c9021211c68",
+    "activeFace": false
   }
 }
