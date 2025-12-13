@@ -38,8 +38,6 @@ function computeGlobalProperties(state, v) {
   }
 
   v<20 && v20WhiteSpacePreWrapRoutineCheck(state, globalProperties);
-  if(globalProperties.v20WhiteSpacePreWrapForAllHtml)
-    console.log('Detected v20WhiteSpacePreWrapForAllHtml');
 
   return globalProperties;
 }
