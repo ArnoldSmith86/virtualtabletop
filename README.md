@@ -1,14 +1,40 @@
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
+![Virtual Tabletop](readme_images/logo.webp)
 
-# virtualtabletop.io
+### Play board games in your browser in seconds:
 
-VTT is an open-source, free to use platform for creating and playing games. This project aims to create a virtual tabletop in the browser where you can (re)create all board, dice and card games and play them without registration over the internet.
+1. ➡️ Go to [virtualtabletop.io](https://virtualtabletop.io).
+2. 🎲 Select a game from the library.
+3. 🔗 Share the URL with your friends.
+4. 🤩 Play!
 
-## Playing games
+Free. Open-source. No accounts. No ads. Easy to self-host.
 
-We have hundreds of games in our public library that are ready to play right now.  That includes classic games like Chinese checkers, backgammon, mancala, Nine Men’s Morris, Reversi, tangrams, and hangman.  It includes modern games that are similar to many popular card and board games available around the world today.  Most of the games are in English, but quite a few are “universal” and require no ability to read or understand English.  And a handful are offered in German and Portuguese and a few more in Spanish and French. See [Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Games) for more detail.
+<details>
+    <summary><b>🃏 Available games</b></summary>
 
-## Creating games
+<br>
+
+> In December 2020 we started with 10 games. In June 2022 we passed 100 games in our public library of included games. In 2025 we are now well over 250 games.
+
+- **Classic board games**: Chess, Checkers, Backgammon, Nine Men's Morris, ...
+- **Classic card games**: Poker, Jass, Whist, Doppelkopf, ...
+- **Games similar to modern award-winning games like** Catan, Dixit, The Crew, Sky Team, ...
+- **"Indie" games**: Godaigo, A Simple Life, Duel 52, Uncheckered, ...
+- And everything in between!
+</details>
+
+<details>
+    <summary><b>🎥 Demo video</b></summary>
+
+<video src="readme_images/play.webm"></video>
+
+</details>
+
+## 🛠️ Forging your own games
+
+The beauty of virtualtabletop.io is that it has a powerful game editor built in.
+
+
 
 New games may be created in VTT using a combination of drag-and-drop and writing JSON text. Capabilities added in JSON include iterating, conditional evaluations, calculations, and other things you might expect to find in a programming system. (See [Functions](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions) for more detail.) The game designer can include player seats, action buttons, sound, scoreboards, and drawing canvases, in addition to many other tools. (See [Widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) for more detail.)
 
@@ -16,22 +42,7 @@ To understand how to use VTT for playing or creating games, you should start by 
 
 If you want to modify an existing game, or do game development, after reading about Playing Games, you should next read [Creating Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games). This section will give you an overview of how to create a game, and will point you to the other sections in this Wiki that provide more detailed information. In particular, you will want to use the pages in section 2, Developer Documentation, as a reference, and we encourage you to at least read the introductory section to each of those pages.
 
-## Contributing
-
-If you want to contribute to VTT development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
-
-Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
-
-Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.
-
-## Playing offline on Android
-
-You can use an Android phone as the server and play with any devices offline by using its wifi hotspot:
-
-- Install and open https://termux.dev/ on your Android device.
-- Run `curl -L is.gd/vttandroid | sh`.
-
-## Hosting own server
+## 📡 Hosting your own server
 
 You can host your own instance or go to [VirtualTabletop.io](https://virtualtabletop.io).
 
@@ -43,15 +54,38 @@ Come join our [Discord server](https://discord.gg/CEZz7wny9T) if you want to dis
 
 This project started after [a reddit post](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/mildly_ot_feature_requests_for_a_pcio_clone/) in our [playingcardsio subreddit](https://www.reddit.com/r/PlayingCardsIO/).
 
-### Docker
+<details>
+    <summary><b>🐳 Docker</b></summary>
 
 Official Docker image: https://hub.docker.com/r/arnoldsmith86/virtualtabletop
 
-### Download this repository and get all dependencies
+</details>
+
+<details>
+    <summary><b>📱 Android</b></summary>
+
+You can use an Android phone as the server and play with any devices offline by using its wifi hotspot:
+
+- Install and open https://termux.dev/ on your Android device.
+- Run `curl -L is.gd/vttandroid | sh`.
+
+</details>
+
+## 🤝 Contributing
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
+
+If you want to contribute to VTT development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
+
+Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
+
+Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.
+
+### 📥 Download this repository and get all dependencies
 
 Follow the steps in [Download Repository](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Download-Repository).
 
-### Starting the server
+### 🚀 Starting the server
 
 Now you can start the server by typing:
 
@@ -69,7 +103,7 @@ This will serve the project at [localhost:8272](http://localhost:8272).
 
 If you close you terminal and wants to restart you server you will need to get back to you clone folder using cd
 
-### Debug
+### 🐛 Debug
 
 To debug client-side code, first start the server so that it doesn't compress the code:
 
@@ -83,7 +117,7 @@ Press F12 to show the developer tools.
 In Chromium, select the Sources tab, then the select the file for the room.
 Press Ctrl-f to search for the code you want to set a breakpoint for an step through.
 
-### Testing
+### 🧪 Testing
 
 To run the unit tests (and get a coverage report):
 
@@ -93,7 +127,7 @@ To run them continuously (on each save) while you develop:
 
     npm run test-cont
 
-## License
+## 📄 License
 
 The project is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
