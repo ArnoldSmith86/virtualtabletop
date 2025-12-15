@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765771720997,
+      "lastUpdate": 1765771912082,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -5779,7 +5779,7 @@
         "--wcBorderOH": "black"
       },
       "::after": {
-        "content": "'Take card'",
+        "content": "'Fill hand'",
         "display": "none",
         "position": "absolute",
         "margin-top": "84px",
@@ -5792,7 +5792,6 @@
         "display": "block"
       }
     },
-    "text": "+ 1",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -5815,7 +5814,11 @@
         ]
       }
     ],
-    "borderRadius": 8
+    "borderRadius": 8,
+    "image": "i/icons/card.svg",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
   },
   "sortButton": {
     "type": "button",
