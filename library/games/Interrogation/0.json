@@ -7069,7 +7069,8 @@
                 "func": "CLONE",
                 "properties": {
                   "id": "pivot${value}Red",
-                  "parent": "row1Red"
+                  "parent": "row1Red",
+                  "task": "pivot"
                 },
                 "source": "PIVOT_C"
               },
