@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765773131125,
+      "lastUpdate": 1765927612660,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -565,8 +565,7 @@
         }
       }
     ],
-    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
-    "classes": "activeTurn"
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
   },
   "seatArea1": {
     "id": "seatArea1",
@@ -846,8 +845,8 @@
     "pawn": 1,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder1",
-    "x": 54
+    "x": 54,
+    "parent": "pawnHolder1"
   },
   "black4": {
     "id": "black4",
@@ -866,17 +865,17 @@
     "pawn": 1,
     "pawns": true,
     "classes": "transitions",
-    "x": 81,
-    "parent": "pawnHolder1"
+    "parent": "pawnHolder1",
+    "x": 81
   },
   "seatArea2": {
     "inheritFrom": {
       "seatArea1": "*"
     },
     "id": "seatArea2",
-    "x": 142,
+    "x": 172,
     "y": 475,
-    "activeFace": 1
+    "activeFace": 0
   },
   "seat2": {
     "inheritFrom": {
@@ -1347,7 +1346,7 @@
   },
   "seatArea4": {
     "id": "seatArea4",
-    "x": 1287,
+    "x": 1257,
     "y": 475,
     "inheritFrom": {
       "seatArea1": "*"
@@ -2671,32 +2670,7 @@
     },
     "dropTarget": {
       "type": "card"
-    },
-    "enterRoutine": [
-      {
-        "func": "GET",
-        "collection": "child",
-        "property": "id"
-      },
-      {
-        "func": "IF",
-        "operand1": "${id}",
-        "operand2": "${PROPERTY awaitingDrop}",
-        "thenRoutine": [
-          {
-            "func": "CLICK",
-            "collection": [
-              "turnButton"
-            ]
-          },
-          {
-            "func": "SORT",
-            "holder": "${PROPERTY id}",
-            "key": "nothing"
-          }
-        ]
-      }
-    ]
+    }
   },
   "4h7h": {
     "deck": "cardDeck",
@@ -3515,7 +3489,7 @@
       "suit": "/i/game-icons.net/lorc/acorn.svg"
     },
     "bgColor": "#e09e00",
-    "classes": "activeTurn",
+    "classes": "",
     "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
   },
   "cardHolder1-3": {
@@ -3530,7 +3504,7 @@
       "suit": "/i/game-icons.net/skoll/hearts.svg"
     },
     "bgColor": "#c679a8",
-    "classes": "activeTurn",
+    "classes": "",
     "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
   },
   "cardHolder1-4": {
@@ -3545,7 +3519,7 @@
       "suit": "/i/game-icons.net/lorc/linden-leaf.svg"
     },
     "bgColor": "#319e72",
-    "classes": "activeTurn",
+    "classes": "",
     "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
   },
   "cardHolder1-5": {
@@ -3560,7 +3534,7 @@
       "suit": "/i/game-icons.net/lorc/snowflake-2.svg"
     },
     "bgColor": "#66b5eb",
-    "classes": "activeTurn",
+    "classes": "",
     "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
   },
   "token2": {
@@ -3670,7 +3644,7 @@
       "cardHolder1Group": "*"
     },
     "id": "cardHolder2Group",
-    "x": 323,
+    "x": 353,
     "y": 230,
     "height": 511,
     "width": 193,
@@ -3894,7 +3868,7 @@
       "cardHolder2Group": "*"
     },
     "id": "cardHolder4Group",
-    "x": 1080,
+    "x": 1050,
     "y": 230,
     "css": {
       "border": "3px solid #a0a0a0"
@@ -5225,14 +5199,6 @@
         "value": []
       },
       {
-        "func": "SET",
-        "collection": [
-          "hand"
-        ],
-        "property": "awaitingDrop",
-        "value": null
-      },
-      {
         "func": "TURN",
         "turnCycle": "random"
       },
@@ -5664,19 +5630,6 @@
                 "arguments": {
                   "addendum": "<b>${playerName}</b> took a discarded card"
                 }
-              },
-              {
-                "func": "GET",
-                "collection": "child",
-                "property": "id"
-              },
-              {
-                "func": "SET",
-                "collection": [
-                  "hand"
-                ],
-                "property": "awaitingDrop",
-                "value": "${id}"
               }
             ]
           }
@@ -7014,7 +6967,7 @@
     "inheritFrom": {
       "cardHolder2-1": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-2": {
     "type": "holder",
@@ -7023,7 +6976,7 @@
     "inheritFrom": {
       "cardHolder2-2": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-3": {
     "type": "holder",
@@ -7032,7 +6985,7 @@
     "inheritFrom": {
       "cardHolder2-3": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-4": {
     "type": "holder",
@@ -7041,7 +6994,7 @@
     "inheritFrom": {
       "cardHolder2-4": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-5": {
     "type": "holder",
@@ -7050,7 +7003,7 @@
     "inheritFrom": {
       "cardHolder2-5": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "gameOver": {
     "id": "gameOver",
@@ -9509,8 +9462,8 @@
     ],
     "borderRadius": 20,
     "scale": 0,
-    "x": -369,
-    "y": 398,
+    "x": 573,
+    "y": -1,
     "display": false
   },
   "gemExpHolder1-1": {
@@ -10176,6 +10129,106 @@
     "layer": -4,
     "height": 110,
     "display": false
+  },
+  "takeAbstractButton": {
+    "type": "button",
+    "id": "takeAbstractButton",
+    "x": 111,
+    "y": 120,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY parent}",
+        "to": "hand",
+        "count": 1
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 1000
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "turnButton"
+        ]
+      }
+    ],
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "${PROPERTY bgColor}80",
+        "--wcBorder": "${PROPERTY bgColor}",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "white"
+      },
+      "::after": {
+        "content": "'Take card'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "84px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "i/icons/card.svg",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "parent": "abstractDiscard",
+    "bgColor": "#2673b4"
+  },
+  "takeAcornButton": {
+    "type": "button",
+    "id": "takeAcornButton",
+    "parent": "acornDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#e09e00"
+  },
+  "takeHeartButton": {
+    "type": "button",
+    "id": "takeHeartButton",
+    "parent": "heartDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#c679a8"
+  },
+  "takeLeafButton": {
+    "type": "button",
+    "id": "takeLeafButton",
+    "parent": "leafDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#319e72"
+  },
+  "takeSnowButton": {
+    "type": "button",
+    "id": "takeSnowButton",
+    "parent": "snowDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#66b5eb"
   },
   "actionPile": {
     "type": "pile",
