@@ -48,9 +48,9 @@ The beauty of virtualtabletop.io is that it has a powerful game editor built in.
 
 Creating simple games can be done in a few minutes but there's basically no limit to what you can create:
 
-- Add [widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) like dice, cards or card holders that work immidiately.
+- Add [widgets](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets) like dice, cards or card holders that work immediately.
 - Customize the look and behavior of each widget using the context-sensitive [JSON editor](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode).
-- With the full power of CSS at your disposal, you can spend hours customizing the look and feel of your game.
+- With the full power of CSS at your disposal, you can completely customize the look and feel of your game.
 - Optionally automate certain aspects of the game using [routines](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions) - a custom programming language inside the JSON.
 
 > For more details, visit [Creating Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games) on our wiki.
