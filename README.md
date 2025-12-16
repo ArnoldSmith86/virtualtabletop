@@ -30,8 +30,6 @@ https://github.com/user-attachments/assets/10d61e5f-b483-453a-ac5f-ac5f1171d8dd
 
 </details>
 
-<br>
-
 > For more details, visit [Playing Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Playing-Games) on our wiki.
 
 ## 🚀 How does it work?
@@ -98,7 +96,7 @@ Using [Termux](https://termux.dev/), you can use an Android phone as the server 
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
 
-If you want to contribute to VTT development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
+If you want to contribute to virtualtabletop.io development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
 
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 
