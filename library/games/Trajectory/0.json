@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765929874431,
+      "lastUpdate": 1765930626088,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -5559,6 +5559,12 @@
         "arguments": {
           "addendum": "<span style='color:${PROPERTY bgColor}'><b>${playerName}</b> discarded the <img src='${PROPERTY thisIcon}' style='vertical-align:middle;height:1em'/></span> ${rank}"
         }
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "movable",
+        "value": false
       }
     ],
     "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
@@ -5617,6 +5623,12 @@
                 "arguments": {
                   "addendum": "<b>${playerName}</b> took a discarded card"
                 }
+              },
+              {
+                "func": "SET",
+                "collection": "child",
+                "property": "movable",
+                "value": true
               }
             ]
           }
@@ -9449,7 +9461,7 @@
     ],
     "borderRadius": 20,
     "scale": 0,
-    "x": 573,
+    "x": 543,
     "y": -1,
     "display": false
   },
@@ -10124,10 +10136,29 @@
     "y": 120,
     "clickRoutine": [
       {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY parent}",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "GET",
+        "property": "z",
+        "aggregation": "max"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "z",
+        "value": "${z}"
+      },
+      {
         "func": "MOVE",
-        "from": "${PROPERTY parent}",
-        "to": "hand",
-        "count": 1
+        "to": "hand"
       },
       {
         "func": "DELAY",
