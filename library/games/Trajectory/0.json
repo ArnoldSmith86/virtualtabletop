@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765927612660,
+      "lastUpdate": 1765929874431,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -865,8 +865,8 @@
     "pawn": 1,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder1",
-    "x": 81
+    "x": 81,
+    "parent": "pawnHolder1"
   },
   "seatArea2": {
     "inheritFrom": {
@@ -989,8 +989,8 @@
     "pawn": 2,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder2",
-    "x": 54
+    "x": 54,
+    "parent": "pawnHolder2"
   },
   "brown4": {
     "id": "brown4",
@@ -1632,91 +1632,17 @@
       },
       "// Check for round/game end condition",
       {
-        "func": "IF",
-        "operand1": "${PROPERTY gameType OF restartButton}",
-        "operand2": 3,
-        "thenRoutine": [
-          "var levelCheck = 8",
-          {
-            "func": "VAR",
-            "variables": {
-              "spaces": [
-                "f8",
-                "g8",
-                "i8",
-                "j8"
-              ]
-            }
-          }
-        ],
-        "elseRoutine": [
-          "var levelCheck = 7",
-          {
-            "func": "VAR",
-            "variables": {
-              "spaces": [
-                "a7",
-                "b7",
-                "c7",
-                "d7",
-                "e7"
-              ]
-            }
-          }
-        ]
+        "func": "CALL",
+        "routine": "endCheckRoutine"
       },
       {
         "func": "IF",
-        "operand1": "${PROPERTY level}",
-        "operand2": "${levelCheck}",
+        "operand1": "${result}",
+        "operand2": 5,
         "thenRoutine": [
-          "var levelCheckPawns = 1"
-        ],
-        "elseRoutine": [
-          "var levelCheckPawns = 0"
-        ]
-      },
-      {
-        "func": "FOREACH",
-        "in": "${spaces}",
-        "loopRoutine": [
-          "var thisHolder = ${value}",
           {
-            "func": "FOREACH",
-            "in": [
-              "vpPawn1",
-              "vpPawn2",
-              "vpPawn3",
-              "vpPawn4"
-            ],
-            "loopRoutine": [
-              {
-                "func": "GET",
-                "collection": [
-                  "${thisHolder}"
-                ],
-                "property": "${value}",
-                "variable": "hasReached"
-              },
-              {
-                "func": "IF",
-                "condition": "${hasReached}",
-                "thenRoutine": [
-                  "var levelCheckPawns = ${levelCheckPawns} + 1",
-                  {
-                    "func": "IF",
-                    "operand1": "${levelCheckPawns}",
-                    "operand2": 5,
-                    "thenRoutine": [
-                      {
-                        "func": "CALL",
-                        "routine": "endConditionRoutine"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "func": "CALL",
+            "routine": "endConditionRoutine"
           }
         ]
       },
@@ -1878,7 +1804,7 @@
           }
         ]
       },
-      "// Flag holder so points will not be given twice and to check for end condition",
+      "// Flag holder so points will not be given twice",
       {
         "func": "SET",
         "collection": "thisButton",
@@ -1982,7 +1908,68 @@
         ]
       }
     ],
-    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
+    "endCheckRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF restartButton}",
+        "operand2": 3,
+        "thenRoutine": [
+          "var board = 3",
+          {
+            "func": "VAR",
+            "variables": {
+              "top": [
+                8,
+                9,
+                10
+              ]
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var board = 1",
+          {
+            "func": "VAR",
+            "variables": {
+              "top": [
+                7,
+                8,
+                9
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "level",
+        "relation": "in",
+        "value": "${top}",
+        "collection": "topHolders"
+      },
+      {
+        "func": "SELECT",
+        "source": "topHolders",
+        "property": "parent",
+        "value": "board${board}",
+        "collection": "topHolders"
+      },
+      "var pawnCount = 0",
+      {
+        "func": "FOREACH",
+        "collection": "topHolders",
+        "loopRoutine": [
+          {
+            "func": "COUNT",
+            "holder": "${widgetID}"
+          },
+          "var pawnCount = ${pawnCount} + ${COUNT}"
+        ]
+      },
+      "var result = ${pawnCount}"
+    ]
   },
   "a2": {
     "inheritFrom": {
@@ -10159,8 +10146,8 @@
         "font-size": "20px",
         "--wcMain": "${PROPERTY bgColor}80",
         "--wcBorder": "${PROPERTY bgColor}",
-        "--wcMainOH": "grey",
-        "--wcBorderOH": "white"
+        "--wcMainOH": "${PROPERTY bgColor}",
+        "--wcBorderOH": "#000000"
       },
       "::after": {
         "content": "'Take card'",
