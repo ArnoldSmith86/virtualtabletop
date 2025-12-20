@@ -39,6 +39,7 @@ https://github.com/user-attachments/assets/10d61e5f-b483-453a-ac5f-ac5f1171d8dd
 - All interactions are synchronized in real-time to all players.
 - Cards snap to holders to make it easier to organize them.
 - Many games have a special cards holder that simulates having hands of cards - each player only sees their own cards.
+- VirtualTabletop.io does not include built-in voice or video chat. Players typically use external tools such as Discord, Zoom, or Jitsi for voice communication.
 
 ## 🛠️ Forging your own games
 
