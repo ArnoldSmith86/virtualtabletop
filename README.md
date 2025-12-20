@@ -53,9 +53,9 @@ Creating simple games can be done in a few minutes but there's basically no limi
 - With the full power of CSS at your disposal, you can completely customize the look and feel of your game.
 - Optionally automate certain aspects of the game using [routines](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions) - a custom programming language inside the JSON.
 
-> For more details, visit [Creating Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games) on our wiki or look at [our many tutorials](https://virtualtabletop.io/Tutorials#tutorials).
+> For more details, visit [📚 Creating Games](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Creating-Games) on our wiki, look at [🎓 our many tutorials](https://virtualtabletop.io/Tutorials#tutorials) or watch a detailed [🎥 YouTube walkthrough](https://www.youtube.com/watch?v=xmdMTWuRO-E).
 
-Mastering the game creation process is a bit daunting at first. But there are always people willing to help on our [Discord server](https://discord.gg/CEZz7wny9T).
+Mastering the game creation process is a bit daunting at first. But there are always people willing to help on our [💬 Discord server](https://discord.gg/CEZz7wny9T).
 
 ## 📡 Hosting your own server
 
