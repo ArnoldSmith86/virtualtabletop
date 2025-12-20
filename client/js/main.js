@@ -131,6 +131,9 @@ function checkURLproperties(connected) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
           $('#filterByType').value = 'Tutorials';
+        } else if(location.hash == '#About') {
+          urlProperties.about = true;
+          $('#aboutButton').click();
         } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
