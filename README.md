@@ -106,10 +106,6 @@ Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/C
 
 The project is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-The cards in [assets/cards-default](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/cards-default) were [created by Adrian Kennard](https://www.me.uk/cards/) and released under CC0 Public Domain license.
+It uses artwork and fonts from various sources. For their licensing information, see the [About section](https://virtualtabletop.io/#About) of the website.
 
-The cards in [assets/cards-plastic](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/cards-plastic) have their own [license.txt file](https://github.com/ArnoldSmith86/virtualtabletop/blob/main/assets/cards-plastic/license.txt).
-
-The icons in [assets/icons-white](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/assets/icons-white) were found at [Font Awesome](https://fontawesome.com/) with license [CC BY 4.0](https://fontawesome.com/license/free).
-
-The games in the public library have their license information and attributions inside their `Attribution` section when selecting a game in the Game Shelf.
+The games in the public library have their license information and attributions inside their `Attribution` section when selecting them in the Game Shelf (or in their [JSON files](https://github.com/ArnoldSmith86/virtualtabletop/tree/main/library/games)).
