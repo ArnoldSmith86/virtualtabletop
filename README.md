@@ -45,7 +45,7 @@ https://github.com/user-attachments/assets/10d61e5f-b483-453a-ac5f-ac5f1171d8dd
 
 The beauty of virtualtabletop.io is that it has a powerful game editor built in.
 
-![Editor screenshot](readme_images/editor.png)
+![Editor screenshot](readme_images/editor.webp)
 
 Creating simple games can be done in a few minutes but there's basically no limit to what you can create:
 
