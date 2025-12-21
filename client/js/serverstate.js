@@ -510,7 +510,11 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    $('#statesButton').click();
+    if(urlProperties.about) {
+      $('#aboutButton').click();
+    } else {
+      $('#statesButton').click();
+    }
     overlayShownForEmptyRoom = true;
   }
 
