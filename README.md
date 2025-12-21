@@ -14,7 +14,7 @@ Free. Open-source. No accounts. No ads. Easy to self-host.
 
 <br>
 
-> In December 2020 we started with 10 games. In June 2022 we passed 100 games in our public library of included games. In 2025 we are now well over 250 games.
+> In December 2020 we started with 10 games. In June 2022 we passed 100 games in our public library of included games. By the end of 2025, we had over 280 games.
 
 - **Classic board games**: Chess, Checkers, Backgammon, Nine Men's Morris, ...
 - **Classic card games**: Poker, Jass, Whist, Doppelkopf, ...
