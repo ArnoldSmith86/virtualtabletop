@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765930626088,
+      "lastUpdate": 1766432143888,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -6317,6 +6317,16 @@
       120,
       150,
       150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
       150
     ],
     "display": false
@@ -6594,6 +6604,10 @@
       2,
       3,
       6,
+      10,
+      10,
+      10,
+      10,
       10
     ],
     "gemScoreRoutine": [
@@ -6952,12 +6966,12 @@
   "gemChart2": {
     "id": "gemChart2",
     "height": 160,
-    "display": false,
     "html": "<table> <tr> <th>Gems</th> <td>0</td> <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <th>Points</th> <td>-50</td> <td>-45</td> <td>-40</td> <td>-10</td> <td>-5</td> <td>0</td> <td>30</td> <td>35</td> <td>40</td> </tr> </table> <table> <tr> <th>Gems</th> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15+</td> </tr> <tr> <th>Points</th> <td>70</td> <td>75</td> <td>80</td> <td>110</td> <td>115</td> <td>120</td> <td>150</td> </tr> </table>",
     "inheritFrom": {
       "gemChart1": "*"
     },
-    "activeFace": 1
+    "activeFace": 1,
+    "display": false
   },
   "cardHolder4-1": {
     "type": "holder",
