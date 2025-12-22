@@ -1,0 +1,2565 @@
+{
+  "_meta": {
+    "version": 20,
+    "info": {
+      "name": "Marble Maneuvers",
+      "image": "/assets/-906541971_48582",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/11632/veleno",
+      "year": "1986",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "lastUpdate": 1766363097801,
+      "showName": true,
+      "skill": "",
+      "description": "Move a marble to capture an adjacent marble. Score both for your own marbles and those of the player counter-clockwise next to you.",
+      "similarImage": "",
+      "similarName": "Veleno",
+      "similarDesigner": "Alex Randolph",
+      "similarAwards": "",
+      "ruleText": "The game works best with 3 players.<div><br></div><div>Players sit in seats. Click the restart button to begin the game. A random player is chose to start.<div><br></div><div>Drag the black marble onto an adjacent marble you want to collect. It will mov to your seat area automatically. The turn also automatically passes to the next player <b>counter-clockwise</b>.</div><div><br></div><div>The game ends when the black marble is isolated and cannot be moved into an area with another marble.</div><div><br></div><div>Press the score button to calculate scores. You get 10 points for each white marble collected. You get the square of the number of each of the other groups of colored marbles collected. For example, a player with 2 white (20 points), 2 pink (2 points), and 6 blue (36 points) stones gets 58 points.</div><div><br></div><div>If playing with more than 2 players, then each player gets added to their score the value of the marbles collected by the player next to them <b>counter-clockwise</b>. Therefore, there is a strategic element to the game in helping the player that goes after you. This score calculation is also handled by pressing the score button and is noted in the history log.</div><div><br></div><div>The player with the highest score wins. In the event of a tie, the player with the highest score based on their own collected marbles wins.</div></div>",
+      "helpText": "",
+      "players": "2-4",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
+    }
+  },
+  "hexA1": {
+    "type": "holder",
+    "id": "hexA1",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 168,
+    "inheritFrom": "hexMaster"
+  },
+  "hexA2": {
+    "type": "holder",
+    "id": "hexA2",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 279,
+    "inheritFrom": "hexMaster"
+  },
+  "boardBack": {
+    "id": "boardBack",
+    "x": 455,
+    "y": 123,
+    "width": 688,
+    "height": 757,
+    "layer": -3,
+    "movable": false,
+    "editorGroup": true
+  },
+  "hexA3": {
+    "type": "holder",
+    "id": "hexA3",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 391,
+    "inheritFrom": "hexMaster"
+  },
+  "hexA4": {
+    "type": "holder",
+    "id": "hexA4",
+    "parent": "boardBack",
+    "x": 0,
+    "y": 502,
+    "inheritFrom": "hexMaster"
+  },
+  "hexB1": {
+    "type": "holder",
+    "id": "hexB1",
+    "parent": "boardBack",
+    "x": 100,
+    "y": 112,
+    "inheritFrom": "hexMaster"
+  },
+  "hexB2": {
+    "type": "holder",
+    "id": "hexB2",
+    "parent": "boardBack",
+    "x": 100,
+    "y": 223,
+    "inheritFrom": "hexMaster"
+  },
+  "hexB3": {
+    "type": "holder",
+    "id": "hexB3",
+    "parent": "boardBack",
+    "x": 100,
+    "y": 335,
+    "inheritFrom": "hexMaster"
+  },
+  "hexB4": {
+    "type": "holder",
+    "id": "hexB4",
+    "parent": "boardBack",
+    "x": 100,
+    "y": 446,
+    "inheritFrom": "hexMaster"
+  },
+  "hexB5": {
+    "type": "holder",
+    "id": "hexB5",
+    "parent": "boardBack",
+    "x": 100,
+    "y": 558,
+    "inheritFrom": "hexMaster"
+  },
+  "hexC1": {
+    "type": "holder",
+    "id": "hexC1",
+    "parent": "boardBack",
+    "x": 201,
+    "y": 56,
+    "inheritFrom": "hexMaster"
+  },
+  "hexC2": {
+    "type": "holder",
+    "id": "hexC2",
+    "parent": "boardBack",
+    "x": 201,
+    "y": 168,
+    "inheritFrom": "hexMaster"
+  },
+  "hexC3": {
+    "type": "holder",
+    "id": "hexC3",
+    "parent": "boardBack",
+    "x": 201,
+    "y": 279,
+    "inheritFrom": "hexMaster"
+  },
+  "hexC4": {
+    "type": "holder",
+    "id": "hexC4",
+    "parent": "boardBack",
+    "x": 201,
+    "y": 391,
+    "inheritFrom": "hexMaster"
+  },
+  "hexC5": {
+    "type": "holder",
+    "id": "hexC5",
+    "parent": "boardBack",
+    "x": 201,
+    "y": 502,
+    "inheritFrom": "hexMaster"
+  },
+  "hexC6": {
+    "type": "holder",
+    "id": "hexC6",
+    "parent": "boardBack",
+    "x": 201,
+    "y": 614,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD1": {
+    "type": "holder",
+    "id": "hexD1",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 0,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD2": {
+    "type": "holder",
+    "id": "hexD2",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 112,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD3": {
+    "type": "holder",
+    "id": "hexD3",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 223,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD4": {
+    "type": "holder",
+    "id": "hexD4",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 335,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD5": {
+    "type": "holder",
+    "id": "hexD5",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 446,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD6": {
+    "type": "holder",
+    "id": "hexD6",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 558,
+    "inheritFrom": "hexMaster"
+  },
+  "hexD7": {
+    "type": "holder",
+    "id": "hexD7",
+    "parent": "boardBack",
+    "x": 301,
+    "y": 670,
+    "inheritFrom": "hexMaster"
+  },
+  "hexE1": {
+    "type": "holder",
+    "id": "hexE1",
+    "parent": "boardBack",
+    "x": 401,
+    "y": 56,
+    "inheritFrom": "hexMaster"
+  },
+  "hexE2": {
+    "type": "holder",
+    "id": "hexE2",
+    "parent": "boardBack",
+    "x": 401,
+    "y": 168,
+    "inheritFrom": "hexMaster"
+  },
+  "hexE3": {
+    "type": "holder",
+    "id": "hexE3",
+    "parent": "boardBack",
+    "x": 401,
+    "y": 279,
+    "inheritFrom": "hexMaster"
+  },
+  "hexE4": {
+    "type": "holder",
+    "id": "hexE4",
+    "parent": "boardBack",
+    "x": 401,
+    "y": 391,
+    "inheritFrom": "hexMaster"
+  },
+  "hexE5": {
+    "type": "holder",
+    "id": "hexE5",
+    "parent": "boardBack",
+    "x": 401,
+    "y": 502,
+    "inheritFrom": "hexMaster"
+  },
+  "hexE6": {
+    "type": "holder",
+    "id": "hexE6",
+    "parent": "boardBack",
+    "x": 401,
+    "y": 614,
+    "inheritFrom": "hexMaster"
+  },
+  "hexF1": {
+    "type": "holder",
+    "id": "hexF1",
+    "parent": "boardBack",
+    "x": 501,
+    "y": 112,
+    "inheritFrom": "hexMaster"
+  },
+  "hexF2": {
+    "type": "holder",
+    "id": "hexF2",
+    "parent": "boardBack",
+    "x": 501,
+    "y": 223,
+    "inheritFrom": "hexMaster"
+  },
+  "hexF3": {
+    "type": "holder",
+    "id": "hexF3",
+    "parent": "boardBack",
+    "x": 501,
+    "y": 335,
+    "inheritFrom": "hexMaster"
+  },
+  "hexF4": {
+    "type": "holder",
+    "id": "hexF4",
+    "parent": "boardBack",
+    "x": 501,
+    "y": 446,
+    "inheritFrom": "hexMaster"
+  },
+  "hexF5": {
+    "type": "holder",
+    "id": "hexF5",
+    "parent": "boardBack",
+    "x": 501,
+    "y": 558,
+    "inheritFrom": "hexMaster"
+  },
+  "hexG1": {
+    "type": "holder",
+    "id": "hexG1",
+    "parent": "boardBack",
+    "x": 601,
+    "y": 168,
+    "inheritFrom": "hexMaster"
+  },
+  "hexG2": {
+    "type": "holder",
+    "id": "hexG2",
+    "parent": "boardBack",
+    "x": 601,
+    "y": 279,
+    "inheritFrom": "hexMaster"
+  },
+  "hexG3": {
+    "type": "holder",
+    "id": "hexG3",
+    "parent": "boardBack",
+    "x": 601,
+    "y": 391,
+    "inheritFrom": "hexMaster"
+  },
+  "hexG4": {
+    "type": "holder",
+    "id": "hexG4",
+    "parent": "boardBack",
+    "x": 601,
+    "y": 502,
+    "inheritFrom": "hexMaster"
+  },
+  "hexMaster": {
+    "type": "holder",
+    "id": "hexMaster",
+    "x": 174,
+    "y": -203,
+    "width": 86.6,
+    "height": 86.6,
+    "movableInEdit": false,
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "1px solid #00000060"
+    },
+    "dropOffsetX": 9,
+    "dropOffsetY": 9,
+    "dropTarget": {},
+    "grid": [
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": -68.3,
+        "offsetY": -19.6
+      },
+      {
+        "x": 150,
+        "y": 86.6,
+        "offsetX": 6.7,
+        "offsetY": 23.7
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "id"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "SELECT",
+            "mode": "remove",
+            "property": "id",
+            "value": "${id}"
+          },
+          {
+            "func": "GET",
+            "property": "color"
+          },
+          {
+            "func": "MOVE",
+            "to": "holder${seatIndex}"
+          },
+          {
+            "func": "CALL",
+            "widget": "historyLabel",
+            "routine": "addendumRoutine",
+            "arguments": {
+              "addendum": "<b>${playerName}</b> captured a <span style='color:${color}'>marble</span>"
+            }
+          },
+          {
+            "func": "CLICK",
+            "collection": [
+              "turnButton"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "orange1": {
+    "id": "orange1",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4,
+    "classes": "transitions"
+  },
+  "green1": {
+    "id": "green1",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "blue1": {
+    "id": "blue1",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "y": 4
+  },
+  "pink1": {
+    "id": "pink1",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "white1": {
+    "id": "white1",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(255,255,255)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "colorType": 5,
+    "marble": true,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "black1": {
+    "id": "black1",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,0,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 6,
+    "classes": "transitions",
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "orange2": {
+    "id": "orange2",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "classes": "transitions",
+    "x": 4,
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "orange3": {
+    "id": "orange3",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "x": 4,
+    "y": 4
+  },
+  "orange4": {
+    "id": "orange4",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "x": 4,
+    "y": 4
+  },
+  "orange5": {
+    "id": "orange5",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "orange6": {
+    "id": "orange6",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "y": 4
+  },
+  "orange7": {
+    "id": "orange7",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "orange8": {
+    "id": "orange8",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(230,159,0)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 1,
+    "classes": "transitions",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "green2": {
+    "id": "green2",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "green3": {
+    "id": "green3",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "green4": {
+    "id": "green4",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "green5": {
+    "id": "green5",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "x": 4,
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "green6": {
+    "id": "green6",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "green7": {
+    "id": "green7",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "green8": {
+    "id": "green8",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,158,115)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 2,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "blue2": {
+    "id": "blue2",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "blue3": {
+    "id": "blue3",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "y": 4
+  },
+  "blue4": {
+    "id": "blue4",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "x": 4,
+    "y": 4
+  },
+  "blue5": {
+    "id": "blue5",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "classes": "transitions",
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "blue6": {
+    "id": "blue6",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "classes": "transitions",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "blue7": {
+    "id": "blue7",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "x": 4,
+    "y": 4
+  },
+  "blue8": {
+    "id": "blue8",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(0,114,178)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 3,
+    "x": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "pink2": {
+    "id": "pink2",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "pink3": {
+    "id": "pink3",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "classes": "transitions",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "pink4": {
+    "id": "pink4",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "pink5": {
+    "id": "pink5",
+    "x": 4,
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "pink6": {
+    "id": "pink6",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "x": 4,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "y": 4
+  },
+  "pink7": {
+    "id": "pink7",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "x": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "y": 4
+  },
+  "pink8": {
+    "id": "pink8",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(204,121,167)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "marble": true,
+    "colorType": 4,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "white2": {
+    "id": "white2",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(255,255,255)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "colorType": 5,
+    "marble": true,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "white3": {
+    "id": "white3",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(255,255,255)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "colorType": 5,
+    "marble": true,
+    "parent": "marbleHolder",
+    "classes": "transitions",
+    "x": 4,
+    "y": 4
+  },
+  "white4": {
+    "id": "white4",
+    "width": 70,
+    "height": 70,
+    "color": "rgb(255,255,255)",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "colorType": 5,
+    "marble": true,
+    "classes": "transitions",
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
+  },
+  "marbleHolder": {
+    "type": "holder",
+    "id": "marbleHolder",
+    "x": 117,
+    "y": 1057,
+    "dropTarget": {
+      "marble": true
+    }
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1540,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "ignoreZoom": true,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyLabel"
+        ],
+        "property": "html",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyBack"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "SELECT",
+        "property": "marble",
+        "value": true
+      },
+      {
+        "func": "MOVE",
+        "to": "marbleHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "marbleHolder"
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "parent",
+        "value": "boardBack"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "marbleHolder",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "score1",
+          "score2",
+          "score3",
+          "score4"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<b>----New Game Started----</b>"
+        }
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "turnButton"
+        ]
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 116,
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "parent": "seatArea1",
+    "color": "#009688",
+    "glowColor": "#004a3c"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "y": 61,
+    "width": 410,
+    "height": 70,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 20,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropTarget": {},
+    "parent": "seatArea1",
+    "linkedToSeat": "seat1",
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "colorType"
+      }
+    ]
+  },
+  "seatArea1": {
+    "id": "seatArea1",
+    "x": 35,
+    "y": 150,
+    "width": 410,
+    "height": 131,
+    "layer": -3,
+    "movable": false
+  },
+  "score1": {
+    "id": "score1",
+    "width": 65,
+    "height": 35,
+    "css": {
+      "background": "${PROPERTY mainColor}",
+      "color": "${PROPERTY textColor}",
+      "font-size": "28px",
+      "border": "2px solid ${PROPERTY outlineColor}"
+    },
+    "parent": "seatArea1",
+    "y": -50,
+    "x": 170,
+    "fixedParent": true,
+    "color": "#000000",
+    "borderRadius": 8,
+    "type": "label",
+    "editable": true,
+    "linkedToSeat": "seat1",
+    "text": 0,
+    "inheritFrom": {
+      "seat1": [
+        "mainColor",
+        "textColor",
+        "outlineColor"
+      ]
+    }
+  },
+  "score1U": {
+    "type": "button",
+    "id": "score1U",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": 78,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "background": "#000000",
+        "border": "3px solid #ffffff"
+      },
+      ":hover": {
+        "background": "#00000080"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "score1D": {
+    "type": "button",
+    "id": "score1D",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": -52,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "background": "#000000",
+        "border": "3px solid #ffffff"
+      },
+      ":hover": {
+        "background": "#00000080"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "seatArea2": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea2",
+    "x": 1165,
+    "y": 150
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": "*",
+      "seat": [
+        ""
+      ]
+    },
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "parent": "seatArea2",
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "color": "#ff9800",
+    "glowColor": "#b34c00"
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "parent": "seatArea2",
+    "linkedToSeat": "seat2"
+  },
+  "score2": {
+    "inheritFrom": {
+      "score1": [
+        "!mainColor",
+        "!textColor",
+        "!outlineColor"
+      ],
+      "seat2": [
+        "mainColor",
+        "textColor",
+        "outlineColor"
+      ]
+    },
+    "id": "score2",
+    "type": "label",
+    "parent": "seatArea2",
+    "linkedToSeat": "seat2",
+    "text": 0
+  },
+  "score2U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score2U",
+    "parent": "score2"
+  },
+  "score2D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score2D",
+    "parent": "score2"
+  },
+  "seatArea3": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea3",
+    "x": 1165,
+    "y": 755,
+    "activeFace": 0
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "parent": "seatArea3",
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000",
+    "color": "#f06292",
+    "glowColor": "#a41646"
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3"
+  },
+  "score3": {
+    "inheritFrom": {
+      "score1": [
+        "!mainColor",
+        "!textColor",
+        "!outlineColor"
+      ],
+      "seat3": [
+        "mainColor",
+        "textColor",
+        "outlineColor"
+      ]
+    },
+    "id": "score3",
+    "type": "label",
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3",
+    "text": 0
+  },
+  "score3U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score3U",
+    "parent": "score3"
+  },
+  "score3D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score3D",
+    "parent": "score3"
+  },
+  "seatArea4": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea4",
+    "x": 35,
+    "y": 755
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "parent": "seatArea4",
+    "player": "",
+    "mainColor": "#dddddd",
+    "textColor": "#000000"
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4"
+  },
+  "score4": {
+    "inheritFrom": {
+      "score1": [
+        "!mainColor",
+        "!textColor",
+        "!outlineColor"
+      ],
+      "seat4": [
+        "mainColor",
+        "textColor",
+        "outlineColor"
+      ]
+    },
+    "id": "score4",
+    "type": "label",
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "text": 0
+  },
+  "score4U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score4U",
+    "parent": "score4"
+  },
+  "score4D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score4D",
+    "parent": "score4"
+  },
+  "scoreButton": {
+    "type": "button",
+    "id": "scoreButton",
+    "x": 775,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "classes": "material-symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "34px",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Score'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "70px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "scoreboard",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Calculating final score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will calculate and display scores. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<b>----Score Button Pressed----</b>"
+        }
+      },
+      {
+        "func": "CALL",
+        "routine": "scoreRoutine"
+      }
+    ],
+    "scoreRoutine": [
+      "// Calculate scores for marbles",
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var thisSeatIndex = ${value}",
+          "var thisSeatID = 'seat' + ${thisSeatIndex}",
+          "var score = 0",
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "property": "parent",
+                "value": "holder${thisSeatIndex}",
+                "collection": "theseMarbles"
+              },
+              {
+                "func": "SELECT",
+                "source": "theseMarbles",
+                "property": "colorType",
+                "value": "${value}"
+              },
+              {
+                "func": "COUNT"
+              },
+              "var multiplier = ${COUNT} * ${COUNT}",
+              "var score = ${score} + ${multiplier}"
+            ]
+          },
+          {
+            "func": "SELECT",
+            "source": "theseMarbles",
+            "property": "colorType",
+            "value": 5
+          },
+          {
+            "func": "COUNT"
+          },
+          "var white = ${COUNT} * 10",
+          "var score = ${score} + ${white}",
+          {
+            "func": "SET",
+            "collection": [
+              "score${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${score}"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "seat${thisSeatIndex}"
+            ],
+            "property": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF $thisSeatID}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "• <b>${player}</b>: ${score} marble points"
+                }
+              }
+            ]
+          },
+          "// Add neighbor's score for 3+ players",
+          "var players = length ${activeSeats}",
+          {
+            "func": "IF",
+            "operand1": "${players}",
+            "relation": ">",
+            "operand2": 2,
+            "thenRoutine": [
+              "// Get seat order",
+              {
+                "func": "SELECT",
+                "source": "activeSeats",
+                "property": "id",
+                "relation": "!=",
+                "value": null,
+                "sortBy": "index"
+              },
+              {
+                "func": "GET",
+                "aggregation": "array",
+                "variable": "activeSeats"
+              },
+              "var activeIndex = ${activeSeats} indexOf ${thisSeatID}",
+              "var before = ${activeSeats} slice 0 ${activeIndex}",
+              "var after = ${activeSeats} slice ${activeIndex} 999",
+              "var activeSeatsInTurnOrder = ${after} concat ${before}",
+              "var previousSeat = pop ${activeSeatsInTurnOrder}",
+              {
+                "func": "GET",
+                "collection": [
+                  "${previousSeat}"
+                ],
+                "property": "index"
+              },
+              "// Calculate marble score for next seat",
+              "var nextScore = 0",
+              {
+                "func": "FOREACH",
+                "range": [
+                  4
+                ],
+                "loopRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "holder${index}",
+                    "collection": "thoseMarbles"
+                  },
+                  {
+                    "func": "SELECT",
+                    "source": "thoseMarbles",
+                    "property": "colorType",
+                    "value": "${value}"
+                  },
+                  {
+                    "func": "COUNT"
+                  },
+                  "var multiplier = ${COUNT} * ${COUNT}",
+                  "var nextScore = ${nextScore} + ${multiplier}"
+                ]
+              },
+              {
+                "func": "SELECT",
+                "source": "thoseMarbles",
+                "property": "colorType",
+                "value": 5
+              },
+              {
+                "func": "COUNT"
+              },
+              "var white = ${COUNT} * 10",
+              "var nextScore = ${nextScore} + ${white}",
+              {
+                "func": "SET",
+                "collection": [
+                  "score${thisSeatIndex}"
+                ],
+                "property": "text",
+                "relation": "+",
+                "value": "${nextScore}"
+              },
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY player OF $thisSeatID}",
+                "relation": "!=",
+                "operand2": "",
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "widget": "historyLabel",
+                    "routine": "addendumRoutine",
+                    "arguments": {
+                      "addendum": "• <b>${player}</b>: ${nextScore} neighbor points"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "historyRecent": {
+    "id": "historyRecent",
+    "x": 1290,
+    "y": 360,
+    "width": 300,
+    "height": 190,
+    "borderRadius": 8,
+    "layer": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 1,
+    "css": {
+      "default": {
+        "background": "#e7e2d7",
+        "font-size": "16px",
+        "color": "black",
+        "overflow": "hidden",
+        "border": "2px solid black",
+        "padding": "2px",
+        "white-space": "pre-wrap"
+      }
+    },
+    "inheritFrom": {
+      "historyLabel": [
+        "html"
+      ]
+    }
+  },
+  "historyButton": {
+    "type": "button",
+    "id": "historyButton",
+    "x": 1540,
+    "y": 572,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Full history'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "84px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": "(📜)",
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF historyBack}",
+      "var checkArray = ${visibleToSeats} isArray",
+      {
+        "func": "IF",
+        "condition": "${checkArray}",
+        "elseRoutine": [
+          "var visibleToSeats = []"
+        ]
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${seatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">",
+        "operand2": -1,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyBack"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ]
+  },
+  "historyBack": {
+    "id": "historyBack",
+    "x": 533,
+    "y": 231,
+    "width": 530,
+    "height": 455,
+    "borderRadius": 8,
+    "layer": 230,
+    "activeFace": 1,
+    "css": {
+      "default": {
+        "border": "5px solid white",
+        "color": "#000000",
+        "background": "#d0dfe8",
+        "font-size": "30px",
+        "text-align": "center"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Full History"
+  },
+  "historyLabel": {
+    "id": "historyLabel",
+    "parent": "historyBack",
+    "fixedParent": true,
+    "x": 10,
+    "y": 36,
+    "width": 510,
+    "height": 405,
+    "borderRadius": 4,
+    "layer": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "overflow": "scroll",
+        "color": "#000000",
+        "background": "#ffffff",
+        "font-size": "16px",
+        "text-align": "left",
+        "white-space": "pre-wrap"
+      }
+    },
+    "html": "",
+    "addendumRoutine": [
+      "var previousLedger = ${PROPERTY html}",
+      {
+        "func": "SET",
+        "property": "html",
+        "value": "${addendum}<br>${previousLedger}",
+        "collection": [
+          "${PROPERTY id}"
+        ]
+      }
+    ]
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 1540,
+    "y": 925,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "39px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Turn'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "backward"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "player"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<b>${player}</b>'s turn"
+        }
+      }
+    ]
+  },
+  "librarySetupButton": {
+    "type": "button",
+    "id": "librarySetupButton",
+    "x": 770,
+    "y": 1092,
+    "text": "Save for PL",
+    "clickRoutine": [
+      "// Used to get the game ready for the PL",
+      {
+        "func": "CLICK",
+        "collection": [
+          "restartButton"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "marble",
+        "value": true
+      },
+      {
+        "func": "MOVE",
+        "to": "marbleHolder"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "mainColor",
+        "value": "#dddddd"
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyLabel"
+        ],
+        "property": "html",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
+      }
+    ]
+  }
+}
