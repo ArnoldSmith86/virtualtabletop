@@ -460,13 +460,12 @@
     "marble": true,
     "colorType": 2,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "blue1": {
     "id": "blue1",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(0,114,178)",
@@ -485,6 +484,7 @@
     "colorType": 3,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "pink1": {
@@ -943,8 +943,8 @@
     "marble": true,
     "colorType": 3,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "blue7": {
@@ -1013,8 +1013,8 @@
     "colorType": 4,
     "classes": "transitions",
     "x": 4,
-    "y": 4,
-    "parent": "marbleHolder"
+    "parent": "marbleHolder",
+    "y": 4
   },
   "pink4": {
     "id": "pink4",
@@ -1103,9 +1103,9 @@
     "secondaryColor": "#000000",
     "marble": true,
     "colorType": 4,
-    "x": 4,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "white2": {
@@ -1608,9 +1608,7 @@
         "elseRoutine": []
       }
     ],
-    "parent": "seatArea1",
-    "color": "#00bcd4",
-    "glowColor": "#007088"
+    "parent": "seatArea1"
   },
   "seatArea1": {
     "id": "seatArea1",
@@ -1642,9 +1640,9 @@
     "parent": "seatArea2",
     "player": "",
     "mainColor": "#dddddd",
-    "textColor": "#ffffff",
-    "color": "#9c27b0",
-    "glowColor": "#e974fd"
+    "textColor": "#000000",
+    "color": "#00bcd4",
+    "glowColor": "#007088"
   },
   "historyRecent": {
     "id": "historyRecent",
@@ -1933,7 +1931,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1766467495081,
+      "lastUpdate": 1766467969474,
       "showName": true,
       "skill": "",
       "description": "A pure abstract strategy game where players take turns moving a pawn in straight lines to collect marbles.",
@@ -2300,7 +2298,6 @@
   },
   "lightBlue3": {
     "id": "lightBlue3",
-    "x": 4,
     "width": 70,
     "height": 70,
     "classes": "transitions",
@@ -2319,6 +2316,7 @@
     "marble": true,
     "secondaryColor": "#000000",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "lightBlue4": {
@@ -2341,8 +2339,8 @@
     "marble": true,
     "secondaryColor": "#000000",
     "x": 4,
-    "y": 4,
-    "parent": "marbleHolder"
+    "parent": "marbleHolder",
+    "y": 4
   },
   "lightBlue5": {
     "id": "lightBlue5",
@@ -2445,7 +2443,7 @@
     "width": 220,
     "height": 70,
     "css": {
-      "background": "#ffffff60"
+      "background": "${PROPERTY bgColor}"
     },
     "dropOffsetX": 0,
     "dropOffsetY": 0,
@@ -2459,7 +2457,8 @@
         "holder": "${PROPERTY id}",
         "key": "colorType"
       }
-    ]
+    ],
+    "bgColor": "rgba(230,159,0,.5)"
   },
   "holder1-2": {
     "inheritFrom": {
@@ -2471,7 +2470,8 @@
     "y": 136,
     "dropTarget": {
       "colorType": 2
-    }
+    },
+    "bgColor": "rgba(0,158,115,.5)"
   },
   "holder1-3": {
     "inheritFrom": {
@@ -2483,7 +2483,8 @@
     "y": 211,
     "dropTarget": {
       "colorType": 3
-    }
+    },
+    "bgColor": "rgba(0,114,178,.5)"
   },
   "holder1-4": {
     "inheritFrom": {
@@ -2495,7 +2496,8 @@
     "y": 286,
     "dropTarget": {
       "colorType": 4
-    }
+    },
+    "bgColor": "rgba(204,121,167,.5)"
   },
   "holder1-5": {
     "inheritFrom": {
@@ -2507,7 +2509,8 @@
     "y": 361,
     "dropTarget": {
       "colorType": 5
-    }
+    },
+    "bgColor": "rgba(255,255,255,.5)"
   },
   "holder1-6": {
     "inheritFrom": {
@@ -2519,7 +2522,8 @@
     "y": 436,
     "dropTarget": {
       "colorType": 6
-    }
+    },
+    "bgColor": "rgba(0,0,0,.5)"
   },
   "holder1-7": {
     "inheritFrom": {
@@ -2531,7 +2535,8 @@
     "y": 511,
     "dropTarget": {
       "colorType": 7
-    }
+    },
+    "bgColor": "rgba(86,180,233,.5)"
   },
   "holder2-1": {
     "type": "holder",
@@ -2544,7 +2549,8 @@
     "linkedToSeat": "seat2",
     "dropTarget": {
       "colorType": 1
-    }
+    },
+    "bgColor": "rgba(230,159,0,.5)"
   },
   "holder2-2": {
     "inheritFrom": {
@@ -2556,7 +2562,8 @@
     "y": 136,
     "dropTarget": {
       "colorType": 2
-    }
+    },
+    "bgColor": "rgba(0,158,115,.5)"
   },
   "holder2-3": {
     "inheritFrom": {
@@ -2568,7 +2575,8 @@
     "y": 211,
     "dropTarget": {
       "colorType": 3
-    }
+    },
+    "bgColor": "rgba(0,114,178,.5)"
   },
   "holder2-4": {
     "inheritFrom": {
@@ -2580,7 +2588,8 @@
     "y": 286,
     "dropTarget": {
       "colorType": 4
-    }
+    },
+    "bgColor": "rgba(204,121,167,.5)"
   },
   "holder2-5": {
     "inheritFrom": {
@@ -2592,7 +2601,8 @@
     "y": 361,
     "dropTarget": {
       "colorType": 5
-    }
+    },
+    "bgColor": "rgba(255,255,255,.5)"
   },
   "holder2-6": {
     "inheritFrom": {
@@ -2604,7 +2614,8 @@
     "y": 436,
     "dropTarget": {
       "colorType": 6
-    }
+    },
+    "bgColor": "rgba(0,0,0,.5)"
   },
   "holder2-7": {
     "inheritFrom": {
@@ -2616,6 +2627,7 @@
     "y": 511,
     "dropTarget": {
       "colorType": 7
-    }
+    },
+    "bgColor": "rgba(86,180,233,.5)"
   }
 }
