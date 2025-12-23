@@ -1949,6 +1949,10 @@
   },
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
+    },
     "info": {
       "name": "Hueas",
       "image": "/assets/1018189218_49544",
@@ -1958,7 +1962,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1766458650514,
+      "lastUpdate": 1766458826185,
       "showName": true,
       "skill": "",
       "description": "A pure abstract strategy game where players take turns moving a pawn in straight lines to collect marbles.",
@@ -1968,14 +1972,10 @@
       "similarAwards": "",
       "ruleText": "<div>Players sit in seats. Click the restart button to begin the game. A random player is chosen to start.</div><div><div><br></div><div>The object of the game is to be the first to collect all 7 marbles of the same color. If no player collects all 7, then the winner is the player that collects at least 4 marbles in at least 4 colors.</div><div><br></div><div>The first player moves the brown pawn onto any space on the board and collects the marble there.</div><div><br></div><div>The other player can move the pawn in any direction to an adjacent space, jumping across any unoccupied spaces in a straight line, until it gets to an occupied space. That player collects the marble in the space where the pawn lands. Then that player may continue to move the pawn and collect marbles if the player can move in a straight line to another marble of the same color. If the player cannot move the pawn again, or chooses not to move the pawn again, then the turn passes to the other player.</div><div><br></div><div>If a player cannot start their move because the pawn is not in a straight line with a marble, then the player moves the pawn to any occupied space of their choice, collects that marble, and ends their turn.</div><div><br></div><div>The game ends immediately if one player collect all 7 marbles of the same color. Otherwise, the player that collects at least 4 marbles in at least 4 colors wins.</div></div>",
       "helpText": "",
-      "players": "2",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {},
-      "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
+      "language": "",
+      "players": "2"
     }
   },
   "hexZ1": {
@@ -2442,14 +2442,22 @@
     "parent": "marbleHolder",
     "y": 4
   },
-  "luiq": {
-    "x": 1425,
-    "y": 98,
+  "pawn": {
+    "id": "pawn",
+    "x": 780,
+    "y": 893,
     "width": 50,
     "height": 90,
+    "z": 1,
+    "classes": "transitions",
     "color": "#8b450c",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "resetProperties": {
+      "parent": null,
+      "x": 780,
+      "y": 893
+    },
     "svgReplaces": {
       "#primaryColor": "color",
       "#borderColor": "borderColor",
@@ -2457,13 +2465,6 @@
     },
     "borderColor": "black",
     "borderWidth": 1,
-    "id": "luiq",
-    "resetProperties": {
-      "parent": null,
-      "x": 1425,
-      "y": 98
-    },
-    "pawn": true,
-    "classes": "transitions"
+    "pawn": true
   }
 }
