@@ -23,7 +23,8 @@
     "height": 757,
     "layer": -3,
     "movable": false,
-    "editorGroup": true
+    "editorGroup": true,
+    "movableInEdit": false
   },
   "hexA3": {
     "type": "holder",
@@ -367,8 +368,12 @@
             "property": "color"
           },
           {
+            "func": "GET",
+            "property": "colorType"
+          },
+          {
             "func": "MOVE",
-            "to": "holder${seatIndex}"
+            "to": "holder${seatIndex}-${colorType}"
           },
           {
             "func": "CALL",
@@ -524,13 +529,12 @@
     "colorType": 5,
     "marble": true,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "black1": {
     "id": "black1",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(0,0,0)",
@@ -549,6 +553,7 @@
     "colorType": 6,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "orange2": {
@@ -645,7 +650,6 @@
   },
   "orange6": {
     "id": "orange6",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(230,159,0)",
@@ -664,6 +668,7 @@
     "colorType": 1,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "orange7": {
@@ -754,8 +759,8 @@
     "marble": true,
     "colorType": 2,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "green5": {
@@ -823,9 +828,9 @@
     "marble": true,
     "colorType": 2,
     "classes": "transitions",
+    "parent": "marbleHolder",
     "x": 4,
-    "y": 4,
-    "parent": "marbleHolder"
+    "y": 4
   },
   "blue2": {
     "id": "blue2",
@@ -846,13 +851,12 @@
     "marble": true,
     "colorType": 3,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "blue3": {
     "id": "blue3",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(0,114,178)",
@@ -871,6 +875,7 @@
     "colorType": 3,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "blue4": {
@@ -892,8 +897,8 @@
     "marble": true,
     "colorType": 3,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "blue5": {
@@ -939,8 +944,8 @@
     "colorType": 3,
     "classes": "transitions",
     "x": 4,
-    "y": 4,
-    "parent": "marbleHolder"
+    "parent": "marbleHolder",
+    "y": 4
   },
   "blue7": {
     "id": "blue7",
@@ -1145,8 +1150,8 @@
     "colorType": 5,
     "marble": true,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "white4": {
@@ -1302,7 +1307,6 @@
   "seat1": {
     "type": "seat",
     "id": "seat1",
-    "x": 116,
     "width": 172,
     "height": 48,
     "borderRadius": 8,
@@ -1605,48 +1609,25 @@
       }
     ],
     "parent": "seatArea1",
-    "color": "#009688",
-    "glowColor": "#004a3c"
-  },
-  "holder1": {
-    "type": "holder",
-    "id": "holder1",
-    "y": 61,
-    "width": 710,
-    "height": 70,
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
-    "stackOffsetX": 20,
-    "css": {
-      "background": "#ffffff80"
-    },
-    "dropTarget": {},
-    "parent": "seatArea1",
-    "linkedToSeat": "seat1",
-    "enterRoutine": [
-      {
-        "func": "SORT",
-        "holder": "${PROPERTY id}",
-        "key": "colorType"
-      }
-    ]
+    "color": "#00bcd4",
+    "glowColor": "#007088"
   },
   "seatArea1": {
     "id": "seatArea1",
-    "x": 35,
-    "y": 850,
+    "y": 300,
     "width": 410,
     "height": 131,
     "layer": -3,
-    "movable": false
+    "movable": false,
+    "x": 12
   },
   "seatArea2": {
     "inheritFrom": {
       "seatArea1": "*"
     },
     "id": "seatArea2",
-    "x": 1165,
-    "y": 850
+    "x": 1355,
+    "y": 300
   },
   "seat2": {
     "inheritFrom": {
@@ -1662,18 +1643,8 @@
     "player": "",
     "mainColor": "#dddddd",
     "textColor": "#ffffff",
-    "color": "#3f51b5",
-    "glowColor": "#8c9eff"
-  },
-  "holder2": {
-    "inheritFrom": {
-      "holder1": "*"
-    },
-    "type": "holder",
-    "id": "holder2",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "x": -300
+    "color": "#9c27b0",
+    "glowColor": "#e974fd"
   },
   "historyRecent": {
     "id": "historyRecent",
@@ -1706,8 +1677,8 @@
   "historyButton": {
     "type": "button",
     "id": "historyButton",
-    "x": 5,
-    "y": 217,
+    "x": 325,
+    "y": 5,
     "width": 50,
     "height": 50,
     "borderRadius": 8,
@@ -1827,8 +1798,8 @@
   "turnButton": {
     "type": "button",
     "id": "turnButton",
-    "x": 1540,
-    "y": 420,
+    "x": 775,
+    "y": 911,
     "width": 50,
     "height": 50,
     "borderRadius": 8,
@@ -1962,7 +1933,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1766458826185,
+      "lastUpdate": 1766467495081,
       "showName": true,
       "skill": "",
       "description": "A pure abstract strategy game where players take turns moving a pawn in straight lines to collect marbles.",
@@ -2162,8 +2133,8 @@
     "colorType": 5,
     "marble": true,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "black2": {
@@ -2191,7 +2162,6 @@
   },
   "black3": {
     "id": "black3",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(0,0,0)",
@@ -2209,6 +2179,7 @@
     "marble": true,
     "colorType": 6,
     "classes": "transitions",
+    "x": 4,
     "parent": "marbleHolder",
     "y": 4
   },
@@ -2260,7 +2231,6 @@
   },
   "black6": {
     "id": "black6",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(0,0,0)",
@@ -2279,6 +2249,7 @@
     "colorType": 6,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "black7": {
@@ -2306,7 +2277,6 @@
   },
   "lightBlue2": {
     "id": "lightBlue2",
-    "x": 4,
     "width": 70,
     "height": 70,
     "classes": "transitions",
@@ -2325,6 +2295,7 @@
     "marble": true,
     "secondaryColor": "#000000",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "lightBlue3": {
@@ -2352,7 +2323,6 @@
   },
   "lightBlue4": {
     "id": "lightBlue4",
-    "x": 4,
     "width": 70,
     "height": 70,
     "classes": "transitions",
@@ -2370,8 +2340,9 @@
     "colorType": 7,
     "marble": true,
     "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "y": 4
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
   },
   "lightBlue5": {
     "id": "lightBlue5",
@@ -2398,7 +2369,6 @@
   },
   "lightBlue6": {
     "id": "lightBlue6",
-    "x": 4,
     "width": 70,
     "height": 70,
     "classes": "transitions",
@@ -2416,8 +2386,9 @@
     "colorType": 7,
     "marble": true,
     "secondaryColor": "#000000",
-    "y": 4,
-    "parent": "marbleHolder"
+    "parent": "marbleHolder",
+    "x": 4,
+    "y": 4
   },
   "lightBlue7": {
     "id": "lightBlue7",
@@ -2444,19 +2415,18 @@
   },
   "pawn": {
     "id": "pawn",
-    "x": 780,
-    "y": 893,
+    "x": 1540,
+    "y": 100,
     "width": 50,
     "height": 90,
-    "z": 1,
     "classes": "transitions",
     "color": "#8b450c",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
     "resetProperties": {
       "parent": null,
-      "x": 780,
-      "y": 893
+      "x": 1540,
+      "y": 100
     },
     "svgReplaces": {
       "#primaryColor": "color",
@@ -2466,5 +2436,186 @@
     "borderColor": "black",
     "borderWidth": 1,
     "pawn": true
+  },
+  "holder1-1": {
+    "type": "holder",
+    "id": "holder1-1",
+    "parent": "seatArea1",
+    "y": 61,
+    "width": 220,
+    "height": 70,
+    "css": {
+      "background": "#ffffff60"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "colorType": 1
+    },
+    "stackOffsetX": 25,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": "${PROPERTY id}",
+        "key": "colorType"
+      }
+    ]
+  },
+  "holder1-2": {
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "type": "holder",
+    "id": "holder1-2",
+    "x": 0,
+    "y": 136,
+    "dropTarget": {
+      "colorType": 2
+    }
+  },
+  "holder1-3": {
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "type": "holder",
+    "id": "holder1-3",
+    "x": 0,
+    "y": 211,
+    "dropTarget": {
+      "colorType": 3
+    }
+  },
+  "holder1-4": {
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "type": "holder",
+    "id": "holder1-4",
+    "x": 0,
+    "y": 286,
+    "dropTarget": {
+      "colorType": 4
+    }
+  },
+  "holder1-5": {
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "type": "holder",
+    "id": "holder1-5",
+    "x": 0,
+    "y": 361,
+    "dropTarget": {
+      "colorType": 5
+    }
+  },
+  "holder1-6": {
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "type": "holder",
+    "id": "holder1-6",
+    "x": 0,
+    "y": 436,
+    "dropTarget": {
+      "colorType": 6
+    }
+  },
+  "holder1-7": {
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "type": "holder",
+    "id": "holder1-7",
+    "x": 0,
+    "y": 511,
+    "dropTarget": {
+      "colorType": 7
+    }
+  },
+  "holder2-1": {
+    "type": "holder",
+    "id": "holder2-1",
+    "parent": "seatArea2",
+    "x": 0,
+    "inheritFrom": {
+      "holder1-1": "*"
+    },
+    "linkedToSeat": "seat2",
+    "dropTarget": {
+      "colorType": 1
+    }
+  },
+  "holder2-2": {
+    "inheritFrom": {
+      "holder2-1": "*"
+    },
+    "type": "holder",
+    "id": "holder2-2",
+    "x": 0,
+    "y": 136,
+    "dropTarget": {
+      "colorType": 2
+    }
+  },
+  "holder2-3": {
+    "inheritFrom": {
+      "holder2-1": "*"
+    },
+    "type": "holder",
+    "id": "holder2-3",
+    "x": 0,
+    "y": 211,
+    "dropTarget": {
+      "colorType": 3
+    }
+  },
+  "holder2-4": {
+    "inheritFrom": {
+      "holder2-1": "*"
+    },
+    "type": "holder",
+    "id": "holder2-4",
+    "x": 0,
+    "y": 286,
+    "dropTarget": {
+      "colorType": 4
+    }
+  },
+  "holder2-5": {
+    "inheritFrom": {
+      "holder2-1": "*"
+    },
+    "type": "holder",
+    "id": "holder2-5",
+    "x": 0,
+    "y": 361,
+    "dropTarget": {
+      "colorType": 5
+    }
+  },
+  "holder2-6": {
+    "inheritFrom": {
+      "holder2-1": "*"
+    },
+    "type": "holder",
+    "id": "holder2-6",
+    "x": 0,
+    "y": 436,
+    "dropTarget": {
+      "colorType": 6
+    }
+  },
+  "holder2-7": {
+    "inheritFrom": {
+      "holder2-1": "*"
+    },
+    "type": "holder",
+    "id": "holder2-7",
+    "x": 0,
+    "y": 511,
+    "dropTarget": {
+      "colorType": 7
+    }
   }
 }
