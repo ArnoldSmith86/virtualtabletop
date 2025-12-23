@@ -552,8 +552,8 @@
     "marble": true,
     "colorType": 6,
     "classes": "transitions",
-    "parent": "marbleHolder",
     "x": 4,
+    "parent": "marbleHolder",
     "y": 4
   },
   "orange2": {
@@ -575,8 +575,8 @@
     "marble": true,
     "colorType": 1,
     "classes": "transitions",
-    "x": 4,
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "orange3": {
@@ -1608,7 +1608,9 @@
         "elseRoutine": []
       }
     ],
-    "parent": "seatArea1"
+    "parent": "seatArea1",
+    "color": "#00bcd4",
+    "glowColor": "#007088"
   },
   "seatArea1": {
     "id": "seatArea1",
@@ -1641,8 +1643,8 @@
     "player": "",
     "mainColor": "#dddddd",
     "textColor": "#000000",
-    "color": "#00bcd4",
-    "glowColor": "#007088"
+    "color": "#ffc107",
+    "glowColor": "#b37500"
   },
   "historyRecent": {
     "id": "historyRecent",
@@ -1931,7 +1933,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1766467969474,
+      "lastUpdate": 1766511533014,
       "showName": true,
       "skill": "",
       "description": "A pure abstract strategy game where players take turns moving a pawn in straight lines to collect marbles.",
@@ -2154,8 +2156,8 @@
     "marble": true,
     "colorType": 6,
     "classes": "transitions",
-    "parent": "marbleHolder",
     "x": 4,
+    "parent": "marbleHolder",
     "y": 4
   },
   "black3": {
@@ -2252,7 +2254,6 @@
   },
   "black7": {
     "id": "black7",
-    "x": 4,
     "width": 70,
     "height": 70,
     "color": "rgb(0,0,0)",
@@ -2271,6 +2272,7 @@
     "colorType": 6,
     "classes": "transitions",
     "parent": "marbleHolder",
+    "x": 4,
     "y": 4
   },
   "lightBlue2": {
@@ -2443,7 +2445,8 @@
     "width": 220,
     "height": 70,
     "css": {
-      "background": "${PROPERTY bgColor}"
+      "background": "${PROPERTY bgColor}${PROPERTY opacity}",
+      "border": "1px solid black"
     },
     "dropOffsetX": 0,
     "dropOffsetY": 0,
@@ -2456,9 +2459,48 @@
         "func": "SORT",
         "holder": "${PROPERTY id}",
         "key": "colorType"
+      },
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
       }
     ],
-    "bgColor": "rgba(230,159,0,.5)"
+    "bgColor": "#E69F00",
+    "opacity": 80,
+    "colorRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "relation": ">=",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": 10
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": 80
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
+      }
+    ]
   },
   "holder1-2": {
     "inheritFrom": {
@@ -2471,7 +2513,8 @@
     "dropTarget": {
       "colorType": 2
     },
-    "bgColor": "rgba(0,158,115,.5)"
+    "bgColor": "#009E73",
+    "opacity": 80
   },
   "holder1-3": {
     "inheritFrom": {
@@ -2484,7 +2527,8 @@
     "dropTarget": {
       "colorType": 3
     },
-    "bgColor": "rgba(0,114,178,.5)"
+    "bgColor": "#0072B2",
+    "opacity": 80
   },
   "holder1-4": {
     "inheritFrom": {
@@ -2497,7 +2541,8 @@
     "dropTarget": {
       "colorType": 4
     },
-    "bgColor": "rgba(204,121,167,.5)"
+    "bgColor": "#CC79A7",
+    "opacity": 80
   },
   "holder1-5": {
     "inheritFrom": {
@@ -2510,7 +2555,8 @@
     "dropTarget": {
       "colorType": 5
     },
-    "bgColor": "rgba(255,255,255,.5)"
+    "bgColor": "#FFFFFF",
+    "opacity": 80
   },
   "holder1-6": {
     "inheritFrom": {
@@ -2523,7 +2569,8 @@
     "dropTarget": {
       "colorType": 6
     },
-    "bgColor": "rgba(0,0,0,.5)"
+    "bgColor": "#000000",
+    "opacity": 80
   },
   "holder1-7": {
     "inheritFrom": {
@@ -2536,7 +2583,8 @@
     "dropTarget": {
       "colorType": 7
     },
-    "bgColor": "rgba(86,180,233,.5)"
+    "bgColor": "#56B4E9",
+    "opacity": 80
   },
   "holder2-1": {
     "type": "holder",
@@ -2550,7 +2598,8 @@
     "dropTarget": {
       "colorType": 1
     },
-    "bgColor": "rgba(230,159,0,.5)"
+    "bgColor": "#E69F00",
+    "opacity": 80
   },
   "holder2-2": {
     "inheritFrom": {
@@ -2563,7 +2612,7 @@
     "dropTarget": {
       "colorType": 2
     },
-    "bgColor": "rgba(0,158,115,.5)"
+    "bgColor": "#009E73"
   },
   "holder2-3": {
     "inheritFrom": {
@@ -2576,7 +2625,8 @@
     "dropTarget": {
       "colorType": 3
     },
-    "bgColor": "rgba(0,114,178,.5)"
+    "bgColor": "#0072B2",
+    "opacity": 80
   },
   "holder2-4": {
     "inheritFrom": {
@@ -2589,7 +2639,7 @@
     "dropTarget": {
       "colorType": 4
     },
-    "bgColor": "rgba(204,121,167,.5)"
+    "bgColor": "#CC79A7"
   },
   "holder2-5": {
     "inheritFrom": {
@@ -2602,7 +2652,7 @@
     "dropTarget": {
       "colorType": 5
     },
-    "bgColor": "rgba(255,255,255,.5)"
+    "bgColor": "#FFFFFF"
   },
   "holder2-6": {
     "inheritFrom": {
@@ -2615,7 +2665,8 @@
     "dropTarget": {
       "colorType": 6
     },
-    "bgColor": "rgba(0,0,0,.5)"
+    "bgColor": "#000000",
+    "opacity": 80
   },
   "holder2-7": {
     "inheritFrom": {
@@ -2628,6 +2679,6 @@
     "dropTarget": {
       "colorType": 7
     },
-    "bgColor": "rgba(86,180,233,.5)"
+    "bgColor": "#56B4E9"
   }
 }
