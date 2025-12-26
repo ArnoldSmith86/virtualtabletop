@@ -1038,7 +1038,6 @@
             "y": 0,
             "width": 103,
             "height": 135.8,
-            "valueType": "static",
             "value": "/assets/1547521554_14109",
             "color": "transparent"
           }
@@ -1054,9 +1053,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1337,7 +1337,8 @@
     "width": 108,
     "z": 1,
     "css": "color: #ffffff75; font-size: 20px;",
-    "text": "DISCARD"
+    "text": "DISCARD",
+    "height": 22
   },
   "reddiscardlabel": {
     "type": "label",
@@ -1548,7 +1549,9 @@
         "property": "nextturn",
         "value": false
       }
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false,
+    "hidePlayerCursors": true
   },
   "s1yellowholder": {
     "type": "holder",
@@ -3555,7 +3558,6 @@
             "y": 25,
             "width": 103,
             "height": 139.3,
-            "valueType": "static",
             "value": "/assets/1303383782_36870",
             "color": "transparent",
             "css": "background-size: cover"
@@ -3566,7 +3568,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/assets/1326832255_2376",
             "color": "transparent",
             "css": "background-size: cover"
@@ -3577,7 +3578,6 @@
             "y": 50,
             "width": 90.6,
             "height": 113.3,
-            "valueType": "static",
             "value": "/assets/-891495356_2827",
             "color": "transparent"
           },
@@ -3587,27 +3587,28 @@
             "y": 5,
             "width": 16,
             "height": 16,
-            "valueType": "dynamic",
-            "value": "icon",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon"
+            }
           },
           {
             "type": "text",
             "x": 7,
             "y": 30,
             "fontSize": 12,
-            "valueType": "dynamic",
-            "value": "toptext",
             "textAlign": "center",
             "width": 90,
-            "css": "color: black; font-weight: bold; font-family: Arial, sans-serif; "
+            "css": "color: black; font-weight: bold; font-family: Arial, sans-serif; ",
+            "dynamicProperties": {
+              "value": "toptext"
+            }
           },
           {
             "type": "text",
             "x": 5,
             "y": 115,
             "fontSize": 35,
-            "valueType": "static",
             "value": "+10",
             "textAlign": "center",
             "width": 90,
@@ -3625,7 +3626,6 @@
             "y": 25,
             "width": 103,
             "height": 139.3,
-            "valueType": "static",
             "value": "/assets/1303383782_36870",
             "color": "transparent",
             "css": "background-size: cover"
@@ -3636,7 +3636,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/assets/1326832255_2376",
             "color": "transparent",
             "css": "background-size: cover"
@@ -3647,7 +3646,6 @@
             "y": 50,
             "width": 90.6,
             "height": 113.3,
-            "valueType": "static",
             "value": "/assets/-891495356_2827",
             "color": "transparent"
           },
@@ -3657,27 +3655,28 @@
             "y": 5,
             "width": 16,
             "height": 16,
-            "valueType": "dynamic",
-            "value": "icon",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "icon"
+            }
           },
           {
             "type": "text",
             "x": 7,
             "y": 30,
             "fontSize": 12,
-            "valueType": "dynamic",
-            "value": "toptext",
             "textAlign": "center",
             "width": 90,
-            "css": "color: black; font-weight: bold; font-family: Arial, sans-serif; "
+            "css": "color: black; font-weight: bold; font-family: Arial, sans-serif; ",
+            "dynamicProperties": {
+              "value": "toptext"
+            }
           },
           {
             "type": "text",
             "x": 5,
             "y": 115,
             "fontSize": 35,
-            "valueType": "static",
             "value": "+10",
             "textAlign": "center",
             "width": 90,
@@ -3865,7 +3864,9 @@
         "property": "nextturn",
         "value": false
       }
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false,
+    "hidePlayerCursors": true
   },
   "s1bonusholder": {
     "type": "holder",
@@ -3984,7 +3985,8 @@
     "z": 1,
     "css": "color: #ffffff75; font-size: 20px;",
     "text": "BONUS CARDS",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "height": 22
   },
   "s1roundtotallabel": {
     "type": "label",
@@ -4250,7 +4252,8 @@
     "z": 1,
     "css": "color: #ffffff75; font-size: 20px;",
     "text": "BONUS CARDS",
-    "movableInEdit": false
+    "movableInEdit": false,
+    "height": 22
   },
   "s2yellowholder": {
     "type": "holder",
@@ -7086,7 +7089,7 @@
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
     "parent": "scoreframe",
-    "height": 10,
+    "height": 17,
     "x": 63,
     "text": "-",
     "score": true
@@ -7112,7 +7115,7 @@
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
     "parent": "scoreframe",
-    "height": 10,
+    "height": 17,
     "x": 207,
     "text": "-",
     "score": true
@@ -7124,7 +7127,7 @@
     "x": -39,
     "y": 40,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7137,7 +7140,7 @@
     "x": -39,
     "y": 71,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7150,7 +7153,7 @@
     "x": -39,
     "y": 102,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7163,7 +7166,7 @@
     "x": -39,
     "y": 134,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7176,7 +7179,7 @@
     "x": 63,
     "y": 40,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7190,7 +7193,7 @@
     "x": 63,
     "y": 134,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7204,7 +7207,7 @@
     "x": 207,
     "y": 134,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7218,7 +7221,7 @@
     "x": 207,
     "y": 40,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7232,7 +7235,7 @@
     "x": 63,
     "y": 71,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7246,7 +7249,7 @@
     "x": 207,
     "y": 71,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7260,7 +7263,7 @@
     "x": 63,
     "y": 102,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7274,7 +7277,7 @@
     "x": 207,
     "y": 102,
     "width": 140,
-    "height": 10,
+    "height": 17,
     "z": 12,
     "movableInEdit": false,
     "css": "color: #ffffff; font-size: 15px; text-align: center;",
@@ -7525,8 +7528,7 @@
               {
                 "func": "RECALL",
                 "holder": [
-                  "drawdeck",
-                  "bonusholder"
+                  "drawdeck"
                 ]
               },
               {
@@ -7549,31 +7551,24 @@
                 "variable": "checkbon"
               },
               {
-                "func": "IF",
-                "operand1": "${checkbon}",
-                "operand2": 1,
+                "func": "SELECT",
+                "source": "all",
+                "property": "parent",
                 "relation": "==",
+                "value": "6thexholder",
+                "collection": "check6th"
+              },
+              {
+                "func": "COUNT",
+                "collection": "check6th",
+                "variable": "checkex"
+              },
+              {
+                "func": "IF",
+                "operand1": "${checkex}",
+                "operand2": 1,
+                "relation": "!=",
                 "thenRoutine": [
-                  {
-                    "func": "SHUFFLE",
-                    "holder": [
-                      "bonusholder"
-                    ]
-                  },
-                  {
-                    "func": "MOVE",
-                    "from": "bonusholder",
-                    "to": [
-                      "bonus1",
-                      "bonus2",
-                      "bonus3",
-                      "bonus4",
-                      "bonus5"
-                    ],
-                    "count": 1
-                  }
-                ],
-                "elseRoutine": [
                   {
                     "func": "SELECT",
                     "source": "all",
@@ -8468,7 +8463,6 @@
             "y": 0,
             "width": 30,
             "height": 30,
-            "valueType": "static",
             "value": "/assets/-1726191037_1143",
             "color": "transparent"
           }
@@ -8484,9 +8478,10 @@
             "y": 0,
             "width": 30,
             "height": 30,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -9163,7 +9158,13 @@
     ]
   },
   "_meta": {
-    "version": 4,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Expeditions",
       "image": "/assets/1725356307_6414",
@@ -9172,15 +9173,21 @@
       "year": "1999",
       "mode": "vs",
       "time": "30",
-      "players": "2",
-      "language": "en-US",
-      "variant": "",
-      "attribution": "Original cards and board layout by Marxos. Released to public domain under CC0.\n\nCard images available for use under the Pixabay License:\n\nhttps://pixabay.com/photos/darling-treasure-chest-euro-coins-76214/\nGerd Altmann\n\nhttps://pixabay.com/photos/petra-jordan-canyon-architecture-4358577/\ndimitrisvetsikas1969\n\nhttps://pixabay.com/photos/paris-the-louvre-museum-antique-4407850/\nDEZALB\n\nhttps://pixabay.com/photos/muli-donkey-carrying-animal-734/\nSimon\n\nhttps://pixabay.com/photos/mountain-range-hills-highlands-640617/\njpeter2\n\nhttps://pixabay.com/photos/mountain-landscape-steps-stones-2031539/\nkinkate\n\nhttps://pixabay.com/photos/elephant-trunk-tusks-forest-jungle-1822636/\nsasint\n\nhttps://pixabay.com/photos/compass-map-direction-degrees-2946959/\nNietjuh\n\nCard images available for use under the Unsplash License:\n\nhttps://unsplash.com/photos/H7JiEU8Slnw\nJustin Clark\n\nhttps://unsplash.com/photos/mfX814jtyro\nSergey Pesterev\n\nhttps://unsplash.com/photos/3OiYMgDKJ6k\nDariusz Sankowski\n\nWood texture available for use under the Unsplash License:\nhttps://unsplash.com/photos/E7DsoC0mcpw\nMarcel Strauß\n\nBackground available for use under the Pixabay License:\nhttps://pixabay.com/illustrations/map-of-the-world-old-historical-2241469/\nGerd Altmann\n\nIcons available under CC BY 3.0:\nSnowflake \nhttps://thenounproject.com/search/?q=snow&i=3037146 by Adrien Coquet, FR\n\nMountain\nhttps://thenounproject.com/search/?q=1613859&i=1613859 by alerma\n\nTree \nhttps://thenounproject.com/search/?q=Tree&i=3594714 by RROOK, NL\n\nHandshake\nhttps://thenounproject.com/search/?q=2784432&i=2784432 by Verry\n\nTrophy\nhttps://thenounproject.com/search/?q=1202917&i=1202917 by jungsang\n\nOther icons created by Marxos in Affinity Designer and released to the Public Domain by CC0\n\nFont:\nhttps://www.fontspace.com/josefin-sans-font-f44035\nSantiago Orozco\nLicensed as\nSIL Open Font License (OFL)",
+      "attribution": "Original cards and board layout by Marxos. Released to public domain under CC0.\n\nCard images available for use under the Pixabay License:\n\nhttps://pixabay.com/photos/darling-treasure-chest-euro-coins-76214/\nGerd Altmann\n\nhttps://pixabay.com/photos/petra-jordan-canyon-architecture-4358577/\ndimitrisvetsikas1969\n\nhttps://pixabay.com/photos/paris-the-louvre-museum-antique-4407850/\nDEZALB\n\nhttps://pixabay.com/photos/muli-donkey-carrying-animal-734/\nSimon\n\nhttps://pixabay.com/photos/mountain-range-hills-highlands-640617/\njpeter2\n\nhttps://pixabay.com/photos/mountain-landscape-steps-stones-2031539/\nkinkate\n\nhttps://pixabay.com/photos/elephant-trunk-tusks-forest-jungle-1822636/\nsasint\n\nhttps://pixabay.com/photos/compass-map-direction-degrees-2946959/\nNietjuh\n\nCard images available for use under the Unsplash License:\n\nhttps://unsplash.com/photos/H7JiEU8Slnw\nJustin Clark\n\nhttps://unsplash.com/photos/mfX814jtyro\nSergey Pesterev\n\nhttps://unsplash.com/photos/3OiYMgDKJ6k\nDariusz Sankowski\n\nWood texture available for use under the Unsplash License:\nhttps://unsplash.com/photos/E7DsoC0mcpw\nMarcel Strauß\n\nBackground available for use under the Pixabay License:\nhttps://pixabay.com/illustrations/map-of-the-world-old-historical-2241469/\nGerd Altmann\n\nIcons available under CC BY 3.0:\nSnowflake \nhttps://thenounproject.com/search/?q=snow&amp;i=3037146 by Adrien Coquet, FR\n\nMountain\nhttps://thenounproject.com/search/?q=1613859&amp;i=1613859 by alerma\n\nTree \nhttps://thenounproject.com/search/?q=Tree&amp;i=3594714 by RROOK, NL\n\nHandshake\nhttps://thenounproject.com/search/?q=2784432&amp;i=2784432 by Verry\n\nTrophy\nhttps://thenounproject.com/search/?q=1202917&amp;i=1202917 by jungsang\n\nOther icons created by Marxos in Affinity Designer and released to the Public Domain by CC0\n\nFont:\nhttps://www.fontspace.com/josefin-sans-font-f44035\nSantiago Orozco\nLicensed as\nSIL Open Font License (OFL)",
       "similarName": "Lost Cities",
       "description": "Play cards into columns in ascending numerical order. Gamble with wager cards that will multiply your positive or negative score. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1636735750000,
-      "similarDesigner": "Reiner Knizia"
+      "lastUpdate": 1766761246973,
+      "similarDesigner": "Reiner Knizia",
+      "skill": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2",
+      "similarImage": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": ""
     }
   },
   "coma": {
