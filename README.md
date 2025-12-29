@@ -113,18 +113,12 @@ But who knows, maybe you'll enjoy a different platform more than ours:
 |----------|------|-------------|---------------|------------------|------------|---------|-----------------|-----------|--------------|--------------|---------------|
 | **[18xx.games](https://18xx.games)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
 | **[Board Game Arena](https://boardgamearena.com)** | 💎 | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **[BoardGameGeek](https://boardgamegeek.com)** | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| **[Boiteajeux](https://www.boiteajeux.net)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | **[BrettspielWelt](https://www.brettspielwelt.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **[CardGames.io](https://cardgames.io)** | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **[Foundry VTT](https://foundryvtt.com)** | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
 | **[FreeBoardGames.org](https://www.freeboardgames.org)** | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| **[Happy Meeple](https://www.happymeeple.com)** | 💎 | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| **[Ludus](https://ludus.one)** | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
-| **[NetTally](https://nettally.com)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ |
 | **[PlayingCards.io](https://playingcards.io)** | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ |
 | **[Pogo](https://www.pogo.com)** | 💎 | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| **[Rally the Troops](https://rallythetroops.com)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ |
 | **[Roll20](https://roll20.net)** | 💎 | ❌ | ✅ | ✅ | ❌ | ❌ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
 | **[Screentop.gg](https://screentop.gg)** | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
 | **[Tabletop Simulator](https://www.tabletopsimulator.com)** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ⚙️ | ✅ | ❌ | ✅ | ❌ |
