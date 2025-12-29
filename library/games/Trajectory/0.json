@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 19,
+    "version": 20,
     "gameSettings": {
       "legacyModes": {},
       "globalCss": "/* Seat appearance */\n\n.seat {\n  gap: 5px;\n  font-size: 21px;\n  box-shadow: 0 2px 5px #00000066;\n  text-shadow:\n    2px 2px 2px #000000bb,\n    -2px 2px 2px #000000bb,\n    2px -2px 2px #000000bb,\n    -2px -2px 2px #000000bb;\n  color: white;\n  border: 2px solid #000000bb;\n  box-sizing: border-box;\n}\n\n.seated.turn {\n  box-shadow: 0px 0px 20px 5px #000000\n}\n\n/* Card transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}\n"
@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1765405923378,
+      "lastUpdate": 1766432143888,
       "showName": true,
       "skill": "",
       "description": "Play cards in sequences to move pieces along five paths. Highest score wins.",
@@ -23,7 +23,7 @@
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "2011 Hungarian Board Game Award Nominee\n2009 Gouden Ludo Nominee\n2009 Golden Geek Best Family Board Game Nominee\n2009 Årets Spill Best Family Game Nominee\n2008 Spiel des Jahres Winner\n2008 Japan Boardgame Prize Voters' Selection Nominee",
       "ruleText": "",
-      "helpText": "Players sit in seats. Click the restart button to begin the game. The game can be played in one round (similar to Keltis) or three (similar to Lost Cities,&nbsp;https://boardgamegeek.com/boardgame/42487/lost-cities-the-board-game).<div><br></div><div>When moving pawns along the track, the action cards will automatically be flipped over. If the card is a gem, it will automatically be moved to that player's hand. If it is victory points, the points are automatically added to that player's score. If it is a move arrow, the player can select any pawn already on the track to move again.<br><div><br></div><div>When a round ends by rule, a notification will appear. Click the score button (1 round game) or the round button (3 round game) to end the game/round, and if more rounds remain, to set up the next round. Scores are calculated automatically.</div></div>",
+      "helpText": "Players sit in seats. Click the restart button to begin the game. The game can be played in one round (similar to Keltis), three rounds (similar to Lost Cities,&nbsp;https://boardgamegeek.com/boardgame/42487/lost-cities-the-board-game), or similar to the Keltis expansion New Ways/New Aims.<div><br></div><div>When moving pawns along the track, if the card is a gem, it will automatically be moved to that player's hand. If it is victory points, the points are automatically added to that player's score. If it is a move arrow, the player can select any pawn already on the track to move again. If it is a card image, the player can discard any card from the hand or any top card from one of the player's stacks.<br><div><br></div><div>When a round ends by rule, a notification will appear. Click the score button (1 round game) or the round button (3 round game) to end the game/round, and if more rounds remain, to set up the next round. Scores are calculated automatically.</div></div>",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -420,8 +420,13 @@
     },
     "leaveRoutine": [
       {
-        "func": "COUNT",
-        "holder": "${PROPERTY id}"
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
       },
       {
         "func": "IF",
@@ -868,9 +873,9 @@
       "seatArea1": "*"
     },
     "id": "seatArea2",
-    "x": 142,
+    "x": 172,
     "y": 475,
-    "activeFace": 1
+    "activeFace": 0
   },
   "seat2": {
     "inheritFrom": {
@@ -1014,7 +1019,7 @@
     "id": "seatArea3",
     "x": 1085,
     "y": 78,
-    "activeFace": 1
+    "activeFace": 0
   },
   "seat3": {
     "inheritFrom": {
@@ -1110,8 +1115,8 @@
     "pawn": 3,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder3",
-    "x": 27
+    "x": 27,
+    "parent": "pawnHolder3"
   },
   "white3": {
     "id": "white3",
@@ -1130,8 +1135,8 @@
     "pawn": 3,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder3",
-    "x": 54
+    "x": 54,
+    "parent": "pawnHolder3"
   },
   "white4": {
     "id": "white4",
@@ -1150,8 +1155,8 @@
     "pawn": 3,
     "pawns": true,
     "classes": "transitions",
-    "parent": "pawnHolder3",
-    "x": 81
+    "x": 81,
+    "parent": "pawnHolder3"
   },
   "silver1": {
     "id": "silver1",
@@ -1189,8 +1194,8 @@
     "pawn": 4,
     "pawns": true,
     "classes": "transitions",
-    "x": 27,
-    "parent": "pawnHolder4"
+    "parent": "pawnHolder4",
+    "x": 27
   },
   "silver3": {
     "id": "silver3",
@@ -1341,12 +1346,12 @@
   },
   "seatArea4": {
     "id": "seatArea4",
-    "x": 1287,
+    "x": 1257,
     "y": 475,
     "inheritFrom": {
       "seatArea1": "*"
     },
-    "activeFace": 1
+    "activeFace": 0
   },
   "pawnHolder4": {
     "type": "holder",
@@ -1487,8 +1492,8 @@
     "pawns": true,
     "double": true,
     "classes": "transitions",
-    "parent": "pawnHolder3",
-    "x": 108
+    "x": 108,
+    "parent": "pawnHolder3"
   },
   "silver5": {
     "id": "silver5",
@@ -1549,7 +1554,17 @@
     "enterRoutine": [
       "var result = false",
       "// Update history for moving the pawn",
-      "var thisLevel = 'label' + ${PROPERTY level}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF restartButton}",
+        "operand2": 3,
+        "thenRoutine": [
+          "var thisLevel = 'label10' + ${PROPERTY level}"
+        ],
+        "elseRoutine": [
+          "var thisLevel = 'label' + ${PROPERTY level}"
+        ]
+      },
       {
         "func": "GET",
         "collection": [
@@ -1558,15 +1573,24 @@
         "property": "text",
         "variable": "level"
       },
+      "var logTextColor = ${PROPERTY bgColor}",
+      {
+        "func": "IF",
+        "operand1": "${logTextColor}",
+        "operand2": "#e7e2d7",
+        "thenRoutine": [
+          "var logTextColor = '#000000'"
+        ]
+      },
       {
         "func": "CALL",
         "widget": "historyLabel",
         "routine": "addendumRoutine",
         "arguments": {
-          "addendum": "<span style='color:${PROPERTY bgColor}'><b>${playerName}</b> moved a pawn to </span><img src='${PROPERTY thisIcon}' style='vertical-align:middle;height:1em'/> level ${level}"
+          "addendum": "<span style='color:${logTextColor}'><b>${playerName}</b> moved a pawn to </span><img src='${PROPERTY thisIcon}' style='vertical-align:middle;height:1em'/> level ${level}"
         }
       },
-      "// Flip associated action card",
+      "// Get info needed for next operations",
       {
         "func": "SELECT",
         "type": "holder",
@@ -1587,12 +1611,6 @@
         "collection": "thisCard"
       },
       {
-        "func": "FLIP",
-        "collection": "thisCard",
-        "face": 1
-      },
-      "// Get info needed for next operations",
-      {
         "func": "GET",
         "collection": "thisCard",
         "property": "cardType"
@@ -1607,70 +1625,39 @@
         "collection": "child",
         "property": "pawn"
       },
+      {
+        "func": "GET",
+        "collection": "thisCard",
+        "property": "gemType"
+      },
       "// Check for round/game end condition",
       {
-        "func": "IF",
-        "operand1": "${PROPERTY level}",
-        "operand2": 7,
-        "thenRoutine": [
-          "var level7Pawns = 1"
-        ],
-        "elseRoutine": [
-          "var level7Pawns = 0"
-        ]
+        "func": "CALL",
+        "routine": "endCheckRoutine"
       },
       {
-        "func": "FOREACH",
-        "in": [
-          "a7",
-          "b7",
-          "c7",
-          "d7",
-          "e7"
-        ],
-        "loopRoutine": [
-          "var thisHolder = ${value}",
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 5,
+        "thenRoutine": [
           {
-            "func": "FOREACH",
-            "in": [
-              "vpPawn1",
-              "vpPawn2",
-              "vpPawn3",
-              "vpPawn4"
-            ],
-            "loopRoutine": [
-              {
-                "func": "GET",
-                "collection": [
-                  "${thisHolder}"
-                ],
-                "property": "${value}",
-                "variable": "hasReached"
-              },
-              {
-                "func": "IF",
-                "condition": "${hasReached}",
-                "thenRoutine": [
-                  "var level7Pawns = ${level7Pawns} + 1",
-                  {
-                    "func": "IF",
-                    "operand1": "${level7Pawns}",
-                    "operand2": 5,
-                    "thenRoutine": [
-                      {
-                        "func": "CALL",
-                        "routine": "endConditionRoutine"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+            "func": "CALL",
+            "routine": "endConditionRoutine"
           }
         ]
       },
-      "// Update history for extra move card",
-      "var thisPawnProperty = 'vpPawn' + ${pawn}",
+      "// Update history for extra move card. Do not allow duplicate unless playing Keltis expansion",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF restartButton}",
+        "operand2": 3,
+        "thenRoutine": [
+          "var thisPawnProperty = 'null'"
+        ],
+        "elseRoutine": [
+          "var thisPawnProperty = 'vpPawn' + ${pawn}"
+        ]
+      },
       {
         "func": "IF",
         "operand1": "${PROPERTY $thisPawnProperty}",
@@ -1694,7 +1681,38 @@
           }
         ]
       },
+      "// Update history for getting an extra discard. Do not allow duplicate unless playing Keltis expansion",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY $thisPawnProperty}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${cardType}",
+            "operand2": "card",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "<b>${playerName}</b> can discard a card"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "// Move gem cards to player's holder",
+      "var gemCard0 = ${cardType} == 'gem'",
+      "var gemCard1 = ${cardType} == 'gem1'",
+      "var gemCard2 = ${cardType} == 'gem2'",
+      "var gemCard3 = ${cardType} == 'gem3'",
+      "var gemCard4 = ${cardType} == 'gem4'",
+      "var gemCard5 = ${cardType} == 'gem5'",
+      "var gemCard =  ${gemCard0} || ${gemCard1} || ${gemCard2} || ${gemCard3} || ${gemCard4} || ${gemCard5}",
       {
         "func": "IF",
         "operand1": "${result}",
@@ -1703,13 +1721,28 @@
         "thenRoutine": [
           {
             "func": "IF",
-            "operand1": "${cardType}",
-            "operand2": "gem",
+            "condition": "${gemCard}",
             "thenRoutine": [
               {
-                "func": "MOVE",
-                "collection": "thisCard",
-                "to": "gemHolder${pawn}"
+                "func": "IF",
+                "operand1": "${PROPERTY gameType OF restartButton}",
+                "operand2": 3,
+                "thenRoutine": [
+                  {
+                    "func": "MOVE",
+                    "collection": "thisCard",
+                    "to": "gemExpHolder${pawn}-${gemType}",
+                    "count": 1
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "MOVE",
+                    "collection": "thisCard",
+                    "to": "gemHolder${pawn}",
+                    "count": 1
+                  }
+                ]
               },
               "// Update history for collecting a gem",
               {
@@ -1724,7 +1757,7 @@
           }
         ]
       },
-      "// For VP cards, first check to see if points already allocated. If so, do nothing. Otherwise add VP to player's score",
+      "// For VP cards, add VP to player's score. Do not allow duplicate unless playing Keltis expansion",
       {
         "func": "IF",
         "operand1": "${result}",
@@ -1771,7 +1804,7 @@
           }
         ]
       },
-      "// Flag holder so points will not be given twice and to check for end condition",
+      "// Flag holder so points will not be given twice",
       {
         "func": "SET",
         "collection": "thisButton",
@@ -1787,11 +1820,14 @@
     "vpPawn2": false,
     "endConditionRoutine": [
       "var result = true",
+      "var keltis1 = ${PROPERTY gameType OF restartButton} == 1",
+      "var keltis3 = ${PROPERTY gameType OF restartButton} == 3",
+      "var keltis = ${keltis1} || ${keltis3}",
       {
         "func": "IF",
-        "operand1": "${PROPERTY gameType OF restartButton}",
-        "operand2": 1,
+        "condition": "${keltis}",
         "thenRoutine": [
+          "// If playing Keltis or the expansion pack, end when 5 pawns get into the last 3 rows",
           {
             "func": "SET",
             "collection": [
@@ -1806,7 +1842,7 @@
               "gameOver"
             ],
             "property": "reason",
-            "value": "5 pawns reached the 7th level. Do not use the event card in that holder."
+            "value": "5 pawns reached the top area. Do not use the event card in that holder."
           },
           {
             "func": "SET",
@@ -1818,6 +1854,7 @@
           }
         ],
         "elseRoutine": [
+          "// If playing Lost Cities, end when 5 pawns get into the last 3 rows, but show different options depending on which round.",
           {
             "func": "IF",
             "operand1": "${PROPERTY text OF roundButton}",
@@ -1838,7 +1875,7 @@
                   "roundOver"
                 ],
                 "property": "reason",
-                "value": "5 pawns reached the 7th level. Do not use the event card in that holder."
+                "value": "5 pawns reached the top area. Do not use the event card in that holder."
               }
             ],
             "elseRoutine": [
@@ -1856,7 +1893,7 @@
                   "gameOver"
                 ],
                 "property": "reason",
-                "value": "5 pawns reached the 7th level. Do not use the event card in that holder."
+                "value": "5 pawns reached the top area. Do not use the event card in that holder."
               },
               {
                 "func": "SET",
@@ -1871,7 +1908,68 @@
         ]
       }
     ],
-    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
+    "endCheckRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF restartButton}",
+        "operand2": 3,
+        "thenRoutine": [
+          "var board = 3",
+          {
+            "func": "VAR",
+            "variables": {
+              "top": [
+                8,
+                9,
+                10
+              ]
+            }
+          }
+        ],
+        "elseRoutine": [
+          "var board = 1",
+          {
+            "func": "VAR",
+            "variables": {
+              "top": [
+                7,
+                8,
+                9
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "level",
+        "relation": "in",
+        "value": "${top}",
+        "collection": "topHolders"
+      },
+      {
+        "func": "SELECT",
+        "source": "topHolders",
+        "property": "parent",
+        "value": "board${board}",
+        "collection": "topHolders"
+      },
+      "var pawnCount = 0",
+      {
+        "func": "FOREACH",
+        "collection": "topHolders",
+        "loopRoutine": [
+          {
+            "func": "COUNT",
+            "holder": "${widgetID}"
+          },
+          "var pawnCount = ${pawnCount} + ${COUNT}"
+        ]
+      },
+      "var result = ${pawnCount}"
+    ]
   },
   "a2": {
     "inheritFrom": {
@@ -2566,770 +2664,770 @@
     "type": "card",
     "cardType": "abstract00",
     "id": "4h7h",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4m4n": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract01",
     "id": "4m4n",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dowc": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract02",
     "id": "dowc",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "xjzs": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract03",
     "id": "xjzs",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "kbko": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract04",
     "id": "kbko",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "c0nc": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract05",
     "id": "c0nc",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4eaa": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract06",
     "id": "4eaa",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qe8e": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract07",
     "id": "qe8e",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qurp": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract08",
     "id": "qurp",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "rrzf": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract09",
     "id": "rrzf",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "di5z": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract10",
     "id": "di5z",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "i921": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn00",
     "id": "i921",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "q83h": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn01",
     "id": "q83h",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zl23": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn02",
     "id": "zl23",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qkp9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn03",
     "id": "qkp9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "jowl": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn04",
     "id": "jowl",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "iblj": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn05",
     "id": "iblj",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zhlb": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn06",
     "id": "zhlb",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "axw1": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn07",
     "id": "axw1",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "oc57": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn08",
     "id": "oc57",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "d1jv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn09",
     "id": "d1jv",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "2bdq": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn10",
     "id": "2bdq",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "welj": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart00",
     "id": "welj",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "sugd": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart01",
     "id": "sugd",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "xlyv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart02",
     "id": "xlyv",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "f37y": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart03",
     "id": "f37y",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "qumn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart04",
     "id": "qumn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "xjfm": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart05",
     "id": "xjfm",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "fhnb": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart06",
     "id": "fhnb",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "wnvq": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart07",
     "id": "wnvq",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "f7t9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart08",
     "id": "f7t9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zrci": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart09",
     "id": "zrci",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "6ohn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart10",
     "id": "6ohn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "g17q": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow00",
     "id": "g17q",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8a1h": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow01",
     "id": "8a1h",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "w7ll": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow02",
     "id": "w7ll",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "h7ma": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow03",
     "id": "h7ma",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "h7pn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow04",
     "id": "h7pn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "9g3f": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow05",
     "id": "9g3f",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "gl65": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow06",
     "id": "gl65",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "wb15": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow07",
     "id": "wb15",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "1p3b": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow08",
     "id": "1p3b",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "527e": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow09",
     "id": "527e",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "3m9k": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow10",
     "id": "3m9k",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "kfhd": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf00",
     "id": "kfhd",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "gq7w": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf01",
     "id": "gq7w",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "pm3g": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf02",
     "id": "pm3g",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "jeh7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf03",
     "id": "jeh7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "su5n": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf04",
     "id": "su5n",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "6jis": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf05",
     "id": "6jis",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "fedh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf06",
     "id": "fedh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "l9de": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf07",
     "id": "l9de",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "n4e3": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf08",
     "id": "n4e3",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dkxu": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf09",
     "id": "dkxu",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ka5y": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf10",
     "id": "ka5y",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4noi": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract00",
     "id": "4noi",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "i8na": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract01",
     "id": "i8na",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "1qvt": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract02",
     "id": "1qvt",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "je4w": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract03",
     "id": "je4w",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "092w": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract04",
     "id": "092w",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "wuns": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract05",
     "id": "wuns",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "t29q": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract06",
     "id": "t29q",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "mau5": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract07",
     "id": "mau5",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "hr5e": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract08",
     "id": "hr5e",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "tnqp": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract09",
     "id": "tnqp",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "d3em": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "abstract10",
     "id": "d3em",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "s153": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn00",
     "id": "s153",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "rzp6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn01",
     "id": "rzp6",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "i9gw": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn02",
     "id": "i9gw",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dzs7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn03",
     "id": "dzs7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "3uq9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn04",
     "id": "3uq9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8ggv": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn05",
     "id": "8ggv",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "d10m": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn06",
     "id": "d10m",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ig4u": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn07",
     "id": "ig4u",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8wef": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn08",
     "id": "8wef",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "tow7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn09",
     "id": "tow7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "t04k": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "acorn10",
     "id": "t04k",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "k6cd": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart00",
     "id": "k6cd",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ukc1": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart01",
     "id": "ukc1",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x212": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart02",
     "id": "x212",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zsh9": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart03",
     "id": "zsh9",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "0obl": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart04",
     "id": "0obl",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "4u9s": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart05",
     "id": "4u9s",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "jdtp": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart06",
     "id": "jdtp",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "tod2": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart07",
     "id": "tod2",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "22e7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart08",
     "id": "22e7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dqwh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart09",
     "id": "dqwh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "kybh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "heart10",
     "id": "kybh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "860b": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow00",
     "id": "860b",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "czwo": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow01",
     "id": "czwo",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "k3oa": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow02",
     "id": "k3oa",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "goxb": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow03",
     "id": "goxb",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "ohh8": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow04",
     "id": "ohh8",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "2j88": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow05",
     "id": "2j88",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "104q": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow06",
     "id": "104q",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "27ge": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow07",
     "id": "27ge",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "bdao": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow08",
     "id": "bdao",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x6fz": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow09",
     "id": "x6fz",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x7rt": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "snow10",
     "id": "x7rt",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "vht6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf00",
     "id": "vht6",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "13yn": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf01",
     "id": "13yn",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zfct": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf02",
     "id": "zfct",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "oe39": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf03",
     "id": "oe39",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "2sg7": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf04",
     "id": "2sg7",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "na52": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf05",
     "id": "na52",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "8reh": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf06",
     "id": "8reh",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "hbk0": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf07",
     "id": "hbk0",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "zj8a": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf08",
     "id": "zj8a",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "dth6": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf09",
     "id": "dth6",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "x7f8": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "leaf10",
     "id": "x7f8",
-    "parent": "k32s"
+    "parent": "deckPile"
   },
   "token1": {
     "id": "token1",
@@ -3533,7 +3631,7 @@
       "cardHolder1Group": "*"
     },
     "id": "cardHolder2Group",
-    "x": 323,
+    "x": 353,
     "y": 230,
     "height": 511,
     "width": 193,
@@ -3757,7 +3855,7 @@
       "cardHolder2Group": "*"
     },
     "id": "cardHolder4Group",
-    "x": 1080,
+    "x": 1050,
     "y": 230,
     "css": {
       "border": "3px solid #a0a0a0"
@@ -3798,21 +3896,6 @@
     },
     "id": "token20",
     "parent": "cardHolder4Group"
-  },
-  "background": {
-    "id": "background",
-    "width": 1920,
-    "height": 960,
-    "scale": 1.09,
-    "layer": -4,
-    "movable": false,
-    "css": {
-      "opacity": "0.6"
-    },
-    "image": "/assets/-52589506_548214",
-    "movableInEdit": false,
-    "activeFace": 1,
-    "clickable": false
   },
   "group1Back": {
     "id": "group1Back",
@@ -4536,6 +4619,10 @@
               {
                 "value": "2",
                 "text": "3 rounds (similar to Lost Cities)"
+              },
+              {
+                "value": "3",
+                "text": "Expansion similar to New Goals, New Paths"
               }
             ],
             "variable": "gameType",
@@ -4566,14 +4653,17 @@
         "func": "RECALL",
         "holder": [
           "actionDeckHolder",
-          "cardDeckHolder"
+          "cardDeckHolder",
+          "actionDeckHolder3",
+          "gemDeckHolder"
         ]
       },
       {
         "func": "FLIP",
         "holder": [
           "actionDeckHolder",
-          "cardDeckHolder"
+          "cardDeckHolder",
+          "actionDeckHolder3"
         ],
         "face": 0
       },
@@ -4581,7 +4671,8 @@
         "func": "SHUFFLE",
         "holder": [
           "actionDeckHolder",
-          "cardDeckHolder"
+          "cardDeckHolder",
+          "actionDeckHolder3"
         ]
       },
       {
@@ -4631,37 +4722,21 @@
         "key": "cardType"
       },
       {
-        "func": "FOREACH",
-        "range": [
-          25
-        ],
-        "loopRoutine": [
-          {
-            "func": "MOVE",
-            "from": "actionDeckHolder",
-            "to": "actionHolder${value}",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "func": "TURN",
-        "turnCycle": "random"
-      },
-      {
-        "func": "CALL",
-        "widget": "turnButton",
-        "routine": "holderHighlightRoutine"
-      },
-      {
         "func": "IF",
         "operand1": "${PROPERTY gameType}",
         "operand2": 1,
         "thenRoutine": [
+          "// Similar to Keltis",
           {
             "func": "SET",
             "collection": [
-              "roundButton"
+              "roundButton",
+              "gemPlusHolder1",
+              "gemPlusHolder2",
+              "gemPlusHolder3",
+              "gemPlusHolder4",
+              "gemChart2",
+              "gemChart3"
             ],
             "property": "display",
             "value": false
@@ -4669,7 +4744,8 @@
           {
             "func": "SET",
             "collection": [
-              "scoreButton"
+              "scoreButton",
+              "gemChart1"
             ],
             "property": "display",
             "value": true
@@ -4685,17 +4761,6 @@
           {
             "func": "SET",
             "collection": [
-              "gemPlusHolder1",
-              "gemPlusHolder2",
-              "gemPlusHolder3",
-              "gemPlusHolder4"
-            ],
-            "property": "display",
-            "value": false
-          },
-          {
-            "func": "SET",
-            "collection": [
               "gemHolder1",
               "gemHolder2",
               "gemHolder3",
@@ -4703,22 +4768,6 @@
             ],
             "property": "x",
             "value": 22
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "gemChart1"
-            ],
-            "property": "display",
-            "value": true
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "gemChart2"
-            ],
-            "property": "display",
-            "value": false
           },
           "// Update action cards with values for the game type",
           {
@@ -4802,12 +4851,23 @@
               }
             ]
           }
-        ],
-        "elseRoutine": [
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType}",
+        "operand2": 2,
+        "thenRoutine": [
+          "// Similar to Lost Cities",
           {
             "func": "SET",
             "collection": [
-              "roundButton"
+              "roundButton",
+              "gemPlusHolder1",
+              "gemPlusHolder2",
+              "gemPlusHolder3",
+              "gemPlusHolder4",
+              "gemChart2"
             ],
             "property": "display",
             "value": true
@@ -4823,21 +4883,12 @@
           {
             "func": "SET",
             "collection": [
-              "scoreButton"
+              "scoreButton",
+              "gemChart1",
+              "gemChart3"
             ],
             "property": "display",
             "value": false
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "gemPlusHolder1",
-              "gemPlusHolder2",
-              "gemPlusHolder3",
-              "gemPlusHolder4"
-            ],
-            "property": "display",
-            "value": true
           },
           {
             "func": "SET",
@@ -4849,22 +4900,6 @@
             ],
             "property": "x",
             "value": 32
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "gemChart1"
-            ],
-            "property": "display",
-            "value": false
-          },
-          {
-            "func": "SET",
-            "collection": [
-              "gemChart2"
-            ],
-            "property": "display",
-            "value": true
           },
           "// Update action cards with values for the game type",
           {
@@ -4950,6 +4985,157 @@
         ]
       },
       {
+        "func": "IF",
+        "operand1": "${PROPERTY gameType}",
+        "operand2": 3,
+        "thenRoutine": [
+          "// Similar to Keltis expansion New Ways New Aims",
+          {
+            "func": "SET",
+            "collection": [
+              "roundButton",
+              "board1",
+              "gemHolder1",
+              "gemPlusHolder1",
+              "gemPlusHolder2",
+              "gemPlusHolder3",
+              "gemPlusHolder4",
+              "gemChart1",
+              "gemChart2"
+            ],
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "scoreButton",
+              "board3",
+              "gemExpHolder1-1",
+              "gemChart3"
+            ],
+            "property": "display",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "scoreButton"
+            ],
+            "property": "clickable",
+            "value": true
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              26,
+              47
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "actionDeckHolder3",
+                "to": "actionHolder${value}",
+                "count": 1,
+                "face": 1
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "property": "deck",
+            "value": "gemDeck",
+            "collection": "gemDeckCollection"
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              5
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "gemDeckCollection",
+                "property": "cardType",
+                "value": "gem${value}"
+              },
+              {
+                "func": "MOVE",
+                "to": "gemSource${value}",
+                "count": 5
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// Similar to either Keltis or Lost Cities",
+          {
+            "func": "SET",
+            "collection": [
+              "board1",
+              "gemHolder1"
+            ],
+            "property": "display",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "board3",
+              "gemExpHolder1-1",
+              "gemChart3"
+            ],
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              25
+            ],
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "actionDeckHolder",
+                "to": "actionHolder${value}",
+                "count": 1,
+                "face": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          5
+        ],
+        "loopRoutine": [
+          "var i = ${value}",
+          {
+            "func": "FOREACH",
+            "range": [
+              5
+            ],
+            "loopRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "gemExpHolder${value}-${i}",
+                  "gemExpHolder${value}-${i}",
+                  "gemExpHolder${value}-${i}",
+                  "gemExpHolder${value}-${i}",
+                  "gemExpHolder${value}-${i}"
+                ],
+                "property": "onlyVisibleForSeat",
+                "value": "seat${value}"
+              }
+            ]
+          },
+          "var i = ${i} + 1"
+        ]
+      },
+      {
         "func": "SORT",
         "holder": [
           "pawnHolder1",
@@ -4998,6 +5184,29 @@
         ],
         "property": "onlyVisibleForSeat",
         "value": []
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "player",
+        "variable": "player"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<b>${player}</b>'s turn<br><b>----New Game Started----</b>"
+        }
       }
     ],
     "gameType": 1,
@@ -5059,140 +5268,141 @@
       "cardType": "gem"
     },
     "stackOffsetX": 15,
-    "enterRoutine": []
+    "enterRoutine": [],
+    "display": true
   },
   "lvy7": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "lvy7",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "9cy7": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "9cy7",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "amff": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "amff",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "78nj": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "78nj",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "a6hc": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "a6hc",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "52gu": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "52gu",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "39c9": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "39c9",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "2fs9": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "2fs9",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "qsg5": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "gem",
     "id": "qsg5",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "mv6e": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "mv6e",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "ex1u": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "ex1u",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "s3ft": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "s3ft",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "q3wl": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "q3wl",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "hpff": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "hpff",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "8qls": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "8qls",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "e3rj": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "e3rj",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "0jej": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "0jej",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "4a5h": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "move",
     "id": "4a5h",
-    "parent": "c2cg"
+    "parent": "actionPile"
   },
   "rfn1": {
     "deck": "actionDeck",
     "type": "card",
     "cardType": "plus15",
     "id": "rfn1",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+3",
     "vp": 3
   },
@@ -5201,7 +5411,7 @@
     "type": "card",
     "cardType": "plus15",
     "id": "7yim",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+3",
     "vp": 3
   },
@@ -5210,7 +5420,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "2ykw",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+2",
     "vp": 2
   },
@@ -5219,7 +5429,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "nsbm",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+2",
     "vp": 2
   },
@@ -5228,7 +5438,7 @@
     "type": "card",
     "cardType": "plus10",
     "id": "8av3",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+2",
     "vp": 2
   },
@@ -5237,7 +5447,7 @@
     "type": "card",
     "cardType": "plus5",
     "id": "vcqi",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+1",
     "vp": 1
   },
@@ -5246,7 +5456,7 @@
     "type": "card",
     "cardType": "plus5",
     "id": "9qsg",
-    "parent": "c2cg",
+    "parent": "actionPile",
     "text": "+1",
     "vp": 1
   },
@@ -5321,6 +5531,23 @@
         "collection": "thisButton"
       },
       {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}PileHandle"
+        ],
+        "property": "text",
+        "value": "${COUNT}"
+      },
+      {
         "func": "GET",
         "collection": "child",
         "property": "rank"
@@ -5332,9 +5559,18 @@
         "arguments": {
           "addendum": "<span style='color:${PROPERTY bgColor}'><b>${playerName}</b> discarded the <img src='${PROPERTY thisIcon}' style='vertical-align:middle;height:1em'/></span> ${rank}"
         }
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "movable",
+        "value": false
       }
     ],
     "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg",
+    "nextRound": false,
+    "doubleLeaveRoutineCompensation": true,
+    "preventPiles": true,
     "leaveRoutine": [
       {
         "func": "IF",
@@ -5354,6 +5590,23 @@
                 "property": "doubleLeaveRoutineCompensation",
                 "collection": "thisButton",
                 "value": false
+              },
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "_ancestor",
+                "value": "${PROPERTY id}"
+              },
+              {
+                "func": "COUNT"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${PROPERTY id}PileHandle"
+                ],
+                "property": "text",
+                "value": "${COUNT}"
               }
             ],
             "elseRoutine": [
@@ -5372,18 +5625,16 @@
                 }
               },
               {
-                "func": "CLICK",
-                "collection": [
-                  "turnButton"
-                ]
+                "func": "SET",
+                "collection": "child",
+                "property": "movable",
+                "value": true
               }
             ]
           }
         ]
       }
-    ],
-    "nextRound": false,
-    "doubleLeaveRoutineCompensation": true
+    ]
   },
   "acornDiscard": {
     "type": "holder",
@@ -5480,7 +5731,7 @@
         "--wcBorderOH": "black"
       },
       "::after": {
-        "content": "'Take card'",
+        "content": "'Fill hand'",
         "display": "none",
         "position": "absolute",
         "margin-top": "84px",
@@ -5493,7 +5744,6 @@
         "display": "block"
       }
     },
-    "text": "+ 1",
     "clickRoutine": [
       {
         "func": "MOVE",
@@ -5516,7 +5766,11 @@
         ]
       }
     ],
-    "borderRadius": 8
+    "borderRadius": 8,
+    "image": "i/icons/card.svg",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
   },
   "sortButton": {
     "type": "button",
@@ -5610,6 +5864,12 @@
       {
         "func": "CALL",
         "routine": "holderHighlightRoutine"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "turnAnimation"
+        ]
       }
     ],
     "holderHighlightRoutine": [
@@ -5669,6 +5929,14 @@
         "arguments": {
           "addendum": "<b>${player}</b>'s turn"
         }
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "hand"
+        ],
+        "property": "awaitingDrop",
+        "value": null
       }
     ]
   },
@@ -5827,7 +6095,8 @@
                 "func": "MOVE",
                 "from": "actionDeckHolder",
                 "to": "actionHolder${value}",
-                "count": 1
+                "count": 1,
+                "face": 1
               }
             ]
           },
@@ -6048,6 +6317,16 @@
       120,
       150,
       150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
+      150,
       150
     ],
     "display": false
@@ -6116,8 +6395,21 @@
         "routine": "pawnScoreRoutine"
       },
       {
-        "func": "CALL",
-        "routine": "gemScoreRoutine"
+        "func": "IF",
+        "operand1": "${PROPERTY gameType OF restartButton}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "gemExpScoreRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "gemScoreRoutine"
+          }
+        ]
       },
       {
         "func": "FOREACH",
@@ -6155,6 +6447,26 @@
         "collection": "thisButton",
         "property": "clickable",
         "value": false
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          5
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "gemExpHolder${value}-1",
+              "gemExpHolder${value}-2",
+              "gemExpHolder${value}-3",
+              "gemExpHolder${value}-4",
+              "gemExpHolder${value}-5"
+            ],
+            "property": "onlyVisibleForSeat",
+            "value": null
+          }
+        ]
       }
     ],
     "pawnScoreRoutine": [
@@ -6203,9 +6515,20 @@
                     "property": "level"
                   },
                   {
+                    "func": "IF",
+                    "operand1": "${PROPERTY gameType OF restartButton}",
+                    "operand2": 3,
+                    "thenRoutine": [
+                      "var thisLabel = 'label10' + ${level}"
+                    ],
+                    "elseRoutine": [
+                      "var thisLabel = 'label' + ${level}"
+                    ]
+                  },
+                  {
                     "func": "GET",
                     "collection": [
-                      "label${level}"
+                      "${thisLabel}"
                     ],
                     "property": "text",
                     "variable": "multiplier"
@@ -6243,11 +6566,22 @@
                 "property": "player"
               },
               {
+                "func": "IF",
+                "operand1": "${sign}",
+                "operand2": "-",
+                "thenRoutine": [
+                  "var historySign = ''"
+                ],
+                "elseRoutine": [
+                  "var historySign = '+'"
+                ]
+              },
+              {
                 "func": "CALL",
                 "widget": "historyLabel",
                 "routine": "addendumRoutine",
                 "arguments": {
-                  "addendum": "• <b>${player}</b> ${sign}${thisTotal} (pawns)"
+                  "addendum": "• <b>${player}</b> ${historySign}${thisTotal} (pawns)"
                 }
               },
               {
@@ -6270,10 +6604,14 @@
       2,
       3,
       6,
+      10,
+      10,
+      10,
+      10,
       10
     ],
     "gemScoreRoutine": [
-      "// Score gems for seated players",
+      "// Keltis - Score gems for seated players",
       {
         "func": "FOREACH",
         "range": [
@@ -6326,11 +6664,22 @@
                 "property": "player"
               },
               {
+                "func": "IF",
+                "operand1": "${sign}",
+                "operand2": "-",
+                "thenRoutine": [
+                  "var historySign = ''"
+                ],
+                "elseRoutine": [
+                  "var historySign = '+'"
+                ]
+              },
+              {
                 "func": "CALL",
                 "widget": "historyLabel",
                 "routine": "addendumRoutine",
                 "arguments": {
-                  "addendum": "• <b>${player}</b> ${sign}${gemPoints} (gems)"
+                  "addendum": "• <b>${player}</b> ${historySign}${gemPoints} (gems)"
                 }
               },
               {
@@ -6341,6 +6690,135 @@
                 "property": "text",
                 "relation": "+",
                 "value": "${gemPoints}"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "gemExpScoreRoutine": [
+      "//Keltis Expansion - Score gems for seated players",
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var i = ${value}",
+          "var gemPointsColors = 0",
+          "var gemPointsSets = 0",
+          {
+            "func": "GET",
+            "collection": [
+              "seat${i}"
+            ],
+            "property": "player"
+          },
+          {
+            "func": "IF",
+            "operand1": "${player}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": [
+                  5
+                ],
+                "loopRoutine": [
+                  {
+                    "func": "COUNT",
+                    "holder": [
+                      "gemExpHolder${i}-${value}"
+                    ]
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${COUNT}",
+                    "relation": ">",
+                    "operand2": 0,
+                    "thenRoutine": [
+                      "var gemPointsColors = ${gemPointsColors} + 1"
+                    ]
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${COUNT}",
+                    "relation": ">=",
+                    "operand2": 3,
+                    "thenRoutine": [
+                      "var gemPointsSets = ${gemPointsSets} + 1"
+                    ]
+                  }
+                ]
+              },
+              "var determineSign = ${gemPointsColors}",
+              "var gemPointsColorsArray = ${PROPERTY gemPoints}",
+              "var gemPointsColors = ${gemPointsColorsArray.$gemPointsColors}",
+              "var gemPointsSets = ${gemPointsSets} * 10",
+              {
+                "func": "IF",
+                "operand1": "${determineSign}",
+                "relation": "<",
+                "operand2": 2,
+                "thenRoutine": [
+                  "var sign = '-'"
+                ],
+                "elseRoutine": [
+                  "var sign = '+'"
+                ]
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "seat${i}"
+                ],
+                "property": "player"
+              },
+              {
+                "func": "IF",
+                "operand1": "${sign}",
+                "operand2": "-",
+                "thenRoutine": [
+                  "var historySign = ''"
+                ],
+                "elseRoutine": [
+                  "var historySign = '+'"
+                ]
+              },
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "• <b>${player}</b> ${historySign}${gemPointsColors} (gem colors)"
+                }
+              },
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "• <b>${player}</b> +${gemPointsSets} (gem sets)"
+                }
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "score${i}"
+                ],
+                "property": "text",
+                "relation": "+",
+                "value": "${gemPointsColors}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "score${i}"
+                ],
+                "property": "text",
+                "relation": "+",
+                "value": "${gemPointsSets}"
               }
             ]
           }
@@ -6482,17 +6960,18 @@
     },
     "html": "<table> <tr> <th>Gems</th> <td>0</td> <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5+</td> </tr> <tr> <th>Points</th> <td>-4</td> <td>-3</td> <td>2</td> <td>3</td> <td>6</td> <td>10</td> </tr> </table> </div>",
     "activeFace": 1,
+    "layer": -4,
     "display": false
   },
   "gemChart2": {
     "id": "gemChart2",
     "height": 160,
-    "display": false,
     "html": "<table> <tr> <th>Gems</th> <td>0</td> <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <th>Points</th> <td>-50</td> <td>-45</td> <td>-40</td> <td>-10</td> <td>-5</td> <td>0</td> <td>30</td> <td>35</td> <td>40</td> </tr> </table> <table> <tr> <th>Gems</th> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15+</td> </tr> <tr> <th>Points</th> <td>70</td> <td>75</td> <td>80</td> <td>110</td> <td>115</td> <td>120</td> <td>150</td> </tr> </table>",
     "inheritFrom": {
       "gemChart1": "*"
     },
-    "activeFace": 1
+    "activeFace": 1,
+    "display": false
   },
   "cardHolder4-1": {
     "type": "holder",
@@ -6501,7 +6980,7 @@
     "inheritFrom": {
       "cardHolder2-1": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-2": {
     "type": "holder",
@@ -6510,7 +6989,7 @@
     "inheritFrom": {
       "cardHolder2-2": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-3": {
     "type": "holder",
@@ -6519,7 +6998,7 @@
     "inheritFrom": {
       "cardHolder2-3": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-4": {
     "type": "holder",
@@ -6528,7 +7007,7 @@
     "inheritFrom": {
       "cardHolder2-4": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "cardHolder4-5": {
     "type": "holder",
@@ -6537,7 +7016,7 @@
     "inheritFrom": {
       "cardHolder2-5": "*"
     },
-    "classes": ""
+    "classes": "activeTurn"
   },
   "gameOver": {
     "id": "gameOver",
@@ -6573,7 +7052,7 @@
       }
     },
     "html": "<h2>Game Over</h2>The game has ended because ${PROPERTY reason} Click the <b>${PROPERTY button}</b> button on the right to automatically calculate scores. All pieces will be left in place so you can double check the game's calculations.<h3>Click to close this overlay.</h3>",
-    "reason": "the last card was drawn.",
+    "reason": "5 pawns reached the top area. Do not use the event card in that holder.",
     "height": 340,
     "clickRoutine": [
       {
@@ -6630,7 +7109,7 @@
         "value": false
       }
     ],
-    "reason": "5 pawns reached the 7th level. Do not use the event card in that holder.",
+    "reason": "the last card was drawn.",
     "activeFace": 1,
     "display": false
   },
@@ -6660,7 +7139,7 @@
       {
         "func": "SET",
         "property": "html",
-        "value": "${addendum}\n${previousLedger}",
+        "value": "${addendum}<br>${previousLedger}",
         "collection": [
           "${PROPERTY id}"
         ]
@@ -6812,6 +7291,90 @@
         "property": "z",
         "value": 1
       },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "cardDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "deckPile"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "actionDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "actionPile"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "actionDeckHolder3"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "actionPile3"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "gemDeckHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "gemPile"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyLabel"
+        ],
+        "property": "html",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat1"
+        ],
+        "property": "mainColor",
+        "value": "#000000"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat2"
+        ],
+        "property": "mainColor",
+        "value": "#8b450c"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat3"
+        ],
+        "property": "mainColor",
+        "value": "#ffffff"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat4"
+        ],
+        "property": "mainColor",
+        "value": "#a0a0a0"
+      },
       "// This just fixes validation errors for false positives on unused properties",
       {
         "func": "SELECT",
@@ -6835,15 +7398,6 @@
       }
     ],
     "text": "Save for PL"
-  },
-  "k32s": {
-    "type": "pile",
-    "parent": "cardDeckHolder",
-    "x": 4,
-    "y": 4,
-    "width": 103,
-    "height": 160,
-    "id": "k32s"
   },
   "historyButton": {
     "type": "button",
@@ -6910,7 +7464,2805 @@
       }
     ]
   },
-  "c2cg": {
+  "abstractDiscardPileHandle": {
+    "id": "abstractDiscardPileHandle",
+    "parent": "abstractDiscard",
+    "x": 91,
+    "y": -10,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "text-align": "center",
+      "color": "#6d6d6d",
+      "font-size": "22px"
+    },
+    "text": 0,
+    "textChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "relation": "<=",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "layer": 7,
+    "display": false
+  },
+  "acornDiscardPileHandle": {
+    "id": "acornDiscardPileHandle",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "parent": "acornDiscard",
+    "text": 0,
+    "display": false
+  },
+  "heartDiscardPileHandle": {
+    "id": "heartDiscardPileHandle",
+    "parent": "heartDiscard",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "text": 0,
+    "display": false
+  },
+  "leafDiscardPileHandle": {
+    "id": "leafDiscardPileHandle",
+    "parent": "leafDiscard",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "text": 0,
+    "display": false
+  },
+  "snowDiscardPileHandle": {
+    "id": "snowDiscardPileHandle",
+    "parent": "snowDiscard",
+    "x": 91,
+    "y": -10,
+    "inheritFrom": {
+      "abstractDiscardPileHandle": "*"
+    },
+    "text": 0,
+    "display": false
+  },
+  "deckPile": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "deckPile",
+    "z": 3,
+    "parent": "cardDeckHolder"
+  },
+  "actionHolder26": {
+    "inheritFrom": {
+      "actionHolder1": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder26",
+    "parent": "f3"
+  },
+  "actionHolder27": {
+    "inheritFrom": {
+      "actionHolder2": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder27",
+    "parent": "f5"
+  },
+  "actionHolder29": {
+    "inheritFrom": {
+      "actionHolder4": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder29",
+    "parent": "f8"
+  },
+  "actionHolder31": {
+    "inheritFrom": {
+      "actionHolder6": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder31",
+    "parent": "g2"
+  },
+  "actionHolder33": {
+    "inheritFrom": {
+      "actionHolder8": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder33",
+    "parent": "g6"
+  },
+  "actionHolder34": {
+    "inheritFrom": {
+      "actionHolder9": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder34",
+    "parent": "g5"
+  },
+  "actionHolder35": {
+    "inheritFrom": {
+      "actionHolder10": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder35",
+    "parent": "g9"
+  },
+  "actionHolder37": {
+    "inheritFrom": {
+      "actionHolder12": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder37",
+    "parent": "h3"
+  },
+  "actionHolder38": {
+    "inheritFrom": {
+      "actionHolder13": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder38",
+    "parent": "h5"
+  },
+  "actionHolder39": {
+    "inheritFrom": {
+      "actionHolder14": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder39",
+    "parent": "h6"
+  },
+  "actionHolder40": {
+    "inheritFrom": {
+      "actionHolder15": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder40",
+    "parent": "h9"
+  },
+  "actionHolder41": {
+    "inheritFrom": {
+      "actionHolder16": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder41",
+    "parent": "i2"
+  },
+  "actionHolder42": {
+    "inheritFrom": {
+      "actionHolder17": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder42",
+    "parent": "i3"
+  },
+  "actionHolder43": {
+    "inheritFrom": {
+      "actionHolder18": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder43",
+    "parent": "i5"
+  },
+  "actionHolder45": {
+    "inheritFrom": {
+      "actionHolder20": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder45",
+    "parent": "i9"
+  },
+  "actionHolder46": {
+    "inheritFrom": {
+      "actionHolder21": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder46",
+    "parent": "j3"
+  },
+  "topArea1": {
+    "inheritFrom": {
+      "topArea": "*"
+    },
+    "id": "topArea1",
+    "parent": "board3",
+    "y": 0,
+    "layer": -5
+  },
+  "board3": {
+    "id": "board3",
+    "x": 595,
+    "y": 204,
+    "inheritFrom": {
+      "board1": "*"
+    },
+    "activeFace": 0,
+    "display": false
+  },
+  "f1": {
+    "type": "holder",
+    "id": "f1",
+    "parent": "board3",
+    "inheritFrom": {
+      "a1": "*"
+    },
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 1,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "f2": {
+    "type": "holder",
+    "id": "f2",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 480,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "layer": -2,
+    "level": 2,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "f3": {
+    "type": "holder",
+    "id": "f3",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 420,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 3,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "f5": {
+    "type": "holder",
+    "id": "f5",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 300,
+    "bgColor": "#8F815780",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 5,
+    "thisIcon": ""
+  },
+  "f6": {
+    "type": "holder",
+    "id": "f6",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 240,
+    "bgColor": "#319e7280",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "layer": -2,
+    "level": 6,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "f7": {
+    "type": "holder",
+    "id": "f7",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 180,
+    "bgColor": "#319e7280",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 7,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "f8": {
+    "type": "holder",
+    "id": "f8",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 120,
+    "bgColor": "#319e7280",
+    "x": 45,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 8,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "f9": {
+    "type": "holder",
+    "id": "f9",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 60,
+    "bgColor": "#c679a880",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 9,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "f10": {
+    "type": "holder",
+    "id": "f10",
+    "parent": "board3",
+    "inheritFrom": {
+      "f1": "*"
+    },
+    "y": 0,
+    "bgColor": "#c679a880",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 10,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "g2": {
+    "type": "holder",
+    "id": "g2",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 480,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 2,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "g3": {
+    "type": "holder",
+    "id": "g3",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 420,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "layer": -2,
+    "level": 3,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "g4": {
+    "type": "holder",
+    "id": "g4",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 360,
+    "bgColor": "#8F815780",
+    "x": 45,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 4,
+    "thisIcon": ""
+  },
+  "g5": {
+    "type": "holder",
+    "id": "g5",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 300,
+    "bgColor": "#66b5eb80",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 5,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "g6": {
+    "type": "holder",
+    "id": "g6",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 240,
+    "bgColor": "#66b5eb80",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 6,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "g7": {
+    "type": "holder",
+    "id": "g7",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 180,
+    "bgColor": "#66b5eb80",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 7,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "g9": {
+    "type": "holder",
+    "id": "g9",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 60,
+    "bgColor": "#2673b480",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 9,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "h3": {
+    "type": "holder",
+    "id": "h3",
+    "parent": "board3",
+    "inheritFrom": {
+      "c1": "*"
+    },
+    "y": 420,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 3,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "h4": {
+    "type": "holder",
+    "id": "h4",
+    "parent": "board3",
+    "inheritFrom": {
+      "h3": "*"
+    },
+    "y": 360,
+    "x": 135,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 4,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "h5": {
+    "type": "holder",
+    "id": "h5",
+    "parent": "board3",
+    "inheritFrom": {
+      "h3": "*"
+    },
+    "y": 300,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 5,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "h6": {
+    "type": "holder",
+    "id": "h6",
+    "parent": "board3",
+    "inheritFrom": {
+      "h3": "*"
+    },
+    "y": 240,
+    "bgColor": "#e09e0080",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 6,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "h7": {
+    "type": "holder",
+    "id": "h7",
+    "parent": "board3",
+    "inheritFrom": {
+      "h3": "*"
+    },
+    "y": 180,
+    "bgColor": "#e09e0080",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 7,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "h9": {
+    "type": "holder",
+    "id": "h9",
+    "parent": "board3",
+    "inheritFrom": {
+      "h3": "*"
+    },
+    "y": 60,
+    "bgColor": "#319e7280",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 9,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "i1": {
+    "type": "holder",
+    "id": "i1",
+    "parent": "board3",
+    "inheritFrom": {
+      "d1": "*"
+    },
+    "bgColor": "#8F815780",
+    "x": 225,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 1,
+    "thisIcon": "/i/noto-emoji/emoji_u1faa8.svg"
+  },
+  "i2": {
+    "type": "holder",
+    "id": "i2",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 480,
+    "x": 225,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 2,
+    "thisIcon": ""
+  },
+  "i3": {
+    "type": "holder",
+    "id": "i3",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 420,
+    "bgColor": "#319e7280",
+    "x": 270,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 3,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "i4": {
+    "type": "holder",
+    "id": "i4",
+    "parent": "board3",
+    "bgColor": "#319e7280",
+    "y": 360,
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "x": 270,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 4,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "i5": {
+    "type": "holder",
+    "id": "i5",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 300,
+    "bgColor": "#319e7280",
+    "x": 315,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 5,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "i6": {
+    "type": "holder",
+    "id": "i6",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 240,
+    "bgColor": "#2673b480",
+    "x": 270,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 6,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "i7": {
+    "type": "holder",
+    "id": "i7",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 180,
+    "bgColor": "#2673b480",
+    "x": 270,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 7,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "i8": {
+    "type": "holder",
+    "id": "i8",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 120,
+    "bgColor": "#2673b480",
+    "x": 225,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 8,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "i9": {
+    "type": "holder",
+    "id": "i9",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 60,
+    "bgColor": "#66b5eb80",
+    "x": 270,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 9,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "j1": {
+    "type": "holder",
+    "id": "j1",
+    "parent": "board3",
+    "inheritFrom": {
+      "e1": "*"
+    },
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 1,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "j2": {
+    "type": "holder",
+    "id": "j2",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 480,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "layer": -2,
+    "level": 2,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "j3": {
+    "type": "holder",
+    "id": "j3",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 420,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 3,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "j6": {
+    "type": "holder",
+    "id": "j6",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 240,
+    "bgColor": "#c679a880",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "layer": -2,
+    "level": 6,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "j7": {
+    "type": "holder",
+    "id": "j7",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 180,
+    "bgColor": "#c679a880",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 7,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "j8": {
+    "type": "holder",
+    "id": "j8",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 120,
+    "bgColor": "#c679a880",
+    "x": 315,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 8,
+    "thisIcon": "/i/game-icons.net/skoll/hearts.svg"
+  },
+  "j9": {
+    "type": "holder",
+    "id": "j9",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 60,
+    "bgColor": "#e09e0080",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 9,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "g10": {
+    "type": "holder",
+    "id": "g10",
+    "parent": "board3",
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "y": 0,
+    "bgColor": "#2673b480",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 10,
+    "thisIcon": "/i/game-icons.net/lorc/swirl-string.svg"
+  },
+  "h10": {
+    "type": "holder",
+    "id": "h10",
+    "parent": "board3",
+    "inheritFrom": {
+      "h3": "*"
+    },
+    "y": 0,
+    "bgColor": "#319e7280",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 10,
+    "thisIcon": "/i/game-icons.net/lorc/linden-leaf.svg"
+  },
+  "i10": {
+    "type": "holder",
+    "id": "i10",
+    "parent": "board3",
+    "inheritFrom": {
+      "i1": "*"
+    },
+    "y": 0,
+    "bgColor": "#66b5eb80",
+    "x": 270,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 10,
+    "thisIcon": "/i/game-icons.net/lorc/snowflake-2.svg"
+  },
+  "j10": {
+    "type": "holder",
+    "id": "j10",
+    "parent": "board3",
+    "inheritFrom": {
+      "j1": "*"
+    },
+    "y": 0,
+    "bgColor": "#e09e0080",
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 10,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "label101": {
+    "id": "label101",
+    "parent": "board3",
+    "inheritFrom": {
+      "label1": "*"
+    },
+    "text": -4,
+    "x": -40
+  },
+  "label102": {
+    "id": "label102",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": -2,
+    "y": 496
+  },
+  "label103": {
+    "id": "label103",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 0,
+    "y": 436
+  },
+  "label104": {
+    "id": "label104",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 5,
+    "y": 379
+  },
+  "label105": {
+    "id": "label105",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 3,
+    "y": 319
+  },
+  "label106": {
+    "id": "label106",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 6,
+    "y": 259
+  },
+  "label107": {
+    "id": "label107",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 8,
+    "y": 199
+  },
+  "label108": {
+    "id": "label108",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "activeFace": 0,
+    "y": 139,
+    "text": 7
+  },
+  "label109": {
+    "id": "label109",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 6,
+    "y": 79
+  },
+  "label111": {
+    "id": "label111",
+    "parent": "board3",
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "x": 425
+  },
+  "label112": {
+    "id": "label112",
+    "parent": "board3",
+    "inheritFrom": {
+      "label102": "*"
+    },
+    "text": -2,
+    "x": 425
+  },
+  "label113": {
+    "id": "label113",
+    "parent": "board3",
+    "inheritFrom": {
+      "label103": "*"
+    },
+    "text": 0,
+    "x": 425
+  },
+  "label115": {
+    "id": "label115",
+    "parent": "board3",
+    "inheritFrom": {
+      "label105": "*"
+    },
+    "text": 3,
+    "x": 425
+  },
+  "label116": {
+    "id": "label116",
+    "parent": "board3",
+    "inheritFrom": {
+      "label106": "*"
+    },
+    "text": 6,
+    "x": 425
+  },
+  "label117": {
+    "id": "label117",
+    "parent": "board3",
+    "inheritFrom": {
+      "label107": "*"
+    },
+    "text": 8,
+    "x": 425
+  },
+  "label119": {
+    "id": "label119",
+    "parent": "board3",
+    "inheritFrom": {
+      "label109": "*"
+    },
+    "text": 6,
+    "x": 425
+  },
+  "g8": {
+    "type": "holder",
+    "id": "g8",
+    "parent": "board3",
+    "y": 120,
+    "inheritFrom": {
+      "g1": "*"
+    },
+    "x": 135,
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 8,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "label114": {
+    "id": "label114",
+    "parent": "board3",
+    "inheritFrom": {
+      "label104": "*"
+    },
+    "text": 5,
+    "x": 425
+  },
+  "label118": {
+    "id": "label118",
+    "parent": "board3",
+    "inheritFrom": {
+      "label108": "*"
+    },
+    "text": 7,
+    "x": 425
+  },
+  "g1": {
+    "type": "holder",
+    "id": "g1",
+    "parent": "board3",
+    "x": 90,
+    "y": 540,
+    "inheritFrom": {
+      "b1": "*"
+    },
+    "vpPawn1": false,
+    "vpPawn2": false,
+    "vpPawn3": false,
+    "vpPawn4": false,
+    "level": 1,
+    "thisIcon": "/i/game-icons.net/lorc/acorn.svg"
+  },
+  "gemSource1": {
+    "type": "holder",
+    "id": "gemSource1",
+    "parent": "f2",
+    "inheritFrom": {
+      "actionHolder1": "*"
+    },
+    "dropTarget": {
+      "cardType": "gem1"
+    }
+  },
+  "actionDeckRecall1": {
+    "type": "button",
+    "id": "actionDeckRecall1",
+    "parent": "gemDeckHolder",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}",
+        "excludeCollection": "DEFAULT"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      }
+    ]
+  },
+  "gemDeckHolder": {
+    "type": "holder",
+    "id": "gemDeckHolder",
+    "x": 175,
+    "y": 1069,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "mwxw": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem1",
+    "id": "mwxw",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "maod": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem2",
+    "id": "maod",
+    "parent": "gemPile"
+  },
+  "qc4i": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem3",
+    "id": "qc4i",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "gtq6": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem4",
+    "id": "gtq6",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "lz5a": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem5",
+    "id": "lz5a",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "actionHolder44": {
+    "inheritFrom": {
+      "actionHolder19": "*"
+    },
+    "type": "holder",
+    "id": "actionHolder44",
+    "parent": "i6"
+  },
+  "actionDeckRecall2": {
+    "type": "button",
+    "id": "actionDeckRecall2",
+    "parent": "actionDeckHolder3",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}",
+        "excludeCollection": "DEFAULT"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      }
+    ]
+  },
+  "actionDeckHolder3": {
+    "type": "holder",
+    "id": "actionDeckHolder3",
+    "x": 39,
+    "y": 1299,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "actionDeck3": {
+    "type": "deck",
+    "id": "actionDeck3",
+    "parent": "actionDeckHolder3",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "width": 30,
+      "height": 30,
+      "classes": "transitions",
+      "layer": 3,
+      "onPileCreation": {
+        "handleOffset": 5,
+        "handlePosition": "top left"
+      }
+    },
+    "cardTypes": {
+      "plus2": {
+        "text": "+2",
+        "vp": 2,
+        "bgColor": "#f2e61180"
+      },
+      "plus3": {
+        "text": "+3",
+        "vp": 3,
+        "bgColor": "#f2e61180"
+      },
+      "move": {
+        "image1": "/i/game-icons.net/delapouite/arrow-cursor.svg",
+        "color": "#ff000090",
+        "bgColor": "#f2e61180"
+      },
+      "card": {
+        "image2": "i/icons/card.svg",
+        "bgColor": "#f2e61180"
+      },
+      "gem1": {
+        "image2": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#2673b480",
+        "suitColor": "#2673b4",
+        "gemType": 1
+      },
+      "gem2": {
+        "image2": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#e09e0080",
+        "suitColor": "#e09e00",
+        "gemType": 2
+      },
+      "gem3": {
+        "image2": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#c679a880",
+        "suitColor": "#c679a8",
+        "gemType": 3
+      },
+      "gem4": {
+        "image2": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#319e7280",
+        "suitColor": "#319e72",
+        "gemType": 4
+      },
+      "gem5": {
+        "image2": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#66b5eb80",
+        "suitColor": "#66b5eb",
+        "gemType": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "css": "background: repeating-linear-gradient(to bottom, #f2e611 0%, #f2e611 16.66%, #d1c300 16.66%, #d1c300 33.33%, #f2e611 33.33%, #f2e611 50%, #d1c300 50%, #d1c300 66.66%, #f2e611 66.66%, #f2e611 83.33%, #d1c300 83.33%, #d1c300 100%)",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "fontSize": 25,
+            "textAlign": "center",
+            "width": 30,
+            "value": "?"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "width": 30,
+            "height": 30
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "color": "bgColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 5,
+            "fontSize": 15,
+            "textAlign": "center",
+            "width": 30,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          },
+          {
+            "type": "image",
+            "x": 2,
+            "y": 2,
+            "color": "transparent",
+            "width": 26,
+            "height": 26,
+            "rotation": 20,
+            "dynamicProperties": {
+              "value": "image1"
+            },
+            "svgReplaces": {
+              "#000": "color"
+            }
+          },
+          {
+            "type": "image",
+            "x": 2,
+            "y": 2,
+            "color": "transparent",
+            "width": 26,
+            "height": 26,
+            "dynamicProperties": {
+              "value": "image2"
+            },
+            "svgReplaces": {
+              "#000": "suitColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "9kca": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus2",
+    "id": "9kca",
+    "parent": "actionPile3"
+  },
+  "gltl": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus3",
+    "id": "gltl",
+    "parent": "actionPile3"
+  },
+  "w1pj": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "move",
+    "id": "w1pj",
+    "parent": "actionPile3"
+  },
+  "iucx": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "card",
+    "id": "iucx",
+    "parent": "actionPile3"
+  },
+  "j88b": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "gem1",
+    "id": "j88b",
+    "parent": "actionPile3"
+  },
+  "i2bg": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "gem2",
+    "id": "i2bg",
+    "parent": "actionPile3"
+  },
+  "evzv": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "gem3",
+    "id": "evzv",
+    "parent": "actionPile3"
+  },
+  "br29": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "gem4",
+    "id": "br29",
+    "parent": "actionPile3"
+  },
+  "lxmd": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "gem5",
+    "id": "lxmd",
+    "parent": "actionPile3"
+  },
+  "h6eb": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus2",
+    "id": "h6eb",
+    "parent": "actionPile3"
+  },
+  "2psw": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus2",
+    "id": "2psw",
+    "parent": "actionPile3"
+  },
+  "6g84": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus2",
+    "id": "6g84",
+    "parent": "actionPile3"
+  },
+  "9pdy": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus2",
+    "id": "9pdy",
+    "parent": "actionPile3"
+  },
+  "la89": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "plus3",
+    "id": "la89",
+    "parent": "actionPile3"
+  },
+  "sya8": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "move",
+    "id": "sya8",
+    "parent": "actionPile3"
+  },
+  "niqo": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "move",
+    "id": "niqo",
+    "parent": "actionPile3"
+  },
+  "chqu": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "move",
+    "id": "chqu",
+    "parent": "actionPile3"
+  },
+  "4fso": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "move",
+    "id": "4fso",
+    "parent": "actionPile3"
+  },
+  "gem6": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "card",
+    "id": "gem6",
+    "parent": "actionPile3"
+  },
+  "5hms": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "card",
+    "id": "5hms",
+    "parent": "actionPile3"
+  },
+  "z1qj": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "card",
+    "id": "z1qj",
+    "parent": "actionPile3"
+  },
+  "19w3": {
+    "deck": "actionDeck3",
+    "type": "card",
+    "cardType": "card",
+    "id": "19w3",
+    "parent": "actionPile3"
+  },
+  "c8wb": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem1",
+    "id": "c8wb",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "gh7k": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem2",
+    "id": "gh7k",
+    "parent": "gemPile"
+  },
+  "81d0": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem3",
+    "id": "81d0",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "vk5d": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem4",
+    "id": "vk5d",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "j18h": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem5",
+    "id": "j18h",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "ip93": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem1",
+    "id": "ip93",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "ma4k": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem2",
+    "id": "ma4k",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "23e7": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem3",
+    "id": "23e7",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "azhv": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem4",
+    "id": "azhv",
+    "parent": "gemPile",
+    "activeFace": 1
+  },
+  "12pr": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem5",
+    "id": "12pr",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "755p": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem1",
+    "id": "755p",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "verf": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem2",
+    "id": "verf",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "5wpv": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem3",
+    "id": "5wpv",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "9pvs": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem4",
+    "id": "9pvs",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "hx47": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem5",
+    "id": "hx47",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "z11y": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem1",
+    "id": "z11y",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "2vv1": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem2",
+    "id": "2vv1",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "ddjb": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem3",
+    "id": "ddjb",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "0195": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem4",
+    "id": "0195",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "t4h7": {
+    "deck": "gemDeck",
+    "type": "card",
+    "cardType": "gem5",
+    "id": "t4h7",
+    "activeFace": 1,
+    "parent": "gemPile"
+  },
+  "gemDeck": {
+    "type": "deck",
+    "id": "gemDeck",
+    "parent": "gemDeckHolder",
+    "x": 12,
+    "y": 41,
+    "cardDefaults": {
+      "width": 30,
+      "height": 30,
+      "classes": "transitions",
+      "layer": 3,
+      "onPileCreation": {
+        "handleOffset": 5,
+        "handlePosition": "top left"
+      }
+    },
+    "cardTypes": {
+      "gem1": {
+        "image": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#2673b480",
+        "suitColor": "#2673b4",
+        "gemType": 1
+      },
+      "gem2": {
+        "image": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#e09e0080",
+        "suitColor": "#e09e00",
+        "gemType": 2
+      },
+      "gem3": {
+        "image": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#c679a880",
+        "suitColor": "#c679a8",
+        "gemType": 3
+      },
+      "gem4": {
+        "image": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#319e7280",
+        "suitColor": "#319e72",
+        "gemType": 4
+      },
+      "gem5": {
+        "image": "/i/game-icons.net/lorc/emerald.svg",
+        "bgColor": "#66b5eb80",
+        "suitColor": "#66b5eb",
+        "gemType": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "width": 30,
+            "height": 30
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 30,
+            "height": 30,
+            "dynamicProperties": {
+              "color": "bgColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 2,
+            "y": 2,
+            "color": "transparent",
+            "width": 26,
+            "height": 26,
+            "rotation": 20,
+            "value": "/i/game-icons.net/lorc/emerald.svg",
+            "svgReplaces": {
+              "#000": "suitColor"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "actionHolder30": {
+    "type": "holder",
+    "id": "actionHolder30",
+    "parent": "f9",
+    "inheritFrom": {
+      "actionHolder5": "*"
+    }
+  },
+  "actionHolder32": {
+    "type": "holder",
+    "id": "actionHolder32",
+    "parent": "j8",
+    "inheritFrom": {
+      "actionHolder24": "*"
+    }
+  },
+  "gemSource5": {
+    "type": "holder",
+    "id": "gemSource5",
+    "parent": "j2",
+    "dropTarget": {
+      "cardType": "gem5"
+    },
+    "inheritFrom": {
+      "actionHolder21": "*"
+    }
+  },
+  "gemSource3": {
+    "type": "holder",
+    "id": "gemSource3",
+    "parent": "j6",
+    "dropTarget": {
+      "cardType": "gem3"
+    },
+    "inheritFrom": {
+      "actionHolder23": "*"
+    }
+  },
+  "gemSource4": {
+    "type": "holder",
+    "id": "gemSource4",
+    "parent": "f6",
+    "dropTarget": {
+      "cardType": "gem4"
+    },
+    "inheritFrom": {
+      "actionHolder3": "*"
+    }
+  },
+  "gemSource2": {
+    "type": "holder",
+    "id": "gemSource2",
+    "parent": "g3",
+    "dropTarget": {
+      "cardType": "gem2"
+    },
+    "inheritFrom": {
+      "actionHolder6": "*"
+    }
+  },
+  "actionHolder28": {
+    "type": "holder",
+    "id": "actionHolder28",
+    "parent": "j9",
+    "inheritFrom": {
+      "actionHolder25": "*"
+    }
+  },
+  "actionHolder36": {
+    "type": "holder",
+    "id": "actionHolder36",
+    "parent": "i8",
+    "inheritFrom": {
+      "actionHolder14": "*"
+    }
+  },
+  "actionHolder47": {
+    "type": "holder",
+    "id": "actionHolder47",
+    "parent": "g8",
+    "inheritFrom": {
+      "actionHolder9": "*"
+    }
+  },
+  "label1010": {
+    "id": "label1010",
+    "parent": "board3",
+    "y": 19,
+    "inheritFrom": {
+      "label101": "*"
+    },
+    "text": 10
+  },
+  "label11020": {
+    "id": "label11020",
+    "parent": "board3",
+    "x": 425,
+    "y": 22,
+    "inheritFrom": {
+      "label1010": "*"
+    }
+  },
+  "turnAnimation": {
+    "id": "turnAnimation",
+    "width": 1600,
+    "height": 1000,
+    "layer": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "classes": "transitions",
+    "css": {
+      "background": "#00000080",
+      "pointer-events": "none"
+    },
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 500
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "_absoluteX",
+        "variable": "x"
+      },
+      {
+        "func": "GET",
+        "property": "_absoluteY",
+        "variable": "y"
+      },
+      "var x = ${x} + 86 - 800",
+      "var y = ${y} + 24 - 500",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "scale",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "x",
+        "value": "${x}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "y",
+        "value": "${y}"
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 1000
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "display",
+        "value": false
+      }
+    ],
+    "borderRadius": 20,
+    "scale": 0,
+    "x": 543,
+    "y": -1,
+    "display": false
+  },
+  "gemExpHolder1-1": {
+    "type": "holder",
+    "id": "gemExpHolder1-1",
+    "x": -1,
+    "y": 90,
+    "width": 30,
+    "height": 30,
+    "display": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "cardType": "gem1"
+      }
+    ],
+    "inheritFrom": {
+      "gemPlusHolder1": "*"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 0,
+    "stackOffsetY": 0,
+    "enterRoutine": [],
+    "dropLimit": -1,
+    "linkedToSeat": "seat1",
+    "onlyVisibleForSeat": "seat1"
+  },
+  "gemExpHolder1-2": {
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "type": "holder",
+    "id": "gemExpHolder1-2",
+    "x": 34,
+    "y": 90,
+    "dropTarget": [
+      {
+        "cardType": "gem2"
+      }
+    ],
+    "onlyVisibleForSeat": "seat1"
+  },
+  "gemExpHolder1-3": {
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "type": "holder",
+    "id": "gemExpHolder1-3",
+    "x": 69,
+    "y": 90,
+    "dropTarget": [
+      {
+        "cardType": "gem3"
+      }
+    ],
+    "onlyVisibleForSeat": "seat1"
+  },
+  "gemExpHolder1-4": {
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "type": "holder",
+    "id": "gemExpHolder1-4",
+    "x": 104,
+    "y": 90,
+    "dropTarget": [
+      {
+        "cardType": "gem4"
+      }
+    ],
+    "onlyVisibleForSeat": "seat1"
+  },
+  "gemExpHolder1-5": {
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "type": "holder",
+    "id": "gemExpHolder1-5",
+    "x": 139,
+    "y": 90,
+    "dropTarget": [
+      {
+        "cardType": "gem5"
+      }
+    ],
+    "onlyVisibleForSeat": "seat1"
+  },
+  "gemExpHolder2-1": {
+    "type": "holder",
+    "id": "gemExpHolder2-1",
+    "x": -1,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "parent": "seatArea2",
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "gemExpHolder2-2": {
+    "type": "holder",
+    "id": "gemExpHolder2-2",
+    "parent": "seatArea2",
+    "x": 34,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-2": "*"
+    },
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "gemExpHolder2-3": {
+    "type": "holder",
+    "id": "gemExpHolder2-3",
+    "parent": "seatArea2",
+    "x": 69,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-3": "*"
+    },
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "gemExpHolder2-4": {
+    "type": "holder",
+    "id": "gemExpHolder2-4",
+    "parent": "seatArea2",
+    "x": 104,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-4": "*"
+    },
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "gemExpHolder2-5": {
+    "type": "holder",
+    "id": "gemExpHolder2-5",
+    "parent": "seatArea2",
+    "x": 139,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-5": "*"
+    },
+    "linkedToSeat": "seat2",
+    "onlyVisibleForSeat": "seat2"
+  },
+  "gemExpHolder3-5": {
+    "type": "holder",
+    "id": "gemExpHolder3-5",
+    "parent": "seatArea3",
+    "x": 139,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-5": "*"
+    },
+    "linkedToSeat": "seat3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "gemExpHolder3-1": {
+    "type": "holder",
+    "id": "gemExpHolder3-1",
+    "x": -1,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "gemExpHolder3-2": {
+    "type": "holder",
+    "id": "gemExpHolder3-2",
+    "x": 34,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-2": "*"
+    },
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "gemExpHolder3-3": {
+    "type": "holder",
+    "id": "gemExpHolder3-3",
+    "x": 69,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-3": "*"
+    },
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "gemExpHolder3-4": {
+    "type": "holder",
+    "id": "gemExpHolder3-4",
+    "x": 104,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-4": "*"
+    },
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3",
+    "onlyVisibleForSeat": "seat3"
+  },
+  "gemExpHolder4-1": {
+    "type": "holder",
+    "id": "gemExpHolder4-1",
+    "x": -1,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-1": "*"
+    },
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "gemExpHolder4-2": {
+    "type": "holder",
+    "id": "gemExpHolder4-2",
+    "x": 34,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-2": "*"
+    },
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "gemExpHolder4-3": {
+    "type": "holder",
+    "id": "gemExpHolder4-3",
+    "x": 69,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-3": "*"
+    },
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "gemExpHolder4-4": {
+    "type": "holder",
+    "id": "gemExpHolder4-4",
+    "x": 104,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-4": "*"
+    },
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "gemExpHolder4-5": {
+    "type": "holder",
+    "id": "gemExpHolder4-5",
+    "x": 139,
+    "y": 90,
+    "inheritFrom": {
+      "gemExpHolder1-5": "*"
+    },
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "onlyVisibleForSeat": "seat4"
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -5,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214",
+    "movableInEdit": false,
+    "activeFace": 1,
+    "clickable": false
+  },
+  "line1": {
+    "id": "line1",
+    "x": 25,
+    "y": 450,
+    "width": 0,
+    "borderRadius": "3px",
+    "layer": -4,
+    "css": {
+      "border": "4px solid #00000030"
+    },
+    "parent": "board3",
+    "movable": false,
+    "movableInEdit": false,
+    "height": 120
+  },
+  "line2": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line2",
+    "x": 115,
+    "y": 450
+  },
+  "line3": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line3",
+    "x": 247,
+    "y": 507,
+    "height": 60
+  },
+  "line4": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line4",
+    "x": 385,
+    "y": 450,
+    "activeFace": 0
+  },
+  "line5": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line5",
+    "x": 25,
+    "y": 195,
+    "height": 120
+  },
+  "line6": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line6",
+    "x": 115,
+    "y": 195,
+    "height": 120
+  },
+  "line7": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line7",
+    "x": 205,
+    "y": 195,
+    "height": 120
+  },
+  "line8": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line8",
+    "x": 295,
+    "y": 195,
+    "height": 75
+  },
+  "line9": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line9",
+    "x": 385,
+    "y": 195,
+    "height": 75
+  },
+  "line10": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line10",
+    "x": 25,
+    "y": 20,
+    "height": 75
+  },
+  "line11": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line11",
+    "x": 115,
+    "y": 20,
+    "height": 75
+  },
+  "line12": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line12",
+    "x": 205,
+    "y": 20,
+    "height": 75
+  },
+  "line13": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line13",
+    "x": 295,
+    "y": 20,
+    "height": 75
+  },
+  "line14": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line14",
+    "x": 385,
+    "y": 20,
+    "height": 75
+  },
+  "line15": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line15",
+    "x": 70,
+    "y": 306,
+    "activeFace": 0,
+    "rotation": 35,
+    "height": 152,
+    "hoverParent": "board3"
+  },
+  "line16": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line16",
+    "x": 70,
+    "y": 307,
+    "height": 152,
+    "rotation": -35,
+    "hoverParent": "board3",
+    "activeFace": 0
+  },
+  "line17": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line17",
+    "x": 160,
+    "y": 306,
+    "height": 152,
+    "rotation": 35,
+    "hoverParent": "board3"
+  },
+  "line18": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line18",
+    "x": 183,
+    "y": 300,
+    "height": 225,
+    "rotation": -35,
+    "hoverParent": "board3"
+  },
+  "line19": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line19",
+    "x": 270,
+    "y": 440,
+    "activeFace": 0,
+    "height": 70,
+    "rotation": 35
+  },
+  "line20": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line20",
+    "x": 292,
+    "y": 388,
+    "height": 55,
+    "hoverParent": "board3"
+  },
+  "line21": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line21",
+    "x": 296,
+    "y": 276,
+    "height": 220,
+    "rotation": -54,
+    "hoverParent": "board3"
+  },
+  "line22": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line22",
+    "x": 339,
+    "y": 253,
+    "height": 152,
+    "rotation": 38,
+    "hoverParent": "board3"
+  },
+  "line23": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line23",
+    "x": 71,
+    "y": 241,
+    "height": 100,
+    "rotation": -58,
+    "hoverParent": "board3"
+  },
+  "line24": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line24",
+    "x": 162,
+    "y": 191,
+    "rotation": 58,
+    "hoverParent": "board3",
+    "height": 100
+  },
+  "line25": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line25",
+    "x": 250,
+    "y": 244,
+    "rotation": 62,
+    "hoverParent": "board3",
+    "height": 100
+  },
+  "line26": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line26",
+    "x": 319,
+    "y": 265,
+    "rotation": -38,
+    "height": 70,
+    "hoverParent": "board3"
+  },
+  "line27": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line27",
+    "x": 70,
+    "y": 80,
+    "height": 130,
+    "rotation": -43,
+    "hoverParent": "board3"
+  },
+  "line28": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line28",
+    "x": 70,
+    "y": 81,
+    "height": 130,
+    "rotation": 43,
+    "hoverParent": "board3"
+  },
+  "line29": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line29",
+    "x": 161,
+    "y": 80,
+    "height": 130,
+    "rotation": 43,
+    "hoverParent": "board3"
+  },
+  "line30": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line30",
+    "x": 159,
+    "y": 82,
+    "height": 130,
+    "rotation": -43,
+    "hoverParent": "board3"
+  },
+  "line31": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line31",
+    "x": 251,
+    "y": 82,
+    "height": 130,
+    "rotation": 43,
+    "hoverParent": "board3"
+  },
+  "line32": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line32",
+    "x": 250,
+    "y": 81,
+    "height": 130,
+    "rotation": -43,
+    "hoverParent": "board3"
+  },
+  "line33": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line33",
+    "x": 340,
+    "y": 81,
+    "height": 130,
+    "rotation": 43,
+    "hoverParent": "board3"
+  },
+  "line34": {
+    "inheritFrom": {
+      "line1": "*"
+    },
+    "id": "line34",
+    "x": 340,
+    "y": 83,
+    "height": 130,
+    "rotation": -43,
+    "hoverParent": "board3"
+  },
+  "gemChart3": {
+    "id": "gemChart3",
+    "x": 130,
+    "y": 7,
+    "width": 380,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      " table": {
+        "width": "100%"
+      },
+      " td, th": {
+        "border": "1px solid black",
+        "padding": "6px"
+      },
+      " th": {
+        "background-color": "#c0c0c0"
+      },
+      " td": {
+        "background-color": "#efefef",
+        "text-align": "center"
+      }
+    },
+    "html": "<table> <tr> <th>Gem Colors</th> <td>0</td> <td>1</td> <td>2</td> <td>3</td> <td>4</td> <td>5</td> </tr> <tr> <th>Points</th> <td>-4</td> <td>-3</td> <td>2</td> <td>3</td> <td>6</td> <td>10</td> </tr> </table> <table> <tr> <th>+10 for each set of 3 of the same color</th> </table>",
+    "activeFace": 1,
+    "layer": -4,
+    "height": 110,
+    "display": false
+  },
+  "takeAbstractButton": {
+    "type": "button",
+    "id": "takeAbstractButton",
+    "x": 111,
+    "y": 120,
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "${PROPERTY parent}",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "GET",
+        "property": "z",
+        "aggregation": "max"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "z",
+        "value": "${z}"
+      },
+      {
+        "func": "MOVE",
+        "to": "hand"
+      },
+      {
+        "func": "DELAY",
+        "milliseconds": 1000
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "turnButton"
+        ]
+      }
+    ],
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "${PROPERTY bgColor}80",
+        "--wcBorder": "${PROPERTY bgColor}",
+        "--wcMainOH": "${PROPERTY bgColor}",
+        "--wcBorderOH": "#000000"
+      },
+      "::after": {
+        "content": "'Take card'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "84px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "image": "i/icons/card.svg",
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "parent": "abstractDiscard",
+    "bgColor": "#2673b4"
+  },
+  "takeAcornButton": {
+    "type": "button",
+    "id": "takeAcornButton",
+    "parent": "acornDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#e09e00"
+  },
+  "takeHeartButton": {
+    "type": "button",
+    "id": "takeHeartButton",
+    "parent": "heartDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#c679a8"
+  },
+  "takeLeafButton": {
+    "type": "button",
+    "id": "takeLeafButton",
+    "parent": "leafDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#319e72"
+  },
+  "takeSnowButton": {
+    "type": "button",
+    "id": "takeSnowButton",
+    "parent": "snowDiscard",
+    "x": 111,
+    "y": 120,
+    "inheritFrom": {
+      "takeAbstractButton": "*"
+    },
+    "bgColor": "#66b5eb"
+  },
+  "actionPile": {
     "type": "pile",
     "parent": "actionDeckHolder",
     "x": 4,
@@ -6919,6 +10271,28 @@
     "height": 30,
     "handleOffset": 5,
     "handlePosition": "top left",
-    "id": "c2cg"
+    "id": "actionPile"
+  },
+  "actionPile3": {
+    "type": "pile",
+    "parent": "actionDeckHolder3",
+    "x": 4,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "handleOffset": 5,
+    "handlePosition": "top left",
+    "id": "actionPile3"
+  },
+  "gemPile": {
+    "type": "pile",
+    "parent": "gemDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 30,
+    "height": 30,
+    "handleOffset": 5,
+    "handlePosition": "top left",
+    "id": "gemPile"
   }
 }
