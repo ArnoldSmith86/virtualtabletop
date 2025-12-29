@@ -103,6 +103,41 @@ Finally, we appreciate donations that go towards paying for the domain name, the
 
 Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.
 
+## 🧩 Similar platforms
+
+Note that virtualtabletop.io is heavily inspired by playingcards.io. We spent a lot of time building [games](https://www.reddit.com/r/PlayingCardsIO/) and [tools](https://www.reddit.com/r/PlayingCardsIO/comments/inuocb/pcio_editor/) for playingcards.io. It is an amazing platform and definitely easier to get into than virtualtabletop.io but at some point, we craved more features and were afraid of the platform simply disappearing - making our games and tools useless. So in October 2020, a spark by Castux [ignited a fire in me](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/comment/ga5zp5b/) to create an open source, self-hostable alternative.
+
+But who knows, maybe you'll enjoy a different platform more than ours:
+
+| Platform | Free | Open Source | Browser-Based | Create Own Games | No account | Ad-Free | Rule enforcement | Real-time | Asynchronous | AI Opponents | Mobile Support |
+|----------|------|-------------|---------------|------------------|------------|---------|-----------------|-----------|--------------|--------------|---------------|
+| **[18xx.games](https://18xx.games)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| **[Board Game Arena](https://boardgamearena.com)** | 💎 | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **[BoardGameGeek](https://boardgamegeek.com)** | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **[Boiteajeux](https://www.boiteajeux.net)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| **[BrettspielWelt](https://www.brettspielwelt.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **[CardGames.io](https://cardgames.io)** | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **[Foundry VTT](https://foundryvtt.com)** | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
+| **[FreeBoardGames.org](https://www.freeboardgames.org)** | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **[Happy Meeple](https://www.happymeeple.com)** | 💎 | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **[Ludus](https://ludus.one)** | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
+| **[NetTally](https://nettally.com)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| **[PlayingCards.io](https://playingcards.io)** | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ |
+| **[Pogo](https://www.pogo.com)** | 💎 | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **[Rally the Troops](https://rallythetroops.com)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ |
+| **[Roll20](https://roll20.net)** | 💎 | ❌ | ✅ | ✅ | ❌ | ❌ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
+| **[Screentop.gg](https://screentop.gg)** | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ⚙️ | ✅ | ❌ | ❌ | ✅ |
+| **[Tabletop Simulator](https://www.tabletopsimulator.com)** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ⚙️ | ✅ | ❌ | ✅ | ❌ |
+| **[Tabletopia](https://tabletopia.com)** | 💎 | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ |
+| **[Vassal](https://www.vassalengine.org)** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ |
+| **[VirtualTabletop.io](https://virtualtabletop.io)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ⚙️ | ✅ | ✅ | ❌ | ✅ |
+| **[Yucata](https://www.yucata.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| **[ZunTzu](https://www.zuntzu.com)** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ |
+
+> **Legend:**  
+> 💎 = Freemium (free tier with optional paid features)  
+> ⚙️ = Optional rule enforcement (can be enabled through scripting/modules/automation)  
+
 ## 📄 License
 
 The project is licensed under [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
