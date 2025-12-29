@@ -2077,7 +2077,7 @@ export class Widget extends StateManaged {
             }
           }
 
-          if (a.turnCycle != 'position' && a.turnCycle != 'seat') {
+          if (a.turnCycle != 'position' && a.turnCycle != 'seat' && a.turnCycle != 'random') {
             // rotate the set of seats so the current turn is first
             for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
               c.unshift(c.pop());
