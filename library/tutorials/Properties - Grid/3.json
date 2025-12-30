@@ -47,34 +47,11 @@
         "property": "text",
         "variable": "maththis"
       },
-      {
-        "func": "COMPUTE",
-        "operation": "/",
-        "applyVariables": [
-          {
-            "variable": "maththis",
-            "parameter": "operation"
-          },
-          {
-            "variable": "Num1",
-            "parameter": "operand1"
-          },
-          {
-            "variable": "Num2",
-            "parameter": "operand2"
-          }
-        ]
-      },
+      "var COMPUTE = ${Num1} 🧮maththis ${Num2}",
       {
         "func": "LABEL",
         "label": "Result-copy001-copy001",
-        "significantDigits": 3,
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "COMPUTE"
-          }
-        ]
+        "value": "${COMPUTE}"
       }
     ],
     "x": 2298,
@@ -169,9 +146,10 @@
             "y": 0,
             "width": 86.6,
             "height": 100,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -188,16 +166,16 @@
         {
           "x": 86.6,
           "y": 150,
-          "offsetX": 0,
-          "offsetY": 0,
-          "maxY": 810
+          "offsetX": -43.3,
+          "offsetY": -75,
+          "maxY": 735
         },
         {
           "x": 86.6,
           "y": 150,
-          "offsetX": 43.3,
-          "offsetY": 75,
-          "maxY": 810
+          "offsetX": 0,
+          "offsetY": 0,
+          "maxY": 735
         }
       ]
     }
@@ -284,7 +262,13 @@
     "y": 225
   },
   "_meta": {
-    "version": 2,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Properties - Grid",
       "image": "/assets/1094524990_4827",
@@ -295,7 +279,7 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1748991686627,
+      "lastUpdate": 1764393111717,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -354,9 +338,10 @@
             "y": 0,
             "width": 86.6,
             "height": 100,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -373,15 +358,15 @@
         {
           "x": 88.6,
           "y": 152,
-          "offsetX": 0,
-          "offsetY": 0
+          "offsetX": -44.3,
+          "offsetY": -76
         },
         {
           "x": 88.6,
           "y": 152,
-          "offsetX": 44.3,
-          "offsetY": 76,
-          "maxY": 810
+          "offsetX": 0,
+          "offsetY": 0,
+          "maxY": 734
         }
       ]
     },
@@ -586,9 +571,10 @@
             "y": 0,
             "width": 100,
             "height": 86.6,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -605,14 +591,14 @@
         {
           "x": 150,
           "y": 86.6,
-          "offsetX": 0,
-          "offsetY": 0
+          "offsetX": -75,
+          "offsetY": -43.3
         },
         {
           "x": 150,
           "y": 86.6,
-          "offsetX": 75,
-          "offsetY": 43.3
+          "offsetX": 0,
+          "offsetY": 0
         }
       ]
     },

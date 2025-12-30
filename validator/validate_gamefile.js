@@ -54,7 +54,7 @@ const COMMON_PROPERTIES = {
     layer: 'number',
     borderRadius: 'any',
     rotation: 'number',
-    scale: 'number',
+    scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
     dragLimit: 'any',
     classes: 'string',
@@ -217,7 +217,7 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note'];
+                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note', 'size'];
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
                                 problems.push({
@@ -1177,11 +1177,11 @@ function validateGameFile(data, checkMeta) {
         
         // BGG URL validation (skip for tutorials)
         const metaMode = (info.mode || '').toLowerCase();
-        if (metaMode !== 'tutorial' && !/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(info.bgg)) {
+        if (metaMode !== 'tutorial' && !/^https?:\/\/(www\.)?boardgamegeek\.com\/boardgame\//.test(info.bgg)) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'bgg'],
-                message: 'does not look like a BoardGameGeek URL'
+                message: 'does not look like a BoardGameGeek boardgame URL'
             });
         }
     

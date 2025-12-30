@@ -23,3 +23,7 @@
   background-position: center center;
   box-sizing: border-box;
 }
+
+.card > .cardFace > .cardFaceObject.html {
+  white-space: collapse;
+}

@@ -266,6 +266,80 @@ const jeCommands = [
     }
   },
   {
+    id: 'je_formatHTML',
+    name: 'format HTML',
+    context: '^.* ↦ ',
+    show: function() {
+      const value = jeGetValue();
+      if (!value || typeof value !== 'object') return false;
+      const key = jeGetLastKey();
+      const stringValue = value[key];
+      return typeof stringValue === 'string' && /<[^>]+>/.test(stringValue);
+    },
+    call: async function() {
+      const key = jeGetLastKey();
+      
+      // Get current indentation from the JSON structure
+      // Find the line with the property key
+      const aO = getSelection().anchorOffset;
+      const fO = getSelection().focusOffset;
+      const s = Math.min(aO, fO);
+      const v = jeGetEditorContent();
+      const lines = v.split('\n');
+      
+      // Find the line containing the property key
+      let propertyLineIndex = -1;
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].includes('"' + key + '"')) {
+          propertyLineIndex = i;
+          break;
+        }
+      }
+      
+      // If not found, use current line
+      if (propertyLineIndex === -1) {
+        propertyLineIndex = v.substr(0, s).split('\n').length - 1;
+      }
+      
+      const propertyLine = lines[propertyLineIndex] || '';
+      const indentMatch = propertyLine.match(/^(\s*)/);
+      const propertyIndent = indentMatch ? indentMatch[1] : '';
+      
+      // Format HTML with indentation (property indent + 2 spaces for HTML content)
+      const htmlIndent = propertyIndent + '  ';
+      
+      let stringStart = -1;
+      let stringEnd = -1;
+      
+      for (let i = s; i >= 0; i--) {
+        if (v[i] === '"' && (i === 0 || v[i-1] !== '\\')) {
+          stringStart = i;
+          break;
+        }
+      }
+      
+      for (let i = Math.max(s, stringStart + 1); i < v.length; i++) {
+        if (v[i] === '"' && v[i-1] !== '\\') {
+          stringEnd = i;
+          break;
+        }
+      }
+      
+      if (stringStart === -1 || stringEnd === -1) {
+        return;
+      }
+      
+      const htmlContent = v.substring(stringStart + 1, stringEnd);
+      const formattedHTML = jeFormatHTML(htmlContent, htmlIndent);
+      const newContent = v.substring(0, stringStart + 1) + '\n' + formattedHTML + '\n' + propertyIndent + v.substring(stringEnd);
+      
+      jeSetEditorContent(newContent);
+      jeColorize();
+      const newStringEnd = stringStart + 1 + formattedHTML.length + 2 + propertyIndent.length;
+      jeSelect(stringStart + 1, newStringEnd, true);
+    }
+  },
+  {
     id: 'je_colorPicker',
     name: 'change color',
     options: [ { type: 'color', label: 'color' } ],
@@ -442,7 +516,7 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
+      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
       if(Array.isArray(jeGetValueAt('icon'))) {
         const current = jeGetValueAt('icon');
         const name = current[jeGetKeyAfter('icon')];
@@ -1414,7 +1488,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
-  jeAddEnumCommands('^.*\\((CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
@@ -1715,17 +1789,19 @@ function jeAddWidgetPropertyCommands(object, widgetBase) {
     if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
-  jeCommands.push({
-    id: 'addWidget_' + type,
-    name: `add ${type} widget`,
-    context: 'No widget selected.',
-    onEmpty: true,
-    call: async function() {
-      const newWidget = widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type}));
-      setSelection([ newWidget ]);
-      jeSelectWidget(newWidget);
-    }
-  });
+  if(type != 'card' && type != 'pile') {
+    jeCommands.push({
+      id: 'addWidget_' + type,
+      name: `add ${type} widget`,
+      context: 'No widget selected.',
+      onEmpty: true,
+      call: async function() {
+        const newWidget = widgets.get(await addWidgetLocal(type == 'basic' ? {} : {type}));
+        setSelection([ newWidget ]);
+        jeSelectWidget(newWidget);
+      }
+    });
+  }
   return type == 'basic' ? null : type;
 }
 
@@ -2038,7 +2114,9 @@ function jeSelectWidget(widget, addToSelection) {
     jeStateNow = JSON.parse(JSON.stringify(widget.state));
     if(newCursorState && newCursorState.defaultValueToAdd && jeStateNow[newCursorState.defaultValueToAdd] === undefined)
       jeStateNow[newCursorState.defaultValueToAdd] = jeWidget.getDefaultValue(newCursorState.defaultValueToAdd);
-    jeSet(jeStateBefore = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  ')),);
+    const jsonString = JSON.stringify(jePreProcessObject(jeStateNow), null, '  ');
+    jeStateBefore = jePreProcessText(jsonString);
+    jeSet(jePreProcessText(jsonString, false));
     editPanel.style.setProperty('--treeHeight', "20%");
   }
 
@@ -2229,6 +2307,30 @@ function jeColorize() {
   let out = [];
   let nr = 0;
   function push(line) {
+    // Highlight HTML tags and attributes
+    line = line.replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9]*)(.*?)(&gt;)/g, (m, open, tag, attrs, close) => {
+      // Highlight tag name
+      let result = open + `<i class=htmltag>${tag}</i>`;
+      // Highlight attributes: attr="value" or attr='value'
+      attrs = attrs.replace(/(\s+)([a-zA-Z][a-zA-Z0-9-]*)(\s*=\s*)('|\\&quot;)([^&']*)(\4)/g, 
+        (m, ws, attr, eq, quote, value, quoteEnd) => {
+          if(attr === 'style') {
+            // Highlight CSS properties and values separately
+            value = value.replace(/([a-zA-Z-]+)(\s*:\s*)([^;]+)/g, 
+              (m, prop, colon, val) => `<i class=csskey>${prop}</i>${colon}<i class=cssvalue>${val.trim()}</i>`
+            );
+            return ws + `<i class=htmlattr>${attr}</i>${eq}${quote}${value}${quoteEnd}`;
+          }
+          return ws + `<i class=htmlattr>${attr}</i>${eq}${quote}<i class=htmlvalue>${value}</i>${quoteEnd}`;
+        }
+      );
+      result += attrs + close;
+      return result;
+    });
+
+    // Highlight variables
+    line = line.replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`);
+
     out.push(`<div class=jeTextLine><span class=jeLineNumber>${nr}</span><span class=jeLineContent>${line}</span></div>`);
   }
   for(let line of jeGetEditorContent().split('\n')) {
@@ -2248,11 +2350,11 @@ function jeColorize() {
           c[2] = 'custom';
 
         for(let i=1; i<l.length; ++i) {
-          if(l[i] && match[i]) {
+          if(c[i] === 'string' && /<[^>]+>/.test(match[i]))
+            c[i] = null;
+          if(c[i] && match[i])
             match[i] = `<i class=${c[i]}>${html(match[i])}</i>`;
-            if(l[i]=='string' || l[i]=='key')
-              match[i] = match[i].replace(/\$\{[^}]+\}/g, m=>`<i class=variable>${m}</i>`)
-          } else if(match[i])
+          else if(match[i])
             match[i] = html(match[i]);
         }
 
@@ -2429,7 +2531,7 @@ function jeGetContext() {
   }
 
   try {
-    jeStateNow = JSON.parse(v.replace(/,(?=\n *[\]}],?$)/gm, ''));
+    jeStateNow = JSON.parse(jePostProcessText(v));
 
     if(!jeStateNow.id)
       jeJSONerror = 'No ID given.';
@@ -2455,11 +2557,21 @@ function jeGetContext() {
   // go through all the lines up until the cursor and use the indentation to figure out the context
   let keys = [ jeStateNow && jeStateNow.type || 'basic' ];
   for(const line of v.split('\n').slice(0, v.substr(0, s).split('\n').length)) {
-    const m = line.match(/^( +)(["{ftn0-9-])([^"]*)/);
-    if(m) {
-      const depth = m[1].length/2;
-      keys[depth] = m[2]=='{' || line.match(/^ +("[^"]*"|false|true|null|-?[0-9]+\.?[0-9]*),?$/) ? (keys[depth] === undefined ? -1 : keys[depth]) + 1 : m[3];
+    const keyMatch = line.match(/^(\s+)"((?:\\.|[^"\\])*)"\s*:/);
+    if(keyMatch) {
+      const depth = keyMatch[1].length/2;
+      keys[depth] = keyMatch[2];
       keys = keys.slice(0, depth+1);
+      continue;
+    }
+
+    const valueMatch = line.match(/^( +)(["{ftn0-9-])/);
+    if(valueMatch) {
+      const depth = valueMatch[1].length/2;
+      if(valueMatch[2]=='{' || line.match(/^ +("[^"]*"|false|true|null|-?[0-9]+\.?[0-9]*),?$/)) {
+        keys[depth] = (keys[depth] === undefined ? -1 : keys[depth]) + 1;
+        keys = keys.slice(0, depth+1);
+      }
     }
     const mClose = line.match(/^( *)[\]}]/);
     if(mClose)
@@ -2574,6 +2686,192 @@ function jeGetKeyAfter(key) {
     if(key == k)
       found = true;
   }
+}
+
+function jeIsInlineTag(tagName) {
+  return [ 'a', 'abbr', 'acronym', 'b', 'bdo', 'big', 'br', 'button', 'cite', 'em', 'i', 'img', 'label', 'map', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'var', 'strike' ].indexOf(tagName.toLowerCase()) != -1;
+}
+
+function jeFormatHTML(html, baseIndent) {
+  if (!html || !html.trim()) return html;
+  
+  const trimmed = html.replace(/\n\s*/g, ' ').trim();
+  const selfClosingTags = ['br', 'hr', 'img', 'input', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr'];
+  
+  function findMatchingClosingTag(startPos, tagName) {
+    let pos = startPos;
+    let nestedDepth = 1;
+    
+    while (pos < trimmed.length) {
+      const nextTag = trimmed.indexOf('<', pos);
+      if (nextTag === -1) return { start: -1, end: -1 };
+      
+      const tagEnd = trimmed.indexOf('>', nextTag);
+      if (tagEnd === -1) return { start: -1, end: -1 };
+      
+      const tagContent = trimmed.substring(nextTag + 1, tagEnd);
+      const isClosing = tagContent.trim().startsWith('/');
+      const currentTagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
+      const isSelfClosing = selfClosingTags.includes(currentTagName) || tagContent.trim().endsWith('/');
+      
+      if (!isClosing && currentTagName === tagName && !isSelfClosing) {
+        nestedDepth++;
+      } else if (isClosing && currentTagName === tagName) {
+        nestedDepth--;
+        if (nestedDepth === 0) {
+          return { start: nextTag, end: tagEnd + 1 };
+        }
+      }
+      
+      pos = tagEnd + 1;
+    }
+    
+    return { start: -1, end: -1 };
+  }
+  
+  function containsBlockChild(contentStart, contentEnd) {
+    let pos = trimmed.indexOf('<', contentStart);
+    while (pos !== -1 && pos < contentEnd) {
+      const tagEnd = trimmed.indexOf('>', pos);
+      if (tagEnd === -1 || tagEnd > contentEnd) break;
+      const tagInner = trimmed.substring(pos + 1, tagEnd).trim();
+      const isClosing = tagInner.startsWith('/');
+      const tagName = (isClosing ? tagInner.substring(1) : tagInner).split(/\s/)[0].toLowerCase();
+      const isSelfClosing = selfClosingTags.includes(tagName) || tagInner.endsWith('/');
+      if (!isClosing && !isSelfClosing && !jeIsInlineTag(tagName)) {
+        return true;
+      }
+      pos = trimmed.indexOf('<', tagEnd + 1);
+    }
+    return false;
+  }
+
+  function formatContent(startPos, endPos, currentDepth, parentIsBlock) {
+    const result = [];
+    let i = startPos;
+    const currentIndent = baseIndent + '  '.repeat(currentDepth);
+    let lineBuffer = '';
+    let lineLength = 0;
+    
+    function flushLine() {
+      if (!parentIsBlock || !lineLength) return;
+      result.push(currentIndent + lineBuffer);
+      lineBuffer = '';
+      lineLength = 0;
+    }
+    
+    function appendToken(tokenText) {
+      if (!parentIsBlock) return;
+      const trimmedToken = tokenText.replace(/\s+/g, ' ').trim();
+      if (!trimmedToken) return;
+      const tokenLength = trimmedToken.length;
+      
+      if (tokenLength > 60) {
+        flushLine();
+        result.push(currentIndent + trimmedToken);
+        return;
+      }
+      
+      if (lineLength && lineLength + 1 + tokenLength > 60) {
+        flushLine();
+      }
+      
+      if (lineLength) {
+        lineBuffer += ' ';
+        lineLength += 1;
+      }
+      
+      lineBuffer += trimmedToken;
+      lineLength += tokenLength;
+    }
+    
+    while (i < endPos) {
+      if (trimmed[i] === '<') {
+        const tagEnd = trimmed.indexOf('>', i);
+        if (tagEnd === -1 || tagEnd >= endPos) break;
+        
+        const tagContent = trimmed.substring(i + 1, tagEnd);
+        const isClosing = tagContent.trim().startsWith('/');
+        const tagName = (isClosing ? tagContent.substring(1) : tagContent).trim().split(/\s/)[0].toLowerCase();
+        const isSelfClosing = selfClosingTags.includes(tagName) || tagContent.trim().endsWith('/');
+        const isInlineTag = jeIsInlineTag(tagName);
+        
+        if (isClosing) {
+          flushLine();
+          result.push(baseIndent + '  '.repeat(Math.max(0, currentDepth - 1)) + '<' + tagContent + '>');
+          i = tagEnd + 1;
+        } else if (isSelfClosing) {
+          flushLine();
+          result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
+          i = tagEnd + 1;
+        } else {
+          const closingTag = findMatchingClosingTag(tagEnd + 1, tagName);
+          if (closingTag.end !== -1 && closingTag.end <= endPos) {
+            const fullTagContent = trimmed.substring(i, closingTag.end).trim();
+            const hasBlockChild = containsBlockChild(tagEnd + 1, closingTag.start);
+            if (isInlineTag) {
+              if (parentIsBlock) {
+                appendToken(fullTagContent);
+              } else {
+                result.push(baseIndent + '  '.repeat(currentDepth) + fullTagContent);
+              }
+              i = closingTag.end;
+            } else if (!hasBlockChild && fullTagContent.length <= 60) {
+              flushLine();
+              result.push(baseIndent + '  '.repeat(currentDepth) + fullTagContent);
+              i = closingTag.end;
+            } else {
+              flushLine();
+              result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
+              const nestedResult = formatContent(tagEnd + 1, closingTag.start, currentDepth + 1, true);
+              result.push(...nestedResult);
+              const actualClosingTag = trimmed.substring(closingTag.start, closingTag.end);
+              result.push(baseIndent + '  '.repeat(currentDepth) + actualClosingTag);
+              i = closingTag.end;
+            }
+          } else {
+            result.push(baseIndent + '  '.repeat(currentDepth) + '<' + tagContent + '>');
+            i = tagEnd + 1;
+          }
+        }
+      } else {
+        const nextTag = trimmed.indexOf('<', i);
+        if (nextTag === -1 || nextTag >= endPos) {
+          const textContent = trimmed.substring(i, endPos).trim();
+          if (textContent) {
+            if (parentIsBlock) {
+              const words = textContent.split(/\s+/);
+              for (const word of words) {
+                appendToken(word);
+              }
+            } else {
+              result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+            }
+          }
+          break;
+        }
+        
+        const textContent = trimmed.substring(i, nextTag).trim();
+        if (textContent) {
+          if (parentIsBlock) {
+            const words = textContent.split(/\s+/);
+            for (const word of words) {
+              appendToken(word);
+            }
+          } else {
+            result.push(baseIndent + '  '.repeat(currentDepth) + textContent);
+          }
+        }
+        i = nextTag;
+      }
+    }
+    
+    flushLine();
+    
+    return result;
+  }
+  
+  return formatContent(0, trimmed.length, 0, false).join('\n');
 }
 
 // START routine logging
@@ -2792,7 +3090,46 @@ function jePostProcessObject(o) {
 }
 
 function jePostProcessText(t) {
-  return t;
+  // Convert actual newlines within JSON strings back to \n escape sequences
+  let result = '';
+  let inString = false;
+  let escapeNext = false;
+  
+  for (let i = 0; i < t.length; i++) {
+    const char = t[i];
+    
+    if (escapeNext) {
+      result += char;
+      escapeNext = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escapeNext = true;
+      result += char;
+      continue;
+    }
+    
+    if (char === '"') {
+      inString = !inString;
+      result += char;
+      continue;
+    }
+    
+    if (inString && char === '\n') {
+      // Replace actual newline with \n escape sequence
+      result += '\\n';
+    } else {
+      result += char;
+    }
+  }
+  
+  // Handle case where escapeNext is still true at end (shouldn't happen in valid JSON, but be safe)
+  if (escapeNext) {
+    result += '\\';
+  }
+  
+  return result;
 }
 
 function jePreProcessObject(o) {
@@ -2836,8 +3173,44 @@ function jePreProcessObject(o) {
   return copy;
 }
 
-function jePreProcessText(t) {
-  return t.replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
+function jePreProcessText(t, returnValidJSON=true) {
+  t = t.replace(/,(?=\n *[\]}],?$)/gm, '').replace(/(\n +"LINEBREAK.*": null,)+/g, '\n').replace(/(,\n?\n +"LINEBREAK.*": null)+/g, '');
+  if(returnValidJSON)
+    return t;
+
+  // Convert \n escape sequences within JSON strings to actual newlines for display
+  let result = '';
+  let inString = false;
+  let escapeNext = false;
+  
+  for (let i = 0; i < t.length; i++) {
+    const char = t[i];
+    
+    if (escapeNext) {
+      if (inString && char === 'n') {
+        result += '\n';
+      } else {
+        result += '\\' + char;
+      }
+      escapeNext = false;
+      continue;
+    }
+    
+    if (char === '\\') {
+      escapeNext = true;
+      continue;
+    }
+    
+    if (char === '"') {
+      inString = !inString;
+      result += char;
+      continue;
+    }
+    
+    result += char;
+  }
+  
+  return result;
 }
 
 // Select the characters in a given range in the text area.
@@ -2878,7 +3251,7 @@ function jeSelect(start, end, scrollToCursor) {
 // Set the text area to the formatted version of the given text and colorize.
 function jeSet(text) {
   try {
-    jeSetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  ')));
+    jeSetEditorContent(jePreProcessText(JSON.stringify(jePreProcessObject(JSON.parse(text)), null, '  '), false));
   } catch(e) {
     jeSetEditorContent(text);
   }
@@ -2893,7 +3266,7 @@ function jeSetAndSelect(replaceBy, insideString) {
   const dollar = replaceBy == '${}'; // ###SELECT ME### should be replaced by ${} (and this will be in a string)
 
   if(jeMode == 'widget')
-    var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '));
+    var jsonString = jePreProcessText(JSON.stringify(jePreProcessObject(jeStateNow), null, '  '), false);
   else
     var jsonString = JSON.stringify(jeStateNow, null, '  ');
   const startIndex = jsonString.indexOf(insideString ? '###SELECT ME###' : '"###SELECT ME###"');

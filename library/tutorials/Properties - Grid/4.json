@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 2,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Grid",
       "image": "/assets/1094524990_4827",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1748991686629,
+      "lastUpdate": 1764393111718,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -56,7 +59,7 @@
       {
         "x": 1,
         "y": 1,
-        "maxY": 250,
+        "maxY": 249.5,
         "options": [
           1,
           2,
@@ -64,13 +67,15 @@
           4,
           5,
           6
-        ]
+        ],
+        "offsetX": -0.5,
+        "offsetY": -0.5
       },
       {
         "x": 1,
         "y": 1,
-        "minY": 251,
-        "maxY": 500,
+        "minY": 250.5,
+        "maxY": 499.5,
         "options": [
           1,
           2,
@@ -84,13 +89,15 @@
           10,
           11,
           12
-        ]
+        ],
+        "offsetX": -0.5,
+        "offsetY": -0.5
       },
       {
         "x": 1,
         "y": 1,
-        "minY": 501,
-        "maxY": 750,
+        "minY": 500.5,
+        "maxY": 749.5,
         "options": [
           "🔴",
           "⚫",
@@ -100,13 +107,15 @@
           "🟢",
           "🟡",
           "🟠"
-        ]
+        ],
+        "offsetX": -0.5,
+        "offsetY": -0.5
       },
       {
         "x": 1,
         "y": 1,
-        "minY": 751,
-        "maxY": 1000,
+        "minY": 750.5,
+        "maxY": 999.5,
         "options": [
           "1",
           "❤︎",
@@ -114,7 +123,9 @@
           "⚡︎",
           "3",
           "💥︎"
-        ]
+        ],
+        "offsetX": -0.5,
+        "offsetY": -0.5
       }
     ],
     "angle": 98466
@@ -131,70 +142,86 @@
       {
         "x": 1,
         "y": 1,
-        "maxX": 800,
-        "maxY": 500,
-        "image": "/i/cards-default/AS.svg"
+        "maxX": 799.5,
+        "maxY": 499.5,
+        "image": "/i/cards-default/AS.svg",
+        "offsetX": -0.5,
+        "offsetY": -0.5
       },
       {
         "x": 1,
         "y": 1,
-        "minX": 800,
-        "maxY": 500,
-        "image": "/i/cards-default/AH.svg"
+        "minX": 799.5,
+        "maxY": 499.5,
+        "image": "/i/cards-default/AH.svg",
+        "offsetX": -0.5,
+        "offsetY": -0.5
       },
       {
         "x": 1,
         "y": 1,
-        "maxX": 800,
-        "minY": 500,
-        "image": "/i/cards-default/AD.svg"
+        "maxX": 799.5,
+        "minY": 499.5,
+        "image": "/i/cards-default/AD.svg",
+        "offsetX": -0.5,
+        "offsetY": -0.5
       },
       {
         "x": 1,
         "y": 1,
-        "minX": 800,
-        "minY": 500,
-        "image": "/i/cards-default/AC.svg"
+        "minX": 799.5,
+        "minY": 499.5,
+        "image": "/i/cards-default/AC.svg",
+        "offsetX": -0.5,
+        "offsetY": -0.5
       }
     ]
   },
   "ixld": {
     "classes": "classicPiece",
     "color": "red",
-    "width": 90,
-    "height": 90,
-    "x": 225,
-    "y": 225,
+    "width": 56,
+    "height": 84,
+    "x": 242,
+    "y": 228,
     "z": 81,
     "id": "ixld",
     "grid": [
       {
         "x": 50,
         "y": 50,
-        "maxX": 800,
-        "maxY": 500,
-        "scale": 1
+        "maxX": 775,
+        "maxY": 475,
+        "scale": 1,
+        "offsetX": -25,
+        "offsetY": -25
       },
       {
         "x": 50,
         "y": 50,
-        "minX": 800,
-        "maxY": 500,
-        "scale": 1.5
+        "minX": 775,
+        "maxY": 475,
+        "scale": 1.5,
+        "offsetX": -25,
+        "offsetY": -25
       },
       {
         "x": 50,
         "y": 50,
-        "maxX": 800,
-        "minY": 500,
-        "scale": 0.5
+        "maxX": 775,
+        "minY": 475,
+        "scale": 0.5,
+        "offsetX": -25,
+        "offsetY": -25
       },
       {
         "x": 50,
         "y": 50,
-        "minX": 800,
-        "minY": 500,
-        "scale": 2
+        "minX": 775,
+        "minY": 475,
+        "scale": 2,
+        "offsetX": -25,
+        "offsetY": -25
       }
     ]
   },

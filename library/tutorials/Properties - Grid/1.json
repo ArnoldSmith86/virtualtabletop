@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 2,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Grid",
       "image": "/assets/1094524990_4827",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "Good reference guide:\nhttps://www.redblobgames.com/grids/hexagons/#size-and-spacing\n\nAlso see the separate tutorial about hexagons.",
       "showName": false,
-      "lastUpdate": 1748991686622,
+      "lastUpdate": 1764393111714,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -73,12 +76,6 @@
     "id": "9wxrD",
     "parent": "9wxr",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -247,7 +244,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -262,8 +258,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -272,7 +269,9 @@
       "grid": [
         {
           "x": 103,
-          "y": 160
+          "y": 160,
+          "offsetX": -51.5,
+          "offsetY": -80
         }
       ]
     }
@@ -793,12 +792,6 @@
     "id": "moe3D",
     "parent": "moe3",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -967,7 +960,6 @@
             "y": 0,
             "width": 51,
             "height": 80,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -982,8 +974,9 @@
             "y": 0,
             "width": 51,
             "height": 80,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -991,42 +984,43 @@
     "cardDefaults": {
       "grid": [
         {
+          "offsetX": 50,
+          "x": 300,
+          "y": 173.2,
+          "rotation": 90,
+          "offsetY": -86.6
+        },
+        {
           "offsetX": 200,
+          "offsetY": 0,
           "x": 300,
           "y": 173.2,
           "rotation": 90
         },
         {
-          "offsetX": 350,
-          "offsetY": 86.6,
-          "x": 300,
-          "y": 173.2,
-          "rotation": 90
-        },
-        {
-          "offsetX": 125,
-          "offsetY": 43.3,
+          "offsetX": -25,
+          "offsetY": -43.3,
           "x": 300,
           "y": 173.2,
           "rotation": 210
         },
         {
+          "offsetX": -25,
+          "offsetY": 43.400000000000006,
+          "x": 300,
+          "y": 173.2,
+          "rotation": 330
+        },
+        {
           "offsetX": 125,
-          "offsetY": 130,
+          "offsetY": -43.3,
           "x": 300,
           "y": 173.2,
           "rotation": 330
         },
         {
-          "offsetX": 275,
-          "offsetY": 43.3,
-          "x": 300,
-          "y": 173.2,
-          "rotation": 330
-        },
-        {
-          "offsetX": 275,
-          "offsetY": 130,
+          "offsetX": 125,
+          "offsetY": 43.400000000000006,
           "x": 300,
           "y": 173.2,
           "rotation": 210
@@ -1597,17 +1591,18 @@
   "yw41": {
     "classes": "classicPiece",
     "color": "#bc5bee",
-    "width": 90,
-    "height": 90,
-    "x": 450,
-    "y": 665,
+    "width": 56,
+    "height": 84,
+    "x": 467,
+    "y": 668,
     "z": 773,
     "id": "yw41",
     "grid": [
       {
         "x": 100,
         "y": 100,
-        "offsetY": 15
+        "offsetY": -35,
+        "offsetX": -50
       }
     ]
   },
@@ -1624,16 +1619,17 @@
   "pcew": {
     "classes": "classicPiece",
     "color": "#bc5bee",
-    "width": 90,
-    "height": 90,
-    "x": 450,
-    "y": 765,
+    "width": 56,
+    "height": 84,
+    "x": 467,
+    "y": 768,
     "z": 777,
     "grid": [
       {
         "x": 100,
         "y": 100,
-        "offsetY": 15
+        "offsetY": -35,
+        "offsetX": -50
       }
     ],
     "id": "pcew"

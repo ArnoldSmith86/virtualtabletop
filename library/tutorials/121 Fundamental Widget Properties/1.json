@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "121 Fundamental Widget Properties",
       "image": "/assets/1251448927_9487",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051108626,
+      "lastUpdate": 1764462779923,
       "showName": false,
       "skill": "",
       "description": "",
@@ -132,7 +135,7 @@
   },
   "meeple": {
     "id": "meeple",
-    "x": 442,
+    "x": 370,
     "y": 842,
     "width": 56,
     "height": 56,
@@ -704,9 +707,9 @@
   "holder": {
     "type": "holder",
     "id": "holder",
-    "x": 1064,
-    "y": 549,
-    "z": 133,
+    "x": 496,
+    "y": 783,
+    "z": 134,
     "dropTarget": {
       "type": "card"
     }
@@ -732,7 +735,7 @@
     "width": 103,
     "height": 160,
     "id": "7gtc",
-    "z": 387,
+    "z": 389,
     "parent": "holder"
   },
   "p0m0": {
@@ -1254,5 +1257,45 @@
     "borderWidth": "1",
     "scale": 4,
     "movable": false
+  },
+  "text4": {
+    "id": "text4",
+    "x": 971,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "<b>Scale</b> can also be in the form of x/y representing horitzontal and vertical scale changes. For example, the first hand above has no <b>scale</b> applied. The second hand has <b>scale</b> of -1,1 and the last has a <b>scale</b> of 1,-1. The <b>scale</b> inverts the entire widget, so any text, other elements, or children of the widget are also scaled in the same way.",
+    "layer": -2
+  },
+  "example4-2": {
+    "id": "example4-2",
+    "x": 1074,
+    "y": 402,
+    "width": 80,
+    "height": 80,
+    "scale": "-1,1",
+    "image": "/i/noto-emoji/emoji_u1f44d.svg"
+  },
+  "example4-3": {
+    "id": "example4-3",
+    "x": 991,
+    "y": 402,
+    "width": 80,
+    "height": 80,
+    "image": "/i/noto-emoji/emoji_u1f44d.svg"
+  },
+  "example4-4": {
+    "id": "example4-4",
+    "x": 1157,
+    "y": 402,
+    "width": 80,
+    "height": 80,
+    "scale": "1,-1",
+    "image": "/i/noto-emoji/emoji_u1f44d.svg"
   }
 }
