@@ -615,7 +615,13 @@
     "text": "pow"
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Math",
       "image": "/assets/-762540666_7187",
@@ -626,7 +632,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748991409928,
+      "lastUpdate": 1763605553705,
       "skill": "",
       "description": "",
       "similarImage": "",

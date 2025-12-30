@@ -1113,8 +1113,8 @@ export class Widget extends StateManaged {
         }
 
         const execute = async function(widget) {
-          const cm = widget.getColorMap();
           if(widget.get('type') == 'canvas') {
+            const cm = widget.getColorMap();
             if(a.mode == 'setPixel') {
               const res = widget.getResolution();
               if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
@@ -2077,7 +2077,7 @@ export class Widget extends StateManaged {
             }
           }
 
-          if (a.turnCycle != 'position' && a.turnCycle != 'seat') {
+          if (a.turnCycle != 'position' && a.turnCycle != 'seat' && a.turnCycle != 'random') {
             // rotate the set of seats so the current turn is first
             for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
               c.unshift(c.pop());

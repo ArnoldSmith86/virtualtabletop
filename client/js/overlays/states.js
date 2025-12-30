@@ -522,7 +522,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
+    const variantText = Object.values(state.variants || {}).map(v => {
+      const variant = v.plStateID && states[v.plStateID] ? states[v.plStateID].variants[v.plVariantID] : v;
+      return variant && variant.variant;
+    }).filter(Boolean).join(' ');
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers} ${state.helpText} ${state.attribution} ${variantText}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
