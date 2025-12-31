@@ -15,7 +15,7 @@
       "time": "45",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
       "importerTime": 1766766964207,
-      "lastUpdate": 1767219859493,
+      "lastUpdate": 1767220445904,
       "importer": "TTS",
       "showName": true,
       "skill": "",
@@ -1127,7 +1127,7 @@
     "parent": "seatArea2",
     "linkedToSeat": "seat2",
     "color": "#e09e00",
-    "text": 5
+    "text": 0
   },
   "score2U": {
     "inheritFrom": {
@@ -1205,7 +1205,8 @@
     "type": "label",
     "parent": "seatArea3",
     "linkedToSeat": "seat3",
-    "color": "#319e72"
+    "color": "#319e72",
+    "text": 0
   },
   "score3U": {
     "inheritFrom": {
@@ -1284,7 +1285,7 @@
     "parent": "seatArea4",
     "linkedToSeat": "seat4",
     "color": "#66b5eb",
-    "text": 9
+    "text": 0
   },
   "score4U": {
     "inheritFrom": {
@@ -1921,6 +1922,14 @@
             ],
             "property": "display",
             "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "score${value}"
+            ],
+            "property": "text",
+            "value": 0
           }
         ]
       },
@@ -2278,7 +2287,8 @@
         ],
         "key": "id"
       }
-    ]
+    ],
+    "swapPlayers": 0
   },
   "deckHolder": {
     "type": "holder",
@@ -4297,8 +4307,7 @@
     "html": "<h3>Rule Variations</h3><br>Click to hide or cycle through options.",
     "opacity": 0,
     "parent": "ruleVariations1",
-    "x": 192,
-    "activeFace": 1
+    "x": 192
   },
   "librarySetupButton": {
     "type": "button",
