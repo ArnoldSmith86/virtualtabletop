@@ -15,7 +15,7 @@
       "time": "45",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
       "importerTime": 1766766964207,
-      "lastUpdate": 1766977973525,
+      "lastUpdate": 1767219859493,
       "importer": "TTS",
       "showName": true,
       "skill": "",
@@ -25,7 +25,7 @@
       "similarDesigner": "Iori Tsukinami",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "Players sit in seats. Press restart button in lower right to deal cards and begin. Player meeples are randomly distributed in areas 1-6 on the board. The turn indicator starts with the player that has the meeple in the highest numbered area.<div><br></div><div>Choose 2 cards to pass to right (play moves from left to right in the seats) by pressing the swap cards button in the card holder above your seat.</div><div><br></div><div>Double click a card to play it then manually resolve the card's effects. Hover over the Rounds, Cards, and Tricks buttons to see player aids.</div><div><br></div><div>The winner of the trick presses the hand icon to take the trick and move the turn indicator. The history log will calculate the influence points for each player in the trick winner's area, but not the ranking or victory points. Manually add victory points to the score counters above each seat.</div><div><br></div><div>During the last trick of a round, pressing the hand icon will calculate the influence points for each player in each area, but not ranking or victory points. Manually add victory points. The current round's row is highlighted in black in each area's score chart.</div><div><br></div><div>Press the scroll icon to see the full history log in reverse chronological order.</div><div><br></div><div>To use the rule variations, click on the small dice button above the hand to randomly select 2 rules. Click the rules cards to cycle through the 6 available options.</div><div><br></div><div>You can manually adjust the turn indicator by using the play icon to the left of the hand. You can sort just your cards by clicking on the sort button to the left of the hand.</div><div><br></div><div>After a round, press the next round indicator button which shows I, II, or III.</div>",
+      "helpText": "Players sit in seats. Press restart button in lower right to deal cards and begin. Player meeples are randomly distributed in areas 1-6 on the board. The turn indicator starts with the player that has the meeple in the highest numbered area.<div><br></div><div>Choose 2 cards to pass, flip them upside down, and drag them to the holder above the seat of the player to your right (play moves from left to right).</div><div><br></div><div>Double click a card to play it then manually resolve the card's effects. Hover over the Rounds, Cards, and Tricks buttons to see player aids.</div><div><br></div><div>The winner of the trick presses the hand icon to take the trick and move the turn indicator. The history log will calculate the influence points for each player in the trick winner's area, but not the ranking or victory points. Manually add victory points to the score counters above each seat.</div><div><br></div><div>During the last trick of a round, pressing the hand icon will calculate the influence points for each player in each area, but not ranking or victory points. Manually add victory points. The current round's row is highlighted in black in each area's score chart.</div><div><br></div><div>Press the scroll icon to see the full history log in reverse chronological order.</div><div><br></div><div>To use the rule variations, click on the small dice button above the hand to randomly select 2 rules. Click the rules cards to cycle through the 6 available options.</div><div><br></div><div>You can manually adjust the turn indicator by using the play icon to the left of the hand. You can sort just your cards by clicking on the sort button to the left of the hand.</div><div><br></div><div>After a round, press the next round indicator button which shows I, II, or III.</div>",
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -2140,7 +2140,39 @@
         "widget": "historyLabel",
         "routine": "addendumRoutine",
         "arguments": {
-          "addendum": "<span class='emBlack'>ALL PLAYERS: Press <span style='display:inline-block;width:1em;height:1em;vertical-align:middle;background-color:#ffffff;mask:url(/i/game-icons.net/delapouite/card-exchange.svg) no-repeat center / contain'></span> button to swap</span>"
+          "addendum": "<span class='emBlack'>ALL PLAYERS: Swap 2 cards</span>"
+        }
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${index}"
+        ],
+        "property": "player"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${index}"
+        ],
+        "property": "color"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span style='color:${color}'><b>${player}</b></span> leads the 1st trick"
         }
       },
       "// This is the only way I can figure out to get the cubes starting holders and properties they way they need to be",
@@ -2149,7 +2181,6 @@
         "routine": "fixCubesRoutine"
       }
     ],
-    "swapPlayers": 0,
     "fixCubesRoutine": [
       {
         "func": "SELECT",
@@ -2761,189 +2792,6 @@
       }
     ]
   },
-  "swapButton1": {
-    "type": "button",
-    "id": "swapButton1",
-    "x": 60,
-    "width": 50,
-    "height": 50,
-    "borderRadius": 8,
-    "color": "white",
-    "css": {
-      "default": {
-        "font-size": "39px",
-        "--wcMain": "black",
-        "--wcBorder": "white",
-        "--wcMainOH": "grey",
-        "--wcBorderOH": "black"
-      },
-      "::after": {
-        "content": "'Swap cards'",
-        "display": "none",
-        "position": "absolute",
-        "margin-top": "80px",
-        "margin-left": "0px",
-        "color": "black",
-        "font-size": "14px",
-        "font-family": "roboto"
-      },
-      ":hover::after": {
-        "display": "block"
-      }
-    },
-    "clickRoutine": [
-      {
-        "func": "SELECT",
-        "type": "card",
-        "property": "owner",
-        "value": "${playerName}",
-        "sortBy": {
-          "key": "cardType",
-          "reverse": false
-        }
-      },
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Passing cards ..."
-          },
-          {
-            "type": "subtitle",
-            "text": "Choose 2 cards to pass to player on your right"
-          },
-          {
-            "type": "choose",
-            "source": "DEFAULT",
-            "min": 2,
-            "max": 2,
-            "collection": "passCollection",
-            "faces": 1
-          }
-        ]
-      },
-      {
-        "func": "MOVE",
-        "collection": "passCollection",
-        "to": "swapHolder${seatIndex}"
-      },
-      {
-        "func": "CALL",
-        "widget": "historyLabel",
-        "routine": "addendumRoutine",
-        "arguments": {
-          "addendum": "<span style='color:${playerColor}'><b>${playerName}</b></span> selected cards to swap"
-        }
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "restartButton"
-        ],
-        "property": "swapPlayers",
-        "relation": "+",
-        "value": 1
-      },
-      "var playerCount = length ${activeSeats}",
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY swapPlayers OF restartButton}",
-        "operand2": "${playerCount}",
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "widget": "historyLabel",
-            "routine": "addendumRoutine",
-            "arguments": {
-              "addendum": "Card swap complete"
-            }
-          },
-          {
-            "func": "SELECT",
-            "source": "activeSeats",
-            "property": "id",
-            "relation": "!=",
-            "value": null,
-            "sortBy": "index"
-          },
-          {
-            "func": "GET",
-            "aggregation": "array",
-            "variable": "activeSeats"
-          },
-          {
-            "func": "FOREACH",
-            "range": [
-              "${playerCount}"
-            ],
-            "loopRoutine": [
-              {
-                "func": "SELECT",
-                "property": "id",
-                "value": "seat${value}"
-              },
-              {
-                "func": "GET"
-              },
-              "var activeIndex = ${activeSeats} indexOf ${id}",
-              "var before = ${activeSeats} slice 0 ${activeIndex}",
-              "var after = ${activeSeats} slice ${activeIndex} 999",
-              "var activeSeatsInTurnOrder = ${after} concat ${before}",
-              {
-                "func": "MOVE",
-                "from": "swapHolder${value}",
-                "to": "${activeSeatsInTurnOrder.1}",
-                "count": "all"
-              }
-            ]
-          },
-          {
-            "func": "SELECT",
-            "type": "seat",
-            "property": "turn",
-            "value": true
-          },
-          {
-            "func": "GET",
-            "property": "index"
-          },
-          {
-            "func": "GET",
-            "collection": [
-              "seat${index}"
-            ],
-            "property": "player"
-          },
-          {
-            "func": "GET",
-            "collection": [
-              "seat${index}"
-            ],
-            "property": "color"
-          },
-          {
-            "func": "CALL",
-            "widget": "historyLabel",
-            "routine": "addendumRoutine",
-            "arguments": {
-              "addendum": "<span style='color:${color}'><b>${player}</b></span>'s turn"
-            }
-          }
-        ]
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "display",
-        "value": false
-      }
-    ],
-    "icon": "delapouite/card-exchange",
-    "parent": "seatArea1",
-    "y": -170,
-    "onlyVisibleForSeat": "seat1"
-  },
   "historyRecent": {
     "id": "historyRecent",
     "x": 1272,
@@ -3191,36 +3039,6 @@
         }
       }
     ]
-  },
-  "swapButton2": {
-    "inheritFrom": {
-      "swapButton1": "*"
-    },
-    "type": "button",
-    "id": "swapButton2",
-    "parent": "seatArea2",
-    "onlyVisibleForSeat": "seat2",
-    "display": true
-  },
-  "swapButton3": {
-    "inheritFrom": {
-      "swapButton1": "*"
-    },
-    "type": "button",
-    "id": "swapButton3",
-    "parent": "seatArea3",
-    "onlyVisibleForSeat": "seat3",
-    "display": true
-  },
-  "swapButton4": {
-    "inheritFrom": {
-      "swapButton1": "*"
-    },
-    "type": "button",
-    "id": "swapButton4",
-    "parent": "seatArea4",
-    "onlyVisibleForSeat": "seat4",
-    "display": true
   },
   "sortButton": {
     "type": "button",
@@ -4479,7 +4297,8 @@
     "html": "<h3>Rule Variations</h3><br>Click to hide or cycle through options.",
     "opacity": 0,
     "parent": "ruleVariations1",
-    "x": 192
+    "x": 192,
+    "activeFace": 1
   },
   "librarySetupButton": {
     "type": "button",
