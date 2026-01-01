@@ -15,7 +15,7 @@
       "time": "45",
       "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
       "importerTime": 1766766964207,
-      "lastUpdate": 1767220445904,
+      "lastUpdate": 1767230780255,
       "importer": "TTS",
       "showName": true,
       "skill": "",
@@ -54,18 +54,11 @@
           "operand2": 1,
           "thenRoutine": [
             {
-              "func": "IF",
-              "operand1": "${PROPERTY display OF $swap}",
-              "operand2": false,
-              "thenRoutine": [
-                {
-                  "func": "MOVE",
-                  "collection": [
-                    "${PROPERTY id}"
-                  ],
-                  "to": "seatHolder${seatIndex}"
-                }
-              ]
+              "func": "MOVE",
+              "collection": [
+                "${PROPERTY id}"
+              ],
+              "to": "seatHolder${seatIndex}"
             }
           ]
         }
@@ -4007,6 +4000,53 @@
         "arguments": {
           "addendum": "<span class='emBlack'>ALL PLAYERS: Score VP for area ${area}</span><br><span style='color:${playerColor}'><b>${playerName}</b></span> claimed the trick"
         }
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var thisSeat = 'seat' + ${value}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF $thisSeat}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "score${value}"
+                ],
+                "property": "text",
+                "variable": "thisScore"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "player"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "color"
+              },
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "<span style='color:${color}'>${player}</span> <u>score before trick</u>: ${thisScore}"
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "func": "SELECT",
