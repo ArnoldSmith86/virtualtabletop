@@ -6960,7 +6960,7 @@
     "dropLimit": 0,
     "layer": -4
   },
-  "15x5": {
+  "startMarble": {
     "width": 35,
     "height": 35,
     "layer": 10,
@@ -6976,12 +6976,12 @@
     },
     "borderColor": "#ffffff",
     "borderWidth": 1,
-    "clonedFrom": "jfxy",
+    "clonedFrom": "startMarble",
     "itemMarker": true,
     "secondaryColor": "#000000",
     "clickable": false,
     "ownedBy": null,
-    "id": "15x5",
+    "id": "startMarble",
     "z": null,
     "parent": "itemHolder"
   }
