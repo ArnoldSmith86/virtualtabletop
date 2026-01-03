@@ -56,7 +56,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -522,7 +523,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -714,7 +716,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -906,7 +909,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -1098,7 +1102,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -1426,7 +1431,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -1618,7 +1624,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
@@ -1811,7 +1818,8 @@
       },
       ".seated.turn::after": {
         "xcontent": "'Active Player'",
-        "content": "'⮞'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
         "font-size": "30px",
         "line-height": "1em",
         "white-space": "wrap",
