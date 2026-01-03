@@ -6982,7 +6982,6 @@
     "clickable": false,
     "ownedBy": null,
     "id": "startMarble",
-    "z": null,
     "parent": "itemHolder"
   }
 }
