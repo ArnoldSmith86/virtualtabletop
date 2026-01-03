@@ -1161,7 +1161,6 @@
       }
     ],
     "onlyVisibleForSeat": "seat1",
-    "hideWhenUnused": true,
     "css": "background-size: 80%; --wcMain: black; --wcBorder:red; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
     "width": 105,
     "height": 40
@@ -1228,7 +1227,6 @@
     ],
     "linkedToSeat": "seat5",
     "onlyVisibleForSeat": "seat5",
-    "hideWhenUnused": true,
     "css": "background-size: 80%; --wcMain: black; --wcBorder:red; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
     "width": 105,
     "height": 40
@@ -1251,7 +1249,6 @@
     ],
     "linkedToSeat": "seat4",
     "onlyVisibleForSeat": "seat4",
-    "hideWhenUnused": true,
     "css": "background-size: 80%; --wcMain: black; --wcBorder:red; --wcMainOH: grey; --wcBorderOH: black; font-size: 25px",
     "width": 105,
     "height": 40
@@ -1614,7 +1611,6 @@
         "deck": "dominodeck"
       }
     ],
-    "hideWhenUnused": true,
     "linkedToSeat": "seat1"
   },
   "holder2": {
@@ -1633,8 +1629,7 @@
         "deck": "dominodeck"
       }
     ],
-    "linkedToSeat": "seat2",
-    "hideWhenUnused": true
+    "linkedToSeat": "seat2"
   },
   "holder3": {
     "type": "holder",
@@ -1652,8 +1647,7 @@
         "deck": "dominodeck"
       }
     ],
-    "linkedToSeat": "seat3",
-    "hideWhenUnused": true
+    "linkedToSeat": "seat3"
   },
   "holder5": {
     "type": "holder",
@@ -1671,8 +1665,7 @@
         "deck": "dominodeck"
       }
     ],
-    "linkedToSeat": "seat5",
-    "hideWhenUnused": true
+    "linkedToSeat": "seat5"
   },
   "deal1button": {
     "type": "button",
@@ -1855,7 +1848,6 @@
       }
     ],
     "onlyVisibleForSeat": "seat1",
-    "hideWhenUnused": true,
     "linkedToSeat": "seat1"
   },
   "plus2": {
@@ -1939,7 +1931,6 @@
         "func": "TURN"
       }
     ],
-    "hideWhenUnused": true,
     "linkedToSeat": "seat1",
     "onlyVisibleForSeat": "seat1"
   },
@@ -1992,8 +1983,7 @@
       }
     ],
     "onlyVisibleForSeat": "seat2",
-    "linkedToSeat": "seat2",
-    "hideWhenUnused": true
+    "linkedToSeat": "seat2"
   },
   "plus5": {
     "type": "button",
@@ -2077,8 +2067,7 @@
       }
     ],
     "linkedToSeat": "seat2",
-    "onlyVisibleForSeat": "seat2",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat2"
   },
   "plus6": {
     "type": "button",
@@ -2330,8 +2319,7 @@
       }
     ],
     "linkedToSeat": "seat5",
-    "onlyVisibleForSeat": "seat5",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat5"
   },
   "plus9": {
     "type": "button",
@@ -2415,8 +2403,7 @@
       }
     ],
     "linkedToSeat": "seat4",
-    "onlyVisibleForSeat": "seat4",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat4"
   },
   "plus4": {
     "type": "button",
@@ -2569,8 +2556,7 @@
       }
     ],
     "linkedToSeat": "seat5",
-    "onlyVisibleForSeat": "seat5",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat5"
   },
   "plus12": {
     "type": "button",
@@ -2621,8 +2607,7 @@
       }
     ],
     "linkedToSeat": "seat4",
-    "onlyVisibleForSeat": "seat4",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat4"
   },
   "dominogameholder": {
     "type": "holder",
@@ -2662,8 +2647,7 @@
         "func": "TURN"
       }
     ],
-    "onlyVisibleForSeat": "seat1",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat1"
   },
   "pass5": {
     "type": "button",
@@ -2680,7 +2664,6 @@
         "func": "TURN"
       }
     ],
-    "hideWhenUnused": true,
     "onlyVisibleForSeat": "seat2",
     "linkedToSeat": "seat2"
   },
@@ -2700,8 +2683,7 @@
     ],
     "y": 86,
     "linkedToSeat": "seat3",
-    "onlyVisibleForSeat": "seat3",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat3"
   },
   "pass7": {
     "type": "button",
@@ -2737,8 +2719,7 @@
       }
     ],
     "linkedToSeat": "seat5",
-    "onlyVisibleForSeat": "seat5",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat5"
   },
   "pass9": {
     "type": "button",
@@ -2756,8 +2737,7 @@
       }
     ],
     "linkedToSeat": "seat4",
-    "onlyVisibleForSeat": "seat4",
-    "hideWhenUnused": true
+    "onlyVisibleForSeat": "seat4"
   },
   "bidholderp1": {
     "type": "holder",
@@ -2773,7 +2753,6 @@
       }
     ],
     "stackOffsetX": 40,
-    "hideWhenUnused": true,
     "linkedToSeat": "seat1",
     "pid": 1,
     "enterRoutine": [
@@ -2825,7 +2804,6 @@
     ],
     "stackOffsetX": 40,
     "linkedToSeat": "seat2",
-    "hideWhenUnused": true,
     "pid": 2,
     "inheritFrom": {
       "bidholderp1": [
@@ -2850,7 +2828,6 @@
     ],
     "stackOffsetX": 40,
     "linkedToSeat": "seat3",
-    "hideWhenUnused": true,
     "pid": 3,
     "movable": false,
     "movableInEdit": true,
@@ -2877,7 +2854,6 @@
     ],
     "stackOffsetX": 40,
     "linkedToSeat": "seat4",
-    "hideWhenUnused": true,
     "pid": 4,
     "movable": false,
     "movableInEdit": true,
@@ -2904,7 +2880,6 @@
     ],
     "stackOffsetX": 40,
     "linkedToSeat": "seat5",
-    "hideWhenUnused": true,
     "pid": 5,
     "movable": false,
     "movableInEdit": true,
@@ -2931,7 +2906,6 @@
     ],
     "stackOffsetX": 40,
     "linkedToSeat": "seat6",
-    "hideWhenUnused": true,
     "pid": 6,
     "movable": false,
     "movableInEdit": true,
@@ -3229,7 +3203,6 @@
             "y": 0,
             "fontSize": 32.28089887640449,
             "textAlign": "center",
-            "textFont": null,
             "width": 45,
             "dynamicProperties": {
               "value": "value"
@@ -3242,7 +3215,6 @@
             "fontSize": 16,
             "value": "--------",
             "textAlign": "center",
-            "textFont": null,
             "width": 45
           },
           {
@@ -3251,7 +3223,6 @@
             "y": 39.33786078098478,
             "fontSize": 13,
             "textAlign": "center",
-            "textFont": null,
             "width": 45,
             "dynamicProperties": {
               "value": "vp_row_one"
@@ -3263,7 +3234,6 @@
             "y": 50.20373514431239,
             "fontSize": 13.539325842696629,
             "textAlign": "center",
-            "textFont": null,
             "width": 45,
             "dynamicProperties": {
               "value": "vp_row_two"
@@ -3275,7 +3245,6 @@
             "y": 61.06960950764005,
             "fontSize": 13,
             "textAlign": "center",
-            "textFont": null,
             "width": 45,
             "dynamicProperties": {
               "value": "vp_row_3"
@@ -3561,7 +3530,6 @@
             "y": 0,
             "fontSize": 34.04494382022472,
             "textAlign": "center",
-            "textFont": null,
             "width": 25.772495755517838,
             "dynamicProperties": {
               "value": "value"
@@ -3573,7 +3541,6 @@
             "y": 0,
             "fontSize": 34.86516853932584,
             "textAlign": "center",
-            "textFont": null,
             "width": 25.772495755517788,
             "dynamicProperties": {
               "value": "value"
@@ -3585,7 +3552,6 @@
             "y": 108.87945670628183,
             "fontSize": 18.46067415730337,
             "textAlign": "center",
-            "textFont": null,
             "width": 57.82682512733444,
             "dynamicProperties": {
               "value": "worm"
@@ -3607,8 +3573,7 @@
     "css": "font-size: 30px;",
     "editable": true,
     "linkedToSeat": "seat1",
-    "text": 0,
-    "hideWhenUnused": true
+    "text": 0
   },
   "bidcountp2": {
     "type": "label",
@@ -3620,7 +3585,6 @@
     "css": "font-size: 30px;",
     "editable": true,
     "linkedToSeat": "seat2",
-    "hideWhenUnused": true,
     "text": 0
   },
   "bidcountp3": {
@@ -3633,8 +3597,7 @@
     "css": "font-size: 30px;",
     "editable": true,
     "linkedToSeat": "seat3",
-    "text": 0,
-    "hideWhenUnused": true
+    "text": 0
   },
   "bidcountp4": {
     "type": "label",
@@ -3646,8 +3609,7 @@
     "css": "font-size: 30px;",
     "editable": true,
     "linkedToSeat": "seat4",
-    "text": 0,
-    "hideWhenUnused": true
+    "text": 0
   },
   "bidcountp5": {
     "type": "label",
@@ -3659,8 +3621,7 @@
     "css": "font-size: 30px;",
     "editable": true,
     "linkedToSeat": "seat5",
-    "text": 0,
-    "hideWhenUnused": true
+    "text": 0
   },
   "bidcountp6": {
     "type": "label",
@@ -3672,8 +3633,7 @@
     "css": "font-size: 30px;",
     "editable": true,
     "linkedToSeat": "seat6",
-    "text": 0,
-    "hideWhenUnused": true
+    "text": 0
   },
   "finalscore": {
     "type": "button",
@@ -3739,8 +3699,7 @@
         "deck": "dominodeck"
       }
     ],
-    "linkedToSeat": "seat6",
-    "hideWhenUnused": true
+    "linkedToSeat": "seat6"
   },
   "holder4": {
     "type": "holder",
@@ -3758,8 +3717,7 @@
         "deck": "dominodeck"
       }
     ],
-    "linkedToSeat": "seat4",
-    "hideWhenUnused": true
+    "linkedToSeat": "seat4"
   },
   "discardp2": {
     "type": "button",
@@ -3773,7 +3731,6 @@
     "linkedToSeat": "seat2",
     "onlyVisibleForSeat": "seat2",
     "text": "Discard",
-    "hideWhenUnused": true,
     "clickRoutine": [
       {
         "func": "MOVE",
