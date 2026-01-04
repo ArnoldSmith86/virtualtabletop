@@ -1,6 +1,10 @@
 {
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ""
+    },
     "info": {
       "name": "Clever Connections",
       "image": "/assets/-852219610_48850",
@@ -10,7 +14,7 @@
       "mode": "vs; solo",
       "time": "30-45",
       "attribution": "<div>Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br></div><div>Tile bag by mousewax available as CC0.</div>",
-      "lastUpdate": 1767413029075,
+      "lastUpdate": 1767551993595,
       "showName": true,
       "skill": "",
       "description": "In this abstract tile-laying game, try to link as many of the same-colored pieces in straight lines as possible. The winner is the player whose worst color score (out of six) is higher than the other players' worst scores.",
@@ -20,14 +24,10 @@
       "similarAwards": "2018 Fall Parents' Choice Silver Honor Winner\n2011 Hra roku Nominee\n2010 MinD-Spielepreis Winner\n2010 Japan Boardgame Prize U-more Award Nominee\n2008 JoTa Best Abstract Board Game Winner\n2006 Hra roku Nominee\n2006 Golden Geek Best Family Board Game Winner\n2006 Golden Geek Best 2-Player Board Game Nominee\n2005 Mensa Select Winner\n2005 Juego del Año Finalist\n2005 Hra roku Nominee\n2004 Spiel des Jahres Nominee\n2004 Meeples Choice Award Nominee\n2004 Japan Boardgame Prize Best Foreign Game for Beginners Winner\n2004 International Gamers Awards - General Strategy; Multi-player Nominee",
       "ruleText": "<div>Players take seats and press the restart button. A random player is assigned to start and each player is dealt six tiles. The board size automatically adjusts based on the player count.</div><div><b><br></b></div><div><b>Standard Rules</b></div><div><br></div>On your turn, place one tile onto two adjacent empty spaces on the board. During the first round, each player must play a tile adjacent to one of the colored hexes built into the board and must use a different built-in hex from the other players' first tiles.<div><div><br></div><div>After playing, score for each of the two hexes on the tile. For each hex, count the number of same-colored hexes in a straight line extending from the newly placed hex in five directions (excluding the direction occupied by the other half of the tile). Your score for that color is the sum of the lengths of each line, excluding the tile just played. Scores are tracked separately for each color.</div><div><br></div><div>As an aid to keeping score, an unlimited number of marbles are available at the bottom of the screen. You can place those on connecting tiles as a reference. The marbles are removed when refilling your hand. The game also defaults to placing a glow around the last played tile as an aid in scoring. You can turn the glow on and off with the lightbulb button at the top of the screen.</div><div><br></div><div>To indicate the score, you can click on the bar representing that color next to your seat. Each click increases the score by one. A double-click decreases the score by one. Alternatively, place the cursor over the top of the colored part of the bar until the cursor symbol changes to a double-ended arrow. Click and drag to move the colored part of the bar.</div><div><br></div><div><div>After scoring, draw tiles to refill your hand. Once per turn, if your hand does not contain the color in the lowest position on your scoreboard, you may swap your remaining tiles using the swap button. The tiles will be displayed for all to see for a few seconds, after which six new tiles are moved to the hand and the old tiles returned to the bag.</div><div><br></div><div>If you reach the maximum score in a color, you may immediately play another tile from your hand. If that extra turn also leads to another color reaching the maximum score, then take another turn and so on. Refill your hand only after completing all extra turns.</div><div>&nbsp;\nThe game ends when no more tiles can be played or when one player has reached the highest value in all six colors, in which case that player wins immediately. Otherwise, the player whose lowest color score is highest wins. Ties are broken by comparing second-lowest scores, and so on.</div></div><div><br></div><div><b>Partnership Rules</b></div><div><b><br></b></div><div>Four players form two teams. All the normal rules apply except that the team uses two scoreboards linked end-to-end. A bonus turn is given when the score reaches the highest point on each of the two linked scoreboards. The partnership with the lowest scoring colored value loses. The turn indicator will not work correctly during a partnership game so use the manual turn button at the top of the screen as appropriate.</div><div><br></div><div><b>Solo Rules</b></div><div><b><br></b></div><div>Follow the standard game rules and use a double-length scoreboard. Bonus turns are not used. Also, there is no hand of tiles in a solo game. Draw a single tile and play it and then draw another single tile. In the room, the solo player must sit in the lower-left seat.</div></div>",
       "helpText": "",
-      "players": "1-4",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {},
-      "globalCss": ""
+      "language": "",
+      "players": "1-4"
     }
   },
   "sMaster": {
@@ -6011,21 +6011,12 @@
     "parent": "seatArea2",
     "linkedToSeat": "seat2"
   },
-  "score1-7": {
-    "inheritFrom": {
-      "score1-1": "*"
-    },
-    "id": "score1-7",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "level": 1
-  },
   "dragger7": {
     "inheritFrom": {
       "dragger1": "*"
     },
     "id": "dragger7",
-    "parent": "score1-7",
+    "parent": "score2-1",
     "y": 324,
     "x": 0
   },
@@ -6069,93 +6060,48 @@
     "parent": "seatArea2",
     "linkedToSeat": "seat2"
   },
-  "score1-8": {
-    "inheritFrom": {
-      "score1-2": "*"
-    },
-    "id": "score1-8",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "level": 1
-  },
   "dragger8": {
     "inheritFrom": {
       "dragger2": "*"
     },
     "id": "dragger8",
-    "parent": "score1-8",
+    "parent": "score2-2",
     "y": 324,
     "x": 0
-  },
-  "score1-9": {
-    "inheritFrom": {
-      "score1-3": "*"
-    },
-    "id": "score1-9",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "level": 1
   },
   "dragger9": {
     "inheritFrom": {
       "dragger3": "*"
     },
     "id": "dragger9",
-    "parent": "score1-9",
+    "parent": "score2-3",
     "x": 0,
     "y": 324
-  },
-  "score1-10": {
-    "inheritFrom": {
-      "score1-4": "*"
-    },
-    "id": "score1-10",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "level": 1
   },
   "dragger10": {
     "inheritFrom": {
       "dragger4": "*"
     },
     "id": "dragger10",
-    "parent": "score1-10",
+    "parent": "score2-4",
     "y": 324,
     "x": 0
-  },
-  "score1-11": {
-    "inheritFrom": {
-      "score1-5": "*"
-    },
-    "id": "score1-11",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "level": 1
   },
   "dragger11": {
     "inheritFrom": {
       "dragger5": "*"
     },
     "id": "dragger11",
-    "parent": "score1-11",
+    "parent": "score2-5",
     "y": 324,
     "x": 0
-  },
-  "score1-12": {
-    "inheritFrom": {
-      "score1-6": "*"
-    },
-    "id": "score1-12",
-    "parent": "seatArea2",
-    "linkedToSeat": "seat2",
-    "level": 1
   },
   "dragger12": {
     "inheritFrom": {
       "dragger6": "*"
     },
     "id": "dragger12",
-    "parent": "score1-12",
+    "parent": "score2-6",
     "x": 0,
     "y": 324
   },
@@ -6195,21 +6141,12 @@
     "activeFace": 0,
     "linkedToSeat": "seat3"
   },
-  "score1-13": {
-    "inheritFrom": {
-      "score1-1": "*"
-    },
-    "id": "score1-13",
-    "parent": "seatArea3",
-    "level": 1,
-    "linkedToSeat": "seat3"
-  },
   "dragger13": {
     "inheritFrom": {
       "dragger1": "*"
     },
     "id": "dragger13",
-    "parent": "score1-13",
+    "parent": "score3-1",
     "x": 0,
     "y": 324
   },
@@ -6263,93 +6200,48 @@
     "y": 42,
     "linkedToSeat": "seat3"
   },
-  "score1-14": {
-    "inheritFrom": {
-      "score1-2": "*"
-    },
-    "id": "score1-14",
-    "parent": "seatArea3",
-    "linkedToSeat": "seat3",
-    "level": 1
-  },
   "dragger14": {
     "inheritFrom": {
       "dragger2": "*"
     },
     "id": "dragger14",
-    "parent": "score1-14",
+    "parent": "score3-2",
     "y": 324,
     "x": 0
-  },
-  "score1-15": {
-    "inheritFrom": {
-      "score1-3": "*"
-    },
-    "id": "score1-15",
-    "parent": "seatArea3",
-    "linkedToSeat": "seat3",
-    "level": 1
   },
   "dragger15": {
     "inheritFrom": {
       "dragger3": "*"
     },
     "id": "dragger15",
-    "parent": "score1-15",
+    "parent": "score3-3",
     "y": 324,
     "x": 0
-  },
-  "score1-16": {
-    "inheritFrom": {
-      "score1-4": "*"
-    },
-    "id": "score1-16",
-    "parent": "seatArea3",
-    "linkedToSeat": "seat3",
-    "level": 1
   },
   "dragger16": {
     "inheritFrom": {
       "dragger4": "*"
     },
     "id": "dragger16",
-    "parent": "score1-16",
+    "parent": "score3-4",
     "y": 324,
     "x": 0
-  },
-  "score1-17": {
-    "inheritFrom": {
-      "score1-5": "*"
-    },
-    "id": "score1-17",
-    "parent": "seatArea3",
-    "linkedToSeat": "seat3",
-    "level": 1
   },
   "dragger17": {
     "inheritFrom": {
       "dragger5": "*"
     },
     "id": "dragger17",
-    "parent": "score1-17",
+    "parent": "score3-5",
     "y": 324,
     "x": 0
-  },
-  "score1-18": {
-    "inheritFrom": {
-      "score1-6": "*"
-    },
-    "id": "score1-18",
-    "parent": "seatArea3",
-    "linkedToSeat": "seat3",
-    "level": 1
   },
   "dragger18": {
     "inheritFrom": {
       "dragger6": "*"
     },
     "id": "dragger18",
-    "parent": "score1-18",
+    "parent": "score3-6",
     "y": 324,
     "x": 0
   },
@@ -6389,21 +6281,12 @@
     "y": 45,
     "linkedToSeat": "seat4"
   },
-  "score1-19": {
-    "inheritFrom": {
-      "score1-1": "*"
-    },
-    "id": "score1-19",
-    "parent": "seatArea4",
-    "level": 1,
-    "linkedToSeat": "seat4"
-  },
   "dragger19": {
     "inheritFrom": {
       "dragger1": "*"
     },
     "id": "dragger19",
-    "parent": "score1-19",
+    "parent": "score4-1",
     "x": 0,
     "y": 324,
     "linkedToSeat": "seat4"
@@ -6458,97 +6341,52 @@
     "y": 45,
     "linkedToSeat": "seat4"
   },
-  "score1-20": {
-    "inheritFrom": {
-      "score1-2": "*"
-    },
-    "id": "score1-20",
-    "parent": "seatArea4",
-    "linkedToSeat": "seat4",
-    "level": 1
-  },
   "dragger20": {
     "inheritFrom": {
       "dragger2": "*"
     },
     "id": "dragger20",
-    "parent": "score1-20",
+    "parent": "score4-2",
     "linkedToSeat": "seat4",
     "y": 324,
     "x": 0
-  },
-  "score1-21": {
-    "inheritFrom": {
-      "score1-3": "*"
-    },
-    "id": "score1-21",
-    "parent": "seatArea4",
-    "linkedToSeat": "seat4",
-    "level": 1
   },
   "dragger21": {
     "inheritFrom": {
       "dragger3": "*"
     },
     "id": "dragger21",
-    "parent": "score1-21",
+    "parent": "score4-3",
     "linkedToSeat": "seat4",
     "y": 324,
     "x": 0
-  },
-  "score1-22": {
-    "inheritFrom": {
-      "score1-4": "*"
-    },
-    "id": "score1-22",
-    "parent": "seatArea4",
-    "linkedToSeat": "seat4",
-    "level": 1
   },
   "dragger22": {
     "inheritFrom": {
       "dragger4": "*"
     },
     "id": "dragger22",
-    "parent": "score1-22",
+    "parent": "score4-4",
     "linkedToSeat": "seat4",
     "y": 324,
     "x": 0
-  },
-  "score1-23": {
-    "inheritFrom": {
-      "score1-5": "*"
-    },
-    "id": "score1-23",
-    "parent": "seatArea4",
-    "linkedToSeat": "seat4",
-    "level": 1
   },
   "dragger23": {
     "inheritFrom": {
       "dragger5": "*"
     },
     "id": "dragger23",
-    "parent": "score1-23",
+    "parent": "score4-5",
     "linkedToSeat": "seat4",
     "y": 324,
     "x": 0
-  },
-  "score1-24": {
-    "inheritFrom": {
-      "score1-6": "*"
-    },
-    "id": "score1-24",
-    "parent": "seatArea4",
-    "linkedToSeat": "seat4",
-    "level": 1
   },
   "dragger24": {
     "inheritFrom": {
       "dragger6": "*"
     },
     "id": "dragger24",
-    "parent": "score1-24",
+    "parent": "score4-6",
     "linkedToSeat": "seat4",
     "y": 324,
     "x": 0
@@ -6983,5 +6821,167 @@
     "ownedBy": null,
     "id": "startMarble",
     "parent": "itemHolder"
+  },
+  "score2-1": {
+    "id": "score2-1",
+    "parent": "seatArea2",
+    "inheritFrom": {
+      "score1-1": "*"
+    },
+    "linkedToSeat": "seat2",
+    "level": 1
+  },
+  "score2-2": {
+    "id": "score2-2",
+    "parent": "seatArea2",
+    "inheritFrom": {
+      "score1-2": "*"
+    },
+    "linkedToSeat": "seat2",
+    "level": 1
+  },
+  "score2-3": {
+    "id": "score2-3",
+    "parent": "seatArea2",
+    "inheritFrom": {
+      "score1-3": "*"
+    },
+    "linkedToSeat": "seat2",
+    "level": 1
+  },
+  "score2-4": {
+    "id": "score2-4",
+    "parent": "seatArea2",
+    "inheritFrom": {
+      "score1-4": "*"
+    },
+    "linkedToSeat": "seat2",
+    "level": 1
+  },
+  "score2-5": {
+    "id": "score2-5",
+    "parent": "seatArea2",
+    "inheritFrom": {
+      "score1-5": "*"
+    },
+    "linkedToSeat": "seat2",
+    "level": 1
+  },
+  "score2-6": {
+    "id": "score2-6",
+    "parent": "seatArea2",
+    "inheritFrom": {
+      "score1-6": "*"
+    },
+    "linkedToSeat": "seat2",
+    "level": 1
+  },
+  "score3-1": {
+    "id": "score3-1",
+    "parent": "seatArea3",
+    "inheritFrom": {
+      "score1-1": "*"
+    },
+    "linkedToSeat": "seat3",
+    "level": 1
+  },
+  "score3-2": {
+    "id": "score3-2",
+    "parent": "seatArea3",
+    "inheritFrom": {
+      "score1-2": "*"
+    },
+    "linkedToSeat": "seat3",
+    "level": 1
+  },
+  "score3-3": {
+    "id": "score3-3",
+    "parent": "seatArea3",
+    "inheritFrom": {
+      "score1-3": "*"
+    },
+    "linkedToSeat": "seat3",
+    "level": 1
+  },
+  "score3-4": {
+    "id": "score3-4",
+    "parent": "seatArea3",
+    "inheritFrom": {
+      "score1-4": "*"
+    },
+    "linkedToSeat": "seat3",
+    "level": 1
+  },
+  "score3-5": {
+    "id": "score3-5",
+    "parent": "seatArea3",
+    "inheritFrom": {
+      "score1-5": "*"
+    },
+    "linkedToSeat": "seat3",
+    "level": 1
+  },
+  "score3-6": {
+    "id": "score3-6",
+    "parent": "seatArea3",
+    "inheritFrom": {
+      "score1-6": "*"
+    },
+    "linkedToSeat": "seat3",
+    "level": 1
+  },
+  "score4-1": {
+    "id": "score4-1",
+    "parent": "seatArea4",
+    "inheritFrom": {
+      "score1-1": "*"
+    },
+    "linkedToSeat": "seat4",
+    "level": 1
+  },
+  "score4-2": {
+    "id": "score4-2",
+    "parent": "seatArea4",
+    "inheritFrom": {
+      "score1-2": "*"
+    },
+    "linkedToSeat": "seat4",
+    "level": 1
+  },
+  "score4-3": {
+    "id": "score4-3",
+    "parent": "seatArea4",
+    "inheritFrom": {
+      "score1-3": "*"
+    },
+    "linkedToSeat": "seat4",
+    "level": 1
+  },
+  "score4-4": {
+    "id": "score4-4",
+    "parent": "seatArea4",
+    "inheritFrom": {
+      "score1-4": "*"
+    },
+    "linkedToSeat": "seat4",
+    "level": 1
+  },
+  "score4-5": {
+    "id": "score4-5",
+    "parent": "seatArea4",
+    "inheritFrom": {
+      "score1-5": "*"
+    },
+    "linkedToSeat": "seat4",
+    "level": 1
+  },
+  "score4-6": {
+    "id": "score4-6",
+    "parent": "seatArea4",
+    "inheritFrom": {
+      "score1-6": "*"
+    },
+    "linkedToSeat": "seat4",
+    "level": 1
   }
 }
