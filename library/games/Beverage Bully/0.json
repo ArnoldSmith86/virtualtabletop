@@ -668,14 +668,14 @@
     "version": 20,
     "info": {
       "name": "Beverage Bully",
-      "image": "/assets/-1445341695_452025",
+      "image": "/assets/-1082157525_36084",
       "rules": "https://boardgamegeek.com/filepage/307451/soda-jerk-allplay-2025",
       "bgg": "https://boardgamegeek.com/boardgame/446953/soda-jerk",
       "year": "2025",
       "mode": "vs",
       "time": "20",
       "attribution": "<div>Game layout and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>All ingredient icons are from Google Noto Color Emoji and are used under the \nSIL Open Font License: \nhttps://fonts.google.com/noto/specimen/Noto+Color+Emoji</div><div><br></div><div>Library image and background from http://www.freepik.com and are used under the Freepik license: https://www.freepik.com/free-vector/pattern-with-beer-bottles-different-colors_927859.htm</div>",
-      "lastUpdate": 1767913803298,
+      "lastUpdate": 1767914674988,
       "showName": true,
       "skill": "",
       "description": "Serve your own delicious beverages, and bully others by contaminating their ingredients.",
@@ -685,71 +685,11 @@
       "similarAwards": "",
       "ruleText": "(see rules overview link)",
       "helpText": "",
-      "players": "2-4",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "",
-      "variantImage": "/assets/-1445341695_452025"
+      "language": "en-US",
+      "players": "2-4"
     }
-  },
-  "fswk": {
-    "deck": "deck-5p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "fswk",
-    "z": 50797,
-    "parent": "owzm",
-    "x": null,
-    "y": null
-  },
-  "5mqd": {
-    "deck": "deck-5p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "5mqd",
-    "z": 50822,
-    "parent": "h9xn",
-    "x": null,
-    "y": null
-  },
-  "zbc6": {
-    "deck": "deck-4p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "zbc6",
-    "z": 51165,
-    "parent": "93bx",
-    "x": null,
-    "y": null
-  },
-  "h9m2": {
-    "deck": "deck-4p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "h9m2",
-    "z": 51190,
-    "parent": "gzmj",
-    "x": null,
-    "y": null
-  },
-  "p28m": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "p28m",
-    "z": 51483,
-    "parent": "w93m",
-    "x": null,
-    "y": null
-  },
-  "o9t2": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "o9t2",
-    "z": 51508,
-    "parent": "n16y",
-    "x": null,
-    "y": null
   },
   "image-area-purple": {
     "id": "image-area-purple",
@@ -853,16 +793,6 @@
     "inheritFrom": "holder-red",
     "x": 20,
     "y": 200
-  },
-  "wwig": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "blue-2",
-    "id": "wwig",
-    "z": 33767,
-    "parent": "nl3t",
-    "x": null,
-    "y": null
   },
   "image-area-orange": {
     "id": "image-area-orange",
@@ -4465,8 +4395,8 @@
     "id": "lq5s",
     "z": 19791,
     "parent": "iw1v",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "iw1v": {
     "type": "pile",
