@@ -194,28 +194,6 @@
       }
     ]
   },
-  "13sgD": {
-    "id": "13sgD",
-    "parent": "label-p1",
-    "fixedParent": true,
-    "x": -38,
-    "width": 32,
-    "height": 32,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "y": 1
-  },
   "button-reset": {
     "type": "button",
     "id": "button-reset",
