@@ -112,28 +112,6 @@
     "x": 2,
     "y": -1
   },
-  "13sgD": {
-    "id": "13sgD",
-    "parent": "label-p1",
-    "fixedParent": true,
-    "x": -38,
-    "width": 32,
-    "height": 32,
-    "type": "button",
-    "movableInEdit": false,
-    "classes": "symbols",
-    "css": "font-size: 28px",
-    "text": "remove",
-    "clickRoutine": [
-      {
-        "func": "LABEL",
-        "label": "${PROPERTY parent}",
-        "mode": "dec",
-        "value": 1
-      }
-    ],
-    "y": 1
-  },
   "holder-p1": {
     "type": "holder",
     "id": "holder-p1",
@@ -674,66 +652,6 @@
       "language": "en-US",
       "players": "2-5"
     }
-  },
-  "fswk": {
-    "deck": "deck-5p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "fswk",
-    "z": 50797,
-    "parent": "owzm",
-    "x": null,
-    "y": null
-  },
-  "5mqd": {
-    "deck": "deck-5p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "5mqd",
-    "z": 50822,
-    "parent": "h9xn",
-    "x": null,
-    "y": null
-  },
-  "zbc6": {
-    "deck": "deck-4p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "zbc6",
-    "z": 51165,
-    "parent": "93bx",
-    "x": null,
-    "y": null
-  },
-  "h9m2": {
-    "deck": "deck-4p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "h9m2",
-    "z": 51190,
-    "parent": "gzmj",
-    "x": null,
-    "y": null
-  },
-  "p28m": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "purple-1",
-    "id": "p28m",
-    "z": 51483,
-    "parent": "w93m",
-    "x": null,
-    "y": null
-  },
-  "o9t2": {
-    "deck": "deck-3p",
-    "type": "card",
-    "cardType": "purple-4",
-    "id": "o9t2",
-    "z": 51508,
-    "parent": "n16y",
-    "x": null,
-    "y": null
   },
   "button-tricks-inc-p1": {
     "type": "button",
