@@ -3794,8 +3794,8 @@
     "id": "nara",
     "z": 50219,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "schx": {
     "deck": "deck-3p",
@@ -3804,8 +3804,8 @@
     "id": "schx",
     "z": 50207,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "iryn": {
     "deck": "deck-3p",
@@ -3910,8 +3910,8 @@
     "id": "6wsm",
     "z": 50221,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "swtb": {
     "deck": "deck-3p",
@@ -3928,8 +3928,8 @@
     "id": "j86j",
     "z": 50216,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "5srk": {
     "deck": "deck-3p",
@@ -3954,8 +3954,8 @@
     "id": "mi7p",
     "z": 50218,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "h35k": {
     "deck": "deck-3p",
@@ -3964,8 +3964,8 @@
     "id": "h35k",
     "z": 50185,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "eiab": {
     "deck": "deck-3p",
@@ -3974,8 +3974,8 @@
     "id": "eiab",
     "z": 50208,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "af2c": {
     "deck": "deck-3p",
@@ -3984,8 +3984,8 @@
     "id": "af2c",
     "z": 50213,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "abgt": {
     "deck": "deck-3p",
@@ -3994,8 +3994,8 @@
     "id": "abgt",
     "z": 50215,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "718p": {
     "deck": "deck-3p",
@@ -4012,8 +4012,8 @@
     "id": "zn7d",
     "z": 50212,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "w7ej": {
     "deck": "deck-3p",
@@ -4046,8 +4046,8 @@
     "id": "qno0",
     "z": 50197,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "557q": {
     "deck": "deck-3p",
@@ -4088,8 +4088,8 @@
     "id": "qokf",
     "z": 50217,
     "parent": "c36s",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "ncnr": {
     "deck": "deck-3p",
