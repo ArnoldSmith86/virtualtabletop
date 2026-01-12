@@ -80,12 +80,8 @@ publicLibraryButtons('Functions - SORT',   1, '062e43d545dc0648d770981585d2f894'
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
-publicLibraryButtons('Xtras - Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
-  'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
-  'violetbutton', 'fae4', 'vbx5'
-]);
 publicLibraryButtons('Functions - SCORE', 0, '88c8ef94e7d34f69bf8d0844acce2dfc', [ 'button2', 'button2', 'button7', 'button15', 'seat9', 'scorePlus', 'button17']);
-publicLibraryButtons('Types - Scoreboard', 2, '458a8e4b7232bc38e151be7e4c7705bf', [ 'button1', 'button2', 'button3', 'button4']);
+publicLibraryButtons('Types - Scoreboard', 2, '5b7dbc6f94827871cf11ac913228d7f3', [ 'button1', 'button2', 'button3', 'button4']);
 
 publicLibraryButtons('Types - Dice', 0, 'c2baa316f0f7e04f64af7701cd41b0a9', [ 'dice3', 'dice4', 'dice5',]);
-publicLibraryButtons('Types - Dice', 3, '9765144109f8962db823161e4bf1d2d8', [ 'dice2', 'dice1', 'button2', 'dice4']);
+publicLibraryButtons('Types - Dice', 3, '5d1806c68e6ae3629844d01b66c587de', [ 'dice2', 'dice1', 'button2', 'dice4']);
