@@ -434,7 +434,6 @@
     "height": 168,
     "z": 5,
     "movable": false,
-    "movableInEdit": null,
     "dropTarget": {
       "type": "card"
     }
@@ -443,7 +442,6 @@
     "type": "button",
     "id": "fe9cB",
     "parent": "fe9c",
-    "x": null,
     "y": 171.36,
     "width": 111,
     "height": 40,

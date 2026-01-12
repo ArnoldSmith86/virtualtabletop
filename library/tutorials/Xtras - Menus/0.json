@@ -1315,11 +1315,7 @@
     "id": "player1",
     "x": 20.5,
     "y": 585,
-    "width": null,
-    "height": null,
-    "z": 7,
-    "movable": null,
-    "movableInEdit": null
+    "z": 7
   },
   "1m7f": {
     "type": "button",

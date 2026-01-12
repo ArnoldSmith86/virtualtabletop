@@ -32,13 +32,6 @@
       "players": "1"
     }
   },
-  "oit_2_C": {
-    "type": "card",
-    "id": "oit_2_C",
-    "parent": "oitfP",
-    "deck": "example1D",
-    "cardType": "C 02"
-  },
   "8fr3": {
     "id": "8fr3",
     "x": 560,

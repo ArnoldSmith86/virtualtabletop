@@ -1998,7 +1998,6 @@
   },
   "jr00": {
     "type": "pile",
-    "parent": null,
     "x": 70,
     "y": 230,
     "width": 103,
@@ -2012,7 +2011,6 @@
   },
   "bu1w": {
     "type": "pile",
-    "parent": null,
     "x": 342,
     "y": 226,
     "width": 103,
@@ -2050,7 +2048,6 @@
   },
   "cmdn": {
     "type": "pile",
-    "parent": null,
     "x": 1232,
     "y": 249,
     "width": 103,
@@ -2063,7 +2060,6 @@
   },
   "pud9": {
     "type": "pile",
-    "parent": null,
     "x": 1466,
     "y": 250,
     "width": 103,
@@ -2250,422 +2246,6 @@
     ],
     "x": -35
   },
-  "mva9_A_C": {
-    "id": "mva9_A_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 01",
-    "deck": "minions-yellow",
-    "z": 7117
-  },
-  "mva9_2_C": {
-    "id": "mva9_2_C",
-    "type": "card",
-    "cardType": "C 02",
-    "deck": "minions-yellow",
-    "z": 12583,
-    "parent": "ksnt"
-  },
-  "mva9_3_C": {
-    "id": "mva9_3_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 03",
-    "deck": "minions-yellow",
-    "z": 5081
-  },
-  "mva9_4_C": {
-    "id": "mva9_4_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 04",
-    "deck": "minions-yellow",
-    "z": 1705
-  },
-  "mva9_5_C": {
-    "id": "mva9_5_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 05",
-    "deck": "minions-yellow",
-    "z": 43
-  },
-  "mva9_6_C": {
-    "id": "mva9_6_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 06",
-    "deck": "minions-yellow",
-    "z": 5675
-  },
-  "mva9_7_C": {
-    "id": "mva9_7_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 07",
-    "deck": "minions-yellow",
-    "z": 613
-  },
-  "mva9_8_C": {
-    "id": "mva9_8_C",
-    "type": "card",
-    "cardType": "C 08",
-    "deck": "minions-yellow",
-    "z": 12585,
-    "parent": "ksnt"
-  },
-  "mva9_9_C": {
-    "id": "mva9_9_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 09",
-    "deck": "minions-yellow",
-    "z": 3487
-  },
-  "mva9_T_C": {
-    "id": "mva9_T_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 10",
-    "deck": "minions-yellow",
-    "z": 2147
-  },
-  "mva9_J_C": {
-    "id": "mva9_J_C",
-    "type": "card",
-    "cardType": "C 2J",
-    "deck": "minions-yellow",
-    "z": 12601,
-    "parent": "nzo8"
-  },
-  "mva9_Q_C": {
-    "id": "mva9_Q_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 3Q",
-    "deck": "minions-yellow",
-    "z": 5524
-  },
-  "mva9_K_C": {
-    "id": "mva9_K_C",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "C 4K",
-    "deck": "minions-yellow",
-    "z": 2402
-  },
-  "mva9_A_D": {
-    "id": "mva9_A_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 01",
-    "deck": "minions-yellow",
-    "z": 5454
-  },
-  "mva9_2_D": {
-    "id": "mva9_2_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 02",
-    "deck": "minions-yellow",
-    "z": 5156
-  },
-  "mva9_3_D": {
-    "id": "mva9_3_D",
-    "type": "card",
-    "cardType": "D 03",
-    "deck": "minions-yellow",
-    "z": 12587,
-    "parent": "ksnt"
-  },
-  "mva9_4_D": {
-    "id": "mva9_4_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 04",
-    "deck": "minions-yellow",
-    "z": 3839
-  },
-  "mva9_5_D": {
-    "id": "mva9_5_D",
-    "type": "card",
-    "cardType": "D 05",
-    "deck": "minions-yellow",
-    "z": 12603,
-    "parent": "wpbg"
-  },
-  "mva9_6_D": {
-    "id": "mva9_6_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 06",
-    "deck": "minions-yellow",
-    "z": 2043
-  },
-  "mva9_7_D": {
-    "id": "mva9_7_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 07",
-    "deck": "minions-yellow",
-    "z": 8136
-  },
-  "mva9_8_D": {
-    "id": "mva9_8_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 08",
-    "deck": "minions-yellow",
-    "z": 4806
-  },
-  "mva9_9_D": {
-    "id": "mva9_9_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 09",
-    "deck": "minions-yellow",
-    "z": 6743
-  },
-  "mva9_T_D": {
-    "id": "mva9_T_D",
-    "type": "card",
-    "cardType": "D 10",
-    "deck": "minions-yellow",
-    "z": 12581,
-    "parent": "ksnt"
-  },
-  "mva9_J_D": {
-    "id": "mva9_J_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 2J",
-    "deck": "minions-yellow",
-    "z": 7971
-  },
-  "mva9_Q_D": {
-    "id": "mva9_Q_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 3Q",
-    "deck": "minions-yellow",
-    "z": 375
-  },
-  "mva9_K_D": {
-    "id": "mva9_K_D",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "D 4K",
-    "deck": "minions-yellow",
-    "z": 3200
-  },
-  "mva9_A_H": {
-    "id": "mva9_A_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 01",
-    "deck": "minions-yellow",
-    "z": 7320
-  },
-  "mva9_2_H": {
-    "id": "mva9_2_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 02",
-    "deck": "minions-yellow",
-    "z": 3299
-  },
-  "mva9_3_H": {
-    "id": "mva9_3_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 03",
-    "deck": "minions-yellow",
-    "z": 6188
-  },
-  "mva9_4_H": {
-    "id": "mva9_4_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 04",
-    "deck": "minions-yellow",
-    "z": 2065
-  },
-  "mva9_5_H": {
-    "id": "mva9_5_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 05",
-    "deck": "minions-yellow",
-    "z": 438
-  },
-  "mva9_6_H": {
-    "id": "mva9_6_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 06",
-    "deck": "minions-yellow",
-    "z": 4989
-  },
-  "mva9_7_H": {
-    "id": "mva9_7_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 07",
-    "deck": "minions-yellow",
-    "z": 6447
-  },
-  "mva9_8_H": {
-    "id": "mva9_8_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 08",
-    "deck": "minions-yellow",
-    "z": 963
-  },
-  "mva9_9_H": {
-    "id": "mva9_9_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 09",
-    "deck": "minions-yellow",
-    "z": 5803
-  },
-  "mva9_T_H": {
-    "id": "mva9_T_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 10",
-    "deck": "minions-yellow",
-    "z": 6863
-  },
-  "mva9_J_H": {
-    "id": "mva9_J_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 2J",
-    "deck": "minions-yellow",
-    "z": 4894
-  },
-  "mva9_Q_H": {
-    "id": "mva9_Q_H",
-    "type": "card",
-    "cardType": "H 3Q",
-    "deck": "minions-yellow",
-    "z": 12599,
-    "parent": "nzo8"
-  },
-  "mva9_K_H": {
-    "id": "mva9_K_H",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "H 4K",
-    "deck": "minions-yellow",
-    "z": 6321
-  },
-  "mva9_A_S": {
-    "id": "mva9_A_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 01",
-    "deck": "minions-yellow",
-    "z": 473
-  },
-  "mva9_2_S": {
-    "id": "mva9_2_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 02",
-    "deck": "minions-yellow",
-    "z": 4498
-  },
-  "mva9_3_S": {
-    "id": "mva9_3_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 03",
-    "deck": "minions-yellow",
-    "z": 297
-  },
-  "mva9_4_S": {
-    "id": "mva9_4_S",
-    "type": "card",
-    "cardType": "S 04",
-    "deck": "minions-yellow",
-    "z": 12597,
-    "parent": "nzo8"
-  },
-  "mva9_5_S": {
-    "id": "mva9_5_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 05",
-    "deck": "minions-yellow",
-    "z": 611
-  },
-  "mva9_6_S": {
-    "id": "mva9_6_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 06",
-    "deck": "minions-yellow",
-    "z": 249
-  },
-  "mva9_7_S": {
-    "id": "mva9_7_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 07",
-    "deck": "minions-yellow",
-    "z": 5842
-  },
-  "mva9_8_S": {
-    "id": "mva9_8_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 08",
-    "deck": "minions-yellow",
-    "z": 4881
-  },
-  "mva9_9_S": {
-    "id": "mva9_9_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 09",
-    "deck": "minions-yellow",
-    "z": 351
-  },
-  "mva9_T_S": {
-    "id": "mva9_T_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 10",
-    "deck": "minions-yellow",
-    "z": 2387
-  },
-  "mva9_J_S": {
-    "id": "mva9_J_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 2J",
-    "deck": "minions-yellow",
-    "z": 7395
-  },
-  "mva9_Q_S": {
-    "id": "mva9_Q_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 3Q",
-    "deck": "minions-yellow",
-    "z": 8066
-  },
-  "mva9_K_S": {
-    "id": "mva9_K_S",
-    "parent": "wpbg",
-    "type": "card",
-    "cardType": "S 4K",
-    "deck": "minions-yellow",
-    "z": 2817
-  },
   "ap1r": {
     "deck": "blueTokens",
     "type": "card",
@@ -2686,7 +2266,6 @@
   },
   "72ch": {
     "type": "pile",
-    "parent": null,
     "x": 694,
     "y": 791,
     "width": 25,
@@ -2725,7 +2304,6 @@
   },
   "zuvx": {
     "type": "pile",
-    "parent": null,
     "x": 795,
     "y": 791,
     "width": 25,
@@ -2910,7 +2488,6 @@
   },
   "eqhj": {
     "type": "pile",
-    "parent": null,
     "x": 153,
     "y": 757,
     "width": 40,
@@ -2923,7 +2500,6 @@
   },
   "awv2": {
     "type": "pile",
-    "parent": null,
     "x": 295,
     "y": 758,
     "width": 40,

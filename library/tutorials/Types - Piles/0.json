@@ -29,13 +29,6 @@
       "players": "1"
     }
   },
-  "oit_2_C": {
-    "type": "card",
-    "id": "oit_2_C",
-    "parent": "oitfP",
-    "deck": "example1D",
-    "cardType": "C 02"
-  },
   "dl5d": {
     "type": "holder",
     "id": "dl5d",
