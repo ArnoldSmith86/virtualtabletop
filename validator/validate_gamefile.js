@@ -513,6 +513,8 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
+                if(func === 'TURN')
+            context.validCollections[operation.collection || 'TURN'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
