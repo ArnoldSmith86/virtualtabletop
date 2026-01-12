@@ -25,10 +25,20 @@
     "z": 29,
     "css": "font-size: 20px; ",
     "text": "Using the css transition property, you can add simple animations to the menu when it appears and disappears.  You can alter the timing element to suit your needs. For the slide example, you will want to make the off screen coordinates close to the edge to prevent extra lag.\n\nFor the scale and opacity examples, the buttons (and holder) are still on the screen and could be clicked or could accept dropped widgets. You need to modify the properties of the button and holder to prevent that from happening.  Look at the JSON in the buttons for one way to do this.",
-    "width": 1000
+    "width": 1000,
+    "clickRoutine": [
+      "// This is only here to avoid validation issues",
+      {
+        "func": "VAR",
+        "variables": {
+          "dummy1": "${PROPERTY imageNote1}",
+          "dummy2": "${PROPERTY cssNote1}"
+        }
+      }
+    ]
   },
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Xtras - Menus",
       "image": "/assets/-1505187436_4098",
@@ -39,7 +49,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748992332992,
+      "lastUpdate": 1768191548577,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -48,10 +58,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Advanced",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Advanced",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "openMenu": {
@@ -110,8 +123,8 @@
     "movable": false,
     "movableInEdit": false,
     "x": 850,
-    "image Note1": "This is an example of a custom widget as the background for the menu system.",
-    "css": "transition: linear 0.6s;opacity: 0"
+    "css": "transition: linear 0.6s;opacity: 0",
+    "imageNote1": "This is an example of a custom widget as the background for the menu system."
   },
   "theSpinner": {
     "type": "spinner",
@@ -183,9 +196,9 @@
     "svgReplaces": {
       "currentColor": "color"
     },
-    "image Note1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property.",
     "flexClick2": true,
-    "clickable": false
+    "clickable": false,
+    "imageNote1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
   },
   "showSpinner": {
     "type": "button",
@@ -266,8 +279,8 @@
     "height": 400,
     "z": 4,
     "css": "background: linear-gradient(to bottom right, blue, lightblue); transition: linear 0.6s",
-    "css Note1": "This is an example of using a holder as a background for the menu system.  CSS properties were used to change the color characteristics of the holder.",
-    "scale": 0
+    "scale": 0,
+    "cssNote1": "This is an example of using a holder as a background for the menu system.  CSS properties were used to change the color characteristics of the holder."
   },
   "wvl1": {
     "type": "button",
@@ -308,9 +321,9 @@
       "currentColor": "color"
     },
     "parent": "aBackground",
-    "image Note1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property.",
     "flexClick1": true,
-    "clickable": false
+    "clickable": false,
+    "imageNote1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
   },
   "player1": {
     "type": "holder",
@@ -397,8 +410,8 @@
     "svgReplaces": {
       "currentColor": "color"
     },
-    "image Note1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property.",
-    "y": 10
+    "y": 10,
+    "imageNote1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
   },
   "7w6t": {
     "type": "label",
@@ -459,29 +472,7 @@
     "parent": "fe9c",
     "x": 12,
     "y": 41,
-    "width": 86,
-    "height": 86,
-    "movable": null,
-    "movableInEdit": null,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -962,7 +953,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -978,9 +968,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }

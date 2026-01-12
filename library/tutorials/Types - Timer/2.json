@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 20,
     "info": {
       "name": "Types - Timer",
       "image": "/assets/1382176810_3946",
@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "The clock face, by temas, is in the Public Domain under CC0, and is available at https://openclipart.org/detail/134335/diy-clock-face-by-temas-134335.\n\nThe stopwatch face is the based on the clock face, but the numbers were modified by LawDawg96.  It is released to the Public Domain under CC0.\n\nThe hour and minute hands are in the Public Domain under CC0, and are available at https://freesvg.org/minute-hand-mitchell-joh.",
       "showName": false,
-      "lastUpdate": 1748992138779,
+      "lastUpdate": 1768190891174,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,10 +20,16 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Appearance",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Appearance",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   },
   "glassTop": {
@@ -199,7 +205,7 @@
           {
             "func": "TIMER",
             "timer": "theTimer2",
-            "mode": "paused"
+            "mode": "pause"
           }
         ]
       }
@@ -310,14 +316,11 @@
     "id": "8fr3",
     "x": 287,
     "y": -4,
-    "width": "1000",
-    "height": "100",
+    "width": 1000,
+    "height": 100,
     "z": 66,
-    "movable": false,
-    "movableInEdit": true,
     "css": "font-size: 60px",
-    "text": "Timer: Appearance",
-    "editable": false
+    "text": "Timer: Appearance"
   },
   "ekxj": {
     "text": "This tutorial demonstrates ways to customize the apperance of the timer  Basic changes can be made using the css properties of the timer widget.  The timer below has a change to font color and size.",

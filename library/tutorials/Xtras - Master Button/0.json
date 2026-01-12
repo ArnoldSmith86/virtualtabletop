@@ -93,16 +93,8 @@
         "collection": "firstInCollection",
         "property": "color",
         "relation": "=",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "checkerColor"
-          },
-          {
-            "parameter": "skip",
-            "variable": "painted"
-          }
-        ]
+        "value": "${checkerColor}",
+        "skip": "${painted}"
       },
       {
         "note": "sets the checker width to the value stored as a property in this button.  This is skipped when a different button is pressed."
@@ -112,16 +104,8 @@
         "collection": "firstInCollection",
         "property": "width",
         "relation": "=",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "checkerWidth"
-          },
-          {
-            "parameter": "skip",
-            "variable": "painted"
-          }
-        ]
+        "value": "${checkerWidth}",
+        "skip": "${painted}"
       },
       {
         "note": "sets the checker height to the value stored as a property in this button.  This is skipped when a different button is pressed."
@@ -131,16 +115,8 @@
         "collection": "firstInCollection",
         "property": "height",
         "relation": "=",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "checkerHeight"
-          },
-          {
-            "parameter": "skip",
-            "variable": "painted"
-          }
-        ]
+        "value": "${checkerHeight}",
+        "skip": "${painted}"
       },
       {
         "note": "routine for moving the checker around the board"
@@ -171,12 +147,7 @@
         "collection": "firstInCollection",
         "property": "x",
         "relation": "+",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "xChange"
-          }
-        ]
+        "value": "${xChange}"
       },
       {
         "note": "sets the ydirection change"
@@ -186,12 +157,7 @@
         "collection": "firstInCollection",
         "property": "y",
         "relation": "+",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "yChange"
-          }
-        ]
+        "value": "${yChange}"
       },
       {
         "note": "reterns 0 if there are no more buttons in the collection"
@@ -204,18 +170,7 @@
       {
         "note": "changes noMoreClicks to a true value when there are no more buttons in the collection"
       },
-      {
-        "func": "COMPUTE",
-        "operation": "==",
-        "applyVariables": [
-          {
-            "parameter": "operand1",
-            "variable": "count"
-          }
-        ],
-        "operand2": 0,
-        "variable": "noMoreClicks"
-      },
+      "var noMoreClicks = ${count} == 0",
       {
         "note": "sets a property on each checker that has been moved/colorchanged so that they will be excluded from the next collection"
       },
@@ -244,12 +199,7 @@
         "property": "exclude",
         "relation": "=",
         "value": false,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "firstInCollectionZ"
-          }
-        ]
+        "skip": "${firstInCollectionZ}"
       },
       {
         "note": "clears out move so other buttons won't trigger movement"
@@ -260,12 +210,7 @@
         "property": "xchange",
         "relation": "=",
         "value": 0,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "firstInCollectionZ"
-          }
-        ]
+        "skip": "${firstInCollectionZ}"
       },
       {
         "note": "clears out move so other buttons won't trigger movement"
@@ -276,12 +221,7 @@
         "property": "ychange",
         "relation": "=",
         "value": 0,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "firstInCollectionZ"
-          }
-        ]
+        "skip": "${firstInCollectionZ}"
       },
       {
         "note": "sets painted property in button so that they will not be colored when movement buttons are pressed"
@@ -292,12 +232,7 @@
         "property": "painted",
         "relation": "=",
         "value": true,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "firstInCollectionZ"
-          }
-        ]
+        "skip": "${firstInCollectionZ}"
       },
       {
         "note": "this portion keeps all checkers in a predefined boxed area"
@@ -317,105 +252,41 @@
         "property": "y",
         "variable": "checkerY"
       },
-      {
-        "func": "COMPUTE",
-        "operation": ">",
-        "applyVariables": [
-          {
-            "parameter": "operand1",
-            "variable": "checkerX"
-          }
-        ],
-        "operand2": 450,
-        "variable": "skipMoveX"
-      },
+      "var skipMoveX = ${checkerX} > 450",
       {
         "func": "SET",
         "collection": "firstInCollection",
         "property": "x",
         "relation": "=",
         "value": 450,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "skipMoveX"
-          }
-        ]
+        "skip": "${skipMoveX}"
       },
-      {
-        "func": "COMPUTE",
-        "operation": "<",
-        "applyVariables": [
-          {
-            "parameter": "operand1",
-            "variable": "checkerX"
-          }
-        ],
-        "operand2": 1300,
-        "variable": "skipMoveX"
-      },
+      "var skipMoveX = ${checkerX} < 1300",
       {
         "func": "SET",
         "collection": "firstInCollection",
         "property": "x",
         "relation": "=",
         "value": 1300,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "skipMoveX"
-          }
-        ]
+        "skip": "${skipMoveX}"
       },
-      {
-        "func": "COMPUTE",
-        "operation": ">",
-        "applyVariables": [
-          {
-            "parameter": "operand1",
-            "variable": "checkerY"
-          }
-        ],
-        "operand2": 200,
-        "variable": "skipMoveY"
-      },
+      "var skipMoveY = ${checkerY} > 200",
       {
         "func": "SET",
         "collection": "firstInCollection",
         "property": "y",
         "relation": "=",
         "value": 200,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "skipMoveY"
-          }
-        ]
+        "skip": "${skipMoveY}"
       },
-      {
-        "func": "COMPUTE",
-        "operation": "<",
-        "applyVariables": [
-          {
-            "parameter": "operand1",
-            "variable": "checkerY"
-          }
-        ],
-        "operand2": 750,
-        "variable": "skipMoveY"
-      },
+      "var skipMoveY = ${checkerY} < 750",
       {
         "func": "SET",
         "collection": "firstInCollection",
         "property": "y",
         "relation": "=",
         "value": 750,
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "skipMoveY"
-          }
-        ]
+        "skip": "${skipMoveY}"
       },
       {
         "note": "clicks this button so that it will apply changes to all checkers one at a time, stops when every checker has been changed"
@@ -423,26 +294,19 @@
       {
         "func": "CLICK",
         "collection": "thisButton",
-        "applyVariables": [
-          {
-            "parameter": "skip",
-            "variable": "noMoreClicks"
-          }
-        ]
+        "skip": "${noMoreClicks}"
       }
     ],
     "x": 1229,
     "y": 806,
     "z": 69,
     "id": "masterbutton",
-    "item": "bokw",
     "checkercolor": "violet",
     "checkerheight": 50,
     "checkerwidth": 100,
     "ychange": 0,
     "xchange": 0,
-    "painted": true,
-    "movableInEdit": true
+    "painted": true
   },
   "redbutton": {
     "type": "button",
@@ -452,7 +316,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -504,7 +368,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -556,7 +420,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -608,7 +472,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -660,7 +524,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -705,7 +569,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -750,7 +614,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -788,7 +652,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -826,7 +690,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -864,7 +728,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -902,7 +766,7 @@
         "func": "SELECT",
         "source": "all",
         "property": "id",
-        "relation": "=",
+        "relation": "==",
         "value": "masterbutton",
         "collection": "masterButton"
       },
@@ -1176,7 +1040,7 @@
     "height": 50
   },
   "_meta": {
-    "version": 1,
+    "version": 20,
     "info": {
       "name": "Xtras - Master Button",
       "image": "/assets/1882549092_5598",
@@ -1187,7 +1051,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051235339,
+      "lastUpdate": 1768191245272,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1196,10 +1060,16 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   },
   "5eeo": {

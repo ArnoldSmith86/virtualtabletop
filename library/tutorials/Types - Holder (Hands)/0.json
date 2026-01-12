@@ -352,24 +352,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -850,7 +832,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -866,9 +847,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1330,7 +1312,9 @@
     "childrenPerOwner": true,
     "width": 600,
     "height": 180,
-    "id": "hand2"
+    "id": "hand2",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "hand1": {
     "id": "hand1",
@@ -1350,7 +1334,9 @@
     "inheritChildZ": true,
     "childrenPerOwner": true,
     "width": 600,
-    "height": 180
+    "height": 180,
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "xtj0": {
     "type": "button",
@@ -1368,7 +1354,10 @@
     "id": "xtj0"
   },
   "_meta": {
-    "version": 1,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder (Hand)",
       "image": "/assets/701433125_6681",
@@ -1379,7 +1368,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051205357,
+      "lastUpdate": 1768189137681,
       "skill": "",
       "description": "",
       "similarImage": "",

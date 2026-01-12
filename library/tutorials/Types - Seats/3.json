@@ -576,42 +576,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1543,7 +1507,8 @@
       },
       {
         "func": "TURN",
-        "source": "DEFAULT"
+        "source": "DEFAULT",
+        "collection": "TURN"
       },
       "//the TURN function returns a collection with the seats it selected",
       {
@@ -1578,7 +1543,8 @@
       },
       {
         "func": "TURN",
-        "source": "DEFAULT"
+        "source": "DEFAULT",
+        "collection": "TURN"
       },
       "//the TURN function returns a collection with the seats it selected",
       {
@@ -1609,7 +1575,8 @@
       {
         "func": "TURN",
         "turnCycle": "forward",
-        "turn": 1
+        "turn": 1,
+        "collection": "TURN"
       },
       "//the TURN function returns a collection with the seats it selected",
       {
@@ -1640,7 +1607,8 @@
       {
         "func": "TURN",
         "turnCycle": "forward",
-        "turn": 0
+        "turn": 0,
+        "collection": "TURN"
       },
       "//the TURN function returns a collection with the seats it selected",
       {
@@ -1716,7 +1684,7 @@
     "movable": false
   },
   "_meta": {
-    "version": 15,
+    "version": 20,
     "info": {
       "name": "Types - Seat",
       "image": "/assets/-1938910465_5823",
@@ -1727,7 +1695,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051218353,
+      "lastUpdate": 1768190674644,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1736,10 +1704,16 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Turn and Deal",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Turn and Deal",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   }
 }
