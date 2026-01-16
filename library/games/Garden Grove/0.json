@@ -1,15 +1,4 @@
 {
-  "7313": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "7313",
-    "z": 34833,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
   "_meta": {
     "version": 20,
     "gameSettings": {
@@ -27,7 +16,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "Initial mod design, layout, maps, and tile designs by lm_3 using Microsoft Copilot and Paint.Net. Released to public domain under CC0.<div>Additional scripting, modification, and How to Play section done by DexDouglas, with assistance by LawDawg, and released to public domain under CC0.</div><div>Library image created using Copilot with prompt: \"create a square image, aquarelle style, of a flower garden with bluebells, sunflowers, rosebushes and lilacs\" and released to public domain under CC0.&nbsp;</div>",
-      "lastUpdate": 1768524379613,
+      "lastUpdate": 1768529504124,
       "showName": true,
       "skill": "Medium",
       "description": "Welcome to Garden Grove! You are competing to own the most beautiful garden-scapes among your opponents. Grow and claim gardens, expand adjacent to pergolas, and get bonuses for treasures you reach along the way.  First to run out of claim tokens, wins!",
@@ -1515,29 +1504,14 @@
     "height": 50,
     "z": 1803
   },
-  "zd32": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "zd32",
-    "z": 34809,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
   "gazebosP1": {
     "type": "deck",
     "id": "gazebosP1",
     "parent": "gazeboHolderP1",
     "x": -7,
     "cardDefaults": {
-      "seat1Color": "gold",
-      "color_change_index": 1,
-      "background": "grey",
-      "color": "black",
-      "width": 52.309,
-      "height": 52.622,
+      "width": 45,
+      "height": 45,
       "onPileCreation": {
         "handleCSS": {
           "background": "black",
@@ -1548,28 +1522,37 @@
       }
     },
     "cardTypes": {
-      "disc-crown": {
-        "image": "/assets/647184309_1309"
+      "token1": {
+        "symbol": "sunny",
+        "bgColor": "gold"
       }
     },
     "faceTemplates": [
       {
         "border": false,
-        "radius": false,
+        "radius": 100,
         "objects": [
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "width": 52.309,
-            "height": 52.622,
-            "color": "transparent",
+            "width": 45,
+            "height": 45,
             "dynamicProperties": {
-              "value": "image"
-            },
-            "svgReplaces": {
-              "#bgcolor": "seat1Color",
-              "#fgcolor": "color"
+              "color": "bgColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 2.5,
+            "y": 2.5,
+            "size": 40,
+            "rotation": 0,
+            "color": "#000000",
+            "strokeColor": "",
+            "strokeWidth": 0,
+            "dynamicProperties": {
+              "value": "symbol"
             }
           }
         ]
@@ -1609,256 +1592,6 @@
     "y": -6,
     "linkedToSeat": "seat1"
   },
-  "hfux": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "hfux",
-    "z": 34810,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "wrxg": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "wrxg",
-    "z": 34811,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "zs2w": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "zs2w",
-    "z": 34812,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "hr92": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "hr92",
-    "z": 34813,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "q3f5": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "q3f5",
-    "z": 34814,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "svlz": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "svlz",
-    "z": 34815,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "a380": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "a380",
-    "z": 34816,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "w3te": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "w3te",
-    "z": 34817,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "qmf7": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "qmf7",
-    "z": 34818,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "tc6t": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "tc6t",
-    "z": 34819,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "7qt9": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "7qt9",
-    "z": 34820,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "k864": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "k864",
-    "z": 34821,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "ts4y": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "ts4y",
-    "z": 34822,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "0r23": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "0r23",
-    "z": 34823,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "rj9x": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "rj9x",
-    "z": 34824,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "oxso": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "oxso",
-    "z": 34825,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "s7tb": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "s7tb",
-    "z": 34826,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "b1xx",
-    "customState": 0
-  },
-  "0p0j": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "0p0j",
-    "z": 34827,
-    "activeFace": 1,
-    "color": "#000000",
-    "customState": 0,
-    "parent": "b1xx"
-  },
-  "glpt": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "glpt",
-    "z": 34828,
-    "activeFace": 1,
-    "color": "#000000",
-    "customState": 0,
-    "parent": "b1xx"
-  },
-  "n6y8": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "n6y8",
-    "z": 34829,
-    "activeFace": 1,
-    "color": "#000000",
-    "customState": 0,
-    "parent": "b1xx"
-  },
-  "7dje": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "7dje",
-    "z": 34830,
-    "activeFace": 1,
-    "color": "#000000",
-    "customState": 0,
-    "parent": "b1xx"
-  },
-  "4xsg": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "4xsg",
-    "z": 34831,
-    "activeFace": 1,
-    "color": "#000000",
-    "customState": 0,
-    "parent": "b1xx"
-  },
-  "f07r": {
-    "deck": "gazebosP1",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "f07r",
-    "z": 34832,
-    "color": "#000000",
-    "customState": 0,
-    "parent": "b1xx"
-  },
   "gazeboHolderP2": {
     "type": "holder",
     "id": "gazeboHolderP2",
@@ -1895,12 +1628,8 @@
     "x": -7,
     "y": -11,
     "cardDefaults": {
-      "seat2Color": "red",
-      "color_change_index": 1,
-      "background": "gray",
-      "color": "black",
-      "width": 52.309,
-      "height": 52.622,
+      "width": 45,
+      "height": 45,
       "onPileCreation": {
         "handleCSS": {
           "background": "black",
@@ -1911,28 +1640,37 @@
       }
     },
     "cardTypes": {
-      "disc-crown": {
-        "image": "/assets/647184309_1309"
+      "token2": {
+        "symbol": "rainy",
+        "bgColor": "#ff0000"
       }
     },
     "faceTemplates": [
       {
         "border": false,
-        "radius": false,
+        "radius": 100,
         "objects": [
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "width": 52.309,
-            "height": 52.622,
-            "color": "transparent",
+            "width": 45,
+            "height": 45,
             "dynamicProperties": {
-              "value": "image"
-            },
-            "svgReplaces": {
-              "#bgcolor": "seat2Color",
-              "#fgcolor": "color"
+              "color": "bgColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 2.5,
+            "y": 2.5,
+            "size": 40,
+            "rotation": 0,
+            "color": "#ffffff",
+            "strokeColor": "",
+            "strokeWidth": 0,
+            "dynamicProperties": {
+              "value": "symbol"
             }
           }
         ]
@@ -1979,12 +1717,8 @@
     "x": -7,
     "y": -11,
     "cardDefaults": {
-      "seat3Color": "#cc04d6",
-      "color_change_index": 1,
-      "background": "gray",
-      "color": "black",
-      "width": 52.309,
-      "height": 52.622,
+      "width": 45,
+      "height": 45,
       "onPileCreation": {
         "handleCSS": {
           "background": "black",
@@ -1995,28 +1729,37 @@
       }
     },
     "cardTypes": {
-      "disc-crown": {
-        "image": "/assets/647184309_1309"
+      "token3": {
+        "symbol": "nightlight",
+        "bgColor": "#cc04d6"
       }
     },
     "faceTemplates": [
       {
         "border": false,
-        "radius": false,
+        "radius": 100,
         "objects": [
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "width": 52.309,
-            "height": 52.622,
-            "color": "transparent",
+            "width": 45,
+            "height": 45,
             "dynamicProperties": {
-              "value": "image"
-            },
-            "svgReplaces": {
-              "#bgcolor": "seat3Color",
-              "#fgcolor": "color"
+              "color": "bgColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 2.5,
+            "y": 2.5,
+            "size": 40,
+            "rotation": 0,
+            "color": "#ffffff",
+            "strokeColor": "",
+            "strokeWidth": 0,
+            "dynamicProperties": {
+              "value": "symbol"
             }
           }
         ]
@@ -2061,12 +1804,8 @@
     "x": -7,
     "y": -11,
     "cardDefaults": {
-      "seat4Color": "#06f202",
-      "color_change_index": 1,
-      "background": "gray",
-      "color": "black",
-      "width": 52.309,
-      "height": 52.622,
+      "width": 45,
+      "height": 45,
       "onPileCreation": {
         "handleCSS": {
           "background": "black",
@@ -2077,28 +1816,37 @@
       }
     },
     "cardTypes": {
-      "disc-crown": {
-        "image": "/assets/647184309_1309"
+      "token4": {
+        "symbol": "(🌩️)",
+        "bgColor": "#06f202"
       }
     },
     "faceTemplates": [
       {
         "border": false,
-        "radius": false,
+        "radius": 100,
         "objects": [
           {
             "type": "image",
             "x": 0,
             "y": 0,
-            "width": 52.309,
-            "height": 52.622,
-            "color": "transparent",
+            "width": 45,
+            "height": 45,
             "dynamicProperties": {
-              "value": "image"
-            },
-            "svgReplaces": {
-              "#bgcolor": "seat4Color",
-              "#fgcolor": "color"
+              "color": "bgColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 2.5,
+            "y": 2.5,
+            "size": 40,
+            "rotation": 0,
+            "color": "#000000",
+            "strokeColor": "",
+            "strokeWidth": 0,
+            "dynamicProperties": {
+              "value": "symbol"
             }
           }
         ]
@@ -2106,760 +1854,6 @@
     ],
     "width": 46,
     "height": 46
-  },
-  "vary": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "vary",
-    "z": 34834,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "5hmj": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "5hmj",
-    "z": 34835,
-    "color": "#000000",
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "eu6r": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "eu6r",
-    "z": 34836,
-    "color": "#000000",
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "3tx5": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "3tx5",
-    "z": 34837,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "wvr9": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "wvr9",
-    "z": 34838,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "eihq": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "eihq",
-    "z": 34839,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "iogr": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "iogr",
-    "z": 34840,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "t1og": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "t1og",
-    "z": 34841,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "fynp": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "fynp",
-    "z": 34842,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "sw7z": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "sw7z",
-    "z": 34843,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "u7k7": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "u7k7",
-    "z": 34844,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "gci4": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "gci4",
-    "z": 34845,
-    "color": "#000000",
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "btvc": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "btvc",
-    "z": 34846,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "9qpv": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "9qpv",
-    "z": 34847,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "kyoh": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "kyoh",
-    "z": 34848,
-    "color": "#000000",
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "g5qb": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "g5qb",
-    "z": 34849,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "81ru": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "81ru",
-    "z": 34850,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "6sx0": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "6sx0",
-    "z": 34851,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "go03": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "go03",
-    "z": 34852,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "e47n": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "e47n",
-    "z": 34853,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "83qw": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "83qw",
-    "z": 34854,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "o4xv",
-    "customState": 0
-  },
-  "7d2g": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "7d2g",
-    "z": 34855,
-    "color": "#000000",
-    "activeFace": 1,
-    "customState": 0,
-    "parent": "o4xv"
-  },
-  "mvo7": {
-    "deck": "gazebosP2",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "mvo7",
-    "z": 34856,
-    "color": "#000000",
-    "activeFace": 1,
-    "customState": 0,
-    "parent": "o4xv"
-  },
-  "b14c": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "b14c",
-    "z": 34857,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "gvhp": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "gvhp",
-    "z": 34858,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "vbap": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "vbap",
-    "z": 34859,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "mdrq": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "mdrq",
-    "z": 34860,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "64gk": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "64gk",
-    "z": 34861,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "epx6": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "epx6",
-    "z": 34862,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "dzmu": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "dzmu",
-    "z": 34863,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "7p4w": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "7p4w",
-    "z": 34864,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "mq3w": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "mq3w",
-    "z": 34865,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "ddul": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "ddul",
-    "z": 34866,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "2urd": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "2urd",
-    "z": 34867,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "metf": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "metf",
-    "z": 34868,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "1nkp": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "1nkp",
-    "z": 34869,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "bdcf": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "bdcf",
-    "z": 34870,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "frmh": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "frmh",
-    "z": 34871,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "ifiy": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "ifiy",
-    "z": 34872,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "qypl": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "qypl",
-    "z": 34873,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "1a06": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "1a06",
-    "z": 34874,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "g9hp": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "g9hp",
-    "z": 34875,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "d46n": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "d46n",
-    "z": 34876,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "1jfn": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "1jfn",
-    "z": 34877,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "9t7y": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "9t7y",
-    "z": 34878,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "vimd": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "vimd",
-    "z": 34879,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "km16": {
-    "deck": "gazebosP3",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "km16",
-    "z": 34880,
-    "color": "#000000",
-    "parent": "n8ln",
-    "customState": 0
-  },
-  "gqkx": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "gqkx",
-    "z": 34881,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "2dqw": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "2dqw",
-    "z": 34882,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "zili": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "zili",
-    "z": 34883,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "wmsf": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "wmsf",
-    "z": 34884,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "ilhm": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "ilhm",
-    "z": 34885,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "dz7w": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "dz7w",
-    "z": 34886,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "46ub": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "46ub",
-    "z": 34887,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "8pau": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "8pau",
-    "z": 34888,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "ie63": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "ie63",
-    "z": 34889,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "arg3": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "arg3",
-    "z": 34890,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "fwpb": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "fwpb",
-    "z": 34891,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "ayy1": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "ayy1",
-    "z": 34892,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "srho": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "srho",
-    "z": 34893,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "g03i": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "g03i",
-    "z": 34894,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "4m3t": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "4m3t",
-    "z": 34895,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "dflt": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "dflt",
-    "z": 34896,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "nv25": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "nv25",
-    "z": 34897,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "q4hj": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "q4hj",
-    "z": 34898,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "6et6": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "6et6",
-    "z": 34899,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "vusv": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "vusv",
-    "z": 34900,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "flsu": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "flsu",
-    "z": 34901,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "u8fn": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "u8fn",
-    "z": 34902,
-    "color": "#000000",
-    "activeFace": 1,
-    "parent": "53u3",
-    "customState": 0
-  },
-  "rr1t": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "rr1t",
-    "z": 34903,
-    "activeFace": 1,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
-  },
-  "l9b2": {
-    "deck": "gazebosP4",
-    "type": "card",
-    "cardType": "disc-crown",
-    "id": "l9b2",
-    "z": 34904,
-    "color": "#000000",
-    "parent": "53u3",
-    "customState": 0
   },
   "reset": {
     "type": "button",
@@ -3668,69 +2662,6 @@
         "turnCycle": "forward"
       }
     ]
-  },
-  "n8ln": {
-    "type": "pile",
-    "parent": "gazeboHolderP3",
-    "x": 0,
-    "y": 4.84,
-    "width": 52.309,
-    "height": 52.622,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handlePosition": "top right",
-    "handleSize": 30,
-    "id": "n8ln"
-  },
-  "o4xv": {
-    "type": "pile",
-    "parent": "gazeboHolderP2",
-    "x": 0,
-    "y": 4.84,
-    "width": 52.309,
-    "height": 52.622,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handlePosition": "top right",
-    "handleSize": 30,
-    "id": "o4xv",
-    "z": 27422
-  },
-  "b1xx": {
-    "type": "pile",
-    "parent": "gazeboHolderP1",
-    "x": 0,
-    "y": 4.84,
-    "width": 52.309,
-    "height": 52.622,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handlePosition": "top right",
-    "handleSize": 30,
-    "id": "b1xx",
-    "z": 27472
-  },
-  "53u3": {
-    "type": "pile",
-    "parent": "gazeboHolderP4",
-    "x": 0,
-    "y": 4.84,
-    "width": 52.309,
-    "height": 52.622,
-    "handleCSS": {
-      "background": "black",
-      "color": "white"
-    },
-    "handlePosition": "top right",
-    "handleSize": 30,
-    "id": "53u3",
-    "z": 27521
   },
   "bluebellMap": {
     "id": "bluebellMap",
@@ -5372,5 +4303,833 @@
       }
     ],
     "text": "Cycle Glow"
+  },
+  "q3ku": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "q3ku",
+    "z": 35007,
+    "parent": "mk6q"
+  },
+  "mewl": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "mewl",
+    "z": 35009,
+    "parent": "mk6q"
+  },
+  "mk6q": {
+    "type": "pile",
+    "parent": "gazeboHolderP1",
+    "x": 0,
+    "y": 4.84,
+    "width": 45,
+    "height": 45,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "mk6q"
+  },
+  "pk0s": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "pk0s",
+    "z": 35011,
+    "parent": "mk6q"
+  },
+  "8aeg": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "8aeg",
+    "z": 35013,
+    "parent": "mk6q"
+  },
+  "twe5": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "twe5",
+    "z": 35015,
+    "parent": "mk6q"
+  },
+  "p39w": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "p39w",
+    "z": 35017,
+    "parent": "mk6q"
+  },
+  "oock": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "oock",
+    "z": 35019,
+    "parent": "mk6q"
+  },
+  "sn9o": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "sn9o",
+    "z": 35021,
+    "parent": "mk6q"
+  },
+  "dp18": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "dp18",
+    "z": 35023,
+    "parent": "mk6q"
+  },
+  "ulmg": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "ulmg",
+    "z": 35025,
+    "parent": "mk6q"
+  },
+  "ny2i": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "ny2i",
+    "z": 35027,
+    "parent": "mk6q"
+  },
+  "00k1": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "00k1",
+    "z": 35029,
+    "parent": "mk6q"
+  },
+  "517u": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "517u",
+    "z": 35031,
+    "parent": "mk6q"
+  },
+  "kua8": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "kua8",
+    "z": 35033,
+    "parent": "mk6q"
+  },
+  "ypu9": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "ypu9",
+    "z": 35035,
+    "parent": "mk6q"
+  },
+  "qld9": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "qld9",
+    "z": 35037,
+    "parent": "mk6q"
+  },
+  "z586": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "z586",
+    "z": 35039,
+    "parent": "mk6q"
+  },
+  "sibq": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "sibq",
+    "z": 35041,
+    "parent": "mk6q"
+  },
+  "6irp": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "6irp",
+    "z": 35043,
+    "parent": "mk6q"
+  },
+  "vege": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "vege",
+    "z": 35045,
+    "parent": "mk6q"
+  },
+  "wc15": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "wc15",
+    "z": 35047,
+    "parent": "mk6q"
+  },
+  "pto6": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "pto6",
+    "z": 35049,
+    "parent": "mk6q"
+  },
+  "hfe7": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "hfe7",
+    "z": 35051,
+    "parent": "mk6q"
+  },
+  "qiw8": {
+    "deck": "gazebosP1",
+    "type": "card",
+    "cardType": "token1",
+    "id": "qiw8",
+    "z": 35053,
+    "parent": "mk6q"
+  },
+  "2fhp": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "2fhp",
+    "z": 35101,
+    "parent": "w4c0"
+  },
+  "7udc": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "7udc",
+    "z": 35103,
+    "parent": "w4c0"
+  },
+  "w4c0": {
+    "type": "pile",
+    "parent": "gazeboHolderP2",
+    "x": 0,
+    "y": 4.84,
+    "width": 45,
+    "height": 45,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "w4c0"
+  },
+  "pud7": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "pud7",
+    "z": 35105,
+    "parent": "w4c0"
+  },
+  "3dnc": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "3dnc",
+    "z": 35107,
+    "parent": "w4c0"
+  },
+  "o2fi": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "o2fi",
+    "z": 35109,
+    "parent": "w4c0"
+  },
+  "hmbu": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "hmbu",
+    "z": 35111,
+    "parent": "w4c0"
+  },
+  "i815": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "i815",
+    "z": 35113,
+    "parent": "w4c0"
+  },
+  "98b5": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "98b5",
+    "z": 35115,
+    "parent": "w4c0"
+  },
+  "654l": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "654l",
+    "z": 35117,
+    "parent": "w4c0"
+  },
+  "a5w5": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "a5w5",
+    "z": 35119,
+    "parent": "w4c0"
+  },
+  "irkg": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "irkg",
+    "z": 35121,
+    "parent": "w4c0"
+  },
+  "dvgl": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "dvgl",
+    "z": 35123,
+    "parent": "w4c0"
+  },
+  "kkps": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "kkps",
+    "z": 35125,
+    "parent": "w4c0"
+  },
+  "qxfh": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "qxfh",
+    "z": 35127,
+    "parent": "w4c0"
+  },
+  "wng3": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "wng3",
+    "z": 35129,
+    "parent": "w4c0"
+  },
+  "nzde": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "nzde",
+    "z": 35131,
+    "parent": "w4c0"
+  },
+  "k6q0": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "k6q0",
+    "z": 35133,
+    "parent": "w4c0"
+  },
+  "qehh": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "qehh",
+    "z": 35135,
+    "parent": "w4c0"
+  },
+  "9vro": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "9vro",
+    "z": 35137,
+    "parent": "w4c0"
+  },
+  "ukft": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "ukft",
+    "z": 35139,
+    "parent": "w4c0"
+  },
+  "3k6f": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "3k6f",
+    "z": 35141,
+    "parent": "w4c0"
+  },
+  "9ij7": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "9ij7",
+    "z": 35143,
+    "parent": "w4c0"
+  },
+  "wbya": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "wbya",
+    "z": 35145,
+    "parent": "w4c0"
+  },
+  "lplw": {
+    "deck": "gazebosP2",
+    "type": "card",
+    "cardType": "token2",
+    "id": "lplw",
+    "z": 35147,
+    "parent": "w4c0"
+  },
+  "ih9l": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "ih9l",
+    "z": 35148,
+    "parent": "a5rp"
+  },
+  "ng0w": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "ng0w",
+    "z": 35150,
+    "parent": "a5rp"
+  },
+  "a5rp": {
+    "type": "pile",
+    "parent": "gazeboHolderP3",
+    "x": 0,
+    "y": 4.84,
+    "width": 45,
+    "height": 45,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "a5rp"
+  },
+  "c7k7": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "c7k7",
+    "z": 35152,
+    "parent": "a5rp"
+  },
+  "vn3z": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "vn3z",
+    "z": 35154,
+    "parent": "a5rp"
+  },
+  "9kbm": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "9kbm",
+    "z": 35156,
+    "parent": "a5rp"
+  },
+  "lnl4": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "lnl4",
+    "z": 35158,
+    "parent": "a5rp"
+  },
+  "sbbz": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "sbbz",
+    "z": 35160,
+    "parent": "a5rp"
+  },
+  "ybmr": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "ybmr",
+    "z": 35162,
+    "parent": "a5rp"
+  },
+  "4mh0": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "4mh0",
+    "z": 35164,
+    "parent": "a5rp"
+  },
+  "gt24": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "gt24",
+    "z": 35166,
+    "parent": "a5rp"
+  },
+  "ctpo": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "ctpo",
+    "z": 35168,
+    "parent": "a5rp"
+  },
+  "agux": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "agux",
+    "z": 35170,
+    "parent": "a5rp"
+  },
+  "8oev": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "8oev",
+    "z": 35172,
+    "parent": "a5rp"
+  },
+  "nr61": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "nr61",
+    "z": 35174,
+    "parent": "a5rp"
+  },
+  "97n0": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "97n0",
+    "z": 35176,
+    "parent": "a5rp"
+  },
+  "8kzy": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "8kzy",
+    "z": 35178,
+    "parent": "a5rp"
+  },
+  "p8ib": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "p8ib",
+    "z": 35180,
+    "parent": "a5rp"
+  },
+  "ekiw": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "ekiw",
+    "z": 35182,
+    "parent": "a5rp"
+  },
+  "ysgu": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "ysgu",
+    "z": 35184,
+    "parent": "a5rp"
+  },
+  "21gw": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "21gw",
+    "z": 35186,
+    "parent": "a5rp"
+  },
+  "9abb": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "9abb",
+    "z": 35188,
+    "parent": "a5rp"
+  },
+  "hx9m": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "hx9m",
+    "z": 35190,
+    "parent": "a5rp"
+  },
+  "gdhg": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "gdhg",
+    "z": 35192,
+    "parent": "a5rp"
+  },
+  "sxtg": {
+    "deck": "gazebosP3",
+    "type": "card",
+    "cardType": "token3",
+    "id": "sxtg",
+    "z": 35194,
+    "parent": "a5rp"
+  },
+  "1bjp": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "1bjp",
+    "z": 35195,
+    "parent": "d6w5"
+  },
+  "xj9e": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "xj9e",
+    "z": 35197,
+    "parent": "d6w5"
+  },
+  "d6w5": {
+    "type": "pile",
+    "parent": "gazeboHolderP4",
+    "x": 0,
+    "y": 4.84,
+    "width": 45,
+    "height": 45,
+    "handleCSS": {
+      "background": "black",
+      "color": "white"
+    },
+    "handlePosition": "top right",
+    "handleSize": 30,
+    "id": "d6w5"
+  },
+  "kmkj": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "kmkj",
+    "z": 35199,
+    "parent": "d6w5"
+  },
+  "q5wu": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "q5wu",
+    "z": 35201,
+    "parent": "d6w5"
+  },
+  "btzh": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "btzh",
+    "z": 35203,
+    "parent": "d6w5"
+  },
+  "h8cg": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "h8cg",
+    "z": 35205,
+    "parent": "d6w5"
+  },
+  "l0ae": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "l0ae",
+    "z": 35207,
+    "parent": "d6w5"
+  },
+  "ed6y": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "ed6y",
+    "z": 35209,
+    "parent": "d6w5"
+  },
+  "f950": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "f950",
+    "z": 35211,
+    "parent": "d6w5"
+  },
+  "2ct0": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "2ct0",
+    "z": 35213,
+    "parent": "d6w5"
+  },
+  "wcv6": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "wcv6",
+    "z": 35215,
+    "parent": "d6w5"
+  },
+  "4j20": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "4j20",
+    "z": 35217,
+    "parent": "d6w5"
+  },
+  "p6w9": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "p6w9",
+    "z": 35219,
+    "parent": "d6w5"
+  },
+  "b2ra": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "b2ra",
+    "z": 35221,
+    "parent": "d6w5"
+  },
+  "4qt5": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "4qt5",
+    "z": 35223,
+    "parent": "d6w5"
+  },
+  "tvz3": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "tvz3",
+    "z": 35225,
+    "parent": "d6w5"
+  },
+  "czt8": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "czt8",
+    "z": 35227,
+    "parent": "d6w5"
+  },
+  "c2ec": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "c2ec",
+    "z": 35229,
+    "parent": "d6w5"
+  },
+  "tilk": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "tilk",
+    "z": 35231,
+    "parent": "d6w5"
+  },
+  "62ih": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "62ih",
+    "z": 35233,
+    "parent": "d6w5"
+  },
+  "3klj": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "3klj",
+    "z": 35235,
+    "parent": "d6w5"
+  },
+  "1e8k": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "1e8k",
+    "z": 35237,
+    "parent": "d6w5"
+  },
+  "roe7": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "roe7",
+    "z": 35239,
+    "parent": "d6w5"
+  },
+  "kwhn": {
+    "deck": "gazebosP4",
+    "type": "card",
+    "cardType": "token4",
+    "id": "kwhn",
+    "z": 35241,
+    "parent": "d6w5"
   }
 }
