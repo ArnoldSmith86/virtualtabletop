@@ -45,7 +45,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "22px",
+      "white-space": "pre-wrap"
     },
     "html": "This button inserts a DELAY between player INPUT choices. The text in the widget above the button will be updated as the player makes selections. To see the changes, open this room in a different browser or using an incognito window.\n\nThese DELAYs use the default time of 0. The pause is already created by the time the player needs to complete the input. DELAY is used here to force the information to be sent.",
     "parent": "bjw6"
@@ -58,7 +59,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "22px",
+      "white-space": "pre-wrap"
     },
     "html": "The deck to the right has a css transition class on it so that movement shows up in the room. The button gathers up all the cards and then uses a <b>loopRoutine</b> to deal out 7 cards to each player.\n\nTo enhance the visual effect, each holder has an <b>enterRoutine</b> to add a small random rotation to the card. The rotation is removed when the dealing is completed.",
     "layer": -4,
@@ -288,42 +290,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1726,10 +1692,7 @@
     "parent": "921i"
   },
   "_meta": {
-    "version": 18,
-    "gameSettings": {
-      "legacyModes": {}
-    },
+    "version": 20,
     "info": {
       "name": "Functions - DELAY",
       "image": "/assets/-892212102_3618",
@@ -1739,7 +1702,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1761328752554,
+      "lastUpdate": 1768609303503,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1749,10 +1712,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

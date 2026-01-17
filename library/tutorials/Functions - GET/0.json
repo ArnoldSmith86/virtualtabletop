@@ -456,7 +456,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -472,9 +471,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1364,7 +1364,10 @@
     "anotherKey": true
   },
   "_meta": {
-    "version": 4,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - GET",
       "image": "/assets/-276645508_3430",
@@ -1375,7 +1378,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068322035,
+      "lastUpdate": 1768609875981,
       "skill": "",
       "description": "",
       "similarImage": "",
