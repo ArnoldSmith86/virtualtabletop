@@ -1422,7 +1422,6 @@
     "parent": "deckHolder"
   },
   "wse2": {
-    "parent": null,
     "x": 1030,
     "y": 372,
     "width": 550,
@@ -1433,7 +1432,6 @@
     "id": "wse2"
   },
   "bjw6": {
-    "parent": null,
     "x": 19,
     "y": 372,
     "width": 300,
@@ -1444,7 +1442,6 @@
     "id": "bjw6"
   },
   "921i": {
-    "parent": null,
     "x": 693,
     "y": 372,
     "width": 300,
@@ -1455,7 +1452,6 @@
     "id": "921i"
   },
   "2vs1": {
-    "parent": null,
     "x": 356,
     "y": 372,
     "width": 300,

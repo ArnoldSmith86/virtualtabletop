@@ -495,7 +495,6 @@
   },
   "pl7a": {
     "type": "pile",
-    "parent": null,
     "x": 1279.5,
     "y": 764,
     "width": 103,
@@ -504,7 +503,6 @@
   },
   "16vd": {
     "type": "pile",
-    "parent": null,
     "x": 1133.5,
     "y": 764,
     "width": 103,
