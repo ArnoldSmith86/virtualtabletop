@@ -3111,12 +3111,6 @@
   },
   "_meta": {
     "version": 20,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
     "info": {
       "name": "Types - Holder",
       "image": "/assets/-1144102332_4316",
@@ -3127,7 +3121,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1768189116281,
+      "lastUpdate": 1768669162603,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -3136,10 +3130,13 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "CSS Flex",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "CSS Flex",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

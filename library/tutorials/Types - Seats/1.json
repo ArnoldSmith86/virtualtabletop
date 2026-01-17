@@ -208,7 +208,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768190476585,
+      "lastUpdate": 1768669394127,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -223,10 +223,7 @@
       "variantImage": ""
     },
     "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
+      "legacyModes": {}
     }
   },
   "qaui": {

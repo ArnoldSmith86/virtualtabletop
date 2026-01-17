@@ -1,12 +1,6 @@
 {
   "_meta": {
     "version": 20,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
     "info": {
       "name": "Types - Pile",
       "image": "/assets/-507593653_3537",
@@ -17,7 +11,7 @@
       "time": "",
       "attribution": "BASIC: N/A<div><br></div><div>--------</div><div><br></div><div>ADVANCED:&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">The rank icon images are by user Ingegneus and are released into the Public Domain through CC0.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">--------</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">DECORATION:&nbsp;&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The brown envelope images are by user mousewax and are released into the Public Domain through CC0.</div><div><br></div><div>--------</div><div><br></div><div>PILESNAPRANGE: N/A</div>",
       "showName": false,
-      "lastUpdate": 1768190089512,
+      "lastUpdate": 1768669197182,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -26,10 +20,13 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Advanced",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Advanced",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "8fr3": {

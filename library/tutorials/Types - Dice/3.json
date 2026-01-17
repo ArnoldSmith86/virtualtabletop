@@ -1,9 +1,6 @@
 {
   "_meta": {
     "version": 20,
-    "gameSettings": {
-      "legacyModes": {}
-    },
     "info": {
       "name": "Types - Dice",
       "image": "/assets/-194319686_4913",
@@ -14,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768188998377,
+      "lastUpdate": 1768669111381,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -23,10 +20,13 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Routines",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Routines",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "overview": {
@@ -207,7 +207,6 @@
     "rollCount": 28,
     "rollCountChangeRoutine": [
       {
-        "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
         "func": "IF",
         "condition": "${PROPERTY value}",
         "thenRoutine": [
@@ -216,14 +215,6 @@
             "from": "holder1",
             "to": "holder2",
             "count": "${PROPERTY value}"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "MOVE",
-            "from": "holder1",
-            "to": "holder2",
-            "count": "all"
           }
         ]
       }

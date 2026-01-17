@@ -641,7 +641,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1768191583138,
+      "lastUpdate": 1768669561532,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -656,10 +656,7 @@
       "variantImage": ""
     },
     "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
+      "legacyModes": {}
     }
   }
 }

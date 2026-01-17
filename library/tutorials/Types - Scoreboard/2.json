@@ -1,12 +1,6 @@
 {
   "_meta": {
     "version": 20,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -24,12 +18,15 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1768190453828,
+      "lastUpdate": 1768669357838,
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Totals and Teams",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Totals and Teams",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "seat1": {
