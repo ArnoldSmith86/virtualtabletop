@@ -2536,7 +2536,7 @@
     "classes": "classicPiece",
     "color": "#23ca5b",
     "parent": "g63n",
-    "y": null
+    "y": 0
   },
   "pin": {
     "id": "pin",

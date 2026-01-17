@@ -1,9 +1,4 @@
 {
-  "undefined": {
-    "z": 1,
-    "x": 738.5,
-    "y": 88
-  },
   "ndiz": {
     "type": "label",
     "text": "In some cases, you will need to reverse a pile. This can be used for example when you need to pick or put a card at the bottom of the pile.\n\nUsing z as the key to the sorting routine and setting reverse to true will reverse the cards on you pile.",
