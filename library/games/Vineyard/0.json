@@ -626,6 +626,9 @@
   },
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Vineyard",
       "image": "/assets/2103190519_47388",
@@ -636,7 +639,7 @@
       "time": "30",
       "attribution": "<div>Game layout and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>All card icons are&nbsp;from https://game-icons.net and are used under CC BY 3.0.</div><div><br></div><div>Library image and game background&nbsp;are from http://www.freepik.com and are used under the Freepik license:&nbsp;https://www.freepik.com/free-vector/abstract-landscape-background-illustration_16340936.htm</div>",
       "importerTime": 1748225779354,
-      "lastUpdate": 1767922668683,
+      "lastUpdate": 1768626726280,
       "importer": "PCIO",
       "showName": true,
       "skill": "",
@@ -703,7 +706,7 @@
     "css": {
       "opacity": 0.2
     },
-    "image": "/assets/-1463598320_4367659",
+    "image": "/assets/-2139230264_320940",
     "movableInEdit": false
   },
   "button-win-p1": {
@@ -862,7 +865,7 @@
     "type": "card",
     "cardType": "Blue 1",
     "id": "b17v",
-    "z": 59131,
+    "z": 59181,
     "parent": "o85a"
   },
   "826b": {
@@ -870,7 +873,7 @@
     "type": "card",
     "cardType": "Blue 3",
     "id": "826b",
-    "z": 59135,
+    "z": 59185,
     "parent": "o85a"
   },
   "gpa9": {
@@ -878,7 +881,7 @@
     "type": "card",
     "cardType": "Blue 4",
     "id": "gpa9",
-    "z": 59142,
+    "z": 59179,
     "parent": "o85a"
   },
   "3j52": {
@@ -886,7 +889,7 @@
     "type": "card",
     "cardType": "Blue 6",
     "id": "3j52",
-    "z": 59139,
+    "z": 59172,
     "parent": "o85a"
   },
   "yc78": {
@@ -894,7 +897,7 @@
     "type": "card",
     "cardType": "Orange 2",
     "id": "yc78",
-    "z": 59130,
+    "z": 59174,
     "parent": "o85a"
   },
   "g56w": {
@@ -902,7 +905,7 @@
     "type": "card",
     "cardType": "Orange 7",
     "id": "g56w",
-    "z": 59134,
+    "z": 59180,
     "parent": "o85a"
   },
   "aswv": {
@@ -910,7 +913,7 @@
     "type": "card",
     "cardType": "Purple 1",
     "id": "aswv",
-    "z": 59128,
+    "z": 59178,
     "parent": "o85a"
   },
   "94dd": {
@@ -918,7 +921,7 @@
     "type": "card",
     "cardType": "Purple 2",
     "id": "94dd",
-    "z": 59140,
+    "z": 59173,
     "parent": "o85a"
   },
   "evvi": {
@@ -926,7 +929,7 @@
     "type": "card",
     "cardType": "Purple 3",
     "id": "evvi",
-    "z": 59141,
+    "z": 59175,
     "parent": "o85a"
   },
   "2r6d": {
@@ -934,7 +937,7 @@
     "type": "card",
     "cardType": "Purple 4",
     "id": "2r6d",
-    "z": 59138,
+    "z": 59187,
     "parent": "o85a"
   },
   "f2ew": {
@@ -942,7 +945,7 @@
     "type": "card",
     "cardType": "Purple 5",
     "id": "f2ew",
-    "z": 59129,
+    "z": 59186,
     "parent": "o85a"
   },
   "jpsi": {
@@ -950,7 +953,7 @@
     "type": "card",
     "cardType": "Purple 7",
     "id": "jpsi",
-    "z": 59144,
+    "z": 59177,
     "parent": "o85a"
   },
   "tr44": {
@@ -958,7 +961,7 @@
     "type": "card",
     "cardType": "Yellow 1",
     "id": "tr44",
-    "z": 59133,
+    "z": 59168,
     "parent": "o85a"
   },
   "lmff": {
@@ -966,7 +969,7 @@
     "type": "card",
     "cardType": "Yellow 4",
     "id": "lmff",
-    "z": 59143,
+    "z": 59184,
     "parent": "o85a"
   },
   "gul2": {
@@ -974,7 +977,7 @@
     "type": "card",
     "cardType": "Green 2",
     "id": "gul2",
-    "z": 59137,
+    "z": 59169,
     "parent": "o85a"
   },
   "x7ns": {
@@ -982,7 +985,7 @@
     "type": "card",
     "cardType": "Green 5",
     "id": "x7ns",
-    "z": 59127,
+    "z": 59171,
     "parent": "o85a"
   },
   "s4ql": {
@@ -990,7 +993,7 @@
     "type": "card",
     "cardType": "Green 6",
     "id": "s4ql",
-    "z": 59126,
+    "z": 59170,
     "parent": "o85a"
   },
   "whrw": {
@@ -998,7 +1001,7 @@
     "type": "card",
     "cardType": "Red 6",
     "id": "whrw",
-    "z": 59136,
+    "z": 59176,
     "parent": "o85a"
   },
   "hand-seat-p1": {
@@ -1099,7 +1102,7 @@
     "type": "card",
     "cardType": "Green 3",
     "id": "uqmh",
-    "z": 59146,
+    "z": 59183,
     "parent": "o85a"
   },
   "agz0": {
@@ -1107,7 +1110,7 @@
     "type": "card",
     "cardType": "Yellow 7",
     "id": "agz0",
-    "z": 59132,
+    "z": 59182,
     "parent": "o85a"
   },
   "qu8l": {
@@ -1115,7 +1118,7 @@
     "type": "card",
     "cardType": "Blue 5",
     "id": "qu8l",
-    "z": 59145,
+    "z": 59188,
     "parent": "o85a"
   },
   "label-guide": {
