@@ -945,11 +945,6 @@ function getCustomPropertyUsage(data) {
                 }
             }
 
-            // Check for scoreboard property linkage
-            if (key === 'scoreProperty' && typeof value === 'string') {
-                customProperties.add(value);
-            }
-            
             // Recursively scan nested objects
             scanForProperties(value);
         }
@@ -963,6 +958,9 @@ function getCustomPropertyUsage(data) {
         
         // Scan widget properties
         scanForProperties(widget);
+
+        if(widget.type === 'scoreboard')
+            customProperties.add(widget.scoreProperty || 'score');
     }
     
     return [...customProperties];
