@@ -944,6 +944,11 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 }
             }
+
+            // Check for scoreboard property linkage
+            if (key === 'scoreProperty' && typeof value === 'string') {
+                customProperties.add(value);
+            }
             
             // Recursively scan nested objects
             scanForProperties(value);
