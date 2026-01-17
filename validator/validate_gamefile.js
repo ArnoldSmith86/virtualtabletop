@@ -302,14 +302,18 @@ function parsePropertySyntax(string) {
     return match;
 }
 
-function validateGetProperty(value, context) {
+function validateGetProperty(value, context, propertyPath = []) {
     if (typeof value === 'string' && value.length > 0) {
         return validators.property(value, context);
     }
     if (Array.isArray(value) && value.length > 0) {
         return true;
     }
-    return 'property must be a non-empty string or array';
+    return [{
+        widget: context.widgetId,
+        property: propertyPath,
+        message: 'GET property must be a non-empty string or array'
+    }];
 }
 
 function validateRoutine(routine, context, propertyPath = []) {
