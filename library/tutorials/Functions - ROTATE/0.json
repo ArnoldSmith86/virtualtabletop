@@ -3,12 +3,6 @@
     "type": "deck",
     "id": "9fngD",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -931,7 +925,7 @@
     }
   },
   "_meta": {
-    "version": 16,
+    "version": 20,
     "info": {
       "name": "Functions - ROTATE",
       "image": "/assets/-952041536_3806",
@@ -942,7 +936,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068438240,
+      "lastUpdate": 1768620845649,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -951,10 +945,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "0a5z": {
@@ -1007,24 +1004,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
