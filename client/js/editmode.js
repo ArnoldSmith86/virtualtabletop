@@ -1308,6 +1308,12 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       for(const key of Object.keys(currentWidget))
         if(currentWidget[key] != undefined && (['id','type','deck','cardType'].includes(key) || !(inheritAll || inheritProperties.includes(key))))
           inheritWidget[key] = currentWidget[key];
+
+      // Ensure increment targets exist locally so they can be updated after inheritFrom.
+      for(const property of incrementIn) {
+        if(property != 'inheritFrom' && inheritWidget[property] === undefined && currentWidget[property] !== undefined)
+          inheritWidget[property] = currentWidget[property];
+      }
       currentWidget = inheritWidget;
     }
 
