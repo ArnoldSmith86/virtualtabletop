@@ -131,8 +131,10 @@ class CloneDragButton extends DragButton {
     const problems = [];
     for(const [ widget, html ] of this.dragStartHTML) {
       const inheritFromSourceId = copyMode == 'difference' ? getInheritFromSourceId(widget) : null;
-      const offsetX = this.useGridSteps ? Math.round(this.gridStepX*Math.sign(this.x)) : (this.x ? Math.round(this.dx/getScale()*Math.sign(this.x)) : 0);
-      const offsetY = this.useGridSteps ? Math.round(this.gridStepY*Math.sign(this.y)) : (this.y ? Math.round(this.dy/getScale()*Math.sign(this.y)) : 0);
+      const signX = Math.sign(this.x);
+      const signY = Math.sign(this.y);
+      const offsetX = this.useGridSteps ? Math.round(this.gridStepX * signX) : (signX ? Math.round(this.dx / getScale() * signX) : 0);
+      const offsetY = this.useGridSteps ? Math.round(this.gridStepY * signY) : (signY ? Math.round(this.dy / getScale() * signY) : 0);
       const clonedWidgets = await duplicateWidget(
         widget,
         true,
@@ -147,13 +149,10 @@ class CloneDragButton extends DragButton {
         problems,
         inheritFromSourceId
       );
-      if(this.useGridSteps && this.gridArray) {
+      if(this.useGridSteps && this.gridArray)
         for(const clonedWidget of clonedWidgets) {
-          if(this.hexOffsetX && this.gridStepY) {
-            const rowIndex = Math.round((clonedWidget.get('y') - widget.get('y')) / this.gridStepY);
-            if(Math.abs(rowIndex) % 2 == 1)
-              await clonedWidget.set('x', clonedWidget.get('x') + this.hexOffsetX);
-          }
+          if(this.hexOffsetX && this.gridStepY && Math.abs(Math.round((clonedWidget.get('y') - widget.get('y')) / this.gridStepY)) % 2 == 1)
+            await clonedWidget.set('x', clonedWidget.get('x') + this.hexOffsetX);
           const snapped = snapToGridCoordsClone(clonedWidget, clonedWidget.get('x'), clonedWidget.get('y'), this.gridArray);
           if(snapped) {
             await clonedWidget.setPosition(snapped.x, snapped.y, clonedWidget.get('z'));
@@ -162,47 +161,57 @@ class CloneDragButton extends DragButton {
                 await clonedWidget.set(p, snapped.grid[p]);
           }
         }
+        newSelection.push(...clonedWidgets);
       }
-      newSelection.push(...clonedWidgets);
-    }
 
-    setSelection(newSelection.filter(w=>newSelection.indexOf(widgets.get(w.get('parent'))) == -1));
+      const selectedIds = new Set(newSelection.map(w => w.get('id')));
+      const filteredSelection = newSelection.filter(w => !selectedIds.has(w.get('parent')));
+      setSelection(filteredSelection);
   }
 
   removeAllClones() {
-    for(const clonesX of this.clones)
-      if(clonesX)
-        for(const clonesY of clonesX)
-          if(clonesY)
-            for(const clone of clonesY)
-              clone.remove();
+    (this.clones || []).forEach(clonesX => {
+      if (!clonesX) return;
+      clonesX.forEach(clonesY => {
+        if (!clonesY) return;
+        clonesY.forEach(clone => clone.remove());
+      });
+    });
     this.clones = [];
   }
 }
 
+function getToolbarIcon(selector, fallback) {
+  const button = $(selector);
+  return button ? button.getAttribute('icon') : fallback;
+}
+
 function getDragToolbarCopyMode() {
-  const copyButton = $('#editorDragToolbarSettings .dragToolbarCopyType');
-  return copyButton ? copyButton.getAttribute('icon') : 'content_copy';
+  return getToolbarIcon('#editorDragToolbarSettings .dragToolbarCopyType', 'content_copy');
 }
 
 function getDragToolbarMoveModeClone() {
-  const moveButton = $('#editorDragToolbarSettings .dragToolbarMoveType');
-  return moveButton ? moveButton.getAttribute('icon') : 'gesture';
+  return getToolbarIcon('#editorDragToolbarSettings .dragToolbarMoveType', 'gesture');
+}
+
+function getNextInheritFromId(widget) {
+  if(!widget || !widget.inheritFrom)
+    return null;
+  const inheritMap = widget.inheritFrom();
+  for(const id of Object.keys(inheritMap || {}))
+    if(widgets.has(id))
+      return id;
+  return null;
 }
 
 function getInheritFromSourceId(widget) {
   let current = widget;
   const visited = new Set();
-  while(current && current.inheritFrom) {
-    const inheritMap = current.inheritFrom();
-    const sourceIds = Object.keys(inheritMap || {}).filter(id => widgets.has(id));
-    if(!sourceIds.length)
+  for(let nextId = getNextInheritFromId(current); nextId; nextId = getNextInheritFromId(current)) {
+    if(visited.has(nextId))
       break;
-    const sourceId = sourceIds[0];
-    if(visited.has(sourceId))
-      break;
-    visited.add(sourceId);
-    current = widgets.get(sourceId);
+    visited.add(nextId);
+    current = widgets.get(nextId);
   }
   return current ? current.get('id') : widget.get('id');
 }
@@ -219,14 +228,15 @@ function getHexGridOffsets(widget, gridArray) {
 
   const offsetX = (altGrid.offsetX || 0) - (baseGrid.offsetX || 0);
   const offsetY = (altGrid.offsetY || 0) - (baseGrid.offsetY || 0);
-  if(!offsetX || !offsetY)
-    return null;
-  return { offsetX, offsetY };
+  return offsetX && offsetY ? { offsetX, offsetY } : null;
 }
 
 const cloneGridSnapIgnoredProps = [ 'x', 'y', 'minX', 'minY', 'maxX', 'maxY', 'offsetX', 'offsetY', 'alignX', 'alignY' ];
 
 function snapToGridCoordsClone(widget, x, y, gridArray) {
+  if(!Array.isArray(gridArray) || !gridArray.length)
+    return null;
+
   let closest = null;
   let closestDistance = 999999;
 
