@@ -83,10 +83,29 @@ class CloneDragButton extends DragButton {
   async dragEnd() {
     this.removeAllClones();
 
+    const copyMode = getDragToolbarCopyMode();
+    const useInheritFrom = copyMode == 'file_copy' || copyMode == 'difference';
+    const inheritProperties = useInheritFrom ? [''] : [];
+
     const newSelection = [...selectedWidgets];
     const problems = [];
-    for(const [ widget, html ] of this.dragStartHTML)
-      newSelection.push(...await duplicateWidget(widget, true, false, [], 'Numbers', 'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text'.split(','), this.x ? Math.round(this.dx/getScale()*Math.sign(this.x)) : 0, this.y ? Math.round(this.dy/getScale()*Math.sign(this.y)) : 0, Math.abs(this.x), Math.abs(this.y), problems));
+    for(const [ widget, html ] of this.dragStartHTML) {
+      const inheritFromSourceId = copyMode == 'difference' ? getInheritFromSourceId(widget) : null;
+      newSelection.push(...await duplicateWidget(
+        widget,
+        true,
+        useInheritFrom,
+        inheritProperties,
+        'Numbers',
+        'dropTarget,hand,index,inheritFrom,linkedToSeat,onlyVisibleForSeat,text'.split(','),
+        this.x ? Math.round(this.dx/getScale()*Math.sign(this.x)) : 0,
+        this.y ? Math.round(this.dy/getScale()*Math.sign(this.y)) : 0,
+        Math.abs(this.x),
+        Math.abs(this.y),
+        problems,
+        inheritFromSourceId
+      ));
+    }
 
     setSelection(newSelection.filter(w=>newSelection.indexOf(widgets.get(w.get('parent'))) == -1));
   }
@@ -100,4 +119,26 @@ class CloneDragButton extends DragButton {
               clone.remove();
     this.clones = [];
   }
+}
+
+function getDragToolbarCopyMode() {
+  const copyButton = $('#editorDragToolbarSettings .dragToolbarCopyType');
+  return copyButton ? copyButton.getAttribute('icon') : 'content_copy';
+}
+
+function getInheritFromSourceId(widget) {
+  let current = widget;
+  const visited = new Set();
+  while(current && current.inheritFrom) {
+    const inheritMap = current.inheritFrom();
+    const sourceIds = Object.keys(inheritMap || {}).filter(id => widgets.has(id));
+    if(!sourceIds.length)
+      break;
+    const sourceId = sourceIds[0];
+    if(visited.has(sourceId))
+      break;
+    visited.add(sourceId);
+    current = widgets.get(sourceId);
+  }
+  return current ? current.get('id') : widget.get('id');
 }
