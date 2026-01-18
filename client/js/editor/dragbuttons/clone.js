@@ -155,7 +155,7 @@ class CloneDragButton extends DragButton {
             await clonedWidget.set('x', clonedWidget.get('x') + this.hexOffsetX);
           const snapped = snapToGridCoordsClone(clonedWidget, clonedWidget.get('x'), clonedWidget.get('y'), this.gridArray);
           if(snapped) {
-            await clonedWidget.setPosition(snapped.x, snapped.y, clonedWidget.get('z'));
+            await clonedWidget.setPosition(roundGridValue(snapped.x), roundGridValue(snapped.y), clonedWidget.get('z'));
             for(const p in snapped.grid)
               if(cloneGridSnapIgnoredProps.indexOf(p) == -1)
                 await clonedWidget.set(p, snapped.grid[p]);
@@ -267,4 +267,8 @@ function snapToGridCoordsClone(widget, x, y, gridArray) {
 
 function cloneGridMod(a, b) {
   return ((a % b) + b) % b;
+}
+
+function roundGridValue(value) {
+  return Math.round(value * 100) / 100;
 }
