@@ -21,7 +21,6 @@ body:not(.overlayActive) #editorDragToolbar.active {
 
 #editorDragToolbar.settingsActive .dragToolbarSettingsButton button {
   background: var(--VTTblueDark);
-  box-shadow: 0 0 0 2px #0006, 0 0 12px #0006;
 }
 
 .editorDragToolbarSettings {
@@ -33,8 +32,8 @@ body:not(.overlayActive) #editorDragToolbar.active {
   background: var(--VTTblue);
   border-radius: 5px;
   height: var(--editToolbarHeight);
-  padding: 0 6px;
-  gap: 6px;
+  padding: 0 4px;
+  gap: 4px;
   align-items: center;
   white-space: nowrap;
   border-bottom: 1px solid #000;
@@ -49,7 +48,25 @@ body:not(.overlayActive) #editorDragToolbar.active {
   color: white;
   font-size: 12px;
   opacity: 0.9;
-  padding: 0 2px;
+  padding: 0 1px;
+}
+
+.editorDragToolbarSettings .dragToolbarSettingButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.editorDragToolbarSettings .dragToolbarSettingButton::before {
+  margin-right: 0;
+}
+
+.editorDragToolbarDivider {
+  display: inline-block;
+  border-left: 1px solid #fff8;
+  margin: 5px;
+  align-self: center;
+  height: calc(var(--editToolbarHeight) - 10px);
 }
 
 body.dragToolbarDragging #editorDragToolbar button:hover span {

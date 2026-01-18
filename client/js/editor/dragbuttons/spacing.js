@@ -21,6 +21,15 @@ class SpacingDragButton extends DragButton {
   }
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
+    const keepAspectRatio = isResizeLockedForSpacing();
+    if(keepAspectRatio) {
+      if(dx>dy) {
+        dy = dx;
+      } else {
+        dx = dy;
+      }
+    }
+
     for(const [ widget, startX, startY, offsetX, offsetY ] of this.dragStartOffsets) {
       await widget.set('x', Math.floor(startX + offsetX*dx));
       await widget.set('y', Math.floor(startY + offsetY*dy));
@@ -56,4 +65,9 @@ class SpacingDragButton extends DragButton {
       Max gap height: <i>${Math.round(maxGapY)}</i>
     `;
   }
+}
+
+function isResizeLockedForSpacing() {
+  const button = $('#editorDragToolbarSettings .dragToolbarResizeType');
+  return button && button.getAttribute('icon') == 'lock';
 }
