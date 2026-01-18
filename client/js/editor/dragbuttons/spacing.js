@@ -69,5 +69,5 @@ class SpacingDragButton extends DragButton {
 
 function isResizeLockedForSpacing() {
   const button = $('#editorDragToolbarSettings .dragToolbarResizeType');
-  return button && button.getAttribute('icon') == 'lock';
+  return button && button.dataset.mode == 'locked';
 }

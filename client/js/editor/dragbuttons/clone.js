@@ -37,7 +37,7 @@ class CloneDragButton extends DragButton {
     this.hexOffsetX = 0;
     this.hexOffsetY = 0;
 
-    if(getDragToolbarMoveModeClone() == 'grid_on' && selectedWidgets.length) {
+    if(getDragToolbarMoveModeClone() == 'grid' && selectedWidgets.length) {
       const gridArray = selectedWidgets[0].get('grid');
       if(Array.isArray(gridArray) && gridArray.length) {
         const grid = gridArray.find(g=>g && g.x && g.y);
@@ -124,13 +124,13 @@ class CloneDragButton extends DragButton {
     this.removeAllClones();
 
     const copyMode = getDragToolbarCopyMode();
-    const useInheritFrom = copyMode == 'file_copy' || copyMode == 'difference';
+    const useInheritFrom = copyMode == 'inheritFromSource' || copyMode == 'inheritFromMaster';
     const inheritProperties = useInheritFrom ? [''] : [];
 
     const newSelection = [...selectedWidgets];
     const problems = [];
     for(const [ widget, html ] of this.dragStartHTML) {
-      const inheritFromSourceId = copyMode == 'difference' ? getInheritFromSourceId(widget) : null;
+      const inheritFromSourceId = copyMode == 'inheritFromMaster' ? getInheritFromSourceId(widget) : null;
       const signX = Math.sign(this.x);
       const signY = Math.sign(this.y);
       const offsetX = this.useGridSteps ? Math.round(this.gridStepX * signX) : (signX ? Math.round(this.dx / getScale() * signX) : 0);
@@ -181,17 +181,17 @@ class CloneDragButton extends DragButton {
   }
 }
 
-function getToolbarIcon(selector, fallback) {
+function getToolbarMode(selector, fallback) {
   const button = $(selector);
-  return button ? button.getAttribute('icon') : fallback;
+  return button ? (button.dataset.mode || fallback) : fallback;
 }
 
 function getDragToolbarCopyMode() {
-  return getToolbarIcon('#editorDragToolbarSettings .dragToolbarCopyType', 'content_copy');
+  return getToolbarMode('#editorDragToolbarSettings .dragToolbarCopyType', 'default');
 }
 
 function getDragToolbarMoveModeClone() {
-  return getToolbarIcon('#editorDragToolbarSettings .dragToolbarMoveType', 'gesture');
+  return getToolbarMode('#editorDragToolbarSettings .dragToolbarMoveType', 'freeform');
 }
 
 function getNextInheritFromId(widget) {

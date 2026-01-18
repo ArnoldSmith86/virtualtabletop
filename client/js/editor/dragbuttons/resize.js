@@ -60,5 +60,5 @@ class ResizeDragButton extends DragButton {
 
 function isResizeLocked() {
   const button = $('#editorDragToolbarSettings .dragToolbarResizeType');
-  return button && button.getAttribute('icon') == 'lock';
+  return button && button.dataset.mode == 'locked';
 }
