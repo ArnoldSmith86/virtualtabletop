@@ -307,7 +307,7 @@ function validateGetProperty(value, context, propertyPath = []) {
         return validators.property(value, context);
     }
     if (Array.isArray(value) && value.length > 0) {
-        return true;
+        return validators.property(value[0], context);
     }
     return [{
         widget: context.widgetId,
