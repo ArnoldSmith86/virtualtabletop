@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 20,
     "info": {
       "name": "Functions - SHUFFLE",
       "image": "/assets/-366031210_3872",
@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749068744637,
+      "lastUpdate": 1768621076892,
       "showName": false,
       "skill": "",
       "description": "",
@@ -20,10 +20,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Basic",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Basic",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "title": {
@@ -263,7 +266,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -296,7 +298,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -329,7 +330,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -362,7 +362,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -395,7 +394,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -428,7 +426,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -461,7 +458,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -494,7 +490,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "parent": "holder2"
   },
@@ -527,7 +522,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker10": {
@@ -559,7 +553,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker11": {
@@ -591,7 +584,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker12": {
@@ -623,7 +615,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker13": {
@@ -655,7 +646,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker14": {
@@ -687,7 +677,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker15": {
@@ -719,7 +708,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "checker16": {
@@ -751,7 +739,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff"
   },
   "f9etD": {
@@ -761,42 +748,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",

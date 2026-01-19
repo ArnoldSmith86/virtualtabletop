@@ -1,0 +1,2773 @@
+{
+  "_meta": {
+    "version": 20,
+    "info": {
+      "name": "Witness Protection",
+      "image": "/assets/371290738_14110",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/18833/the-lord-of-the-rings-the-confrontation",
+      "year": "2005",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<div><div>Card layout by mousewax and available under CC0. All other room layout, design, and scripting are by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>The card backs for the mafia players was created by the Google Gemini AI (https://gemini.google.com/) using the following prompt: \"<span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">1:1 square minimalist card back design. Dark, desaturated background with a subtle central motif formed from overlapping shadows and worn textures, suggesting secrecy and hierarchy without literal imagery. Aged letterpress feel, soft contrast, and visible paper grain. Clean edges, symmetrical framing, and high legibility at card size. Mood is controlled, serious, and ominous without theatrical noir lighting.\"</span></div><div><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\"><br></span></div><div><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">The library image and the card backs for the law enforcement players was also created by Google Gemini with the following prompt: \"</span><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">Now make a similar one for the good guys. Lighter tones. Less ominous imagery.\"</span></div><div><br></div><div>The character images were created by the Microsoft Copilot AI (https://copilot.microsoft.com/) using various prompts to describe the mood and characters similar to: \"1:1 square image of a _________. Figure should be standing. Only include accessories appropriate to the role/occupation. Style: Muted 1930s–1940s American noir with painterly realism and an aged letterpress feel, using desaturated colors, soft contrast, and subtle paper grain; composition favors clean silhouettes, balanced framing, and restrained detail, keeping backgrounds abstract and readable without cinematic lighting or ornamentation. Overall tone is grounded and serious, evoking procedural crime, quiet menace, and tension without parody, fantasy, modern visual elements and no text. Faces must be distinct and non-recurring across images. Avoid reusing facial structure, age, hairline, jaw shape, or expression from prior images. Do not default to noir archetype faces (square-jawed fedora men, similar stubble, mirrored features). Each figure must occupy a different identity cluster, with clearly different bone structure, age cues, and presence. Prior images must not be visually recognizable in face, silhouette, or attire.\"</div></div><div><br></div><div>The texture used in the room background was created using the ChatGPT AI (https://chatgpt.com/) by uploading the library image and applying the following prompt: \"Take this and strip out the emblem. Make it 103:168 ratio. Get rid of any border and make the corners square.\"</div><div><br></div>The courthouse building in the room background is by BruceEmmerling and is available under the Pixabay license from https://pixabay.com/photos/historic-building-philadelphia-4257401/.<div><br></div><div>The card font is Libre Baskerville, copyright 2012 by The Libre Baskerville Project Authors with Reserved Font Name Libre Baskerville and is licensed for use under the SIL Open Font License, Version 1.1.</div>",
+      "lastUpdate": 1768534474937,
+      "showName": true,
+      "skill": "",
+      "description": "The prosecution's star witness can take the mafia down. But the witness has to make it from the safehouse to the courthouse, and the mafia will stop at nothing to eliminate him.",
+      "similarImage": "",
+      "similarName": "The Lord of the Rings: The Confrontation",
+      "similarDesigner": "Reiner Knizia, Eric M. Lang, Christian T. Petersen",
+      "similarAwards": "2014 Juego del Año Recommended\n2007 Golden Geek Best 2-Player Board Game Nominee\n2006 Golden Geek Best 2-Player Board Game Nominee",
+      "ruleText": "",
+      "helpText": "Players sit in seats. Press the restart button to begin. The character cards are randomly distributed on the map in starting positions. Players may freely rearrange their character cards before starting. The player using the mafia characters goes first.<div><div><br></div><div>Manually drag a character card from one region to another. When an attack is initiated, click on the appropriate character cards to reveal them to the other player. When revealed, an eye icon appears on the card as a reminder that the other player can see it. Click the character card again to show its back to the other player and remove the eye icon. To help prevent accidental disclosures, character cards can only be revealed when characters from both sets are in the same region, and a confirmation prompt also appears. Characters that lose an attack should be manually dragged and dropped in the appropriate holder for defeated characters.</div><div><br></div><div>To play an action card, double click or drag it to the holder below the seat. Any cards left in that holder from previous attacks are automatically moved to the used card area whether you double click or drag and drop. Cards are displayed face down. Once both players have chosen a card, manually click to turn them over. Double click the card to send it to the used card area. When the ninth and final card is played, the remaining cards are automatically returned to the end. After resolving the effect of the final card, double click it or drag it back to the hand. This way both players start with all nine cards for the next attack.</div><div><br></div><div>The game ends when any of the following occur:</div><div><ul><li>The law enforcement side wins immediately if the Witness makes it to the Courthouse region.</li><li>The mafia side wins immediately if either the Witness is defeated or there are three mafia characters in the Safehouse region.</li><li>A player loses if they are unable to move a character forward during their turn.&nbsp;</li></ul></div><div><br></div></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2"
+    },
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Visibility marker */\n\n.visibleToOthers {\n  position: relative;\n}\n\n.visibleToOthers::after {\n  content: \"\";\n  position: absolute;\n  top: 29px;\n  left: 10px;\n  width: 30px;\n  height: 30px;\n  background-color: black;\n  background-image: url(\"/i/noto-emoji/emoji_u1f441.svg\");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 30px 30px;\n  border-radius: 6px;\n  pointer-events: none;\n  z-index: 1000;\n}\n\n/* Card transitions */\n\n.transition {\n  transition: transform 1000ms\n}\n\n.transition.dragging {\n  transition: none\n}\n\n"
+    }
+  },
+  "region1": {
+    "id": "region1",
+    "x": 635,
+    "y": 855,
+    "width": 330,
+    "height": 140,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "1px solid ${PROPERTY borderColor}",
+        "display": "flex",
+        "justify-content": "center",
+        "font-size": "20px",
+        "border-radius": "10px",
+        "font-family": "LibreBaskerville",
+        "background": "${PROPERTY bgColor}",
+        "color": "${PROPERTY color}"
+      },
+      "@font-face": {
+        "font-family": "LibreBaskerville",
+        "src": "url(/assets/-890236194_112336)"
+      }
+    },
+    "movableInEdit": false,
+    "layer": -1,
+    "bgColor": "#ffffffee",
+    "borderColor": "#000000",
+    "html": "Safehouse"
+  },
+  "region2": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region2",
+    "x": 500,
+    "y": 713,
+    "html": "West Neighborhood",
+    "bgColor": "#ffffff99",
+    "width": 300
+  },
+  "region3": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region3",
+    "x": 800,
+    "y": 713,
+    "html": "East Neighborhood",
+    "bgColor": "#ffffff99",
+    "width": 300
+  },
+  "region4": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region4",
+    "x": 350,
+    "y": 571,
+    "html": "Shopping District",
+    "bgColor": "#ffffff33",
+    "width": 300
+  },
+  "region5": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region5",
+    "x": 650,
+    "y": 571,
+    "html": "Factory District",
+    "bgColor": "#ffffff33",
+    "width": 300
+  },
+  "region6": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region6",
+    "x": 950,
+    "y": 571,
+    "html": "Warehouse District",
+    "bgColor": "#ffffff33",
+    "width": 300
+  },
+  "region7": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region7",
+    "x": 200,
+    "y": 429,
+    "html": "<u>Docks",
+    "bgColor": "#80808033",
+    "borderColor": "#D2691E",
+    "width": 300
+  },
+  "region8": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region8",
+    "x": 500,
+    "y": 429,
+    "html": "<u>Financial District",
+    "bgColor": "#80808033",
+    "borderColor": "#D2691E",
+    "width": 300
+  },
+  "region9": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region9",
+    "x": 800,
+    "y": 429,
+    "html": "<u>Union Station",
+    "bgColor": "#80808033",
+    "borderColor": "#D2691E",
+    "activeFace": 0,
+    "width": 300
+  },
+  "region10": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region10",
+    "x": 1102,
+    "y": 429,
+    "html": "<u>Rail Yard",
+    "bgColor": "#80808033",
+    "borderColor": "#D2691E",
+    "width": 300
+  },
+  "region11": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region11",
+    "x": 350,
+    "y": 287,
+    "html": "Casino Row",
+    "bgColor": "#00000055",
+    "color": "#ffffff",
+    "width": 300
+  },
+  "region12": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region12",
+    "x": 650,
+    "y": 287,
+    "html": "Midtown",
+    "bgColor": "#00000055",
+    "color": "#ffffff",
+    "width": 300
+  },
+  "region13": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region13",
+    "x": 950,
+    "y": 287,
+    "html": "Theater District",
+    "bgColor": "#00000055",
+    "color": "#ffffff",
+    "width": 300
+  },
+  "region14": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region14",
+    "x": 500,
+    "y": 147,
+    "html": "North Park",
+    "bgColor": "#00000077",
+    "color": "#ffffff",
+    "width": 300
+  },
+  "region15": {
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "id": "region15",
+    "x": 800,
+    "y": 147,
+    "html": "Downtown",
+    "bgColor": "#00000077",
+    "color": "#ffffff",
+    "width": 300
+  },
+  "region16": {
+    "id": "region16",
+    "x": 635,
+    "html": "Courthouse",
+    "y": 7,
+    "inheritFrom": {
+      "region1": "*"
+    },
+    "bgColor": "#00000099",
+    "color": "#ffffff"
+  },
+  "characterDeck": {
+    "type": "deck",
+    "id": "characterDeck",
+    "cardDefaults": {
+      "scale": 0.5,
+      "width": 150,
+      "height": 200,
+      "movable": false,
+      "movableInEdit": false,
+      "clickRoutine": [
+        {
+          "func": "CLICK",
+          "collection": [
+            "${PROPERTY parent}"
+          ]
+        }
+      ],
+      "css": {
+        "default": {
+          "box-shadow": "0 2px 3px #0005",
+          "border-radius": "10px",
+          "border": "1px solid #0005",
+          "font-family": "LibreBaskerville"
+        },
+        " .setIcon": {
+          "vertical-align": "middle",
+          "height": "2em",
+          "padding": "1px"
+        },
+        " .cardFace .cardFaceObject": {
+          "display": "flex",
+          "flex-direction": "column"
+        },
+        " .title": {
+          "z-index": "2",
+          "position": "relative",
+          "display": "flex",
+          "align-items": "center",
+          "align-content": "space-between",
+          "justify-content": "space-between",
+          "border": "3px double ${PROPERTY altColor}",
+          "border-radius": "1em 20px 2.5em 0.2in",
+          "margin": "5px 5px 0 5px",
+          "font-size": "12px",
+          "background-color": "${PROPERTY mainColor}",
+          "color": "${PROPERTY altColor}"
+        },
+        " .title .name": {
+          "padding": "2px 0px 2px 2px",
+          "flex-grow": 1,
+          "font-weight": "bold"
+        },
+        " .crimson": {
+          "background-color": "#8B1E1E"
+        },
+        " .teal": {
+          "background-color": "#3A6F7A"
+        },
+        " .purple": {
+          "background-color": "#5A3E6B"
+        },
+        " .peru": {
+          "background-color": "#CD853F"
+        },
+        " .olive": {
+          "background-color": "#556B2F"
+        },
+        " .toughness": {
+          "font-size": "12px",
+          "padding": "0 8px",
+          "position": "absolute",
+          "top": "9px",
+          "right": "10px",
+          "color": "${PROPERTY mainColor}",
+          "background": "${PROPERTY altColor}",
+          "z-index": "2",
+          "border-radius": "1em"
+        },
+        " .type": {
+          "z-index": "2",
+          "font-weight": "bold",
+          "font-size": "6px",
+          "border": "3px double ${PROPERTY color}",
+          "border-radius": "2em",
+          "margin": "0 5px",
+          "padding": "1px 1px 1px 5px",
+          "background-color": "#ffffff"
+        },
+        " .description": {
+          "font-size": "10px",
+          "border-radius": "0 0 5px 5px",
+          "border-right": "1px solid black",
+          "border-bottom": "1px solid black",
+          "border-left": "1px solid black",
+          "margin": "-10px 5px 5px 5px",
+          "flex-grow": 1,
+          "flex-shrink": 0,
+          "min-height": "50px",
+          "padding": "10px 5px 5px 5px",
+          "z-index": "1",
+          "background": "#fffB"
+        },
+        " .picture": {
+          "flex-grow": 1,
+          "background-size": "cover",
+          "margin": "-10px 5px",
+          "z-index": "1",
+          "background-position": "top center",
+          "border-left": "1px solid black",
+          "border-right": "1px solid black",
+          "height": "100px"
+        }
+      }
+    },
+    "cardTypes": {
+      "Rookie": {
+        "name": "Rookie",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "crimson",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/-1478875586_71578",
+        "strength": "0",
+        "icon": "i/game-icons.net/lorc/crossed-pistols.svg",
+        "action": "Lethal",
+        "description": "<p>Both <b>Rookie</b> and the other player's character are defeated</p>"
+      },
+      "Witness": {
+        "name": "Witness",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "teal",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/1235687683_42510",
+        "strength": "1",
+        "icon": "/i/game-icons.net/lorc/checked-shield.svg",
+        "action": "Defense",
+        "description": "<p>When attacked, may retreat sideways"
+      },
+      "Decoy": {
+        "name": "Decoy",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "teal",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/904652644_50430",
+        "strength": "1",
+        "icon": "/i/game-icons.net/lorc/checked-shield.svg",
+        "action": "Defense",
+        "description": "<p>When attacking, may retreat backwards"
+      },
+      "Informant": {
+        "name": "Informant",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "crimson",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/1689609274_47524",
+        "strength": "2",
+        "icon": "i/game-icons.net/lorc/crossed-pistols.svg",
+        "action": "Lethal",
+        "description": "<p>Instantly defeats <b>Don</b>"
+      },
+      "Escort Officer": {
+        "name": "Escort Officer",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "olive",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/-1732605172_58764",
+        "strength": "2",
+        "icon": "/i/game-icons.net/lorc/backup.svg",
+        "action": "Support",
+        "description": "<p>When with <b>Witness</b> strength = 5 and may replace <b>Witness</b> in battle"
+      },
+      "Sniper": {
+        "name": "Sniper",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "crimson",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/393562383_60000",
+        "strength": "3",
+        "icon": "i/game-icons.net/lorc/crossed-pistols.svg",
+        "action": "Lethal",
+        "description": "<p>Instantly defeats <b>Sidecar Gunner</b>"
+      },
+      "SWAT Officer": {
+        "name": "SWAT Officer",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "crimson",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/-1147788908_80736",
+        "strength": "3",
+        "icon": "i/game-icons.net/lorc/crossed-pistols.svg",
+        "action": "Lethal",
+        "description": "<p>Instantly defeats <b>Street Thugs</b>"
+      },
+      "Federal Marshal": {
+        "name": "Federal Marshal",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "peru",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/2046821413_43544",
+        "strength": "4",
+        "icon": "i/game-icons.net/lorc/bottom-right-3d-arrow.svg",
+        "action": "Movement",
+        "description": "<p>May attack any adjacent region"
+      },
+      "Prosecutor": {
+        "name": "Prosecutor",
+        "side": "light",
+        "otherSeat": "seat2",
+        "back": "/assets/1575059499_32956",
+        "color": "purple",
+        "mainColor": "#ffffff",
+        "altColor": "#000000",
+        "image": "/assets/157897166_42448",
+        "strength": "5",
+        "icon": "/i/game-icons.net/lorc/interdiction.svg",
+        "action": "Card Influence",
+        "description": "<p>The other player must show their card first"
+      },
+      "Corrupt Judge": {
+        "name": "Corrupt Judge",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "purple",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/-1410797466_50172",
+        "strength": "2",
+        "icon": "/i/game-icons.net/lorc/interdiction.svg",
+        "action": "Card Influence",
+        "description": "<p>The other player's character ability has no effect"
+      },
+      "Street Thugs": {
+        "name": "Street Thugs",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "crimson",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/-727207961_55956",
+        "strength": "2",
+        "icon": "i/game-icons.net/lorc/crossed-pistols.svg",
+        "action": "Lethal",
+        "description": "<p>When attacking, instantly defeat the first defender"
+      },
+      "Hit Squad": {
+        "name": "Hit Squad",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "peru",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/564561821_48000",
+        "strength": "3",
+        "icon": "i/game-icons.net/lorc/bottom-right-3d-arrow.svg",
+        "action": "Movement",
+        "description": "<p>May move forward any number of regions to attack"
+      },
+      "Sidecar Gunner": {
+        "name": "Sidecar Gunner",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "peru",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/1193514471_33164",
+        "strength": "3",
+        "icon": "i/game-icons.net/lorc/bottom-right-3d-arrow.svg",
+        "action": "Movement",
+        "description": "<p>May attack a single character in any region"
+      },
+      "Fixer": {
+        "name": "Fixer",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "purple",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/1155682143_17212",
+        "strength": "4",
+        "icon": "/i/game-icons.net/lorc/interdiction.svg",
+        "action": "Card Influence",
+        "description": "<p>May decide that no cards are played"
+      },
+      "Don": {
+        "name": "Don",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "peru",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/33847893_21126",
+        "strength": "5",
+        "icon": "i/game-icons.net/lorc/bottom-right-3d-arrow.svg",
+        "action": "Movement",
+        "description": "<p>May attack sideways"
+      },
+      "Capo": {
+        "name": "Capo",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "peru",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/-1006447409_21864",
+        "strength": "5",
+        "icon": "i/game-icons.net/lorc/bottom-right-3d-arrow.svg",
+        "action": "Movement",
+        "description": "<p>Move <b>Capo</b> to <i>Downtown</i> after defeating a character"
+      },
+      "Button Man": {
+        "name": "Button Man",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "crimson",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/1769584873_19154",
+        "strength": "5",
+        "icon": "i/game-icons.net/lorc/crossed-pistols.svg",
+        "action": "Lethal",
+        "description": "<p>When in <i>Union Station</i>, may reveal to instantly defeat any character"
+      },
+      "Brute Enforcer": {
+        "name": "Brute Enforcer",
+        "side": "dark",
+        "otherSeat": "seat1",
+        "back": "/assets/1192849562_55730",
+        "color": "purple",
+        "mainColor": "#000000",
+        "altColor": "#ffffff",
+        "image": "/assets/-823071488_64002",
+        "strength": "9",
+        "icon": "/i/game-icons.net/lorc/interdiction.svg",
+        "action": "Card Influence",
+        "description": "<p>The other player's card is ignored"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 150,
+            "height": 200,
+            "css": "background-position:center;background-size:200%;border:8px solid #000000;",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "width": 150,
+            "height": 200,
+            "value": "<div class='title'><span class='name'>${PROPERTY name}</span></div><div class='picture' style='background-image:url(${PROPERTY image})'></div><div class='type'><img class='setIcon' src='${PROPERTY icon}'>${PROPERTY action}</div><div class='description'>${PROPERTY description}</div><div class='toughness'>${PROPERTY strength}</div>",
+            "dynamicProperties": {
+              "classes": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "x": -353,
+    "y": 346
+  },
+  "cardDeck": {
+    "type": "deck",
+    "id": "cardDeck",
+    "y": 4,
+    "cardDefaults": {
+      "scale": 0.75,
+      "enlarge": 1.5,
+      "classes": "transition",
+      "width": 150,
+      "height": 200,
+      "css": {
+        "default": {
+          "box-shadow": "0 2px 3px #0005",
+          "border-radius": "10px",
+          "border": "1px solid #0005",
+          "font-family": "LibreBaskerville"
+        },
+        "#enlarged": {
+          "top": "calc(var(--roomTop) + var(--scale)*-1px)",
+          "left": "calc(var(--roomLeft) + var(--scale)*1373px)",
+          "right": "unset",
+          "transform-origin": "top left"
+        },
+        " .title": {
+          "z-index": "2",
+          "position": "relative",
+          "display": "flex",
+          "align-items": "center",
+          "align-content": "space-between",
+          "justify-content": "space-between",
+          "border": "3px double black",
+          "border-radius": "1em 20px 2.5em 0.2in",
+          "margin": "5px 5px 0 5px",
+          "font-size": "12px",
+          "background-color": "white"
+        },
+        " .title .name": {
+          "padding": "2px 0px 2px 2px",
+          "font-weight": "bold"
+        },
+        " .crimson": {
+          "background-color": "#8B1E1E"
+        },
+        " .teal": {
+          "background-color": "#3A6F7A"
+        },
+        " .purple": {
+          "background-color": "#5A3E6B"
+        },
+        " .peru": {
+          "background-color": "#CD853F"
+        },
+        " .olive": {
+          "background-color": "#556B2F"
+        },
+        " .description": {
+          "font-size": "13px",
+          "border-radius": "0 0 5px 5px",
+          "border": "1px solid black",
+          "min-height": "67px",
+          "margin": "0px 5px 5px 5px",
+          "padding": "0px 5px 5px 5px",
+          "background": "#fff"
+        },
+        " .picture": {
+          "background-size": "80%",
+          "margin": "-10px 5px",
+          "background-position": "top center",
+          "border-left": "1px solid black",
+          "border-right": "1px solid black",
+          "height": "110px"
+        }
+      },
+      "doubleClickRoutine": [
+        "var inHand1 = ${PROPERTY parent} == 'hand1'",
+        "var inHand2 = ${PROPERTY parent} == 'hand2'",
+        "var inHand = ${inHand1} || ${inHand2}",
+        {
+          "func": "IF",
+          "condition": "${inHand}",
+          "thenRoutine": [
+            {
+              "func": "MOVE",
+              "from": "card${seatIndex}",
+              "to": "playedCard${seatIndex}"
+            },
+            {
+              "func": "MOVE",
+              "collection": [
+                "${PROPERTY id}"
+              ],
+              "to": "card${seatIndex}"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "condition": "${PROPERTY recall OF playedCard1}",
+              "thenRoutine": [
+                {
+                  "func": "MOVE",
+                  "from": "card1",
+                  "to": "seat1"
+                },
+                {
+                  "func": "MOVE",
+                  "from": "card2",
+                  "to": "seat2"
+                }
+              ],
+              "elseRoutine": [
+                {
+                  "func": "MOVE",
+                  "from": "card${seatIndex}",
+                  "to": "playedCard${seatIndex}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "Protective Custody": {
+        "name": "Protective Custody",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "purple",
+        "description": "Strength card used by other player has no effect"
+      },
+      "Evacuation": {
+        "name": "Evacuation",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "teal",
+        "description": "Retreat backward"
+      },
+      "Legal Maneuvers": {
+        "name": "Legal Maneuvers",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "purple",
+        "description": "Replace this card with a card from your discard pile"
+      },
+      "Cover-Up": {
+        "name": "Cover-Up",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "crimson",
+        "description": "Both characters are defeated"
+      },
+      "Light5": {
+        "name": "+5 Strength",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>5</div>"
+      },
+      "Light4": {
+        "name": "+4 Strength",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "olive",
+        "image": "/assets/1649668638_68682",
+        "description": "<div style='font-size:50px;text-align:center'>4</div>"
+      },
+      "Light3": {
+        "name": "+3 Strength",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>3</div>"
+      },
+      "Light2": {
+        "name": "+2 Strength",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>2</div>"
+      },
+      "Light1": {
+        "name": "+1 Strength",
+        "side": "light",
+        "back": "/assets/1575059499_32956",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>1</div>"
+      },
+      "Withdrawal": {
+        "name": "Withdrawal",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "teal",
+        "description": "Retreat sideways"
+      },
+      "Backup Plan": {
+        "name": "Backup Plan",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "purple",
+        "description": "Replace this card with a card from your discard pile"
+      },
+      "Omertà": {
+        "name": "Omertà",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "purple",
+        "description": "Text card used by other player has no effect"
+      },
+      "Dark 6": {
+        "name": "+6 Strength",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>6</div>"
+      },
+      "Dark 5": {
+        "name": "+5 Strength",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>5</div>"
+      },
+      "Dark 4": {
+        "name": "+4 Strength",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>4</div>"
+      },
+      "Dark 3": {
+        "name": "+3 Strength",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>3</div>"
+      },
+      "Dark 2": {
+        "name": "+2 Strength",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>2</div>"
+      },
+      "Dark 1": {
+        "name": "+1 Strength",
+        "side": "dark",
+        "back": "/assets/1192849562_55730",
+        "color": "olive",
+        "description": "<div style='font-size:50px;text-align:center'>1</div>"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 150,
+            "height": 200,
+            "css": "background-position:center;background-size:200%;border:8px solid black;",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "back"
+            }
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "width": 150,
+            "height": 200,
+            "value": "<div class='title'><span class='name'>${PROPERTY name}</span></div><div class='picture' style='background-image:url(${PROPERTY back})'></div><div class='description'>${PROPERTY description}</div>",
+            "dynamicProperties": {
+              "classes": "color"
+            }
+          }
+        ]
+      }
+    ],
+    "x": 4,
+    "parent": "cardDeckHolder"
+  },
+  "w616": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Protective Custody",
+    "id": "w616",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "svnc": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Evacuation",
+    "id": "svnc",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "fpj9": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Legal Maneuvers",
+    "id": "fpj9",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "3d2o": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Cover-Up",
+    "id": "3d2o",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "a4rd": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Light5",
+    "id": "a4rd",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "t39u": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Light4",
+    "id": "t39u",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "ji6h": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Light3",
+    "id": "ji6h",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "h2sc": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Light2",
+    "id": "h2sc",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "ybfu": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Light1",
+    "id": "ybfu",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "yr3n": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Withdrawal",
+    "id": "yr3n",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "5cmd": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Backup Plan",
+    "id": "5cmd",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "mqx5": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Omertà",
+    "id": "mqx5",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "f2xb": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Dark 6",
+    "id": "f2xb",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "kvgz": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Dark 5",
+    "id": "kvgz",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "q1ic": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Dark 4",
+    "id": "q1ic",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "pe09": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Dark 3",
+    "id": "pe09",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "6mh0": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Dark 2",
+    "id": "6mh0",
+    "activeFace": 1,
+    "parent": "h9sx"
+  },
+  "8i1b": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "Dark 1",
+    "id": "8i1b",
+    "parent": "h9sx",
+    "activeFace": 1
+  },
+  "fyyjB1": {
+    "id": "fyyjB1",
+    "parent": "cardDeckHolder",
+    "fixedParent": true,
+    "y": 219,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 1
+      }
+    ],
+    "x": 20
+  },
+  "cardDeckHolder": {
+    "type": "holder",
+    "id": "cardDeckHolder",
+    "x": -292,
+    "y": 775,
+    "width": 150,
+    "height": 200,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "backgroundBuilding": {
+    "id": "backgroundBuilding",
+    "width": 1791,
+    "height": 1176,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": 0.2
+    },
+    "image": "/assets/85382316_144340",
+    "y": -159,
+    "x": -82,
+    "movableInEdit": false
+  },
+  "backgroundTexture": {
+    "id": "backgroundTexture",
+    "x": 288,
+    "y": -341,
+    "width": 1030,
+    "height": 1680,
+    "rotation": 90,
+    "layer": -4,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.6
+    },
+    "image": "/assets/-1840159363_61732",
+    "movable": false
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 15,
+    "y": 470,
+    "displayEmpty": "good guys",
+    "hand": "hand1",
+    "hideWhenUnused": true
+  },
+  "tunnelArrow": {
+    "id": "tunnelArrow",
+    "x": 856,
+    "y": 488,
+    "width": 30,
+    "height": 30,
+    "icon": {
+      "name": "keyboard_arrow_right",
+      "scale": 2,
+      "rotation": -90,
+      "color": "#80808080"
+    },
+    "movable": false,
+    "layer": -3,
+    "rotation": -25
+  },
+  "culvertArrow1": {
+    "id": "culvertArrow1",
+    "x": 624,
+    "y": 312,
+    "width": 30,
+    "height": 30,
+    "movable": false,
+    "icon": {
+      "name": "keyboard_arrow_right",
+      "scale": 2,
+      "color": "#0000ff60"
+    },
+    "layer": -3
+  },
+  "culvertArrow2": {
+    "id": "culvertArrow2",
+    "x": 923,
+    "y": 312,
+    "width": 30,
+    "height": 30,
+    "movable": false,
+    "icon": {
+      "name": "keyboard_arrow_right",
+      "scale": 2,
+      "color": "#0000ff60"
+    },
+    "layer": -3
+  },
+  "culvert": {
+    "id": "culvert",
+    "x": 569,
+    "y": 321,
+    "width": 440,
+    "height": 0,
+    "borderRadius": "3px",
+    "movable": false,
+    "css": {
+      "border": "5px solid #0000ff60"
+    },
+    "layer": -3
+  },
+  "lightHolder1": {
+    "type": "holder",
+    "id": "lightHolder1",
+    "y": 4,
+    "width": 75,
+    "height": 100,
+    "layer": 3,
+    "movable": true,
+    "css": {
+      "default": {
+        "background": "transparent",
+        "border": "none"
+      },
+      "#enlarged": {
+        "top": "calc(var(--roomTop) + var(--scale)*-1px)",
+        "left": "calc(var(--roomLeft) + var(--scale)*-1px)",
+        "right": "unset",
+        "transform-origin": "top left"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -37.5,
+    "dropOffsetY": -50,
+    "enlarge": 3,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "GET",
+        "property": "otherSeat"
+      },
+      {
+        "func": "GET",
+        "property": "name"
+      },
+      {
+        "func": "GET",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY parent}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "character",
+        "value": "light",
+        "collection": "lightCharacters"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "character",
+        "value": "dark",
+        "collection": "darkCharacters"
+      },
+      {
+        "func": "COUNT",
+        "collection": "lightCharacters",
+        "variable": "lightCount"
+      },
+      {
+        "func": "COUNT",
+        "collection": "darkCharacters",
+        "variable": "darkCount"
+      },
+      "var light = ${lightCount} > 0",
+      "var dark = ${darkCount} > 0",
+      "var hasBoth = ${light} && ${dark}",
+      {
+        "func": "IF",
+        "condition": "${hasBoth}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY showInactiveFaceToSeat}",
+            "operand2": "${otherSeat}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "fields": [
+                  {
+                    "type": "title",
+                    "text": "Reveal card?"
+                  }
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "showInactiveFaceToSeat",
+                "value": ""
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${id}"
+                ],
+                "property": "classes",
+                "value": "visibleToOthers"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "showInactiveFaceToSeat",
+                "value": "${otherSeat}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${id}"
+                ],
+                "property": "classes",
+                "value": ""
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "var defeated1 = ${PROPERTY parent} == 'defeatedCharacter1'",
+          "var defeated2 = ${PROPERTY parent} == 'defeatedCharacter2'",
+          "var defeated = ${defeated1} || ${defeated2}",
+          {
+            "func": "IF",
+            "condition": "${defeated}",
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "showInactiveFaceToSeat",
+                "value": "${otherSeat}"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${id}"
+                ],
+                "property": "classes",
+                "value": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "character": "light",
+    "x": 4,
+    "classes": "transition",
+    "showInactiveFaceToSeat": "seat2",
+    "parent": "lightCharacterHolder"
+  },
+  "59fq": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Street Thugs",
+    "id": "59fq",
+    "activeFace": 1,
+    "hoverParent": "darkHolder2",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder2"
+  },
+  "bqno": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Sidecar Gunner",
+    "id": "bqno",
+    "activeFace": 1,
+    "hoverParent": "darkHolder4",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder4"
+  },
+  "ron3": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Capo",
+    "id": "ron3",
+    "activeFace": 1,
+    "hoverParent": "darkHolder7",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder7"
+  },
+  "vyjb": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Rookie",
+    "id": "vyjb",
+    "activeFace": 1,
+    "classes": "",
+    "hoverParent": "lightHolder1",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder1"
+  },
+  "usxx": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Witness",
+    "id": "usxx",
+    "activeFace": 1,
+    "hoverParent": "lightHolder2",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder2"
+  },
+  "idg0": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Decoy",
+    "id": "idg0",
+    "activeFace": 1,
+    "hoverParent": "lightHolder3",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder3"
+  },
+  "3iot": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Informant",
+    "id": "3iot",
+    "activeFace": 1,
+    "hoverParent": "lightHolder4",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder4"
+  },
+  "3qfn": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Sniper",
+    "id": "3qfn",
+    "activeFace": 1,
+    "hoverParent": "lightHolder6",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder6"
+  },
+  "agji": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Escort Officer",
+    "id": "agji",
+    "hoverParent": "lightHolder5",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder5",
+    "activeFace": 1
+  },
+  "ov96": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "SWAT Officer",
+    "id": "ov96",
+    "activeFace": 1,
+    "hoverParent": "lightHolder7",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder7"
+  },
+  "sraa": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Prosecutor",
+    "id": "sraa",
+    "activeFace": 1,
+    "hoverParent": "lightHolder9",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder9"
+  },
+  "nmkb": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Corrupt Judge",
+    "id": "nmkb",
+    "activeFace": 1,
+    "hoverParent": "darkHolder1",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder1"
+  },
+  "79sq": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Hit Squad",
+    "id": "79sq",
+    "activeFace": 1,
+    "hoverParent": "darkHolder3",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder3"
+  },
+  "sn6h": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Fixer",
+    "id": "sn6h",
+    "activeFace": 1,
+    "hoverParent": "darkHolder5",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder5"
+  },
+  "4wix": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Don",
+    "id": "4wix",
+    "activeFace": 1,
+    "hoverParent": "darkHolder6",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder6"
+  },
+  "82cx": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Button Man",
+    "id": "82cx",
+    "activeFace": 1,
+    "hoverParent": "darkHolder8",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder8"
+  },
+  "odkg": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Federal Marshal",
+    "id": "odkg",
+    "activeFace": 1,
+    "hoverParent": "lightHolder8",
+    "x": -37.5,
+    "y": -50,
+    "parent": "lightHolder8"
+  },
+  "338h": {
+    "deck": "characterDeck",
+    "type": "card",
+    "cardType": "Brute Enforcer",
+    "id": "338h",
+    "activeFace": 1,
+    "hoverParent": "darkHolder9",
+    "x": -37.5,
+    "y": -50,
+    "parent": "darkHolder9"
+  },
+  "lightHolder2": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder2",
+    "x": 4,
+    "y": 4,
+    "showInactiveFaceToSeat": "seat2",
+    "classes": "transition",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder3": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder3",
+    "x": 4,
+    "y": 4,
+    "showInactiveFaceToSeat": "seat2",
+    "classes": "transition",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder4": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder4",
+    "x": 4,
+    "y": 4,
+    "classes": "transition",
+    "showInactiveFaceToSeat": "seat2",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder5": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder5",
+    "x": 4,
+    "y": 4,
+    "classes": "transition",
+    "showInactiveFaceToSeat": "seat2",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder6": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder6",
+    "x": 4,
+    "y": 4,
+    "classes": "transition",
+    "showInactiveFaceToSeat": "seat2",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder7": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder7",
+    "x": 4,
+    "y": 4,
+    "showInactiveFaceToSeat": "seat2",
+    "classes": "transition",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder8": {
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "type": "holder",
+    "id": "lightHolder8",
+    "x": 4,
+    "y": 4,
+    "showInactiveFaceToSeat": "seat2",
+    "classes": "transition",
+    "parent": "lightCharacterHolder"
+  },
+  "lightHolder9": {
+    "type": "holder",
+    "id": "lightHolder9",
+    "x": 4,
+    "y": 4,
+    "showInactiveFaceToSeat": "seat2",
+    "classes": "transition",
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "parent": "lightCharacterHolder"
+  },
+  "darkHolder9": {
+    "type": "holder",
+    "id": "darkHolder9",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder8": {
+    "type": "holder",
+    "id": "darkHolder8",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder7": {
+    "type": "holder",
+    "id": "darkHolder7",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "classes": "transition",
+    "showInactiveFaceToSeat": "seat1",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder6": {
+    "type": "holder",
+    "id": "darkHolder6",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "classes": "transition",
+    "showInactiveFaceToSeat": "seat1",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder5": {
+    "type": "holder",
+    "id": "darkHolder5",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder4": {
+    "type": "holder",
+    "id": "darkHolder4",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder3": {
+    "type": "holder",
+    "id": "darkHolder3",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder2": {
+    "type": "holder",
+    "id": "darkHolder2",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "darkHolder1": "!parent"
+    },
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "darkHolder1": {
+    "type": "holder",
+    "id": "darkHolder1",
+    "x": 4,
+    "y": 4,
+    "inheritFrom": {
+      "lightHolder1": "!parent"
+    },
+    "character": "dark",
+    "showInactiveFaceToSeat": "seat1",
+    "classes": "transition",
+    "parent": "darkCharacterHolder"
+  },
+  "tunnel": {
+    "id": "tunnel",
+    "x": 864,
+    "y": 391,
+    "width": 0,
+    "height": 200,
+    "borderRadius": "3px",
+    "layer": -3,
+    "movable": false,
+    "css": {
+      "border": "5px solid #80808080"
+    },
+    "rotation": -25
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 976,
+    "y": 6,
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "ignoreZoom": true,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "cardDeckHolder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": "cardDeckHolder",
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "characterDeck"
+      },
+      {
+        "func": "SET",
+        "property": "classes",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "SELECT",
+        "property": "character",
+        "value": "light"
+      },
+      {
+        "func": "MOVE",
+        "to": "lightCharacterHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "lightCharacterHolder"
+      },
+      {
+        "func": "SET",
+        "property": "classes",
+        "value": "transition"
+      },
+      {
+        "func": "SELECT",
+        "property": "character",
+        "value": "dark"
+      },
+      {
+        "func": "MOVE",
+        "to": "darkCharacterHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "darkCharacterHolder"
+      },
+      {
+        "func": "SET",
+        "property": "classes",
+        "value": "transition"
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          7,
+          87,
+          167,
+          247
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "lightCharacterHolder",
+            "max": 1,
+            "random": true
+          },
+          {
+            "func": "MOVE",
+            "to": "regionHolder1"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 30
+          },
+          {
+            "func": "SET",
+            "property": "showInactiveFaceToSeat",
+            "value": "seat2"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "darkCharacterHolder",
+            "max": 1,
+            "random": true
+          },
+          {
+            "func": "MOVE",
+            "to": "regionHolder16"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${value}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 30
+          },
+          {
+            "func": "SET",
+            "property": "showInactiveFaceToSeat",
+            "value": "seat1"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "lightCharacterHolder",
+            "max": 1,
+            "random": true
+          },
+          {
+            "func": "MOVE",
+            "to": "regionHolder${value}"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": 113
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 30
+          },
+          {
+            "func": "SET",
+            "property": "showInactiveFaceToSeat",
+            "value": "seat2"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "in": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "darkCharacterHolder",
+            "max": 1,
+            "random": true
+          },
+          {
+            "func": "MOVE",
+            "to": "regionHolder${value}"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": 113
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 30
+          },
+          {
+            "func": "SET",
+            "property": "showInactiveFaceToSeat",
+            "value": "seat1"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "cardDeck",
+        "collection": "allCards"
+      },
+      {
+        "func": "SELECT",
+        "source": "allCards",
+        "property": "side",
+        "value": "light",
+        "sortBy": {
+          "key": "name",
+          "reverse": false
+        }
+      },
+      {
+        "func": "MOVE",
+        "to": "seat1"
+      },
+      {
+        "func": "SELECT",
+        "source": "allCards",
+        "property": "side",
+        "value": "dark",
+        "sortBy": {
+          "key": "name",
+          "reverse": false
+        }
+      },
+      {
+        "func": "MOVE",
+        "to": "seat2"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "playedCard1"
+        ],
+        "property": "recall",
+        "value": false
+      }
+    ]
+  },
+  "regionHolder1": {
+    "id": "regionHolder1",
+    "x": 635,
+    "y": 855,
+    "width": 330,
+    "height": 140,
+    "layer": -1,
+    "movableInEdit": false,
+    "type": "holder",
+    "classes": "transparent",
+    "dropTarget": {
+      "type": "holder"
+    },
+    "alignChildren": false,
+    "css": {
+      "border": "none !important"
+    },
+    "doubleClickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "character",
+        "value": "light",
+        "collection": "lightCharacters"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "character",
+        "value": "dark",
+        "collection": "darkCharacters"
+      },
+      {
+        "func": "COUNT",
+        "collection": "lightCharacters",
+        "variable": "lightCount"
+      },
+      {
+        "func": "COUNT",
+        "collection": "darkCharacters",
+        "variable": "darkCount"
+      },
+      "var light = ${lightCount} > 1",
+      "var dark = ${darkCount} > 1",
+      "var canShuffle = ${light} || ${dark}",
+      {
+        "func": "IF",
+        "condition": "${canShuffle}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "holder",
+            "property": "parent",
+            "value": "${PROPERTY id}"
+          },
+          {
+            "func": "GET",
+            "property": "x",
+            "aggregation": "array"
+          },
+          {
+            "func": "GET",
+            "property": "y",
+            "aggregation": "array"
+          },
+          {
+            "func": "MOVE",
+            "to": "lightCharacterHolder"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "lightCharacterHolder"
+          },
+          {
+            "func": "SELECT",
+            "property": "parent",
+            "value": "lightCharacterHolder",
+            "sortBy": {
+              "key": "z"
+            }
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 1000
+          },
+          "var i = 0",
+          {
+            "func": "FOREACH",
+            "collection": "DEFAULT",
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "to": "${PROPERTY id}"
+              },
+              {
+                "func": "SET",
+                "property": "x",
+                "value": "${x.$i}"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": "${y.$i}"
+              },
+              "var i = ${i} + 1"
+            ]
+          },
+          {
+            "func": "SET",
+            "property": "classes",
+            "value": "transition"
+          }
+        ]
+      }
+    ]
+  },
+  "regionHolder2": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder2",
+    "type": "holder",
+    "x": 500,
+    "y": 713,
+    "width": 300
+  },
+  "regionHolder3": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder3",
+    "type": "holder",
+    "x": 800,
+    "y": 713,
+    "width": 300
+  },
+  "regionHolder4": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder4",
+    "type": "holder",
+    "x": 350,
+    "y": 571,
+    "width": 300
+  },
+  "regionHolder5": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder5",
+    "type": "holder",
+    "x": 650,
+    "y": 571,
+    "width": 300
+  },
+  "regionHolder6": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder6",
+    "type": "holder",
+    "x": 950,
+    "y": 571,
+    "width": 300
+  },
+  "regionHolder7": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder7",
+    "type": "holder",
+    "x": 200,
+    "y": 429,
+    "width": 300
+  },
+  "regionHolder8": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder8",
+    "type": "holder",
+    "x": 500,
+    "y": 429,
+    "width": 300
+  },
+  "regionHolder9": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder9",
+    "type": "holder",
+    "x": 800,
+    "y": 429,
+    "width": 300
+  },
+  "regionHolder10": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder10",
+    "type": "holder",
+    "x": 1102,
+    "y": 429,
+    "width": 300
+  },
+  "regionHolder11": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder11",
+    "type": "holder",
+    "x": 350,
+    "y": 287,
+    "width": 300
+  },
+  "regionHolder12": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder12",
+    "type": "holder",
+    "x": 650,
+    "y": 287,
+    "width": 300
+  },
+  "regionHolder13": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder13",
+    "type": "holder",
+    "x": 950,
+    "y": 287,
+    "width": 300
+  },
+  "regionHolder14": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder14",
+    "type": "holder",
+    "x": 500,
+    "y": 147,
+    "width": 300
+  },
+  "regionHolder15": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder15",
+    "type": "holder",
+    "x": 800,
+    "y": 147,
+    "width": 300
+  },
+  "regionHolder16": {
+    "inheritFrom": {
+      "regionHolder1": "*"
+    },
+    "id": "regionHolder16",
+    "type": "holder",
+    "x": 635,
+    "y": 7
+  },
+  "lightCharacterHolder": {
+    "type": "holder",
+    "id": "lightCharacterHolder",
+    "x": -294,
+    "y": 456,
+    "width": 150,
+    "height": 200,
+    "dropTarget": {
+      "type": "holder"
+    }
+  },
+  "darkCharacterHolder": {
+    "type": "holder",
+    "id": "darkCharacterHolder",
+    "x": -472,
+    "y": 459,
+    "width": 150,
+    "height": 200,
+    "dropTarget": {
+      "type": "holder"
+    }
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1417,
+    "y": 470,
+    "displayEmpty": "bad guys",
+    "hand": "hand2",
+    "hideWhenUnused": true
+  },
+  "hand1": {
+    "type": "holder",
+    "id": "hand1",
+    "x": 5,
+    "y": 835,
+    "width": 484,
+    "height": 160,
+    "dropOffsetX": -15,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropOffsetY": -20,
+    "stackOffsetX": 45,
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 9,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playedCard1"
+            ],
+            "property": "recall",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "showInactiveFaceToSeat": "seat2",
+    "movableInEdit": false
+  },
+  "hand2": {
+    "inheritFrom": {
+      "hand1": "*"
+    },
+    "type": "holder",
+    "id": "hand2",
+    "x": 1110,
+    "y": 835,
+    "showInactiveFaceToSeat": "seat1"
+  },
+  "card1": {
+    "type": "holder",
+    "id": "card1",
+    "x": 40,
+    "y": 528,
+    "width": 113,
+    "height": 150,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropOffsetX": -19,
+    "dropOffsetY": -24,
+    "dropLimit": 2,
+    "enterRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "GET",
+            "collection": "child",
+            "property": "id"
+          },
+          {
+            "func": "MOVE",
+            "from": "${PROPERTY id}",
+            "to": "playedCard${seatIndex}",
+            "count": "all"
+          },
+          {
+            "func": "MOVE",
+            "collection": [
+              "${id}"
+            ],
+            "to": "${PROPERTY id}"
+          }
+        ]
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "hand1",
+          "hand2"
+        ],
+        "variable": "hands"
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "card1",
+          "card2"
+        ],
+        "variable": "cards"
+      },
+      {
+        "func": "COUNT",
+        "holder": [
+          "playedCard1",
+          "playedCard2"
+        ],
+        "variable": "played"
+      },
+      "var hands = ${hands} == 0",
+      "var cards = ${cards} == 2",
+      "var played = ${played} == 16",
+      "var recall = ${hands} && ${cards} && ${played}",
+      {
+        "func": "IF",
+        "condition": "${recall}",
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "playedCard1",
+            "to": "seat1",
+            "count": "all"
+          },
+          {
+            "func": "MOVE",
+            "from": "playedCard2",
+            "to": "seat2",
+            "count": "all"
+          },
+          {
+            "func": "SORT",
+            "holder": [
+              "hand1",
+              "hand2"
+            ],
+            "key": "name"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playedCard1"
+            ],
+            "property": "recall",
+            "value": true
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "card2": {
+    "inheritFrom": {
+      "card1": "*"
+    },
+    "type": "holder",
+    "id": "card2",
+    "x": 1445,
+    "y": 528
+  },
+  "playedCard1": {
+    "type": "holder",
+    "id": "playedCard1",
+    "x": 5,
+    "y": 5,
+    "width": 484,
+    "height": 160,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropOffsetX": -15,
+    "dropOffsetY": -20,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 60,
+    "recall": false,
+    "movableInEdit": false,
+    "dropTarget": {
+      "deck": "cardDeck"
+    }
+  },
+  "playedCard2": {
+    "inheritFrom": {
+      "playedCard1": "*"
+    },
+    "type": "holder",
+    "id": "playedCard2",
+    "x": 1110,
+    "y": 5
+  },
+  "playedLabel1": {
+    "id": "playedLabel1",
+    "x": 475,
+    "y": 40,
+    "icon": [
+      {
+        "name": "[cards]",
+        "offsetX": 0.5,
+        "color": "#00000060"
+      },
+      {
+        "name": "(❌)",
+        "offsetX": -0.5,
+        "color": "#00000040"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -4,
+    "width": 80,
+    "height": 80,
+    "css": {
+      "pointer-events": "none"
+    }
+  },
+  "playedLabel2": {
+    "inheritFrom": {
+      "playedLabel1": "*"
+    },
+    "id": "playedLabel2",
+    "x": 1045,
+    "y": 40
+  },
+  "characterLabel1": {
+    "id": "characterLabel1",
+    "x": 427,
+    "y": 184,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "icon": [
+      {
+        "name": "delapouite/character",
+        "offsetX": 0.5,
+        "color": "#00000060"
+      },
+      {
+        "name": "(❌)",
+        "offsetX": -0.5,
+        "color": "#00000040"
+      }
+    ],
+    "width": 80,
+    "height": 80,
+    "css": {
+      "pointer-events": "none"
+    }
+  },
+  "characterLabel2": {
+    "id": "characterLabel2",
+    "x": 1091,
+    "y": 184,
+    "inheritFrom": {
+      "characterLabel1": "*"
+    }
+  },
+  "defeatedCharacter2": {
+    "type": "holder",
+    "id": "defeatedCharacter2",
+    "x": 1158,
+    "y": 170,
+    "inheritFrom": {
+      "defeatedCharacter1": "*"
+    }
+  },
+  "defeatedCharacter1": {
+    "type": "holder",
+    "id": "defeatedCharacter1",
+    "x": 5,
+    "y": 170,
+    "width": 435,
+    "height": 108,
+    "movableInEdit": false,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropTarget": {
+      "type": "holder"
+    },
+    "hidePlayerCursors": true,
+    "stackOffsetX": 50,
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "showInactiveFaceToSeat",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${id}"
+      },
+      {
+        "func": "SET",
+        "property": "classes",
+        "value": "visibleToOthers"
+      }
+    ]
+  },
+  "h9sx": {
+    "type": "pile",
+    "parent": "cardDeckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 150,
+    "height": 200,
+    "id": "h9sx"
+  },
+  "librarySetupButton": {
+    "type": "button",
+    "id": "librarySetupButton",
+    "x": 760,
+    "y": 1135,
+    "text": "Save for PL",
+    "clickRoutine": [
+      "// Used to reset the same ready for the PL",
+      {
+        "func": "CLICK",
+        "collection": [
+          "restartButton"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "character",
+        "value": "light"
+      },
+      {
+        "func": "MOVE",
+        "to": "lightCharacterHolder"
+      },
+      {
+        "func": "SELECT",
+        "property": "character",
+        "value": "dark"
+      },
+      {
+        "func": "MOVE",
+        "to": "darkCharacterHolder"
+      },
+      "// Leave the z reset for last",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
+      }
+    ]
+  }
+}
