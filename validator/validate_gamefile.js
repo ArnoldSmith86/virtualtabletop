@@ -302,6 +302,20 @@ function parsePropertySyntax(string) {
     return match;
 }
 
+function validateGetProperty(value, context, propertyPath = []) {
+    if (typeof value === 'string' && value.length > 0) {
+        return validators.property(value, context);
+    }
+    if (Array.isArray(value) && value.length > 0) {
+        return validators.property(value[0], context);
+    }
+    return [{
+        widget: context.widgetId,
+        property: propertyPath,
+        message: 'GET property must be a non-empty string or array'
+    }];
+}
+
 function validateRoutine(routine, context, propertyPath = []) {
     const problems = [];
 
@@ -649,7 +663,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    'property',
+        'property':    validateGetProperty,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -930,6 +944,8 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
+                } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
+                    customProperties.add(value[0]);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
