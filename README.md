@@ -114,9 +114,9 @@ But who knows, maybe you'll enjoy a different platform more than ours:
 | **[18xx.games](https://18xx.games)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | <details><summary>❌</summary>No online multiplayer without account.</details> | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
 | **[Board Game Arena](https://boardgamearena.com)** | <details><summary>✅</summary>Many games are free. Many aren't.</details> | ❌ | ✅ | <details><summary>❌</summary>Only with coding and rights to the game.</details> | ❌ | <details><summary>❌</summary>Minor and relevant ads.</details> | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only tutorials and demos.</details> | ✅ |
 | **[BoardSpace.net](https://boardspace.net)** | ✅ | ✅ | <details><summary>✅</summary>It's an app but can be used in the browser.</details> | <details><summary>❌</summary>Only with coding.</details> | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **[BoardTogether](https://boardtogether.games)** | ✅ | ✅ | ? | ? | ? | ✅ | ✅ | ✅ | ✅ | ? | ? |
+| **[Board Together](https://boardtogether.games)** | ✅ | ✅ | ? | ? | ? | ✅ | ✅ | ✅ | ✅ | ? | ? |
 | **[BrettspielWelt](https://www.brettspielwelt.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | <details><summary>❌</summary>Minor and relevant ads.</details> | ✅ | ✅ | ❌ | ❌ | ✅ |
-| **[CardGames.io](https://cardgames.io)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
+| **[CardGames.io](https://cardgames.io)** | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ | ? | ? | ✅ | ✅ |
 | **[FreeBoardGames.org](https://www.freeboardgames.org)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **[Online Board Gamers](https://www.onlineboardgamers.com)** | ✅ | ? | ? | ? | ❌ | ? | ? | ✅ | ? | ❌ | ? |
 | **[PlayingCards.io](https://playingcards.io)** | <details><summary>✅</summary>Playing and creating games is free. Some admin features are paid.</details> | ❌ | ✅ | ✅ | ✅ | <details><summary>❌</summary>Unless you pay.</details> | ❌ | ✅ | ✅ | ❌ | ✅ |
@@ -126,7 +126,7 @@ But who knows, maybe you'll enjoy a different platform more than ours:
 | **[Tabletop Simulator](https://www.tabletopsimulator.com)** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | <details><summary>❌</summary>Scripting allows it but many games don't use it.</details> | ✅ | ❌ | ❌ | ❌ |
 | **[Tabletopia](https://tabletopia.com)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
 | **[Vassal](https://www.vassalengine.org)** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | <details><summary>❌</summary>You can if you mail files back and forth.</details> | ❌ | ❌ |
-| **[VirtualTabletop.io](https://virtualtabletop.io)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | <details><summary>❌</summary>Scripting allows it but most games don't use it.</details> | ✅ | ✅ | <details><summary>❌</summary>Scripting allows it.</details> | ✅ |
+| **[VirtualTabletop.io](https://virtualtabletop.io)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | <details><summary>❌</summary>Scripting allows it but most games don't use it.</details> | ✅ | ✅ | <details><summary>❌</summary>Scripting allows it in theory but it's way too complicated.</details> | ✅ |
 | **[Yucata](https://www.yucata.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | <details><summary>✅</summary>On newer games. Older games require refreshing the page.</details> | ✅ | ❌ | ❌ |
 | **[ZunTzu](https://www.zuntzu.com)** | ? | ? | ❌ | ? | ? | ? | ❌ | ✅ | ? | ❌ | ❌ |
 
