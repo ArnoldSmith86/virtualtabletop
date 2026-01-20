@@ -124,7 +124,6 @@
       "text4"
     ],
     "state": 3,
-    "debug": true,
     "stateChangeRoutine": [
       "var a = ${PROPERTY labelOptions} getIndex ${PROPERTY state}",
       {
@@ -575,7 +574,6 @@
     "z": 99,
     "id": "l3ec",
     "state": 0,
-    "debug": true,
     "stateChangeRoutine": [
       "var a = ${PROPERTY colorOptions} getIndex ${PROPERTY state}",
       {
@@ -632,7 +630,7 @@
     "z": 106
   },
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Xtras - State Dependent Routines",
       "image": "/assets/-1289394105_8185",
@@ -643,7 +641,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051246622,
+      "lastUpdate": 1768669561532,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -652,10 +650,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Custom states",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Custom states",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

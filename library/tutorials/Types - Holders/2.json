@@ -53,12 +53,6 @@
     "id": "68joD",
     "parent": "68jo",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -227,7 +221,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg"
           }
         ]
@@ -242,8 +235,9 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image"
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -851,7 +845,10 @@
     "id": "8fr3"
   },
   "_meta": {
-    "version": 1,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder",
       "image": "/assets/-1144102332_4316",
@@ -862,7 +859,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1748992077637,
+      "lastUpdate": 1768189116277,
       "skill": "",
       "description": "",
       "similarImage": "",
