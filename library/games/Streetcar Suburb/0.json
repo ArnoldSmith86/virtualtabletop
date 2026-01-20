@@ -1,10 +1,10 @@
 {
   "6393": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "6393",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "backgroundColor": {
     "id": "backgroundColor",
@@ -16,36 +16,6 @@
       "background": "linear-gradient(to bottom, #86b3ff 0%, #e9f1ff 100%)"
     },
     "movableInEdit": false
-  },
-  "_meta": {
-    "version": 20,
-    "info": {
-      "name": "Streetcar Suburb",
-      "image": "/assets/1753726120_43538",
-      "rules": "https://streetcar.drew-edwards.com/home",
-      "bgg": "https://boardgamegeek.com/boardgame/355847/streetcar-suburb",
-      "year": "2022",
-      "mode": "vs",
-      "time": "15",
-      "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1768876509577,
-      "showName": true,
-      "skill": "",
-      "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "Drew Edwards",
-      "similarAwards": "",
-      "ruleText": "Click on the rules button in the upper left corner of the room when sitting in a seat to display the rules.",
-      "helpText": "Players sit in seats. Press the restart button to begin and assign a random starting player.<div><br></div><div>The area over the map is a drawing canvas. Click and drag to draw a line between hexes. The player whose turn it is has their player color set as the active drawing color. To change to the other player's color use either the turn button or click on the colored pen icon at the bottom of the page near the player's seat. To erase part of a drawing, click on the eraser icon near the player's seat.</div><div><br></div><div>Drag and drop houses into the holders above the player's seat. Cubes stack on top of each other and can be dragged as a group.</div>",
-      "variantImage": "",
-      "variant": "",
-      "language": "",
-      "players": "2"
-    },
-    "gameSettings": {
-      "legacyModes": {}
-    }
   },
   "houseHolder": {
     "type": "holder",
@@ -791,7 +761,299 @@
     "stackOffsetY": 15,
     "layer": 2,
     "dropOffsetX": 42,
-    "dropOffsetY": 42
+    "dropOffsetY": 42,
+    "doubleClickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          "// Select the cubes in adjacent hexes",
+          {
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "_centerAbsoluteX"
+          },
+          {
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "_centerAbsoluteY"
+          },
+          "var minX = ${_centerAbsoluteX} - 165",
+          "var maxX = ${_centerAbsoluteX} + 110",
+          "var minY = ${_centerAbsoluteY} - 165",
+          "var maxY = ${_centerAbsoluteY} + 110",
+          {
+            "func": "SELECT",
+            "property": "token",
+            "value": "cube"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteX",
+            "relation": ">=",
+            "value": "${minX}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteX",
+            "relation": "<=",
+            "value": "${maxX}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteY",
+            "relation": ">=",
+            "value": "${minY}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteY",
+            "relation": "<=",
+            "value": "${maxY}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "// If there are no cubes in adjacent hexes, then continue",
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "${PROPERTY id}"
+              },
+              {
+                "func": "GET",
+                "property": "houseColor"
+              },
+              {
+                "func": "MOVE",
+                "to": "${houseColor}House${seatIndex}"
+              },
+              "// Select the houses in adjacent hexes",
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "deck",
+                "value": "houseDeck"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteX",
+                "relation": ">=",
+                "value": "${minX}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteX",
+                "relation": "<=",
+                "value": "${maxX}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteY",
+                "relation": ">=",
+                "value": "${minY}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteY",
+                "relation": "<=",
+                "value": "${maxY}"
+              },
+              {
+                "func": "COUNT"
+              },
+              "// If there are only 3 houses, then determine colors using checksums",
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 3,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "property": "checksum",
+                    "aggregation": "sum",
+                    "variable": "sum"
+                  },
+                  "// Set up the array for this group of colors",
+                  "var colorString = ${PROPERTY colorArray} getIndex ${sum}",
+                  "var colorGroup = ${colorString} split '.'",
+                  "var length = length ${colorGroup}",
+                  "var length = ${length} - 1",
+                  "var base = ${colorGroup.0}",
+                  "var colorGroup = remove 0 1",
+                  "// Move the base color into position",
+                  {
+                    "func": "GET",
+                    "collection": "thisButton",
+                    "property": "_absoluteX"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "thisButton",
+                    "property": "_absoluteY"
+                  },
+                  "var x = ${_absoluteX} + 43",
+                  {
+                    "func": "IF",
+                    "operand1": "${length}",
+                    "operand2": 3,
+                    "thenRoutine": [
+                      "// For 4 cubes",
+                      "var y = ${_absoluteY} + 87"
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${length}",
+                        "operand2": 2,
+                        "thenRoutine": [
+                          "// For 3 cubes",
+                          "var y = ${_absoluteY} + 70"
+                        ],
+                        "elseRoutine": [
+                          "// For 2 cubes",
+                          "var y = ${_absoluteY} + 56"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "${base}Cubes",
+                    "max": 1
+                  },
+                  {
+                    "func": "MOVE",
+                    "to": "tempHolder"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "tempHolder"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "thisHolderID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "value": "${thisHolderID}"
+                  },
+                  {
+                    "func": "xSET",
+                    "property": "parent",
+                    "value": null
+                  },
+                  {
+                    "func": "xSET",
+                    "property": "x",
+                    "value": "${x}"
+                  },
+                  {
+                    "func": "xSET",
+                    "property": "y",
+                    "value": "${y}"
+                  },
+                  "// Move the other cubes into position",
+                  {
+                    "func": "FOREACH",
+                    "in": "${colorGroup}",
+                    "loopRoutine": [
+                      {
+                        "func": "SELECT",
+                        "property": "parent",
+                        "value": "${value}Cubes",
+                        "max": 1
+                      },
+                      {
+                        "func": "MOVE",
+                        "to": "tempHolder"
+                      },
+                      {
+                        "func": "SELECT",
+                        "property": "parent",
+                        "value": "tempHolder"
+                      },
+                      {
+                        "func": "GET",
+                        "property": "id",
+                        "variable": "nextID"
+                      },
+                      {
+                        "func": "MOVE",
+                        "to": "${thisHolderID}"
+                      },
+                      "var thisHolderID = ${nextID}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "colorArray": [
+      0,
+      1,
+      2,
+      "blue.blue.blue",
+      "blue.blue",
+      "yellow.yellow",
+      "yellow.yellow.yellow",
+      7,
+      8,
+      9,
+      "blue.blue",
+      "blue.yellow.white.black",
+      "yellow.yellow",
+      13,
+      "blue.blue",
+      "blue.yellow.white.black",
+      "yellow.yellow",
+      "white.white",
+      "white.white",
+      19,
+      20,
+      "blue.yellow.white.black",
+      "blue.yellow.white.black",
+      23,
+      "white.white.white",
+      "black.black",
+      "black.black",
+      27,
+      "white.white",
+      29,
+      30,
+      31,
+      "black.black",
+      33,
+      34,
+      35,
+      "black.black.black"
+    ]
   },
   "seat1": {
     "type": "seat",
@@ -1962,7 +2224,7 @@
     "colorMap": [
       "transparent",
       "#dddddd",
-      "#ff9800"
+      "#dddddd"
     ],
     "layer": 1,
     "movable": false,
@@ -2210,15 +2472,6 @@
       }
     ]
   },
-  "backgroundImage": {
-    "id": "backgroundImage",
-    "width": 1600,
-    "height": 1000,
-    "layer": -4,
-    "movable": false,
-    "image": "/assets/-294869202_53646",
-    "movableInEdit": false
-  },
   "score1": {
     "id": "score1",
     "width": 65,
@@ -2399,415 +2652,363 @@
     "backgroundColor": "#000000",
     "borderColor": "#ffffff"
   },
-  "cube-yellow": {
-    "type": "deck",
-    "id": "cube-yellow",
-    "x": 4,
-    "y": 4,
-    "cardDefaults": {
-      "layer": 2,
-      "borderWidth": 2,
-      "width": 60,
-      "height": 60,
-      "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;"
-    },
-    "cardTypes": {
-      "blueHouse": {
-        "primaryColor": "#3532ff",
-        "borderColor": "#ffffff"
-      },
-      "yellowHouse": {
-        "primaryColor": "#ede100",
-        "borderColor": "#ffffff"
-      },
-      "whiteHouse": {
-        "primaryColor": "#ffffff",
-        "borderColor": "#808080"
-      },
-      "blackHouse": {
-        "primaryColor": "#000000",
-        "borderColor": "#ffffff"
-      }
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "transparent",
-            "value": "/i/game-pieces/3D/House-3D.svg",
-            "width": 60,
-            "height": 60,
-            "svgReplaces": {
-              "#primaryColor": "primaryColor",
-              "#borderColor": "borderColor",
-              "#borderWidth": "borderWidth"
-            }
-          }
-        ]
-      }
-    ],
-    "hoverParent": "houseHolder",
-    "parent": "houseHolder"
-  },
   "3cz8": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "3cz8",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "7q6r": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "7q6r",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "ms1d": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "ms1d",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "uvqr": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "uvqr",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "96az": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "96az",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "hnm5": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "hnm5",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "b2i7": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "b2i7",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "d22w": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "d22w",
-    "parent": "w284"
+    "dragging": "Mike",
+    "parent": "housePile"
   },
   "p8x2": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "p8x2",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "g3tm": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "g3tm",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "sjpr": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "sjpr",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "16wx": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "16wx",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "rdxa": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "rdxa",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "zjw0": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "zjw0",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "ic3y": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "ic3y",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "306z": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "306z",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "00kj": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "00kj",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "h0c5": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "h0c5",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "xfjb": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "xfjb",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "satw": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "satw",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "fkh7": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "fkh7",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "yw6y": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "yw6y",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "qwoz": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "qwoz",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "qvr6": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "qvr6",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "qq73": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "qq73",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "ppeo": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "ppeo",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "sr7j": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "sr7j",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "path": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "path",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "gqdq": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "gqdq",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "fo37": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "fo37",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "hkit": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "hkit",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "zfpt": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "zfpt",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "w1la": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "w1la",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "8omj": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "8omj",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "cwj9": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "cwj9",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "qcjf": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "qcjf",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "ul5j": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "ul5j",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "73rp": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "73rp",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "71kl": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "71kl",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "w7ub": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "w7ub",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "0izs": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "0izs",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "8i6x": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "8i6x",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "bwzg": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "bwzg",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "2pg7": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "2pg7",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "33g0": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "33g0",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "r1vb": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "r1vb",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "ky3k": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "ky3k",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "v1zy": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "v1zy",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "n2ag": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "n2ag",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "sh78": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "sh78",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "eysx": {
-    "deck": "cube-yellow",
+    "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "eysx",
-    "parent": "w284"
+    "parent": "housePile"
   },
   "blueHouse1": {
     "type": "holder",
@@ -3078,6 +3279,11 @@
         "value": "blueCube1"
       },
       {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "blueCubeMaster"
+      },
+      {
         "func": "SELECT",
         "property": "parent",
         "value": "yellowCubes"
@@ -3086,6 +3292,11 @@
         "func": "SET",
         "property": "id",
         "value": "yellowCube1"
+      },
+      {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "yellowCubeMaster"
       },
       {
         "func": "SELECT",
@@ -3098,6 +3309,11 @@
         "value": "whiteCube1"
       },
       {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "whiteCubeMaster"
+      },
+      {
         "func": "SELECT",
         "property": "parent",
         "value": "blackCubes"
@@ -3106,6 +3322,22 @@
         "func": "SET",
         "property": "id",
         "value": "blackCube1"
+      },
+      {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "blackCubeMaster"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "houseHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "housePile"
       },
       "// Leave the z reset for last",
       {
@@ -3121,21 +3353,129 @@
       }
     ]
   },
-  "w284": {
-    "type": "pile",
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": -137,
+    "y": 635,
+    "width": 70,
+    "height": 70
+  },
+  "houseDeck": {
+    "type": "deck",
+    "id": "houseDeck",
     "parent": "houseHolder",
     "x": 4,
     "y": 4,
-    "width": 60,
-    "height": 60,
-    "id": "w284"
+    "cardDefaults": {
+      "classes": "transition",
+      "layer": 2,
+      "borderWidth": 2,
+      "width": 60,
+      "height": 60,
+      "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+      "doubleClickRoutine": [
+        {
+          "func": "CALL",
+          "routine": "doubleClickRoutine",
+          "widget": "${PROPERTY parent}"
+        }
+      ]
+    },
+    "cardTypes": {
+      "blueHouse": {
+        "primaryColor": "#3532ff",
+        "borderColor": "#ffffff",
+        "checksum": 1,
+        "houseColor": "blue"
+      },
+      "yellowHouse": {
+        "primaryColor": "#ede100",
+        "borderColor": "#ffffff",
+        "checksum": 2,
+        "houseColor": "yellow"
+      },
+      "whiteHouse": {
+        "primaryColor": "#ffffff",
+        "borderColor": "#808080",
+        "checksum": 8,
+        "houseColor": "white"
+      },
+      "blackHouse": {
+        "primaryColor": "#000000",
+        "borderColor": "#ffffff",
+        "checksum": 12,
+        "houseColor": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/i/game-pieces/3D/House-3D.svg",
+            "width": 60,
+            "height": 60,
+            "svgReplaces": {
+              "#primaryColor": "primaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "houseHolder"
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Card transitions */\n\n.transition {\n  transition: transform 1000ms\n}\n\n.transition.dragging {\n  transition: none\n}"
+    },
+    "info": {
+      "name": "Streetcar Suburb",
+      "image": "/assets/1753726120_43538",
+      "rules": "https://streetcar.drew-edwards.com/home",
+      "bgg": "https://boardgamegeek.com/boardgame/355847/streetcar-suburb",
+      "year": "2022",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1768951004654,
+      "showName": true,
+      "skill": "",
+      "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Drew Edwards",
+      "similarAwards": "",
+      "ruleText": "Click on the rules button in the upper left corner of the room when sitting in a seat to display the rules.",
+      "helpText": "Players sit in seats. Press the restart button to begin and assign a random starting player.<div><br></div><div>The area over the map is a drawing canvas. Click and drag to draw a line between hexes. The player whose turn it is has their player color set as the active drawing color. To change to the other player's color use either the turn button or click on the colored pen icon at the bottom of the page near the player's seat. To erase part of a drawing, click on the eraser icon near the player's seat.</div><div><br></div><div>Double click a house or the hex it is in to send that cube into the appropriate holder for end of game scoring and to automatically build, when permitted by the rules, a stack of cubes in that holder. You can also manually drag and drop houses and cubes. Cubes stack on top of each other and can be dragged as a group.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "boardImage": {
+    "id": "boardImage",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-294869202_53646"
   },
   "blueCube1": {
     "type": "holder",
     "width": 60,
     "height": 60,
     "movable": true,
-    "classes": "transparent",
+    "classes": "transparent transition",
     "css": {
       "default": {
         "background-image": "url('${PROPERTY bgImage}')",
@@ -3153,7 +3493,7 @@
     "bgImage": "/assets/-691333523_1805",
     "color": "blue",
     "token": "cube",
-    "clonedFrom": "im3u",
+    "clonedFrom": "blueCubeMaster",
     "y": 4,
     "layer": 3,
     "enterRoutine": [
@@ -3169,8 +3509,9 @@
         ]
       }
     ],
-    "dragging": "Mike",
     "x": 4,
+    "dragging": "Mike",
+    "z": null,
     "id": "blueCube1",
     "parent": "blueCubes"
   },
@@ -3181,7 +3522,7 @@
     "width": 60,
     "height": 60,
     "movable": true,
-    "classes": "transparent",
+    "classes": "transparent transition",
     "css": {
       "default": {
         "background-image": "url('${PROPERTY bgImage}')",
@@ -3199,7 +3540,7 @@
     "bgImage": "/assets/1977876427_1801",
     "color": "yellow",
     "token": "cube",
-    "clonedFrom": "31wd",
+    "clonedFrom": "yellowCubeMaster",
     "dragging": "Mike",
     "layer": 3,
     "enterRoutine": [
@@ -3215,6 +3556,7 @@
         ]
       }
     ],
+    "z": null,
     "id": "yellowCube1",
     "parent": "yellowCubes"
   },
@@ -3225,7 +3567,7 @@
     "width": 60,
     "height": 60,
     "movable": true,
-    "classes": "transparent",
+    "classes": "transparent transition",
     "css": {
       "default": {
         "background-image": "url('${PROPERTY bgImage}')",
@@ -3244,7 +3586,7 @@
     "color": "white",
     "token": "cube",
     "dragging": "Mike",
-    "clonedFrom": "r9c4",
+    "clonedFrom": "whiteCubeMaster",
     "layer": 3,
     "enterRoutine": [
       {
@@ -3259,6 +3601,7 @@
         ]
       }
     ],
+    "z": null,
     "id": "whiteCube1",
     "parent": "whiteCubes"
   },
@@ -3269,7 +3612,7 @@
     "width": 60,
     "height": 60,
     "movable": true,
-    "classes": "transparent",
+    "classes": "transparent transition",
     "css": {
       "default": {
         "background-image": "url('${PROPERTY bgImage}')",
@@ -3288,7 +3631,7 @@
     "color": "black",
     "token": "cube",
     "dragging": "Mike",
-    "clonedFrom": "lyy6",
+    "clonedFrom": "blackCubeMaster",
     "layer": 3,
     "enterRoutine": [
       {
@@ -3303,7 +3646,17 @@
         ]
       }
     ],
+    "z": null,
     "id": "blackCube1",
     "parent": "blackCubes"
+  },
+  "housePile": {
+    "type": "pile",
+    "parent": "houseHolder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "housePile"
   }
 }
