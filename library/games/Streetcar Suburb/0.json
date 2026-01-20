@@ -1,0 +1,3309 @@
+{
+  "6393": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "6393",
+    "parent": "w284"
+  },
+  "backgroundColor": {
+    "id": "backgroundColor",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "background": "linear-gradient(to bottom, #86b3ff 0%, #e9f1ff 100%)"
+    },
+    "movableInEdit": false
+  },
+  "_meta": {
+    "version": 20,
+    "info": {
+      "name": "Streetcar Suburb",
+      "image": "/assets/1753726120_43538",
+      "rules": "https://streetcar.drew-edwards.com/home",
+      "bgg": "https://boardgamegeek.com/boardgame/355847/streetcar-suburb",
+      "year": "2022",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1768876509577,
+      "showName": true,
+      "skill": "",
+      "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Drew Edwards",
+      "similarAwards": "",
+      "ruleText": "Click on the rules button in the upper left corner of the room when sitting in a seat to display the rules.",
+      "helpText": "Players sit in seats. Press the restart button to begin and assign a random starting player.<div><br></div><div>The area over the map is a drawing canvas. Click and drag to draw a line between hexes. The player whose turn it is has their player color set as the active drawing color. To change to the other player's color use either the turn button or click on the colored pen icon at the bottom of the page near the player's seat. To erase part of a drawing, click on the eraser icon near the player's seat.</div><div><br></div><div>Drag and drop houses into the holders above the player's seat. Cubes stack on top of each other and can be dragged as a group.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "houseHolder": {
+    "type": "holder",
+    "id": "houseHolder",
+    "x": -140,
+    "y": 513,
+    "width": 70,
+    "height": 70
+  },
+  "hex2": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex2",
+    "x": 434,
+    "y": 34
+  },
+  "hex3": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex3",
+    "x": 565,
+    "y": 34
+  },
+  "hex4": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex4",
+    "x": 695,
+    "y": 34
+  },
+  "hex5": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex5",
+    "x": 826,
+    "y": 34
+  },
+  "hex6": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex6",
+    "x": 957,
+    "y": 34
+  },
+  "hex7": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex7",
+    "x": 1088,
+    "y": 34
+  },
+  "hex8": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex8",
+    "x": 1218,
+    "y": 34
+  },
+  "hex10": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex10",
+    "x": 369,
+    "y": 147
+  },
+  "hex11": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex11",
+    "x": 500,
+    "y": 147
+  },
+  "hex12": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex12",
+    "x": 630,
+    "y": 147
+  },
+  "hex13": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex13",
+    "x": 761,
+    "y": 147
+  },
+  "hex14": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex14",
+    "x": 892,
+    "y": 147
+  },
+  "hex15": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex15",
+    "x": 1023,
+    "y": 147
+  },
+  "hex16": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex16",
+    "x": 1153,
+    "y": 147
+  },
+  "hex18": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex18",
+    "x": 434,
+    "y": 260
+  },
+  "hex19": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex19",
+    "x": 565,
+    "y": 260
+  },
+  "hex20": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex20",
+    "x": 695,
+    "y": 260
+  },
+  "hex21": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex21",
+    "x": 826,
+    "y": 260
+  },
+  "hex22": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex22",
+    "x": 957,
+    "y": 260
+  },
+  "hex23": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex23",
+    "x": 1088,
+    "y": 260
+  },
+  "hex27": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex27",
+    "x": 500,
+    "y": 374
+  },
+  "hex28": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex28",
+    "x": 630,
+    "y": 374
+  },
+  "hex29": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex29",
+    "x": 761,
+    "y": 374
+  },
+  "hex30": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex30",
+    "x": 892,
+    "y": 374
+  },
+  "hex31": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex31",
+    "x": 1023,
+    "y": 374
+  },
+  "hex34": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex34",
+    "x": 434,
+    "y": 487
+  },
+  "hex35": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex35",
+    "x": 565,
+    "y": 487
+  },
+  "hex36": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex36",
+    "x": 695,
+    "y": 487
+  },
+  "hex37": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex37",
+    "x": 826,
+    "y": 487
+  },
+  "hex38": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex38",
+    "x": 957,
+    "y": 487
+  },
+  "hex42": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex42",
+    "x": 369,
+    "y": 600
+  },
+  "hex43": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex43",
+    "x": 500,
+    "y": 600
+  },
+  "hex44": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex44",
+    "x": 630,
+    "y": 600
+  },
+  "hex45": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex45",
+    "x": 761,
+    "y": 600
+  },
+  "hex46": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex46",
+    "x": 892,
+    "y": 600
+  },
+  "hex47": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex47",
+    "x": 1023,
+    "y": 600
+  },
+  "hex49": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex49",
+    "x": 303,
+    "y": 713
+  },
+  "hex50": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex50",
+    "x": 434,
+    "y": 713
+  },
+  "hex51": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex51",
+    "x": 565,
+    "y": 713
+  },
+  "hex52": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex52",
+    "x": 695,
+    "y": 713
+  },
+  "hex53": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex53",
+    "x": 826,
+    "y": 713
+  },
+  "hex54": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex54",
+    "x": 957,
+    "y": 713
+  },
+  "hex55": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex55",
+    "x": 1088,
+    "y": 713
+  },
+  "hex57": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex57",
+    "x": 238,
+    "y": 827
+  },
+  "hex58": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex58",
+    "x": 369,
+    "y": 827
+  },
+  "hex59": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex59",
+    "x": 500,
+    "y": 827
+  },
+  "hex60": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex60",
+    "x": 630,
+    "y": 827
+  },
+  "hex61": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex61",
+    "x": 761,
+    "y": 827
+  },
+  "hex62": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex62",
+    "x": 892,
+    "y": 827
+  },
+  "hex63": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex63",
+    "x": 1023,
+    "y": 827
+  },
+  "hex64": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex64",
+    "x": 1153,
+    "y": 827
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1535,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Reset'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "turnIndex"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "draw${turnIndex}"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "houseHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "houseHolder"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          64
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "houseHolder",
+            "to": "hex${value}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "blueCubes",
+          "yellowCubes",
+          "whiteCubes",
+          "blackCubes"
+        ]
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "CANVAS",
+        "canvas": "canvas",
+        "mode": "reset"
+      },
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "set",
+        "value": "${turnIndex}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvas"
+        ],
+        "property": "lineWidth",
+        "value": 3.5
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      }
+    ]
+  },
+  "blueCubes": {
+    "type": "holder",
+    "id": "blueCubes",
+    "y": 308,
+    "width": 66,
+    "height": 66,
+    "dropTarget": {
+      "color": "blue"
+    },
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "classes": "transparent",
+    "layer": 3,
+    "x": 54
+  },
+  "yellowCubes": {
+    "type": "holder",
+    "id": "yellowCubes",
+    "x": 124,
+    "y": 308,
+    "dropTarget": {
+      "color": "yellow"
+    },
+    "inheritFrom": {
+      "blueCubes": "*"
+    }
+  },
+  "whiteCubes": {
+    "type": "holder",
+    "id": "whiteCubes",
+    "x": 1394,
+    "y": 308,
+    "dropTarget": {
+      "color": "white"
+    },
+    "inheritFrom": {
+      "blueCubes": "*"
+    }
+  },
+  "blackCubes": {
+    "type": "holder",
+    "id": "blackCubes",
+    "x": 1464,
+    "y": 308,
+    "dropTarget": {
+      "color": "black"
+    },
+    "inheritFrom": {
+      "blueCubes": "*"
+    }
+  },
+  "hex1": {
+    "type": "holder",
+    "id": "hex1",
+    "x": 303,
+    "width": 140,
+    "height": 140,
+    "css": {
+      "default": {
+        "clip-path": "polygon(93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%, 50% 0%)",
+        "border": "none !important"
+      }
+    },
+    "y": 34,
+    "grid": [
+      {
+        "x": 130.77,
+        "y": 226.5,
+        "offsetX": -26,
+        "offsetY": -83
+      },
+      {
+        "x": 130.77,
+        "y": 226.5,
+        "offsetX": 39,
+        "offsetY": 30
+      }
+    ],
+    "classes": "transparent",
+    "movableInEdit": false,
+    "stackOffsetX": 15,
+    "stackOffsetY": 15,
+    "layer": 2,
+    "dropOffsetX": 42,
+    "dropOffsetY": 42
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(6)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "inUse": false,
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "// If you always want this seat to be a specific color, add a `staticColor` property wtih the hex color as the value",
+      "// If you want this seat to do other things, scroll all the way to the bottom and lock for comments about adding functions depending on whether the seat is being used or not. If you need functions that activate whenever there is a status change (being used or not), add those at the end of this clickRoutine.",
+      "// Check if another player is picking this seat",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY inUse}",
+        "thenRoutine": [
+          "// If another player is currently picking this seat, notify the play and end",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Pick another seat. Another player is getting this one ready."
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// If another player does not have the INPUT overlay on this seat active then flag it as active and CALL the routines needed to use the seat",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": true
+          },
+          {
+            "func": "DELAY"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateColorArrayRoutine",
+            "variable": "availableColors"
+          },
+          {
+            "func": "CALL",
+            "routine": "useSeatRoutine"
+          },
+          "// Update player color and name to match player's selections.",
+          "var playerColor = ${result.0}",
+          "var playerName = ${result.1}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "colorContrastRoutine": [
+      "// Use color functions to automatically adjust contrast for best visibility",
+      "var newText = colorContrast ${PROPERTY mainColor}",
+      "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "textColor",
+        "value": "${newText}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "glowColor",
+        "value": "${newGlow}"
+      }
+    ],
+    "doubleClickRoutine": [
+      "// A quick way to enter a seat with current playerName and random available color.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY inUse}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColors"
+              },
+              "var arrayLen = length ${availableColors}",
+              "var arrayLen = ${arrayLen} - 1",
+              "var random = randInt 0 ${arrayLen}",
+              "var arrayColor = ${availableColors} getIndex ${random}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var color = ${PROPERTY staticColor}"
+                ],
+                "elseRoutine": [
+                  "var color = ${arrayColor}"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${color}"
+              },
+              {
+                "func": "CALL",
+                "routine": "colorContrastRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${playerName}"
+              },
+              "var playerColor = ${color}"
+            ]
+          }
+        ]
+      }
+    ],
+    "updateColorArrayRoutine": [
+      "// Select all active seats except the current one and get color into an array.",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "value": "${PROPERTY id}",
+        "mode": "remove"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "aggregation": "array",
+        "variable": "seatColors"
+      },
+      "var result = ${PROPERTY colorArray}",
+      "// Remove colors used in other seats from the list of available colors for this player's overlay choices",
+      {
+        "func": "FOREACH",
+        "in": "${seatColors}",
+        "loopRoutine": [
+          "var isUsedIndex = ${result} indexOf ${value}",
+          "var result = ${isUsedIndex} remove 1"
+        ]
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY staticColor}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          "var color = ${PROPERTY staticColor}"
+        ],
+        "elseRoutine": [
+          "var color = ${PROPERTY color}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          "// If seat is empty, then prompt for name (and color if not static).",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${availableColors}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "// If seat is occupied by the player pressing the button, allow player to change name, color if not static, or get up from seat.",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name and choice of player color (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "palette",
+                        "label": "Your Color:",
+                        "colors": "${availableColors}",
+                        "variable": "color",
+                        "value": "${playerColor}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "// If seat is occupied by other than the player clicking, then confirm removal.",
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "// If player is leaving or getting kicked from seat, update color and player properties to empty values",
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "// Evaluate scenarios for what properties need to change",
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              "// Double check to make sure that another player has not chosen the same color if multiple seat INPUT overlays were open at the same time",
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColorsRecheck"
+              },
+              "var doubleCheck = ${availableColorsRecheck} indexOf ${color}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var doubleCheck = 99"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${doubleCheck}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "// Make updates to player color and name array for the return to the clickRoutine and SET the properties on this seat",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "color",
+                    "value": "${color}"
+                  },
+                  "var result = push ${color}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "player",
+                    "value": "${name}"
+                  },
+                  "var result = push ${name}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "mainColor",
+                    "value": "${result.0}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "colorContrastRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Choose again. That color was recently selected by another player."
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "inUse",
+                    "value": false
+                  },
+                  {
+                    "func": "CLICK",
+                    "collection": "thisButton"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          "// If there is anything else this seat needs to do after a player has left, add that here."
+        ],
+        "elseRoutine": [
+          "// If there is anything else this seat needs to do after it has been claimed, do that here."
+        ]
+      }
+    ],
+    "x": 29,
+    "y": 850
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(6)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "inUse": false,
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "// If you always want this seat to be a specific color, add a `staticColor` property wtih the hex color as the value",
+      "// If you want this seat to do other things, scroll all the way to the bottom and lock for comments about adding functions depending on whether the seat is being used or not. If you need functions that activate whenever there is a status change (being used or not), add those at the end of this clickRoutine.",
+      "// Check if another player is picking this seat",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY inUse}",
+        "thenRoutine": [
+          "// If another player is currently picking this seat, notify the play and end",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Pick another seat. Another player is getting this one ready."
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// If another player does not have the INPUT overlay on this seat active then flag it as active and CALL the routines needed to use the seat",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": true
+          },
+          {
+            "func": "DELAY"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateColorArrayRoutine",
+            "variable": "availableColors"
+          },
+          {
+            "func": "CALL",
+            "routine": "useSeatRoutine"
+          },
+          "// Update player color and name to match player's selections.",
+          "var playerColor = ${result.0}",
+          "var playerName = ${result.1}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "colorContrastRoutine": [
+      "// Use color functions to automatically adjust contrast for best visibility",
+      "var newText = colorContrast ${PROPERTY mainColor}",
+      "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "textColor",
+        "value": "${newText}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "glowColor",
+        "value": "${newGlow}"
+      }
+    ],
+    "doubleClickRoutine": [
+      "// A quick way to enter a seat with current playerName and random available color.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY inUse}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColors"
+              },
+              "var arrayLen = length ${availableColors}",
+              "var arrayLen = ${arrayLen} - 1",
+              "var random = randInt 0 ${arrayLen}",
+              "var arrayColor = ${availableColors} getIndex ${random}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var color = ${PROPERTY staticColor}"
+                ],
+                "elseRoutine": [
+                  "var color = ${arrayColor}"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${color}"
+              },
+              {
+                "func": "CALL",
+                "routine": "colorContrastRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${playerName}"
+              },
+              "var playerColor = ${color}"
+            ]
+          }
+        ]
+      }
+    ],
+    "updateColorArrayRoutine": [
+      "// Select all active seats except the current one and get color into an array.",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "value": "${PROPERTY id}",
+        "mode": "remove"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "aggregation": "array",
+        "variable": "seatColors"
+      },
+      "var result = ${PROPERTY colorArray}",
+      "// Remove colors used in other seats from the list of available colors for this player's overlay choices",
+      {
+        "func": "FOREACH",
+        "in": "${seatColors}",
+        "loopRoutine": [
+          "var isUsedIndex = ${result} indexOf ${value}",
+          "var result = ${isUsedIndex} remove 1"
+        ]
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY staticColor}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          "var color = ${PROPERTY staticColor}"
+        ],
+        "elseRoutine": [
+          "var color = ${PROPERTY color}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          "// If seat is empty, then prompt for name (and color if not static).",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${availableColors}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "// If seat is occupied by the player pressing the button, allow player to change name, color if not static, or get up from seat.",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name and choice of player color (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "palette",
+                        "label": "Your Color:",
+                        "colors": "${availableColors}",
+                        "variable": "color",
+                        "value": "${playerColor}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "// If seat is occupied by other than the player clicking, then confirm removal.",
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "// If player is leaving or getting kicked from seat, update color and player properties to empty values",
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "// Evaluate scenarios for what properties need to change",
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              "// Double check to make sure that another player has not chosen the same color if multiple seat INPUT overlays were open at the same time",
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColorsRecheck"
+              },
+              "var doubleCheck = ${availableColorsRecheck} indexOf ${color}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var doubleCheck = 99"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${doubleCheck}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "// Make updates to player color and name array for the return to the clickRoutine and SET the properties on this seat",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "color",
+                    "value": "${color}"
+                  },
+                  "var result = push ${color}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "player",
+                    "value": "${name}"
+                  },
+                  "var result = push ${name}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "mainColor",
+                    "value": "${result.0}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "colorContrastRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Choose again. That color was recently selected by another player."
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "inUse",
+                    "value": false
+                  },
+                  {
+                    "func": "CLICK",
+                    "collection": "thisButton"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          "// If there is anything else this seat needs to do after a player has left, add that here."
+        ],
+        "elseRoutine": [
+          "// If there is anything else this seat needs to do after it has been claimed, do that here."
+        ]
+      }
+    ],
+    "x": 1381,
+    "index": 2,
+    "y": 850
+  },
+  "canvas": {
+    "type": "canvas",
+    "id": "canvas",
+    "x": 238,
+    "width": 1125,
+    "height": 1125,
+    "resolution": 500,
+    "colorMap": [
+      "transparent",
+      "#dddddd",
+      "#ff9800"
+    ],
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "lineWidth": 3.5,
+    "css": {
+      "border": "none"
+    }
+  },
+  "draw1": {
+    "id": "draw1",
+    "x": 42,
+    "y": 911,
+    "icon": {
+      "name": "stylus_note",
+      "color": "${PROPERTY color}"
+    },
+    "width": 60,
+    "height": 60,
+    "clickRoutine": [
+      "var seatPID = 'seat' + ${PROPERTY pID}",
+      {
+        "func": "GET",
+        "collection": [
+          "${seatPID}"
+        ],
+        "property": "mainColor",
+        "variable": "color"
+      },
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "change",
+        "color": "${color}",
+        "value": "${PROPERTY pID}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      },
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "set",
+        "value": "${PROPERTY pID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvas"
+        ],
+        "property": "lineWidth",
+        "value": 3.5
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2",
+          "erase1",
+          "erase2"
+        ],
+        "property": "border",
+        "value": "1px solid #00000000"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "border",
+        "value": "1px dashed black"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "${PROPERTY border}"
+    },
+    "borderRadius": 100,
+    "border": "1px solid #00000000",
+    "color": "grey",
+    "pID": 1
+  },
+  "erase1": {
+    "id": "erase1",
+    "x": 115,
+    "y": 911,
+    "icon": {
+      "name": "ink_eraser",
+      "color": "grey"
+    },
+    "width": 60,
+    "height": 60,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvas"
+        ],
+        "property": "lineWidth",
+        "value": 6
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2",
+          "erase1",
+          "erase2"
+        ],
+        "property": "border",
+        "value": "1px solid #00000000"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "border",
+        "value": "1px dashed black"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "border": "1px solid #00000000",
+    "css": {
+      "border": "${PROPERTY border}"
+    },
+    "borderRadius": 100
+  },
+  "draw2": {
+    "id": "draw2",
+    "x": 1396,
+    "y": 910,
+    "inheritFrom": {
+      "draw1": "*"
+    },
+    "border": "1px solid #00000000",
+    "color": "grey",
+    "pID": 2
+  },
+  "erase2": {
+    "id": "erase2",
+    "x": 1469,
+    "y": 910,
+    "inheritFrom": {
+      "erase1": "*"
+    },
+    "border": "1px solid #00000000"
+  },
+  "rules": {
+    "id": "rules",
+    "x": 152,
+    "width": 1294,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1417409669_239566",
+    "layer": 4,
+    "css": {
+      "border": "2px solid black"
+    },
+    "onlyVisibleForSeat": [],
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "rulesButton"
+        ]
+      }
+    ],
+    "height": 1000
+  },
+  "rulesButton": {
+    "type": "button",
+    "id": "rulesButton",
+    "x": 15,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Rules'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": "lists",
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF rules}",
+      "var checkArray = ${visibleToSeats} isArray",
+      {
+        "func": "IF",
+        "condition": "${checkArray}",
+        "elseRoutine": [
+          "var visibleToSeats = []"
+        ]
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${seatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">",
+        "operand2": -1,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ]
+  },
+  "backgroundImage": {
+    "id": "backgroundImage",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/-294869202_53646",
+    "movableInEdit": false
+  },
+  "score1": {
+    "id": "score1",
+    "width": 65,
+    "height": 35,
+    "css": {
+      "background": "silver",
+      "color": "black",
+      "font-size": "28px"
+    },
+    "borderRadius": 8,
+    "type": "label",
+    "editable": true,
+    "text": 0,
+    "x": 84,
+    "y": 780
+  },
+  "score1U": {
+    "type": "button",
+    "id": "score1U",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": 78,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "score1D": {
+    "type": "button",
+    "id": "score1D",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": -52,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "score2": {
+    "id": "score2",
+    "width": 65,
+    "height": 35,
+    "css": {
+      "background": "silver",
+      "color": "black",
+      "font-size": "28px"
+    },
+    "borderRadius": 8,
+    "type": "label",
+    "editable": true,
+    "text": 0,
+    "x": 1434,
+    "y": 780
+  },
+  "score2U": {
+    "type": "button",
+    "id": "score2U",
+    "parent": "score2",
+    "fixedParent": true,
+    "x": 78,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "score2D": {
+    "type": "button",
+    "id": "score2D",
+    "parent": "score2",
+    "fixedParent": true,
+    "x": -52,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff"
+  },
+  "cube-yellow": {
+    "type": "deck",
+    "id": "cube-yellow",
+    "x": 4,
+    "y": 4,
+    "cardDefaults": {
+      "layer": 2,
+      "borderWidth": 2,
+      "width": 60,
+      "height": 60,
+      "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;"
+    },
+    "cardTypes": {
+      "blueHouse": {
+        "primaryColor": "#3532ff",
+        "borderColor": "#ffffff"
+      },
+      "yellowHouse": {
+        "primaryColor": "#ede100",
+        "borderColor": "#ffffff"
+      },
+      "whiteHouse": {
+        "primaryColor": "#ffffff",
+        "borderColor": "#808080"
+      },
+      "blackHouse": {
+        "primaryColor": "#000000",
+        "borderColor": "#ffffff"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/i/game-pieces/3D/House-3D.svg",
+            "width": 60,
+            "height": 60,
+            "svgReplaces": {
+              "#primaryColor": "primaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "houseHolder",
+    "parent": "houseHolder"
+  },
+  "3cz8": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "3cz8",
+    "parent": "w284"
+  },
+  "7q6r": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "7q6r",
+    "parent": "w284"
+  },
+  "ms1d": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "ms1d",
+    "parent": "w284"
+  },
+  "uvqr": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "uvqr",
+    "parent": "w284"
+  },
+  "96az": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "96az",
+    "parent": "w284"
+  },
+  "hnm5": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "hnm5",
+    "parent": "w284"
+  },
+  "b2i7": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "b2i7",
+    "parent": "w284"
+  },
+  "d22w": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "d22w",
+    "parent": "w284"
+  },
+  "p8x2": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "p8x2",
+    "parent": "w284"
+  },
+  "g3tm": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "g3tm",
+    "parent": "w284"
+  },
+  "sjpr": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "sjpr",
+    "parent": "w284"
+  },
+  "16wx": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "16wx",
+    "parent": "w284"
+  },
+  "rdxa": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "rdxa",
+    "parent": "w284"
+  },
+  "zjw0": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "zjw0",
+    "parent": "w284"
+  },
+  "ic3y": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "ic3y",
+    "parent": "w284"
+  },
+  "306z": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "306z",
+    "parent": "w284"
+  },
+  "00kj": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "00kj",
+    "parent": "w284"
+  },
+  "h0c5": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "h0c5",
+    "parent": "w284"
+  },
+  "xfjb": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "xfjb",
+    "parent": "w284"
+  },
+  "satw": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "satw",
+    "parent": "w284"
+  },
+  "fkh7": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "fkh7",
+    "parent": "w284"
+  },
+  "yw6y": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "yw6y",
+    "parent": "w284"
+  },
+  "qwoz": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "qwoz",
+    "parent": "w284"
+  },
+  "qvr6": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "qvr6",
+    "parent": "w284"
+  },
+  "qq73": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "qq73",
+    "parent": "w284"
+  },
+  "ppeo": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "ppeo",
+    "parent": "w284"
+  },
+  "sr7j": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "sr7j",
+    "parent": "w284"
+  },
+  "path": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "path",
+    "parent": "w284"
+  },
+  "gqdq": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "gqdq",
+    "parent": "w284"
+  },
+  "fo37": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "fo37",
+    "parent": "w284"
+  },
+  "hkit": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "hkit",
+    "parent": "w284"
+  },
+  "zfpt": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "zfpt",
+    "parent": "w284"
+  },
+  "w1la": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "w1la",
+    "parent": "w284"
+  },
+  "8omj": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "8omj",
+    "parent": "w284"
+  },
+  "cwj9": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "cwj9",
+    "parent": "w284"
+  },
+  "qcjf": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "qcjf",
+    "parent": "w284"
+  },
+  "ul5j": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "ul5j",
+    "parent": "w284"
+  },
+  "73rp": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "73rp",
+    "parent": "w284"
+  },
+  "71kl": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "71kl",
+    "parent": "w284"
+  },
+  "w7ub": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "w7ub",
+    "parent": "w284"
+  },
+  "0izs": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "0izs",
+    "parent": "w284"
+  },
+  "8i6x": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "8i6x",
+    "parent": "w284"
+  },
+  "bwzg": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "bwzg",
+    "parent": "w284"
+  },
+  "2pg7": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "2pg7",
+    "parent": "w284"
+  },
+  "33g0": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "33g0",
+    "parent": "w284"
+  },
+  "r1vb": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "r1vb",
+    "parent": "w284"
+  },
+  "ky3k": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "ky3k",
+    "parent": "w284"
+  },
+  "v1zy": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "v1zy",
+    "parent": "w284"
+  },
+  "n2ag": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "n2ag",
+    "parent": "w284"
+  },
+  "sh78": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "sh78",
+    "parent": "w284"
+  },
+  "eysx": {
+    "deck": "cube-yellow",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "eysx",
+    "parent": "w284"
+  },
+  "blueHouse1": {
+    "type": "holder",
+    "id": "blueHouse1",
+    "x": 88,
+    "y": 472,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#3532ff80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blueHouse"
+    }
+  },
+  "whiteHouse1": {
+    "type": "holder",
+    "id": "whiteHouse1",
+    "x": 88,
+    "y": 622,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ffffffbb"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "whiteHouse"
+    }
+  },
+  "yellowHouse1": {
+    "type": "holder",
+    "id": "yellowHouse1",
+    "x": 88,
+    "y": 547,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ede10080"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "yellowHouse"
+    }
+  },
+  "blackHouse1": {
+    "type": "holder",
+    "id": "blackHouse1",
+    "x": 88,
+    "y": 698,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#000000aa"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blackHouse"
+    }
+  },
+  "blueHouse2": {
+    "type": "holder",
+    "id": "blueHouse2",
+    "x": 1438,
+    "y": 472,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#3532ff80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blueHouse"
+    }
+  },
+  "yellowHouse2": {
+    "type": "holder",
+    "id": "yellowHouse2",
+    "x": 1438,
+    "y": 547,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ede10080"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "yellowHouse"
+    }
+  },
+  "whiteHouse2": {
+    "type": "holder",
+    "id": "whiteHouse2",
+    "x": 1438,
+    "y": 622,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ffffffbb"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "whiteHouse"
+    }
+  },
+  "blackHouse2": {
+    "type": "holder",
+    "id": "blackHouse2",
+    "x": 1438,
+    "y": 698,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#000000aa"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blackHouse"
+    }
+  },
+  "turnButton1": {
+    "type": "button",
+    "id": "turnButton1",
+    "x": 210,
+    "y": 628,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "layer": 3,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "39px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Turn'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "turnIndex"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "draw${turnIndex}"
+        ]
+      }
+    ]
+  },
+  "turnButton2": {
+    "inheritFrom": {
+      "turnButton1": "*"
+    },
+    "type": "button",
+    "id": "turnButton2",
+    "x": 1330,
+    "y": 628
+  },
+  "librarySetupButton": {
+    "type": "button",
+    "id": "librarySetupButton",
+    "x": 760,
+    "y": 1161,
+    "text": "Save for PL",
+    "clickRoutine": [
+      "// Used to reset the same ready for the PL",
+      {
+        "func": "CLICK",
+        "collection": [
+          "restartButton"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "houseHolder"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "hoverTarget",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "hoverTarget",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2"
+        ],
+        "property": "color",
+        "value": "grey"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2"
+        ],
+        "property": "border",
+        "value": "1px solid #00000000"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "blueCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "blueCube1"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "yellowCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "yellowCube1"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "whiteCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "whiteCube1"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "blackCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "blackCube1"
+      },
+      "// Leave the z reset for last",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
+      }
+    ]
+  },
+  "w284": {
+    "type": "pile",
+    "parent": "houseHolder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "w284"
+  },
+  "blueCube1": {
+    "type": "holder",
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-691333523_1805",
+    "color": "blue",
+    "token": "cube",
+    "clonedFrom": "im3u",
+    "y": 4,
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "blueCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "dragging": "Mike",
+    "x": 4,
+    "id": "blueCube1",
+    "parent": "blueCubes"
+  },
+  "yellowCube1": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/1977876427_1801",
+    "color": "yellow",
+    "token": "cube",
+    "clonedFrom": "31wd",
+    "dragging": "Mike",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "yellowCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "id": "yellowCube1",
+    "parent": "yellowCubes"
+  },
+  "whiteCube1": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-1731024678_1801",
+    "color": "white",
+    "token": "cube",
+    "dragging": "Mike",
+    "clonedFrom": "r9c4",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "whiteCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "id": "whiteCube1",
+    "parent": "whiteCubes"
+  },
+  "blackCube1": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-148598130_1801",
+    "color": "black",
+    "token": "cube",
+    "dragging": "Mike",
+    "clonedFrom": "lyy6",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "blackCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "id": "blackCube1",
+    "parent": "blackCubes"
+  }
+}
