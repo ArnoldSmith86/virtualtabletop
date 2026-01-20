@@ -962,17 +962,17 @@
                     "value": "${thisHolderID}"
                   },
                   {
-                    "func": "xSET",
+                    "func": "SET",
                     "property": "parent",
                     "value": null
                   },
                   {
-                    "func": "xSET",
+                    "func": "SET",
                     "property": "x",
                     "value": "${x}"
                   },
                   {
-                    "func": "xSET",
+                    "func": "SET",
                     "property": "y",
                     "value": "${y}"
                   },
@@ -3445,7 +3445,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1768951004654,
+      "lastUpdate": 1768951218594,
       "showName": true,
       "skill": "",
       "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
@@ -3469,96 +3469,6 @@
     "movable": false,
     "movableInEdit": false,
     "image": "/assets/-294869202_53646"
-  },
-  "blueCube1": {
-    "type": "holder",
-    "width": 60,
-    "height": 60,
-    "movable": true,
-    "classes": "transparent transition",
-    "css": {
-      "default": {
-        "background-image": "url('${PROPERTY bgImage}')",
-        "background-repeat": "no-repeat",
-        "background-size": "100%",
-        "background-position": "50%"
-      }
-    },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -32,
-    "dropTarget": {
-      "token": "cube"
-    },
-    "bgImage": "/assets/-691333523_1805",
-    "color": "blue",
-    "token": "cube",
-    "clonedFrom": "blueCubeMaster",
-    "y": 4,
-    "layer": 3,
-    "enterRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY parent}",
-        "operand2": "blueCubes",
-        "thenRoutine": [
-          {
-            "func": "DELETE",
-            "collection": "child"
-          }
-        ]
-      }
-    ],
-    "x": 4,
-    "dragging": "Mike",
-    "z": null,
-    "id": "blueCube1",
-    "parent": "blueCubes"
-  },
-  "yellowCube1": {
-    "type": "holder",
-    "x": 4,
-    "y": 4,
-    "width": 60,
-    "height": 60,
-    "movable": true,
-    "classes": "transparent transition",
-    "css": {
-      "default": {
-        "background-image": "url('${PROPERTY bgImage}')",
-        "background-repeat": "no-repeat",
-        "background-size": "100%",
-        "background-position": "50%"
-      }
-    },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -32,
-    "dropTarget": {
-      "token": "cube"
-    },
-    "bgImage": "/assets/1977876427_1801",
-    "color": "yellow",
-    "token": "cube",
-    "clonedFrom": "yellowCubeMaster",
-    "dragging": "Mike",
-    "layer": 3,
-    "enterRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY parent}",
-        "operand2": "yellowCubes",
-        "thenRoutine": [
-          {
-            "func": "DELETE",
-            "collection": "child"
-          }
-        ]
-      }
-    ],
-    "z": null,
-    "id": "yellowCube1",
-    "parent": "yellowCubes"
   },
   "whiteCube1": {
     "type": "holder",
@@ -3658,5 +3568,95 @@
     "width": 60,
     "height": 60,
     "id": "housePile"
+  },
+  "nng4": {
+    "type": "holder",
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent transition",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-691333523_1805",
+    "color": "blue",
+    "token": "cube",
+    "clonedFrom": "blueCube1",
+    "y": 4,
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "blueCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "x": 4,
+    "dragging": "LawDawg",
+    "z": 31,
+    "id": "nng4",
+    "parent": "blueCubes"
+  },
+  "b2uj": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent transition",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/1977876427_1801",
+    "color": "yellow",
+    "token": "cube",
+    "clonedFrom": "yellowCube1",
+    "dragging": "LawDawg",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "yellowCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "z": 34,
+    "id": "b2uj",
+    "parent": "yellowCubes"
   }
 }
