@@ -122,13 +122,13 @@ But who knows, maybe you'll enjoy a different platform more than ours:
 | **[PlayingCards.io](https://playingcards.io)** | <details><summary>✅</summary>Playing and creating games is free. Some admin features are paid.</details> | ❌ | ✅ | ✅ | ✅ | <details><summary>❌</summary>Unless you pay.</details> | ❌ | ✅ | ✅ | ❌ | ✅ |
 | **[Pogo](https://www.pogo.com)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
 | **[Rally the Troops](https://www.rally-the-troops.com)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ❌ | ✅ | ? | ✅ | ✅ | ? | ? |
-| **[Screentop.gg](https://screentop.gg)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
+| **[Screentop.gg](https://screentop.gg)** | <details><summary>✅</summary>Playing games is free. Some features for creating games are paid.</details> | ❌ | ✅ | <details><summary>✅</summary>It has a built-in game editor but many features are paid.</details> | ? | ❌ | ❌ | ✅ | ? | ? | ? |
 | **[Tabletop Simulator](https://www.tabletopsimulator.com)** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | <details><summary>❌</summary>Scripting allows it but many games don't use it.</details> | ✅ | ❌ | ❌ | ❌ |
 | **[Tabletopia](https://tabletopia.com)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
 | **[Vassal](https://www.vassalengine.org)** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | <details><summary>❌</summary>You can if you mail files back and forth.</details> | ❌ | ❌ |
 | **[VirtualTabletop.io](https://virtualtabletop.io)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | <details><summary>❌</summary>Scripting allows it but most games don't use it.</details> | ✅ | ✅ | <details><summary>❌</summary>Scripting allows it.</details> | ✅ |
 | **[Yucata](https://www.yucata.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ | ✅ | <details><summary>✅</summary>On newer games. Older games require refreshing the page.</details> | ✅ | ❌ | ❌ |
-| **[ZunTzu](https://www.zuntzu.com)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
+| **[ZunTzu](https://www.zuntzu.com)** | ? | ? | ❌ | ? | ? | ? | ❌ | ✅ | ? | ❌ | ❌ |
 
 ## 📄 License
 
