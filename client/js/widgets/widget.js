@@ -1001,7 +1001,7 @@ export class Widget extends StateManaged {
             else if(match[14])
               return await compute(op, input, toNum(getParam(15, dv)), toNum(getParam(19, dv)), toNum(getParam(23, dv)));
             else
-              return getParam(5, null);
+              return JSON.parse(JSON.stringify(getParam(5, null)));
           };
 
           const variable = match[1] !== undefined ? variables[unescape(match[2])] : unescape(match[2]);
