@@ -953,6 +953,12 @@ export class Widget extends StateManaged {
         continue;
       }
 
+      if(depth > 250) {
+        problems.push("Too much recursion (>250). Your routine is probably (directly or indirectly) calling itself.");
+        if(jeRoutineLogging) jeLoggingRoutineOperationEnd(problems, variables, collections, true);
+        break;
+      }
+
       if(typeof a == 'string') {
         const identifier = '(?:[a-zA-Z0-9_-]|\\\\u[0-9a-fA-F]{4})+';
         const string     = `'((?:[ !#-&(-[\\]-~]|\\\\u[0-9a-fA-F]{4})*)'`;
