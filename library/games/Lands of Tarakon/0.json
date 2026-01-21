@@ -1,16 +1,19 @@
 {
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Lands of Tarakon",
-      "image": "/assets/-1296736456_45278",
+      "image": "/assets/-478303661_106366",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/393530/karak-ii",
       "year": "2023",
-      "mode": "",
+      "mode": "vs",
       "time": "45-60",
-      "attribution": "<div>Game layout, design, and coding by flow86 (with much help on Discord!). Released to the public domain under CC0.</div><div><br></div>All graphics created with Microsoft Copilot with staring prompt:<div>“I need a regular hexagon for a board game. In the center, there should be a plain green cube in a 3D view. Around the cube, there should be a comic-style light forest shown from a top-down perspective, so that the piece still looks good when rotated. Toward the edges of the hexagon, the forest should gradually become lighter and fade out completely. The background color should be light brown or light gray. The hexagon should ideally be isolated (with a transparent background) as well.”</div><div><br></div><div>Prompts were then altered and added all other graphics based on the created tile. There were many chat iterations.</div><div><br></div><div>The AI graphics were edited with Affinity to fit the game.<br></div>",
-      "lastUpdate": 1768954885206,
+      "attribution": "<div>Game layout, design, and coding by flow86 (with much help on Discord!). Released to the public domain under CC0.</div><div><br></div>All graphics created with Microsoft Copilot with starting prompt:<div>“I need a regular hexagon for a board game. In the center, there should be a plain green cube in a 3D view. Around the cube, there should be a comic-style light forest shown from a top-down perspective, so that the piece still looks good when rotated. Toward the edges of the hexagon, the forest should gradually become lighter and fade out completely. The background color should be light brown or light gray. The hexagon should ideally be isolated (with a transparent background) as well.”</div><div><br></div><div>Prompts were then altered and added all other graphics based on the created tile. There were many chat iterations.</div><div><br></div><div>The AI graphics were edited with Affinity to fit the game.<br></div>",
+      "lastUpdate": 1769003856887,
       "showName": true,
       "skill": "Medium",
       "description": "Explore the land and battle monsters.",
@@ -18,15 +21,12 @@
       "similarName": "Karak 2",
       "similarDesigner": "Petr Mikša",
       "similarAwards": "",
-      "ruleText": "<p class=\"MsoNormal\"><b>Your Turn</b></p><p class=\"MsoNormal\">Each turn consists of <b>2 actions</b>.<br>\nBefore <i>each</i> action, you may <b>move one hex</b> (but never across a lava gap).</p><p class=\"MsoNormal\"><br></p><p class=\"MsoNormal\"><b>Available Actions</b></p><ul style=\"margin-top:0cm\" type=\"disc\">\n <li class=\"MsoNormal\"><b>Gather Resources</b>\n     Take the colored dice (Red = Food, Green = Wood, Grey = Stone) shown on the hexagon you are standing on.</li>\n <li class=\"MsoNormal\"><b>Heal</b>\n     Heal <b>2 Hearts</b>.</li>\n <li class=\"MsoNormal\"><b>Take an Item</b>\n     Pick up the flipped Monster card (item) on your hex.</li>\n <li class=\"MsoNormal\"><b>Build</b></li><ul style=\"margin-top:0cm\" type=\"circle\">  <li class=\"MsoNormal\">Build your <b>City</b> (your Hero's color) on your current hex — only once per game.</li>\n  <li class=\"MsoNormal\">After your City is built, you may build <b>any number of buildings</b> from\n      your Hero board by paying the listed resources and flipping the card.</li>\n </ul>\n <li class=\"MsoNormal\"><b>Recruit Soldiers</b>\n     Pay resources to buy dice of the corresponding color when standing on your city:</li> <ul style=\"margin-top:0cm\" type=\"circle\"><li class=\"MsoNormal\">Light Blue = Knight (weak)</li>  <li class=\"MsoNormal\">Violet= Archer (medium)</li>  <li class=\"MsoNormal\">Dark Red = Wizard (strong)</li>\n </ul>\n <li class=\"MsoNormal\"><b>Eradicate Pox</b>\n     Only when standing on the <b>central castle (Tarakon)</b>:<br>Heal to maximum and remove the <b>Pox marker</b> from your Hero board.<br>If you have no Pox, you simply heal to full.</li>\n <li class=\"MsoNormal\"><b>Discover New Territories</b>\n     Move onto an unexplored hex, flip it, and rotate it as you wish.\n     → It must connect <b>without a lava gap&nbsp;</b>to move from your current hex tile to the new hextile</li></ul><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\"><b>Battle Monsters</b>\n     Whenever you reveal a new hex: <b>1 Monster appears immediately</b> and\n     must be fought.\n     Some hexes later show a “2” → then <b>2 Monsters appear together</b> and\n     their strengths are added.</li></ul><p class=\"MsoNormal\"><b><br></b></p><p class=\"MsoNormal\"><b>Battle Rules</b></p><p class=\"MsoNormal\">Roll <b>all your dice</b>. If:</p><p class=\"MsoNormal\"><b><span style=\"font-family:&quot;Segoe UI Emoji&quot;,sans-serif;\nmso-bidi-font-family:&quot;Segoe UI Emoji&quot;\"><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>✔️</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span> Your total (dice + equipment) ≥ Monster total</b></p><p class=\"MsoNormal\">You win:</p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\">Flip the Monster(s)</li> <li class=\"MsoNormal\">Take the Item(s) if you have space</li> <li class=\"MsoNormal\">If no space in hero table: you may replace an item in you hero table and leave the flipped Monster card(s) on the hex</li></ul><p class=\"MsoNormal\"><b><span style=\"font-family:&quot;Segoe UI Emoji&quot;,sans-serif;\nmso-bidi-font-family:&quot;Segoe UI Emoji&quot;\"><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>❌</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span> Your total &lt; Monster total</b></p><p class=\"MsoNormal\">You lose:</p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\">Move back to the hex you came from</li></ul><div><br></div><p class=\"MsoNormal\"><b>Dice Overview</b></p><ul style=\"margin-top:0cm\" type=\"disc\"><li class=\"MsoNormal\"><b>Yellow&nbsp;</b>– Hero Die (One for each player)</li> <li class=\"MsoNormal\"><b>LightBlue</b> – Knight (max 10)</li> <li class=\"MsoNormal\"><b>Violet</b>– Archer (max 10)</li> <li class=\"MsoNormal\"><b>DarkRed</b> – Wizard (max 10)</li> <li class=\"MsoNormal\"><b>LightRed</b> – Bone Die (max 3)</li> <li class=\"MsoNormal\"><b>Orange</b>– Bear Die (1)</li> <li class=\"MsoNormal\"><b>Silver</b>– Golem Die (1)</li></ul><div><br></div><p class=\"MsoNormal\"><b>Monster Types &amp; Rewards</b></p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\"><b>Sword/ Axe (Green background)</b> → Sword or Axe item\n     (Place in the two weapon slots on your Hero board)</li>\n <li class=\"MsoNormal\"><b>Fire Wizard (Blue baackground)</b> → <i>Fireball</i>\n     Use after a roll for <b>+1</b>, then discard.</li>\n <li class=\"MsoNormal\"><b>Ice-Hand Wizard</b> → <i>Ice Spell</i>\n     Use on your turn to steal <b>2 resources</b> from any player, then discard</li>\n <li class=\"MsoNormal\"><b>Ork Cart (Brown)</b><br>Immediately gain <b>any 3 resources</b>, then discard.</li>\n <li class=\"MsoNormal\"><b>Demon (Violet, value 4 or 6)</b>\n     Gain <b>1 or 2 Dark Crystals</b>\n     (Crystals do <b>not</b> occupy item slots.)</li>\n <li class=\"MsoNormal\"><b>Amulet Bearer (Red)</b> → Gain an Amulet\n     You keep its ability as long as you wear the amulet.\n     Changing amulets replaces the old effect.</li>\n</ul><p class=\"MsoNormal\"><b>Amulets</b></p><ul style=\"margin-top:0cm\" type=\"disc\"><li class=\"MsoNormal\"><b>Bird Amulet:</b>&nbsp;+1 action per turn</li>\n <li class=\"MsoNormal\"><b>Golem Amulet:&nbsp;</b>Gain the <b>Silver Golem Die</b> (doesn't count toward flag\n     strength)</li><li class=\"MsoNormal\" style=\"background-color: transparent;\">Red flag Amulet: +2 Flag Strength (lose these 2 if discarded)</li>\n <li class=\"MsoNormal\"><b>Amulet of Protection:</b> – Ignore the “2 Skulls” die face (but still add Pox)<br><br></li><li class=\"MsoNormal\">Amulett of Recources (silver shield, 3 dice on it): +1 extra gathered resource (or two different resources)</li>\n</ul><div class=\"MsoNormal\" align=\"center\" style=\"text-align:center\"><b>Heroes</b></div>\n\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"3\" cellpadding=\"0\">\n <thead>\n  <tr>\n   <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n   background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n   <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Hero</span></b></p>\n   </td>\n   <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n   background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n   <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Ability\n   (Battle)</span></b></p>\n   </td>\n   <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n   background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n   <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Passive\n   Ability</span></b></p>\n   </td>\n  </tr>\n </thead>\n <tbody><tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Arin(green)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Re-roll all Knight, Archer, and Wizard dice once per\n  battle</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Gain 1 resource of the hex after defeating a monster</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Bronth(blue)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Monsters with strength 1 are defeated automatically</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Draw 2 hex tiles, choose 1, return the other</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Morgrim(grey)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Spend 1 action to gain 1 Bone Die (lightred, max 3) – Bone dice\n  don't count for flag strength</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Every time you lose a Bone Die, gain 1 life</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Kaela(red)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Explore a hex anywhere on the map and attach it</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Permanently use Bear Die(orange) (doesn’t count to flag strength)</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Saren(orange)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Take one additional Monster card and choose which to\n  fight; put the extra back</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Each building costs <b>1 resource less</b> (your choice)</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Lyra(violet)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Re-roll your Hero die once per battle</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Once per turn, move up to 3 hexes in a straight line (even\n  across lava gaps)</p>\n  </td>\n </tr>\n</tbody></table>\n<div class=\"MsoNormal\" align=\"center\" style=\"text-align:center\"><br></div>\n<p class=\"MsoNormal\"><b>Flag of Strength</b></p><p class=\"MsoNormal\">Your Flag of Strength equals the <b>highest combined Monster&nbsp;</b><b>strength</b> you have defeated.(On the left of your hero table)</p><p class=\"MsoNormal\">You may own <b>up to that many Knight/Archer/Wizard dice as your flag of strength ist&nbsp;</b>(max 10 total).</p>\n\n<p class=\"MsoNormal\"><b>Dice Faces</b></p><ul style=\"margin-top:0cm\" type=\"disc\">\n <li class=\"MsoNormal\"><b>1,2,3&nbsp;</b>→ Attack power 1/2/3</li>\n <li class=\"MsoNormal\"><b>Skull&nbsp;</b>→ hero die: lose 1 health, other die: return the die to holder</li>\n <li class=\"MsoNormal\"><b>Two Skulls</b> → Lose 2 Life + give <b>Pox</b> to a player (that player\n     discards 1 of each resource if possible and can't recruit until pox erradicated)</li>\n <li class=\"MsoNormal\"><b>1+ Skull</b> → 1 Power and lose 1 Life</li></ul>\n<p class=\"MsoNormal\"><b>Buildings</b></p><p class=\"MsoNormal\">After you have constructed your <b>City</b>, you may build any number of buildings from your Hero board by paying the required resources.<br>\nEach building provides a permanent bonus for the rest of the game.</p><p class=\"MsoNormal\"><b>Stable:&nbsp;</b>Gain <b>+1 additional action per turn</b>.</p><p class=\"MsoNormal\"><b>Flag:&nbsp;</b>Increase your <b>Flag of Strength by +2</b>.</p><p class=\"MsoNormal\"><b>Portal:&nbsp;</b>Once per turn, you may spend <b>1 action</b> to:</p><ul style=\"margin-top:0cm\" type=\"disc\"><li class=\"MsoNormal\"><b>Teleport to any hex</b> on the map, or</li>\n <li class=\"MsoNormal\"><b>Teleport back to your City</b></li></ul><p class=\"MsoNormal\"><b>Knight Hall:&nbsp;</b>You are now able to <b>recruit Knights</b> (light blue dice).</p><p class=\"MsoNormal\"><b>Archer Range:&nbsp;</b>You are now able to <b>recruit Archers</b> (violet dice).</p><p class=\"MsoNormal\"><b>Wizard Tower:&nbsp;</b>You are now able to <b>recruit Wizards</b> (dark red dice).</p><div><br></div><p class=\"MsoNormal\"><b>Pox</b></p><p class=\"MsoNormal\">Placed on your Hero board.\nWhile you have Pox, you <b>cannot recruit</b> Knights, Archers, or Wizards.\nRemove it only at the central castle for 1 action</p><div class=\"MsoNormal\" align=\"center\" style=\"text-align:center\"><br></div><p class=\"MsoNormal\"><b>No Health Left:&nbsp;</b>On your next turn: You recover <b>3 Life</b>, and your turn immediately ends.</p>\n<p class=\"MsoNormal\"><b>The Hellgate &amp; Xhanton</b></p><p class=\"MsoNormal\">When the <b>Hellgate</b> appears, Xhanton enters the game. (Bottom right)</p><p class=\"MsoNormal\"><b>Xhanton’s Power:</b></p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\">Base Power: <b>10</b></li>\n <li class=\"MsoNormal\">+5 for <b>2–3 players</b></li>\n <li class=\"MsoNormal\">+4 for <b>4 players</b></li>\n</ul><p class=\"MsoNormal\"><b>Battle Against Xhanton:</b></p><p class=\"MsoNormal\">You <b>always lose 1 Life</b> during each battle.</p><p class=\"MsoNormal\"><b>If your Power is between 10 and (Counter - 1):</b></p><p class=\"MsoNormal\">You weaken Xhanton:→ Reduce his Counter by <b>1</b></p><p class=\"MsoNormal\"><b>If your Power is below 10:&nbsp;</b>You lose the battle step back to the Hex tile you came from.</p><p class=\"MsoNormal\"><b>If your Power ≥ (10 + current Counter):&nbsp;</b>You defeat Xhanton and gain <b>4.5 Crystals</b>.<br></p><p class=\"MsoNormal\"><br></p><p class=\"MsoNormal\">Player with most crystals wins the game.</p>",
+      "ruleText": "<p class=\"MsoNormal\"><b>Your Turn</b></p><p class=\"MsoNormal\">Each turn consists of <b>2 actions</b>.<br>\nBefore <i>each</i> action, you may <b>move one hex</b> (but never across a lava gap).</p><p class=\"MsoNormal\"><br></p><p class=\"MsoNormal\"><b>Available Actions</b></p><ul style=\"margin-top:0cm\" type=\"disc\">\n <li class=\"MsoNormal\"><b>Gather Resources</b>\n     Take the colored dice (Red = Food, Green = Wood, Grey = Stone) shown on the hexagon you are standing on.</li>\n <li class=\"MsoNormal\"><b>Heal</b>\n     Heal <b>2 Hearts</b>.</li>\n <li class=\"MsoNormal\"><b>Take an Item</b>\n     Pick up the flipped Monster card (item) on your hex.</li>\n <li class=\"MsoNormal\"><b>Build</b></li><ul style=\"margin-top:0cm\" type=\"circle\">  <li class=\"MsoNormal\">Build your <b>City</b> (your Hero's color) on your current hex — only once per game.</li>\n  <li class=\"MsoNormal\">After your City is built, you may build <b>any number of buildings</b> from\n      your Hero board by paying the listed resources and flipping the card.</li>\n </ul>\n <li class=\"MsoNormal\"><b>Recruit Soldiers</b>\n     Pay resources to buy dice of the corresponding color when standing on your city:</li> <ul style=\"margin-top:0cm\" type=\"circle\"><li class=\"MsoNormal\">Light Blue = Knight (weak)</li>  <li class=\"MsoNormal\">Violet= Archer (medium)</li>  <li class=\"MsoNormal\">Dark Red = Wizard (strong)</li>\n </ul>\n <li class=\"MsoNormal\"><b>Eradicate Pox</b>\n     Only when standing on the <b>central castle (Tarakon)</b>:<br>Heal to maximum and remove the <b>Pox marker</b> from your Hero board.<br>If you have no Pox, you simply heal to full.</li>\n <li class=\"MsoNormal\"><b>Discover New Territories</b>\n     Move onto an unexplored hex, flip it, and rotate it as you wish.\n     → It must connect <b>without a lava gap&nbsp;</b>to move from your current hex tile to the new hextile</li></ul><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\"><b>Battle Monsters</b>\n     Whenever you reveal a new hex: <b>1 Monster appears immediately</b> and\n     must be fought.\n     Some hexes later show a “2” → then <b>2 Monsters appear together</b> and\n     their strengths are added.</li></ul><p class=\"MsoNormal\"><b><br></b></p><p class=\"MsoNormal\"><b>Battle Rules</b></p><p class=\"MsoNormal\">Roll <b>all your dice</b>. If:</p><p class=\"MsoNormal\"><b><span style=\"font-family:&quot;Segoe UI Emoji&quot;,sans-serif;\nmso-bidi-font-family:&quot;Segoe UI Emoji&quot;\"><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>✔️</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span> Your total (dice + equipment) ≥ Monster total</b></p><p class=\"MsoNormal\">You win:</p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\">Flip the Monster(s)</li> <li class=\"MsoNormal\">Take the Item(s) if you have space</li> <li class=\"MsoNormal\">If no space in hero table: you may replace an item in you hero table and leave the flipped Monster card(s) on the hex</li></ul><p class=\"MsoNormal\"><b><span style=\"font-family:&quot;Segoe UI Emoji&quot;,sans-serif;\nmso-bidi-font-family:&quot;Segoe UI Emoji&quot;\"><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span><span>❌</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span> Your total &lt; Monster total</b></p><p class=\"MsoNormal\">You lose:</p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\">Move back to the hex you came from</li></ul><div><br></div><p class=\"MsoNormal\"><b>Dice Overview</b></p><ul style=\"margin-top:0cm\" type=\"disc\"><li class=\"MsoNormal\"><b>Yellow&nbsp;</b>– Hero Die (One for each player)</li> <li class=\"MsoNormal\"><b>LightBlue</b> – Knight (max 10)</li> <li class=\"MsoNormal\"><b>Violet</b>– Archer (max 10)</li> <li class=\"MsoNormal\"><b>DarkRed</b> – Wizard (max 10)</li> <li class=\"MsoNormal\"><b>LightRed</b> – Bone Die (max 3)</li> <li class=\"MsoNormal\"><b>Orange</b>– Bear Die (1)</li> <li class=\"MsoNormal\"><b>Silver</b>– Golem Die (1)</li></ul><div><br></div><p class=\"MsoNormal\"><b>Monster Types &amp; Rewards</b></p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\"><b>Sword/ Axe (Green background)</b> → Sword or Axe item\n     (Place in the two weapon slots on your Hero board)</li>\n <li class=\"MsoNormal\"><b>Fire Wizard (Blue baackground)</b> → <i>Fireball</i>\n     Use after a roll for <b>+1</b>, then discard.</li>\n <li class=\"MsoNormal\"><b>Ice-Hand Wizard</b> → <i>Ice Spell</i>\n     Use on your turn to steal <b>2 resources</b> from any player, then discard</li>\n <li class=\"MsoNormal\"><b>Ork Cart (Brown)</b><br>Immediately gain <b>any 3 resources</b>, then discard.</li>\n <li class=\"MsoNormal\"><b>Demon (Violet, value 4 or 6)</b>\n     Gain <b>1 or 2 Dark Crystals</b>\n     (Crystals do <b>not</b> occupy item slots.)</li>\n <li class=\"MsoNormal\"><b>Amulet Bearer (Red)</b> → Gain an Amulet\n     You keep its ability as long as you wear the amulet.\n     Changing amulets replaces the old effect.</li>\n</ul><p class=\"MsoNormal\"><b>Amulets</b></p><ul style=\"margin-top:0cm\" type=\"disc\"><li class=\"MsoNormal\"><b>Bird Amulet:</b>&nbsp;+1 action per turn</li>\n <li class=\"MsoNormal\"><b>Golem Amulet:&nbsp;</b>Gain the <b>Silver Golem Die</b> (doesn't count toward flag\n     strength)</li><li class=\"MsoNormal\" style=\"background-color: transparent;\">Red flag Amulet: +2 Flag Strength (lose these 2 if discarded)</li>\n <li class=\"MsoNormal\"><b>Amulet of Protection:</b> – Ignore the “2 Skulls” die face (but still add Pox)<br><br></li><li class=\"MsoNormal\">Amulett of Recources (silver shield, 3 dice on it): +1 extra gathered resource (or two different resources)</li>\n</ul><div class=\"MsoNormal\" align=\"center\" style=\"text-align:center\"><b>Heroes</b></div>\n\n<table class=\"MsoNormalTable\" border=\"0\" cellspacing=\"3\" cellpadding=\"0\">\n <thead>\n  <tr>\n   <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n   background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n   <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Hero</span></b></p>\n   </td>\n   <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n   background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n   <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Ability\n   (Battle)</span></b></p>\n   </td>\n   <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n   background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n   <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Passive\n   Ability</span></b></p>\n   </td>\n  </tr>\n </thead>\n <tbody><tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Arin(green)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Re-roll all Knight, Archer, and Wizard dice once per\n  battle</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Gain 1 resource of the hex after defeating a monster</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Bronth(blue)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Monsters with strength 1 are defeated automatically</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Draw 2 hex tiles, choose 1, return the other</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Morgrim(grey)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Spend 1 action to gain 1 Bone Die (lightred, max 3) – Bone dice\n  don't count for flag strength</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Every time you lose a Bone Die, gain 1 life</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Kaela(red)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Explore a hex anywhere on the map and attach it</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Permanently use Bear Die(orange) (doesn’t count to flag strength)</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Saren(orange)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Take one additional Monster card and choose which to\n  fight; put the extra back</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Each building costs <b>1 resource less</b> (your choice)</p>\n  </td>\n </tr>\n <tr>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  background:whitesmoke;padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\"><b><span style=\"color:black;mso-color-alt:windowtext\">Lyra(violet)</span></b></p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Re-roll your Hero die once per battle</p>\n  </td>\n  <td style=\"border:solid #E6E6E6 1.0pt;mso-border-alt:solid #E6E6E6 .75pt;\n  padding:.75pt .75pt .75pt .75pt\">\n  <p class=\"MsoNormal\">Once per turn, move up to 3 hexes in a straight line (even\n  across lava gaps)</p>\n  </td>\n </tr>\n</tbody></table>\n<div class=\"MsoNormal\" align=\"center\" style=\"text-align:center\"><br></div>\n<p class=\"MsoNormal\"><b>Flag of Strength</b></p><p class=\"MsoNormal\">Your Flag of Strength equals the <b>highest combined Monster&nbsp;</b><b>strength</b> you have defeated.(On the left of your hero table)</p><p class=\"MsoNormal\">You may own <b>up to that many Knight/Archer/Wizard dice as your flag of strength ist&nbsp;</b>(max 10 total).</p>\n\n<p class=\"MsoNormal\"><b>Dice Faces</b></p><ul style=\"margin-top:0cm\" type=\"disc\">\n <li class=\"MsoNormal\"><b>1,2,3&nbsp;</b>→ Attack power 1/2/3</li>\n <li class=\"MsoNormal\"><b>Skull&nbsp;</b>→ hero die: lose 1 health, other die: return the die to holder</li>\n <li class=\"MsoNormal\"><b>Two Skulls</b> → Lose 2 Life + give <b>Pox</b> to a player (that player\n     discards 1 of each resource if possible and can't recruit until pox erradicated)</li>\n <li class=\"MsoNormal\"><b>1+ Skull</b> → 1 Power and lose 1 Life</li></ul>\n<p class=\"MsoNormal\"><b>Buildings</b></p><p class=\"MsoNormal\">After you have constructed your <b>City</b>, you may build any number of buildings from your Hero board by paying the required resources.<br>\nEach building provides a permanent bonus for the rest of the game.</p><p class=\"MsoNormal\"><b>Stable:&nbsp;</b>Gain <b>+1 additional action per turn</b>.</p><p class=\"MsoNormal\"><b>Flag:&nbsp;</b>Increase your <b>Flag of Strength by +2</b>.</p><p class=\"MsoNormal\"><b>Portal:&nbsp;</b>Once per turn, you may spend <b>1 action</b> to:</p><ul style=\"margin-top:0cm\" type=\"disc\"><li class=\"MsoNormal\"><b>Teleport to any hex</b> on the map, or</li>\n <li class=\"MsoNormal\"><b>Teleport back to your City</b></li></ul><p class=\"MsoNormal\"><b>Knight Hall:&nbsp;</b>You are now able to <b>recruit Knights</b> (light blue dice).</p><p class=\"MsoNormal\"><b>Archer Range:&nbsp;</b>You are now able to <b>recruit Archers</b> (violet dice).</p><p class=\"MsoNormal\"><b>Wizard Tower:&nbsp;</b>You are now able to <b>recruit Wizards</b> (dark red dice).</p><div><br></div><p class=\"MsoNormal\"><b>Pox</b></p><p class=\"MsoNormal\">Placed on your Hero board.\nWhile you have Pox, you <b>cannot recruit</b> Knights, Archers, or Wizards.\nRemove it only at the central castle for 1 action</p><div class=\"MsoNormal\" align=\"center\" style=\"text-align:center\"><br></div><p class=\"MsoNormal\"><b>No Health Left:&nbsp;</b>On your next turn: You recover <b>3 Life</b>, and your turn immediately ends.</p>\n<p class=\"MsoNormal\"><b>The Hellgate &amp; Xhanton</b></p><p class=\"MsoNormal\">When the <b>Hellgate</b> appears, Xhanton enters the game. (Bottom right)</p><p class=\"MsoNormal\"><b>Xhanton’s Power:</b></p><ul style=\"margin-top:0cm\" type=\"disc\"> <li class=\"MsoNormal\">Base Power: <b>10</b></li>\n <li class=\"MsoNormal\">+5 for <b>2–3 players</b></li>\n <li class=\"MsoNormal\">+4 for <b>4 players</b></li>\n</ul><p class=\"MsoNormal\"><b>Battle Against Xhanton:</b></p><p class=\"MsoNormal\">You <b>always lose 1 Life</b> during each battle.</p><p class=\"MsoNormal\"><b>If your Power is between 10 and (Counter - 1):</b></p><p class=\"MsoNormal\">You weaken Xhanton:→ Reduce his Counter by <b>1</b></p><p class=\"MsoNormal\"><b>If your Power is below 10:&nbsp;</b>You lose the battle step back to the Hex tile you came from.</p><p class=\"MsoNormal\"><b>If your Power ≥ (10 + current Counter):&nbsp;</b>You defeat Xhanton and gain <b>4.5 Crystals</b>.<br></p><p class=\"MsoNormal\"><br></p><p class=\"MsoNormal\">Player with most crystals wins the game.</p>",
       "helpText": "Enemy Button:&nbsp;<div>Gets you one enemy. Aome heroes let you pick 2-3 Enemies and choose which one(s) to put on the field, therefore the enemy back button. Just put the unused enemy in the holder and click enemy back to reshuffle it into the monster pile</div><div><br></div><div>Dice Button:</div><div style=\"background-color: transparent;\">Put all dice you need in your Hero Dice Holder and click \"dice px\" to roll all dice. Some heroes let you reroll the hero dice =&gt; you can just click the hero dice in the dice holder single to roll it. Some heroes let you reroll all (knight, archer, wizard dice) =&gt; move all other dice out of the holder and click \"dice px\" again to just roll the dice needed.</div><div style=\"background-color: transparent;\"><br></div><div style=\"background-color: transparent;\">Hex Lands:</div><div style=\"background-color: transparent;\">Double click to rotate.</div><div style=\"background-color: transparent;\"><br></div><div style=\"background-color: transparent;\">Recources &amp; Crystals:</div><div style=\"background-color: transparent;\">Place them anywhere in your hero table or dice holder.</div>",
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "players": "2-4"
     }
   },
   "mvr0": {
@@ -144,7 +144,7 @@
     "id": "mvr0 1_bauernhof_0border.png",
     "deck": "mvr0",
     "cardType": "1_bauernhof_0border.png",
-    "z": 39872,
+    "z": 40044,
     "rotation": 60,
     "parent": "ms8i"
   },
@@ -153,7 +153,7 @@
     "id": "mvr0 1_bauernhof_1border.png",
     "deck": "mvr0",
     "cardType": "1_bauernhof_1border.png",
-    "z": 39882,
+    "z": 40062,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -162,7 +162,7 @@
     "id": "mvr0 1_bauernhof_2border.png",
     "deck": "mvr0",
     "cardType": "1_bauernhof_2border.png",
-    "z": 39898,
+    "z": 40070,
     "rotation": 60,
     "parent": "ms8i"
   },
@@ -171,7 +171,7 @@
     "id": "mvr0 1_bauernhof_steinbruch_1border.png",
     "deck": "mvr0",
     "cardType": "1_bauernhof_steinbruch_1border.png",
-    "z": 39904,
+    "z": 40068,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -180,7 +180,7 @@
     "id": "mvr0 1_bauernhof_holz_0border.png",
     "deck": "mvr0",
     "cardType": "1_bauernhof_holz_0border.png",
-    "z": 39884,
+    "z": 40058,
     "parent": "ms8i"
   },
   "mvr0 1_holz_1border.png": {
@@ -188,7 +188,7 @@
     "id": "mvr0 1_holz_1border.png",
     "deck": "mvr0",
     "cardType": "1_holz_1border.png",
-    "z": 39894,
+    "z": 40066,
     "parent": "ms8i"
   },
   "mvr0 1_holz_stein_1border.png": {
@@ -196,7 +196,7 @@
     "id": "mvr0 1_holz_stein_1border.png",
     "deck": "mvr0",
     "cardType": "1_holz_stein_1border.png",
-    "z": 39906,
+    "z": 40064,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -240,7 +240,7 @@
     "type": "card",
     "cardType": "1_bauernhof_0border.png",
     "id": "j6gz",
-    "z": 39876,
+    "z": 40048,
     "rotation": 120,
     "parent": "ms8i"
   },
@@ -249,7 +249,7 @@
     "type": "card",
     "cardType": "1_bauernhof_0border.png",
     "id": "218v",
-    "z": 39878,
+    "z": 40042,
     "rotation": 60,
     "parent": "ms8i"
   },
@@ -258,7 +258,7 @@
     "type": "card",
     "cardType": "1_bauernhof_1border.png",
     "id": "ovqj",
-    "z": 39900,
+    "z": 40054,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -267,7 +267,7 @@
     "type": "card",
     "cardType": "1_holz_0border.png",
     "id": "dk3p",
-    "z": 39892,
+    "z": 40046,
     "rotation": 300,
     "parent": "ms8i"
   },
@@ -276,7 +276,7 @@
     "type": "card",
     "cardType": "1_bauernhof_2border.png",
     "id": "docb",
-    "z": 39890,
+    "z": 40056,
     "parent": "ms8i"
   },
   "vwku": {
@@ -284,7 +284,7 @@
     "type": "card",
     "cardType": "1_holz_2border.png",
     "id": "vwku",
-    "z": 39886,
+    "z": 40040,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -293,7 +293,7 @@
     "type": "card",
     "cardType": "1_holz_1border.png",
     "id": "esg3",
-    "z": 39880,
+    "z": 40050,
     "rotation": 180,
     "parent": "ms8i"
   },
@@ -643,7 +643,7 @@
     "type": "card",
     "cardType": "type-993aec5e-eb26-44fb-9dfb-6c626d0b4f43",
     "id": "aghb",
-    "z": 32836,
+    "z": 32872,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -652,7 +652,7 @@
     "type": "card",
     "cardType": "type-65a6230b-c55c-438a-b89a-843dc00a1e76",
     "id": "taxk",
-    "z": 32837,
+    "z": 32873,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -661,7 +661,7 @@
     "type": "card",
     "cardType": "type-3fb6c6a6-4636-44b3-8c2f-34f3280e60fd",
     "id": "npeu",
-    "z": 32838,
+    "z": 32874,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -670,7 +670,7 @@
     "type": "card",
     "cardType": "type-9682fac0-37ea-4802-ab46-a48f35f9a8a6",
     "id": "pc5s",
-    "z": 32839,
+    "z": 32875,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -679,7 +679,7 @@
     "type": "card",
     "cardType": "type-33b9522b-b082-4bdb-a0fc-676a570a64da",
     "id": "k4wr",
-    "z": 32840,
+    "z": 32876,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -688,7 +688,7 @@
     "type": "card",
     "cardType": "type-16686908-cb80-4234-ad6f-96de8bed9b18",
     "id": "k90b",
-    "z": 32841,
+    "z": 32877,
     "parent": "5i1w",
     "activeFace": "0"
   },
@@ -697,7 +697,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "lms7",
-    "z": 32842,
+    "z": 32878,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -706,7 +706,7 @@
     "type": "card",
     "cardType": "type-d848009d-6906-4a47-a01f-fca9bf5041d2",
     "id": "wcxr",
-    "z": 32843,
+    "z": 32879,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -715,7 +715,7 @@
     "type": "card",
     "cardType": "type-2a0e874b-883d-41a1-bbb7-fdf4b42407bd",
     "id": "6dpb",
-    "z": 32844,
+    "z": 32880,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -724,7 +724,7 @@
     "type": "card",
     "cardType": "type-797be44c-b7a6-492b-8ca3-5c73be177d1a",
     "id": "3ywv",
-    "z": 32845,
+    "z": 32881,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -733,7 +733,7 @@
     "type": "card",
     "cardType": "type-c4e967fe-5904-4f62-97cd-460797418ab6",
     "id": "weuh",
-    "z": 32846,
+    "z": 32882,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -742,7 +742,7 @@
     "type": "card",
     "cardType": "type-56e0aa51-e23c-4d5b-be92-e3b45dce78b7",
     "id": "zwd7",
-    "z": 32847,
+    "z": 32883,
     "parent": "5i1w",
     "activeFace": "0"
   },
@@ -751,7 +751,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "61pe",
-    "z": 32848,
+    "z": 32884,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -760,7 +760,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "0pwm",
-    "z": 32849,
+    "z": 32885,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -769,7 +769,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "v3da",
-    "z": 32850,
+    "z": 32886,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -778,7 +778,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "s5x3",
-    "z": 32851,
+    "z": 32887,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -787,7 +787,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "i2nx",
-    "z": 32852,
+    "z": 32888,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -796,7 +796,7 @@
     "type": "card",
     "cardType": "type-57f8a691-13ac-4c4b-bcbd-e32d48b937ac",
     "id": "5xyv",
-    "z": 32853,
+    "z": 32889,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -805,7 +805,7 @@
     "type": "card",
     "cardType": "type-d848009d-6906-4a47-a01f-fca9bf5041d2",
     "id": "anpa",
-    "z": 32854,
+    "z": 32890,
     "parent": "5i1w",
     "activeFace": "0"
   },
@@ -814,7 +814,7 @@
     "type": "card",
     "cardType": "type-d848009d-6906-4a47-a01f-fca9bf5041d2",
     "id": "phc3",
-    "z": 32855,
+    "z": 32891,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -823,7 +823,7 @@
     "type": "card",
     "cardType": "type-d848009d-6906-4a47-a01f-fca9bf5041d2",
     "id": "sck0",
-    "z": 32856,
+    "z": 32892,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -832,7 +832,7 @@
     "type": "card",
     "cardType": "type-d848009d-6906-4a47-a01f-fca9bf5041d2",
     "id": "9sqz",
-    "z": 32857,
+    "z": 32893,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -841,7 +841,7 @@
     "type": "card",
     "cardType": "type-d848009d-6906-4a47-a01f-fca9bf5041d2",
     "id": "13ra",
-    "z": 32858,
+    "z": 32894,
     "parent": "5i1w",
     "activeFace": "0"
   },
@@ -850,7 +850,7 @@
     "type": "card",
     "cardType": "type-56e0aa51-e23c-4d5b-be92-e3b45dce78b7",
     "id": "z9t9",
-    "z": 32859,
+    "z": 32895,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -859,7 +859,7 @@
     "type": "card",
     "cardType": "type-56e0aa51-e23c-4d5b-be92-e3b45dce78b7",
     "id": "nnjk",
-    "z": 32860,
+    "z": 32896,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -868,7 +868,7 @@
     "type": "card",
     "cardType": "type-56e0aa51-e23c-4d5b-be92-e3b45dce78b7",
     "id": "4akt",
-    "z": 32861,
+    "z": 32897,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -877,7 +877,7 @@
     "type": "card",
     "cardType": "type-c4e967fe-5904-4f62-97cd-460797418ab6",
     "id": "ciul",
-    "z": 32862,
+    "z": 32898,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -886,7 +886,7 @@
     "type": "card",
     "cardType": "type-c4e967fe-5904-4f62-97cd-460797418ab6",
     "id": "l7hu",
-    "z": 32863,
+    "z": 32899,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -895,7 +895,7 @@
     "type": "card",
     "cardType": "type-797be44c-b7a6-492b-8ca3-5c73be177d1a",
     "id": "dgzg",
-    "z": 32864,
+    "z": 32900,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -904,7 +904,7 @@
     "type": "card",
     "cardType": "type-797be44c-b7a6-492b-8ca3-5c73be177d1a",
     "id": "9uon",
-    "z": 32865,
+    "z": 32901,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -913,7 +913,7 @@
     "type": "card",
     "cardType": "type-797be44c-b7a6-492b-8ca3-5c73be177d1a",
     "id": "y4ic",
-    "z": 32866,
+    "z": 32902,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -922,7 +922,7 @@
     "type": "card",
     "cardType": "type-2a0e874b-883d-41a1-bbb7-fdf4b42407bd",
     "id": "de5i",
-    "z": 32867,
+    "z": 32903,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -931,7 +931,7 @@
     "type": "card",
     "cardType": "type-2a0e874b-883d-41a1-bbb7-fdf4b42407bd",
     "id": "s6vo",
-    "z": 32868,
+    "z": 32904,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -940,7 +940,7 @@
     "type": "card",
     "cardType": "type-2a0e874b-883d-41a1-bbb7-fdf4b42407bd",
     "id": "e89a",
-    "z": 32869,
+    "z": 32905,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -949,7 +949,7 @@
     "type": "card",
     "cardType": "type-2a0e874b-883d-41a1-bbb7-fdf4b42407bd",
     "id": "0v76",
-    "z": 32870,
+    "z": 32906,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -1062,7 +1062,7 @@
     "id": "5juo 2_bauernhof_stein_3border_3x.png 1",
     "deck": "5juo",
     "cardType": "2_bauernhof_stein_3border_3x.png",
-    "z": 39799,
+    "z": 39981,
     "parent": "ms8i"
   },
   "5juo 2_bauernhof_stein_3border_3x.png 2": {
@@ -1070,7 +1070,7 @@
     "id": "5juo 2_bauernhof_stein_3border_3x.png 2",
     "deck": "5juo",
     "cardType": "2_bauernhof_stein_3border_3x.png",
-    "z": 39803,
+    "z": 39971,
     "parent": "ms8i"
   },
   "5juo 2_bauernhof_stein_3border_3x.png 3": {
@@ -1078,7 +1078,7 @@
     "id": "5juo 2_bauernhof_stein_3border_3x.png 3",
     "deck": "5juo",
     "cardType": "2_bauernhof_stein_3border_3x.png",
-    "z": 39817,
+    "z": 39973,
     "rotation": 60,
     "parent": "ms8i"
   },
@@ -1087,7 +1087,7 @@
     "id": "5juo 2_3xBauerhof_4border.png",
     "deck": "5juo",
     "cardType": "2_3xBauerhof_4border.png",
-    "z": 39807,
+    "z": 39969,
     "rotation": 180,
     "parent": "ms8i"
   },
@@ -1096,7 +1096,7 @@
     "id": "5juo 2_holz_stein_3border.png",
     "deck": "5juo",
     "cardType": "2_holz_stein_3border.png",
-    "z": 39815,
+    "z": 39975,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -1105,7 +1105,7 @@
     "id": "5juo 2_krater.png",
     "deck": "5juo",
     "cardType": "2_krater.png",
-    "z": 39801,
+    "z": 39979,
     "rotation": 180,
     "parent": "ms8i"
   },
@@ -1114,7 +1114,7 @@
     "id": "5juo 2_holz_stein_2border.png",
     "deck": "5juo",
     "cardType": "2_holz_stein_2border.png",
-    "z": 39805,
+    "z": 39965,
     "rotation": 60,
     "parent": "ms8i"
   },
@@ -1123,7 +1123,7 @@
     "id": "5juo 2_3xholz_4border.png",
     "deck": "5juo",
     "cardType": "2_3xholz_4border.png",
-    "z": 39813,
+    "z": 39967,
     "rotation": 120,
     "parent": "ms8i"
   },
@@ -1132,7 +1132,7 @@
     "id": "5juo 3_3xstein_4border.png",
     "deck": "5juo",
     "cardType": "3_3xstein_4border.png",
-    "z": 39809,
+    "z": 39977,
     "rotation": 180,
     "parent": "ms8i"
   },
@@ -1141,7 +1141,7 @@
     "id": "5juo 2_bauernhof_holz_3border.png",
     "deck": "5juo",
     "cardType": "2_bauernhof_holz_3border.png",
-    "z": 39811,
+    "z": 39983,
     "rotation": 120,
     "parent": "ms8i"
   },
@@ -1150,7 +1150,7 @@
     "type": "card",
     "cardType": "type-56e0aa51-e23c-4d5b-be92-e3b45dce78b7",
     "id": "y7vl",
-    "z": 32871,
+    "z": 32907,
     "activeFace": "0",
     "parent": "5i1w"
   },
@@ -1811,7 +1811,7 @@
     "type": "card",
     "cardType": "1_bauernhof_holz_3border.png",
     "id": "0sxg",
-    "z": 39888,
+    "z": 40072,
     "rotation": 120,
     "parent": "ms8i"
   },
@@ -1820,7 +1820,7 @@
     "type": "card",
     "cardType": "1_holz_0border.png",
     "id": "ohpm",
-    "z": 39896,
+    "z": 40052,
     "rotation": 120,
     "parent": "ms8i"
   },
@@ -1829,7 +1829,7 @@
     "type": "card",
     "cardType": "1_holz_2border.png",
     "id": "6f54",
-    "z": 39902,
+    "z": 40060,
     "rotation": 60,
     "parent": "ms8i"
   },
@@ -1838,7 +1838,7 @@
     "type": "card",
     "cardType": "1_holz_2border.png",
     "id": "2t65",
-    "z": 39874,
+    "z": 40038,
     "rotation": 240,
     "parent": "ms8i"
   },
@@ -4567,11 +4567,12 @@
     "type": "card",
     "cardType": "1_Burg_0border.png",
     "id": "c4nh",
-    "activeFace": 1,
     "z": 200,
     "movable": false,
     "x": 950,
-    "y": 432.75
+    "y": 432.75,
+    "activeFace": 1,
+    "clickable": false
   },
   "zeqg": {
     "type": "button",
