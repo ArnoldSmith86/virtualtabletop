@@ -876,6 +876,18 @@ body.edit:not(.hitTest) .widget.foreign, body.edit:not(.hitTest):not(.showHidden
   pointer-events: none;
 }
 
+.widget.notUsable {
+ --notUsable:true;
+}
+
+body:not(.jsonEdit) .widget:not(.zoomy).notUsable {
+  pointer-events: none !important;
+}
+
+body:not(.jsonEdit) .widget.zoomy.notUsable > * {
+   pointer-events: none !important;
+ }
+
 .widget.limbo {
   opacity: 0.5;
   border: 5px dashed darkred;
