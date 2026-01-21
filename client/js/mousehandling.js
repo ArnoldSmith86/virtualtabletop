@@ -14,7 +14,7 @@ function eventCoords(name, e) {
   let x = (coords.clientX - roomRectangle.left) / scale / zoomScale;
   let y = (coords.clientY - roomRectangle.top) / scale / zoomScale;
   if (!edit || zoom == 1) {
-    x = Math.max(0, Math.min(1600, x));
+    x = Math.max(0, Math.min(1778, x));
     y = Math.max(0, Math.min(1000, y));
   }
   return {x, y, clientX: coords.clientX, clientY: coords.clientY};
