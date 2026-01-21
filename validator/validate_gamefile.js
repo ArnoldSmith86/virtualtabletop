@@ -1218,6 +1218,66 @@ function validateGameFile(data, checkMeta) {
                 message: 'image is bigger than 50000 - a good target is 600x600 @ WebP 60% quality'
             });
         }
+        
+        // Players validation
+        if (info.players === undefined || info.players === null || String(info.players).trim() === '') {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'players'],
+                message: 'is missing or empty'
+            });
+        } else {
+            const playersStr = String(info.players).trim();
+            const tokens = playersStr.split(',');
+            for (let i = 0; i < tokens.length; i++) {
+                const token = tokens[i].trim();
+                const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
+                if (!match) {
+                    problems.push({
+                        widget: '',
+                        property: ['_meta', 'info', 'players'],
+                        message: `invalid player count format: "${token}" (expected format: "2", "2-4", "2+", or comma-separated values like "2,4,6")`
+                    });
+                } else {
+                    const min = parseInt(match[1], 10);
+                    if (match[2] === '+') {
+                        // "2+" format is valid
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (minimum must be at least 1)`
+                            });
+                        }
+                    } else if (match[2] && match[2].startsWith('-')) {
+                        // Range format "2-4"
+                        const max = parseInt(match[3], 10);
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (minimum must be at least 1)`
+                            });
+                        } else if (max < min) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count range: "${token}" (maximum ${max} is less than minimum ${min})`
+                            });
+                        }
+                    } else {
+                        // Single number format "2"
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (must be at least 1)`
+                            });
+                        }
+                    }
+                }
+            }
+        }
     }
     return problems;
 }
