@@ -676,6 +676,14 @@
             ],
             "property": "display",
             "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "lineMaster"
+            ],
+            "property": "display",
+            "value": true
           }
         ],
         "elseRoutine": [
@@ -690,6 +698,14 @@
             ],
             "property": "display",
             "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "lineMaster"
+            ],
+            "property": "display",
+            "value": false
           }
         ]
       },
@@ -6000,7 +6016,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1769020197951,
+      "lastUpdate": 1769020496502,
       "showName": true,
       "skill": "",
       "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
