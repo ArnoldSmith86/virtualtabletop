@@ -1278,6 +1278,39 @@ function validateGameFile(data, checkMeta) {
                 }
             }
         }
+        
+        // Mode validation
+        if (info.mode === undefined || info.mode === null || String(info.mode).trim() === '') {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'mode'],
+                message: 'is missing or empty'
+            });
+        } else {
+            const modeStr = String(info.mode).trim();
+            const allowedModes = ['vs', 'coop', 'solo', 'teams', 'asymmetrical', 'tutorial'];
+            
+            // Split by comma or semicolon
+            const modes = modeStr.split(/[,;] /);
+            
+            if (modes.length === 0) {
+                problems.push({
+                    widget: '',
+                    property: ['_meta', 'info', 'mode'],
+                    message: 'mode contains only separators (comma/semicolon)'
+                });
+            } else {
+                for (const mode of modes) {
+                    if (!allowedModes.includes(mode.toLowerCase())) {
+                        problems.push({
+                            widget: '',
+                            property: ['_meta', 'info', 'mode'],
+                            message: `invalid mode value: "${mode}" (allowed values: ${allowedModes.join(', ')}, or comma/semicolon-separated combinations)`
+                        });
+                    }
+                }
+            }
+        }
     }
     return problems;
 }
