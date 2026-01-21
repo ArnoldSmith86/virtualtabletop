@@ -302,6 +302,20 @@ function parsePropertySyntax(string) {
     return match;
 }
 
+function validateGetProperty(value, context, propertyPath = []) {
+    if (typeof value === 'string' && value.length > 0) {
+        return validators.property(value, context);
+    }
+    if (Array.isArray(value) && value.length > 0) {
+        return validators.property(value[0], context);
+    }
+    return [{
+        widget: context.widgetId,
+        property: propertyPath,
+        message: 'GET property must be a non-empty string or array'
+    }];
+}
+
 function validateRoutine(routine, context, propertyPath = []) {
     const problems = [];
 
@@ -513,6 +527,8 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
+        if(func === 'TURN')
+            context.validCollections[operation.collection || 'TURN'] = 1;
         if(func === 'UPLOAD')
             context.validVariables[operation.variable || 'uploadedFileName'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
@@ -651,7 +667,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    'property',
+        'property':    validateGetProperty,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -936,6 +952,8 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
+                } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
+                    customProperties.add(value[0]);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
@@ -948,7 +966,7 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 }
             }
-            
+
             // Recursively scan nested objects
             scanForProperties(value);
         }
@@ -962,6 +980,9 @@ function getCustomPropertyUsage(data) {
         
         // Scan widget properties
         scanForProperties(widget);
+
+        if(widget.type === 'scoreboard')
+            customProperties.add(widget.scoreProperty || 'score');
     }
     
     return [...customProperties];

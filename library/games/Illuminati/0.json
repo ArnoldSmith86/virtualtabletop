@@ -1,0 +1,5267 @@
+{
+  "hand": {
+    "id": "hand",
+    "x": 602,
+    "z": 11626,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 32,
+    "childrenPerOwner": true,
+    "width": 400,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "height": 80,
+    "y": 890
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 303,
+    "y": 138,
+    "z": 12910,
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "width": 380,
+    "hideWhenUnused": true,
+    "text": 8,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    }
+  },
+  "handsize-p1": {
+    "id": "handsize-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 355,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "y": -15
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "y": 37,
+    "width": 90,
+    "height": 60,
+    "z": 13004,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetScoresRoutine"
+      }
+    ],
+    "css": "font-size:40px;font-weight:bold;border-radius:7px",
+    "classes": "symbols",
+    "gameStartRoutine": [
+      {
+        "func": "RESET",
+        "property": "button-resetReset"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-money-seat-p1",
+          "holder-money-seat-p2",
+          "holder-money-seat-p3",
+          "holder-money-seat-p4",
+          "holder-money-seat-p5",
+          "holder-deck"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "holder-money-seat-p1",
+          "holder-money-seat-p2",
+          "holder-money-seat-p3",
+          "holder-money-seat-p4",
+          "holder-money-seat-p5",
+          "holder-deck"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder-money-seat-p1",
+          "holder-money-seat-p2",
+          "holder-money-seat-p3",
+          "holder-money-seat-p4",
+          "holder-money-seat-p5",
+          "holder-deck"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-pass-seat-p1",
+          "button-pass-seat-p2",
+          "button-pass-seat-p3",
+          "button-pass-seat-p4",
+          "button-pass-seat-p5"
+        ],
+        "property": "text",
+        "value": "Pass"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "button-pass-seat-p1",
+          "button-pass-seat-p2",
+          "button-pass-seat-p3",
+          "button-pass-seat-p4",
+          "button-pass-seat-p5"
+        ],
+        "property": "css",
+        "value": "font-weight:bold;font-size:18px;border-radius:7px"
+      },
+      {
+        "note": "Get player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "note": "Deal each player a hand of cards",
+            "func": "MOVE",
+            "from": "holder-money-${widgetID}",
+            "to": "${widgetID}",
+            "count": 11
+          }
+        ]
+      },
+      {
+        "note": "Draw a random card to auction",
+        "func": "MOVE",
+        "from": "holder-deck",
+        "to": "holder-auction",
+        "count": 1
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "hand"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "x": 307,
+    "resetScoresRoutine": [
+      {
+        "note": "Set each player's score to 0",
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-score-seat-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "text": "skip_next"
+  },
+  "button-cycle": {
+    "type": "button",
+    "id": "button-cycle",
+    "x": 606,
+    "y": 37,
+    "width": 90,
+    "height": 60,
+    "z": 13002,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Cycle Lead",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 1459,
+    "y": -87,
+    "width": 90,
+    "height": 50,
+    "z": 12991,
+    "css": {
+      "_, .transition": {
+        "transition": "transform 400ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "text": "Code",
+    "clickRoutine": []
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "x": 303,
+    "y": 284,
+    "z": 12932,
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "width": 380,
+    "text": 8,
+    "index": 2,
+    "hideWhenUnused": true,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "turn": true
+  },
+  "handsize-p2": {
+    "id": "handsize-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 355,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 303,
+    "y": 429,
+    "z": 12933,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "width": 380,
+    "text": 8,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "handsize-p3": {
+    "id": "handsize-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 355,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 303,
+    "y": 575,
+    "z": 12934,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "width": 380,
+    "text": 8,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "handsize-p4": {
+    "id": "handsize-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 355,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "x": 303,
+    "y": 720,
+    "z": 12935,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "width": 380,
+    "text": 8,
+    "index": 5,
+    "hideWhenUnused": true
+  },
+  "handsize-p5": {
+    "id": "handsize-p5",
+    "parent": "seat-p5",
+    "fixedParent": true,
+    "x": 355,
+    "y": -15,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "label-guide-2p": {
+    "type": "label",
+    "id": "label-guide-2p",
+    "x": 411,
+    "y": 295,
+    "width": 230,
+    "height": 100,
+    "z": 16450,
+    "css": {
+      "default": {
+        "font-weight": "bold",
+        "font-size": "18px",
+        "text-align": "left",
+        "line-height": "26px",
+        "color": "black"
+      },
+      " textarea": {
+        "text-shadow": "1px 1px 1px silver"
+      }
+    },
+    "text": "Cards Used:\t\t0-10\nStarting Hand:\t13 cards\nMagic Number:\t7 tricks",
+    "display": false
+  },
+  "label-guide-3p": {
+    "type": "label",
+    "id": "label-guide-3p",
+    "x": 411,
+    "y": 295,
+    "width": 230,
+    "height": 100,
+    "z": 16453,
+    "css": {
+      "default": {
+        "font-weight": "bold",
+        "font-size": "18px",
+        "text-align": "left",
+        "line-height": "26px",
+        "color": "black"
+      },
+      " textarea": {
+        "text-shadow": "1px 1px 1px silver"
+      }
+    },
+    "text": "Cards Used:\t\t0-10\nStarting Hand:\t13 cards\nMagic Number:\t4 tricks",
+    "display": false
+  },
+  "label-guide-4p": {
+    "type": "label",
+    "id": "label-guide-4p",
+    "x": 411,
+    "y": 295,
+    "width": 230,
+    "height": 100,
+    "z": 16453,
+    "css": {
+      "default": {
+        "font-weight": "bold",
+        "font-size": "18px",
+        "text-align": "left",
+        "line-height": "26px",
+        "color": "black"
+      },
+      " textarea": {
+        "text-shadow": "1px 1px 1px silver"
+      }
+    },
+    "text": "Cards Used:\t\t0-12\nStarting Hand:\t13 cards\nMagic Number:\t3 tricks",
+    "display": false
+  },
+  "label-guide-5p": {
+    "type": "label",
+    "id": "label-guide-5p",
+    "x": 411,
+    "y": 295,
+    "width": 230,
+    "height": 100,
+    "z": 16453,
+    "css": {
+      "default": {
+        "font-weight": "bold",
+        "font-size": "18px",
+        "text-align": "left",
+        "line-height": "26px",
+        "color": "black"
+      },
+      " textarea": {
+        "text-shadow": "1px 1px 1px silver"
+      }
+    },
+    "text": "Cards Used:\t\t0-15\nStarting Hand:\t14 cards\nMagic Number:\t3 tricks",
+    "display": false
+  },
+  "label-deck-main": {
+    "id": "label-deck-main",
+    "parent": "holder-deck",
+    "height": 20,
+    "z": 16397,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Deck",
+    "y": -22,
+    "x": -15
+  },
+  "8u0z": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-1",
+    "id": "8u0z",
+    "z": 84597,
+    "parent": "p5z2"
+  },
+  "bhbm": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-2",
+    "id": "bhbm",
+    "z": 84587,
+    "parent": "p5z2"
+  },
+  "cboe": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-3",
+    "id": "cboe",
+    "z": 84586,
+    "parent": "p5z2"
+  },
+  "f6cm": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-4",
+    "id": "f6cm",
+    "z": 84590,
+    "parent": "p5z2"
+  },
+  "go8f": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-5",
+    "id": "go8f",
+    "z": 84592,
+    "parent": "p5z2"
+  },
+  "5ckx": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-6",
+    "id": "5ckx",
+    "z": 84589,
+    "parent": "p5z2"
+  },
+  "792i": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-7",
+    "id": "792i",
+    "z": 84604,
+    "parent": "holder-auction",
+    "activeFace": 1
+  },
+  "1bxl": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-8",
+    "id": "1bxl",
+    "z": 84600,
+    "parent": "p5z2"
+  },
+  "jm1d": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-9",
+    "id": "jm1d",
+    "z": 84602,
+    "parent": "p5z2"
+  },
+  "bghz": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-10",
+    "id": "bghz",
+    "z": 84601,
+    "parent": "p5z2"
+  },
+  "4hil": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-12",
+    "id": "4hil",
+    "z": 84585,
+    "parent": "p5z2"
+  },
+  "kwjb": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-doublemoney",
+    "id": "kwjb",
+    "z": 84599,
+    "parent": "p5z2"
+  },
+  "ne8u": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "card-blindbid",
+    "id": "ne8u",
+    "z": 84595,
+    "parent": "p5z2"
+  },
+  "image-bg": {
+    "id": "image-bg",
+    "y": -130,
+    "width": 1980,
+    "height": 1130,
+    "layer": -4,
+    "z": 18,
+    "movable": false,
+    "css": {
+      "opacity": 0.15
+    },
+    "image": "/assets/-1953531396_64842",
+    "movableInEdit": false,
+    "rotation": 90,
+    "x": -420
+  },
+  "gq78": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "1",
+    "id": "gq78",
+    "z": 84531,
+    "parent": "gopd"
+  },
+  "ujn5": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "2",
+    "id": "ujn5",
+    "z": 84536,
+    "parent": "gopd"
+  },
+  "wmzy": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "3",
+    "id": "wmzy",
+    "z": 84533,
+    "parent": "gopd"
+  },
+  "z32f": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "4",
+    "id": "z32f",
+    "z": 84538,
+    "parent": "gopd"
+  },
+  "r3dx": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "6",
+    "id": "r3dx",
+    "z": 84535,
+    "parent": "gopd"
+  },
+  "pkh7": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "8",
+    "id": "pkh7",
+    "z": 84539,
+    "parent": "gopd"
+  },
+  "eygw": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "10",
+    "id": "eygw",
+    "z": 84532,
+    "parent": "gopd"
+  },
+  "vmob": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "12",
+    "id": "vmob",
+    "z": 84540,
+    "parent": "gopd"
+  },
+  "o4y3": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "15",
+    "id": "o4y3",
+    "z": 84534,
+    "parent": "gopd"
+  },
+  "mdov": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "20",
+    "id": "mdov",
+    "z": 84530,
+    "parent": "gopd"
+  },
+  "l0hs": {
+    "deck": "deck-money-seat-p1",
+    "type": "card",
+    "cardType": "25",
+    "id": "l0hs",
+    "z": 84537,
+    "parent": "gopd"
+  },
+  "yzlc": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "special-x2",
+    "id": "yzlc",
+    "z": 84591,
+    "parent": "p5z2"
+  },
+  "g272B": {
+    "id": "g272B",
+    "parent": "holder-money-seat-p1",
+    "fixedParent": true,
+    "y": 80,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "g273B": {
+    "id": "g273B",
+    "parent": "holder-money-seat-p2",
+    "fixedParent": true,
+    "y": 80,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "g274B": {
+    "id": "g274B",
+    "parent": "holder-money-seat-p3",
+    "fixedParent": true,
+    "y": 80,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "g275B": {
+    "id": "g275B",
+    "parent": "holder-money-seat-p4",
+    "fixedParent": true,
+    "y": 80,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "g276B": {
+    "id": "g276B",
+    "parent": "holder-money-seat-p5",
+    "fixedParent": true,
+    "y": 80,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "d9r2": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "1",
+    "id": "d9r2",
+    "z": 84550,
+    "parent": "gk9r"
+  },
+  "40ms": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "2",
+    "id": "40ms",
+    "z": 84548,
+    "parent": "gk9r"
+  },
+  "2brt": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "3",
+    "id": "2brt",
+    "z": 84543,
+    "parent": "gk9r"
+  },
+  "h1pj": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "4",
+    "id": "h1pj",
+    "z": 84549,
+    "parent": "gk9r"
+  },
+  "4a1i": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "6",
+    "id": "4a1i",
+    "z": 84541,
+    "parent": "gk9r"
+  },
+  "0dp4": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "8",
+    "id": "0dp4",
+    "z": 84551,
+    "parent": "gk9r"
+  },
+  "5l77": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "25",
+    "id": "5l77",
+    "z": 84546,
+    "parent": "gk9r"
+  },
+  "o026": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "20",
+    "id": "o026",
+    "z": 84545,
+    "parent": "gk9r"
+  },
+  "xfpl": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "15",
+    "id": "xfpl",
+    "z": 84547,
+    "parent": "gk9r"
+  },
+  "1j1s": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "12",
+    "id": "1j1s",
+    "z": 84542,
+    "parent": "gk9r"
+  },
+  "ij71": {
+    "deck": "deck-money-seat-p2",
+    "type": "card",
+    "cardType": "10",
+    "id": "ij71",
+    "z": 84544,
+    "parent": "gk9r"
+  },
+  "zaoh": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "1",
+    "id": "zaoh",
+    "z": 84554,
+    "parent": "h9x6"
+  },
+  "tgra": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "2",
+    "id": "tgra",
+    "z": 84552,
+    "parent": "h9x6"
+  },
+  "yutm": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "3",
+    "id": "yutm",
+    "z": 84558,
+    "parent": "h9x6"
+  },
+  "acls": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "4",
+    "id": "acls",
+    "z": 84562,
+    "parent": "h9x6"
+  },
+  "6kuo": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "6",
+    "id": "6kuo",
+    "z": 84553,
+    "parent": "h9x6"
+  },
+  "8mvq": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "8",
+    "id": "8mvq",
+    "z": 84561,
+    "parent": "h9x6"
+  },
+  "q5ll": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "10",
+    "id": "q5ll",
+    "z": 84556,
+    "parent": "h9x6"
+  },
+  "qzc5": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "12",
+    "id": "qzc5",
+    "z": 84557,
+    "parent": "h9x6"
+  },
+  "0xoe": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "15",
+    "id": "0xoe",
+    "z": 84555,
+    "parent": "h9x6"
+  },
+  "f0hj": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "20",
+    "id": "f0hj",
+    "z": 84559,
+    "parent": "h9x6"
+  },
+  "mol4": {
+    "deck": "deck-money-seat-p3",
+    "type": "card",
+    "cardType": "25",
+    "id": "mol4",
+    "z": 84560,
+    "parent": "h9x6"
+  },
+  "u7dc": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "1",
+    "id": "u7dc",
+    "z": 84567,
+    "parent": "cala"
+  },
+  "6s9c": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "2",
+    "id": "6s9c",
+    "z": 84565,
+    "parent": "cala"
+  },
+  "7jca": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "3",
+    "id": "7jca",
+    "z": 84571,
+    "parent": "cala"
+  },
+  "ag90": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "4",
+    "id": "ag90",
+    "z": 84568,
+    "parent": "cala"
+  },
+  "b0uf": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "6",
+    "id": "b0uf",
+    "z": 84570,
+    "parent": "cala"
+  },
+  "31u1": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "8",
+    "id": "31u1",
+    "z": 84573,
+    "parent": "cala"
+  },
+  "xpff": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "10",
+    "id": "xpff",
+    "z": 84563,
+    "parent": "cala"
+  },
+  "p4lo": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "12",
+    "id": "p4lo",
+    "z": 84572,
+    "parent": "cala"
+  },
+  "ijo4": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "15",
+    "id": "ijo4",
+    "z": 84564,
+    "parent": "cala"
+  },
+  "t2h9": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "20",
+    "id": "t2h9",
+    "z": 84566,
+    "parent": "cala"
+  },
+  "w7cl": {
+    "deck": "deck-money-seat-p4",
+    "type": "card",
+    "cardType": "25",
+    "id": "w7cl",
+    "z": 84569,
+    "parent": "cala"
+  },
+  "zqf2": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "1",
+    "id": "zqf2",
+    "z": 84580,
+    "parent": "pxss"
+  },
+  "82tp": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "2",
+    "id": "82tp",
+    "z": 84584,
+    "parent": "pxss"
+  },
+  "8hf7": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "3",
+    "id": "8hf7",
+    "z": 84583,
+    "parent": "pxss"
+  },
+  "ws51": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "4",
+    "id": "ws51",
+    "z": 84576,
+    "parent": "pxss"
+  },
+  "n37n": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "6",
+    "id": "n37n",
+    "z": 84578,
+    "parent": "pxss"
+  },
+  "gehh": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "8",
+    "id": "gehh",
+    "z": 84574,
+    "parent": "pxss"
+  },
+  "jkdj": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "10",
+    "id": "jkdj",
+    "z": 84579,
+    "parent": "pxss"
+  },
+  "p1nt": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "12",
+    "id": "p1nt",
+    "z": 84581,
+    "parent": "pxss"
+  },
+  "nwpt": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "15",
+    "id": "nwpt",
+    "z": 84577,
+    "parent": "pxss"
+  },
+  "e0cl": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "20",
+    "id": "e0cl",
+    "z": 84575,
+    "parent": "pxss"
+  },
+  "ljm7": {
+    "deck": "deck-money-seat-p5",
+    "type": "card",
+    "cardType": "25",
+    "id": "ljm7",
+    "z": 84582,
+    "parent": "pxss"
+  },
+  "deck-money-seat-p1": {
+    "type": "deck",
+    "id": "deck-money-seat-p1",
+    "parent": "holder-money-seat-p1",
+    "x": 4,
+    "y": 4,
+    "z": 51346,
+    "cardDefaults": {
+      "class": "moneycard",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "darkseagreen",
+      "image-icon": "",
+      "caption": "$"
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1",
+        "sortingOrder": 1
+      },
+      "2": {
+        "number": "2",
+        "sortingOrder": 2
+      },
+      "3": {
+        "number": "3",
+        "sortingOrder": 3
+      },
+      "4": {
+        "number": "4",
+        "sortingOrder": 4
+      },
+      "6": {
+        "number": "6",
+        "sortingOrder": 5
+      },
+      "8": {
+        "number": "8",
+        "sortingOrder": 6
+      },
+      "10": {
+        "number": "10",
+        "sortingOrder": 7
+      },
+      "12": {
+        "number": "12",
+        "sortingOrder": 8
+      },
+      "15": {
+        "number": "15",
+        "sortingOrder": 9
+      },
+      "20": {
+        "number": "20",
+        "sortingOrder": 10
+      },
+      "25": {
+        "number": "25",
+        "sortingOrder": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -45,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/banknote.svg",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 60,
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image-icon",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 3,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 33,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": "80",
+            "dynamicProperties": {
+              "value": "caption"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "holder-money-seat-p1": {
+    "type": "holder",
+    "id": "holder-money-seat-p1",
+    "x": 1145,
+    "y": 1040,
+    "width": 80,
+    "height": 80,
+    "z": 11581,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "holder-money-seat-p2": {
+    "type": "holder",
+    "id": "holder-money-seat-p2",
+    "x": 1229,
+    "y": 1040,
+    "width": 80,
+    "height": 80,
+    "z": 11574,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-money-seat-p2": {
+    "type": "deck",
+    "id": "deck-money-seat-p2",
+    "parent": "holder-money-seat-p2",
+    "x": 4,
+    "y": 4,
+    "z": 51346,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "darkseagreen",
+      "image-icon": "",
+      "caption": "$"
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1",
+        "sortingOrder": 1
+      },
+      "2": {
+        "number": "2",
+        "sortingOrder": 2
+      },
+      "3": {
+        "number": "3",
+        "sortingOrder": 3
+      },
+      "4": {
+        "number": "4",
+        "sortingOrder": 4
+      },
+      "6": {
+        "number": "6",
+        "sortingOrder": 5
+      },
+      "8": {
+        "number": "8",
+        "sortingOrder": 6
+      },
+      "10": {
+        "number": "10",
+        "sortingOrder": 7
+      },
+      "12": {
+        "number": "12",
+        "sortingOrder": 8
+      },
+      "15": {
+        "number": "15",
+        "sortingOrder": 9
+      },
+      "20": {
+        "number": "20",
+        "sortingOrder": 10
+      },
+      "25": {
+        "number": "25",
+        "sortingOrder": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -45,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/banknote.svg",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 60,
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image-icon",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 3,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 33,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": "80",
+            "dynamicProperties": {
+              "value": "caption"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "holder-money-seat-p3": {
+    "type": "holder",
+    "id": "holder-money-seat-p3",
+    "x": 1313,
+    "y": 1040,
+    "width": 80,
+    "height": 80,
+    "z": 11475,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-money-seat-p3": {
+    "type": "deck",
+    "id": "deck-money-seat-p3",
+    "parent": "holder-money-seat-p3",
+    "x": 4,
+    "y": 4,
+    "z": 51346,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "darkseagreen",
+      "image-icon": "",
+      "caption": "$"
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1",
+        "sortingOrder": 1
+      },
+      "2": {
+        "number": "2",
+        "sortingOrder": 2
+      },
+      "3": {
+        "number": "3",
+        "sortingOrder": 3
+      },
+      "4": {
+        "number": "4",
+        "sortingOrder": 4
+      },
+      "6": {
+        "number": "6",
+        "sortingOrder": 5
+      },
+      "8": {
+        "number": "8",
+        "sortingOrder": 6
+      },
+      "10": {
+        "number": "10",
+        "sortingOrder": 7
+      },
+      "12": {
+        "number": "12",
+        "sortingOrder": 8
+      },
+      "15": {
+        "number": "15",
+        "sortingOrder": 9
+      },
+      "20": {
+        "number": "20",
+        "sortingOrder": 10
+      },
+      "25": {
+        "number": "25",
+        "sortingOrder": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -45,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/banknote.svg",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 60,
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image-icon",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 3,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 33,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": "80",
+            "dynamicProperties": {
+              "value": "caption"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "holder-money-seat-p4": {
+    "type": "holder",
+    "id": "holder-money-seat-p4",
+    "x": 1396,
+    "y": 1040,
+    "width": 80,
+    "height": 80,
+    "z": 11578,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-money-seat-p4": {
+    "type": "deck",
+    "id": "deck-money-seat-p4",
+    "parent": "holder-money-seat-p4",
+    "x": 4,
+    "y": 4,
+    "z": 51346,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "darkseagreen",
+      "image-icon": "",
+      "caption": "$"
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1",
+        "sortingOrder": 1
+      },
+      "2": {
+        "number": "2",
+        "sortingOrder": 2
+      },
+      "3": {
+        "number": "3",
+        "sortingOrder": 3
+      },
+      "4": {
+        "number": "4",
+        "sortingOrder": 4
+      },
+      "6": {
+        "number": "6",
+        "sortingOrder": 5
+      },
+      "8": {
+        "number": "8",
+        "sortingOrder": 6
+      },
+      "10": {
+        "number": "10",
+        "sortingOrder": 7
+      },
+      "12": {
+        "number": "12",
+        "sortingOrder": 8
+      },
+      "15": {
+        "number": "15",
+        "sortingOrder": 9
+      },
+      "20": {
+        "number": "20",
+        "sortingOrder": 10
+      },
+      "25": {
+        "number": "25",
+        "sortingOrder": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -45,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/banknote.svg",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 60,
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image-icon",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 3,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 33,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": "80",
+            "dynamicProperties": {
+              "value": "caption"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "holder-money-seat-p5": {
+    "type": "holder",
+    "id": "holder-money-seat-p5",
+    "x": 1479,
+    "y": 1040,
+    "width": 80,
+    "height": 80,
+    "z": 11579,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-money-seat-p5": {
+    "type": "deck",
+    "id": "deck-money-seat-p5",
+    "parent": "holder-money-seat-p5",
+    "x": 4,
+    "y": 4,
+    "z": 51346,
+    "cardDefaults": {
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "darkseagreen",
+      "image-icon": "",
+      "caption": "$"
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1",
+        "sortingOrder": 1
+      },
+      "2": {
+        "number": "2",
+        "sortingOrder": 2
+      },
+      "3": {
+        "number": "3",
+        "sortingOrder": 3
+      },
+      "4": {
+        "number": "4",
+        "sortingOrder": 4
+      },
+      "6": {
+        "number": "6",
+        "sortingOrder": 5
+      },
+      "8": {
+        "number": "8",
+        "sortingOrder": 6
+      },
+      "10": {
+        "number": "10",
+        "sortingOrder": 7
+      },
+      "12": {
+        "number": "12",
+        "sortingOrder": 8
+      },
+      "15": {
+        "number": "15",
+        "sortingOrder": 9
+      },
+      "20": {
+        "number": "20",
+        "sortingOrder": 10
+      },
+      "25": {
+        "number": "25",
+        "sortingOrder": 11
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -45,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/banknote.svg",
+            "width": 80,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 80,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 80,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 60,
+            "width": 50,
+            "height": 50,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image-icon",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 80,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 3,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 80,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": -23,
+            "y": 33,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": "80",
+            "dynamicProperties": {
+              "value": "caption"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "label-auction": {
+    "id": "label-auction",
+    "parent": "holder-auction",
+    "x": -15,
+    "y": -25,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Auction"
+  },
+  "holder-auction": {
+    "type": "holder",
+    "id": "holder-auction",
+    "x": 960,
+    "width": 74,
+    "height": 74,
+    "z": 11617,
+    "preventPiles": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 1,
+    "css": {
+      "border": "3px solid black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "y": 35,
+    "dropTarget": [
+      {
+        "class": "prestigecard"
+      }
+    ],
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "holder-auction"
+      },
+      {
+        "func": "GET",
+        "property": "identity",
+        "comment": "Default variable name is the name of the property, so we use that in LABEL below",
+        "variable": "CurrentCardIdentity"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "auctiontype"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "relation": "=",
+        "value": "${CurrentCardIdentity}"
+      }
+    ]
+  },
+  "button-pass-seat-p1": {
+    "type": "button",
+    "id": "button-pass-seat-p1",
+    "parent": "holder-bid-seat-p1",
+    "x": 408,
+    "height": 35,
+    "z": 12926,
+    "css": "font-weight:bold;font-size:18px;border-radius:7px",
+    "text": "Pass",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p1"
+            ],
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p1"
+            ],
+            "property": "css",
+            "value": "background-color:crimson;font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p1"
+            ],
+            "property": "text",
+            "value": "Pass"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p1"
+            ],
+            "property": "css",
+            "value": "font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ]
+      }
+    ],
+    "y": -3,
+    "width": 90
+  },
+  "button-pass-seat-p2": {
+    "type": "button",
+    "id": "button-pass-seat-p2",
+    "parent": "holder-bid-seat-p2",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p2"
+            ],
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p2"
+            ],
+            "property": "css",
+            "value": "background-color:crimson;font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p2"
+            ],
+            "property": "text",
+            "value": "Pass"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p2"
+            ],
+            "property": "css",
+            "value": "font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ]
+      }
+    ],
+    "text": "Pass",
+    "inheritFrom": "button-pass-seat-p1",
+    "width": 90,
+    "height": 35,
+    "css": "font-weight:bold;font-size:18px;border-radius:7px"
+  },
+  "button-pass-seat-p3": {
+    "type": "button",
+    "id": "button-pass-seat-p3",
+    "parent": "holder-bid-seat-p3",
+    "css": "font-weight:bold;font-size:18px;border-radius:7px",
+    "text": "Pass",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p3"
+            ],
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p3"
+            ],
+            "property": "css",
+            "value": "background-color:crimson;font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p3"
+            ],
+            "property": "text",
+            "value": "Pass"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p3"
+            ],
+            "property": "css",
+            "value": "font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ]
+      }
+    ],
+    "inheritFrom": "button-pass-seat-p1"
+  },
+  "button-pass-seat-p4": {
+    "type": "button",
+    "id": "button-pass-seat-p4",
+    "parent": "holder-bid-seat-p4",
+    "css": "font-weight:bold;font-size:18px;border-radius:7px",
+    "text": "Pass",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p4"
+            ],
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p4"
+            ],
+            "property": "css",
+            "value": "background-color:crimson;font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p4"
+            ],
+            "property": "text",
+            "value": "Pass"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p4"
+            ],
+            "property": "css",
+            "value": "font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ]
+      }
+    ],
+    "inheritFrom": "button-pass-seat-p1"
+  },
+  "button-pass-seat-p5": {
+    "type": "button",
+    "id": "button-pass-seat-p5",
+    "parent": "holder-bid-seat-p5",
+    "css": "font-weight:bold;font-size:18px;border-radius:7px",
+    "text": "Pass",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Pass",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p5"
+            ],
+            "property": "text",
+            "value": "X"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p5"
+            ],
+            "property": "css",
+            "value": "background-color:crimson;font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p5"
+            ],
+            "property": "text",
+            "value": "Pass"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "button-pass-seat-p5"
+            ],
+            "property": "css",
+            "value": "font-weight:bold;font-size:18px;border-radius:7px"
+          }
+        ]
+      }
+    ],
+    "inheritFrom": "button-pass-seat-p1"
+  },
+  "holder-deck": {
+    "type": "holder",
+    "id": "holder-deck",
+    "x": 820,
+    "y": 35,
+    "width": 70,
+    "height": 70,
+    "z": 11620,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "deck": {
+    "type": "deck",
+    "id": "deck",
+    "parent": "holder-deck",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "prestigecard",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "onPileCreation": {
+        "handleCSS": {
+          "background": "#000000bb",
+          "color": "#ffffff",
+          "font-weight": "bold"
+        },
+        "handlePosition": "bottom center"
+      },
+      "css": {
+        "font-weight": "bold",
+        "line-height": "15px"
+      }
+    },
+    "cardTypes": {
+      "card-1": {
+        "bgcolor": "lavender",
+        "number": "1",
+        "rank": "1",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 2,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-2": {
+        "bgcolor": "lavender",
+        "number": "2",
+        "rank": "2",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 3,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-3": {
+        "bgcolor": "lavender",
+        "number": "3",
+        "rank": "3",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 4,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-4": {
+        "bgcolor": "lavender",
+        "number": "4",
+        "rank": "4",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 5,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-5": {
+        "bgcolor": "lavender",
+        "number": "5",
+        "rank": "5",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 6,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-6": {
+        "bgcolor": "lavender",
+        "number": "6",
+        "rank": "6",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 7,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-7": {
+        "bgcolor": "lavender",
+        "number": "7",
+        "rank": "7",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 8,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-8": {
+        "bgcolor": "lavender",
+        "number": "8",
+        "rank": "8",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 9,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-9": {
+        "bgcolor": "lavender",
+        "number": "9",
+        "rank": "9",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 10,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-10": {
+        "bgcolor": "lavender",
+        "number": "10",
+        "rank": "10",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 11,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-12": {
+        "bgcolor": "lavender",
+        "number": "12*",
+        "rank": "12",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 12,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-neg-5": {
+        "bgcolor": "lavender",
+        "number": "-5",
+        "rank": "-5",
+        "identity": "Reverse",
+        "multiplier": "1",
+        "sortingOrder": 13,
+        "image-icon": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "auctiontype": "Reverse Auction"
+      },
+      "card-faux-pas": {
+        "bgcolor": "lavender",
+        "title": "Faux\nPas",
+        "identity": "Reverse",
+        "multiplier": "1",
+        "sortingOrder": 14,
+        "image-icon": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "auctiontype": "Reverse Auction"
+      },
+      "card-doublemoney": {
+        "bgcolor": "lavender",
+        "title": "Double Money",
+        "identity": "Normal",
+        "multiplier": "1",
+        "sortingOrder": 15,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "card-blindbid": {
+        "bgcolor": "lavender",
+        "title": "5\n(blind bid)",
+        "rank": "5",
+        "identity": "Blind",
+        "multiplier": "1",
+        "sortingOrder": 16,
+        "image-icon": "/i/game-icons.net/delapouite/blindfold.svg"
+      },
+      "special-x2": {
+        "bgcolor": "plum",
+        "number": "x2",
+        "identity": "Normal",
+        "multiplier": "2",
+        "sortingOrder": 18,
+        "image-icon": "/i/game-icons.net/delapouite/all-seeing-eye.svg"
+      },
+      "special-half": {
+        "bgcolor": "plum",
+        "number": "x0.5",
+        "identity": "Reverse",
+        "multiplier": "0.5",
+        "sortingOrder": 19,
+        "image-icon": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "auctiontype": "Reverse Auction"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "width": 80,
+            "height": 80
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 34,
+            "width": 35,
+            "height": 35,
+            "svgReplaces": {
+              "#000": "color"
+            },
+            "dynamicProperties": {
+              "value": "image-icon",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "value": "",
+            "color": "rgba(255, 255, 255, 0)",
+            "width": 120,
+            "height": 160
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 6,
+            "fontSize": 24,
+            "textAlign": "center",
+            "width": 70,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 3,
+            "fontSize": 14,
+            "textAlign": "center",
+            "width": "70",
+            "dynamicProperties": {
+              "value": "title"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "button-win-seat-p1": {
+    "type": "button",
+    "id": "button-win-seat-p1",
+    "parent": "holder-bid-seat-p1",
+    "x": 408,
+    "y": 37,
+    "height": 35,
+    "z": 12923,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Win",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-bid-seat-p1",
+          "holder-bid-seat-p2",
+          "holder-bid-seat-p3",
+          "holder-bid-seat-p4",
+          "holder-bid-seat-p5"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p1"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p2",
+          "seat-p3",
+          "seat-p4",
+          "seat-p5"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF auctiontype}",
+        "operand2": "Reverse",
+        "thenRoutine": [
+          {
+            "note": "Winner takes back their played bid cards",
+            "func": "MOVE",
+            "from": "holder-bid-seat-p1",
+            "to": "seat-p1",
+            "count": "all"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "note": "Everyone else pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p${value}",
+                "to": "holder-discard-seat-p${value}",
+                "count": "all"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF auctiontype}",
+            "operand2": "Blind",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone pays their blind bid",
+                    "func": "MOVE",
+                    "from": "holder-blind-seat-p${value}",
+                    "to": "holder-discard-seat-p${value}",
+                    "count": "all"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "Winner pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p1",
+                "to": "holder-discard-seat-p1",
+                "count": "all"
+              },
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone takes back their failed bid cards into their hand",
+                    "func": "MOVE",
+                    "from": "holder-bid-seat-p${value}",
+                    "to": "seat-p${value}",
+                    "count": "all"
+                  },
+                  {
+                    "note": "Set all X text back to pass text",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "text",
+                    "value": "Pass"
+                  },
+                  {
+                    "note": "Set pass button color back to normal",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "css",
+                    "value": "font-weight:bold;font-size:18px;border-radius:7px"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Move the auction card won by active player to their prestige pile",
+        "func": "MOVE",
+        "from": "holder-auction",
+        "to": "holder-prestige-seat-p1",
+        "count": 1
+      },
+      {
+        "note": "Draw a new card to auction for next round",
+        "func": "MOVE",
+        "from": "holder-deck",
+        "to": "holder-auction",
+        "count": 1
+      }
+    ],
+    "width": 90
+  },
+  "button-win-seat-p2": {
+    "type": "button",
+    "id": "button-win-seat-p2",
+    "parent": "holder-bid-seat-p2",
+    "inheritFrom": "button-win-seat-p1",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-bid-seat-p1",
+          "holder-bid-seat-p2",
+          "holder-bid-seat-p3",
+          "holder-bid-seat-p4",
+          "holder-bid-seat-p5"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p2"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p1",
+          "seat-p3",
+          "seat-p4",
+          "seat-p5"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF auctiontype}",
+        "operand2": "Reverse",
+        "thenRoutine": [
+          {
+            "note": "Winner takes back their played bid cards",
+            "func": "MOVE",
+            "from": "holder-bid-seat-p2",
+            "to": "seat-p2",
+            "count": "all"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "note": "Everyone else pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p${value}",
+                "to": "holder-discard-seat-p${value}",
+                "count": "all"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF auctiontype}",
+            "operand2": "Blind",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone pays their blind bid",
+                    "func": "MOVE",
+                    "from": "holder-blind-seat-p${value}",
+                    "to": "holder-discard-seat-p${value}",
+                    "count": "all"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "Winner pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p2",
+                "to": "holder-discard-seat-p2",
+                "count": "all"
+              },
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone takes back their failed bid cards into their hand",
+                    "func": "MOVE",
+                    "from": "holder-bid-seat-p${value}",
+                    "to": "seat-p${value}",
+                    "count": "all"
+                  },
+                  {
+                    "note": "Set all X text back to pass text",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "text",
+                    "value": "Pass"
+                  },
+                  {
+                    "note": "Set pass button color back to normal",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "css",
+                    "value": "font-weight:bold;font-size:18px;border-radius:7px"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Move the auction card won by active player to their prestige pile",
+        "func": "MOVE",
+        "from": "holder-auction",
+        "to": "holder-prestige-seat-p2",
+        "count": 1
+      },
+      {
+        "note": "Draw a new card to auction for next round",
+        "func": "MOVE",
+        "from": "holder-deck",
+        "to": "holder-auction",
+        "count": 1
+      }
+    ]
+  },
+  "button-win-seat-p3": {
+    "type": "button",
+    "id": "button-win-seat-p3",
+    "parent": "holder-bid-seat-p3",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-bid-seat-p1",
+          "holder-bid-seat-p2",
+          "holder-bid-seat-p3",
+          "holder-bid-seat-p4",
+          "holder-bid-seat-p5"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p3"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p1",
+          "seat-p2",
+          "seat-p4",
+          "seat-p5"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF auctiontype}",
+        "operand2": "Reverse",
+        "thenRoutine": [
+          {
+            "note": "Winner takes back their played bid cards",
+            "func": "MOVE",
+            "from": "holder-bid-seat-p3",
+            "to": "seat-p3",
+            "count": "all"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "note": "Everyone else pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p${value}",
+                "to": "holder-discard-seat-p${value}",
+                "count": "all"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF auctiontype}",
+            "operand2": "Blind",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone pays their blind bid",
+                    "func": "MOVE",
+                    "from": "holder-blind-seat-p${value}",
+                    "to": "holder-discard-seat-p${value}",
+                    "count": "all"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "Winner pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p3",
+                "to": "holder-discard-seat-p3",
+                "count": "all"
+              },
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone takes back their failed bid cards into their hand",
+                    "func": "MOVE",
+                    "from": "holder-bid-seat-p${value}",
+                    "to": "seat-p${value}",
+                    "count": "all"
+                  },
+                  {
+                    "note": "Set all X text back to pass text",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "text",
+                    "value": "Pass"
+                  },
+                  {
+                    "note": "Set pass button color back to normal",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "css",
+                    "value": "font-weight:bold;font-size:18px;border-radius:7px"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Move the auction card won by active player to their prestige pile",
+        "func": "MOVE",
+        "from": "holder-auction",
+        "to": "holder-prestige-seat-p3",
+        "count": 1
+      },
+      {
+        "note": "Draw a new card to auction for next round",
+        "func": "MOVE",
+        "from": "holder-deck",
+        "to": "holder-auction",
+        "count": 1
+      }
+    ],
+    "inheritFrom": "button-win-seat-p1"
+  },
+  "button-win-seat-p4": {
+    "type": "button",
+    "id": "button-win-seat-p4",
+    "parent": "holder-bid-seat-p4",
+    "inheritFrom": "button-win-seat-p1",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-bid-seat-p1",
+          "holder-bid-seat-p2",
+          "holder-bid-seat-p3",
+          "holder-bid-seat-p4",
+          "holder-bid-seat-p5"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p4"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p1",
+          "seat-p2",
+          "seat-p3",
+          "seat-p5"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF auctiontype}",
+        "operand2": "Reverse",
+        "thenRoutine": [
+          {
+            "note": "Winner takes back their played bid cards",
+            "func": "MOVE",
+            "from": "holder-bid-seat-p4",
+            "to": "seat-p4",
+            "count": "all"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "note": "Everyone else pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p${value}",
+                "to": "holder-discard-seat-p${value}",
+                "count": "all"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF auctiontype}",
+            "operand2": "Blind",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone pays their blind bid",
+                    "func": "MOVE",
+                    "from": "holder-blind-seat-p${value}",
+                    "to": "holder-discard-seat-p${value}",
+                    "count": "all"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "Winner pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p4",
+                "to": "holder-discard-seat-p4",
+                "count": "all"
+              },
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone takes back their failed bid cards into their hand",
+                    "func": "MOVE",
+                    "from": "holder-bid-seat-p${value}",
+                    "to": "seat-p${value}",
+                    "count": "all"
+                  },
+                  {
+                    "note": "Set all X text back to pass text",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "text",
+                    "value": "Pass"
+                  },
+                  {
+                    "note": "Set pass button color back to normal",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "css",
+                    "value": "font-weight:bold;font-size:18px;border-radius:7px"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Move the auction card won by active player to their prestige pile",
+        "func": "MOVE",
+        "from": "holder-auction",
+        "to": "holder-prestige-seat-p4",
+        "count": 1
+      },
+      {
+        "note": "Draw a new card to auction for next round",
+        "func": "MOVE",
+        "from": "holder-deck",
+        "to": "holder-auction",
+        "count": 1
+      }
+    ]
+  },
+  "button-win-seat-p5": {
+    "type": "button",
+    "id": "button-win-seat-p5",
+    "parent": "holder-bid-seat-p5",
+    "inheritFrom": "button-win-seat-p1",
+    "clickRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-bid-seat-p1",
+          "holder-bid-seat-p2",
+          "holder-bid-seat-p3",
+          "holder-bid-seat-p4",
+          "holder-bid-seat-p5"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p5"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat-p1",
+          "seat-p2",
+          "seat-p3",
+          "seat-p4"
+        ],
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text OF auctiontype}",
+        "operand2": "Reverse",
+        "thenRoutine": [
+          {
+            "note": "Winner takes back their played bid cards",
+            "func": "MOVE",
+            "from": "holder-bid-seat-p5",
+            "to": "seat-p5",
+            "count": "all"
+          },
+          {
+            "func": "FOREACH",
+            "range": 5,
+            "loopRoutine": [
+              {
+                "note": "Everyone else pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p${value}",
+                "to": "holder-discard-seat-p${value}",
+                "count": "all"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY text OF auctiontype}",
+            "operand2": "Blind",
+            "thenRoutine": [
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone pays their blind bid",
+                    "func": "MOVE",
+                    "from": "holder-blind-seat-p${value}",
+                    "to": "holder-discard-seat-p${value}",
+                    "count": "all"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "note": "Winner pays",
+                "func": "MOVE",
+                "from": "holder-bid-seat-p5",
+                "to": "holder-discard-seat-p5",
+                "count": "all"
+              },
+              {
+                "func": "FOREACH",
+                "range": 5,
+                "loopRoutine": [
+                  {
+                    "note": "Everyone takes back their failed bid cards into their hand",
+                    "func": "MOVE",
+                    "from": "holder-bid-seat-p${value}",
+                    "to": "seat-p${value}",
+                    "count": "all"
+                  },
+                  {
+                    "note": "Set all X text back to pass text",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "text",
+                    "value": "Pass"
+                  },
+                  {
+                    "note": "Set pass button color back to normal",
+                    "func": "SET",
+                    "collection": [
+                      "button-pass-seat-p${value}"
+                    ],
+                    "property": "css",
+                    "value": "font-weight:bold;font-size:18px;border-radius:7px"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note": "Move the auction card won by active player to their prestige pile",
+        "func": "MOVE",
+        "from": "holder-auction",
+        "to": "holder-prestige-seat-p5",
+        "count": 1
+      },
+      {
+        "note": "Draw a new card to auction for next round",
+        "func": "MOVE",
+        "from": "holder-deck",
+        "to": "holder-auction",
+        "count": 1
+      }
+    ]
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Illuminati",
+      "image": "/assets/-854298398_30428",
+      "rules": "https://boardgamegeek.com/filepage/167430/high-society-rulebook",
+      "bgg": "https://boardgamegeek.com/boardgame/220/high-society",
+      "year": "1995",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "Game layout and scripting by Robin Harn, released to the Public Domain under CC0.\n\nThe following graphics are from https://game-icons.net and under CC BY 3.0:\n* All Seeing Eye: https://game-icons.net/1x1/delapouite/all-seeing-eye.html\n* Chewed Skull: https://game-icons.net/1x1/lorc/chewed-skull.html\n* Blindfold: https://game-icons.net/1x1/delapouite/blindfold.html\n* Card Joker: https://game-icons.net/1x1/delapouite/card-joker.html\n\n<div>Library image and background from http://www.freepik.com and are used under the Freepik license:&nbsp;</div><div>* https://www.freepik.com/free-vector/hand-drawn-boho-background_16680307.htm\n</div>",
+      "lastUpdate": 1768626529379,
+      "showName": true,
+      "skill": "",
+      "description": "Gain prestige towards joining the illuminati, and avoid scandal along the way.",
+      "similarImage": "",
+      "similarName": "High Society",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "1995 Meeples Choice Award Nominee\n1995 Fairplay À la carte Runner-up",
+      "ruleText": "(see rules overview link)",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-5"
+    }
+  },
+  "label-discard-seat-p1": {
+    "id": "label-discard-seat-p1",
+    "parent": "holder-discard-seat-p1",
+    "x": -15,
+    "y": -25,
+    "height": 20,
+    "z": 16415,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Discard"
+  },
+  "holder-trash": {
+    "type": "holder",
+    "id": "holder-trash",
+    "x": 1318,
+    "y": 35,
+    "width": 70,
+    "height": 70,
+    "z": 11608,
+    "dropOffsetX": 0,
+    "preventPiles": true,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-trash"
+        ],
+        "key": "sortingOrder"
+      }
+    ],
+    "dropOffsetY": 0,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg"
+  },
+  "label-trash": {
+    "id": "label-trash",
+    "parent": "holder-trash",
+    "x": -15,
+    "y": -22,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Trash"
+  },
+  "holder-prestige-seat-p1": {
+    "type": "holder",
+    "id": "holder-prestige-seat-p1",
+    "parent": "seat-p1",
+    "x": 500,
+    "y": 50,
+    "width": 500,
+    "height": 70,
+    "z": 11533,
+    "inheritChildZ": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "class": "prestigecard"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 70,
+    "enterRoutine": []
+  },
+  "holder-prestige-seat-p2": {
+    "type": "holder",
+    "id": "holder-prestige-seat-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-prestige-seat-p1",
+    "x": 500,
+    "y": 50
+  },
+  "holder-prestige-seat-p3": {
+    "type": "holder",
+    "id": "holder-prestige-seat-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-prestige-seat-p1",
+    "x": 500,
+    "y": 50
+  },
+  "holder-prestige-seat-p4": {
+    "type": "holder",
+    "id": "holder-prestige-seat-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-prestige-seat-p1",
+    "x": 500,
+    "y": 50
+  },
+  "holder-prestige-seat-p5": {
+    "type": "holder",
+    "id": "holder-prestige-seat-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "holder-prestige-seat-p1",
+    "x": 500,
+    "y": 50
+  },
+  "holder-bid-seat-p1": {
+    "type": "holder",
+    "id": "holder-bid-seat-p1",
+    "parent": "seat-p1",
+    "x": -10,
+    "y": 50,
+    "width": 400,
+    "height": 70,
+    "z": 11339,
+    "inheritChildZ": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "deck": "deck-money-seat-p1"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 32,
+    "enterRoutine": []
+  },
+  "holder-bid-seat-p2": {
+    "type": "holder",
+    "id": "holder-bid-seat-p2",
+    "parent": "seat-p2",
+    "dropTarget": [
+      {
+        "deck": "deck-money-seat-p2"
+      }
+    ],
+    "inheritFrom": "holder-bid-seat-p1"
+  },
+  "holder-bid-seat-p3": {
+    "type": "holder",
+    "id": "holder-bid-seat-p3",
+    "parent": "seat-p3",
+    "dropTarget": [
+      {
+        "deck": "deck-money-seat-p3"
+      }
+    ],
+    "inheritFrom": "holder-bid-seat-p1"
+  },
+  "holder-bid-seat-p4": {
+    "type": "holder",
+    "id": "holder-bid-seat-p4",
+    "parent": "seat-p4",
+    "dropTarget": [
+      {
+        "deck": "deck-money-seat-p4"
+      }
+    ],
+    "inheritFrom": "holder-bid-seat-p1"
+  },
+  "holder-bid-seat-p5": {
+    "type": "holder",
+    "id": "holder-bid-seat-p5",
+    "parent": "seat-p5",
+    "dropTarget": [
+      {
+        "deck": "deck-money-seat-p5"
+      }
+    ],
+    "inheritFrom": "holder-bid-seat-p1"
+  },
+  "label-discard-seat-p2": {
+    "id": "label-discard-seat-p2",
+    "parent": "holder-discard-seat-p2",
+    "x": -15,
+    "y": -25,
+    "height": 20,
+    "z": 16415,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Discard"
+  },
+  "label-discard-seat-p3": {
+    "id": "label-discard-seat-p3",
+    "parent": "holder-discard-seat-p3",
+    "x": -15,
+    "y": -25,
+    "height": 20,
+    "z": 16415,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Discard"
+  },
+  "label-discard-seat-p4": {
+    "id": "label-discard-seat-p4",
+    "parent": "holder-discard-seat-p4",
+    "x": -15,
+    "y": -25,
+    "height": 20,
+    "z": 16415,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Discard"
+  },
+  "label-discard-seat-p5": {
+    "id": "label-discard-seat-p5",
+    "parent": "holder-discard-seat-p5",
+    "x": -15,
+    "y": -25,
+    "height": 20,
+    "z": 16415,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Discard"
+  },
+  "label-normalauction": {
+    "id": "label-normalauction",
+    "x": 1428,
+    "y": 262,
+    "width": 150,
+    "z": 16512,
+    "css": {
+      "font-weight": "bold",
+      "line-height": "16px",
+      "text-align": "center",
+      "background-color": "white",
+      "border-radius": "7px"
+    },
+    "text": "Normal Auction:\n\n Winner pays; everyone else takes back their bid",
+    "movable": false,
+    "display": false
+  },
+  "holder-discard-seat-p2": {
+    "type": "holder",
+    "id": "holder-discard-seat-p2",
+    "parent": "seat-p2",
+    "inheritFrom": "holder-discard-seat-p1",
+    "x": 1010,
+    "y": 50
+  },
+  "holder-discard-seat-p1": {
+    "type": "holder",
+    "id": "holder-discard-seat-p1",
+    "parent": "seat-p1",
+    "x": 1010,
+    "y": 50,
+    "width": 70,
+    "height": 70,
+    "z": 11604,
+    "enterRoutine": [
+      {
+        "func": "SORT",
+        "holder": [
+          "holder-discard-seat-p1",
+          "holder-discard-seat-p2",
+          "holder-discard-seat-p3",
+          "holder-discard-seat-p4",
+          "holder-discard-seat-p5"
+        ],
+        "key": "sortingOrder"
+      }
+    ],
+    "preventPiles": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    }
+  },
+  "holder-discard-seat-p3": {
+    "type": "holder",
+    "id": "holder-discard-seat-p3",
+    "parent": "seat-p3",
+    "inheritFrom": "holder-discard-seat-p1",
+    "x": 1010,
+    "y": 50
+  },
+  "holder-discard-seat-p4": {
+    "type": "holder",
+    "id": "holder-discard-seat-p4",
+    "parent": "seat-p4",
+    "inheritFrom": "holder-discard-seat-p1",
+    "x": 1010,
+    "y": 50
+  },
+  "holder-discard-seat-p5": {
+    "type": "holder",
+    "id": "holder-discard-seat-p5",
+    "parent": "seat-p5",
+    "inheritFrom": "holder-discard-seat-p1",
+    "x": 1010,
+    "y": 50
+  },
+  "label-reverseauction": {
+    "id": "label-reverseauction",
+    "x": 1428,
+    "y": 424,
+    "width": 150,
+    "z": 16501,
+    "css": {
+      "font-weight": "bold",
+      "line-height": "16px",
+      "text-align": "center",
+      "background-color": "white",
+      "border-radius": "7px"
+    },
+    "text": "Reverse Auction: \n\n First player to pass takes back their bid; everyone else pays",
+    "movable": false,
+    "display": false
+  },
+  "label-score-seat-p1": {
+    "type": "label",
+    "id": "label-score-seat-p1",
+    "parent": "seat-p1",
+    "x": 410,
+    "width": 65,
+    "height": 40,
+    "z": 16456,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 3
+  },
+  "label-score-seat-p2": {
+    "type": "label",
+    "id": "label-score-seat-p2",
+    "parent": "seat-p2",
+    "x": 410,
+    "y": 3,
+    "width": 65,
+    "height": 40,
+    "z": 16457,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0
+  },
+  "label-score-seat-p3": {
+    "type": "label",
+    "id": "label-score-seat-p3",
+    "parent": "seat-p3",
+    "x": 410,
+    "width": 65,
+    "height": 40,
+    "z": 16458,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 3
+  },
+  "label-score-seat-p4": {
+    "type": "label",
+    "id": "label-score-seat-p4",
+    "parent": "seat-p4",
+    "x": 410,
+    "width": 65,
+    "height": 40,
+    "z": 16459,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 3
+  },
+  "label-score-seat-p5": {
+    "type": "label",
+    "id": "label-score-seat-p5",
+    "parent": "seat-p5",
+    "x": 410,
+    "width": 65,
+    "height": 40,
+    "z": 16460,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 3
+  },
+  "71qv": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "special-x2",
+    "id": "71qv",
+    "z": 84598,
+    "parent": "p5z2"
+  },
+  "zj5u": {
+    "deck": "deck",
+    "type": "card",
+    "cardType": "special-x2",
+    "id": "zj5u",
+    "z": 84588,
+    "parent": "p5z2"
+  },
+  "image-normalauction": {
+    "id": "image-normalauction",
+    "parent": "label-normalauction",
+    "x": 50,
+    "y": -53,
+    "z": 16490,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/all-seeing-eye.svg",
+    "width": 50,
+    "height": 50
+  },
+  "image-reverseauction": {
+    "id": "image-reverseauction",
+    "x": 50,
+    "y": -53,
+    "z": 16502,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/chewed-skull.svg",
+    "parent": "label-reverseauction",
+    "width": 50,
+    "height": 50
+  },
+  "image-reverseauction1": {
+    "id": "image-reverseauction1",
+    "x": 50,
+    "y": -53,
+    "z": 16492,
+    "movable": false,
+    "image": "/i/game-icons.net/delapouite/blindfold.svg",
+    "parent": "label-blindauction",
+    "width": 50,
+    "height": 50
+  },
+  "label-blindauction": {
+    "id": "label-blindauction",
+    "x": 1428,
+    "y": 587,
+    "width": 150,
+    "z": 16504,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "line-height": "16px",
+      "text-align": "center",
+      "background-color": "white",
+      "border-radius": "7px"
+    },
+    "text": "Blind Auction: \n\nEveryone must bid\none card face down;\nhighest unique bid wins; everyone pays",
+    "display": false
+  },
+  "label-prestige-seat-p1": {
+    "id": "label-prestige-seat-p1",
+    "parent": "holder-prestige-seat-p1",
+    "x": 210,
+    "y": -25,
+    "height": 20,
+    "z": 16415,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Prestige"
+  },
+  "label-prestige-seat-p2": {
+    "id": "label-prestige-seat-p2",
+    "parent": "holder-prestige-seat-p2",
+    "inheritFrom": "label-prestige-seat-p1"
+  },
+  "label-prestige-seat-p3": {
+    "id": "label-prestige-seat-p3",
+    "parent": "holder-prestige-seat-p3",
+    "inheritFrom": "label-prestige-seat-p1"
+  },
+  "label-prestige-seat-p4": {
+    "id": "label-prestige-seat-p4",
+    "parent": "holder-prestige-seat-p4",
+    "inheritFrom": "label-prestige-seat-p1"
+  },
+  "label-prestige-seat-p5": {
+    "id": "label-prestige-seat-p5",
+    "parent": "holder-prestige-seat-p5",
+    "inheritFrom": "label-prestige-seat-p1"
+  },
+  "button-guide": {
+    "type": "button",
+    "id": "button-guide",
+    "x": 457,
+    "y": 37,
+    "width": 90,
+    "height": 60,
+    "z": 13005,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Show Guide",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Show Guide",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-guide"
+            ],
+            "property": "text",
+            "value": "Hide Guide"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-normalauction",
+              "label-reverseauction",
+              "label-blindauction",
+              "label-12"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-guide"
+            ],
+            "property": "text",
+            "value": "Show Guide"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-normalauction",
+              "label-reverseauction",
+              "label-blindauction",
+              "label-12"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "label-hand": {
+    "id": "label-hand",
+    "parent": "hand",
+    "x": 150,
+    "y": -22,
+    "height": 20,
+    "z": 16397,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Your Hand"
+  },
+  "image-12": {
+    "id": "image-12",
+    "x": 50,
+    "y": -33,
+    "width": 50,
+    "height": 30,
+    "z": 16510,
+    "css": "font-weight:bold;font-size:24px;text-align:center;align-content:center",
+    "text": "12*",
+    "movable": false,
+    "parent": "label-12"
+  },
+  "label-12": {
+    "id": "label-12",
+    "x": 1428,
+    "y": 743,
+    "width": 150,
+    "z": 16514,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "line-height": "16px",
+      "text-align": "center",
+      "background-color": "white",
+      "border-radius": "7px"
+    },
+    "text": "12* card:\n\nEveryone else takes back their highest previously played money card",
+    "display": false
+  },
+  "card_bad_negativefive": {
+    "type": "card",
+    "id": "card_bad_negativefive",
+    "deck": "deck",
+    "cardType": "card-neg-5",
+    "z": 84593,
+    "parent": "p5z2"
+  },
+  "card_bad_half": {
+    "type": "card",
+    "id": "card_bad_half",
+    "deck": "deck",
+    "cardType": "special-half",
+    "z": 84596,
+    "parent": "p5z2"
+  },
+  "card_bad_faux_pas": {
+    "type": "card",
+    "id": "card_bad_faux_pas",
+    "deck": "deck",
+    "cardType": "card-faux-pas",
+    "z": 84594,
+    "parent": "p5z2"
+  },
+  "fsf4D": {
+    "type": "button",
+    "id": "fsf4D",
+    "parent": "label-score-seat-p1",
+    "fixedParent": true,
+    "x": -18,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf4U": {
+    "type": "button",
+    "id": "fsf4U",
+    "parent": "label-score-seat-p1",
+    "fixedParent": true,
+    "x": 60,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "fsf5U": {
+    "type": "button",
+    "id": "fsf5U",
+    "parent": "label-score-seat-p2",
+    "fixedParent": true,
+    "x": 60,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "fsf6U": {
+    "type": "button",
+    "id": "fsf6U",
+    "parent": "label-score-seat-p3",
+    "fixedParent": true,
+    "x": 60,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "fsf7U": {
+    "type": "button",
+    "id": "fsf7U",
+    "parent": "label-score-seat-p4",
+    "fixedParent": true,
+    "x": 60,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "fsf8U": {
+    "type": "button",
+    "id": "fsf8U",
+    "parent": "label-score-seat-p5",
+    "fixedParent": true,
+    "x": 60,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "fsf5D": {
+    "type": "button",
+    "id": "fsf5D",
+    "parent": "label-score-seat-p2",
+    "fixedParent": true,
+    "x": -18,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf6D": {
+    "type": "button",
+    "id": "fsf6D",
+    "parent": "label-score-seat-p3",
+    "fixedParent": true,
+    "x": -18,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf7D": {
+    "type": "button",
+    "id": "fsf7D",
+    "parent": "label-score-seat-p4",
+    "fixedParent": true,
+    "x": -18,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "fsf8D": {
+    "type": "button",
+    "id": "fsf8D",
+    "parent": "label-score-seat-p5",
+    "fixedParent": true,
+    "x": -18,
+    "y": 7,
+    "width": 24,
+    "height": 24,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "label-trash1": {
+    "id": "label-trash1",
+    "parent": "holder-blind-seat-p1",
+    "x": -15,
+    "y": -22,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Blind Bid"
+  },
+  "holder-blind-seat-p1": {
+    "type": "holder",
+    "id": "holder-blind-seat-p1",
+    "parent": "holder-bid-seat-p1",
+    "x": -90,
+    "width": 70,
+    "height": 70,
+    "z": 11622,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "image": "/i/game-icons.net/delapouite/blindfold.svg",
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "holder-blind-seat-p2": {
+    "type": "holder",
+    "id": "holder-blind-seat-p2",
+    "parent": "holder-bid-seat-p2",
+    "inheritFrom": "holder-blind-seat-p1"
+  },
+  "label-trash2": {
+    "id": "label-trash2",
+    "parent": "holder-blind-seat-p2",
+    "x": -15,
+    "y": -22,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Blind Bid"
+  },
+  "holder-blind-seat-p3": {
+    "type": "holder",
+    "id": "holder-blind-seat-p3",
+    "parent": "holder-bid-seat-p3",
+    "inheritFrom": "holder-blind-seat-p1"
+  },
+  "label-trash3": {
+    "id": "label-trash3",
+    "parent": "holder-blind-seat-p3",
+    "x": -15,
+    "y": -22,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Blind Bid"
+  },
+  "holder-blind-seat-p4": {
+    "type": "holder",
+    "id": "holder-blind-seat-p4",
+    "parent": "holder-bid-seat-p4",
+    "inheritFrom": "holder-blind-seat-p1"
+  },
+  "label-trash4": {
+    "id": "label-trash4",
+    "parent": "holder-blind-seat-p4",
+    "x": -15,
+    "y": -22,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Blind Bid"
+  },
+  "holder-blind-seat-p5": {
+    "type": "holder",
+    "id": "holder-blind-seat-p5",
+    "parent": "holder-bid-seat-p5",
+    "inheritFrom": "holder-blind-seat-p1"
+  },
+  "label-trash5": {
+    "id": "label-trash5",
+    "parent": "holder-blind-seat-p5",
+    "x": -15,
+    "y": -22,
+    "height": 20,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Blind Bid"
+  },
+  "pxss": {
+    "type": "pile",
+    "parent": "holder-money-seat-p5",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "id": "pxss"
+  },
+  "auctiontype": {
+    "id": "auctiontype",
+    "x": 1095,
+    "y": 37,
+    "width": 150,
+    "z": -99999,
+    "css": {
+      "font-size": "20px",
+      "font-weight": "bold",
+      "line-height": "68px",
+      "color": "black",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white",
+      "border-radius": "7px",
+      "background-color": "ghostwhite"
+    },
+    "text": "Normal",
+    "height": 70,
+    "movable": false
+  },
+  "label-auctiontype": {
+    "id": "label-auctiontype",
+    "width": 150,
+    "height": 30,
+    "z": 16525,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Auction Type:",
+    "movable": false,
+    "x": 1095,
+    "y": 13
+  },
+  "h9x6": {
+    "type": "pile",
+    "parent": "holder-money-seat-p3",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "id": "h9x6"
+  },
+  "p5z2": {
+    "type": "pile",
+    "x": 0,
+    "y": 0,
+    "width": 70,
+    "height": 70,
+    "handleCSS": {
+      "background": "#000000bb",
+      "color": "#ffffff",
+      "font-weight": "bold"
+    },
+    "handlePosition": "bottom center",
+    "id": "p5z2",
+    "z": 83449,
+    "hoverParent": "holder-deck",
+    "parent": "holder-deck"
+  },
+  "cala": {
+    "type": "pile",
+    "parent": "holder-money-seat-p4",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "id": "cala"
+  },
+  "gopd": {
+    "type": "pile",
+    "parent": "holder-money-seat-p1",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "id": "gopd"
+  },
+  "gk9r": {
+    "type": "pile",
+    "parent": "holder-money-seat-p2",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "id": "gk9r"
+  }
+}
