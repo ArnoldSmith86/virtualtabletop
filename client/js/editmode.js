@@ -1250,6 +1250,34 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     return;
   }
 
+  if(widget.parent !== undefined) {
+    if(widget.parent === widget.id) {
+      alert(`Widget ${widget.id} cannot set its parent to itself.`);
+      batchEnd();
+      return;
+    }
+
+    let currentParentId = widget.parent;
+    let isDescendant = false;
+    while(currentParentId !== null) {
+      if(currentParentId === widget.id) {
+        isDescendant = true;
+        break;
+      }
+      const currentParent = widgets.get(currentParentId);
+      if(!currentParent || !currentParent.state || !currentParent.get('parent')) {
+        break;
+      }
+      currentParentId = currentParent.get('parent');
+    }
+
+    if(isDescendant) {
+      alert(`Widget ${widget.id} cannot set its parent to its descendants.`);
+      batchEnd();
+      return;
+    }
+  }
+
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
