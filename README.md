@@ -114,14 +114,14 @@ But who knows, maybe you'll enjoy a different platform more than ours:
 | **[18xx.games](https://18xx.games)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | <details><summary>❌</summary>No online multiplayer without account.</details> | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
 | **[Board Game Arena](https://boardgamearena.com)** | <details><summary>✅</summary>Many games are free. Many aren't.</details> | ❌ | ✅ | <details><summary>❌</summary>Only with coding and rights to the game.</details> | ❌ | <details><summary>❌</summary>Minor and relevant ads.</details> | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only tutorials and demos.</details> | ✅ |
 | **[BoardSpace.net](https://boardspace.net)** | ✅ | ✅ | <details><summary>✅</summary>It's an app but can be used in the browser.</details> | <details><summary>❌</summary>Only with coding.</details> | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| **[Board Together](https://boardtogether.games)** | ✅ | ✅ | ? | ? | ? | ✅ | ✅ | ✅ | ✅ | ? | ? |
+| **[Board Together](https://boardtogether.games)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
 | **[BrettspielWelt](https://www.brettspielwelt.de)** | ✅ | ❌ | ✅ | ❌ | ❌ | <details><summary>❌</summary>Minor and relevant ads.</details> | ✅ | ✅ | ❌ | ❌ | ✅ |
 | **[CardGames.io](https://cardgames.io)** | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ | ? | ? | ✅ | ✅ |
 | **[FreeBoardGames.org](https://www.freeboardgames.org)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
 | **[Online Board Gamers](https://www.onlineboardgamers.com)** | ✅ | ? | ? | ? | ❌ | ? | ? | ✅ | ? | ❌ | ? |
 | **[PlayingCards.io](https://playingcards.io)** | <details><summary>✅</summary>Playing and creating games is free. Some admin features are paid.</details> | ❌ | ✅ | ✅ | ✅ | <details><summary>❌</summary>Unless you pay.</details> | ❌ | ✅ | ✅ | ❌ | ✅ |
-| **[Pogo](https://www.pogo.com)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
-| **[Rally the Troops](https://www.rally-the-troops.com)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ❌ | ✅ | ? | ✅ | ✅ | ? | ? |
+| **[Pogo](https://www.pogo.com)** | <details><summary>❌</summary>You can play many games for free but Pogo is pushing monetization pretty hard.</details> | ❌ | ✅ | ? | <details><summary>❌</summary>No online multiplayer without account.</details> | <details><summary>❌</summary>Unless you pay.</details> | ? | ? | ? | ? | ? |
+| **[Rally the Troops](https://www.rally-the-troops.com)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ❌ | ✅ | ✅ | ✅ | ✅ | ? | ? |
 | **[Screentop.gg](https://screentop.gg)** | <details><summary>✅</summary>Playing games is free. Some features for creating games are paid.</details> | ❌ | ✅ | <details><summary>✅</summary>It has a built-in game editor but many features are paid.</details> | ? | ❌ | ❌ | ✅ | ? | ? | ? |
 | **[Tabletop Simulator](https://www.tabletopsimulator.com)** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | <details><summary>❌</summary>Scripting allows it but many games don't use it.</details> | ✅ | ❌ | ❌ | ❌ |
 | **[Tabletopia](https://tabletopia.com)** | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? | ? |
