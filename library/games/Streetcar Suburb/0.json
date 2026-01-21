@@ -4,7 +4,8 @@
     "type": "card",
     "cardType": "blueHouse",
     "id": "6393",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "backgroundColor": {
     "id": "backgroundColor",
@@ -15,7 +16,8 @@
     "css": {
       "background": "linear-gradient(to bottom, #86b3ff 0%, #e9f1ff 100%)"
     },
-    "movableInEdit": false
+    "movableInEdit": false,
+    "z": 1
   },
   "houseHolder": {
     "type": "holder",
@@ -23,7 +25,8 @@
     "x": -140,
     "y": 513,
     "width": 70,
-    "height": 70
+    "height": 70,
+    "z": 1
   },
   "hex2": {
     "inheritFrom": {
@@ -32,7 +35,8 @@
     "type": "holder",
     "id": "hex2",
     "x": 434,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex3": {
     "inheritFrom": {
@@ -41,7 +45,8 @@
     "type": "holder",
     "id": "hex3",
     "x": 565,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex4": {
     "inheritFrom": {
@@ -50,7 +55,8 @@
     "type": "holder",
     "id": "hex4",
     "x": 695,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex5": {
     "inheritFrom": {
@@ -59,7 +65,8 @@
     "type": "holder",
     "id": "hex5",
     "x": 826,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex6": {
     "inheritFrom": {
@@ -68,7 +75,8 @@
     "type": "holder",
     "id": "hex6",
     "x": 957,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex7": {
     "inheritFrom": {
@@ -77,7 +85,8 @@
     "type": "holder",
     "id": "hex7",
     "x": 1088,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex8": {
     "inheritFrom": {
@@ -86,7 +95,8 @@
     "type": "holder",
     "id": "hex8",
     "x": 1218,
-    "y": 34
+    "y": 34,
+    "z": 1
   },
   "hex10": {
     "inheritFrom": {
@@ -95,7 +105,8 @@
     "type": "holder",
     "id": "hex10",
     "x": 369,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex11": {
     "inheritFrom": {
@@ -104,7 +115,8 @@
     "type": "holder",
     "id": "hex11",
     "x": 500,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex12": {
     "inheritFrom": {
@@ -113,7 +125,8 @@
     "type": "holder",
     "id": "hex12",
     "x": 630,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex13": {
     "inheritFrom": {
@@ -122,7 +135,8 @@
     "type": "holder",
     "id": "hex13",
     "x": 761,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex14": {
     "inheritFrom": {
@@ -131,7 +145,8 @@
     "type": "holder",
     "id": "hex14",
     "x": 892,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex15": {
     "inheritFrom": {
@@ -140,7 +155,8 @@
     "type": "holder",
     "id": "hex15",
     "x": 1023,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex16": {
     "inheritFrom": {
@@ -149,7 +165,8 @@
     "type": "holder",
     "id": "hex16",
     "x": 1153,
-    "y": 147
+    "y": 147,
+    "z": 1
   },
   "hex18": {
     "inheritFrom": {
@@ -158,7 +175,8 @@
     "type": "holder",
     "id": "hex18",
     "x": 434,
-    "y": 260
+    "y": 260,
+    "z": 1
   },
   "hex19": {
     "inheritFrom": {
@@ -167,7 +185,8 @@
     "type": "holder",
     "id": "hex19",
     "x": 565,
-    "y": 260
+    "y": 260,
+    "z": 1
   },
   "hex20": {
     "inheritFrom": {
@@ -176,7 +195,8 @@
     "type": "holder",
     "id": "hex20",
     "x": 695,
-    "y": 260
+    "y": 260,
+    "z": 1
   },
   "hex21": {
     "inheritFrom": {
@@ -185,7 +205,8 @@
     "type": "holder",
     "id": "hex21",
     "x": 826,
-    "y": 260
+    "y": 260,
+    "z": 1
   },
   "hex22": {
     "inheritFrom": {
@@ -194,7 +215,8 @@
     "type": "holder",
     "id": "hex22",
     "x": 957,
-    "y": 260
+    "y": 260,
+    "z": 1
   },
   "hex23": {
     "inheritFrom": {
@@ -203,7 +225,8 @@
     "type": "holder",
     "id": "hex23",
     "x": 1088,
-    "y": 260
+    "y": 260,
+    "z": 1
   },
   "hex27": {
     "inheritFrom": {
@@ -212,7 +235,8 @@
     "type": "holder",
     "id": "hex27",
     "x": 500,
-    "y": 374
+    "y": 374,
+    "z": 1
   },
   "hex28": {
     "inheritFrom": {
@@ -221,7 +245,8 @@
     "type": "holder",
     "id": "hex28",
     "x": 630,
-    "y": 374
+    "y": 374,
+    "z": 1
   },
   "hex29": {
     "inheritFrom": {
@@ -230,7 +255,8 @@
     "type": "holder",
     "id": "hex29",
     "x": 761,
-    "y": 374
+    "y": 374,
+    "z": 1
   },
   "hex30": {
     "inheritFrom": {
@@ -239,7 +265,8 @@
     "type": "holder",
     "id": "hex30",
     "x": 892,
-    "y": 374
+    "y": 374,
+    "z": 1
   },
   "hex31": {
     "inheritFrom": {
@@ -248,7 +275,8 @@
     "type": "holder",
     "id": "hex31",
     "x": 1023,
-    "y": 374
+    "y": 374,
+    "z": 1
   },
   "hex34": {
     "inheritFrom": {
@@ -257,7 +285,8 @@
     "type": "holder",
     "id": "hex34",
     "x": 434,
-    "y": 487
+    "y": 487,
+    "z": 1
   },
   "hex35": {
     "inheritFrom": {
@@ -266,7 +295,8 @@
     "type": "holder",
     "id": "hex35",
     "x": 565,
-    "y": 487
+    "y": 487,
+    "z": 1
   },
   "hex36": {
     "inheritFrom": {
@@ -275,7 +305,8 @@
     "type": "holder",
     "id": "hex36",
     "x": 695,
-    "y": 487
+    "y": 487,
+    "z": 1
   },
   "hex37": {
     "inheritFrom": {
@@ -284,7 +315,8 @@
     "type": "holder",
     "id": "hex37",
     "x": 826,
-    "y": 487
+    "y": 487,
+    "z": 1
   },
   "hex38": {
     "inheritFrom": {
@@ -293,7 +325,8 @@
     "type": "holder",
     "id": "hex38",
     "x": 957,
-    "y": 487
+    "y": 487,
+    "z": 1
   },
   "hex42": {
     "inheritFrom": {
@@ -302,7 +335,8 @@
     "type": "holder",
     "id": "hex42",
     "x": 369,
-    "y": 600
+    "y": 600,
+    "z": 1
   },
   "hex43": {
     "inheritFrom": {
@@ -311,7 +345,8 @@
     "type": "holder",
     "id": "hex43",
     "x": 500,
-    "y": 600
+    "y": 600,
+    "z": 1
   },
   "hex44": {
     "inheritFrom": {
@@ -320,7 +355,8 @@
     "type": "holder",
     "id": "hex44",
     "x": 630,
-    "y": 600
+    "y": 600,
+    "z": 1
   },
   "hex45": {
     "inheritFrom": {
@@ -329,7 +365,8 @@
     "type": "holder",
     "id": "hex45",
     "x": 761,
-    "y": 600
+    "y": 600,
+    "z": 1
   },
   "hex46": {
     "inheritFrom": {
@@ -338,7 +375,8 @@
     "type": "holder",
     "id": "hex46",
     "x": 892,
-    "y": 600
+    "y": 600,
+    "z": 1
   },
   "hex47": {
     "inheritFrom": {
@@ -347,7 +385,8 @@
     "type": "holder",
     "id": "hex47",
     "x": 1023,
-    "y": 600
+    "y": 600,
+    "z": 1
   },
   "hex49": {
     "inheritFrom": {
@@ -356,7 +395,8 @@
     "type": "holder",
     "id": "hex49",
     "x": 303,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex50": {
     "inheritFrom": {
@@ -365,7 +405,8 @@
     "type": "holder",
     "id": "hex50",
     "x": 434,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex51": {
     "inheritFrom": {
@@ -374,7 +415,8 @@
     "type": "holder",
     "id": "hex51",
     "x": 565,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex52": {
     "inheritFrom": {
@@ -383,7 +425,8 @@
     "type": "holder",
     "id": "hex52",
     "x": 695,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex53": {
     "inheritFrom": {
@@ -392,7 +435,8 @@
     "type": "holder",
     "id": "hex53",
     "x": 826,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex54": {
     "inheritFrom": {
@@ -401,7 +445,8 @@
     "type": "holder",
     "id": "hex54",
     "x": 957,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex55": {
     "inheritFrom": {
@@ -410,7 +455,8 @@
     "type": "holder",
     "id": "hex55",
     "x": 1088,
-    "y": 713
+    "y": 713,
+    "z": 1
   },
   "hex57": {
     "inheritFrom": {
@@ -419,7 +465,8 @@
     "type": "holder",
     "id": "hex57",
     "x": 238,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex58": {
     "inheritFrom": {
@@ -428,7 +475,8 @@
     "type": "holder",
     "id": "hex58",
     "x": 369,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex59": {
     "inheritFrom": {
@@ -437,7 +485,8 @@
     "type": "holder",
     "id": "hex59",
     "x": 500,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex60": {
     "inheritFrom": {
@@ -446,7 +495,8 @@
     "type": "holder",
     "id": "hex60",
     "x": 630,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex61": {
     "inheritFrom": {
@@ -455,7 +505,8 @@
     "type": "holder",
     "id": "hex61",
     "x": 761,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex62": {
     "inheritFrom": {
@@ -464,7 +515,8 @@
     "type": "holder",
     "id": "hex62",
     "x": 892,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex63": {
     "inheritFrom": {
@@ -473,7 +525,8 @@
     "type": "holder",
     "id": "hex63",
     "x": 1023,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "hex64": {
     "inheritFrom": {
@@ -482,7 +535,8 @@
     "type": "holder",
     "id": "hex64",
     "x": 1153,
-    "y": 827
+    "y": 827,
+    "z": 1
   },
   "restartButton": {
     "type": "button",
@@ -623,7 +677,8 @@
         "property": "onlyVisibleForSeat",
         "value": []
       }
-    ]
+    ],
+    "z": 1
   },
   "blueCubes": {
     "type": "holder",
@@ -690,7 +745,8 @@
     ],
     "classes": "transparent",
     "layer": 3,
-    "x": 54
+    "x": 54,
+    "z": 1
   },
   "yellowCubes": {
     "type": "holder",
@@ -702,7 +758,8 @@
     },
     "inheritFrom": {
       "blueCubes": "*"
-    }
+    },
+    "z": 1
   },
   "whiteCubes": {
     "type": "holder",
@@ -714,7 +771,8 @@
     },
     "inheritFrom": {
       "blueCubes": "*"
-    }
+    },
+    "z": 1
   },
   "blackCubes": {
     "type": "holder",
@@ -726,7 +784,8 @@
     },
     "inheritFrom": {
       "blueCubes": "*"
-    }
+    },
+    "z": 1
   },
   "hex1": {
     "type": "holder",
@@ -1053,7 +1112,8 @@
       34,
       35,
       "black.black.black"
-    ]
+    ],
+    "z": 1
   },
   "seat1": {
     "type": "seat",
@@ -1632,7 +1692,8 @@
       }
     ],
     "x": 29,
-    "y": 850
+    "y": 850,
+    "z": 1
   },
   "seat2": {
     "type": "seat",
@@ -2212,7 +2273,8 @@
     ],
     "x": 1381,
     "index": 2,
-    "y": 850
+    "y": 850,
+    "z": 1
   },
   "canvas": {
     "type": "canvas",
@@ -2232,7 +2294,8 @@
     "lineWidth": 3.5,
     "css": {
       "border": "none"
-    }
+    },
+    "z": 1
   },
   "draw1": {
     "id": "draw1",
@@ -2311,7 +2374,8 @@
     "borderRadius": 100,
     "border": "1px solid #00000000",
     "color": "grey",
-    "pID": 1
+    "pID": 1,
+    "z": 1
   },
   "erase1": {
     "id": "erase1",
@@ -2364,7 +2428,8 @@
     "css": {
       "border": "${PROPERTY border}"
     },
-    "borderRadius": 100
+    "borderRadius": 100,
+    "z": 1
   },
   "draw2": {
     "id": "draw2",
@@ -2375,7 +2440,8 @@
     },
     "border": "1px solid #00000000",
     "color": "grey",
-    "pID": 2
+    "pID": 2,
+    "z": 1
   },
   "erase2": {
     "id": "erase2",
@@ -2384,7 +2450,8 @@
     "inheritFrom": {
       "erase1": "*"
     },
-    "border": "1px solid #00000000"
+    "border": "1px solid #00000000",
+    "z": 1
   },
   "rules": {
     "id": "rules",
@@ -2406,7 +2473,8 @@
         ]
       }
     ],
-    "height": 1000
+    "height": 1000,
+    "z": 1
   },
   "rulesButton": {
     "type": "button",
@@ -2470,7 +2538,8 @@
         "property": "onlyVisibleForSeat",
         "value": "${visibleToSeats}"
       }
-    ]
+    ],
+    "z": 1
   },
   "score1": {
     "id": "score1",
@@ -2486,7 +2555,8 @@
     "editable": true,
     "text": 0,
     "x": 84,
-    "y": 780
+    "y": 780,
+    "z": 1
   },
   "score1U": {
     "type": "button",
@@ -2523,7 +2593,8 @@
       }
     ],
     "backgroundColor": "#000000",
-    "borderColor": "#ffffff"
+    "borderColor": "#ffffff",
+    "z": 1
   },
   "score1D": {
     "type": "button",
@@ -2560,7 +2631,8 @@
       }
     ],
     "backgroundColor": "#000000",
-    "borderColor": "#ffffff"
+    "borderColor": "#ffffff",
+    "z": 1
   },
   "score2": {
     "id": "score2",
@@ -2576,7 +2648,8 @@
     "editable": true,
     "text": 0,
     "x": 1434,
-    "y": 780
+    "y": 780,
+    "z": 1
   },
   "score2U": {
     "type": "button",
@@ -2613,7 +2686,8 @@
       }
     ],
     "backgroundColor": "#000000",
-    "borderColor": "#ffffff"
+    "borderColor": "#ffffff",
+    "z": 1
   },
   "score2D": {
     "type": "button",
@@ -2650,56 +2724,64 @@
       }
     ],
     "backgroundColor": "#000000",
-    "borderColor": "#ffffff"
+    "borderColor": "#ffffff",
+    "z": 1
   },
   "3cz8": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "3cz8",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "7q6r": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "7q6r",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "ms1d": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "ms1d",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "uvqr": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "uvqr",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "96az": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "96az",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "hnm5": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "hnm5",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "b2i7": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "b2i7",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "d22w": {
     "deck": "houseDeck",
@@ -2707,308 +2789,352 @@
     "cardType": "blackHouse",
     "id": "d22w",
     "dragging": "Mike",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "p8x2": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "p8x2",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "g3tm": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "g3tm",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "sjpr": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "sjpr",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "16wx": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "16wx",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "rdxa": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "rdxa",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "zjw0": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "zjw0",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "ic3y": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "ic3y",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "306z": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "306z",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "00kj": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "00kj",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "h0c5": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "h0c5",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "xfjb": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "xfjb",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "satw": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "satw",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "fkh7": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "fkh7",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "yw6y": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "yw6y",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "qwoz": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "qwoz",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "qvr6": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "qvr6",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "qq73": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "qq73",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "ppeo": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "ppeo",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "sr7j": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "sr7j",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "path": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "path",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "gqdq": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "gqdq",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "fo37": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "fo37",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "hkit": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "hkit",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "zfpt": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "zfpt",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "w1la": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "w1la",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "8omj": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "8omj",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "cwj9": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "cwj9",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "qcjf": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "qcjf",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "ul5j": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "ul5j",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "73rp": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "73rp",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "71kl": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "71kl",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "w7ub": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "w7ub",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "0izs": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "0izs",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "8i6x": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "8i6x",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "bwzg": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "bwzg",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "2pg7": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "2pg7",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "33g0": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "33g0",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "r1vb": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "r1vb",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "ky3k": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "ky3k",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "v1zy": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blueHouse",
     "id": "v1zy",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "n2ag": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "yellowHouse",
     "id": "n2ag",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "sh78": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "whiteHouse",
     "id": "sh78",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "eysx": {
     "deck": "houseDeck",
     "type": "card",
     "cardType": "blackHouse",
     "id": "eysx",
-    "parent": "housePile"
+    "parent": "qcmg",
+    "z": 1
   },
   "blueHouse1": {
     "type": "holder",
@@ -3024,7 +3150,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "blueHouse"
-    }
+    },
+    "z": 1
   },
   "whiteHouse1": {
     "type": "holder",
@@ -3040,7 +3167,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "whiteHouse"
-    }
+    },
+    "z": 1
   },
   "yellowHouse1": {
     "type": "holder",
@@ -3056,7 +3184,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "yellowHouse"
-    }
+    },
+    "z": 1
   },
   "blackHouse1": {
     "type": "holder",
@@ -3072,7 +3201,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "blackHouse"
-    }
+    },
+    "z": 1
   },
   "blueHouse2": {
     "type": "holder",
@@ -3088,7 +3218,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "blueHouse"
-    }
+    },
+    "z": 1
   },
   "yellowHouse2": {
     "type": "holder",
@@ -3104,7 +3235,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "yellowHouse"
-    }
+    },
+    "z": 1
   },
   "whiteHouse2": {
     "type": "holder",
@@ -3120,7 +3252,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "whiteHouse"
-    }
+    },
+    "z": 1
   },
   "blackHouse2": {
     "type": "holder",
@@ -3136,7 +3269,8 @@
     "dropOffsetY": 0,
     "dropTarget": {
       "cardType": "blackHouse"
-    }
+    },
+    "z": 1
   },
   "turnButton1": {
     "type": "button",
@@ -3193,7 +3327,8 @@
           "draw${turnIndex}"
         ]
       }
-    ]
+    ],
+    "z": 1
   },
   "turnButton2": {
     "inheritFrom": {
@@ -3202,7 +3337,8 @@
     "type": "button",
     "id": "turnButton2",
     "x": 1330,
-    "y": 628
+    "y": 628,
+    "z": 1
   },
   "librarySetupButton": {
     "type": "button",
@@ -3349,9 +3485,10 @@
       {
         "func": "SET",
         "property": "z",
-        "value": null
+        "value": 1
       }
-    ]
+    ],
+    "z": 1
   },
   "tempHolder": {
     "type": "holder",
@@ -3359,7 +3496,8 @@
     "x": -137,
     "y": 635,
     "width": 70,
-    "height": 70
+    "height": 70,
+    "z": 1
   },
   "houseDeck": {
     "type": "deck",
@@ -3428,7 +3566,8 @@
         ]
       }
     ],
-    "hoverParent": "houseHolder"
+    "hoverParent": "houseHolder",
+    "z": 1
   },
   "_meta": {
     "version": 20,
@@ -3445,7 +3584,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1768951218594,
+      "lastUpdate": 1768953609421,
       "showName": true,
       "skill": "",
       "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
@@ -3468,7 +3607,8 @@
     "layer": -4,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/-294869202_53646"
+    "image": "/assets/-294869202_53646",
+    "z": 1
   },
   "whiteCube1": {
     "type": "holder",
@@ -3511,7 +3651,7 @@
         ]
       }
     ],
-    "z": null,
+    "z": 1,
     "id": "whiteCube1",
     "parent": "whiteCubes"
   },
@@ -3556,20 +3696,11 @@
         ]
       }
     ],
-    "z": null,
+    "z": 1,
     "id": "blackCube1",
     "parent": "blackCubes"
   },
-  "housePile": {
-    "type": "pile",
-    "parent": "houseHolder",
-    "x": 4,
-    "y": 4,
-    "width": 60,
-    "height": 60,
-    "id": "housePile"
-  },
-  "nng4": {
+  "blueCube1": {
     "type": "holder",
     "width": 60,
     "height": 60,
@@ -3592,7 +3723,7 @@
     "bgImage": "/assets/-691333523_1805",
     "color": "blue",
     "token": "cube",
-    "clonedFrom": "blueCube1",
+    "clonedFrom": "blueCubeMaster",
     "y": 4,
     "layer": 3,
     "enterRoutine": [
@@ -3610,11 +3741,11 @@
     ],
     "x": 4,
     "dragging": "LawDawg",
-    "z": 31,
-    "id": "nng4",
+    "z": 1,
+    "id": "blueCube1",
     "parent": "blueCubes"
   },
-  "b2uj": {
+  "yellowCube1": {
     "type": "holder",
     "x": 4,
     "y": 4,
@@ -3639,7 +3770,7 @@
     "bgImage": "/assets/1977876427_1801",
     "color": "yellow",
     "token": "cube",
-    "clonedFrom": "yellowCube1",
+    "clonedFrom": "yellowCubeMaster",
     "dragging": "LawDawg",
     "layer": 3,
     "enterRoutine": [
@@ -3655,8 +3786,17 @@
         ]
       }
     ],
-    "z": 34,
-    "id": "b2uj",
+    "z": 1,
+    "id": "yellowCube1",
     "parent": "yellowCubes"
+  },
+  "qcmg": {
+    "type": "pile",
+    "parent": "houseHolder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "qcmg"
   }
 }
