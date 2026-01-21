@@ -52,6 +52,37 @@ jobs:
             exit 1
           fi
 
+      - name: Check library images are square
+        run: |
+          python3 -m pip install --quiet Pillow
+          found_non_square=false
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
+              image_path=$(python3 -c "import json, sys; data = json.load(open('$file')); print(data.get('_meta', {}).get('info', {}).get('image', ''))" 2>/dev/null)
+              if [[ -n "$image_path" ]] && [[ "$image_path" =~ ^/assets/ ]]; then
+                asset_name=$(basename "$image_path")
+                game_dir=$(dirname "$file")
+                asset_file="$game_dir/assets/$asset_name"
+                if [[ -f "$asset_file" ]]; then
+                  dimensions=$(python3 -c "from PIL import Image; img = Image.open('$asset_file'); print(f'{img.width}x{img.height}')" 2>/dev/null)
+                  if [ $? -eq 0 ]; then
+                    width=$(echo "$dimensions" | cut -d'x' -f1)
+                    height=$(echo "$dimensions" | cut -d'x' -f2)
+                    if [ "$width" != "$height" ]; then
+                      echo "❌ $file: library image $asset_file is not square (${width}x${height})"
+                      found_non_square=true
+                    else
+                      echo "✅ $file: library image $asset_file is square (${width}x${height})"
+                    fi
+                  fi
+                fi
+              fi
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          if [ "$found_non_square" = true ]; then
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
