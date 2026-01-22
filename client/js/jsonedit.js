@@ -2042,8 +2042,7 @@ function jeCommandOptions() {
 export async function jeClick(widget, e) {
   if(e.ctrlKey) {
     jeSelectWidget(widget, e.shiftKey || e.which == 3 || e.button == 2);
-  } else {
-    await widget.click();
+    return true;
   }
 }
 
