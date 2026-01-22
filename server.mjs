@@ -7,7 +7,6 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
-import rateLimit from 'express-rate-limit';
 
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
@@ -23,13 +22,6 @@ try { crawlers = JSON.parse(fs.readFileSync('node_modules/crawler-user-agents/cr
 const app = express();
 const server = http.Server(app);
 const router = express.Router();
-
-const apiLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Limit each IP to 100 requests per window
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
 
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
@@ -322,7 +314,7 @@ MinifyHTML().then(function(result) {
     res.send(JSON.stringify(customWidgets));
   });
 
-  router.post('/api/widgets', apiLimiter, bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.post('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const widget = req.body;
     if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
@@ -341,7 +333,7 @@ MinifyHTML().then(function(result) {
     res.send({ id });
   });
 
-  router.put('/api/widgets', apiLimiter, bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const data = req.body;
     if (typeof data === 'object' && data !== null) {
@@ -352,7 +344,7 @@ MinifyHTML().then(function(result) {
     res.send('OK');
   });
 
-  router.put('/api/widgets/:id', apiLimiter, bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+  router.put('/api/widgets/:id', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const widget = req.body;
     if (typeof widget !== 'object' || widget === null || !widget.id || !Array.isArray(widget.widgets)) {
@@ -366,7 +358,7 @@ MinifyHTML().then(function(result) {
     res.send('OK');
   });
 
-  router.delete('/api/widgets/:id', apiLimiter, function(req, res, next) {
+  router.delete('/api/widgets/:id', function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     customWidgets.widgets = customWidgets.widgets.filter(w => w.id !== req.params.id);
     if (Array.isArray(customWidgets.groups)) {
@@ -502,7 +494,7 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
-  router.put('/asset/:link', apiLimiter, async function(req, res) {
+  router.put('/asset/:link', async function(req, res) {
     try {
       if (assetCache[req.params.link]) {
         res.send(`/assets${assetCache[req.params.link]}`);
@@ -521,7 +513,7 @@ MinifyHTML().then(function(result) {
     }
   });
 
-  router.put('/asset', apiLimiter, bodyParser.raw({ limit: '10mb' }), function(req, res) {
+  router.put('/asset', bodyParser.raw({ limit: '10mb' }), function(req, res) {
     const filename = `/${CRC32.buf(req.body)}_${req.body.length}`;
     if(!Config.resolveAsset(filename.substr(1)))
       fs.writeFileSync(assetsdir + filename, req.body);

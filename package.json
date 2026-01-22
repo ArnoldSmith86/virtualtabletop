@@ -57,8 +57,7 @@
     "express": "^5.1.0",
     "jszip": "^3.10.1",
     "node-fetch": "^3.3.2",
-    "ws": "^8.18.3",
-    "express-rate-limit": "^7.1.5"
+    "ws": "^8.18.3"
   },
   "optionalDependencies": {
     "crawler-user-agents": "^1.21.0"
