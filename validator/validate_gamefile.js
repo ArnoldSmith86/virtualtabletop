@@ -529,6 +529,8 @@ function validateRoutine(routine, context, propertyPath = []) {
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
         if(func === 'TURN')
             context.validCollections[operation.collection || 'TURN'] = 1;
+        if(func === 'UPLOAD')
+            context.validVariables[operation.variable || 'uploadedFileName'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
@@ -784,6 +786,10 @@ const operationProps = {
         'turnCycle': getEnumValidator(['forward','backward','random','position','seat']),
         'source': 'inCollection',
         'collection': 'string'
+    },
+    'UPLOAD': {
+        'fileTypes': v=>Array.isArray(v) && v.every(x=>typeof x === 'string'),
+        'variable': 'string'
     },
     'VAR': {
         'variables': 'object'
