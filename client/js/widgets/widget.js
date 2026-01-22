@@ -2050,6 +2050,20 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'UPLOAD') {
+        setDefaults(a, { variable: 'uploadedFileName', fileTypes: null });
+        const uploadedAsset = await uploadAsset(null, a.fileTypes);
+        if(!String(uploadedAsset).match(/^\/assets\/[0-9_-]+$/)) {
+          variables[a.variable] = false;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        } else {
+          variables[a.variable] = uploadedAsset;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
+        }
+      }
+
       if(a.func == 'TURN') {
         setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
         if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
