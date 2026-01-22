@@ -112,6 +112,7 @@ But who knows, maybe you'll enjoy a different platform more than ours:
 | Platform | Free | Open Source | Browser-Based | Create Own Games | Play without account | Ad-Free | Rule enforcement | Real-time | Asynchronous | AI Opponents | Mobile Support |
 |----------|------|-------------|---------------|------------------|------------|---------|-----------------|-----------|--------------|--------------|---------------|
 | **[18xx.games](https://18xx.games)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | <details><summary>❌</summary>No online multiplayer without account.</details> | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| **[Abstract Play](https://abstractplay.com/)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ❌ | ✅ | ✅ | ❌ | ✅ | ? | ? |
 | **[Board Game Arena](https://boardgamearena.com)** | <details><summary>✅</summary>Many games are free. Many aren't.</details> | ❌ | ✅ | <details><summary>❌</summary>Only with coding and rights to the game.</details> | ❌ | <details><summary>❌</summary>Minor and relevant ads.</details> | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only tutorials and demos.</details> | ✅ |
 | **[BoardSpace.net](https://boardspace.net)** | ✅ | ✅ | <details><summary>✅</summary>It's an app but can be used in the browser.</details> | <details><summary>❌</summary>Only with coding.</details> | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **[Board Together](https://boardtogether.games)** | ✅ | ✅ | ✅ | <details><summary>❌</summary>Only with coding.</details> | ❌ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
