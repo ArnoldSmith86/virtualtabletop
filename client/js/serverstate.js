@@ -574,13 +574,7 @@ async function removeWidgetLocal(widgetID, keepChildren) {
   if(widgets.get(widgetID).inRemovalQueue)
     return;
 
-  const toRemove = getWidgetsToRemove(widgetID);
-  if(typeof setSelection != 'undefined') {
-    const idsToRemove = new Set(toRemove.map(w => w.id));
-    setSelection(selectedWidgets.filter(w => !idsToRemove.has(w.id)));
-  }
-
-  for(const w of toRemove) {
+  for(const w of getWidgetsToRemove(widgetID)) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
