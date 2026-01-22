@@ -14,7 +14,7 @@ Free. Open-source. No accounts. No ads. Easy to self-host.
 
 <br>
 
-> In December 2020 we started with 10 games. In June 2022 we passed 100 games in our public library of included games. By the end of 2025, we had over 280 games.
+> In December 2020 we started with 10 games. In June 2022 we passed 100 games in our public library of included games. By the end of January 2026, we had reached 300 games.
 
 - **Classic board games**: Chess, Checkers, Backgammon, Nine Men's Morris, ...
 - **Classic card games**: Poker, Jass, Whist, Doppelkopf, ...
@@ -105,7 +105,7 @@ Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/C
 
 ## 🧩 Similar platforms
 
-Note that virtualtabletop.io is heavily inspired by playingcards.io. We spent a lot of time building [games](https://www.reddit.com/r/PlayingCardsIO/) and [tools](https://www.reddit.com/r/PlayingCardsIO/comments/inuocb/pcio_editor/) for playingcards.io. It is an amazing platform and definitely easier to get into than virtualtabletop.io but at some point, we craved more features and were afraid of the platform simply disappearing - making our games and tools useless. So in October 2020, a spark by Castux [ignited a fire in me](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/comment/ga5zp5b/) to create an open source, self-hostable alternative.
+Note that virtualtabletop.io is heavily inspired by playingcards.io. We spent a lot of time building [games](https://www.reddit.com/r/PlayingCardsIO/) and [tools](https://www.reddit.com/r/PlayingCardsIO/comments/inuocb/pcio_editor/) for playingcards.io. It is an amazing platform and definitely easier to get into than virtualtabletop.io but at some point, we craved more features and were afraid of the platform simply disappearing - making our games and tools useless. So in October 2020, a spark by Castux [ignited a fire in one of us (ArnoldSmith86)](https://www.reddit.com/r/PlayingCardsIO/comments/jiajth/comment/ga5zp5b/) to create an open source, self-hostable alternative. While ArnoldSmith86 wrote the first code, many others have made substantial contributions over the years.
 
 But who knows, maybe you'll enjoy a different platform more than ours:
 
