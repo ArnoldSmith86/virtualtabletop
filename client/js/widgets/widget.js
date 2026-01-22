@@ -2056,11 +2056,11 @@ export class Widget extends StateManaged {
         if(uploadedAsset === null) {
           variables[a.variable] = false;
           if(jeRoutineLogging)
-        jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
         } else {
           variables[a.variable] = uploadedAsset;
           if(jeRoutineLogging)
-        jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`)
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
         }
       }
 
