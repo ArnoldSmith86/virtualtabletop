@@ -20,6 +20,20 @@ let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
 
+function applyCustomCss(gameSettings) {
+  let style = document.getElementById('globalCss');
+  if (style)
+    style.innerHTML = '';
+  if (gameSettings && (gameSettings.globalCss || gameSettings.cursorCss)) {
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'globalCss';
+      document.head.appendChild(style);
+    }
+    style.appendChild(document.createTextNode((gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '')));
+  }
+}
+
 function generateUniqueWidgetID() {
   let id;
   do {
@@ -288,6 +302,16 @@ export function batchEnd() {
   sendDelta();
 }
 
+export function flushDelta() {
+  const currentBatchDepth = batchDepth;
+  const currentDeltaCause = delta.c;
+  batchDepth = 0;
+  sendDelta();
+  if(currentDeltaCause)
+    delta.c = currentDeltaCause;
+  batchDepth = currentBatchDepth;
+}
+
 function setDeltaCause(cause) {
   if(!delta.c)
     delta.c = cause;
@@ -437,6 +461,9 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
+  // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
+  currentGameSettings = args._meta.gameSettings || {};
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   const topSurface = $('#topSurface');
@@ -547,7 +574,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
+    if(!w.isLimbo)
+      await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
   }
 }
@@ -584,5 +612,10 @@ export function widgetFilter(callback) {
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('meta', (args) => {
+    if(args.meta) {
+      applyCustomCss(args.meta.gameSettings);
+    }
+  });
   setScale();
 });

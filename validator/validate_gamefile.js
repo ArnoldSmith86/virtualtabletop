@@ -54,7 +54,7 @@ const COMMON_PROPERTIES = {
     layer: 'number',
     borderRadius: 'any',
     rotation: 'number',
-    scale: 'number',
+    scale: v=>typeof v === 'number' || typeof v === 'string' && !!String(v).match(/^-[0-9.]+,[0-9.]+$|^[0-9.]+,-[0-9.]+$/) || 'number expected (or special string for flipping: -x,y or x,-y)',
     ignoreZoom: 'boolean',
     dragLimit: 'any',
     classes: 'string',
@@ -86,6 +86,7 @@ const COMMON_PROPERTIES = {
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
     clickRoutine: 'routine',
+    doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
     enterRoutine: getRoutineValidator({}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
@@ -166,7 +167,9 @@ const WIDGET_PROPERTIES = {
                 
                 // Check for $ in face-level properties
                 for(const [key, value] of Object.entries(face)) {
-                    problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, key]));
+                    if(key != 'objects') {
+                        problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, key]));
+                    }
                 }
                 
                 // Check for unused face-level properties
@@ -194,8 +197,9 @@ const WIDGET_PROPERTIES = {
                         }
                         
                         // Check for $ in object properties
-                        for(const [key, value] of Object.entries(obj)) {
-                            problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, 'objects', objIndex, key]));
+                        if(obj.type != 'html')
+                            for(const [key, value] of Object.entries(obj)) {
+                                problems.push(...checkForDollarSign(value, p, [...propertyPath, faceIndex, 'objects', objIndex, key]));
                         }
                         
                         // Check for properties defined both directly and through dynamicProperties
@@ -212,7 +216,7 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note'];
+                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note', 'size'];
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
                                 problems.push({
@@ -296,6 +300,20 @@ function parsePropertySyntax(string) {
     const match               = string.match(new RegExp(`^\\$\\{(?:${property})\\}` + '\x24'));
 
     return match;
+}
+
+function validateGetProperty(value, context, propertyPath = []) {
+    if (typeof value === 'string' && value.length > 0) {
+        return validators.property(value, context);
+    }
+    if (Array.isArray(value) && value.length > 0) {
+        return validators.property(value[0], context);
+    }
+    return [{
+        widget: context.widgetId,
+        property: propertyPath,
+        message: 'GET property must be a non-empty string or array'
+    }];
 }
 
 function validateRoutine(routine, context, propertyPath = []) {
@@ -509,6 +527,8 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
+        if(func === 'TURN')
+            context.validCollections[operation.collection || 'TURN'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
@@ -612,6 +632,9 @@ const operationProps = {
         'owner':      'string',
         'variable':   'string'
     },
+    'DELAY': {
+        'milliseconds': 'positiveNumber'
+    },
     'DELETE': { 
         'collection': 'inCollection'
     },
@@ -642,7 +665,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    'property',
+        'property':    validateGetProperty,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -923,6 +946,8 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
+                } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
+                    customProperties.add(value[0]);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
@@ -935,7 +960,7 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 }
             }
-            
+
             // Recursively scan nested objects
             scanForProperties(value);
         }
@@ -949,6 +974,9 @@ function getCustomPropertyUsage(data) {
         
         // Scan widget properties
         scanForProperties(widget);
+
+        if(widget.type === 'scoreboard')
+            customProperties.add(widget.scoreProperty || 'score');
     }
     
     return [...customProperties];
@@ -1161,12 +1189,13 @@ function validateGameFile(data, checkMeta) {
             }
         }
         
-        // BGG URL validation
-        if (!/^https?:\/\/(www\.)?boardgamegeek\.com\//.test(info.bgg)) {
+        // BGG URL validation (skip for tutorials)
+        const metaMode = (info.mode || '').toLowerCase();
+        if (metaMode !== 'tutorial' && !/^https?:\/\/(www\.)?boardgamegeek\.com\/boardgame\//.test(info.bgg)) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'bgg'],
-                message: 'does not look like a BoardGameGeek URL'
+                message: 'does not look like a BoardGameGeek boardgame URL'
             });
         }
     

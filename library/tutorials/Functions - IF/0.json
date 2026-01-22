@@ -166,24 +166,6 @@
     "x": 4,
     "y": 4,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -664,7 +646,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -680,9 +661,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1211,7 +1193,7 @@
     "id": "8fr3"
   },
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - IF",
       "image": "/assets/243082235_3096",
@@ -1222,7 +1204,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068335037,
+      "lastUpdate": 1768612833432,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1235,6 +1217,9 @@
       "variant": "Overview",
       "language": "en-US",
       "players": "1"
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "4gwy": {
@@ -1368,13 +1353,8 @@
     "id": "Holder1",
     "x": 1368.5,
     "y": 631,
-    "width": 111,
-    "height": 168,
     "z": 1798,
-    "movable": null,
-    "movableInEdit": null,
-    "dropTarget": {},
-    "groupdeal": "yes"
+    "dropTarget": {}
   },
   "nbzu": {
     "type": "button",
@@ -1422,12 +1402,6 @@
     "x": 4,
     "y": 4,
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -1596,7 +1570,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -1612,9 +1585,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -2067,15 +2041,15 @@
   "h5ey": {
     "classes": "classicPiece",
     "color": "#e2a633",
-    "width": 90,
-    "height": 90,
-    "x": 1496,
-    "y": 609,
+    "width": 56,
+    "height": 84,
+    "x": 1513,
+    "y": 612,
     "z": 40,
     "id": "h5ey"
   },
   "o48j": {
-    "text": "Uses the 2 operand version of IF. This routine moves a card into the empty holder, but only if it is empty.  If there is anything in it (a card, another widget, etc.) then nothing will be moved.  Compare this to a similar feature in the SKIP tutorial.",
+    "text": "Uses the 2 operand version of IF. This routine moves a card into the empty holder, but only if it is empty.  If there is anything in it (a card, another widget, etc.) then nothing will be moved.",
     "z": 36,
     "x": 1155,
     "y": 850,

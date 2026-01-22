@@ -212,7 +212,13 @@
     "html": "As a final example in this overview, let's create a new array by using a <b>loopRoutine</b> to add 100 to each value in the array we have been working with. Make sure you have pressed all the previous buttons in order and then click the button above look at the JSON output.<br/><br/>This just scratches the surface of all the things possible with arrays. Look at the other variants for more detail or see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>."
   },
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Arrays",
       "image": "/assets/-2038908983_7396",
@@ -223,7 +229,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748991356662,
+      "lastUpdate": 1763605491575,
       "skill": "",
       "description": "",
       "similarImage": "",

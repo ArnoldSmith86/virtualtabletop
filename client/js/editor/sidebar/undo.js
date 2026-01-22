@@ -2,10 +2,12 @@ class UndoModule extends SidebarModule {
   constructor() {
     super('undo', 'History', 'Undo changes from editing or playing.');
     this.lastRenderedIndex = -2;
+    this.latestEntryDOM = null;
   }
 
   onClose() {
     this.lastRenderedIndex = -2;
+    this.latestEntryDOM = null;
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -15,6 +17,7 @@ class UndoModule extends SidebarModule {
           entry.remove();
         this.lastRenderedIndex = -1;
         this.resetOnNextDelta = false;
+        this.latestEntryDOM = null;
       }
       this.renderModule(this.moduleDOM);
     }
@@ -45,6 +48,11 @@ class UndoModule extends SidebarModule {
 
     this.protocol = [...getUndoProtocol()];
 
+    if(this.latestEntryDOM) {
+      const d = this.protocol[this.lastRenderedIndex].delta;
+      this.latestEntryDOM.innerText = `${this.lastRenderedIndex+1} - ${d.c || 'unknown'} (${Object.keys(d.s).length} widget${Object.keys(d.s).length == 1 ? '' : 's'} changed)`;
+    }
+
     for(let i=this.lastRenderedIndex+1; i<this.protocol.length; ++i) {
       const div = document.createElement('div');
       const affectedWidgets = Object.keys(this.protocol[i].delta.s);
@@ -52,6 +60,7 @@ class UndoModule extends SidebarModule {
       div.onclick = _=>this.onEntryClick(i, div);
       div.className = 'undoEntry';
       this.moduleDOM.insertBefore(div, $('.undoEntry', this.moduleDOM));
+      this.latestEntryDOM = div;
 
       if(i == this.protocol.length-1)
         this.setActiveIndex(i, div);

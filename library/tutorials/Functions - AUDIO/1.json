@@ -39,24 +39,6 @@
     "x": 4,
     "y": 4,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1012,7 +994,6 @@
       {
         "func": "AUDIO",
         "source": "/assets/246026332_3761",
-        "type": "audio/mpeg",
         "maxVolume": 1,
         "player": "${playerName}"
       },
@@ -1064,7 +1045,7 @@
     "text": "This button sets a length for the audio to play in milliseconds and reduces the volume to 80% of the maximum. Users can also adjust the volume or silence sounds by using the 'sound' slider in the main menu toolbar."
   },
   "_meta": {
-    "version": 16,
+    "version": 20,
     "info": {
       "name": "Functions - AUDIO",
       "image": "/assets/-648207956_3845",
@@ -1075,7 +1056,7 @@
       "time": "0",
       "attribution": "The rolling dice and card moving sounds in this tutorial are by Interitus and are released to the Public Domain by CC0.<div><br></div><div>The bell sound and the excerpt of the song are available under CC0 from Wikiemedia Commons at:</div><div><br></div><div><ul><li>https://commons.wikimedia.org/wiki/File:406243_stubb_typewriter-ding-near-mono.wav</li><li>https://commons.wikimedia.org/wiki/File:Beethoven_Piano_Concerto_4_slow_movement,_bars_47-55.wav</li></ul></div>",
       "showName": false,
-      "lastUpdate": 1749067786736,
+      "lastUpdate": 1768608618173,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1084,10 +1065,13 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "AUDIO",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "AUDIO",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "40ug": {
