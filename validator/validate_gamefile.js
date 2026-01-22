@@ -303,6 +303,20 @@ function parsePropertySyntax(string) {
     return match;
 }
 
+function validateGetProperty(value, context, propertyPath = []) {
+    if (typeof value === 'string' && value.length > 0) {
+        return validators.property(value, context);
+    }
+    if (Array.isArray(value) && value.length > 0) {
+        return validators.property(value[0], context);
+    }
+    return [{
+        widget: context.widgetId,
+        property: propertyPath,
+        message: 'GET property must be a non-empty string or array'
+    }];
+}
+
 function validateRoutine(routine, context, propertyPath = []) {
     const problems = [];
 
@@ -514,6 +528,8 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
+        if(func === 'TURN')
+            context.validCollections[operation.collection || 'TURN'] = 1;
         if(func === 'UPLOAD')
             context.validVariables[operation.variable || 'uploadedFileName'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
@@ -652,7 +668,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    'property',
+        'property':    validateGetProperty,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -937,6 +953,8 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
+                } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
+                    customProperties.add(value[0]);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
@@ -949,7 +967,7 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 }
             }
-            
+
             // Recursively scan nested objects
             scanForProperties(value);
         }
@@ -963,6 +981,9 @@ function getCustomPropertyUsage(data) {
         
         // Scan widget properties
         scanForProperties(widget);
+
+        if(widget.type === 'scoreboard')
+            customProperties.add(widget.scoreProperty || 'score');
     }
     
     return [...customProperties];
@@ -1203,6 +1224,99 @@ function validateGameFile(data, checkMeta) {
                 property: ['_meta', 'info', 'image'],
                 message: 'image is bigger than 50000 - a good target is 600x600 @ WebP 60% quality'
             });
+        }
+        
+        // Players validation
+        if (info.players === undefined || info.players === null || String(info.players).trim() === '') {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'players'],
+                message: 'is missing or empty'
+            });
+        } else {
+            const playersStr = String(info.players).trim();
+            const tokens = playersStr.split(',');
+            for (let i = 0; i < tokens.length; i++) {
+                const token = tokens[i].trim();
+                const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
+                if (!match) {
+                    problems.push({
+                        widget: '',
+                        property: ['_meta', 'info', 'players'],
+                        message: `invalid player count format: "${token}" (expected format: "2", "2-4", "2+", or comma-separated values like "2,4,6")`
+                    });
+                } else {
+                    const min = parseInt(match[1], 10);
+                    if (match[2] === '+') {
+                        // "2+" format is valid
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (minimum must be at least 1)`
+                            });
+                        }
+                    } else if (match[2] && match[2].startsWith('-')) {
+                        // Range format "2-4"
+                        const max = parseInt(match[3], 10);
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (minimum must be at least 1)`
+                            });
+                        } else if (max < min) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count range: "${token}" (maximum ${max} is less than minimum ${min})`
+                            });
+                        }
+                    } else {
+                        // Single number format "2"
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (must be at least 1)`
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Mode validation
+        if (info.mode === undefined || info.mode === null || String(info.mode).trim() === '') {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'mode'],
+                message: 'is missing or empty'
+            });
+        } else {
+            const modeStr = String(info.mode).trim();
+            const allowedModes = ['vs', 'coop', 'solo', 'teams', 'asymmetrical', 'tutorial'];
+            
+            // Split by comma or semicolon
+            const modes = modeStr.split(/[,;] /);
+            
+            if (modes.length === 0) {
+                problems.push({
+                    widget: '',
+                    property: ['_meta', 'info', 'mode'],
+                    message: 'mode contains only separators (comma/semicolon)'
+                });
+            } else {
+                for (const mode of modes) {
+                    if (!allowedModes.includes(mode.toLowerCase())) {
+                        problems.push({
+                            widget: '',
+                            property: ['_meta', 'info', 'mode'],
+                            message: `invalid mode value: "${mode}" (allowed values: ${allowedModes.join(', ')}, or comma/semicolon-separated combinations)`
+                        });
+                    }
+                }
+            }
         }
     }
     return problems;

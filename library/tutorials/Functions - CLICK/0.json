@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - CLICK",
       "image": "/assets/-1155107578_3739",
@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068021662,
+      "lastUpdate": 1768608801565,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,10 +20,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Basic",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Basic",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "yqji": {
@@ -140,12 +143,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -314,7 +311,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -330,9 +326,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }

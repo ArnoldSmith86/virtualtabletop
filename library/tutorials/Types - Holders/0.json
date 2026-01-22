@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder",
       "image": "/assets/-1144102332_4316",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1748992077634,
+      "lastUpdate": 1768189116274,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -96,12 +99,6 @@
     "id": "x80kD",
     "parent": "x80k",
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },

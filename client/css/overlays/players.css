@@ -33,19 +33,36 @@
 }
 
 .teamColor {
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  border-radius: 100%;
-  display: inline-block;
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
-  width: 2em;
-  height: 2em;
+  border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.25);
-  flex-basis: 2em;
-  flex-grow: 0;
+  box-sizing: border-box;
+}
+.teamColorWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 2em;
   height: 2em;
+  flex: 0 0 2em;
+}
+.teamColorIcon {
+  position: absolute;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1em;
+  line-height: 1;
+  pointer-events: none;
 }
 .teamColor::-webkit-color-swatch-wrapper {
   padding: 0;
@@ -53,11 +70,6 @@
 }
 .teamColor::-webkit-color-swatch {
   border-radius: 100%;
-  /* background properties broken up to avoid erasing the selected colors */
-  background-image: url(i/icons-white/user-solid-svg.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 1em;
 }
 .teamColor::-moz-color-swatch-wrapper {
   padding: 0;
@@ -65,11 +77,6 @@
 }
 .teamColor::-moz-color-swatch  {
   border-radius: 100%;
-  /* background properties broken up to avoid erasing the selected colors */
-  background-image: url(i/icons-white/user-solid-svg.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 1em;
 }
 
 #playerList .myPlayerEntry input{

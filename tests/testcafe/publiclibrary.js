@@ -70,22 +70,18 @@ publicLibraryButtons('Reward',             0, '5290d9113f42a3c0e458a788b5a1ea99'
 ]);
 publicLibraryButtons('Rummy Tiles',        0, '2625ca4661785ca9a75cdf93d6379427', [ 'startMix', 'draw14' ]);
 publicLibraryButtons('Undercover',         1, 'dccab2340f9bff4b4126141abc742aca', [ 'Reset', 'Spy Master Button' ]);
-publicLibraryButtons('Functions - CALL',   0, '4c3fd4ade5c1ee5cee34b7ff46cb2cb1', [
+publicLibraryButtons('Functions - CALL',   0, 'bb8636a3e2b6724d4f729bff546f354d', [
   'n4cw_8_C', '5a52', '5a52', '66kr', 'qeg1', 'n4cwB', '8r6p', 'qeg1', 'qeg1', 'n5eu'
 ]);
-publicLibraryButtons('Functions - CLICK',  0, 'd44e77e0782cadbc9594494e5a83dde0', [ '7u2q' ]);
-publicLibraryButtons('Functions - ROTATE', 0, '1fe2b6cb79a5da9e9aa70c52544fe555', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
-publicLibraryButtons('Functions - SELECT', 2, '65881371547e86a6837d28c6640be9fe', [ 'jkmt1']);
-publicLibraryButtons('Functions - SORT',   1, '062e43d545dc0648d770981585d2f894', [
+publicLibraryButtons('Functions - CLICK',  0, 'ac3480f0750e9223d6585256d19aa3ab', [ '7u2q' ]);
+publicLibraryButtons('Functions - ROTATE', 0, '5da18c83415df22ca3fc10aba392359e', [ 'c44c', '9kdj', 'w53c', 'w53c' ]);
+publicLibraryButtons('Functions - SELECT', 2, '3c78aba40f3804b70d4d8139d42dc904', [ 'jkmt1']);
+publicLibraryButtons('Functions - SORT',   1, '1fba3113ce09f517f301238fd0626c94', [
   'ingw', 'k131', 'cnfu', 'i6yz', 'z394', '0v3h', '1h8o', 'v5ra', 'ingw-copy001', 'k131-copy001', 'cnfu-copy001',
   'i6yz-copy001', 'z394-copy001', '0v3h-copy001'
 ]);
-publicLibraryButtons('Xtras - Master Button',      0, 'eb19dffdb38641d5556e5fdb2c47c62b', [
-  'masterbutton', 'redbutton', 'orangebutton', 'yellowbutton', 'greenbutton', 'bluebutton', 'indigobutton',
-  'violetbutton', 'fae4', 'vbx5'
-]);
 publicLibraryButtons('Functions - SCORE', 0, '88c8ef94e7d34f69bf8d0844acce2dfc', [ 'button2', 'button2', 'button7', 'button15', 'seat9', 'scorePlus', 'button17']);
-publicLibraryButtons('Types - Scoreboard', 2, '458a8e4b7232bc38e151be7e4c7705bf', [ 'button1', 'button2', 'button3', 'button4']);
+publicLibraryButtons('Types - Scoreboard', 2, '5b7dbc6f94827871cf11ac913228d7f3', [ 'button1', 'button2', 'button3', 'button4']);
 
 publicLibraryButtons('Types - Dice', 0, 'c2baa316f0f7e04f64af7701cd41b0a9', [ 'dice3', 'dice4', 'dice5',]);
-publicLibraryButtons('Types - Dice', 3, '9765144109f8962db823161e4bf1d2d8', [ 'dice2', 'dice1', 'button2', 'dice4']);
+publicLibraryButtons('Types - Dice', 3, '92066ae0af20d6e26ef447d024fb740a', [ 'dice2', 'dice1', 'button2', 'dice4']);
