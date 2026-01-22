@@ -1268,13 +1268,11 @@ export class Widget extends StateManaged {
         setDefaults(a, { collection: 'DEFAULT' });
         const collection = getCollection(a.collection);
         if(collection) {
-          const promises = [];
           for(const w of collections[collection]) {
-            promises.push(removeWidgetLocal(w.get('id')));
+            await removeWidgetLocal(w.get('id'));
             for(const c in collections)
               collections[c] = collections[c].filter(x=>x!=w);
           }
-          await Promise.all(promises);
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary( `'${a.collection}'`)
         }
