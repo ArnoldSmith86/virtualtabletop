@@ -25,7 +25,6 @@ const router = express.Router();
 
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
-const assetCache = fs.existsSync(assetsdir + '/cache.json') ? JSON.parse(fs.readFileSync(assetsdir + '/cache.json')) : {};
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
 let customWidgets = (() => {
   if (!fs.existsSync('library/widgets.json')) return { widgets: [], groups: [] };
@@ -496,17 +495,10 @@ MinifyHTML().then(function(result) {
 
   router.put('/asset/:link', async function(req, res) {
     try {
-      if (assetCache[req.params.link]) {
-        res.send(`/assets${assetCache[req.params.link]}`);
-        return;
-      }
       const content = Buffer.from(await (await fetch(req.params.link)).arrayBuffer());
       const filename = `/${CRC32.buf(content)}_${content.length}`;
-      if(!Config.resolveAsset(filename.substr(1))) {
+      if(!Config.resolveAsset(filename.substr(1)))
         fs.writeFileSync(assetsdir + filename, content);
-      }
-      assetCache[req.params.link] = filename;
-      fs.writeFileSync(assetsdir + '/cache.json', JSON.stringify(assetCache));
       res.send(`/assets${filename}`);
     } catch(e) {
       res.status(404).send('Downloading external asset failed.');
