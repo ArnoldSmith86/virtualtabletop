@@ -638,7 +638,11 @@ class WidgetsModule extends SidebarModule {
                 tempState.x = (s.x || 0) - minX;
                 tempState.y = (s.y || 0) - minY;
               }
-              if (tempState.deck) tempState.deck = idMap.get(tempState.deck);
+              if (tempState.deck) {
+                if(!idMap.has(tempState.deck))
+                  continue;
+                tempState.deck = idMap.get(tempState.deck);
+              }
 
               previewWidget.applyInitialDelta(tempState);
 
