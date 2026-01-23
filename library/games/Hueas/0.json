@@ -311,16 +311,11 @@
     "id": "hexMaster",
     "x": 174,
     "y": -203,
-    "width": 86.6,
-    "height": 86.6,
+    "width": 112,
+    "height": 112,
     "movableInEdit": false,
-    "css": {
-      "border-radius": "100%",
-      "background": "transparent",
-      "border": "1px solid #00000060"
-    },
-    "dropOffsetX": 9,
-    "dropOffsetY": 9,
+    "dropOffsetX": 25,
+    "dropOffsetY": 25,
     "dropTarget": {},
     "grid": [
       {
@@ -369,6 +364,10 @@
           },
           {
             "func": "GET",
+            "property": "historyColor"
+          },
+          {
+            "func": "GET",
             "property": "colorType"
           },
           {
@@ -380,7 +379,7 @@
             "widget": "historyLabel",
             "routine": "addendumRoutine",
             "arguments": {
-              "addendum": "<b>${playerName}</b> captured a <span style='color:${color}'>marble</span>"
+              "addendum": "<b>${playerName}</b> captured a <span style='color:${historyColor}'>${historyColor} piece</span>"
             }
           }
         ]
@@ -393,789 +392,23 @@
             "func": "SET",
             "collection": "child",
             "property": "x",
-            "value": 19
+            "value": 32
           },
           {
             "func": "SET",
             "collection": "child",
             "property": "y",
-            "value": -2
+            "value": 13
           }
         ]
       }
-    ]
-  },
-  "background": {
-    "id": "background",
-    "width": 1920,
-    "height": 960,
-    "scale": 1.09,
-    "layer": -4,
-    "movable": false,
-    "movableInEdit": false,
+    ],
     "css": {
-      "opacity": "0.6"
-    },
-    "image": "/assets/-52589506_548214"
-  },
-  "orange1": {
-    "id": "orange1",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "green1": {
-    "id": "green1",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue1": {
-    "id": "blue1",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "pink1": {
-    "id": "pink1",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "white1": {
-    "id": "white1",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "black1": {
-    "id": "black1",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "orange2": {
-    "id": "orange2",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "orange3": {
-    "id": "orange3",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "orange4": {
-    "id": "orange4",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "orange5": {
-    "id": "orange5",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "orange6": {
-    "id": "orange6",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "orange7": {
-    "id": "orange7",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(230,159,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 1,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "green2": {
-    "id": "green2",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "green3": {
-    "id": "green3",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "green4": {
-    "id": "green4",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "green5": {
-    "id": "green5",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "green6": {
-    "id": "green6",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "green7": {
-    "id": "green7",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,158,115)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 2,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue2": {
-    "id": "blue2",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue3": {
-    "id": "blue3",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue4": {
-    "id": "blue4",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue5": {
-    "id": "blue5",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue6": {
-    "id": "blue6",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "blue7": {
-    "id": "blue7",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,114,178)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 3,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "pink2": {
-    "id": "pink2",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "pink3": {
-    "id": "pink3",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "pink4": {
-    "id": "pink4",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "pink5": {
-    "id": "pink5",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "pink6": {
-    "id": "pink6",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "pink7": {
-    "id": "pink7",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(204,121,167)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 4,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "white2": {
-    "id": "white2",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "white3": {
-    "id": "white3",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "white4": {
-    "id": "white4",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
+      "default": {
+        "background-color": "#e6e1c2",
+        "clip-path": "polygon(25% 6.67%, 75% 6.67%, 100% 50%, 75% 93.33%, 25% 93.33%, 0% 50%)"
+      }
+    }
   },
   "marbleHolder": {
     "type": "holder",
@@ -1608,9 +841,7 @@
         "elseRoutine": []
       }
     ],
-    "parent": "seatArea1",
-    "color": "#00bcd4",
-    "glowColor": "#007088"
+    "parent": "seatArea1"
   },
   "seatArea1": {
     "id": "seatArea1",
@@ -1642,9 +873,7 @@
     "parent": "seatArea2",
     "player": "",
     "mainColor": "#dddddd",
-    "textColor": "#000000",
-    "color": "#ffc107",
-    "glowColor": "#b37500"
+    "textColor": "#000000"
   },
   "historyRecent": {
     "id": "historyRecent",
@@ -1925,24 +1154,24 @@
       "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
     },
     "info": {
-      "name": "Hueas",
-      "image": "/assets/1018189218_49544",
-      "rules": "",
+      "name": "Tintas",
+      "image": "/assets/2145857841_48942",
+      "rules": "https://spielstein.com/games/tintas/rules",
       "bgg": "https://boardgamegeek.com/boardgame/207951/tintas",
       "year": "2016",
       "mode": "vs",
       "time": "15",
-      "attribution": "<div>History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1766511533014,
+      "attribution": "<div>This is an original game by Dieter Stein. It is available under CC BY-NC 4.0.</div><div><br></div><div>History logging technique developed by Johnathan Cox. All other layout, design, and coding are by LawDawg96. Released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1769182475715,
       "showName": true,
       "skill": "",
-      "description": "A pure abstract strategy game where players take turns moving a pawn in straight lines to collect marbles.",
+      "description": "Tintas is played on a hexagonal game board with 49 spaces and pieces in seven colors and a neutral pawn for collecting the pieces.",
       "similarImage": "",
-      "similarName": "Tintas",
+      "similarName": "",
       "similarDesigner": "Dieter Stein",
       "similarAwards": "",
-      "ruleText": "<div>Players sit in seats. Click the restart button to begin the game. A random player is chosen to start.</div><div><div><br></div><div>The object of the game is to be the first to collect all 7 marbles of the same color. If no player collects all 7, then the winner is the player that collects at least 4 marbles in at least 4 colors.</div><div><br></div><div>The first player moves the brown pawn onto any space on the board and collects the marble there.</div><div><br></div><div>The other player can move the pawn in any direction to an adjacent space, jumping across any unoccupied spaces in a straight line, until it gets to an occupied space. That player collects the marble in the space where the pawn lands. Then that player may continue to move the pawn and collect marbles if the player can move in a straight line to another marble of the same color. If the player cannot move the pawn again, or chooses not to move the pawn again, then the turn passes to the other player.</div><div><br></div><div>If a player cannot start their move because the pawn is not in a straight line with a marble, then the player moves the pawn to any occupied space of their choice, collects that marble, and ends their turn.</div><div><br></div><div>The game ends immediately if one player collect all 7 marbles of the same color. Otherwise, the player that collects at least 4 marbles in at least 4 colors wins.</div></div>",
-      "helpText": "",
+      "ruleText": "<h4><span style=\"font-weight: normal;\">For more information about this game and others by Dieter Stein, go to&nbsp;</span>https://spielstein.com/games/tintas.</h4><h4>Objective</h4>Get all seven pieces of one color or win by majority.<h4>Preparation</h4><div>Spread all pieces <b>at random</b> onto the game board.\n\nIt doesn’t matter if two or more pieces of the same color wind up laying next to one another. Only if seven pieces of the same color are adjacent to another should you change the distribution.</div><div><br></div><div><img class=\"richtextAsset\" src=\"/assets/2145857841_48942\"></div><div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><b>Figure 1</b> - A possible game set-up</div></blockquote></div><div><br></div><div>The starting player is determined by lot. He gets the pawn. Players then alternate turns.</div><h4>Play</h4><div>The starting player places the pawn on a hexagonal space of his choice, takes the playing piece lying there and places it in front of him. This ends his game turn. Now it is the other player’s turn.</div><div><br></div><div><img class=\"richtextAsset\" src=\"/assets/1197469183_49522\"></div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><div><b>Figure 2</b> - A possible first move. Placing the pawn and taking a piece from the board.</div></div></blockquote><div><br></div><div>From now on, the active player has to move the pawn in <b>any of the six possible directions</b> – straight and, if applicable, accross unoccupied spaces – until it gets to an <b>occupied space</b>. He collects the playing piece lying on that space and places the pawn there.\n\nIf he can collect another <b>piece of the same color</b> by continuing to move the pawn, the active player may keep going until he is no longer <b>able or willing</b> to collect another same-colored piece.</div><div><br></div><div><img class=\"richtextAsset\" src=\"/assets/-1086300391_49236\"></div><div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><b>Figure 3.1</b> - Three purple pieces are collected in one turn.</div><div><br></div></blockquote><img class=\"richtextAsset\" src=\"/assets/-1895039899_41554\"></div><div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><b>Figure 3.2</b> - Moves can be stringed together in any direction.</div></blockquote></div><div><br></div><div>If a player has <b>no possibility of moving</b> because the pawn is not in line with any occupied space, he has to jump the pawn to an occupied space of his choice and collect the piece lying there. As before, he leaves the pawn on this space, and his turn ends.</div><div><br></div><div><img class=\"richtextAsset\" src=\"/assets/1548517126_47878\"></div><div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><b>Figure 4</b> - If the pawn cannot reach an occupied space it has to jump.</div></blockquote></div><h4>End of the game</h4><span style=\"font-weight: normal;\">If one player has collected all </span><b>seven pieces</b><span style=\"font-weight: normal;\"> of </span><b><i>one</i></b><span style=\"font-weight: normal;\"> color, he wins </span><b>immediately</b><span style=\"font-weight: normal;\">.\n\n</span><b>Otherwise,</b><span style=\"font-weight: normal;\"> the player who has collected four or more pieces in at least four colors by the end of the game wins.</span><div><br></div><div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><b>Watch out</b>: As long as one player can still get seven pieces of one color to win, the game goes on!</div></blockquote><div><br></div></div>",
+      "helpText": "Players sit in seats. Click the restart button to begin the game. A random player is chosen to start.<div><br></div><div>Drag and drop the pawn on the board according to the rules. Captured pieces are automatically moved to the colored holders below each seat.</div>",
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -2045,374 +1274,6 @@
     "y": 302,
     "inheritFrom": "hexMaster"
   },
-  "lightBlue1": {
-    "id": "lightBlue1",
-    "x": 4,
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "white5": {
-    "id": "white5",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "white6": {
-    "id": "white6",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "white7": {
-    "id": "white7",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(255,255,255)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "colorType": 5,
-    "marble": true,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "black2": {
-    "id": "black2",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "black3": {
-    "id": "black3",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "black4": {
-    "id": "black4",
-    "x": 4,
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "black5": {
-    "id": "black5",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "black6": {
-    "id": "black6",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "black7": {
-    "id": "black7",
-    "width": 70,
-    "height": 70,
-    "color": "rgb(0,0,0)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "secondaryColor": "#000000",
-    "marble": true,
-    "colorType": 6,
-    "classes": "transitions",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "lightBlue2": {
-    "id": "lightBlue2",
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "lightBlue3": {
-    "id": "lightBlue3",
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "lightBlue4": {
-    "id": "lightBlue4",
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "x": 4,
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "lightBlue5": {
-    "id": "lightBlue5",
-    "x": 4,
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "y": 4
-  },
-  "lightBlue6": {
-    "id": "lightBlue6",
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "x": 4,
-    "y": 4
-  },
-  "lightBlue7": {
-    "id": "lightBlue7",
-    "x": 4,
-    "width": 70,
-    "height": 70,
-    "classes": "transitions",
-    "color": "rgb(86,180,233)",
-    "css": "border-radius: 50%;",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "colorType": 7,
-    "marble": true,
-    "secondaryColor": "#000000",
-    "parent": "marbleHolder",
-    "y": 4
-  },
   "pawn": {
     "id": "pawn",
     "x": 1540,
@@ -2420,7 +1281,7 @@
     "width": 50,
     "height": 90,
     "classes": "transitions",
-    "color": "#8b450c",
+    "color": "#000000",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
     "resetProperties": {
@@ -2445,11 +1306,11 @@
     "width": 220,
     "height": 70,
     "css": {
-      "background": "${PROPERTY bgColor}${PROPERTY opacity}",
+      "background": "${PROPERTY bgColor}",
       "border": "1px solid black"
     },
-    "dropOffsetX": 0,
-    "dropOffsetY": 0,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
     "dropTarget": {
       "colorType": 1
     },
@@ -2465,8 +1326,7 @@
         "routine": "colorRoutine"
       }
     ],
-    "bgColor": "#E69F00",
-    "opacity": 80,
+    "bgColor": "#f40000",
     "colorRoutine": [
       {
         "func": "COUNT",
@@ -2500,7 +1360,9 @@
         "func": "CALL",
         "routine": "colorRoutine"
       }
-    ]
+    ],
+    "opacity": 80,
+    "historyColor": "yellow"
   },
   "holder1-2": {
     "inheritFrom": {
@@ -2513,7 +1375,7 @@
     "dropTarget": {
       "colorType": 2
     },
-    "bgColor": "#009E73",
+    "bgColor": "#f8a100",
     "opacity": 80
   },
   "holder1-3": {
@@ -2527,7 +1389,7 @@
     "dropTarget": {
       "colorType": 3
     },
-    "bgColor": "#0072B2",
+    "bgColor": "#fefe00",
     "opacity": 80
   },
   "holder1-4": {
@@ -2541,7 +1403,7 @@
     "dropTarget": {
       "colorType": 4
     },
-    "bgColor": "#CC79A7",
+    "bgColor": "#7ae000",
     "opacity": 80
   },
   "holder1-5": {
@@ -2555,7 +1417,7 @@
     "dropTarget": {
       "colorType": 5
     },
-    "bgColor": "#FFFFFF",
+    "bgColor": "#4bb4ff",
     "opacity": 80
   },
   "holder1-6": {
@@ -2569,7 +1431,7 @@
     "dropTarget": {
       "colorType": 6
     },
-    "bgColor": "#000000",
+    "bgColor": "#8660d6",
     "opacity": 80
   },
   "holder1-7": {
@@ -2583,7 +1445,7 @@
     "dropTarget": {
       "colorType": 7
     },
-    "bgColor": "#56B4E9",
+    "bgColor": "#ffffff",
     "opacity": 80
   },
   "holder2-1": {
@@ -2598,8 +1460,7 @@
     "dropTarget": {
       "colorType": 1
     },
-    "bgColor": "#E69F00",
-    "opacity": 80
+    "bgColor": "#f40000"
   },
   "holder2-2": {
     "inheritFrom": {
@@ -2612,7 +1473,7 @@
     "dropTarget": {
       "colorType": 2
     },
-    "bgColor": "#009E73"
+    "bgColor": "#f8a100"
   },
   "holder2-3": {
     "inheritFrom": {
@@ -2625,8 +1486,7 @@
     "dropTarget": {
       "colorType": 3
     },
-    "bgColor": "#0072B2",
-    "opacity": 80
+    "bgColor": "#fefe00"
   },
   "holder2-4": {
     "inheritFrom": {
@@ -2639,7 +1499,7 @@
     "dropTarget": {
       "colorType": 4
     },
-    "bgColor": "#CC79A7"
+    "bgColor": "#7ae000"
   },
   "holder2-5": {
     "inheritFrom": {
@@ -2652,7 +1512,8 @@
     "dropTarget": {
       "colorType": 5
     },
-    "bgColor": "#FFFFFF"
+    "bgColor": "#4bb4ff",
+    "opacity": 80
   },
   "holder2-6": {
     "inheritFrom": {
@@ -2665,7 +1526,7 @@
     "dropTarget": {
       "colorType": 6
     },
-    "bgColor": "#000000",
+    "bgColor": "#8660d6",
     "opacity": 80
   },
   "holder2-7": {
@@ -2679,6 +1540,529 @@
     "dropTarget": {
       "colorType": 7
     },
-    "bgColor": "#56B4E9"
+    "bgColor": "#FFFFFF"
+  },
+  "background": {
+    "id": "background",
+    "text": "Basic widget",
+    "css": {
+      "background": "#d2c79e"
+    },
+    "movable": false,
+    "movableInEdit": false,
+    "width": 1600,
+    "height": 1000,
+    "layer": -4
+  },
+  "circle1": {
+    "id": "circle1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#f40000",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 1,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "red"
+  },
+  "circle8": {
+    "id": "circle8",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#f8a100",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 2,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "orange"
+  },
+  "circle15": {
+    "id": "circle15",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#fefe00",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 3,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "yellow"
+  },
+  "circle22": {
+    "id": "circle22",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#7ae000",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 4,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "green"
+  },
+  "circle29": {
+    "id": "circle29",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#4bb4ff",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 5,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "blue"
+  },
+  "circle36": {
+    "id": "circle36",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#8660d6",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 6,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "purple"
+  },
+  "circle43": {
+    "id": "circle43",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "borderRadius": 100,
+    "classes": "transitions",
+    "color": "#ffffff",
+    "css": {
+      "background": "${PROPERTY color}",
+      "border": "2px solid black",
+      "box-shadow": "1px 6px 8px #808080"
+    },
+    "colorType": 7,
+    "marble": true,
+    "parent": "marbleHolder",
+    "historyColor": "white"
+  },
+  "circle2": {
+    "inheritFrom": {
+      "circle1": "*"
+    },
+    "id": "circle2",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle3": {
+    "inheritFrom": {
+      "circle1": "*"
+    },
+    "id": "circle3",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle4": {
+    "inheritFrom": {
+      "circle1": "*"
+    },
+    "id": "circle4",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle5": {
+    "inheritFrom": {
+      "circle1": "*"
+    },
+    "id": "circle5",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle6": {
+    "inheritFrom": {
+      "circle1": "*"
+    },
+    "id": "circle6",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle7": {
+    "inheritFrom": {
+      "circle1": "*"
+    },
+    "id": "circle7",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle9": {
+    "inheritFrom": {
+      "circle8": "*"
+    },
+    "id": "circle9",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle10": {
+    "inheritFrom": {
+      "circle8": "*"
+    },
+    "id": "circle10",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle11": {
+    "inheritFrom": {
+      "circle8": "*"
+    },
+    "id": "circle11",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle12": {
+    "inheritFrom": {
+      "circle8": "*"
+    },
+    "id": "circle12",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle13": {
+    "inheritFrom": {
+      "circle8": "*"
+    },
+    "id": "circle13",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle14": {
+    "inheritFrom": {
+      "circle8": "*"
+    },
+    "id": "circle14",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle16": {
+    "inheritFrom": {
+      "circle15": "*"
+    },
+    "id": "circle16",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle17": {
+    "inheritFrom": {
+      "circle15": "*"
+    },
+    "id": "circle17",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle18": {
+    "inheritFrom": {
+      "circle15": "*"
+    },
+    "id": "circle18",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle19": {
+    "inheritFrom": {
+      "circle15": "*"
+    },
+    "id": "circle19",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle20": {
+    "inheritFrom": {
+      "circle15": "*"
+    },
+    "id": "circle20",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle21": {
+    "inheritFrom": {
+      "circle15": "*"
+    },
+    "id": "circle21",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle23": {
+    "inheritFrom": {
+      "circle22": "*"
+    },
+    "id": "circle23",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle24": {
+    "inheritFrom": {
+      "circle22": "*"
+    },
+    "id": "circle24",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle25": {
+    "inheritFrom": {
+      "circle22": "*"
+    },
+    "id": "circle25",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle26": {
+    "inheritFrom": {
+      "circle22": "*"
+    },
+    "id": "circle26",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle27": {
+    "inheritFrom": {
+      "circle22": "*"
+    },
+    "id": "circle27",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle28": {
+    "inheritFrom": {
+      "circle22": "*"
+    },
+    "id": "circle28",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle30": {
+    "inheritFrom": {
+      "circle29": "*"
+    },
+    "id": "circle30",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle31": {
+    "inheritFrom": {
+      "circle29": "*"
+    },
+    "id": "circle31",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle32": {
+    "inheritFrom": {
+      "circle29": "*"
+    },
+    "id": "circle32",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle33": {
+    "inheritFrom": {
+      "circle29": "*"
+    },
+    "id": "circle33",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle34": {
+    "inheritFrom": {
+      "circle29": "*"
+    },
+    "id": "circle34",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle35": {
+    "inheritFrom": {
+      "circle29": "*"
+    },
+    "id": "circle35",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle37": {
+    "inheritFrom": {
+      "circle36": "*"
+    },
+    "id": "circle37",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle38": {
+    "inheritFrom": {
+      "circle36": "*"
+    },
+    "id": "circle38",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle39": {
+    "inheritFrom": {
+      "circle36": "*"
+    },
+    "id": "circle39",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle40": {
+    "inheritFrom": {
+      "circle36": "*"
+    },
+    "id": "circle40",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle41": {
+    "inheritFrom": {
+      "circle36": "*"
+    },
+    "id": "circle41",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle42": {
+    "inheritFrom": {
+      "circle36": "*"
+    },
+    "id": "circle42",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle44": {
+    "inheritFrom": {
+      "circle43": "*"
+    },
+    "id": "circle44",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle45": {
+    "inheritFrom": {
+      "circle43": "*"
+    },
+    "id": "circle45",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle46": {
+    "inheritFrom": {
+      "circle43": "*"
+    },
+    "id": "circle46",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle47": {
+    "inheritFrom": {
+      "circle43": "*"
+    },
+    "id": "circle47",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle48": {
+    "inheritFrom": {
+      "circle43": "*"
+    },
+    "id": "circle48",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
+  },
+  "circle49": {
+    "inheritFrom": {
+      "circle43": "*"
+    },
+    "id": "circle49",
+    "x": 4,
+    "y": 4,
+    "parent": "marbleHolder"
   }
 }
