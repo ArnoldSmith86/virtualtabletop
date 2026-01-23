@@ -1162,7 +1162,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>This is an original game by Dieter Stein. It is available under CC BY-NC 4.0.</div><div><br></div><div>History logging technique developed by Johnathan Cox. All other layout, design, and coding are by LawDawg96. Released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1769182475715,
+      "lastUpdate": 1769183116948,
       "showName": true,
       "skill": "",
       "description": "Tintas is played on a hexagonal game board with 49 spaces and pieces in seven colors and a neutral pawn for collecting the pieces.",
@@ -1544,7 +1544,6 @@
   },
   "background": {
     "id": "background",
-    "text": "Basic widget",
     "css": {
       "background": "#d2c79e"
     },
