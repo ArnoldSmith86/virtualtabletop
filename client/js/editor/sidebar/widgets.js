@@ -71,12 +71,6 @@ class WidgetsModule extends SidebarModule {
     return `<img src="${preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;" draggable="false">`;
   }
 
-  onSelectionChangedWhileActive(newSelection) {
-    if (this.moduleDOM) {
-      $('#saveWidgetsToBuffer', this.moduleDOM).disabled = newSelection.length !== 1;
-    }
-  }
-
   renderModule(target) {
     target.innerHTML = '';
     super.renderModule(target);
@@ -128,7 +122,6 @@ class WidgetsModule extends SidebarModule {
       this.renderWidgetBuffer($('#widgetFilter', d).value);
     };
     $('#saveWidgetsToBuffer', d).onclick = e => this.button_saveWidgetsToBuffer();
-    $('#saveWidgetsToBuffer', d).disabled = selectedWidgets.length !== 1;
 
     this.currentContents = div(target);
     this.renderWidgetBuffer();
@@ -540,6 +533,10 @@ class WidgetsModule extends SidebarModule {
           previewContainer.style.position = 'absolute';
           previewContainer.style.left = '-9999px';
 
+          const scaleWrapper = document.createElement('div');
+          scaleWrapper.style.transform = `scale(${getScale() * getZoomLevel()})`;
+          previewContainer.appendChild(scaleWrapper);
+
           const idMap = new Map();
           const tempWidgetInstances = new Map();
           const cards = [];
@@ -628,8 +625,6 @@ class WidgetsModule extends SidebarModule {
 
               const tempState = JSON.parse(JSON.stringify(s));
               tempState.id = tempId;
-              if(!tempState.parent)
-                tempState.scale = (tempState.scale || 1) * getScale() * getZoomLevel();
 
               const parentId = tempState.parent ? idMap.get(tempState.parent) : null;
               if (parentId) {
@@ -647,7 +642,7 @@ class WidgetsModule extends SidebarModule {
               previewWidget.applyInitialDelta(tempState);
 
               if (!parentId) {
-                previewContainer.appendChild(previewWidget.domElement);
+                scaleWrapper.appendChild(previewWidget.domElement);
               }
             }
           };
