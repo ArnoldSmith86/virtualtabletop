@@ -1189,13 +1189,16 @@ const jeCommands = [
   }
 ];
 
-function jeRoutineCall(callback, synchronous) {
+function jeRoutineCall(callback, synchronous, command) {
   const f = function() {
     let routineIndex = -1;
+    let commandFound = !command;
     for(let i=jeContext.length-1; i>=0; --i) {
-      if(String(jeContext[i]).match(/Routine$/)) {
+      if(commandFound && String(jeContext[i]).match(/Routine$/)) {
         routineIndex = i;
         break;
+      } else if(!commandFound && String(jeContext[i]) == `(${command})`) {
+        commandFound = true;
       }
     }
 
@@ -1333,10 +1336,10 @@ function jeAddRoutineOperationCommands(command, defaults) {
             "reverse": false
           };
           jeSetAndSelect('z');
-        }) :
+        }, false, command) :
         jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
           jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
-        }),
+        }, false, command),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
       }, true)
