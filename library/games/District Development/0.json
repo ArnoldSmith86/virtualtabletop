@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-GB",
-      "players": "3-5"
+      "players": "3-5",
+      "usesAIImagery": true
     },
     "gameSettings": {
       "legacyModes": {
