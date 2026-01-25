@@ -361,7 +361,14 @@ class AssetsModule extends SidebarModule {
       oldContainer.remove();
   }
 
+  onMetaReceivedWhileActive(meta) {
+    if(this.moduleDOM && meta.gameSettings) {
+      this.renderModule(this.moduleDOM);
+    }
+  }
+
   renderModule(target) {
+    target.innerHTML = '';
     this.urlMap = {};
     this.urlDIVs = {};
     for(const widget of widgets.values()) {
@@ -385,6 +392,8 @@ class AssetsModule extends SidebarModule {
       `);
       $('#downloadCloudAssetsButton').onclick = e=>this.button_downloadCloudAssets(e);
     }
+
+    this.renderAssetAliases(target);
 
     this.addSubHeader('Included Assets');
     div(target, 'buttonBar', `
@@ -428,5 +437,405 @@ class AssetsModule extends SidebarModule {
       if(property.includes(oldLink))
         await widget.set(propertyName, JSON.parse(property.replaceAll(oldLink, newLink)));
     }
+  }
+
+  replaceAssetWithAliasRecursive(obj, asset, alias) {
+    if(typeof obj == 'string') {
+      if(obj == asset)
+        return `{{${alias}}}`;
+      return obj;
+    }
+    if(typeof obj == 'object' && obj != null) {
+      if(Array.isArray(obj)) {
+        return obj.map(item => this.replaceAssetWithAliasRecursive(item, asset, alias));
+      } else {
+        const result = {};
+        for(const [key, value] of Object.entries(obj)) {
+          result[key] = this.replaceAssetWithAliasRecursive(value, asset, alias);
+        }
+        return result;
+      }
+    }
+    return obj;
+  }
+
+  replaceAliasWithAssetRecursive(obj, alias, asset) {
+    if(typeof obj == 'string') {
+      if(obj == `{{${alias}}}`)
+        return asset;
+      return obj;
+    }
+    if(typeof obj == 'object' && obj != null) {
+      if(Array.isArray(obj)) {
+        return obj.map(item => this.replaceAliasWithAssetRecursive(item, alias, asset));
+      } else {
+        const result = {};
+        for(const [key, value] of Object.entries(obj)) {
+          result[key] = this.replaceAliasWithAssetRecursive(value, alias, asset);
+        }
+        return result;
+      }
+    }
+    return obj;
+  }
+
+  async setAssetAlias(asset, alias) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} set asset alias in editor`);
+    
+    const gameSettings = getCurrentGameSettings();
+    if(!gameSettings.assetAliases)
+      gameSettings.assetAliases = {};
+    
+    const oldAlias = gameSettings.assetAliases[asset];
+    
+    if(oldAlias && oldAlias !== alias) {
+      for(const [id, widget] of widgets) {
+        for(const propertyName in widget.state) {
+          const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+          const newValue = this.replaceAliasWithAssetRecursive(property, oldAlias, asset);
+          await widget.set(propertyName, newValue);
+        }
+      }
+    }
+    
+    gameSettings.assetAliases[asset] = alias;
+    toServer('setGameSettings', gameSettings);
+    
+    for(const [id, widget] of widgets) {
+      for(const propertyName in widget.state) {
+        const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+        const newValue = this.replaceAssetWithAliasRecursive(property, asset, alias);
+        await widget.set(propertyName, newValue);
+      }
+    }
+    
+    batchEnd();
+  }
+
+  async removeAssetAlias(asset) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} removed asset alias in editor`);
+    
+    const gameSettings = getCurrentGameSettings();
+    if(!gameSettings.assetAliases)
+      return;
+    
+    const alias = gameSettings.assetAliases[asset];
+    if(!alias)
+      return;
+    
+    delete gameSettings.assetAliases[asset];
+    toServer('setGameSettings', gameSettings);
+    
+    for(const [id, widget] of widgets) {
+      for(const propertyName in widget.state) {
+        const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+        const newValue = this.replaceAliasWithAssetRecursive(property, alias, asset);
+        await widget.set(propertyName, newValue);
+      }
+    }
+    
+    batchEnd();
+  }
+
+  renderAssetAliases(target) {
+    const existingH2s = $a('h2', target);
+    let assetAliasH2 = null;
+    for(const h2 of existingH2s) {
+      if(h2.textContent === 'Asset Alias') {
+        assetAliasH2 = h2;
+        break;
+      }
+    }
+    
+    if(assetAliasH2) {
+      const nodesToRemove = [assetAliasH2];
+      let node = assetAliasH2.nextSibling;
+      while(node) {
+        if(node.nodeType === Node.ELEMENT_NODE) {
+          if(node.tagName === 'H2') {
+            break;
+          }
+          nodesToRemove.push(node);
+        } else {
+          nodesToRemove.push(node);
+        }
+        node = node.nextSibling;
+      }
+      
+      for(const nodeToRemove of nodesToRemove) {
+        nodeToRemove.remove();
+      }
+    }
+    
+    this.addSubHeader('Asset Alias');
+    
+    const p = document.createElement('p');
+    p.textContent = 'Assign aliases to assets to use {{alias}} syntax instead of asset paths. This makes it easier to reference assets and update them later.';
+    target.append(p);
+    
+    const gameSettings = getCurrentGameSettings();
+    const assetAliases = gameSettings.assetAliases || {};
+    
+    const currentAssets = Object.keys(getAllAssetsGrouped());
+    const aliasedAssets = Object.keys(assetAliases);
+    const allAssetsSet = new Set([...currentAssets, ...aliasedAssets]);
+    const assets = Array.from(allAssetsSet).sort();
+    
+    if(assets.length === 0) {
+      const emptyMsg = document.createElement('p');
+      emptyMsg.textContent = 'No assets found in this game.';
+      emptyMsg.style.fontStyle = 'italic';
+      emptyMsg.style.color = 'var(--textColor)';
+      emptyMsg.style.opacity = '0.7';
+      target.append(emptyMsg);
+      return;
+    }
+    
+    const container = div(target, 'assetAliasesContainer');
+    const table = document.createElement('table');
+    table.style.cssText = `
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    `;
+    
+    const headerRow = table.insertRow();
+    headerRow.style.cssText = `
+      background: var(--backgroundHighlightColor1);
+      border-bottom: 2px solid var(--modalBorderColor);
+    `;
+    
+    const headers = ['Preview', 'Asset Path', 'Alias', 'Actions'];
+    for(const headerText of headers) {
+      const th = document.createElement('th');
+      th.textContent = headerText;
+      th.style.cssText = `
+        padding: 8px;
+        text-align: left;
+        font-weight: bold;
+        color: var(--textColor);
+      `;
+      headerRow.appendChild(th);
+    }
+    
+    for(const asset of assets) {
+      const row = table.insertRow();
+      row.style.cssText = `
+        border-bottom: 1px solid var(--modalBorderColor);
+      `;
+      
+      const previewCell = row.insertCell();
+      previewCell.style.cssText = `
+        padding: 8px;
+        vertical-align: middle;
+      `;
+      
+      const assetImg = document.createElement('img');
+      assetImg.src = asset.substr(1);
+      assetImg.style.cssText = `
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        border: 1px solid var(--modalBorderColor);
+        border-radius: 2px;
+        display: block;
+      `;
+      assetImg.onerror = () => {
+        assetImg.style.display = 'none';
+      };
+      previewCell.appendChild(assetImg);
+      
+      const pathCell = row.insertCell();
+      pathCell.style.cssText = `
+        padding: 8px;
+        vertical-align: middle;
+      `;
+      const assetPath = document.createElement('div');
+      assetPath.textContent = asset;
+      assetPath.style.cssText = `
+        font-family: monospace;
+        font-size: 0.9em;
+        word-break: break-all;
+        color: var(--textColor);
+      `;
+      pathCell.appendChild(assetPath);
+      
+      const aliasCell = row.insertCell();
+      aliasCell.style.cssText = `
+        padding: 8px;
+        vertical-align: middle;
+      `;
+      
+      const aliasInput = document.createElement('input');
+      aliasInput.type = 'text';
+      aliasInput.value = assetAliases[asset] || '';
+      aliasInput.placeholder = 'Enter alias name';
+      aliasInput.style.cssText = `
+        width: 100%;
+        padding: 6px;
+        border: 1px solid var(--modalBorderColor);
+        border-radius: 2px;
+        background: var(--backgroundColor);
+        color: var(--textColor);
+        font-family: monospace;
+        box-sizing: border-box;
+      `;
+      aliasCell.appendChild(aliasInput);
+      
+      if(assetAliases[asset]) {
+        const aliasInfo = document.createElement('div');
+        aliasInfo.style.cssText = `
+          margin-top: 4px;
+          font-size: 0.85em;
+          color: var(--textColor);
+          opacity: 0.8;
+        `;
+        aliasInfo.textContent = `Use {{${assetAliases[asset]}}}`;
+        aliasCell.appendChild(aliasInfo);
+      }
+      
+      const actionsCell = row.insertCell();
+      actionsCell.style.cssText = `
+        padding: 8px;
+        vertical-align: middle;
+        white-space: nowrap;
+      `;
+      
+      const setButton = document.createElement('button');
+      setButton.setAttribute('icon', 'checkmark');
+      setButton.textContent = assetAliases[asset] ? 'Update' : 'Set';
+      setButton.style.cssText = `
+        padding: 6px 12px;
+        margin-right: 4px;
+      `;
+      
+      const removeButton = document.createElement('button');
+      removeButton.setAttribute('icon', 'delete');
+      removeButton.textContent = 'Remove';
+      removeButton.className = 'red';
+      removeButton.style.cssText = `
+        padding: 6px 12px;
+        margin-right: 4px;
+      `;
+      if(!assetAliases[asset])
+        removeButton.style.display = 'none';
+      
+      const replaceButton = document.createElement('button');
+      replaceButton.setAttribute('icon', 'cloud_upload');
+      replaceButton.textContent = 'Replace';
+      replaceButton.style.cssText = `
+        padding: 6px 12px;
+      `;
+      if(!assetAliases[asset])
+        replaceButton.style.display = 'none';
+      
+      const handleSet = async () => {
+        const alias = aliasInput.value.trim();
+        if(!alias) {
+          alert('Please enter an alias name.');
+          return;
+        }
+        if(!/^[a-zA-Z0-9_-]+$/.test(alias)) {
+          alert('Alias can only contain letters, numbers, underscores, and hyphens.');
+          return;
+        }
+        for(const [otherAsset, otherAlias] of Object.entries(assetAliases)) {
+          if(otherAsset !== asset && otherAlias === alias) {
+            alert(`Alias "${alias}" is already used for ${otherAsset}. Please choose a different alias.`);
+            return;
+          }
+        }
+        await this.setAssetAlias(asset, alias);
+        this.renderModule(this.moduleDOM);
+      };
+      
+      const handleRemove = async () => {
+        if(confirm(`Remove alias for ${asset}? This will replace all {{${assetAliases[asset]}}} references back to the asset path.`)) {
+          await this.removeAssetAlias(asset);
+          this.renderModule(this.moduleDOM);
+        }
+      };
+      
+      const handleReplace = async () => {
+        const alias = assetAliases[asset];
+        if(!alias) {
+          alert('Please set an alias first before replacing the asset.');
+          return;
+        }
+        
+        try {
+          const newAsset = await uploadAsset(null);
+          if(!newAsset || !newAsset.match(/^\/assets\/[0-9_-]+$/)) {
+            return;
+          }
+          
+          batchStart();
+          setDeltaCause(`${getPlayerDetails().playerName} replaced asset for alias ${alias} in editor`);
+          
+          const gameSettings = getCurrentGameSettings();
+          gameSettings.assetAliases[newAsset] = alias;
+          delete gameSettings.assetAliases[asset];
+          toServer('setGameSettings', gameSettings);
+          
+          function replaceAssetRecursive(obj, oldAsset, newAsset) {
+            if(typeof obj == 'string') {
+              if(obj == oldAsset)
+                return newAsset;
+              return obj.replace(new RegExp(regexEscape(oldAsset), 'g'), newAsset);
+            }
+            if(typeof obj == 'object' && obj != null) {
+              if(Array.isArray(obj)) {
+                return obj.map(item => replaceAssetRecursive(item, oldAsset, newAsset));
+              } else {
+                const result = {};
+                for(const [key, value] of Object.entries(obj)) {
+                  result[key] = replaceAssetRecursive(value, oldAsset, newAsset);
+                }
+                return result;
+              }
+            }
+            return obj;
+          }
+          
+          for(const [id, widget] of widgets) {
+            for(const propertyName in widget.state) {
+              const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+              let newValue = this.replaceAliasWithAssetRecursive(property, alias, newAsset);
+              newValue = replaceAssetRecursive(newValue, asset, newAsset);
+              await widget.set(propertyName, newValue);
+            }
+          }
+          
+          for(const [id, widget] of widgets) {
+            for(const propertyName in widget.state) {
+              const property = JSON.parse(JSON.stringify(widget.get(propertyName)));
+              const newValue = this.replaceAssetWithAliasRecursive(property, newAsset, alias);
+              await widget.set(propertyName, newValue);
+            }
+          }
+          
+          batchEnd();
+          this.renderModule(this.moduleDOM);
+        } catch(e) {
+          console.error('Failed to replace asset:', e);
+          alert('Failed to replace asset. Please try again.');
+        }
+      };
+      
+      setButton.onclick = handleSet;
+      removeButton.onclick = handleRemove;
+      replaceButton.onclick = handleReplace;
+      aliasInput.onkeydown = (e) => {
+        if(e.key === 'Enter') {
+          handleSet();
+        }
+      };
+      
+      actionsCell.append(setButton, removeButton, replaceButton);
+    }
+    
+    container.appendChild(table);
   }
 }
