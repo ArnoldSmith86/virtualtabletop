@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div><div>Card layout by mousewax and available under CC0. Dexdouglas wrote character text hints. All other room layout, design, and scripting are by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>The card back for the Bad Guy characters was created by the Google Gemini AI (https://gemini.google.com/) using the following prompt: \"<span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">1:1 square minimalist card back design. Dark, desaturated background with a subtle central motif formed from overlapping shadows and worn textures, suggesting secrecy and hierarchy without literal imagery. Aged letterpress feel, soft contrast, and visible paper grain. Clean edges, symmetrical framing, and high legibility at card size. Mood is controlled, serious, and ominous without theatrical noir lighting.\"</span></div><div><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\"><br></span></div><div><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">The library image and the card back for the Good Guy characters was also created by Google Gemini with the following prompt: \"</span><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">Now make a similar one for the good guys. Lighter tones. Less ominous imagery.\"</span></div><div><br></div><div>The character images were created by the Microsoft Copilot AI (https://copilot.microsoft.com/) using various prompts to describe the mood and characters similar to: \"1:1 square image of a _________. Figure should be standing. Only include accessories appropriate to the role/occupation. Style: Muted 1930s–1940s American noir with painterly realism and an aged letterpress feel, using desaturated colors, soft contrast, and subtle paper grain; composition favors clean silhouettes, balanced framing, and restrained detail, keeping backgrounds abstract and readable without cinematic lighting or ornamentation. Overall tone is grounded and serious, evoking procedural crime, quiet menace, and tension without parody, fantasy, modern visual elements and no text. Faces must be distinct and non-recurring across images. Avoid reusing facial structure, age, hairline, jaw shape, or expression from prior images. Do not default to noir archetype faces (square-jawed fedora men, similar stubble, mirrored features). Each figure must occupy a different identity cluster, with clearly different bone structure, age cues, and presence. Prior images must not be visually recognizable in face, silhouette, or attire.\"</div></div><div><br></div><div>The texture used in the room background was created using the ChatGPT AI (https://chatgpt.com/) by uploading the library image and applying the following prompt: \"Take this and strip out the emblem. Make it 103:168 ratio. Get rid of any border and make the corners square.\"</div><div><br></div>The courthouse building in the room background is by BruceEmmerling and is available under the Pixabay license from https://pixabay.com/photos/historic-building-philadelphia-4257401/.<div><br></div><div>The font is Libre Baskerville, copyright 2012 by The Libre Baskerville Project Authors with Reserved Font Name Libre Baskerville and is licensed for use under the SIL Open Font License, Version 1.1.</div>",
-      "lastUpdate": 1769321991678,
+      "lastUpdate": 1769322410564,
       "showName": true,
       "skill": "",
       "description": "The prosecution's star witness can take the mafia down. But the witness has to make it from the safehouse to the courthouse, and the mafia will stop at nothing to eliminate him.",
@@ -2041,19 +2041,19 @@
           },
           {
             "func": "GET",
-            "source": "holderCollection",
+            "collection": "holderCollection",
             "property": "x",
             "aggregation": "array"
           },
           {
             "func": "GET",
-            "source": "holderCollection",
+            "collection": "holderCollection",
             "property": "y",
             "aggregation": "array"
           },
           {
             "func": "GET",
-            "source": "holderCollection",
+            "collection": "holderCollection",
             "property": "id"
           },
           {
