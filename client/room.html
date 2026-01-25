@@ -260,6 +260,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
+          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
@@ -267,7 +268,6 @@
         <div class="details">
           <h1 data-field="name"></h1>
           <div class="onlyForEdit"><input type="checkbox" id="showName" data-field="showName" data-target="checked"> <label for="showName">Overlay name</label></div>
-          <div class="onlyForEdit"><input type="checkbox" id="usesAIImagery" data-field="usesAIImagery" data-target="checked"> <label for="usesAIImagery">Uses AI generated imagery</label></div>
           <div data-showfor="time"><i class="material-symbols">schedule</i> Time: <span data-field="time"></span> minutes</div>
           <div data-showfor="mode"><i class="material-symbols">groups</i> Mode: <span data-field="mode"></span></div>
           <div data-showfor="skill"><i class="material-symbols">psychology</i> Skill: <span data-field="skill"></span></div>
@@ -338,6 +338,11 @@
         <div data-field="helpText" data-html="true"></div>
         <h3 data-showfor="attribution">Attribution</h3>
         <div data-field="attribution" data-html="true"></div>
+        <div class="onlyForEdit" style="margin-top: 12px;"><input type="checkbox" id="usesAIImagery" data-field="usesAIImagery" data-target="checked"> <label for="usesAIImagery">Uses AI generated imagery</label></div>
+        <div class="hideForEdit" data-showfor="usesAIImagery" style="margin-top: 12px; padding: 8px; background: rgba(33, 150, 243, 0.1); border-radius: 4px; border-left: 3px solid var(--VTTblue);">
+          <i class="material-symbols" style="vertical-align: middle; color: var(--VTTblue);">auto_awesome</i>
+          <span style="margin-left: 4px;">This game uses AI generated imagery.</span>
+        </div>
       </div>
     </div>
 
