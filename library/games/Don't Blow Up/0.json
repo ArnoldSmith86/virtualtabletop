@@ -921,7 +921,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-5",
-      "similarDesigner": "Matthew Inman, Elan Lee, Shane Small"
+      "similarDesigner": "Matthew Inman, Elan Lee, Shane Small",
+      "usesAIImagery": true
     }
   },
   "Peek": {

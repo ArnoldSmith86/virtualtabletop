@@ -31,7 +31,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-8",
-      "similarDesigner": "Seiji Kanai, John Zinser"
+      "similarDesigner": "Seiji Kanai, John Zinser",
+      "usesAIImagery": true
     }
   },
   "deckHolder": {

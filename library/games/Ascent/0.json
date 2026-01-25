@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-6"
+      "players": "2-6",
+      "usesAIImagery": true
     }
   },
   "diceHolder1": {

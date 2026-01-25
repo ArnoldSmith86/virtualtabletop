@@ -1359,7 +1359,8 @@
       "variant": "Inquisitor expansion",
       "language": "en-US",
       "players": "2-6",
-      "similarDesigner": "Rikki Tahta"
+      "similarDesigner": "Rikki Tahta",
+      "usesAIImagery": true
     }
   }
 }

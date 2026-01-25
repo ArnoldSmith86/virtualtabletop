@@ -23,7 +23,8 @@
       "variant": "",
       "language": "en-US",
       "players": "3-10",
-      "similarDesigner": "Thomas Dagenais-Lespérance"
+      "similarDesigner": "Thomas Dagenais-Lespérance",
+      "usesAIImagery": true
     }
   },
   "backWhite": {

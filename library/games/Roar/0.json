@@ -1567,7 +1567,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3-5"
+      "players": "3-5",
+      "usesAIImagery": true
     }
   },
   "Player 2 - Tokens": {

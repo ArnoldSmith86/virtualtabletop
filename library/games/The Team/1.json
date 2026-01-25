@@ -7481,7 +7481,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3"
+      "players": "3",
+      "usesAIImagery": true
     }
   },
   "a446559e-6d46-4477-b6ea-2a1c349f93a10": {

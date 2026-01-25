@@ -459,6 +459,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
+    const aiBadge = $('.ai-badge', entry);
+    if(aiBadge) {
+      toggleClass(aiBadge, 'hidden', !state.usesAIImagery);
+    }
+
     if(state.image) {
       const mappedURL = mapAssetURLs(state.image);
       if(loadedLibraryImages[mappedURL]) {

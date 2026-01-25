@@ -23,7 +23,8 @@
       "players": "2-5",
       "language": "en-US",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   },
   "fruitDeck": {

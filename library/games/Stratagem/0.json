@@ -8062,7 +8062,8 @@
       "variant": "",
       "language": "",
       "players": "2-4",
-      "similarDesigner": "Bernard Tavitian"
+      "similarDesigner": "Bernard Tavitian",
+      "usesAIImagery": true
     }
   },
   "recall_button": {

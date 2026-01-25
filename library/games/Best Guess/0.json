@@ -29,7 +29,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3-8"
+      "players": "3-8",
+      "usesAIImagery": true
     }
   },
   "seat1": {

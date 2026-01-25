@@ -31,7 +31,8 @@
       "variant": "",
       "language": "en-US",
       "players": "3-5",
-      "similarDesigner": "Christian Stöhr, Daniela Stöhr"
+      "similarDesigner": "Christian Stöhr, Daniela Stöhr",
+      "usesAIImagery": true
     }
   },
   "seat1": {

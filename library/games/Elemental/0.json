@@ -1498,7 +1498,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-6",
-      "similarDesigner": "Győri Zoltán Gábor"
+      "similarDesigner": "Győri Zoltán Gábor",
+      "usesAIImagery": true
     }
   },
   "Background": {

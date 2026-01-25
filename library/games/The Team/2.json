@@ -3236,7 +3236,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "4"
+      "players": "4",
+      "usesAIImagery": true
     }
   }
 }

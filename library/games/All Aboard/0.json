@@ -5378,7 +5378,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-5"
+      "players": "2-5",
+      "usesAIImagery": true
     }
   },
   "orij": {

@@ -2697,7 +2697,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-4",
-      "similarDesigner": "Rudi Hoffmann"
+      "similarDesigner": "Rudi Hoffmann",
+      "usesAIImagery": true
     }
   },
   "mt6f": {

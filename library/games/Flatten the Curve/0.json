@@ -31,7 +31,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-4",
-      "similarDesigner": "Matt Leacock"
+      "similarDesigner": "Matt Leacock",
+      "usesAIImagery": true
     }
   },
   "map": {

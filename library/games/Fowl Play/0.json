@@ -23,7 +23,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-4",
-      "similarDesigner": "Brian Calhoun"
+      "similarDesigner": "Brian Calhoun",
+      "usesAIImagery": true
     }
   },
   "square1": {

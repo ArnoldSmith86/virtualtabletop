@@ -898,7 +898,8 @@
       "similarImage": "",
       "similarAwards": "",
       "similarDesigner": "Thorsten Gimmler",
-      "ruleText": ""
+      "ruleText": "",
+      "usesAIImagery": true
     }
   },
   "tokenDeck": {

@@ -510,7 +510,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": true
     }
   },
   "Reset": {

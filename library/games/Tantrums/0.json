@@ -7613,7 +7613,8 @@
       "variant": "",
       "language": "",
       "players": "1-4",
-      "similarDesigner": "Reiner Knizia"
+      "similarDesigner": "Reiner Knizia",
+      "usesAIImagery": true
     }
   },
   "gpjvD": {

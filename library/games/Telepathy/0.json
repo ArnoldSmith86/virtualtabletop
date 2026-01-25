@@ -23,7 +23,8 @@
       "variant": "",
       "language": "",
       "players": "2-4",
-      "similarDesigner": "Wolfgang Warsch"
+      "similarDesigner": "Wolfgang Warsch",
+      "usesAIImagery": true
     }
   },
   "pvtm": {

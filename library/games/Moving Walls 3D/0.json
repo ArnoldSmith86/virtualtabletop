@@ -4228,7 +4228,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-4",
-      "similarDesigner": "Michael Feldkötter"
+      "similarDesigner": "Michael Feldkötter",
+      "usesAIImagery": true
     }
   },
   "Hand1": {

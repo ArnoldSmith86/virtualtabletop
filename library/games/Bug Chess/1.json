@@ -111,7 +111,8 @@
       "variant": "Full Game",
       "language": "en-US",
       "players": "2",
-      "similarDesigner": "John Yianni"
+      "similarDesigner": "John Yianni",
+      "usesAIImagery": true
     }
   },
   "0ava": {

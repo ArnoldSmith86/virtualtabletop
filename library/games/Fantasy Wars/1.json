@@ -1044,7 +1044,8 @@
       "variant": "",
       "language": "en-US",
       "players": "4",
-      "similarDesigner": "Trevor Benjamin, David Thompson (I)"
+      "similarDesigner": "Trevor Benjamin, David Thompson (I)",
+      "usesAIImagery": true
     }
   },
   "hex0": {

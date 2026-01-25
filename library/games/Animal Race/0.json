@@ -3538,7 +3538,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-6",
-      "similarDesigner": "David Parlett"
+      "similarDesigner": "David Parlett",
+      "usesAIImagery": true
     }
   }
 }

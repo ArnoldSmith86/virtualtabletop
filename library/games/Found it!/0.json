@@ -2397,7 +2397,8 @@
       "variant": "",
       "language": "",
       "players": "2-8",
-      "similarDesigner": "Denis Blanchot, Jacques Cottereau, Guillaume Gille-Naves, Igor Polouchine"
+      "similarDesigner": "Denis Blanchot, Jacques Cottereau, Guillaume Gille-Naves, Igor Polouchine",
+      "usesAIImagery": true
     }
   },
   "flz8": {

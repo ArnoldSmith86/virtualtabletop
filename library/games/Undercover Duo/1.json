@@ -3825,7 +3825,8 @@
       "variant": "",
       "language": "de-DE",
       "players": "2",
-      "similarDesigner": "Vlaada Chvátil, Scot Eaton"
+      "similarDesigner": "Vlaada Chvátil, Scot Eaton",
+      "usesAIImagery": true
     }
   }
 }

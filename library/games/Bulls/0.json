@@ -1704,7 +1704,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-10",
-      "similarDesigner": "Wolfgang Kramer"
+      "similarDesigner": "Wolfgang Kramer",
+      "usesAIImagery": true
     }
   },
   "background": {

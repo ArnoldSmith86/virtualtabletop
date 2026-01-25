@@ -3981,7 +3981,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-8",
-      "similarDesigner": "Klaus-Jürgen Wrede"
+      "similarDesigner": "Klaus-Jürgen Wrede",
+      "usesAIImagery": true
     }
   },
   "Player 2 - Big Meeple": {

@@ -27,7 +27,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "3-6"
+      "players": "3-6",
+      "usesAIImagery": true
     }
   },
   "outline1": {

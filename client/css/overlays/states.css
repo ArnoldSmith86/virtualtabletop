@@ -256,7 +256,7 @@
   transform: skewX(-10deg);
 }
 
-.roomState .star, .roomState > i {
+.roomState .star, .roomState > i, .roomState .ai-badge {
   display: none;
   position: absolute;
   top: 0;
@@ -273,6 +273,22 @@
 .roomState > i {
   color: white;
   padding: 9px;
+}
+
+.roomState .ai-badge {
+  right: 0;
+  color: #9c27b0;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0 10px 0 10px;
+  text-shadow: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.roomState .ai-badge:not(.hidden) {
+  display: block;
 }
 
 div:nth-of-type(2) > .list > .roomState .star {

@@ -1799,7 +1799,8 @@
       "variant": "",
       "language": "en-US",
       "players": "9-10",
-      "similarDesigner": "Rikki Tahta"
+      "similarDesigner": "Rikki Tahta",
+      "usesAIImagery": true
     }
   }
 }

@@ -23,7 +23,8 @@
       "variant": "",
       "language": "en-US",
       "players": "3-5",
-      "similarDesigner": "Uwe Rosenberg"
+      "similarDesigner": "Uwe Rosenberg",
+      "usesAIImagery": true
     }
   },
   "brhd": {

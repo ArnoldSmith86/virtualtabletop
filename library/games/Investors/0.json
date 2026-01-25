@@ -31,7 +31,8 @@
       "variant": "",
       "language": "en-US",
       "players": "3-7",
-      "similarDesigner": "Jun Sasaki"
+      "similarDesigner": "Jun Sasaki",
+      "usesAIImagery": true
     }
   },
   "hand": {
