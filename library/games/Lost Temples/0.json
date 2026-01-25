@@ -3,13 +3,13 @@
     "version": 6,
     "info": {
       "name": "Lost Temples",
-      "image": "/assets/-148611109_43840",
+      "image": "/assets/858017082_1122039",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/183251/karuba",
       "year": "2015",
       "mode": "vs",
       "time": "30-40",
-      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe wood grain background and board backgrounds (water, beach, grass) are available under the Pixabay License and are available at:\n\nhttps://pixabay.com/photos/water-sea-background-texture-1029842/\nhttps://pixabay.com/photos/sand-texture-beach-summer-4432101/\nhttps://pixabay.com/photos/lawn-grass-artificial-grass-green-1846813/\nhttps://pixabay.com/photos/wood-structure-fund-nature-grain-186304/\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  - By delapouite (grass, temple, statute, skull, gem):\n\nhttps://game-icons.net/1x1/delapouite/high-grass.html\nhttps://game-icons.net/1x1/delapouite/mayan-pyramid.html\nhttps://game-icons.net/1x1/delapouite/colombian-statue.html\nhttps://game-icons.net/1x1/delapouite/calavera.html\nhttps://game-icons.net/1x1/delapouite/rupee.html\n\n  -  By lorc (diamond, chalice):\nhttps://game-icons.net/1x1/lorc/cut-diamond.html\nhttps://game-icons.net/1x1/lorc/jeweled-chalice.html\n\n  -  By faithtoken (gold ore):\nhttps://game-icons.net/1x1/faithtoken/ore.html<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"lost Mayan temples painting --ar 1:! --v 5.1\"<br></div>",
+      "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe wood grain background and board backgrounds (water, beach, grass) are available under the Pixabay License and are available at:\n\nhttps://pixabay.com/photos/water-sea-background-texture-1029842/\nhttps://pixabay.com/photos/sand-texture-beach-summer-4432101/\nhttps://pixabay.com/photos/lawn-grass-artificial-grass-green-1846813/\nhttps://pixabay.com/photos/wood-structure-fund-nature-grain-186304/\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  - By delapouite (grass, temple, statute, skull, gem):\n\nhttps://game-icons.net/1x1/delapouite/high-grass.html\nhttps://game-icons.net/1x1/delapouite/mayan-pyramid.html\nhttps://game-icons.net/1x1/delapouite/colombian-statue.html\nhttps://game-icons.net/1x1/delapouite/calavera.html\nhttps://game-icons.net/1x1/delapouite/rupee.html\n\n  -  By lorc (diamond, chalice):\nhttps://game-icons.net/1x1/lorc/cut-diamond.html\nhttps://game-icons.net/1x1/lorc/jeweled-chalice.html\n\n  -  By faithtoken (gold ore):\nhttps://game-icons.net/1x1/faithtoken/ore.html",
       "similarName": "Karuba",
       "description": "Tile-laying race game. Players start with identical empty boards and each place the same piece and move tokens to be the first to reach temples and collect treasure. Player with most points wins.",
       "showName": true,
@@ -23,8 +23,7 @@
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "similarDesigner": "Rüdiger Dorn",
-      "usesAIImagery": true
+      "similarDesigner": "Rüdiger Dorn"
     }
   },
   "tac8": {

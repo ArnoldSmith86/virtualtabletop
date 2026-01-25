@@ -3,13 +3,13 @@
     "version": 12,
     "info": {
       "name": "Ultra",
-      "image": "/assets/-879888425_42719",
+      "image": "/assets/-505857146_152515",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/225694/decrypto",
       "year": "2018",
       "mode": "teams",
       "time": "15-45",
-      "attribution": "The game layout and all game elements are by LawDawg and are released to the Public Domain by CC0.\n\nWord list was compiled from:\n\nhttps://www.thegamegal.com/printables/#word-lists\nhttps://www.thegamegal.com/word-generator/\nhttps://github.com/Alamantus/fun-word-list\nhttps://www.randomlists.com/nouns\nhttps://randomwordgenerator.com/noun.php\nhttps://jimpix.co.uk/words/word-generator.asp\n\nand was edited by LawDawg.<div><br><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"decryption enigma machine black and white photograph --ar 1:1 --v 5.1\"<br></div></div>",
+      "attribution": "The game layout and all game elements are by LawDawg and are released to the Public Domain by CC0.\n\nWord list was compiled from:\n\nhttps://www.thegamegal.com/printables/#word-lists\nhttps://www.thegamegal.com/word-generator/\nhttps://github.com/Alamantus/fun-word-list\nhttps://www.randomlists.com/nouns\nhttps://randomwordgenerator.com/noun.php\nhttps://jimpix.co.uk/words/word-generator.asp\n\nand was edited by LawDawg.",
       "similarName": "Decrypto",
       "description": "One player on each of two teams provides clues about code words. Players attempt to correctly match clue with the code word. Teams try to guess their own codes and the other team's codes. Play up to 8 rounds, but winner declared after two failures or two intercepts.",
       "showName": true,
@@ -23,8 +23,7 @@
       "variant": "",
       "language": "en-US",
       "players": "3-10",
-      "similarDesigner": "Thomas Dagenais-Lespérance",
-      "usesAIImagery": true
+      "similarDesigner": "Thomas Dagenais-Lespérance"
     }
   },
   "backWhite": {

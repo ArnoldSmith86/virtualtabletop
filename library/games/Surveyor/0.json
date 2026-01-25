@@ -3,13 +3,13 @@
     "version": 6,
     "info": {
       "name": "Surveyor",
-      "image": "/assets/-14007944_28509",
+      "image": "/assets/885503749_21329",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/263918/cartographers",
       "year": "2019",
       "mode": "solo; vs",
       "time": "30-45",
-      "attribution": "Room design and layout by LawDawg96. Released to the public domain under CC0.\n\nIcons from Game-icons.net available under CC BY 3.0 from:\n  Lorc\n   - Wheat https://game-icons.net/1x1/lorc/wheat.html\n   - Waves https://game-icons.net/1x1/lorc/waves.html\n   - Tree https://game-icons.net/1x1/lorc/pine-tree.html\n   - Mountains https://game-icons.net/1x1/lorc/mountains.html\n   - Crown https://game-icons.net/1x1/lorc/queen-crown.html\n\n  Delapouite\n   - House https://game-icons.net/1x1/delapouite/house.html\n   - Ruins https://game-icons.net/1x1/delapouite/ancient-columns.html\n\n  Caro Asercion\n   - Monster https://game-icons.net/1x1/caro-asercion/goblin.html\n\nPhotos from Pixabay and available under the Pixabay license:\n  - Card back by schaeffler schaeffler https://pixabay.com/photos/map-of-the-world-compass-antique-429784/\n  - Map background on goal cards by M.H. https://pixabay.com/photos/background-treasure-map-map-1675212/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"two surveyors in wilderness, painting by Thomas Kinkade --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Room design and layout by LawDawg96. Released to the public domain under CC0.\n\nIcons from Game-icons.net available under CC BY 3.0 from:\n  Lorc\n   - Wheat https://game-icons.net/1x1/lorc/wheat.html\n   - Waves https://game-icons.net/1x1/lorc/waves.html\n   - Tree https://game-icons.net/1x1/lorc/pine-tree.html\n   - Mountains https://game-icons.net/1x1/lorc/mountains.html\n   - Crown https://game-icons.net/1x1/lorc/queen-crown.html\n\n  Delapouite\n   - House https://game-icons.net/1x1/delapouite/house.html\n   - Ruins https://game-icons.net/1x1/delapouite/ancient-columns.html\n\n  Caro Asercion\n   - Monster https://game-icons.net/1x1/caro-asercion/goblin.html\n\nPhotos from Pixabay and available under the Pixabay license:\n  - Card back by schaeffler schaeffler https://pixabay.com/photos/map-of-the-world-compass-antique-429784/\n  - Map background on goal cards by M.H. https://pixabay.com/photos/background-treasure-map-map-1675212/",
       "similarName": "Cartographers",
       "description": "Draw cards to reveal terrain and a shape. Add selected terrain and shape to individual 11x11 grid board. Try to connect terrain pieces in patterns designated by goal cards. Play 4 rounds. Highest score wins.",
       "showName": true,
@@ -23,8 +23,7 @@
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
-      "similarDesigner": "Jordy Adan",
-      "usesAIImagery": true
+      "similarDesigner": "Jordy Adan"
     }
   },
   "borderLeft1": {

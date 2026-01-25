@@ -129,13 +129,13 @@
     "version": 6,
     "info": {
       "name": "Dog Eat Dog World",
-      "image": "/assets/1434037453_37197",
+      "image": "/assets/-1896214630_2512",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/309110/food-chain-island",
       "year": "2020",
       "mode": "solo",
       "time": "15",
-      "attribution": "Room layout and card design by LawDawg96. Released to the public domain under CC0.\n\nRoom background is from https://pixabay.com/photos/background-texture-pictorial-2668435/ and is available under the Pixabay license.\n\nCard images from https://icons8.com/ and available under the Icons8 license:\n - Plant https://icons8.com/icon/80791/plant\n - Ant https://icons8.com/icon/16010/ant\n - Spider https://icons8.com/icon/17372/spider\n - Mouse https://icons8.com/icon/NZ8kvzWb7v6Q/mouse\n - Lizard https://icons8.com/icon/NMg3nPX3R1UT/lizard\n - Rat https://icons8.com/icon/vzz0xyvO-UyC/rat\n - Bat https://icons8.com/icon/5mD2JRHQvi8_/bat\n - Snake https://icons8.com/icon/OwPRfsLEUW71/snake\n - Racoon https://icons8.com/icon/xuqvSAsgBfzm/raccoon\n - Fox https://icons8.com/icon/OzPzLNFKW3qG/fox\n - Wolf https://icons8.com/icon/VcTCb_viZ8ui/wolf\n - Tiger https://icons8.com/icon/I5OML1bajbP2/tiger\n - Gator https://icons8.com/icon/ucFXo98hhFEL/alligator\n - Lion https://icons8.com/icon/33035/lion\n - Polar bear https://icons8.com/icon/c3GBKV63y0qQ/polar-bear\n - Whale https://icons8.com/icon/AHWkIE_i5sGn/whale\n - Shark https://icons8.com/icon/w3JYY-Hele6S/shark\n\n\nCard images from https://www.flaticon.com/ and available under the Flaticon license:\n - Lynx https://cdn-icons-png.flaticon.com/512/6855/6855249.png\n\nCard images from https://game-icons.net/ by Lorc available under CC BY 3.0:\n - Teeth https://game-icons.net/1x1/lorc/alligator-clip.html\n - Food chain (card back) https://game-icons.net/1x1/lorc/food-chain.html<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"food chain mammals watercolor painting --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Room layout and card design by LawDawg96. Released to the public domain under CC0.\n\nRoom background is from https://pixabay.com/photos/background-texture-pictorial-2668435/ and is available under the Pixabay license.\n\nCard images from https://icons8.com/ and available under the Icons8 license:\n - Plant https://icons8.com/icon/80791/plant\n - Ant https://icons8.com/icon/16010/ant\n - Spider https://icons8.com/icon/17372/spider\n - Mouse https://icons8.com/icon/NZ8kvzWb7v6Q/mouse\n - Lizard https://icons8.com/icon/NMg3nPX3R1UT/lizard\n - Rat https://icons8.com/icon/vzz0xyvO-UyC/rat\n - Bat https://icons8.com/icon/5mD2JRHQvi8_/bat\n - Snake https://icons8.com/icon/OwPRfsLEUW71/snake\n - Racoon https://icons8.com/icon/xuqvSAsgBfzm/raccoon\n - Fox https://icons8.com/icon/OzPzLNFKW3qG/fox\n - Wolf https://icons8.com/icon/VcTCb_viZ8ui/wolf\n - Tiger https://icons8.com/icon/I5OML1bajbP2/tiger\n - Gator https://icons8.com/icon/ucFXo98hhFEL/alligator\n - Lion https://icons8.com/icon/33035/lion\n - Polar bear https://icons8.com/icon/c3GBKV63y0qQ/polar-bear\n - Whale https://icons8.com/icon/AHWkIE_i5sGn/whale\n - Shark https://icons8.com/icon/w3JYY-Hele6S/shark\n\n\nCard images from https://www.flaticon.com/ and available under the Flaticon license:\n - Lynx https://cdn-icons-png.flaticon.com/512/6855/6855249.png\n\nCard images from https://game-icons.net/ by Lorc available under CC BY 3.0:\n - Teeth https://game-icons.net/1x1/lorc/alligator-clip.html\n - Food chain (card back and library image) https://game-icons.net/1x1/lorc/food-chain.html",
       "similarName": "Food Chain Island",
       "description": "Starting with grid of 16 cards representing animals, move card to eat another smaller, adjacent animal card. Then activate the special power of the eating animal. Game ends when player cannot move to eat an animal. Goal is to have only one animal card remaining.",
       "showName": true,
@@ -149,8 +149,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "similarDesigner": "Scott Almes",
-      "usesAIImagery": true
+      "similarDesigner": "Scott Almes"
     }
   },
   "shiftup": {

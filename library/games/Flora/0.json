@@ -40,13 +40,13 @@
     "version": 14,
     "info": {
       "name": "Flora",
-      "image": "/assets/110283352_37731",
+      "image": "/assets/-293329117_95425",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/140934/arboretum",
       "year": "2015",
       "mode": "vs",
       "time": "30",
-      "attribution": "The game layout, game board, and game piece designs were done by LawDawg, with edits by RaphaelAlvez, and are released to the Public Domain by CC0.\n\nThe room background and card back are from https://pixabay.com/ and are available under the Pixabay License:\n -https://pixabay.com/photos/hydrangea-flowers-pink-hydrangea-3659614/\n -https://pixabay.com/illustrations/rose-graphic-flower-deco-4372048/\n\nThe card face artwork is all in the public domain and available from the following sources:\n\nButtercup - http://www.clker.com/clipart-14008.html\nCamellia - http://www.clker.com/clipart-26556.html\nCarnation - http://www.clker.com/clipart-26550.html\nCrocus - http://www.clker.com/clipart-14014.html\nDahlia - http://www.clker.com/clipart-26857.html\nDaisy - http://www.clker.com/clipart-clip-art.html\nLily - http://www.clker.com/clipart-26617.html\nPeriwinkle - http://www.clker.com/clipart-14022.html\nTulip - http://www.clker.com/clipart-14030.html\nRose - https://freesvg.org/outlined-rose-image<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"flowers three seasons triptych watercolor painting --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "The game layout, game board, game piece designs, and library image were done by LawDawg, with edits by RaphaelAlvez, and are released to the Public Domain by CC0.\n\nThe room background and card back are from https://pixabay.com/ and are available under the Pixabay License:\n -https://pixabay.com/photos/hydrangea-flowers-pink-hydrangea-3659614/\n -https://pixabay.com/illustrations/rose-graphic-flower-deco-4372048/\n\nThe card face artwork is all in the public domain and available from the following sources:\n\nButtercup - http://www.clker.com/clipart-14008.html\nCamellia - http://www.clker.com/clipart-26556.html\nCarnation - http://www.clker.com/clipart-26550.html\nCrocus - http://www.clker.com/clipart-14014.html\nDahlia - http://www.clker.com/clipart-26857.html\nDaisy - http://www.clker.com/clipart-clip-art.html\nLily - http://www.clker.com/clipart-26617.html\nPeriwinkle - http://www.clker.com/clipart-14022.html\nTulip - http://www.clker.com/clipart-14030.html\nRose - https://freesvg.org/outlined-rose-image",
       "similarName": "Arboretum",
       "description": "Create sets of floral cards in tiled sequences to connect the same species of flower. Highest score wins.",
       "showName": true,
@@ -60,8 +60,7 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-4",
-      "usesAIImagery": true
+      "players": "2-4"
     }
   },
   "discard1": {
