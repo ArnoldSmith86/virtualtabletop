@@ -14,7 +14,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div><div>Card layout by mousewax and available under CC0. Dexdouglas wrote character text hints. All other room layout, design, and scripting are by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>The card back for the Bad Guy characters was created by the Google Gemini AI (https://gemini.google.com/) using the following prompt: \"<span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">1:1 square minimalist card back design. Dark, desaturated background with a subtle central motif formed from overlapping shadows and worn textures, suggesting secrecy and hierarchy without literal imagery. Aged letterpress feel, soft contrast, and visible paper grain. Clean edges, symmetrical framing, and high legibility at card size. Mood is controlled, serious, and ominous without theatrical noir lighting.\"</span></div><div><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\"><br></span></div><div><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">The library image and the card back for the Good Guy characters was also created by Google Gemini with the following prompt: \"</span><span style=\"color: rgb(32, 33, 36); font-family: &quot;Google Sans&quot;, Roboto, Arial, sans-serif; font-size: 16px; letter-spacing: 0.1px; white-space-collapse: collapse;\">Now make a similar one for the good guys. Lighter tones. Less ominous imagery.\"</span></div><div><br></div><div>The character images were created by the Microsoft Copilot AI (https://copilot.microsoft.com/) using various prompts to describe the mood and characters similar to: \"1:1 square image of a _________. Figure should be standing. Only include accessories appropriate to the role/occupation. Style: Muted 1930s–1940s American noir with painterly realism and an aged letterpress feel, using desaturated colors, soft contrast, and subtle paper grain; composition favors clean silhouettes, balanced framing, and restrained detail, keeping backgrounds abstract and readable without cinematic lighting or ornamentation. Overall tone is grounded and serious, evoking procedural crime, quiet menace, and tension without parody, fantasy, modern visual elements and no text. Faces must be distinct and non-recurring across images. Avoid reusing facial structure, age, hairline, jaw shape, or expression from prior images. Do not default to noir archetype faces (square-jawed fedora men, similar stubble, mirrored features). Each figure must occupy a different identity cluster, with clearly different bone structure, age cues, and presence. Prior images must not be visually recognizable in face, silhouette, or attire.\"</div></div><div><br></div><div>The texture used in the room background was created using the ChatGPT AI (https://chatgpt.com/) by uploading the library image and applying the following prompt: \"Take this and strip out the emblem. Make it 103:168 ratio. Get rid of any border and make the corners square.\"</div><div><br></div>The courthouse building in the room background is by BruceEmmerling and is available under the Pixabay license from https://pixabay.com/photos/historic-building-philadelphia-4257401/.<div><br></div><div>The font is Libre Baskerville, copyright 2012 by The Libre Baskerville Project Authors with Reserved Font Name Libre Baskerville and is licensed for use under the SIL Open Font License, Version 1.1.</div>",
-      "lastUpdate": 1769296021887,
+      "lastUpdate": 1769300748860,
       "showName": true,
       "skill": "",
       "description": "The prosecution's star witness can take the mafia down. But the witness has to make it from the safehouse to the courthouse, and the mafia will stop at nothing to eliminate him.",
@@ -1144,7 +1144,7 @@
     "id": "seat1",
     "x": 15,
     "y": 470,
-    "displayEmpty": "good guys",
+    "displayEmpty": "Good Guys",
     "hand": "hand1",
     "hideWhenUnused": true,
     "clickRoutine": [
@@ -1181,7 +1181,11 @@
           }
         ]
       }
-    ]
+    ],
+    "css": {
+      "font-family": "LibreBaskerville",
+      "font-size": "20px"
+    }
   },
   "tunnelArrow": {
     "id": "tunnelArrow",
@@ -1693,8 +1697,8 @@
         "margin-top": "80px",
         "margin-left": "0px",
         "color": "black",
-        "font-size": "14px",
-        "font-family": "roboto"
+        "font-family": "LibreBaskerville",
+        "font-size": "14px"
       },
       ":hover::after": {
         "display": "block"
@@ -2272,9 +2276,13 @@
     "index": 2,
     "x": 1417,
     "y": 470,
-    "displayEmpty": "bad guys",
+    "displayEmpty": "Bad Guys",
     "hand": "hand2",
-    "hideWhenUnused": true
+    "hideWhenUnused": true,
+    "css": {
+      "font-family": "LibreBaskerville",
+      "font-size": "20px"
+    }
   },
   "hand1": {
     "type": "holder",
@@ -2868,11 +2876,40 @@
           "display": "block"
         },
         " .hintDisplay": {
-          "border": "5px solid black",
+          "border": "2px solid #000000",
+          "box-shadow": "inset 0 0 0 5px ${PROPERTY mainColor}",
           "border-radius": "10px",
-          "overflow": "hidden",
           "background": "#e7e2d7",
-          "padding": "8px 10px 8px 10px"
+          "padding": "8px 10px",
+          "display": "flex",
+          "gap": "10px",
+          "align-items": "center"
+        },
+        " .hintLeft": {
+          "width": "90px",
+          "display": "flex",
+          "flex-direction": "column",
+          "align-items": "center",
+          "flex-shrink": 0
+        },
+        " .hintTitle": {
+          "font-weight": "bold",
+          "text-align": "center",
+          "margin-bottom": "6px",
+          "font-size": "12px"
+        },
+        " .hintIcon": {
+          "width": "64px",
+          "height": "64px",
+          "background": "black",
+          "background-size": "cover",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "border-radius": "6px"
+        },
+        " .hintText": {
+          "flex": 1,
+          "line-height": "1.35"
         }
       }
     },
@@ -2885,8 +2922,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "\n        <div class='hintDisplay'>When the <b>Rookie</b> is in an encounter, both the <b>Rookie</b> and the opposing Bad Guy are defeated before the Bad Guys’ ability is resolved. Exception: an encounter against the <b>Judge</b> where the <b>Rookie’s</b> ability has no effect and the encounter proceeds to playing cards.</div>"
+        "yValue": 245,
+        "image": "/assets/-1478875586_71578",
+        "detail": "\n        <div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When the <b>Rookie</b> is in an encounter, both the <b>Rookie</b> and the opposing Bad Guy are defeated before the Bad Guys’ ability is resolved. Exception: an encounter against the <b>Judge</b> where the <b>Rookie’s</b> ability has no effect and the encounter proceeds to playing cards.</div></div>"
       },
       "Witness": {
         "name": "Witness",
@@ -2896,8 +2934,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>When defending, the <b>Witness</b> can choose to retreat sideways to an adjacent region. Retreating can only occur at the beginning of an encounter, before a card is played. You can never retreat sideways in the <i>Industrial District</i>, or into a region with a Bad Guy, or into a region that already has the maximum allowable Good Guys.</div>"
+        "yValue": 245,
+        "image": "/assets/1235687683_42510",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When defending, the <b>Witness</b> can choose to retreat sideways to an adjacent region. Retreating can only occur at the beginning of an encounter, before a card is played. You can never retreat sideways in the <i>Industrial District</i>, or into a region with a Bad Guy, or into a region that already has the maximum allowable Good Guys.</div></div>"
       },
       "Decoy": {
         "name": "Decoy",
@@ -2907,8 +2946,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>When attacking, the <b>Decoy</b> may retreat backward to an adjacent region. The <b>Decoy</b> can only use his ability to retreat at the beginning of an encounter, and not after cards are played.</div>"
+        "yValue": 245,
+        "image": "/assets/904652644_50430",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When attacking, the <b>Decoy</b> may retreat backward to an adjacent region. The <b>Decoy</b> can only use his ability to retreat at the beginning of an encounter, and not after cards are played.</div></div>"
       },
       "Informant": {
         "name": "Informant",
@@ -2918,8 +2958,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>When in an encounter with the <b>Don</b>, the <b>Informant</b> automatically defeats the <b>Don</b> before cards are chosen. In an encounter against any other Bad Guy, the <b>Informant’s</b> character ability has no effect.</div>"
+        "yValue": 245,
+        "image": "/assets/1689609274_47524",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When in an encounter with the <b>Don</b>, the <b>Informant</b> automatically defeats the <b>Don</b> before cards are chosen. In an encounter against any other Bad Guy, the <b>Informant’s</b> character ability has no effect.</div></div>"
       },
       "Escort": {
         "name": "Escort",
@@ -2929,8 +2970,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>If the <b>Escort</b> is in the same space as the <b>Witness</b>, and the <b>Witness</b> is attacked first, the <b>Escort</b> may be revealed to take the <b>Witness’s</b> place in the attack (this must be done before you use the <b>Witness’s</b> ability). If this is done, the <b>Escort’s</b> strength becomes 5. The Good Guys must reveal the <b>Witness</b> (before cards are chosen) in order to prove the <b>Escort’s</b> strength. Alternatively, the Good Guys may choose not to reveal the <b>Witness</b> and keep the <b>Escort’s</b> strength at 2. If the <b>Witness</b> is battling the <b>Judge</b>, the <b>Escort</b> cannot replace the <b>Witness</b>. If the <b>Escort</b> is battling the <b>Judge</b>, the <b>Escort's</b> strength remains at 2, even if the <b>Witness</b> is in the same region. If the <b>Thugs</b> attack the <b>Witness</b> as their first attack, a switch to the <b>Escort</b> will result in the <b>Thugs</b> defeating the <b>Escort</b>. Reminder: As the character limit in the <i>Industrial District</i> is 1, the <b>Escort</b> cannot accompany the <b>Witness</b> in the same region within the <i>Industrial District</i>.</div>"
+        "yValue": 245,
+        "image": "/assets/-1732605172_58764",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>If the <b>Escort</b> is in the same space as the <b>Witness</b>, and the <b>Witness</b> is attacked first, the <b>Escort</b> may be revealed to take the <b>Witness’s</b> place in the attack (this must be done before you use the <b>Witness’s</b> ability). If this is done, the <b>Escort’s</b> strength becomes 5. The Good Guys must reveal the <b>Witness</b> (before cards are chosen) in order to prove the <b>Escort’s</b> strength. Alternatively, the Good Guys may choose not to reveal the <b>Witness</b> and keep the <b>Escort’s</b> strength at 2. If the <b>Witness</b> is battling the <b>Judge</b>, the <b>Escort</b> cannot replace the <b>Witness</b>. If the <b>Escort</b> is battling the <b>Judge</b>, the <b>Escort's</b> strength remains at 2, even if the <b>Witness</b> is in the same region. If the <b>Thugs</b> attack the <b>Witness</b> as their first attack, a switch to the <b>Escort</b> will result in the <b>Thugs</b> defeating the <b>Escort</b>. Reminder: As the character limit in the <i>Industrial District</i> is 1, the <b>Escort</b> cannot accompany the <b>Witness</b> in the same region within the <i>Industrial District</i>.</div></div>"
       },
       "Sniper": {
         "name": "Sniper",
@@ -2940,8 +2982,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>When in an encounter with the <b>Mole</b>, the <b>Sniper</b> defeats the <b>Mole</b> before cards are played. In an encounter against any other Bad Guy, the <b>Sniper’s</b> ability has no effect.</div>"
+        "yValue": 245,
+        "image": "/assets/393562383_60000",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When in an encounter with the <b>Mole</b>, the <b>Sniper</b> defeats the <b>Mole</b> before cards are played. In an encounter against any other Bad Guy, the <b>Sniper’s</b> ability has no effect.</div></div>"
       },
       "SWAT": {
         "name": "SWAT",
@@ -2951,8 +2994,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": " <div class='hintDisplay'>When in an encounter with the <b>Thugs</b>, the <b>SWAT</b> defeats the <b>Thugs</b> before the <b>Thugs’</b> character ability is resolved. In an encounter against any other Bad Guy, the <b>SWAT’s</b> character ability has no effect.</div>"
+        "yValue": 245,
+        "image": "/assets/-1147788908_80736",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When in an encounter with the <b>Thugs</b>, the <b>SWAT</b> defeats the <b>Thugs</b> before the <b>Thugs’</b> character ability is resolved. In an encounter against any other Bad Guy, the <b>SWAT’s</b> character ability has no effect.</div></div>"
       },
       "Marshal": {
         "name": "Marshal",
@@ -2962,8 +3006,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>When moving, the <b>Marshal</b> can move into any adjacent region (forward, sideways, or backward) if he attacks at least one Bad Guy by doing so. Otherwise, the <b>Marshal</b> can only move forward into an adjacent region as normal. The <b>Marshal</b> can attack the <b>Judge</b> using his special ability, since he uses his ability before he enters the space with the <b>Judge</b>. The <b>Marshal</b> cannot move sideways in the <i>Industrial District</i>.</div>"
+        "yValue": 245,
+        "image": "/assets/2046821413_43544",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When moving, the <b>Marshal</b> can move into any adjacent region (forward, sideways, or backward) if he attacks at least one Bad Guy by doing so. Otherwise, the <b>Marshal</b> can only move forward into an adjacent region as normal. The <b>Marshal</b> can attack the <b>Judge</b> using his special ability, since he uses his ability before he enters the space with the <b>Judge</b>. The <b>Marshal</b> cannot move sideways in the <i>Industrial District</i>.</div></div>"
       },
       "Prosecutor": {
         "name": "Prosecutor",
@@ -2973,8 +3018,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": -705,
-        "yValue": 345,
-        "detail": "<div class='hintDisplay'>In an encounter against the <b>Prosecutor</b>, if characters must play cards, the Bad Guys must choose and reveal their card to the Good Guys first. After the Bad Guys have revealed their card, the Good Guys then choose their card. The Good Guys must play a card, even if the Bad Guys play their <u>Withdrawal</u> card after which, both cards are resolved as normal (with Bad Guys resolving text cards first). If the Bad Guys play their <u>Backup Plan</u> card, they must completely resolve it and reveal their new chosen card before the Good Guys choose and reveal their card. If the Bad Guys’ chosen card is a text card, do not resolve it until after the Good Guys have revealed their card choice.</div>"
+        "yValue": 245,
+        "image": "/assets/157897166_42448",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>In an encounter against the <b>Prosecutor</b>, if characters must play cards, the Bad Guys must choose and reveal their card to the Good Guys first. After the Bad Guys have revealed their card, the Good Guys then choose their card. The Good Guys must play a card, even if the Bad Guys play their <u>Withdrawal</u> card after which, both cards are resolved as normal (with Bad Guys resolving text cards first). If the Bad Guys play their <u>Backup Plan</u> card, they must completely resolve it and reveal their new chosen card before the Good Guys choose and reveal their card. If the Bad Guys’ chosen card is a text card, do not resolve it until after the Good Guys have revealed their card choice.</div></div>"
       },
       "Judge": {
         "name": "Judge",
@@ -2984,8 +3030,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>In an encounter against the <b>Judge</b>, the opposing Good Guys' character ability has no effect.</div>"
+        "yValue": 245,
+        "image": "/assets/-1410797466_50172",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>In an encounter against the <b>Judge</b>, the opposing Good Guys' character ability has no effect.</div></div>"
       },
       "Thugs": {
         "name": "Thugs",
@@ -2995,8 +3042,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>When attacking, the <b>Thugs</b> defeat the first Good Guy attacked in a region before cards are played. If there are additional Good Guys in the space, the <b>Thugs’</b> character ability has no effect in those subsequent encounters. A Good Guys' character with a retreat ability may retreat before the <b>Thugs’</b> ability is resolved. If the Good Guy retreats, ending that encounter, that encounter is still considered the <b>Thugs’</b> first attack (unless the <b>Thugs</b> were defending).</div>"
+        "yValue": 245,
+        "image": "/assets/-727207961_55956",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When attacking, the <b>Thugs</b> defeat the first Good Guy attacked in a region before cards are played. If there are additional Good Guys in the space, the <b>Thugs’</b> character ability has no effect in those subsequent encounters. A Good Guys' character with a retreat ability may retreat before the <b>Thugs’</b> ability is resolved. If the Good Guy retreats, ending that encounter, that encounter is still considered the <b>Thugs’</b> first attack (unless the <b>Thugs</b> were defending).</div></div>"
       },
       "Hit Squad": {
         "name": "Hit Squad",
@@ -3006,8 +3054,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>When moving, the <b>Hit Squad</b> can move forward any number of regions as long as they attack a region with at least one Good Guy by doing so. Otherwise, the <b>Hit Squad</b> must use the normal movement rules. The <b>Hit Squad</b> cannot move into or through a region already containing the maximum number of Bad Guys, nor can they move through a region occupied by one or more Good Guys.</div>"
+        "yValue": 245,
+        "image": "/assets/564561821_48000",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When moving, the <b>Hit Squad</b> can move forward any number of regions as long as they attack a region with at least one Good Guy by doing so. Otherwise, the <b>Hit Squad</b> must use the normal movement rules. The <b>Hit Squad</b> cannot move into or through a region already containing the maximum number of Bad Guys, nor can they move through a region occupied by one or more Good Guys.</div></div>"
       },
       "Mole": {
         "name": "Mole",
@@ -3017,8 +3066,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>When moving, the <b>Mole</b> may move to any region on the board as long as that region is occupied by a single Good Guy (and so attacks the Good Guys' character). Otherwise, the <b>Mole</b> must use the normal movement rules. The <b>Mole’s</b> ability allows it to move sideways into an adjacent <i>Industrial District</i> region as long as that region is occupied by a single Good Guy.</div>"
+        "yValue": 245,
+        "image": "/assets/1193514471_33164",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When moving, the <b>Mole</b> may move to any region on the board as long as that region is occupied by a single Good Guy (and so attacks the Good Guys' character). Otherwise, the <b>Mole</b> must use the normal movement rules. The <b>Mole’s</b> ability allows it to move sideways into an adjacent <i>Industrial District</i> region as long as that region is occupied by a single Good Guy.</div></div>"
       },
       "Fixer": {
         "name": "Fixer",
@@ -3028,8 +3078,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>In an encounter with the <b>Fixer</b>, if the Good Guy does not retreat using its character ability, the Bad Guys may declare that no cards are to be played, and that an encounter is decided by the character strength alone. All other normal rules for an encounter apply. </div>"
+        "yValue": 245,
+        "image": "/assets/1155682143_17212",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>In an encounter with the <b>Fixer</b>, if the Good Guy does not retreat using its character ability, the Bad Guys may declare that no cards are to be played, and that an encounter is decided by the character strength alone. All other normal rules for an encounter apply.</div></div>"
       },
       "Don": {
         "name": "Don",
@@ -3039,8 +3090,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>When moving, the <b>Don</b> can move sideways into an adjacent region if he attacks at least one Good Guy by doing so. Otherwise, the <b>Don</b> must use the normal movement rules. The <b>Don</b> cannot move sideways in the <i>Industrial District</i>. If the <b>Don</b> encounters the <b>Witness</b> in a sideways attack, the <b>Witness</b> may retreat sideways to the region previously occupied by the <b>Don</b>, as long as no other Bad Guys are there.</div>"
+        "yValue": 245,
+        "image": "/assets/33847893_21126",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>When moving, the <b>Don</b> can move sideways into an adjacent region if he attacks at least one Good Guy by doing so. Otherwise, the <b>Don</b> must use the normal movement rules. The <b>Don</b> cannot move sideways in the <i>Industrial District</i>. If the <b>Don</b> encounters the <b>Witness</b> in a sideways attack, the <b>Witness</b> may retreat sideways to the region previously occupied by the <b>Don</b>, as long as no other Bad Guys are there.</div></div>"
       },
       "Capo": {
         "name": "Capo",
@@ -3050,8 +3102,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>If the <b>Capo</b> defeats a Good Guy in an encounter, the <b>Capo</b> is immediately placed <i>Downtown</i> (unless the encounter took place in <i>Downtown</i>, in which case the <b>Capo</b> remains where he is). If there are already two other Bad Guys in <i>Downtown</i>, or if there are one or more Good Guys in <i>Downtown</i>, the <b>Capo</b> is defeated instead of relocated and is removed from the game.</div>"
+        "yValue": 245,
+        "image": "/assets/-1006447409_21864",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>If the <b>Capo</b> defeats a Good Guy in an encounter, the <b>Capo</b> is immediately placed <i>Downtown</i> (unless the encounter took place in <i>Downtown</i>, in which case the <b>Capo</b> remains where he is). If there are already two other Bad Guys in <i>Downtown</i>, or if there are one or more Good Guys in <i>Downtown</i>, the <b>Capo</b> is defeated instead of relocated and is removed from the game.</div></div>"
       },
       "Button Man": {
         "name": "Button Man",
@@ -3061,8 +3114,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>If the <b>Button Man</b> is in the <i>Warehouse</i> when a Good Guy uses the <i>Tunnel</i> (moving from <i>Central Park</i> directly to <i>Midtown</i>), the Bad Guys may reveal the <b>Button Man</b> to immediately defeat the Good Guy character (even the <b>Witness</b>) without an encounter. The <b>Button Man</b> himself remains unharmed (even the <b>Rookie</b> does not defeat the <b>Button Man</b> in this situation). A Good Guy character that is defeated by the <b>Button Man</b> when traveling through the <i>Tunnel</i> never reaches <i>Midtown</i>, so no Bad Guy in <i>Midtown</i> is revealed in an encounter.</div>"
+        "yValue": 245,
+        "image": "/assets/1769584873_19154",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>If the <b>Button Man</b> is in the <i>Warehouse</i> when a Good Guy uses the <i>Tunnel</i> (moving from <i>Central Park</i> directly to <i>Midtown</i>), the Bad Guys may reveal the <b>Button Man</b> to immediately defeat the Good Guy character (even the <b>Witness</b>) without an encounter. The <b>Button Man</b> himself remains unharmed (even the <b>Rookie</b> does not defeat the <b>Button Man</b> in this situation). A Good Guy character that is defeated by the <b>Button Man</b> when traveling through the <i>Tunnel</i> never reaches <i>Midtown</i>, so no Bad Guy in <i>Midtown</i> is revealed in an encounter.</div></div>"
       },
       "Enforcer": {
         "name": "Enforcer",
@@ -3072,8 +3126,9 @@
         "enlargeWidth": 604,
         "enlargeHeight": 600,
         "xValue": 398,
-        "yValue": 155,
-        "detail": "<div class='hintDisplay'>In an encounter with the <b>Enforcer</b>, the Bad Guys’ card has no effect and no strength. Bad Guys must still play and discard a card, even though that card has no benefit in the encounter.</div>"
+        "yValue": 245,
+        "image": "/assets/-823071488_64002",
+        "detail": "<div class='hintDisplay'><div class='hintLeft'><div class='hintTitle'>${PROPERTY name}: ${PROPERTY strength}</div><div class='hintIcon' style='background-image:url(${PROPERTY image})'></div></div><div class='hintText'>In an encounter with the <b>Enforcer</b>, the Bad Guys’ card has no effect and no strength. Bad Guys must still play and discard a card, even though that card has no benefit in the encounter.</div></div>"
       }
     },
     "faceTemplates": [
