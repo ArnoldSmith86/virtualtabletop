@@ -1,5 +1,5 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
@@ -30,7 +30,8 @@ function applyCustomCss(gameSettings) {
       style.id = 'globalCss';
       document.head.appendChild(style);
     }
-    style.appendChild(document.createTextNode((gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '')));
+    const cssText = (gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '');
+    style.appendChild(document.createTextNode(mapAssetURLs(cssText)));
   }
 }
 
