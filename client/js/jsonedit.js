@@ -713,7 +713,14 @@ const jeCommands = [
     context: '^deck ↦ cardTypes',
     call: async function(options) {
 
-      let csv = await selectFile('TEXT')
+      let csv;
+      try {
+        csv = await selectFile('TEXT');
+      } catch(e) {
+        if(e.message !== 'File selection cancelled.')
+          alert(`Error: ${e.toString()}`);
+        return;
+      }
 
       //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
 
