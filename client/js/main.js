@@ -405,11 +405,15 @@ async function uploadAsset(multipleCallback, fileTypes) {
         return null;
       });
       multipleCallback(uploadPath, f.name)
+    }).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Error: ${e.toString()}`);
     });
   }
   else {
     return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
-      alert(`Uploading failed: ${e.toString()}`);
+      if(e.message !== 'File selection cancelled.')
+        alert(`Uploading failed: ${e.toString()}`);
       return null;
     });
   }

@@ -505,9 +505,10 @@ function validateRoutine(routine, context, propertyPath = []) {
                 for(const key of Object.keys(operation.arguments))
                     if(typeof operation.arguments[key] === 'string')
                         newContext.validVariables[operation.arguments[key]] = 1;
+            newContext.validCollections['caller'] = 1;
             for(const widget of Object.values(context.widgets))
                 if(Array.isArray(widget[operation.routine]))
-                    validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]);
+                    problems.push(...validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]));
         }
         if(func === 'CALL')
             context.validVariables[operation.variable || 'result'] = 1;

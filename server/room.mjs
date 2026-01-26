@@ -112,6 +112,8 @@ export default class Room {
           delete Room.publicLibrary;
           this.publicLibraryUpdatedCallback();
           return;
+        } else {
+          delete meta.publicLibrary;
         }
 
         if(type != 'link' || meta.importerTemp)

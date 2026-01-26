@@ -499,6 +499,11 @@ export function selectFile(getContents, multipleCallback, fileTypes) {
 
       if (typeof multipleCallback === 'function') {
         for (const file of e.target.files) {
+          if(!getContents) {
+            multipleCallback(file);
+            continue;
+          }
+  
           const reader = new FileReader();
           reader.onload = (event) => {
             multipleCallback({ content: event.target.result, name: file.name });
@@ -514,6 +519,11 @@ export function selectFile(getContents, multipleCallback, fileTypes) {
         resolve(); // Resolve the promise once all files are being processed
       } else {
         const file = e.target.files[0];
+        if(!getContents) {
+          resolve(file);
+          return;
+        }
+
         const reader = new FileReader();
         reader.onload = (event) => {
           resolve({ content: event.target.result, name: file.name });
