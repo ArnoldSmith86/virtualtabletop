@@ -469,6 +469,10 @@ body.aspectTooGood.hiddenToolbar {
       content: '[edit_mode]';
     }
 
+    #meButton::before {
+      content: '[face]';
+    }
+
     #addButton::before {
       content: '[widget_add]';
     }
@@ -736,8 +740,30 @@ body.aspectTooGood.hiddenToolbar {
   overflow: auto
 }
 
+.overlay .heading{
+}
+.overlay .heading h1{
+  margin: 0 0.5em 0 0;
+  padding: 0.25em 0.5em 0.25em 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  line-height: 1em;
+  text-align: left;
+  max-width: 45%;
+}
+.overlay .heading .instructionalText{
+  display: block;
+  font-size: 16px;
+  text-align: left;
+  padding: 0 0 0.9rem 0;
+}
+
+.overlay > div {
+  width: 100%;
+}
+
 .overlay h1 {
-  text-align: center;
+  text-align: left;
+  width: 100%;
 }
 
 .overlay a {
@@ -747,6 +773,25 @@ body.aspectTooGood.hiddenToolbar {
 
 .overlay tr:nth-child(even) {
   background: #00000022;
+}
+
+label.ui-line{
+  display: block;
+  border-top: 1px solid rgb(31, 92, 166);
+  width: 100%;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  margin: 1rem 0 0.75rem 0;
+  padding: 0;
+}
+label.ui-line::before{
+  background-color: rgb(31, 92, 166);
+  color: white;
+  display: inline-block;
+  content: attr(data-label);
+  padding: 0 0.5rem;
+  border-radius: 0 0 0.5rem;
+  font-weight: bold;
 }
 
 div[icon] {
