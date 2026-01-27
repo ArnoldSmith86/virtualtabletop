@@ -14,6 +14,8 @@ jobs:
           fetch-depth: 0
 
       - name: Check and fix asset file names
+        id: asset-names
+        continue-on-error: true
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -53,6 +55,8 @@ jobs:
           fi
 
       - name: Check library images are square
+        id: square-images
+        continue-on-error: true
         run: |
           python3 -m pip install --quiet Pillow
           found_non_square=false
@@ -115,7 +119,7 @@ jobs:
           fi
 
       - name: Comment on PR with validation issues
-        if: steps.validate.outputs.validation_output != ''
+        if: always() && steps.validate.outputs.validation_output != ''
         uses: actions/github-script@v6
         env:
           VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
@@ -127,3 +131,7 @@ jobs:
               repo: context.repo.repo,
               body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
             });
+
+      - name: Fail if any check failed
+        if: always() && (steps.asset-names.outcome == 'failure' || steps.square-images.outcome == 'failure')
+        run: exit 1
