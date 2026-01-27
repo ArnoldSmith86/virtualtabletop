@@ -1478,13 +1478,13 @@
     "version": 3,
     "info": {
       "name": "Elemental",
-      "image": "/assets/192298734_43132",
+      "image": "/assets/-170776426_30255",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/299169/spicy",
       "year": "2020",
       "mode": "vs",
       "time": "15",
-      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"water fire land diorama --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/rocks-stones-pebbles-background-1246668/\nhttps://pixabay.com/photos/ice-frost-winter-snow-snowflakes-6538605/\nhttps://pixabay.com/photos/fire-wood-fire-flame-burn-brand-171229/\nhttps://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/",
       "similarName": "Spicy",
       "description": "Bluffing card game. Play or pass each turn while declaring card. Penalties for getting caught lieing and wrong challenges. Collect reward cards for points. Most points wins.",
       "showName": true,
@@ -1498,8 +1498,7 @@
       "variant": "",
       "language": "en-US",
       "players": "2-6",
-      "similarDesigner": "Győri Zoltán Gábor",
-      "usesAIImagery": true
+      "similarDesigner": "Győri Zoltán Gábor"
     }
   },
   "Background": {

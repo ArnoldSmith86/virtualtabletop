@@ -3518,13 +3518,13 @@
     "version": 4,
     "info": {
       "name": "Animal Race",
-      "image": "/assets/532296362_34744",
+      "image": "/assets/882185853_14331",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/361/hare-tortoise",
       "year": "1973",
       "mode": "vs",
       "time": "45",
-      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/fields-path-farm-house-wooden-house-5680966/\nhttps://pixabay.com/photos/cabbage-kale-vegetables-healthy-4513641/\nhttps://pixabay.com/photos/carrots-carrot-tops-vegetable-1112020/\nhttps://pixabay.com/photos/young-hare-leveret-hare-baby-hare-5374701/\nhttps://pixabay.com/photos/hedgehog-garden-nature-autumn-cute-5476447/<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"rabbit race for carrots by E.H. Shepard --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages released under Pixabay License:\nhttps://pixabay.com/photos/fields-path-farm-house-wooden-house-5680966/\nhttps://pixabay.com/photos/cabbage-kale-vegetables-healthy-4513641/\nhttps://pixabay.com/photos/carrots-carrot-tops-vegetable-1112020/\nhttps://pixabay.com/photos/young-hare-leveret-hare-baby-hare-5374701/\nhttps://pixabay.com/photos/hedgehog-garden-nature-autumn-cute-5476447/",
       "similarName": "Hare & Tortoise",
       "similarAwards": "1979 Spiel des Jahres Winner",
       "description": "Move around board by collecting and spending carrots and lettuce. First around the board having depleted all lettuce and all but 10 carrots wins.",
@@ -3538,8 +3538,7 @@
       "variant": "",
       "language": "en-US",
       "players": "2-6",
-      "similarDesigner": "David Parlett",
-      "usesAIImagery": true
+      "similarDesigner": "David Parlett"
     }
   }
 }

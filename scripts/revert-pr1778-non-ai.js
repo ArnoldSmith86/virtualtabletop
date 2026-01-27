@@ -8,7 +8,7 @@ import { execSync } from 'child_process';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PR_COMMIT = '1c91411f';
+const PR_COMMIT = 'f5205799';
 
 function hasAIImagery(attribution) {
   if (!attribution) return false;
@@ -172,7 +172,7 @@ function removeNewImage(gameFile, newImagePath) {
   return false;
 }
 
-console.log('Checking games changed in PR 1777...\n');
+console.log('Checking games changed in PR 1778...\n');
 
 const gameFiles = getGameFilesFromPR();
 const gamesToRevert = [];
@@ -191,10 +191,10 @@ for (const gameFile of gameFiles) {
   }
 }
 
-console.log(`Games that HAD AI imagery before PR 1777 (${gamesWithAI.length}):`);
+console.log(`Games that HAD AI imagery before PR 1778 (${gamesWithAI.length}):`);
 gamesWithAI.forEach(f => console.log(`  - ${f}`));
 
-console.log(`\nGames that did NOT have AI imagery before PR 1777 (${gamesToRevert.length}):`);
+console.log(`\nGames that did NOT have AI imagery before PR 1778 (${gamesToRevert.length}):`);
 gamesToRevert.forEach(f => console.log(`  - ${f}`));
 
 console.log(`\nReverting library image, attribution, and AI flag for ${gamesToRevert.length} games...\n`);

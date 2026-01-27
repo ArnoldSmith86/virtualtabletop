@@ -3794,13 +3794,13 @@
     "version": 4,
     "info": {
       "name": "Undercover",
-      "image": "/assets/-2123648215_15758",
+      "image": "/assets/2045601153_25796",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/178900/codenames",
       "year": "2015",
       "mode": "teams",
       "time": "20",
-      "attribution": "Word list by http://frequencylists.blogspot.com - usage allowed for non-commercial use: http://frequencylists.blogspot.com/2015/12/the-2000-most-frequent-german-nouns.html?showComment=1484153673875#c2670569270285286827\n\nCard graphics are from https://pixabay.com and are available for use under the Pixabay license.\n\nThe game layout and assets were created by https://www.reddit.com/user/Casbuild, https://www.reddit.com/user/ArnoldSmith86, and https://www.reddit.com/user/RaphaelAlvez and are released to the public domain by CC0.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"male spy silhouette sunset by ian fleming --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Word list by http://frequencylists.blogspot.com - usage allowed for non-commercial use: http://frequencylists.blogspot.com/2015/12/the-2000-most-frequent-german-nouns.html?showComment=1484153673875#c2670569270285286827\n\nCard graphics are from https://pixabay.com and are available for use under the Pixabay license.\n\nThe game layout and assets were created by https://www.reddit.com/user/Casbuild, https://www.reddit.com/user/ArnoldSmith86, and https://www.reddit.com/user/RaphaelAlvez and are released to the public domain by CC0.",
       "similarName": "Codenames",
       "similarAwards": "2017 MinD-Spielepreis Short Game Winner\n2017 As d'Or - Jeu de l'Année Nominee\n2016 UK Games Expo Best Party Game Winner\n2016 Tric Trac Nominee\n2016 Tric Trac d'Argent\n2016 SXSW Tabletop Game of the Year Nominee\n2016 Swiss Gamers Award Nominee\n2016 Spiel des Jahres Winner\n2016 Spiel der Spiele Hit mit Freunden Recommended\n2016 Nederlandse Spellenprijs Best Family Game Nominee\n2016 Lys Grand Public Finalist\n2016 Juego del Año Finalist\n2016 Japan Boardgame Prize Voters' Selection Winner\n2016 International Gamers Award - General Strategy: Multi-player Nominee\n2016 Hra roku Winner\n2016 Guldbrikken Best Adult Game Winner\n2016 Gra Roku Game of the Year Winner\n2016 Gouden Ludo Best Family Game Winner\n2016 Gioco dell’Anno Nominee\n2016 Fairplay À la carte Runner-up\n2016 Boardgames Australia Awards Best International Game Winner\n2016 Best Science Fiction or Fantasy Board Game Nominee\n2016 Årets Spill Best Party Game Winner\n2016 Årets Spel Best Adult Game Nominee\n2015 Meeples' Choice Winner\n2015 Jocul Anului în România Best Game in Romanian Winner\n2015 Jocul Anului în România Beginners Finalist\n2015 Hra roku Recommended\n2015 Golden Geek Most Innovative Board Game Nominee\n2015 Golden Geek Board Game of the Year Nominee\n2015 Golden Geek Best Party Board Game Winner\n2015 Golden Geek Best Family Board Game Winner\n2015 Cardboard Republic Socializer Laurel Winner\n2015 Board Game Quest Awards Game of the Year Nominee",
       "description": "Team leader gives team member clues so they can guess words. First team to guess all words without getting the assasin card wins.",
@@ -3814,8 +3814,7 @@
       "variant": "",
       "language": "en-US",
       "players": "4+",
-      "similarDesigner": "Vlaada Chvátil",
-      "usesAIImagery": true
+      "similarDesigner": "Vlaada Chvátil"
     }
   },
   "4wqf": {
