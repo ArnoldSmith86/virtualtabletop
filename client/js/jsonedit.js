@@ -713,7 +713,14 @@ const jeCommands = [
     context: '^deck ↦ cardTypes',
     call: async function(options) {
 
-      let csv = await selectFile('TEXT')
+      let csv;
+      try {
+        csv = await selectFile('TEXT');
+      } catch(e) {
+        if(e.message !== 'File selection cancelled.')
+          alert(`Error: ${e.toString()}`);
+        return;
+      }
 
       //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
 
@@ -1189,13 +1196,16 @@ const jeCommands = [
   }
 ];
 
-function jeRoutineCall(callback, synchronous) {
+function jeRoutineCall(callback, synchronous, command) {
   const f = function() {
     let routineIndex = -1;
+    let commandFound = !command;
     for(let i=jeContext.length-1; i>=0; --i) {
-      if(String(jeContext[i]).match(/Routine$/)) {
+      if(commandFound && String(jeContext[i]).match(/Routine$/)) {
         routineIndex = i;
         break;
+      } else if(!commandFound && String(jeContext[i]) == `(${command})`) {
+        commandFound = true;
       }
     }
 
@@ -1333,10 +1343,10 @@ function jeAddRoutineOperationCommands(command, defaults) {
             "reverse": false
           };
           jeSetAndSelect('z');
-        }) :
+        }, false, command) :
         jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
           jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
-        }),
+        }, false, command),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
       }, true)
@@ -1390,6 +1400,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+  jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
   jeAddRoutineOperationCommands('VAR', { variables: {} });
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
@@ -2041,8 +2052,7 @@ function jeCommandOptions() {
 export async function jeClick(widget, e) {
   if(e.ctrlKey) {
     jeSelectWidget(widget, e.shiftKey || e.which == 3 || e.button == 2);
-  } else {
-    await widget.click();
+    return true;
   }
 }
 

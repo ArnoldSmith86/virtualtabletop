@@ -6,42 +6,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1392,7 +1356,7 @@
     "parent": "holder-deck"
   },
   "_meta": {
-    "version": 15,
+    "version": 20,
     "info": {
       "name": "Functions - SWAPHANDS",
       "image": "/assets/-407492963_4703",
@@ -1402,7 +1366,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1749068771682,
+      "lastUpdate": 1768621533542,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1412,10 +1376,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Basics",
+      "players": "1",
       "language": "",
-      "players": "1"
+      "variant": "Basics",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

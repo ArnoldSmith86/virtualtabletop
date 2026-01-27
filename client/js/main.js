@@ -131,6 +131,9 @@ function checkURLproperties(connected) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
           $('#filterByType').value = 'Tutorials';
+        } else if(location.hash == '#About') {
+          urlProperties.about = true;
+          $('#aboutButton').click();
         } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
@@ -394,15 +397,25 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   }
 }
 
-async function uploadAsset(multipleCallback) {
+async function uploadAsset(multipleCallback, fileTypes) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
-      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      let uploadPath = await _uploadAsset(f).catch(e=>{
+        alert(`Uploading failed: ${e.toString()}`);
+        return null;
+      });
       multipleCallback(uploadPath, f.name)
+    }).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Error: ${e.toString()}`);
     });
   }
   else {
-    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+    return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Uploading failed: ${e.toString()}`);
+      return null;
+    });
   }
 }
 

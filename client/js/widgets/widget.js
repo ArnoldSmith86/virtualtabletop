@@ -453,7 +453,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'hoverParent', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -2047,6 +2047,20 @@ export class Widget extends StateManaged {
             jeLoggingRoutineOperationSummary(`${phrase} by ${a.value}`);
           else
             jeLoggingRoutineOperationSummary(`${a.mode} ${phrase}`);
+        }
+      }
+
+      if(a.func == 'UPLOAD') {
+        setDefaults(a, { variable: 'uploadedFileName', fileTypes: null });
+        const uploadedAsset = await uploadAsset(null, a.fileTypes);
+        if(!String(uploadedAsset).match(/^\/assets\/[0-9_-]+$/)) {
+          variables[a.variable] = false;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        } else {
+          variables[a.variable] = uploadedAsset;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
         }
       }
 

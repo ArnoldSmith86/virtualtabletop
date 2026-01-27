@@ -170,9 +170,7 @@ function setSelection(newSelectedWidgets) {
 export async function editClick(widget) {
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
-  } else {
-    setDeltaCause(`${getPlayerDetails().playerName} clicked ${widget.id} in editor`);
-    await widget.click();
+    return true;
   }
 }
 
