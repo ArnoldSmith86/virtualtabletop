@@ -32,7 +32,10 @@ async function resolveStateCollections(file, callback) {
 }
 
 function selectVTTfile(callback) {
-  selectFile(false, file=>resolveStateCollections(file, callback));
+  selectFile(false, file=>resolveStateCollections(file, callback)).catch(e=>{
+    if(e.message !== 'File selection cancelled.')
+      alert(`Error: ${e.toString()}`);
+  });
 }
 
 function addStateFile(f) {
