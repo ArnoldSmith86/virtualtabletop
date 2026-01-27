@@ -1,4 +1,29 @@
 {
+  "9205": {
+    "width": 35,
+    "height": 35,
+    "layer": 10,
+    "color": "#fcf0d4",
+    "css": "border-radius: 50%;",
+    "hoverParent": "itemHolder",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "clonedFrom": "1tc6",
+    "itemMarker": true,
+    "secondaryColor": "#000000",
+    "clickable": false,
+    "ownedBy": null,
+    "id": "9205",
+    "z": null,
+    "parent": "itemHolder"
+  },
   "_meta": {
     "version": 20,
     "gameSettings": {
@@ -14,7 +39,7 @@
       "mode": "vs; solo",
       "time": "30-45",
       "attribution": "<div>Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br></div><div>Tile bag by mousewax available as CC0.</div>",
-      "lastUpdate": 1767551993595,
+      "lastUpdate": 1769484557570,
       "showName": true,
       "skill": "",
       "description": "In this abstract tile-laying game, try to link as many of the same-colored pieces in straight lines as possible. The winner is the player whose worst color score (out of six) is higher than the other players' worst scores.",
@@ -22,7 +47,7 @@
       "similarName": "Ingenious",
       "similarDesigner": "Reiner Knizia",
       "similarAwards": "2018 Fall Parents' Choice Silver Honor Winner\n2011 Hra roku Nominee\n2010 MinD-Spielepreis Winner\n2010 Japan Boardgame Prize U-more Award Nominee\n2008 JoTa Best Abstract Board Game Winner\n2006 Hra roku Nominee\n2006 Golden Geek Best Family Board Game Winner\n2006 Golden Geek Best 2-Player Board Game Nominee\n2005 Mensa Select Winner\n2005 Juego del Año Finalist\n2005 Hra roku Nominee\n2004 Spiel des Jahres Nominee\n2004 Meeples Choice Award Nominee\n2004 Japan Boardgame Prize Best Foreign Game for Beginners Winner\n2004 International Gamers Awards - General Strategy; Multi-player Nominee",
-      "ruleText": "<div>Players take seats and press the restart button. A random player is assigned to start and each player is dealt six tiles. The board size automatically adjusts based on the player count.</div><div><b><br></b></div><div><b>Standard Rules</b></div><div><br></div>On your turn, place one tile onto two adjacent empty spaces on the board. During the first round, each player must play a tile adjacent to one of the colored hexes built into the board and must use a different built-in hex from the other players' first tiles.<div><div><br></div><div>After playing, score for each of the two hexes on the tile. For each hex, count the number of same-colored hexes in a straight line extending from the newly placed hex in five directions (excluding the direction occupied by the other half of the tile). Your score for that color is the sum of the lengths of each line, excluding the tile just played. Scores are tracked separately for each color.</div><div><br></div><div>As an aid to keeping score, an unlimited number of marbles are available at the bottom of the screen. You can place those on connecting tiles as a reference. The marbles are removed when refilling your hand. The game also defaults to placing a glow around the last played tile as an aid in scoring. You can turn the glow on and off with the lightbulb button at the top of the screen.</div><div><br></div><div>To indicate the score, you can click on the bar representing that color next to your seat. Each click increases the score by one. A double-click decreases the score by one. Alternatively, place the cursor over the top of the colored part of the bar until the cursor symbol changes to a double-ended arrow. Click and drag to move the colored part of the bar.</div><div><br></div><div><div>After scoring, draw tiles to refill your hand. Once per turn, if your hand does not contain the color in the lowest position on your scoreboard, you may swap your remaining tiles using the swap button. The tiles will be displayed for all to see for a few seconds, after which six new tiles are moved to the hand and the old tiles returned to the bag.</div><div><br></div><div>If you reach the maximum score in a color, you may immediately play another tile from your hand. If that extra turn also leads to another color reaching the maximum score, then take another turn and so on. Refill your hand only after completing all extra turns.</div><div>&nbsp;\nThe game ends when no more tiles can be played or when one player has reached the highest value in all six colors, in which case that player wins immediately. Otherwise, the player whose lowest color score is highest wins. Ties are broken by comparing second-lowest scores, and so on.</div></div><div><br></div><div><b>Partnership Rules</b></div><div><b><br></b></div><div>Four players form two teams. All the normal rules apply except that the team uses two scoreboards linked end-to-end. A bonus turn is given when the score reaches the highest point on each of the two linked scoreboards. The partnership with the lowest scoring colored value loses. The turn indicator will not work correctly during a partnership game so use the manual turn button at the top of the screen as appropriate.</div><div><br></div><div><b>Solo Rules</b></div><div><b><br></b></div><div>Follow the standard game rules and use a double-length scoreboard. Bonus turns are not used. Also, there is no hand of tiles in a solo game. Draw a single tile and play it and then draw another single tile. In the room, the solo player must sit in the lower-left seat.</div></div>",
+      "ruleText": "<div>Players take seats and press the restart button. A random player is assigned to start and each player is dealt six tiles. The board size automatically adjusts based on the player count.</div><div><b><br></b></div><div><b>Standard Rules</b></div><div><br></div>On your turn, place one tile onto two adjacent empty spaces on the board. During the first round, each player must play a tile adjacent to one of the colored hexes built into the board and must use a different built-in hex from the other players' first tiles.<div><div><br></div><div>After playing, score for each of the two hexes on the tile. For each hex, count the number of same-colored hexes in a straight line extending from the newly placed hex in five directions (excluding the direction occupied by the other half of the tile). Your score for that color is the sum of the lengths of each line, excluding the tile just played. Scores are tracked separately for each color.</div><div><br></div><div>As an aid to keeping score, an unlimited number of marbles are available at the bottom of the screen. You can place those on connecting tiles as a reference. The marbles are removed when refilling your hand. The game also defaults to placing a glow around the last played tile as an aid in scoring. You can turn the glow on and off with the lightbulb button at the top of the screen.</div><div><br></div><div>To indicate the score, you can click on the bar representing that color next to your seat. Each click increases the score by one. Alternatively, place the cursor over the top of the colored part of the bar until the cursor symbol changes to a double-ended arrow. Click and drag to move the colored part of the bar. You can increase or decrease (in case of clicking too many times) the score by dragging.</div><div><br></div><div><div>After scoring, use the hand icon below the tile back to draw tiles to refill your hand. Once per turn, if your hand does not contain the color in the lowest position on your scoreboard, you may swap your remaining tiles using the swap button. The tiles will be displayed for all to see for a few seconds, after which six new tiles are moved to the hand and the old tiles returned to the bag.</div><div><br></div><div>If you reach the maximum score in a color, you may immediately play another tile from your hand. If that extra turn also leads to another color reaching the maximum score, then take another turn and so on. Refill your hand only after completing all extra turns.</div><div>&nbsp;\nThe game ends when no more tiles can be played or when one player has reached the highest value in all six colors, in which case that player wins immediately. Otherwise, the player whose lowest color score is highest wins. Ties are broken by comparing second-lowest scores, and so on.</div></div><div><br></div><div><b>Partnership Rules</b></div><div><b><br></b></div><div>Four players form two teams. All the normal rules apply except that the team uses two scoreboards linked end-to-end. A bonus turn is given when the score reaches the highest point on each of the two linked scoreboards. The partnership with the lowest scoring colored value loses. The turn indicator will not work correctly during a partnership game so use the manual turn button at the top of the screen as appropriate.</div><div><br></div><div><b>Solo Rules</b></div><div><b><br></b></div><div>In the room, the solo player must sit in the lower-left seat. Follow the standard game rules and use a double-length scoreboard. Bonus turns are not used. Also, there is no hand of tiles in a solo game. Draw a single tile and play it and then draw another single tile.</div></div>",
       "helpText": "",
       "variantImage": "",
       "variant": "",
@@ -359,6 +384,14 @@
         "value": null
       },
       {
+        "func": "SET",
+        "collection": [
+          "swapLabel"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
         "func": "CLICK",
         "collection": [
           "recallItemButton"
@@ -561,7 +594,10 @@
     "color": "white",
     "clickRoutine": [
       {
-        "func": "TURN"
+        "func": "CLICK",
+        "collection": [
+          "fillButton"
+        ]
       }
     ],
     "layer": 3,
@@ -5378,9 +5414,7 @@
       }
     ],
     "parent": "seatArea1",
-    "mainColor": "#dddddd",
-    "color": "#00bcd4",
-    "glowColor": "#007088"
+    "mainColor": "#dddddd"
   },
   "legend1": {
     "id": "legend1",
@@ -5520,34 +5554,6 @@
             "func": "SET",
             "property": "y",
             "relation": "-",
-            "value": 18
-          }
-        ]
-      }
-    ],
-    "doubleClickRoutine": [
-      {
-        "func": "IF",
-        "operand1": "${PROPERTY level}",
-        "relation": ">",
-        "operand2": 1,
-        "thenRoutine": [
-          {
-            "func": "SET",
-            "collection": "thisButton",
-            "property": "level",
-            "relation": "-",
-            "value": 1
-          },
-          {
-            "func": "SELECT",
-            "property": "parent",
-            "value": "${PROPERTY id}"
-          },
-          {
-            "func": "SET",
-            "property": "y",
-            "relation": "+",
             "value": 18
           }
         ]
@@ -6267,9 +6273,7 @@
     "inUse": false,
     "player": "",
     "mainColor": "#dddddd",
-    "textColor": "#000000",
-    "color": "#009688",
-    "glowColor": "#004a3c"
+    "textColor": "#000000"
   },
   "legend19": {
     "inheritFrom": {
@@ -6541,9 +6545,45 @@
         "func": "MOVE",
         "to": "swapHolder"
       },
+      "var i = 6",
       {
-        "func": "DELAY",
-        "milliseconds": 7000
+        "func": "SET",
+        "collection": [
+          "swapLabel"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          6,
+          0,
+          -1
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "swapLabel"
+            ],
+            "property": "text",
+            "value": "${playerName} is returning the tiles below in ${i} seconds. Please wait ..."
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 1000
+          },
+          "var i = ${i} - 1"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "swapLabel"
+        ],
+        "property": "display",
+        "value": false
       },
       {
         "func": "CLICK",
@@ -6769,6 +6809,14 @@
         "to": "tileBag"
       },
       {
+        "func": "SET",
+        "collection": [
+          "swapLabel"
+        ],
+        "property": "text",
+        "value": null
+      },
+      {
         "func": "SELECT",
         "property": "id",
         "relation": "!=",
@@ -6797,30 +6845,6 @@
     "alignChildren": true,
     "dropLimit": 0,
     "layer": -4
-  },
-  "startMarble": {
-    "width": 35,
-    "height": 35,
-    "layer": 10,
-    "color": "#fcf0d4",
-    "css": "border-radius: 50%;",
-    "hoverParent": "itemHolder",
-    "image": "/i/game-pieces/3D/Marble-3D.svg",
-    "svgReplaces": {
-      "#primaryColor": "color",
-      "#secondaryColor": "secondaryColor",
-      "#borderColor": "borderColor",
-      "#borderWidth": "borderWidth"
-    },
-    "borderColor": "#ffffff",
-    "borderWidth": 1,
-    "clonedFrom": "startMarble",
-    "itemMarker": true,
-    "secondaryColor": "#000000",
-    "clickable": false,
-    "ownedBy": null,
-    "id": "startMarble",
-    "parent": "itemHolder"
   },
   "score2-1": {
     "id": "score2-1",
@@ -6983,5 +7007,19 @@
     },
     "linkedToSeat": "seat4",
     "level": 1
+  },
+  "swapLabel": {
+    "id": "swapLabel",
+    "x": 1213,
+    "y": 563,
+    "css": {
+      "color": "black",
+      "font-size": "25px"
+    },
+    "width": 380,
+    "height": 70,
+    "movable": false,
+    "movableInEdit": false,
+    "display": false
   }
 }
