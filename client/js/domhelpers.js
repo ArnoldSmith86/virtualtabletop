@@ -155,7 +155,7 @@ export function shuffleArray(array) {
 export function mapAssetURLs(str) {
   let result = String(str);
 
-  const gameSettings = getGameSettings();
+  const gameSettings = getCurrentGameSettings();
   const assetAliases = gameSettings.assetAliases || {};
   
   for(const [asset, alias] of Object.entries(assetAliases))
