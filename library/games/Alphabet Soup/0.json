@@ -24,7 +24,8 @@
       "variant": "",
       "language": "en-US",
       "players": "1-8",
-      "similarDesigner": "Bill Cooke, Allan Turoff"
+      "similarDesigner": "Bill Cooke, Allan Turoff",
+      "usesAIImagery": true
     }
   },
   "base": {

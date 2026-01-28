@@ -24047,7 +24047,8 @@
       "variant": "",
       "language": "",
       "players": "3-8",
-      "similarDesigner": "Alexandr Ushan"
+      "similarDesigner": "Alexandr Ushan",
+      "usesAIImagery": true
     }
   },
   "arrow": {

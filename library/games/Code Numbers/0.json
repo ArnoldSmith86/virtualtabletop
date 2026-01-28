@@ -10909,7 +10909,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1-4"
+      "players": "1-4",
+      "usesAIImagery": true
     }
   },
   "answerTab2": {

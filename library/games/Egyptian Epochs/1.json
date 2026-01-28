@@ -4657,7 +4657,8 @@
       "variantImage": "",
       "variant": "Ankh Angst",
       "language": "en-US",
-      "players": "2-5"
+      "players": "2-5",
+      "usesAIImagery": true
     }
   },
   "tile-gold-1": {

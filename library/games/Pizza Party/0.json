@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2"
+      "players": "2",
+      "usesAIImagery": true
     }
   },
   "tileDeck": {

@@ -23,7 +23,8 @@
       "variant": "",
       "language": "",
       "players": "1-5",
-      "similarDesigner": "Steffen Benndorf"
+      "similarDesigner": "Steffen Benndorf",
+      "usesAIImagery": true
     }
   },
   "Deck": {
