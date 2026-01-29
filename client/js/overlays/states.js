@@ -267,7 +267,8 @@ function updateLibraryFilter() {
     players:  $('#filterByPlayers').value,
     duration: $('#filterByDuration').value,
     language: $('#filterByLanguage').value,
-    mode:     $('#filterByMode').value
+    mode:     $('#filterByMode').value,
+    ai:       $('#filterByAi').value
   };
 
   function applyFilters(filters, callback) {
@@ -281,7 +282,8 @@ function updateLibraryFilter() {
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
         const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesaiimagery === '1');
+        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch && aiMatch);
       }
     }
   }
@@ -540,6 +542,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
+    entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
 
     if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
       entry.dataset.type = 'Tutorials';
