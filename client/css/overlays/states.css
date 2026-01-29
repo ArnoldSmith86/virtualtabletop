@@ -523,7 +523,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   font-size: 14px;
   padding: 6px 8px;
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 0 0 0 20px;
+  border-radius: 0 0 0 10px;
   text-shadow: none;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
   z-index: 10;
