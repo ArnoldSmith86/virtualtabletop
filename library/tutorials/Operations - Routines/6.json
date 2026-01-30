@@ -27,7 +27,7 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "addToRoomRoutine",
+      "variant": "editorAddToRoomRoutine",
       "language": "en-US",
       "players": "1"
     }
@@ -42,7 +42,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "addToRoomRoutine",
+    "text": "editorAddToRoomRoutine",
     "layer": -3
   },
   "overview": {
@@ -56,7 +56,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "This routine is for game developers only and is not used in game play. It works in connection with the Widgets Sidebar button in the JSON Editor. When saving widgets to local storage for use in other games or rooms, a <b>addToRoomRoutine</b> can be manually added. It works excatly like other VTT routines except that it activates when the widget is added to the room in Edit Mode. The routine is then deleted from the widget that is added to the room.\n\nThere is no button in the JSON Editor to automatically add this routine and it appears in orange instead of yellow in the colored JSON available in the editor."
+    "html": "This routine is for game developers only and is not used in game play. It works in connection with the Widgets Sidebar button in the JSON Editor. When saving widgets to local storage for use in other games or rooms, a <b>editorAddToRoomRoutine</b> can be manually added. It works excatly like other VTT routines except that it activates when the widget is added to the room in Edit Mode. The routine is then deleted from the widget that is added to the room.\n\nThere is no button in the JSON Editor to automatically add this routine and it appears in orange instead of yellow in the colored JSON available in the editor."
   },
   "button1": {
     "type": "button",
@@ -65,7 +65,7 @@
     "y": 402,
     "z": 22840,
     "text": "Demo",
-    "addToRoomRoutine": [
+    "editorAddToRoomRoutine": [
       {
         "func": "INPUT",
         "header": "Choose piece color",
@@ -96,6 +96,6 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above contains an <b>addToRoomRoutine</b>. An example of something you may want to include there is a routine to pick a color that should be set on the widget. For example, this is done on the VTT-provided game pieces using the routine demonstrated in the example above. You can see how this works by adding the button to your local storage and then adding it to the room."
+    "html": "The button above contains an <b>editorAddToRoomRoutine</b>. An example of something you may want to include there is a routine to pick a color that should be set on the widget. For example, this is done on the VTT-provided game pieces using the routine demonstrated in the example above. You can see how this works by adding the button to your local storage and then adding it to the room."
   }
 }
