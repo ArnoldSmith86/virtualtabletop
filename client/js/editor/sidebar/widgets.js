@@ -163,20 +163,22 @@ class WidgetsModule extends SidebarModule {
 
   async createWidget(widgetData, target) {
     const { widgets, groups } = await this.getWidgets(target);
-    const newId = target === 'local' ? `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}` : undefined;
-    const newWidget = JSON.parse(JSON.stringify(widgetData));
-    if (newId) {
-      newWidget.id = newId;
+    let newId;
+    if (target === 'local') {
+      newId = `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+    } else {
+      do {
+        newId = Math.random().toString(36).substring(2, 10);
+      } while (widgets.some(w => w.id === newId));
     }
+    const newWidget = JSON.parse(JSON.stringify(widgetData));
+    newWidget.id = newId;
+    if (!newWidget.name) newWidget.name = newId;
     widgets.push(newWidget);
 
     if (target === 'server') {
       if (!config.allowPublicLibraryEdits) return;
-      return fetch(`${config.urlPrefix}/api/widgets`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newWidget)
-      });
+      return this.updateAllWidgets({ widgets, groups }, target);
     } else {
       localStorage.setItem('customWidgets', JSON.stringify({ widgets, groups }));
       return Promise.resolve(newWidget);

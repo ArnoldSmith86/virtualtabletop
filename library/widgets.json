@@ -3519,6 +3519,675 @@
         }
       ],
       "preview": "i/icons/upload.svg"
+    },
+    {
+      "name": "dice1 Widget",
+      "widgets": [
+        {
+          "id": "dice1",
+          "width": 50,
+          "height": 50,
+          "borderRadius": 8,
+          "z": 4,
+          "css": {
+            "default": {
+              "background-color": "white",
+              "border": "0.5px solid black",
+              "transition": ""
+            }
+          },
+          "dice": true,
+          "sides": [
+            "/assets/72771024_2221",
+            "/assets/-1927750112_4192",
+            "/assets/-1897421947_2261",
+            "/assets/1428699476_1772",
+            "/assets/-2039093533_1156",
+            "/assets/458760096_2411"
+          ],
+          "image": "/assets/-1927750112_4192",
+          "rollRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "clickable",
+              "value": false
+            },
+            {
+              "func": "SELECT",
+              "type": "timer",
+              "property": "parent",
+              "value": "${PROPERTY id}"
+            },
+            {
+              "func": "CLICK"
+            }
+          ],
+          "x": 150,
+          "clickRoutine": [
+            {
+              "func": "CALL",
+              "routine": "rollRoutine"
+            }
+          ]
+        },
+        {
+          "type": "timer",
+          "id": "timer1",
+          "parent": "dice1",
+          "fixedParent": true,
+          "width": 74,
+          "height": 30,
+          "scale": 0,
+          "z": 33,
+          "movable": false,
+          "precision": 100,
+          "millisecondsChangeRoutine": [
+            "var parent = ${PROPERTY parent}",
+            "var check = ${PROPERTY milliseconds} / 100",
+            "var check = ${check} / 2",
+            "var round = ${check} floor",
+            "var isEven = ${check} == ${round}",
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY milliseconds}",
+              "relation": ">=",
+              "operand2": 1000,
+              "thenRoutine": [
+                {
+                  "func": "TIMER",
+                  "timer": "${PROPERTY id}",
+                  "mode": "reset"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "rotation",
+                  "value": 0
+                },
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = ''",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "clickable",
+                  "value": true
+                }
+              ],
+              "elseRoutine": [
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = 'linear 0.15s'",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "IF",
+                  "condition": "${isEven}",
+                  "thenRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation OF $parent} + ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    }
+                  ],
+                  "elseRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation} - ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    },
+                    "var count = ${PROPERTY sides OF $parent} length",
+                    "var count = ${count} - 1",
+                    "var random = randInt 0 ${count}",
+                    "var side = ${PROPERTY sides OF $parent} getIndex ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "image",
+                      "value": "${side}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dice2",
+          "width": 50,
+          "height": 50,
+          "borderRadius": 8,
+          "z": 3,
+          "css": {
+            "default": {
+              "background-color": "white",
+              "border": "0.5px solid black",
+              "transition": ""
+            }
+          },
+          "dice": true,
+          "sides": [
+            "/assets/72771024_2221",
+            "/assets/-1927750112_4192",
+            "/assets/-1897421947_2261",
+            "/assets/1428699476_1772",
+            "/assets/-2039093533_1156",
+            "/assets/458760096_2411"
+          ],
+          "image": "/assets/-1897421947_2261",
+          "rollRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "clickable",
+              "value": false
+            },
+            {
+              "func": "SELECT",
+              "type": "timer",
+              "property": "parent",
+              "value": "${PROPERTY id}"
+            },
+            {
+              "func": "CLICK"
+            }
+          ],
+          "clickRoutine": [
+            {
+              "func": "CALL",
+              "routine": "rollRoutine"
+            }
+          ],
+          "x": 100
+        },
+        {
+          "type": "timer",
+          "id": "timer2",
+          "parent": "dice2",
+          "fixedParent": true,
+          "width": 74,
+          "height": 30,
+          "scale": 0,
+          "z": 33,
+          "movable": false,
+          "precision": 100,
+          "millisecondsChangeRoutine": [
+            "var parent = ${PROPERTY parent}",
+            "var check = ${PROPERTY milliseconds} / 100",
+            "var check = ${check} / 2",
+            "var round = ${check} floor",
+            "var isEven = ${check} == ${round}",
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY milliseconds}",
+              "relation": ">=",
+              "operand2": 1000,
+              "thenRoutine": [
+                {
+                  "func": "TIMER",
+                  "timer": "${PROPERTY id}",
+                  "mode": "reset"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "rotation",
+                  "value": 0
+                },
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = ''",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "clickable",
+                  "value": true
+                }
+              ],
+              "elseRoutine": [
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = 'linear 0.15s'",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "IF",
+                  "condition": "${isEven}",
+                  "thenRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation OF $parent} + ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    }
+                  ],
+                  "elseRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation} - ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    },
+                    "var count = ${PROPERTY sides OF $parent} length",
+                    "var count = ${count} - 1",
+                    "var random = randInt 0 ${count}",
+                    "var side = ${PROPERTY sides OF $parent} getIndex ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "image",
+                      "value": "${side}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dice3",
+          "width": 50,
+          "height": 50,
+          "borderRadius": 8,
+          "z": 2,
+          "css": {
+            "default": {
+              "background-color": "white",
+              "border": "0.5px solid black",
+              "transition": ""
+            }
+          },
+          "dice": true,
+          "sides": [
+            "/assets/72771024_2221",
+            "/assets/-1927750112_4192",
+            "/assets/-1897421947_2261",
+            "/assets/1428699476_1772",
+            "/assets/-2039093533_1156",
+            "/assets/458760096_2411"
+          ],
+          "image": "/assets/-2039093533_1156",
+          "rollRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "clickable",
+              "value": false
+            },
+            {
+              "func": "SELECT",
+              "type": "timer",
+              "property": "parent",
+              "value": "${PROPERTY id}"
+            },
+            {
+              "func": "CLICK"
+            }
+          ],
+          "clickRoutine": [
+            {
+              "func": "CALL",
+              "routine": "rollRoutine"
+            }
+          ],
+          "x": 50
+        },
+        {
+          "type": "timer",
+          "id": "timer3",
+          "parent": "dice3",
+          "fixedParent": true,
+          "width": 74,
+          "height": 30,
+          "scale": 0,
+          "z": 33,
+          "movable": false,
+          "precision": 100,
+          "millisecondsChangeRoutine": [
+            "var parent = ${PROPERTY parent}",
+            "var check = ${PROPERTY milliseconds} / 100",
+            "var check = ${check} / 2",
+            "var round = ${check} floor",
+            "var isEven = ${check} == ${round}",
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY milliseconds}",
+              "relation": ">=",
+              "operand2": 1000,
+              "thenRoutine": [
+                {
+                  "func": "TIMER",
+                  "timer": "${PROPERTY id}",
+                  "mode": "reset"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "rotation",
+                  "value": 0
+                },
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = ''",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "clickable",
+                  "value": true
+                }
+              ],
+              "elseRoutine": [
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = 'linear 0.15s'",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "IF",
+                  "condition": "${isEven}",
+                  "thenRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation OF $parent} + ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    }
+                  ],
+                  "elseRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation} - ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    },
+                    "var count = ${PROPERTY sides OF $parent} length",
+                    "var count = ${count} - 1",
+                    "var random = randInt 0 ${count}",
+                    "var side = ${PROPERTY sides OF $parent} getIndex ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "image",
+                      "value": "${side}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "dice5",
+          "width": 50,
+          "height": 50,
+          "borderRadius": 8,
+          "z": 1,
+          "css": {
+            "default": {
+              "background-color": "white",
+              "border": "0.5px solid black",
+              "transition": ""
+            }
+          },
+          "dice": true,
+          "sides": [
+            "/assets/72771024_2221",
+            "/assets/-1927750112_4192",
+            "/assets/-1897421947_2261",
+            "/assets/1428699476_1772",
+            "/assets/-2039093533_1156",
+            "/assets/458760096_2411"
+          ],
+          "image": "/assets/72771024_2221",
+          "rollRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "clickable",
+              "value": false
+            },
+            {
+              "func": "SELECT",
+              "type": "timer",
+              "property": "parent",
+              "value": "${PROPERTY id}"
+            },
+            {
+              "func": "CLICK"
+            }
+          ],
+          "clickRoutine": [
+            {
+              "func": "CALL",
+              "routine": "rollRoutine"
+            }
+          ]
+        },
+        {
+          "type": "timer",
+          "id": "timer5",
+          "parent": "dice5",
+          "fixedParent": true,
+          "width": 74,
+          "height": 30,
+          "scale": 0,
+          "z": 33,
+          "movable": false,
+          "precision": 100,
+          "millisecondsChangeRoutine": [
+            "var parent = ${PROPERTY parent}",
+            "var check = ${PROPERTY milliseconds} / 100",
+            "var check = ${check} / 2",
+            "var round = ${check} floor",
+            "var isEven = ${check} == ${round}",
+            {
+              "func": "IF",
+              "operand1": "${PROPERTY milliseconds}",
+              "relation": ">=",
+              "operand2": 1000,
+              "thenRoutine": [
+                {
+                  "func": "TIMER",
+                  "timer": "${PROPERTY id}",
+                  "mode": "reset"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "rotation",
+                  "value": 0
+                },
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = ''",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "clickable",
+                  "value": true
+                }
+              ],
+              "elseRoutine": [
+                "var newCSS = {}",
+                "var newProps = {}",
+                "var newProps = ${PROPERTY css OF $parent}",
+                "var newProps = ${newProps.default}",
+                "var newProps.transition = 'linear 0.15s'",
+                "var newCSS.default = ${newProps}",
+                {
+                  "func": "SET",
+                  "collection": [
+                    "${parent}"
+                  ],
+                  "property": "css",
+                  "value": "${newCSS}"
+                },
+                {
+                  "func": "IF",
+                  "condition": "${isEven}",
+                  "thenRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation OF $parent} + ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    }
+                  ],
+                  "elseRoutine": [
+                    "var random = randInt 15 65",
+                    "var rotation = ${PROPERTY rotation} - ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "rotation",
+                      "value": "${rotation}"
+                    },
+                    "var count = ${PROPERTY sides OF $parent} length",
+                    "var count = ${count} - 1",
+                    "var random = randInt 0 ${count}",
+                    "var side = ${PROPERTY sides OF $parent} getIndex ${random}",
+                    {
+                      "func": "SET",
+                      "collection": [
+                        "${parent}"
+                      ],
+                      "property": "image",
+                      "value": "${side}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "id": "yhpiktyn"
     }
   ],
   "groups": [

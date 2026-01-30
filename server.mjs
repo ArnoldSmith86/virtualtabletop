@@ -26,17 +26,8 @@ const router = express.Router();
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
-let customWidgets = (() => {
-  if (!fs.existsSync('library/widgets.json')) return { widgets: [], groups: [] };
-  try {
-    const raw = JSON.parse(fs.readFileSync('library/widgets.json'));
-    if (Array.isArray(raw)) return { widgets: raw, groups: [] };
-    if (typeof raw === 'object' && raw !== null) {
-      return { widgets: raw.widgets || [], groups: raw.groups || [] };
-    }
-  } catch (e) {}
-  return { widgets: [], groups: [] };
-})();
+const customWidgets = fs.existsSync(Config.directory('library') + '/widgets.json') ? JSON.parse(fs.readFileSync(Config.directory('library') + '/widgets.json')) : { widgets: [], groups: [] };
+
 
 const serverStart = +new Date();
 
@@ -313,25 +304,6 @@ MinifyHTML().then(function(result) {
     res.send(JSON.stringify(customWidgets));
   });
 
-  router.post('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
-    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
-    const widget = req.body;
-    if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
-      return res.status(400).send('Invalid widget format.');
-    }
-    let id;
-    do {
-      id = Math.random().toString(36).substring(2, 10);
-    } while (customWidgets.widgets.find(w => w.id === id));
-    widget.id = id;
-    if (!widget.name) {
-      widget.name = id;
-    }
-    customWidgets.widgets.push(widget);
-    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
-    res.send({ id });
-  });
-
   router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
     if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
     const data = req.body;
@@ -339,36 +311,7 @@ MinifyHTML().then(function(result) {
       customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
       customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
     }
-    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
-    res.send('OK');
-  });
-
-  router.put('/api/widgets/:id', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
-    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
-    const widget = req.body;
-    if (typeof widget !== 'object' || widget === null || !widget.id || !Array.isArray(widget.widgets)) {
-      return res.status(400).send('Invalid widget format.');
-    }
-    const index = customWidgets.widgets.findIndex(w => w.id === req.params.id);
-    if (index !== -1) {
-      customWidgets.widgets[index] = widget;
-    }
-    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
-    res.send('OK');
-  });
-
-  router.delete('/api/widgets/:id', function(req, res, next) {
-    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
-    customWidgets.widgets = customWidgets.widgets.filter(w => w.id !== req.params.id);
-    if (Array.isArray(customWidgets.groups)) {
-      customWidgets.groups.forEach(g => {
-        if (Array.isArray(g.widgets)) {
-          g.widgets = g.widgets.filter(id => id !== req.params.id);
-        }
-      });
-      customWidgets.groups = customWidgets.groups.filter(g => g.widgets && g.widgets.length > 0);
-    }
-    fs.writeFileSync('library/widgets.json', JSON.stringify(customWidgets, null, 2));
+    fs.writeFileSync(Config.directory('library') + '/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
