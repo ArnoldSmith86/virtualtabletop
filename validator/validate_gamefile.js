@@ -92,7 +92,7 @@ const COMMON_PROPERTIES = {
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
-    addToRoomRoutine: 'routine',
+    editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
     animatePropertyChange: 'any',
     resetProperties: 'object',

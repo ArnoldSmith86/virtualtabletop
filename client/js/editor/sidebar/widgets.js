@@ -1119,7 +1119,7 @@ class WidgetsModule extends SidebarModule {
       return [...new Set(state.widgets.map(w => w.type || 'basic'))].join(', ');
     };
     const widgetTypes = getWidgetTypesString(state);
-    const hasAddToRoomRoutine = state.widgets.some(w => w.addToRoomRoutine);
+    const hasAddToRoomRoutine = state.widgets.some(w => w.editorAddToRoomRoutine);
     return `
           <li data-id="${state.id}" data-source="${source}" draggable="${isEditing}" style="display: flex; align-items: center; margin-bottom: 5px;">
               <span class="drag-handle"></span>
@@ -1412,10 +1412,10 @@ class WidgetsModule extends SidebarModule {
       const newWidgetIds = await this.placeWidgetFromBuffer(widgetDataCopy, coords);
       const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
       for (const widget of newWidgets) {
-        if (widget.get('addToRoomRoutine')) {
-          await widget.evaluateRoutine('addToRoomRoutine');
+        if (widget.get('editorAddToRoomRoutine')) {
+          await widget.evaluateRoutine('editorAddToRoomRoutine');
           if (widgets.has(widget.id)) {
-            widget.set('addToRoomRoutine', undefined);
+            widget.set('editorAddToRoomRoutine');
           }
         }
       }

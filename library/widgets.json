@@ -22,7 +22,7 @@
           },
           "borderColor": "black",
           "borderWidth": 1,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -65,7 +65,7 @@
           },
           "borderColor": "black",
           "borderWidth": "1",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -111,7 +111,7 @@
           "borderColor": "#ffffff",
           "borderWidth": 1,
           "secondaryColor": "#000000",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -157,7 +157,7 @@
           "borderColor": "white",
           "borderWidth": 1,
           "secondaryColor": "black",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -201,7 +201,7 @@
           },
           "borderColor": "#000000",
           "borderWidth": 1,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -258,7 +258,7 @@
           "borderColor": "#000000",
           "borderWidth": 1,
           "secondaryColor": "#ffffff",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -315,7 +315,7 @@
           "borderColor": "#000000",
           "borderWidth": 1,
           "secondaryColor": "#ffffff",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -372,7 +372,7 @@
           "borderColor": "#000000",
           "borderWidth": 1,
           "state": "alive",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -416,7 +416,7 @@
           },
           "borderColor": "#000000",
           "borderWidth": 2,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -460,7 +460,7 @@
           },
           "borderColor": "#000000",
           "borderWidth": 3,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -504,7 +504,7 @@
           },
           "borderColor": "#000000",
           "borderWidth": 1,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -549,7 +549,7 @@
           },
           "borderColor": "#000000",
           "borderWidth": 2,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -612,7 +612,7 @@
           "borderColor": "#000000",
           "borderWidth": 1,
           "note": "Game designer: You can remove any face you may not need. That way you can limit rotation",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -656,7 +656,7 @@
           "borderColor": "#000000",
           "borderWidth": 2,
           "hexType": "flat",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -700,7 +700,7 @@
           "borderColor": "#000000",
           "borderWidth": 2,
           "hexType": "point",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -751,7 +751,7 @@
           },
           "hexType": "flat",
           "imageColor": "#ffffff",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -802,7 +802,7 @@
           },
           "hexType": "point",
           "imageColor": "#ffffff",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose piece color",
@@ -1584,7 +1584,7 @@
             5,
             6
           ],
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose number of sides",
@@ -1645,7 +1645,7 @@
             7,
             8
           ],
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose number of sides",
@@ -1700,7 +1700,7 @@
           "z": 18,
           "borderColor": "transparent",
           "color": "transparent",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose die color",
@@ -3056,7 +3056,7 @@
           "x": 840,
           "y": 90,
           "id": "seat1",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "SELECT",
               "property": "type",
@@ -3138,7 +3138,7 @@
           "x": 840,
           "y": 90,
           "id": "seat1",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "SELECT",
               "property": "type",
@@ -3184,7 +3184,7 @@
           "x": 450,
           "y": 835,
           "z": 1,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "INPUT",
               "header": "Choose number of spinner values",
@@ -3454,7 +3454,7 @@
       "widgets": [
         {
           "id": "customToken",
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "UPLOAD",
               "variable": "newfilename"
@@ -3492,7 +3492,7 @@
           "height": 1000,
           "layer": -4,
           "movable": false,
-          "addToRoomRoutine": [
+          "editorAddToRoomRoutine": [
             {
               "func": "UPLOAD",
               "variable": "newfilename"
