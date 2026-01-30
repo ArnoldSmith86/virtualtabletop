@@ -1,16 +1,19 @@
 {
   "_meta": {
-    "version": 14,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Naval Warfare",
       "image": "/assets/-1220508055_35142",
       "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/2425/battleship",
+      "bgg": "https://boardgamegeek.com/boardgame/40851/battleship-the-tactical-combat-game",
       "year": "1931",
       "mode": "vs",
       "time": "30",
       "attribution": "Room layout and design by LawDawg and released to the public domain by CC0.<div><br></div><div>Background water image by Michelle_Raponi is available under the Pixabay license at&nbsp;https://pixabay.com/photos/water-sea-caribbean-background-1330252/.<br><div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"world war 2 battleship on fire, oil on canvas \"<br></div><div><br></div></div>",
-      "lastUpdate": 1699747207690,
+      "lastUpdate": 1769128389450,
       "showName": true,
       "skill": "",
       "description": "Find and sink your opponent's ships before they sink yours.",
@@ -2729,7 +2732,6 @@
     ],
     "shipType": "Patrol",
     "alignChildren": false,
-    "ship": true,
     "resetProperties": {
       "x": 777,
       "y": 561,
@@ -2830,13 +2832,13 @@
     "borderColor": "#000000",
     "borderWidth": 3,
     "resetProperties": {
+      "parent": null,
       "x": 900,
       "y": 655
     },
     "onlyVisibleForSeat": "seat1",
     "hidePlayerCursors": true,
-    "meeple": true,
-    "parent": "hex-c4"
+    "meeple": true
   },
   "seat1": {
     "type": "seat",
@@ -3054,13 +3056,13 @@
     "borderColor": "#000000",
     "borderWidth": 3,
     "resetProperties": {
+      "parent": null,
       "x": 664,
       "y": 764
     },
     "onlyVisibleForSeat": "seat2",
     "hidePlayerCursors": true,
-    "meeple": true,
-    "parent": "hex-f23"
+    "meeple": true
   },
   "restart": {
     "type": "button",
