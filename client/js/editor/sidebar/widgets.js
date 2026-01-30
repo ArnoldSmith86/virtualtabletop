@@ -56,7 +56,13 @@ class WidgetsModule extends SidebarModule {
     this.viewMode = localStorage.getItem('vtt-widget-view-mode') || 'list';
     this.listViewButton = null;
     this.gridViewButton = null;
-  }
+    $('#roomArea').addEventListener('drop', e => this.onRoomAreaDrop(e));
+
+    $('#roomArea').addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+    });
+    }
 
   // Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
   renderPreviewHTML(preview) {
@@ -1375,6 +1381,46 @@ class WidgetsModule extends SidebarModule {
     return newRootWidgetIds;
   }
 
+  async onRoomAreaDrop(e) {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text/plain');
+    if (!data) return;
+  
+    try {
+      const { id, source } = JSON.parse(data);
+      const coords = eventCoords('drop', e);
+      await this.placeWidget(id, source, coords);
+    } catch (error) {
+      console.error('Failed to parse widget data on drop:', error);
+    }
+  }
+  
+  async placeWidget(widgetId, source, coords) {
+    const { widgets: allWidgets } = await this.getWidgets(source);
+    const widgetData = allWidgets.find(w => w.id === widgetId);
+  
+    if (widgetData) {
+      const widgetDataCopy = JSON.parse(JSON.stringify(widgetData));
+  
+      const newWidgetIds = await this.placeWidgetFromBuffer(widgetDataCopy, coords);
+      const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
+      for (const widget of newWidgets) {
+        if (widget.get('addToRoomRoutine')) {
+          await widget.evaluateRoutine('addToRoomRoutine');
+          if (widgets.has(widget.id)) {
+            widget.set('addToRoomRoutine', undefined);
+          }
+        }
+      }
+      const existingNewWidgets = newWidgets.filter(w => widgets.has(w.id));
+      if (existingNewWidgets.length > 0) {
+        setSelection(existingNewWidgets);
+      }
+    } else {
+      console.error(`Widget with id ${widgetId} not found in ${source}.`);
+    }
+  }
+  
   async button_loadWidgetFromBuffer(widgetData) {
     this.placeWidgetFromBuffer(widgetData);
   }
