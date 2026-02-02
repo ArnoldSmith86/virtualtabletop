@@ -365,7 +365,14 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
-   this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
+    this.addCheckbox('Hover enlarge (legacy right-click popup)', 'hoverEnlarge', `
+      <b>Legacy behavior</b>: Right-click or long-touch on widgets with <code>enlarge</code> shows the old hover-enlarge popup instead of the new context menu.
+      <br><br>
+      Enable this only if your game relies on the previous enlarge-on-hover/right-click behavior. When unchecked, widgets with <code>enlarge</code> use the new context menu (preview, rotation, and <code>contextMenu</code> buttons).
+      <br><br>
+      See the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+      `, target);
+    this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
      <b>Legacy Behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe. This behavior is used for older games and can be enabled by checking this box.
      <br><br>
      <b>Default Behavior</b>: These objects are rendered directly into the DOM which should be faster and easier to work with. This is the default for new games and is used when this box is unchecked.

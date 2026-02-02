@@ -86,8 +86,11 @@ const COMMON_PROPERTIES = {
     onlyVisibleForSeat: 'idArray',
     hoverInheritVisibleForSeat: 'boolean',
     clickRoutine: 'routine',
+    rightClickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
+    rotationSteps: 'any',
+    contextMenu: validateContextMenu,
     enterRoutine: getRoutineValidator({}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
@@ -544,6 +547,65 @@ function getEnumValidator(values) {
     return v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
 }
 
+const CONTEXT_MENU_ENTRY_KEYS = ['text', 'routine', 'icon', 'menu', 'color'];
+
+function validateContextMenuEntries(entries, context, propertyPath, widget) {
+    const problems = [];
+    if (!Array.isArray(entries)) return problems;
+    for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        const entryPath = [...propertyPath, i];
+        if (typeof entry !== 'object' || entry === null) {
+            problems.push({ widget: context.widgetId, property: entryPath, message: 'contextMenu entry must be an object' });
+            continue;
+        }
+        for (const key of Object.keys(entry)) {
+            if (!CONTEXT_MENU_ENTRY_KEYS.includes(key)) {
+                problems.push({ widget: context.widgetId, property: [...entryPath, key], message: 'contextMenu entry may only have text, routine, optional icon, optional menu, and optional color' });
+            }
+        }
+        if (entry.text === undefined || entry.text === null) {
+            problems.push({ widget: context.widgetId, property: [...entryPath, 'text'], message: 'contextMenu entry must have text' });
+        } else if (typeof entry.text !== 'string') {
+            problems.push({ widget: context.widgetId, property: [...entryPath, 'text'], message: 'contextMenu entry text must be a string' });
+        }
+        const hasMenu = Array.isArray(entry.menu) && entry.menu.length > 0;
+        if (entry.routine !== undefined && entry.routine !== null) {
+            if (typeof entry.routine !== 'string') {
+                problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: 'contextMenu entry routine must be a string' });
+            } else if (!validators.routineProperty(entry.routine)) {
+                problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: validators.routineProperty(entry.routine) });
+            } else if (widget && !Array.isArray(widget[entry.routine])) {
+                problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: `routine '${entry.routine}' does not exist on this widget` });
+            } else if (widget && context.calledCustomRoutines && !context.calledCustomRoutines.includes(entry.routine)) {
+                context.calledCustomRoutines.push(entry.routine);
+            }
+        } else if (!hasMenu) {
+            problems.push({ widget: context.widgetId, property: entryPath, message: 'contextMenu entry must have routine or menu' });
+        }
+        if (entry.menu !== undefined && entry.menu !== null) {
+            if (!Array.isArray(entry.menu)) {
+                problems.push({ widget: context.widgetId, property: [...entryPath, 'menu'], message: 'contextMenu entry menu must be an array' });
+            } else {
+                problems.push(...validateContextMenuEntries(entry.menu, context, [...entryPath, 'menu'], widget));
+            }
+        }
+    }
+    return problems;
+}
+
+function validateContextMenu(v, context, propertyPath = []) {
+    const problems = [];
+    if (v === undefined || v === null) return true;
+    if (!Array.isArray(v)) {
+        problems.push({ widget: context.widgetId, property: propertyPath, message: 'contextMenu must be an array' });
+        return problems.length ? problems : true;
+    }
+    const widget = context.widgets[context.widgetId];
+    problems.push(...validateContextMenuEntries(v, context, propertyPath, widget));
+    return problems.length ? problems : true;
+}
+
 function getRoutineValidator(variables, collections, isolateContext = true) {
     return (v, context, propertyPath = []) => {
         if(isolateContext) {
@@ -619,6 +681,16 @@ const operationProps = {
         'collection': 'inCollection', 
         'count':      'positiveNumber',
         'mode':       getEnumValidator(['respect', 'ignoreClickable', 'ignoreClickRoutine', 'ignoreAll'])
+    },
+    'CONTEXTMENU': {
+        'collection':  'inCollection',
+        'contextMenu': (v, context, propertyPath) => {
+            if (v === undefined || v === null) return true;
+            if (!Array.isArray(v)) return 'contextMenu must be an array';
+            const problems = validateContextMenuEntries(v, context, propertyPath, null);
+            return problems.length ? problems : true;
+        },
+        'property':    'string'
     },
     'CLONE': { 
         'source':     'inCollection', 
@@ -805,6 +877,17 @@ function customRoutineChecks(operation, problems, context, operationPath) {
             message: 'IF uses both operand1 and condition - did you mean to use relation instead?'
         });
     }
+    if (operation.func === 'CONTEXTMENU') {
+        const hasMenu = Array.isArray(operation.contextMenu) && operation.contextMenu.length >= 0;
+        const hasProperty = typeof operation.property === 'string' && operation.property.length > 0;
+        if (!hasMenu && !hasProperty) {
+            problems.push({
+                widget: context.widgetId,
+                property: operationPath,
+                message: 'CONTEXTMENU must have contextMenu (array) or property (widget property name containing the menu)'
+            });
+        }
+    }
 }
 
 function customWidgetChecks(widget, widgets, problems) {
@@ -965,6 +1048,8 @@ function getCustomPropertyUsage(data) {
                     customProperties.add(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
                     customProperties.add(value);
+                } else if (func === 'CONTEXTMENU' && key === 'property' && typeof value === 'string') {
+                    customProperties.add(value);
                 }
             }
 
@@ -984,6 +1069,13 @@ function getCustomPropertyUsage(data) {
 
         if(widget.type === 'scoreboard')
             customProperties.add(widget.scoreProperty || 'score');
+
+        if (Array.isArray(widget.contextMenu)) {
+            for (const entry of widget.contextMenu) {
+                if (entry && typeof entry.routine === 'string')
+                    customProperties.add(entry.routine);
+            }
+        }
     }
     
     return [...customProperties];

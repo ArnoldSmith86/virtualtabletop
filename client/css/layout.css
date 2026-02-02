@@ -927,6 +927,96 @@ body:not(.edit) .widget.limbo {
   visibility: hidden;
 }
 
+.contextMenuPopup {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.contextMenuPopup:not(.hidden) {
+  pointer-events: auto;
+}
+.contextMenuPopup.hidden {
+  display: none;
+}
+.contextMenuPopup .contextMenuRotationRow,
+.contextMenuPopup .contextMenuButtons,
+.contextMenuPopup .contextMenuPopupBg {
+  pointer-events: auto;
+}
+.contextMenuPopupBg {
+  background: var(--VTTblue);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.contextMenuPreviewWrap {
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+.contextMenuRotationRow {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  pointer-events: auto;
+}
+.contextMenuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: stretch;
+  width: max-content;
+  pointer-events: auto;
+}
+.contextMenuAction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--VTTblueDark);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.contextMenuAction .symbolText {
+  text-transform: uppercase;
+}
+.contextMenuAction:hover {
+  background: var(--VTTblueDark);
+}
+.contextMenuAction:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.contextMenuActionIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+}
+.contextMenuActionIcon .symbolOuterWrapper,
+.contextMenuActionIcon .symbolWrapper > div {
+  font-weight: normal;
+  font-size: var(--targetSize, 24px);
+  line-height: 1;
+}
+.contextMenuActionIcon .autoIconAlignSymbols {
+  font-family: "VTT-Symbols";
+}
+.contextMenuActionIcon .autoIconAlignMaterialIcons,
+.contextMenuActionIcon .autoIconAlignMaterialIconsNoFill {
+  font-family: "Material Symbols", "Material Symbols NoFill";
+}
+.contextMenuActionLabel {
+  flex: 1;
+  text-align: left;
+}
+
 /*Buttons css*/
 
 button {
