@@ -38,6 +38,7 @@ const validators = {
     property: (v,p)=>Object.values(WIDGET_PROPERTIES).some(props=>Object.keys(props).includes(v)) || Object.values(p.widgets).some(w=>w[v] !== undefined) || p.customProperties.includes(v) || `property '${v}' not found`,
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
+    rotationSteps: v=>typeof v === 'number' || (Array.isArray(v) && v.every(x=>typeof x === 'number')) || 'rotationSteps must be a number or array of numbers',
     any: v=>true
 }
 
@@ -89,7 +90,7 @@ const COMMON_PROPERTIES = {
     rightClickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
-    rotationSteps: 'any',
+    rotationSteps: 'rotationSteps',
     contextMenu: validateContextMenu,
     enterRoutine: getRoutineValidator({}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),

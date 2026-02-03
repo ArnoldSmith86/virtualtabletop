@@ -21,15 +21,19 @@ let longTouchTimer = null;
 let previewRotation = 0;
 let currentMenu = null;
 
+function hasRotationSteps(widget) {
+  const s = widget.get('rotationSteps');
+  return typeof s === 'number' || (Array.isArray(s) && s.length > 0);
+}
+
 function hasButtons(widget) {
-  const steps = widget.get('rotationSteps');
   const menu = currentMenu ?? widget.get('contextMenu');
-  return (Array.isArray(steps) && steps.length > 0) || (Array.isArray(menu) && menu.length > 0);
+  return hasRotationSteps(widget) || (Array.isArray(menu) && menu.length > 0);
 }
 
 function hasEnlargeOrRotationOrContextMenu(widget) {
   return widget.get('enlarge') ||
-    (Array.isArray(widget.get('rotationSteps')) && widget.get('rotationSteps').length > 0) ||
+    hasRotationSteps(widget) ||
     (Array.isArray(widget.get('contextMenu')) && widget.get('contextMenu').length > 0);
 }
 
@@ -174,9 +178,9 @@ function copyWidgetToPreview(widget, previewEl) {
     const buttonsHeight = buttonsCol && buttonsCol.offsetHeight ? buttonsCol.offsetHeight : aabbH;
     const contentHeight = Math.max(aabbH, buttonsHeight);
     const bgWidth = aabbW + (buttonsWidth ? buttonsWidth + gap : 0) + padding * 2;
-    const bgHeight = (rotationRow && Array.isArray(widget.get('rotationSteps')) && widget.get('rotationSteps').length ? rowH + gap : 0) + contentHeight + padding * 2;
+    const bgHeight = (rotationRow && hasRotationSteps(widget) ? rowH + gap : 0) + contentHeight + padding * 2;
     let bgLeft = Math.round(centerX - aabbW / 2 - padding);
-    let bgTop = Math.round(centerY - aabbH / 2 - padding - (rotationRow && Array.isArray(widget.get('rotationSteps')) && widget.get('rotationSteps').length ? rowH + gap : 0));
+    let bgTop = Math.round(centerY - aabbH / 2 - padding - (rotationRow && hasRotationSteps(widget) ? rowH + gap : 0));
     const roomArea = $('#roomArea');
     if (roomArea) {
       const room = roomArea.getBoundingClientRect();
@@ -199,7 +203,7 @@ function copyWidgetToPreview(widget, previewEl) {
       bg.style.boxSizing = 'border-box';
     }
     const contentLeft = padding;
-    const contentTop = padding + (rotationRow && Array.isArray(widget.get('rotationSteps')) && widget.get('rotationSteps').length ? rowH + gap : 0);
+    const contentTop = padding + (rotationRow && hasRotationSteps(widget) ? rowH + gap : 0);
     if (wrap) {
       wrap.style.position = 'absolute';
       wrap.style.left = `${contentLeft}px`;
@@ -238,8 +242,9 @@ function rotationStepIndex(steps, currentRotation) {
 
 function renderRotationButtons(widget, rowEl) {
   const steps = widget.get('rotationSteps');
+  const stepNum = typeof steps === 'number' ? steps : (Array.isArray(steps) && steps.length > 0 ? steps[0] : null);
   rowEl.innerHTML = '';
-  if (!Array.isArray(steps) || steps.length === 0) {
+  if (stepNum == null) {
     rowEl.style.display = 'none';
     return;
   }
@@ -255,26 +260,43 @@ function renderRotationButtons(widget, rowEl) {
       if (currentWidget) positionPopupBackground(currentWidget, ensurePopup());
     });
   };
-  leftBtn.onclick = async () => {
-    const current = currentWidget.get('rotation') ?? 0;
-    const i = rotationStepIndex(steps, current);
-    const nextI = (i - 1 + steps.length) % steps.length;
-    const nextVal = steps[nextI];
-    setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-    await currentWidget.set('rotation', nextVal);
-    copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-    afterRotate();
-  };
-  rightBtn.onclick = async () => {
-    const current = currentWidget.get('rotation') ?? 0;
-    const i = rotationStepIndex(steps, current);
-    const nextI = (i + 1) % steps.length;
-    const nextVal = steps[nextI];
-    setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-    await currentWidget.set('rotation', nextVal);
-    copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-    afterRotate();
-  };
+  if (typeof steps === 'number') {
+    leftBtn.onclick = async () => {
+      const current = currentWidget.get('rotation') ?? 0;
+      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
+      await currentWidget.set('rotation', current - stepNum);
+      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
+      afterRotate();
+    };
+    rightBtn.onclick = async () => {
+      const current = currentWidget.get('rotation') ?? 0;
+      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
+      await currentWidget.set('rotation', current + stepNum);
+      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
+      afterRotate();
+    };
+  } else {
+    leftBtn.onclick = async () => {
+      const current = currentWidget.get('rotation') ?? 0;
+      const i = rotationStepIndex(steps, current);
+      const nextI = (i - 1 + steps.length) % steps.length;
+      const nextVal = steps[nextI];
+      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
+      await currentWidget.set('rotation', nextVal);
+      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
+      afterRotate();
+    };
+    rightBtn.onclick = async () => {
+      const current = currentWidget.get('rotation') ?? 0;
+      const i = rotationStepIndex(steps, current);
+      const nextI = (i + 1) % steps.length;
+      const nextVal = steps[nextI];
+      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
+      await currentWidget.set('rotation', nextVal);
+      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
+      afterRotate();
+    };
+  }
   rowEl.append(leftBtn, rightBtn);
 }
 
@@ -361,7 +383,7 @@ function positionPopupBackground(widget, popup) {
   const padding = BORDER_PX;
   const contentHeight = Math.max(aabbH, bh);
   const bgWidth = aabbW + bw + gap + padding * 2;
-  const bgHeight = (Array.isArray(widget.get('rotationSteps')) && widget.get('rotationSteps').length ? rowH + gap : 0) + contentHeight + padding * 2;
+  const bgHeight = (hasRotationSteps(widget) ? rowH + gap : 0) + contentHeight + padding * 2;
   const bg = $('.contextMenuPopupBg', popup);
   if (!bg) return;
   let bgLeft = parseFloat(bg.style.left) || 0;
