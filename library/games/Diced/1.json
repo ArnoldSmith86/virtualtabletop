@@ -1461,13 +1461,13 @@
     "version": 12,
     "info": {
       "name": "Diced",
-      "image": "/assets/1388313035_16304",
+      "image": "/assets/891905077_47030",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/131260/qwixx",
       "year": "2012",
       "mode": "vs",
       "time": "15",
-      "attribution": "The room layout and images, including the library image, were done by LawDawg96 and are released to the Public Domain by CC0.<span style=\"color: var(--overlayFontColor);\">&nbsp;</span>",
+      "attribution": "The room layout and design were done by LawDawg96 and are released to the Public Domain by CC0.<span style=\"color: var(--overlayFontColor);\">&nbsp;</span><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The library image by adam_gorka is available under the Pixabay License at&nbsp;</span>https://pixabay.com/photos/dice-gambling-chance-risk-game-1375555/.</div>",
       "similarName": "Qwixx",
       "description": "Roll colored and white dice to mark off scoresheet with boxes of 2-12 trying to get as many boxes as possible. Highest score wins.",
       "showName": true,
@@ -1476,12 +1476,13 @@
       "similarAwards": "2014 Spring Parents' Choice Silver Honor Winner\n2014 Vuoden Peli Family Game of the Year Nominee\n2014 Nederlandse Spellenprijs Best Family Game Winner\n2014 Nederlandse Spellenprijs Best Family Game Nominee\n2014 Mensa Select Winner\n2013 Spiel des Jahres Nominee\n2013 Kinderspielexperten \"8-to-13-year-olds\" Nominee\n2013 Golden Geek Best Family Board Game Nominee\n2013 Golden Geek Best Abstract Board Game Nominee\n2013 Deutscher Lernspielpreis Nominee",
       "ruleText": "",
       "helpText": "Players sit in seats. Press the black and white restart button in the top center to randomly assign a starting player.&nbsp; Click the roll dice button to start. Each player makes desired selections on their scoresheet by clicking the number to mark it.&nbsp; Click the space again if a mistake was made to unmark it.&nbsp;<span style=\"color: var(--overlayFontColor);\">When the current player finishes, the next player clicks the roll dice button. Play continues in that fashion.</span><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">If a player chooses not to make a mark when required to by rule, click on the white box at the end of the row. When a colored dice has been closed, click on the down arrow below the dice to hide it offscreen and block future changes to that color on the scoreboards. If a mistake is made, the dice can be returned to play by clicking on the up arrow.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Scoring is automatic for each player whenever the blue button with the sigma symbol is pressed. Typically you would wait until the end of the game to press it, but it can be used at any point in the game.</span></div>",
-      "lastUpdate": 1676604001021,
+      "lastUpdate": 1770144067846,
+      "similarDesigner": "Steffen Benndorf",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "Diced and Sliced",
       "language": "",
-      "players": "2-8",
-      "similarDesigner": "Steffen Benndorf"
+      "players": "2-8"
     }
   },
   "seat1": {
