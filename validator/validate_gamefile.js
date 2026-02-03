@@ -548,7 +548,7 @@ function getEnumValidator(values) {
     return v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
 }
 
-const CONTEXT_MENU_ENTRY_KEYS = ['text', 'routine', 'icon', 'menu', 'color'];
+const CONTEXT_MENU_ENTRY_KEYS = ['text', 'routine', 'icon', 'menu', 'color', 'description'];
 
 function validateContextMenuEntries(entries, context, propertyPath, widget) {
     const problems = [];
@@ -562,7 +562,7 @@ function validateContextMenuEntries(entries, context, propertyPath, widget) {
         }
         for (const key of Object.keys(entry)) {
             if (!CONTEXT_MENU_ENTRY_KEYS.includes(key)) {
-                problems.push({ widget: context.widgetId, property: [...entryPath, key], message: 'contextMenu entry may only have text, routine, optional icon, optional menu, and optional color' });
+                problems.push({ widget: context.widgetId, property: [...entryPath, key], message: 'contextMenu entry may only have text, routine, optional icon, optional menu, optional color, and optional description' });
             }
         }
         if (entry.text === undefined || entry.text === null) {
@@ -590,6 +590,9 @@ function validateContextMenuEntries(entries, context, propertyPath, widget) {
             } else {
                 problems.push(...validateContextMenuEntries(entry.menu, context, [...entryPath, 'menu'], widget));
             }
+        }
+        if (entry.description !== undefined && entry.description !== null && typeof entry.description !== 'string') {
+            problems.push({ widget: context.widgetId, property: [...entryPath, 'description'], message: 'contextMenu entry description must be a string' });
         }
     }
     return problems;

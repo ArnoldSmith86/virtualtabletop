@@ -1015,6 +1015,51 @@ body:not(.edit) .widget.limbo {
   flex: 1;
   text-align: left;
 }
+.contextMenuActionRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.contextMenuActionRow .contextMenuAction {
+  flex: 1;
+  min-width: 0;
+}
+.contextMenuDescriptionTrigger {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.contextMenuDescriptionTrigger:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.contextMenuDescriptionPopover {
+  position: fixed;
+  max-width: 260px;
+  padding: 10px 12px;
+  background: #fff;
+  color: #222;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  pointer-events: auto;
+  z-index: 60;
+}
+.contextMenuDescriptionPopover.hidden {
+  display: none;
+}
 
 /*Buttons css*/
 

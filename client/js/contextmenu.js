@@ -8,6 +8,7 @@ import { generateSymbolsDiv } from './symbols.js';
 
 const CONTEXT_PREVIEW_ID = 'contextMenuPreview';
 const CONTEXT_POPUP_ID = 'contextMenuPopup';
+const CONTEXT_DESCRIPTION_POPOVER_ID = 'contextMenuDescriptionPopover';
 const BORDER_PX = 8;
 const DEFAULT_ENLARGE = 2;
 
@@ -20,6 +21,7 @@ let mouseUpBound = null;
 let longTouchTimer = null;
 let previewRotation = 0;
 let currentMenu = null;
+let descriptionPopoverOwner = null;
 
 function hasRotationSteps(widget) {
   const s = widget.get('rotationSteps');
@@ -272,6 +274,7 @@ function renderRotationButtons(widget, rowEl) {
 }
 
 function renderContextMenuButtons(widget, colEl) {
+  hideDescriptionPopover();
   const menu = currentMenu ?? widget.get('contextMenu');
   colEl.innerHTML = '';
   if (!Array.isArray(menu) || menu.length === 0) {
@@ -284,11 +287,15 @@ function renderContextMenuButtons(widget, colEl) {
   const popup = ensurePopup();
   const buttonsCol = $('.contextMenuButtons', popup);
   const iconSize = 24;
+  const descriptionPopover = $(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`);
   for (const item of menu) {
     const hasSubmenu = Array.isArray(item.menu) && item.menu.length > 0;
     const routine = item.routine;
     const routineDef = typeof routine === 'string' ? widget.get(routine) : null;
     const hasRoutine = typeof routine === 'string' && Array.isArray(routineDef);
+    const hasDescription = typeof item.description === 'string' && item.description.length > 0;
+    const row = document.createElement('div');
+    row.className = 'contextMenuActionRow';
     const btn = document.createElement('button');
     btn.className = 'contextMenuAction';
     const textColor = item.color ? contrastAnyColor(item.color, 1) : 'white';
@@ -312,6 +319,34 @@ function renderContextMenuButtons(widget, colEl) {
     label.textContent = item.text || '';
     if (item.color) label.style.color = textColor;
     btn.appendChild(label);
+    row.appendChild(btn);
+    if (hasDescription && descriptionPopover) {
+      const infoBtn = document.createElement('button');
+      infoBtn.className = 'contextMenuDescriptionTrigger';
+      infoBtn.type = 'button';
+      infoBtn.title = 'Show description';
+      const infoIcon = document.createElement('div');
+      infoIcon.className = 'contextMenuActionIcon';
+      infoIcon.style.width = '20px';
+      infoIcon.style.height = '20px';
+      generateSymbolsDiv(infoIcon, 20, 20, [ { name: 'info' } ], '', 1, 'white', 'white');
+      infoBtn.appendChild(infoIcon);
+      infoBtn.onclick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const isOpen = descriptionPopoverOwner === infoBtn;
+        hideDescriptionPopover();
+        if (!isOpen) {
+          descriptionPopover.textContent = item.description;
+          descriptionPopoverOwner = infoBtn;
+          const rect = infoBtn.getBoundingClientRect();
+          descriptionPopover.style.left = `${rect.left}px`;
+          descriptionPopover.style.top = `${rect.bottom + 4}px`;
+          descriptionPopover.classList.remove('hidden');
+        }
+      };
+      row.appendChild(infoBtn);
+    }
     if (hasSubmenu) {
       btn.onclick = (e) => {
         e.stopPropagation();
@@ -329,8 +364,14 @@ function renderContextMenuButtons(widget, colEl) {
         closeContextMenu();
       };
     }
-    colEl.appendChild(btn);
+    colEl.appendChild(row);
   }
+}
+
+function hideDescriptionPopover() {
+  const el = $(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`);
+  if (el) el.classList.add('hidden');
+  descriptionPopoverOwner = null;
 }
 
 function positionPopupBackground(widget, popup) {
@@ -407,6 +448,7 @@ export function closeContextMenu() {
   currentMenu = null;
   touchActive = false;
   rightClickActive = false;
+  hideDescriptionPopover();
   const popup = $(`#${CONTEXT_POPUP_ID}`);
   if (popup) popup.classList.add('hidden');
   const styleEl = $('#contextMenuStyle');
@@ -593,12 +635,16 @@ onLoad(function() {
   });
   document.addEventListener('click', (e) => {
     const popup = $(`#${CONTEXT_POPUP_ID}`);
+    const descPopover = $(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`);
+    if (descPopover && !descPopover.classList.contains('hidden') && !descPopover.contains(e.target) && !e.target.closest('.contextMenuDescriptionTrigger')) {
+      hideDescriptionPopover();
+    }
     if (!popup || popup.classList.contains('hidden')) return;
     if (!popup.contains(e.target)) {
       closeContextMenu();
       return;
     }
-    if (!e.target.closest('.contextMenuPopupBg'))
+    if (!e.target.closest('.contextMenuPopupBg') && !e.target.closest(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`))
       closeContextMenu();
   });
   window.addEventListener('resize', () => {
