@@ -52,36 +52,7 @@ function widgetAtPoint(clientX, clientY) {
 }
 
 function ensurePopup() {
-  let popup = $(`#${CONTEXT_POPUP_ID}`);
-  if (!popup) {
-    popup = document.createElement('div');
-    popup.id = CONTEXT_POPUP_ID;
-    popup.className = 'contextMenuPopup';
-    popup.innerHTML = `
-      <div class="contextMenuPopupBg">
-        <div class="contextMenuRotationRow"></div>
-        <div class="contextMenuContent">
-          <div class="contextMenuPreviewWrap">
-            <div id="${CONTEXT_PREVIEW_ID}" class="contextMenuPreview"></div>
-          </div>
-          <div class="contextMenuButtons"></div>
-        </div>
-      </div>
-    `;
-    popup.classList.add('hidden');
-    $('body').appendChild(popup);
-    popup.addEventListener('mousedown', e => {
-      if (e.button === 2) {
-        e.preventDefault();
-        e.stopPropagation();
-        closePopupAndStartHold(e.clientX, e.clientY);
-      } else {
-        e.stopPropagation();
-      }
-    });
-    popup.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
-  }
-  return popup;
+  return $(`#${CONTEXT_POPUP_ID}`);
 }
 
 function getRoomScale() {
@@ -573,6 +544,19 @@ export function onTouchEndContextMenu() {
 }
 
 onLoad(function() {
+  const popupEl = $(`#${CONTEXT_POPUP_ID}`);
+  if (popupEl) {
+    popupEl.addEventListener('mousedown', e => {
+      if (e.button === 2) {
+        e.preventDefault();
+        e.stopPropagation();
+        closePopupAndStartHold(e.clientX, e.clientY);
+      } else {
+        e.stopPropagation();
+      }
+    });
+    popupEl.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+  }
   document.addEventListener('mousedown', (e) => {
     if (e.button !== 2) return;
     e.preventDefault();

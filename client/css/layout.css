@@ -930,7 +930,6 @@ body:not(.edit) .widget.limbo {
 .contextMenuPopup {
   position: fixed;
   inset: 0;
-  z-index: 10;
   pointer-events: none;
 }
 .contextMenuPopup:not(.hidden) {
