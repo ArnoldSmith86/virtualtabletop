@@ -738,7 +738,7 @@ class WidgetsModule extends SidebarModule {
         state.name = e.target.value;
         this.updateWidget(state, source);
       };
-      item.querySelector('[icon=add]').onclick = e => placeWidget(state.id, source);
+      item.querySelector('[icon=add]').onclick = e => this.placeWidget(state.id, source);
       item.querySelector('.download-json').onclick = e => this.exportWidgetJson(state);
       const deleteButton = item.querySelector('[icon=delete]');
       if (source === 'server' && !config.allowPublicLibraryEdits) {
@@ -923,7 +923,7 @@ class WidgetsModule extends SidebarModule {
         item.classList.remove('dragging');
       });
 
-      item.querySelector('.add-to-room-grid').onclick = e => placeWidget(state.id, source);
+      item.querySelector('.add-to-room-grid').onclick = e => this.placeWidget(state.id, source);
     }
 
     for (const list of this.currentContents.querySelectorAll('.widget-list, .widget-grid')) {
