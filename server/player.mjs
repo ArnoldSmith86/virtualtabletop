@@ -1,5 +1,6 @@
 import Config from './config.mjs';
 import Logging from './logging.mjs';
+import User from './user.mjs';
 
 export default class Player {
   constructor(connection, name, room) {
@@ -44,6 +45,8 @@ export default class Player {
         this.room.removeState(this, args);
       if(func == 'rename')
         this.room.renamePlayer(this, args.oldName, args.newName);
+      if(func == 'requestMetaUpdate')
+        this.room.sendMetaUpdate();
       if(func == 'saveState')
         this.room.saveState(this, args.players, args.updateCurrentSave);
       if(func == 'setGameSettings')
@@ -56,10 +59,27 @@ export default class Player {
         this.trace('client', args);
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
+      if(func == 'login') {
+        const user = new User(args.username);
+        this.send('loginResponse', user.authenticate(args.password));
+      }
+      if(func == 'createUser') {
+        const user = new User(args.username);
+        this.send('createUserResponse', user.create(args.password, this.room.state._meta.players[args.username]));
+      }
+      if(func == 'updateUserData') {
+        const user = new User(args.username);
+        user.updateData(args.userData);
+      }
+      if(func == 'verifyToken') {
+        const user = new User(args.username);
+        this.send('verifyTokenResponse', user.verifyToken(args.token));
+      }
     } catch(e) {
       if(e instanceof Logging.UserError) {
         this.send('error', `${e.code} - ${e.message}`);
       } else {
+        console.log(e);
         Logging.handleWebSocketException(func, args, e);
         this.send('internal_error', func);
         this.connection.close();
