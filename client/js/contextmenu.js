@@ -480,11 +480,15 @@ function closePopupAndStartHold(clientX, clientY) {
       document.removeEventListener('mouseup', mouseUpBound);
       mouseMoveBound = null;
       mouseUpBound = null;
-      if (!currentWidget || !hasButtons(currentWidget)) closeContextMenu();
+      if (shouldClosePopupOnRelease()) closeContextMenu();
     }
   };
   document.addEventListener('mousemove', mouseMoveBound);
   document.addEventListener('mouseup', mouseUpBound);
+}
+
+function shouldClosePopupOnRelease() {
+  return !currentWidget || !hasButtons(currentWidget);
 }
 
 function updateHoveredWidget(clientX, clientY) {
@@ -539,8 +543,7 @@ export function handleContextMenu(e, widget) {
       document.removeEventListener('mouseup', mouseUpBound);
       mouseMoveBound = null;
       mouseUpBound = null;
-      if (!currentWidget || !hasButtons(currentWidget))
-        closeContextMenu();
+      if (shouldClosePopupOnRelease()) closeContextMenu();
     }
   };
   document.addEventListener('mousemove', mouseMoveBound);
@@ -576,8 +579,7 @@ export function onLongTouch(widget) {
 
 export function onTouchEndContextMenu() {
   if (!touchActive) return;
-  if (currentWidget && !hasButtons(currentWidget))
-    closeContextMenu();
+  if (shouldClosePopupOnRelease()) closeContextMenu();
   touchActive = false;
   if (touchMoveBound) {
     document.removeEventListener('touchmove', touchMoveBound);
