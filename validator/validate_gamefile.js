@@ -239,7 +239,7 @@ const WIDGET_PROPERTIES = {
 };
 
 const SUPER_GLOBALS = {
-    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
+    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1, previewIndex: 1 },
     collections: { playerSeats: 1, activeSeats: 1, thisButton: 1 }
 };
 
@@ -694,7 +694,19 @@ const operationProps = {
             const problems = validateContextMenuEntries(v, context, propertyPath, null);
             return problems.length ? problems : true;
         },
-        'property':    'string'
+        'property':    'string',
+        'factor':      'number',
+        'title':       'string',
+        'color':       'string',
+        'image':       (v) => v === undefined || v === null || typeof v === 'string' || (Array.isArray(v) && v.every(s => typeof s === 'string')) || 'image must be string or array of strings',
+        'widget':      (v, p) => {
+            if (v === undefined || v === null) return true;
+            const arr = Array.isArray(v) ? v : [v];
+            for (const id of arr) {
+                if (!p.widgets[id] && !String(id).includes('$')) return `widget '${id}' not found`;
+            }
+            return true;
+        }
     },
     'CLONE': { 
         'source':     'inCollection', 

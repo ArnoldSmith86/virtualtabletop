@@ -47,15 +47,22 @@
 
     <div id="contextMenuPopup" class="contextMenuPopup hidden">
       <div class="contextMenuPopupBg">
-        <div class="contextMenuRotationRow"></div>
-        <div class="contextMenuContent">
-          <div class="contextMenuPreviewWrap">
-            <div id="contextMenuPreview" class="contextMenuPreview"></div>
+        <div id="contextMenuTitleRow" class="contextMenuTitleRow hidden"></div>
+        <div class="contextMenuMainRow">
+          <div class="contextMenuLeftColumn">
+            <div class="contextMenuRotationRow"></div>
+            <div class="contextMenuPreviewWrap">
+              <div id="contextMenuPreview" class="contextMenuPreview"></div>
+              <div id="contextMenuDescriptionPopover" class="contextMenuDescriptionPopover hidden"></div>
+            </div>
+            <div class="contextMenuPreviewNavRow"></div>
           </div>
-          <div class="contextMenuButtons"></div>
+          <div class="contextMenuRightColumn">
+            <div class="contextMenuMenuSpacer"></div>
+            <div class="contextMenuButtons"></div>
+          </div>
         </div>
       </div>
-      <div id="contextMenuDescriptionPopover" class="contextMenuDescriptionPopover hidden"></div>
     </div>
 
     <div id="gridOverlay" class="overlay">

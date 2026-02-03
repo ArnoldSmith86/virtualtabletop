@@ -1404,7 +1404,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
-  jeAddRoutineOperationCommands('CONTEXTMENU', { collection: 'DEFAULT', contextMenu: [] });
+  jeAddRoutineOperationCommands('CONTEXTMENU', { collection: 'DEFAULT', contextMenu: [], property: null, factor: null, title: '', color: '', image: null, widget: null });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('DELAY', { milliseconds: 0 });

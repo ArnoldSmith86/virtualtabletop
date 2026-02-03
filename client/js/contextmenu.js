@@ -1,4 +1,4 @@
-import { $, $a, removeFromDOM, escapeID, unescapeID, onLoad } from './domhelpers.js';
+import { $, $a, removeFromDOM, escapeID, unescapeID, onLoad, asArray, mapAssetURLs } from './domhelpers.js';
 import { widgets, batchStart, batchEnd, setDeltaCause } from './serverstate.js';
 import { clientPointer } from './main.js';
 import { playerName } from './overlays/players.js';
@@ -9,10 +9,13 @@ import { generateSymbolsDiv } from './symbols.js';
 const CONTEXT_PREVIEW_ID = 'contextMenuPreview';
 const CONTEXT_POPUP_ID = 'contextMenuPopup';
 const CONTEXT_DESCRIPTION_POPOVER_ID = 'contextMenuDescriptionPopover';
+const CONTEXT_TITLE_ROW_ID = 'contextMenuTitleRow';
 const BORDER_PX = 8;
 const DEFAULT_ENLARGE = 2;
 
 let currentWidget = null;
+let enlargePreviewIndex = 0;
+let enlargeOverrides = null;
 let touchActive = false;
 let rightClickActive = false;
 let touchMoveBound = null;
@@ -70,130 +73,170 @@ function getRoomScale() {
   return scale;
 }
 
-function copyWidgetToPreview(widget, previewEl) {
-  const id = widget.get('id');
-  const roomScale = getRoomScale();
-  const enlarge = widget.get('enlarge') || DEFAULT_ENLARGE;
-  const w = widget.get('width');
-  const h = widget.get('height');
-  const scale = roomScale * enlarge;
-  const scaledW = w * scale;
-  const scaledH = h * scale;
-  const boundBox = widget.domElement.getBoundingClientRect();
-  const centerX = boundBox.left + boundBox.width / 2;
-  const centerY = boundBox.top + boundBox.height / 2;
-  let left = centerX - scaledW / 2;
-  let top = centerY - scaledH / 2;
-  const widgetRotation = widget.get('rotation') || 0;
-  const totalRotation = widgetRotation + previewRotation;
-  const rad = (totalRotation * Math.PI) / 180;
-  const aabbW = Math.abs(scaledW * Math.cos(rad)) + Math.abs(scaledH * Math.sin(rad));
-  const aabbH = Math.abs(scaledW * Math.sin(rad)) + Math.abs(scaledH * Math.cos(rad));
-
-  let cssText = widget.domElement.style.cssText;
-  cssText += `;--originalLeft:${boundBox.left}px;--originalTop:${boundBox.top}px`;
-  cssText += `;--originalRight:${boundBox.right}px;--originalBottom:${boundBox.bottom}px`;
-
-  previewEl.innerHTML = widget.domElement.innerHTML;
-  previewEl.className = widget.domElement.className;
-  previewEl.dataset.id = id;
-  previewEl.style.cssText = cssText;
-  previewEl.style.display = widget.domElement.style.display;
-  previewEl.style.position = 'absolute';
-  previewEl.style.left = '50%';
-  previewEl.style.top = '50%';
-  previewEl.style.width = `${w}px`;
-  previewEl.style.height = `${h}px`;
-  previewEl.style.marginLeft = `${-w / 2}px`;
-  previewEl.style.marginTop = `${-h / 2}px`;
-  previewEl.style.transform = `scale(${scale}) rotate(${totalRotation}deg)`;
-  previewEl.style.transformOrigin = 'center center';
-
-  if (widget.get('_ancestor') && widgets.has(widget.get('_ancestor')) && widgets.get(widget.get('_ancestor')).domElement.classList.contains('showCardBack'))
-    previewEl.classList.add('showCardBack');
-
-  for (const clone of $a('canvas', previewEl)) {
-    const original = $(`canvas[data-id = '${clone.dataset.id}']`, widget.domElement);
-    if (original) {
-      const context = clone.getContext('2d');
-      clone.width = original.width;
-      clone.height = original.height;
-      context.drawImage(original, 0, 0);
+function getEnlargeOpts(widget) {
+  const raw = widget.get('enlarge');
+  let opts = null;
+  if (raw !== undefined && raw !== null && raw !== false) {
+    if (typeof raw === 'number') opts = { factor: raw };
+    else if (typeof raw === 'object') {
+      opts = { factor: typeof raw.factor === 'number' ? raw.factor : DEFAULT_ENLARGE };
+      if (typeof raw.title === 'string') opts.title = raw.title;
+      if (typeof raw.color === 'string') opts.color = raw.color;
+      if (raw.image !== undefined && raw.image !== null) opts.image = asArray(raw.image);
+      if (raw.widget !== undefined && raw.widget !== null) opts.widget = asArray(raw.widget);
     }
   }
-  const originalTextareas = [...$a('textarea', widget.domElement)];
-  const clonedTextareas = [...$a('textarea', previewEl)];
-  for (const i in originalTextareas)
-    if (clonedTextareas[i]) clonedTextareas[i].value = originalTextareas[i].value;
+  if (enlargeOverrides) {
+    opts = opts ? { ...opts } : { factor: DEFAULT_ENLARGE };
+    if (typeof enlargeOverrides.factor === 'number') opts.factor = enlargeOverrides.factor;
+    if (typeof enlargeOverrides.title === 'string') opts.title = enlargeOverrides.title;
+    if (typeof enlargeOverrides.color === 'string') opts.color = enlargeOverrides.color;
+    if (enlargeOverrides.image !== undefined && enlargeOverrides.image !== null) opts.image = asArray(enlargeOverrides.image);
+    if (enlargeOverrides.widget !== undefined && enlargeOverrides.widget !== null) opts.widget = asArray(enlargeOverrides.widget);
+  }
+  return opts;
+}
 
-  const wStyle = $(`#STYLES_${escapeID(id)}`);
-  let styleEl = $('#contextMenuStyle');
-  if (styleEl) removeFromDOM(styleEl);
-  if (wStyle) {
-    styleEl = document.createElement('style');
-    styleEl.id = 'contextMenuStyle';
-    styleEl.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`, `#${CONTEXT_PREVIEW_ID}`)));
-    $('head').appendChild(styleEl);
+function copyWidgetToPreview(widget, previewEl) {
+  const opts = getEnlargeOpts(widget);
+  const roomScale = getRoomScale();
+  const factor = opts ? opts.factor : (widget.get('enlarge') || DEFAULT_ENLARGE);
+  const boundBox = widget.domElement.getBoundingClientRect();
+
+  let sourceWidget = widget;
+  let previewW = widget.get('width');
+  let previewH = widget.get('height');
+  let useImage = false;
+  let imageList = null;
+  let widgetList = null;
+
+  if (opts && opts.widget && opts.widget.length > 0) {
+    widgetList = opts.widget.map(id => widgets.has(id) ? widgets.get(id) : null).filter(Boolean);
+    if (widgetList.length > 0) {
+      sourceWidget = widgetList[enlargePreviewIndex % widgetList.length];
+      previewW = sourceWidget.get('width');
+      previewH = sourceWidget.get('height');
+    }
+  } else if (opts && opts.image && opts.image.length > 0) {
+    useImage = true;
+    imageList = opts.image;
   }
 
+  const scale = roomScale * factor;
+  const scaledW = previewW * scale;
+  const scaledH = previewH * scale;
+
+  const widgetRotation = useImage ? 0 : (sourceWidget.get('rotation') || 0) + previewRotation;
+  const rad = (widgetRotation * Math.PI) / 180;
+  const aabbW = useImage ? scaledW : (Math.abs(previewW * scale * Math.cos(rad)) + Math.abs(previewH * scale * Math.sin(rad)));
+  const aabbH = useImage ? scaledH : (Math.abs(previewW * scale * Math.sin(rad)) + Math.abs(previewH * scale * Math.cos(rad)));
+
   const wrap = previewEl.closest('.contextMenuPreviewWrap');
+  const descPopover = $(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`);
+  wrap.innerHTML = '';
+  const navCount = (imageList && imageList.length > 1) || (widgetList && widgetList.length > 1);
+
+  if (useImage) {
+    let styleEl = $('#contextMenuStyle');
+    if (styleEl) removeFromDOM(styleEl);
+    previewEl.innerHTML = '';
+    previewEl.className = 'contextMenuPreview';
+    previewEl.removeAttribute('data-id');
+    previewEl.style.cssText = '';
+    const img = document.createElement('img');
+    img.alt = '';
+    img.style.maxWidth = '100%';
+    img.style.maxHeight = '100%';
+    img.style.objectFit = 'contain';
+    const idx = enlargePreviewIndex % imageList.length;
+    img.src = mapAssetURLs(typeof imageList[idx] === 'string' ? imageList[idx] : (imageList[idx]?.image ?? imageList[idx]));
+    previewEl.appendChild(img);
+    wrap.appendChild(previewEl);
+  } else {
+    const id = sourceWidget.get('id');
+    const w = sourceWidget.get('width');
+    const h = sourceWidget.get('height');
+    let cssText = sourceWidget.domElement.style.cssText;
+    cssText += `;--originalLeft:${boundBox.left}px;--originalTop:${boundBox.top}px`;
+    cssText += `;--originalRight:${boundBox.right}px;--originalBottom:${boundBox.bottom}px`;
+    previewEl.innerHTML = sourceWidget.domElement.innerHTML;
+    previewEl.className = sourceWidget.domElement.className;
+    previewEl.dataset.id = id;
+    previewEl.style.cssText = cssText;
+    previewEl.style.display = sourceWidget.domElement.style.display;
+    previewEl.style.position = 'absolute';
+    previewEl.style.left = '50%';
+    previewEl.style.top = '50%';
+    previewEl.style.width = `${w}px`;
+    previewEl.style.height = `${h}px`;
+    previewEl.style.marginLeft = `${-w / 2}px`;
+    previewEl.style.marginTop = `${-h / 2}px`;
+    previewEl.style.transform = `scale(${scale}) rotate(${widgetRotation}deg)`;
+    previewEl.style.transformOrigin = 'center center';
+    if (sourceWidget.get('_ancestor') && widgets.has(sourceWidget.get('_ancestor')) && widgets.get(sourceWidget.get('_ancestor')).domElement.classList.contains('showCardBack'))
+      previewEl.classList.add('showCardBack');
+    for (const clone of $a('canvas', previewEl)) {
+      const original = $(`canvas[data-id = '${clone.dataset.id}']`, sourceWidget.domElement);
+      if (original) {
+        const context = clone.getContext('2d');
+        clone.width = original.width;
+        clone.height = original.height;
+        context.drawImage(original, 0, 0);
+      }
+    }
+    const originalTextareas = [...$a('textarea', sourceWidget.domElement)];
+    const clonedTextareas = [...$a('textarea', previewEl)];
+    for (const i in originalTextareas)
+      if (clonedTextareas[i]) clonedTextareas[i].value = originalTextareas[i].value;
+    const wStyle = $(`#STYLES_${escapeID(id)}`);
+    let styleEl = $('#contextMenuStyle');
+    if (styleEl) removeFromDOM(styleEl);
+    if (wStyle) {
+      styleEl = document.createElement('style');
+      styleEl.id = 'contextMenuStyle';
+      styleEl.appendChild(document.createTextNode(wStyle.textContent.replaceAll(`#w_${escapeID(id)}`, `#${CONTEXT_PREVIEW_ID}`)));
+      $('head').appendChild(styleEl);
+    }
+    wrap.appendChild(previewEl);
+  }
+
+  const popupEl = $(`#${CONTEXT_POPUP_ID}`);
+  const navRow = popupEl ? $('.contextMenuPreviewNavRow', popupEl) : null;
+  if (navRow) {
+    navRow.innerHTML = '';
+    if (navCount) {
+      navRow.style.display = 'flex';
+      const len = imageList ? imageList.length : widgetList.length;
+      const leftNav = document.createElement('button');
+      leftNav.type = 'button';
+      leftNav.setAttribute('icon', 'chevron_left');
+      leftNav.setAttribute('aria-label', 'Previous');
+      leftNav.title = 'Previous';
+      leftNav.onclick = (e) => { e.stopPropagation(); enlargePreviewIndex = (enlargePreviewIndex - 1 + len) % len; copyWidgetToPreview(widget, previewEl); };
+      const rightNav = document.createElement('button');
+      rightNav.type = 'button';
+      rightNav.setAttribute('icon', 'chevron_right');
+      rightNav.setAttribute('aria-label', 'Next');
+      rightNav.title = 'Next';
+      rightNav.onclick = (e) => { e.stopPropagation(); enlargePreviewIndex = (enlargePreviewIndex + 1) % len; copyWidgetToPreview(widget, previewEl); };
+      navRow.append(leftNav, rightNav);
+    } else {
+      navRow.style.display = 'none';
+    }
+  }
 
   const popup = $(`#${CONTEXT_POPUP_ID}`);
   if (popup) {
-    const rotationRow = $('.contextMenuRotationRow', popup);
-    const buttonsCol = $('.contextMenuButtons', popup);
-    const rowH = 40;
-    const gap = 8;
-    const padding = BORDER_PX;
-    const menuForLayout = currentMenu ?? widget.get('contextMenu');
-    const hasMenuButtons = Array.isArray(menuForLayout) && menuForLayout.length > 0;
-    const buttonsWidth = buttonsCol && hasMenuButtons ? 100 : 0;
-    const buttonsHeight = buttonsCol && buttonsCol.offsetHeight ? buttonsCol.offsetHeight : aabbH;
-    const contentHeight = Math.max(aabbH, buttonsHeight);
-    const bgWidth = aabbW + (buttonsWidth ? buttonsWidth + gap : 0) + padding * 2;
-    const bgHeight = (rotationRow && hasRotationSteps(widget) ? rowH + gap : 0) + contentHeight + padding * 2;
-    let bgLeft = Math.round(centerX - aabbW / 2 - padding);
-    let bgTop = Math.round(centerY - aabbH / 2 - padding - (rotationRow && hasRotationSteps(widget) ? rowH + gap : 0));
-    const roomArea = $('#roomArea');
-    if (roomArea) {
-      const room = roomArea.getBoundingClientRect();
-      const margin = Math.min(room.width, room.height) * 0.05;
-      if (bgLeft < room.left + margin) bgLeft = room.left + margin;
-      if (bgLeft + bgWidth > room.right - margin) bgLeft = room.right - margin - bgWidth;
-      if (bgTop < room.top + margin) bgTop = room.top + margin;
-      if (bgTop + bgHeight > room.bottom - margin) bgTop = room.bottom - margin - bgHeight;
-      bgLeft = Math.round(bgLeft);
-      bgTop = Math.round(bgTop);
+    const titleRow = $(`#${CONTEXT_TITLE_ROW_ID}`);
+    const hasTitle = opts && opts.title;
+    if (titleRow) {
+      titleRow.textContent = hasTitle ? opts.title : '';
+      titleRow.classList.toggle('hidden', !hasTitle);
     }
-    const bg = $('.contextMenuPopupBg', popup);
-    if (bg) {
-      bg.style.position = 'fixed';
-      bg.style.left = `${bgLeft}px`;
-      bg.style.top = `${bgTop}px`;
-      bg.style.width = `${bgWidth}px`;
-      bg.style.height = `${bgHeight}px`;
-      bg.style.padding = `${padding}px`;
-      bg.style.boxSizing = 'border-box';
-    }
-    const contentLeft = padding;
-    const contentTop = padding + (rotationRow && hasRotationSteps(widget) ? rowH + gap : 0);
     if (wrap) {
-      wrap.style.position = 'absolute';
-      wrap.style.left = `${contentLeft}px`;
-      wrap.style.top = `${contentTop}px`;
       wrap.style.width = `${aabbW}px`;
       wrap.style.height = `${aabbH}px`;
-    }
-    if (rotationRow) {
-      rotationRow.style.position = 'absolute';
-      rotationRow.style.left = `${contentLeft}px`;
-      rotationRow.style.top = `${padding}px`;
-      rotationRow.style.width = `${aabbW}px`;
-    }
-    if (buttonsCol) {
-      buttonsCol.style.position = 'absolute';
-      buttonsCol.style.left = `${contentLeft + aabbW + gap}px`;
-      buttonsCol.style.top = `${contentTop}px`;
+      if (descPopover) wrap.appendChild(descPopover);
     }
   }
 }
@@ -217,11 +260,14 @@ function renderRotationButtons(widget, rowEl) {
   const steps = widget.get('rotationSteps');
   const stepNum = typeof steps === 'number' ? steps : (Array.isArray(steps) && steps.length > 0 ? steps[0] : null);
   rowEl.innerHTML = '';
+  const spacer = rowEl.closest('.contextMenuPopupBg')?.querySelector('.contextMenuMenuSpacer');
   if (stepNum == null) {
     rowEl.style.display = 'none';
+    if (spacer) spacer.style.minHeight = '0';
     return;
   }
   rowEl.style.display = 'flex';
+  if (spacer) spacer.style.minHeight = '';
   const leftBtn = document.createElement('button');
   leftBtn.setAttribute('icon', 'rotate_left');
   leftBtn.title = 'Rotate left';
@@ -273,7 +319,7 @@ function renderRotationButtons(widget, rowEl) {
   rowEl.append(leftBtn, rightBtn);
 }
 
-function renderContextMenuButtons(widget, colEl) {
+function renderContextMenuButtons(widget, colEl, popupContrastColor) {
   hideDescriptionPopover();
   const menu = currentMenu ?? widget.get('contextMenu');
   colEl.innerHTML = '';
@@ -281,6 +327,7 @@ function renderContextMenuButtons(widget, colEl) {
     colEl.style.display = 'none';
     return;
   }
+  const iconColor = popupContrastColor ?? 'white';
   colEl.style.display = 'flex';
   colEl.style.flexDirection = 'column';
   colEl.style.gap = '4px';
@@ -329,7 +376,7 @@ function renderContextMenuButtons(widget, colEl) {
       infoIcon.className = 'contextMenuActionIcon';
       infoIcon.style.width = '20px';
       infoIcon.style.height = '20px';
-      generateSymbolsDiv(infoIcon, 20, 20, [ { name: 'info' } ], '', 1, 'white', 'white');
+      generateSymbolsDiv(infoIcon, 20, 20, [ { name: 'info' } ], '', 1, iconColor, iconColor);
       infoBtn.appendChild(infoIcon);
       infoBtn.onclick = (e) => {
         e.stopPropagation();
@@ -339,9 +386,6 @@ function renderContextMenuButtons(widget, colEl) {
         if (!isOpen) {
           descriptionPopover.textContent = item.description;
           descriptionPopoverOwner = infoBtn;
-          const rect = infoBtn.getBoundingClientRect();
-          descriptionPopover.style.left = `${rect.left}px`;
-          descriptionPopover.style.top = `${rect.bottom + 4}px`;
           descriptionPopover.classList.remove('hidden');
         }
       };
@@ -352,14 +396,17 @@ function renderContextMenuButtons(widget, colEl) {
         e.stopPropagation();
         e.preventDefault();
         currentMenu = item.menu;
-        renderContextMenuButtons(widget, buttonsCol);
+        const bg = $('.contextMenuPopupBg', popup);
+        const subBgColor = bg ? getComputedStyle(bg).backgroundColor : '';
+        const subContrast = (subBgColor && subBgColor !== 'rgba(0, 0, 0, 0)') ? contrastAnyColor(subBgColor, 1) : 'white';
+        renderContextMenuButtons(widget, buttonsCol, subContrast);
         requestAnimationFrame(() => { if (currentWidget) positionPopupBackground(currentWidget, popup); });
       };
     } else if (hasRoutine) {
       btn.onclick = async () => {
         batchStart();
         setDeltaCause(`${playerName} context action ${routine} on ${widget.id}`);
-        await widget.evaluateRoutine(routine, {}, {});
+        await widget.evaluateRoutine(routine, { previewIndex: enlargePreviewIndex }, {});
         batchEnd();
         closeContextMenu();
       };
@@ -375,46 +422,33 @@ function hideDescriptionPopover() {
 }
 
 function positionPopupBackground(widget, popup) {
-  const buttonsCol = $('.contextMenuButtons', popup);
-  const bw = buttonsCol && buttonsCol.offsetWidth ? buttonsCol.offsetWidth : 0;
-  const bh = buttonsCol && buttonsCol.offsetHeight ? buttonsCol.offsetHeight : 0;
-  if (bw <= 0) return;
-  const roomScale = getRoomScale();
-  const enlarge = widget.get('enlarge') || DEFAULT_ENLARGE;
-  const w = widget.get('width');
-  const h = widget.get('height');
-  const scale = roomScale * enlarge;
-  const scaledW = w * scale;
-  const scaledH = h * scale;
-  const totalRotation = (widget.get('rotation') || 0) + previewRotation;
-  const rad = (totalRotation * Math.PI) / 180;
-  const aabbW = Math.abs(scaledW * Math.cos(rad)) + Math.abs(scaledH * Math.sin(rad));
-  const aabbH = Math.abs(scaledW * Math.sin(rad)) + Math.abs(scaledH * Math.cos(rad));
-  const rowH = 40;
-  const gap = 8;
-  const padding = BORDER_PX;
-  const contentHeight = Math.max(aabbH, bh);
-  const bgWidth = aabbW + bw + gap + padding * 2;
-  const bgHeight = (hasRotationSteps(widget) ? rowH + gap : 0) + contentHeight + padding * 2;
   const bg = $('.contextMenuPopupBg', popup);
-  if (!bg) return;
-  let bgLeft = parseFloat(bg.style.left) || 0;
-  let bgTop = parseFloat(bg.style.top) || 0;
+  const wrap = $('.contextMenuPreviewWrap', popup);
+  if (!bg || !wrap) return;
+  const boundBox = widget.domElement.getBoundingClientRect();
+  const widgetCenterX = boundBox.left + boundBox.width / 2;
+  const widgetCenterY = boundBox.top + boundBox.height / 2;
+  const wrapRect = wrap.getBoundingClientRect();
+  const wrapCenterX = wrapRect.left + wrapRect.width / 2;
+  const wrapCenterY = wrapRect.top + wrapRect.height / 2;
+  const bgRect = bg.getBoundingClientRect();
+  let left = Math.round(bgRect.left + (widgetCenterX - wrapCenterX));
+  let top = Math.round(bgRect.top + (widgetCenterY - wrapCenterY));
+  const w = bg.offsetWidth;
+  const h = bg.offsetHeight;
   const roomArea = $('#roomArea');
   if (roomArea) {
     const room = roomArea.getBoundingClientRect();
     const margin = Math.min(room.width, room.height) * 0.05;
-    if (bgLeft < room.left + margin) bgLeft = room.left + margin;
-    if (bgLeft + bgWidth > room.right - margin) bgLeft = room.right - margin - bgWidth;
-    if (bgTop < room.top + margin) bgTop = room.top + margin;
-    if (bgTop + bgHeight > room.bottom - margin) bgTop = room.bottom - margin - bgHeight;
-    bgLeft = Math.round(bgLeft);
-    bgTop = Math.round(bgTop);
+    if (left < room.left + margin) left = room.left + margin;
+    if (left + w > room.right - margin) left = room.right - margin - w;
+    if (top < room.top + margin) top = room.top + margin;
+    if (top + h > room.bottom - margin) top = room.bottom - margin - h;
+    left = Math.round(left);
+    top = Math.round(top);
   }
-  bg.style.width = `${bgWidth}px`;
-  bg.style.height = `${bgHeight}px`;
-  bg.style.left = `${bgLeft}px`;
-  bg.style.top = `${bgTop}px`;
+  bg.style.left = `${left}px`;
+  bg.style.top = `${top}px`;
 }
 
 function openContextMenu(widget, menuOverride) {
@@ -422,30 +456,52 @@ function openContextMenu(widget, menuOverride) {
   previewRotation = 0;
   currentMenu = menuOverride !== undefined ? (Array.isArray(menuOverride) ? menuOverride : []) : (widget.get('contextMenu') || []);
   const popup = ensurePopup();
+  const opts = getEnlargeOpts(widget);
+  const bg = $('.contextMenuPopupBg', popup);
+  if (bg) bg.style.backgroundColor = (opts && opts.color) ? opts.color : '';
+  const bgColor = bg ? getComputedStyle(bg).backgroundColor : '';
+  const popupContrastColor = (bgColor && bgColor !== 'rgba(0, 0, 0, 0)') ? contrastAnyColor(bgColor, 1) : 'white';
   const previewEl = $(`#${CONTEXT_PREVIEW_ID}`);
   const rotationRow = $('.contextMenuRotationRow', popup);
   const buttonsCol = $('.contextMenuButtons', popup);
 
   copyWidgetToPreview(widget, previewEl);
   renderRotationButtons(widget, rotationRow);
-  renderContextMenuButtons(widget, buttonsCol);
+  renderContextMenuButtons(widget, buttonsCol, popupContrastColor);
 
   popup.classList.remove('hidden');
 
   requestAnimationFrame(() => {
     if (!currentWidget || currentWidget !== widget) return;
     positionPopupBackground(widget, popup);
+    applyPopupContrastColors(popup);
   });
 }
 
-export function openContextMenuWithMenu(widget, menu) {
+function applyPopupContrastColors(popup) {
+  const bg = $('.contextMenuPopupBg', popup);
+  if (!bg) return;
+  const bgColor = getComputedStyle(bg).backgroundColor;
+  if (!bgColor || bgColor === 'rgba(0, 0, 0, 0)') return;
+  const color = contrastAnyColor(bgColor, 1);
+  const titleRow = $(`#${CONTEXT_TITLE_ROW_ID}`);
+  if (titleRow) titleRow.style.color = color;
+  for (const row of ['.contextMenuRotationRow', '.contextMenuPreviewNavRow']) {
+    const el = $(row, popup);
+    if (el) for (const btn of el.querySelectorAll('button')) btn.style.color = color;
+  }
+}
+
+export function openContextMenuWithMenu(widget, menu, overrides) {
   if (!widget || !Array.isArray(menu)) return;
+  enlargeOverrides = overrides && typeof overrides === 'object' ? overrides : null;
   openContextMenu(widget, menu);
 }
 
 export function closeContextMenu() {
   currentWidget = null;
   currentMenu = null;
+  enlargeOverrides = null;
   touchActive = false;
   rightClickActive = false;
   hideDescriptionPopover();

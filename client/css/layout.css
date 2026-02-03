@@ -939,24 +939,80 @@ body:not(.edit) .widget.limbo {
   display: none;
 }
 .contextMenuPopup .contextMenuRotationRow,
+.contextMenuPopup .contextMenuPreviewNavRow,
 .contextMenuPopup .contextMenuButtons,
 .contextMenuPopup .contextMenuPopupBg {
   pointer-events: auto;
 }
+.contextMenuTitleRow {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+}
+.contextMenuTitleRow.hidden {
+  display: none;
+}
 .contextMenuPopupBg {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
   background: var(--VTTblue);
   border-radius: 4px;
   box-sizing: border-box;
 }
+.contextMenuMainRow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+}
+.contextMenuLeftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.contextMenuRightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+.contextMenuMenuSpacer {
+  min-height: 40px;
+}
 .contextMenuPreviewWrap {
+  position: relative;
+  flex: 0 0 auto;
   box-sizing: border-box;
   pointer-events: auto;
 }
-.contextMenuRotationRow {
+#contextMenuPreview {
+  z-index: 0 !important;
+}
+.contextMenuRotationRow,
+.contextMenuPreviewNavRow {
   display: flex;
   gap: 8px;
   justify-content: center;
+  min-height: 40px;
   pointer-events: auto;
+}
+.contextMenuRotationRow button,
+.contextMenuPreviewNavRow button {
+  background: transparent;
+  transition: none;
+}
+.contextMenuRotationRow button:hover,
+.contextMenuPreviewNavRow button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.contextMenuPreviewNavRow:empty {
+  display: none;
 }
 .contextMenuButtons {
   display: flex;
@@ -964,6 +1020,7 @@ body:not(.edit) .widget.limbo {
   gap: 4px;
   align-items: stretch;
   width: max-content;
+  min-width: 100px;
   pointer-events: auto;
 }
 .contextMenuAction {
@@ -1042,20 +1099,24 @@ body:not(.edit) .widget.limbo {
   background: rgba(255, 255, 255, 0.2);
 }
 .contextMenuDescriptionPopover {
-  position: fixed;
-  max-width: 260px;
-  padding: 10px 12px;
-  background: #fff;
-  color: #222;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
   border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   font-weight: normal;
   line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
   pointer-events: auto;
-  z-index: 60;
 }
 .contextMenuDescriptionPopover.hidden {
   display: none;

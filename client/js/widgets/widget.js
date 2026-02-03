@@ -1126,7 +1126,14 @@ export class Widget extends StateManaged {
             else menu = [];
           }
           if (Array.isArray(menu)) {
-            setTimeout(() => openContextMenuWithMenu(targetWidget, menu), 0);
+            const overrides = {};
+            if (typeof a.factor === 'number') overrides.factor = a.factor;
+            if (typeof a.title === 'string') overrides.title = a.title;
+            if (typeof a.color === 'string') overrides.color = a.color;
+            if (a.image !== undefined && a.image !== null) overrides.image = a.image;
+            if (a.widget !== undefined && a.widget !== null) overrides.widget = a.widget;
+            const hasOverrides = Object.keys(overrides).length > 0;
+            setTimeout(() => openContextMenuWithMenu(targetWidget, menu, hasOverrides ? overrides : undefined), 0);
           }
         }
       }
