@@ -3,27 +3,28 @@
     "version": 12,
     "info": {
       "name": "Ultra",
-      "image": "/assets/-1503320900_12702",
+      "image": "/assets/-1800222950_49006",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/225694/decrypto",
       "year": "2018",
       "mode": "teams",
       "time": "15-45",
-      "attribution": "The game layout and all game elements are by LawDawg and are released to the Public Domain by CC0.\n\nWord list was compiled from:\n\nhttps://www.thegamegal.com/printables/#word-lists\nhttps://www.thegamegal.com/word-generator/\nhttps://github.com/Alamantus/fun-word-list\nhttps://www.randomlists.com/nouns\nhttps://randomwordgenerator.com/noun.php\nhttps://jimpix.co.uk/words/word-generator.asp\n\nand was edited by LawDawg.",
+      "attribution": "The game layout and all game elements are by LawDawg and are released to the Public Domain by CC0.<div><br></div><div>The library image by taha08 is available under the Pixabay License at&nbsp;https://pixabay.com/photos/antique-key-celebration-cipher-7684998/.\n\nWord list was compiled from:\n\nhttps://www.thegamegal.com/printables/#word-lists\nhttps://www.thegamegal.com/word-generator/\nhttps://github.com/Alamantus/fun-word-list\nhttps://www.randomlists.com/nouns\nhttps://randomwordgenerator.com/noun.php\nhttps://jimpix.co.uk/words/word-generator.asp\n\nand was edited by LawDawg.</div>",
       "similarName": "Decrypto",
       "description": "One player on each of two teams provides clues about code words. Players attempt to correctly match clue with the code word. Teams try to guess their own codes and the other team's codes. Play up to 8 rounds, but winner declared after two failures or two intercepts.",
       "showName": true,
       "helpText": "Players take seats and close seat menu. First code giver presses draw code button and begins giving clues. Clues and code number guesses for white team are entered on left side of screen. White team enters other clues and code number guesses on right side of the screen. Sides of the screen are reversed for black team. Code giver presses show code button to reveal actual code to his team. Adjust scores. Next code giver presses draw code button for next round.",
-      "lastUpdate": 1680382915047,
+      "lastUpdate": 1770143884662,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
+      "similarDesigner": "Thomas Dagenais-Lespérance",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
       "players": "3-10",
-      "similarDesigner": "Thomas Dagenais-Lespérance"
+      "usesAIImagery": false
     }
   },
   "backWhite": {
