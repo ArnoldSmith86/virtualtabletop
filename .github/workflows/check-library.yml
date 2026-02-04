@@ -59,7 +59,12 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          python3 -m pip install Pillow
+          output=$(python3 -m pip install Pillow 2>&1)
+          if [ $? -ne 0 ]; then
+            echo "❌ Failed to install Pillow"
+            echo "$output"
+            exit 1
+          fi
           found_non_square=false
           while IFS= read -r file; do
             if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
@@ -69,7 +74,30 @@ jobs:
                 game_dir=$(dirname "$file")
                 asset_file="$game_dir/assets/$asset_name"
                 if [[ -f "$asset_file" ]]; then
+                  file_type=$(file -b "$asset_file")
+                  if [[ "$file_type" == *SVG* ]]; then
+                    dimensions=$(python3 -c "
+import sys, re
+with open(sys.argv[1]) as f:
+  s = f.read()
+w = re.search(r'<svg[^>]*\swidth=[\"'\''']([0-9.]+)', s)
+h = re.search(r'<svg[^>]*\sheight=[\"'\''']([0-9.]+)', s)
+if w and h:
+  print(f\"{w.group(1)}x{h.group(1)}\")
+else:
+  vb = re.search(r'viewBox=\"([^\"]+)\"', s)
+  if vb:
+    parts = vb.group(1).split()
+    if len(parts) >= 4:
+      print(f\"{parts[2]}x{parts[3]}\")
+    else:
+      sys.exit(1)
+  else:
+    sys.exit(1)
+" "$asset_file")
+                  else
                   dimensions=$(python3 -c "import sys; from PIL import Image; img = Image.open(sys.argv[1]); print(f'{img.width}x{img.height}')" "$asset_file")
+                  fi
                   if [ $? -eq 0 ]; then
                     width=$(echo "$dimensions" | cut -d'x' -f1)
                     height=$(echo "$dimensions" | cut -d'x' -f2)
