@@ -144,9 +144,6 @@
     "clickRoutine": [
       {
         "func": "IF",
-        "operand1": "${PROPERTY player}",
-        "relation": "==",
-        "operand2": "",
         "condition": "${PROPERTY player}",
         "thenRoutine": [
           {
@@ -289,9 +286,6 @@
     "clickRoutine": [
       {
         "func": "IF",
-        "operand1": "${PROPERTY player}",
-        "relation": "==",
-        "operand2": "",
         "condition": "${PROPERTY player}",
         "thenRoutine": [
           {
@@ -606,7 +600,8 @@
     "z": 72,
     "id": "ym8d",
     "text": "always start and and set time to 0",
-    "width": 200
+    "width": 200,
+    "height": 35
   },
   "ym9d": {
     "type": "label",
@@ -643,7 +638,8 @@
     "z": 57,
     "id": "ym12d",
     "width": 250,
-    "text": "just changing the 'faces' property for better visualization"
+    "text": "just changing the 'faces' property for better visualization",
+    "height": 35
   },
   "bjpp": {
     "type": "label",
@@ -716,6 +712,39 @@
     "y": 348,
     "id": "ok1n",
     "z": 69
+  },
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770162707265,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "clickRoutine Equivalents",
+      "language": "en-US",
+      "players": "1"
+    }
   },
   "8fr3": {
     "id": "8fr3",
@@ -801,7 +830,8 @@
     "y": 805,
     "z": 71,
     "id": "yf2v",
-    "width": 300
+    "width": 300,
+    "height": 35
   },
   "eyep": {
     "type": "label",
@@ -929,24 +959,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1858,24 +1870,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -2925,8 +2919,6 @@
   "61ft": {
     "type": "pile",
     "parent": "754p",
-    "x": 4,
-    "y": 4,
     "width": 103,
     "height": 160,
     "clickRoutine": [
@@ -3004,66 +2996,15 @@
         "relation": ">",
         "thenRoutine": [
           {
-            "note": "This was added by the automatic file migration because the behavior of MOVEXY with count=0 changed.",
-            "func": "IF",
-            "condition": "${splitcheck}",
-            "thenRoutine": [
-              {
-                "func": "MOVEXY",
-                "from": "${thisID}",
-                "count": "${splitcheck}",
-                "x": "${xPos}",
-                "y": "${yPos}",
-                "resetOwner": false
-              }
-            ],
-            "elseRoutine": [
-              {
-                "func": "MOVEXY",
-                "from": "${thisID}",
-                "count": "all",
-                "x": "${xPos}",
-                "y": "${yPos}",
-                "resetOwner": false
-              }
-            ]
+            "func": "MOVEXY",
+            "from": "${thisID}",
+            "count": "${splitcheck}",
+            "x": "${xPos}",
+            "y": "${yPos}"
           }
         ]
       }
     ],
     "id": "61ft"
-  },
-  "_meta": {
-    "version": 20,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
-    "info": {
-      "name": "Operations - Routines",
-      "image": "/assets/786542630_8010",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1770181607866,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "clickRoutine Equivalents",
-      "language": "en-US",
-      "players": "1"
-    }
   }
 }

@@ -1,4 +1,37 @@
 {
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770162707255,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Intro, clickRoutine, and doubleClickRoutine",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
   "8fr3": {
     "type": "label",
     "id": "8fr3",
@@ -131,9 +164,10 @@
   "7cyoP": {
     "type": "pile",
     "id": "7cyoP",
-    "parent": "7cyo",
     "width": 103,
-    "height": 160
+    "height": 160,
+    "z": 9,
+    "parent": "7cyo"
   },
   "7cyoD": {
     "type": "deck",
@@ -142,24 +176,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1092,38 +1108,5 @@
       }
     ],
     "activeFace": 1
-  },
-  "_meta": {
-    "version": 20,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
-    "info": {
-      "name": "Operations - Routines",
-      "image": "/assets/786542630_8010",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1770181607861,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Intro, clickRoutine, and doubleClickRoutine",
-      "language": "en-US",
-      "players": "1"
-    }
   }
 }

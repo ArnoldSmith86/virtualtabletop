@@ -1,11 +1,38 @@
 {
+  "_meta": {
+    "version": 12,
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770162707263,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "globalUpdateRoutine",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
   "8fr3": {
     "type": "label",
     "id": "8fr3",
     "x": 287,
     "y": -6,
     "width": 1000,
-    "height": 62,
+    "height": 60,
     "z": 322,
     "css": "font-size: 60px",
     "text": "Routines: globalUpdateRoutine"
@@ -601,38 +628,5 @@
         "value": "${finalBoard}"
       }
     ]
-  },
-  "_meta": {
-    "version": 20,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
-    "info": {
-      "name": "Operations - Routines",
-      "image": "/assets/786542630_8010",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1770181607865,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "globalUpdateRoutine",
-      "language": "en-US",
-      "players": "1"
-    }
   }
 }
