@@ -26,7 +26,7 @@ const router = express.Router();
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
-const customWidgets = fs.existsSync(Config.directory('library') + '/widgets.json') ? JSON.parse(fs.readFileSync(Config.directory('library') + '/widgets.json')) : { widgets: [], groups: [] };
+const customWidgets = fs.existsSync(path.resolve() + '/assets/widgets.json') ? JSON.parse(fs.readFileSync(path.resolve() + '/assets/widgets.json')) : { widgets: [], groups: [] };
 
 
 const serverStart = +new Date();
@@ -311,7 +311,7 @@ MinifyHTML().then(function(result) {
       customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
       customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
     }
-    fs.writeFileSync(Config.directory('library') + '/widgets.json', JSON.stringify(customWidgets, null, 2));
+    fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
   });
 
@@ -528,3 +528,4 @@ autosaveRooms();
       process.exit();
   });
 });
+
