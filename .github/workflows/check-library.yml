@@ -58,17 +58,31 @@ jobs:
         id: square-images
         continue-on-error: true
         run: |
-          python3 -m pip install --quiet Pillow
+          set +e
+          pip_err=$(mktemp)
+          python3 -m pip install Pillow 2> "$pip_err"
+          pip_ret=$?
+          if [ $pip_ret -ne 0 ]; then
+            cat "$pip_err" >&2
+            rm -f "$pip_err"
+            exit $pip_ret
+          fi
+          rm -f "$pip_err"
           found_non_square=false
           while IFS= read -r file; do
             if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
-              image_path=$(python3 -c "import json, sys; data = json.load(open('$file')); print(data.get('_meta', {}).get('info', {}).get('image', ''))" 2>/dev/null)
+              image_path=$(python3 -c "import json, sys; data = json.load(open(sys.argv[1])); print(data.get('_meta', {}).get('info', {}).get('image', ''))" "$file")
               if [[ -n "$image_path" ]] && [[ "$image_path" =~ ^/assets/ ]]; then
                 asset_name=$(basename "$image_path")
                 game_dir=$(dirname "$file")
                 asset_file="$game_dir/assets/$asset_name"
                 if [[ -f "$asset_file" ]]; then
-                  dimensions=$(python3 -c "from PIL import Image; img = Image.open('$asset_file'); print(f'{img.width}x{img.height}')" 2>/dev/null)
+                  file_type=$(file -b "$asset_file")
+                  if [[ "$file_type" == *SVG* ]]; then
+                    dimensions=$(python3 .github/scripts/check_svg_square.py "$asset_file")
+                  else
+                    dimensions=$(python3 -c "import sys; from PIL import Image; img = Image.open(sys.argv[1]); print(f'{img.width}x{img.height}')" "$asset_file")
+                  fi
                   if [ $? -eq 0 ]; then
                     width=$(echo "$dimensions" | cut -d'x' -f1)
                     height=$(echo "$dimensions" | cut -d'x' -f2)
@@ -85,6 +99,8 @@ jobs:
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           if [ "$found_non_square" = true ]; then
             exit 1
+          else
+            exit 0
           fi
 
       - name: Setup Node.js
@@ -125,13 +141,26 @@ jobs:
           VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
         with:
           script: |
+            const output = process.env.VALIDATION_OUTPUT;
+            const maxLines = 1000;
+            const lines = output.split('\n');
+            let body = '## Game File Validation Issues\n\n';
+            if (lines.length > maxLines) {
+              body += lines.slice(0, maxLines).join('\n');
+              body += '\n\n... *(output truncated; see the "Run validator on changed game files" step in the [Actions run](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.run_id + ') for full output.)*';
+            } else {
+              body += output;
+            }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
+              body
             });
 
       - name: Fail if any check failed
         if: always() && (steps.asset-names.outcome == 'failure' || steps.square-images.outcome == 'failure')
-        run: exit 1
+        run: |
+          if [ "${{ steps.asset-names.outcome }}" = 'failure' ]; then echo "Failed: Check and fix asset file names"; fi
+          if [ "${{ steps.square-images.outcome }}" = 'failure' ]; then echo "Failed: Check library images are square"; fi
+          exit 1
