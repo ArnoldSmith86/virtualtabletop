@@ -111,11 +111,29 @@ jobs:
       - name: Run validator on changed game files
         id: validate
         run: |
+          changed_files=()
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
+              changed_files+=("$file")
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          
+          summary_only=false
+          [[ ${#changed_files[@]} -gt 10 ]] && summary_only=true
+          
           validation_output=""
           found_issues=false
           
-          while IFS= read -r file; do
-            if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
+          for file in "${changed_files[@]}"; do
+            if [ "$summary_only" = true ]; then
+              if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
+                echo "✅ $file - No issues found"
+                validation_output+="✅ \`$file\` - No issues found\n"
+              else
+                echo "❌ $file - Issues found"
+                validation_output+="❌ \`$file\` - Issues found\n"
+              fi
+            else
               echo "Validating $file..."
               if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
                 echo "✅ $file - No issues found"
@@ -126,9 +144,13 @@ jobs:
                 found_issues=true
               fi
             fi
-          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          done
           
-          if [ "$found_issues" = true ]; then
+          if [ "$summary_only" = true ]; then
+            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$validation_output" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          elif [ "$found_issues" = true ]; then
             echo "validation_output<<EOF" >> $GITHUB_OUTPUT
             echo -e "$validation_output" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
@@ -141,21 +163,11 @@ jobs:
           VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
         with:
           script: |
-            const output = process.env.VALIDATION_OUTPUT;
-            const maxLines = 1000;
-            const lines = output.split('\n');
-            let body = '## Game File Validation Issues\n\n';
-            if (lines.length > maxLines) {
-              body += lines.slice(0, maxLines).join('\n');
-              body += '\n\n... *(output truncated; see the "Run validator on changed game files" step in the [Actions run](https://github.com/' + context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.run_id + ') for full output.)*';
-            } else {
-              body += output;
-            }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body
+              body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
             });
 
       - name: Fail if any check failed
