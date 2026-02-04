@@ -1,15 +1,21 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Pachyderm Push",
-      "image": "/assets/-1580538836_78182",
+      "image": "/assets/957976370_47660",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/20782/siam",
       "year": "2005",
       "mode": "vs",
       "time": "15",
-      "attribution": "<div>Room design and layout by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icons by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; e<span style=\"color: var(--overlayFontColor);\">lephant, r</span><span style=\"color: var(--overlayFontColor);\">hinoceros, push symbol, clockwise rotation.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Icon by lorc available from&nbsp;</span><span style=\"color: var(--overlayFontColor);\">https://game-icons.net under CC BY 3.0: rock.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The background and library images were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"photograph of a trail through a bamboo forest --ar 8:5\".<br></div>",
+      "attribution": "<div>Room design, layout, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Icons by Delapouite available from https://game-icons.net under CC BY 3.0:&nbsp; e<span style=\"color: var(--overlayFontColor);\">lephant, r</span><span style=\"color: var(--overlayFontColor);\">hinoceros, push symbol, clockwise rotation.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">Icon by lorc available from&nbsp;</span><span style=\"color: var(--overlayFontColor);\">https://game-icons.net under CC BY 3.0: rock.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">The background image is by cucaihn and is available under the Pixabay License at&nbsp;</span>https://pixabay.com/photos/bamboo-forest-bamboo-forest-trees-3870863/.</div>",
       "lastUpdate": 1710628688429,
       "showName": true,
       "skill": "",
@@ -20,6 +26,7 @@
       "similarAwards": "2007 As d'Or - Jeu de l'Année Nominee\n2006 Tric Trac Nominee",
       "ruleText": "During your turn, take one of the following actions:<div><ul><li>Add one of your tiles to any blank space on the board and orient it in any direction you want.</li><li>Remove one of your tiles from the board.</li><li>Rotate one of your tiles to any orientation.</li><li>Move one of your tiles orthogonally one space to an unoccupied space and optionally rotate it to any orientation.</li><li>Push one of your tiles in the direction it is oriented if allowed.</li></ul><div>Basic summary of push rules:</div></div><div><ul><li>You can only push a rock as long as there is an equal or greater number of animals (from either player) pushing in the same direction.</li><li>You can only push other animals if there are a greater number of animals (from either player) pushing animals that are pointed in the opposite direction. Animals oriented perpendicular to the push are \"neutral\" and do not count.</li><li>If there is a mix of rocks and animals, then both conditions above must be satisfied for the push to work.</li><li>You may push to enter the board to an occupied space.</li></ul><div>The game ends when a rock is pushed off the board. The player with the piece closest to the rock and oriented in the same direction as the push wins. The winner is not necessarily the one that initiated the push.</div></div>",
       "helpText": "<div>Press reset button to choose between standard and alternate board layout.</div><div><br></div>Move tiles around the board by dragging and dropping. If you accidentally drop a tile onto an occupied space, the dropped tile will be pushed to the right of the board out of play.<div><br></div><div>The colored button above each set of tiles is used to either rotate tiles of that color or push them. Click to swap between rotating and pushing. After every push, the button returns to the default status of rotating.<div><ul><li>To rotate a tile, make sure the colored button shows the rotation arrow and click the tile.</li><li>To push pieces, make sure the colored button shows the push icon and click the tile. The push will move all the appropriate tiles one space each if the move is valid. Otherwise, nothing happens when you click the tile and the move is not permitted by the rules. If you accidentally push instead of rotating, manually move the pieces back.</li></ul></div><div>Keep pieces that are not in play outside of the gold bordered area. Invisible holders inside the border are used in automation routines.</div></div>",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -1161,14 +1168,16 @@
   },
   "background": {
     "id": "background",
-    "width": 1600,
-    "height": 1000,
+    "width": 1800,
+    "height": 1200,
     "layer": -4,
     "movable": false,
     "css": {
       "opacity": 0.3
     },
-    "image": "/assets/-892239381_190992"
+    "image": "/assets/361592476_551587",
+    "x": -100,
+    "y": -200
   },
   "backgroundCover": {
     "id": "backgroundCover",

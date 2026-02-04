@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-GB",
-      "players": "2"
+      "players": "2",
+      "usesAIImagery": true
     }
   },
   "seat1": {

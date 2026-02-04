@@ -180,7 +180,8 @@
       "players": "2",
       "language": "en-US",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   },
   "anj7": {

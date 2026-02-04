@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "Default",
       "language": "en-GB",
-      "players": "2-6"
+      "players": "2-6",
+      "usesAIImagery": true
     }
   },
   "background": {
