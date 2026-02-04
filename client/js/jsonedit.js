@@ -1017,6 +1017,33 @@ const jeCommands = [
     })
   },
   {
+    id: 'je_contextMenuEntry',
+    name: 'add context menu entry',
+    context: '^[a-z]+( ↦ contextMenu)?',
+    call: async function() {
+      if (!Array.isArray(jeStateNow.contextMenu)) jeStateNow.contextMenu = [];
+      jeStateNow.contextMenu.push({ icon: '###SELECT ME###', text: 'Action', routine: 'clickRoutine' });
+      jeSetAndSelect('visibility');
+      await jeApplyChanges();
+    }
+  },
+  {
+    id: 'je_contextMenuSubmenu',
+    name: 'add submenu',
+    context: '^[a-z]+ ↦ contextMenu ↦ [0-9]+$',
+    show: _=> {
+      const entry = jeGetValue(jeContext.slice(1));
+      return entry && typeof entry === 'object' && !Array.isArray(entry.menu);
+    },
+    call: async function() {
+      const entry = jeGetValue(jeContext.slice(1));
+      if (!entry || typeof entry !== 'object') return;
+      entry.menu = [ { icon: '###SELECT ME###', text: 'Action', routine: 'clickRoutine' } ];
+      jeSetAndSelect('visibility');
+      await jeApplyChanges();
+    }
+  },
+  {
     id: 'je_classes',
     name: 'classes',
     context: '^deck ↦ faceTemplates ↦ [0-9]+ ↦ objects ↦ [0-9]+',
@@ -1377,6 +1404,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('CALL', { widget: 'id', routine: 'clickRoutine', return: true, arguments: {}, variable: 'result' });
   jeAddRoutineOperationCommands('CANVAS', { collection: 'DEFAULT', mode: 'reset', x: 0, y: 0, value: 1 ,color:'#1F5CA6' });
   jeAddRoutineOperationCommands('CLICK', { collection: 'DEFAULT', count: 1 , mode:'respect' });
+  jeAddRoutineOperationCommands('CONTEXTMENU', { collection: 'DEFAULT', contextMenu: [], property: null, factor: null, title: '', color: '', image: null, widget: null });
   jeAddRoutineOperationCommands('CLONE', { source: 'DEFAULT', collection: 'DEFAULT', xOffset: 0, yOffset: 0, count: 1, recursive: false, properties: null });
   jeAddRoutineOperationCommands('COUNT', { collection: 'DEFAULT', holder: null, variable: 'COUNT', owner: null });
   jeAddRoutineOperationCommands('DELAY', { milliseconds: 0 });
@@ -1498,7 +1526,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(TURN\\) ↦ turnCycle', [ 'forward', 'backward', 'random', 'position', 'seat']);
   jeAddEnumCommands('^.*\\([A-Z]+\\) ↦ property', [ 'id', 'parent', 'type', 'rotation' ]);
 
-  jeAddEnumCommands('^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
+  jeAddEnumCommands('^.*\\((CANVAS|CLICK|CONTEXTMENU|COUNT|DELETE|FLIP|GET|LABEL|ROTATE|SET|SORT|SHUFFLE|TIMER)\\) ↦ collection', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\(CLONE\\) ↦ source', collectionNames.slice(1));
   jeAddEnumCommands('^.*\\((SELECT|TURN)\\) ↦ source', collectionNames);
   jeAddEnumCommands('^.*\\(COUNT\\) ↦ owner', [ '${}' ]);
