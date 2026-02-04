@@ -504,8 +504,7 @@ function validateRoutine(routine, context, propertyPath = []) {
             const newContext = Object.assign({}, JSON.parse(JSON.stringify(context)), {recursionCheck, calledCustomRoutines: context.calledCustomRoutines});
             if(typeof operation.arguments === 'object' && operation.arguments !== null)
                 for(const key of Object.keys(operation.arguments))
-                    if(typeof operation.arguments[key] === 'string')
-                        newContext.validVariables[operation.arguments[key]] = 1;
+                    newContext.validVariables[key] = 1;
             newContext.validCollections['caller'] = 1;
             for(const widget of Object.values(context.widgets))
                 if(Array.isArray(widget[operation.routine]))
