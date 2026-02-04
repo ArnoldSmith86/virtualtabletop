@@ -120,11 +120,29 @@
 .mainStateDetails .hidden {
   display: none;
 }
-.mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span {
+.mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span:not(.ai-badge) {
   position: absolute;
   font-size: 50px;
   background: none;
   text-shadow: 2px 2px 4px #444;
+}
+.mainStateImage .ai-badge {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--VTTblue);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0 0 0 10px;
+  text-shadow: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.mainStateImage .ai-badge:not(.hidden) {
+  display: block;
 }
 .mainStateDetails .star::before {
   font-size: 50px;
@@ -138,7 +156,7 @@
 .mainStateImage .active.star, .mainStateImage .active.star + span {
   color: gold;
 }
-.mainStateImage span {
+.mainStateImage span:not(.ai-badge) {
   position: absolute;
   font-size: 16px;
   top: 51px;
@@ -209,6 +227,9 @@
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
+  }
+  .mainStateImage .ai-badge {
+    border-radius: 0 10px 0 10px;
   }
 
   #linkDetailsOverlay .addToRoomBox {

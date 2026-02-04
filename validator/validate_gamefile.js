@@ -92,6 +92,7 @@ const COMMON_PROPERTIES = {
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
+    editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
     animatePropertyChange: 'any',
     resetProperties: 'object',
@@ -1058,7 +1059,7 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage', 'importer', 'importerTime'
+                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery'
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {
