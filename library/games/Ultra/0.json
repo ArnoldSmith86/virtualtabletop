@@ -14,7 +14,7 @@
       "description": "One player on each of two teams provides clues about code words. Players attempt to correctly match clue with the code word. Teams try to guess their own codes and the other team's codes. Play up to 8 rounds, but winner declared after two failures or two intercepts.",
       "showName": true,
       "helpText": "Players take seats and close seat menu. First code giver presses draw code button and begins giving clues. Clues and code number guesses for white team are entered on left side of screen. White team enters other clues and code number guesses on right side of the screen. Sides of the screen are reversed for black team. Code giver presses show code button to reveal actual code to his team. Adjust scores. Next code giver presses draw code button for next round.",
-      "lastUpdate": 1770143884662,
+      "lastUpdate": 1680382915047,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
