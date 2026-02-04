@@ -6481,7 +6481,8 @@
       "variantImage": "",
       "variant": "Guan Dan (掼蛋)",
       "language": "en-GB",
-      "players": "4"
+      "players": "4",
+      "usesAIImagery": true
     }
   },
   "seat4": {

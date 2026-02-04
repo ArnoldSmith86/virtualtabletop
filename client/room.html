@@ -135,6 +135,14 @@
           <i class="material-symbols">groups</i>
           <select id="filterByMode"></select>
         </span>
+        <span id="filterByAiWrapper" data-priority="8">
+          <i class="material-symbols">auto_awesome</i>
+          <select id="filterByAi">
+            <option>Any</option>
+            <option value="no-ai">No AI imagery</option>
+            <option value="ai">Uses AI imagery</option>
+          </select>
+        </span>
         <span id="librarySortWrapper" data-priority="3">
           <i class="material-symbols">sort_by_alpha</i>
           <select id="librarySort"><option value="name">by Name</option><option value="similarName">by Similar Name</option><option value="stars">by Stars</option><option value="timePlayed">by Popularity</option><option value="lastUpdate">by Last Updated</option><option value="year">by Year</option></select>
@@ -151,6 +159,7 @@
           <img>
           <button icon="star_rate" class="star"></button>
           <i class="material-symbols linked">link</i>
+          <span class="ai-badge" title="Uses AI generated imagery">AI</span>
           <div class="details">
             <h3>Name</h3>
             <h4>Similar Name</h4>
@@ -259,6 +268,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
+          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
@@ -336,6 +346,11 @@
         <div data-field="helpText" data-html="true"></div>
         <h3 data-showfor="attribution">Attribution</h3>
         <div data-field="attribution" data-html="true"></div>
+        <div class="onlyForEdit" style="margin-top: 12px;"><input type="checkbox" id="usesAIImagery" data-field="usesAIImagery" data-target="checked"> <label for="usesAIImagery">Uses AI generated imagery</label></div>
+        <div class="hideForEdit ai-imagery-notice" data-showfor="usesAIImagery">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game uses AI generated imagery.</span>
+        </div>
       </div>
     </div>
 
@@ -404,6 +419,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
+          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
         </div>
         <div class="details">
           <h1 data-field="name"></h1>
@@ -430,6 +446,10 @@
           <button id="welcomePlayButton" icon="play_arrow">Create room</button>
         </div>
         <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
+        <div class="ai-imagery-notice" data-showfor="usesAIImagery">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game uses AI generated imagery.</span>
+        </div>
       </div>
     </div>
 

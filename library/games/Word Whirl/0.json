@@ -8547,7 +8547,8 @@
       "players": "2-6",
       "language": "de-DE, en-US, es-ES, fr-FR, pt-BR",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   }
 }

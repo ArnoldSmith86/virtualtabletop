@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "Egyptian Epochs",
       "language": "en-US",
-      "players": "2-5"
+      "players": "2-5",
+      "usesAIImagery": true
     }
   },
   "seat-p1": {
