@@ -85,6 +85,8 @@ jobs:
           done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
           if [ "$found_non_square" = true ]; then
             exit 1
+          else
+            exit 0
           fi
 
       - name: Setup Node.js
