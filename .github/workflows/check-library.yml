@@ -69,7 +69,7 @@ jobs:
                 game_dir=$(dirname "$file")
                 asset_file="$game_dir/assets/$asset_name"
                 if [[ -f "$asset_file" ]]; then
-                  dimensions=$(python3 -c "from PIL import Image; img = Image.open(sys.argv[1]); print(f'{img.width}x{img.height}')" "$asset_file")
+                  dimensions=$(python3 -c "import sys; from PIL import Image; img = Image.open(sys.argv[1]); print(f'{img.width}x{img.height}')" "$asset_file")
                   if [ $? -eq 0 ]; then
                     width=$(echo "$dimensions" | cut -d'x' -f1)
                     height=$(echo "$dimensions" | cut -d'x' -f2)
@@ -137,4 +137,7 @@ jobs:
 
       - name: Fail if any check failed
         if: always() && (steps.asset-names.outcome == 'failure' || steps.square-images.outcome == 'failure')
-        run: exit 1
+        run: |
+          if [ "${{ steps.asset-names.outcome }}" = 'failure' ]; then echo "Failed: Check and fix asset file names"; fi
+          if [ "${{ steps.square-images.outcome }}" = 'failure' ]; then echo "Failed: Check library images are square"; fi
+          exit 1
