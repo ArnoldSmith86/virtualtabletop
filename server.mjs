@@ -26,6 +26,8 @@ const router = express.Router();
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
+const customWidgets = fs.existsSync(path.resolve() + '/assets/widgets.json') ? JSON.parse(fs.readFileSync(path.resolve() + '/assets/widgets.json')) : { widgets: [], groups: [] };
+
 
 const serverStart = +new Date();
 
@@ -297,6 +299,22 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  router.get('/api/widgets', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(customWidgets));
+  });
+
+  router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
+    const data = req.body;
+    if (typeof data === 'object' && data !== null) {
+      customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
+      customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
+    }
+    fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
+  });
+
   router.get('/s/:link/:junk', function(req, res, next) {
     if(!sharedLinks[`/s/${req.params.link}`])
       return res.status(404).send('Invalid share.');
@@ -510,3 +528,4 @@ autosaveRooms();
       process.exit();
   });
 });
+

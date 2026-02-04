@@ -59,15 +59,12 @@ jobs:
         continue-on-error: true
         run: |
           set +e
-          pip_err=$(mktemp)
-          python3 -m pip install Pillow 2> "$pip_err"
-          pip_ret=$?
-          if [ $pip_ret -ne 0 ]; then
-            cat "$pip_err" >&2
-            rm -f "$pip_err"
-            exit $pip_ret
+          output=$(python3 -m pip install Pillow 2>&1)
+          if [ $? -ne 0 ]; then
+            echo "❌ Failed to install Pillow"
+            echo "$output"
+            exit 1
           fi
-          rm -f "$pip_err"
           found_non_square=false
           while IFS= read -r file; do
             if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
