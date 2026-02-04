@@ -1,44 +1,14 @@
 {
-  "_meta": {
-    "version": 19,
-    "gameSettings": {
-      "legacyModes": {}
-    },
-    "info": {
-      "name": "Operations - Routines",
-      "image": "/assets/786542630_8010",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1770162707262,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "gameStartRoutine",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "8fr3": {
+    "type": "label",
     "id": "8fr3",
     "x": 287,
     "y": -6,
     "width": 1000,
-    "height": 72,
+    "height": 62,
     "z": 322,
     "css": "font-size: 60px",
-    "text": "Routines: gameStartRoutine",
-    "type": "label"
+    "text": "Routines: gameStartRoutine"
   },
   "v5h4": {
     "id": "v5h4",
@@ -72,6 +42,42 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
+      "T 3J": {
+        "image": "/i/cards-default/3J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J3",
+        "rankA": "J3",
+        "rankFixed": "J3 T"
+      },
+      "T 4J": {
+        "image": "/i/cards-default/4J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J4",
+        "rankA": "J4",
+        "rankFixed": "J4 T"
+      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -582,14 +588,14 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 01",
-    "z": 1024
+    "z": 1050
   },
   "no1p_2_C": {
     "id": "no1p_2_C",
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 02",
-    "z": 1029,
+    "z": 1025,
     "parent": "k9ql"
   },
   "no1p_3_C": {
@@ -598,14 +604,14 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 03",
-    "z": 1067
+    "z": 1066
   },
   "no1p_4_C": {
     "id": "no1p_4_C",
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 04",
-    "z": 1048,
+    "z": 1031,
     "parent": "k9ql"
   },
   "no1p_5_C": {
@@ -614,7 +620,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 05",
-    "z": 1037
+    "z": 1036
   },
   "no1p_6_C": {
     "id": "no1p_6_C",
@@ -622,7 +628,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 06",
-    "z": 1066
+    "z": 1044
   },
   "no1p_7_C": {
     "id": "no1p_7_C",
@@ -630,7 +636,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 07",
-    "z": 1059
+    "z": 1070
   },
   "no1p_8_C": {
     "id": "no1p_8_C",
@@ -638,7 +644,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 08",
-    "z": 1035
+    "z": 1047
   },
   "no1p_9_C": {
     "id": "no1p_9_C",
@@ -646,7 +652,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 09",
-    "z": 1062
+    "z": 1041
   },
   "no1p_T_C": {
     "id": "no1p_T_C",
@@ -654,7 +660,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 10",
-    "z": 1056
+    "z": 1062
   },
   "no1p_J_C": {
     "id": "no1p_J_C",
@@ -662,7 +668,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 2J",
-    "z": 1030
+    "z": 1043
   },
   "no1p_Q_C": {
     "id": "no1p_Q_C",
@@ -670,15 +676,18 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 1033
+    "z": 1029
   },
   "no1p_K_C": {
     "id": "no1p_K_C",
-    "parent": "k9ql",
+    "parent": "holder2",
     "deck": "no1pD",
     "type": "card",
     "cardType": "C 4K",
-    "z": 1039
+    "z": 4,
+    "activeFace": 1,
+    "x": 124,
+    "y": 4
   },
   "no1p_A_D": {
     "id": "no1p_A_D",
@@ -686,7 +695,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 01",
-    "z": 1032
+    "z": 1065
   },
   "no1p_2_D": {
     "id": "no1p_2_D",
@@ -694,7 +703,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 02",
-    "z": 1040
+    "z": 1039
   },
   "no1p_3_D": {
     "id": "no1p_3_D",
@@ -702,14 +711,14 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 03",
-    "z": 1069
+    "z": 1026
   },
   "no1p_4_D": {
     "id": "no1p_4_D",
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 04",
-    "z": 1041,
+    "z": 1064,
     "parent": "k9ql"
   },
   "no1p_5_D": {
@@ -718,7 +727,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 05",
-    "z": 1057
+    "z": 1069
   },
   "no1p_6_D": {
     "id": "no1p_6_D",
@@ -726,7 +735,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 06",
-    "z": 1047
+    "z": 1057
   },
   "no1p_7_D": {
     "id": "no1p_7_D",
@@ -734,7 +743,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 07",
-    "z": 1025
+    "z": 1028
   },
   "no1p_8_D": {
     "id": "no1p_8_D",
@@ -742,8 +751,8 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 08",
-    "z": 4,
-    "x": 124,
+    "z": 3,
+    "x": 84,
     "y": 4,
     "activeFace": 1
   },
@@ -753,15 +762,18 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 09",
-    "z": 1045
+    "z": 1037
   },
   "no1p_T_D": {
     "id": "no1p_T_D",
-    "parent": "k9ql",
+    "parent": "holder2",
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 10",
-    "z": 1063
+    "z": 1,
+    "activeFace": 1,
+    "x": 4,
+    "y": 4
   },
   "no1p_J_D": {
     "id": "no1p_J_D",
@@ -769,7 +781,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 2J",
-    "z": 1028
+    "z": 1056
   },
   "no1p_Q_D": {
     "id": "no1p_Q_D",
@@ -777,7 +789,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 1044
+    "z": 1067
   },
   "no1p_K_D": {
     "id": "no1p_K_D",
@@ -785,7 +797,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "D 4K",
-    "z": 1043
+    "z": 1046
   },
   "no1p_A_H": {
     "id": "no1p_A_H",
@@ -793,7 +805,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 01",
-    "z": 1034
+    "z": 1048
   },
   "no1p_2_H": {
     "id": "no1p_2_H",
@@ -801,29 +813,23 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 02",
-    "z": 1027
+    "z": 1063
   },
   "no1p_3_H": {
     "id": "no1p_3_H",
-    "parent": "holder2",
+    "parent": "k9ql",
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 03",
-    "z": 5,
-    "activeFace": 1,
-    "x": 164,
-    "y": 4
+    "z": 1049
   },
   "no1p_4_H": {
     "id": "no1p_4_H",
-    "parent": "holder2",
+    "parent": "k9ql",
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 04",
-    "z": 1,
-    "activeFace": 1,
-    "x": 4,
-    "y": 4
+    "z": 1045
   },
   "no1p_5_H": {
     "id": "no1p_5_H",
@@ -831,7 +837,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 05",
-    "z": 1060
+    "z": 1055
   },
   "no1p_6_H": {
     "id": "no1p_6_H",
@@ -839,7 +845,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 06",
-    "z": 1053
+    "z": 1035
   },
   "no1p_7_H": {
     "id": "no1p_7_H",
@@ -847,7 +853,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 07",
-    "z": 1049
+    "z": 1060
   },
   "no1p_8_H": {
     "id": "no1p_8_H",
@@ -855,7 +861,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 08",
-    "z": 1061
+    "z": 1051
   },
   "no1p_9_H": {
     "id": "no1p_9_H",
@@ -863,18 +869,15 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 09",
-    "z": 1051
+    "z": 1061
   },
   "no1p_T_H": {
     "id": "no1p_T_H",
-    "parent": "holder2",
+    "parent": "k9ql",
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 10",
-    "z": 2,
-    "activeFace": 1,
-    "x": 44,
-    "y": 4
+    "z": 1034
   },
   "no1p_J_H": {
     "id": "no1p_J_H",
@@ -882,7 +885,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 2J",
-    "z": 1054
+    "z": 1030
   },
   "no1p_Q_H": {
     "id": "no1p_Q_H",
@@ -890,7 +893,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 1052
+    "z": 1042
   },
   "no1p_K_H": {
     "id": "no1p_K_H",
@@ -898,7 +901,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "H 4K",
-    "z": 1064
+    "z": 1054
   },
   "no1p_A_S": {
     "id": "no1p_A_S",
@@ -906,7 +909,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 01",
-    "z": 1055
+    "z": 1052
   },
   "no1p_2_S": {
     "id": "no1p_2_S",
@@ -914,7 +917,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 02",
-    "z": 1031
+    "z": 1038
   },
   "no1p_3_S": {
     "id": "no1p_3_S",
@@ -922,14 +925,14 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 03",
-    "z": 1036
+    "z": 1024
   },
   "no1p_4_S": {
     "id": "no1p_4_S",
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 04",
-    "z": 1065,
+    "z": 1033,
     "parent": "k9ql"
   },
   "no1p_5_S": {
@@ -938,7 +941,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 05",
-    "z": 1046
+    "z": 1040
   },
   "no1p_6_S": {
     "id": "no1p_6_S",
@@ -946,26 +949,26 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 06",
-    "z": 1050
+    "z": 1058
   },
   "no1p_7_S": {
     "id": "no1p_7_S",
-    "parent": "k9ql",
-    "deck": "no1pD",
-    "type": "card",
-    "cardType": "S 07",
-    "z": 1068
-  },
-  "no1p_8_S": {
-    "id": "no1p_8_S",
     "parent": "holder2",
     "deck": "no1pD",
     "type": "card",
-    "cardType": "S 08",
-    "z": 3,
+    "cardType": "S 07",
+    "z": 2,
     "activeFace": 1,
-    "x": 84,
+    "x": 44,
     "y": 4
+  },
+  "no1p_8_S": {
+    "id": "no1p_8_S",
+    "parent": "k9ql",
+    "deck": "no1pD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 1032
   },
   "no1p_9_S": {
     "id": "no1p_9_S",
@@ -973,7 +976,7 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 09",
-    "z": 1042
+    "z": 1068
   },
   "no1p_T_S": {
     "id": "no1p_T_S",
@@ -981,14 +984,14 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 10",
-    "z": 1070
+    "z": 1059
   },
   "no1p_J_S": {
     "id": "no1p_J_S",
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 2J",
-    "z": 1026,
+    "z": 1027,
     "parent": "k9ql"
   },
   "no1p_Q_S": {
@@ -997,15 +1000,18 @@
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 1058
+    "z": 1053
   },
   "no1p_K_S": {
     "id": "no1p_K_S",
-    "parent": "k9ql",
+    "parent": "holder2",
     "deck": "no1pD",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1038
+    "z": 5,
+    "activeFace": 1,
+    "x": 164,
+    "y": 4
   },
   "holder1": {
     "type": "holder",
@@ -1060,5 +1066,35 @@
     "width": 103,
     "height": 160,
     "id": "k9ql"
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770181607864,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "gameStartRoutine",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }

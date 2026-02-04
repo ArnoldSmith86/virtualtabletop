@@ -1,37 +1,4 @@
 {
-  "_meta": {
-    "version": 19,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
-    "info": {
-      "name": "Operations - Routines",
-      "image": "/assets/786542630_8010",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1770162707257,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "enterRoutine and leaveRoutine",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "8fr3": {
     "type": "label",
     "id": "8fr3",
@@ -224,6 +191,24 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J1",
+        "rankA": "J1",
+        "rankFixed": "J1 T"
+      },
+      "T 2J": {
+        "image": "/i/cards-default/2J.svg",
+        "suit": "T",
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "J2",
+        "rankA": "J2",
+        "rankFixed": "J2 T"
+      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -818,11 +803,11 @@
   },
   "7cyo_Q_C": {
     "id": "7cyo_Q_C",
+    "parent": "7cyoP",
     "deck": "7cyoD",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 9856,
-    "parent": "7cyoP"
+    "z": 9484
   },
   "7cyo_K_C": {
     "id": "7cyo_K_C",
@@ -842,11 +827,11 @@
   },
   "7cyo_2_D": {
     "id": "7cyo_2_D",
+    "parent": "7cyoP",
     "deck": "7cyoD",
     "type": "card",
     "cardType": "D 02",
-    "z": 9859,
-    "parent": "7cyoP"
+    "z": 9820
   },
   "7cyo_3_D": {
     "id": "7cyo_3_D",
@@ -1074,11 +1059,11 @@
   },
   "7cyo_5_S": {
     "id": "7cyo_5_S",
+    "parent": "7cyoP",
     "deck": "7cyoD",
     "type": "card",
     "cardType": "S 05",
-    "z": 9853,
-    "parent": "7cyoP"
+    "z": 9400
   },
   "7cyo_6_S": {
     "id": "7cyo_6_S",
@@ -1201,7 +1186,8 @@
       },
       {
         "note": "Count the group of cards selected in the previous steps.",
-        "func": "COUNT"
+        "func": "COUNT",
+        "holder": "${DEFAULT}"
       },
       {
         "note": "Set the value of the text (can be done through the LABEL function or by setting the text property) to the COUNT variable.",
@@ -1226,7 +1212,8 @@
         "value": "y5uf"
       },
       {
-        "func": "COUNT"
+        "func": "COUNT",
+        "holder": "${DEFAULT}"
       },
       {
         "func": "LABEL",
@@ -1267,5 +1254,38 @@
     "text": "The button below demonstrates how enterRoutine and leaveRoutine work when not using a holder. Press the button to make the pawn a child widget of the checker. The pawn will move slightly. The enterRoutine in the checker will cause it to flip. Then either drag the pawn, which will cause it to lose its parent, or click the button again. The leaveRoutine makes the checker flip again.",
     "movable": false,
     "height": 130
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770181607862,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "enterRoutine and leaveRoutine",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }

@@ -966,39 +966,6 @@
     },
     "scale": 0.88
   },
-  "_meta": {
-    "version": 19,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
-    "info": {
-      "name": "Operations - Routines",
-      "image": "/assets/786542630_8010",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1770162707259,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "changeRoutine",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "fl9q": {
     "type": "button",
     "clickRoutine": [],
@@ -1296,7 +1263,6 @@
     "y": 100,
     "z": 802,
     "changeRoutine": [
-      "// Use xMin to set the left limit of the travel of the slider.  This will depend on where the slider is on the board.  Use xRange to set how far the slider can travel.  In this case, it is 120 so the scale will max out at 1.2.  Use yLock at the y coordinate on which the slider will travel to prevent it from moving up or down.",
       {
         "Note": "Choose the things you want to change the scale on. For this example, it is the holder containing the chess board and pieces",
         "func": "SELECT",
@@ -1365,6 +1331,7 @@
     "yLock": 100,
     "xMin": 5,
     "xRange": 120,
+    "xMin Note": "Use xMin to set the left limit of the travel of the slider.  This will depend on where the slider is on the board.  Use xRange to set how far the slider can travel.  In this case, it is 120 so the scale will max out at 1.2.  Use yLock at the y coordinate on which the slider will travel to prevent it from moving up or down.",
     "x": 93
   },
   "slidebutton": {
@@ -1374,7 +1341,6 @@
     "z": 845,
     "movable": true,
     "changeRoutine": [
-      "// Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 360 so the setting will go from 0 to 360.",
       {
         "Note": "Choose the things you want to change.",
         "func": "SELECT",
@@ -1450,6 +1416,7 @@
     ],
     "xLock": 1500,
     "x": 1500,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 360 so the setting will go from 0 to 360.",
     "yMin": 100,
     "yRange": 360,
     "text": "Rotation"
@@ -1459,7 +1426,6 @@
     "y": 628,
     "z": 859,
     "changeRoutine": [
-      "// Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 359 so the setting will go from 0 to 359.",
       {
         "Note": "Choose the things you want to change.",
         "func": "SELECT",
@@ -1528,6 +1494,7 @@
     "width": 100,
     "height": 100,
     "xLock": 45,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 359 so the setting will go from 0 to 359.",
     "yMin": 400,
     "yRange": 359,
     "text": "Hue"
@@ -1608,7 +1575,6 @@
     "y": 490,
     "z": 850,
     "changeRoutine": [
-      "// Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0% to 100%.",
       {
         "Note": "Choose the things you want to change.",
         "func": "SELECT",
@@ -1679,14 +1645,14 @@
     "text": "Sat",
     "yMin": 400,
     "yRange": 100,
-    "xLock": 195
+    "xLock": 195,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0% to 100%."
   },
   "pv2t": {
     "type": "button",
     "y": 587,
     "z": 860,
     "changeRoutine": [
-      "// Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0% to 100%.",
       {
         "Note": "Choose the things you want to change.",
         "func": "SELECT",
@@ -1755,6 +1721,7 @@
     "css": "border-color:transparent;background-color:transparent;border-radius:0",
     "image": "/assets/1502865726_277",
     "xLock": 195,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0% to 100%.",
     "yMin": 540,
     "yRange": 100,
     "text": "Light"
@@ -1763,7 +1730,6 @@
     "type": "button",
     "z": 858,
     "changeRoutine": [
-      "// Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0.0 to 1.0.",
       {
         "Note": "Choose the things you want to change.",
         "func": "SELECT",
@@ -1834,6 +1800,7 @@
     "width": 100,
     "y": 780,
     "xLock": 195,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 100 so the setting will go from 0.0 to 1.0.",
     "yMin": 680,
     "yRange": 100,
     "text": "Alpha"
@@ -1960,7 +1927,6 @@
     "z": 823,
     "movable": true,
     "changeRoutine": [
-      "// Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 360 so the setting will go from 0 to 360.",
       {
         "Note": "Choose the things you want to change.",
         "func": "SELECT",
@@ -2036,6 +2002,7 @@
     ],
     "xLock": 1500,
     "x": 1500,
+    "xLock Note": "Use xLock at the x coordinate on which the slider will travel to prevent it from moving left or right. Use yMin to set the upper limit of the travel of the slider.  This will depend on where the slider is on the board.  Use yRange to set how far the slider can travel.  In this case, it is 360 so the setting will go from 0 to 360.",
     "yMin": 550,
     "yRange": 360,
     "text": "Rot. w/ Grid & Click",
@@ -2130,5 +2097,48 @@
         ]
       }
     ]
+  },
+  "mwwg": {
+    "type": null,
+    "id": "mwwg",
+    "x": null,
+    "y": null,
+    "width": null,
+    "height": null,
+    "movable": null,
+    "movableInEdit": null
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770181607863,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "changeRoutine",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
