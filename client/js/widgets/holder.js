@@ -10,6 +10,7 @@ class Holder extends ImageWidget {
       movable: false,
       layer: -3,
       typeClasses: 'widget holder',
+      color: 'white',
 
       dropTarget: { type: 'card' },
       dropOffsetX: 4,
@@ -70,11 +71,17 @@ class Holder extends ImageWidget {
   }
 
   css() {
-    return this.base.css.call(this);
+    let css = this.base.css.call(this);
+    if(!legacyMode('disableHolderImageWidget'))
+      css += '; --bgColor: ' + this.get('color');
+    return css;
   }
 
   cssProperties() {
-    return this.base.cssProperties.call(this);
+    const p = this.base.cssProperties.call(this);
+    if(!legacyMode('disableHolderImageWidget'))
+      p.push('color');
+    return p;
   }
 
   async dispenseCard(card) {
