@@ -1,0 +1,4436 @@
+{
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Card transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}\n"
+    },
+    "info": {
+      "name": "Tatakai",
+      "image": "/assets/-1445258460_48140",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/180901/joraku",
+      "year": "2015",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "<div>Card design available in VTT. History logging technique developed by Johnathan Cox. All other layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "importerTime": 1766766964207,
+      "lastUpdate": 1767230780255,
+      "importer": "TTS",
+      "showName": true,
+      "skill": "",
+      "description": "Tatakai (戦い) is Japanese for fight or battle. In this trick-taking, area control game use skillful card play to play and move tokens to control the most valuable areas on the map.",
+      "similarImage": "",
+      "similarName": "Joraku",
+      "similarDesigner": "Iori Tsukinami",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "Players sit in seats. Press restart button in lower right to deal cards and begin. Player meeples are randomly distributed in areas 1-6 on the board. The turn indicator starts with the player that has the meeple in the highest numbered area.<div><br></div><div>Choose 2 cards to pass, flip them upside down, and drag them to the holder above the seat of the player to your right (play moves from left to right).</div><div><br></div><div>Double click a card to play it then manually resolve the card's effects. Hover over the Rounds, Cards, and Tricks buttons to see player aids.</div><div><br></div><div>The winner of the trick presses the hand icon to take the trick and move the turn indicator. The history log will calculate the influence points for each player in the trick winner's area, but not the ranking or victory points. Manually add victory points to the score counters above each seat.</div><div><br></div><div>During the last trick of a round, pressing the hand icon will calculate the influence points for each player in each area, but not ranking or victory points. Manually add victory points. The current round's row is highlighted in black in each area's score chart.</div><div><br></div><div>Press the scroll icon to see the full history log in reverse chronological order.</div><div><br></div><div>To use the rule variations, click on the small dice button above the hand to randomly select 2 rules. Click the rules cards to cycle through the 6 available options.</div><div><br></div><div>You can manually adjust the turn indicator by using the play icon to the left of the hand. You can sort just your cards by clicking on the sort button to the left of the hand.</div><div><br></div><div>After a round, press the next round indicator button which shows I, II, or III.</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "3-4"
+    }
+  },
+  "cardDeck": {
+    "type": "deck",
+    "id": "cardDeck",
+    "cardDefaults": {
+      "outline": "<path stroke=\"#1f1f1f\" stroke-width=\"5\" ",
+      "classes": "transitions",
+      "layer": 3,
+      "doubleClickRoutine": [
+        "var swap = 'swapButton' + ${seatIndex}",
+        {
+          "func": "COUNT",
+          "holder": [
+            "seatHolder${seatIndex}"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${COUNT}",
+          "relation": "<",
+          "operand2": 1,
+          "thenRoutine": [
+            {
+              "func": "MOVE",
+              "collection": [
+                "${PROPERTY id}"
+              ],
+              "to": "seatHolder${seatIndex}"
+            }
+          ]
+        }
+      ]
+    },
+    "cardTypes": {
+      "axe0": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 0
+      },
+      "axe1": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 1
+      },
+      "axe2": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 2
+      },
+      "axe3": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 3
+      },
+      "axe4": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 4
+      },
+      "axe5": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 5
+      },
+      "axe6": {
+        "suit": "/i/game-icons.net/delapouite/sharp-axe.svg",
+        "suitColor": "#255196",
+        "rank": 6
+      },
+      "knife0": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 0
+      },
+      "knife1": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 1
+      },
+      "knife2": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 2
+      },
+      "knife3": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 3
+      },
+      "knife4": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 4
+      },
+      "knife5": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 5
+      },
+      "knife6": {
+        "suit": "/i/game-icons.net/skoll/bowie-knife.svg",
+        "suitColor": "#bd0000",
+        "rank": 6
+      },
+      "sword0": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 0
+      },
+      "sword1": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 1
+      },
+      "sword2": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 2
+      },
+      "sword3": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 3
+      },
+      "sword4": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 4
+      },
+      "sword5": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 5
+      },
+      "sword6": {
+        "suit": "/i/game-icons.net/skoll/stiletto.svg",
+        "suitColor": "#ac6200",
+        "rank": 6
+      }
+    },
+    "faceTemplates": [
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "#fff"
+          },
+          {
+            "type": "image",
+            "x": 5,
+            "y": 5,
+            "width": 93,
+            "height": 150,
+            "css": "border-radius:10px; background: linear-gradient(90deg, rgba(213,94,0,1) 14.3%, rgba(230,159,0,1) 14.4%, rgba(230,159,0,1) 28.6%, rgba(240,228,66,1) 28.7%, rgba(240,228,66,1) 42.8%, rgba(0,158,155,1) 42.9%, rgba(0,141,164,1) 57.1%, rgba(0,114,178,1) 57.2%, rgba(0,114,178,1) 71.4%, rgba(86,180,233,1) 71.5%, rgba(86,180,233,1) 85.7%, rgba(204,121,167,1) 85.8%, rgba(204,121,167,1) 100%);"
+          }
+        ],
+        "border": 1
+      },
+      {
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "#fff"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            },
+            "css": "border-radius:7px"
+          },
+          {
+            "type": "image",
+            "x": 21.5,
+            "y": 50,
+            "width": 60,
+            "height": 60,
+            "color": "#fff",
+            "css": "border-radius:100%; border:1px solid #444; background-size: 80%",
+            "dynamicProperties": {
+              "value": "suit"
+            },
+            "svgReplaces": {
+              "#000": "suitColor",
+              "<path ": "outline"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 2,
+            "textAlign": "center",
+            "width": 30,
+            "height": 30,
+            "fontSize": 25,
+            "color": "black",
+            "dynamicProperties": {
+              "value": "rank"
+            },
+            "css": "font-weight: bold !important; display: flex;justify-content: center; align-items: center;text-align: center;  border:1px solid black; border-radius:5px; background-color: #fff; letter-spacing: -1px"
+          },
+          {
+            "type": "text",
+            "x": 70,
+            "y": 127,
+            "textAlign": "center",
+            "width": 30,
+            "height": 30,
+            "fontSize": 25,
+            "color": "black",
+            "dynamicProperties": {
+              "value": "rank"
+            },
+            "css": "font-weight: bold !important; display: flex;justify-content: center; align-items: center;text-align: center;  border:1px solid black; border-radius:5px; background-color: #fff; letter-spacing: -1px",
+            "rotation": 0
+          }
+        ],
+        "border": 1
+      }
+    ],
+    "parent": "deckHolder"
+  },
+  "cardDeckRecall": {
+    "type": "button",
+    "id": "cardDeckRecall",
+    "parent": "deckHolder",
+    "fixedParent": true,
+    "y": 175,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      }
+    ],
+    "x": -3
+  },
+  "iwc8": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe2",
+    "id": "iwc8",
+    "parent": "9k37"
+  },
+  "seatArea1": {
+    "id": "seatArea1",
+    "width": 172,
+    "height": 48,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 895,
+    "x": 10,
+    "activeFace": 1
+  },
+  "pawnHolder1": {
+    "type": "holder",
+    "id": "pawnHolder1",
+    "parent": "seatArea1",
+    "fixedParent": true,
+    "y": 55,
+    "width": 170,
+    "height": 40,
+    "css": {
+      "background": "${PROPERTY bgColor}80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "pawn": 1
+    },
+    "stackOffsetX": 15,
+    "linkedToSeat": "seat1",
+    "movableInEdit": false,
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "widget": "holder0",
+        "routine": "historyRoutine",
+        "arguments": {
+          "thisContainsTokens": "${PROPERTY containsTokens}",
+          "thisBGColor": "${PROPERTY bgColor}",
+          "thisValue": "${PROPERTY value}",
+          "callerID": "${PROPERTY id}"
+        }
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "previousParent",
+        "value": "supply"
+      }
+    ],
+    "containsTokens": [
+      "pink1",
+      "pink2",
+      "pink3",
+      "pink4",
+      "pink5",
+      "pink6",
+      "pink7",
+      "pink8",
+      "pink9",
+      "pink10"
+    ],
+    "value": "supply",
+    "bgColor": "#c679a8"
+  },
+  "score1": {
+    "id": "score1",
+    "width": 65,
+    "height": 35,
+    "css": {
+      "background": "${PROPERTY color}",
+      "color": "${PROPERTY textColor}",
+      "font-size": "28px"
+    },
+    "parent": "seatArea1",
+    "y": -40,
+    "x": 54,
+    "fixedParent": true,
+    "color": "#c679a8",
+    "borderRadius": 8,
+    "textColor": "#ffffff",
+    "type": "label",
+    "editable": true,
+    "linkedToSeat": "seat1",
+    "text": 0,
+    "movableInEdit": false
+  },
+  "score1U": {
+    "type": "button",
+    "id": "score1U",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": 78,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "${PROPERTY textColor}",
+        "background": "${PROPERTY backgroundColor}",
+        "border": "3px solid ${PROPERTY borderColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY backgroundColor}80"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#c679a8",
+    "borderColor": "#ffffff"
+  },
+  "score1D": {
+    "type": "button",
+    "id": "score1D",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": -52,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "${PROPERTY textColor}",
+        "background": "${PROPERTY backgroundColor}",
+        "border": "3px solid ${PROPERTY borderColor}"
+      },
+      ":hover": {
+        "background": "${PROPERTY backgroundColor}80"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#c679a8",
+    "borderColor": "#ffffff"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "color": "#c679a8",
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(6)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "inUse": false,
+    "mainColor": "#c679a8",
+    "outlineColor": "#000000bb",
+    "staticColor": "#c679a8",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "// If you always want this seat to be a specific color, add a `staticColor` property wtih the hex color as the value",
+      "// If you want this seat to do other things, scroll all the way to the bottom and lock for comments about adding functions depending on whether the seat is being used or not. If you need functions that activate whenever there is a status change (being used or not), add those at the end of this clickRoutine.",
+      "// Check if another player is picking this seat",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY inUse}",
+        "thenRoutine": [
+          "// If another player is currently picking this seat, notify the play and end",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Pick another seat. Another player is getting this one ready."
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// If another player does not have the INPUT overlay on this seat active then flag it as active and CALL the routines needed to use the seat",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": true
+          },
+          {
+            "func": "DELAY"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateColorArrayRoutine",
+            "variable": "availableColors"
+          },
+          {
+            "func": "CALL",
+            "routine": "useSeatRoutine"
+          },
+          "// Update player color and name to match player's selections.",
+          "var playerColor = ${result.0}",
+          "var playerName = ${result.1}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "colorContrastRoutine": [
+      "// Use color functions to automatically adjust contrast for best visibility",
+      "var newText = colorContrast ${PROPERTY mainColor}",
+      "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "textColor",
+        "value": "${newText}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "glowColor",
+        "value": "${newGlow}"
+      }
+    ],
+    "doubleClickRoutine": [
+      "// A quick way to enter a seat with current playerName and random available color.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY inUse}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColors"
+              },
+              "var arrayLen = length ${availableColors}",
+              "var arrayLen = ${arrayLen} - 1",
+              "var random = randInt 0 ${arrayLen}",
+              "var arrayColor = ${availableColors} getIndex ${random}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var color = ${PROPERTY staticColor}"
+                ],
+                "elseRoutine": [
+                  "var color = ${arrayColor}"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${color}"
+              },
+              {
+                "func": "CALL",
+                "routine": "colorContrastRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${playerName}"
+              },
+              "var playerColor = ${color}"
+            ]
+          }
+        ]
+      }
+    ],
+    "updateColorArrayRoutine": [
+      "// Select all active seats except the current one and get color into an array.",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "value": "${PROPERTY id}",
+        "mode": "remove"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "aggregation": "array",
+        "variable": "seatColors"
+      },
+      "var result = ${PROPERTY colorArray}",
+      "// Remove colors used in other seats from the list of available colors for this player's overlay choices",
+      {
+        "func": "FOREACH",
+        "in": "${seatColors}",
+        "loopRoutine": [
+          "var isUsedIndex = ${result} indexOf ${value}",
+          "var result = ${isUsedIndex} remove 1"
+        ]
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY staticColor}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          "var color = ${PROPERTY staticColor}"
+        ],
+        "elseRoutine": [
+          "var color = ${PROPERTY color}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          "// If seat is empty, then prompt for name (and color if not static).",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${availableColors}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "// If seat is occupied by the player pressing the button, allow player to change name, color if not static, or get up from seat.",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name and choice of player color (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "palette",
+                        "label": "Your Color:",
+                        "colors": "${availableColors}",
+                        "variable": "color",
+                        "value": "${playerColor}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "// If seat is occupied by other than the player clicking, then confirm removal.",
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "// If player is leaving or getting kicked from seat, update color and player properties to empty values",
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "// Evaluate scenarios for what properties need to change",
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              "// Double check to make sure that another player has not chosen the same color if multiple seat INPUT overlays were open at the same time",
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColorsRecheck"
+              },
+              "var doubleCheck = ${availableColorsRecheck} indexOf ${color}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var doubleCheck = 99"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${doubleCheck}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "// Make updates to player color and name array for the return to the clickRoutine and SET the properties on this seat",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "color",
+                    "value": "${color}"
+                  },
+                  "var result = push ${color}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "player",
+                    "value": "${name}"
+                  },
+                  "var result = push ${name}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "mainColor",
+                    "value": "${result.0}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "colorContrastRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Choose again. That color was recently selected by another player."
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "inUse",
+                    "value": false
+                  },
+                  {
+                    "func": "CLICK",
+                    "collection": "thisButton"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          "// If there is anything else this seat needs to do after a player has left, add that here."
+        ],
+        "elseRoutine": [
+          "// If there is anything else this seat needs to do after it has been claimed, do that here."
+        ]
+      }
+    ],
+    "parent": "seatArea1",
+    "movableInEdit": false,
+    "glowColor": "#7a2d5c",
+    "vp": 0
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 1,
+    "clickable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "pink1": {
+    "id": "pink1",
+    "width": 36,
+    "height": 40,
+    "color": "#c679a8",
+    "css": "border-radius: 50%/35%;",
+    "image": "/i/game-pieces/3D/Cube-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "white",
+    "borderWidth": 1,
+    "pawn": 1,
+    "secondaryColor": "black",
+    "token": "cube",
+    "previousParent": "supply",
+    "parent": "pawnHolder1",
+    "points": 1,
+    "z": 10,
+    "x": 135
+  },
+  "seatArea2": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea2",
+    "x": 210,
+    "y": 895
+  },
+  "pawnHolder2": {
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "type": "holder",
+    "id": "pawnHolder2",
+    "parent": "seatArea2",
+    "dropTarget": {
+      "pawn": 2
+    },
+    "linkedToSeat": "seat2",
+    "containsTokens": [
+      "orange1",
+      "orange2",
+      "orange3",
+      "orange4",
+      "orange5",
+      "orange6",
+      "orange7",
+      "orange8",
+      "orange9",
+      "orange10"
+    ],
+    "bgColor": "#e09e00"
+  },
+  "score2": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score2",
+    "type": "label",
+    "parent": "seatArea2",
+    "linkedToSeat": "seat2",
+    "color": "#e09e00",
+    "text": 0
+  },
+  "score2U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score2U",
+    "parent": "score2",
+    "backgroundColor": "#e09e00"
+  },
+  "score2D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score2D",
+    "parent": "score2",
+    "backgroundColor": "#e09e00"
+  },
+  "seat2": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "parent": "seatArea2",
+    "staticColor": "#e09e00",
+    "inUse": false,
+    "color": "#e09e00",
+    "player": "",
+    "mainColor": "#e09e00",
+    "textColor": "#000000",
+    "glowColor": "#945200",
+    "vp": 0
+  },
+  "seatArea3": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea3",
+    "x": 410,
+    "y": 895
+  },
+  "pawnHolder3": {
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "type": "holder",
+    "id": "pawnHolder3",
+    "parent": "seatArea3",
+    "dropTarget": {
+      "pawn": 3
+    },
+    "linkedToSeat": "seat3",
+    "containsTokens": [
+      "green1",
+      "green2",
+      "green3",
+      "green4",
+      "green5",
+      "green6",
+      "green7",
+      "green8",
+      "green9",
+      "green10"
+    ],
+    "bgColor": "#319e72"
+  },
+  "score3": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score3",
+    "type": "label",
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3",
+    "color": "#319e72",
+    "text": 0
+  },
+  "score3U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score3U",
+    "parent": "score3",
+    "backgroundColor": "#319e72"
+  },
+  "score3D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score3D",
+    "parent": "score3",
+    "backgroundColor": "#319e72"
+  },
+  "seat3": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "parent": "seatArea3",
+    "staticColor": "#319e72",
+    "inUse": false,
+    "color": "#319e72",
+    "player": "",
+    "textColor": "#000000",
+    "mainColor": "#319e72",
+    "glowColor": "#005226",
+    "vp": 0
+  },
+  "seatArea4": {
+    "inheritFrom": {
+      "seatArea1": "*"
+    },
+    "id": "seatArea4",
+    "x": 610,
+    "y": 895
+  },
+  "pawnHolder4": {
+    "inheritFrom": {
+      "pawnHolder1": "*"
+    },
+    "type": "holder",
+    "id": "pawnHolder4",
+    "parent": "seatArea4",
+    "dropTarget": {
+      "pawn": 4
+    },
+    "linkedToSeat": "seat4",
+    "containsTokens": [
+      "blue1",
+      "blue2",
+      "blue3",
+      "blue4",
+      "blue5",
+      "blue6",
+      "blue7",
+      "blue8",
+      "blue9",
+      "blue10"
+    ],
+    "bgColor": "#66b5eb"
+  },
+  "score4": {
+    "inheritFrom": {
+      "score1": "*"
+    },
+    "id": "score4",
+    "type": "label",
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4",
+    "color": "#66b5eb",
+    "text": 0
+  },
+  "score4U": {
+    "inheritFrom": {
+      "score1U": "*"
+    },
+    "type": "button",
+    "id": "score4U",
+    "parent": "score4",
+    "backgroundColor": "#66b5eb"
+  },
+  "score4D": {
+    "inheritFrom": {
+      "score1D": "*"
+    },
+    "type": "button",
+    "id": "score4D",
+    "parent": "score4",
+    "backgroundColor": "#66b5eb"
+  },
+  "seat4": {
+    "inheritFrom": {
+      "seat1": "*"
+    },
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "parent": "seatArea4",
+    "staticColor": "#66b5eb",
+    "inUse": false,
+    "color": "#66b5eb",
+    "player": "",
+    "textColor": "#000000",
+    "mainColor": "#66b5eb",
+    "glowColor": "#1a699f",
+    "vp": 0
+  },
+  "orange1": {
+    "id": "orange1",
+    "x": 135,
+    "y": 0,
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "parent": "pawnHolder2",
+    "z": 10
+  },
+  "green1": {
+    "id": "green1",
+    "x": 135,
+    "y": 0,
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "parent": "pawnHolder3",
+    "z": 10
+  },
+  "blue1": {
+    "id": "blue1",
+    "x": 135,
+    "y": 0,
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 10,
+    "parent": "pawnHolder4"
+  },
+  "orange2": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange2",
+    "x": 105,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 8,
+    "parent": "pawnHolder2"
+  },
+  "orange3": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange3",
+    "x": 90,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 7,
+    "parent": "pawnHolder2"
+  },
+  "orange4": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange4",
+    "x": 75,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 6,
+    "parent": "pawnHolder2"
+  },
+  "orange5": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange5",
+    "x": 60,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 5,
+    "parent": "pawnHolder2"
+  },
+  "orange6": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange6",
+    "x": 45,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 4,
+    "parent": "pawnHolder2"
+  },
+  "orange7": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange7",
+    "x": 30,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 3,
+    "parent": "pawnHolder2"
+  },
+  "orange8": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange8",
+    "x": 15,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 2,
+    "parent": "pawnHolder2"
+  },
+  "orange9": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange9",
+    "x": 0,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "z": 1,
+    "parent": "pawnHolder2"
+  },
+  "orange10": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "orange10",
+    "x": 120,
+    "y": 0,
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "parent": "pawnHolder2",
+    "z": 9
+  },
+  "green2": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green2",
+    "x": 105,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 8,
+    "parent": "pawnHolder3"
+  },
+  "green3": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green3",
+    "x": 90,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 7,
+    "parent": "pawnHolder3"
+  },
+  "green4": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green4",
+    "x": 75,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 6,
+    "parent": "pawnHolder3"
+  },
+  "green5": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green5",
+    "x": 60,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 5,
+    "parent": "pawnHolder3"
+  },
+  "green6": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green6",
+    "x": 45,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 4,
+    "parent": "pawnHolder3"
+  },
+  "green7": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green7",
+    "x": 30,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 3,
+    "parent": "pawnHolder3"
+  },
+  "green8": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green8",
+    "x": 15,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 2,
+    "parent": "pawnHolder3"
+  },
+  "green9": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green9",
+    "x": 0,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "z": 1,
+    "parent": "pawnHolder3"
+  },
+  "green10": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "green10",
+    "x": 120,
+    "y": 0,
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "parent": "pawnHolder3",
+    "z": 9
+  },
+  "blue2": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue2",
+    "x": 105,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 8,
+    "parent": "pawnHolder4"
+  },
+  "blue3": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue3",
+    "x": 90,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 7,
+    "parent": "pawnHolder4"
+  },
+  "blue4": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue4",
+    "x": 75,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 6,
+    "parent": "pawnHolder4"
+  },
+  "blue5": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue5",
+    "x": 60,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 5,
+    "parent": "pawnHolder4"
+  },
+  "blue6": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue6",
+    "x": 45,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 4,
+    "parent": "pawnHolder4"
+  },
+  "blue7": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue7",
+    "x": 30,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 3,
+    "parent": "pawnHolder4"
+  },
+  "blue8": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue8",
+    "x": 15,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 2,
+    "parent": "pawnHolder4"
+  },
+  "blue9": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue9",
+    "x": 0,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 1,
+    "parent": "pawnHolder4"
+  },
+  "blue10": {
+    "inheritFrom": {
+      "pink1": "!parent"
+    },
+    "id": "blue10",
+    "x": 120,
+    "y": 0,
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "z": 9,
+    "parent": "pawnHolder4"
+  },
+  "pink2": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink2",
+    "x": 105,
+    "y": 0,
+    "previousParent": "supply",
+    "parent": "pawnHolder1",
+    "z": 8
+  },
+  "pink3": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink3",
+    "x": 90,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 7,
+    "parent": "pawnHolder1"
+  },
+  "pink4": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink4",
+    "x": 75,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 6,
+    "parent": "pawnHolder1"
+  },
+  "pink5": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink5",
+    "x": 60,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 5,
+    "parent": "pawnHolder1"
+  },
+  "pink6": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink6",
+    "x": 45,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 4,
+    "parent": "pawnHolder1"
+  },
+  "pink7": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink7",
+    "x": 30,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 3,
+    "parent": "pawnHolder1"
+  },
+  "pink8": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink8",
+    "x": 15,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 2,
+    "parent": "pawnHolder1"
+  },
+  "pink9": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink9",
+    "x": 0,
+    "y": 0,
+    "previousParent": "supply",
+    "z": 1,
+    "parent": "pawnHolder1"
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1525,
+    "y": 945,
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Reset'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-70px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Starting new game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "Cancel"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "cardDeckRecall"
+        ]
+      },
+      "var playerCount = length ${activeSeats}",
+      {
+        "func": "IF",
+        "operand1": "${playerCount}",
+        "operand2": 4,
+        "thenRoutine": [
+          "var cardCount = 5"
+        ],
+        "elseRoutine": [
+          "var cardCount = 6"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "pawnHolder${value}"
+            ],
+            "property": "containsTokens",
+            "value": []
+          },
+          {
+            "func": "SELECT",
+            "property": "pawn",
+            "value": "${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "pawnHolder${value}",
+            "count": "all"
+          },
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat${value}"
+            ],
+            "count": "${cardCount}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "swapButton${value}"
+            ],
+            "property": "display",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "score${value}"
+            ],
+            "property": "text",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          0,
+          6
+        ],
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "holder${value}"
+            ],
+            "property": "containsTokens",
+            "value": []
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "cardType"
+      },
+      {
+        "func": "RESET"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "roundButton"
+        ],
+        "property": "state",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "swapPlayers",
+        "value": 0
+      },
+      {
+        "func": "VAR",
+        "variables": {
+          "location": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      "var location = shuffle ${location}",
+      "var max = []",
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var thisSeat = 'seat' + ${value}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF $thisSeat}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "collection": [
+                  "meeple${value}"
+                ],
+                "to": "holder${location.$value}",
+                "count": 1
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "meeple${value}"
+                ],
+                "property": "x",
+                "value": 85
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "meeple${value}"
+                ],
+                "property": "y",
+                "value": 50
+              },
+              "var max = push ${location.$value}"
+            ]
+          }
+        ]
+      },
+      "var max = numericSort ${max}",
+      "var max = reverse ${max}",
+      "var first = ${max.0}",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder${first}"
+      },
+      {
+        "func": "GET",
+        "property": "pawn",
+        "variable": "index"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "seat${index}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "ruleVariations1",
+          "ruleVariations2"
+        ],
+        "property": "activeFace",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyLabel"
+        ],
+        "property": "html",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyBack"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span class='emRed'><b>----New Game Started----</b></span>"
+        }
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "GET",
+        "aggregation": "array",
+        "property": "index"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${index}",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "meeple${value}"
+            ],
+            "property": "parent"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "${parent}"
+            ],
+            "property": "value",
+            "variable": "area"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "holder${area}"
+            ],
+            "property": "bgColor",
+            "variable": "aColor"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "player"
+          },
+          {
+            "func": "GET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "color",
+            "variable": "pColor"
+          },
+          {
+            "func": "CALL",
+            "widget": "historyLabel",
+            "routine": "addendumRoutine",
+            "arguments": {
+              "addendum": "<span style='color:${pColor}'><b>${player}</b></span> starts in area <span style='color:${aColor}'>${area}</span>"
+            }
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span class='emBlack'>ALL PLAYERS: Swap 2 cards</span>"
+        }
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${index}"
+        ],
+        "property": "player"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${index}"
+        ],
+        "property": "color"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span style='color:${color}'><b>${player}</b></span> leads the 1st trick"
+        }
+      },
+      "// This is the only way I can figure out to get the cubes starting holders and properties they way they need to be",
+      {
+        "func": "CALL",
+        "routine": "fixCubesRoutine"
+      }
+    ],
+    "fixCubesRoutine": [
+      {
+        "func": "SELECT",
+        "property": "token",
+        "value": "cube"
+      },
+      {
+        "func": "SET",
+        "property": "previousParent",
+        "value": "supply"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pawnHolder1"
+        ],
+        "property": "containsTokens",
+        "value": [
+          "pink1",
+          "pink2",
+          "pink3",
+          "pink4",
+          "pink5",
+          "pink6",
+          "pink7",
+          "pink8",
+          "pink9",
+          "pink10"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pawnHolder2"
+        ],
+        "property": "containsTokens",
+        "value": [
+          "orange1",
+          "orange2",
+          "orange3",
+          "orange4",
+          "orange5",
+          "orange6",
+          "orange7",
+          "orange8",
+          "orange9",
+          "orange10"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pawnHolder3"
+        ],
+        "property": "containsTokens",
+        "value": [
+          "green1",
+          "green2",
+          "green3",
+          "green4",
+          "green5",
+          "green6",
+          "green7",
+          "green8",
+          "green9",
+          "green10"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "pawnHolder4"
+        ],
+        "property": "containsTokens",
+        "value": [
+          "blue1",
+          "blue2",
+          "blue3",
+          "blue4",
+          "blue5",
+          "blue6",
+          "blue7",
+          "blue8",
+          "blue9",
+          "blue10"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "pawnHolder1",
+          "pawnHolder2",
+          "pawnHolder3",
+          "pawnHolder4"
+        ],
+        "key": "id"
+      }
+    ],
+    "swapPlayers": 0
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 1635,
+    "y": 805,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "holder1": {
+    "inheritFrom": {
+      "holder0": "*"
+    },
+    "type": "holder",
+    "id": "holder1",
+    "x": 225,
+    "y": 0,
+    "bgColor": "#409997",
+    "parent": "holderBack",
+    "value": 1,
+    "containsTokens": []
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder0": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "x": 450,
+    "y": 0,
+    "bgColor": "#408035",
+    "parent": "holderBack",
+    "value": 2,
+    "containsTokens": []
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder0": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "x": 675,
+    "y": 0,
+    "bgColor": "#ab142f",
+    "parent": "holderBack",
+    "value": 3,
+    "containsTokens": []
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder0": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "x": 900,
+    "y": 0,
+    "bgColor": "#746700",
+    "parent": "holderBack",
+    "value": 4,
+    "containsTokens": []
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder0": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 1125,
+    "y": 0,
+    "bgColor": "#c24600",
+    "parent": "holderBack",
+    "value": 5,
+    "containsTokens": []
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder0": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 1350,
+    "y": 0,
+    "bgColor": "#6e706c",
+    "parent": "holderBack",
+    "value": 6,
+    "containsTokens": []
+  },
+  "holderBack": {
+    "id": "holderBack",
+    "x": 5,
+    "width": 1575,
+    "height": 600,
+    "layer": -3,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 45
+  },
+  "holderLabel1": {
+    "id": "holderLabel1",
+    "x": 92,
+    "y": -40,
+    "css": {
+      "background": "${PROPERTY bgColor}",
+      "font-size": "35px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "${PROPERTY fontColor}"
+    },
+    "width": 40,
+    "height": 40,
+    "bgColor": "#60198a",
+    "fontColor": "#ffffff",
+    "borderRadius": 6,
+    "parent": "holderBack",
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "text": 0
+  },
+  "holderLabel2": {
+    "inheritFrom": {
+      "holderLabel1": "*"
+    },
+    "id": "holderLabel2",
+    "x": 317,
+    "y": -40,
+    "bgColor": "#409997",
+    "text": 1
+  },
+  "holderLabel3": {
+    "inheritFrom": {
+      "holderLabel1": "*"
+    },
+    "id": "holderLabel3",
+    "x": 542,
+    "y": -40,
+    "bgColor": "#408035",
+    "text": 2
+  },
+  "holderLabel4": {
+    "inheritFrom": {
+      "holderLabel1": "*"
+    },
+    "id": "holderLabel4",
+    "x": 767,
+    "y": -40,
+    "bgColor": "#ab142f",
+    "text": 3
+  },
+  "holderLabel5": {
+    "inheritFrom": {
+      "holderLabel1": "*"
+    },
+    "id": "holderLabel5",
+    "x": 992,
+    "y": -40,
+    "bgColor": "#746700",
+    "text": 4
+  },
+  "holderLabel6": {
+    "inheritFrom": {
+      "holderLabel1": "*"
+    },
+    "id": "holderLabel6",
+    "x": 1217,
+    "y": -40,
+    "bgColor": "#c24600",
+    "text": 5
+  },
+  "holderLabel7": {
+    "inheritFrom": {
+      "holderLabel1": "*"
+    },
+    "id": "holderLabel7",
+    "x": 1442,
+    "y": -40,
+    "bgColor": "#6e706c",
+    "text": 6
+  },
+  "seatHolder1": {
+    "type": "holder",
+    "id": "seatHolder1",
+    "parent": "seatArea1",
+    "x": 31,
+    "y": -225,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "enterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "rank"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "suitColor"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "suit"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span style='color:${playerColor}'><b>${playerName}</b></span> played <span style='display:inline-block;width:1em;height:1em;vertical-align:middle;background-color:${suitColor};mask:url(${suit}) no-repeat center / contain'></span> <span style='color:${suitColor}'>${rank}</span>"
+        }
+      }
+    ]
+  },
+  "seatHolder2": {
+    "inheritFrom": {
+      "seatHolder1": "*"
+    },
+    "type": "holder",
+    "id": "seatHolder2",
+    "parent": "seatArea2",
+    "linkedToSeat": "seat2"
+  },
+  "seatHolder3": {
+    "inheritFrom": {
+      "seatHolder1": "*"
+    },
+    "type": "holder",
+    "id": "seatHolder3",
+    "parent": "seatArea3",
+    "linkedToSeat": "seat3"
+  },
+  "seatHolder4": {
+    "inheritFrom": {
+      "seatHolder1": "*"
+    },
+    "type": "holder",
+    "id": "seatHolder4",
+    "parent": "seatArea4",
+    "linkedToSeat": "seat4"
+  },
+  "takenHolder": {
+    "type": "holder",
+    "id": "takenHolder",
+    "x": 1628,
+    "y": 1048
+  },
+  "meeple1": {
+    "id": "meeple1",
+    "width": 56,
+    "height": 56,
+    "color": "#c679a8",
+    "css": "border-radius: 100% 100% 25% 25%; ",
+    "image": "i/game-pieces/3D/Meeple-3D.svg",
+    "linkedToSeat": "seat1",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 1,
+    "resetProperties": {
+      "parent": "seatArea1",
+      "x": 58,
+      "y": -105
+    },
+    "pawn": 1,
+    "token": "meeple",
+    "previousParent": "supply",
+    "x": 58,
+    "y": -105,
+    "layer": 3,
+    "points": 2,
+    "parent": "seatArea1"
+  },
+  "meeple2": {
+    "inheritFrom": {
+      "meeple1": "!parent"
+    },
+    "id": "meeple2",
+    "x": 58,
+    "y": -105,
+    "resetProperties": {
+      "parent": "seatArea2",
+      "x": 58,
+      "y": -105
+    },
+    "linkedToSeat": "seat2",
+    "color": "#e09e00",
+    "pawn": 2,
+    "previousParent": "supply",
+    "parent": "seatArea2"
+  },
+  "meeple4": {
+    "inheritFrom": {
+      "meeple1": "!parent"
+    },
+    "id": "meeple4",
+    "x": 58,
+    "y": -105,
+    "resetProperties": {
+      "parent": "seatArea4",
+      "x": 58,
+      "y": -105
+    },
+    "linkedToSeat": "seat4",
+    "color": "#66b5eb",
+    "pawn": 4,
+    "previousParent": "supply",
+    "parent": "seatArea4"
+  },
+  "swapHolder1": {
+    "type": "holder",
+    "id": "swapHolder1",
+    "x": 41,
+    "y": 1100
+  },
+  "swapHolder2": {
+    "inheritFrom": {
+      "swapHolder1": "*"
+    },
+    "type": "holder",
+    "id": "swapHolder2",
+    "x": 241,
+    "y": 1100
+  },
+  "swapHolder3": {
+    "inheritFrom": {
+      "swapHolder1": "*"
+    },
+    "type": "holder",
+    "id": "swapHolder3",
+    "x": 441,
+    "y": 1100
+  },
+  "swapHolder4": {
+    "inheritFrom": {
+      "swapHolder1": "*"
+    },
+    "type": "holder",
+    "id": "swapHolder4",
+    "x": 641,
+    "y": 1100
+  },
+  "holderScore0": {
+    "id": "holderScore0",
+    "y": 492,
+    "width": 150,
+    "height": 105,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "pointer-events": "none"
+      },
+      " table": {
+        "width": "100%",
+        "border-collapse": "collapse"
+      },
+      " th": {
+        "background-color": "#ffffff80"
+      },
+      " td": {
+        "text-align": "center"
+      },
+      " .rowActive th, .rowActive td": {
+        "background": "#000000",
+        "color": "#ffffff"
+      },
+      " .rowInactive th, .rowInactive td": {
+        "background": "#ffffff80",
+        "color": "#000000"
+      },
+      " .tableWrap": {
+        "border": "2px solid black",
+        "border-radius": "2px"
+      }
+    },
+    "html": "\n    <div class='tableWrap'>\n      <table>\n        <thead>\n          <tr>\n            <th></th>\n            <th>1st</th>\n            <th>2nd</th>\n            <th>3rd</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class='${PROPERTY row1Class}'>\n            <th>I</th>\n            <td>0</td>\n            <td>0</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row2Class}'>\n            <th>II</th>\n            <td>4</td>\n            <td>2</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row3Class}'>\n            <th>III</th>\n            <td>15</td>\n            <td>10</td>\n            <td>5</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  ",
+    "parent": "holderBack",
+    "x": 36,
+    "movable": false,
+    "movableInEdit": false,
+    "fixedParent": true,
+    "row1Class": "rowActive",
+    "row2Class": "rowInactive",
+    "row3Class": "rowInactive",
+    "layer": -2
+  },
+  "holderScore1": {
+    "id": "holderScore1",
+    "html": "\n    <div class='tableWrap'>\n      <table>\n        <thead>\n          <tr>\n            <th></th>\n            <th>1st</th>\n            <th>2nd</th>\n            <th>3rd</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class='${PROPERTY row1Class}'>\n            <th>I</th>\n            <td>2</td>\n            <td>0</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row2Class}'>\n            <th>II</th>\n            <td>5</td>\n            <td>3</td>\n            <td>2</td>\n          </tr>\n          <tr class='${PROPERTY row3Class}'>\n            <th>III</th>\n            <td>10</td>\n            <td>7</td>\n            <td>4</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  ",
+    "x": 261,
+    "inheritFrom": {
+      "holderScore0": [
+        "*"
+      ]
+    }
+  },
+  "holderScore2": {
+    "id": "holderScore2",
+    "html": "\n    <div class='tableWrap'>\n      <table>\n        <thead>\n          <tr>\n            <th></th>\n            <th>1st</th>\n            <th>2nd</th>\n            <th>3rd</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class='${PROPERTY row1Class}'>\n            <th>I</th>\n            <td>3</td>\n            <td>2</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row2Class}'>\n            <th>II</th>\n            <td>7</td>\n            <td>4</td>\n            <td>2</td>\n          </tr>\n          <tr class='${PROPERTY row3Class}'>\n            <th>III</th>\n            <td>7</td>\n            <td>4</td>\n            <td>2</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  ",
+    "x": 486,
+    "inheritFrom": {
+      "holderScore0": [
+        "*"
+      ]
+    }
+  },
+  "holderScore3": {
+    "id": "holderScore3",
+    "html": "\n    <div class='tableWrap'>\n      <table>\n        <thead>\n          <tr>\n            <th></th>\n            <th>1st</th>\n            <th>2nd</th>\n            <th>3rd</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class='${PROPERTY row1Class}'>\n            <th>I</th>\n            <td>4</td>\n            <td>2</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row2Class}'>\n            <th>II</th>\n            <td>5</td>\n            <td>3</td>\n            <td>2</td>\n          </tr>\n          <tr class='${PROPERTY row3Class}'>\n            <th>III</th>\n            <td>6</td>\n            <td>3</td>\n            <td>2</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  ",
+    "x": 711,
+    "inheritFrom": {
+      "holderScore0": [
+        "*"
+      ]
+    }
+  },
+  "holderScore4": {
+    "id": "holderScore4",
+    "html": "\n    <div class='tableWrap'>\n      <table>\n        <thead>\n          <tr>\n            <th></th>\n            <th>1st</th>\n            <th>2nd</th>\n            <th>3rd</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class='${PROPERTY row1Class}'>\n            <th>I</th>\n            <td>5</td>\n            <td>3</td>\n            <td>2</td>\n          </tr>\n          <tr class='${PROPERTY row2Class}'>\n            <th>II</th>\n            <td>4</td>\n            <td>2</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row3Class}'>\n            <th>III</th>\n            <td>3</td>\n            <td>2</td>\n            <td>0</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  ",
+    "x": 936,
+    "inheritFrom": {
+      "holderScore0": [
+        "*"
+      ]
+    }
+  },
+  "holderScore5": {
+    "id": "holderScore5",
+    "html": "\n    <div class='tableWrap'>\n    <table>\n      <thead>\n        <tr>\n          <th></th>\n          <th>1st</th>\n          <th>2nd</th>\n          <th>3rd</th>\n        </tr>\n      </thead>\n      <tbody>\n          <tr class='${PROPERTY row1Class}'>\n          <th>I</th>\n          <td>6</td>\n          <td>3</td>\n          <td>2</td>\n        </tr>\n          <tr class='${PROPERTY row2Class}'>\n          <th>II</th>\n          <td>3</td>\n          <td>2</td>\n          <td>0</td>\n        </tr>\n          <tr class='${PROPERTY row3Class}'>\n          <th>III</th>\n          <td>0</td>\n          <td>0</td>\n          <td>0</td>\n        </tr>\n      </tbody>\n    </table>\n    </div>\n  ",
+    "x": 1161,
+    "inheritFrom": {
+      "holderScore0": [
+        "*"
+      ]
+    }
+  },
+  "holderScore6": {
+    "id": "holderScore6",
+    "html": "\n    <div class='tableWrap'>\n      <table>\n        <thead>\n          <tr>\n            <th></th>\n            <th>1st</th>\n            <th>2nd</th>\n            <th>3rd</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr class='${PROPERTY row1Class}'>\n            <th>I</th>\n            <td>7</td>\n            <td>4</td>\n            <td>2</td>\n          </tr>\n          <tr class='${PROPERTY row2Class}'>\n            <th>II</th>\n            <td>0</td>\n            <td>0</td>\n            <td>0</td>\n          </tr>\n          <tr class='${PROPERTY row3Class}'>\n            <th>III</th>\n            <td>0</td>\n            <td>0</td>\n            <td>0</td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  ",
+    "x": 1386,
+    "inheritFrom": {
+      "holderScore0": [
+        "*"
+      ]
+    }
+  },
+  "takeButton": {
+    "type": "button",
+    "id": "takeButton",
+    "x": 795,
+    "y": 747,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "classes": "material-symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "39px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Trick'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "15px",
+        "margin-left": "5px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "pan_tool",
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "widget": "routines",
+        "routine": "endTrickRoutine"
+      },
+      {
+        "func": "COUNT",
+        "holder": "hand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "widget": "routines",
+            "routine": "endRoundRoutine"
+          }
+        ]
+      }
+    ]
+  },
+  "historyRecent": {
+    "id": "historyRecent",
+    "x": 1272,
+    "y": 645,
+    "width": 300,
+    "height": 165,
+    "borderRadius": 8,
+    "layer": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "activeFace": 0,
+    "css": {
+      "default": {
+        "background": "#ffffff",
+        "font-size": "16px",
+        "color": "black",
+        "overflow": "hidden",
+        "border": "2px solid black",
+        "padding": "2px",
+        "white-space": "pre-wrap"
+      },
+      " .emBlack": {
+        "background": "#222222",
+        "color": "#ffffff",
+        "padding": "0.15em 0.4em",
+        "border-radius": "0.4em",
+        "display": "inline-block"
+      },
+      " .emRed": {
+        "background": "#880000",
+        "color": "#ffffff",
+        "padding": "0.15em 0.4em",
+        "border-radius": "0.4em",
+        "display": "inline-block"
+      }
+    },
+    "inheritFrom": {
+      "historyLabel": [
+        "html"
+      ]
+    }
+  },
+  "historyButton": {
+    "type": "button",
+    "id": "historyButton",
+    "x": 1218,
+    "y": 647,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Full history'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "84px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": "(📜)",
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF historyBack}",
+      "var checkArray = ${visibleToSeats} isArray",
+      {
+        "func": "IF",
+        "condition": "${checkArray}",
+        "elseRoutine": [
+          "var visibleToSeats = []"
+        ]
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${seatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">",
+        "operand2": -1,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyBack"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ]
+  },
+  "historyBack": {
+    "id": "historyBack",
+    "x": 533,
+    "y": 231,
+    "width": 530,
+    "height": 455,
+    "borderRadius": 8,
+    "layer": 230,
+    "activeFace": 1,
+    "css": {
+      "default": {
+        "border": "5px solid white",
+        "color": "#000000",
+        "background": "#d0dfe8",
+        "font-size": "30px",
+        "text-align": "center"
+      }
+    },
+    "onlyVisibleForSeat": [],
+    "text": "Full History"
+  },
+  "historyLabel": {
+    "id": "historyLabel",
+    "parent": "historyBack",
+    "fixedParent": true,
+    "x": 10,
+    "y": 36,
+    "width": 510,
+    "height": 405,
+    "borderRadius": 4,
+    "layer": 5,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "overflow": "scroll",
+        "color": "#000000",
+        "background": "#ffffff",
+        "font-size": "16px",
+        "text-align": "left",
+        "white-space": "pre-wrap"
+      },
+      " .emBlack": {
+        "background": "#222222",
+        "color": "#ffffff",
+        "padding": "0.15em 0.4em",
+        "border-radius": "0.4em",
+        "display": "inline-block"
+      },
+      " .emRed": {
+        "background": "#880000",
+        "color": "#ffffff",
+        "padding": "0.15em 0.4em",
+        "border-radius": "0.4em",
+        "display": "inline-block"
+      }
+    },
+    "html": "",
+    "addendumRoutine": [
+      "var previousLedger = ${PROPERTY html}",
+      {
+        "func": "SET",
+        "property": "html",
+        "value": "${addendum}<br>${previousLedger}",
+        "collection": [
+          "${PROPERTY id}"
+        ]
+      }
+    ]
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 795,
+    "y": 847,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "39px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Turn'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${index}"
+        ],
+        "property": "player"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat${index}"
+        ],
+        "property": "color"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span style='color:${color}'><b>${player}</b></span>'s turn"
+        }
+      }
+    ]
+  },
+  "sortButton": {
+    "type": "button",
+    "id": "sortButton",
+    "x": 795,
+    "y": 947,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 8,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "39px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Sort hand\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "[sort_ascending]",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "hand"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "owner",
+        "value": "${playerName}"
+      },
+      {
+        "func": "SORT",
+        "collection": "DEFAULT",
+        "key": "cardType"
+      }
+    ]
+  },
+  "aidDeck": {
+    "type": "deck",
+    "id": "aidDeck",
+    "x": 1833,
+    "y": 785,
+    "cardDefaults": {
+      "movable": false,
+      "movableInEdit": false,
+      "width": 100,
+      "height": 23,
+      "css": {
+        "default": {
+          "overflow": "visible !important",
+          "white-space": "collapse"
+        },
+        "#enlarged > .active": {
+          "display": "none"
+        },
+        "#enlarged > .cardFace:nth-child(2)": {
+          "display": "block"
+        },
+        " .rulesWrap": {
+          "border": "3px solid black",
+          "border-radius": "10px",
+          "overflow": "hidden",
+          "background": "#e7e2d7"
+        },
+        " .rulesTable": {
+          "width": "100%",
+          "border-collapse": "collapse"
+        },
+        " .rulesTable th": {
+          "border": "1px solid black",
+          "padding": "4px"
+        },
+        " .rulesTable td": {
+          "border": "1px solid black",
+          "padding": "4px",
+          "vertical-align": "top"
+        },
+        " .indentSpan": {
+          "display": "inline-block",
+          "margin-left": "16px"
+        }
+      },
+      "clickRoutine": []
+    },
+    "cardTypes": {
+      "rounds": {
+        "text": "Rounds",
+        "enlargeWidth": 600,
+        "enlargeHeight": 600,
+        "xValue": 212,
+        "yValue": -8,
+        "detail": "\n      <div class='rulesWrap'>\n        <table class='rulesTable'>\n          <tr>\n            <th colspan='2' style='text-align:center'>\n              Player Aid: Rounds\n            </th>\n          </tr>\n          <tr>\n            <td><b>Set Up</b></td>\n            <td>1. Deal cards.<br>2. Pass 2 cards to the right.</td>\n          </tr>\n          <tr>\n            <td><b>Play Cards</b></td>\n            <td>\n              1. Each player in turn (from L to R) plays a card.\n              <br>\n              <span class='indentSpan'><i>Must follow starting suit if possible.<br>Immediately resolve its effects. (See <b>Cards</b> player aid)</i></span>\n              <br>\n              2. Determine trick winner.\n              <br>\n              <span class='indentSpan'><i>Highest value wins; color does not matter. Later played card wins tie.<br>0 wins if 6 is played.</i></span>\n              <br>\n              3. Calculate trick winner Victory Points (VP). (See <b>Tricks</b> player aid)\n              <br>\n              <span class='indentSpan'><i>This player starts next trick.</i></span>\n              <br>\n              4. Repeat steps 1-3 until all hand cards have been played.\n            </td>\n          </tr>\n          <tr>\n            <td><b>Score</b></td>\n            <td>\n              Calculate VP for each player.\n              <br>\n              <span class='indentSpan'><i>1. Start with area 6 on the map and work to the left.<br>2. Determine each player's influence and rank them.<br>3. In case of tie, each tied player gets lower rank.<br>4. Each <b>meeple = 2</b> influence points. Each <b>cube = 1</b> influence point.<br>5. Use chart in each area corresponding to the current round.</i></span>\n              <br>\n              Start new round. Repeat until 3 rounds have been completed.\n            </td>\n          </tr>\n        </table>\n      </div>\n    "
+      },
+      "cards": {
+        "text": "Cards",
+        "enlargeWidth": 500,
+        "enlargeHeight": 600,
+        "xValue": 364,
+        "yValue": 115,
+        "detail": "\n        <div class='rulesWrap'>\n          <table class='rulesTable'>\n            <tr>\n              <th colspan='2' style='text-align:center'>\n                Player Aid: Card Effects\n              </th>\n            </tr>\n            <tr>\n              <td><b>0</b></td>\n              <td>\n                Move 0 - 3 cubes from your supply to <b>any</b> area(s) on\n                the map.\n                <br>\n                <span class='indentSpan'><i>They can be moved to multiple different areas.</i></span>\n              </td>\n            </tr>\n            <tr>\n              <td><b>1<br>2<br>3<br>4<br>5<br>6</b></td>\n              <td>\n                <b>Choose either A or B:</b>\n                <br>\n                <span class='indentSpan'><i>A. Move 0 - 3 cubes from your supply to the area on the map with the number matching the card OR<br> B. Gain action points (AP) equal to the value of the card. Use them immediately as follows:</i></span>\n                <span class='indentSpan'><b>Action points:</b>\n                <br>\n                <span class='indentSpan'><u>2 AP</u>: Move your meeple to any adjacent area on the map.<br><u>1 AP</u>: Move 1 of your cubes to any adjacent area on the map.<br><u>1 AP</u>: Remove 1 cube of another player in the area that your meeple is in. Return the cube to the other player's supply.</span>\n              </td>\n            </tr>\n          </table>\n        </div>\n      "
+      },
+      "tricks": {
+        "text": "Tricks",
+        "enlargeWidth": 600,
+        "enlargeHeight": 600,
+        "xValue": 315,
+        "yValue": 191,
+        "detail": "\n        <div class='rulesWrap'>\n          <table class='rulesTable'>\n            <tr>\n              <th colspan='2' style='text-align:center'>\n                Player Aid: Tricks\n              </th>\n            </tr>\n            <tr>\n              <td><b>Ranking</b></td>\n              <td>\n                Look in map area where the meeple of the player that won the\n                trick is.\n                <br>\n                <span class='indentSpan'><i>1. Determine each player's influence and rank them.<br>2. In case of tie, each tied player gets lower rank.<br>3. Each <b>meeple = 2</b> influence points. Each <b>cube = 1</b> influence point.</i></span>\n              </td>\n            </tr>\n            <tr>\n              <td><b>Score</b></td>\n              <td>\n                Add points to each player's total before starting next trick:<br>\n                <span class='indentSpan'>\n                  <u>1st Place</u>: 3 VP\n                  <br>\n                  <u>2nd Place</u>: 2 VP\n                  <br>\n                  <u>3rd Place</u>: 1 VP\n                </span>\n              </td>\n            </tr>\n          </table>\n        </div>\n      "
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "properties": {
+          "enlarge": 1.5
+        },
+        "objects": [
+          {
+            "type": "text",
+            "x": 0,
+            "y": 0,
+            "css": "background-color:white; border: 2px solid black; border-radius:4px; text-align: center",
+            "dynamicProperties": {
+              "value": "text"
+            },
+            "width": 80,
+            "height": 23
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "html",
+            "dynamicProperties": {
+              "value": "detail",
+              "width": "enlargeWidth",
+              "height": "enlargeHeight",
+              "x": "xValue",
+              "y": "yValue"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "gfm2": {
+    "deck": "aidDeck",
+    "type": "card",
+    "cardType": "rounds",
+    "id": "gfm2",
+    "x": 897,
+    "y": 645
+  },
+  "cpay": {
+    "deck": "aidDeck",
+    "type": "card",
+    "cardType": "cards",
+    "id": "cpay",
+    "y": 645,
+    "x": 977
+  },
+  "w51o": {
+    "deck": "aidDeck",
+    "type": "card",
+    "cardType": "tricks",
+    "id": "w51o",
+    "x": 1057,
+    "y": 645
+  },
+  "randomRule": {
+    "type": "button",
+    "id": "randomRule",
+    "parent": "ruleVariations1",
+    "x": 160,
+    "y": 57,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 4,
+    "classes": "material-symbols-nofill",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "22px",
+        "border": "1px solid white",
+        "background": "#000000",
+        "opacity": "${PROPERTY opacity}",
+        "padding": "3px"
+      }
+    },
+    "text": "casino",
+    "clickRoutine": [
+      "var random1 = randInt 2 7",
+      "var random2 = randInt 0 5",
+      "var randomCheck = ${random2} + 2",
+      {
+        "func": "IF",
+        "operand1": "${random1}",
+        "operand2": "${randomCheck}",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": "thisButton"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "ruleVariations1"
+            ],
+            "property": "activeFace",
+            "value": "${random1}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "ruleVariations2"
+            ],
+            "property": "activeFace",
+            "value": "${random2}"
+          }
+        ]
+      }
+    ],
+    "opacity": 1,
+    "movableInEdit": false,
+    "fixedParent": true
+  },
+  "roundButton": {
+    "type": "button",
+    "id": "roundButton",
+    "x": 1525,
+    "y": 835,
+    "width": 50,
+    "height": 50,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "39px !important",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Round'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "70px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Starting new round ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will setup the board for the next round. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "Cancel"
+      },
+      "var newState = ${PROPERTY state} + 1",
+      "var stateMod = ${newState} % 3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "state",
+        "value": "${stateMod}"
+      }
+    ],
+    "state": 0,
+    "stateChangeRoutine": [
+      "var state = ${PROPERTY state}",
+      {
+        "func": "VAR",
+        "variables": {
+          "roman": [
+            "I",
+            "II",
+            "III"
+          ]
+        }
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${roman.$state}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holderScore0"
+        ],
+        "property": "row1Class",
+        "value": "rowInactive"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holderScore0"
+        ],
+        "property": "row2Class",
+        "value": "rowInactive"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "holderScore0"
+        ],
+        "property": "row3Class",
+        "value": "rowInactive"
+      },
+      "var statePlus = ${state} + 1",
+      {
+        "func": "SET",
+        "collection": [
+          "holderScore0"
+        ],
+        "property": "row${statePlus}Class",
+        "value": "rowActive"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "cardDeckRecall"
+        ]
+      },
+      "var playerCount = length ${activeSeats}",
+      {
+        "func": "IF",
+        "operand1": "${playerCount}",
+        "operand2": 4,
+        "thenRoutine": [
+          "var cardCount = 5"
+        ],
+        "elseRoutine": [
+          "var cardCount = 6"
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat${value}"
+            ],
+            "count": "${cardCount}"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "swapButton${value}"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "cardType"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span class='emRed'><b>----Starting Round ${PROPERTY text}----</b></span>"
+        }
+      }
+    ],
+    "text": "I"
+  },
+  "pink10": {
+    "inheritFrom": {
+      "pink1": [
+        "!parent"
+      ]
+    },
+    "id": "pink10",
+    "x": 120,
+    "y": 0,
+    "previousParent": "supply",
+    "parent": "pawnHolder1",
+    "z": 9
+  },
+  "meeple3": {
+    "inheritFrom": {
+      "meeple1": "!parent"
+    },
+    "id": "meeple3",
+    "x": 58,
+    "y": -105,
+    "resetProperties": {
+      "parent": "seatArea3",
+      "x": 58,
+      "y": -105
+    },
+    "linkedToSeat": "seat3",
+    "color": "#319e72",
+    "pawn": 3,
+    "previousParent": "supply",
+    "parent": "seatArea3"
+  },
+  "holder0": {
+    "type": "holder",
+    "id": "holder0",
+    "css": {
+      "background": "${PROPERTY bgColor}60",
+      "border": "2px solid black"
+    },
+    "height": 600,
+    "width": 225,
+    "borderRadius": 12,
+    "bgColor": "#60198a",
+    "parent": "holderBack",
+    "movableInEdit": false,
+    "alignChildren": false,
+    "dropTarget": [
+      {
+        "token": "cube"
+      },
+      {
+        "token": "meeple"
+      }
+    ],
+    "fixedParent": true,
+    "value": 0,
+    "containsTokens": [],
+    "enterRoutine": [
+      {
+        "func": "CALL",
+        "routine": "historyRoutine",
+        "arguments": {
+          "thisContainsTokens": "${PROPERTY containsTokens}",
+          "thisBGColor": "${PROPERTY bgColor}",
+          "thisValue": "${PROPERTY value}",
+          "callerID": "${PROPERTY id}"
+        }
+      }
+    ],
+    "historyRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "color"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "previousParent"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "id"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "image"
+      },
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "pawn"
+      },
+      "var isPresent = ${thisContainsTokens} includes ${id}",
+      {
+        "func": "IF",
+        "operand1": "${isPresent}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${previousParent}",
+            "operand2": "supply",
+            "thenRoutine": [
+              "var oldColor = ${color}",
+              "var previousHolder = 'pawnHolder' + ${pawn}"
+            ],
+            "elseRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "holder${previousParent}"
+                ],
+                "property": "bgColor",
+                "variable": "oldColor"
+              },
+              "var previousHolder = 'holder' + ${previousParent}"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${image}",
+            "operand2": "/i/game-pieces/3D/Cube-3D.svg",
+            "thenRoutine": [
+              "var image = '/i/game-icons.net/delapouite/cube.svg'"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${image}",
+            "operand2": "i/game-pieces/3D/Meeple-3D.svg",
+            "thenRoutine": [
+              "var image = '/i/game-icons.net/delapouite/3d-meeple.svg'"
+            ]
+          },
+          {
+            "func": "CALL",
+            "widget": "historyLabel",
+            "routine": "addendumRoutine",
+            "arguments": {
+              "addendum": "<span style='color:${playerColor}'><b>${playerName}</b></span> moved <span style='display:inline-block;width:1em;height:1em;vertical-align:middle;background-color:${color};mask:url(${image}) no-repeat center / contain'></span> from <span style='color:${oldColor}'>${previousParent}</span> to <span style='color:${thisBGColor}'>${thisValue}</span>"
+            }
+          },
+          "var containsTokens = ${thisContainsTokens}",
+          "var containsTokens = push ${id}",
+          {
+            "func": "SET",
+            "collection": [
+              "${callerID}"
+            ],
+            "property": "containsTokens",
+            "value": "${containsTokens}"
+          },
+          "var previousArray = ${PROPERTY containsTokens OF $previousHolder}",
+          "var index = ${previousArray} indexOf ${id}",
+          "var previousArray = remove ${index} 1",
+          {
+            "func": "SET",
+            "collection": [
+              "${previousHolder}"
+            ],
+            "property": "containsTokens",
+            "value": "${previousArray}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "child",
+        "property": "previousParent",
+        "value": "${PROPERTY value}"
+      }
+    ]
+  },
+  "ches": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword2",
+    "id": "ches",
+    "parent": "9k37"
+  },
+  "pkvc": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe0",
+    "id": "pkvc",
+    "parent": "9k37"
+  },
+  "krrv": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe1",
+    "id": "krrv",
+    "parent": "9k37"
+  },
+  "trbu": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe3",
+    "id": "trbu",
+    "parent": "9k37"
+  },
+  "jr5s": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe4",
+    "id": "jr5s",
+    "parent": "9k37"
+  },
+  "w5tj": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe5",
+    "id": "w5tj",
+    "parent": "9k37"
+  },
+  "w17o": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "axe6",
+    "id": "w17o",
+    "parent": "9k37"
+  },
+  "oawh": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife0",
+    "id": "oawh",
+    "parent": "9k37"
+  },
+  "urme": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife1",
+    "id": "urme",
+    "parent": "9k37"
+  },
+  "z7aq": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife2",
+    "id": "z7aq",
+    "parent": "9k37"
+  },
+  "yllg": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife3",
+    "id": "yllg",
+    "parent": "9k37"
+  },
+  "zanr": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife4",
+    "id": "zanr",
+    "parent": "9k37"
+  },
+  "hhgg": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife5",
+    "id": "hhgg",
+    "parent": "9k37"
+  },
+  "cfrq": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "knife6",
+    "id": "cfrq",
+    "parent": "9k37"
+  },
+  "zrii": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword0",
+    "id": "zrii",
+    "parent": "9k37"
+  },
+  "hzqk": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword1",
+    "id": "hzqk",
+    "parent": "9k37"
+  },
+  "8t8r": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword3",
+    "id": "8t8r",
+    "parent": "9k37"
+  },
+  "wej9": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword4",
+    "id": "wej9",
+    "parent": "9k37"
+  },
+  "yl43": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword5",
+    "id": "yl43",
+    "parent": "9k37"
+  },
+  "aj2g": {
+    "deck": "cardDeck",
+    "type": "card",
+    "cardType": "sword6",
+    "id": "aj2g",
+    "parent": "9k37"
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 10,
+    "dropOffsetY": 14,
+    "stackOffsetX": 105,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 850,
+    "y": 820,
+    "width": 650,
+    "height": 180,
+    "id": "hand",
+    "css": {
+      "background": "#ffffff80"
+    },
+    "movableInEdit": false
+  },
+  "routines": {
+    "id": "routines",
+    "text": "Routines",
+    "css": {
+      "background": "white",
+      "color": "black"
+    },
+    "x": -232,
+    "y": 30,
+    "endRoundRoutine": [
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span class='emRed'>ALL PLAYERS: Round over. Score VP.</span>"
+        }
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          6,
+          0,
+          -1
+        ],
+        "loopRoutine": [
+          "var area = ${value}",
+          {
+            "func": "CALL",
+            "widget": "historyLabel",
+            "routine": "addendumRoutine",
+            "arguments": {
+              "addendum": "---------------"
+            }
+          },
+          {
+            "func": "SELECT",
+            "property": "token",
+            "relation": "!=",
+            "value": null,
+            "collection": "allMeeples"
+          },
+          {
+            "func": "SELECT",
+            "source": "allMeeples",
+            "property": "parent",
+            "value": "holder${area}",
+            "collection": "areaMeeples"
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "areaMeeples",
+                "property": "pawn",
+                "value": "${value}"
+              },
+              {
+                "func": "GET",
+                "aggregation": "sum",
+                "property": "points"
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "vp",
+                "value": "${points}"
+              }
+            ]
+          },
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "GET",
+            "property": "vp",
+            "aggregation": "array"
+          },
+          "var vp = numericSort ${vp}",
+          "var key = 0",
+          "var pos = 1",
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "type": "seat",
+                "property": "vp",
+                "value": "${vp.$key}"
+              },
+              {
+                "func": "GET",
+                "property": "player"
+              },
+              {
+                "func": "GET",
+                "property": "color"
+              },
+              {
+                "func": "GET",
+                "property": "id"
+              },
+              {
+                "func": "IF",
+                "operand1": "${vp.$key}",
+                "relation": ">",
+                "operand2": 0,
+                "thenRoutine": [
+                  {
+                    "func": "CALL",
+                    "widget": "historyLabel",
+                    "routine": "addendumRoutine",
+                    "arguments": {
+                      "addendum": "<span style='color:${color}'><b>${player}</b></span> = ${vp.$key} influence (Area ${area})"
+                    }
+                  }
+                ]
+              },
+              "var key = ${key} + 1",
+              {
+                "func": "SET",
+                "collection": [
+                  "${id}"
+                ],
+                "property": "vp",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "player"
+      },
+      {
+        "func": "GET",
+        "property": "color"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span style='color:${color}'><b>${player}</b></span> starts the next round"
+        }
+      }
+    ],
+    "endTrickRoutine": [
+      {
+        "func": "MOVE",
+        "from": [
+          "seatHolder1",
+          "seatHolder2",
+          "seatHolder3",
+          "seatHolder4"
+        ],
+        "to": "takenHolder",
+        "count": "all"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "${seatID}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "meeple${seatIndex}"
+      },
+      {
+        "func": "GET",
+        "property": "parent"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${parent}"
+        ],
+        "property": "value",
+        "variable": "area"
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span class='emBlack'>ALL PLAYERS: Score VP for area ${area}</span><br><span style='color:${playerColor}'><b>${playerName}</b></span> claimed the trick"
+        }
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var thisSeat = 'seat' + ${value}",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF $thisSeat}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "GET",
+                "collection": [
+                  "score${value}"
+                ],
+                "property": "text",
+                "variable": "thisScore"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "player"
+              },
+              {
+                "func": "GET",
+                "collection": [
+                  "seat${value}"
+                ],
+                "property": "color"
+              },
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "<span style='color:${color}'>${player}</span> <u>score before trick</u>: ${thisScore}"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "token",
+        "relation": "!=",
+        "value": null,
+        "collection": "allMeeples"
+      },
+      {
+        "func": "SELECT",
+        "source": "allMeeples",
+        "property": "parent",
+        "value": "holder${area}",
+        "collection": "areaMeeples"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "areaMeeples",
+            "property": "pawn",
+            "value": "${value}"
+          },
+          {
+            "func": "GET",
+            "aggregation": "sum",
+            "property": "points"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "seat${value}"
+            ],
+            "property": "vp",
+            "value": "${points}"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "GET",
+        "property": "vp",
+        "aggregation": "array"
+      },
+      "var vp = numericSort ${vp}",
+      "var key = 0",
+      "var pos = 1",
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "vp",
+            "value": "${vp.$key}"
+          },
+          {
+            "func": "GET",
+            "property": "player"
+          },
+          {
+            "func": "GET",
+            "property": "color"
+          },
+          {
+            "func": "GET",
+            "property": "id"
+          },
+          {
+            "func": "IF",
+            "operand1": "${vp.$key}",
+            "relation": ">",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "widget": "historyLabel",
+                "routine": "addendumRoutine",
+                "arguments": {
+                  "addendum": "<span style='color:${color}'><b>${player}</b></span> = ${vp.$key} influence"
+                }
+              }
+            ]
+          },
+          "var key = ${key} + 1",
+          {
+            "func": "SET",
+            "collection": [
+              "${id}"
+            ],
+            "property": "vp",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "historyLabel",
+        "routine": "addendumRoutine",
+        "arguments": {
+          "addendum": "<span style='color:${playerColor}'><b>${playerName}</b></span> starts the next trick"
+        }
+      }
+    ]
+  },
+  "ruleVariations1": {
+    "id": "ruleVariations1",
+    "x": 865,
+    "y": 675,
+    "width": 150,
+    "height": 138,
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "tan",
+        "font-size": "14px",
+        "opacity": "${PROPERTY opacity}",
+        "border": "1px solid black",
+        "padding": "0 2px 0 5px"
+      },
+      " h3": {
+        "margin": "0",
+        "padding": "0 2px 0 5px",
+        "text-align": "center"
+      }
+    },
+    "faces": [
+      {
+        "html": "<h3>Rule Variations</h3><br>Click to hide this widget or cycle through options. Click dice to select random rules variations."
+      },
+      {
+        "html": ""
+      },
+      {
+        "html": "<h3>Variation 1</h3><br>During end of round scoring, a player ranked 1st in the area where their meeple is gets VP equal to that number."
+      },
+      {
+        "html": "<h3>Variation 2</h3><br>When there is a tie for ranking in an area, players tie for the higher rank."
+      },
+      {
+        "html": "<h3>Variation 3</h3><br>The player that wins the trick uses the following scoring for victory points: <u>1st</u> (4 VP); <u>2nd</u> (2 VP); <u>3rd</u> (0 VP)."
+      },
+      {
+        "html": "<h3>Variation 4</h3><br>Once per game, when a player moves the meeple into the 0 area, they get VP equal to the value of their starting area."
+      },
+      {
+        "html": "<h3>Variation 5</h3><br>During a trick, every time a player follows the suit of the staring card, gain 2 VP."
+      },
+      {
+        "html": "<h3>Variation 6</h3><br>Moving the meeple only costs 1 action point instead of 2."
+      }
+    ],
+    "html": "<h3>Rule Variations</h3><br>Click to hide or cycle through options.",
+    "opacity": 1,
+    "activeFaceChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY activeFace}",
+        "operand2": 1,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": 0.4
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "randomRule"
+            ],
+            "property": "opacity",
+            "value": 0
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "ruleVariations2"
+            ],
+            "property": "opacity",
+            "value": 0
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "opacity",
+            "value": 1
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY activeFace}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "ruleVariations2"
+                ],
+                "property": "opacity",
+                "value": 0
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "randomRule"
+                ],
+                "property": "opacity",
+                "value": 1
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "opacity",
+                "value": 1
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "randomRule"
+                ],
+                "property": "opacity",
+                "value": 1
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "ruleVariations2"
+                ],
+                "property": "opacity",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ruleVariations2": {
+    "id": "ruleVariations2",
+    "width": 150,
+    "height": 138,
+    "borderRadius": 8,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "default": {
+        "background": "tan",
+        "font-size": "14px",
+        "opacity": "${PROPERTY opacity}",
+        "border": "1px solid black",
+        "padding": "0 2px 0 5px"
+      },
+      " h3": {
+        "margin": "0",
+        "padding": "0 2px 0 5px",
+        "text-align": "center"
+      }
+    },
+    "faces": [
+      {
+        "html": "<h3>Variation 1</h3><br>During end of round scoring, a player ranked 1st in the area where their meeple is gets VP equal to that number."
+      },
+      {
+        "html": "<h3>Variation 2</h3><br>When there is a tie for ranking in an area, players tie for the higher rank."
+      },
+      {
+        "html": "<h3>Variation 3</h3><br>The player that wins the trick uses the following scoring for victory points: <u>1st</u> (4 VP); <u>2nd</u> (2 VP); <u>3rd</u> (0 VP)."
+      },
+      {
+        "html": "<h3>Variation 4</h3><br>Once per game, when a player moves the meeple into the 0 area, they get VP equal to the value of their starting area."
+      },
+      {
+        "html": "<h3>Variation 5</h3><br>During a trick, every time a player follows the suit of the staring card, gain 2 VP."
+      },
+      {
+        "html": "<h3>Variation 6</h3><br>Moving the meeple only costs 1 action point instead of 2."
+      }
+    ],
+    "html": "<h3>Rule Variations</h3><br>Click to hide or cycle through options.",
+    "opacity": 0,
+    "parent": "ruleVariations1",
+    "x": 192
+  },
+  "librarySetupButton": {
+    "type": "button",
+    "id": "librarySetupButton",
+    "x": 921,
+    "y": 1157,
+    "text": "Save for PL",
+    "clickRoutine": [
+      "// Used to reset the same ready for the PL",
+      {
+        "func": "CLICK",
+        "collection": [
+          "restartButton"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "deck",
+        "value": "cardDeck",
+        "sortBy": {
+          "key": "cardType"
+        }
+      },
+      {
+        "func": "MOVE",
+        "to": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "historyLabel"
+        ],
+        "property": "html",
+        "value": ""
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "pawnHolder1",
+          "pawnHolder2",
+          "pawnHolder3",
+          "pawnHolder4"
+        ]
+      }
+    ]
+  },
+  "9k37": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "9k37"
+  }
+}

@@ -338,7 +338,8 @@
       "variant": "",
       "language": "en-US",
       "players": "2-4",
-      "similarDesigner": "Reiner Knizia"
+      "similarDesigner": "Reiner Knizia",
+      "usesAIImagery": true
     }
   },
   "vl5g": {

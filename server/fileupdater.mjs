@@ -1,4 +1,4 @@
-export const VERSION = 19;
+export const VERSION = 21;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -36,6 +36,9 @@ function computeGlobalProperties(state, v) {
         break;
     }
   }
+
+  v<20 && v20WhiteSpacePreWrapRoutineCheck(state, globalProperties);
+
   return globalProperties;
 }
 
@@ -71,7 +74,9 @@ function hasPropertyCondition(properties, condition) {
 
 function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
-  v<19 && v19DisableHolderImageWidget(meta, state);
+  v<19 && v19useIframeForHtmlCards(meta, state);
+
+  v<21 && v21DisableHolderImageWidget(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -106,6 +111,7 @@ function updateProperties(properties, v, globalProperties) {
   v<14 && v14HidePlayerCursors(properties);
   v<15 && v15SkipTurnProperty(properties);
   v<17 && v17MaterialSymbols(properties);
+  v<20 && v20WhiteSpacePreWrap(properties, globalProperties);
 }
 
 function updateRoutine(routine, v, globalProperties) {
@@ -517,7 +523,86 @@ function v18RoutineLegacyModes(meta, state) {
   }
 }
 
-function v19DisableHolderImageWidget(meta, state) {
+function v19useIframeForHtmlCards(meta, state) {
+  for(const widget of Object.values(state))
+    if(widget.type == 'deck' && Array.isArray(widget.faceTemplates))
+      for(const face of widget.faceTemplates)
+        if(Array.isArray(face.objects))
+          for(const object of face.objects)
+            if(object.type == 'html')
+              return meta.gameSettings.legacyModes.useIframeForHtmlCards = true;
+}
+
+function v20WhiteSpacePreWrapRoutineCheck(obj, globalProperties) {
+  // recursively check all objects in state to see if any SET operation sets html
+  if(Array.isArray(obj)) {
+    for(const operation of obj) {
+      if(v20WhiteSpacePreWrapRoutineCheck(operation, globalProperties))
+        return true;
+    }
+  }
+  if(typeof obj == 'object' && obj !== null) {
+    for(const subObj of Object.values(obj)) {
+      if(v20WhiteSpacePreWrapRoutineCheck(subObj, globalProperties))
+        return true;
+    }
+    if(obj.func == 'SET' && obj.property == 'html')
+      return globalProperties.v20WhiteSpacePreWrapForAllHtml = true;
+  }
+  return false;
+}
+
+function v20WhiteSpacePreWrap(properties, globalProperties) {
+  function hasMultipleWhitespaceOrNewline(str) {
+    return typeof str == 'string' && (/[\r\n]|\s{2,}/.test(str));
+  }
+
+  function cssHasWhiteSpace(css) {
+    if(typeof css == 'string')
+      return /\bwhite-space(-collapse)?\s*:/i.test(css);
+    if(isNestedCSS(css))
+      return cssHasWhiteSpace(css['']) || cssHasWhiteSpace(css['inline']) || cssHasWhiteSpace(css['default']);
+    if(typeof css == 'object' && css !== null)
+      return css['white-space'] || css['white-space-collapse'];
+    return false;
+  }
+
+  function isNestedCSS(css) {
+    if(typeof css == 'object' && css !== null)
+      for(const key in css)
+        if(typeof css[key] == 'object' && css[key] !== null)
+          return true;
+    return false;
+  }
+
+  function addWhiteSpacePreWrapToCss(css) {
+    if(!css)
+      return 'white-space: pre-wrap';
+    if(typeof css == 'string')
+      return `${css}; white-space: pre-wrap`;
+    if(isNestedCSS(css)) {
+      css['default'] = addWhiteSpacePreWrapToCss(css['default'] || {});
+      return css;
+    }
+    if(typeof css == 'object' && css !== null)
+      css['white-space'] = 'pre-wrap';
+    return css;
+  }
+
+  if(properties.type == 'deck' && Array.isArray(properties.faceTemplates))
+    for(const face of properties.faceTemplates)
+      if(Array.isArray(face.objects))
+        for(const object of face.objects)
+          if(object.type == 'html' && object.value && hasMultipleWhitespaceOrNewline(String(object.value)))
+            if(!cssHasWhiteSpace(object.css))
+              object.css = addWhiteSpacePreWrapToCss(object.css);
+
+  if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
+    properties.css = addWhiteSpacePreWrapToCss(properties.css);
+}
+
+
+function v21DisableHolderImageWidget(meta, state) {
   for(const id in state) {
     const properties = state[id];
     if(properties && properties.type == 'holder') {

@@ -328,3 +328,537 @@
   white-space: pre;
   display: inline-block;
 }
+
+/* widgets */
+
+@keyframes flash {
+  0% { background-color: rgba(0, 150, 255, 0.3); }
+  100% { background-color: transparent; }
+}
+
+.flash {
+  animation: flash 1s ease-out;
+}
+
+.editorModule.widgets .buttonBar {
+  position: relative;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.editorModule.widgets .buttonBar .actions {
+  flex-grow: 0;
+  display: flex;
+  align-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.editorModule .segmented-control button.active {
+  background:var(--VTTblueDark);
+  color:#fff;
+}
+
+.widgets.editorModule .buttonBar input[type=text]{
+  line-height: 33px;
+  padding: 0 5px;
+  border: 1px solid #0005;
+  border-radius: 5px;
+  padding-left: 25px;
+  margin: 0;
+}
+
+.widgets.editorModule .buttonBar .widgetFilerIcon {
+  font-family: "Material Symbols";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 34px;
+  width: 24px;
+  text-align: right;
+  line-height: 36px;
+}
+
+.widgets.editorModule .editing [icon=delete], .widgets.editorModule .editing [icon=download], .widgets.editorModule .editing [icon=upload] {
+  display: inline-block;
+}
+
+.widgets.editorModule [icon=delete], 
+.widgets.editorModule [icon=download], 
+.widgets.editorModule [icon=upload],
+.widgets.editorModule .editing [icon=add], 
+.widgets.editorModule .editing .widget-type {
+    display: none;
+}
+
+.widgets.editorModule li input {
+    pointer-events: none;
+    border: none;
+    font-weight: bold;
+    background: transparent;
+    padding: 2px 0;
+    color: var(--textColor);
+}
+
+.widgets.editorModule .editing li input {
+    pointer-events: auto;
+    border-bottom: 1px solid #ccc;
+    font-weight: normal;
+    background: transparent;
+    padding: 1px;
+}
+
+.widgets.editorModule .drag-handle {
+  display: none;
+  cursor: grab;
+  margin-right: 5px;
+}
+
+.widgets.editorModule .editing .drag-handle {
+  display: inline-block;
+}
+
+.widgets.editorModule li.dragging {
+  opacity: 0.5;
+}
+.widgets.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+.widgets.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+.widgets.editorModule li.drag-over {
+  background-color: var(--backgroundHighlightColor2);
+}
+
+.widgets.editorModule > ul {
+  border-top: 1px solid #ccc;
+}
+
+.widgets.editorModule .widget-group ul {
+  border-top: 0px none transparent;
+}
+
+.widgets.editorModule .widget-group + ul {
+  border-top: 3px double var(--textColor);
+}
+
+.widgets.editorModule ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widgets.editorModule li {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.widgets.editorModule li .widget-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.widgets.editorModule li .widget-info .widget-type {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.legend-text {
+  font-size: 0.9em;
+  margin-top: -1.5em;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg{
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0 0 0 3px;
+}
+
+.explainer-text svg, .legend-text svg{
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  margin: 0;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.hasRoutine, .widgets.editorModule .legend-text svg.hasRoutine{
+  fill: orange;
+}
+
+.widgets.editorModule li .widget-info .widget-type svg.isUnique, .widgets.editorModule .legend-text svg.isUnique{
+  fill: red;
+}
+
+.widgets.editorModule li .actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.widgets.editorModule #editWidgetsButton.active {
+  color: #ff0;
+  background: var(--VTTblueDark);
+}
+
+.widgets.editorModule .widget-label, .widgets.editorModule .preview-url-input {
+  display: none;
+}
+
+.widgets.editorModule .editing .widget-label, .widgets.editorModule .editing .preview-url-input {
+  display: flex;
+}
+
+.widget-label > span {
+  margin-bottom: -2px;
+}
+
+.widgets.editorModule .editing .unique-widget-label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 5px;
+  color: var(--textColor);
+  font-size: 0.9em;
+}
+
+.widget-list-container{
+  margin-bottom: 1em;
+}
+
+.widget-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--VTTblue);
+  color: white;
+  padding: 0 5px;
+  border-radius: 5px 5px 0 0;
+  min-height: 40px;
+}
+
+.collapsed .widget-list-header{
+  border-radius: 5px;
+}
+
+.widget-list-actions {
+  display: flex;
+  gap: 0px;
+}
+
+.sidebarButton.sort-widgets:hover {
+  background: var(--VTTblueDark) !important;
+}
+
+.widgets.editorModule li.readonly .unique-widget-label {
+  display: none;
+}
+
+.widgets.editorModule li.readonly input {
+  pointer-events: none;
+  border: none;
+}
+
+.sidebarButton {
+  position: relative;
+}
+
+.sidebarButton[icon] {
+  padding-right: 0px;
+}
+
+.sidebarButton span {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+  margin-bottom: 5px;
+  background: var(--VTTblueDark);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-transform: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.sidebarButton span::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--VTTblueDark) transparent transparent transparent;
+}
+
+.sidebarButton:hover span {
+  display: block;
+}
+
+.explainer-text {
+  padding: 10px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+body.darkMode .widget-group-header {
+    background: #666;
+}
+
+.widget-group-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.widget-group-header .group-name-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    color: var(--textColor);
+    padding: 0;
+    pointer-events: none;
+}
+
+.editing .widget-group-header .group-name-input {
+    pointer-events: auto;
+    border: 1px solid #ccc;
+    font-weight: normal;
+    padding: 1px;
+}
+
+.widget-group-header .collapse-arrow, .widget-list-header .collapse-arrow {
+    width: 1.2em;
+    height: 1em;
+    text-align: center;
+}
+
+.widget-list .new-group-drop-target {
+  border: 2px dashed lightgray;
+  color: lightgray;
+  padding: 20px;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 14px;
+  font-style: italic;
+  height: auto;
+}
+
+.widget-list .new-group-drop-target::before {
+  content: '+';
+  font-style: normal;
+}
+
+.widget-list .new-group-drop-target.drag-over {
+  background-color: var(--backgroundHighlightColor1);
+  color: white;
+}
+
+.widget-list-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.widget-list-container.collapsed .widget-list {
+  display: none;
+}
+
+.widget-list-header-text {
+  flex-grow: 1;
+}
+
+
+.editing .sort-control {
+  display: none;
+}
+
+.widget-list-actions {
+  margin: 3px 0;
+}
+
+div.widget-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px;
+}
+
+div.widget-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #222;
+  border-radius: 3px;
+  flex-basis: 100px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  height: 75px;
+  width: 75px;
+  max-width: 75px;
+}
+
+div.widget-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 0 0 2px white;
+  padding: 2px 5px;
+  box-sizing: border-box;
+  line-height: 1;
+  background-color: #fffb;
+  z-index: 1;
+  color: black;
+}
+
+.editorModule.widgets .widget-preview {
+  height: 75px;
+  width: 75px;
+  max-width: 75px;
+  background-color: #bbbbbb;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.editorModule.widgets .widget-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  height: 70px;
+  object-fit: contain;
+}
+
+.editorModule.widgets .add-to-room-grid {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  z-index: 2;
+}
+
+.segmented-control {
+  display: flex;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #fff5 #0005 #0005 #fff5;
+}
+
+.segmented-control button{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border-radius: 0;
+  border-left: 1px solid #fff5;
+  border-right: 1px solid #0005;
+  flex-basis: 33px;
+  min-width: 33px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 34px;
+}
+
+.segmented-control button::before {
+  margin: 0;
+}
+
+.segmented-control.sort-control button{
+  max-height: 32px;
+}
+
+.collapsed .sort-control {
+  display: none;
+}
+
+.segmented-control.sort-control .sort-label {
+  padding-top: 2px;
+  margin-bottom: -2px;
+}
+
+
+
+.segmented-control button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-left: none;
+}
+
+.segmented-control button:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-right: none;
+}
+
+.editing-widgets .widget-list li .widget-label {
+  display: block;
+  align-items: center;
+  font-size: 10px;
+  color: #888;
+  margin-right: 5px;
+}
+
+.widget-group {
+  margin-bottom: 10px;
+}
+
+.widget-group-header {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.widget-group-header .drag-handle {
+  width: 10px;
+  height: 20px;
+  margin-right: 5px;
+  cursor: move;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='20' viewBox='0 0 10 20'%3E%3Cpath d='M1,3 H9 M1,7 H9 M1,11 H9 M1,15 H9' stroke='%23888' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+.widget-group-header .collapse-arrow {
+  margin-right: 5px;
+}
+
+.widget-group-header .group-name-input {
+  flex-grow: 1;
+  border: none;
+  background: none;
+}
+
+.new-group-drop-target {
+  height: 30px;
+  border: 2px dashed #ccc;
+  margin-top: 10px;
+}
+
+.drag-over {
+  background-color: #f0f0f0;
+}

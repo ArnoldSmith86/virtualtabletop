@@ -33,7 +33,8 @@
       "players": "3-5",
       "language": "en-US",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   },
   "b862ca83-403a-4e81-b6ea-af0e7eda2b7b_decrementButton": {

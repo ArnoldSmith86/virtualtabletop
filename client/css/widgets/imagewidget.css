@@ -20,7 +20,7 @@
   max-width: var(--targetSize);
   font-size: var(--targetSize);
   color: var(--color);
-  transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation));
+  transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation)) scale(var(--flipX, 1), var(--flipY, 1));
   background-image: var(--image);
   opacity: var(--opacity, 1);
   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
@@ -58,6 +58,7 @@
 }
 
 .autoIconAlignFont {
+  background-image: none !important;
   font-family: "Material Symbols";
   font-weight: normal;
   line-height: 1;

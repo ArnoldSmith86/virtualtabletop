@@ -32,7 +32,10 @@ async function resolveStateCollections(file, callback) {
 }
 
 function selectVTTfile(callback) {
-  selectFile(false, file=>resolveStateCollections(file, callback));
+  selectFile(false, file=>resolveStateCollections(file, callback)).catch(e=>{
+    if(e.message !== 'File selection cancelled.')
+      alert(`Error: ${e.toString()}`);
+  });
 }
 
 function addStateFile(f) {
@@ -264,7 +267,8 @@ function updateLibraryFilter() {
     players:  $('#filterByPlayers').value,
     duration: $('#filterByDuration').value,
     language: $('#filterByLanguage').value,
-    mode:     $('#filterByMode').value
+    mode:     $('#filterByMode').value,
+    ai:       $('#filterByAi').value
   };
 
   function applyFilters(filters, callback) {
@@ -278,7 +282,8 @@ function updateLibraryFilter() {
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
         const modeMatch     = filters.mode     == 'Any' || dataset.modes.split(/[,;] */).indexOf(filters.mode) != -1;
-        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch);
+        const aiMatch       = filters.ai       == 'Any' || (filters.ai === 'ai') === (dataset.usesaiimagery === '1');
+        callback(dom, textMatch && typeMatch && playersMatch && durationMatch && languageMatch && modeMatch && aiMatch);
       }
     }
   }
@@ -459,6 +464,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 
     fillStateTileTitles(entry, state.name, state.similarName, state.savePlayers, state.saveDate);
 
+    const aiBadge = $('.ai-badge', entry);
+    if(aiBadge) {
+      toggleClass(aiBadge, 'hidden', !state.usesAIImagery);
+    }
+
     if(state.image) {
       const mappedURL = mapAssetURLs(state.image);
       if(loadedLibraryImages[mappedURL]) {
@@ -522,12 +532,17 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.year = state.year;
     entry.dataset.stars = state.stars;
     entry.dataset.timePlayed = state.timePlayed;
-    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers}`.toLowerCase();
+    const variantText = Object.values(state.variants || {}).map(v => {
+      const variant = v.plStateID && states[v.plStateID] ? states[v.plStateID].variants[v.plVariantID] : v;
+      return variant && variant.variant;
+    }).filter(Boolean).join(' ');
+    entry.dataset.text = `${state.name} ${state.similarName} ${state.description} ${state.similarDesigner} ${state.similarAwards} ${state.savePlayers} ${state.helpText} ${state.attribution} ${variantText}`.toLowerCase();
     entry.dataset.players = validPlayers.join();
     entry.dataset.lastUpdate = state.saveDate || state.lastUpdate || 0;
     entry.dataset.duration = String(state.time).replace(/.*[^0-9]/, '');
     entry.dataset.languages = validLanguages.join();
     entry.dataset.modes = state.mode;
+    entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
 
     if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
       entry.dataset.type = 'Tutorials';

@@ -354,7 +354,9 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
   let iconsHeight = height;
   let textWidth = width;
   let textHeight = height;
-  if(text) {
+  const hasText = text !== undefined && text !== null && text !== '';
+  const normalizedText = hasText ? String(text) : '';
+  if(hasText) {
     outerWrapper.classList.add('withText');
     if(width/height >= 2) {
       outerWrapper.classList.add('textRight');
@@ -362,14 +364,14 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       textWidth = width - iconsWidth
     } else {
       outerWrapper.classList.add('textBottom');
-      iconsHeight = iconsHeight / (text.indexOf('\n') != -1 ? 3 : 2);
+      iconsHeight = iconsHeight / (normalizedText.indexOf('\n') != -1 ? 3 : 2);
       textHeight = height - iconsHeight
     }
     wrapper.style.setProperty('--width', `${iconsWidth}px`);
     wrapper.style.setProperty('--height', `${iconsHeight}px`);
     $('.symbolText', outerWrapper).style.setProperty('--color', `${defaultColor}`);
     $('.symbolText', outerWrapper).style.setProperty('--hoverColor', `${defaultHoverColor}`);
-    setTextAndAdjustFontSize($('.symbolText', outerWrapper), text, textWidth, textHeight);
+    setTextAndAdjustFontSize($('.symbolText', outerWrapper), normalizedText, textWidth, textHeight);
   }
   const maxSize = optimalSquareSize(asArray(symbols).length, iconsWidth, iconsHeight);
 
@@ -388,6 +390,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     symbol = {
       name: symbol.name,
       scale: symbol.scale || 1,
+      flip: symbol.flip || "",
       offsetX: symbol.offsetX || 0,
       offsetY: symbol.offsetY || 0,
       rotation: symbol.rotation || 0,
@@ -427,6 +430,11 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       icon.style.setProperty('--image', `url("${image}")`);
       icon.style.setProperty('--hoverImage', `url("${hoverImage}")`);
     }
+    const flip = (symbol.flip || '').toString().toLowerCase();
+    const flipX = flip == 'horizontal' || flip == 'both' ? -1 : 1;
+    const flipY = flip == 'vertical'   || flip == 'both' ? -1 : 1;
+    icon.style.setProperty('--flipX', flipX);
+    icon.style.setProperty('--flipY', flipY);
     icon.style.setProperty('--scale', symbol.scale);
     icon.style.setProperty('--width', `${maxSize}px`);
     icon.style.setProperty('--height', `${maxSize}px`);

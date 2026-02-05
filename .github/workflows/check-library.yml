@@ -14,6 +14,8 @@ jobs:
           fetch-depth: 0
 
       - name: Check and fix asset file names
+        id: asset-names
+        continue-on-error: true
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -52,6 +54,52 @@ jobs:
             exit 1
           fi
 
+      - name: Check library images are square
+        id: square-images
+        continue-on-error: true
+        run: |
+          set +e
+          output=$(python3 -m pip install Pillow 2>&1)
+          if [ $? -ne 0 ]; then
+            echo "❌ Failed to install Pillow"
+            echo "$output"
+            exit 1
+          fi
+          found_non_square=false
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
+              image_path=$(python3 -c "import json, sys; data = json.load(open(sys.argv[1])); print(data.get('_meta', {}).get('info', {}).get('image', ''))" "$file")
+              if [[ -n "$image_path" ]] && [[ "$image_path" =~ ^/assets/ ]]; then
+                asset_name=$(basename "$image_path")
+                game_dir=$(dirname "$file")
+                asset_file="$game_dir/assets/$asset_name"
+                if [[ -f "$asset_file" ]]; then
+                  file_type=$(file -b "$asset_file")
+                  if [[ "$file_type" == *SVG* ]]; then
+                    dimensions=$(python3 .github/scripts/check_svg_square.py "$asset_file")
+                  else
+                    dimensions=$(python3 -c "import sys; from PIL import Image; img = Image.open(sys.argv[1]); print(f'{img.width}x{img.height}')" "$asset_file")
+                  fi
+                  if [ $? -eq 0 ]; then
+                    width=$(echo "$dimensions" | cut -d'x' -f1)
+                    height=$(echo "$dimensions" | cut -d'x' -f2)
+                    if [ "$width" != "$height" ]; then
+                      echo "❌ $file: library image $asset_file is not square (${width}x${height})"
+                      found_non_square=true
+                    else
+                      echo "✅ $file: library image $asset_file is square (${width}x${height})"
+                    fi
+                  fi
+                fi
+              fi
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          if [ "$found_non_square" = true ]; then
+            exit 1
+          else
+            exit 0
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -60,11 +108,29 @@ jobs:
       - name: Run validator on changed game files
         id: validate
         run: |
+          changed_files=()
+          while IFS= read -r file; do
+            if [[ "$file" =~ library/(games|tutorials)/.*\.json$ ]] && [[ -f "$file" ]]; then
+              changed_files+=("$file")
+            fi
+          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          
+          summary_only=false
+          [[ ${#changed_files[@]} -gt 10 ]] && summary_only=true
+          
           validation_output=""
           found_issues=false
           
-          while IFS= read -r file; do
-            if [[ "$file" =~ library/games/.*\.json$ ]] && [[ -f "$file" ]]; then
+          for file in "${changed_files[@]}"; do
+            if [ "$summary_only" = true ]; then
+              if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
+                echo "✅ $file - No issues found"
+                validation_output+="✅ \`$file\` - No issues found\n"
+              else
+                echo "❌ $file - Issues found"
+                validation_output+="❌ \`$file\` - Issues found\n"
+              fi
+            else
               echo "Validating $file..."
               if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
                 echo "✅ $file - No issues found"
@@ -75,16 +141,20 @@ jobs:
                 found_issues=true
               fi
             fi
-          done < <(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          done
           
-          if [ "$found_issues" = true ]; then
+          if [ "$summary_only" = true ]; then
+            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$validation_output" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          elif [ "$found_issues" = true ]; then
             echo "validation_output<<EOF" >> $GITHUB_OUTPUT
             echo -e "$validation_output" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           fi
 
       - name: Comment on PR with validation issues
-        if: steps.validate.outputs.validation_output != ''
+        if: always() && steps.validate.outputs.validation_output != ''
         uses: actions/github-script@v6
         env:
           VALIDATION_OUTPUT: ${{ steps.validate.outputs.validation_output }}
@@ -96,3 +166,10 @@ jobs:
               repo: context.repo.repo,
               body: '## Game File Validation Issues\n\n' + process.env.VALIDATION_OUTPUT
             });
+
+      - name: Fail if any check failed
+        if: always() && (steps.asset-names.outcome == 'failure' || steps.square-images.outcome == 'failure')
+        run: |
+          if [ "${{ steps.asset-names.outcome }}" = 'failure' ]; then echo "Failed: Check and fix asset file names"; fi
+          if [ "${{ steps.square-images.outcome }}" = 'failure' ]; then echo "Failed: Check library images are square"; fi
+          exit 1

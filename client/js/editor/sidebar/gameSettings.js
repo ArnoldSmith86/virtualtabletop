@@ -79,15 +79,6 @@ class GameSettingsModule extends SidebarModule {
     removeSection.append(removeText, removeButton);
     tile.append(removeSection);
 
-    const handleToggle = (e) => {
-      if (e.target.tagName === 'A') return;
-      const newState = !checkbox.checked;
-      legacyMode(name, newState);
-      checkbox.checked = newState;
-      tile.style.background = newState ? 'var(--backgroundHighlightColor1)' : 'var(--backgroundColor)';
-      removeSection.style.display = newState ? 'none' : 'block';
-    };
-
     const handleRemove = (e) => {
       e.stopPropagation();
       const confirmMessage = `This can't be undone.\n\nOnly do this if you've confirmed your game works correctly without this setting.`;
@@ -95,8 +86,21 @@ class GameSettingsModule extends SidebarModule {
         this.removeLegacyMode(name);
     };
 
-    tile.addEventListener('click', handleToggle);
-    checkbox.addEventListener('change', handleToggle);
+    const handleChange = () => {
+      const newState = checkbox.checked;
+      legacyMode(name, newState);
+      tile.style.background = newState ? 'var(--backgroundHighlightColor1)' : 'var(--backgroundColor)';
+      removeSection.style.display = newState ? 'none' : 'block';
+    };
+
+    tile.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'LABEL' || e.target === removeButton || removeButton.contains(e.target)) return;
+      if (e.target !== checkbox) {
+        checkbox.click();
+      }
+    });
+
+    checkbox.addEventListener('change', handleChange);
     removeButton.addEventListener('click', handleRemove);
 
     // Set initial state
@@ -361,6 +365,13 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
+   this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
+     <b>Legacy Behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe. This behavior is used for older games and can be enabled by checking this box.
+     <br><br>
+     <b>Default Behavior</b>: These objects are rendered directly into the DOM which should be faster and easier to work with. This is the default for new games and is used when this box is unchecked.
+     <br><br>
+     See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2729">pull request #2729</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+     `, target);
     this.addCheckbox('Disable holder image support', 'disableHolderImageWidget', `
       <b>Problem</b>: Holders now support image, icon, and text properties natively, but some games manually implemented this functionality before it was supported and may break with the new behavior.
       <br><br>

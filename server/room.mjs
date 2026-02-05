@@ -112,6 +112,8 @@ export default class Room {
           delete Room.publicLibrary;
           this.publicLibraryUpdatedCallback();
           return;
+        } else {
+          delete meta.publicLibrary;
         }
 
         if(type != 'link' || meta.importerTemp)
@@ -938,10 +940,10 @@ export default class Room {
   setGameSettings(player, gameSettings) {
     const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
     const newLegacyModes = gameSettings.legacyModes || {};
-    
+  
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();
-    
+
     const legacyModesChanged = JSON.stringify(oldLegacyModes) !== JSON.stringify(newLegacyModes);
     if(legacyModesChanged)
       this.broadcast('state', this.state);

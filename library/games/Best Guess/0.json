@@ -1,29 +1,35 @@
 {
   "_meta": {
-    "version": 4,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Best Guess",
-      "image": "/assets/2016798349_34683",
+      "image": "/assets/2088017168_25732",
       "rules": "",
       "bgg": "https://www.boardgamegeek.com/boardgame/254640/just-one",
       "year": "2018",
       "mode": "coop",
       "time": "20",
-      "attribution": "Room layout and all room elements by LawDawg96 and released to the Public Domain by CC0.  List of nouns randomly generated from https://www.randomlists.com/nouns, https://randomwordgenerator.com/noun.php, and https://jimpix.co.uk/words/word-generator.asp.\n\nBackground available under the Pixabay license: https://pixabay.com/photos/texture-handwriting-s%c3%bctterlin-1362873/.<div><br></div><div>Library image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"pantomime charades game charcoal art --ar 1:1 --v 5.1\"<br></div>",
+      "attribution": "Room layout and all room elements by LawDawg96 and released to the Public Domain by CC0.  List of nouns randomly generated from https://www.randomlists.com/nouns, https://randomwordgenerator.com/noun.php, and https://jimpix.co.uk/words/word-generator.asp.\n\nBackground available under the Pixabay license: https://pixabay.com/photos/texture-handwriting-s%c3%bctterlin-1362873/.",
       "similarName": "Just One",
       "similarAwards": "2021 Bulgarian Board Game Awards Game of the Year Nominee\n2021 Bulgarian Board Game Awards Bulgarian Game of the Year Winner\n2020/2021 Årets Spill Best Party Game Nominee\n2020 Japan Boardgame Prize Voters' Selection Nominee\n2020 Hungarian Board Game Award Special Prize Winner\n2020 Guldbrikken Best Parlor Game Winner\n2019 Tric Trac Nominee\n2019 Swiss Gamers Award Nominee\n2019 Swiss Gamers Award Kids Nominee\n2019 Spiel des Jahres Winner\n2019 Palme d'Argent for Best Party Game\n2019 Lys Grand Public Finalist\n2019 Juego del Año Recommended\n2019 International Gamers Award - General Strategy: Multi-player Nominee\n2019 Fairplay À la carte Runner-up\n2019 American Tabletop Casual Games Recommended\n2019 5 Seasons Best International Party&Coop Nominee\n2018 Meeples' Choice Nominee\n2018 Golden Geek Best Party Game Nominee\n2018 Golden Geek Best Cooperative Game Nominee\n2018 Cardboard Republic Socializer Laurel Nominee",
       "description": "Cooperative game where one player guesses word based on clues provided by other players. Try to get as many correct as possible.",
       "showName": true,
-      "lastUpdate": 1637895026000,
+      "lastUpdate": 1766529079505,
       "skill": "",
+      "similarImage": "",
+      "ruleText": "",
+      "helpText": "Players sit in seats. Click the Play button to begin a game. Follow the on-screen instructions. Players should not leave seats and new players should not join except at the end of a round immediately before pressing the Next Round button.",
+      "similarDesigner": "Ludovic Roudy, Bruno Sautter",
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3-8",
-      "similarImage": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "Ludovic Roudy, Bruno Sautter"
+      "players": "3-8"
     }
   },
   "seat1": {
@@ -34,7 +40,62 @@
     "movableInEdit": false,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "operand2": "",
+        "thenRoutine": [
+          "var inputText1 = 'Taking seat ...'",
+          "var inputText2 = 'take a seat'",
+          "var inputText3 = 'sit down'"
+        ],
+        "elseRoutine": [
+          "var inputText1 = 'Leaving seat ...'",
+          "var inputText2 = 'leave a seat'",
+          "var inputText3 = 'get up'"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "${inputText1}"
+          },
+          {
+            "type": "subtitle",
+            "text": "You should not ${inputText2} except at the beginning of a game or right before starting a new round. Are you sure you want to ${inputText3}?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ]
   },
   "seat2": {
     "type": "seat",
@@ -45,7 +106,26 @@
     "index": 2,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "seat3": {
     "type": "seat",
@@ -56,7 +136,26 @@
     "index": 3,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "seat4": {
     "type": "seat",
@@ -67,7 +166,26 @@
     "index": 4,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "seat5": {
     "type": "seat",
@@ -78,7 +196,26 @@
     "index": 5,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "seat6": {
     "type": "seat",
@@ -89,7 +226,26 @@
     "index": 6,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "seat7": {
     "type": "seat",
@@ -100,7 +256,26 @@
     "index": 7,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "seat8": {
     "type": "seat",
@@ -111,7 +286,26 @@
     "index": 8,
     "hideWhenUnused": true,
     "classes": "handwriting_casual_font",
-    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px"
+    "css": "box-shadow:0 20px 15px #9B7468; line-height:20px",
+    "playerChangeRoutine": [
+      "var arrayLen = length ${activeSeats}",
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeatCount",
+        "value": "${arrayLen}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "activeSeats",
+        "value": "${activeSeats}"
+      }
+    ]
   },
   "startButton": {
     "type": "button",
@@ -754,11 +948,6 @@
       "year",
       "yesterday"
     ],
-    "activeSeats": [
-      "seat1",
-      "seat3",
-      "seat8"
-    ],
     "zzResetSeatRoutine": [
       {
         "func": "SELECT",
@@ -840,7 +1029,7 @@
         "value": 0
       }
     ],
-    "activeSeatCount": 3,
+    "activeSeatCount": 0,
     "zzAssignWordRoutine": [
       {
         "note": "Move the clue label for active player off board.",
@@ -1015,7 +1204,8 @@
     "parent": "seat3",
     "movableInEdit": false,
     "movable": false,
-    "classes": "handwriting_casual_font"
+    "classes": "handwriting_casual_font",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat1": {
     "type": "label",
@@ -1032,7 +1222,8 @@
     "onlyVisibleForSeat": "seat1",
     "movableInEdit": false,
     "classes": "handwriting_casual_font",
-    "text": "?"
+    "text": "?",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat2": {
     "inheritFrom": "clueSeat1",
@@ -1042,7 +1233,8 @@
     "y": -20,
     "parent": "seat2",
     "text": "?",
-    "onlyVisibleForSeat": "seat2"
+    "onlyVisibleForSeat": "seat2",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat3": {
     "inheritFrom": "clueSeat1",
@@ -1052,7 +1244,8 @@
     "y": -20,
     "parent": "seat3",
     "text": "?",
-    "onlyVisibleForSeat": "seat3"
+    "onlyVisibleForSeat": "seat3",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat4": {
     "inheritFrom": "clueSeat1",
@@ -1062,7 +1255,8 @@
     "y": -20,
     "parent": "seat4",
     "text": "?",
-    "onlyVisibleForSeat": "seat4"
+    "onlyVisibleForSeat": "seat4",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat5": {
     "inheritFrom": "clueSeat1",
@@ -1072,7 +1266,8 @@
     "y": -20,
     "parent": "seat5",
     "text": "?",
-    "onlyVisibleForSeat": "seat5"
+    "onlyVisibleForSeat": "seat5",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat6": {
     "inheritFrom": "clueSeat1",
@@ -1082,7 +1277,8 @@
     "y": -20,
     "parent": "seat6",
     "text": "?",
-    "onlyVisibleForSeat": "seat6"
+    "onlyVisibleForSeat": "seat6",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat7": {
     "inheritFrom": "clueSeat1",
@@ -1093,7 +1289,8 @@
     "parent": "seat7",
     "onlyVisibleForSeat": "seat7",
     "activeFace": 1,
-    "text": "?"
+    "text": "?",
+    "hoverInheritVisibleForSeat": false
   },
   "clueSeat8": {
     "inheritFrom": "clueSeat1",
@@ -1104,7 +1301,8 @@
     "parent": "seat8",
     "onlyVisibleForSeat": "seat8",
     "activeFace": 1,
-    "text": "?"
+    "text": "?",
+    "hoverInheritVisibleForSeat": false
   },
   "submitButton1": {
     "type": "button",
@@ -1323,7 +1521,8 @@
     ],
     "movable": false,
     "classes": "handwriting_casual_font",
-    "text": "?"
+    "text": "?",
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow2": {
     "inheritFrom": "clueShow1",
@@ -1336,7 +1535,8 @@
     "text": "?",
     "onlyVisibleForSeat": [
       "seat2"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow3": {
     "inheritFrom": "clueShow1",
@@ -1349,7 +1549,8 @@
     "text": "",
     "onlyVisibleForSeat": [
       "seat3"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow4": {
     "inheritFrom": "clueShow1",
@@ -1362,7 +1563,8 @@
     "text": "?",
     "onlyVisibleForSeat": [
       "seat4"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow5": {
     "inheritFrom": "clueShow1",
@@ -1375,7 +1577,8 @@
     "text": "?",
     "onlyVisibleForSeat": [
       "seat5"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow6": {
     "inheritFrom": "clueShow1",
@@ -1388,7 +1591,8 @@
     "text": "?",
     "onlyVisibleForSeat": [
       "seat6"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow7": {
     "inheritFrom": "clueShow1",
@@ -1401,7 +1605,8 @@
     "text": "?",
     "onlyVisibleForSeat": [
       "seat7"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "clueShow8": {
     "inheritFrom": "clueShow1",
@@ -1414,7 +1619,8 @@
     "text": "?",
     "onlyVisibleForSeat": [
       "seat8"
-    ]
+    ],
+    "hoverInheritVisibleForSeat": false
   },
   "revealCluesButton": {
     "type": "button",
@@ -1647,7 +1853,8 @@
     "css": "background: #9b7468; color: white; font-size:25px; text-align: center;line-height: 3; border:2px solid #44332d; border-radius:5%; box-shadow: 0 20px 15px #9B7468;line-height:25px; display: flex; flex-direction: column;justify-content:center;",
     "onlyVisibleForSeat": "seat3",
     "text": "Waiting on other players",
-    "classes": "handwriting_casual_font"
+    "classes": "handwriting_casual_font",
+    "hoverInheritVisibleForSeat": false
   },
   "7yekD": {
     "id": "7yekD",
@@ -1831,13 +2038,13 @@
     "x": 880,
     "y": 100,
     "width": 500,
-    "height": 740,
+    "height": 830,
     "z": 13,
     "movable": false,
     "movableInEdit": false,
     "classes": "handwriting_casual_font",
     "css": "color: black; background:#ffffffaa;border-radius:5%;box-shadow:0 20px 15px #9B7468; font-size:22px; line-height:22px;padding-left:10px",
-    "text": "                               Instructions\n\n1. When all players are seated, press 'Play' to assign random starting player and word.\n\n2. Non-guessing players write clue in box with a question mark. Press 'Submit'.\n\n3.After all players have submitted, clues are displayed for rules check. Click box to hide clues that violate rules:\n    - same clue provided by multiple players\n    - mystery word written differently\n    - mystery word in foreign language\n    - word from same family as mystery word\n    - invented word\n    - phonetically same but different meaning\n\n4. Press 'Reveal Clues' to show valid clues to the guessing player.\n\n5. Assigned player makes guess.  Then press 'Reveal All'.\n\n6. Adjust score:\n    - If player guessed correctly, add 1 to 'Correct Guesses and decrease 'Rounds Remaining' by 1.\n    - If player guessed incorrectly, decrease 'Rounds Remaining' by 2.\n    - If player did not guess, decrease 'Rounds Remaining' by 1.\n\n7. Press 'Next Round'."
+    "text": "                               Instructions\n\n1. When all players are seated, press 'Play' to assign random starting player and word.\n\n2. Non-guessing players write clue in box with a question mark. Press 'Submit'.\n\n3.After all players have submitted, clues are displayed for rules check. Click box to hide clues that violate rules:\n    - same clue provided by multiple players\n    - mystery word written differently\n    - mystery word in foreign language\n    - word from same family as mystery word\n    - invented word\n    - phonetically same but different meaning\n\n4. Press 'Reveal Clues' to show valid clues to the guessing player.\n\n5. Assigned player makes guess.  Then press 'Reveal All'.\n\n6. Adjust score:\n    - If player guessed correctly, add 1 to 'Correct Guesses and decrease 'Rounds Remaining' by 1.\n    - If player guessed incorrectly, decrease 'Rounds Remaining' by 2.\n    - If player did not guess, decrease 'Rounds Remaining' by 1.\n    \n(Before step 7 is the only time players can safely enter or leave seats without ruining the automation)\n\n7. Press 'Next Round'."
   },
   "highlight": {
     "id": "highlight",
@@ -1867,7 +2074,6 @@
         "value": "${z}"
       }
     ],
-    "debug": true,
     "state": 0,
     "stateChangeRoutine": [
       "var pos = ${PROPERTY yPosition} getIndex ${PROPERTY state}",
@@ -1895,7 +2101,7 @@
       70,
       280,
       70,
-      210
+      310
     ],
     "yPosition": [
       30,

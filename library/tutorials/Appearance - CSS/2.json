@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "version": 18,
+    "version": 19,
     "gameSettings": {
       "legacyModes": {},
-      "globalCss": "/* Holder modifications */\n\n.holder {\n  background: #c0c0c0;\n}\n\n/* Button font */\n\n.button {\n  color: #000000;\n  background: #66cdaa;\n  border-color: #008080;\n  font-size: 18px\n}\n\n.button:hover {\n  color: #ffffff;\n  background: #008080;\n  border-color: #66cdaa;\n  cursor: pointer;\n  text-decoration: underline;\n  font-style: italic;\n}\n\n\n/* Card transitions */\n\n.customTransitionClass {\n  transition: transform 600ms\n}\n\n.customTransitionClass.dragging {\n  transition: none\n}\n\n/* INPUT overlay modifications */\n\n.modal {\n  transform: scale(0.9) !important;\n  position: absolute !important;\n  top: 50px !important;\n  right: 50px !important;\n}\n\n.inputtitle {\n  background-color: #909090;\n  color: #7c3aed;\n}\n\n.inputsubtitle {\n  background-color: #c0c0c0;\n  color: #7c3aedaa;\n}\n\n.modal .footer > button#buttonInputGo {\n  background-color: #ffffff;\n  color: #000000;\n}\n\n.modal .footer > button#buttonInputCancel {\n  background-color: #000000;\n  color: #ffffff;\n}\n\n#buttonInputOverlay {\n  background-color: #000;\n  background-image:\n    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px 100%),\n    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0 1px, transparent 1px 100%),\n    linear-gradient(180deg, #7c3aed 0%, #000000 100%);\n}"
+      "globalCss": "/* Holder modifications */\n\n.holder {\n  background: #c0c0c0;\n}\n\n/* Basic widget modification */\n\n.widget.basic.purple {\n  background: purple;\n  color: white;\n}\n\n/* Button font */\n\n.button {\n  color: #000000;\n  background: #66cdaa;\n  border-color: #008080;\n  font-size: 18px\n}\n\n.button:hover {\n  color: #ffffff;\n  background: #008080;\n  border-color: #66cdaa;\n  cursor: pointer;\n  text-decoration: underline;\n  font-style: italic;\n}\n\n\n/* Card transitions */\n\n.customTransitionClass {\n  transition: transform 600ms\n}\n\n.customTransitionClass.dragging {\n  transition: none\n}\n\n/* INPUT overlay modifications */\n\n.modal {\n  transform: scale(0.9) !important;\n  position: absolute !important;\n  top: 50px !important;\n  right: 50px !important;\n}\n\n.inputtitle {\n  background-color: #909090;\n  color: #7c3aed;\n}\n\n.inputsubtitle {\n  background-color: #c0c0c0;\n  color: #7c3aedaa;\n}\n\n.modal .footer > button#buttonInputGo {\n  background-color: #ffffff;\n  color: #000000;\n}\n\n.modal .footer > button#buttonInputCancel {\n  background-color: #000000;\n  color: #ffffff;\n}\n\n#buttonInputOverlay {\n  background-color: #000;\n  background-image:\n    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px 100%),\n    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.02) 0 1px, transparent 1px 100%),\n    linear-gradient(180deg, #7c3aed 0%, #000000 100%);\n}"
     },
     "info": {
       "name": "Appearance - CSS",
@@ -15,7 +15,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1762439294512,
+      "lastUpdate": 1763600448101,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -58,7 +58,7 @@
   "button4": {
     "type": "button",
     "id": "button4",
-    "x": 1248,
+    "x": 1398,
     "y": 463,
     "z": 22840,
     "clickRoutine": [
@@ -81,7 +81,7 @@
   },
   "text1": {
     "id": "text1",
-    "x": 190,
+    "x": 18,
     "y": 613,
     "width": 300,
     "z": 185,
@@ -94,7 +94,7 @@
   },
   "text2": {
     "id": "text2",
-    "x": 511,
+    "x": 661,
     "y": 613,
     "width": 300,
     "z": 121,
@@ -107,7 +107,7 @@
   },
   "text3": {
     "id": "text3",
-    "x": 837,
+    "x": 987,
     "y": 613,
     "width": 300,
     "z": 9732,
@@ -120,7 +120,7 @@
   },
   "text4": {
     "id": "text4",
-    "x": 1150,
+    "x": 1300,
     "y": 613,
     "width": 300,
     "z": 9732,
@@ -134,7 +134,7 @@
   "holder1": {
     "type": "holder",
     "id": "holder1",
-    "x": 218,
+    "x": 46,
     "y": 447,
     "z": 130,
     "layer": 3
@@ -142,7 +142,7 @@
   "holder2": {
     "type": "holder",
     "id": "holder2",
-    "x": 355,
+    "x": 183,
     "y": 447,
     "z": 130,
     "css": {
@@ -216,12 +216,12 @@
   },
   "ubga_9_C": {
     "id": "ubga_9_C",
-    "parent": "v3js",
     "deck": "ubgaD",
     "type": "card",
     "cardType": "C 09",
-    "z": 4,
-    "layer": 3
+    "z": 133,
+    "layer": 3,
+    "parent": "v3js"
   },
   "ubga_T_C": {
     "id": "ubga_T_C",
@@ -570,7 +570,7 @@
   "button1": {
     "type": "button",
     "id": "button1",
-    "x": 602,
+    "x": 752,
     "y": 463,
     "z": 22839,
     "text": "Button",
@@ -579,7 +579,7 @@
   "button2": {
     "type": "button",
     "id": "button2",
-    "x": 1008,
+    "x": 1158,
     "y": 463,
     "z": 22839,
     "clickRoutine": [
@@ -598,7 +598,7 @@
   "holder3": {
     "type": "holder",
     "id": "holder3",
-    "x": 857,
+    "x": 1007,
     "y": 393,
     "dropTarget": {
       "type": "card"
@@ -612,42 +612,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1190,5 +1154,51 @@
     "z": 1248,
     "hoverParent": "holder3",
     "parent": "holder3"
+  },
+  "text5": {
+    "id": "text5",
+    "x": 333,
+    "y": 613,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "There is global CSS in this tutorial to change the background and text color of basic widgets with the special class <b>purple</b>. Only widgets with that class (like the one in the upper left) apply that CSS.\n\nCreating classes is the best way to ensure the css changes do not go further than necessary, like the holder and button examples do."
+  },
+  "basic1": {
+    "id": "basic1",
+    "x": 354,
+    "y": 449,
+    "height": 50,
+    "text": "Basic widget",
+    "classes": "purple",
+    "movable": false
+  },
+  "basic2": {
+    "id": "basic2",
+    "x": 482,
+    "y": 449,
+    "height": 50,
+    "text": "Basic widget",
+    "movable": false
+  },
+  "basic3": {
+    "id": "basic3",
+    "x": 354,
+    "y": 523,
+    "height": 50,
+    "text": "Basic widget",
+    "movable": false
+  },
+  "basic4": {
+    "id": "basic4",
+    "x": 482,
+    "y": 523,
+    "height": 50,
+    "text": "Basic widget",
+    "movable": false
   }
 }

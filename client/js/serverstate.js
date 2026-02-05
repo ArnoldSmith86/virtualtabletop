@@ -1,5 +1,5 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
@@ -30,7 +30,8 @@ function applyCustomCss(gameSettings) {
       style.id = 'globalCss';
       document.head.appendChild(style);
     }
-    style.appendChild(document.createTextNode((gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '')));
+    const cssText = (gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '');
+    style.appendChild(document.createTextNode(mapAssetURLs(cssText)));
   }
 }
 
@@ -510,7 +511,11 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    $('#statesButton').click();
+    if(urlProperties.about) {
+      $('#aboutButton').click();
+    } else {
+      $('#statesButton').click();
+    }
     overlayShownForEmptyRoom = true;
   }
 
@@ -574,7 +579,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
+    if(!w.isLimbo)
+      await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
   }
 }
