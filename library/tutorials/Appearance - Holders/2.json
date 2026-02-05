@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 19,
+    "version": 21,
     "info": {
       "name": "Appearance - Holders",
       "image": "/assets/-1027054583_6051",
@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1762664693062,
+      "lastUpdate": 1770263478156,
       "showName": false,
       "skill": "",
       "description": "",
@@ -20,10 +20,10 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Images",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Images",
+      "variantImage": ""
     },
     "gameSettings": {
       "legacyModes": {}
@@ -521,42 +521,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1188,7 +1152,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "22px",
+      "white-space": "pre-wrap"
     },
     "html": "The <b>--bgColor</b> and\n<b>--bgColorOpacity</b> properties work in combination with images."
   },
