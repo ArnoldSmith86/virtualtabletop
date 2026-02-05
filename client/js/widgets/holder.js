@@ -96,6 +96,14 @@ class Holder extends ImageWidget {
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
 
+  getDefaultIconScale() {
+    return 0.85;
+  }
+
+  getDefaultIconOpacity() {
+    return 0.2;
+  }
+
   async onChildAdd(child, oldParentID) {
     await super.onChildAdd(child, oldParentID);
     if(child.get('type') == 'deck')

@@ -339,7 +339,7 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
-function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor) {
+function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity) {
   const outerWrapper = div(target, 'symbolOuterWrapper', `
     <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
@@ -377,9 +377,8 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
 
   outerWrapper.style.setProperty('--count', 1);
 
-  // Determine default opacity based on widget type (holders are dimmer by default)
-  const isHolderWidget = !!(outerWrapper.closest && outerWrapper.closest('.widget.holder'));
-  const defaultOpacity = isHolderWidget ? 0.2 : 1;
+  if(defaultOpacity === undefined)
+    defaultOpacity = 1;
 
   for(let symbol of asArray(symbols)) {
     if(!symbol)
