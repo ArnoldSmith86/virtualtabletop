@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder",
       "image": "/assets/-1144102332_4316",
@@ -9,9 +12,9 @@
       "year": "2020",
       "mode": "Tutorial",
       "time": "0",
-      "attribution": "<div>Look at the \"Appearance\" series of tutorials for a demo on how to modify the appearance of holders.</div><div><br></div>The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
+      "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1762658851798,
+      "lastUpdate": 1768189116274,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -21,957 +24,761 @@
       "helpText": "",
       "similarDesigner": "",
       "variantImage": "",
-      "variant": "Stackable Tokens",
+      "variant": "Appearance",
       "language": "en-US",
       "players": "1"
     }
   },
-  "overview": {
-    "id": "overview",
-    "x": 108,
-    "y": 80,
-    "width": 1400,
-    "layer": -3,
-    "z": 129,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 25px; ",
-    "text": "When holders are set to be movable and to accept other holders as a 'dropTarget' then holders can have characteristics of cards (because they stack) and holders. This room has several different examples of how this can be implemented. Drag widgets around in this room and stack them to see how this works. Unlike with piles, you can select and drag from the middle of the stack and the rest of the stack moves with it.",
-    "height": 90
-  },
-  "title": {
-    "id": "title",
-    "width": 1600,
-    "height": 70,
-    "z": 70,
-    "css": "font-size: 60px; text-align:center",
-    "text": "Holders: Stackable Tokens",
-    "movable": false,
-    "movableInEdit": false
-  },
-  "text1": {
-    "id": "text1",
-    "x": 42,
-    "y": 434,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "There is a master holder widget (at the bottom of the left stack). The other widgets use `inheritFrom` to copy the master's properties. It is important that the parent property be excluded to prevent problems.\n\nHolders do not apply a 'text' property, so CSS is used to add text to the holder. Routines (enter, leave, and textChange) are used to update the count on each card.\n\nYou can remove or adjust position of the numbers and you can adjust the offsets to change how the stack forms."
-  },
-  "text2": {
-    "id": "text2",
-    "x": 398,
-    "y": 514,
-    "width": 300,
-    "z": 185,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "Since holders do not apply the 'image' property, this stack uses CSS and a URL-encoded SVG to draw a rectangle. The rectangle's color is adjustable and it is shifted to the bottom of the holder so that vertical stacking works.\n\nThe 'dropTarget' allows blue and red to stack together, but that can be changed so that only the same colors stack with each other.\n\nAgain, the numbers are optional and position is adjustable."
-  },
-  "coin1": {
+  "gaup": {
     "type": "holder",
-    "id": "coin1",
-    "y": 517,
-    "height": 80,
-    "z": 1274,
-    "classes": "transparent",
-    "css": {
-      "default": {
-        "background-image": "url('/assets/123241915_760')",
-        "background-position-y": "20%",
-        "display": "flex",
-        "align-items": "center",
-        "justify-content": "center",
-        "font-size": "25px"
-      },
-      "::before": {
-        "content": "\"${PROPERTY text}\"",
-        "color": "black",
-        "transform": "translateY(-3px) skewX(20deg)"
-      }
-    },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -15,
+    "x": 108.5,
+    "y": 383,
+    "z": 9,
+    "id": "gaup"
+  },
+  "1svp": {
+    "type": "holder",
+    "x": 451.5,
+    "y": 395,
+    "z": 12,
+    "id": "1svp",
+    "classes": "transparent"
+  },
+  "3ew8": {
+    "type": "holder",
+    "x": 882.5,
+    "y": 406,
+    "z": 13,
+    "id": "3ew8",
+    "css": "background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);"
+  },
+  "x80k": {
+    "type": "holder",
+    "id": "x80k",
+    "x": 702.5,
+    "y": 729,
     "dropTarget": {
-      "token": "coin"
+      "deck": "x80kD"
     },
-    "text": 1,
-    "token": "coin",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
-      },
-      "var childCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
-      }
-    ],
-    "width": 100,
-    "movable": true,
-    "x": 1133
+    "z": 6
   },
-  "circle1": {
-    "type": "holder",
-    "id": "circle1",
-    "x": 795,
-    "y": 527,
-    "z": 1229,
-    "classes": "transparent",
-    "css": {
-      "default": {
-        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Cpath fill='${PROPERTY color}' stroke='${PROPERTY outline}' d='m50 99c-27.1 0-49-21.9-49-49 0-27.1 21.9-49 49-49 27.1 0 49 21.9 49 49 0 27.1-21.9 49-49 49z'/%3E%3C/svg%3E\")",
-        "background-size": "contain",
-        "background-repeat": "no-repeat",
-        "display": "flex",
-        "align-items": "center",
-        "justify-content": "center",
-        "font-size": "30px"
-      },
-      "::before": {
-        "content": "\"${PROPERTY text}\"",
-        "color": "black"
-      }
-    },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -25,
-    "dropTarget": {
-      "token": "circle",
-      "color": "cyan"
-    },
-    "color": "cyan",
-    "outline": "black",
-    "text": 1,
-    "token": "circle",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
-      },
-      "var childCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
-      }
-    ],
-    "width": 100,
-    "height": 100,
-    "movable": true
+  "x80kP": {
+    "type": "pile",
+    "id": "x80kP",
+    "parent": "x80k",
+    "width": 103,
+    "height": 160
   },
-  "square1": {
-    "type": "holder",
-    "id": "square1",
-    "x": 58,
-    "y": 268,
-    "width": 50,
-    "height": 50,
-    "z": 1107,
-    "movable": true,
-    "css": {
-      "default": {
-        "background": "mediumseagreen",
-        "border": "1px solid black"
-      },
-      "::before": {
-        "content": "\"${PROPERTY text}\"",
-        "color": "black"
-      }
-    },
-    "dropOffsetX": 10,
-    "dropOffsetY": 10,
-    "dropTarget": {
-      "token": "square"
-    },
-    "text": 1,
-    "token": "square",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
-      },
-      {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
-      },
-      "var childCount = ${PROPERTY text} + 1",
-      {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
-      }
-    ]
-  },
-  "rectangle1": {
-    "type": "holder",
-    "id": "rectangle1",
-    "x": 386,
-    "y": 462,
-    "width": 100,
+  "x80kB": {
+    "id": "x80kB",
+    "parent": "x80k",
+    "y": 171.36,
+    "width": 111,
     "height": 40,
-    "borderRadius": 0,
-    "z": 1175,
-    "movable": true,
-    "classes": "transparent",
-    "css": {
-      "default": {
-        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' width='100' height='20'%3E%3Cpath fill='${PROPERTY color}' d='m0 0h100v20h-100z'/%3E%3C/svg%3E\")",
-        "background-repeat": "no-repeat",
-        "background-position-y": "100%",
-        "display": "flex",
-        "align-items": "teop",
-        "justify-content": "center",
-        "font-size": "20px"
-      },
-      "::before": {
-        "content": "\"${PROPERTY text}\"",
-        "color": "black",
-        "transform": "translateY(-10px)"
-      }
-    },
-    "dropLimit": 1,
-    "dropOffsetX": -1,
-    "dropOffsetY": -25,
-    "dropTarget": {
-      "token": "rectangle"
-    },
-    "color": "red",
-    "text": 1,
-    "token": "rectangle",
-    "enterRoutine": [
-      "var newCount = ${PROPERTY text} + 1",
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
       {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": "${newCount}"
-      }
-    ],
-    "leaveRoutine": [
-      {
-        "func": "SET",
-        "collection": "child",
-        "property": "text",
-        "value": 1
-      }
-    ],
-    "textChangeRoutine": [
-      {
-        "func": "SELECT",
-        "property": "parent",
-        "value": "${PROPERTY id}"
+        "func": "RECALL",
+        "holder": "x80k"
       },
       {
-        "func": "GET",
-        "property": "id",
-        "variable": "childID"
+        "func": "FLIP",
+        "holder": "x80k",
+        "face": 0
       },
-      "var childCount = ${PROPERTY text} + 1",
       {
-        "func": "SET",
-        "collection": [
-          "${childID}"
-        ],
-        "property": "text",
-        "value": "${childCount}"
+        "func": "SHUFFLE",
+        "holder": "x80k"
       }
     ]
   },
-  "square2": {
-    "inheritFrom": {
-      "square1": "!parent"
+  "x80kD": {
+    "type": "deck",
+    "id": "x80kD",
+    "parent": "x80k",
+    "cardTypes": {
+      "AC": {
+        "image": "/i/cards-default/AC.svg"
+      },
+      "2C": {
+        "image": "/i/cards-default/2C.svg"
+      },
+      "3C": {
+        "image": "/i/cards-default/3C.svg"
+      },
+      "4C": {
+        "image": "/i/cards-default/4C.svg"
+      },
+      "5C": {
+        "image": "/i/cards-default/5C.svg"
+      },
+      "6C": {
+        "image": "/i/cards-default/6C.svg"
+      },
+      "7C": {
+        "image": "/i/cards-default/7C.svg"
+      },
+      "8C": {
+        "image": "/i/cards-default/8C.svg"
+      },
+      "9C": {
+        "image": "/i/cards-default/9C.svg"
+      },
+      "TC": {
+        "image": "/i/cards-default/TC.svg"
+      },
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
+      },
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
+      },
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
+      },
+      "AD": {
+        "image": "/i/cards-default/AD.svg"
+      },
+      "2D": {
+        "image": "/i/cards-default/2D.svg"
+      },
+      "3D": {
+        "image": "/i/cards-default/3D.svg"
+      },
+      "4D": {
+        "image": "/i/cards-default/4D.svg"
+      },
+      "5D": {
+        "image": "/i/cards-default/5D.svg"
+      },
+      "6D": {
+        "image": "/i/cards-default/6D.svg"
+      },
+      "7D": {
+        "image": "/i/cards-default/7D.svg"
+      },
+      "8D": {
+        "image": "/i/cards-default/8D.svg"
+      },
+      "9D": {
+        "image": "/i/cards-default/9D.svg"
+      },
+      "TD": {
+        "image": "/i/cards-default/TD.svg"
+      },
+      "JD": {
+        "image": "/i/cards-default/JD.svg"
+      },
+      "QD": {
+        "image": "/i/cards-default/QD.svg"
+      },
+      "KD": {
+        "image": "/i/cards-default/KD.svg"
+      },
+      "AH": {
+        "image": "/i/cards-default/AH.svg"
+      },
+      "2H": {
+        "image": "/i/cards-default/2H.svg"
+      },
+      "3H": {
+        "image": "/i/cards-default/3H.svg"
+      },
+      "4H": {
+        "image": "/i/cards-default/4H.svg"
+      },
+      "5H": {
+        "image": "/i/cards-default/5H.svg"
+      },
+      "6H": {
+        "image": "/i/cards-default/6H.svg"
+      },
+      "7H": {
+        "image": "/i/cards-default/7H.svg"
+      },
+      "8H": {
+        "image": "/i/cards-default/8H.svg"
+      },
+      "9H": {
+        "image": "/i/cards-default/9H.svg"
+      },
+      "TH": {
+        "image": "/i/cards-default/TH.svg"
+      },
+      "JH": {
+        "image": "/i/cards-default/JH.svg"
+      },
+      "QH": {
+        "image": "/i/cards-default/QH.svg"
+      },
+      "KH": {
+        "image": "/i/cards-default/KH.svg"
+      },
+      "AS": {
+        "image": "/i/cards-default/AS.svg"
+      },
+      "2S": {
+        "image": "/i/cards-default/2S.svg"
+      },
+      "3S": {
+        "image": "/i/cards-default/3S.svg"
+      },
+      "4S": {
+        "image": "/i/cards-default/4S.svg"
+      },
+      "5S": {
+        "image": "/i/cards-default/5S.svg"
+      },
+      "6S": {
+        "image": "/i/cards-default/6S.svg"
+      },
+      "7S": {
+        "image": "/i/cards-default/7S.svg"
+      },
+      "8S": {
+        "image": "/i/cards-default/8S.svg"
+      },
+      "9S": {
+        "image": "/i/cards-default/9S.svg"
+      },
+      "TS": {
+        "image": "/i/cards-default/TS.svg"
+      },
+      "JS": {
+        "image": "/i/cards-default/JS.svg"
+      },
+      "QS": {
+        "image": "/i/cards-default/QS.svg"
+      },
+      "KS": {
+        "image": "/i/cards-default/KS.svg"
+      }
     },
-    "type": "holder",
-    "id": "square2",
-    "x": 10,
-    "y": 10,
-    "z": 1101,
-    "text": 2,
-    "parent": "square1"
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
   },
-  "square3": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square3",
-    "x": 10,
-    "y": 10,
-    "z": 1103,
-    "text": 3,
-    "parent": "square2"
+  "x80kAC": {
+    "id": "x80kAC",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 166
   },
-  "square4": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square4",
-    "x": 10,
-    "y": 10,
-    "z": 1070,
-    "text": 4,
-    "parent": "square3"
+  "x80k2C": {
+    "id": "x80k2C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 163
   },
-  "square5": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square5",
-    "x": 10,
-    "y": 10,
-    "z": 1052,
-    "parent": "square6",
-    "text": 3
+  "x80k3C": {
+    "id": "x80k3C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 179
   },
-  "square6": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square6",
-    "x": 10,
-    "y": 10,
-    "z": 1050,
-    "parent": "square7",
-    "text": 2
+  "x80k4C": {
+    "id": "x80k4C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 162
   },
-  "square7": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square7",
-    "x": 148,
-    "y": 261,
-    "z": 1110,
-    "text": 1
+  "x80k5C": {
+    "id": "x80k5C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 190
   },
-  "square8": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square8",
-    "x": 10,
-    "y": 10,
-    "z": 1108,
-    "text": 6,
-    "parent": "square9"
+  "x80k6C": {
+    "id": "x80k6C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 161
   },
-  "square9": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square9",
-    "x": 10,
-    "y": 10,
-    "z": 1072,
-    "text": 5,
-    "parent": "square4"
+  "x80k7C": {
+    "id": "x80k7C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 188
   },
-  "square10": {
-    "inheritFrom": {
-      "square1": "!parent"
-    },
-    "type": "holder",
-    "id": "square10",
-    "x": 10,
-    "y": 10,
-    "z": 1074,
-    "parent": "square5",
-    "text": 4
+  "x80k8C": {
+    "id": "x80k8C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 203
   },
-  "rectangle2": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle2",
-    "x": -1,
-    "y": -25,
-    "z": 1181,
-    "text": 5,
-    "color": "blue",
-    "parent": "rectangle3"
+  "x80k9C": {
+    "id": "x80k9C",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 197
   },
-  "rectangle3": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle3",
-    "x": -1,
-    "y": -25,
-    "z": 1147,
-    "parent": "rectangle4",
-    "text": 4,
-    "color": "blue"
+  "x80kTC": {
+    "id": "x80kTC",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 191
   },
-  "rectangle4": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle4",
-    "x": -1,
-    "y": -25,
-    "z": 1165,
-    "text": 3,
-    "color": "blue",
-    "parent": "rectangle12"
+  "x80kJC": {
+    "id": "x80kJC",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 2,
+    "x": 49,
+    "y": 4,
+    "parent": "k9yg",
+    "activeFace": 1
   },
-  "rectangle5": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle5",
-    "x": -1,
-    "y": -25,
-    "z": 1167,
-    "text": 6,
-    "color": "blue",
-    "parent": "rectangle2"
+  "x80kQC": {
+    "id": "x80kQC",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 199
   },
-  "rectangle6": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle6",
-    "x": -1,
-    "y": -25,
-    "z": 1170,
-    "text": 7,
-    "color": "blue",
-    "parent": "rectangle5"
+  "x80kKC": {
+    "id": "x80kKC",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 204
   },
-  "rectangle7": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle7",
-    "x": -1,
-    "y": -25,
-    "z": 1172,
-    "text": 8,
-    "color": "blue",
-    "parent": "rectangle6"
+  "x80kAD": {
+    "id": "x80kAD",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 172
   },
-  "rectangle8": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle8",
-    "x": -1,
-    "y": -25,
-    "z": 1137,
-    "parent": "rectangle9",
-    "text": 4,
-    "color": "blue"
+  "x80k2D": {
+    "id": "x80k2D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 169
   },
-  "rectangle9": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle9",
-    "x": -1,
-    "y": -25,
-    "z": 1135,
-    "parent": "rectangle10",
-    "text": 3,
-    "color": "blue"
+  "x80k3D": {
+    "id": "x80k3D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 201
   },
-  "rectangle10": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle10",
-    "x": -1,
-    "y": -25,
-    "z": 1133,
-    "parent": "rectangle11",
-    "text": 2,
-    "color": "blue"
+  "x80k4D": {
+    "id": "x80k4D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 164
   },
-  "rectangle11": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle11",
-    "x": 496,
-    "y": 293,
-    "z": 1177,
-    "color": "blue"
+  "x80k5D": {
+    "id": "x80k5D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 171
   },
-  "rectangle12": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle12",
-    "x": -1,
-    "y": -25,
-    "z": 1130,
-    "parent": "rectangle13",
-    "text": 2
+  "x80k6D": {
+    "id": "x80k6D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 184
   },
-  "rectangle13": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle13",
-    "x": 606,
-    "y": 464,
-    "z": 1178,
-    "text": 1
+  "x80k7D": {
+    "id": "x80k7D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 185
   },
-  "rectangle14": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle14",
-    "x": -1,
-    "y": -25,
-    "z": 1125,
-    "parent": "rectangle15",
-    "text": 3
+  "x80k8D": {
+    "id": "x80k8D",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 180
   },
-  "rectangle15": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle15",
-    "x": -1,
-    "y": -25,
-    "z": 1122,
-    "parent": "rectangle16",
-    "text": 2
+  "x80k9D": {
+    "id": "x80k9D",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 1,
+    "x": 4,
+    "y": 4,
+    "parent": "k9yg",
+    "activeFace": 1
   },
-  "rectangle16": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle16",
-    "x": 494,
-    "y": 463,
-    "z": 1176,
-    "text": 1
+  "x80kTD": {
+    "id": "x80kTD",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 192
   },
-  "rectangle17": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle17",
-    "x": -1,
-    "y": -25,
-    "z": 1118,
-    "parent": "rectangle18",
-    "text": 5
+  "x80kJD": {
+    "id": "x80kJD",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 157
   },
-  "rectangle18": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle18",
-    "x": -1,
-    "y": -25,
-    "z": 1189,
-    "text": 4,
-    "parent": "rectangle19"
+  "x80kQD": {
+    "id": "x80kQD",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 193
   },
-  "rectangle19": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle19",
-    "x": -1,
-    "y": -25,
-    "z": 1114,
-    "parent": "rectangle20",
-    "text": 3
+  "x80kKD": {
+    "id": "x80kKD",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 176
   },
-  "rectangle20": {
-    "inheritFrom": {
-      "rectangle1": "!parent"
-    },
-    "type": "holder",
-    "id": "rectangle20",
-    "x": -1,
-    "y": -25,
-    "z": 1160,
-    "text": 2,
-    "parent": "rectangle1"
+  "x80kAH": {
+    "id": "x80kAH",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 165
   },
-  "circle2": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle2",
-    "x": -1,
-    "y": -25,
-    "z": 1208,
-    "parent": "circle3",
-    "text": 3
+  "x80k2H": {
+    "id": "x80k2H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 194
   },
-  "circle3": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle3",
-    "x": -1,
-    "y": -25,
-    "z": 1204,
-    "parent": "circle1",
-    "text": 2
+  "x80k3H": {
+    "id": "x80k3H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 182
   },
-  "circle4": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle4",
-    "x": -1,
-    "y": -25,
-    "z": 1226,
-    "text": 2,
-    "parent": "circle5"
+  "x80k4H": {
+    "id": "x80k4H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "4H",
+    "z": 181
   },
-  "circle5": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle5",
+  "x80k5H": {
+    "id": "x80k5H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 189
+  },
+  "x80k6H": {
+    "id": "x80k6H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 174
+  },
+  "x80k7H": {
+    "id": "x80k7H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 195
+  },
+  "x80k8H": {
+    "id": "x80k8H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 177
+  },
+  "x80k9H": {
+    "id": "x80k9H",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 196
+  },
+  "x80kTH": {
+    "id": "x80kTH",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 186
+  },
+  "x80kJH": {
+    "id": "x80kJH",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 173
+  },
+  "x80kQH": {
+    "id": "x80kQH",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 3,
+    "x": 94,
+    "y": 4,
+    "parent": "k9yg",
+    "activeFace": 1
+  },
+  "x80kKH": {
+    "id": "x80kKH",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 175
+  },
+  "x80kAS": {
+    "id": "x80kAS",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 178
+  },
+  "x80k2S": {
+    "id": "x80k2S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 187
+  },
+  "x80k3S": {
+    "id": "x80k3S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 158
+  },
+  "x80k4S": {
+    "id": "x80k4S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 198
+  },
+  "x80k5S": {
+    "id": "x80k5S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 159
+  },
+  "x80k6S": {
+    "id": "x80k6S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "6S",
+    "z": 168
+  },
+  "x80k7S": {
+    "id": "x80k7S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 183
+  },
+  "x80k8S": {
+    "id": "x80k8S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 170
+  },
+  "x80k9S": {
+    "id": "x80k9S",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 200
+  },
+  "x80kTS": {
+    "id": "x80kTS",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 160
+  },
+  "x80kJS": {
+    "id": "x80kJS",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 202
+  },
+  "x80kQS": {
+    "id": "x80kQS",
+    "parent": "x80kP",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 167
+  },
+  "x80kKS": {
+    "id": "x80kKS",
+    "deck": "x80kD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 4,
+    "x": 139,
+    "y": 4,
+    "activeFace": 1,
+    "parent": "k9yg"
+  },
+  "z5lb": {
+    "type": "label",
+    "text": "Normal",
+    "x": 116,
+    "y": 270,
+    "z": 7,
+    "id": "z5lb"
+  },
+  "12w6": {
+    "type": "label",
+    "text": "Transparent using 'classes': 'transparent'. It will still show a border when hovering a card over it. You should always make sure to highlight this position in the game board underneath.",
+    "x": 352,
+    "y": 249,
+    "z": 10,
+    "id": "12w6",
+    "width": 320,
+    "height": 120
+  },
+  "qzvk": {
+    "type": "label",
+    "text": "You can use the 'css' property to change pretty much anything about the looks.",
     "x": 797,
-    "y": 658,
-    "z": 1235,
-    "text": 1
-  },
-  "circle6": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle6",
-    "x": -1,
-    "y": -25,
-    "z": 1220,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "parent": "circle10",
-    "text": 2
-  },
-  "circle7": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle7",
-    "x": -1,
-    "y": -25,
-    "z": 1214,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "parent": "circle6",
-    "text": 3
-  },
-  "circle8": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle8",
-    "x": -1,
-    "y": -25,
-    "z": 1216,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "parent": "circle7",
-    "text": 4
-  },
-  "circle9": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle9",
-    "x": 916,
-    "y": 661,
-    "z": 1238,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    },
-    "text": 1
-  },
-  "circle10": {
-    "inheritFrom": {
-      "circle1": "!parent"
-    },
-    "type": "holder",
-    "id": "circle10",
-    "x": 912,
-    "y": 531,
-    "z": 1237,
-    "color": "white",
-    "dropTarget": {
-      "token": "circle",
-      "color": "white"
-    }
-  },
-  "text3": {
-    "id": "text3",
-    "x": 778,
-    "y": 833,
+    "y": 273,
+    "z": 12,
+    "id": "qzvk",
     "width": 300,
-    "z": 185,
+    "height": 60
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Holders: Appearance",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 287,
+    "y": -6,
+    "z": 75,
+    "id": "8fr3"
+  },
+  "k9yg": {
+    "type": "holder",
+    "id": "k9yg",
+    "x": 109,
+    "y": 726,
+    "width": 511,
+    "height": 168,
+    "z": 15,
     "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "This is similar to the rectangles except that the numbers are displayed in a different location and the 'dropTarget' prevents mixing colors."
+    "dropShadow": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "stackOffsetX": 45
   },
-  "text4": {
-    "id": "text4",
-    "x": 1178,
-    "y": 615,
-    "width": 300,
-    "z": 185,
+  "1kvg": {
+    "id": "1kvg",
+    "x": 177,
+    "y": 669,
+    "width": 400,
+    "height": 50,
+    "z": 4,
     "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 22px; ",
-    "text": "The SVG is a little more complicated in this holder. So it is represented by a VTT asset and not a URL-encoded SVG. Doing it this way simplifies the JSON, but then it is not possible to adjust the fill or stroke colors since holders do not apply 'svgReplaces'.\n\nThis stack also uses slighly more complicated css to achieve the desired visual effect. "
-  },
-  "coin2": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin2",
-    "x": -1,
-    "y": -15,
-    "z": 1256,
-    "width": 100,
-    "height": 80,
-    "parent": "coin1",
-    "text": 2
-  },
-  "coin3": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin3",
-    "x": -1,
-    "y": -15,
-    "z": 1258,
-    "width": 100,
-    "height": 80,
-    "parent": "coin2",
-    "text": 3
-  },
-  "coin4": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin4",
-    "x": -1,
-    "y": -15,
-    "z": 1260,
-    "width": 100,
-    "height": 80,
-    "parent": "coin3",
-    "text": 4
-  },
-  "coin5": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin5",
-    "x": -1,
-    "y": -15,
-    "z": 1262,
-    "width": 100,
-    "height": 80,
-    "parent": "coin4",
-    "text": 5
-  },
-  "coin6": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin6",
-    "x": -1,
-    "y": -15,
-    "z": 1264,
-    "width": 100,
-    "height": 80,
-    "parent": "coin5",
-    "text": 6
-  },
-  "coin7": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin7",
-    "x": 1264,
-    "y": 516,
-    "z": 1284,
-    "width": 100,
-    "height": 80,
-    "text": 1
-  },
-  "coin8": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin8",
-    "x": -1,
-    "y": -15,
-    "z": 1282,
-    "width": 100,
-    "height": 80,
-    "text": 2,
-    "parent": "coin7"
-  },
-  "coin9": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin9",
-    "x": -1,
-    "y": -15,
-    "z": 1280,
-    "width": 100,
-    "height": 80,
-    "text": 3,
-    "parent": "coin8"
-  },
-  "coin10": {
-    "inheritFrom": {
-      "coin1": "!parent"
-    },
-    "type": "holder",
-    "id": "coin10",
-    "x": 1384,
-    "y": 519,
-    "z": 1285,
-    "width": 100,
-    "height": 80,
-    "text": 1
+    "text": "This holder has dropShadow: true. You can modify the shadow using css with '.dragging-shadow'."
   }
 }
