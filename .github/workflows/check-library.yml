@@ -131,7 +131,6 @@ jobs:
                 validation_output+="❌ \`$file\` - Issues found\n"
               fi
             else
-              echo "Validating $file..."
               if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
                 echo "✅ $file - No issues found"
               else
