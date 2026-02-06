@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770355895760,
+      "lastUpdate": 1770387252535,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1098,8 +1098,6 @@
       " .holderTextOnly": {
         "top": "auto",
         "bottom": "calc(100% + 0.25em)",
-        "height": "auto",
-        "padding": 0,
         "font-size": "22px !important"
       }
     },
@@ -1168,9 +1166,7 @@
       " .holderTextOnly": {
         "bottom": "auto",
         "top": "calc(100% + 0.25em)",
-        "height": "auto",
-        "padding": 0,
-        "font-size": "19px !important"
+        "font-size": "17px !important"
       }
     },
     "text": "Bottom Text",
