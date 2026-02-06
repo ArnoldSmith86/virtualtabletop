@@ -302,13 +302,13 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
-.roomState.hideName:not(.savedGame) .details h3{
+.roomState.hideMainName .details h3 {
   display: none;
 }
-.roomState.hideName.savedGame .details h3 {
+.roomState.hideSimilarName:not(.savedGame) .details h4 {
   display: none;
 }
-.roomState.hideName.savedGame .details h4 {
+.roomState.savedGame .details h4 {
   margin: 8px;
 }
 .roomState h4:empty {
@@ -394,7 +394,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     left: 48px;
     height: 48px;
   }
-  .roomState.hideName:not(.savedGame) .details {
+  .roomState.hideMainName:not(.savedGame) .details {
     display: block;
   }
   .roomState.savedGame h3 {
