@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770354440973,
+      "lastUpdate": 1770355719479,
       "showName": false,
       "skill": "",
       "description": "",
@@ -87,7 +87,7 @@
     "id": "9qwrP",
     "width": 103,
     "height": 160,
-    "z": 325,
+    "z": 400,
     "parent": "deckHolder"
   },
   "9qwr_A_C": {
@@ -119,7 +119,7 @@
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 04",
-    "z": 398,
+    "z": 404,
     "parent": "9qwrP"
   },
   "9qwr_5_C": {
@@ -513,6 +513,9 @@
     "y": 18,
     "dropTarget": {
       "type": "card"
+    },
+    "onLeave": {
+      "activeFace": 1
     }
   },
   "mainDeck": {
@@ -1178,7 +1181,7 @@
     "css": {
       ".hasImage::before": {
         "background-size": "50%",
-        "top": "-70%"
+        "top": "-140%"
       }
     }
   }

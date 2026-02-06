@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Holders",
       "image": "/assets/-1027054583_6051",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770354440969,
+      "lastUpdate": 1770355719477,
       "showName": false,
       "skill": "",
       "description": "",
@@ -25,9 +28,6 @@
       "variant": "Basic",
       "language": "en-US",
       "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
     }
   },
   "title": {
@@ -101,7 +101,7 @@
     "id": "9qwrP",
     "width": 103,
     "height": 160,
-    "z": 325,
+    "z": 896,
     "parent": "deckHolder"
   },
   "9qwr_A_C": {
@@ -546,6 +546,9 @@
     "y": 18,
     "dropTarget": {
       "type": "card"
+    },
+    "onLeave": {
+      "activeFace": 1
     }
   },
   "mainDeck": {

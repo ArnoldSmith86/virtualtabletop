@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770354440971,
+      "lastUpdate": 1770355719478,
       "showName": false,
       "skill": "",
       "description": "",
@@ -82,381 +82,373 @@
       }
     ]
   },
-  "9qwrP": {
-    "type": "pile",
-    "id": "9qwrP",
-    "width": 103,
-    "height": 160,
-    "z": 325,
-    "parent": "deckHolder"
-  },
   "9qwr_2_C": {
     "id": "9qwr_2_C",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 02",
-    "z": 1085
+    "z": 1596
   },
   "9qwr_3_C": {
     "id": "9qwr_3_C",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 03",
-    "z": 1087
+    "z": 1633
   },
   "9qwr_4_C": {
     "id": "9qwr_4_C",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 04",
-    "z": 1082,
-    "parent": "9qwrP"
+    "z": 1632,
+    "parent": "m421"
   },
   "9qwr_6_C": {
     "id": "9qwr_6_C",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 06",
-    "z": 1093
+    "z": 1602
   },
   "9qwr_7_C": {
     "id": "9qwr_7_C",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 07",
-    "z": 1068
+    "z": 1584
   },
   "9qwr_8_C": {
     "id": "9qwr_8_C",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 08",
-    "z": 1075,
-    "parent": "9qwrP"
+    "z": 1621,
+    "parent": "m421"
   },
   "9qwr_9_C": {
     "id": "9qwr_9_C",
-    "parent": "9qwrP",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 09",
-    "z": 1079
+    "z": 1630,
+    "parent": "m421"
   },
   "9qwr_T_C": {
     "id": "9qwr_T_C",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 10",
-    "z": 1061,
-    "parent": "9qwrP"
+    "z": 1611,
+    "parent": "m421"
   },
   "9qwr_J_C": {
     "id": "9qwr_J_C",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 2J",
-    "z": 1145,
-    "parent": "9qwrP"
+    "z": 1595,
+    "parent": "m421"
   },
   "9qwr_Q_C": {
     "id": "9qwr_Q_C",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 3Q",
-    "z": 1060
+    "z": 1629
   },
   "9qwr_K_C": {
     "id": "9qwr_K_C",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 4K",
-    "z": 1070
+    "z": 1605
   },
   "9qwr_A_D": {
     "id": "9qwr_A_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 01",
-    "z": 1064
+    "z": 1625
   },
   "9qwr_2_D": {
     "id": "9qwr_2_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 02",
-    "z": 1062
+    "z": 1610
   },
   "9qwr_3_D": {
     "id": "9qwr_3_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 03",
-    "z": 1083
+    "z": 1624
   },
   "9qwr_4_D": {
     "id": "9qwr_4_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 04",
-    "z": 1096
+    "z": 1615
   },
   "9qwr_5_D": {
     "id": "9qwr_5_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 05",
-    "z": 1080
+    "z": 1617
   },
   "9qwr_6_D": {
     "id": "9qwr_6_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 06",
-    "z": 1055
+    "z": 1598
   },
   "9qwr_7_D": {
     "id": "9qwr_7_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 07",
-    "z": 1058
+    "z": 1626
   },
   "9qwr_8_D": {
     "id": "9qwr_8_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 08",
-    "z": 1065
+    "z": 1597
   },
   "9qwr_9_D": {
     "id": "9qwr_9_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 09",
-    "z": 1076
+    "z": 1627
   },
   "9qwr_T_D": {
     "id": "9qwr_T_D",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 10",
-    "z": 1054,
-    "parent": "9qwrP"
+    "z": 1599,
+    "parent": "m421"
   },
   "9qwr_J_D": {
     "id": "9qwr_J_D",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 2J",
-    "z": 1142,
-    "parent": "9qwrP"
+    "z": 1608,
+    "parent": "m421"
   },
   "9qwr_Q_D": {
     "id": "9qwr_Q_D",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 3Q",
-    "z": 1051,
-    "parent": "9qwrP"
+    "z": 1586,
+    "parent": "m421"
   },
   "9qwr_K_D": {
     "id": "9qwr_K_D",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 4K",
-    "z": 1095
+    "z": 1613
   },
   "9qwr_A_H": {
     "id": "9qwr_A_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 01",
-    "z": 1057
+    "z": 1607
   },
   "9qwr_2_H": {
     "id": "9qwr_2_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 02",
-    "z": 1089
+    "z": 1609
   },
   "9qwr_3_H": {
     "id": "9qwr_3_H",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 03",
-    "z": 1091,
-    "parent": "9qwrP"
+    "z": 1587,
+    "parent": "m421"
   },
   "9qwr_4_H": {
     "id": "9qwr_4_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 04",
-    "z": 1097
+    "z": 1590
   },
   "9qwr_5_H": {
     "id": "9qwr_5_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 05",
-    "z": 1056
+    "z": 1603
   },
   "9qwr_6_H": {
     "id": "9qwr_6_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 06",
-    "z": 1086
+    "z": 1635
   },
   "9qwr_9_H": {
     "id": "9qwr_9_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 09",
-    "z": 1073
+    "z": 1622
   },
   "9qwr_J_H": {
     "id": "9qwr_J_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 2J",
-    "z": 1090
+    "z": 1614
   },
   "9qwr_Q_H": {
     "id": "9qwr_Q_H",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 3Q",
-    "z": 1081,
-    "parent": "9qwrP"
+    "z": 1616,
+    "parent": "m421"
   },
   "9qwr_K_H": {
     "id": "9qwr_K_H",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "H 4K",
-    "z": 1084
+    "z": 1593
   },
   "9qwr_A_S": {
     "id": "9qwr_A_S",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 01",
-    "z": 1050
+    "z": 1623
   },
   "9qwr_2_S": {
     "id": "9qwr_2_S",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 02",
-    "z": 1071,
-    "parent": "9qwrP"
+    "z": 1585,
+    "parent": "m421"
   },
   "9qwr_3_S": {
     "id": "9qwr_3_S",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 03",
-    "z": 1078
+    "z": 1589
   },
   "9qwr_5_S": {
     "id": "9qwr_5_S",
-    "parent": "9qwrP",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 05",
-    "z": 1094
+    "z": 1592,
+    "parent": "m421"
   },
   "9qwr_6_S": {
     "id": "9qwr_6_S",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 06",
-    "z": 1053,
-    "parent": "9qwrP"
+    "z": 1606,
+    "parent": "m421"
   },
   "9qwr_7_S": {
     "id": "9qwr_7_S",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 07",
-    "z": 1066
+    "z": 1594
   },
   "9qwr_8_S": {
     "id": "9qwr_8_S",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 08",
-    "z": 1088
+    "z": 1620
   },
   "9qwr_9_S": {
     "id": "9qwr_9_S",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 09",
-    "z": 1052
+    "z": 1600
   },
   "9qwr_T_S": {
     "id": "9qwr_T_S",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 10",
-    "z": 1074,
-    "parent": "9qwrP"
+    "z": 1612,
+    "parent": "m421"
   },
   "9qwr_J_S": {
     "id": "9qwr_J_S",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 2J",
-    "z": 1151,
-    "parent": "9qwrP"
+    "z": 1588,
+    "parent": "m421"
   },
   "9qwr_Q_S": {
     "id": "9qwr_Q_S",
-    "parent": "9qwrP",
+    "parent": "m421",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 3Q",
-    "z": 1072
+    "z": 1604
   },
   "9qwr_K_S": {
     "id": "9qwr_K_S",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1143,
-    "parent": "9qwrP"
+    "z": 1631,
+    "parent": "m421"
   },
   "deckHolder": {
     "type": "holder",
@@ -465,6 +457,9 @@
     "y": 18,
     "dropTarget": {
       "type": "card"
+    },
+    "onLeave": {
+      "activeFace": 1
     }
   },
   "mainDeck": {
@@ -1005,48 +1000,48 @@
     "id": "9qwr_4_S",
     "deck": "mainDeck",
     "cardType": "S 04",
-    "z": 1092,
-    "parent": "9qwrP"
+    "z": 1601,
+    "parent": "m421"
   },
   "9qwr_8_H": {
     "type": "card",
     "id": "9qwr_8_H",
     "deck": "mainDeck",
     "cardType": "H 08",
-    "z": 1063,
-    "parent": "9qwrP"
+    "z": 1619,
+    "parent": "m421"
   },
   "9qwr_A_C": {
     "type": "card",
     "id": "9qwr_A_C",
     "deck": "mainDeck",
     "cardType": "C 01",
-    "z": 1069,
-    "parent": "9qwrP"
+    "z": 1628,
+    "parent": "m421"
   },
   "9qwr_7_H": {
     "type": "card",
     "id": "9qwr_7_H",
     "deck": "mainDeck",
     "cardType": "H 07",
-    "z": 1067,
-    "parent": "9qwrP"
+    "z": 1591,
+    "parent": "m421"
   },
   "9qwr_5_C": {
     "type": "card",
     "id": "9qwr_5_C",
     "deck": "mainDeck",
     "cardType": "C 05",
-    "z": 1077,
-    "parent": "9qwrP"
+    "z": 1618,
+    "parent": "m421"
   },
   "9qwr_T_H": {
     "type": "card",
     "id": "9qwr_T_H",
     "deck": "mainDeck",
     "cardType": "H 10",
-    "z": 1059,
-    "parent": "9qwrP"
+    "z": 1634,
+    "parent": "m421"
   },
   "holder31": {
     "type": "holder",
@@ -1123,7 +1118,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Use <b>.holderTextOnly</b> class to limit changes to the holder and not impact child widgets. This class can override the automatic font resizing in holders.<br><br>The  example above can be used on a holder of any height and the text will always appear the same distance above the top of the holder. And the left example will put it at the bottom."
+    "html": "Use <b>.holderTextOnly</b> class to limit changes to the holder and not impact child widgets. This class can override the automatic font resizing in holders.<br><br>The  example above can be used on a holder of any height and the text will always appear the same distance above the top of the holder. And the right example will put it at the bottom."
   },
   "holder5": {
     "type": "holder",
@@ -1166,7 +1161,7 @@
   "holder4a": {
     "type": "holder",
     "id": "holder4a",
-    "x": 660,
+    "x": 1013,
     "y": 781,
     "z": 9733,
     "css": {
@@ -1181,5 +1176,48 @@
     "text": "Bottom Text",
     "textColor": "green",
     "height": 68
+  },
+  "q5xm": {
+    "type": "holder",
+    "y": 799,
+    "z": 9734,
+    "id": "q5xm",
+    "width": 650,
+    "x": 71,
+    "resetProperties": {
+      "text": "Drag cards into this holder and the text will be erased using an enterRoutine. Press the reset button to restore it."
+    },
+    "enterRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": null
+      }
+    ],
+    "stackOffsetX": 40,
+    "text": "Drag cards into this holder and the text will be erased using an enterRoutine. Press the reset button to restore it."
+  },
+  "fvjz": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "RESET"
+      }
+    ],
+    "x": 340,
+    "y": 711,
+    "z": 1,
+    "id": "fvjz",
+    "text": "Reset"
+  },
+  "m421": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "m421"
   }
 }
