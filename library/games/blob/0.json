@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "blob",
       "image": "/assets/-336756995_33281",
@@ -10,7 +13,7 @@
       "mode": "vs",
       "time": "20-30",
       "attribution": "Room design and layout LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Blob icons and library image by RaphaelAlvez. Released to the Public Domain under CC0.<br><div><br></div></div>",
-      "lastUpdate": 1770380184997,
+      "lastUpdate": 1770392533680,
       "showName": true,
       "skill": "",
       "description": "Mischievous goo creatures plop onto the board and squish each other around. Merge blobs, bounce rivals, and be the first to get three large blobs in a row.",
@@ -25,9 +28,6 @@
       "variant": "",
       "language": "",
       "players": "2"
-    },
-    "gameSettings": {
-      "legacyModes": {}
     }
   },
   "orangeBig1": {
@@ -58,9 +58,10 @@
   },
   "tealBig1": {
     "id": "tealBig1",
-    "z": 1,
+    "z": 2,
     "css": {
-      "filter": "hue-rotate(-5deg) grayscale(0.1)"
+      "filter": "hue-rotate(-5deg) grayscale(0.1)",
+      "transform": "translate(${PROPERTY x}px, ${PROPERTY y}px) scaleX(-1) !important"
     },
     "image": "/assets/-1708261459_3249",
     "grid": [
@@ -79,8 +80,7 @@
     "resetProperties": {
       "parent": "tealBigHolder"
     },
-    "y": 4,
-    "hoverParent": "tealBigHolder",
+    "y": 54,
     "parent": "tealBigHolder"
   },
   "tealSmall1": {
@@ -472,13 +472,14 @@
       "outline": "4px solid #a66e33"
     },
     "editorGroup": true,
-    "z": 4
+    "z": 4,
+    "movable": false,
+    "movableInEdit": false
   },
   "tealBig2": {
     "id": "tealBig2",
-    "y": 54,
-    "z": 2,
-    "parent": "tealBigHolder",
+    "y": 104,
+    "z": 3,
     "inheritFrom": {
       "tealBig1": [
         "grid",
@@ -487,7 +488,10 @@
         "blob",
         "image"
       ]
-    }
+    },
+    "x": 0,
+    "hoverParent": "tealBigHolder",
+    "parent": "tealBigHolder"
   },
   "tealSmall2": {
     "id": "tealSmall2",
@@ -523,11 +527,12 @@
   },
   "tealSmall4": {
     "id": "tealSmall4",
-    "y": 4,
-    "z": 1,
+    "y": 54,
+    "z": 2,
     "css": {
       "background-size": "50% !important",
-      "filter": "hue-rotate(-5deg) grayscale(0.1)"
+      "filter": "hue-rotate(-5deg) grayscale(0.1)",
+      "transform": "translate(${PROPERTY x}px, ${PROPERTY y}px) scaleX(-1) !important"
     },
     "image": "/assets/-1109567416_3074",
     "grid": [
@@ -567,10 +572,9 @@
   },
   "tealSmall6": {
     "id": "tealSmall6",
-    "y": 54,
-    "z": 2,
+    "y": 4,
+    "z": 1,
     "x": -10,
-    "parent": "tealSmallHolder",
     "inheritFrom": {
       "tealSmall4": [
         "grid",
@@ -579,7 +583,8 @@
         "blob",
         "image"
       ]
-    }
+    },
+    "parent": "tealSmallHolder"
   },
   "tealSmall7": {
     "id": "tealSmall7",
@@ -653,36 +658,6 @@
   },
   "tealBig3": {
     "id": "tealBig3",
-    "y": 104,
-    "z": 3,
-    "parent": "tealBigHolder",
-    "inheritFrom": {
-      "tealBig1": [
-        "grid",
-        "css",
-        "resetProperties",
-        "blob",
-        "image"
-      ]
-    }
-  },
-  "tealBig4": {
-    "id": "tealBig4",
-    "y": 154,
-    "z": 4,
-    "parent": "tealBigHolder",
-    "inheritFrom": {
-      "tealBig1": [
-        "grid",
-        "css",
-        "resetProperties",
-        "blob",
-        "image"
-      ]
-    }
-  },
-  "tealBig5": {
-    "id": "tealBig5",
     "y": 204,
     "z": 5,
     "parent": "tealBigHolder",
@@ -694,10 +669,11 @@
         "blob",
         "image"
       ]
-    }
+    },
+    "x": 0
   },
-  "tealBig6": {
-    "id": "tealBig6",
+  "tealBig4": {
+    "id": "tealBig4",
     "y": 254,
     "z": 6,
     "parent": "tealBigHolder",
@@ -709,10 +685,11 @@
         "blob",
         "image"
       ]
-    }
+    },
+    "x": 0
   },
-  "tealBig7": {
-    "id": "tealBig7",
+  "tealBig5": {
+    "id": "tealBig5",
     "y": 304,
     "z": 7,
     "parent": "tealBigHolder",
@@ -724,10 +701,11 @@
         "blob",
         "image"
       ]
-    }
+    },
+    "x": 0
   },
-  "tealBig8": {
-    "id": "tealBig8",
+  "tealBig6": {
+    "id": "tealBig6",
     "y": 354,
     "z": 8,
     "parent": "tealBigHolder",
@@ -739,7 +717,42 @@
         "blob",
         "image"
       ]
-    }
+    },
+    "x": 0
+  },
+  "tealBig7": {
+    "id": "tealBig7",
+    "y": 154,
+    "z": 4,
+    "inheritFrom": {
+      "tealBig1": [
+        "grid",
+        "css",
+        "resetProperties",
+        "blob",
+        "image"
+      ]
+    },
+    "x": 0,
+    "hoverParent": "tealBigHolder",
+    "parent": "tealBigHolder"
+  },
+  "tealBig8": {
+    "id": "tealBig8",
+    "y": 4,
+    "z": 1,
+    "inheritFrom": {
+      "tealBig1": [
+        "grid",
+        "css",
+        "resetProperties",
+        "blob",
+        "image"
+      ]
+    },
+    "hoverParent": "tealBigHolder",
+    "x": 0,
+    "parent": "tealBigHolder"
   },
   "tealBigHolder": {
     "type": "holder",
