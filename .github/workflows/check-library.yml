@@ -129,6 +129,7 @@ jobs:
               else
                 echo "❌ $file - Issues found"
                 validation_output+="❌ \`$file\` - Issues found\n"
+                found_issues=true
               fi
             else
               if output=$(node validator/validate_gamefile_node.js "$file" 2>&1); then
@@ -142,11 +143,7 @@ jobs:
             fi
           done
           
-          if [ "$summary_only" = true ]; then
-            echo "validation_output<<EOF" >> $GITHUB_OUTPUT
-            echo -e "$validation_output" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          elif [ "$found_issues" = true ]; then
+          if [ "$found_issues" = true ]; then
             echo "validation_output<<EOF" >> $GITHUB_OUTPUT
             echo -e "$validation_output" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
