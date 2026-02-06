@@ -3,14 +3,14 @@
     "version": 20,
     "info": {
       "name": "blob",
-      "image": "/assets/2085339988_8331",
+      "image": "/assets/-336756995_33281",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/355433/boop",
       "year": "2022",
       "mode": "vs",
       "time": "20-30",
       "attribution": "Room design and layout LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Blob icons and library image by RaphaelAlvez. Released to the Public Domain under CC0.<br><div><br></div></div>",
-      "lastUpdate": 1770337102665,
+      "lastUpdate": 1770380184997,
       "showName": true,
       "skill": "",
       "description": "Mischievous goo creatures plop onto the board and squish each other around. Merge blobs, bounce rivals, and be the first to get three large blobs in a row.",
@@ -21,10 +21,10 @@
       "ruleText": "",
       "helpText": "",
       "usesAIImagery": false,
-      "players": "2",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
+      "language": "",
+      "players": "2"
     },
     "gameSettings": {
       "legacyModes": {}
