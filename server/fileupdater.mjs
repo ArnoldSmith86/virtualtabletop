@@ -604,7 +604,7 @@ function v21DisableHolderImageWidget(meta, state) {
   for(const id in state) {
     const properties = state[id];
     if(properties && properties.type == 'holder') {
-      if(properties.image || properties.icon || properties.text) {
+      if(properties.image || properties.icon || properties.text || properties.textColor || properties.color || properties.svgReplaces) {
         meta.gameSettings.legacyModes.disableHolderImageWidget = true;
         return;
       }
