@@ -33,7 +33,7 @@ class Holder extends ImageWidget {
 
   applyDeltaToDOM(delta) {
     this.base.applyDeltaToDOM.call(this, delta, true);
-    if(!this.get('text') && this.textWrapper) {
+    if(this.textWrapper && !this.get('text')) {
       this.textWrapper.remove();
       this.textWrapper = null;
     }

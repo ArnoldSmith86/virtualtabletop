@@ -313,20 +313,24 @@ function optimalSquareSize(count, width, height) {
 }
 
 function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFontSize=100, step=10) {
-  element.textContent = text;
+  element.textContent = text; // Set the text
 
+  // Start with a large font size and decrease until it fits
   let fontSize = initialFontSize;
 
+  // Set the font size and measure the height and width of the element
   while (fontSize >= 10) {
     element.style.fontSize = `${fontSize}px`;
 
     const elementHeight = element.scrollHeight;
     const elementWidth = element.scrollWidth;
 
-    if (elementHeight <= maxHeight && elementWidth <= maxWidth)
-      break;
+    // Check if the element fits within the available height and width
+    if (elementHeight <= maxHeight && elementWidth <= maxWidth) {
+      break; // The element fits, exit the loop
+    }
 
-    fontSize -= step;
+    fontSize -= step; // Reduce the font size
   }
 
   element.style.setProperty('--maxWidth', `${maxWidth}px`);
