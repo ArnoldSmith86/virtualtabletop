@@ -16,6 +16,10 @@
   top: -1px;
 }
 
+.holder.hasImage::before {
+  background-image: var(--bgImage);
+}
+
 .holder.transparent {
   background: none;
   border-color: transparent;

@@ -72,11 +72,14 @@ class Holder extends ImageWidget {
   }
 
   css() {
-    let css = this.base.css.call(this);
+    let css = this.base.css.call(this, true);
+
     if(!legacyMode('disableHolderImageWidget')) {
       css += '; --bgColor: ' + this.get('color');
       css += '; --holderTextColor: ' + this.get('textColor');
+      css += '; --bgImage: url("' + this.getImage() + '")';
     }
+
     return css;
   }
 
