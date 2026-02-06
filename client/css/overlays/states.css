@@ -504,8 +504,8 @@ div:nth-of-type(2) > .list > .roomState .star {
   text-shadow: 2px 2px 4px #444;
 }
 #mainDetails .star::before {
-  font-size: 50px;
-  width: 50px;
+  font-size: 27px;
+  width: 27px;
 }
 #mainDetails #mainImage > i {
   top: unset;
