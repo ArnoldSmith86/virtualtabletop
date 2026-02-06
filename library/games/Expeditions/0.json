@@ -9167,7 +9167,7 @@
     },
     "info": {
       "name": "Expeditions",
-      "image": "/assets/1725356307_6414",
+      "image": "/assets/677133612_494323",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/50/lost-cities",
       "year": "1999",
@@ -9177,7 +9177,7 @@
       "similarName": "Lost Cities",
       "description": "Play cards into columns in ascending numerical order. Gamble with wager cards that will multiply your positive or negative score. Highest score wins.",
       "showName": true,
-      "lastUpdate": 1766761388680,
+      "lastUpdate": 1770381206215,
       "similarDesigner": "Reiner Knizia",
       "skill": "",
       "similarImage": "",
@@ -9187,7 +9187,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2"
+      "players": "2",
+      "usesAIImagery": false
     }
   },
   "coma": {

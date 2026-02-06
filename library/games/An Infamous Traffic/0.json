@@ -30,14 +30,14 @@
     "version": 15,
     "info": {
       "name": "An Infamous Traffic",
-      "image": "/assets/-1552614890_11368",
+      "image": "/assets/1588347109_124819",
       "rules": "https://boardgamegeek.com/filepage/138527/rulebook",
       "bgg": "https://boardgamegeek.com/boardgame/206490/an-infamous-traffic",
       "year": "",
       "mode": "vs",
       "time": "45 - 90",
       "attribution": "Layout design and coding by Jonathan Cox (email: JonGetsGames@gmail.com for inquiries). Game name and all art assets copyright by, and used with permission from, the rights holder,&nbsp;<span style=\"white-space-collapse: collapse;\">Cole Wehrle</span>. \"Wrong Answer\" audio source&nbsp;by [UNIVERSFIELD] via&nbsp;https://pixabay.com/sound-effects/wrong-answer-129254/.",
-      "lastUpdate": 1713028548804,
+      "lastUpdate": 1770382863613,
       "showName": false,
       "skill": "complex",
       "description": "Create supply chains to conduct the opium trade in 19th century Qing China.",
@@ -50,7 +50,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-5"
+      "players": "2-5",
+      "usesAIImagery": false
     }
   },
   "7f3r": {
