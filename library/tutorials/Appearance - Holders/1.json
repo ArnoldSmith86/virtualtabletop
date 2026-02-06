@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Holders",
       "image": "/assets/-1027054583_6051",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770263422863,
+      "lastUpdate": 1770345699543,
       "showName": false,
       "skill": "",
       "description": "",
@@ -20,13 +23,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "usesAIImagery": false,
+      "variantImage": "",
       "variant": "Text",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1"
     }
   },
   "title": {
@@ -259,11 +260,11 @@
   },
   "9qwr_J_D": {
     "id": "9qwr_J_D",
-    "parent": "9qwrP",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 2J",
-    "z": 1101
+    "z": 1112,
+    "parent": "9qwrP"
   },
   "9qwr_Q_D": {
     "id": "9qwr_Q_D",
@@ -1053,10 +1054,8 @@
     "x": 581,
     "y": 252,
     "z": 9733,
-    "css": {
-      "--color": "red"
-    },
-    "text": "Change color with css"
+    "text": "Change color with css",
+    "textColor": "red"
   },
   "holder2": {
     "type": "holder",
@@ -1092,7 +1091,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Holders use a special <b>--color</b> property for text"
+    "html": "Holders use the <b>textColor</b> property for to change the text color."
   },
   "holder4": {
     "type": "holder",
@@ -1102,12 +1101,12 @@
     "z": 9733,
     "css": {
       " .holderTextOnly": {
-        "color": "purple",
         "top": "-100px",
-        "font-size": "20px !important"
+        "font-size": "19px !important"
       }
     },
-    "text": "CSS Tips"
+    "text": "CSS Tips",
+    "textColor": "purple"
   },
   "text4": {
     "id": "text4",
@@ -1121,7 +1120,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Use <b>.holderTextOnly</b> class to limit changes to a holder and not impact child widgets."
+    "html": "Use <b>.holderTextOnly</b> class to limit changes to a holder and not impact child widgets. You can also use this class to override the automatic font resizing in holders."
   },
   "holder5": {
     "type": "holder",
@@ -1147,13 +1146,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The holder above demonstrates what happens when font size is not on the <b>.holderTextOnly</b> class. Drop the tan widget into the holder and its font will change. Also note that it will not impact the text in the <b>text</b> property"
+    "html": "The holder above demonstrates what happens when font size is not on the <b>.holderTextOnly</b> class. Drop the tan widget into the holder and its font will change. Also note that it will not impact the text in the widget's <b>text</b> property."
   },
   "basic1": {
     "id": "basic1",
     "x": 1234,
     "y": 252,
-    "z": 21,
+    "z": 24,
     "text": "This widget starts with the default font-size of 16px.",
     "width": 103,
     "height": 160,

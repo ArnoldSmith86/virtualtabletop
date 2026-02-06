@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Holders",
       "image": "/assets/-1027054583_6051",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770263508006,
+      "lastUpdate": 1770345699546,
       "showName": false,
       "skill": "",
       "description": "",
@@ -20,13 +23,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "usesAIImagery": false,
+      "variantImage": "",
       "variant": "Icons",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1"
     }
   },
   "title": {

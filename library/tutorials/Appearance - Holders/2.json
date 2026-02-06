@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Appearance - Holders",
       "image": "/assets/-1027054583_6051",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770263478156,
+      "lastUpdate": 1770345699545,
       "showName": false,
       "skill": "",
       "description": "",
@@ -20,13 +23,11 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "players": "1",
-      "language": "en-US",
+      "usesAIImagery": false,
+      "variantImage": "",
       "variant": "Images",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1"
     }
   },
   "title": {
@@ -118,7 +119,7 @@
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 04",
-    "z": 393,
+    "z": 398,
     "parent": "9qwrP"
   },
   "9qwr_5_C": {
@@ -1040,9 +1041,7 @@
     "y": 284,
     "z": 9733,
     "css": {
-      "--bgImageOpacity": 0.8,
-      "background-repeat": "no-repeat",
-      "background-position": "center"
+      "--bgImageOpacity": 0.8
     },
     "image": "/i/game-icons.net/skoll/atom.svg",
     "svgReplaces": {
@@ -1079,14 +1078,14 @@
     "z": 9734,
     "css": {
       "default": {
-        "--bgColor": "#ff0000",
         "--bgColorOpacity": 0.5
       },
       ".widget.holder.hasImage::before": {
         "opacity": 0.6
       }
     },
-    "image": "/i/noto-emoji/emoji_u1f34e.svg"
+    "image": "/i/noto-emoji/emoji_u1f34e.svg",
+    "color": "#ff0000"
   },
   "holder5": {
     "type": "holder",
@@ -1094,11 +1093,9 @@
     "x": 1363,
     "y": 284,
     "z": 9734,
-    "css": {
-      "--bgColor": "#fcefd5"
-    },
     "image": "/i/noto-emoji/emoji_u1f381.svg",
-    "text": "Happy Birthday"
+    "text": "Happy Birthday",
+    "color": "#fcefd5"
   },
   "text1": {
     "id": "text1",
@@ -1112,7 +1109,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Add an image using the <b>image</b> property. It is centered vertically and horizontally and the opacity is set at 0.2."
+    "html": "Add an image using the <b>image</b> property. It is centered vertically and horizontally and the opacity defaults to 0.2."
   },
   "text2": {
     "id": "text2",
@@ -1155,7 +1152,7 @@
       "font-size": "22px",
       "white-space": "pre-wrap"
     },
-    "html": "The <b>--bgColor</b> and\n<b>--bgColorOpacity</b> properties work in combination with images."
+    "html": "A <b>--bgColorOpacity</b> property is used to change just the background color. Changing the regular css opacity would also change the opacity of child widgets."
   },
   "text5": {
     "id": "text5",
