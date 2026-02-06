@@ -239,8 +239,8 @@ class Holder extends ImageWidget {
       this.textWrapper.className = 'holderTextOnly';
       this.textWrapper.textContent = this.get('text');
       this.domElement.appendChild(this.textWrapper);
-      
-      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.get('width'), this.get('height'));
+
+      setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.textWrapper.scrollWidth, this.textWrapper.scrollHeight, 25, 1);
     } else {
       super.updateIcon();
     }

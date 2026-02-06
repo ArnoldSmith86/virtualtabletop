@@ -312,42 +312,25 @@ function optimalSquareSize(count, width, height) {
   return cell_size;
 }
 
-function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
-  element.textContent = text; // Set the text
+function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFontSize=100, step=10) {
+  element.textContent = text;
 
-  // Holder different because it was added later and this prevents comptability problems.
-  const isHolder = element.classList.contains('holderTextOnly');
-  let paddingX = 0;
-  let paddingY = 0;
-  let availableWidth = maxWidth;
-  let availableHeight = maxHeight;
-  if (isHolder) {
-    const computedStyle = getComputedStyle(element);
-    paddingX = (parseFloat(computedStyle.paddingLeft) || 0) + (parseFloat(computedStyle.paddingRight) || 0);
-    paddingY = (parseFloat(computedStyle.paddingTop) || 0) + (parseFloat(computedStyle.paddingBottom) || 0);
-    availableWidth = Math.max(0, maxWidth - paddingX);
-    availableHeight = Math.max(0, maxHeight - paddingY);
-  }
-  let fontSize = isHolder ? 25 : 100;
-  const step = isHolder ? 1 : 10;
+  let fontSize = initialFontSize;
 
-  // Set the font size and measure the height and width of the element
   while (fontSize >= 10) {
     element.style.fontSize = `${fontSize}px`;
 
-    const elementHeight = isHolder ? Math.max(0, element.scrollHeight - paddingY) : element.scrollHeight;
-    const elementWidth = isHolder ? Math.max(0, element.scrollWidth - paddingX) : element.scrollWidth;
+    const elementHeight = element.scrollHeight;
+    const elementWidth = element.scrollWidth;
 
-    // Check if the element fits within the available height and width
-    if (elementHeight <= availableHeight && elementWidth <= availableWidth) {
-      break; // The element fits, exit the loop
-    }
+    if (elementHeight <= maxHeight && elementWidth <= maxWidth)
+      break;
 
-    fontSize -= step; // Reduce the font size by the chosen step
+    fontSize -= step;
   }
 
-  element.style.setProperty('--maxWidth', `${availableWidth}px`);
-  element.style.setProperty('--maxHeight', `${availableHeight}px`);
+  element.style.setProperty('--maxWidth', `${maxWidth}px`);
+  element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
 function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1) {
