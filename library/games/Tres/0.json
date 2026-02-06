@@ -1924,8 +1924,8 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>Room and card layout, coding, and library image by LawDawg. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1751053188513,
-      "showName": true,
+      "lastUpdate": 1770367495432,
+      "showName": false,
       "skill": "",
       "description": "Be the first to collect three sets of three matching cards to win in this memory and deduction card game.",
       "similarImage": "",
@@ -1937,7 +1937,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "3-6"
+      "players": "3-6",
+      "usesAIImagery": false
     }
   },
   "capture1-4": {

@@ -7380,8 +7380,8 @@
       "similarName": "The Crew: The Quest for Planet Nine",
       "similarAwards": "2022 Hungarian Board Game Award Nominee\n2021 Gioco dell’Anno Nominee\n2021 As d'Or - Jeu de l'Année Expert Winner\n2021 American Tabletop Casual Games Winner\n2021 5 Seasons Best International Party&Coop Nominee\n2020 Tric Trac Nominee\n2020 Tric Trac de Bronze\n2020 Spiel der Spiele Hit mit Freunden Recommended\n2020 Nederlandse Spellenprijs Best Advanced Game Winner\n2020 Kennerspiel des Jahres Winner\n2020 Juego del Año Winner\n2020 Japan Boardgame Prize Voters' Selection Nominee\n2020 International Gamers Award - General Strategy Nominee\n2020 Guldbrikken Best Adult Game Winner\n2020 Gouden Ludo Best Family Game Winner\n2020 Goblin Magnifico Nominee\n2020 Fairplay À la carte Winner\n2020 Dragon Awards Best Science Fiction or Fantasy Board Game Nominee\n2020 Deutscher Spiele Preis Best Family/Adult Game Winner\n2020 Cardboard Republic Socializer Laurel Winner\n2019 Meeples' Choice Winner\n2019 Golden Geek Most Innovative Board Game Nominee\n2019 Golden Geek Board Game of the Year Nominee\n2019 Golden Geek Best Family Board Game Nominee\n2019 Golden Geek Best Cooperative Game Winner\n2019 Golden Geek Best Card Game Nominee",
       "description": "Cooperative trick taking card game. Work together on mission tasks to ensure that certain tricks are taken by certain players, all while not revealing your hand.",
-      "showName": true,
-      "lastUpdate": 1698745969939,
+      "showName": false,
+      "lastUpdate": 1770367546600,
       "skill": "",
       "similarImage": "",
       "ruleText": "",
@@ -7390,7 +7390,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "5"
+      "players": "5",
+      "usesAIImagery": false
     }
   },
   "a446559e-6d46-4477-b6ea-2a1c349f93a10": {

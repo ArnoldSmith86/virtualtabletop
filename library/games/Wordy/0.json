@@ -548,9 +548,9 @@
       "attribution": "The game layout, game pieces, images, and Wordy logo were done by LawDawg96 and are released to the Public Domain under CC0.\n<br><div>The library image contains a photograph from https://pixabay.com/photos/printing-plate-letters-font-type-1030849/ and is available under the Pixabay License.<div><br></div><div>Letter distribution and point values from:&nbsp;https://en.wikipedia.org/wiki/Scrabble_letter_distributions.</div></div>",
       "similarName": "Scrabble",
       "description": "Use letter tiles to build words with extra points for playing in certain locations. Play until tile bag runs out. Most points wins.",
-      "showName": true,
+      "showName": false,
       "helpText": "Players take seats.<div><br></div><div>Start game (and choose language) by selecting button with dashed outline of globe.</div><div><br></div><div>Play tiles on board. To exchange tiles, manually flip tiles upside down in hand then drag to swap holder. Press swap icon. New cards are added to hand; swapped cards are returned to pile and it is shuffled.</div><div><br></div><div>Click on scoreboard to enter score for that play.</div>",
-      "lastUpdate": 1701051185957,
+      "lastUpdate": 1770367445551,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -559,7 +559,8 @@
       "variantImage": "",
       "variant": "",
       "language": "cy-GB, de-DE, el-GR, en-US, es, fr-FR, he-IL, it-IT, pt-BR, uk-UA",
-      "players": "2-4"
+      "players": "2-4",
+      "usesAIImagery": false
     }
   },
   "swap": {
