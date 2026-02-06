@@ -103,6 +103,8 @@
   word-break: normal;
   white-space: normal;
   line-height: 1.1;
+  box-sizing: border-box;
+  padding: 0.7em;
 }
 
 .widget.holder.hasImage {

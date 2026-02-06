@@ -316,7 +316,18 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   element.textContent = text; // Set the text
 
   // Holder different because it was added later and this prevents comptability problems.
-  const isHolder = element.classList.contains('holderTextOnly') || (element.closest && element.closest('.widget.holder'));
+  const isHolder = element.classList.contains('holderTextOnly');
+  let paddingX = 0;
+  let paddingY = 0;
+  let availableWidth = maxWidth;
+  let availableHeight = maxHeight;
+  if (isHolder) {
+    const computedStyle = getComputedStyle(element);
+    paddingX = (parseFloat(computedStyle.paddingLeft) || 0) + (parseFloat(computedStyle.paddingRight) || 0);
+    paddingY = (parseFloat(computedStyle.paddingTop) || 0) + (parseFloat(computedStyle.paddingBottom) || 0);
+    availableWidth = Math.max(0, maxWidth - paddingX);
+    availableHeight = Math.max(0, maxHeight - paddingY);
+  }
   let fontSize = isHolder ? 25 : 100;
   const step = isHolder ? 1 : 10;
 
@@ -324,19 +335,19 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   while (fontSize >= 10) {
     element.style.fontSize = `${fontSize}px`;
 
-    const elementHeight = element.scrollHeight;
-    const elementWidth = element.scrollWidth;
+    const elementHeight = isHolder ? Math.max(0, element.scrollHeight - paddingY) : element.scrollHeight;
+    const elementWidth = isHolder ? Math.max(0, element.scrollWidth - paddingX) : element.scrollWidth;
 
     // Check if the element fits within the available height and width
-    if (elementHeight <= maxHeight && elementWidth <= maxWidth) {
+    if (elementHeight <= availableHeight && elementWidth <= availableWidth) {
       break; // The element fits, exit the loop
     }
 
     fontSize -= step; // Reduce the font size by the chosen step
   }
 
-  element.style.setProperty('--maxWidth', `${maxWidth}px`);
-  element.style.setProperty('--maxHeight', `${maxHeight}px`);
+  element.style.setProperty('--maxWidth', `${availableWidth}px`);
+  element.style.setProperty('--maxHeight', `${availableHeight}px`);
 }
 
 function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity) {
