@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770345699543,
+      "lastUpdate": 1770354440971,
       "showName": false,
       "skill": "",
       "description": "",
@@ -159,7 +159,7 @@
     "deck": "mainDeck",
     "type": "card",
     "cardType": "C 2J",
-    "z": 1099,
+    "z": 1145,
     "parent": "9qwrP"
   },
   "9qwr_Q_C": {
@@ -263,7 +263,7 @@
     "deck": "mainDeck",
     "type": "card",
     "cardType": "D 2J",
-    "z": 1112,
+    "z": 1142,
     "parent": "9qwrP"
   },
   "9qwr_Q_D": {
@@ -436,11 +436,11 @@
   },
   "9qwr_J_S": {
     "id": "9qwr_J_S",
-    "parent": "9qwrP",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 2J",
-    "z": 1098
+    "z": 1151,
+    "parent": "9qwrP"
   },
   "9qwr_Q_S": {
     "id": "9qwr_Q_S",
@@ -452,11 +452,11 @@
   },
   "9qwr_K_S": {
     "id": "9qwr_K_S",
-    "parent": "9qwrP",
     "deck": "mainDeck",
     "type": "card",
     "cardType": "S 4K",
-    "z": 1100
+    "z": 1143,
+    "parent": "9qwrP"
   },
   "deckHolder": {
     "type": "holder",
@@ -1101,11 +1101,14 @@
     "z": 9733,
     "css": {
       " .holderTextOnly": {
-        "top": "-100px",
-        "font-size": "19px !important"
+        "top": "auto",
+        "bottom": "calc(100% + 0.25em)",
+        "height": "auto",
+        "padding": 0,
+        "font-size": "22px !important"
       }
     },
-    "text": "CSS Tips",
+    "text": "Top Text",
     "textColor": "purple"
   },
   "text4": {
@@ -1120,7 +1123,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Use <b>.holderTextOnly</b> class to limit changes to a holder and not impact child widgets. You can also use this class to override the automatic font resizing in holders."
+    "html": "Use <b>.holderTextOnly</b> class to limit changes to the holder and not impact child widgets. This class can override the automatic font resizing in holders.<br><br>The  example above can be used on a holder of any height and the text will always appear the same distance above the top of the holder. And the left example will put it at the bottom."
   },
   "holder5": {
     "type": "holder",
@@ -1150,14 +1153,33 @@
   },
   "basic1": {
     "id": "basic1",
-    "x": 1234,
-    "y": 252,
-    "z": 24,
+    "x": 1254,
+    "y": 255,
+    "z": 32,
     "text": "This widget starts with the default font-size of 16px.",
     "width": 103,
     "height": 160,
     "css": {
       "background": "tan"
     }
+  },
+  "holder4a": {
+    "type": "holder",
+    "id": "holder4a",
+    "x": 660,
+    "y": 781,
+    "z": 9733,
+    "css": {
+      " .holderTextOnly": {
+        "bottom": "auto",
+        "top": "calc(100% + 0.25em)",
+        "height": "auto",
+        "padding": 0,
+        "font-size": "19px !important"
+      }
+    },
+    "text": "Bottom Text",
+    "textColor": "green",
+    "height": 68
   }
 }

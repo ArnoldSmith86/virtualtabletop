@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770345699545,
+      "lastUpdate": 1770354440973,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1166,6 +1166,20 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Images and text are also easily combined."
+    "html": "Images and text are also easily combined.<br><br>Or you can use css position as in the example below to move the image outside the holder."
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 1363,
+    "y": 780,
+    "z": 9733,
+    "image": "/i/game-icons.net/lorc/acorn.svg",
+    "css": {
+      ".hasImage::before": {
+        "background-size": "50%",
+        "top": "-70%"
+      }
+    }
   }
 }
