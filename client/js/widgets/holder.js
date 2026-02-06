@@ -231,10 +231,14 @@ class Holder extends ImageWidget {
     if(legacyMode('disableHolderImageWidget'))
       return;
 
-    if (this.textWrapper) { this.textWrapper.remove(); this.textWrapper = null; }
+    if(this.textWrapper) {
+      this.textWrapper.remove();
+      this.textWrapper = null;
+    }
 
-    if (this.get('text') && !this.get('icon')) {
-      if (this.symbolWrapper) this.symbolWrapper.remove();
+    if(this.get('text') && !this.get('icon')) {
+      if(this.symbolWrapper)
+        this.symbolWrapper.remove();
       this.textWrapper = document.createElement('div');
       this.textWrapper.className = 'holderTextOnly';
       this.textWrapper.textContent = this.get('text');

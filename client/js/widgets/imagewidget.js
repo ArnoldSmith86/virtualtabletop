@@ -41,7 +41,7 @@ class ImageWidget extends Widget {
 
   css(skipImage=false) {
     let css = super.css();
-    if(this.get('image') && !skipImage)
+    if(!skipImage && this.get('image'))
       css += '; background-image: url("' + this.getImage() + '")';
     return css;
   }
