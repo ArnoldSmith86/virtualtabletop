@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770355719478,
+      "lastUpdate": 1770355895760,
       "showName": false,
       "skill": "",
       "description": "",
@@ -1049,7 +1049,7 @@
     "x": 581,
     "y": 252,
     "z": 9733,
-    "text": "Change color with css",
+    "text": "Change text colors",
     "textColor": "red"
   },
   "holder2": {
