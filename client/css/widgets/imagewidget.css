@@ -86,38 +86,3 @@
 .autoIconAlignCustomAsset {
   background-size: contain;
 }
-
-.widget.holder > .holderTextOnly {
-  position: absolute;
-  inset: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: var(--holderTextColor);
-  font-weight: bold;
-  overflow: hidden;
-  word-break: normal;
-  white-space: normal;
-  line-height: 1.1;
-  box-sizing: border-box;
-}
-
-.widget.holder.hasImage {
-  background-image: none;
-}
-
-.widget.holder.hasImage::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-  opacity: var(--bgImageOpacity, 0.2);
-  border-radius: inherit;
-  pointer-events: none;
-}
