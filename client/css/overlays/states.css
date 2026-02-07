@@ -543,7 +543,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   border-radius: 0 0 0 10px;
   text-shadow: none;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
-  z-index: 10;
+  z-index: 0;
 }
 #mainImage .ai-badge:not(.hidden) {
   display: block;
