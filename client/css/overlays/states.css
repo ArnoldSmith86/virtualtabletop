@@ -897,6 +897,10 @@ div:nth-of-type(2) > .list > .roomState .star {
   #mainDetails > .details > div:nth-of-type(1) {
     position: unset;
   }
+  #mainDetails .star::before, #mainDetails #mainImage > i {
+    font-size: 32px;
+    width: 32px;
+  }
   #mainImage button, #similarImage button {
     font-size: 0;
     padding: 5px;
