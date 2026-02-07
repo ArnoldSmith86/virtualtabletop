@@ -449,8 +449,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
-    if(state.showName === false)
-      entry.className += ' hideName';
+    if(state.showName === false || state.showName === 'only similar')
+      entry.className += ' hideMainName';
+    if(state.showName === false || state.showName === 'only main')
+      entry.className += ' hideSimilarName';
     if(state.link)
       entry.className += ' linkedGame';
     if(state.savePlayers)
@@ -631,6 +633,9 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
+  const sn = state.showName;
+  $('#showName').checked = sn === true || sn === 'only main';
+  $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
 
@@ -956,6 +961,8 @@ function fillStateDetails(states, state, dom) {
   };
   $('#stateDetailsOverlay .buttons [icon=save]').onclick = function() {
     const meta = Object.assign(JSON.parse(JSON.stringify(state)), getValuesFromDOM($('#stateDetailsOverlay')));
+    const main = $('#showName').checked, similar = $('#showNameSimilar').checked;
+    meta.showName = main && similar ? true : !main && !similar ? false : main ? 'only main' : 'only similar';
 
     const variantInput = [];
     for(const variantDOM of $a('#variantsList .variant')) {
