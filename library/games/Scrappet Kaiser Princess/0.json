@@ -3647,7 +3647,7 @@
     "version": 15,
     "info": {
       "name": "Scrappet Kaiser Princess",
-      "image": "/assets/-603103304_27308",
+      "image": "/assets/-2146510327_183572",
       "rules": "https://zoql.itch.io/scrappetkaiserprincess",
       "bgg": "https://zoql.itch.io/scrappetkaiserprincess",
       "year": "2021",
@@ -3658,7 +3658,7 @@
       "similarDesigner": "Zoql",
       "description": "Place workers on game board and assign them tasks of earning money, buying cards, trading for cards, or dueling for cards. Play 7 rounds and earn as many points as possible. Compare against game ending point chart to see how well you did.\n\n\nv1.2.3",
       "showName": false,
-      "lastUpdate": 1720453324611,
+      "lastUpdate": 1770486138167,
       "skill": "",
       "similarImage": "",
       "similarAwards": "",
@@ -3667,7 +3667,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   }
 }
