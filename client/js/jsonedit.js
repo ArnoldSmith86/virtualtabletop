@@ -4001,23 +4001,18 @@ function jeInitEventListeners() {
       e.stopPropagation();
       e.stopImmediatePropagation();
       if (jeTabSearchActive) {
-        if (jeTabSearchFilter.length > 0) {
-          // Execute highlighted button when there's a search filter
-          const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
-          if (buttons.length > 0) {
-            buttons[0].click();
-          }
+        const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+        if (buttons.length > 0) {
+          buttons[0].click();
           jeTabSearchActive = false;
           jeTabSearchFilter = '';
           jeTabSearchHighlightIndex = -1;
           jeTabArrowKeysUsed = false;
           jeShowCommands();
         } else if (jeTabKeyHeld) {
-          // Keep tabSearch active when releasing without a search term (only if Tab was held)
           jeTabKeyHeld = false;
           jeShowCommands();
         } else {
-          // Close tabSearch if Tab was pressed (not held) without a search term
           jeTabSearchActive = false;
           jeTabSearchFilter = '';
           jeTabSearchHighlightIndex = -1;
