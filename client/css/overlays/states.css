@@ -237,7 +237,6 @@
   bottom: 0;
   right: 0;
   padding: 0;
-  background: #00000061;
   text-shadow: 0 0 3px #000;
   color: white;
 }
@@ -247,7 +246,9 @@
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1em;
-  margin: 8px 8px 4px 8px;
+  padding: 8px 8px 5px 8px;
+  margin: 0;
+  background: #00000061;
 }
 
 .roomState h4 {
@@ -255,7 +256,9 @@
   font-style: italic;
   font-weight: 700;
   font-size: .8rem;
-  margin: 4px 8px 8px 8px;
+  padding: 3px 8px 4px 8px;
+  margin: 0;
+  background: #00000061;
 }
 .roomState h4 img.emoji {
   transform: skewX(-10deg);
@@ -304,14 +307,18 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
-.roomState.hideName:not(.savedGame) .details {
+.roomState.hideMainName .details h3 {
   display: none;
 }
-.roomState.hideName.savedGame .details h3 {
+.roomState.hideSimilarName:not(.savedGame) .details h4 {
   display: none;
 }
-.roomState.hideName.savedGame .details h4 {
+.roomState.savedGame .details h4 {
   margin: 8px;
+}
+.roomState h4:empty {
+  margin: 0px;
+  padding: 0px;
 }
 
 .roomState.noImage > img {
@@ -392,7 +399,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     left: 48px;
     height: 48px;
   }
-  .roomState.hideName:not(.savedGame) .details {
+  .roomState.hideMainName:not(.savedGame) .details {
     display: block;
   }
   .roomState.savedGame h3 {

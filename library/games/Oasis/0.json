@@ -12,7 +12,7 @@
       "attribution": "The room layout and game design is by LawDawg96 and released to the Public Domain by CC0.\n\nThe desert icon is by Flaticon and is available under the Flaticon license: https://www.flaticon.com/free-icons/desert\n\nThe waterfall icon is by Delapouite and is available under CC BY 3.0: https://game-icons.net/1x1/delapouite/waterfall.html\n\nThe oasis card back and room image icon is available under the Pixabay License: https://pixabay.com/illustrations/oasis-oases-nature-desert-sand-4701493/ \n\nThe oasis room background is available under the Pixabay License: https://pixabay.com/photos/huacachina-oasis-ica---peru-930676/",
       "similarName": "Skull",
       "description": "Players start with 4 cards. Play cards face down until one player challenges. Highest bidder then flips stated number of cards. If player flips all 'good' cards and no 'bad' ones, player wins challenge. First player to win two challenges wins.",
-      "showName": true,
+      "showName": "only similar",
       "helpText": "Players take seats. Card count for each player is to the right of the player name. Drag lost cards to the trash icon. Press the hand in holder icon to return cards to a player's hand. Press colored edge of player holder to \"flip\" it over (indicated by dashed line) to show that player has won one round.",
       "lastUpdate": 1644184116000,
       "skill": "",

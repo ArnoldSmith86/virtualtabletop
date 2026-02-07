@@ -117,7 +117,8 @@
   top: 5px;
   position: relative;
 }
-.mainStateDetails .hidden {
+.mainStateDetails .hidden,
+#linkDetailsOverlay .hidden {
   display: none;
 }
 .mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span:not(.ai-badge) {
