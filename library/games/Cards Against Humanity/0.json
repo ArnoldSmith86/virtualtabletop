@@ -35,14 +35,14 @@
     "version": 9,
     "info": {
       "name": "Cards Against Humanity",
-      "image": "/assets/450129006_106493",
+      "image": "/assets/-1489077030_44198",
       "rules": "https://cdn.sanity.io/files/vc07edlh/production/024751665e12163130085836650f4f7387e2de0a.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/50381/cards-against-humanity",
       "year": "2009",
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Cards Against Humanity is free to use under the Creative Commons BY-NC-SA 2.0 License. Visit https://www.cardsagainsthumanity.com/ for details.<br></div><div><br></div><div>The game file itself was created by ArnoldSmith86 and is also released under the Creative Commons BY-NC-SA 2.0 License.</div>",
-      "lastUpdate": 1770380673802,
+      "lastUpdate": 1770440659985,
       "showName": false,
       "skill": "creativity",
       "description": "Card game where you pick a response to a given prompt. One player gives points for the funniest combination. Player with most points wins.",
@@ -52,11 +52,11 @@
       "ruleText": "<div><h4>Setup</h4></div><ol><li>Every player clicks a seat at the top.</li><li>Click on \"Start\" in the top left.</li></ol><div><h4>Turns</h4></div><ol><li>The Card Czar will be highlighted at the top.</li><li>All other players look at the prompt on the black card in the middle and their response cards at the bottom (each player sees different responses). Pick one or two response cards (depending on the prompt) and move them to one or two holders next to the prompt card (keep them face down).<br></li><li>When every player has played one or two cards, the Card Czar clicks \"Pick Winner\" and then chooses the funniest combination.</li></ol>Play as long as you like. The player with the most points wins.<br>",
       "helpText": "",
       "similarDesigner": "Josh Dillon, Daniel Dranove, Eli Halpern, Ben Hantoot, David Munk, David Pinsof, Max Temkin, Eliot Weinstein",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "3-10",
-      "usesAIImagery": false
+      "players": "3-10"
     }
   },
   "hand": {
