@@ -27,6 +27,7 @@ let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
 let jeIgnoreBlurOnce = false;
+let jeCommandClickEvent = null;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -1303,6 +1304,39 @@ function jeAddRoutineCommentCommand() {
   });
 }
 
+// Common params to prefill when inserting (from library game patterns). Omit to insert without params.
+const jeRoutineOperationCommonParams = {
+  IF: { operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] },
+  MOVE: { from: null, to: null, count: 1, collection: 'DEFAULT' },
+  CALL: { routine: 'clickRoutine', widget: 'id' },
+  SET: { collection: 'DEFAULT', property: 'parent', value: null },
+  GET: { collection: 'DEFAULT', property: 'id', variable: 'result' },
+  DELAY: { milliseconds: 500 },
+  CLICK: { collection: 'DEFAULT', count: 1 },
+  COUNT: { collection: 'DEFAULT', variable: 'COUNT' },
+  SHUFFLE: { collection: 'DEFAULT' },
+  FLIP: { collection: 'DEFAULT', face: 0 },
+  DELETE: { collection: 'DEFAULT' },
+  SELECT: { collection: 'DEFAULT', type: 'all', property: 'parent', value: null },
+  FOREACH: { collection: 'DEFAULT', loopRoutine: [] },
+  CLONE: { source: 'DEFAULT', collection: 'DEFAULT', count: 1 },
+  ROTATE: { collection: 'DEFAULT', angle: 90, count: 1 },
+  LABEL: { collection: 'DEFAULT', value: 0, mode: 'set' },
+  RESET: { property: 'resetProperties' },
+  RECALL: { holder: null, inHolder: true },
+  TIMER: { collection: 'DEFAULT', mode: 'toggle' },
+  TURN: { turn: 1, source: 'all' },
+  SCORE: { mode: 'set', property: 'score' },
+  SORT: { collection: 'DEFAULT', key: 'value', reverse: false },
+  INPUT: { header: '', fields: [], confirmButtonText: 'Go', cancelButtonText: 'Cancel' },
+  CANVAS: { collection: 'DEFAULT', mode: 'reset' },
+  AUDIO: { source: '', maxVolume: 1.0 },
+  MOVEXY: { from: null, x: 0, y: 0, count: 1 },
+  UPLOAD: { variable: 'uploadedFileName' },
+  VAR: { variables: {} },
+  SWAPHANDS: { source: 'all', direction: 'forward' }
+};
+
 function jeAddRoutineOperationCommands(command, defaults) {
   jeCommands.push({
     id: 'operation_' + command,
@@ -1310,10 +1344,19 @@ function jeAddRoutineOperationCommands(command, defaults) {
     class: 'operation',
     context: `^.*Routine`,
     call: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
+      const noParams = jeCommandClickEvent && jeCommandClickEvent.shiftKey;
+      let newOp;
+      if (noParams) {
+        newOp = { func: '###SELECT ME###' };
+      } else {
+        const common = jeRoutineOperationCommonParams[command];
+        const cloned = common ? JSON.parse(JSON.stringify(common)) : {};
+        newOp = { func: '###SELECT ME###', ...cloned };
+      }
       if(operationIndex === null)
-        routine.push({func: '###SELECT ME###'});
+        routine.push(newOp);
       else
-        routine.splice(operationIndex+1, 0, {func: '###SELECT ME###'});
+        routine.splice(operationIndex+1, 0, newOp);
       jeSetAndSelect(command);
     }),
     show: jeRoutineCall((_, routine)=>Array.isArray(routine), true)
@@ -3340,7 +3383,7 @@ function jeShowCommands() {
       searchHint += `Type letters to filter<br>`;
     }
     const executeText = jeTabKeyHeld ? 'Release' : 'Press';
-    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>${executeText} <span class="key">Tab</span> to execute`;
+    searchHint += `<span class="key">↑</span><span class="key">↓</span> to select<br>${executeText} <span class="key">Tab</span> to execute<br><span class="key">Shift</span>: insert without parameters`;
     searchHint += `</div>`;
     commandText += searchHint;
   }
@@ -3454,7 +3497,8 @@ function jeShowCommands() {
           jeTabSearchHighlightIndex >= 0 &&
           commandIndex === Math.min(jeTabSearchHighlightIndex, allFilteredCommands.length - 1);
         const highlightClass = shouldHighlight ? ' jeHighlight' : '';
-        commandText += `<button id="${command.id}" class="${highlightClass}">${name}</button>\n`;
+        const title = command.class === 'operation' ? `${name} (Shift+click: insert without parameters)` : '';
+        commandText += `<button id="${command.id}" class="${highlightClass}"${title ? ` title="${html(title)}"` : ''}>${name}</button>\n`;
         commandIndex++;
       }
     }
@@ -3582,8 +3626,10 @@ function jeShowCommands() {
               jeTextElement2.focus();
             }
             const highlighted = $('#jeContextButtons') && $('#jeContextButtons').querySelectorAll('button.jeHighlight');
-            if (highlighted && highlighted.length > 0)
+            if (highlighted && highlighted.length > 0) {
+              jeCommandClickEvent = { shiftKey: jeState.shift };
               highlighted[0].click();
+            }
             jeTabSearchActive = false;
             jeTabSearchFilter = '';
             jeTabSearchHighlightIndex = -1;
@@ -3760,7 +3806,10 @@ function jeEmpty() {
 }
 
 const clickButton = async function(event) {
+  if (event.isTrusted)
+    jeCommandClickEvent = event;
   await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
+  jeCommandClickEvent = null;
   jeGetContext();
   if(jeMode != 'macro' && jeMode != 'empty') {
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
@@ -4003,6 +4052,7 @@ function jeInitEventListeners() {
       if (jeTabSearchActive) {
         const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
         if (buttons.length > 0) {
+          jeCommandClickEvent = { shiftKey: e.shiftKey };
           buttons[0].click();
           jeTabSearchActive = false;
           jeTabSearchFilter = '';
