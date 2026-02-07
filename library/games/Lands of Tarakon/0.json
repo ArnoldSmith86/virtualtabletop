@@ -13,7 +13,7 @@
       "mode": "vs",
       "time": "45-60",
       "attribution": "<div>Game layout, design, rules text and coding by flow86 (with much help on Discord!). Released to the public domain under CC0.</div><div><br></div>All graphics created with Microsoft Copilot with starting prompt:<div>“I need a regular hexagon for a board game. In the center, there should be a plain green cube in a 3D view. Around the cube, there should be a comic-style light forest shown from a top-down perspective, so that the piece still looks good when rotated. Toward the edges of the hexagon, the forest should gradually become lighter and fade out completely. The background color should be light brown or light gray. The hexagon should ideally be isolated (with a transparent background) as well.”</div><div><br></div><div>Prompts were then altered and added all other graphics based on the created tile. There were many chat iterations.</div><div><br></div><div>The AI graphics were edited with Affinity to fit the game.<br></div>",
-      "lastUpdate": 1770488177712,
+      "lastUpdate": 1769004023243,
       "showName": true,
       "skill": "Medium",
       "description": "Explore the land and battle monsters.",
