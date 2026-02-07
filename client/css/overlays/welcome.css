@@ -122,7 +122,7 @@
 }
 .mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span:not(.ai-badge) {
   position: absolute;
-  font-size: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
@@ -145,8 +145,8 @@
   display: block;
 }
 .mainStateDetails .star::before {
-  font-size: 50px;
-  width: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
+  width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
 .mainStateDetails .mainStateImage > i {
   top: unset;
@@ -158,9 +158,9 @@
 }
 .mainStateImage span:not(.ai-badge) {
   position: absolute;
-  font-size: 16px;
-  top: 51px;
-  width: 62px;
+  top: calc(var(--starOffset) + 100% * var(--starSize));
+  width: calc(var(--starSize) * 100%);
+  font-size: calc(var(--mainDetailsHeight) * 0.08);
   text-align: center;
   color: white;
   font-weight: bold;

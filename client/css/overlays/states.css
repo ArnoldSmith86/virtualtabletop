@@ -1,3 +1,8 @@
+:root {
+  --starOffset: 5%;
+  --starSize: 0.2;
+}
+
 #statesOverlay {
   --columns: 10;
   --size: calc((var(--roomWidth) * var(--scale) - 10px) / var(--columns) - 22px);
@@ -261,13 +266,13 @@
   position: absolute;
   top: 0;
   background: transparent;
-  font-size: 200%;
+  font-size: calc(var(--size) * var(--starSize));
   text-shadow: 1px 1px 2px #444;
 }
 
 .roomState .star::before {
-  font-size: 32px;
-  width: 32px;
+  font-size: calc(var(--size) * var(--starSize));
+  width: calc(var(--size) * var(--starSize));
 }
 
 .roomState > i {
@@ -499,13 +504,13 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 #mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
   position: fixed;
-  font-size: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
 #mainDetails .star::before {
-  font-size: 27px;
-  width: 27px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
+  width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
 #mainDetails #mainImage > i {
   top: unset;
@@ -536,9 +541,9 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 #mainImage span {
   position: absolute;
-  font-size: 16px;
-  top: 51px;
-  width: 62px;
+  top: calc(var(--starOffset) + 100% * var(--starSize));
+  width: calc(var(--starSize) * 100%);
+  font-size: calc(var(--mainDetailsHeight) * 0.08);
   text-align: center;
   color: white;
   font-weight: bold;
@@ -884,9 +889,6 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #mainDetails > .details > div:nth-of-type(1) {
     position: unset;
-  }
-  #mainDetails .star::before, #mainDetails #mainImage > i {
-    font-size: 32px;
   }
   #mainImage button, #similarImage button {
     font-size: 0;
