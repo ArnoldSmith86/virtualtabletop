@@ -4010,9 +4010,11 @@ function jeInitEventListeners() {
           jeTabArrowKeysUsed = false;
           jeShowCommands();
         } else if (jeTabKeyHeld) {
+          // Keep tabSearch active when releasing without a search term (only if Tab was held)
           jeTabKeyHeld = false;
           jeShowCommands();
         } else {
+          // Close tabSearch if Tab was pressed (not held) without a search term
           jeTabSearchActive = false;
           jeTabSearchFilter = '';
           jeTabSearchHighlightIndex = -1;
