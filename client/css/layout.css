@@ -927,6 +927,201 @@ body:not(.edit) .widget.limbo {
   visibility: hidden;
 }
 
+.contextMenuPopup {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.contextMenuPopup:not(.hidden) {
+  pointer-events: auto;
+}
+.contextMenuPopup.hidden {
+  display: none;
+}
+.contextMenuPopup .contextMenuRotationRow,
+.contextMenuPopup .contextMenuPreviewNavRow,
+.contextMenuPopup .contextMenuButtons,
+.contextMenuPopup .contextMenuPopupBg {
+  pointer-events: auto;
+}
+.contextMenuTitleRow {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
+}
+.contextMenuTitleRow.hidden {
+  display: none;
+}
+.contextMenuPopupBg {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--VTTblue);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.contextMenuMainRow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+}
+.contextMenuLeftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.contextMenuRightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+.contextMenuMenuSpacer {
+  min-height: 40px;
+}
+.contextMenuPreviewWrap {
+  position: relative;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+#contextMenuPreview {
+  z-index: 0 !important;
+}
+.contextMenuRotationRow,
+.contextMenuPreviewNavRow {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  min-height: 40px;
+  pointer-events: auto;
+}
+.contextMenuRotationRow button,
+.contextMenuPreviewNavRow button {
+  background: transparent;
+  transition: none;
+}
+.contextMenuRotationRow button:hover,
+.contextMenuPreviewNavRow button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.contextMenuPreviewNavRow:empty {
+  display: none;
+}
+.contextMenuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: stretch;
+  width: max-content;
+  min-width: 100px;
+  pointer-events: auto;
+}
+.contextMenuAction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--VTTblueDark);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.contextMenuAction .symbolText {
+  text-transform: uppercase;
+}
+.contextMenuAction:hover {
+  background: var(--VTTblueDark);
+}
+.contextMenuAction:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.contextMenuActionIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+}
+.contextMenuActionIcon .symbolOuterWrapper,
+.contextMenuActionIcon .symbolWrapper > div {
+  font-weight: normal;
+  font-size: var(--targetSize, 24px);
+  line-height: 1;
+}
+.contextMenuActionIcon .autoIconAlignSymbols {
+  font-family: "VTT-Symbols";
+}
+.contextMenuActionIcon .autoIconAlignMaterialIcons,
+.contextMenuActionIcon .autoIconAlignMaterialIconsNoFill {
+  font-family: "Material Symbols", "Material Symbols NoFill";
+}
+.contextMenuActionLabel {
+  flex: 1;
+  text-align: left;
+}
+.contextMenuActionRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.contextMenuActionRow .contextMenuAction {
+  flex: 1;
+  min-width: 0;
+}
+.contextMenuDescriptionTrigger {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.contextMenuDescriptionTrigger:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.contextMenuDescriptionPopover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  pointer-events: auto;
+}
+.contextMenuDescriptionPopover.hidden {
+  display: none;
+}
+
 /*Buttons css*/
 
 button {

@@ -84,8 +84,11 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      rightClickRoutine: null,
       doubleClickRoutine: null,
       changeRoutine: null,
+      rotationSteps: null,
+      contextMenu: null,
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
@@ -97,7 +100,10 @@ export class Widget extends StateManaged {
     });
     this.domElement.timer = false
 
-    this.domElement.addEventListener('contextmenu', e => this.showEnlarged(e), false);
+    this.domElement.addEventListener('contextmenu', e => {
+      if (document.body.classList.contains('edit')) this.showEnlarged(e);
+      else handleContextMenu(e, this);
+    }, false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);
     this.domElement.addEventListener("touchstart", e => this.touchstart(), false);
@@ -112,14 +118,19 @@ export class Widget extends StateManaged {
     this.touchend = function() {
       clearTimeout(this.timer);
       this.timer = null;
+      onTouchEndContextMenu();
       this.hideEnlarged();
     }
 
     this.onlongtouch = function() {
-      this.showEnlarged();
+      if (document.body.classList.contains('edit')) {
+        this.showEnlarged();
+        this.domElement.classList.add('longtouch');
+      } else {
+        onLongTouch(this);
+      }
       clearTimeout(this.timer);
       this.timer = null;
-      this.domElement.classList.add('longtouch');
     }
 
     this.animateTimeouts = {};
@@ -1102,6 +1113,29 @@ export class Widget extends StateManaged {
         }
         if (!a.return)
           abortRoutine = true;
+      }
+
+      if(a.func == 'CONTEXTMENU') {
+        setDefaults(a, { collection: 'DEFAULT', contextMenu: null, property: null });
+        const collection = getCollection(a.collection);
+        if (collection && collections[collection] && collections[collection].length) {
+          const targetWidget = collections[collection][0];
+          let menu = a.contextMenu;
+          if (menu === undefined || menu === null) {
+            if (typeof a.property === 'string') menu = targetWidget.get(a.property);
+            else menu = [];
+          }
+          if (Array.isArray(menu)) {
+            const overrides = {};
+            if (typeof a.factor === 'number') overrides.factor = a.factor;
+            if (typeof a.title === 'string') overrides.title = a.title;
+            if (typeof a.color === 'string') overrides.color = a.color;
+            if (a.image !== undefined && a.image !== null) overrides.image = a.image;
+            if (a.widget !== undefined && a.widget !== null) overrides.widget = a.widget;
+            const hasOverrides = Object.keys(overrides).length > 0;
+            setTimeout(() => openContextMenuWithMenu(targetWidget, menu, hasOverrides ? overrides : undefined), 0);
+          }
+        }
       }
 
       if(a.func == 'CANVAS') {
@@ -2251,7 +2285,7 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/)) {
+    if (!this.domElement.className.match(/selected/) && legacyMode('hoverEnlarge')) {
       $('#enlarged').classList.add('hidden');
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
@@ -2653,7 +2687,7 @@ export class Widget extends StateManaged {
   }
 
   showEnlarged(event, delta) {
-    if(this.get('enlarge')) {
+    if(this.get('enlarge') && legacyMode('hoverEnlarge')) {
       const id = this.get('id');
       const e = $('#enlarged');
       // If there is no delta passed in, we must update the enlarged widget. Otherwise,

@@ -48,6 +48,7 @@ export default async function minifyHTML() {
     'client/js/connection.js',
     'client/js/serverstate.js',
     'client/js/legacymodes.js',
+    'client/js/contextmenu.js',
     'client/js/geometry.js',
     'client/js/compute.js',
     'client/js/mousehandling.js',

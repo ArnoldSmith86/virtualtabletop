@@ -72,28 +72,33 @@ async function inputHandler(name, e) {
         await widget.mouseRaw('move', coords);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
-      mouseStatus[target.id] = {
-        status: 'initial',
-        start: new Date(),
-        downCoords: coords,
-        moveTarget: widget
-      };
+      const isRightButton = name === 'mousedown' && e.button === 2;
+      if (!isRightButton) {
+        mouseStatus[target.id] = {
+          status: 'initial',
+          start: new Date(),
+          downCoords: coords,
+          moveTarget: widget
+        };
+      }
       const ms = mouseStatus[target.id];
-      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-      while (ms.moveTarget && !movable) {
-        let parent = ms.moveTarget.get('parent');
-        if(parent && widgets.has(parent)) {
-          ms.moveTarget = widgets.get(parent);
-          movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-        } else {
-          ms.moveTarget = null;
-          movable = false;
+      if (ms) {
+        let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+        while (ms.moveTarget && !movable) {
+          let parent = ms.moveTarget.get('parent');
+          if(parent && widgets.has(parent)) {
+            ms.moveTarget = widgets.get(parent);
+            movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+          } else {
+            ms.moveTarget = null;
+            movable = false;
+          }
+        }
+        if (movable) {
+          ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
         }
       }
-      if (movable) {
-        ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
-      }
-    } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
+    } else if((name == 'mouseup' || name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
       const timeSinceStart = +new Date() - ms.start;
       const pixelsMoved = ms.coords ? Math.abs(ms.coords.x - ms.downCoords.x) + Math.abs(ms.coords.y - ms.downCoords.y) : 0;
@@ -133,7 +138,7 @@ async function inputHandler(name, e) {
         }
       }
       delete mouseStatus[target.id];
-    } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
+    } else if((name == 'mousemove' || name == 'touchmove') && mouseStatus[target.id]) {
       setDeltaCause(`${playerName} dragged ${widget.id}`);
       if(mouseStatus[target.id].status == 'initial') {
         mouseStatus[target.id].status = 'moving';

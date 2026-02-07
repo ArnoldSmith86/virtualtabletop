@@ -1,4 +1,4 @@
-export const VERSION = 20;
+export const VERSION = 21;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -75,6 +75,7 @@ function hasPropertyCondition(properties, condition) {
 function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
   v<19 && v19useIframeForHtmlCards(meta, state);
+  v<21 && v21HoverEnlarge(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -597,4 +598,10 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
 
   if(!properties.type && (hasMultipleWhitespaceOrNewline(String(properties.html)) || String(JSON.stringify(properties.inheritFrom)).match(/"html"/)) || (typeof properties.html == 'string' && globalProperties.v20WhiteSpacePreWrapForAllHtml) && !cssHasWhiteSpace(properties.css))
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
+}
+
+function v21HoverEnlarge(meta, state) {
+  for(const widget of Object.values(state))
+    if(widget.enlarge)
+      meta.gameSettings.legacyModes.hoverEnlarge = true;
 }
