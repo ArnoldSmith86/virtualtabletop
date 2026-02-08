@@ -200,6 +200,35 @@ class FilesModule extends SidebarModule {
     this.addHeader('Files');
     const mappings = getGameSettingsFileMappings();
 
+    const details = document.createElement('details');
+    details.className = 'filesPanel-help';
+    const summary = document.createElement('summary');
+    summary.textContent = 'About & how to use';
+    details.append(summary);
+    const helpBody = document.createElement('div');
+    helpBody.className = 'filesPanel-helpBody';
+    const experimental = document.createElement('p');
+    experimental.className = 'filesPanel-experimental';
+    experimental.textContent = 'This feature is a bit experimental.';
+    helpBody.append(experimental);
+    const desc = document.createElement('p');
+    desc.textContent = 'Monitor a folder (choose directory or drop one). For each file, pick an action in the table\'s Edit form ("On update" dropdown), configure options, and Save. Run applies the action when the file changes or when you click Run. Mappings are saved with the game.';
+    helpBody.append(desc);
+    const handlersTitle = document.createElement('p');
+    handlersTitle.innerHTML = '<strong>Handlers:</strong>';
+    helpBody.append(handlersTitle);
+    const list = document.createElement('ul');
+    list.className = 'filesPanel-handlerList';
+    const allHandlers = typeof window.getAllFileHandlers === 'function' ? window.getAllFileHandlers() : [];
+    for (const h of allHandlers) {
+      const li = document.createElement('li');
+      li.textContent = h.label;
+      list.append(li);
+    }
+    helpBody.append(list);
+    details.append(helpBody);
+    target.append(details);
+
     const chooseDir = document.createElement('button');
     chooseDir.className = 'sidebarButton';
     chooseDir.setAttribute('icon', 'folder_open');

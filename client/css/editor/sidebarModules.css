@@ -860,6 +860,24 @@ div.widget-name {
 }
 
 /* Files panel */
+.filesPanel-help {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: var(--textColor);
+}
+.filesPanel-help summary {
+  cursor: pointer;
+  padding: 4px 0;
+  list-style: none;
+}
+.filesPanel-help summary::-webkit-details-marker { display: none; }
+.filesPanel-help summary::before { content: '▶ '; }
+.filesPanel-help[open] summary::before { content: '▼ '; }
+.filesPanel-helpBody { padding-left: 1em; margin-top: 4px; }
+.filesPanel-helpBody p { margin: 6px 0; }
+.filesPanel-experimental { font-style: italic; opacity: 0.9; }
+.filesPanel-handlerList { margin: 4px 0 0 1em; padding-left: 1em; }
+.filesPanel-handlerList li { margin: 2px 0; }
 .filesPanel-dropZone {
   border: 2px dashed var(--modalBorderColor);
   border-radius: 8px;
