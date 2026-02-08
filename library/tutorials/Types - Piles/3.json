@@ -14,7 +14,7 @@
       "time": "",
       "attribution": "BASIC: N/A<div><br></div><div>--------</div><div><br></div><div>ADVANCED:&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">The rank icon images are by user Ingegneus and are released into the Public Domain through CC0.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">--------</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">DECORATION:&nbsp;&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The brown envelope images are by user mousewax and are released into the Public Domain through CC0.</div><div><br></div><div>--------</div><div><br></div><div>PILESNAPRANGE: N/A</div>",
       "showName": false,
-      "lastUpdate": 1770520366167,
+      "lastUpdate": 1770580693112,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -99,7 +99,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteX"
+              "value": "x"
             }
           },
           {
@@ -110,7 +110,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteY"
+              "value": "y"
             }
           }
         ]
@@ -235,7 +235,8 @@
       "height": 100,
       "onPileCreation": {
         "pileSnapRange": 50
-      }
+      },
+      "xChangeRoutine": []
     },
     "cardTypes": {
       "red-50": {
@@ -294,7 +295,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteX"
+              "value": "x"
             }
           },
           {
@@ -305,7 +306,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteY"
+              "value": "y"
             }
           }
         ]
