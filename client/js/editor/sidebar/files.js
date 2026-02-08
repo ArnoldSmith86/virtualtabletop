@@ -228,10 +228,11 @@ class FilesModule extends SidebarModule {
 
   renderLogEntry(entry) {
     const div = document.createElement('div');
-    div.className = 'filesPanel-logEntry';
+    div.className = 'filesPanel-logEntry' + (entry.error ? ' filesPanel-logError' : '');
     const time = new Date(entry.time).toLocaleTimeString();
     const widgets = (entry.editedWidgetIds || []).length ? entry.editedWidgetIds.join(', ') : '—';
-    div.innerHTML = `<span class="filesPanel-logTime">${time}</span> <span class="filesPanel-logFile">${entry.filePath}</span> → ${entry.handlerId}<br><span class="filesPanel-logWidgets">Widgets: ${widgets}</span>`;
+    const err = entry.error ? `<br><span class="filesPanel-logErrorText">${String(entry.error).replace(/</g, '&lt;')}</span>` : '';
+    div.innerHTML = `<span class="filesPanel-logTime">${time}</span> <span class="filesPanel-logFile">${entry.filePath}</span> → ${entry.handlerId}<br><span class="filesPanel-logWidgets">Widgets: ${widgets}</span>${err}`;
     return div;
   }
 
@@ -511,7 +512,14 @@ class FilesModule extends SidebarModule {
       content = await (file instanceof Blob ? file.text() : Promise.resolve(file));
     }
 
-    const result = await handler.apply(content, options, fileInfo.relativePath, context);
+    let result;
+    try {
+      result = await handler.apply(content, options, fileInfo.relativePath, context);
+    } catch (err) {
+      result = { editedWidgetIds: [], _error: err.message };
+      console.error('[Files panel] handler failed:', fileInfo.relativePath, err);
+      alert(err.message);
+    }
     const mappingsAfter = getGameSettingsFileMappings();
     const mA = mappingsAfter[fileInfo.relativePath];
     if (mA && result && typeof result === 'object' && result.lastAssetUrl) {
@@ -523,7 +531,8 @@ class FilesModule extends SidebarModule {
       time: Date.now(),
       filePath: fileInfo.relativePath,
       handlerId: mapping.handlerId,
-      editedWidgetIds: (result && result.editedWidgetIds) || []
+      editedWidgetIds: (result && result.editedWidgetIds) || [],
+      error: result && result._error
     };
     this.fileLog.push(logEntry);
     const logList = this.moduleDOM && this.moduleDOM.querySelector('.filesPanel-logEntries');

@@ -220,9 +220,14 @@ function registerBuiltInHandlers() {
     filePattern: /\.json$/i,
     optionsSchema: [],
     async apply(contentText) {
-      const patches = JSON.parse(contentText);
-      if (typeof patches !== 'object' || Array.isArray(patches))
-        throw new Error('Expected object of id -> partial state');
+      let patches;
+      try {
+        patches = JSON.parse(contentText);
+      } catch (e) {
+        throw new Error('Invalid JSON: ' + (e.message || e));
+      }
+      if (typeof patches !== 'object' || patches === null || Array.isArray(patches))
+        throw new Error('Expected a JSON object: { "widgetId1": { "prop": value }, "widgetId2": ... }');
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} updated widgets from Files panel`);
       const editedWidgetIds = [];
@@ -244,9 +249,21 @@ function registerBuiltInHandlers() {
     filePattern: /\.json$/i,
     optionsSchema: [],
     async apply(contentText) {
-      const state = JSON.parse(contentText);
+      let state;
+      try {
+        state = JSON.parse(contentText);
+      } catch (e) {
+        throw new Error('Invalid JSON: ' + (e.message || e));
+      }
+      if (typeof state !== 'object' || state === null)
+        throw new Error('JSON must be an object with an "id" property');
       const id = state.id;
-      if (!id || !widgets.has(id)) throw new Error('Widget id not found');
+      if (!id)
+        throw new Error('JSON must include "id" set to an existing widget id');
+      if (!widgets.has(id)) {
+        const sample = [...widgets.keys()].slice(0, 5).join(', ');
+        throw new Error(`Widget id "${id}" not found. Use an existing id (e.g. ${sample}).`);
+      }
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} updated widget from Files panel`);
       const w = widgets.get(id);
@@ -266,7 +283,12 @@ function registerBuiltInHandlers() {
       { key: 'propertyPath', label: 'Property (e.g. text or cardDefaults.width)', type: 'string' }
     ],
     async apply(contentText, options) {
-      const value = JSON.parse(contentText);
+      let value;
+      try {
+        value = JSON.parse(contentText);
+      } catch (e) {
+        throw new Error('Invalid JSON: ' + (e.message || e));
+      }
       const w = widgets.get(options.widgetId);
       if (!w) throw new Error('Widget not found');
       const path = (options.propertyPath || '').trim().split(/\./).filter(Boolean);

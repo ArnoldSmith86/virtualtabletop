@@ -989,3 +989,7 @@ div.widget-name {
   font-size: 0.95em;
   opacity: 0.9;
 }
+.filesPanel-logEntry.filesPanel-logError .filesPanel-logErrorText {
+  color: var(--errorColor, #c00);
+  font-size: 0.9em;
+}
