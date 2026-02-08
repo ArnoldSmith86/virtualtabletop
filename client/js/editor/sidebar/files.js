@@ -284,6 +284,9 @@ class FilesModule extends SidebarModule {
     if (this.pollTimer) clearInterval(this.pollTimer);
     const poll = async () => {
       const files = await readDirectory(handle);
+      const prevPaths = new Set(this.files.map(f => f.relativePath));
+      const currPaths = new Set(files.map(f => f.relativePath));
+      const listChanged = prevPaths.size !== currPaths.size || [...currPaths].some(p => !prevPaths.has(p));
       const currentMappings = getGameSettingsFileMappings();
       for (const f of files) {
         const m = currentMappings[f.relativePath];
@@ -297,6 +300,7 @@ class FilesModule extends SidebarModule {
         } catch (_) {}
       }
       this.files = files;
+      if (listChanged && this.moduleDOM) this.renderModule(this.moduleDOM);
     };
     this.lastModifiedByPath = {};
     this.pollTimer = setInterval(poll, 2000);
