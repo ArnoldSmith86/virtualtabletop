@@ -546,6 +546,23 @@ div:nth-of-type(2) > .list > .roomState .star {
 #mainImage .active.star, #mainImage .active.star + span {
   color: gold;
 }
+#mainImage .star-count {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+#mainImage .star-count .star {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+#mainImage .star-count span {
+  padding: 0 4px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
 #mainImage span {
   position: absolute;
   top: calc(var(--starOffset) + 100% * var(--starSize));
@@ -943,6 +960,12 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #helpTexts h3 {
     margin: 10px 0;
+  }
+  #mainImage .star-count span {
+    display: none !important;
+  }
+  #mainImage .star-count {
+    justify-content: center;
   }
 }
 @media (max-width: 270px), (max-height: 168px) {
