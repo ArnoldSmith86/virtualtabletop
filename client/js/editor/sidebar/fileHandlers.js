@@ -201,7 +201,7 @@ function registerBuiltInHandlers() {
   registerFileHandler({
     id: 'csvDeckCards',
     label: 'CSV → deck card types',
-    filePattern: /\.(csv|txt)$/i,
+    filePattern: /\.csv$/i,
     optionsSchema: [
       { key: 'deckId', label: 'Deck', type: 'deck' },
       { key: 'mode', label: 'Mode', type: 'select', options: [{ value: 'set', text: 'Replace' }, { value: 'add', text: 'Add' }] }

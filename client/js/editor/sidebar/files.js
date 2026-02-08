@@ -29,6 +29,37 @@ function buildFileTree(files) {
   return root;
 }
 
+function buildFileTableRows(files) {
+  const byDir = new Map();
+  byDir.set('', []);
+  for (const f of files) {
+    const parts = f.relativePath.split(/[/\\]/).filter(Boolean);
+    const dir = parts.length > 1 ? parts.slice(0, -1).join('/') : '';
+    if (!byDir.has(dir)) byDir.set(dir, []);
+    byDir.get(dir).push(f);
+  }
+  for (const arr of byDir.values()) arr.sort((a, b) => (a.name || a.relativePath).localeCompare(b.name || b.relativePath));
+  const dirs = [...byDir.keys()].sort();
+  const rows = [];
+  for (const d of dirs) {
+    const filesInDir = byDir.get(d);
+    if (d) rows.push({ type: 'dir', path: d });
+    for (const f of filesInDir) rows.push({ type: 'file', file: f, rel: f.relativePath });
+  }
+  return rows;
+}
+
+function getActionSummary(mapping, rel) {
+  if (!mapping || !mapping.handlerId) return { text: '', assetUrl: null };
+  const handler = window.getFileHandler && window.getFileHandler(mapping.handlerId);
+  const label = handler ? handler.label : mapping.handlerId;
+  if (mapping.handlerId === 'imageReplaceAsset' && mapping.options && mapping.options.assetUrl)
+    return { text: 'Replace asset', assetUrl: mapping.options.assetUrl };
+  if (mapping.handlerId === 'csvDeckCards' && mapping.options && mapping.options.deckId)
+    return { text: `CSV → deck ${mapping.options.deckId}`, assetUrl: null };
+  return { text: label, assetUrl: null };
+}
+
 async function readDirectory(handle, basePath = '') {
   const files = [];
   for await (const [name, entry] of handle.entries()) {
@@ -172,7 +203,7 @@ class FilesModule extends SidebarModule {
     const chooseDir = document.createElement('button');
     chooseDir.className = 'sidebarButton';
     chooseDir.setAttribute('icon', 'folder_open');
-    chooseDir.innerHTML = '<span>Choose directory…</span>';
+    chooseDir.innerHTML = 'Choose directory…';
     chooseDir.style.marginBottom = '8px';
     if (typeof showDirectoryPicker !== 'function') {
       chooseDir.disabled = true;
@@ -199,11 +230,11 @@ class FilesModule extends SidebarModule {
     target.append(dropZone);
 
     if (this.files.length) {
-      this.addSubHeader('File tree');
-      const treeEl = document.createElement('div');
-      treeEl.className = 'filesPanel-tree';
-      this.renderTree(treeEl, buildFileTree(this.files), '', mappings);
-      target.append(treeEl);
+      this.addSubHeader('Files');
+      const tableWrap = document.createElement('div');
+      tableWrap.className = 'filesPanel-tableWrap';
+      this.renderFileTable(tableWrap, mappings);
+      target.append(tableWrap);
     } else if (typeof showDirectoryPicker === 'function') {
       this.tryRestoreDirectory(target, mappings);
     }
@@ -220,7 +251,7 @@ class FilesModule extends SidebarModule {
     const clearLog = document.createElement('button');
     clearLog.className = 'sidebarButton';
     clearLog.setAttribute('icon', 'delete');
-    clearLog.innerHTML = '<span>Clear log</span>';
+    clearLog.innerHTML = 'Clear log';
     clearLog.onclick = () => { this.fileLog = []; this.renderModule(this.moduleDOM); };
     logEl.append(clearLog);
     target.append(logEl);
@@ -287,122 +318,225 @@ class FilesModule extends SidebarModule {
       const prevPaths = new Set(this.files.map(f => f.relativePath));
       const currPaths = new Set(files.map(f => f.relativePath));
       const listChanged = prevPaths.size !== currPaths.size || [...currPaths].some(p => !prevPaths.has(p));
+      let contentChanged = false;
       const currentMappings = getGameSettingsFileMappings();
       for (const f of files) {
-        const m = currentMappings[f.relativePath];
-        if (!m || !m.handlerId || !f.isHandle) continue;
+        if (!f.isHandle) continue;
         try {
           const file = await f.handle.getFile();
           const mod = file.lastModified;
-          if (this.lastModifiedByPath[f.relativePath] != null && this.lastModifiedByPath[f.relativePath] !== mod)
-            await this.runHandlerForFile(f, m);
+          const prevMod = this.lastModifiedByPath[f.relativePath];
+          if (prevMod != null && prevMod !== mod) contentChanged = true;
           this.lastModifiedByPath[f.relativePath] = mod;
+          const m = currentMappings[f.relativePath];
+          if (m && m.handlerId && prevMod != null && prevMod !== mod)
+            await this.runHandlerForFile(f, m);
         } catch (_) {}
       }
       this.files = files;
-      if (listChanged && this.moduleDOM) this.renderModule(this.moduleDOM);
+      if ((listChanged || contentChanged) && this.moduleDOM) this.renderModule(this.moduleDOM);
     };
     this.lastModifiedByPath = {};
     this.pollTimer = setInterval(poll, 2000);
     poll();
   }
 
-  renderTree(container, node, pathPrefix, mappings) {
-    const ul = document.createElement('ul');
-    ul.className = 'filesPanel-list';
+  renderFileTable(container, mappings) {
+    const rows = buildFileTableRows(this.files);
+    const table = document.createElement('table');
+    table.className = 'filesPanel-table';
+    const hoverPreview = document.createElement('div');
+    hoverPreview.className = 'filesPanel-assetHoverPreview';
+    const hoverPreviewImg = document.createElement('img');
+    hoverPreviewImg.alt = '';
+    hoverPreview.append(hoverPreviewImg);
+    container.append(hoverPreview);
+    table.innerHTML = '<thead><tr><th></th><th>File</th><th>Action</th><th></th></tr></thead>';
+    const tbody = document.createElement('tbody');
+    const showThumbPreview = (imgEl) => {
+      hoverPreviewImg.src = imgEl.src;
+      const r = imgEl.getBoundingClientRect();
+      hoverPreview.style.left = r.left + 'px';
+      hoverPreview.style.top = (r.top - 8) + 'px';
+      hoverPreview.style.transform = 'translateY(-100%)';
+      hoverPreview.classList.add('filesPanel-assetHoverPreview-visible');
+    };
+    const hideThumbPreview = () => hoverPreview.classList.remove('filesPanel-assetHoverPreview-visible');
 
-    for (const [dirName, child] of Object.entries(node.children).sort()) {
-      const li = document.createElement('li');
-      li.className = 'filesPanel-dir';
-      const label = document.createElement('span');
-      label.className = 'filesPanel-dirName';
-      label.textContent = dirName + '/';
-      label.onclick = () => {
-        li.classList.toggle('open');
-      };
-      li.append(label);
-      const sub = document.createElement('div');
-      sub.className = 'filesPanel-children';
-      this.renderTree(sub, child, pathPrefix ? pathPrefix + '/' + dirName : dirName, mappings);
-      li.append(sub);
-      ul.append(li);
-    }
+    for (const row of rows) {
+      if (row.type === 'dir') {
+        const tr = document.createElement('tr');
+        tr.className = 'filesPanel-dirRow';
+        const td = document.createElement('td');
+        td.colSpan = 4;
+        td.textContent = row.path + '/';
+        tr.append(td);
+        tbody.append(tr);
+        continue;
+      }
+      const { file, rel } = row;
+      const mapping = mappings[rel] || {};
+      const tr = document.createElement('tr');
+      tr.className = 'filesPanel-fileRow';
+      tr.dataset.path = rel;
 
-    for (const file of node.files.sort((a, b) => a.name.localeCompare(b.name))) {
-      const rel = pathPrefix ? pathPrefix + '/' + file.name : file.name;
-      const li = document.createElement('li');
-      li.className = 'filesPanel-file';
-      li.dataset.path = rel;
-
-      const preview = document.createElement('div');
-      preview.className = 'filesPanel-preview';
+      const tdThumb = document.createElement('td');
+      tdThumb.className = 'filesPanel-cellThumb';
+      const thumbWrap = document.createElement('div');
+      thumbWrap.className = 'filesPanel-thumbWrap';
       if (IMAGE_EXT.test(file.name)) {
         const img = document.createElement('img');
         img.alt = file.name;
         getFileContent(file).then(blob => { img.src = URL.createObjectURL(blob); }).catch(() => {});
-        preview.append(img);
+        img.onmouseenter = () => showThumbPreview(img);
+        img.onmouseleave = hideThumbPreview;
+        thumbWrap.append(img);
       } else {
         const ext = getExtension(file.name);
-        preview.textContent = ext || '?';
+        thumbWrap.textContent = ext || '?';
       }
-      li.append(preview);
+      tdThumb.append(thumbWrap);
+      tr.append(tdThumb);
 
-      const nameSpan = document.createElement('span');
-      nameSpan.className = 'filesPanel-fileName';
-      nameSpan.textContent = file.name;
-      li.append(nameSpan);
+      const tdName = document.createElement('td');
+      tdName.className = 'filesPanel-cellName';
+      tdName.textContent = file.name;
+      tr.append(tdName);
 
-      const mapping = mappings[rel] || {};
-      const row = document.createElement('div');
-      row.className = 'filesPanel-actions';
-      const select = document.createElement('select');
-      select.className = 'filesPanel-handlerSelect';
-      select.innerHTML = '<option value="">— On update —</option>';
-      const ext = getExtension(file.name);
-      const handlers = window.getFileHandlersForExtension(ext);
-      for (const h of handlers) {
-        const opt = document.createElement('option');
-        opt.value = h.id;
-        opt.textContent = h.label;
-        if (mapping.handlerId === h.id) opt.selected = true;
-        select.append(opt);
+      const summary = getActionSummary(mapping, rel);
+      const tdSummary = document.createElement('td');
+      tdSummary.className = 'filesPanel-cellSummary filesPanel-summary';
+      const summaryText = document.createElement('span');
+      summaryText.className = 'filesPanel-summaryText';
+      summaryText.textContent = summary.text;
+      tdSummary.append(summaryText);
+      tr.append(tdSummary);
+
+      const tdActions = document.createElement('td');
+      tdActions.className = 'filesPanel-cellActions';
+      const editBtn = document.createElement('button');
+      editBtn.type = 'button';
+      editBtn.className = 'sidebarButton';
+      editBtn.setAttribute('icon', 'edit');
+      editBtn.textContent = 'Edit';
+      const runBtn = document.createElement('button');
+      runBtn.type = 'button';
+      runBtn.className = 'sidebarButton';
+      runBtn.setAttribute('icon', 'play_arrow');
+      runBtn.textContent = 'Run';
+      runBtn.onclick = () => {
+        const m = getGameSettingsFileMappings()[rel] || {};
+        this.runHandlerForFile(file, m).catch(e => alert(e.message));
+      };
+      editBtn.onclick = () => this.openEditForm(tbody, tr, rel, file, mappings, tdSummary);
+      const btnWrap = document.createElement('span');
+      btnWrap.className = 'filesPanel-rowButtons';
+      btnWrap.append(editBtn, runBtn);
+      tdActions.append(btnWrap);
+      tr.append(tdActions);
+      tbody.append(tr);
+    }
+    table.append(tbody);
+    container.append(table);
+  }
+
+  openEditForm(tbody, fileRow, rel, file, mappings, summaryCell) {
+    const existingForm = tbody.querySelector('.filesPanel-formRow');
+    if (existingForm) existingForm.remove();
+    const mapping = mappings[rel] || {};
+    const formTr = document.createElement('tr');
+    formTr.className = 'filesPanel-formRow';
+    const formTd = document.createElement('td');
+    formTd.colSpan = 4;
+    const form = document.createElement('div');
+    form.className = 'filesPanel-editForm';
+    const handlerRow = document.createElement('div');
+    handlerRow.className = 'filesPanel-formRowInner';
+    const handlerLabel = document.createElement('label');
+    handlerLabel.textContent = 'On update ';
+    const select = document.createElement('select');
+    select.className = 'filesPanel-handlerSelect';
+    select.innerHTML = '<option value="">— On update —</option>';
+    const ext = getExtension(file.name);
+    const handlers = window.getFileHandlersForExtension(ext);
+    for (const h of handlers) {
+      const opt = document.createElement('option');
+      opt.value = h.id;
+      opt.textContent = h.label;
+      if (mapping.handlerId === h.id) opt.selected = true;
+      select.append(opt);
+    }
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'filesPanel-formOptions';
+    const updateOptions = () => {
+      optionsDiv.innerHTML = '';
+      const hid = select.value || null;
+      if (!hid) return;
+      if (!mappings[rel]) mappings[rel] = {};
+      mappings[rel].handlerId = hid;
+      const handler = window.getFileHandler(hid);
+      mappings[rel].options = mappings[rel].options || {};
+      for (const sch of handler.optionsSchema || []) {
+        if (mappings[rel].options[sch.key] === undefined && sch.options && sch.options[0])
+          mappings[rel].options[sch.key] = sch.options[0].value;
       }
-      select.onchange = () => {
-        const handlerId = select.value || null;
-        if (!handlerId) {
-          delete mappings[rel];
-        } else {
-          if (!mappings[rel]) mappings[rel] = {};
-          mappings[rel].handlerId = handlerId;
-          const handler = window.getFileHandler(handlerId);
-          mappings[rel].options = mappings[rel].options || {};
-          for (const sch of handler.optionsSchema || []) {
-            if (mappings[rel].options[sch.key] === undefined && sch.options && sch.options[0])
-              mappings[rel].options[sch.key] = sch.options[0].value;
+      this.renderOptions(optionsDiv, rel, mappings[rel], file);
+    };
+    select.onchange = () => {
+      const handlerId = select.value || null;
+      if (!handlerId) delete mappings[rel];
+      updateOptions();
+      saveFileMappings();
+    };
+    handlerLabel.append(select);
+    handlerRow.append(handlerLabel);
+    form.append(handlerRow);
+    form.append(optionsDiv);
+    updateOptions();
+    const btnRow = document.createElement('div');
+    btnRow.className = 'filesPanel-formButtons';
+    const saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'sidebarButton';
+    saveBtn.setAttribute('icon', 'checkmark');
+    saveBtn.textContent = 'Save';
+    const cancelBtn = document.createElement('button');
+    cancelBtn.type = 'button';
+    cancelBtn.className = 'sidebarButton';
+    cancelBtn.setAttribute('icon', 'close');
+    cancelBtn.textContent = 'Cancel';
+      saveBtn.onclick = () => {
+      const handlerId = select.value || null;
+      const mappings = getGameSettingsFileMappings();
+      if (handlerId) {
+        if (!mappings[rel]) mappings[rel] = {};
+        mappings[rel].handlerId = handlerId;
+        const m = mappings[rel];
+        m.options = m.options || {};
+        if (optionsDiv) {
+          for (const input of optionsDiv.querySelectorAll('select, input[type="text"], input[type="hidden"]')) {
+            const key = input.dataset.optionKey;
+            if (key) m.options[key] = input.value;
           }
         }
-        saveFileMappings();
-        this.renderOptions(row, rel, mappings[rel], file);
-      };
-      row.append(select);
-
-      this.renderOptions(row, rel, mapping, file);
-      li.append(row);
-
-      const runBtn = document.createElement('button');
-      runBtn.className = 'sidebarButton filesPanel-run';
-      runBtn.setAttribute('icon', 'play_arrow');
-      runBtn.title = 'Run now';
-      runBtn.onclick = () => {
-        const mapping = getGameSettingsFileMappings()[rel] || {};
-        this.runHandlerForFile(file, mapping).catch(e => alert(e.message));
-      };
-      li.append(runBtn);
-
-      ul.append(li);
-    }
-
-    container.append(ul);
+      } else {
+        delete mappings[rel];
+      }
+      saveFileMappings();
+      formTr.remove();
+      const s = getActionSummary(getGameSettingsFileMappings()[rel], rel);
+      summaryCell.innerHTML = '';
+      const span = document.createElement('span');
+      span.className = 'filesPanel-summaryText';
+      span.textContent = s.text;
+      summaryCell.append(span);
+    };
+    cancelBtn.onclick = () => formTr.remove();
+    btnRow.append(saveBtn, cancelBtn);
+    form.append(btnRow);
+    formTd.append(form);
+    formTr.append(formTd);
+    tbody.insertBefore(formTr, fileRow.nextSibling);
   }
 
   renderOptions(container, rel, mapping, fileInfo) {
@@ -422,11 +556,34 @@ class FilesModule extends SidebarModule {
       if (sch.type === 'asset') {
         const grouped = typeof getAllAssetsGrouped === 'function' ? getAllAssetsGrouped() : {};
         const urls = Object.keys(grouped);
+        if (typeof console !== 'undefined' && console.log)
+          console.log('[Files asset picker] mapping.options', mapping && mapping.options ? { ...mapping.options } : null, 'rel', rel);
+        const norm = (u) => {
+          if (!u) return '';
+          const s = String(u).trim();
+          const path = s.startsWith('http') ? (() => { try { return new URL(s).pathname; } catch (_) { return s; } })() : s;
+          return '/' + path.replace(/^\/+/, '').replace(/\/+$/, '');
+        };
+        const current = opts[sch.key] || (urls[0] || '');
+        const currentNorm = norm(current);
+        const matchedUrl = urls.find(u => norm(u) === currentNorm);
         const hidden = document.createElement('input');
         hidden.type = 'hidden';
         hidden.dataset.optionKey = sch.key;
-        hidden.value = opts[sch.key] || (urls[0] || '');
+        hidden.value = matchedUrl !== undefined ? matchedUrl : (urls[0] || '');
         opts[sch.key] = hidden.value;
+        if (typeof console !== 'undefined' && console.log) {
+          console.log('[Files asset picker]', {
+            savedOpt: opts[sch.key],
+            current,
+            currentNorm,
+            matchedUrl: matchedUrl !== undefined ? matchedUrl : null,
+            hiddenValue: hidden.value,
+            urlCount: urls.length,
+            firstFewUrls: urls.slice(0, 5),
+            normsMatch: urls.map(u => ({ url: u, norm: norm(u), match: norm(u) === currentNorm })).slice(0, 8)
+          });
+        }
         const wrap = document.createElement('div');
         wrap.className = 'filesPanel-assetPicker';
         wrap.append(hidden);
@@ -438,10 +595,15 @@ class FilesModule extends SidebarModule {
         wrap.append(preview);
         const thumbnails = document.createElement('div');
         thumbnails.className = 'filesPanel-assetThumbnails';
-        for (const url of urls) {
+        const hiddenNorm = norm(hidden.value);
+        for (let i = 0; i < urls.length; i++) {
+          const url = urls[i];
+          const isSelected = norm(url) === hiddenNorm;
+          if (isSelected && typeof console !== 'undefined' && console.log)
+            console.log('[Files asset picker] selected index', i, 'url', url);
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'filesPanel-assetThumb' + (opts[sch.key] === url ? ' filesPanel-assetSelected' : '');
+          btn.className = 'filesPanel-assetThumb' + (isSelected ? ' filesPanel-assetSelected' : '');
           btn.dataset.assetUrl = url;
           const img = document.createElement('img');
           img.src = url;
@@ -523,7 +685,7 @@ class FilesModule extends SidebarModule {
     const mappings = getGameSettingsFileMappings();
     const m = mappings[fileInfo.relativePath];
     if (m && this.moduleDOM) {
-      const row = this.moduleDOM.querySelector(`.filesPanel-file[data-path="${fileInfo.relativePath}"]`);
+      const row = this.moduleDOM.querySelector(`.filesPanel-fileRow[data-path="${fileInfo.relativePath}"]`);
       const optsDiv = row && row.querySelector('.filesPanel-options');
       if (optsDiv) {
         m.options = m.options || {};
