@@ -993,3 +993,65 @@ div.widget-name {
   color: var(--errorColor, #c00);
   font-size: 0.9em;
 }
+
+.filesPanel-assetPicker {
+  display: block;
+  margin-top: 4px;
+}
+.filesPanel-assetThumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.filesPanel-assetThumb {
+  padding: 0;
+  border: 2px solid var(--modalBorderColor);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.filesPanel-assetThumb:hover {
+  border-color: var(--textColor);
+  opacity: 0.9;
+}
+.filesPanel-assetThumb.filesPanel-assetSelected {
+  border-color: var(--VTTblue, #1f5ca6);
+  border-width: 3px;
+  box-shadow: 0 0 0 1px var(--VTTblue, #1f5ca6);
+}
+.filesPanel-assetThumb img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.filesPanel-assetHoverPreview {
+  position: fixed;
+  z-index: 10000;
+  padding: 6px;
+  background: var(--backgroundColor);
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+.filesPanel-assetHoverPreview.filesPanel-assetHoverPreview-visible {
+  opacity: 1;
+  visibility: visible;
+}
+.filesPanel-assetHoverPreview img {
+  display: block;
+  max-width: 280px;
+  max-height: 280px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}

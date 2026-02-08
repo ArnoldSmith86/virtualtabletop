@@ -420,20 +420,54 @@ class FilesModule extends SidebarModule {
       label.textContent = sch.label + ' ';
       let input;
       if (sch.type === 'asset') {
-        input = document.createElement('select');
         const grouped = typeof getAllAssetsGrouped === 'function' ? getAllAssetsGrouped() : {};
-        for (const url of Object.keys(grouped)) {
-          const opt = document.createElement('option');
-          opt.value = url;
-          opt.textContent = url.replace(/^\/assets\//, '');
-          if (opts[sch.key] === url) opt.selected = true;
-          input.append(opt);
+        const urls = Object.keys(grouped);
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.dataset.optionKey = sch.key;
+        hidden.value = opts[sch.key] || (urls[0] || '');
+        opts[sch.key] = hidden.value;
+        const wrap = document.createElement('div');
+        wrap.className = 'filesPanel-assetPicker';
+        wrap.append(hidden);
+        const preview = document.createElement('div');
+        preview.className = 'filesPanel-assetHoverPreview';
+        const previewImg = document.createElement('img');
+        previewImg.alt = '';
+        preview.append(previewImg);
+        wrap.append(preview);
+        const thumbnails = document.createElement('div');
+        thumbnails.className = 'filesPanel-assetThumbnails';
+        for (const url of urls) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'filesPanel-assetThumb' + (opts[sch.key] === url ? ' filesPanel-assetSelected' : '');
+          btn.dataset.assetUrl = url;
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = '';
+          img.title = url.replace(/^\/assets\//, '');
+          btn.append(img);
+          btn.onclick = () => {
+            thumbnails.querySelectorAll('.filesPanel-assetThumb').forEach(t => t.classList.remove('filesPanel-assetSelected'));
+            btn.classList.add('filesPanel-assetSelected');
+            hidden.value = url;
+            opts[sch.key] = url;
+            saveFileMappings();
+          };
+          btn.onmouseenter = (e) => {
+            previewImg.src = url;
+            const r = btn.getBoundingClientRect();
+            preview.style.left = r.left + 'px';
+            preview.style.top = (r.top - 8) + 'px';
+            preview.style.transform = 'translateY(-100%)';
+            preview.classList.add('filesPanel-assetHoverPreview-visible');
+          };
+          btn.onmouseleave = () => preview.classList.remove('filesPanel-assetHoverPreview-visible');
+          thumbnails.append(btn);
         }
-        opts[sch.key] = input.value || opts[sch.key];
-        input.onchange = () => {
-          opts[sch.key] = input.value;
-          saveFileMappings();
-        };
+        wrap.append(thumbnails);
+        input = wrap;
       } else if (sch.type === 'deck') {
         input = document.createElement('select');
         for (const [id, w] of widgets) {
@@ -493,7 +527,7 @@ class FilesModule extends SidebarModule {
       const optsDiv = row && row.querySelector('.filesPanel-options');
       if (optsDiv) {
         m.options = m.options || {};
-        for (const input of optsDiv.querySelectorAll('select, input[type="text"]')) {
+        for (const input of optsDiv.querySelectorAll('select, input[type="text"], input[type="hidden"]')) {
           const key = input.dataset.optionKey;
           if (key) m.options[key] = input.value;
         }
