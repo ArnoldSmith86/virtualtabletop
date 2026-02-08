@@ -862,3 +862,130 @@ div.widget-name {
 .drag-over {
   background-color: #f0f0f0;
 }
+
+/* Files panel */
+.filesPanel-dropZone {
+  border: 2px dashed var(--modalBorderColor);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: var(--textColor);
+  margin-bottom: 12px;
+  transition: background 0.2s;
+}
+.filesPanel-dropZone.drag-over {
+  background: var(--backgroundHighlightColor1);
+}
+.filesPanel-tree {
+  margin-top: 8px;
+}
+.filesPanel-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.filesPanel-dir {
+  margin: 4px 0;
+}
+.filesPanel-dirName {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.filesPanel-dirName:hover {
+  background: var(--backgroundHighlightColor1);
+}
+.filesPanel-dir .filesPanel-children {
+  margin-left: 12px;
+  display: none;
+}
+.filesPanel-dir.open .filesPanel-children {
+  display: block;
+}
+.filesPanel-file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 6px 0;
+  padding: 6px;
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  border: 1px solid var(--modalBorderColor);
+}
+.filesPanel-preview {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.filesPanel-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.filesPanel-fileName {
+  flex: 0 1 auto;
+  min-width: 0;
+  word-break: break-all;
+}
+.filesPanel-actions {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.filesPanel-handlerSelect {
+  min-width: 180px;
+  padding: 4px 8px;
+}
+.filesPanel-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.filesPanel-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.filesPanel-run {
+  flex-shrink: 0;
+}
+
+.filesPanel-log {
+  margin-top: 12px;
+  border-top: 1px solid var(--modalBorderColor);
+  padding-top: 8px;
+}
+.filesPanel-logEntries {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+}
+.filesPanel-logEntry {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--modalBorderColor);
+  word-break: break-all;
+}
+.filesPanel-logTime {
+  color: var(--textColor);
+  opacity: 0.8;
+}
+.filesPanel-logFile {
+  font-weight: bold;
+}
+.filesPanel-logWidgets {
+  font-size: 0.95em;
+  opacity: 0.9;
+}
