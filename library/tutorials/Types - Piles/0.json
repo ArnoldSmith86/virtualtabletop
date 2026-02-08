@@ -14,7 +14,7 @@
       "time": "",
       "attribution": "BASIC: N/A<div><br></div><div>--------</div><div><br></div><div>ADVANCED:&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">The rank icon images are by user Ingegneus and are released into the Public Domain through CC0.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">--------</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">DECORATION:&nbsp;&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The brown envelope images are by user mousewax and are released into the Public Domain through CC0.</div><div><br></div><div>--------</div><div><br></div><div>PILESNAPRANGE: N/A</div>",
       "showName": false,
-      "lastUpdate": 1768190089509,
+      "lastUpdate": 1770520366162,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -23,6 +23,7 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "Basic",
       "language": "en-US",
@@ -32,7 +33,7 @@
   "dl5d": {
     "type": "holder",
     "id": "dl5d",
-    "x": 28.5,
+    "x": 29,
     "y": 769,
     "dropTarget": {
       "type": "card"
@@ -298,7 +299,7 @@
   "yrr5": {
     "type": "holder",
     "id": "yrr5",
-    "x": 387.25,
+    "x": 330,
     "y": 769,
     "dropTarget": {
       "type": "card"
@@ -522,7 +523,7 @@
   "7puf": {
     "type": "holder",
     "id": "7puf",
-    "x": 746,
+    "x": 632,
     "y": 769,
     "dropTarget": {
       "type": "card"
@@ -900,7 +901,7 @@
   "q7fg": {
     "id": "q7fg",
     "z": 95,
-    "x": 431,
+    "x": 375,
     "y": 720,
     "height": 30,
     "css": "font-size: 25px; ",
@@ -911,7 +912,7 @@
   "q8fg": {
     "id": "q8fg",
     "z": 94,
-    "x": 791,
+    "x": 676,
     "y": 720,
     "height": 30,
     "css": "font-size: 25px; ",
@@ -927,14 +928,14 @@
     "css": "font-size: 18px; ",
     "width": 1500,
     "height": 500,
-    "text": "Piles can be customized by editing the 'cardDefaults' property in the deck. To do this, add a 'onPileCreation' property. That property will exist in every card in the deck.  When cards from those decks form a new pile, the specified properties will be passed on to the pile.\n\nTo see this in action, drag a few cards individually out of any one pile and make a new pile in the room.  Look at the JSON for the pile.  Then drag the pile to the Eraser holder on the end.  Note how all the special properties are removed.  Finally, move the cards individually out of the Eraser and make a new pile.\n\nPiles only update when new piles form or when a routine is applied to them.  To see this, drag an entire pile from a deck to the Eraser and back again. The Eraser actively removes properties added to piles.  But when the pile returns to its holder it is still the same pile so no properties get applied.  Then take a few individual cards out and make a new pile in the room to watch the changes to a new pile.  Next, drag a pile into the 'Make Blue' holder. It contains an 'enterRoutine' which changes the 'handleCSS' property to make the color of the pile handle blue. Then drag a few individual cards out and make another pile.  The pile handle reverts to what is contained in the cards' 'onPileCreation' property.\n\nFinally, note that piles will only form if both cards have the same value for 'onPileCreation.' Try to form piles from cards from different decks below and it will not happen.\n\nIn deck #1, the pile is customized by changing the 'handleCSS' property. Regular CSS parameters can be used just like with other widgets. A special paramater of '--FontSize' has been added to control the size of the font in the pile handle. If you want the handle to appear behind the cards, include 'z-index:-1' in the 'handleCSS'.\n\nDeck #2 shows how to use properties unique to piles for positioning and size: 'handleSize', 'handleOffset', and 'handlePosition'.\n\nDeck #3 demonstrates other attributes than can be included in 'onPileCreation' such as scale, rotation, enlarge, text, grid. Almost any widget property can be applied, but faces is one notable exception that does not work.",
+    "text": "Piles can be customized by editing the 'cardDefaults' property in the deck. To do this, add a 'onPileCreation' property. That property will exist in every card in the deck.  When cards from those decks form a new pile, the specified properties will be passed on to the pile.\n\nTo see this in action, drag a few cards individually out of any one pile and make a new pile in the room.  Look at the JSON for the pile.  Then drag the pile to the Eraser holder on the end.  Note how all the special properties are removed.  Finally, move the cards individually out of the Eraser and make a new pile.\n\nPiles only update when new piles form or when a routine is applied to them.  To see this, drag an entire pile from a deck to the Eraser and back again. The Eraser actively removes properties added to piles.  But when the pile returns to its holder it is still the same pile so no properties get applied.  Then take a few individual cards out and make a new pile in the room to watch the changes to a new pile.  Next, drag a pile into the 'Make Blue' holder. It contains an 'enterRoutine' which changes the 'handleCSS' property to make the color of the pile handle blue. Then drag a few individual cards out and make another pile.  The pile handle reverts to what is contained in the cards' 'onPileCreation' property.\n\nFinally, note that piles will only form if both cards have the same value for 'onPileCreation.' Try to form piles from cards from different decks below and it will not happen.\n\nIn deck #1, the pile is customized by changing the 'handleCSS' property. Regular CSS parameters can be used just like with other widgets. A special paramater of '--FontSize' has been added to control the size of the font in the pile handle. If you want the handle to appear behind the cards, include 'z-index:-1' in the 'handleCSS'.\n\nDeck #2 shows how to use properties unique to piles for positioning and size: 'handleSize', 'handleOffset', and 'handlePosition'.\n\nDeck #3 demonstrates other attributes than can be included in 'onPileCreation' such as scale, rotation, enlarge, text, grid. Almost any widget property can be applied, but faces is one notable exception that does not work.\n\nDeck #4 contains 10 cards that will not pile, even with its own deck, because 'pileSnapRange' is set to 0. There is a variant of this tutorial that demonstrates that property. \n",
     "movable": false,
     "movableInEdit": false,
     "layer": -3
   },
   "wpw1": {
     "type": "holder",
-    "x": 1104.75,
+    "x": 1173,
     "y": 769,
     "z": 98,
     "id": "wpw1",
@@ -955,7 +956,7 @@
   "kwza1": {
     "id": "kwza1",
     "z": 81,
-    "x": 1102,
+    "x": 1170,
     "y": 944,
     "css": "font-size: 25px; ",
     "height": 40,
@@ -978,11 +979,12 @@
   },
   "txvh": {
     "type": "pile",
-    "parent": "dl5d",
     "width": 103,
     "height": 160,
     "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
-    "id": "txvh"
+    "id": "txvh",
+    "z": 9983,
+    "parent": "dl5d"
   },
   "gmkp": {
     "type": "pile",
@@ -1002,5 +1004,288 @@
       }
     ],
     "id": "gmkp"
+  },
+  "jmhg": {
+    "type": "holder",
+    "x": 933,
+    "y": 769,
+    "z": 99,
+    "id": "jmhg"
+  },
+  "dl6dD": {
+    "type": "deck",
+    "id": "dl6dD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "pileSnapRange": 0
+      }
+    },
+    "z": 9980,
+    "parent": "jmhg"
+  },
+  "rsuv": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 04",
+    "id": "rsuv",
+    "z": 9985,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "rwcc": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 05",
+    "id": "rwcc",
+    "z": 9986,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "zg4a": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 06",
+    "id": "zg4a",
+    "z": 9987,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "kggo": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 07",
+    "id": "kggo",
+    "z": 9988,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "umat": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 08",
+    "id": "umat",
+    "z": 9989,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "p59o": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 09",
+    "id": "p59o",
+    "z": 9990,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "quya": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 10",
+    "id": "quya",
+    "z": 9991,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "7lky": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 2J",
+    "id": "7lky",
+    "z": 10005,
+    "x": 4,
+    "y": 4,
+    "parent": "jmhg"
+  },
+  "7aly": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "id": "7aly",
+    "z": 10007,
+    "x": 4,
+    "y": 4,
+    "parent": "jmhg"
+  },
+  "pyih": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 4K",
+    "id": "pyih",
+    "z": 10009,
+    "x": 4,
+    "y": 4,
+    "parent": "jmhg"
+  },
+  "8pufB": {
+    "id": "8pufB",
+    "parent": "jmhg",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "q9fg": {
+    "id": "q9fg",
+    "z": 94,
+    "x": 978,
+    "y": 720,
+    "height": 30,
+    "css": "font-size: 25px; ",
+    "width": 40,
+    "movable": false,
+    "text": "4"
   }
 }
