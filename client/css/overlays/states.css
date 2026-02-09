@@ -383,8 +383,8 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-bottom: 4px;
     box-shadow: unset;
   }
-  #statesOverlay .roomState h3, #statesOverlay .roomState h4 {
-    margin: 2px 4px;
+  #statesOverlay .roomState .ai-badge {
+    z-index: 1;
   }
   #statesOverlay .roomState > img {
     height: 48px;
@@ -393,9 +393,19 @@ div:nth-of-type(2) > .list > .roomState .star {
   #statesOverlay .roomState > .details {
     left: 48px;
     height: 48px;
+    background: #00000061;
   }
-  .roomState.hideMainName:not(.savedGame) .details {
+  .roomState .details h3, .roomState .details h4 {
+    background: none;
+    padding: 5px 5px 0 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis
+  }
+  .roomState .details h4 {
+    padding: 0 5px;
+  }
+  .roomState.hideMainName .details h3, .roomState.hideSimilarName .details h4 {
     display: block;
+    background: none;
   }
   .roomState.savedGame h3 {
     font-size: 1rem;
