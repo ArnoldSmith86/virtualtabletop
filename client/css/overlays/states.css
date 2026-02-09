@@ -306,7 +306,8 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: none;
 }
 .roomState.hideName.savedGame .details h4 {
-  margin: 8px;
+  padding: 11px 16px 12px 16px;
+  margin: 0;
 }
 
 .roomState.noImage > img {
