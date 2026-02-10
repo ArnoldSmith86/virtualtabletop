@@ -998,7 +998,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'stateDetailsOverlay') {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.add('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
       $('#statesOverlay').append($('#stateDetailsOverlay'));
@@ -1007,7 +1007,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails')) {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.remove('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
     }
