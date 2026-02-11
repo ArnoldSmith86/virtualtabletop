@@ -232,7 +232,6 @@
   bottom: 0;
   right: 0;
   padding: 0;
-  background: #00000061;
   text-shadow: 0 0 3px #000;
   color: white;
 }
@@ -242,7 +241,9 @@
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1em;
-  margin: 8px 8px 4px 8px;
+  padding: 8px 8px 5px 8px;
+  margin: 0;
+  background: #00000061;
 }
 
 .roomState h4 {
@@ -250,7 +251,9 @@
   font-style: italic;
   font-weight: 700;
   font-size: .8rem;
-  margin: 4px 8px 8px 8px;
+  padding: 3px 8px 4px 8px;
+  margin: 0;
+  background: #00000061;
 }
 .roomState h4 img.emoji {
   transform: skewX(-10deg);
@@ -299,14 +302,18 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
-.roomState.hideName:not(.savedGame) .details {
+.roomState.hideMainName .details h3 {
   display: none;
 }
-.roomState.hideName.savedGame .details h3 {
+.roomState.hideSimilarName:not(.savedGame) .details h4 {
   display: none;
 }
-.roomState.hideName.savedGame .details h4 {
+.roomState.savedGame .details h4 {
   margin: 8px;
+}
+.roomState h4:empty {
+  margin: 0px;
+  padding: 0px;
 }
 
 .roomState.noImage > img {
@@ -376,8 +383,8 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-bottom: 4px;
     box-shadow: unset;
   }
-  #statesOverlay .roomState h3, #statesOverlay .roomState h4 {
-    margin: 2px 4px;
+  #statesOverlay .roomState .ai-badge {
+    z-index: 1;
   }
   #statesOverlay .roomState > img {
     height: 48px;
@@ -386,9 +393,19 @@ div:nth-of-type(2) > .list > .roomState .star {
   #statesOverlay .roomState > .details {
     left: 48px;
     height: 48px;
+    background: #00000061;
   }
-  .roomState.hideName:not(.savedGame) .details {
+  .roomState .details h3, .roomState .details h4 {
+    background: none;
+    padding: 5px 5px 0 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis
+  }
+  .roomState .details h4 {
+    padding: 0 5px;
+  }
+  .roomState.hideMainName .details h3, .roomState.hideSimilarName .details h4 {
     display: block;
+    background: none;
   }
   .roomState.savedGame h3 {
     font-size: 1rem;
@@ -526,7 +543,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   border-radius: 0 0 0 10px;
   text-shadow: none;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
-  z-index: 10;
+  z-index: 0;
 }
 #mainImage .ai-badge:not(.hidden) {
   display: block;
