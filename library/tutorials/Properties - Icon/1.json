@@ -1,34 +1,4 @@
 {
-  "_meta": {
-    "version": 21,
-    "info": {
-      "name": "Properties - Icon",
-      "image": "/assets/1481362664_5448",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "lastUpdate": 1770265817140,
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "players": "1",
-      "language": "en-US",
-      "variant": "Basic",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
-    }
-  },
   "notes1": {
     "id": "notes1",
     "y": 424,
@@ -36,7 +6,7 @@
     "z": 441,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "This is a standard VTT icon on a button.",
     "x": 30
@@ -48,7 +18,7 @@
     "z": 444,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "This is a Material Symbol an a basic widget.",
     "x": 323
@@ -200,7 +170,13 @@
     "height": 150,
     "z": 2,
     "icon": "[library]",
-    "text": "New\nFolder"
+    "text": "New\nFolder",
+    "css": {
+      " .symbolText": {
+        "color": "gold",
+        "font-size": "35px !important"
+      }
+    }
   },
   "example8": {
     "type": "button",
@@ -266,7 +242,7 @@
     "z": 444,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "Text and multiple icons also works the same way."
   },
@@ -278,7 +254,7 @@
     "z": 441,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "Add multiple icons by making the icon property an array."
   },
@@ -290,9 +266,9 @@
     "z": 447,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
-    "text": "If you add both text and an icon, VTT will automatically adjust icon spacing and sizing to accomodate both. There are some limitations on modifying the layout using css if using both text and icons."
+    "html": "If you add both text and an icon, VTT will automatically adjust icon spacing and sizing to accomodate both. There are some limitations on modifying the layout using css if using both text and icons. However, using the CSS class &quot .symbolText&quot, as in the example on the right, allows you to modify the text color, size, opacity, position, etc."
   },
   "notes4": {
     "id": "notes4",
@@ -302,7 +278,7 @@
     "z": 446,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "The faceTemplate and cardType of these cards use a dynamic property value to create the images, which are icons from the game-icons.net collection."
   },
@@ -314,7 +290,7 @@
     "z": 445,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "This is a die with pips on the first four faces and emojis on the last two."
   },
@@ -334,8 +310,39 @@
     "z": 444,
     "movable": false,
     "css": {
-      "font-size": "19px"
+      "font-size": "21px"
     },
     "text": "Icons work the same way on holders."
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1770833039978,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    }
   }
 }

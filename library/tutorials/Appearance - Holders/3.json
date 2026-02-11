@@ -1,35 +1,4 @@
 {
-  "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {}
-    },
-    "info": {
-      "name": "Appearance - Holders",
-      "image": "/assets/-1027054583_6051",
-      "rules": "",
-      "bgg": "",
-      "year": "",
-      "mode": "Tutorial",
-      "time": "",
-      "attribution": "",
-      "lastUpdate": 1770387252537,
-      "showName": false,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarDesigner": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "usesAIImagery": false,
-      "variantImage": "",
-      "variant": "Icons",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "title": {
     "id": "title",
     "x": 400,
@@ -1040,58 +1009,11 @@
   "holder2": {
     "type": "holder",
     "id": "holder2",
-    "x": 466,
+    "x": 421,
     "y": 284,
     "z": 9733,
     "icon": "👣",
     "text": "Bigfoot"
-  },
-  "holder3": {
-    "type": "holder",
-    "id": "holder3",
-    "x": 846,
-    "y": 284,
-    "z": 9733,
-    "icon": [
-      "💾",
-      "🎺"
-    ]
-  },
-  "holder4": {
-    "type": "holder",
-    "id": "holder4",
-    "x": 1224,
-    "y": 284,
-    "z": 9734,
-    "icon": [
-      {
-        "name": "[trash]",
-        "scale": 1,
-        "offsetX": -0.3,
-        "offsetY": -0.1,
-        "rotation": 10,
-        "color": "red",
-        "strokeColor": "",
-        "strokeWidth": 0,
-        "hoverStrokeColor": "",
-        "hoverStrokeWidth": null,
-        "hoverOpacity": 1
-      },
-      {
-        "name": "[cards]",
-        "scale": 1,
-        "offsetX": 0.2,
-        "offsetY": 0.1,
-        "rotation": 10,
-        "color": "silver",
-        "opacity": 1,
-        "strokeColor": "",
-        "strokeWidth": 0,
-        "hoverColor": "gold",
-        "hoverStrokeColor": "",
-        "hoverStrokeWidth": null
-      }
-    ]
   },
   "text1": {
     "id": "text1",
@@ -1109,7 +1031,7 @@
   },
   "text2": {
     "id": "text2",
-    "x": 392,
+    "x": 358,
     "y": 482,
     "width": 230,
     "layer": -3,
@@ -1121,10 +1043,51 @@
     },
     "html": "Easily combine icons with text. Unlike with images, VTT calculates all the positions automatically."
   },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 757,
+    "y": 284,
+    "z": 9733,
+    "icon": "delapouite/avocado",
+    "text": "Avocado",
+    "css": {
+      " .symbolText": {
+        "color": "green",
+        "font-size": "30px !important",
+        "opacity": "0.5"
+      }
+    }
+  },
   "text3": {
     "id": "text3",
-    "x": 797,
+    "x": 711,
     "y": 482,
+    "width": 230,
+    "layer": -3,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "You can modify the text size, color, position, etc. using CSS class &quot .symbolText&quot as in the example above."
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 1094,
+    "y": 285,
+    "z": 9733,
+    "icon": [
+      "💾",
+      "🎺"
+    ]
+  },
+  "text4": {
+    "id": "text4",
+    "x": 1065,
+    "y": 483,
     "width": 200,
     "layer": -3,
     "z": 185,
@@ -1135,10 +1098,10 @@
     },
     "html": "You can also easily combine multiple icons."
   },
-  "text4": {
-    "id": "text4",
-    "x": 1181,
-    "y": 482,
+  "text5": {
+    "id": "text5",
+    "x": 1388,
+    "y": 483,
     "width": 200,
     "layer": -3,
     "z": 185,
@@ -1148,5 +1111,73 @@
       "font-size": "22px"
     },
     "html": "Using the advanced icon object properties, you can customize many aspects of the icons."
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 1431,
+    "y": 285,
+    "z": 9734,
+    "icon": [
+      {
+        "name": "[trash]",
+        "scale": 1,
+        "offsetX": -0.3,
+        "offsetY": -0.1,
+        "rotation": 10,
+        "opacity": 1,
+        "color": "red",
+        "strokeColor": "",
+        "strokeWidth": 0,
+        "hoverStrokeColor": "",
+        "hoverStrokeWidth": null,
+        "hoverOpacity": 0.2
+      },
+      {
+        "name": "[cards]",
+        "scale": 1,
+        "offsetX": 0.2,
+        "offsetY": 0.1,
+        "rotation": 10,
+        "opacity": 1,
+        "color": "black",
+        "strokeColor": "",
+        "strokeWidth": 0,
+        "hoverColor": "gold",
+        "hoverStrokeColor": "",
+        "hoverStrokeWidth": null
+      }
+    ]
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Appearance - Holders",
+      "image": "/assets/-1027054583_6051",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1770833003116,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "Icons",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
