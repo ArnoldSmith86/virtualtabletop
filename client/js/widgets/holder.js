@@ -16,6 +16,7 @@ class Holder extends Widget {
       alignChildren: true,
       preventPiles: false,
       childrenPerOwner: false,
+      cloneChildren: null,
       showInactiveFaceToSeat: null,
 
       onEnter: {},
@@ -79,6 +80,15 @@ class Holder extends Widget {
   }
 
   async onChildAdd(child, oldParentID) {
+    const hasChildren = super.children().length > 0;
+    if(this.get('cloneChildren') && compareDropTarget(child, this, true) && hasChildren) {
+      if(child.fromHolderClone) {
+        delete child.fromHolderClone;
+      } else {
+        await removeWidgetLocal(child.get('id'));
+        return;
+      }
+    }
     await super.onChildAdd(child, oldParentID);
     if(child.get('type') == 'deck')
       return;
