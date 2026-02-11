@@ -1,6 +1,8 @@
 .holder {
-  background: var(--bgColor, white);
-  background: color-mix(in srgb, var(--bgColor, white) calc(var(--bgColorOpacity, 1) * 100%), transparent);
+  --bgColor: white;
+  --bgColorOpacity: 1;
+  background: var(--bgColor);
+  background: color-mix(in srgb, var(--bgColor) calc(var(--bgColorOpacity) * 100%), transparent);
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
