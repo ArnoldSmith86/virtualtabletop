@@ -633,7 +633,7 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
-  const sn = state.showName;
+  const sn = typeof state.showName === 'undefined' ? true : state.showName;
   $('#showName').checked = sn === true || sn === 'only main';
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
@@ -998,7 +998,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'stateDetailsOverlay') {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.add('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
       $('#statesOverlay').append($('#stateDetailsOverlay'));
@@ -1007,7 +1007,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails')) {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.remove('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
     }
