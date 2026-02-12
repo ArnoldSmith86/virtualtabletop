@@ -1,5 +1,8 @@
 .holder {
-  background: white;
+  --bgColor: white;
+  --bgColorOpacity: 1;
+  background: var(--bgColor);
+  background: color-mix(in srgb, var(--bgColor) calc(var(--bgColorOpacity) * 100%), transparent);
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
@@ -13,6 +16,42 @@
 .holder > .widget {
   left: -1px;
   top: -1px;
+}
+
+.widget.holder > .holderTextOnly {
+  position: absolute;
+  inset: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--holderTextColor);
+  font-weight: bold;
+  overflow: hidden;
+  word-break: normal;
+  white-space: normal;
+  line-height: 1.1;
+  box-sizing: border-box;
+}
+
+.widget.holder.hasImage {
+  background-image: none;
+}
+
+.widget.holder.hasImage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bgImage);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: var(--bgImageOpacity, 0.2);
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 .holder.transparent {
