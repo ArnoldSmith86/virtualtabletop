@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 11,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Pile",
       "image": "/assets/-507593653_3537",
@@ -11,7 +14,7 @@
       "time": "",
       "attribution": "BASIC: N/A<div><br></div><div>--------</div><div><br></div><div>ADVANCED:&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">The rank icon images are by user Ingegneus and are released into the Public Domain through CC0.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">--------</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">DECORATION:&nbsp;&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The brown envelope images are by user mousewax and are released into the Public Domain through CC0.</div><div><br></div><div>--------</div><div><br></div><div>PILESNAPRANGE: N/A</div>",
       "showName": false,
-      "lastUpdate": 1768190089516,
+      "lastUpdate": 1770580693112,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,6 +23,7 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "pileSnapRange",
       "language": "en-US",
@@ -95,7 +99,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteX"
+              "value": "x"
             }
           },
           {
@@ -106,7 +110,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteY"
+              "value": "y"
             }
           }
         ]
@@ -231,7 +235,8 @@
       "height": 100,
       "onPileCreation": {
         "pileSnapRange": 50
-      }
+      },
+      "xChangeRoutine": []
     },
     "cardTypes": {
       "red-50": {
@@ -290,7 +295,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteX"
+              "value": "x"
             }
           },
           {
@@ -301,7 +306,7 @@
             "height": 100,
             "color": "white",
             "dynamicProperties": {
-              "value": "_absoluteY"
+              "value": "y"
             }
           }
         ]
@@ -426,7 +431,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 24px; ",
-    "text": "By default, piles will form and cards will be added to existing piles when the card being dragged is within 10 pixels of either the x or y coordinates of the other card/pile. This can be changed using 'onPileCreation' and the 'pileSnapRange' property. 'pileSnapRange' defaults to 10 and can be any positive number. The larger the number, the further away cards will form or snap to existing piles.\n\nThere are 2 decks of cards in this room. The cards with -100 in the name at the top have 'pileSnapRange' set to 100 and those with -50 have it set to 50. The cards will not mix with each other because the 'onPileCreation' properties are not identical. The cards with 100 will form a pile or snap to an existing pile when they are within 100 pixel of another card of the same type. The cards in this room are 100 pixels wide, so any overlap between the cards will cause it to move into a pile. The numbers on the cards are its x,y coordinates in the room, provided just as a reference so you can compare how close the cards are. Drag cards and piles around and observe the interactions."
+    "text": "By default, piles will form and cards will be added to existing piles when the card being dragged is within 10 pixels of either the x or y coordinates of the other card/pile. This can be changed using 'onPileCreation' and the 'pileSnapRange' property. 'pileSnapRange' defaults to 10 and can be any positive number. The larger the number, the further away cards will form or snap to existing piles. If `pileSnapRange` is set to 0, then the cards will not form a pile.\n\nThere are 2 decks of cards in this room. The cards with -100 in the name at the top have 'pileSnapRange' set to 100 and those with -50 have it set to 50. The cards will not mix with each other because the 'onPileCreation' properties are not identical. The cards with 100 will form a pile or snap to an existing pile when they are within 100 pixel of another card of the same type. The cards in this room are 100 pixels wide, so any overlap between the cards will cause it to move into a pile. The numbers on the cards are its x,y coordinates in the room, provided just as a reference so you can compare how close the cards are. Drag cards and piles around and observe the interactions."
   },
   "zdlh": {
     "type": "pile",
