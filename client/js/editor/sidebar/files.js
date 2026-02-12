@@ -185,6 +185,7 @@ class FilesModule extends SidebarModule {
     this.pollTimer = null;
     this.lastPollKeys = null;
     this.lastModifiedByPath = {};
+    this.lastSizeByPath = {};
     this.fileLog = [];
   }
 
@@ -343,29 +344,44 @@ class FilesModule extends SidebarModule {
   startPolling(handle, mappings) {
     if (this.pollTimer) clearInterval(this.pollTimer);
     const poll = async () => {
-      const files = await readDirectory(handle);
-      const prevPaths = new Set(this.files.map(f => f.relativePath));
-      const currPaths = new Set(files.map(f => f.relativePath));
-      const listChanged = prevPaths.size !== currPaths.size || [...currPaths].some(p => !prevPaths.has(p));
-      let contentChanged = false;
-      const currentMappings = getGameSettingsFileMappings();
-      for (const f of files) {
-        if (!f.isHandle) continue;
-        try {
-          const file = await f.handle.getFile();
-          const mod = file.lastModified;
-          const prevMod = this.lastModifiedByPath[f.relativePath];
-          if (prevMod != null && prevMod !== mod) contentChanged = true;
-          this.lastModifiedByPath[f.relativePath] = mod;
-          const m = currentMappings[f.relativePath];
-          if (m && m.handlerId && prevMod != null && prevMod !== mod)
-            await this.runHandlerForFile(f, m);
-        } catch (_) {}
+      try {
+        const files = await readDirectory(handle);
+        const prevPaths = new Set(this.files.map(f => f.relativePath));
+        const currPaths = new Set(files.map(f => f.relativePath));
+        const listChanged = prevPaths.size !== currPaths.size || [...currPaths].some(p => !prevPaths.has(p));
+        let contentChanged = false;
+        const currentMappings = getGameSettingsFileMappings();
+        for (const f of files) {
+          if (!f.isHandle) continue;
+          try {
+            const file = await f.handle.getFile();
+            const mod = file.lastModified;
+            const size = file.size;
+            const prevMod = this.lastModifiedByPath[f.relativePath];
+            const prevSize = this.lastSizeByPath[f.relativePath];
+            const timeChanged = prevMod != null && prevMod !== mod;
+            const sizeChanged = prevSize != null && prevSize !== size;
+            if (timeChanged || sizeChanged) {
+              contentChanged = true;
+              console.log('[Files panel] change detected:', f.relativePath, { timeChanged, sizeChanged, mod, prevMod, size, prevSize });
+            }
+            this.lastModifiedByPath[f.relativePath] = mod;
+            this.lastSizeByPath[f.relativePath] = size;
+            const m = currentMappings[f.relativePath];
+            if (m && m.handlerId && (timeChanged || sizeChanged))
+              await this.runHandlerForFile(f, m);
+          } catch (err) {
+            console.error('[Files panel] getFile failed:', f.relativePath, err);
+          }
+        }
+        this.files = files;
+        if ((listChanged || contentChanged) && this.moduleDOM) this.renderModule(this.moduleDOM);
+      } catch (err) {
+        console.error('[Files panel] poll failed:', err);
       }
-      this.files = files;
-      if ((listChanged || contentChanged) && this.moduleDOM) this.renderModule(this.moduleDOM);
     };
     this.lastModifiedByPath = {};
+    this.lastSizeByPath = {};
     this.pollTimer = setInterval(poll, 2000);
     poll();
   }
