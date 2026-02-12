@@ -309,7 +309,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: none;
 }
 .roomState.savedGame .details h4 {
-  padding: 4px 8px 8px 8px;
+  padding: 3px 8px 4px 8px;
   margin: 0;
 }
 .roomState h4:empty {
