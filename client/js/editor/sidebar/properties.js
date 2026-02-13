@@ -1685,6 +1685,7 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Label content and properties');
 
     // Editable checkbox: when checked, label is editable in play mode
+    // todo: change to auxiliary checkbox function.
     const editableWrap = div(this.moduleDOM);
     const editableCheck = document.createElement('input');
     editableCheck.type = 'checkbox';
@@ -1698,7 +1699,7 @@ class PropertiesModule extends SidebarModule {
     editableCheck.onchange = () => this.inputValueUpdated(widget, 'editable', editableCheck.checked);
     this.addPropertyListener(widget, 'editable', w => { editableCheck.checked = !!w.get('editable'); });
 
-    this.renderLargeTextInput(widget, 'text', 'Text Content');
+    this.renderLargeTextInput(widget, 'Text Content', 'text');
 
     // Color picker: reads/writes text color from widget css (inline string or object.inline)
     const colorWrap = div(this.moduleDOM);
@@ -1723,8 +1724,9 @@ class PropertiesModule extends SidebarModule {
         colorInput.value = parsePropertyFromCSS(widget.get('css'), 'color', '#000000');
     });
 
+    this.addLineBreak();
     // Placeholder text (shown when label text is empty in play mode)
-    this.renderLargeTextInput(widget, 'placeholderText', 'Placeholder Text (shown when label is empty)');
+    this.renderLargeTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText');
 
   }
 
@@ -1779,7 +1781,7 @@ class PropertiesModule extends SidebarModule {
     return button;
   }    
 
-  renderLargeTextInput (widget, property, title) {
+  renderLargeTextInput (widget, title, property) {
     // Large text input for label text (~90% width, 6 lines, scroll if needed)
     const textTitle = document.createElement('div');
     textTitle.className = 'labelEditorSectionTitle';
