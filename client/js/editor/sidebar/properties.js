@@ -106,25 +106,72 @@ async function setCardCount(deck, cardType, count) {
 /* end helper functions */
 
 function parsePropertyFromCSS(css, prop, defaultValue='') {
-  if (!css) return defaultValue;
-  const str = typeof css === 'string' ? css : (css.inline || '');
-  const propEsc = String(prop).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-  const re = new RegExp(propEsc + '\\s*:\\s*([^;]+)', 'i');
-  const m = str.match(re);
-  return m ? m[1].trim() : defaultValue;
+  if (css === null || typeof css === 'undefined') return defaultValue;
+  const key = String(prop);
+
+  // 1) string form: "prop: value; prop2: value2"
+  if (typeof css === 'string') {
+    const propEsc = key.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const re = new RegExp(propEsc + '\\s*:\\s*([^;]+)', 'i');
+    const m = css.match(re);
+    return m ? m[1].trim() : defaultValue;
+  }
+
+  // 2) object form: prefer explicit property on the object
+  if (typeof css === 'object' && css !== null && !Array.isArray(css)) {
+    if (Object.prototype.hasOwnProperty.call(css, key) && css[key] != null)
+      return String(css[key]);
+
+    // 3) nested default object: css.default.prop
+    if (css.default && typeof css.default === 'object' && Object.prototype.hasOwnProperty.call(css.default, key) && css.default[key] != null)
+      return String(css.default[key]);
+  }
+
+  return defaultValue;
 }
 
 function mergePropertyFromCSS(css, prop, value) {
-  const str = typeof css === 'string' ? css : (css && css.inline ? css.inline : '');
-  const propEsc = String(prop).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-  const without = str.replace(new RegExp('\\s*' + propEsc + '\\s*:\\s*[^;]+\\s*;?', 'gi'), '').trim().replace(/;+\s*$/, '');
-  const newInline = without ? (without + '; ' + prop + ': ' + value) : (prop + ': ' + value);
+  const key = String(prop);
+
+  // helper to remove existing occurrences from inline string
+  const removeFromInline = (str) => str.replace(new RegExp('\\s*' + key.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\s*:\\s*[^;]+\\s*;?', 'gi'), '').trim().replace(/;+\\s*$/, '');
+
+  // 1) incoming css is a string -> return updated string
+  if (typeof css === 'string') {
+    const base = removeFromInline(css);
+    if (value === null || typeof value === 'undefined' || value === '')
+      return base;
+    const newInline = base ? (base + '; ' + key + ': ' + value) : (key + ': ' + value);
+    return newInline;
+  }
+
+  // 2) incoming css is an object -> update appropriate place
   if (typeof css === 'object' && css !== null) {
-    const out = Object.assign({}, css);
-    out.inline = newInline;
+    // clone to avoid mutating original
+    const out = Array.isArray(css) ? css.slice() : Object.assign({}, css);
+
+    // prefer top-level property if it exists, otherwise use css.default when present
+    if (Object.prototype.hasOwnProperty.call(out, key) || !out.default) {
+      if (value === null || typeof value === 'undefined' || value === '')
+        delete out[key];
+      else
+        out[key] = value;
+      return out;
+    }
+
+    // use css.default when available
+    out.default = Object.assign({}, out.default || {});
+    if (value === null || typeof value === 'undefined' || value === '')
+      delete out.default[key];
+    else
+      out.default[key] = value;
     return out;
   }
-  return newInline;
+
+  // 3) no css defined yet -> create simple object or return empty on deletion
+  if (value === null || typeof value === 'undefined' || value === '')
+    return css;
+  return { [key]: value };
 }
 
 
@@ -1873,7 +1920,7 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
   }
 
-  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css) {
+  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css') {
     // ideally the CSS property would be optional and if not specified this function would treat property as a normal widget proterty and read/write color from it. Will change when/if needed by other widgets.
     const colorWrap = div(this.moduleDOM);
     const colorLabel = document.createElement('label');
@@ -1896,7 +1943,7 @@ class PropertiesModule extends SidebarModule {
       this.inputUpdaters[widget.id][css] = [];
     this.inputUpdaters[widget.id][css].push(() => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(widget.get(css), property, '#000000');
+        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor);
     });
   }
 
