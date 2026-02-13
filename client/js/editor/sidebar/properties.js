@@ -1642,42 +1642,20 @@ class PropertiesModule extends SidebarModule {
     // --- Label style presets (preview buttons like deck) ---
     this.addSubHeader('Label style');
     const labelStyles = [
-      { name: 'T', css: 'font-size: 50px; font-weight: bold' },
-      { name: 'H', css: 'font-size: 30px; font-weight: bold' },
-      { name: 'Normal', css: null },
-      { name: 'Bold', css: 'font-weight: bold' },
-      { name: 'Italic', css: 'font-style: italic' }
+      { name: 'H', css: 'font-size: 30px; font-weight: bold', labelAppearanceHeight: 45 },
+      { name: 'Normal', css: null, labelAppearanceHeight: 15 },
+      { name: 'Bold', css: 'font-weight: bold', labelAppearanceHeight: 15 },
+      { name: 'Italic', css: 'font-style: italic', labelAppearanceHeight: 15 }
     ];
 
-    for (const style of labelStyles) {
-      // Preview button: mini label showing style name in that style
-      const labelState = {
+    for (const s of labelStyles) {
+      const label = this.renderWidgetButton(new Label(), {
         type: 'label',
-        text: style.name,
+        css: s.css,
+        text: s.name,
         width: 120,
-        height: 60,
-        css: style.css
-      };
-      const styleButton = this.renderWidgetButton(new Label(generateUniqueWidgetID()), labelState, this.moduleDOM);
-
-      // Keep "selected" in sync with widget css (and set initial state)
-      const updateSelected = (w) => {
-        const inline = (() => {
-          const c = w.get('css');
-          if (typeof c === 'string') return c;
-          if (c && typeof c === 'object' && c.inline) return c.inline;
-          return '';
-        })();
-        const norm = (s) => !s ? '' : String(s).replace(/\s+/g, ' ').trim();
-        const styleCssStr = typeof style.css === 'string' ? style.css : (style.css && style.css.inline);
-        const isSelected = style.css === null ? !norm(inline) : (norm(inline) === norm(styleCssStr));
-        styleButton.classList.toggle('selected', isSelected);
-      };
-      this.addPropertyListener(widget, 'css', updateSelected);
-      updateSelected(widget);
-      styleButton.onclick = () => {
-        if (!styleButton.classList.contains('selected'))
-          widget.set('css', style.css);
+        height: s.labelAppearanceHeight,
+        overflow: 'visible'
       };
     }
 
