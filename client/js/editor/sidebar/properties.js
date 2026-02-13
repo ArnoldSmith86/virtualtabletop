@@ -1677,19 +1677,7 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Label content');
 
     // Editable checkbox: when checked, label is editable in play mode
-    // todo: change to auxiliary checkbox function.
-    const editableWrap = div(this.moduleDOM);
-    const editableCheck = document.createElement('input');
-    editableCheck.type = 'checkbox';
-    editableCheck.id = 'labelEditable_' + widget.id;
-    editableCheck.checked = !!widget.get('editable');
-    const editableLabel = document.createElement('label');
-    editableLabel.htmlFor = editableCheck.id;
-    editableLabel.textContent = 'Editable (in play mode)';
-    editableWrap.appendChild(editableCheck);
-    editableWrap.appendChild(editableLabel);
-    editableCheck.onchange = () => this.inputValueUpdated(widget, 'editable', editableCheck.checked);
-    this.addPropertyListener(widget, 'editable', w => { editableCheck.checked = !!w.get('editable'); });
+    this.renderCheckbox(widget, 'Editable (in play mode)', 'editable');
 
     this.renderLargeTextInput(widget, 'Text Content', 'text');
 
@@ -1782,6 +1770,28 @@ class PropertiesModule extends SidebarModule {
     if (!this.inputUpdaters[widget.id][property])
       this.inputUpdaters[widget.id][property] = [];
     this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== textArea) textArea.value = widget.get(property) || ''; });
+  }
+
+  renderCheckbox(widget, title, property) {
+    const wrap = div(this.moduleDOM);
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = `${property}_${widget.id}`;
+    input.checked = !!widget.get(property);
+    const label = document.createElement('label');
+    label.htmlFor = input.id;
+    label.textContent = title || property;
+    wrap.appendChild(input);
+    wrap.appendChild(label);
+
+    input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
+    this.addPropertyListener(widget, property, w => { input.checked = !!w.get(property); });
+
+    if (!this.inputUpdaters[widget.id])
+      this.inputUpdaters[widget.id] = {};
+    if (!this.inputUpdaters[widget.id][property])
+      this.inputUpdaters[widget.id][property] = [];
+    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
   }
 
   renderColorInput(widget, title, property, css) {
