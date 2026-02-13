@@ -1682,7 +1682,7 @@ class PropertiesModule extends SidebarModule {
     }
 
     // --- Label content and specific properties ---
-    this.addSubHeader('Label content and properties');
+    this.addSubHeader('Label content');
 
     // Editable checkbox: when checked, label is editable in play mode
     // todo: change to auxiliary checkbox function.
@@ -1707,7 +1707,8 @@ class PropertiesModule extends SidebarModule {
     this.addLineBreak();
     // Placeholder text (shown when label text is empty in play mode)
     this.renderLargeTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText');
-
+    this.addSubHeader('Other properties');
+    this.renderGenericProperties(widget, ['css','editable', 'placeholderText', 'text' ]);
   }
 
   renderGenericProperties(widget, exclude) {
