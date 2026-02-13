@@ -105,6 +105,28 @@ async function setCardCount(deck, cardType, count) {
 
 /* end helper functions */
 
+function parsePropertyFromCSS(css, prop, defaultValue='') {
+  if (!css) return defaultValue;
+  const str = typeof css === 'string' ? css : (css.inline || '');
+  const propEsc = String(prop).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const re = new RegExp(propEsc + '\\s*:\\s*([^;]+)', 'i');
+  const m = str.match(re);
+  return m ? m[1].trim() : defaultValue;
+}
+
+function mergePropertyFromCSS(css, prop, value) {
+  const str = typeof css === 'string' ? css : (css && css.inline ? css.inline : '');
+  const propEsc = String(prop).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const without = str.replace(new RegExp('\\s*' + propEsc + '\\s*:\\s*[^;]+\\s*;?', 'gi'), '').trim().replace(/;+\s*$/, '');
+  const newInline = without ? (without + '; ' + prop + ': ' + value) : (prop + ': ' + value);
+  if (typeof css === 'object' && css !== null) {
+    const out = Object.assign({}, css);
+    out.inline = newInline;
+    return out;
+  }
+  return newInline;
+}
+
 
 class PropertiesModule extends SidebarModule {
   constructor() {
@@ -1663,7 +1685,7 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Label content and properties');
 
     // Editable checkbox: when checked, label is editable in play mode
-    const editableWrap = div(this.moduleDOM, 'genericInput');
+    const editableWrap = div(this.moduleDOM);
     const editableCheck = document.createElement('input');
     editableCheck.type = 'checkbox';
     editableCheck.id = 'labelEditable_' + widget.id;
@@ -1676,78 +1698,33 @@ class PropertiesModule extends SidebarModule {
     editableCheck.onchange = () => this.inputValueUpdated(widget, 'editable', editableCheck.checked);
     this.addPropertyListener(widget, 'editable', w => { editableCheck.checked = !!w.get('editable'); });
 
-    // Large text input for label text (~90% width, 6 lines, scroll if needed)
-    const textTitle = document.createElement('div');
-    textTitle.className = 'labelEditorSectionTitle';
-    textTitle.textContent = 'Text content';
-    textTitle.style.fontWeight = 'bold';
-    textTitle.style.marginTop = '8px';
-    textTitle.style.marginBottom = '4px';
-    this.moduleDOM.appendChild(textTitle);
-    const textAreaWrap = div(this.moduleDOM, 'labelTextAreaWrap');
-    const textArea = document.createElement('textarea');
-    textArea.className = 'labelPropertyTextArea';
-    textArea.rows = 6;
-    textArea.value = widget.get('text') || '';
-    textArea.style.width = '90%';
-    textArea.style.maxWidth = '100%';
-    textArea.style.minHeight = '6em';
-    textArea.style.overflowY = 'auto';
-    textArea.style.boxSizing = 'border-box';
-    textAreaWrap.appendChild(textArea);
-    textArea.oninput = () => this.inputValueUpdated(widget, 'text', textArea.value);
-    this.addPropertyListener(widget, 'text', w => {
-      if (document.activeElement !== textArea)
-        textArea.value = w.get('text') || '';
-    });
-    if (!this.inputUpdaters[widget.id]['text'])
-      this.inputUpdaters[widget.id]['text'] = [];
-    this.inputUpdaters[widget.id]['text'].push(() => { if (document.activeElement !== textArea) textArea.value = widget.get('text') || ''; });
+    this.renderLargeTextInput(widget, 'text', 'Text Content');
 
     // Color picker: reads/writes text color from widget css (inline string or object.inline)
-    const colorWrap = div(this.moduleDOM, 'genericInput');
+    const colorWrap = div(this.moduleDOM);
     const colorLabel = document.createElement('label');
     colorLabel.textContent = 'Color: ';
     colorLabel.style.display = 'inline-block';
     const colorInput = document.createElement('input');
     colorInput.type = 'color';
-    const parseColorFromCss = (css) => {
-      if (!css) return '#000000';
-      const str = typeof css === 'string' ? css : (css.inline || '');
-      const m = str.match(/color\s*:\s*([#\w()%,. ]+)/i);
-      return m ? m[1].trim() : '#000000';
-    };
-    const mergeColorIntoCss = (css, hex) => {
-      const str = typeof css === 'string' ? css : (css && css.inline ? css.inline : '');
-      const without = str.replace(/\s*color\s*:\s*[#\w()%,. ]+\s*;?/gi, '').trim().replace(/;+\s*$/, '');
-      const newInline = without ? (without + '; color: ' + hex) : ('color: ' + hex);
-      if (typeof css === 'object' && css !== null) {
-        const out = Object.assign({}, css);
-        out.inline = newInline;
-        return out;
-      }
-      return newInline;
-    };
-    colorInput.value = parseColorFromCss(widget.get('css'));
+   
+    colorInput.value = parsePropertyFromCSS(widget.get('css'), 'color', '#000000');
     colorWrap.appendChild(colorLabel);
     colorWrap.appendChild(colorInput);
-    colorInput.oninput = () => widget.set('css', mergeColorIntoCss(widget.get('css'), colorInput.value));
+    colorInput.oninput = () => widget.set('css', mergePropertyFromCSS(widget.get('css'), 'color', colorInput.value));
     this.addPropertyListener(widget, 'css', w => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parseColorFromCss(w.get('css'));
+        colorInput.value = parsePropertyFromCSS(w.get('css'), 'color', '#000000');
     });
     if (!this.inputUpdaters[widget.id]['css'])
       this.inputUpdaters[widget.id]['css'] = [];
     this.inputUpdaters[widget.id]['css'].push(() => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parseColorFromCss(widget.get('css'));
+        colorInput.value = parsePropertyFromCSS(widget.get('css'), 'color', '#000000');
     });
 
     // Placeholder text (shown when label text is empty in play mode)
-    const placeholderInput = this.addInput('Placeholder text', widget.get('placeholderText'), v => this.inputValueUpdated(widget, 'placeholderText', v), this.moduleDOM, 'text');
-    if (!this.inputUpdaters[widget.id]['placeholderText'])
-      this.inputUpdaters[widget.id]['placeholderText'] = [];
-    this.inputUpdaters[widget.id]['placeholderText'].push(placeholderInput.setValue);
+    this.renderLargeTextInput(widget, 'placeholderText', 'Placeholder Text (shown when label is empty)');
 
   }
 
@@ -1800,6 +1777,36 @@ class PropertiesModule extends SidebarModule {
     centerElementInClientRect(button.children[0], button.getBoundingClientRect());
 
     return button;
+  }    
+
+  renderLargeTextInput (widget, property, title) {
+    // Large text input for label text (~90% width, 6 lines, scroll if needed)
+    const textTitle = document.createElement('div');
+    textTitle.className = 'labelEditorSectionTitle';
+    textTitle.textContent = title;
+    textTitle.style.fontWeight = 'bold';
+    textTitle.style.marginTop = '8px';
+    textTitle.style.marginBottom = '4px';
+    this.moduleDOM.appendChild(textTitle);
+    const textAreaWrap = div(this.moduleDOM, 'labelTextAreaWrap');
+    const textArea = document.createElement('textarea');
+    textArea.className = 'labelPropertyTextArea';
+    textArea.rows = 6;
+    textArea.value = widget.get(property) || '';
+    textArea.style.width = '90%';
+    textArea.style.maxWidth = '100%';
+    textArea.style.minHeight = '6em';
+    textArea.style.overflowY = 'auto';
+    textArea.style.boxSizing = 'border-box';
+    textAreaWrap.appendChild(textArea);
+    textArea.oninput = () => this.inputValueUpdated(widget, property, textArea.value);
+    this.addPropertyListener(widget, property, w => {
+      if (document.activeElement !== textArea)
+        textArea.value = w.get(property) || '';
+    });
+    if (!this.inputUpdaters[widget.id][property])
+      this.inputUpdaters[widget.id][property] = [];
+    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== textArea) textArea.value = widget.get(property) || ''; });
   }
 
   renderModule(target) {
