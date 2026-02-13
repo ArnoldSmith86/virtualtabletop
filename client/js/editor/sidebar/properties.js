@@ -1642,6 +1642,7 @@ class PropertiesModule extends SidebarModule {
     // --- Label style presets (preview buttons like deck) ---
     this.addSubHeader('Label style');
     const labelStyles = [
+      { name: 'T', css: 'font-size: 50px; font-weight: bold', labelAppearanceHeight: 80 },
       { name: 'H', css: 'font-size: 30px; font-weight: bold', labelAppearanceHeight: 45 },
       { name: 'Normal', css: null, labelAppearanceHeight: 15 },
       { name: 'Bold', css: 'font-weight: bold', labelAppearanceHeight: 15 },
@@ -1656,6 +1657,19 @@ class PropertiesModule extends SidebarModule {
         width: 120,
         height: s.labelAppearanceHeight,
         overflow: 'visible'
+      }, this.moduleDOM);
+
+      this.addPropertyListener(widget, 'css', widget => {
+        if (JSON.stringify(widget.get('css')) === JSON.stringify(s.css)) {
+          label.classList.add('selected');
+        } else {
+          label.classList.remove('selected');
+        }
+      });
+      label.onclick = async e => {
+        if (!label.classList.contains('selected')) {
+          widget.set('css', s.css);
+        }
       };
     }
 
