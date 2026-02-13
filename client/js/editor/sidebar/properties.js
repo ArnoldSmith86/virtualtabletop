@@ -1685,8 +1685,16 @@ class PropertiesModule extends SidebarModule {
     this.renderColorInput(widget, 'Color', 'color', 'css');
     
     this.addLineBreak();
+
     // Placeholder text (shown when label text is empty in play mode)
-    this.renderLargeTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText');
+    this.renderObscureProperties(widget, [
+      {
+        property: 'placeholderText',
+        title: 'Placeholder Text (shown when label is empty)',
+        renderer: () => this.renderLargeTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText')
+      }
+    ]);
+
     this.addSubHeader('Other properties');
     this.renderGenericProperties(widget, ['css','editable', 'placeholderText', 'text' ]);
   }
@@ -1701,6 +1709,77 @@ class PropertiesModule extends SidebarModule {
         this.inputUpdaters[widget.id][property] = [];
 
       this.inputUpdaters[widget.id][property].push(input.setValue);
+    }
+  }
+
+    renderObscureProperties(widget, specs) {
+    // specs: array of either property name strings or objects { property, title, renderer }
+    // this was all Ai generated from a pseudo code
+    for (const s of specs) {
+      const spec = typeof s === 'string' ? { property: s, title: s } : s;
+      const prop = spec.property;
+      const title = spec.title || prop;
+      const renderFn = spec.renderer || (() => this.addInput(title, widget.get(prop), v => this.inputValueUpdated(widget, prop, v)));
+
+      const val = widget.get(prop);
+      const hasValue = val !== undefined && val !== null && !(typeof val === 'string' && val.trim() === '');
+      if (hasValue) {
+        renderFn();
+        continue;
+      }
+
+      const btn = document.createElement('button');
+      btn.className = 'blue';
+      btn.innerText = '+ ' + title;
+      this.moduleDOM.appendChild(btn);
+
+      const propertyWatcher = w => {
+        const v = w.get(prop);
+        if (v !== undefined && v !== null && !(typeof v === 'string' && v.trim() === '')) {
+          // replace the button with the generated input in-place
+          const parent = this.moduleDOM;
+          try {
+            const beforeCount = parent.childNodes.length;
+            const container = document.createElement('div');
+            container.className = 'obscurePropertyContainer';
+            if (btn.parentNode) btn.replaceWith(container);
+            // allow renderer to run (pass container in case it accepts a target)
+            renderFn(container);
+            // move any nodes appended to moduleDOM by the renderer into container
+            const afterCount = parent.childNodes.length;
+            let newNodes = afterCount - beforeCount;
+            for (let i = 0; i < newNodes; ++i) {
+              const node = parent.childNodes[beforeCount];
+              if (node) container.appendChild(node);
+            }
+          } catch (err) {
+            console.error('renderObscureProperties propertyWatcher renderFn threw', err);
+          }
+        }
+      };
+
+      this.addPropertyListener(widget, prop, propertyWatcher);
+
+      // Use addEventListener and place generated input where the button was
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const parent = this.moduleDOM;
+        try {
+          const beforeCount = parent.childNodes.length;
+          const container = document.createElement('div');
+          container.className = 'obscurePropertyContainer';
+          if (btn.parentNode) btn.replaceWith(container);
+          renderFn(container);
+          const afterCount = parent.childNodes.length;
+          let newNodes = afterCount - beforeCount;
+          for (let i = 0; i < newNodes; ++i) {
+            const node = parent.childNodes[beforeCount];
+            if (node) container.appendChild(node);
+          }
+        } catch (err) {
+          console.error('renderObscureProperties click renderFn threw', err);
+        }
+      });
     }
   }
 
