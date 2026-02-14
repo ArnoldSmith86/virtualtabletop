@@ -1689,11 +1689,11 @@ class PropertiesModule extends SidebarModule {
     // --- Label style presets (preview buttons like deck) ---
     this.addSubHeader('Label style');
     const labelStyles = [
-      { name: 'T', css: 'font-size: 50px; font-weight: bold', labelAppearanceHeight: 80 },
-      { name: 'H', css: 'font-size: 30px; font-weight: bold', labelAppearanceHeight: 45 },
-      { name: 'Normal', css: null, labelAppearanceHeight: 15 },
-      { name: 'Bold', css: 'font-weight: bold', labelAppearanceHeight: 15 },
-      { name: 'Italic', css: 'font-style: italic', labelAppearanceHeight: 15 }
+      { name: 'Title', css: 'font-size: 50px; font-weight: bold', labelAppearanceHeight: 85 },
+      { name: 'Header', css: 'font-size: 30px; font-weight: bold', labelAppearanceHeight: 50 },
+      { name: 'Regular', css: null, labelAppearanceHeight: 20 },
+      { name: 'Bold', css: 'font-weight: bold', labelAppearanceHeight: 20 },
+      { name: 'Italic', css: 'font-style: italic', labelAppearanceHeight: 20 }
     ];
 
     for (const s of labelStyles) {
