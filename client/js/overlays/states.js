@@ -1096,8 +1096,9 @@ async function shareLink(state) {
       const baseURL = getBaseURL();
       if(url.startsWith(`${baseURL}/s/`))
         url = `${baseURL}/game/${url.substr(baseURL.length + 3, 8)}/${name}`;
-      if(url.startsWith(`${baseURL}/game/`))
-        url = `${baseURL}/game/${url.substr(baseURL.length + 6, 8)}/${name}`;
+      const gameWithHash = url.match(/^(.*\/game\/[0-9a-z]{8}\/.*)(#VTT.*)$/);
+      if(gameWithHash)
+        url = gameWithHash[1];
     }
   }
 
