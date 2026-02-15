@@ -1934,14 +1934,17 @@ class PropertiesModule extends SidebarModule {
   renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css') {
     // ideally the CSS property would be optional and if not specified this function would treat property as a normal widget proterty and read/write color from it. Will change when/if needed by other widgets.
     const colorWrap = div(this.moduleDOM);
-    const colorLabel = document.createElement('label');
-    colorLabel.textContent = (title || 'Color') + ': ';
-    colorLabel.style.display = 'inline-block';
+    if (title) {
+      const colorLabel = document.createElement('label');
+      colorLabel.textContent = title;
+      colorLabel.style.display = 'inline-block';
+      colorWrap.appendChild(colorLabel);
+    }
     const colorInput = document.createElement('input');
     colorInput.type = 'color';
+    colorInput.style = "-webkit-appearance: none; -moz-appearance: none; border-radius: 4px; display: inline-block; margin: 3px 3px 0 8px; padding: 0; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0); order: 1; flex-grow: 0; flex-shrink: 0; "
 
     colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor);
-    colorWrap.appendChild(colorLabel);
     colorWrap.appendChild(colorInput);
     colorInput.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value));
     this.addPropertyListener(widget, css, w => {
