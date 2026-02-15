@@ -937,7 +937,6 @@ button {
   border-radius: 5px;
   background-repeat: no-repeat;
   margin: 1px;
-  transition: color 0.3s ease
 }
 
 button:hover {
