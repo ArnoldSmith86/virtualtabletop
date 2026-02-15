@@ -9,11 +9,15 @@ import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
 import Statistics from './statistics.mjs';
 
+const DELTA_CONFIRM_BUFFER_MS = 5 * 60 * 1000;
+
 export default class Room {
   players = [];
   state = {};
   deltaID = 0;
   lastStatisticsDeltaID = 0;
+  deltaConfirmBuffer = [];
+  lastMouseStateByPlayer = {};
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
     this.id = id;
@@ -42,6 +46,10 @@ export default class Room {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
     } else {
       player.send('state', this.state);
+      for (const other of this.players) {
+        if (other !== player && this.lastMouseStateByPlayer[other.name])
+          player.send('mouse', { player: other.name, mouseState: this.lastMouseStateByPlayer[other.name] });
+      }
     }
 
     if(this.traceIsEnabled()) {
@@ -675,6 +683,7 @@ export default class Room {
   }
 
   mouseMove(player, mouseState) {
+    this.lastMouseStateByPlayer[player.name] = mouseState;
     this.broadcast('mouse', { player: player.name, mouseState });
   }
 
@@ -694,6 +703,15 @@ export default class Room {
   }
 
   receiveDelta(player, delta) {
+    if(Math.random() < 0.05)
+      return;
+
+    if(delta.previousDeltaSendId != null) {
+      const applied = new Set(this.deltaConfirmBuffer.map(e => e.id));
+      if(!applied.has(delta.previousDeltaSendId))
+        return;
+    }
+
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
@@ -711,6 +729,15 @@ export default class Room {
     }
     delta.id = ++this.deltaID;
 
+    if(delta.deltaSendId) {
+      const now = Date.now();
+      this.deltaConfirmBuffer.push({ id: delta.deltaSendId, time: now });
+      const cut = now - DELTA_CONFIRM_BUFFER_MS;
+      this.deltaConfirmBuffer = this.deltaConfirmBuffer.filter(e => e.time > cut);
+      if(Math.random() >= 0.05)
+        player.send('deltaConfirm', { id: delta.deltaSendId });
+    }
+
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;
       this.broadcast('state', this.state, player);
@@ -718,6 +745,14 @@ export default class Room {
     } else {
       this.broadcast('delta', delta, player);
     }
+  }
+
+  checkDeltaIds(player, ids) {
+    const applied = new Set(this.deltaConfirmBuffer.map(e => e.id));
+    const results = {};
+    for(const id of ids || [])
+      results[id] = applied.has(id);
+    player.send('checkDeltaIdsResult', { results });
   }
 
   receiveInvalidDelta(player, delta, widgetID, property) {
@@ -785,7 +820,7 @@ export default class Room {
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
-
+    delete this.lastMouseStateByPlayer[player.name];
     this.players = this.players.filter(e => e != player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
@@ -831,6 +866,10 @@ export default class Room {
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
     this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
     delete this.state._meta.players[oldName];
+    if (this.lastMouseStateByPlayer[oldName]) {
+      this.lastMouseStateByPlayer[newName] = this.lastMouseStateByPlayer[oldName];
+      delete this.lastMouseStateByPlayer[oldName];
+    }
 
     for(const player of this.players)
       if(player.name == oldName)

@@ -1,4 +1,5 @@
-import { toServer } from './connection.js';
+import { toServer, forceReconnect, onMessage, onConnectionClose } from './connection.js';
+import { setConnectionState, updateStatus } from './overlays/status.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
@@ -14,6 +15,12 @@ let delta = { s: {} };
 let deltaChanged = false;
 let deltaID = 0;
 let batchDepth = 0;
+let pendingDeltas = [];
+let justReconnected = false;
+const DELTA_CONFIRM_WARN_MS = 5000;
+export function setJustReconnected(v) { justReconnected = v; }
+const DELTA_CONFIRM_BAD_MS = 10000;
+const DELTA_CONFIRM_RECONNECT_MS = 15000;
 let overlayShownForEmptyRoom = false;
 
 let triggerGameStartRoutineOnNextStateLoad = false;
@@ -448,10 +455,19 @@ function getDelta() {
   return delta;
 }
 
+function randomDeltaSendId() {
+  return (Math.random() * 0x10000 | 0).toString(16).padStart(4, '0');
+}
+
 function sendRawDelta(delta) {
   receiveDelta(delta);
   delta.id = deltaID;
+  const sendId = randomDeltaSendId();
+  delta.deltaSendId = sendId;
+  delta.previousDeltaSendId = pendingDeltas.length ? pendingDeltas[pendingDeltas.length - 1].id : null;
+  pendingDeltas.push({ id: sendId, delta, sentAt: Date.now() });
   toServer('delta', delta);
+  updateConnectionMonitor();
 }
 
 function receiveDeltaFromServer(delta) {
@@ -502,6 +518,11 @@ function receiveStateFromServer(args) {
 
   resetZoomAndPan();
 
+  if(justReconnected && pendingDeltas.length) {
+    for(const p of pendingDeltas)
+      receiveDelta(p.delta);
+  }
+
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
@@ -520,6 +541,11 @@ function receiveStateFromServer(args) {
   }
 
   toServer('confirm');
+
+  if(pendingDeltas.length)
+    toServer('checkDeltaIds', { ids: pendingDeltas.map(p => p.id) });
+  if(justReconnected)
+    justReconnected = false;
 
   if(typeof jeEnabled != 'undefined' && jeEnabled)
     jeApplyState(args);
@@ -590,7 +616,12 @@ function sendDelta() {
     if(deltaChanged) {
       receiveDelta(delta);
       delta.id = deltaID;
+      const sendId = randomDeltaSendId();
+      delta.deltaSendId = sendId;
+      delta.previousDeltaSendId = pendingDeltas.length ? pendingDeltas[pendingDeltas.length - 1].id : null;
+      pendingDeltas.push({ id: sendId, delta, sentAt: Date.now() });
       toServer('delta', delta);
+      updateConnectionMonitor();
     }
     delta = { s: {} };
     deltaChanged = false;
@@ -614,13 +645,61 @@ export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
+let connectionMonitorReconnectTriggered = false;
+function updateConnectionMonitor() {
+  const now = Date.now();
+  if (!pendingDeltas.length) {
+    connectionMonitorReconnectTriggered = false;
+    setConnectionState(0, 0, '');
+    updateStatus();
+    return;
+  }
+  const oldest = Math.min(...pendingDeltas.map(p => p.sentAt));
+  const oldestAge = now - oldest;
+  if (oldestAge >= DELTA_CONFIRM_RECONNECT_MS) {
+    if (!connectionMonitorReconnectTriggered) {
+      connectionMonitorReconnectTriggered = true;
+      justReconnected = true;
+      forceReconnect();
+    }
+    setConnectionState(pendingDeltas.length, oldestAge, 'reconnecting');
+  } else {
+    connectionMonitorReconnectTriggered = false;
+    if (oldestAge >= DELTA_CONFIRM_BAD_MS)
+      setConnectionState(pendingDeltas.length, oldestAge, 'bad');
+    else if (oldestAge >= DELTA_CONFIRM_WARN_MS)
+      setConnectionState(pendingDeltas.length, oldestAge, 'warn');
+    else
+      setConnectionState(0, 0, '');
+  }
+  updateStatus();
+}
+
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
+  onMessage('deltaConfirm', (args) => {
+    if(args && args.id)
+      pendingDeltas = pendingDeltas.filter(p => p.id !== args.id);
+    updateConnectionMonitor();
+  });
   onMessage('state', receiveStateFromServer);
+  onMessage('checkDeltaIdsResult', (args) => {
+    if(!args || !args.results) return;
+    pendingDeltas = pendingDeltas.filter(p => !args.results[p.id]);
+    const now = Date.now();
+    pendingDeltas.forEach((p, i) => {
+      p.sentAt = now;
+      if(i === 0) p.delta.previousDeltaSendId = null;
+      toServer('delta', p.delta);
+    });
+    updateConnectionMonitor();
+  });
   onMessage('meta', (args) => {
     if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
     }
   });
+  onConnectionClose(() => setJustReconnected(true));
+  setInterval(updateConnectionMonitor, 500);
   setScale();
 });

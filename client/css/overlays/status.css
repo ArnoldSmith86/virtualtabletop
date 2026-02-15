@@ -1,0 +1,54 @@
+#statusOverlay {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #0008;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 5;
+  --pulse-min: 0.4;
+  --pulse-max: 0.6;
+  transition: opacity 0.2s;
+}
+#statusOverlay.visible {
+  opacity: var(--pulse-max);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+#statusOverlay.bad {
+  --pulse-min: 0.6;
+  --pulse-max: 0.8;
+}
+#statusOverlay.reconnecting {
+  --pulse-min: 0.8;
+  --pulse-max: 1;
+}
+@keyframes statusPulse {
+  0%, 100% { opacity: var(--pulse-min); }
+  50% { opacity: var(--pulse-max); }
+}
+#statusOverlay .statusIcon {
+  font-family: "VTT-Symbols", "Material Symbols";
+  font-size: 20px;
+  color: #fff;
+}
+#statusOverlay[data-state="warn"] .statusIcon,
+#statusOverlay[data-state="bad"] .statusIcon,
+#statusOverlay[data-state="reconnecting"] .statusIcon {
+  font-family: "Material Symbols";
+}
+#statusOverlay .statusIcon[icon]::before {
+  content: attr(icon);
+}
+#statusOverlay .statusText {
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+#statusOverlay .statusText:empty {
+  display: none;
+}

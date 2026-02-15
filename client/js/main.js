@@ -1,5 +1,6 @@
 import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
+import { setCurrentOverlayId, getCurrentOverlayId, getEditMode, setCurrentStateView, getCurrentStateView } from './overlaystate.js';
 
 
 export let scale = 1;
@@ -92,6 +93,8 @@ export function showOverlay(id, forced) {
       d.style.display = 'none';
 
   if(id) {
+    setCurrentOverlayId(id);
+    if (id !== 'stateDetailsOverlay') setCurrentStateView(null, null);
     const style = $(`#${id}`).style;
     const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
     style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
@@ -103,12 +106,20 @@ export function showOverlay(id, forced) {
     if (id == 'buttonInputOverlay') {
       $('#buttonInputGo').focus();
     }
-    if(!isLoading)
-      toServer('mouse',{inactive:true})
   } else {
+    setCurrentOverlayId(null);
     overlayActive = false;
   }
   $('body').classList.toggle('overlayActive', overlayActive);
+  if (!isLoading) {
+    const view = getCurrentStateView();
+    toServer('mouse', {
+      inactive: !!overlayActive,
+      activeOverlay: getCurrentOverlayId(),
+      editMode: getEditMode(),
+      activeStateName: view.stateName || undefined
+    });
+  }
 }
 
 export function showStatesOverlay(id) {
@@ -546,6 +557,15 @@ async function toggleEditMode() {
     openEditor();
   showOverlay();
   setScale();
+  if (!isLoading) {
+    const view = getCurrentStateView();
+    toServer('mouse', {
+      inactive: !!overlayActive,
+      activeOverlay: getCurrentOverlayId(),
+      editMode: getEditMode(),
+      activeStateName: view.stateName || undefined
+    });
+  }
 }
 
 onLoad(function() {

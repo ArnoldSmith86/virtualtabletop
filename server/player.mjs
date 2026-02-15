@@ -28,6 +28,8 @@ export default class Player {
         this.room.addStateToPublicLibrary(this, args);
       if(func == 'audio')
         this.room.playAudio(args);
+      if(func == 'checkDeltaIds')
+        this.room.checkDeltaIds(this, args.ids);
       if(func == 'confirm')
         this.waitingForStateConfirmation = false;
       if(func == 'delta')
