@@ -103,7 +103,7 @@ async function setCardCount(deck, cardType, count) {
     batchEnd();
 }
 
-function parsePropertyFromCSS(css, prop, defaultValue='', cssClass=null) {
+function parsePropertyFromCSS(css, prop, defaultValue='', cssClass="default") {
   if (css === null || typeof css === 'undefined') return defaultValue;
 
   if (typeof css === 'string') {
@@ -114,11 +114,8 @@ function parsePropertyFromCSS(css, prop, defaultValue='', cssClass=null) {
   }
 
   if (typeof css === 'object') {
-    if(typeof css[cssClass] === 'object') {
+    if(typeof css[cssClass] === 'object' && typeof css[cssClass][prop] !== 'undefined') {
       return String(css[cssClass][prop]);
-    }
-    else if(typeof css.default === 'object') {
-      return String(css.default[prop]);
     }
     else if (typeof css[prop] !== 'undefined') {
       return String(css[prop]);
@@ -152,27 +149,36 @@ function mergePropertyFromCSS(css, prop, value, cssClass=null) {
     const out = Array.isArray(css) ? css.slice() : Object.assign({}, css);
 
     if(cssClass) {
-      if (typeof out[0] === 'object') {
+      if (typeof Object.values(out)[0] === 'object') {
+        // input and output are both nested objects
         if (value === null || typeof value === 'undefined' || value === '')
           delete out[cssClass][prop];
         else
           out[cssClass][prop] = value
       } else {
-          out[prop] = {[prop]: value};
+        // input is simple object and output is nested object -> move existing properties to default class
+        classObject = Array.isArray(css) ? css.slice() : Object.assign({}, css);
+        const out = {default: classObject};;
+        out[cssClass][prop] = value
       }
     }
-    else if (typeof out.default === 'object') {
-      if (value === null || typeof value === 'undefined' || value === '')
-        delete out.default[prop];
-      else
-        out.default[prop] = value;
-    }
+
     else {
-      if (value === null || typeof value === 'undefined' || value === '')
-        delete out[prop];
-      else
-        out[prop] = value;
-    }
+      if (typeof Object.values(out)[0] === 'object') {
+        // input is simple object and output is nested object -> keep nested and use default class
+        if (value === null || typeof value === 'undefined' || value === '')
+          delete out.default[prop];
+        else
+          out.default[prop] = value
+        }
+      else {
+        // input and output are both nested objects -> keep simple
+        if (value === null || typeof value === 'undefined' || value === '')
+          delete out[prop];
+        else
+          out[prop] = value;
+        }
+      }
     return out;
   }
   
@@ -181,6 +187,11 @@ function mergePropertyFromCSS(css, prop, value, cssClass=null) {
     return { [prop]: value };
   }
   
+}
+
+function parseFontSize(fontSize) {
+  const [, value, unit] = String(fontSize).trim().match(/^(-?\d*\.?\d+)([a-z%]*)$/i) || [];
+  return value ? { value: +value, unit: unit || null } : null;
 }
 
 /* end helper functions */
@@ -1742,6 +1753,9 @@ class PropertiesModule extends SidebarModule {
     // Color picker: reads/writes text color from widget css (inline string or object.inline)
     this.renderColorInput(widget, 'Color', 'color');
 
+    //this is broken for now because it needs to be able to read css units
+    this.renderNumberInput(widget, "Font Size", "font-size", { step: 1, min: 0 }, "16px", 'css', "default");
+    
     this.addLineBreak();
 
     // Placeholder text (shown when label text is empty in play mode)
@@ -1931,8 +1945,49 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
   }
 
-  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css') {
-    // ideally the CSS property would be optional and if not specified this function would treat property as a normal widget proterty and read/write color from it. Will change when/if needed by other widgets.
+  renderNumberInput(widget, title, opts = {}, property, defaultValue = "16px", css='css', cssClass) {
+    const { step = 'any', min, max, placeholder } = opts;
+    const wrap = div(this.moduleDOM);
+    if (title) {
+      const label = document.createElement('label');
+      label.textContent = title;
+      label.style.display = 'inline-block';
+      wrap.appendChild(label);
+    }
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = step;
+    if (typeof min !== 'undefined') input.min = min;
+    if (typeof max !== 'undefined') input.max = max;
+    if (typeof placeholder !== 'undefined') input.placeholder = placeholder;
+
+    const fontSize = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass))
+
+    input.value = Number(fontSize.value || 0);
+    wrap.appendChild(input);
+
+    if (fontSize.unit) {
+      const unit = document.createElement('span');
+      unit.textContent = fontSize.unit;
+      wrap.appendChild(unit);
+    }
+
+    input.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, input.value+fontSize.unit, cssClass));
+    this.addPropertyListener(widget, css, w => {
+      if (document.activeElement !== input)
+        input.value = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass)).value
+    });
+
+    if (!this.inputUpdaters[widget.id]) this.inputUpdaters[widget.id] = {};
+    if (!this.inputUpdaters[widget.id][css]) this.inputUpdaters[widget.id][css] = [];
+    this.inputUpdaters[widget.id][css].push(() => {
+      if (document.activeElement !== input)
+        input.value = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass)).value
+    });
+  }
+
+  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css', cssClass) {
     const colorWrap = div(this.moduleDOM);
     if (title) {
       const colorLabel = document.createElement('label');
@@ -1944,12 +1999,12 @@ class PropertiesModule extends SidebarModule {
     colorInput.type = 'color';
     colorInput.style = "-webkit-appearance: none; -moz-appearance: none; border-radius: 4px; display: inline-block; margin: 3px 3px 0 8px; padding: 0; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0); order: 1; flex-grow: 0; flex-shrink: 0; "
 
-    colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor);
+    colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
     colorWrap.appendChild(colorInput);
-    colorInput.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value));
+    colorInput.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value, cssClass));
     this.addPropertyListener(widget, css, w => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(w.get(css), property, defaultColor);
+        colorInput.value = parsePropertyFromCSS(w.get(css), property, defaultColor, cssClass);
     });
     if (!this.inputUpdaters[widget.id])
       this.inputUpdaters[widget.id] = {};
@@ -1957,7 +2012,7 @@ class PropertiesModule extends SidebarModule {
       this.inputUpdaters[widget.id][css] = [];
     this.inputUpdaters[widget.id][css].push(() => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor);
+        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
     });
   }
 
