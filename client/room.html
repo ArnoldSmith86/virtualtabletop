@@ -44,6 +44,10 @@
     <div id="room">
       <div id="topSurface" class="surface"><h1 id="loadingRoomIndicator">Loading room...</h1></div>
     </div>
+    <div id="statusOverlay" data-state="">
+      <span class="statusIcon" icon="hourglass_empty"></span>
+      <span class="statusText"></span>
+    </div>
 
     <div id="gridOverlay" class="overlay">
       <div class="modal"></div>
@@ -566,17 +570,6 @@
         <pre id="clientErrorStack"></pre>
       </details>
       <p><button>Submit and Reload</button></p>
-    </div>
-
-    <div id="connectionLostOverlay" class="overlay" style="display:none;">
-      <h1>Connection lost</h1>
-      <div class="disconnected">
-        <div class="cable">&nbsp;</div>
-        <div class="plug">&nbsp;</div>
-        <div class="cable">&nbsp;</div>
-      </div>
-      <p>The connection to the server was lost. It should be reestablished in a few moments.</p>
-      <p>In case that doesn't work, try reloading the page or use a different room.</p>
     </div>
 
     <div id="playerCursors"></div>

@@ -1,3 +1,6 @@
+import { setCurrentStateView, getCurrentOverlayId, getEditMode, getCurrentStateView } from '../overlaystate.js';
+import { toServer } from '../connection.js';
+
 let currentMetaData = null;
 
 let waitingForStateCreation = null;
@@ -622,11 +625,15 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 }
 
 function fillStateDetails(states, state, dom) {
+  setCurrentStateView(state.id, state.name || null);
   toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
     showStatesOverlay(detailsOverlay);
-  else
+  else {
     updateFilterOverflow();
+    const view = getCurrentStateView();
+    toServer('mouse', { inactive: true, activeOverlay: getCurrentOverlayId(), editMode: getEditMode(), activeStateName: view.stateName || undefined });
+  }
 
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))
