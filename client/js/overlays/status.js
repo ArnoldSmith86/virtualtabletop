@@ -111,8 +111,8 @@ function render() {
     el.classList.add('visible');
     el.classList.remove('bad', 'reconnecting');
     icon.setAttribute('icon', TOOLBAR_ICONS.edit);
-    const namePart = inEdit.length === 1 ? inEdit[0] : null;
-    text.textContent = namePart ? `${namePart} is in Edit Mode` : `${inEdit.length} players in Edit Mode`;
+    const who = inEdit.length === 1 ? inEdit[0] : inEdit.length === 2 ? `${inEdit[0]} and ${inEdit[1]}` : inEdit.slice(0, -1).join(', ') + ' and ' + inEdit[inEdit.length - 1];
+    text.textContent = `${who} ${inEdit.length === 1 ? 'is' : 'are'} in Edit Mode`;
     return;
   }
 
