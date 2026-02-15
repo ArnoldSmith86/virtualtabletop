@@ -1740,8 +1740,8 @@ class PropertiesModule extends SidebarModule {
     this.renderLargeTextInput(widget, 'Text Content', 'text');
 
     // Color picker: reads/writes text color from widget css (inline string or object.inline)
-    this.renderColorInput(widget, 'Color', 'color', 'css');
-    
+    this.renderColorInput(widget, 'Color', 'color');
+
     this.addLineBreak();
 
     // Placeholder text (shown when label text is empty in play mode)
