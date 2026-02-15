@@ -103,76 +103,87 @@ async function setCardCount(deck, cardType, count) {
     batchEnd();
 }
 
-/* end helper functions */
-
-function parsePropertyFromCSS(css, prop, defaultValue='') {
+function parsePropertyFromCSS(css, prop, defaultValue='', cssClass=null) {
   if (css === null || typeof css === 'undefined') return defaultValue;
-  const key = String(prop);
 
-  // 1) string form: "prop: value; prop2: value2"
   if (typeof css === 'string') {
-    const propEsc = key.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const propEsc = prop.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const re = new RegExp(propEsc + '\\s*:\\s*([^;]+)', 'i');
     const m = css.match(re);
     return m ? m[1].trim() : defaultValue;
   }
 
-  // 2) object form: prefer explicit property on the object
-  if (typeof css === 'object' && css !== null && !Array.isArray(css)) {
-    if (Object.prototype.hasOwnProperty.call(css, key) && css[key] != null)
-      return String(css[key]);
-
-    // 3) nested default object: css.default.prop
-    if (css.default && typeof css.default === 'object' && Object.prototype.hasOwnProperty.call(css.default, key) && css.default[key] != null)
-      return String(css.default[key]);
+  if (typeof css === 'object') {
+    if(typeof css[cssClass] === 'object') {
+      return String(css[cssClass][prop]);
+    }
+    else if(typeof css.default === 'object') {
+      return String(css.default[prop]);
+    }
+    else if (typeof css[prop] !== 'undefined') {
+      return String(css[prop]);
+    }
   }
-
   return defaultValue;
 }
 
-function mergePropertyFromCSS(css, prop, value) {
-  const key = String(prop);
+function cssStringToObject(str) {
+  const out = {};
+  if (!str || typeof str !== 'string') return out;
+  for (const part of str.split(';')) {
+    const idx = part.indexOf(':');
+    if (idx === -1) continue;
+    const k = part.slice(0, idx).trim();
+    const v = part.slice(idx + 1).trim();
+    if (k) out[k] = v;
+  }
+  return out;
+}
 
-  // helper to remove existing occurrences from inline string
-  const removeFromInline = (str) => str.replace(new RegExp('\\s*' + key.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\s*:\\s*[^;]+\\s*;?', 'gi'), '').trim().replace(/;+\\s*$/, '');
-
-  // 1) incoming css is a string -> return updated string
+function mergePropertyFromCSS(css, prop, value, cssClass=null) {
+  
+  // Editor only writes css as an object
   if (typeof css === 'string') {
-    const base = removeFromInline(css);
-    if (value === null || typeof value === 'undefined' || value === '')
-      return base;
-    const newInline = base ? (base + '; ' + key + ': ' + value) : (key + ': ' + value);
-    return newInline;
+    css = cssStringToObject(css);
   }
 
-  // 2) incoming css is an object -> update appropriate place
+  // incoming css is an object -> update appropriate place
   if (typeof css === 'object' && css !== null) {
-    // clone to avoid mutating original
     const out = Array.isArray(css) ? css.slice() : Object.assign({}, css);
 
-    // prefer top-level property if it exists, otherwise use css.default when present
-    if (Object.prototype.hasOwnProperty.call(out, key) || !out.default) {
-      if (value === null || typeof value === 'undefined' || value === '')
-        delete out[key];
-      else
-        out[key] = value;
-      return out;
+    if(cssClass) {
+      if (typeof out[0] === 'object') {
+        if (value === null || typeof value === 'undefined' || value === '')
+          delete out[cssClass][prop];
+        else
+          out[cssClass][prop] = value
+      } else {
+          out[prop] = {[prop]: value};
+      }
     }
-
-    // use css.default when available
-    out.default = Object.assign({}, out.default || {});
-    if (value === null || typeof value === 'undefined' || value === '')
-      delete out.default[key];
-    else
-      out.default[key] = value;
+    else if (typeof out.default === 'object') {
+      if (value === null || typeof value === 'undefined' || value === '')
+        delete out.default[prop];
+      else
+        out.default[prop] = value;
+    }
+    else {
+      if (value === null || typeof value === 'undefined' || value === '')
+        delete out[prop];
+      else
+        out[prop] = value;
+    }
     return out;
   }
-
-  // 3) no css defined yet -> create simple object or return empty on deletion
-  if (value === null || typeof value === 'undefined' || value === '')
-    return css;
-  return { [key]: value };
+  
+  // no css defined yet -> create simple object or return empty on deletion
+  if (!css && value !== null && typeof value !== 'undefined' && value !== '') {
+    return { [prop]: value };
+  }
+  
 }
+
+/* end helper functions */
 
 
 class PropertiesModule extends SidebarModule {
@@ -1689,11 +1700,11 @@ class PropertiesModule extends SidebarModule {
     // --- Label style presets (preview buttons like deck) ---
     this.addSubHeader('Label style');
     const labelStyles = [
-      { name: 'Title', css: 'font-size: 50px; font-weight: bold', labelAppearanceHeight: 85 },
-      { name: 'Header', css: 'font-size: 30px; font-weight: bold', labelAppearanceHeight: 50 },
+      { name: 'Title', css: { 'font-size': '50px', 'font-weight': 'bold' }, labelAppearanceHeight: 85 },
+      { name: 'Header', css: { 'font-size': '30px', 'font-weight': 'bold' }, labelAppearanceHeight: 50 },
       { name: 'Regular', css: null, labelAppearanceHeight: 20 },
-      { name: 'Bold', css: 'font-weight: bold', labelAppearanceHeight: 20 },
-      { name: 'Italic', css: 'font-style: italic', labelAppearanceHeight: 20 }
+      { name: 'Bold', css: { 'font-weight': 'bold' }, labelAppearanceHeight: 20 },
+      { name: 'Italic', css: { 'font-style': 'italic' }, labelAppearanceHeight: 20 }
     ];
 
     for (const s of labelStyles) {
