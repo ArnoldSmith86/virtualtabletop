@@ -169,7 +169,7 @@
           }
         ],
         "elseRoutine": [
-          "// If the new piece will match and adjacent color, then start over. This is done to ensure there are enough valid swaps to make the board appear randomized. This is not true randomnes and does not catch or prevent moves from the same holder or moves of the same color, but the 200 iterations should be enough to give an appearance of randomness.",
+          "// If the new piece will match an adjacent color, then start over. This is done to ensure there are enough valid swaps to make the board appear randomized. This is not true randomnes and does not catch or prevent moves from the same holder or moves of the same color, but the 200 iterations should be enough to give an appearance of randomness.",
           {
             "func": "CALL",
             "routine": "swapRoutine"
@@ -620,6 +620,10 @@
   },
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ""
+    },
     "info": {
       "name": "Paletto",
       "image": "/assets/121446110_26466",
@@ -629,25 +633,21 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>This is an original game by Dieter Stein. The rules, library image, board layout, and piece design are available under CC BY-NC 4.0.</div><div><br></div><div>Layout, design, and coding are by LawDawg96 and those elements are released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1771369947213,
+      "lastUpdate": 1771389918479,
       "skill": "",
       "description": "Paletto is a colorful logic game with only a few rules and easy to learn. Who can take all pieces of a color or the very last one?",
       "similarImage": "",
       "similarName": "",
       "similarDesigner": "Dieter Stein",
       "similarAwards": "2012 Deutscher Lernspielpreis Leserpreis der Zeitschrift spielen und lernen Winner\n2012 Deutscher Lernspielpreis \"6 years and up\" Nominee",
-      "ruleText": "<h4><span style=\"font-weight: normal;\">For more information about this game and others by Dieter Stein, go to&nbsp;</span>https://spielstein.com/games/paletto.</h4><h4><b>Preparation</b></h4><h4><div style=\"font-size: medium;\"><span style=\"font-weight: 400;\">All 36 playing pieces are placed on the game board such that same-colored pieces </span>are not horizontally or vertically adjacent<span style=\"font-weight: normal;\">.&nbsp;</span></div><div style=\"font-size: medium; font-weight: 400;\"><br></div><div style=\"font-size: medium; font-weight: 400;\"><a href=\"/assets/121446110_26466\"><img class=\"richtextAsset\" src=\"/assets/121446110_26466\"></a></div><div style=\"font-size: medium; font-weight: 400;\"><blockquote style=\"margin: 0px 0px 0px 40px; border: none; padding: 0px;\"><b>Figure 1</b> - One of many possible setups.</blockquote></div><div style=\"font-size: medium; font-weight: 400;\"><br></div></h4><h4>Objective</h4><h4><div style=\"font-size: medium; font-weight: 400;\"></div></h4><h4><span style=\"font-size: medium; font-weight: 400;\">The game is won by the player who either takes all 6 pieces of </span><span style=\"font-size: medium;\">any<span style=\"font-weight: normal;\">&nbsp;color or whoever takes the </span>last piece<span style=\"font-weight: normal;\">&nbsp;from the board.</span></span></h4><h4>Play</h4><h4><div style=\"font-size: medium;\"><span style=\"font-weight: 400;\">Players take turns. In each turn a player chooses a color, then removes </span>any number<span style=\"font-weight: normal;\">&nbsp;of same-colored pieces (not necessarily all) from the board and puts them in front of him.</span></div><div style=\"font-size: medium;\"><br></div><div style=\"font-size: medium;\"><span style=\"font-weight: 400;\">A piece may be removed from the board if ...</span></div><div style=\"font-size: medium;\"><ul><li><span style=\"font-weight: 400;\">there are no adjacent pieces on two sides. At start only the corner pieces may be taken - see figure 2,</span></li><li><span style=\"font-weight: 400;\">and all remaining pieces are still connected horizontally and vertically after the move - see figure 3.</span></li></ul></div><div style=\"font-size: medium; font-weight: 400;\"><a href=\"/assets/466582303_29044\"><img class=\"richtextAsset\" src=\"/assets/466582303_29044\"></a></div><blockquote style=\"font-size: medium; margin: 0px 0px 0px 40px; border: none; padding: 0px;\"><span style=\"font-weight: 400;\"><b>Figure 2</b> - The first player may take one </span>or<span style=\"font-weight: normal;\">&nbsp;both black pieces, </span>or<span style=\"font-weight: normal;\">&nbsp;the yellow one, </span>or<span style=\"font-weight: normal;\">&nbsp;the grey one (five different moves)</span><span style=\"font-weight: 400;\">. All other pieces have only one free side or they are surrounded completely and therefore unreachable.</span></blockquote><div style=\"font-size: medium; font-weight: 400;\"><a href=\"/assets/1950485391_21082\"><img class=\"richtextAsset\" src=\"/assets/1950485391_21082\"></a></div><div style=\"font-size: medium; font-weight: 400;\"><blockquote style=\"margin: 0px 0px 0px 40px; border: none; padding: 0px;\"><div><b>Figure 3</b><span><span><span><span><span><span><span><span><span>&nbsp;- All marked pieces (✔️) are reachable. The blue piece in the middle (❌) may not be taken: it has two free sides, but it also connects other pieces.</span></span></span></span></span></span></span></span></span></div></blockquote></div></h4>",
+      "ruleText": "<h4><span style=\"font-weight: normal;\">For more information about this game and others by Dieter Stein, go to&nbsp;</span>https://spielstein.com/games/paletto.</h4><h4><b>Preparation</b></h4><h4><div style=\"font-size: medium;\"><span style=\"font-weight: 400;\">All 36 playing pieces are placed on the game board such that same-colored pieces </span>are not horizontally or vertically adjacent<span style=\"font-weight: normal;\">.&nbsp;</span></div><div style=\"font-size: medium; font-weight: 400;\"><br></div><div style=\"font-size: medium; font-weight: 400;\"><a href=\"/assets/121446110_26466\"><img class=\"richtextAsset\" src=\"/assets/121446110_26466\"></a></div><div style=\"font-size: medium; font-weight: 400;\"><blockquote style=\"margin: 0px 0px 0px 40px; border: none; padding: 0px;\"><b>Figure 1</b> - One of many possible setups.</blockquote></div><div style=\"font-size: medium; font-weight: 400;\"><br></div></h4><h4>Objective</h4><h4><div style=\"font-size: medium; font-weight: 400;\"></div></h4><h4><span style=\"font-size: medium; font-weight: 400;\">The game is won by the player who either takes all 6 pieces of </span><span style=\"font-size: medium;\">any<span style=\"font-weight: normal;\">&nbsp;color or whoever takes the </span>last piece<span style=\"font-weight: normal;\">&nbsp;from the board.</span></span></h4><h4>Play</h4><h4><div style=\"font-size: medium;\"><span style=\"font-weight: 400;\">Players take turns. In each turn a player chooses a color, then removes </span>any number<span style=\"font-weight: normal;\">&nbsp;of same-colored pieces (not necessarily all) from the board and puts them in front of him.</span></div><div style=\"font-size: medium;\"><br></div><div style=\"font-size: medium;\"><span style=\"font-weight: 400;\">A piece may be removed from the board if ...</span></div><div style=\"font-size: medium;\"><ul><li><span style=\"font-weight: 400;\">there are no adjacent pieces on two sides. At start only the corner pieces may be taken - see figure 2,</span></li><li><span style=\"font-weight: 400;\">and all remaining pieces are still connected horizontally and vertically after the move - see figure 3.</span></li></ul></div><div style=\"font-size: medium; font-weight: 400;\"><a href=\"/assets/466582303_29044\"><img class=\"richtextAsset\" src=\"/assets/466582303_29044\"></a></div><blockquote style=\"font-size: medium; margin: 0px 0px 0px 40px; border: none; padding: 0px;\"><span style=\"font-weight: 400;\"><b>Figure 2</b> - The first player may take one </span>or<span style=\"font-weight: normal;\">&nbsp;both black pieces, </span>or<span style=\"font-weight: normal;\">&nbsp;the yellow one, </span>or<span style=\"font-weight: normal;\">&nbsp;the grey one (five different moves)</span><span style=\"font-weight: 400;\">. All other pieces have only one free side or they are surrounded completely and therefore unreachable.</span></blockquote><div style=\"font-size: medium; font-weight: 400;\"><a href=\"/assets/1950485391_21082\"><img class=\"richtextAsset\" src=\"/assets/1950485391_21082\"></a></div><div style=\"font-size: medium; font-weight: 400;\"><blockquote style=\"margin: 0px 0px 0px 40px; border: none; padding: 0px;\"><div><b>Figure 3</b><span><span><span><span><span><span><span><span><span><span><span>&nbsp;- All marked pieces (✔️) are reachable. The blue piece in the middle (❌) may not be taken: it has two free sides, but it also connects other pieces.</span></span></span></span></span></span></span></span></span></span></span></div></blockquote></div></h4>",
       "helpText": "Players sit in seats. Click the restart button to begin the game. A random player is chosen to start and the pieces are randomly distributed.<div><br></div><div>Drag and drop the pieces into the colored areas beneath the player's seat.</div>",
       "usesAIImagery": false,
       "showName": "only main",
-      "players": "2-3",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {},
-      "globalCss": "/* Transitions */\n\n.transitions {\n  transition: transform 1000ms\n}\n\n.transitions.dragging {\n  transition: none\n}"
+      "language": "",
+      "players": "2-3"
     }
   },
   "holder1-1": {
