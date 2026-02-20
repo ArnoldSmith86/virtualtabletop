@@ -1,0 +1,22 @@
+#meOverlay > div {
+  flex-grow: 0;
+}
+
+#meOverlay > div.spacer {
+  flex-grow: 1;
+}
+
+#mePlayerEntry {
+  display: flex;
+}
+
+#mePlayerEntry {
+  width: 100%;
+}
+#mePlayerEntry input{
+  font-size: 1.2rem;
+}
+
+#meButtons {
+    margin-top: 15px;
+}

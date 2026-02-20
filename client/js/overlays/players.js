@@ -1,20 +1,32 @@
 import { asArray, onLoad, rand } from '../domhelpers.js';
+import { toHex } from '../color.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
 let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand()*1000);
-let playerColor = 'red';
+let playerColor = localStorage.getItem('playerColor') || 'red';
 let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
 localStorage.setItem('playerName', playerName);
+localStorage.setItem('playerColor', playerColor);
 
 export {
   playerName,
   playerColor,
   activePlayers,
   activeColors,
-  mouseCoords
+  mouseCoords,
+  getPlayerName,
+  getPlayerColor
+}
+
+function getPlayerName() {
+  return playerName;
+}
+
+function getPlayerColor() {
+  return playerColor;
 }
 
 function getPlayerDetails() {
@@ -38,25 +50,57 @@ function addPlayerCursor(playerName, playerColor) {
 }
 
 function fillPlayerList(players, active) {
+  if (config.authenticateUsers) {
+    document.querySelector('#playerList .me').style.display = 'none';    
+    document.querySelector('#playerList .otherPlayers.ui-line').style.display = 'none';
+    if (document.querySelector('#playerList .myPlayerEntry')) {
+      document.querySelector('#playerList .myPlayerEntry').style.display = 'none';
+    }
+  } else {
+    document.querySelector('#meButton').style.display = 'none';
+  }
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
   for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
-    $('.teamColor', entry).value = players[player];
+    $('.teamColor', entry).value = toHex(players[player]);
     $('.playerName', entry).value = player;
     $('.teamColor', entry).addEventListener('change', function(e) {
-      toServer('playerColor', { player, color: toHex(e.target.value) });
+      const newColor = toHex(e.target.value);
+      toServer('playerColor', { player, color: newColor });
+      if (player === playerName) {
+        playerColor = newColor;
+        localStorage.setItem('playerColor', playerColor);
+        const userData = JSON.parse(localStorage.getItem('userData')) || {};
+        userData.playerColor = newColor;
+        localStorage.setItem('userData', JSON.stringify(userData));
+        toServer('updateUserData', { username: player, userData: { playerColor: newColor } });
+      }
     });
     $('.playerName', entry).addEventListener('change', function(e) {
-      toServer('rename', { oldName: player, newName: e.target.value });
+      const newName = e.target.value;
+      toServer('rename', { oldName: player, newName: newName });
+      if (player === playerName) {
+        const userData = JSON.parse(localStorage.getItem('userData')) || {};
+        userData.playerName = newName;
+        localStorage.setItem('userData', JSON.stringify(userData));
+        toServer('updateUserData', { username: newName, userData: { playerName: newName } });
+      }
     });
-    if(player == playerName) {
-      entry.className = 'myPlayerEntry';
-      playerColor = players[player];
+    if (config.authenticateUsers) {
+      
     } else {
-      entry.className = 'activePlayerEntry';
+      if(player == playerName) {
+        entry.className = 'myPlayerEntry';
+        if (players[player]) {
+          playerColor = players[player];
+          localStorage.setItem('playerColor', playerColor);
+        }
+      } else {
+        entry.className = 'activePlayerEntry';
+      }
     }
     if(activePlayers.indexOf(player) == -1)
       entry.className = 'inactivePlayerEntry';
@@ -66,7 +110,7 @@ function fillPlayerList(players, active) {
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
-  if(activePlayers.length < 2){
+  if((activePlayers.length < 2) && !config.authenticateUsers){
     document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
   }
   updatePlayerCountDisplay();
