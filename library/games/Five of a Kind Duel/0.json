@@ -1,6 +1,10 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Transitions */\n\n.transition {\n  transition: transform 1000ms\n}\n\n.transition.dragging {\n  transition: none\n}"
+    },
     "info": {
       "name": "Five of a Kind Duel",
       "image": "/assets/-1480534131_45578",
@@ -10,7 +14,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "<div>Layout, design, and library image by LawDawg96. English rules translated from German by ChatGPT and summarized by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
-      "lastUpdate": 1771632487119,
+      "lastUpdate": 1771654637956,
       "skill": "",
       "description": "A tug-of-war twist on a classic dice-rolling game. Be the first to get 5 total disks or 3 adjacent disks on your side.",
       "similarImage": "",
@@ -25,10 +29,6 @@
       "variant": "",
       "language": "",
       "players": "2"
-    },
-    "gameSettings": {
-      "legacyModes": {},
-      "globalCss": "/* Transitions */\n\n.transition {\n  transition: transform 1000ms\n}\n\n.transition.dragging {\n  transition: none\n}"
     }
   },
   "endHolder1": {
@@ -900,7 +900,7 @@
     "x": 5,
     "width": 90,
     "height": 90,
-    "z": 403,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -918,7 +918,8 @@
     "labelColor": "#00000022",
     "y": 5,
     "resetProperties": {
-      "parent": "midHolder1"
+      "parent": "midHolder1",
+      "z": 1
     },
     "parent": "midHolder1"
   },
@@ -928,7 +929,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 442,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -945,7 +946,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder2"
+      "parent": "midHolder2",
+      "z": 1
     },
     "parent": "midHolder2"
   },
@@ -955,7 +957,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 404,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -972,7 +974,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder3"
+      "parent": "midHolder3",
+      "z": 1
     },
     "parent": "midHolder3"
   },
@@ -982,7 +985,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 395,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -999,7 +1002,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder4"
+      "parent": "midHolder4",
+      "z": 1
     },
     "parent": "midHolder4"
   },
@@ -1009,7 +1013,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 361,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1026,7 +1030,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder5"
+      "parent": "midHolder5",
+      "z": 1
     },
     "parent": "midHolder5"
   },
@@ -1036,7 +1041,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 351,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1053,7 +1058,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder6"
+      "parent": "midHolder6",
+      "z": 1
     },
     "parent": "midHolder6"
   },
@@ -1063,7 +1069,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 295,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1080,7 +1086,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder7"
+      "parent": "midHolder7",
+      "z": 1
     },
     "parent": "midHolder7"
   },
@@ -1090,7 +1097,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 293,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1107,7 +1114,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder8"
+      "parent": "midHolder8",
+      "z": 1
     },
     "parent": "midHolder8"
   },
@@ -1117,7 +1125,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 299,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1134,7 +1142,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder9"
+      "parent": "midHolder9",
+      "z": 1
     },
     "parent": "midHolder9"
   },
@@ -1144,7 +1153,7 @@
     "y": 5,
     "width": 90,
     "height": 90,
-    "z": 301,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1161,7 +1170,8 @@
     "borderWidth": 2,
     "labelColor": "#00000022",
     "resetProperties": {
-      "parent": "midHolder10"
+      "parent": "midHolder10",
+      "z": 1
     },
     "parent": "midHolder10"
   },
@@ -1171,7 +1181,7 @@
     "y": 4,
     "width": 90,
     "height": 90,
-    "z": 42,
+    "z": 1,
     "chip": true,
     "classes": "pokerChip transition",
     "color": "#b59548",
@@ -1189,7 +1199,8 @@
     "labelColor": "#00000022",
     "parent": "midHolder11",
     "resetProperties": {
-      "parent": "midHolder11"
+      "parent": "midHolder11",
+      "z": 1
     }
   },
   "boardBack": {
@@ -1589,7 +1600,7 @@
   "redDice1": {
     "type": "dice",
     "id": "redDice1",
-    "z": 4,
+    "z": 1,
     "faces": [
       1,
       2,
@@ -1608,10 +1619,10 @@
     "resetPropertiesDice": {
       "parent": "roll1",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
     "parent": "roll1",
-    "x": 270,
     "clickRoutine": [
       {
         "func": "SET",
@@ -1620,7 +1631,8 @@
         "relation": "+",
         "value": 1
       }
-    ]
+    ],
+    "x": 180
   },
   "roll1": {
     "type": "holder",
@@ -1705,7 +1717,7 @@
   "redDice2": {
     "type": "dice",
     "id": "redDice2",
-    "z": 5,
+    "z": 1,
     "faces": [
       1,
       2,
@@ -1724,9 +1736,9 @@
     "resetPropertiesDice": {
       "parent": "roll1",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
-    "x": 360,
     "parent": "roll1",
     "clickRoutine": [
       {
@@ -1736,12 +1748,13 @@
         "relation": "+",
         "value": 1
       }
-    ]
+    ],
+    "x": 270
   },
   "redDice3": {
     "type": "dice",
     "id": "redDice3",
-    "z": 2,
+    "z": 1,
     "faces": [
       1,
       2,
@@ -1760,7 +1773,8 @@
     "resetPropertiesDice": {
       "parent": "roll1",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
     "x": 90,
     "parent": "roll1",
@@ -1777,7 +1791,7 @@
   "redDice4": {
     "type": "dice",
     "id": "redDice4",
-    "z": 3,
+    "z": 1,
     "faces": [
       1,
       2,
@@ -1796,9 +1810,10 @@
     "resetPropertiesDice": {
       "parent": "roll1",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
-    "x": 180,
+    "x": 360,
     "parent": "roll1",
     "clickRoutine": [
       {
@@ -1832,7 +1847,8 @@
     "resetPropertiesDice": {
       "parent": "roll1",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
     "parent": "roll1",
     "clickRoutine": [
@@ -1850,7 +1866,7 @@
     "id": "blueDice1",
     "width": 90,
     "height": 90,
-    "z": 4,
+    "z": 1,
     "movable": true,
     "color": "#0000ff",
     "faces": [
@@ -1867,10 +1883,10 @@
     "resetPropertiesDice": {
       "parent": "roll2",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
     "parent": "roll2",
-    "x": 270,
     "clickRoutine": [
       {
         "func": "SET",
@@ -1879,14 +1895,15 @@
         "relation": "+",
         "value": 1
       }
-    ]
+    ],
+    "x": 270
   },
   "blueDice2": {
     "type": "dice",
     "id": "blueDice2",
     "width": 90,
     "height": 90,
-    "z": 3,
+    "z": 1,
     "movable": true,
     "color": "#0000ff",
     "faces": [
@@ -1903,7 +1920,8 @@
     "resetPropertiesDice": {
       "parent": "roll2",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
     "x": 180,
     "parent": "roll2",
@@ -1922,7 +1940,7 @@
     "id": "blueDice3",
     "width": 90,
     "height": 90,
-    "z": 5,
+    "z": 1,
     "movable": true,
     "color": "#0000ff",
     "faces": [
@@ -1939,9 +1957,9 @@
     "resetPropertiesDice": {
       "parent": "roll2",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
-    "x": 360,
     "parent": "roll2",
     "clickRoutine": [
       {
@@ -1951,7 +1969,8 @@
         "relation": "+",
         "value": 1
       }
-    ]
+    ],
+    "x": 360
   },
   "blueDice4": {
     "type": "dice",
@@ -1975,7 +1994,8 @@
     "resetPropertiesDice": {
       "parent": "roll2",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
     "parent": "roll2",
     "clickRoutine": [
@@ -1986,14 +2006,15 @@
         "relation": "+",
         "value": 1
       }
-    ]
+    ],
+    "x": 90
   },
   "blueDice5": {
     "type": "dice",
     "id": "blueDice5",
     "width": 90,
     "height": 90,
-    "z": 2,
+    "z": 1,
     "movable": true,
     "color": "#0000ff",
     "faces": [
@@ -2010,9 +2031,9 @@
     "resetPropertiesDice": {
       "parent": "roll2",
       "activeFace": 0,
-      "rollCount": 0
+      "rollCount": 0,
+      "z": 1
     },
-    "x": 90,
     "parent": "roll2",
     "clickRoutine": [
       {
@@ -2822,7 +2843,7 @@
   "v851": {
     "width": 73,
     "height": 73,
-    "z": 409,
+    "z": 1,
     "classes": "pokerChip transition",
     "color": "#ff0000",
     "image": "i/game-pieces/2D/Poker-2D.svg",
@@ -2839,7 +2860,8 @@
     "labelColor": "#00000022",
     "piece": 1,
     "resetProperties": {
-      "parent": "factory1"
+      "parent": "factory1",
+      "z": 1
     },
     "clonedFrom": "xe6h",
     "icon": {
@@ -2897,8 +2919,17 @@
         "func": "FOREACH",
         "collection": "DEFAULT",
         "loopRoutine": [
+          "var random = randInt 0 6",
           {
-            "func": "CLICK"
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${random}"
+          },
+          {
+            "func": "SET",
+            "property": "rollCount",
+            "relation": "+",
+            "value": 1
           },
           {
             "func": "DELAY",
@@ -2975,8 +3006,17 @@
         "func": "FOREACH",
         "collection": "DEFAULT",
         "loopRoutine": [
+          "var random = randInt 0 6",
           {
-            "func": "CLICK"
+            "func": "SET",
+            "property": "activeFace",
+            "value": "${random}"
+          },
+          {
+            "func": "SET",
+            "property": "rollCount",
+            "relation": "+",
+            "value": 1
           },
           {
             "func": "DELAY",
@@ -3010,7 +3050,7 @@
   "gzcm": {
     "width": 73,
     "height": 73,
-    "z": 416,
+    "z": 1,
     "classes": "pokerChip transition",
     "color": "#0000ff",
     "image": "i/game-pieces/2D/Poker-2D.svg",
@@ -3027,7 +3067,8 @@
     "labelColor": "#00000022",
     "piece": 2,
     "resetProperties": {
-      "parent": "factory2"
+      "parent": "factory2",
+      "z": 1
     },
     "clonedFrom": "rwui",
     "icon": {
