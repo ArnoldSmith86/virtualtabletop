@@ -1,0 +1,3044 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Five of a Kind Duel",
+      "image": "/assets/-1480534131_45578",
+      "rules": "https://www.schmidtspiele.de/files/Retail/72dpi_PNG/49480_Kniffel_Das_Duell_DE.pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/465411/kniffel-das-duell",
+      "year": "2026",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "<div>Layout, design, and library image by LawDawg96. English rules translated from German by ChatGPT and summarized by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "lastUpdate": 1771632487119,
+      "skill": "",
+      "description": "A tug-of-war twist on a classic dice-rolling game. Be the first to get 5 total disks or 3 adjacent disks on your side.",
+      "similarImage": "",
+      "similarName": "Kniffel: Das Duell",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "",
+      "ruleText": "<div>Players sit in seats and press the Restart button. A random player will be selected to begin.</div><div><br></div>On your turn, you may roll up to three times by pressing the Roll Dice button. Keep any number of dice between rolls, if desired, by moving them to the Keep holder. Or return dice back to the Roll holder to roll them again. After the final roll, if you have achieved one of the combinations shown on the board, you move that category’s disk toward your side.\n\nThe first time a category is achieved, the disk moves from the center to the holder on that player's side of the board with the combination label. After that, it moves back and forth between players (and skipping over the center) whenever that combination is rolled. If you roll a combination and the disk is already on your side, you may move it into your round holder to secure it permanently. The 5 of a Kind category is not subject to the back-and-forth; the first player to get 5 of a Kind moves the disk into the holder on their side and wins it.\n\nIf you cannot move any disk on your turn (either because you did not roll a valid combination or the disk is already won by either player), move a joker disk of your color to an area on your side of the board. Jokers can later be used to change dice to any value. You may use multiple jokers in a turn. Put used jokers back in the supply. If you want to change the face of a die because you used a joker, click it to increase its value by one.\n\nCombinations include:\n<ul><li>At least three of a specific number (one through six)</li><li>Small Straight (four in sequence)</li><li>Large Straight (five in sequence)</li><li>Four of a Kind (at least four of the same number)</li><li>Full House (three of one number and two of another)</li><li>Five of a Kind (all five dice are the same)</li></ul>To win, be the first player to get 5 disks total on your side or get 3 disks on your side that are in adjacent spaces.<div></div>",
+      "helpText": "",
+      "usesAIImagery": false,
+      "showName": true,
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    },
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Transitions */\n\n.transition {\n  transition: transform 1000ms\n}\n\n.transition.dragging {\n  transition: none\n}"
+    }
+  },
+  "endHolder1": {
+    "type": "holder",
+    "id": "endHolder1",
+    "z": 1,
+    "borderRadius": 100,
+    "width": 100,
+    "height": 100,
+    "dropTarget": {
+      "chip": true
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "css": {
+      "background": "#ffffff30",
+      "border": "1px solid #00000020"
+    },
+    "parent": "boardBack",
+    "x": 5,
+    "y": 5,
+    "movableInEdit": false
+  },
+  "endHolder2": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder2",
+    "x": 130,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder3": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder3",
+    "x": 255,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder4": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder4",
+    "x": 380,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder5": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder5",
+    "x": 505,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder6": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder6",
+    "x": 630,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder7": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder7",
+    "x": 755,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder8": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder8",
+    "x": 880,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder9": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder9",
+    "x": 1005,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder10": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder10",
+    "x": 1130,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder11": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder11",
+    "x": 1255,
+    "y": 5,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder12": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder12",
+    "x": 5,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder13": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder13",
+    "x": 130,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder14": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder14",
+    "x": 255,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder15": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder15",
+    "x": 380,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder16": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder16",
+    "x": 505,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder17": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder17",
+    "x": 630,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder18": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder18",
+    "x": 755,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder19": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder19",
+    "x": 880,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder20": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder20",
+    "x": 1005,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder21": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder21",
+    "x": 1130,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "endHolder22": {
+    "inheritFrom": {
+      "endHolder1": "*"
+    },
+    "type": "holder",
+    "id": "endHolder22",
+    "x": 1255,
+    "y": 424,
+    "parent": "boardBack",
+    "z": 1
+  },
+  "halfHolder1": {
+    "type": "holder",
+    "id": "halfHolder1",
+    "y": 110,
+    "width": 100,
+    "height": 100,
+    "z": 2,
+    "text": "5 of a Kind",
+    "textColor": "#000000",
+    "classes": "transparent",
+    "css": {
+      "border": "transparent !important"
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "parent": "boardBack",
+    "x": 5,
+    "movableInEdit": false
+  },
+  "halfHolder2": {
+    "inheritFrom": {
+      "halfHolder1": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder2",
+    "x": 130,
+    "y": 110,
+    "text": "Large Straight",
+    "classes": "",
+    "css": {
+      "background": "#ffffff00",
+      "border": "1px solid black"
+    },
+    "dropTarget": {
+      "chip": true
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder3": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder3",
+    "x": 255,
+    "y": 110,
+    "text": "Small Straight",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder4": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder4",
+    "x": 380,
+    "y": 110,
+    "text": "Full House",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder5": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder5",
+    "x": 505,
+    "y": 110,
+    "text": "4 of a Kind",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder6": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder6",
+    "x": 630,
+    "y": 110,
+    "text": "",
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-six",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-six",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-six",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder7": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder7",
+    "x": 755,
+    "y": 110,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-five",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-five",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-five",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder8": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder8",
+    "x": 880,
+    "y": 110,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-four",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-four",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-four",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder9": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder9",
+    "x": 1005,
+    "y": 110,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-three",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-three",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-three",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder10": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder10",
+    "x": 1130,
+    "y": 110,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-two",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-two",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-two",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder11": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder11",
+    "x": 1255,
+    "y": 110,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-one",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-one",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-one",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder12": {
+    "inheritFrom": {
+      "halfHolder1": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder12",
+    "x": 5,
+    "y": 319,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder13": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder13",
+    "x": 130,
+    "y": 319,
+    "text": "Large Straight",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder14": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder14",
+    "x": 255,
+    "y": 319,
+    "text": "Small Straight",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder15": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder15",
+    "x": 380,
+    "y": 319,
+    "text": "Full House",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder16": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder16",
+    "x": 505,
+    "y": 319,
+    "text": "4 of a Kind",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder17": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder17",
+    "x": 630,
+    "y": 319,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-six",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-six",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-six",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder18": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder18",
+    "x": 755,
+    "y": 319,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-five",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-five",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-five",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder19": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder19",
+    "x": 880,
+    "y": 319,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-four",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-four",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-four",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder20": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder20",
+    "x": 1005,
+    "y": 319,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-three",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-three",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-three",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder21": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder21",
+    "x": 1130,
+    "y": 319,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-two",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-two",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-two",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "halfHolder22": {
+    "inheritFrom": {
+      "halfHolder2": "*"
+    },
+    "type": "holder",
+    "id": "halfHolder22",
+    "x": 1255,
+    "y": 319,
+    "icon": [
+      {
+        "name": "delapouite/dice-six-faces-one",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-one",
+        "opacity": 1,
+        "color": "#000"
+      },
+      {
+        "name": "delapouite/dice-six-faces-one",
+        "opacity": 1,
+        "color": "#000"
+      }
+    ],
+    "text": "",
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder1": {
+    "type": "holder",
+    "id": "midHolder1",
+    "y": 214,
+    "width": 100,
+    "height": 100,
+    "z": 2,
+    "classes": "transparent",
+    "dropTarget": {
+      "chip": true
+    },
+    "dropOffsetX": 5,
+    "dropOffsetY": 5,
+    "parent": "boardBack",
+    "x": 5,
+    "movableInEdit": false,
+    "dropLimit": 0
+  },
+  "midHolder2": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder2",
+    "x": 130,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder3": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder3",
+    "x": 255,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder4": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder4",
+    "x": 380,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder5": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder5",
+    "x": 505,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder6": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder6",
+    "x": 630,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder7": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder7",
+    "x": 755,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder8": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder8",
+    "x": 880,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder9": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder9",
+    "x": 1005,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder10": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder10",
+    "x": 1130,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "midHolder11": {
+    "inheritFrom": {
+      "midHolder1": "*"
+    },
+    "type": "holder",
+    "id": "midHolder11",
+    "x": 1255,
+    "y": 214,
+    "parent": "boardBack",
+    "z": 2
+  },
+  "chip1": {
+    "id": "chip1",
+    "x": 5,
+    "width": 90,
+    "height": 90,
+    "z": 403,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "y": 5,
+    "resetProperties": {
+      "parent": "midHolder1"
+    },
+    "parent": "midHolder1"
+  },
+  "chip2": {
+    "id": "chip2",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 442,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder2"
+    },
+    "parent": "midHolder2"
+  },
+  "chip3": {
+    "id": "chip3",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 404,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder3"
+    },
+    "parent": "midHolder3"
+  },
+  "chip4": {
+    "id": "chip4",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 395,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder4"
+    },
+    "parent": "midHolder4"
+  },
+  "chip5": {
+    "id": "chip5",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 361,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder5"
+    },
+    "parent": "midHolder5"
+  },
+  "chip6": {
+    "id": "chip6",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 351,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder6"
+    },
+    "parent": "midHolder6"
+  },
+  "chip7": {
+    "id": "chip7",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 295,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder7"
+    },
+    "parent": "midHolder7"
+  },
+  "chip8": {
+    "id": "chip8",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 293,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder8"
+    },
+    "parent": "midHolder8"
+  },
+  "chip9": {
+    "id": "chip9",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 299,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder9"
+    },
+    "parent": "midHolder9"
+  },
+  "chip10": {
+    "id": "chip10",
+    "x": 5,
+    "y": 5,
+    "width": 90,
+    "height": 90,
+    "z": 301,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "resetProperties": {
+      "parent": "midHolder10"
+    },
+    "parent": "midHolder10"
+  },
+  "chip11": {
+    "id": "chip11",
+    "x": 4,
+    "y": 4,
+    "width": 90,
+    "height": 90,
+    "z": 42,
+    "chip": true,
+    "classes": "pokerChip transition",
+    "color": "#b59548",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "parent": "midHolder11",
+    "resetProperties": {
+      "parent": "midHolder11"
+    }
+  },
+  "boardBack": {
+    "id": "boardBack",
+    "x": 120,
+    "y": 235,
+    "width": 1360,
+    "height": 529,
+    "movable": false,
+    "layer": -3,
+    "css": {
+      "background": "linear-gradient(to bottom, red 0%, #ff000040 50%, #0000ff80 50%, blue 100%)"
+    },
+    "movableInEdit": false,
+    "borderRadius": 10
+  },
+  "factory1": {
+    "type": "holder",
+    "id": "factory1",
+    "y": 121,
+    "width": 75,
+    "height": 75,
+    "z": 2,
+    "classes": "transparent",
+    "css": {
+      "border": "1px dashed black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "dropTarget": {
+      "piece": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "#fcf0d4"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${result}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisCounter",
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "GET",
+        "collection": "thisCounter",
+        "property": "text",
+        "variable": "currentCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${currentCount}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "relation": "-",
+                "value": 2
+              },
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ],
+    "parent": "boardBack",
+    "movableInEdit": false,
+    "fixedParent": true,
+    "x": -100
+  },
+  "factoryCount1": {
+    "id": "factoryCount1",
+    "parent": "factory1",
+    "fixedParent": true,
+    "x": 23.5,
+    "y": -28,
+    "width": 25,
+    "height": 25,
+    "borderRadius": 100,
+    "z": 46,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "color": "#000",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "1px solid gray"
+    },
+    "text": 11,
+    "counter": true
+  },
+  "factory2": {
+    "type": "holder",
+    "id": "factory2",
+    "x": -100,
+    "y": 337,
+    "width": 75,
+    "height": 75,
+    "z": 2,
+    "classes": "transparent",
+    "css": {
+      "border": "1px dashed black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "dropTarget": {
+      "piece": 2
+    },
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "#fcf0d4"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${result}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisCounter",
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "GET",
+        "collection": "thisCounter",
+        "property": "text",
+        "variable": "currentCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${currentCount}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "relation": "-",
+                "value": 2
+              },
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "boardBack"
+  },
+  "factoryCount2": {
+    "id": "factoryCount2",
+    "parent": "factory2",
+    "fixedParent": true,
+    "x": 23.5,
+    "y": -28,
+    "width": 25,
+    "height": 25,
+    "borderRadius": 100,
+    "z": 46,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "color": "#000",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "1px solid gray"
+    },
+    "text": 11,
+    "counter": true
+  },
+  "redDice1": {
+    "type": "dice",
+    "id": "redDice1",
+    "z": 4,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "color": "#ff0000",
+    "pipColor": "#ffffff",
+    "width": 90,
+    "height": 90,
+    "movable": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll1",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "parent": "roll1",
+    "x": 270,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "roll1": {
+    "type": "holder",
+    "id": "roll1",
+    "x": 140,
+    "y": -125,
+    "width": 450,
+    "height": 90,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 90,
+    "text": "Roll",
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "boardBack",
+    "color": "#ff000080"
+  },
+  "keep1": {
+    "type": "holder",
+    "id": "keep1",
+    "parent": "boardBack",
+    "fixedParent": true,
+    "x": 774,
+    "y": -125,
+    "width": 450,
+    "height": 90,
+    "z": 3,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 90,
+    "text": "Keep",
+    "color": "#ff000080"
+  },
+  "roll2": {
+    "type": "holder",
+    "id": "roll2",
+    "x": 140,
+    "y": 559,
+    "width": 450,
+    "height": 90,
+    "z": 3,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 90,
+    "text": "Roll",
+    "movableInEdit": false,
+    "fixedParent": true,
+    "parent": "boardBack",
+    "color": "#0000ff80"
+  },
+  "keep2": {
+    "type": "holder",
+    "id": "keep2",
+    "parent": "boardBack",
+    "fixedParent": true,
+    "x": 774,
+    "y": 559,
+    "width": 450,
+    "height": 90,
+    "z": 3,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetX": 90,
+    "text": "Keep",
+    "color": "#0000ff80"
+  },
+  "redDice2": {
+    "type": "dice",
+    "id": "redDice2",
+    "z": 5,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "color": "#ff0000",
+    "pipColor": "#ffffff",
+    "width": 90,
+    "height": 90,
+    "movable": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll1",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "x": 360,
+    "parent": "roll1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "redDice3": {
+    "type": "dice",
+    "id": "redDice3",
+    "z": 2,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "color": "#ff0000",
+    "pipColor": "#ffffff",
+    "width": 90,
+    "height": 90,
+    "movable": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll1",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "x": 90,
+    "parent": "roll1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "redDice4": {
+    "type": "dice",
+    "id": "redDice4",
+    "z": 3,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "color": "#ff0000",
+    "pipColor": "#ffffff",
+    "width": 90,
+    "height": 90,
+    "movable": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll1",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "x": 180,
+    "parent": "roll1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "redDice5": {
+    "type": "dice",
+    "id": "redDice5",
+    "z": 1,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "shape3d": true,
+    "color": "#ff0000",
+    "pipColor": "#ffffff",
+    "width": 90,
+    "height": 90,
+    "movable": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll1",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "parent": "roll1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "blueDice1": {
+    "type": "dice",
+    "id": "blueDice1",
+    "width": 90,
+    "height": 90,
+    "z": 4,
+    "movable": true,
+    "color": "#0000ff",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipColor": "#ffffff",
+    "shape3d": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll2",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "parent": "roll2",
+    "x": 270,
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "blueDice2": {
+    "type": "dice",
+    "id": "blueDice2",
+    "width": 90,
+    "height": 90,
+    "z": 3,
+    "movable": true,
+    "color": "#0000ff",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipColor": "#ffffff",
+    "shape3d": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll2",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "x": 180,
+    "parent": "roll2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "blueDice3": {
+    "type": "dice",
+    "id": "blueDice3",
+    "width": 90,
+    "height": 90,
+    "z": 5,
+    "movable": true,
+    "color": "#0000ff",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipColor": "#ffffff",
+    "shape3d": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll2",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "x": 360,
+    "parent": "roll2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "blueDice4": {
+    "type": "dice",
+    "id": "blueDice4",
+    "width": 90,
+    "height": 90,
+    "z": 1,
+    "movable": true,
+    "color": "#0000ff",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipColor": "#ffffff",
+    "shape3d": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll2",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "parent": "roll2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "blueDice5": {
+    "type": "dice",
+    "id": "blueDice5",
+    "width": 90,
+    "height": 90,
+    "z": 2,
+    "movable": true,
+    "color": "#0000ff",
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipColor": "#ffffff",
+    "shape3d": true,
+    "classes": "shaking transition",
+    "resetPropertiesDice": {
+      "parent": "roll2",
+      "activeFace": 0,
+      "rollCount": 0
+    },
+    "x": 90,
+    "parent": "roll2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "activeFace",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "50% 50%",
+        "animation": "turnPulse 1s ease-in-out"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(8)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "x": 594,
+    "y": -203,
+    "movableInEdit": false,
+    "parent": "boardBack",
+    "fixedParent": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "50% 50%",
+        "animation": "turnPulse 1s ease-in-out"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(8)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "useSeatRoutine"
+      },
+      "var playerColor = ${result.0}",
+      "var playerName = ${result.1}"
+    ],
+    "colorChangeRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "marker${PROPERTY index}"
+        ],
+        "property": "color",
+        "value": "${PROPERTY color}"
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var color = ${PROPERTY color}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Your Name:",
+                "variable": "name",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Your Color:",
+                "colors": "${PROPERTY colorArray}",
+                "variable": "color",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${PROPERTY colorArray}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  },
+                  {
+                    "type": "subtitle",
+                    "text": "All done?",
+                    "css": "background-color: var(--VTTblue);color:white;"
+                  },
+                  {
+                    "type": "checkbox",
+                    "label": "Stand up from seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              "var result = push ${color}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${name}"
+              },
+              "var result = push ${name}",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${result.0}"
+              },
+              "var newText = colorContrast ${PROPERTY mainColor}",
+              "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "textColor",
+                "value": "${newText}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "glowColor",
+                "value": "${newGlow}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          }
+        ],
+        "elseRoutine": []
+      }
+    ],
+    "fixedParent": true,
+    "movableInEdit": false,
+    "parent": "boardBack",
+    "x": 594,
+    "y": 681
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 19,
+    "y": 475,
+    "width": 75,
+    "height": 50,
+    "layer": 3,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Turn'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-70px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": {
+      "name": "skip_next",
+      "scale": 1.5
+    },
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count1",
+          "count2"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count1",
+          "count2"
+        ],
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "RESET",
+        "property": "resetPropertiesDice"
+      }
+    ]
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1535,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Reset'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "RESET"
+      },
+      {
+        "func": "RESET",
+        "property": "resetPropertiesDice"
+      }
+    ]
+  },
+  "count1": {
+    "id": "count1",
+    "x": 555,
+    "y": 22,
+    "width": 40,
+    "height": 60,
+    "css": {
+      "font-size": "50px"
+    },
+    "text": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "resetProperties": {
+      "display": false,
+      "text": 0
+    },
+    "display": false
+  },
+  "count2": {
+    "id": "count2",
+    "x": 555,
+    "y": 915,
+    "width": 40,
+    "height": 60,
+    "css": {
+      "font-size": "50px"
+    },
+    "text": 0,
+    "movable": false,
+    "movableInEdit": false,
+    "resetProperties": {
+      "display": false,
+      "text": 0
+    },
+    "display": false
+  },
+  "v851": {
+    "width": 73,
+    "height": 73,
+    "z": 409,
+    "classes": "pokerChip transition",
+    "color": "#ff0000",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "piece": 1,
+    "resetProperties": {
+      "parent": "factory1"
+    },
+    "clonedFrom": "xe6h",
+    "icon": {
+      "name": "delapouite/perspective-dice-six-faces-random",
+      "opacity": 1,
+      "color": "#fff",
+      "scale": 0.8
+    },
+    "id": "v851",
+    "parent": "factory1"
+  },
+  "rollButton2": {
+    "type": "button",
+    "id": "rollButton2",
+    "x": 450,
+    "y": 905,
+    "width": 75,
+    "height": 75,
+    "layer": 3,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "24px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Roll'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-95px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": "delapouite/rolling-dices",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "roll2",
+        "sortBy": {
+          "key": "z"
+        }
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CLICK"
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 150
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "roll2"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count2"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count2"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "rollButton1": {
+    "type": "button",
+    "id": "rollButton1",
+    "x": 450,
+    "y": 17,
+    "width": 75,
+    "height": 75,
+    "layer": 3,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "24px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Roll'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "95px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": "delapouite/rolling-dices",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "roll1",
+        "sortBy": {
+          "key": "z"
+        }
+      },
+      {
+        "func": "FOREACH",
+        "collection": "DEFAULT",
+        "loopRoutine": [
+          {
+            "func": "CLICK"
+          },
+          {
+            "func": "DELAY",
+            "milliseconds": 150
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "roll1"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count1"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "count1"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ]
+  },
+  "gzcm": {
+    "width": 73,
+    "height": 73,
+    "z": 416,
+    "classes": "pokerChip transition",
+    "color": "#0000ff",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "piece": 2,
+    "resetProperties": {
+      "parent": "factory2"
+    },
+    "clonedFrom": "rwui",
+    "icon": {
+      "name": "delapouite/perspective-dice-six-faces-random",
+      "opacity": 1,
+      "color": "#fff",
+      "scale": 0.8
+    },
+    "dragging": "Guest808",
+    "hoverParent": "factory2",
+    "id": "gzcm",
+    "parent": "factory2"
+  }
+}
