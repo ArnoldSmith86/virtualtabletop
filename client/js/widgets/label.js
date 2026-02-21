@@ -17,15 +17,61 @@ export class Label extends Widget {
 
       text: '',
       editable: false,
-      twoRowBottomAlign: false
+      twoRowBottomAlign: false,
+      regex: null,
+      regexHint: null
     });
 
     this.domElement.appendChild(this.input);
-    this.input.addEventListener('keyup', e=>{
-      if(this.get('editable') && e.target.value !== this.get('text'))
-        this.setText(e.target.value)
+    this.input.addEventListener('input', e => {
+      if (!this.get('editable')) return;
+      
+      const newValue = e.target.value;
+      this.validateInput(newValue);
+      
+      if (newValue !== this.get('text')) {
+        this.set('text', newValue);
+      }
+    });
+    
+    this.input.addEventListener('blur', e => {
+      let value = e.target.value;
+      if (value && value.match(/^[-+]?[0-9]*\.?[0-9]*$/)) {
+        const num = parseFloat(value);
+        if (isNaN(num)) {
+        } else if (num === 0) {
+          value = '0';
+        } else {
+          value = num.toString();
+        }
+      }
+      e.target.value = value;
+      if (value !== this.get('text')) {
+        this.set('text', value);
+      }
     });
   }
+
+  createRegexPattern(regex) {
+    if (!regex.startsWith('/')) return new RegExp(regex);
+    
+    const lastSlash = regex.lastIndexOf('/');
+    if (lastSlash <= 0) return new RegExp(regex);
+    
+    const pattern = regex.slice(1, lastSlash);
+    const flags = regex.slice(lastSlash + 1);
+    return new RegExp(pattern, flags);
+  }
+
+    toggleValidationError(show, message = '') {
+  if (show) {
+    this.input.setAttribute('title', message);
+    this.input.classList.add('invalid');
+  } else {
+    this.input.removeAttribute('title');
+    this.input.classList.remove('invalid');
+  }
+}
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
@@ -67,5 +113,67 @@ export class Label extends Widget {
     if(delta.spellCheck !== undefined)
       this.input.setAttribute('spellcheck', this.get('spellCheck') === true);
 
+  }
+
+  async setText(text, mode) {
+    const finalText = this.processTextMode(text, mode);
+    await this.set('text', finalText);
+    this.updateInputValue(finalText);
+  }
+
+  processTextMode(text, mode) {
+    if (mode == 'inc' || mode == 'dec') {
+      const currentValue = parseFloat(this.get('text')) || 0;
+      const changeValue = parseFloat(text) || 0;
+      return currentValue + (mode == 'dec' ? -changeValue : changeValue);
+    }    
+    if (mode == 'append') {
+      return this.get('text') + text;
+    }    
+    if (Array.isArray(text)) {
+      return text.join(', ');
+    }    
+    return this.formatNumericText(text);
+  }
+
+  formatNumericText(text) {
+    if (typeof text === 'string' && text.match(/^[-+]?[0-9]*\.?[0-9]+$/)) {
+      return parseFloat(text).toString();
+    }
+    return text;
+  }
+
+  updateInputValue(value) {
+    if (document.activeElement !== this.input) {
+      this.input.value = value;
+      return;
+    }
+    
+    const currentNumeric = parseFloat(this.input.value);
+    const newNumeric = parseFloat(value);    
+    const shouldUpdate = isNaN(currentNumeric) !== isNaN(newNumeric) || 
+      (!isNaN(currentNumeric) && !isNaN(newNumeric) && currentNumeric !== newNumeric);    
+    if (shouldUpdate) {
+      this.input.value = value;
+    }
+  }
+
+  validateInput(value) {
+    const regex = this.get('regex');    
+    if (!regex || !value) {
+      this.input.classList.remove('invalid');
+      this.toggleValidationError(false);
+      return;
+    }    
+    try {
+      const isValid = this.createRegexPattern(regex).test(value);
+      this.input.classList.toggle('invalid', !isValid);
+      this.toggleValidationError(!isValid, 
+        !isValid ? (this.get('regexHint') || 'Invalid input') : ''
+      );
+    } catch(e) {
+      this.input.classList.add('invalid');
+      this.toggleValidationError(true, 'Invalid regex pattern');
+    }
   }
 }
