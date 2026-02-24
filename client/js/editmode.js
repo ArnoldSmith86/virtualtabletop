@@ -1213,7 +1213,7 @@ function uploadWidget(preset) {
       id = await addWidgetLocal({
         image: asset,
         movable: false,
-        width: 1600,
+        width: 1778,
         height: 1000,
         layer: -4
       });

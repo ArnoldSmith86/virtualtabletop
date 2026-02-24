@@ -24,7 +24,7 @@ class MoveDragButton extends DragButton {
       Y change: <i>${dy>0 ? '+' : ''}${Math.floor(dy)}</i><br><br>
 
       Min X: <i>${minX}</i><br>
-      Max X: <i>${1600 - maxX}</i> from right<br>
+      Max X: <i>${1778 - maxX}</i> from right<br>
       Min Y: <i>${minY}</i><br>
       Max Y: <i>${1000 - maxY}</i> from bottom
     `;
