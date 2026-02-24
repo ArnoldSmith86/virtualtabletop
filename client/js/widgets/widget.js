@@ -257,6 +257,7 @@ export class Widget extends StateManaged {
     }
 
     if(delta.inheritFrom !== undefined) {
+      this.getCache = {};
       this.inheritFromUnregister();
 
       if(delta.inheritFrom)
@@ -266,6 +267,7 @@ export class Widget extends StateManaged {
     }
 
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
+      inheriting.getCache = {};
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
       inheriting.applyInheritedDeltaToDOM(inheritedDelta);
@@ -2184,31 +2186,34 @@ export class Widget extends StateManaged {
   }
 
   get(property) {
+    if(this.getCache[property] !== undefined)
+      return this.getCache[property];
+
     if(!readOnlyProperties.has(property)) {
-      return super.get(property);
+      return this.getCache[property] = super.get(property);
     } else {
       const p = this.get('parent');
       switch(property) {
         case '_absoluteRotation':
-          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+          return this.getCache[property] = this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
         case '_absoluteScale':
-          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+          return this.getCache[property] = this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
         case '_absoluteX':
-          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
         case '_absoluteY':
-          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
         case '_ancestor':
-          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+          return this.getCache[property] = (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
         case '_centerAbsoluteX':
-          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
         case '_centerAbsoluteY':
-          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
         case '_localOriginAbsoluteX':
-          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+          return this.getCache[property] = this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
         case '_localOriginAbsoluteY':
-          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+          return this.getCache[property] = this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
         default:
-          return super.get(property);
+          return this.getCache[property] = super.get(property);
       }
     }
   }
