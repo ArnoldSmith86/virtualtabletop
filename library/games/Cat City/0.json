@@ -2959,7 +2959,6 @@
         "minY": 0
       }
     ],
-    "hoverParent": "grid-map",
     "image": "i/game-pieces/2D/Hex-Flat.svg",
     "svgReplaces": {
       "#primaryColor": "color",
