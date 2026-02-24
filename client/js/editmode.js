@@ -261,6 +261,182 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+function generateLineWidgets(id, x, y) {
+  const size = 30
+  const offset = size/2
+  const ctrlPoints = {
+    type: "basic",
+    width: size,
+    height: size,
+    parent: id,
+    fixedParent: true,
+    display: false,
+    movable: true,
+    movableInEdit: true,
+    borderRadius: "50%",
+    color: "gray",
+    classes: "controlPoint"
+  };
+  return [
+    {
+      type: "basic",
+      id: id + "_wrapper",
+      x: x,
+      y: y,
+      width: 200,
+      height: 200,
+      movable: true,
+      movableInEdit: true,
+      classes: "lineWrapper"
+    },
+    { type: 'line',
+      id: id,
+      x: 0,
+      y: 0,
+      parent: id + "_wrapper",
+      fixedParent: true,
+      width: 200,
+      height: 200,
+      movable: false,
+      movableInEdit: false,
+      inheritFromNotifyAll: true,
+      inheritFrom: {
+        [id + "_S"]: [
+          {"x": "startx"},
+          {"y": "starty"},
+          {"width": "startWidth"},
+          {"height": "startHeight"}
+        ],
+        [id + "_C1"]: [
+          {"x": "cp1x"},
+          {"y": "cp1y"},
+          {"width": "cp1Width"},
+          {"height": "cp1Height"}
+        ],
+        [id + "_C2"]: [
+          {"x": "cp2x"},
+          {"y": "cp2y"},
+          {"width": "cp2Width"},
+          {"height": "cp2Height"}
+        ],
+        [id + "_E"]: [
+          {"x": "endx"},
+          {"y": "endy"},
+          {"width": "endWidth"},
+          {"height": "endHeight"}
+        ]
+      }
+    },
+    Object.assign({ ...ctrlPoints }, { id: id + "_S", x: 0-offset, y: 0-offset, text: "S"}),
+    Object.assign({ ...ctrlPoints }, { id: id + "_E", x: 200-offset, y: 200-offset, text: "E" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C1", x: 0-offset, y: 200-offset, text: "1"}),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C2", x: 200-offset, y: 0-offset, text: "2"}),
+    // added controlPoint class on the widget, but could be done behind the scenes (like active for timer), I just couldn't figure out how
+  ];
+}
+
+function generateFannedHolders(id, x, y) {
+  const size = 30
+  const offset = size/2
+  const spots = 5
+  const holders = {
+    type: "holder",
+    parent: id,
+    fixedParent: true,
+  };
+  function addInheritance(holder, spotNumber) {
+    const spotKey = `spot_${spotNumber}`;
+    holder.inheritFrom = {
+      [id]: [ // Use the dynamic id here
+        {
+          [`spotLocations.${spotKey}.centeredx`]: "x",
+          [`spotLocations.${spotKey}.centeredy`]: "y",
+          [`spotLocations.${spotKey}.orientation`]: "rotation",
+          notify: true
+        }
+      ]
+    };
+    return holder;
+  }
+
+  const fanHolders = [];
+  for (let i = 0; i < spots; i++) {
+    fanHolders.push(addInheritance(Object.assign({ ...holders }, { id: `ho${i}_${id}` }), i));
+  }
+
+  const ctrlPoints = {
+    type: "basic",
+    width: size,
+    height: size,
+    parent: id,
+    fixedParent: true,
+    display: false,
+    movable: true,
+    movableInEdit: true,
+    borderRadius: "50%",
+    color: "gray",
+    classes: "controlPoint"
+  };
+  let list = [
+    {
+      type: "basic",
+      id: id + "_wrapper",
+      x: x,
+      y: y,
+      width: 200,
+      height: 200,
+      movable: true,
+      movableInEdit: true,
+      classes: "lineWrapper"
+    },
+    { type: 'line',
+      id: id,
+      x: 0,
+      y: 0,
+      parent: id + "_wrapper",
+      fixedParent: true,
+      width: 200,
+      height: 200,
+      spotAtStart: true,
+      spotAtEnd: true,
+      movable: false,
+      movableInEdit: false,
+      inheritFromNotifyAll: true,
+      inheritFrom: {
+        [id + "_S"]: [
+          {"x": "startx"},
+          {"y": "starty"},
+          {"width": "startWidth"},
+          {"height": "startHeight"}
+        ],
+        [id + "_C1"]: [
+          {"x": "cp1x"},
+          {"y": "cp1y"},
+          {"width": "cp1Width"},
+          {"height": "cp1Height"}
+        ],
+        [id + "_C2"]: [
+          {"x": "cp2x"},
+          {"y": "cp2y"},
+          {"width": "cp2Width"},
+          {"height": "cp2Height"}
+        ],
+        [id + "_E"]: [
+          {"x": "endx"},
+          {"y": "endy"},
+          {"width": "endWidth"},
+          {"height": "endHeight"}
+        ]
+      }
+    },
+    ...fanHolders,
+    Object.assign({ ...ctrlPoints }, { id: id + "_S", x: 5, y: 165, text: "S"}),
+    Object.assign({ ...ctrlPoints }, { id: id + "_E", x: 195, y: 165, text: "E" }),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C1", x: 25, y: 65, text: "1"}),
+    Object.assign({ ...ctrlPoints }, { id: id + "_C2", x: 175, y: 65, text: "2"})
+  ];
+  return list
+}
 function generateTimerWidgets(id, x, y) {
   return [
     { type:'timer', id: id, x: x, y: y },
@@ -311,12 +487,14 @@ function generateTimerWidgets(id, x, y) {
 function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
   for(const wi of widgetsToAdd) {
     let w = null;
+    if(wi.type == 'basic')  w = new BasicWidget(wi.id);
     if(wi.type == 'button') w = new Button(wi.id);
     if(wi.type == 'canvas') w = new Canvas(wi.id);
     if(wi.type == 'card')   w = new Card(wi.id);
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
+    if(wi.type == 'line')   w = new Line(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
@@ -1203,7 +1381,42 @@ function populateAddWidgetOverlay() {
 
     css: { "border": "3px solid #666" }
   });
-}
+
+  // Add the composite Line widget
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1300, 430), async function() {
+    const id = generateUniqueWidgetID();
+    for (const w of generateLineWidgets(id, 1300, 430))
+      await addWidgetLocal(w);
+      // to get the spots correctly updated, make a quick change and back
+      const end = widgets.get(id+"_E");
+      const endx = end.get("x")
+      await end.set('x', endx+1)
+      await end.set('x', endx)
+    return id
+    });
+    
+    // Add a holder fanning Line widget
+    addCompositeWidgetToAddWidgetOverlay(
+      [{type: "basic",
+        x: 100,
+        y: 800,
+        width: 150,
+        height: 150,
+        rotation: -25,
+        css: "border-radius: 50%",
+        image: "/i/game-icons.net/lorc/poker-hand.svg",
+      }], async function() {
+      const id = generateUniqueWidgetID();
+      for (const w of generateFannedHolders(id, 200, 200))
+        await addWidgetLocal(w);
+        // to get the spots correctly updated, make a quick change and back
+        const end = widgets.get(id+"_E");
+        const endx = end.get("x")
+        await end.set('x', endx+1)
+        await end.set('x', endx)
+      return id
+      });
+    }
 // end of JSON generators
 
 function uploadWidget(preset) {
