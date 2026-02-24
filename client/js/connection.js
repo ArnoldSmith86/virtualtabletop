@@ -1,6 +1,7 @@
 let lastTimeout = 1000;
 let lastOverlay = null;
 let connection;
+let pongReceived = true;
 let serverStart = null;
 let userNavigatedAway = false;
 let messageCallbacks = {};
@@ -18,6 +19,7 @@ export function startWebSocket() {
   connection = new WebSocket(url);
 
   connection.onopen = () => {
+    lastTimeout = 500;
     showOverlay(null, true);
     showOverlay(lastOverlay);
     if(!urlProperties.askID) {
@@ -55,6 +57,9 @@ export function startWebSocket() {
       serverStart = args;
     }
 
+    if(func == 'pong')
+      pongReceived = true;
+
     for(const callback of (messageCallbacks[func] || []))
       callback(args);
   };
@@ -79,6 +84,13 @@ function preventReconnect() {
 function log(str) {
   toServer('trace', str);
 }
+
+setInterval(function() {
+  if(!pongReceived)
+    startWebSocket();
+  pongReceived = false;
+  toServer('ping');
+}, 5000);
 
 window.onbeforeunload = function() {
   userNavigatedAway = true;

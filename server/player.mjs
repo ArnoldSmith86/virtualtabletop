@@ -38,6 +38,8 @@ export default class Player {
         await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID, args.delayForGameStartRoutine);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
+      if(func == 'ping')
+        this.send('pong');
       if(func == 'playerColor')
         this.room.recolorPlayer(this, args.player, args.color);
       if(func == 'removeState')
