@@ -4,6 +4,7 @@ import { getElementTransformRelativeTo } from './geometry.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 let isLoading = true;
+export let room = {};
 
 export const widgets = new Map();
 
@@ -467,6 +468,7 @@ function receiveStateFromServer(args) {
 
   mouseTarget = null;
   deltaID = args._meta.deltaID;
+  room = args;
   const topSurface = $('#topSurface');
   for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();

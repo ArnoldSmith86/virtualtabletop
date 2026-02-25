@@ -22,6 +22,7 @@ export default async function minifyHTML() {
     'client/css/overlays/connectionlost.css',
     'client/css/overlays/about.css',
     'client/css/overlays/welcome.css',
+    'client/css/overlays/user.css',
 
     'client/css/widgets/basicwidget.css',
     'client/css/widgets/imagewidget.css',
@@ -78,6 +79,7 @@ export default async function minifyHTML() {
     'client/js/widgets/spinner.js',
     'client/js/widgets/timer.js',
 
+    'client/js/user.js',
     'client/js/main.js'
   ]);
 
