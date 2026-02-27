@@ -1276,8 +1276,8 @@
     },
     "dragging": "Mike",
     "hoverParent": "factory1",
-    "x": null,
-    "y": null,
+    "x": 0,
+    "y": 0,
     "id": "2zs0",
     "parent": "factory1"
   },
@@ -1315,8 +1315,8 @@
     },
     "dragging": "Mike",
     "hoverParent": "factory2",
-    "x": null,
-    "y": null,
+    "x": 0,
+    "y": 0,
     "id": "k4wq",
     "parent": "factory2"
   }
