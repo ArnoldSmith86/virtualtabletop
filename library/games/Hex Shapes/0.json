@@ -1,0 +1,1323 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Hex Shapes",
+      "image": "/assets/-1543191338_43358",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/20195/six",
+      "year": "2003",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "Room design, layout, rules text, and library image by LawDawg96.&nbsp; Released to the Public Domain under CC0.<div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "lastUpdate": 1772168401306,
+      "skill": "",
+      "description": "Play your hex pieces in order to make a shape out of 6 pieces. The first to make one of 3 shapes wins.",
+      "similarImage": "",
+      "similarName": "Six",
+      "similarDesigner": "Steffen Mühlhäuser",
+      "similarAwards": "",
+      "ruleText": "Players sit in seats. Press the Restart button to begin and a random player will be selected to start.<div><br></div><div>The first player puts a hex piece of their color in one of the 3 spaces adjacent to and touching the other player's piece and not touching their own color. After the first player finishes, alternate turns and all subsequent plays can be made anywhere so long as the piece touches at least one of the already played pieces.</div><div><br></div><div>The object of the game is to be the first player to get 6 of their pieces into one of the 3 specified shapes (line, circle, or triangle). The 3 shapes are illustrated by the red tiles in the library image for this game. For the circle, it does not matter if the center space is occupied or not nor does the color of the center space matter.</div><div><br></div><div>If the players have placed all pieces without creating one of the shapes, the game moves into the second phase. In the second phase, the goal is unchanged. However, this time each player removes one of the pieces of their color and moves it somewhere else on the board. A completely enclosed piece can be moved.</div><div><br></div><div>If in removing a piece, some pieces are disconnected and isolated, each of the pieces in the smaller group of isolated pieces (it could be one or many) is removed from play. If the groups are the same size, then the player that moved the piece decides which group is eliminated.</div><div><br></div><div>In the second phase, the game ends when one player forms one of the 3 shapes or one player has less than six pieces remaining in play.</div><div><br></div><div>After playing a piece, press the Turn button to cycle the turn indicator on the seat.</div><div><br></div><div>The game is designed for 2 or 4 players. With 4 players, there are 2 teams of 2 with the players sharing the pieces and alternating turns between teams. The goal and all rules remain the same. The game could also be played with 3 players where 2 are on a team and one plays solo. If playing with 3 players, the Turn button will not work properly.</div>",
+      "helpText": "",
+      "usesAIImagery": false,
+      "showName": true,
+      "players": "2-4",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "factory1": {
+    "type": "holder",
+    "id": "factory1",
+    "y": 210,
+    "width": 70,
+    "height": 70,
+    "z": 7,
+    "classes": "transparent",
+    "css": {
+      "border": "1px dashed black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "dropTarget": {
+      "piece": 1
+    },
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "#fcf0d4"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${result}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisCounter",
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "GET",
+        "collection": "thisCounter",
+        "property": "text",
+        "variable": "currentCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${currentCount}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "relation": "-",
+                "value": 2
+              },
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ]
+  },
+  "factoryCount1": {
+    "id": "factoryCount1",
+    "parent": "factory1",
+    "fixedParent": true,
+    "x": 23.5,
+    "y": -28,
+    "width": 25,
+    "height": 25,
+    "borderRadius": 100,
+    "z": 46,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "color": "#000",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "1px solid gray"
+    },
+    "text": 20,
+    "counter": true
+  },
+  "factory2": {
+    "type": "holder",
+    "id": "factory2",
+    "x": 1515.5,
+    "y": 210,
+    "width": 70,
+    "height": 70,
+    "z": 5,
+    "classes": "transparent",
+    "css": {
+      "border": "1px dashed black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "dropTarget": {
+      "piece": 2
+    },
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "#fcf0d4"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${result}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisCounter",
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "GET",
+        "collection": "thisCounter",
+        "property": "text",
+        "variable": "currentCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${currentCount}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "relation": "-",
+                "value": 2
+              },
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ]
+  },
+  "factoryCount2": {
+    "id": "factoryCount2",
+    "parent": "factory2",
+    "fixedParent": true,
+    "x": 23.5,
+    "y": -28,
+    "width": 25,
+    "height": 25,
+    "borderRadius": 100,
+    "z": 46,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "color": "#000",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "1px solid gray"
+    },
+    "text": 20,
+    "counter": true
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1545,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-family": "LibreBaskerville",
+        "font-size": "14px"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "ignoreZoom": true,
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          },
+          {
+            "type": "number",
+            "min": 2,
+            "max": 4,
+            "label": "Choose number of players",
+            "value": "${PROPERTY playerCount}",
+            "variable": "playerCount"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "RESET"
+      },
+      "var playerCount = length ${activeSeats}",
+      "var 2p = ${playerCount} < 3",
+      "var 3p = ${playerCount} == 3",
+      "var 4p = ${playerCount} == 4",
+      {
+        "func": "IF",
+        "condition": "${2p}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "factoryCount1",
+              "factoryCount2"
+            ],
+            "property": "text",
+            "value": 21
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "factory3",
+              "factory4"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${3p}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player OF seat3}",
+            "relation": "!=",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "factoryCount1"
+                ],
+                "property": "text",
+                "value": 11
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factoryCount3"
+                ],
+                "property": "text",
+                "value": 10
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factoryCount2"
+                ],
+                "property": "text",
+                "value": 21
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factory3"
+                ],
+                "property": "display",
+                "value": true
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factory4"
+                ],
+                "property": "display",
+                "value": false
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "factoryCount1"
+                ],
+                "property": "text",
+                "value": 21
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factoryCount2"
+                ],
+                "property": "text",
+                "value": 11
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factoryCount4"
+                ],
+                "property": "text",
+                "value": 10
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factory3"
+                ],
+                "property": "display",
+                "value": false
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "factory4"
+                ],
+                "property": "display",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "condition": "${4p}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "factoryCount1",
+              "factoryCount2"
+            ],
+            "property": "text",
+            "value": 11
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "factoryCount3",
+              "factoryCount4"
+            ],
+            "property": "text",
+            "value": 10
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "factory3",
+              "factory4"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      },
+      {
+        "func": "MOVEXY",
+        "from": "factory1",
+        "x": 727.44,
+        "y": 420
+      },
+      {
+        "func": "MOVEXY",
+        "from": "factory2",
+        "x": 788.06,
+        "y": 420
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ]
+  },
+  "factory3": {
+    "type": "holder",
+    "id": "factory3",
+    "y": 525,
+    "width": 70,
+    "height": 70,
+    "z": 8,
+    "classes": "transparent",
+    "css": {
+      "border": "1px dashed black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "dropTarget": {
+      "piece": 3
+    },
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "#fcf0d4"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${result}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisCounter",
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "GET",
+        "collection": "thisCounter",
+        "property": "text",
+        "variable": "currentCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${currentCount}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "relation": "-",
+                "value": 2
+              },
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ],
+    "display": false
+  },
+  "factoryCount3": {
+    "id": "factoryCount3",
+    "parent": "factory3",
+    "fixedParent": true,
+    "x": 23.5,
+    "y": -28,
+    "width": 25,
+    "height": 25,
+    "borderRadius": 100,
+    "z": 46,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "color": "#000",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "1px solid gray"
+    },
+    "text": 10,
+    "counter": true
+  },
+  "sake": {
+    "width": 70,
+    "height": 70,
+    "color": "#ff0000",
+    "image": "i/game-pieces/2D/Hex-Point.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 243,
+    "grid": [
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 30.31,
+        "offsetY": 52.5
+      },
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "piece": 3,
+    "clonedFrom": "3d7q",
+    "id": "sake",
+    "resetProperties": {
+      "parent": "factory3"
+    },
+    "parent": "factory3"
+  },
+  "factory4": {
+    "type": "holder",
+    "id": "factory4",
+    "x": 1515.5,
+    "y": 525,
+    "width": 70,
+    "height": 70,
+    "z": 9,
+    "classes": "transparent",
+    "css": {
+      "border": "1px dashed black"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "countRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "mode": "remove"
+      },
+      {
+        "func": "COUNT",
+        "variable": "result"
+      }
+    ],
+    "dropTarget": {
+      "piece": 4
+    },
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "#fcf0d4"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${result}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "SET",
+        "collection": "thisCounter",
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "CALL",
+        "routine": "countRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "counter",
+        "value": true,
+        "collection": "thisCounter"
+      },
+      {
+        "func": "GET",
+        "collection": "thisCounter",
+        "property": "text",
+        "variable": "currentCount"
+      },
+      {
+        "func": "IF",
+        "operand1": "${result}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${currentCount}",
+            "relation": ">",
+            "operand2": 1,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "relation": "-",
+                "value": 2
+              },
+              {
+                "func": "CLONE",
+                "source": "child"
+              },
+              {
+                "func": "SET",
+                "property": "parent",
+                "value": "${thisID}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisCounter",
+                "property": "text",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY neutral}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "child",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ]
+      }
+    ],
+    "display": false
+  },
+  "factoryCount4": {
+    "id": "factoryCount4",
+    "parent": "factory4",
+    "fixedParent": true,
+    "x": 23.5,
+    "y": -28,
+    "width": 25,
+    "height": 25,
+    "borderRadius": 100,
+    "z": 46,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#e4e4e4",
+      "color": "#000",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "border": "1px solid gray"
+    },
+    "text": 10,
+    "counter": true
+  },
+  "h1lr": {
+    "width": 70,
+    "height": 70,
+    "color": "#000000",
+    "image": "i/game-pieces/2D/Hex-Point.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 241,
+    "grid": [
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 30.31,
+        "offsetY": 52.5
+      },
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "piece": 4,
+    "clonedFrom": "1w17",
+    "id": "h1lr",
+    "resetProperties": {
+      "parent": "factory4"
+    },
+    "parent": "factory4"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "y": 290,
+    "hideWhenUnused": true
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "y": 290,
+    "index": 2,
+    "x": 1422,
+    "hideWhenUnused": true
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "y": 606,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 1422,
+    "y": 606,
+    "hideWhenUnused": true,
+    "turn": true
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "z": 1,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "turnButton": {
+    "type": "button",
+    "id": "turnButton",
+    "x": 5,
+    "y": 5,
+    "width": 75,
+    "height": 50,
+    "layer": 3,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Turn'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "70px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": {
+      "name": "skip_next",
+      "scale": 1.5
+    },
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "203e": {
+    "width": 70,
+    "height": 70,
+    "color": "#ff0000",
+    "image": "i/game-pieces/2D/Hex-Point.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 487,
+    "grid": [
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 30.31,
+        "offsetY": 52.5
+      },
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "piece": 1,
+    "clonedFrom": "6r9k",
+    "resetProperties": {
+      "parent": "factory1"
+    },
+    "dragging": "Mike",
+    "hoverParent": "factory1",
+    "x": 727.4399999999999,
+    "y": 420,
+    "id": "203e"
+  },
+  "ftgw": {
+    "width": 70,
+    "height": 70,
+    "color": "#505050",
+    "image": "i/game-pieces/2D/Hex-Point.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 488,
+    "grid": [
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 30.31,
+        "offsetY": 52.5
+      },
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "piece": 2,
+    "clonedFrom": "cywe",
+    "resetProperties": {
+      "parent": "factory2"
+    },
+    "dragging": "Mike",
+    "hoverParent": "factory2",
+    "x": 788.06,
+    "y": 420,
+    "id": "ftgw"
+  },
+  "2zs0": {
+    "width": 70,
+    "height": 70,
+    "color": "#ff0000",
+    "image": "i/game-pieces/2D/Hex-Point.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 487,
+    "grid": [
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 30.31,
+        "offsetY": 52.5
+      },
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "piece": 1,
+    "clonedFrom": "203e",
+    "resetProperties": {
+      "parent": "factory1"
+    },
+    "dragging": "Mike",
+    "hoverParent": "factory1",
+    "x": null,
+    "y": null,
+    "id": "2zs0",
+    "parent": "factory1"
+  },
+  "k4wq": {
+    "width": 70,
+    "height": 70,
+    "color": "#505050",
+    "image": "i/game-pieces/2D/Hex-Point.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "z": 488,
+    "grid": [
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 30.31,
+        "offsetY": 52.5
+      },
+      {
+        "x": 60.62,
+        "y": 105,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    ],
+    "piece": 2,
+    "clonedFrom": "ftgw",
+    "resetProperties": {
+      "parent": "factory2"
+    },
+    "dragging": "Mike",
+    "hoverParent": "factory2",
+    "x": null,
+    "y": null,
+    "id": "k4wq",
+    "parent": "factory2"
+  }
+}
