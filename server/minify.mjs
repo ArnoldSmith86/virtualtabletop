@@ -19,7 +19,7 @@ export default async function minifyHTML() {
     'client/css/overlays/misc.css',
     'client/css/overlays/players.css',
     'client/css/overlays/states.css',
-    'client/css/overlays/connectionlost.css',
+    'client/css/overlays/status.css',
     'client/css/overlays/about.css',
     'client/css/overlays/welcome.css',
 
@@ -46,10 +46,12 @@ export default async function minifyHTML() {
 
     'client/js/domhelpers.js',
     'client/js/connection.js',
+    'client/js/overlays/status.js',
     'client/js/serverstate.js',
     'client/js/legacymodes.js',
     'client/js/geometry.js',
     'client/js/compute.js',
+    'client/js/overlaystate.js',
     'client/js/mousehandling.js',
     'client/js/zoom.js',
     'client/js/tracing.js',

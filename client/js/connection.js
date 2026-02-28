@@ -3,7 +3,10 @@ let lastOverlay = null;
 let connection;
 let serverStart = null;
 let userNavigatedAway = false;
+let userInitiatedReconnect = false;
 let messageCallbacks = {};
+let onConnectionCloseCallbacks = [];
+export function onConnectionClose(cb) { onConnectionCloseCallbacks.push(cb); }
 
 //used by unit tests until jest supports mocking ESM static imports
 export function mockConnection() {
@@ -33,9 +36,15 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
+    if(userInitiatedReconnect) {
+      userInitiatedReconnect = false;
+      lastTimeout = 1000;
+      setTimeout(startWebSocket, 1000);
+      return;
+    }
     if(!userNavigatedAway) {
       lastOverlay = [...$a('.overlay')].filter(d=>d.style.display!='none').map(d=>d.id)[0] || null;
-      showOverlay('connectionLostOverlay', true);
+      for(const cb of onConnectionCloseCallbacks) cb();
     }
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
@@ -47,8 +56,7 @@ export function startWebSocket() {
     if(func == 'serverStart') {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
-        setTimeout(location.reload, rand()*10000);
-        showOverlay('connectionLostOverlay', true);
+        setTimeout(() => location.reload(), rand()*10000);
         preventReconnect();
         connection.close();
       }
@@ -60,7 +68,7 @@ export function startWebSocket() {
   };
 }
 
-function onMessage(func, callback) {
+export function onMessage(func, callback) {
   if(!messageCallbacks[func])
     messageCallbacks[func] = [];
   messageCallbacks[func].push(callback);
@@ -69,6 +77,13 @@ function onMessage(func, callback) {
 export function toServer(func, args) {
   if(connection.readyState === WebSocket.OPEN)
     connection.send(JSON.stringify({ func, args }));
+}
+
+export function forceReconnect() {
+  userInitiatedReconnect = true;
+  lastTimeout = 1000;
+  if(connection && connection.readyState === WebSocket.OPEN)
+    connection.close();
 }
 
 function preventReconnect() {
