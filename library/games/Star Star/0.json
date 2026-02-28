@@ -110,26 +110,6 @@
       "glow_color": "black"
     }
   },
-  "iri3": {
-    "deck": "city_cards_deck",
-    "type": "card",
-    "cardType": "B",
-    "id": "iri3",
-    "z": 198,
-    "parent": "x4ms",
-    "x": null,
-    "y": null
-  },
-  "xvxl": {
-    "deck": "city_cards_deck",
-    "type": "card",
-    "cardType": "E",
-    "id": "xvxl",
-    "z": 223,
-    "parent": "rajp",
-    "x": null,
-    "y": null
-  },
   "1_seat_anchor": {
     "id": "1_seat_anchor",
     "width": 35,
