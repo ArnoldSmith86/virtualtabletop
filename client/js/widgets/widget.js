@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, removeWidgetLocal } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -482,7 +482,10 @@ export class Widget extends StateManaged {
   }
 
   async clone(overrideProperties, recursive = false, problems = null, xOffset = 0, yOffset = 0) {
-    const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), overrideProperties);
+    const override = Object.assign({}, overrideProperties);
+    const fromHolderClone = override._fromHolderClone;
+    delete override._fromHolderClone;
+    const clone = Object.assign(JSON.parse(JSON.stringify(this.state)), override);
     const parent = clone.parent;
     const inheritFrom = clone.inheritFrom;
     if(parent !== undefined && parent !== null && !widgets.has(parent))
@@ -499,6 +502,8 @@ export class Widget extends StateManaged {
     const newID = await addWidgetLocal(clone);
     if(widgets.has(newID)) { // cloning can fail for example with invalid cardType
       const cWidget = widgets.get(newID);
+      if(fromHolderClone)
+        cWidget.fromHolderClone = true;
 
       // use moveToHolder so that CLONE triggers onEnter and similar features
       cWidget.movedByButton = problems != null;
@@ -509,8 +514,8 @@ export class Widget extends StateManaged {
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
       if(!parent || !widgets.get(parent).get('alignChildren')) {
-        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+        await cWidget.set('x', (override.x !== undefined ? override.x : this.get('x')) + xOffset);
+        await cWidget.set('y', (override.y !== undefined ? override.y : this.get('y')) + yOffset);
         await cWidget.updatePiles();
       }
       delete cWidget.movedByButton;
@@ -1526,6 +1531,17 @@ export class Widget extends StateManaged {
         }
       }
 
+      const cloneFromCloneChildrenHolder = async function(widget, oldParentId, newParentId) {
+        if(!oldParentId || oldParentId === newParentId || widget.fromHolderClone)
+          return null;
+        if(!widgets.has(oldParentId))
+          return null;
+        const oldParent = widgets.get(oldParentId);
+        if(oldParent.get('type') != 'holder' || !oldParent.get('cloneChildren'))
+          return null;
+        return await widget.clone({ parent: null });
+      };
+
       if(a.func == 'MOVE') {
         setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
         let count = a.fillTo || a.count;
@@ -1548,11 +1564,41 @@ export class Widget extends StateManaged {
             problems.push(`Skipping move of ${c.id} to its descendant ${target.id}.`);
           } else if(!a.fillTo || target.children().length < a.fillTo) {
             c.movedByButton = true;
+            const sourceParentId = source ? source.get('id') : c.get('parent');
+            const targetParentId = target ? target.get('id') : null;
+            const clone = await cloneFromCloneChildrenHolder(c, sourceParentId, targetParentId);
+            if(clone) {
+              if(a.face !== null && clone.flip)
+                await clone.flip(a.face);
+              if(target.get('type') == 'seat') {
+                if(target.get('hand') && target.get('player')) {
+                  if(widgets.has(target.get('hand'))) {
+                    const targetHand = widgets.get(target.get('hand'));
+                    clone.targetPlayer = target.get('player');
+                    await clone.moveToHolder(targetHand);
+                    delete clone.targetPlayer;
+                    await clone.bringToFront();
+                    if(targetHand.get('type') == 'holder')
+                      await targetHand.updateAfterShuffle();
+                    ++moved;
+                  } else {
+                    problems.push(`Seat ${target.id} declares 'hand: ${target.get('hand')}' which does not exist.`);
+                  }
+                } else {
+                  problems.push(`Seat ${target.id} is empty or does not define a hand.`);
+                }
+              } else {
+                await clone.moveToHolder(target);
+                ++moved;
+              }
+              delete c.movedByButton;
+              return moved;
+            }
+            await applyFlip();
             if(target.get('type') == 'seat') {
               if(target.get('hand') && target.get('player')) {
                 if(widgets.has(target.get('hand'))) {
                   const targetHand = widgets.get(target.get('hand'));
-                  await applyFlip();
                   if (targetHand == source) {
                     // cards are already in hand: only an owner update is needed
                     await c.set('owner', target.get('player'));
@@ -1572,7 +1618,6 @@ export class Widget extends StateManaged {
                 problems.push(`Seat ${target.id} is empty or does not define a hand.`);
               }
             } else {
-              await applyFlip();
               await c.moveToHolder(target);
               ++moved;
             }
@@ -1695,7 +1740,23 @@ export class Widget extends StateManaged {
       if (a.func == 'RESET') {
         setDefaults(a, { property: 'resetProperties' });      
         for(const widget of widgets.values()) {
-          for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
+          const resetProperties = widget.get(a.property) || {};
+          const requestedParent = resetProperties.parent;
+          const oldParentId = widget.get('parent');
+          if(requestedParent !== undefined) {
+            const clone = await cloneFromCloneChildrenHolder(widget, oldParentId, requestedParent);
+            if(clone) {
+              for(const [ key, value ] of Object.entries(resetProperties)) {
+                if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
+                  problems.push(`Tried setting ${key} on widget ${clone.id} to ${value} which doesn't exist.`);
+                } else {
+                  await clone.set(key, value);
+                }
+              }
+              continue;
+            }
+          }
+          for(const [ key, value ] of Object.entries(resetProperties)) {
             if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
             } else {
@@ -1874,10 +1935,19 @@ export class Widget extends StateManaged {
 
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
-              if(a.relation == '+' && a.value == null)
+              if(a.relation == '+' && a.value == null) {
                 problems.push(`null value being appended, SET ignored`);
-              else
+              } else if(a.property == 'parent') {
+                const newParent = await compute(a.relation, null, w.get(String(a.property)), a.value);
+                const oldParentId = w.get('parent');
+                const clone = await cloneFromCloneChildrenHolder(w, oldParentId, newParent);
+                if(clone)
+                  await clone.set('parent', newParent);
+                else
+                  await w.set('parent', newParent);
+              } else {
                 await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
+              }
             }
           }
         }
@@ -2346,6 +2416,19 @@ export class Widget extends StateManaged {
     await this.set('dragging', playerName);
 
     if(!this.get('fixedParent') && this.get('movable')) {
+      const currentHolderId = this.get('_ancestor');
+      if(currentHolderId && widgets.has(currentHolderId)) {
+        const currentHolder = widgets.get(currentHolderId);
+        if(currentHolder.get('type') == 'holder' && currentHolder.get('cloneChildren')) {
+          const clone = await this.clone({
+            parent: currentHolderId,
+            x: this.get('x'),
+            y: this.get('y'),
+            z: this.get('z'),
+            _fromHolderClone: true
+          });
+        }
+      }
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
       if(this.currentParent)
@@ -2480,7 +2563,11 @@ export class Widget extends StateManaged {
         let coordNew = this.dragCorner(coordGlobal, localAnchor, this.hoverTarget);
         this.setPosition(coordNew.x, coordNew.y, this.get('z'));
         await this.snapToGrid();
-        await this.moveToHolder(this.hoverTarget);
+        if(this.hoverTarget.get('cloneChildren') && this.hoverTarget.childArray.length > 0) {
+          await removeWidgetLocal(this.get('id'));
+        } else {
+          await this.moveToHolder(this.hoverTarget);
+        }
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
     }
