@@ -14,6 +14,61 @@ body:not(.overlayActive) #editorDragToolbar.active {
   width: 200px;
 }
 
+#editorDragToolbar .editorDragToolbarSettings button span {
+  top: calc(var(--editToolbarHeight) + var(--editToolbarHeight) + 1px);
+  white-space: normal;
+}
+
+#editorDragToolbar.settingsActive .dragToolbarSettingsButton button {
+  background: var(--VTTblueDark);
+}
+
+.editorDragToolbarSettings {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  transform: none;
+  background: var(--VTTblue);
+  border-radius: 5px;
+  height: var(--editToolbarHeight);
+  padding: 0 4px;
+  gap: 4px;
+  align-items: center;
+  white-space: nowrap;
+  border-bottom: 1px solid #000;
+  box-sizing: border-box;
+}
+
+#editorDragToolbar.settingsActive .editorDragToolbarSettings {
+  display: flex;
+}
+
+.editorDragToolbarLabel {
+  color: white;
+  font-size: 12px;
+  opacity: 0.9;
+  padding: 0 1px;
+}
+
+.editorDragToolbarSettings .dragToolbarSettingButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.editorDragToolbarSettings .dragToolbarSettingButton::before {
+  margin-right: 0;
+}
+
+.editorDragToolbarDivider {
+  display: inline-block;
+  border-left: 1px solid #fff8;
+  margin: 5px;
+  align-self: center;
+  height: calc(var(--editToolbarHeight) - 10px);
+}
+
 body.dragToolbarDragging #editorDragToolbar button:hover span {
   display: none;
 }
