@@ -103,6 +103,97 @@ async function setCardCount(deck, cardType, count) {
     batchEnd();
 }
 
+function parsePropertyFromCSS(css, prop, defaultValue='', cssClass="default") {
+  if (css === null || typeof css === 'undefined') return defaultValue;
+
+  if (typeof css === 'string') {
+    const propEsc = prop.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const re = new RegExp(propEsc + '\\s*:\\s*([^;]+)', 'i');
+    const m = css.match(re);
+    return m ? m[1].trim() : defaultValue;
+  }
+
+  if (typeof css === 'object') {
+    if(typeof css[cssClass] === 'object' && typeof css[cssClass][prop] !== 'undefined') {
+      return String(css[cssClass][prop]);
+    }
+    else if (typeof css[prop] !== 'undefined') {
+      return String(css[prop]);
+    }
+  }
+  return defaultValue;
+}
+
+function cssStringToObject(str) {
+  const out = {};
+  if (!str || typeof str !== 'string') return out;
+  for (const part of str.split(';')) {
+    const idx = part.indexOf(':');
+    if (idx === -1) continue;
+    const k = part.slice(0, idx).trim();
+    const v = part.slice(idx + 1).trim();
+    if (k) out[k] = v;
+  }
+  return out;
+}
+
+function mergePropertyFromCSS(css, prop, value, cssClass=null) {
+  
+  // Editor only writes css as an object
+  if (typeof css === 'string') {
+    css = cssStringToObject(css);
+  }
+
+  // incoming css is an object -> update appropriate place
+  if (typeof css === 'object' && css !== null) {
+    const out = Array.isArray(css) ? css.slice() : Object.assign({}, css);
+
+    if(cssClass) {
+      if (typeof Object.values(out)[0] === 'object') {
+        // input and output are both nested objects
+        if (value === null || typeof value === 'undefined' || value === '')
+          delete out[cssClass][prop];
+        else
+          out[cssClass][prop] = value
+      } else {
+        // input is simple object and output is nested object -> move existing properties to default class
+        classObject = Array.isArray(css) ? css.slice() : Object.assign({}, css);
+        const out = {default: classObject};;
+        out[cssClass][prop] = value
+      }
+    }
+
+    else {
+      if (typeof Object.values(out)[0] === 'object') {
+        // input is simple object and output is nested object -> keep nested and use default class
+        if (value === null || typeof value === 'undefined' || value === '')
+          delete out.default[prop];
+        else
+          out.default[prop] = value
+        }
+      else {
+        // input and output are both nested objects -> keep simple
+        if (value === null || typeof value === 'undefined' || value === '')
+          delete out[prop];
+        else
+          out[prop] = value;
+        }
+      }
+    return out;
+  }
+  
+  // no css defined yet -> create simple object or return empty on deletion
+  if (!css && value !== null && typeof value !== 'undefined' && value !== '') {
+    return { [prop]: value };
+  }
+  
+}
+
+function parseFontSize(fontSize) {
+  const [, value, unit] = String(fontSize).trim().match(/^(-?\d*\.?\d+)([a-z%]*)$/i) || [];
+  return value ? { value: +value, unit: unit || null } : null;
+}
+
 /* end helper functions */
 
 
@@ -270,6 +361,7 @@ class PropertiesModule extends SidebarModule {
         case 'deck':   this.renderForDeck(widget);   break;
         case 'dice': this.renderForDice(widget); break;
         case 'holder': this.renderForHolder(widget); break;
+        case 'label':  this.renderForLabel(widget);  break;
         case 'spinner': this.renderForSpinner(widget); break;
 
         default:
@@ -1607,7 +1699,77 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader(`Spinner properties`);
     this.renderGenericProperties(widget, ['options']);
-  }    
+  }
+
+  /**
+   * Renders the Properties sidebar UI for a label widget: style presets, text content,
+   * editable flag, color, placeholder, and generic properties.
+   */
+  renderForLabel(widget) {
+    this.addHeader(`Label ${widget.id}`);
+
+    // --- Label style presets (preview buttons like deck) ---
+    this.addSubHeader('Label style');
+    const labelStyles = [
+      { name: 'Title', css: { 'font-size': '50px', 'font-weight': 'bold' }, labelAppearanceHeight: 85 },
+      { name: 'Header', css: { 'font-size': '30px', 'font-weight': 'bold' }, labelAppearanceHeight: 50 },
+      { name: 'Regular', css: null, labelAppearanceHeight: 20 },
+      { name: 'Bold', css: { 'font-weight': 'bold' }, labelAppearanceHeight: 20 },
+      { name: 'Italic', css: { 'font-style': 'italic' }, labelAppearanceHeight: 20 }
+    ];
+
+    for (const s of labelStyles) {
+      const label = this.renderWidgetButton(new Label(), {
+        type: 'label',
+        css: s.css,
+        text: s.name,
+        width: 120,
+        height: s.labelAppearanceHeight,
+        overflow: 'visible'
+      }, this.moduleDOM);
+
+      this.addPropertyListener(widget, 'css', widget => {
+        if (JSON.stringify(widget.get('css')) === JSON.stringify(s.css)) {
+          label.classList.add('selected');
+        } else {
+          label.classList.remove('selected');
+        }
+      });
+      label.onclick = async e => {
+        if (!label.classList.contains('selected')) {
+          widget.set('css', s.css);
+        }
+      };
+    }
+
+    // --- Label content and specific properties ---
+    this.addSubHeader('Label content');
+
+    // Editable checkbox: when checked, label is editable in play mode
+    this.renderCheckbox(widget, 'Editable (in play mode)', 'editable');
+
+    this.renderLargeTextInput(widget, 'Text Content', 'text');
+
+    // Color picker: reads/writes text color from widget css (inline string or object.inline)
+    this.renderColorInput(widget, 'Color', 'color');
+
+    //this is broken for now because it needs to be able to read css units
+    this.renderNumberInput(widget, "Font Size", "font-size", { step: 1, min: 0 }, "16px", 'css', "default");
+    
+    this.addLineBreak();
+
+    // Placeholder text (shown when label text is empty in play mode)
+    this.renderObscureProperties(widget, [
+      {
+        property: 'placeholderText',
+        title: 'Placeholder Text (shown when label is empty)',
+        renderer: () => this.renderLargeTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText')
+      }
+    ]);
+
+    this.addSubHeader('Other properties');
+    this.renderGenericProperties(widget, ['css','editable', 'placeholderText', 'text' ]);
+  }
 
   renderGenericProperties(widget, exclude) {
     for(const property in widget.state) {
@@ -1619,6 +1781,77 @@ class PropertiesModule extends SidebarModule {
         this.inputUpdaters[widget.id][property] = [];
 
       this.inputUpdaters[widget.id][property].push(input.setValue);
+    }
+  }
+
+    renderObscureProperties(widget, specs) {
+    // specs: array of either property name strings or objects { property, title, renderer }
+    // this was all Ai generated from a pseudo code
+    for (const s of specs) {
+      const spec = typeof s === 'string' ? { property: s, title: s } : s;
+      const prop = spec.property;
+      const title = spec.title || prop;
+      const renderFn = spec.renderer || (() => this.addInput(title, widget.get(prop), v => this.inputValueUpdated(widget, prop, v)));
+
+      const val = widget.get(prop);
+      const hasValue = val !== undefined && val !== null && !(typeof val === 'string' && val.trim() === '');
+      if (hasValue) {
+        renderFn();
+        continue;
+      }
+
+      const btn = document.createElement('button');
+      btn.className = 'blue';
+      btn.innerText = '+ ' + title;
+      this.moduleDOM.appendChild(btn);
+
+      const propertyWatcher = w => {
+        const v = w.get(prop);
+        if (v !== undefined && v !== null && !(typeof v === 'string' && v.trim() === '')) {
+          // replace the button with the generated input in-place
+          const parent = this.moduleDOM;
+          try {
+            const beforeCount = parent.childNodes.length;
+            const container = document.createElement('div');
+            container.className = 'obscurePropertyContainer';
+            if (btn.parentNode) btn.replaceWith(container);
+            // allow renderer to run (pass container in case it accepts a target)
+            renderFn(container);
+            // move any nodes appended to moduleDOM by the renderer into container
+            const afterCount = parent.childNodes.length;
+            let newNodes = afterCount - beforeCount;
+            for (let i = 0; i < newNodes; ++i) {
+              const node = parent.childNodes[beforeCount];
+              if (node) container.appendChild(node);
+            }
+          } catch (err) {
+            console.error('renderObscureProperties propertyWatcher renderFn threw', err);
+          }
+        }
+      };
+
+      this.addPropertyListener(widget, prop, propertyWatcher);
+
+      // Use addEventListener and place generated input where the button was
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const parent = this.moduleDOM;
+        try {
+          const beforeCount = parent.childNodes.length;
+          const container = document.createElement('div');
+          container.className = 'obscurePropertyContainer';
+          if (btn.parentNode) btn.replaceWith(container);
+          renderFn(container);
+          const afterCount = parent.childNodes.length;
+          let newNodes = afterCount - beforeCount;
+          for (let i = 0; i < newNodes; ++i) {
+            const node = parent.childNodes[beforeCount];
+            if (node) container.appendChild(node);
+          }
+        } catch (err) {
+          console.error('renderObscureProperties click renderFn threw', err);
+        }
+      });
     }
   }
 
@@ -1658,6 +1891,129 @@ class PropertiesModule extends SidebarModule {
     centerElementInClientRect(button.children[0], button.getBoundingClientRect());
 
     return button;
+  }    
+
+  renderLargeTextInput (widget, title, property) {
+    // Large text input for label text (~90% width, 6 lines, scroll if needed)
+    const textTitle = document.createElement('div');
+    textTitle.className = 'labelEditorSectionTitle';
+    textTitle.textContent = title;
+    textTitle.style.fontWeight = 'bold';
+    textTitle.style.marginTop = '8px';
+    textTitle.style.marginBottom = '4px';
+    this.moduleDOM.appendChild(textTitle);
+    const textAreaWrap = div(this.moduleDOM, 'labelTextAreaWrap');
+    const textArea = document.createElement('textarea');
+    textArea.className = 'labelPropertyTextArea';
+    textArea.rows = 6;
+    textArea.value = widget.get(property) || '';
+    textArea.style.width = '90%';
+    textArea.style.maxWidth = '100%';
+    textArea.style.minHeight = '6em';
+    textArea.style.overflowY = 'auto';
+    textArea.style.boxSizing = 'border-box';
+    textAreaWrap.appendChild(textArea);
+    textArea.oninput = () => this.inputValueUpdated(widget, property, textArea.value);
+    this.addPropertyListener(widget, property, w => {
+      if (document.activeElement !== textArea)
+        textArea.value = w.get(property) || '';
+    });
+    if (!this.inputUpdaters[widget.id][property])
+      this.inputUpdaters[widget.id][property] = [];
+    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== textArea) textArea.value = widget.get(property) || ''; });
+  }
+
+  renderCheckbox(widget, title, property) {
+    const wrap = div(this.moduleDOM);
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = `${property}_${widget.id}`;
+    input.checked = !!widget.get(property);
+    const label = document.createElement('label');
+    label.htmlFor = input.id;
+    label.textContent = title || property;
+    wrap.appendChild(input);
+    wrap.appendChild(label);
+
+    input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
+    this.addPropertyListener(widget, property, w => { input.checked = !!w.get(property); });
+
+    if (!this.inputUpdaters[widget.id])
+      this.inputUpdaters[widget.id] = {};
+    if (!this.inputUpdaters[widget.id][property])
+      this.inputUpdaters[widget.id][property] = [];
+    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
+  }
+
+  renderNumberInput(widget, title, opts = {}, property, defaultValue = "16px", css='css', cssClass) {
+    const { step = 'any', min, max, placeholder } = opts;
+    const wrap = div(this.moduleDOM);
+    if (title) {
+      const label = document.createElement('label');
+      label.textContent = title;
+      label.style.display = 'inline-block';
+      wrap.appendChild(label);
+    }
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = step;
+    if (typeof min !== 'undefined') input.min = min;
+    if (typeof max !== 'undefined') input.max = max;
+    if (typeof placeholder !== 'undefined') input.placeholder = placeholder;
+
+    const fontSize = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass))
+
+    input.value = Number(fontSize.value || 0);
+    wrap.appendChild(input);
+
+    if (fontSize.unit) {
+      const unit = document.createElement('span');
+      unit.textContent = fontSize.unit;
+      wrap.appendChild(unit);
+    }
+
+    input.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, input.value+fontSize.unit, cssClass));
+    this.addPropertyListener(widget, css, w => {
+      if (document.activeElement !== input)
+        input.value = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass)).value
+    });
+
+    if (!this.inputUpdaters[widget.id]) this.inputUpdaters[widget.id] = {};
+    if (!this.inputUpdaters[widget.id][css]) this.inputUpdaters[widget.id][css] = [];
+    this.inputUpdaters[widget.id][css].push(() => {
+      if (document.activeElement !== input)
+        input.value = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass)).value
+    });
+  }
+
+  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css', cssClass) {
+    const colorWrap = div(this.moduleDOM);
+    if (title) {
+      const colorLabel = document.createElement('label');
+      colorLabel.textContent = title;
+      colorLabel.style.display = 'inline-block';
+      colorWrap.appendChild(colorLabel);
+    }
+    const colorInput = document.createElement('input');
+    colorInput.type = 'color';
+    colorInput.style = "-webkit-appearance: none; -moz-appearance: none; border-radius: 4px; display: inline-block; margin: 3px 3px 0 8px; padding: 0; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0); order: 1; flex-grow: 0; flex-shrink: 0; "
+
+    colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
+    colorWrap.appendChild(colorInput);
+    colorInput.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value, cssClass));
+    this.addPropertyListener(widget, css, w => {
+      if (document.activeElement !== colorInput)
+        colorInput.value = parsePropertyFromCSS(w.get(css), property, defaultColor, cssClass);
+    });
+    if (!this.inputUpdaters[widget.id])
+      this.inputUpdaters[widget.id] = {};
+    if (!this.inputUpdaters[widget.id][css])
+      this.inputUpdaters[widget.id][css] = [];
+    this.inputUpdaters[widget.id][css].push(() => {
+      if (document.activeElement !== colorInput)
+        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
+    });
   }
 
   renderModule(target) {
