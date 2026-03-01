@@ -257,11 +257,6 @@
             "collection": "thisButton",
             "property": "player",
             "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "color",
-            "value": "#000000"
           }
         ],
         "elseRoutine": [
@@ -973,17 +968,6 @@
         "collection": [
           "${PROPERTY id}"
         ]
-      }
-    ],
-    "changeRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "history_label_copy"
-        ],
-        "property": "text",
-        "relation": "=",
-        "value": "${PROPERTY text}"
       }
     ]
   },
@@ -9081,7 +9065,7 @@
       "mode": "vs",
       "time": "45",
       "attribution": "Layout, board, cards, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The bus icon is from Google Noto Color Emoji and is available under the SIL Open Font License.</div><div><br></div><div>The library image was created by a 4-year-old and is released to the Public Domain under CC0 by her father.&nbsp;</div>",
-      "lastUpdate": 1772323408785,
+      "lastUpdate": 1772376265175,
       "skill": "medium",
       "description": "In Star Star, players compete to earn the most points by opening businesses near popular bus stops along the galaxy streets. Can you capitalize on alien tourist spending each time a bus passes?",
       "similarImage": "",
