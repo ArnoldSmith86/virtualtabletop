@@ -1,40 +1,4 @@
 {
-  "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true,
-        "disableHolderImageWidget": true
-      },
-      "globalCss": ".transition {\n  transition: transform 300ms\n}\n\n.transition.dragging {\n  transition: none\n}"
-    },
-    "info": {
-      "name": "Star Star",
-      "image": "/assets/1542858382_25384",
-      "rules": "https://drive.google.com/file/d/1OAPi77V8ighSKzwCzw3MJ4rvFNEbNKFj/view?usp=sharing",
-      "bgg": "https://boardgamegeek.com/boardgame/5825/paris-paris",
-      "year": "2003",
-      "mode": "vs",
-      "time": "45",
-      "attribution": "Layout, board, cards, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The bus icon is from Google Noto Color Emoji and is available under the SIL Open Font License.</div><div><br></div><div>The library image was created by a 4-year-old and is released to the Public Domain under CC0 by her father.&nbsp;</div>",
-      "lastUpdate": 1772302970767,
-      "skill": "medium",
-      "description": "In Star Star, players compete to earn the most points by opening businesses near popular bus stops along the galaxy streets. Can you capitalize on alien tourist spending each time a bus passes?",
-      "similarImage": "",
-      "similarName": "Paris Paris",
-      "similarDesigner": "Michael Schacht",
-      "similarAwards": "2003 Spiel des Jahres Recommended\n2003 Japan Boardgame Prize - Best Advanced Game Nominee\n2003 International Gamers Awards - General Strategy: Multi-player nominee",
-      "ruleText": "",
-      "helpText": "Players take seats. Press Setup button to begin. A random player (indicated by the white pawn) is chosen to start.&nbsp;If there are 2 players seated then a random face-up Hidden Route card will be placed above the discard pile which is used during final scoring.<div><br></div><div>On your turn, press the Deal Cards button to display cards (one more than the number of players) in the upper left corner of the board. Move the cards next to the corresponding shape on the map as a reminder of which bus stops are available that round. Each player, in turn, then moves a house to their chosen bus stop and the corresponding card to the Discard Pile. If the player's move replaces an existing house, move the old house to the Hidden Houses Bag. Move the unused card to the Unpicked Route Tokens and score points according to the rules. At the end of the round, move the pawn to the next player.&nbsp;</div><div><br></div><div>Manually keep score throughout the game by moving the marbles along the Score Track. If you score more than 50 points, drag a new marble from under the track and place it onto the track. At the end of the game, score all hidden routes (including the face-up one for 2 player) and then drag the houses out of the Hidden Houses Bag and score them according to the rules.</div>",
-      "usesAIImagery": false,
-      "showName": true,
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-4"
-    }
-  },
   "errh": {
     "x": 4,
     "y": 4,
@@ -1021,8 +985,7 @@
         "relation": "=",
         "value": "${PROPERTY text}"
       }
-    ],
-    "text": " -- New Round --\n"
+    ]
   },
   "history_toggle": {
     "type": "button",
@@ -4474,7 +4437,7 @@
       }
     },
     "text": "Setup",
-    "player_count": 3,
+    "player_count": 0,
     "setup_complete": true,
     "clickRoutine": [
       {
@@ -5014,8 +4977,8 @@
     "type": "card",
     "cardType": "Red",
     "id": "n2bx",
-    "z": 31524,
-    "parent": "whfc"
+    "z": 31555,
+    "parent": "fyta"
   },
   "hidden_routes_deck": {
     "type": "deck",
@@ -5272,32 +5235,32 @@
     "type": "card",
     "cardType": "Blue",
     "id": "cu7t",
-    "z": 31527,
-    "parent": "whfc"
+    "z": 31557,
+    "parent": "fyta"
   },
   "g84w": {
     "deck": "hidden_routes_deck",
     "type": "card",
     "cardType": "Green",
     "id": "g84w",
-    "z": 31526,
-    "parent": "whfc"
+    "z": 31554,
+    "parent": "fyta"
   },
   "xqtc": {
     "deck": "hidden_routes_deck",
     "type": "card",
     "cardType": "Orange",
     "id": "xqtc",
-    "z": 31528,
-    "parent": "whfc"
+    "z": 31553,
+    "parent": "fyta"
   },
   "cshd": {
     "deck": "hidden_routes_deck",
     "type": "card",
     "cardType": "Purple",
     "id": "cshd",
-    "z": 31525,
-    "parent": "whfc"
+    "z": 31556,
+    "parent": "fyta"
   },
   "map_no_letters": {
     "id": "map_no_letters",
@@ -5309,7 +5272,7 @@
     "z": 5,
     "movable": false,
     "movableInEdit": false,
-    "image": "/assets/-1233624362_199107"
+    "image": "/assets/-1049014026_98922"
   },
   "hidden_bag": {
     "type": "holder",
@@ -7512,7 +7475,7 @@
     "type": "card",
     "cardType": "hex_red",
     "id": "hvii",
-    "z": 1583,
+    "z": 1883,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7530,7 +7493,7 @@
     "type": "card",
     "cardType": "diamond_red",
     "id": "3uvp",
-    "z": 1631,
+    "z": 1836,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7548,7 +7511,7 @@
     "type": "card",
     "cardType": "star_red",
     "id": "s9df",
-    "z": 1596,
+    "z": 1880,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7566,7 +7529,7 @@
     "type": "card",
     "cardType": "circle_red_purple",
     "id": "czwr",
-    "z": 1590,
+    "z": 1886,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7584,7 +7547,7 @@
     "type": "card",
     "cardType": "circle_red_orange",
     "id": "462u",
-    "z": 1598,
+    "z": 1873,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -7602,10 +7565,10 @@
     "type": "card",
     "cardType": "circle_red_green",
     "id": "6dgh",
-    "z": 1588,
+    "z": 1871,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -7620,7 +7583,7 @@
     "type": "card",
     "cardType": "circle_red_blue",
     "id": "ouzh",
-    "z": 1597,
+    "z": 1862,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7629,16 +7592,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "hvii1": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "hex_red",
     "id": "hvii1",
-    "z": 1604,
+    "z": 1878,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7656,7 +7619,7 @@
     "type": "card",
     "cardType": "diamond_red",
     "id": "4uvp",
-    "z": 1595,
+    "z": 1890,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7665,16 +7628,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "463u": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_red_orange",
     "id": "463u",
-    "z": 1601,
+    "z": 1869,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7683,16 +7646,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "464u": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_red_orange",
     "id": "464u",
-    "z": 1608,
+    "z": 1858,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7710,7 +7673,7 @@
     "type": "card",
     "cardType": "circle_red_purple",
     "id": "czwr1",
-    "z": 1636,
+    "z": 1877,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7728,7 +7691,7 @@
     "type": "card",
     "cardType": "circle_red_purple",
     "id": "czwr2",
-    "z": 1623,
+    "z": 1876,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -7746,7 +7709,7 @@
     "type": "card",
     "cardType": "circle_red_purple",
     "id": "czwr3",
-    "z": 1621,
+    "z": 1854,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -7755,16 +7718,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "ouzh1": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_red_blue",
     "id": "ouzh1",
-    "z": 1584,
+    "z": 1882,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7782,7 +7745,7 @@
     "type": "card",
     "cardType": "circle_red_blue",
     "id": "ouzh2",
-    "z": 1618,
+    "z": 1842,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -7791,16 +7754,16 @@
         "box-shadow": "0px 0px 20px 05px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "ouzh3": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_red_blue",
     "id": "ouzh3",
-    "z": 1614,
+    "z": 1856,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -7809,16 +7772,16 @@
         "box-shadow": "0px 0px 20px 05px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "7dgh": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_red_green",
     "id": "7dgh",
-    "z": 1612,
+    "z": 1860,
     "css": {
       "default": {
         "border": "5px solid #ED176A",
@@ -7836,10 +7799,10 @@
     "type": "card",
     "cardType": "circle_red_green",
     "id": "8dgh",
-    "z": 1600,
+    "z": 1833,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -7854,10 +7817,10 @@
     "type": "card",
     "cardType": "circle_green_blue",
     "id": "e50i",
-    "z": 1619,
+    "z": 1844,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -7872,10 +7835,10 @@
     "type": "card",
     "cardType": "circle_green_blue",
     "id": "e51i",
-    "z": 1634,
+    "z": 1834,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -7890,7 +7853,7 @@
     "type": "card",
     "cardType": "circle_green_blue",
     "id": "e52i",
-    "z": 1626,
+    "z": 1859,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -7908,7 +7871,7 @@
     "type": "card",
     "cardType": "circle_green_blue",
     "id": "e53i",
-    "z": 1605,
+    "z": 1885,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -7926,25 +7889,7 @@
     "type": "card",
     "cardType": "circle_green_orange",
     "id": "df37",
-    "z": 1624,
-    "css": {
-      "default": {
-        "border": "5px solid #F8991C",
-        "background": "#e9e9e9",
-        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
-        "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
-      }
-    },
-    "parent": "city_cards_holder",
-    "x": 4,
-    "y": 4
-  },
-  "df38": {
-    "deck": "city_cards_deck",
-    "type": "card",
-    "cardType": "circle_green_orange",
-    "id": "df38",
-    "z": 1607,
+    "z": 1855,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -7957,15 +7902,33 @@
     "y": 4,
     "parent": "city_cards_holder"
   },
+  "df38": {
+    "deck": "city_cards_deck",
+    "type": "card",
+    "cardType": "circle_green_orange",
+    "id": "df38",
+    "z": 1861,
+    "css": {
+      "default": {
+        "border": "5px solid #F8991C",
+        "background": "#e9e9e9",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
+      }
+    },
+    "parent": "city_cards_holder",
+    "x": 4,
+    "y": 4
+  },
   "df39": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_green_orange",
     "id": "df39",
-    "z": 1628,
+    "z": 1840,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -7980,10 +7943,10 @@
     "type": "card",
     "cardType": "circle_green_orange",
     "id": "df40",
-    "z": 1610,
+    "z": 1874,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -7998,7 +7961,7 @@
     "type": "card",
     "cardType": "circle_green_purple",
     "id": "t4pu",
-    "z": 1638,
+    "z": 1853,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8016,7 +7979,7 @@
     "type": "card",
     "cardType": "circle_green_purple",
     "id": "t5pu",
-    "z": 1620,
+    "z": 1889,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8034,10 +7997,10 @@
     "type": "card",
     "cardType": "circle_green_purple",
     "id": "t6pu",
-    "z": 1639,
+    "z": 1851,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8052,7 +8015,7 @@
     "type": "card",
     "cardType": "circle_orange_purple",
     "id": "kj1c",
-    "z": 1637,
+    "z": 1887,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8070,7 +8033,7 @@
     "type": "card",
     "cardType": "circle_orange_purple",
     "id": "kj2c",
-    "z": 1630,
+    "z": 1892,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8088,28 +8051,10 @@
     "type": "card",
     "cardType": "circle_orange_purple",
     "id": "kj3c",
-    "z": 1589,
+    "z": 1848,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
-        "background": "#e9e9e9",
-        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
-        "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
-      }
-    },
-    "parent": "city_cards_holder",
-    "x": 4,
-    "y": 4
-  },
-  "kj4c": {
-    "deck": "city_cards_deck",
-    "type": "card",
-    "cardType": "circle_orange_purple",
-    "id": "kj4c",
-    "z": 1640,
-    "css": {
-      "default": {
-        "border": "5px solid #8051A1",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8119,12 +8064,30 @@
     "y": 4,
     "parent": "city_cards_holder"
   },
+  "kj4c": {
+    "deck": "city_cards_deck",
+    "type": "card",
+    "cardType": "circle_orange_purple",
+    "id": "kj4c",
+    "z": 1837,
+    "css": {
+      "default": {
+        "border": "5px solid #8051A1",
+        "background": "#e9e9e9",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
+      }
+    },
+    "parent": "city_cards_holder",
+    "x": 4,
+    "y": 4
+  },
   "2w7b": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_orange_blue",
     "id": "2w7b",
-    "z": 1622,
+    "z": 1881,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8142,7 +8105,7 @@
     "type": "card",
     "cardType": "circle_purple_blue",
     "id": "v9cz",
-    "z": 1611,
+    "z": 1864,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8151,16 +8114,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "2w8b": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_orange_blue",
     "id": "2w8b",
-    "z": 1615,
+    "z": 1870,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8169,16 +8132,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "2w9b": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_orange_blue",
     "id": "2w9b",
-    "z": 1629,
+    "z": 1872,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8196,7 +8159,7 @@
     "type": "card",
     "cardType": "circle_purple_blue",
     "id": "v10cz",
-    "z": 1625,
+    "z": 1875,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8205,16 +8168,16 @@
         "box-shadow": "0px 0px 20px 05px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "v11cz": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "circle_purple_blue",
     "id": "v11cz",
-    "z": 1603,
+    "z": 1866,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8232,7 +8195,7 @@
     "type": "card",
     "cardType": "hex_blue",
     "id": "1p1h",
-    "z": 1602,
+    "z": 1879,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8241,16 +8204,16 @@
         "box-shadow": "0px 0px 20px 05px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "1p2h": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "hex_blue",
     "id": "1p2h",
-    "z": 1613,
+    "z": 1865,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8259,16 +8222,16 @@
         "box-shadow": "0px 0px 20px 05px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "dq27": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "diamond_blue",
     "id": "dq27",
-    "z": 1635,
+    "z": 1845,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8277,16 +8240,16 @@
         "box-shadow": "0px 0px 20px 05px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "dq28": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "diamond_blue",
     "id": "dq28",
-    "z": 1592,
+    "z": 1884,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8304,7 +8267,7 @@
     "type": "card",
     "cardType": "star_blue",
     "id": "syot",
-    "z": 1632,
+    "z": 1835,
     "css": {
       "default": {
         "border": "5px solid #42C7F1",
@@ -8322,10 +8285,10 @@
     "type": "card",
     "cardType": "hex_green",
     "id": "qh6w",
-    "z": 1617,
+    "z": 1863,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8340,10 +8303,10 @@
     "type": "card",
     "cardType": "hex_green",
     "id": "qh7w",
-    "z": 1586,
+    "z": 1852,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8358,10 +8321,10 @@
     "type": "card",
     "cardType": "diamond_green",
     "id": "5lhx",
-    "z": 1633,
+    "z": 1843,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8376,10 +8339,10 @@
     "type": "card",
     "cardType": "diamond_green",
     "id": "6lhx",
-    "z": 1599,
+    "z": 1888,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8394,10 +8357,10 @@
     "type": "card",
     "cardType": "star_green",
     "id": "m6dx",
-    "z": 1609,
+    "z": 1850,
     "css": {
       "default": {
-        "border": "5px solid #C1D82F",
+        "border": "5px solid #D8D62F",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8412,7 +8375,7 @@
     "type": "card",
     "cardType": "hex_orange",
     "id": "3sjl",
-    "z": 1593,
+    "z": 1839,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8421,16 +8384,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
+    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4,
-    "parent": "city_cards_holder"
+    "y": 4
   },
   "4sjl": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "hex_orange",
     "id": "4sjl",
-    "z": 1606,
+    "z": 1841,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8448,7 +8411,7 @@
     "type": "card",
     "cardType": "diamond_orange",
     "id": "b4nr",
-    "z": 1616,
+    "z": 1867,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8457,16 +8420,16 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "b5nr": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "diamond_orange",
     "id": "b5nr",
-    "z": 1627,
+    "z": 1838,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
@@ -8484,28 +8447,10 @@
     "type": "card",
     "cardType": "star_orange",
     "id": "9z9t",
-    "z": 1594,
+    "z": 1857,
     "css": {
       "default": {
         "border": "5px solid #F8991C",
-        "background": "#e9e9e9",
-        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
-        "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
-      }
-    },
-    "x": 4,
-    "y": 4,
-    "parent": "city_cards_holder"
-  },
-  "g3z0": {
-    "deck": "city_cards_deck",
-    "type": "card",
-    "cardType": "hex_purple",
-    "id": "g3z0",
-    "z": 1641,
-    "css": {
-      "default": {
-        "border": "5px solid #8051A1",
         "background": "#e9e9e9",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
@@ -8515,12 +8460,30 @@
     "x": 4,
     "y": 4
   },
+  "g3z0": {
+    "deck": "city_cards_deck",
+    "type": "card",
+    "cardType": "hex_purple",
+    "id": "g3z0",
+    "z": 1849,
+    "css": {
+      "default": {
+        "border": "5px solid #8051A1",
+        "background": "#e9e9e9",
+        "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099",
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
+      }
+    },
+    "x": 4,
+    "y": 4,
+    "parent": "city_cards_holder"
+  },
   "g3z1": {
     "deck": "city_cards_deck",
     "type": "card",
     "cardType": "hex_purple",
     "id": "g3z1",
-    "z": 1591,
+    "z": 1868,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8538,7 +8501,7 @@
     "type": "card",
     "cardType": "diamond_purple",
     "id": "1d9f",
-    "z": 1585,
+    "z": 1847,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8556,7 +8519,7 @@
     "type": "card",
     "cardType": "diamond_purple",
     "id": "1d10f",
-    "z": 1582,
+    "z": 1846,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8574,7 +8537,7 @@
     "type": "card",
     "cardType": "star_purple",
     "id": "wmg3",
-    "z": 1587,
+    "z": 1891,
     "css": {
       "default": {
         "border": "5px solid #8051A1",
@@ -8583,9 +8546,9 @@
         "box-shadow": "0px 0px 20px 5px ${PROPERTY glow_color}"
       }
     },
-    "parent": "city_cards_holder",
     "x": 4,
-    "y": 4
+    "y": 4,
+    "parent": "city_cards_holder"
   },
   "city_cards_deck": {
     "type": "deck",
@@ -8615,7 +8578,7 @@
       },
       "circle_red_green": {
         "border_color": "#ED176A",
-        "inside_color": "#C1D82F",
+        "inside_color": "#D8D62F",
         "circle": "/i/game-icons.net/delapouite/plain-circle.svg"
       },
       "circle_red_blue": {
@@ -8624,17 +8587,17 @@
         "circle": "/i/game-icons.net/delapouite/plain-circle.svg"
       },
       "circle_green_blue": {
-        "border_color": "#C1D82F",
+        "border_color": "#D8D62F",
         "inside_color": "#42C7F1",
         "circle": "/i/game-icons.net/delapouite/plain-circle.svg"
       },
       "circle_green_orange": {
         "border_color": "#F8991C",
-        "inside_color": "#C1D82F",
+        "inside_color": "#D8D62F",
         "circle": "/i/game-icons.net/delapouite/plain-circle.svg"
       },
       "circle_green_purple": {
-        "border_color": "#C1D82F",
+        "border_color": "#D8D62F",
         "inside_color": "#8051A1",
         "circle": "/i/game-icons.net/delapouite/plain-circle.svg"
       },
@@ -8684,17 +8647,17 @@
         "star": "/i/game-icons.net/delapouite/round-star.svg"
       },
       "hex_green": {
-        "border_color": "#C1D82F",
+        "border_color": "#D8D62F",
         "inside_color": "#ffffff",
         "hex": "i/game-pieces/2D/Hex-Flat.svg"
       },
       "diamond_green": {
-        "border_color": "#C1D82F",
+        "border_color": "#D8D62F",
         "inside_color": "#000000",
         "square": "/i/game-icons.net/delapouite/plain-square.svg"
       },
       "star_green": {
-        "border_color": "#C1D82F",
+        "border_color": "#D8D62F",
         "inside_color": "#000000",
         "star": "/i/game-icons.net/delapouite/round-star.svg"
       },
@@ -9090,13 +9053,49 @@
     },
     "layer": 10
   },
-  "whfc": {
+  "fyta": {
     "type": "pile",
     "parent": "hidden_routes_holder",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 45,
-    "id": "whfc"
+    "id": "fyta"
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true,
+        "disableHolderImageWidget": true
+      },
+      "globalCss": ".transition {\n  transition: transform 300ms\n}\n\n.transition.dragging {\n  transition: none\n}"
+    },
+    "info": {
+      "name": "Star Star",
+      "image": "/assets/1542858382_25384",
+      "rules": "https://drive.google.com/file/d/1OAPi77V8ighSKzwCzw3MJ4rvFNEbNKFj/view?usp=sharing",
+      "bgg": "https://boardgamegeek.com/boardgame/5825/paris-paris",
+      "year": "2003",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Layout, board, cards, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The bus icon is from Google Noto Color Emoji and is available under the SIL Open Font License.</div><div><br></div><div>The library image was created by a 4-year-old and is released to the Public Domain under CC0 by her father.&nbsp;</div>",
+      "lastUpdate": 1772323408785,
+      "skill": "medium",
+      "description": "In Star Star, players compete to earn the most points by opening businesses near popular bus stops along the galaxy streets. Can you capitalize on alien tourist spending each time a bus passes?",
+      "similarImage": "",
+      "similarName": "Paris Paris",
+      "similarDesigner": "Michael Schacht",
+      "similarAwards": "2003 Spiel des Jahres Recommended\n2003 Japan Boardgame Prize - Best Advanced Game Nominee\n2003 International Gamers Awards - General Strategy: Multi-player nominee",
+      "ruleText": "",
+      "helpText": "Players take seats. Press Setup button to begin. A random player (indicated by the white pawn) is chosen to start.&nbsp;If there are 2 players seated then a random face-up Hidden Route card will be placed above the discard pile which is used during final scoring.<div><br></div><div>On your turn, press the Deal Cards button to display cards (one more than the number of players) in the upper left corner of the board. Move the cards next to the corresponding shape on the map as a reminder of which bus stops are available that round. Each player, in turn, then moves a house to their chosen bus stop and the corresponding card to the Discard Pile. If the player's move replaces an existing house, move the old house to the Hidden Houses Bag. Move the unused card to the Unpicked Route Tokens and score points according to the rules. At the end of the round, move the pawn to the next player.&nbsp;</div><div><br></div><div>Manually keep score throughout the game by moving the marbles along the Score Track. If you score more than 50 points, drag a new marble from under the track and place it onto the track. At the end of the game, score all hidden routes (including the face-up one for 2 player) and then drag the houses out of the Hidden Houses Bag and score them according to the rules.</div>",
+      "usesAIImagery": false,
+      "showName": true,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
+    }
   }
 }
