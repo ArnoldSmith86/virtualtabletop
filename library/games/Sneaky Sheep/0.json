@@ -3939,13 +3939,11 @@
         "border": "5px dashed #a36700"
       }
     },
-    "stackOffsetX": null,
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
-    "stock_holder": null
+    "contrast_color_opposite": "#000000"
   },
   "1_question_mark": {
     "type": "basic",
