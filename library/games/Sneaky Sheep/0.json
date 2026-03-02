@@ -7,39 +7,6 @@
     "z": 39882,
     "parent": "vskp"
   },
-  "_meta": {
-    "version": 21,
-    "info": {
-      "name": "Sneaky Sheep",
-      "image": "/assets/1117176194_44812",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/1588/bauernschlau",
-      "year": "1991",
-      "mode": "vs",
-      "time": "45",
-      "attribution": "Layout, board, cards, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The dog icon is from Google Noto Color Emoji and is available under the SIL Open Font License.</div><div><br></div><div>The sheep icon by Bakunetsu Kaito is available at https://thenounproject.com/icon/sheep-8273757/ under the Noun Project License.</div><div><br></div><div>The library image by LawDawg96 is released to the Public Domain under CC0.&nbsp;</div>",
-      "lastUpdate": 1772421131724,
-      "skill": "",
-      "description": "Create the best sheep farm by adding sheep and building a fence around your farm as you go.",
-      "similarImage": "",
-      "similarName": "Bauernschlau",
-      "similarDesigner": "Tom Schoeps",
-      "similarAwards": "1991 Spiel des Jahres Recommended\n1991 Deutscher Spiele Preis Best Family/Adult Game 2nd Place",
-      "ruleText": "",
-      "helpText": "Players take seats. Press Setup button to begin. A random player (indicated by a button next to the seat area) is chosen to start.<div><br></div><div>To complete setup, drag a sheep card to the holder in your seat area with a question mark. This will reveal the value of the sheep only to you. Taking turns, each player drags their sheep to an empty green space on the board.<div><br></div><div>On your turn and according to the rules, manually move sheep and fences by dragging them and flip sheep to show their value by clicking them. At the end of your turn, click the Current Turn button.</div><div><br></div><div>At the end of the game, click on the \"0 vp\" area at your seat to enter your score.</div></div>",
-      "usesAIImagery": false,
-      "showName": true,
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-6"
-    },
-    "gameSettings": {
-      "legacyModes": {
-        "disableHolderImageWidget": true
-      }
-    }
-  },
   "fence_template": {
     "id": "fence_template",
     "x": 1888.5,
@@ -229,7 +196,7 @@
           },
           {
             "type": "image",
-            "x": 5,
+            "x": 3,
             "y": 5,
             "width": 99,
             "height": 85,
@@ -346,7 +313,7 @@
     "handleOffset": 14,
     "handlePosition": "top right",
     "id": "vskp",
-    "z": 36721,
+    "z": 36722,
     "hoverParent": "sheep_holder",
     "parent": "sheep_holder"
   },
@@ -451,7 +418,7 @@
     "type": "card",
     "cardType": "sheepneg3",
     "id": "02x1",
-    "z": 39954,
+    "z": 39974,
     "parent": "vskp"
   },
   "seyz": {
@@ -491,7 +458,7 @@
     "type": "card",
     "cardType": "sheep1",
     "id": "lavx",
-    "z": 39951,
+    "z": 39963,
     "parent": "vskp"
   },
   "0eeg": {
@@ -691,7 +658,7 @@
     "type": "card",
     "cardType": "sheep5",
     "id": "a1ux",
-    "z": 39948,
+    "z": 39977,
     "parent": "vskp"
   },
   "095p": {
@@ -3292,7 +3259,7 @@
     "width": 16,
     "height": 68,
     "inheritFrom": "fence_template",
-    "z": 2060,
+    "z": 2095,
     "x": 30,
     "y": 1,
     "activeFace": 1,
@@ -3694,7 +3661,7 @@
     "width": 16,
     "height": 68,
     "inheritFrom": "fence_template",
-    "z": 2070,
+    "z": 2093,
     "x": 30,
     "y": 1,
     "activeFace": 1,
@@ -4825,5 +4792,38 @@
     "height": 168,
     "z": 83848,
     "movable": false
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "disableHolderImageWidget": true
+      }
+    },
+    "info": {
+      "name": "Sneaky Sheep",
+      "image": "/assets/1117176194_44812",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/1588/bauernschlau",
+      "year": "1991",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Layout, board, cards, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The dog icon is from Google Noto Color Emoji and is available under the SIL Open Font License.</div><div><br></div><div>The sheep icon by Bakunetsu Kaito is available at https://thenounproject.com/icon/sheep-8273757/ under the Noun Project License.</div><div><br></div><div>The library image by LawDawg96 is released to the Public Domain under CC0.&nbsp;</div>",
+      "lastUpdate": 1772426354097,
+      "skill": "",
+      "description": "Create the best sheep farm by adding sheep and building a fence around your farm as you go.",
+      "similarImage": "",
+      "similarName": "Bauernschlau",
+      "similarDesigner": "Tom Schoeps",
+      "similarAwards": "1991 Spiel des Jahres Recommended\n1991 Deutscher Spiele Preis Best Family/Adult Game 2nd Place",
+      "ruleText": "",
+      "helpText": "Players take seats. Press Setup button to begin. A random player (indicated by a button next to the seat area) is chosen to start.<div><br></div><div>To complete setup, drag a sheep card to the holder in your seat area with a question mark. This will reveal the value of the sheep only to you. Taking turns, each player drags their sheep to an empty green space on the board.<div><br></div><div>On your turn and according to the rules, manually move sheep and fences by dragging them and flip sheep to show their value by clicking them. At the end of your turn, click the Current Turn button.</div><div><br></div><div>At the end of the game, click on the \"0 vp\" area at your seat to enter your score.</div></div>",
+      "usesAIImagery": false,
+      "showName": true,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-6"
+    }
   }
 }
