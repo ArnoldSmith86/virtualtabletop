@@ -1,16 +1,4 @@
 {
-  "woiqD": {
-    "type": "card",
-    "id": "woiqD",
-    "parent": "woiq",
-    "x": 12,
-    "y": 41,
-    "cardTypes": {
-      "hex red straight.png": {
-        "image": "/assets/-10577771_9418",
-        "back": "/assets/-273717236_9397"
-      }
-    },
     "faceTemplates": [
       {
         "border": false,
@@ -72,127 +60,6 @@
       ]
     },
     "z": 116
-  },
-  "oivz": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "oivz",
-    "z": 1,
-    "parent": "23ta"
-  },
-  "l7jj": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "l7jj",
-    "z": 3,
-    "parent": "23ta",
-    "x": null,
-    "y": null
-  },
-  "qvru": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "qvru",
-    "z": 5,
-    "parent": "23ta",
-    "x": null,
-    "y": null
-  },
-  "qn4f": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "qn4f",
-    "z": 142,
-    "x": 389.69999999999993,
-    "y": 675
-  },
-  "lobx": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "lobx",
-    "z": 101,
-    "x": 606.1999999999999,
-    "y": 450
-  },
-  "rbfl": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "rbfl",
-    "z": 174,
-    "activeFace": 1,
-    "x": 259.79999999999995,
-    "y": 450
-  },
-  "t0qj": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "t0qj",
-    "z": 167,
-    "x": 692.8,
-    "y": 300
-  },
-  "0kta": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "0kta",
-    "z": 175,
-    "x": 519.5999999999999,
-    "y": 450
-  },
-  "q80h": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red bend.png",
-    "id": "q80h",
-    "z": 37,
-    "x": 303.09999999999997,
-    "y": 75
-  },
-  "r44j": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red bend.png",
-    "id": "r44j",
-    "z": 36,
-    "x": 346.4,
-    "y": 300
-  },
-  "ffx3": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red bend.png",
-    "id": "ffx3",
-    "z": 35,
-    "x": 433,
-    "y": 450
-  },
-  "h34l": {
-    "deck": "woiqD",
-    "type": "card",
-    "cardType": "hex red bend.png",
-    "id": "h34l",
-    "z": 165,
-    "x": 389.69999999999993,
-    "y": 375
-  },
-  "61wa": {
-    "deck": "1uclD",
-    "type": "card",
-    "cardType": "hex red straight.png",
-    "id": "61wa",
-    "z": 184,
-    "activeFace": 1,
-    "x": 346.4,
-    "y": 150,
-    "rotation": 240
   },
   "qdai": {
     "deck": "1_house_deck",
@@ -10135,8 +10002,8 @@
     "id": "t6bh",
     "z": 89891,
     "parent": "c90u",
-    "x": null,
-    "y": null,
+    "x": 0,
+    "y": 0,
     "activeFace": 1,
     "color": "#b4b4b4",
     "contrast_color": "#FFFFFF",
