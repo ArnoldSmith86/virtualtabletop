@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 20,
+    "version": 21,
     "gameSettings": {
       "legacyModes": {},
       "globalCss": ""
@@ -14,7 +14,7 @@
       "mode": "vs; solo",
       "time": "30-45",
       "attribution": "<div>Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div><div><br></div><div>Tile bag by mousewax available as CC0.</div>",
-      "lastUpdate": 1769484940264,
+      "lastUpdate": 1772678981571,
       "showName": true,
       "skill": "",
       "description": "In this abstract tile-laying game, try to link as many of the same-colored pieces in straight lines as possible. The winner is the player whose worst color score (out of six) is higher than the other players' worst scores.",
@@ -27,7 +27,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "1-4"
+      "players": "1-4",
+      "usesAIImagery": false
     }
   },
   "sMaster": {
@@ -370,6 +371,14 @@
         "value": false
       },
       {
+        "func": "SET",
+        "collection": [
+          "turnButton"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
         "func": "CLICK",
         "collection": [
           "recallItemButton"
@@ -606,7 +615,8 @@
       "name": "skip_next",
       "scale": 1.5
     },
-    "z": 1
+    "z": 1,
+    "display": false
   },
   "background": {
     "id": "background",
@@ -7287,6 +7297,14 @@
         ],
         "property": "text",
         "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "turnButton"
+        ],
+        "property": "display",
+        "value": false
       },
       {
         "func": "SELECT",
