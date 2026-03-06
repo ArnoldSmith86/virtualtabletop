@@ -7475,7 +7475,8 @@
     "onEnter": {
       "activeFace": 1
     },
-    "stackOffsetX": 63
+    "stackOffsetX": 63,
+    "linkedToSeat": "1_seat"
   },
   "2_offer_holder": {
     "type": "holder",
@@ -7483,7 +7484,7 @@
     "parent": "2_seat_anchor",
     "fixedParent": true,
     "inheritFrom": "1_offer_holder",
-    "linkedToSeat": "3_seat"
+    "linkedToSeat": "2_seat"
   },
   "2_meeple_deck": {
     "type": "deck",
@@ -10295,7 +10296,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Layout, board, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The library image by LawDawg96 is released to the Public Domain under CC0.</div>",
-      "lastUpdate": 1772810512520,
+      "lastUpdate": 1772826396812,
       "skill": "",
       "description": "Use your resources and camels wisely to link territory and cut off your opponents.",
       "similarImage": "",
@@ -10303,7 +10304,7 @@
       "similarDesigner": "Alan R. Moon, Aaron Weissblum",
       "similarAwards": "2004 Spiel des Jahres Recommended",
       "ruleText": "",
-      "helpText": "Players take seats. Press the Setup button to begin. Starting player order is randomly determined and indicated with round tokens next to each seat.<div><br></div><div>During each round, in order players reveal 1 to 3 cards by dragging and dropping them in the colored area to the right of the seat. Then draw replacement card(s) by clicking on the black \"Put 1 card under your deck\" button once for each card needed.</div><div><br></div><div>After all players have revealed cards, starting with the first player again, choose another player whose card offering you want to use. Drag and drop your turn order token to the left of that player's seat in the area labeled \"Next Turn Order.\" Then perform the appropriate actions specified on those face-up cards by (a) placing square tokens and camels on the board (along with a meeple if appropriate), (b) moving round multiplier tokens to the holder beneath the seat, and/or(c) drawing cards by clicking the black button. Continue until all players have chosen cards to activate. Manually drag the order tokens back to the area \"Current Turn Order\" and the new first player gets a bonus opportunity to place any tile or camel on the board. Then start a new round by revealing cards and continue until the game ends according to the rules.<br><div><br></div><div>Click the \"0 vp\" area to change the value of a player's victory points to change the score at the end of the game.</div></div>",
+      "helpText": "Players take seats. Press the Setup button to begin, and select a multiplier visibility option. Starting player order is randomly determined and indicated with round tokens next to each seat.<div><br></div><div>During each round, in order players reveal 1 to 3 cards by dragging and dropping them in the colored area to the right of the seat. Then draw replacement card(s) by clicking on the black \"Put 1 card under your deck\" button once for each card needed.</div><div><br></div><div>After all players have revealed cards, starting with the first player again, choose another player whose card offering you want to use. Drag and drop your turn order token to the left of that player's seat in the area labeled \"Next Turn Order.\" Then perform the appropriate actions specified on those face-up cards by (a) placing square tokens and camels on the board (along with a meeple if appropriate), (b) moving round multiplier tokens to the holder beneath the seat, and/or(c) drawing cards by clicking the black button. Continue until all players have chosen cards to activate. Manually drag the order tokens back to the area \"Current Turn Order\" and the new first player gets a bonus opportunity to place any tile or camel on the board. Then start a new round by revealing cards and continue until the game ends according to the rules.<br><div><br></div><div>Click the \"0 vp\" area to change the value of a player's victory points to change the score at the end of the game.</div></div>",
       "usesAIImagery": false,
       "showName": true,
       "variantImage": "",
