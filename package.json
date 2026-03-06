@@ -50,7 +50,7 @@
     "@node-minify/core": "^9.0.2",
     "@node-minify/html-minifier": "^9.0.1",
     "@node-minify/no-compress": "^9.0.1",
-    "@node-minify/uglify-es": "^9.0.1",
+    "@node-minify/uglify-es": "^10.4.0",
     "bson": "^6.10.4",
     "crc-32": "^1.2.2",
     "dompurify": "^3.3.0",
