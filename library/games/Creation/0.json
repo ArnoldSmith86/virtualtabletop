@@ -2415,6 +2415,11 @@
             "widget": "turn_button"
           }
         ]
+      },
+      "// This SELECT just makes the validator happy",
+      {
+        "func": "SELECT",
+        "property": "note"
       }
     ],
     "color_background": "grey",
@@ -5929,6 +5934,15 @@
     "activeFace": 1,
     "parent": "zha3"
   },
+  "wfvs": {
+    "deck": "icon_options_deck",
+    "type": "card",
+    "cardType": "flamingo",
+    "id": "wfvs",
+    "z": 87129,
+    "activeFace": 1,
+    "parent": "zha3"
+  },
   "1_display_icon": {
     "id": "1_display_icon",
     "parent": "1_seat",
@@ -6988,7 +7002,7 @@
       "mode": "vs",
       "time": "20-45",
       "attribution": "The game layout, cards, and library image were created by an anonymous person who gave the work to virtualtabletop.io. Virtualtabletop.io releases all of this to the Public Domain under CC0.",
-      "lastUpdate": 1772837772844,
+      "lastUpdate": 1772902512504,
       "showName": true,
       "skill": "simple",
       "description": "",
