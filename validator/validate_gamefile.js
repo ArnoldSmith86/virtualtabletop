@@ -39,7 +39,17 @@ const validators = {
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
     any: v=>true
-}
+};
+
+const FACE_OBJECT_COMMON_PROPS = ['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
+
+const FACE_OBJECT_VALID_PROPS = {
+    _common: FACE_OBJECT_COMMON_PROPS,
+    image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
+    icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
+    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
+    html: FACE_OBJECT_COMMON_PROPS
+};
 
 // Common properties for all widgets
 const COMMON_PROPERTIES = {
@@ -217,13 +227,14 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note', 'size'];
+                        const objType = (obj.type && String(obj.type).toLowerCase()) || '';
+                        const validObjProps = FACE_OBJECT_VALID_PROPS[objType] || FACE_OBJECT_VALID_PROPS._common;
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
                                 problems.push({
                                     widget: p.widgetId,
                                     property: [...propertyPath, faceIndex, 'objects', objIndex, prop],
-                                    message: `invalid property. Valid object properties: ${validObjProps.join(', ')}`
+                                    message: `invalid property for type "${obj.type || 'unknown'}". Valid properties: ${validObjProps.join(', ')}`
                                 });
                             }
                         }
