@@ -752,6 +752,8 @@ export class Widget extends StateManaged {
             variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
           variables[field.variable] = dom.value
+        } else if(field.type == 'slider') {
+          variables[field.variable] = Number(dom.value);
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
           variables[field.variable] = dom.value;
         }
@@ -790,6 +792,10 @@ export class Widget extends StateManaged {
         isValid = displayError(field, `Please enter a number above ${field.min}.`);
       if(field.type == 'number' && variables[field.variable] > field.max)
         isValid = displayError(field, `Please enter a number below ${field.max}.`);
+      if(field.type == 'slider' && field.min !== undefined && variables[field.variable] < field.min)
+        isValid = displayError(field, `Value must be at least ${field.min}.`);
+      if(field.type == 'slider' && field.max !== undefined && variables[field.variable] > field.max)
+        isValid = displayError(field, `Value must be at most ${field.max}.`);
       try {
         if(field.type == 'string' && field.regex && !variables[field.variable].match(field.regex))
           isValid = displayError(field, field.regexHint || `Input does not match regular expression ${field.regex}.`);

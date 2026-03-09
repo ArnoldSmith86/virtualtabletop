@@ -260,6 +260,29 @@ export function formField(field, dom, id) {
     input.id = id;
   }
 
+  if(field.type == 'slider') {
+    const min = field.min !== undefined ? field.min : 0;
+    const max = field.max !== undefined ? field.max : 10;
+    const value = field.value !== undefined ? Number(field.value) : min;
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('countInput');
+    const input = document.createElement('input');
+    input.type = 'range';
+    input.min = min;
+    input.max = max;
+    input.value = Math.max(min, Math.min(max, value));
+    const valueSpan = document.createElement('span');
+    valueSpan.classList.add('inputSliderValue');
+    valueSpan.textContent = input.value;
+    input.addEventListener('input', () => { valueSpan.textContent = input.value; });
+    if(field.min !== undefined && field.max !== undefined)
+      label.appendChild(document.createTextNode(' (' + field.min + ' - ' + field.max + ')'));
+    wrapper.appendChild(valueSpan);
+    wrapper.appendChild(input);
+    dom.appendChild(wrapper);
+    input.id = id;
+  }
+
   if(field.type == 'select') {
     const input = document.createElement('select');
     const underlineelement = document.createElement('div');
