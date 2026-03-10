@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "Happy Landings",
       "language": "en-US",
-      "players": "2-4"
+      "players": "2-4",
+      "usesAIImagery": true
     }
   },
   "67r0": {
