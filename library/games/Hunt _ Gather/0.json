@@ -1,37 +1,4 @@
 {
-  "_meta": {
-    "version": 21,
-    "info": {
-      "name": "Hunt & Gather",
-      "image": "/assets/1864168426_45952",
-      "rules": "https://boardgamegeek.com/filepage/72577/hunter-and-gatherer-english-rules-v1",
-      "bgg": "https://boardgamegeek.com/boardgame/65568/jager-und-sammler",
-      "year": "2010",
-      "mode": "vs",
-      "time": "45",
-      "attribution": "Layout, board, cards, design, coding, and library image by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The cave icon by Alfan Zulkarnain is available at https://thenounproject.com/icon/cave-5282394/ under the Noun Project License.</div><div><br></div><div>All other icons are from assets with attribution in the About overlay.</div>",
-      "lastUpdate": 1772908625178,
-      "skill": "medium",
-      "description": "Gather food and weapons to prepare for winter, where hunting mammoths and staying alive are the goal!",
-      "similarImage": "",
-      "similarName": "Jäger und Sammler",
-      "similarDesigner": "Reiner Knizia",
-      "similarAwards": "2012 Hungarian Board Game Award Winner\n2011 Hra roku Nominee\n2010 Spiel des Jahres Recommended",
-      "ruleText": "",
-      "helpText": "<div>Game and scoring information can be found by hovering your mouse over the information box in the top right corner of the screen.</div><div><br></div>Players take seats. Press the Summer Setup button to begin. A random player (indicated by a button next to the seat area) is chosen to start.&nbsp;<div><br></div><div>Drag hunters on the board and drag taken tiles into your player area. Each tile has a specific location in your area that is indicated with a highlighted border. Used weapons should be placed into the weapon discard holder in the bottom left corner of the screen. Click the \"Click to end turn\" button between all turns.</div><div><br></div><div>Begin winter by clicking the Winter Setup button, and select which type of path you want to play with. During winter, placed cubes on camps must go within a highlighted circle in the camp location to be scored.</div><div><br></div><div>All scores are automatically calculated.</div>",
-      "usesAIImagery": false,
-      "showName": true,
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "2-4"
-    },
-    "gameSettings": {
-      "legacyModes": {
-        "disableHolderImageWidget": true
-      }
-    }
-  },
   "space_template": {
     "type": "holder",
     "id": "space_template",
@@ -1463,22 +1430,22 @@
         "main_stack": true
       },
       "food1": {
-        "image": "/i/noto-emoji/emoji_u1f352.svg",
+        "image": "/i/noto-emoji/emoji_u1f344.svg",
         "number": 1,
         "main_stack": true
       },
       "food2": {
-        "image": "/i/noto-emoji/emoji_u1f344.svg",
+        "image": "/i/noto-emoji/emoji_u1f955.svg",
         "number": 2,
         "main_stack": true
       },
       "food3": {
-        "image": "/i/noto-emoji/emoji_u1f954.svg",
+        "image": "/i/noto-emoji/emoji_u1f360.svg",
         "number": 3,
         "main_stack": true
       },
       "weapons": {
-        "image2": "/i/game-icons.net/lorc/stone-axe.svg",
+        "image4": "/i/noto-emoji/emoji_u1f3f9.svg",
         "number": ""
       },
       "setA": {
@@ -1568,6 +1535,17 @@
             }
           },
           {
+            "type": "image",
+            "x": 20,
+            "y": 25,
+            "width": 50,
+            "height": 50,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image4"
+            }
+          },
+          {
             "type": "text",
             "x": 0,
             "y": 60,
@@ -1587,316 +1565,316 @@
     "type": "card",
     "cardType": "mammoth7",
     "id": "mff2",
-    "z": 22829,
+    "z": 25530,
     "activeFace": 1,
+    "parent": "space156",
     "x": 1,
-    "y": 1,
-    "parent": "space66"
+    "y": 1
   },
   "aqer": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "mammoth5",
     "id": "aqer",
-    "z": 22869,
+    "z": 25569,
     "activeFace": 1,
+    "parent": "space71",
     "x": 1,
-    "y": 1,
-    "parent": "space163"
+    "y": 1
   },
   "09w5": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "mammoth6",
     "id": "09w5",
-    "z": 22830,
+    "z": 25541,
     "activeFace": 1,
+    "parent": "space171",
     "x": 1,
-    "y": 1,
-    "parent": "space67"
+    "y": 1
   },
   "hywo": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "hywo",
-    "z": 22899,
+    "z": 25487,
     "activeFace": 1,
+    "parent": "space35",
     "x": 1,
-    "y": 1,
-    "parent": "space188"
+    "y": 1
   },
   "61kc": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "61kc",
-    "z": 22836,
+    "z": 25587,
     "activeFace": 1,
+    "parent": "space91",
     "x": 1,
-    "y": 1,
-    "parent": "space84"
+    "y": 1
   },
   "bv1a": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "bv1a",
-    "z": 22921,
+    "z": 25482,
     "activeFace": 1,
+    "parent": "space12",
     "x": 1,
-    "y": 1,
-    "parent": "space91"
+    "y": 1
   },
   "rlwg": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "rlwg",
-    "z": 22845,
+    "z": 25510,
     "activeFace": 1,
+    "parent": "space107",
     "x": 1,
-    "y": 1,
-    "parent": "space108"
+    "y": 1
   },
   "rgg8": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "rgg8",
-    "z": 22908,
+    "z": 25534,
     "activeFace": 1,
+    "parent": "space160",
     "x": 1,
-    "y": 1,
-    "parent": "space88"
+    "y": 1
   },
   "9wm8": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "9wm8",
-    "z": 22872,
+    "z": 25547,
     "activeFace": 1,
+    "parent": "space180",
     "x": 1,
-    "y": 1,
-    "parent": "space166"
+    "y": 1
   },
   "ufy5": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "ufy5",
-    "z": 22847,
+    "z": 25493,
     "activeFace": 1,
+    "parent": "space64",
     "x": 1,
-    "y": 1,
-    "parent": "space120"
+    "y": 1
   },
   "07eb": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "07eb",
-    "z": 22906,
-    "x": 1,
-    "y": 1,
+    "z": 25536,
     "activeFace": 1,
-    "parent": "space86"
+    "parent": "space164",
+    "x": 1,
+    "y": 1
   },
   "b2ol": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "b2ol",
-    "z": 22895,
+    "z": 25546,
     "activeFace": 1,
+    "parent": "space176",
     "x": 1,
-    "y": 1,
-    "parent": "space184"
+    "y": 1
   },
   "58wv": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "58wv",
-    "z": 22863,
+    "z": 25524,
     "activeFace": 1,
+    "parent": "space148",
     "x": 1,
-    "y": 1,
-    "parent": "space155"
+    "y": 1
   },
   "ln7d": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "ln7d",
-    "z": 22867,
+    "z": 25523,
     "activeFace": 1,
+    "parent": "space147",
     "x": 1,
-    "y": 1,
-    "parent": "space159"
+    "y": 1
   },
   "2yys": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "2yys",
-    "z": 22821,
+    "z": 25507,
     "activeFace": 1,
+    "parent": "space98",
     "x": 1,
-    "y": 1,
-    "parent": "space35"
+    "y": 1
   },
   "cadq": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "cadq",
-    "z": 22822,
+    "z": 25592,
     "activeFace": 1,
+    "parent": "space31",
     "x": 1,
-    "y": 1,
-    "parent": "space41"
+    "y": 1
   },
   "hpyz": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "hpyz",
-    "z": 22875,
+    "z": 25549,
     "activeFace": 1,
+    "parent": "space19",
     "x": 1,
-    "y": 1,
-    "parent": "space171"
+    "y": 1
   },
   "je7c": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "je7c",
-    "z": 22842,
+    "z": 25525,
     "activeFace": 1,
+    "parent": "space151",
     "x": 1,
-    "y": 1,
-    "parent": "space105"
+    "y": 1
   },
   "a1v4": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "a1v4",
-    "z": 22853,
+    "z": 25575,
     "activeFace": 1,
+    "parent": "space113",
     "x": 1,
-    "y": 1,
-    "parent": "space134"
+    "y": 1
   },
   "yb7o": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "yb7o",
-    "z": 22892,
+    "z": 25539,
     "activeFace": 1,
+    "parent": "space167",
     "x": 1,
-    "y": 1,
-    "parent": "space168"
+    "y": 1
   },
   "reje": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "reje",
-    "z": 22856,
+    "z": 25560,
     "activeFace": 1,
+    "parent": "space183",
     "x": 1,
-    "y": 1,
-    "parent": "space137"
+    "y": 1
   },
   "b48v": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "b48v",
-    "z": 22912,
+    "z": 25581,
     "activeFace": 1,
+    "parent": "space193",
     "x": 1,
-    "y": 1,
-    "parent": "space178"
+    "y": 1
   },
   "7g57": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "7g57",
-    "z": 22898,
+    "z": 25486,
     "activeFace": 1,
+    "parent": "space34",
     "x": 1,
-    "y": 1,
-    "parent": "space187"
+    "y": 1
   },
   "uwle": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "uwle",
-    "z": 22866,
+    "z": 25500,
     "activeFace": 1,
+    "parent": "space77",
     "x": 1,
-    "y": 1,
-    "parent": "space158"
+    "y": 1
   },
   "2bfm": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "2bfm",
-    "z": 22894,
+    "z": 25516,
     "activeFace": 1,
+    "parent": "space125",
     "x": 1,
-    "y": 1,
-    "parent": "space183"
+    "y": 1
   },
   "r19d": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "r19d",
-    "z": 22909,
+    "z": 25526,
     "activeFace": 1,
+    "parent": "space152",
     "x": 1,
-    "y": 1,
-    "parent": "space113"
+    "y": 1
   },
   "ccwq": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "ccwq",
-    "z": 22900,
+    "z": 25504,
     "activeFace": 1,
+    "parent": "space93",
     "x": 1,
-    "y": 1,
-    "parent": "space189"
+    "y": 1
   },
   "gb77": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "gb77",
-    "z": 22861,
+    "z": 25553,
     "activeFace": 1,
+    "parent": "space78",
     "x": 1,
-    "y": 1,
-    "parent": "space153"
+    "y": 1
   },
   "bfts": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "bfts",
-    "z": 22884,
-    "parent": "space63",
+    "z": 25483,
+    "parent": "space20",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -1906,97 +1884,97 @@
     "type": "card",
     "cardType": "food1",
     "id": "14i2",
-    "z": 22896,
+    "z": 25573,
     "activeFace": 1,
+    "parent": "space87",
     "x": 1,
-    "y": 1,
-    "parent": "space185"
+    "y": 1
   },
   "w6v1": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "w6v1",
-    "z": 22889,
+    "z": 25503,
     "activeFace": 1,
+    "parent": "space92",
     "x": 1,
-    "y": 1,
-    "parent": "space103"
+    "y": 1
   },
   "gz5h": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "gz5h",
-    "z": 22927,
+    "z": 25505,
     "activeFace": 1,
+    "parent": "space94",
     "x": 1,
-    "y": 1,
-    "parent": "space74"
+    "y": 1
   },
   "i82n": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "i82n",
-    "z": 22858,
+    "z": 25567,
     "activeFace": 1,
+    "parent": "space191",
     "x": 1,
-    "y": 1,
-    "parent": "space148"
+    "y": 1
   },
   "0o8f": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "0o8f",
-    "z": 22887,
+    "z": 25527,
     "activeFace": 1,
+    "parent": "space153",
     "x": 1,
-    "y": 1,
-    "parent": "space78"
+    "y": 1
   },
   "ddxv": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "ddxv",
-    "z": 22833,
+    "z": 25565,
     "activeFace": 1,
+    "parent": "space188",
     "x": 1,
-    "y": 1,
-    "parent": "space70"
+    "y": 1
   },
   "z1pw": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "z1pw",
-    "z": 22870,
+    "z": 25506,
     "activeFace": 1,
+    "parent": "space95",
     "x": 1,
-    "y": 1,
-    "parent": "space164"
+    "y": 1
   },
   "rc2r": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "rc2r",
-    "z": 22879,
+    "z": 25522,
     "activeFace": 1,
+    "parent": "space137",
     "x": 1,
-    "y": 1,
-    "parent": "space175"
+    "y": 1
   },
   "7ihp": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "7ihp",
-    "z": 22873,
+    "z": 25586,
     "activeFace": 1,
-    "parent": "space167",
+    "parent": "space89",
     "x": 1,
     "y": 1
   },
@@ -2005,64 +1983,64 @@
     "type": "card",
     "cardType": "food2",
     "id": "bqd3",
-    "z": 22827,
+    "z": 25558,
     "activeFace": 1,
+    "parent": "space168",
     "x": 1,
-    "y": 1,
-    "parent": "space64"
+    "y": 1
   },
   "65q7": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "65q7",
-    "z": 22848,
+    "z": 25501,
     "activeFace": 1,
+    "parent": "space82",
     "x": 1,
-    "y": 1,
-    "parent": "space121"
+    "y": 1
   },
   "xt71": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "xt71",
-    "z": 22860,
+    "z": 25557,
     "activeFace": 1,
+    "parent": "space132",
     "x": 1,
-    "y": 1,
-    "parent": "space152"
+    "y": 1
   },
   "8qj1": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "8qj1",
-    "z": 22862,
+    "z": 25512,
     "activeFace": 1,
+    "parent": "space119",
     "x": 1,
-    "y": 1,
-    "parent": "space154"
+    "y": 1
   },
   "pwx8": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "pwx8",
-    "z": 22913,
+    "z": 25571,
     "activeFace": 1,
+    "parent": "space85",
     "x": 1,
-    "y": 1,
-    "parent": "space179"
+    "y": 1
   },
   "5vg6": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "5vg6",
-    "z": 22882,
+    "z": 25564,
     "activeFace": 1,
-    "parent": "space182",
+    "parent": "space187",
     "x": 1,
     "y": 1
   },
@@ -2071,361 +2049,361 @@
     "type": "card",
     "cardType": "food2",
     "id": "5gg5",
-    "z": 22824,
+    "z": 25508,
     "activeFace": 1,
+    "parent": "space105",
     "x": 1,
-    "y": 1,
-    "parent": "space51"
+    "y": 1
   },
   "1xnq": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "1xnq",
-    "z": 22864,
+    "z": 25554,
     "activeFace": 1,
+    "parent": "space90",
     "x": 1,
-    "y": 1,
-    "parent": "space156"
+    "y": 1
   },
   "zmrn": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "zmrn",
-    "z": 22851,
+    "z": 25579,
     "activeFace": 1,
+    "parent": "space179",
     "x": 1,
-    "y": 1,
-    "parent": "space126"
+    "y": 1
   },
   "xreq": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "xreq",
-    "z": 22880,
+    "z": 25485,
     "activeFace": 1,
+    "parent": "space26",
     "x": 1,
-    "y": 1,
-    "parent": "space176"
+    "y": 1
   },
   "cvqe": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "cvqe",
-    "z": 22855,
+    "z": 25533,
     "activeFace": 1,
+    "parent": "space159",
     "x": 1,
-    "y": 1,
-    "parent": "space136"
+    "y": 1
   },
   "m5i3": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "m5i3",
-    "z": 22918,
+    "z": 25517,
     "activeFace": 1,
+    "parent": "space126",
     "x": 1,
-    "y": 1,
-    "parent": "space197"
+    "y": 1
   },
   "7ikx": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "7ikx",
-    "z": 22926,
+    "z": 25502,
     "activeFace": 1,
+    "parent": "space84",
     "x": 1,
-    "y": 1,
-    "parent": "space31"
+    "y": 1
   },
   "29uu": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "29uu",
-    "z": 22818,
+    "z": 25531,
     "activeFace": 1,
+    "parent": "space157",
     "x": 1,
-    "y": 1,
-    "parent": "space21"
+    "y": 1
   },
   "wzfy": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "wzfy",
-    "z": 22877,
+    "z": 25552,
     "activeFace": 1,
+    "parent": "space76",
     "x": 1,
-    "y": 1,
-    "parent": "space173"
+    "y": 1
   },
   "u4d5": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "u4d5",
-    "z": 22881,
+    "z": 25529,
     "activeFace": 1,
+    "parent": "space155",
     "x": 1,
-    "y": 1,
-    "parent": "space180"
+    "y": 1
   },
   "hosk": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "hosk",
-    "z": 22910,
+    "z": 25542,
     "activeFace": 1,
+    "parent": "space172",
     "x": 1,
-    "y": 1,
-    "parent": "space114"
+    "y": 1
   },
   "cflp": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "cflp",
-    "z": 22878,
+    "z": 25582,
     "activeFace": 1,
+    "parent": "space194",
     "x": 1,
-    "y": 1,
-    "parent": "space174"
+    "y": 1
   },
   "edrp": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "edrp",
-    "z": 22924,
+    "z": 25574,
     "activeFace": 1,
+    "parent": "space88",
     "x": 1,
-    "y": 1,
-    "parent": "space73"
+    "y": 1
   },
   "npr5": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "npr5",
-    "z": 22825,
+    "z": 25578,
     "activeFace": 1,
+    "parent": "space178",
     "x": 1,
-    "y": 1,
-    "parent": "space52"
+    "y": 1
   },
   "tfno": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "tfno",
-    "z": 22823,
+    "z": 25499,
     "activeFace": 1,
+    "parent": "space70",
     "x": 1,
-    "y": 1,
-    "parent": "space42"
+    "y": 1
   },
   "o19b": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "o19b",
-    "z": 22868,
+    "z": 25535,
     "activeFace": 1,
+    "parent": "space163",
     "x": 1,
-    "y": 1,
-    "parent": "space160"
+    "y": 1
   },
   "vc36": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "vc36",
-    "z": 22844,
+    "z": 25563,
     "activeFace": 1,
+    "parent": "space186",
     "x": 1,
-    "y": 1,
-    "parent": "space107"
+    "y": 1
   },
   "z4yx": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "z4yx",
-    "z": 22923,
+    "z": 25519,
     "activeFace": 1,
+    "parent": "space134",
     "x": 1,
-    "y": 1,
-    "parent": "space199"
+    "y": 1
   },
   "4po7": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "4po7",
-    "z": 22916,
+    "z": 25562,
     "activeFace": 1,
+    "parent": "space185",
     "x": 1,
-    "y": 1,
-    "parent": "space194"
+    "y": 1
   },
   "7qnb": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "7qnb",
-    "z": 22888,
+    "z": 25495,
     "activeFace": 1,
+    "parent": "space66",
     "x": 1,
-    "y": 1,
-    "parent": "space90"
+    "y": 1
   },
   "uqz2": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "uqz2",
-    "z": 22854,
+    "z": 25532,
     "activeFace": 1,
+    "parent": "space158",
     "x": 1,
-    "y": 1,
-    "parent": "space135"
+    "y": 1
   },
   "iwmo": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setB",
     "id": "iwmo",
-    "z": 22897,
+    "z": 25497,
     "activeFace": 1,
+    "parent": "space68",
     "x": 1,
-    "y": 1,
-    "parent": "space186"
+    "y": 1
   },
   "dkym": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "dkym",
-    "z": 22843,
+    "z": 25491,
     "activeFace": 1,
+    "parent": "space52",
     "x": 1,
-    "y": 1,
-    "parent": "space106"
+    "y": 1
   },
   "tsbf": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "tsbf",
-    "z": 22920,
+    "z": 25521,
     "activeFace": 1,
+    "parent": "space136",
     "x": 1,
-    "y": 1,
-    "parent": "space89"
+    "y": 1
   },
   "55vk": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "55vk",
-    "z": 22914,
+    "z": 25490,
     "activeFace": 1,
+    "parent": "space51",
     "x": 1,
-    "y": 1,
-    "parent": "space192"
+    "y": 1
   },
   "gbiq": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "gbiq",
-    "z": 22837,
+    "z": 25496,
     "activeFace": 1,
+    "parent": "space67",
     "x": 1,
-    "y": 1,
-    "parent": "space92"
+    "y": 1
   },
   "an3p": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "an3p",
-    "z": 22839,
+    "z": 25589,
     "activeFace": 1,
+    "parent": "space199",
     "x": 1,
-    "y": 1,
-    "parent": "space94"
+    "y": 1
   },
   "rbrh": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "rbrh",
-    "z": 22917,
+    "z": 25484,
     "activeFace": 1,
+    "parent": "space21",
     "x": 1,
-    "y": 1,
-    "parent": "space196"
+    "y": 1
   },
   "ay5c": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "ay5c",
-    "z": 22840,
+    "z": 25570,
     "activeFace": 1,
+    "parent": "space72",
     "x": 1,
-    "y": 1,
-    "parent": "space95"
+    "y": 1
   },
   "lsda": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "lsda",
-    "z": 22883,
+    "z": 25583,
     "activeFace": 1,
+    "parent": "space196",
     "x": 1,
-    "y": 1,
-    "parent": "space19"
+    "y": 1
   },
   "khj1": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "khj1",
-    "z": 22826,
+    "z": 25489,
     "activeFace": 1,
+    "parent": "space42",
     "x": 1,
-    "y": 1,
-    "parent": "space53"
+    "y": 1
   },
   "qn1t": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "setA",
     "id": "qn1t",
-    "z": 22919,
+    "z": 25593,
     "activeFace": 1,
+    "parent": "space74",
     "x": 1,
-    "y": 1,
-    "parent": "space198"
+    "y": 1
   },
   "sybk": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "weapons",
     "id": "sybk",
-    "z": 22838,
+    "z": 25572,
     "activeFace": 1,
-    "parent": "space93",
+    "parent": "space86",
     "x": 1,
     "y": 1
   },
@@ -2434,9 +2412,9 @@
     "type": "card",
     "cardType": "weapons",
     "id": "oe9k",
-    "z": 22832,
+    "z": 25520,
     "activeFace": 1,
-    "parent": "space69",
+    "parent": "space135",
     "x": 1,
     "y": 1
   },
@@ -2445,9 +2423,9 @@
     "type": "card",
     "cardType": "weapons",
     "id": "wz1j",
-    "z": 22819,
+    "z": 25591,
     "activeFace": 1,
-    "parent": "space26",
+    "parent": "space99",
     "x": 1,
     "y": 1
   },
@@ -2456,9 +2434,9 @@
     "type": "card",
     "cardType": "weapons",
     "id": "rojr",
-    "z": 22886,
+    "z": 25492,
     "activeFace": 1,
-    "parent": "space76",
+    "parent": "space53",
     "x": 1,
     "y": 1
   },
@@ -2467,20 +2445,20 @@
     "type": "card",
     "cardType": "weapons",
     "id": "s0zc",
-    "z": 22890,
+    "z": 25545,
     "activeFace": 1,
+    "parent": "space175",
     "x": 1,
-    "y": 1,
-    "parent": "space118"
+    "y": 1
   },
   "nnk7": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "weapons",
     "id": "nnk7",
-    "z": 22902,
+    "z": 25555,
     "activeFace": 1,
-    "parent": "space30",
+    "parent": "space103",
     "x": 1,
     "y": 1
   },
@@ -2489,9 +2467,9 @@
     "type": "card",
     "cardType": "weapons",
     "id": "v2x1",
-    "z": 22850,
+    "z": 25543,
     "activeFace": 1,
-    "parent": "space125",
+    "parent": "space173",
     "x": 1,
     "y": 1
   },
@@ -2500,9 +2478,9 @@
     "type": "card",
     "cardType": "weapons",
     "id": "b17b",
-    "z": 22841,
+    "z": 25537,
     "activeFace": 1,
-    "parent": "space98",
+    "parent": "space165",
     "x": 1,
     "y": 1
   },
@@ -2511,9 +2489,9 @@
     "type": "card",
     "cardType": "weapons",
     "id": "ul00",
-    "z": 22871,
+    "z": 25559,
     "activeFace": 1,
-    "parent": "space165",
+    "parent": "space181",
     "x": 1,
     "y": 1
   },
@@ -2522,18 +2500,18 @@
     "type": "card",
     "cardType": "weapons",
     "id": "ljmf",
-    "z": 22905,
+    "z": 25566,
     "activeFace": 1,
+    "parent": "space189",
     "x": 1,
-    "y": 1,
-    "parent": "space85"
+    "y": 1
   },
   "8vly": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "weapons",
     "id": "8vly",
-    "z": 22828,
+    "z": 25494,
     "activeFace": 1,
     "parent": "space65",
     "x": 1,
@@ -2544,11 +2522,11 @@
     "type": "card",
     "cardType": "weapons",
     "id": "q7pn",
-    "z": 22865,
+    "z": 25544,
+    "parent": "space174",
     "activeFace": 1,
     "x": 1,
-    "y": 1,
-    "parent": "space157"
+    "y": 1
   },
   "winter_tiles_deck": {
     "type": "deck",
@@ -2609,26 +2587,26 @@
         "main_stack": true
       },
       "food1": {
-        "image": "/i/noto-emoji/emoji_u1f352.svg",
+        "image": "/i/noto-emoji/emoji_u1f344.svg",
         "number": 1,
         "main_stack": true
       },
       "food2": {
-        "image": "/i/noto-emoji/emoji_u1f344.svg",
+        "image": "/i/noto-emoji/emoji_u1f955.svg",
         "number": 2,
         "main_stack": true
       },
       "food3": {
-        "image": "/i/noto-emoji/emoji_u1f954.svg",
+        "image": "/i/noto-emoji/emoji_u1f360.svg",
         "number": 3,
         "main_stack": true
       },
       "weapons": {
-        "image2": "/i/game-icons.net/lorc/stone-axe.svg",
+        "image3": "/i/noto-emoji/emoji_u1f3f9.svg",
         "number": ""
       },
       "setC": {
-        "image2": "/i/noto-emoji/emoji_u1f9b4.svg",
+        "image3": "/i/noto-emoji/emoji_u1f9b4.svg",
         "number": ""
       },
       "setD": {
@@ -2740,8 +2718,8 @@
     "type": "card",
     "cardType": "food1",
     "id": "vxvm",
-    "z": 22790,
-    "parent": "v5cj",
+    "z": 25411,
+    "parent": "bouo",
     "activeFace": 1
   },
   "sdb1": {
@@ -2749,125 +2727,125 @@
     "type": "card",
     "cardType": "food1",
     "id": "sdb1",
-    "z": 22795,
+    "z": 25449,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "2c6r": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "2c6r",
-    "z": 22794,
+    "z": 25454,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "i7xb": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "i7xb",
-    "z": 22793,
+    "z": 25446,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "v4ew": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "v4ew",
-    "z": 22785,
+    "z": 25406,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "v7d1": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "v7d1",
-    "z": 22762,
+    "z": 25474,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "cejq": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "cejq",
-    "z": 22800,
+    "z": 25443,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "9ey4": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "9ey4",
-    "z": 22729,
+    "z": 25479,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "tdyg": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "tdyg",
-    "z": 22802,
+    "z": 25475,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "4y77": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "4y77",
-    "z": 22814,
+    "z": 25441,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "0pso": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "0pso",
-    "z": 22751,
+    "z": 25471,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "vxm6": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "vxm6",
-    "z": 22810,
+    "z": 25461,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "51cg": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "51cg",
-    "z": 22781,
+    "z": 25416,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "uone": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "uone",
-    "z": 22784,
+    "z": 25395,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "6e92": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "6e92",
-    "z": 22807,
-    "parent": "v5cj",
+    "z": 25439,
+    "parent": "bouo",
     "activeFace": 1
   },
   "vs6n": {
@@ -2875,71 +2853,71 @@
     "type": "card",
     "cardType": "food1",
     "id": "vs6n",
-    "z": 22815,
+    "z": 25468,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "w9q0": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "w9q0",
-    "z": 22753,
+    "z": 25460,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "2anl": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "2anl",
-    "z": 22730,
+    "z": 25477,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "tsr4": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "tsr4",
-    "z": 22755,
+    "z": 25450,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "87bs": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "87bs",
-    "z": 22804,
+    "z": 25462,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "7de5": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "7de5",
-    "z": 22773,
+    "z": 25405,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "9yoz": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "9yoz",
-    "z": 22770,
+    "z": 25459,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "8e47": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "8e47",
-    "z": 22803,
-    "parent": "v5cj",
+    "z": 25435,
+    "parent": "bouo",
     "activeFace": 1
   },
   "1g4v": {
@@ -2947,89 +2925,89 @@
     "type": "card",
     "cardType": "food1",
     "id": "1g4v",
-    "z": 22791,
+    "z": 25397,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "bp2s": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "bp2s",
-    "z": 22774,
+    "z": 25400,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "ugtc": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "ugtc",
-    "z": 22731,
+    "z": 25478,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "qq14": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "qq14",
-    "z": 22766,
+    "z": 25464,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "n0jv": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "n0jv",
-    "z": 22779,
+    "z": 25447,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "hh5h": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "hh5h",
-    "z": 22750,
+    "z": 25424,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "8kau": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food1",
     "id": "8kau",
-    "z": 22760,
+    "z": 25434,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "0s30": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "0s30",
-    "z": 22812,
+    "z": 25444,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "kjo9": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "kjo9",
-    "z": 22758,
+    "z": 25456,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "694t": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "694t",
-    "z": 22759,
-    "parent": "v5cj",
+    "z": 25470,
+    "parent": "bouo",
     "activeFace": 1
   },
   "yo6f": {
@@ -3037,107 +3015,107 @@
     "type": "card",
     "cardType": "food2",
     "id": "yo6f",
-    "z": 22780,
+    "z": 25465,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "idvz": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "idvz",
-    "z": 22777,
+    "z": 25399,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "suv8": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "suv8",
-    "z": 22740,
+    "z": 25417,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "o6r1": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "o6r1",
-    "z": 22811,
+    "z": 25407,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "q4b8": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "q4b8",
-    "z": 22808,
+    "z": 25412,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "c9xe": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "c9xe",
-    "z": 22757,
+    "z": 25408,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "yonk": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "yonk",
-    "z": 22752,
+    "z": 25463,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "1izw": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "1izw",
-    "z": 22742,
+    "z": 25473,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "6piq": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "6piq",
-    "z": 22782,
+    "z": 25448,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "b93x": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "b93x",
-    "z": 22733,
+    "z": 25404,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "pec2": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "pec2",
-    "z": 22764,
+    "z": 25433,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "stto": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "stto",
-    "z": 22754,
-    "parent": "v5cj",
+    "z": 25403,
+    "parent": "bouo",
     "activeFace": 1
   },
   "9v2t": {
@@ -3145,161 +3123,161 @@
     "type": "card",
     "cardType": "food2",
     "id": "9v2t",
-    "z": 22796,
+    "z": 25422,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "07hb": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "07hb",
-    "z": 22745,
+    "z": 25410,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "qlri": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food2",
     "id": "qlri",
-    "z": 22749,
+    "z": 25419,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "cdrt": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "cdrt",
-    "z": 22761,
+    "z": 25476,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "b5eg": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "b5eg",
-    "z": 22735,
+    "z": 25436,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "73qu": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "73qu",
-    "z": 22763,
+    "z": 25418,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "dqol": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "dqol",
-    "z": 22768,
+    "z": 25437,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "zpqa": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "food3",
     "id": "zpqa",
-    "z": 22775,
+    "z": 25455,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "i752": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "weapons",
     "id": "i752",
-    "z": 22744,
+    "z": 25423,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "z42e": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "weapons",
     "id": "z42e",
-    "z": 22769,
+    "z": 25469,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "ej9g": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "weapons",
     "id": "ej9g",
-    "z": 22805,
+    "z": 25466,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "rvig": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "rvig",
-    "z": 22799,
+    "z": 25421,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "bsgq": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "bsgq",
-    "z": 22736,
+    "z": 25401,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "fqsq": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "fqsq",
-    "z": 22798,
+    "z": 25442,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "mguz": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "mguz",
-    "z": 22732,
+    "z": 25438,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "6dy0": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "6dy0",
-    "z": 22806,
+    "z": 25458,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "bmzz": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "bmzz",
-    "z": 22787,
+    "z": 25445,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "264b": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "264b",
-    "z": 22772,
-    "parent": "v5cj",
+    "z": 25451,
+    "parent": "bouo",
     "activeFace": 1
   },
   "3ico": {
@@ -3307,17 +3285,17 @@
     "type": "card",
     "cardType": "setC",
     "id": "3ico",
-    "z": 22748,
+    "z": 25409,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "o1mo": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setC",
     "id": "o1mo",
-    "z": 22797,
-    "parent": "v5cj",
+    "z": 25480,
+    "parent": "bouo",
     "activeFace": 1
   },
   "4r41": {
@@ -3325,134 +3303,134 @@
     "type": "card",
     "cardType": "setC",
     "id": "4r41",
-    "z": 22746,
+    "z": 25394,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "zbny": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "zbny",
-    "z": 22789,
+    "z": 25420,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "gkcq": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "gkcq",
-    "z": 22788,
+    "z": 25472,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "nr03": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "nr03",
-    "z": 22741,
+    "z": 25457,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "btcu": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "btcu",
-    "z": 22783,
+    "z": 25426,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "yx41": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "yx41",
-    "z": 22734,
+    "z": 25429,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "fafr": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "fafr",
-    "z": 22771,
+    "z": 25402,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "s3mc": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "s3mc",
-    "z": 22813,
+    "z": 25440,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "xqo7": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "xqo7",
-    "z": 22809,
+    "z": 25415,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "8pca": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "8pca",
-    "z": 22778,
+    "z": 25452,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "a2q5": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "setD",
     "id": "a2q5",
-    "z": 22801,
+    "z": 25414,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "exgx": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth5",
     "id": "exgx",
-    "z": 22792,
+    "z": 25396,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "mdht": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth3",
     "id": "mdht",
-    "z": 22747,
+    "z": 25430,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "1mec": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth8",
     "id": "1mec",
-    "z": 22739,
+    "z": 25481,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "44yy": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth3",
     "id": "44yy",
-    "z": 22786,
-    "parent": "v5cj",
+    "z": 25431,
+    "parent": "bouo",
     "activeFace": 1
   },
   "whz1": {
@@ -3460,80 +3438,81 @@
     "type": "card",
     "cardType": "mammoth7",
     "id": "whz1",
-    "z": 22767,
+    "z": 25398,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "f04y": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth4",
     "id": "f04y",
-    "z": 22737,
+    "z": 25432,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "g2l4": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth6",
     "id": "g2l4",
-    "z": 22738,
-    "parent": "v5cj"
+    "z": 25453,
+    "parent": "bouo",
+    "activeFace": 1
   },
   "jeaj": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth7",
     "id": "jeaj",
-    "z": 22776,
+    "z": 25467,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "3bv0": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth5",
     "id": "3bv0",
-    "z": 22765,
+    "z": 25413,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "bu2h": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth4",
     "id": "bu2h",
-    "z": 22743,
+    "z": 25425,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "ww6e": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth6",
     "id": "ww6e",
-    "z": 22728,
+    "z": 25427,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "wd95": {
     "deck": "winter_tiles_deck",
     "type": "card",
     "cardType": "mammoth8",
     "id": "wd95",
-    "z": 22756,
+    "z": 25428,
     "activeFace": 1,
-    "parent": "v5cj"
+    "parent": "bouo"
   },
   "r0bo": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "cave",
     "id": "r0bo",
-    "z": 22904,
+    "z": 25498,
     "stay_in_winter": true,
-    "parent": "space72",
+    "parent": "space69",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3543,10 +3522,10 @@
     "type": "card",
     "cardType": "path",
     "id": "6igy",
-    "z": 22874,
+    "z": 25590,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space170",
+    "parent": "space73",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3556,21 +3535,21 @@
     "type": "card",
     "cardType": "cave",
     "id": "5fed",
-    "z": 22925,
+    "z": 25561,
     "stay_in_winter": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space99"
+    "parent": "space184"
   },
   "u5jq": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "cave",
     "id": "u5jq",
-    "z": 22852,
+    "z": 25556,
     "stay_in_winter": true,
-    "parent": "space133",
+    "parent": "space118",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3580,23 +3559,23 @@
     "type": "card",
     "cardType": "cave",
     "id": "9d97",
-    "z": 22846,
+    "z": 25580,
     "stay_in_winter": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space119"
+    "parent": "space192"
   },
   "knic": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "cave",
     "id": "knic",
-    "z": 22859,
+    "z": 25518,
     "stay_in_winter": true,
     "x": 1,
     "y": 1,
-    "parent": "space151",
+    "parent": "space133",
     "activeFace": 1
   },
   "k5dc": {
@@ -3604,10 +3583,10 @@
     "type": "card",
     "cardType": "path",
     "id": "k5dc",
-    "z": 22922,
+    "z": 25577,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space115",
+    "parent": "space177",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3617,36 +3596,36 @@
     "type": "card",
     "cardType": "path",
     "id": "awl9",
-    "z": 22891,
+    "z": 25538,
     "stay_in_winter": true,
     "winter_image_swap": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space132"
+    "parent": "space166"
   },
   "wniz": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "path",
     "id": "wniz",
-    "z": 22835,
+    "z": 25488,
     "stay_in_winter": true,
     "winter_image_swap": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space82"
+    "parent": "space41"
   },
   "67fv": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "path",
     "id": "67fv",
-    "z": 22834,
+    "z": 25588,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space77",
+    "parent": "space115",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3656,10 +3635,10 @@
     "type": "card",
     "cardType": "path",
     "id": "e7gm",
-    "z": 22903,
+    "z": 25509,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space71",
+    "parent": "space106",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3669,10 +3648,10 @@
     "type": "card",
     "cardType": "path",
     "id": "ii5g",
-    "z": 22885,
+    "z": 25513,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space75",
+    "parent": "space120",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3682,10 +3661,10 @@
     "type": "card",
     "cardType": "path",
     "id": "s1jx",
-    "z": 22911,
+    "z": 25528,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space177",
+    "parent": "space154",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3695,36 +3674,36 @@
     "type": "card",
     "cardType": "path",
     "id": "v5ua",
-    "z": 22857,
+    "z": 25514,
     "stay_in_winter": true,
     "winter_image_swap": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space147"
+    "parent": "space121"
   },
   "y5f3": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "path",
     "id": "y5f3",
-    "z": 22816,
+    "z": 25568,
     "stay_in_winter": true,
     "winter_image_swap": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space12"
+    "parent": "space30"
   },
   "dpkn": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "path",
     "id": "dpkn",
-    "z": 22876,
+    "z": 25576,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space172",
+    "parent": "space114",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3734,10 +3713,10 @@
     "type": "card",
     "cardType": "path",
     "id": "sfqs",
-    "z": 22820,
+    "z": 25551,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space34",
+    "parent": "space75",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3747,10 +3726,10 @@
     "type": "card",
     "cardType": "path",
     "id": "8dqp",
-    "z": 22907,
+    "z": 25511,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space87",
+    "parent": "space108",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3760,23 +3739,23 @@
     "type": "card",
     "cardType": "path",
     "id": "k5f4",
-    "z": 22817,
+    "z": 25515,
     "stay_in_winter": true,
     "winter_image_swap": true,
     "activeFace": 1,
     "x": 1,
     "y": 1,
-    "parent": "space20"
+    "parent": "space122"
   },
   "ubho": {
     "deck": "summer_tiles_deck",
     "type": "card",
     "cardType": "path",
     "id": "ubho",
-    "z": 22849,
+    "z": 25540,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space122",
+    "parent": "space170",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3786,10 +3765,10 @@
     "type": "card",
     "cardType": "path",
     "id": "6pit",
-    "z": 22915,
+    "z": 25548,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space193",
+    "parent": "space182",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3799,10 +3778,10 @@
     "type": "card",
     "cardType": "path",
     "id": "g04h",
-    "z": 22831,
+    "z": 25584,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space68",
+    "parent": "space197",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3812,10 +3791,10 @@
     "type": "card",
     "cardType": "path",
     "id": "b37x",
-    "z": 22893,
+    "z": 25550,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space181",
+    "parent": "space63",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3825,10 +3804,10 @@
     "type": "card",
     "cardType": "path",
     "id": "58yb",
-    "z": 22901,
+    "z": 25585,
     "stay_in_winter": true,
     "winter_image_swap": true,
-    "parent": "space191",
+    "parent": "space198",
     "activeFace": 1,
     "x": 1,
     "y": 1
@@ -3858,7 +3837,7 @@
       }
     },
     "text": "Summer Setup",
-    "player_count": 1,
+    "player_count": 0,
     "setup_complete": true,
     "clickRoutine": [
       {
@@ -5592,7 +5571,7 @@
       ]
     },
     "player": "",
-    "turn": true,
+    "turn": false,
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "textColor": "#000000",
@@ -8452,7 +8431,7 @@
     "y": 153,
     "width": 48,
     "height": 51,
-    "z": 80242,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8488,7 +8467,7 @@
     "y": 239,
     "width": 48,
     "height": 51,
-    "z": 3,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8524,7 +8503,7 @@
     "y": 630,
     "width": 48,
     "height": 51,
-    "z": 3,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8560,7 +8539,7 @@
     "y": 806,
     "width": 48,
     "height": 51,
-    "z": 80239,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8596,7 +8575,7 @@
     "y": 202,
     "width": 48,
     "height": 51,
-    "z": 80244,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8632,7 +8611,7 @@
     "y": 287,
     "width": 48,
     "height": 51,
-    "z": 80243,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8668,7 +8647,7 @@
     "y": 678,
     "width": 48,
     "height": 51,
-    "z": 80246,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -8704,7 +8683,7 @@
     "y": 854,
     "width": 48,
     "height": 51,
-    "z": 80235,
+    "z": 5,
     "color": "#b4b4b4",
     "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
     "faces": [
@@ -9337,7 +9316,7 @@
         ]
       }
     ],
-    "text": "\n"
+    "text": " ••• Summer Begins •••\n"
   },
   "history_toggle": {
     "type": "button",
@@ -9575,13 +9554,46 @@
     "y": 9,
     "x": 1449
   },
-  "v5cj": {
+  "bouo": {
     "type": "pile",
     "parent": "winter_tiles_holder",
     "x": 4,
     "y": 4,
     "width": 95,
     "height": 95,
-    "id": "v5cj"
+    "id": "bouo"
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "disableHolderImageWidget": true
+      }
+    },
+    "info": {
+      "name": "Hunt & Gather",
+      "image": "/assets/1864168426_45952",
+      "rules": "https://boardgamegeek.com/filepage/72577/hunter-and-gatherer-english-rules-v1",
+      "bgg": "https://boardgamegeek.com/boardgame/65568/jager-und-sammler",
+      "year": "2010",
+      "mode": "vs",
+      "time": "45",
+      "attribution": "Layout, board, cards, design, coding, and library image by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The cave icon by Alfan Zulkarnain is available at https://thenounproject.com/icon/cave-5282394/ under the Noun Project License.</div><div><br></div><div>All other icons are from assets with attribution in the About overlay.</div><div><br></div><div>The sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at https://pixabay.com/sound-effects/wrong-answer-129254/.</div>",
+      "lastUpdate": 1773109245108,
+      "skill": "medium",
+      "description": "Gather food and weapons to prepare for winter, where hunting mammoths and staying alive are the goal!",
+      "similarImage": "",
+      "similarName": "Jäger und Sammler",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "2012 Hungarian Board Game Award Winner\n2011 Hra roku Nominee\n2010 Spiel des Jahres Recommended",
+      "ruleText": "",
+      "helpText": "<div>Game and scoring information can be found by hovering your mouse over the information box in the top right corner of the screen.</div><div><br></div>Players take seats. Press the Summer Setup button to begin. A random player (indicated by a button next to the seat area) is chosen to start.&nbsp;<div><br></div><div>Drag hunters on the board and drag taken tiles into your player area. Each tile has a specific location in your area that is indicated with a highlighted border. Used weapons should be placed into the weapon discard holder in the bottom left corner of the screen. Click the \"Click to end turn\" button between all turns.</div><div><br></div><div>Begin winter by clicking the Winter Setup button, and select which type of path you want to play with. During winter, placed cubes on camps must go within a highlighted circle in the camp location to be scored.</div><div><br></div><div>All scores are automatically calculated.</div>",
+      "usesAIImagery": false,
+      "showName": true,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
+    }
   }
 }
