@@ -28,7 +28,8 @@
       "variantImage": "",
       "variant": "Merchant Ships",
       "language": "en-GB",
-      "players": "3-7"
+      "players": "3-7",
+      "usesAIImagery": true
     }
   },
   "2b1761ea-8cd5-4e2b-a36e-8b354df38cc4_label": {
