@@ -55,8 +55,8 @@ class Holder extends ImageWidget {
     });
   }
 
-  classes() {
-    let className = this.base.classes.call(this);
+  classes(includeTemporary=false) {
+    let className = this.base.classes.call(this, includeTemporary);
 
     if(this.get('showInactiveFaceToSeat'))
       if(widgetFilter(w=>asArray(this.get('showInactiveFaceToSeat')).indexOf(w.get('id'))!=-1&&w.get('player')==playerName).length)
