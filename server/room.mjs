@@ -9,14 +9,11 @@ import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
 import Statistics from './statistics.mjs';
 
-const DELTA_CONFIRM_BUFFER_MS = 5 * 60 * 1000;
-
 export default class Room {
   players = [];
   state = {};
   deltaID = 0;
   lastStatisticsDeltaID = 0;
-  deltaConfirmBuffer = [];
   lastMouseStateByPlayer = {};
 
   constructor(id, unloadCallback, publicLibraryUpdatedCallback) {
@@ -706,12 +703,6 @@ export default class Room {
     if(Math.random() < 0.05)
       return;
 
-    if(delta.previousDeltaSendId != null) {
-      const applied = new Set(this.deltaConfirmBuffer.map(e => e.id));
-      if(!applied.has(delta.previousDeltaSendId))
-        return;
-    }
-
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
@@ -729,14 +720,8 @@ export default class Room {
     }
     delta.id = ++this.deltaID;
 
-    if(delta.deltaSendId) {
-      const now = Date.now();
-      this.deltaConfirmBuffer.push({ id: delta.deltaSendId, time: now });
-      const cut = now - DELTA_CONFIRM_BUFFER_MS;
-      this.deltaConfirmBuffer = this.deltaConfirmBuffer.filter(e => e.time > cut);
-      if(Math.random() >= 0.05)
-        player.send('deltaConfirm', { id: delta.deltaSendId });
-    }
+    if(delta.deltaSendId && Math.random() >= 0.05)
+      player.send('deltaConfirm', { id: delta.deltaSendId });
 
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;
@@ -745,14 +730,6 @@ export default class Room {
     } else {
       this.broadcast('delta', delta, player);
     }
-  }
-
-  checkDeltaIds(player, ids) {
-    const applied = new Set(this.deltaConfirmBuffer.map(e => e.id));
-    const results = {};
-    for(const id of ids || [])
-      results[id] = applied.has(id);
-    player.send('checkDeltaIdsResult', { results });
   }
 
   receiveInvalidDelta(player, delta, widgetID, property) {

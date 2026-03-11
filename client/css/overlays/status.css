@@ -38,7 +38,7 @@
 }
 #statusOverlay[data-state="warn"] .statusIcon,
 #statusOverlay[data-state="bad"] .statusIcon,
-#statusOverlay[data-state="reconnecting"] .statusIcon {
+#statusOverlay[data-state="reload"] .statusIcon {
   font-family: "Material Symbols";
 }
 #statusOverlay .statusIcon[icon]::before {

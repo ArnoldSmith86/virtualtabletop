@@ -82,22 +82,28 @@ function render() {
 
   if (connectionState.pendingCount && connectionState.state) {
     el.dataset.state = connectionState.state;
-    if (connectionState.state === 'reconnecting') {
-      el.classList.add('visible', 'bad', 'reconnecting');
-      text.textContent = `reconnecting (${connectionState.pendingCount} deltas pending - ${Math.round(connectionState.oldestAge / 1000)}s without feedback)`;
-      el.style.setProperty('--pulse-min', '0.8');
-      el.style.setProperty('--pulse-max', '1');
+    icon.setAttribute('icon', 'link_off');
+    if (connectionState.state === 'warn') {
+      el.classList.add('visible');
+      el.classList.remove('bad', 'reconnecting');
+      text.textContent = '';
+      el.style.setProperty('--pulse-min', '0.4');
+      el.style.setProperty('--pulse-max', '0.6');
     } else if (connectionState.state === 'bad') {
       el.classList.add('visible', 'bad');
       el.classList.remove('reconnecting');
-      icon.setAttribute('icon', 'link_off');
-      text.textContent = `bad connection (${connectionState.pendingCount} deltas pending)`;
+      text.textContent = 'No response from server';
+      el.style.setProperty('--pulse-min', '0.6');
+      el.style.setProperty('--pulse-max', '0.8');
+    } else if (connectionState.state === 'reload') {
+      el.classList.add('visible', 'bad');
+      el.classList.remove('reconnecting');
+      text.textContent = 'If connection is not restored, the page will reload in 30 seconds.';
       el.style.setProperty('--pulse-min', '0.6');
       el.style.setProperty('--pulse-max', '0.8');
     } else {
       el.classList.add('visible');
       el.classList.remove('bad', 'reconnecting');
-      icon.setAttribute('icon', 'link_off');
       text.textContent = '';
       el.style.setProperty('--pulse-min', '0.4');
       el.style.setProperty('--pulse-max', '0.6');
@@ -124,8 +130,8 @@ function render() {
     if (!byOverlay[label]) byOverlay[label] = [];
     byOverlay[label].push({ name, stateName: label === 'Game Shelf' ? (o.activeStateName || null) : null });
   }
-  const order = ['Input', 'Game Shelf', 'Players', 'About'];
-  const labelToOverlayId = { 'Input': 'buttonInputOverlay', 'Game Shelf': 'statesOverlay', 'Players': 'playerOverlay', 'About': 'aboutOverlay' };
+  const order = ['Input'];
+  const labelToOverlayId = { 'Input': 'buttonInputOverlay' };
   const joinNames = (entries, max = 3) => {
     const n = entries.map(e => typeof e === 'string' ? e : e.name);
     if (n.length <= max) return n.length === 1 ? n[0] : n.length === 2 ? `${n[0]} and ${n[1]}` : n.slice(0, -1).join(', ') + ', and ' + n[n.length - 1];
@@ -139,33 +145,8 @@ function render() {
     el.classList.remove('bad', 'reconnecting');
     const overlayId = labelToOverlayId[label] || 'statesOverlay';
     icon.setAttribute('icon', TOOLBAR_ICONS[overlayId] || TOOLBAR_ICONS.statesOverlay);
-    if (label === 'Game Shelf') {
-      const withGame = entries.filter(e => e.stateName);
-      const listOnly = entries.filter(e => !e.stateName);
-      const parts = [];
-      if (withGame.length) {
-        const byState = {};
-        for (const e of withGame) {
-          const k = e.stateName || '';
-          if (!byState[k]) byState[k] = [];
-          byState[k].push(e.name);
-        }
-        const stateNames = [...new Set(withGame.map(e => e.stateName))];
-        for (const stateName of stateNames) {
-          const names = byState[stateName];
-          const who = joinNames(names.map(n => ({ name: n })));
-          parts.push(`${who} ${names.length === 1 ? 'is' : 'are'} looking at ${stateName} in Game Shelf`);
-        }
-      }
-      if (listOnly.length) {
-        const who = joinNames(listOnly);
-        parts.push(`${who} ${listOnly.length === 1 ? 'has' : 'have'} Game Shelf open`);
-      }
-      text.textContent = parts.join('; ');
-    } else {
-      const who = joinNames(entries);
-      text.textContent = entries.length === 1 ? `${who} has ${label} open` : `${who} have ${label} open`;
-    }
+    const who = joinNames(entries);
+    text.textContent = entries.length === 1 ? `${who} has ${label} open` : `${who} have ${label} open`;
     return;
   }
 
