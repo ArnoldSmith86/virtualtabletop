@@ -266,8 +266,23 @@ export function formField(field, dom, id) {
     const step = field.step !== undefined ? field.step : (Number.isInteger(min) && Number.isInteger(max) ? 1 : 'any');
     const value = field.value !== undefined ? Number(field.value) : min;
     const unit = field.unit != null ? String(field.unit) : '';
+    let decimals = 0;
+    if (step !== 'any' && step !== undefined && step !== null) {
+      const n = Number(step);
+      if (Number.isFinite(n) && !(n >= 1 && Number.isInteger(n))) {
+        const s = n.toFixed(14).replace(/0+$/, '');
+        const i = s.indexOf('.');
+        decimals = i === -1 ? 0 : Math.min(s.length - i - 1, 10);
+      }
+    } else {
+      decimals = 2;
+    }
+    const format = v => Number(v).toFixed(decimals) + unit;
+    const minStr = format(min);
+    const maxStr = format(max);
+    const valueCh = Math.max(minStr.length, maxStr.length) + 1;
     const wrapper = document.createElement('div');
-    wrapper.classList.add('countInput');
+    wrapper.classList.add('countInput', 'inputsliderCompact');
     const input = document.createElement('input');
     input.type = 'range';
     input.min = min;
@@ -276,7 +291,8 @@ export function formField(field, dom, id) {
     input.value = Math.max(min, Math.min(max, value));
     const valueSpan = document.createElement('span');
     valueSpan.classList.add('inputSliderValue');
-    const updateValue = () => { valueSpan.textContent = input.value + unit; };
+    valueSpan.style.setProperty('--input-slider-value-ch', valueCh + 'ch');
+    const updateValue = () => { valueSpan.textContent = format(input.value); };
     updateValue();
     input.addEventListener('input', updateValue);
     wrapper.appendChild(valueSpan);

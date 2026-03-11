@@ -1720,9 +1720,9 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   padding: 0;
 }
 .inputslider .inputSliderValue{
-  padding: 0 5px;
+  padding: 0;
   font-size: 16px;
-  min-width: 4ch;
+  min-width: var(--input-slider-value-ch, 4ch);
   text-align: right;
   color: var(--modalTextColor);
 }
