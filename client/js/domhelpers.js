@@ -263,20 +263,22 @@ export function formField(field, dom, id) {
   if(field.type == 'slider') {
     const min = field.min !== undefined ? field.min : 0;
     const max = field.max !== undefined ? field.max : 10;
+    const step = field.step !== undefined ? field.step : (Number.isInteger(min) && Number.isInteger(max) ? 1 : 'any');
     const value = field.value !== undefined ? Number(field.value) : min;
+    const unit = field.unit != null ? String(field.unit) : '';
     const wrapper = document.createElement('div');
     wrapper.classList.add('countInput');
     const input = document.createElement('input');
     input.type = 'range';
     input.min = min;
     input.max = max;
+    input.step = step;
     input.value = Math.max(min, Math.min(max, value));
     const valueSpan = document.createElement('span');
     valueSpan.classList.add('inputSliderValue');
-    valueSpan.textContent = input.value;
-    input.addEventListener('input', () => { valueSpan.textContent = input.value; });
-    if(field.min !== undefined && field.max !== undefined)
-      label.appendChild(document.createTextNode(' (' + field.min + ' - ' + field.max + ')'));
+    const updateValue = () => { valueSpan.textContent = input.value + unit; };
+    updateValue();
+    input.addEventListener('input', updateValue);
     wrapper.appendChild(valueSpan);
     wrapper.appendChild(input);
     dom.appendChild(wrapper);

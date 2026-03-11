@@ -1495,6 +1495,7 @@ button:disabled:hover {
     font-weight: 400;
     line-height: 15.6px;
     min-height: 15px;
+    box-sizing: border-box;
 }
 
 .inputcheckbox input{
@@ -1716,11 +1717,30 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   width: 100%;
   justify-content: flex-start;
   gap: 12px;
+  padding: 0;
 }
 .inputslider .inputSliderValue{
-  min-width: 2ch;
+  padding: 0 5px;
+  font-size: 16px;
+  min-width: 4ch;
   text-align: right;
   color: var(--modalTextColor);
+}
+.inputslider input[type=range] {
+  height: 24px;
+  margin: 4px;
+  margin-right: 6px;
+}
+.inputslider input[type=range]::-moz-range-track {
+  background-color: var(--VTTblue);
+  height: 24px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
 }
 .countInput input[type=number]{
   font-size: 1.5rem;

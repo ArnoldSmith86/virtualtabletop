@@ -1450,6 +1450,8 @@ function jeAddCommands() {
   jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
   jeAddFieldCommand('min', 'number|slider', 0);
   jeAddFieldCommand('max', 'number|slider', 10);
+  jeAddFieldCommand('step', 'slider', 1);
+  jeAddFieldCommand('unit', 'slider', '');
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
   jeAddFieldCommand('regex', 'string', '');
   jeAddFieldCommand('regexHint', 'string', '');
