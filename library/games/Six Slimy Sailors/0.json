@@ -16,7 +16,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Implementation and library cover by Mitchell Stolycia. Released for use under CCBY 4.0.<div>\nTracks artwork by Dennis Laumen. Available under CC0.\n\nArt used in the library image of this implementation:\nPool table from 8 ballin' by Mitchell Stolycia. Available under&nbsp;CCBY 4.0.\n<div>Out of Pocket library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>No Monkey library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>Card Constructor library image&nbsp;by Mitchell Stolycia. Available under CC0.</div><div>A character card from Ad Populum&nbsp;by Mitchell Stolycia. Available under CCBY 4.0.</div></div>",
-      "lastUpdate": 1773279208499,
+      "lastUpdate": 1773318450146,
       "skill": "",
       "description": "Become one of six slimy sailors and swing your stash of silver supsiciously to set sail the seven seas on the slickest ships by splashing your splosh.",
       "similarImage": "",
@@ -3455,7 +3455,7 @@
     "editable": true,
     "parent": "seat1",
     "scoreLabel": "seat1",
-    "text": 40
+    "text": 0
   },
   "l2": {
     "type": "label",
@@ -3470,7 +3470,7 @@
       "color": "black"
     },
     "editable": true,
-    "text": 40,
+    "text": 0,
     "scoreLabel": "seat2"
   },
   "l3": {
@@ -3487,7 +3487,7 @@
     },
     "editable": true,
     "scoreLabel": "seat3",
-    "text": 40
+    "text": 0
   },
   "l4": {
     "type": "label",
@@ -3504,7 +3504,7 @@
     "editable": true,
     "scoreLabel": "seat4",
     "z": 9532,
-    "text": 40
+    "text": 0
   },
   "l5": {
     "type": "label",
@@ -3519,7 +3519,7 @@
       "color": "black"
     },
     "editable": true,
-    "text": 40,
+    "text": 0,
     "scoreLabel": "seat5"
   },
   "l6": {
@@ -3535,7 +3535,7 @@
       "color": "black"
     },
     "editable": true,
-    "text": 40,
+    "text": 0,
     "scoreLabel": "seat6"
   },
   "label2": {
