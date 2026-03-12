@@ -1729,14 +1729,29 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
 .inputslider input[type=range] {
   height: 24px;
   margin: 4px;
-  margin-right: 6px;
+}
+@-moz-document url-prefix() {
+  .inputslider input[type=range] {
+    margin-right: 6px;
+  }
 }
 .inputslider input[type=range]::-moz-range-track {
   background-color: var(--VTTblue);
   height: 24px;
   padding: 2px;
 }
+.inputslider input[type=range]::-webkit-slider-runnable-track {
+  background-color: var(--VTTblue);
+  height: 28px;
+  padding: 2px;
+}
 .inputslider input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
+}
+.inputslider input[type=range]::-webkit-slider-thumb {
   box-shadow: 0 0 3px #000;
   border: none;
   height: 24px;
