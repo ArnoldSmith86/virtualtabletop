@@ -29,7 +29,8 @@
       "variantImage": "",
       "variant": "Garden Grove",
       "language": "en-US",
-      "players": "2-4"
+      "players": "2-4",
+      "usesAIImagery": true
     }
   },
   "w43f": {
