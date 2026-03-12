@@ -445,7 +445,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: inline-flex;
 }
 
-#stateDetailsOverlay > .buttons > div > button {
+#stateDetailsOverlay > .buttons > div button {
   width: 100%;
 }
 

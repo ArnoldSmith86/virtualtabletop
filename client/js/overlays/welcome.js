@@ -1,4 +1,13 @@
 function parseGameURL() {
+  const customLibraryMatch = location.href.match(/\/library\/([^/]+)\/([a-z-]+)$/);
+  if (customLibraryMatch) {
+    return {
+      type: 'public',
+      category: customLibraryMatch[1],
+      id: `PL:${customLibraryMatch[1]}:${customLibraryMatch[2]}`
+    };
+  }
+
   const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
   if(gameURLmatch) {
     if(gameURLmatch[2]) {

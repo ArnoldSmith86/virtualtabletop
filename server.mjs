@@ -366,6 +366,7 @@ MinifyHTML().then(function(result) {
   router.get('/game/:plName', gameRoomHandler);
   router.get('/game/:shareID/:name', gameRoomHandler);
   router.get('/tutorial/:plName', gameRoomHandler);
+  router.get('/library/:folder/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
     try {
       if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
