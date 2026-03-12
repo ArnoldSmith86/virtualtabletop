@@ -83,14 +83,6 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false
   },
-  "29617dd3-d3e4-4113-978c-e246abbfdf47": {
-    "id": "29617dd3-d3e4-4113-978c-e246abbfdf47",
-    "z": 10384,
-    "type": "card",
-    "deck": "cardDeck",
-    "cardType": "type-96e13a15-5109-4828-9796-60a52d06b520",
-    "parent": "nomu"
-  },
   "c711ee1e-4faa-4308-8a07-2c9decf0ff58_label": {
     "id": "c711ee1e-4faa-4308-8a07-2c9decf0ff58_label",
     "parent": "lot",
@@ -102,30 +94,6 @@
     "text": "Lot",
     "twoRowBottomAlign": true,
     "movableInEdit": false
-  },
-  "4eba8f90-ba4f-455a-b52f-5132d669ee9a": {
-    "id": "4eba8f90-ba4f-455a-b52f-5132d669ee9a",
-    "z": 10375,
-    "type": "card",
-    "deck": "cardDeck",
-    "cardType": "type-8f44336a-3b44-4caf-868a-5927f70c31d5",
-    "parent": "nomu"
-  },
-  "4b10581a-b83b-4694-8e7a-ffe884e19e23": {
-    "id": "4b10581a-b83b-4694-8e7a-ffe884e19e23",
-    "z": 10359,
-    "type": "card",
-    "deck": "cardDeck",
-    "cardType": "type-2e5faf69-35d9-4725-ae16-63a1ddcea531",
-    "parent": "nomu"
-  },
-  "b1a74b4d-8370-46fb-a0ba-ab80bba32176": {
-    "id": "b1a74b4d-8370-46fb-a0ba-ab80bba32176",
-    "z": 10350,
-    "type": "card",
-    "deck": "cardDeck",
-    "cardType": "type-828a876c-6695-4f6f-88ab-d46b37c26030",
-    "parent": "nomu"
   },
   "35f73619-8e42-41b5-80cc-ff6324abe0e6": {
     "id": "35f73619-8e42-41b5-80cc-ff6324abe0e6",
@@ -1905,15 +1873,6 @@
     "movable": false,
     "movableInEdit": true,
     "inheritFrom": "r0"
-  },
-  "sor2": {
-    "deck": "p1D",
-    "type": "card",
-    "cardType": "EthnosCover.png",
-    "id": "sor2",
-    "z": 10393,
-    "x": 854,
-    "y": 296
   },
   "j5xh": {
     "deck": "cardDeck",
@@ -4682,44 +4641,6 @@
     "dropTarget": {
       "type": "card"
     }
-  },
-  "e0m3 3ref.jpg": {
-    "type": "card",
-    "id": "e0m3 3ref.jpg",
-    "deck": "e0m3",
-    "cardType": "3ref.jpg",
-    "x": 4,
-    "y": 4,
-    "z": 18668,
-    "parent": "discard",
-    "cardBack": 1
-  },
-  "e0m3 4ref.jpg": {
-    "type": "card",
-    "id": "e0m3 4ref.jpg",
-    "deck": "e0m3",
-    "cardType": "4ref.jpg",
-    "x": 204,
-    "y": 0,
-    "activeFace": 1
-  },
-  "e0m3 5ref.jpg": {
-    "type": "card",
-    "id": "e0m3 5ref.jpg",
-    "deck": "e0m3",
-    "cardType": "5ref.jpg",
-    "x": 408,
-    "y": 0,
-    "activeFace": 1
-  },
-  "e0m3 6ref.jpg": {
-    "type": "card",
-    "id": "e0m3 6ref.jpg",
-    "deck": "e0m3",
-    "cardType": "6ref.jpg",
-    "x": 612,
-    "y": 0,
-    "activeFace": 1
   },
   "refDeck": {
     "type": "deck",
