@@ -1,38 +1,4 @@
 {
-  "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
-    },
-    "info": {
-      "name": "Six Slimy Sailors Suspiciously Swinging their Stashes of Silver to Splash their Splosh on the Slickest Ships and Set Sail the Seven Seas",
-      "image": "/assets/502181324_201760",
-      "rules": "",
-      "bgg": "https://boardgamegeek.com/boardgame/46/medici",
-      "year": "1995",
-      "mode": "vs",
-      "time": "60",
-      "attribution": "Implementation and library cover by Mitchell Stolycia. Released for use under CCBY 4.0.<div>\nTracks artwork by Dennis Laumen. Available under CC0.\n\nArt used in the library image of this implementation:\nPool table from 8 ballin' by Mitchell Stolycia. Available under&nbsp;CCBY 4.0.\n<div>Out of Pocket library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>No Monkey library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>Card Constructor library image&nbsp;by Mitchell Stolycia. Available under CC0.</div><div>A character card from Ad Populum&nbsp;by Mitchell Stolycia. Available under CCBY 4.0.</div></div>",
-      "lastUpdate": 1773318450146,
-      "skill": "",
-      "description": "Become one of six slimy sailors and swing your stash of silver supsiciously to set sail the seven seas on the slickest ships by splashing your splosh.",
-      "similarImage": "",
-      "similarName": "Medici",
-      "similarDesigner": "Reiner Knizia",
-      "similarAwards": "1995 Spiel des Jahres Recommended\n1995 Meeples Choice Award Winner\n1995 Meeples Choice Award Nominee",
-      "ruleText": "",
-      "helpText": "<div><b>Setup</b></div><blockquote><div>Take your seats and hit the <i>Setup </i>button.<br>Throughout the game, the pawn is to be passed to the active player, to the right of their seat. A first player will be chosen at random at setup.</div></blockquote><div><b>Auctions</b><br><ul><li>To bid call your bid out loud (I know you've been missing some human connection recently).</li><li>To pay for and claim your winnings, click the <i>Claim lot</i> button.</li><li>After a player has won and claimed a lot, their marker will automatically change position on the appropriate tracks on the right hand-side of the play area.</li></ul><b>End of round scoring</b><br><ul><li><b>Score the ship totals manually </b>according to the reference aid.</li><li>The tracks can be scored automatically by pressing the <i><b>Score tracks</b></i> button.</li><ul><li>The first pop-up appears to prevent accidental clicks, but this can be disabled if you wish.</li><li>You can then choose how fast you want the track scoring to be. 2.0 seconds is recommended as the default between scoring sections, but feel free to change it as you please. Your previous selection will be remembered between rounds.</li></ul></ul></div>",
-      "usesAIImagery": false,
-      "showName": "only similar",
-      "variantImage": "",
-      "variant": "Six Slimy Sailors...",
-      "language": "en-GB",
-      "players": "3-6"
-    }
-  },
   "f6f2d10f-26b1-4e8d-a9e6-2a38f0f59e1e_label": {
     "id": "f6f2d10f-26b1-4e8d-a9e6-2a38f0f59e1e_label",
     "parent": "drawpile",
@@ -100,7 +66,7 @@
     "x": 1038.12,
     "y": 16.44,
     "z": 730,
-    "image": "/assets/1122881094_6612",
+    "image": "/assets/1617687527_5332",
     "movable": false,
     "layer": -4,
     "width": 550.1210710439534,
@@ -1317,6 +1283,11 @@
         "order": "${PROPERTY z}",
         "margin-left": "${PROPERTY marginL}",
         "margin-top": "${PROPERTY marginT}"
+      },
+      " .holderTextOnly": {
+        "top": "-2.4em",
+        "right": "-1.1em",
+        "font-size": "30px !important"
       }
     },
     "dropTarget": {
@@ -1372,7 +1343,8 @@
         "value": "${css}"
       }
     ],
-    "bgColor": "transparent"
+    "bgColor": "transparent",
+    "textColor": "#00000050"
   },
   "r1": {
     "type": "holder",
@@ -1417,7 +1389,8 @@
     "y": 265,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+5"
   },
   "r6": {
     "type": "holder",
@@ -1426,7 +1399,8 @@
     "y": 147,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+10"
   },
   "r7": {
     "type": "holder",
@@ -1568,6 +1542,11 @@
         "order": "${PROPERTY z}",
         "margin-left": "${PROPERTY marginL}",
         "margin-top": "${PROPERTY marginT}"
+      },
+      " .holderTextOnly": {
+        "top": "-2.4em",
+        "right": "-1.1em",
+        "font-size": "30px !important"
       }
     },
     "dropLimit": 9,
@@ -1584,7 +1563,8 @@
     "marginL": "12px",
     "marginT": "3px",
     "paddingLR": "0px",
-    "paddingT": "0px"
+    "paddingT": "0px",
+    "text": "+20"
   },
   "o0": {
     "type": "holder",
@@ -1620,7 +1600,9 @@
     "y": 28,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "preventPiles": true,
+    "text": "+20"
   },
   "o3": {
     "type": "holder",
@@ -1638,7 +1620,8 @@
     "y": 147,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+10"
   },
   "o4": {
     "type": "holder",
@@ -1656,7 +1639,8 @@
     "y": 265,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+5"
   },
   "b0": {
     "type": "holder",
@@ -1710,7 +1694,8 @@
     "y": 265,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+5"
   },
   "b6": {
     "type": "holder",
@@ -1719,7 +1704,8 @@
     "y": 147,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+10"
   },
   "b7": {
     "type": "holder",
@@ -1728,7 +1714,8 @@
     "y": 28,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+20"
   },
   "g0": {
     "type": "holder",
@@ -1782,7 +1769,8 @@
     "y": 265,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+5"
   },
   "g6": {
     "type": "holder",
@@ -1791,7 +1779,8 @@
     "y": 147,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+10"
   },
   "g7": {
     "type": "holder",
@@ -1800,7 +1789,8 @@
     "y": 28,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+20"
   },
   "p0": {
     "type": "holder",
@@ -1854,7 +1844,8 @@
     "y": 265,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+5"
   },
   "p6": {
     "type": "holder",
@@ -1863,7 +1854,8 @@
     "y": 147,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+10"
   },
   "p7": {
     "type": "holder",
@@ -1872,7 +1864,8 @@
     "y": 28,
     "movable": false,
     "movableInEdit": true,
-    "inheritFrom": "r0"
+    "inheritFrom": "r0",
+    "text": "+20"
   },
   "j5xh": {
     "deck": "cardDeck",
@@ -5151,5 +5144,39 @@
     "width": 283,
     "height": 301,
     "id": "0lf6"
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
+    "info": {
+      "name": "Six Slimy Sailors Suspiciously Swinging their Stashes of Silver to Splash their Splosh on the Slickest Ships and Set Sail the Seven Seas",
+      "image": "/assets/502181324_201760",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/46/medici",
+      "year": "1995",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "Implementation and library cover by Mitchell Stolycia. Released for use under CCBY 4.0.<div>\nTracks artwork by Dennis Laumen. Available under CC0.\n\nArt used in the library image of this implementation:\nPool table from 8 ballin' by Mitchell Stolycia. Available under&nbsp;CCBY 4.0.\n<div>Out of Pocket library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>No Monkey library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>Card Constructor library image&nbsp;by Mitchell Stolycia. Available under CC0.</div><div>A character card from Ad Populum&nbsp;by Mitchell Stolycia. Available under CCBY 4.0.</div></div>",
+      "lastUpdate": 1773425853855,
+      "skill": "",
+      "description": "Become one of six slimy sailors and swing your stash of silver supsiciously to set sail the seven seas on the slickest ships by splashing your splosh.",
+      "similarImage": "",
+      "similarName": "Medici",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "1995 Spiel des Jahres Recommended\n1995 Meeples Choice Award Winner\n1995 Meeples Choice Award Nominee",
+      "ruleText": "",
+      "helpText": "<div><b>Setup</b></div><blockquote><div>Take your seats and hit the <i>Setup </i>button.<br>Throughout the game, the pawn is to be passed to the active player, to the right of their seat. A first player will be chosen at random at setup.</div></blockquote><div><b>Auctions</b><br><ul><li>To bid call your bid out loud (I know you've been missing some human connection recently).</li><li>To pay for and claim your winnings, click the <i>Claim lot</i> button.</li><li>After a player has won and claimed a lot, their marker will automatically change position on the appropriate tracks on the right hand-side of the play area.</li></ul><b>End of round scoring</b><br><ul><li><b>Score the ship totals manually </b>according to the reference aid.</li><li>The tracks can be scored automatically by pressing the <i><b>Score tracks</b></i> button.</li><ul><li>The first pop-up appears to prevent accidental clicks, but this can be disabled if you wish.</li><li>You can then choose how fast you want the track scoring to be. 2.0 seconds is recommended as the default between scoring sections, but feel free to change it as you please. Your previous selection will be remembered between rounds.</li></ul></ul></div>",
+      "usesAIImagery": false,
+      "showName": "only similar",
+      "variantImage": "",
+      "variant": "Six Slimy Sailors...",
+      "language": "en-GB",
+      "players": "3-6"
+    }
   }
 }

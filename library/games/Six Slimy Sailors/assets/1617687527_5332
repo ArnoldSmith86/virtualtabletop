@@ -48,35 +48,20 @@
 </g>
 <g id="text">
 	<rect x="612.5" y="319.1" class="st10" width="75.6" height="37.5"/>
-	<text transform="matrix(1 0 0 1 612.494 347.7435)" class="st11 st12 st13">+5</text>
 	<rect x="593.3" y="169.3" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 593.347 197.9662)" class="st11 st12 st13">+10</text>
 	<rect x="593.3" y="21.5" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 593.347 50.0925)" class="st11 st12 st13">+20</text>
 	<rect x="482.1" y="319.1" class="st10" width="75.6" height="37.5"/>
-	<text transform="matrix(1 0 0 1 482.1299 347.7435)" class="st11 st12 st13">+5</text>
 	<rect x="463.1" y="169.3" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 463.109 197.9662)" class="st11 st12 st13">+10</text>
 	<rect x="462.5" y="21.5" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 462.501 50.0925)" class="st11 st12 st13">+20</text>
 	<rect x="349.6" y="319.1" class="st10" width="75.6" height="37.5"/>
-	<text transform="matrix(1 0 0 1 349.6434 347.7435)" class="st11 st12 st13">+5</text>
 	<rect x="331.7" y="169.3" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 331.655 197.9662)" class="st11 st12 st13">+10</text>
 	<rect x="331.7" y="21.5" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 331.655 50.0925)" class="st11 st12 st13">+20</text>
 	<rect x="219.6" y="319.1" class="st10" width="75.6" height="37.5"/>
-	<text transform="matrix(1 0 0 1 219.613 347.7435)" class="st11 st12 st13">+5</text>
 	<rect x="200.8" y="169.3" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 200.809 197.9662)" class="st11 st12 st13">+10</text>
 	<rect x="200.8" y="21.5" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 200.809 50.0925)" class="st11 st12 st13">+20</text>
 	<rect x="88" y="319.1" class="st10" width="75.6" height="37.5"/>
-	<text transform="matrix(1 0 0 1 87.9838 347.7435)" class="st11 st12 st13">+5</text>
 	<rect x="70" y="169.3" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 69.963 197.9662)" class="st11 st12 st13">+10</text>
 	<rect x="70" y="21.5" class="st10" width="84.9" height="37.5"/>
-	<text transform="matrix(1 0 0 1 69.963 50.0925)" class="st11 st12 st13">+20</text>
 </g>
 <g id="vertical">
 	<rect x="12.3" y="10.2" class="st14" width="656.2" height="1190.1"/>
