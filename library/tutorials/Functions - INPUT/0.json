@@ -1,47 +1,17 @@
 {
-  "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {}
-    },
-    "info": {
-      "name": "Functions - INPUT",
-      "image": "/assets/-1767092614_3482",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1773281847248,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "usesAIImagery": false,
-      "variantImage": "",
-      "variant": "Basic",
-      "language": "en-US",
-      "players": "1"
-    }
-  },
   "zjgm": {
     "id": "zjgm",
     "z": 22811,
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "x": -15,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -100,
     "y": 90,
     "height": 20,
-    "text": "Switch",
     "parent": "button8",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "width": 300,
+    "html": "<b>Switch</b>: Outputs a variable of either <i>on</i> or <i>off</i>."
   },
   "zjgm1": {
     "id": "zjgm1",
@@ -51,76 +21,81 @@
     "x": -32,
     "y": 90,
     "height": 20,
-    "text": "String: The example on the right shows how to use the 'regex' and 'regexHint' parameters to limit the input to the numbers 0-9 and the letters a-z. No other symbols are allowed in this regex, including spaces.",
     "parent": "button7",
     "movable": false,
     "movableInEdit": false,
-    "width": 300
+    "width": 300,
+    "html": "<b>String</b>: The example on the right uses the <i>regex</i> and <i>regexHint</i> parameters to limit the input to the numbers 0-9 and the letters a-z. No other symbols are allowed in this example regex, including spaces."
   },
   "zjgm2": {
     "id": "zjgm2",
     "z": 22811,
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
+    "css": "color: black;font-size: 22px; text-align:left  ",
     "y": 90,
     "height": 20,
-    "text": "Select",
     "parent": "button5",
     "movable": false,
     "movableInEdit": false,
-    "x": 48
+    "x": -15,
+    "width": 300,
+    "html": "<b>Select</b>: The example on the rights uses the <i>options</i> parameter to create a selectable list of options."
   },
   "zjgm3": {
     "id": "zjgm3",
     "z": 22811,
     "parent": "button3",
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
+    "css": "color: black;font-size: 22px; text-align:left  ",
     "y": 90,
     "height": 20,
-    "text": "Number",
     "movable": false,
     "movableInEdit": false,
-    "x": 51
+    "x": -15,
+    "width": 300,
+    "html": "<b>Number</b>: The example on the right uses <i>min</i> and <i>max</i> to limit the input to a range."
   },
   "zjgm4": {
     "id": "zjgm4",
     "z": 22811,
     "parent": "button2",
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "text": "Color",
-    "x": -15,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -100,
     "y": 90,
     "height": 20,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "width": 300,
+    "html": "<b>Color</b>: This uses the browser's built-in color-picker to let the player pick a color."
   },
   "zjgm5": {
     "id": "zjgm5",
     "z": 22811,
     "parent": "button1",
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "text": "Checkbox",
-    "x": -15,
+    "css": "color: black;font-size: 22px; text-align:left  ",
     "y": 90,
     "height": 20,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "width": 300,
+    "x": -50,
+    "html": "<b>Checkbox</b>: Outputs a variable of either <i>true</i> or <i>false</i>."
   },
   "zjgm6": {
     "id": "zjgm6",
     "z": 22811,
     "parent": "button4",
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
+    "css": "color: black;font-size: 22px; text-align:left ",
     "y": 90,
     "height": 20,
     "movable": false,
     "movableInEdit": false,
-    "text": "Palette",
-    "x": 56
+    "x": -15,
+    "width": 300,
+    "html": "<b>Palette</b>: The example on the right uses the <i>colors</i> parameter to limit create a list of available colors."
   },
   "title": {
     "id": "title",
@@ -145,12 +120,12 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "text": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Unless the user presses the continue/go button, the routine will not continue. Each of the examples below demonstrates 8 of the 9 possible field types of INPUT (the 'choose' type is in another variant of this tutorial). They are each presented in their most basic and default form first, followed by an example with changes to the parameters when the parameter has additional options. The result (the variable used by routines) is displayed on the button."
+    "html": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Unless the user presses the &quotGo&quot button, the routine will not continue. Each of the examples below demonstrates 8 of the 9 possible field types of INPUT (the <b>choose</b> type is in another variant of this tutorial). They are each presented in their most basic and default form first, followed by an example(s) with changes to the parameters, when the parameter has additional options. The result (the variable used by routines) is displayed on the button."
   },
   "button1": {
     "type": "button",
     "id": "button1",
-    "x": 45,
+    "x": 75,
     "y": 250,
     "z": 22838,
     "text": true,
@@ -501,20 +476,22 @@
     "z": 22811,
     "parent": "button6",
     "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
+    "css": "color: black;font-size: 22px; text-align:left ",
     "y": 90,
     "height": 20,
     "movable": false,
     "movableInEdit": false,
-    "text": "Slider",
-    "x": 48
+    "x": -15,
+    "width": 300,
+    "html": "<b>Slider</b>: The middle example uses <i>min, max, step</i>, and <i>unit</i> parameters for the slider. The example on the right uses the <i>values</i> parameter to create a list of items selectable by the slider."
   },
-  "button9": {
+  "button6a": {
     "type": "button",
-    "id": "button9",
-    "x": 595,
+    "id": "button6a",
+    "x": 575,
     "y": 688,
     "z": 22829,
+    "text": 50,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -537,7 +514,74 @@
         "property": "text",
         "value": "${slider}"
       }
-    ],
-    "text": 50
+    ]
+  },
+  "button6b": {
+    "type": "button",
+    "id": "button6b",
+    "x": 675,
+    "y": 688,
+    "z": 22829,
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "slider",
+            "label": "Use slider to select color",
+            "values": [
+              "Red",
+              "Orange",
+              "Yellow",
+              "Green",
+              "Blue",
+              "Indigo",
+              "Violet"
+            ],
+            "unit": " %",
+            "variable": "slider",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${slider}"
+      }
+    ]
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - INPUT",
+      "image": "/assets/-1767092614_3482",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1773426013185,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
