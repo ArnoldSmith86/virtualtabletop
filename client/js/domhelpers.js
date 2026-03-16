@@ -153,7 +153,15 @@ export function shuffleArray(array) {
 }
 
 export function mapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
+  let result = String(str);
+
+  const gameSettings = getCurrentGameSettings();
+  const assetAliases = gameSettings.assetAliases || {};
+  
+  for(const [asset, alias] of Object.entries(assetAliases))
+    result = result.replace(new RegExp(`\\{\\{${regexEscape(alias)}\\}\\}`, 'g'), asset);
+
+  return result.replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
 }
 
 export function unmapAssetURLs(str) {
