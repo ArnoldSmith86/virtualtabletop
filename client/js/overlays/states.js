@@ -649,7 +649,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
   toggleClass($('#mainImage > i'),                     'hidden', !state.link);
-  toggleClass($('#publicLibraryUploadButtons'),        'hidden', !config.allowPublicLibraryEdits || (state.publicLibrary && Object.keys(config.libraries).length <= 1));
+  toggleClass($('#publicLibraryUploadButtons'),        'hidden', !config.allowPublicLibraryEdits || (!!state.publicLibrary && Object.keys(config.libraries).length <= 1));
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
