@@ -43,10 +43,11 @@ function checkForGameURL() {
         $('#welcomeGameType').innerText = gameDetails.category || 'game';
         $('#welcomeGameTypeHint').innerText = gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it';
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
-        toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user' || !state.stars);
-        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
-        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden', !state.usesAIImagery);
-        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden', !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .star'),               'hidden',       gameDetails.type == 'user' || !state.stars);
+        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden',       gameDetails.type == 'public');
+        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', !!state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden',       !state.usesAIImagery);
 
         let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
         document.title = `${state.name} - ${tabSuffix}`;
