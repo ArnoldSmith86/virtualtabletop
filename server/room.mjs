@@ -440,8 +440,7 @@ export default class Room {
   getPublicLibraryGames() {
     if(!Room.publicLibrary) {
       Room.publicLibrary = {};
-      const libraries = Config.get('libraries') || { "Games": "games", "Tutorials": "tutorials" };
-      for(const [ subLibrary, folder ] of Object.entries(libraries)) {
+      for(const [ subLibrary, folder ] of Object.entries(Config.get('libraries'))) {
         const categoryPath = Config.directory('library') + '/' + folder;
         if(fs.existsSync(categoryPath)) {
           for(const dir of fs.readdirSync(categoryPath)) {

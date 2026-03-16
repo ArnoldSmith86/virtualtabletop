@@ -590,8 +590,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : 'Games';
   $('#filterByType').dataset.initialized = 'true';
   let typeHTML = '<option>Any</option>';
-  const libraries = config.libraries || { "Games": "games", "Tutorials": "tutorials" };
-  for(const typeOption of Object.keys(libraries))
+  for(const typeOption of Object.keys(config.libraries))
     typeHTML += `<option ${previousType && previousType == typeOption ? 'selected' : ''}>${typeOption}</option>`;
   $('#filterByType').innerHTML = typeHTML;
 
@@ -650,7 +649,7 @@ function fillStateDetails(states, state, dom) {
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
   toggleClass($('#mainImage > i'),                     'hidden', !state.link);
-  toggleClass($('#publicLibraryUploadButtons'), 'hidden', !config.allowPublicLibraryEdits || (state.publicLibrary && Object.keys(config.libraries || { "Games": "games", "Tutorials": "tutorials" }).length <= 1));
+  toggleClass($('#publicLibraryUploadButtons'),        'hidden', !config.allowPublicLibraryEdits || (state.publicLibrary && Object.keys(config.libraries).length <= 1));
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
@@ -917,9 +916,7 @@ function fillStateDetails(states, state, dom) {
   };
   const uploadButtonsContainer = $('#publicLibraryUploadButtons');
   uploadButtonsContainer.innerHTML = '';
-  const libraries = config.libraries || { "Games": "games", "Tutorials": "tutorials" };
-  const numLibraries = Object.keys(libraries).length;
-  for (const [category, folder] of Object.entries(libraries)) {
+  for (const [category, folder] of Object.entries(config.libraries)) {
     if (state.publicLibrary && state.publicLibraryCategory === category) {
       continue;
     }
@@ -931,11 +928,7 @@ function fillStateDetails(states, state, dom) {
         toServer('moveStateWithinPublicLibrary', { id: state.id, newLibrary: folder, newCategory: category });
       };
     } else {
-      if (numLibraries > 1) {
-        button.textContent = `Add to ${category}`;
-      } else {
-        button.textContent = 'Add to public library';
-      }
+      button.textContent = `Add to public library: ${category}`;
       button.onclick = function() {
         toServer('addStateToPublicLibrary', { id: state.id, library: folder, category: category });
       };

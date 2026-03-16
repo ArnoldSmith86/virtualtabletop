@@ -34,8 +34,7 @@ class Config {
   resolveAsset(asset) {
     if(!this.publicLibraryAssets) {
       this.publicLibraryAssets = {};
-      const libraries = this.config.libraries || { "Games": "games", "Tutorials": "tutorials" };
-      for(const category of Object.values(libraries)) {
+      for(const category of Object.values(this.config.libraries)) {
         const name = this.directory('library') + '/' + category;
         if(fs.existsSync(name)) {
           for(const dir of fs.readdirSync(name))
