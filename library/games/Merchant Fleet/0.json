@@ -13,7 +13,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "<div>Layout, design, coding, and library image by LawDawg96. Released to the Public Domain under CC0.</div><div><br></div>Caravel ship icon by Amethyst Studio available under CC BY 3.0 from&nbsp;https://thenounproject.com/icon/caravel-5296171/.<div><br></div><div>All other icons have attribution as listed in the About overlay.<br><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div></div>",
-      "lastUpdate": 1773541151816,
+      "lastUpdate": 1773678819813,
       "skill": "",
       "description": "Select ships from a deck with a simplified auction and prepare your fleet to be the most successful traders by the end of three rounds.",
       "similarImage": "",
@@ -9728,7 +9728,6 @@
         "default": {
           "overflow": "visible !important",
           "white-space": "collapse",
-          "font-family": "LibreBaskerville",
           "font-size": "14px"
         },
         "#enlarged > .active": {
