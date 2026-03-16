@@ -260,7 +260,7 @@ MinifyHTML().then(function(result) {
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const isPublicLibraryGame = req.params.share.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.sendStatus(404);
 
@@ -275,7 +275,7 @@ MinifyHTML().then(function(result) {
   });
 
   async function shareDetails(shareID) {
-    const isPublicLibraryGame = shareID.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    const isPublicLibraryGame = shareID.match(/^PL:([a-z-]+):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${shareID}`])
       return null;
 
@@ -394,7 +394,9 @@ MinifyHTML().then(function(result) {
             }
           }
         } else {
-          const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
+          const routeFolderMap = { game: 'games', tutorial: 'tutorials' };
+          const routeFolder = req.params.folder || routeFolderMap[req.url.split('/')[1]] || req.url.split('/')[1];
+          const share = await shareDetails(req.params.shareID || `PL:${routeFolder}:${req.params.plName}`);
           if(share && req.url.split('/')[1] == 'tutorial') {
             ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
             ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;

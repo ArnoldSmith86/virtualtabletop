@@ -658,7 +658,7 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/'))
+  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/') && !location.href.includes('/library/'))
     startWebSocket();
 
   onMessage('warning', alert);

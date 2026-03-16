@@ -484,16 +484,7 @@ export default class Room {
       const [ , category, name ] = stateID.split(':');
       for(const [ id, state ] of Object.entries(this.state._meta.states)) {
         if(state.publicLibrary) {
-          // Backward compatibility check for "game" and "tutorial" route IDs
-          let matchCategory = state.publicLibraryCategory;
-          if (category === 'game' && state.publicLibraryCategory.toLowerCase() === 'games') {
-            matchCategory = category;
-          } else if (category === 'tutorial' && state.publicLibraryCategory.toLowerCase() === 'tutorials') {
-            matchCategory = category;
-          } else if (state.publicLibrary.startsWith(category + '/')) { // directly matching the folder
-            matchCategory = category;
-          }
-          if(matchCategory.toLowerCase() == category && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name) {
+          if(state.publicLibrary.startsWith(category + '/') && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name) {
             return Object.assign({}, state, { id });
           }
         }
