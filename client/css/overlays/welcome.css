@@ -172,7 +172,7 @@
 }
 
 
-@media (min-width: 1200px) and (min-height: 750px) {
+@media (min-width: 1400px) and (min-height: 875px) {
   #linkDetailsOverlay {
     justify-content: center;
   }
@@ -224,6 +224,12 @@
     float: left;
     margin-right: 10px;
   }
+  .mainStateImage {
+    border-radius: 10px;
+  }
+  .mainStateImage.has-ai-badge img {
+    border-top-right-radius: 12px;
+  }
   .mainStateImage img, .mainStateImage > div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
@@ -251,8 +257,11 @@
     padding: unset;
     margin: unset;
   }
-  .mainStateImage .star, .mainStateImage .star + span {
+  .mainStateImage .star, .mainStateImage .star + span, .mainStateImage .ai-badge:not(.hidden) {
     display: none;
+  }
+  .mainStateImage.has-ai-badge img {
+    border-top-right-radius: 10px;
   }
   #linkDetailsOverlay > .mainStateDetails i {
     font-size: 32px;
