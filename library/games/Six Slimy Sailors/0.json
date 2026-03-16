@@ -3622,7 +3622,7 @@
       },
       {
         "func": "GET",
-        "property": "timeV",
+        "property": "timeSeconds",
         "collection": "thisButton"
       },
       {
@@ -4343,7 +4343,6 @@
     },
     "borderRadius": 5,
     "pop2": false,
-    "timeV": 2000,
     "pop1": false,
     "1PopRoutine": [
       {
@@ -4399,48 +4398,14 @@
             "cancelButtonText": "Cancel",
             "fields": [
               {
-                "type": "select",
-                "label": "Interval",
+                "type": "slider",
                 "variable": "time",
-                "value": "${timeV}",
-                "options": [
-                  {
-                    "value": 0,
-                    "text": "0 s"
-                  },
-                  {
-                    "value": 500,
-                    "text": "0.5 s"
-                  },
-                  {
-                    "value": 1000,
-                    "text": "1.0 s"
-                  },
-                  {
-                    "value": 1500,
-                    "text": "1.5 s"
-                  },
-                  {
-                    "value": 2000,
-                    "text": "2.0 s (default)"
-                  },
-                  {
-                    "value": 2500,
-                    "text": "2.5 s"
-                  },
-                  {
-                    "value": 3000,
-                    "text": "3.0 s"
-                  },
-                  {
-                    "value": 3500,
-                    "text": "3.5 s"
-                  },
-                  {
-                    "value": 4000,
-                    "text": "4.0 s"
-                  }
-                ]
+                "value": "${timeSeconds}",
+                "min": 0,
+                "max": 4,
+                "step": 0.5,
+                "unit": " s",
+                "label": "Default: 2.0 s"
               },
               {
                 "type": "checkbox",
@@ -4452,11 +4417,17 @@
           },
           {
             "func": "SET",
+            "property": "timeSeconds",
+            "value": "${time}",
+            "collection": "thisButton"
+          },
+          "var timeMil = ${time} * 1000",
+          {
+            "func": "SET",
             "property": "timeV",
             "collection": "thisButton",
-            "value": "${time}"
+            "value": "${timeMil}"
           },
-          "var time = ${timeV}",
           {
             "func": "SET",
             "property": "pop2",
@@ -4487,7 +4458,8 @@
         "func": "CALL",
         "routine": "2Routine"
       }
-    ]
+    ],
+    "timeSeconds": 2
   },
   "background": {
     "id": "background",
@@ -4503,11 +4475,11 @@
   },
   "pawn": {
     "id": "pawn",
-    "x": 4,
-    "y": 4,
+    "x": 846,
+    "y": 28,
     "width": 45,
     "height": 75,
-    "z": 9649,
+    "z": 9681,
     "color": "#666565",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -4517,8 +4489,7 @@
       "#borderWidth": "borderWidth"
     },
     "borderColor": "black",
-    "borderWidth": 1,
-    "parent": "hp1"
+    "borderWidth": 1
   },
   "l6a": {
     "type": "label",
@@ -5162,7 +5133,7 @@
       "mode": "vs",
       "time": "60",
       "attribution": "Implementation and library cover by Mitchell Stolycia. Released for use under CCBY 4.0.<div>\nTracks artwork by Dennis Laumen. Available under CC0.\n\nArt used in the library image of this implementation:\nPool table from 8 ballin' by Mitchell Stolycia. Available under&nbsp;CCBY 4.0.\n<div>Out of Pocket library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>No Monkey library image by Mitchell Stolycia. Available under CCBY 4.0.</div><div>Card Constructor library image&nbsp;by Mitchell Stolycia. Available under CC0.</div><div>A character card from Ad Populum&nbsp;by Mitchell Stolycia. Available under CCBY 4.0.</div></div>",
-      "lastUpdate": 1773425853855,
+      "lastUpdate": 1773678686596,
       "skill": "",
       "description": "Become one of six slimy sailors and swing your stash of silver supsiciously to set sail the seven seas on the slickest ships by splashing your splosh.",
       "similarImage": "",

@@ -1,4 +1,13 @@
 function parseGameURL() {
+  const customLibraryMatch = location.href.match(/\/library\/([^/]+)\/([a-z-]+)$/);
+  if (customLibraryMatch) {
+    return {
+      type: 'public',
+      category: customLibraryMatch[1],
+      id: `PL:${customLibraryMatch[1]}:${customLibraryMatch[2]}`
+    };
+  }
+
   const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
   if(gameURLmatch) {
     if(gameURLmatch[2]) {
@@ -7,10 +16,12 @@ function parseGameURL() {
         id: gameURLmatch[2]
       };
     } else {
+      const folderMap = { game: 'games', tutorial: 'tutorials' };
+      const folder = folderMap[gameURLmatch[1]] || gameURLmatch[1];
       return {
         type: 'public',
         category: gameURLmatch[1],
-        id: `PL:${gameURLmatch[1]}:${gameURLmatch[3]}`
+        id: `PL:${folder}:${gameURLmatch[3]}`
       };
     }
   }
@@ -46,7 +57,7 @@ function checkForGameURL() {
         checkForGameURL_showError('Game not found!');
       }
     });
-  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/')) {
+  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/') || location.href.includes('/library/')) {
     checkForGameURL_showError('Invalid game name!');
   }
 }
