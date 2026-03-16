@@ -1639,7 +1639,6 @@
         "minY": 0
       }
     ],
-    "hoverParent": "grid-map",
     "image": "i/game-pieces/2D/Hex-Flat.svg",
     "svgReplaces": {
       "#primaryColor": "color",
@@ -2967,8 +2966,7 @@
       "#primaryColor": "color"
     },
     "borderColor": "black",
-    "borderWidth": "1",
-    "passed": false
+    "borderWidth": "1"
   },
   "1_seat": {
     "type": "seat",
@@ -3167,11 +3165,6 @@
             "collection": "thisButton",
             "property": "player",
             "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "color",
-            "value": "#000000"
           }
         ],
         "elseRoutine": [
@@ -3434,7 +3427,6 @@
         "elseRoutine": []
       }
     ],
-    "passed": false,
     "background_color_solid": "#bf360c",
     "background_color_transparent": "white",
     "color_options": [
@@ -3671,7 +3663,6 @@
     "border_color_forced": "black",
     "color_change_index": 1,
     "contrast_color": "#FFFFFF",
-    "player_value_label": true,
     "value": 0,
     "clickRoutine": [
       {
@@ -3768,8 +3759,7 @@
       "#primaryColor": "color"
     },
     "borderColor": "black",
-    "borderWidth": "1",
-    "passed": false
+    "borderWidth": "1"
   },
   "2_seat": {
     "type": "seat",
@@ -3785,7 +3775,6 @@
     },
     "player": "",
     "turn": false,
-    "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "textColor": "#000000",
@@ -3793,7 +3782,6 @@
     "textShadowDistance": 2,
     "background_color_transparent": "white",
     "background_color_solid": "#607d8b",
-    "passed": false,
     "turn_alert_enabled": true,
     "contrast_color": "black",
     "audio_your_turn_enabled": true
@@ -3876,8 +3864,7 @@
       "#primaryColor": "color"
     },
     "borderColor": "black",
-    "borderWidth": "1",
-    "passed": false
+    "borderWidth": "1"
   },
   "3_seat": {
     "type": "seat",
@@ -3893,13 +3880,11 @@
     },
     "player": "",
     "turn": false,
-    "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
     "textColor": "#000000",
     "textShadowBlur": 2,
     "textShadowDistance": 2,
-    "passed": false,
     "turn_alert_enabled": true,
     "background_color_transparent": "white",
     "background_color_solid": "#bf360c",
@@ -3988,8 +3973,7 @@
       "#primaryColor": "color"
     },
     "borderColor": "black",
-    "borderWidth": "1",
-    "passed": false
+    "borderWidth": "1"
   },
   "4_seat": {
     "type": "seat",
@@ -4005,10 +3989,8 @@
     },
     "player": "",
     "turn": false,
-    "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
-    "passed": false,
     "textColor": "#000000",
     "textShadowBlur": 2,
     "textShadowDistance": 2,
@@ -4035,7 +4017,6 @@
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "color_change_index": 4,
-    "passed": false,
     "contrast_color": "#FFFFFF",
     "border_color": "#4caf50",
     "glow_color": "a",
@@ -4587,10 +4568,6 @@
       "font-size": "15px",
       "color": "var(--playerColor)"
     },
-    "cursor_default_selected": false,
-    "cursor_invisible_selected": false,
-    "cursor_solid_no_name_selected": false,
-    "cursor_solid_player_name_selected": true,
     "cursor_style": "solid_player_name",
     "cursor_styleChangeRoutine": [
       "var newCSS = {}",
@@ -5706,10 +5683,7 @@
     "dropTarget": {
       "label": "ledger_label"
     },
-    "onlyVisibleForSeat": [
-      "5_seat",
-      null
-    ]
+    "onlyVisibleForSeat": []
   },
   "full_history_label": {
     "type": "label",
@@ -5760,28 +5734,6 @@
           "${PROPERTY id}"
         ]
       }
-    ],
-    "CopyThisToMakeAddendumRoutine": [
-      {
-        "note": "ADDENDUM ADDED TO HISTORY",
-        "func": "CALL",
-        "widget": "history_label",
-        "routine": "AddendumRoutine",
-        "arguments": {
-          "addendum": ""
-        }
-      }
-    ],
-    "changeRoutine": [
-      {
-        "func": "SET",
-        "collection": [
-          "history_label_copy"
-        ],
-        "property": "text",
-        "relation": "=",
-        "value": "${PROPERTY text}"
-      }
     ]
   },
   "history_toggle": {
@@ -5823,17 +5775,6 @@
     "contrast_color": "black",
     "textShadowBlur": 2,
     "textShadowDistance": 0,
-    "CopyThisToMakeAddendumRoutine": [
-      {
-        "note": "ADDENDUM ADDED TO HISTORY",
-        "func": "CALL",
-        "widget": "history_label",
-        "routine": "AddendumRoutine",
-        "arguments": {
-          "addendum": ""
-        }
-      }
-    ],
     "clickRoutine": [
       "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF history_holder}",
       "var checkArray = ${visibleToSeats} isArray",
@@ -5891,7 +5832,6 @@
         "text"
       ]
     },
-    "passed": false,
     "AddendumRoutine": [
       "var previous_ledger = ${PROPERTY text}",
       {
@@ -5901,17 +5841,6 @@
         "collection": [
           "${PROPERTY id}"
         ]
-      }
-    ],
-    "CopyThisToMakeAddendumRoutine": [
-      {
-        "note": "ADDENDUM ADDED TO HISTORY",
-        "func": "CALL",
-        "widget": "history_label",
-        "routine": "AddendumRoutine",
-        "arguments": {
-          "addendum": ""
-        }
       }
     ]
   },
@@ -6012,7 +5941,6 @@
     },
     "background_color_solid": "#bf360c",
     "background_color_transparent": "#bf360c48",
-    "passed": false,
     "x": -438,
     "y": 543,
     "height": 130,
@@ -6552,10 +6480,7 @@
       }
     },
     "button_background_color": "#bf360c",
-    "button_border_color": "#bf360c",
     "current_turn_index": "1",
-    "defaultX": 1093,
-    "defaultY": -144,
     "turn_holder": true,
     "ModifyButtonRoutine": [
       {
@@ -6846,138 +6771,6 @@
     ],
     "text": "Current Turn",
     "width": 74,
-    "previous_states": [],
-    "undo": false,
-    "NewTurnSetupRoutine": [
-      {
-        "func": "CALL",
-        "routine": "SetCurrentTurnIndexRoutine"
-      }
-    ],
-    "NextTurnRoutine": [
-      {
-        "func": "TURN",
-        "turnCycle": "forward"
-      },
-      {
-        "func": "SELECT",
-        "property": "turn",
-        "relation": "==",
-        "value": true,
-        "collection": "current_turn"
-      },
-      {
-        "func": "GET",
-        "collection": "current_turn",
-        "property": "index",
-        "variable": "current_turn_index"
-      },
-      {
-        "func": "GET",
-        "collection": [
-          "${current_turn_index}_seat"
-        ],
-        "property": "empty_hand"
-      },
-      {
-        "func": "IF",
-        "operand1": "${empty_hand}",
-        "relation": "==",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "routine": "NextTurnRoutine"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "CALL",
-            "routine": "NewTurnSetupRoutine"
-          }
-        ]
-      }
-    ],
-    "PassRoutine": [
-      {
-        "func": "CALL",
-        "routine": "NextTurnRoutine"
-      }
-    ],
-    "SetSpecificTurnRoutine": [
-      {
-        "func": "TURN",
-        "turnCycle": "seat",
-        "turn": "${new_index}_seat"
-      },
-      {
-        "func": "GET",
-        "collection": [
-          "${new_index}_seat"
-        ],
-        "property": "empty_hand"
-      },
-      {
-        "func": "IF",
-        "operand1": "${empty_hand}",
-        "relation": "==",
-        "operand2": true,
-        "thenRoutine": [
-          {
-            "func": "CALL",
-            "routine": "NextTurnRoutine"
-          }
-        ],
-        "elseRoutine": [
-          {
-            "func": "CALL",
-            "routine": "NewTurnSetupRoutine"
-          }
-        ]
-      }
-    ],
-    "UndoLoadRoutine": [
-      "var previous_states = ${PROPERTY previous_states}",
-      "var previous_state = ${previous_states} pop",
-      {
-        "func": "TURN",
-        "turnCycle": "seat",
-        "turn": "${previous_state}_seat"
-      },
-      {
-        "func": "CALL",
-        "routine": "SetCurrentTurnIndexRoutine"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "previous_states",
-        "relation": "=",
-        "value": "${previous_states}"
-      }
-    ],
-    "UndoSaveRoutine": [
-      {
-        "func": "GET",
-        "collection": "thisButton",
-        "property": "previous_states"
-      },
-      "var current_turn_index = ${PROPERTY current_turn_index}",
-      "var previous_states = ${current_turn_index} push",
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "previous_states",
-        "relation": "=",
-        "value": "${previous_states}"
-      }
-    ],
-    "clickRoutine": [
-      {
-        "func": "CALL",
-        "routine": "NextTurnRoutine"
-      }
-    ],
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
     "x": -121,
@@ -7147,7 +6940,7 @@
       "mode": "vs",
       "time": "45-60",
       "attribution": "<div>Game layout and scripting by Sergio De La Guera and Jonathan Cox, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://www.publicdomainpictures.net/ and are&nbsp;released to the Public Domain&nbsp;under CC0:</div><div><br></div><div>Cover Image: https://www.publicdomainpictures.net/en/view-image.php?image=696819&amp;picture=black-cat-paris-postcard</div><div><br></div><div>The following graphics are from https://game-icons.net and under CC BY 3.0:</div><div>Cat: https://game-icons.net/1x1/lorc/cat.html</div><div>Bastet: https://game-icons.net/1x1/delapouite/bastet.html</div><div>Feline: https://game-icons.net/1x1/delapouite/feline.html</div><div>Canned Fish: https://game-icons.net/1x1/delapouite/canned-fish.html</div><div>Lion: https://game-icons.net/1x1/lorc/lion.html</div><div>Saber Toothed Cat Head: https://game-icons.net/1x1/delapouite/saber-toothed-cat-head.html</div><div>Plain Circle: https://game-icons.net/1x1/delapouite/plain-circle.html</div><div>Money Stack:&nbsp;https://game-icons.net/1x1/delapouite/money-stack.html</div><div><br></div><div>The sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at https://pixabay.com/sound-effects/wrong-answer-129254/.</div>",
-      "lastUpdate": 1773702865434,
+      "lastUpdate": 1773704226267,
       "showName": true,
       "skill": "",
       "description": "Stake your cats turf and extort rival cats for money.",
