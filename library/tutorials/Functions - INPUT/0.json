@@ -1,36 +1,105 @@
 {
-  "_meta": {
-    "version": 20,
-    "info": {
-      "name": "Functions - INPUT",
-      "image": "/assets/-1767092614_3482",
-      "rules": "",
-      "bgg": "",
-      "year": "2021",
-      "mode": "Tutorial",
-      "time": "0",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1768613153667,
-      "skill": "",
-      "description": "",
-      "similarImage": "",
-      "similarName": "",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "",
-      "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Basic",
-      "language": "en-US",
-      "players": "1"
-    },
-    "gameSettings": {
-      "legacyModes": {}
-    }
+  "zjgm": {
+    "id": "zjgm",
+    "z": 22811,
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -100,
+    "y": 90,
+    "height": 20,
+    "parent": "button8",
+    "movable": false,
+    "movableInEdit": false,
+    "width": 300,
+    "html": "<b>Switch</b>: Outputs a variable of either <i>on</i> or <i>off</i>."
   },
-  "8fr3": {
-    "id": "8fr3",
+  "zjgm1": {
+    "id": "zjgm1",
+    "z": 22812,
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -32,
+    "y": 90,
+    "height": 20,
+    "parent": "button7",
+    "movable": false,
+    "movableInEdit": false,
+    "width": 300,
+    "html": "<b>String</b>: The example on the right uses the <i>regex</i> and <i>regexHint</i> parameters to limit the input to the numbers 0-9 and the letters a-z. No other symbols are allowed in this example regex, including spaces."
+  },
+  "zjgm2": {
+    "id": "zjgm2",
+    "z": 22811,
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "y": 90,
+    "height": 20,
+    "parent": "button5",
+    "movable": false,
+    "movableInEdit": false,
+    "x": -15,
+    "width": 300,
+    "html": "<b>Select</b>: The example on the rights uses the <i>options</i> parameter to create a selectable list of options."
+  },
+  "zjgm3": {
+    "id": "zjgm3",
+    "z": 22811,
+    "parent": "button3",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "x": -15,
+    "width": 300,
+    "html": "<b>Number</b>: The example on the right uses <i>min</i> and <i>max</i> to limit the input to a range."
+  },
+  "zjgm4": {
+    "id": "zjgm4",
+    "z": 22811,
+    "parent": "button2",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "x": -100,
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "width": 300,
+    "html": "<b>Color</b>: This uses the browser's built-in color-picker to let the player pick a color."
+  },
+  "zjgm5": {
+    "id": "zjgm5",
+    "z": 22811,
+    "parent": "button1",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left  ",
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "width": 300,
+    "x": -50,
+    "html": "<b>Checkbox</b>: Outputs a variable of either <i>true</i> or <i>false</i>."
+  },
+  "zjgm6": {
+    "id": "zjgm6",
+    "z": 22811,
+    "parent": "button4",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left ",
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "x": -15,
+    "width": 300,
+    "html": "<b>Palette</b>: The example on the right uses the <i>colors</i> parameter to limit create a list of available colors."
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
     "y": -2,
     "width": 800,
     "height": 60,
@@ -38,249 +107,28 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 60px;text-align:center",
-    "text": "Functions: INPUT",
-    "x": 400
+    "text": "Functions: INPUT (Basic)"
   },
-  "406b": {
-    "id": "406b",
+  "overview": {
+    "id": "overview",
     "x": 108,
+    "y": 80,
     "width": 1400,
     "height": 150,
     "layer": -3,
     "z": 129,
+    "movable": false,
+    "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "text": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Even if the variable is not stored, unless the user presses the continue/go button, the routine will not continue. Each of the examples immediately below demonstrates 7 of the 8 possible field types of INPUT (the 'choose' type is in another variant of this tutorial). They are each presented in their most basic and default form. The result is displayed in the button text. The lower buttons show how you can change the visual appearance of an INPUT function.",
-    "y": 80,
-    "movable": false,
-    "movableInEdit": false
+    "html": "INPUT is used to prompt a user to enter data that can be stored in a variable and acted upon. At its most basic form, it can serve as a confirmation prompt. Unless the user presses the &quotGo&quot button, the routine will not continue. Each of the examples below demonstrates 8 of the 9 possible field types of INPUT (the <b>choose</b> type is in another variant of this tutorial). They are each presented in their most basic and default form first, followed by an example(s) with changes to the parameters, when the parameter has additional options. The result (the variable used by routines) is displayed on the button."
   },
-  "bm4j": {
-    "text": "The INPUT above shows how to use the 'title' and 'subtitle' areas to provide information to the players. You can also use the css background-color property to change the color of the input rows. Number fields with min-max values will automatically show the range.",
-    "id": "bm4j",
-    "x": 4,
-    "y": 700,
-    "z": 185,
-    "width": 300,
-    "movable": false,
-    "css": "font-size: 22px; ",
-    "movableInEdit": false
-  },
-  "bm5j": {
-    "text": "The INPUT above shows how to use css to color the 'title' and 'subtitle' areas. The input box area will automatically adjust height and width to fit the content. You can also use variables in the 'value' parameter to pre-fill in data.",
-    "id": "bm5j",
-    "x": 325,
-    "y": 700,
-    "z": 121,
-    "width": 300,
-    "movable": false,
-    "css": "font-size: 22px; ",
-    "movableInEdit": false
-  },
-  "bm6j": {
-    "id": "bm6j",
-    "x": 651,
-    "y": 700,
-    "z": 9732,
-    "width": 300,
-    "text": "This button shows how you can change the default 'Go' and 'Cancel' buttons to other text or icons. The icons must be from the VTT-Symbols list. See the wiki entry on Fonts for a list of names that can be used.",
-    "movable": false,
-    "css": "font-size: 22px; ",
-    "movableInEdit": false
-  },
-  "jkmt": {
+  "button1": {
     "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "css": "background-color:beige",
-        "fields": [
-          {
-            "type": "title",
-            "text": "This is a title area."
-          },
-          {
-            "type": "subtitle",
-            "text": "This is a subtitle area."
-          },
-          {
-            "type": "number",
-            "label": "Enter a number",
-            "variable": "number1",
-            "value": 4,
-            "min": 1,
-            "max": 6
-          },
-          {
-            "type": "number",
-            "label": "Enter another number. Decimals are allowed.",
-            "variable": "number2",
-            "value": 0
-          },
-          {
-            "type": "subtitle",
-            "text": "Another subtitle."
-          },
-          {
-            "type": "switch",
-            "label": "I heard you like switches.",
-            "variable": "switch",
-            "value": "off"
-          }
-        ]
-      }
-    ],
-    "x": 95,
-    "y": 550,
-    "z": 22841,
-    "id": "jkmt",
-    "text": "INPUT"
-  },
-  "jkmt1": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "This is a title area with more text than before.",
-            "css": "background-color:purple"
-          },
-          {
-            "type": "subtitle",
-            "text": "This is a subtitle area. And it has a lot more text. In fact it will actually carry over to a second line.",
-            "css": "background-color:violet; color:white"
-          },
-          {
-            "type": "string",
-            "label": "Enter some text",
-            "variable": "string1",
-            "value": ""
-          },
-          {
-            "type": "string",
-            "label": "This string defaults to your playerName. Change it and it will change your actual playerName.",
-            "variable": "playerName",
-            "value": "${playerName}"
-          },
-          {
-            "type": "subtitle",
-            "text": "Another subtitle.",
-            "css": "background-color:violet;"
-          },
-          {
-            "type": "switch",
-            "label": "Do you still like switches?",
-            "variable": "switch",
-            "value": "on"
-          }
-        ]
-      }
-    ],
-    "x": 416,
-    "y": 550,
-    "z": 22839,
-    "id": "jkmt1",
-    "text": "INPUT"
-  },
-  "jkmt2": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "title",
-            "text": "Choose an option."
-          },
-          {
-            "type": "select",
-            "label": "Options are just arrays of options. Have as many as you need.",
-            "variable": "select",
-            "value": "${PROPERTY text}",
-            "options": [
-              {
-                "value": 1,
-                "text": "Input this"
-              },
-              {
-                "value": 2,
-                "text": "Input that"
-              },
-              {
-                "value": 3,
-                "text": "Input this and that"
-              }
-            ]
-          }
-        ],
-        "confirmButtonText": "Confirm Selection!",
-        "cancelButtonIcon": "cancel"
-      }
-    ],
-    "x": 743,
-    "y": 550,
-    "z": 22840,
-    "id": "jkmt2",
-    "text": "INPUT"
-  },
-  "jkmt3": {
-    "type": "button",
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "subtitle",
-            "text": "Check some boxes."
-          },
-          {
-            "type": "checkbox",
-            "label": "You can have a subtitle without a title",
-            "variable": "checkbox",
-            "value": true
-          },
-          {
-            "type": "checkbox",
-            "label": "Checkboxes are true/false and switches are off/on",
-            "variable": "checkbox",
-            "value": true
-          },
-          {
-            "type": "color",
-            "label": "Colors are stored as hex values. Change this color and it will change your playerColor.",
-            "variable": "playerColor",
-            "value": "${PROPERTY playerColor}"
-          }
-        ],
-        "confirmButtonText": "This color rocks",
-        "confirmButtonIcon": "palette",
-        "cancelButtonIcon": "cancel exit_fullscreen grid"
-      }
-    ],
-    "x": 1386,
-    "y": 550,
-    "z": 11,
-    "id": "jkmt3",
-    "text": "INPUT"
-  },
-  "bm7j": {
-    "id": "bm7j",
-    "x": 1294,
-    "y": 700,
-    "z": 9732,
-    "width": 300,
-    "text": "This button shows you can combine text and icons on the confirm and cancel buttons. Icons will always appear to the left of text. You cannot change the color of the confirm and cancel buttons.",
-    "movable": false,
-    "css": "font-size: 22px; ",
-    "movableInEdit": false
-  },
-  "checkboxbutton": {
-    "type": "button",
-    "id": "checkboxbutton",
-    "x": 45,
+    "id": "button1",
+    "x": 75,
     "y": 250,
     "z": 22838,
+    "text": true,
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -299,15 +147,15 @@
         "property": "text",
         "value": "${checkbox}"
       }
-    ],
-    "text": true
+    ]
   },
-  "colorbutton": {
+  "button2": {
     "type": "button",
-    "id": "colorbutton",
-    "x": 278,
+    "id": "button2",
+    "x": 465,
     "y": 250,
     "z": 22829,
+    "text": "#ff0000",
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -326,21 +174,20 @@
         "property": "text",
         "value": "${color}"
       }
-    ],
-    "text": "#ff0000"
+    ]
   },
-  "numberbutton": {
+  "button3": {
     "type": "button",
-    "id": "numberbutton",
-    "x": 512,
+    "id": "button3",
+    "x": 888,
     "y": 250,
     "z": 22835,
+    "text": "9",
     "clickRoutine": [
       {
         "func": "INPUT",
         "fields": [
           {
-            "note": "This can also have'min' and 'max' parameters.",
             "type": "number",
             "label": "Enter a number",
             "variable": "number",
@@ -354,94 +201,132 @@
         "property": "text",
         "value": "${number}"
       }
-    ],
-    "text": "9"
+    ]
   },
-  "zjgm": {
-    "id": "zjgm",
-    "z": 22811,
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "x": -15,
-    "y": 90,
-    "height": 20,
-    "text": "Switch",
-    "parent": "switchbutton",
-    "movable": false,
-    "movableInEdit": false
-  },
-  "zjgm1": {
-    "id": "zjgm1",
-    "z": 22812,
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:left  ",
-    "x": -100,
-    "y": 90,
-    "height": 20,
-    "text": "String: This example also shows how to use the 'regex' and 'regexHint' parameters to limit the input the numbers 0-9 and the letters a-z. No other symbols are allowed.",
-    "parent": "stringbutton",
-    "movable": false,
-    "movableInEdit": false,
-    "width": 300
-  },
-  "zjgm2": {
-    "id": "zjgm2",
-    "z": 22811,
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "x": -15,
-    "y": 90,
-    "height": 20,
-    "text": "Select",
-    "parent": "selectbutton",
-    "movable": false,
-    "movableInEdit": false
-  },
-  "zjgm3": {
-    "id": "zjgm3",
-    "z": 22811,
-    "parent": "numberbutton",
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "x": -15,
-    "y": 90,
-    "height": 20,
-    "text": "Number",
-    "movable": false,
-    "movableInEdit": false
-  },
-  "zjgm4": {
-    "id": "zjgm4",
-    "z": 22811,
-    "parent": "colorbutton",
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "text": "Color",
-    "x": -15,
-    "y": 90,
-    "height": 20,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "zjgm5": {
-    "id": "zjgm5",
-    "z": 22811,
-    "parent": "checkboxbutton",
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "text": "Checkbox",
-    "x": -15,
-    "y": 90,
-    "height": 20,
-    "movable": false,
-    "movableInEdit": false
-  },
-  "selectbutton": {
+  "button4": {
     "type": "button",
-    "id": "selectbutton",
-    "x": 978,
+    "id": "button4",
+    "x": 1309,
     "y": 250,
+    "z": 22835,
+    "text": "#000000",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "palette",
+            "label": "Choose a color",
+            "variable": "color",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${color}"
+      }
+    ]
+  },
+  "button5": {
+    "type": "button",
+    "id": "button5",
+    "x": 45,
+    "y": 688,
     "z": 22831,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "select",
+            "label": "Pick an option",
+            "variable": "select",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${select}"
+      }
+    ]
+  },
+  "button3a": {
+    "type": "button",
+    "id": "button3a",
+    "x": 1018,
+    "y": 250,
+    "z": 22835,
+    "text": "42",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "number",
+            "min": 25,
+            "max": 50,
+            "label": "Enter a number",
+            "variable": "number",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${number}"
+      }
+    ]
+  },
+  "button4a": {
+    "type": "button",
+    "id": "button4a",
+    "x": 1439,
+    "y": 248,
+    "z": 22835,
+    "text": "#800080",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "palette",
+            "label": "Choose a color",
+            "colors": [
+              "#000000",
+              "#0000FF",
+              "#008000",
+              "#800080",
+              "#FF0000",
+              "#FFFF00"
+            ],
+            "variable": "color",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${color}"
+      }
+    ]
+  },
+  "button5a": {
+    "type": "button",
+    "id": "button5a",
+    "x": 175,
+    "y": 688,
+    "z": 22831,
+    "text": "option 3",
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -474,15 +359,15 @@
         "property": "text",
         "value": "${select}"
       }
-    ],
-    "text": "option 3"
+    ]
   },
-  "stringbutton": {
+  "button7a": {
     "type": "button",
-    "id": "stringbutton",
-    "x": 1212,
-    "y": 250,
+    "id": "button7a",
+    "x": 1018,
+    "y": 688,
     "z": 22834,
+    "text": "Nospaces",
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -503,15 +388,15 @@
         "property": "text",
         "value": "${string}"
       }
-    ],
-    "text": "Hello"
+    ]
   },
-  "switchbutton": {
+  "button8": {
     "type": "button",
-    "id": "switchbutton",
-    "x": 1445,
-    "y": 250,
+    "id": "button8",
+    "x": 1309,
+    "y": 688,
     "z": 22816,
+    "text": "on",
     "clickRoutine": [
       {
         "func": "INPUT",
@@ -530,44 +415,23 @@
         "property": "text",
         "value": "${switch}"
       }
-    ],
-    "text": "on"
+    ]
   },
-  "zjgm6": {
-    "id": "zjgm6",
-    "z": 22811,
-    "parent": "palettebutton",
-    "fixedParent": true,
-    "css": "color: black;font-size: 22px; text-align:center  ",
-    "x": -15,
-    "y": 90,
-    "height": 20,
-    "movable": false,
-    "movableInEdit": false,
-    "text": "Palette"
-  },
-  "palettebutton": {
+  "button7": {
     "type": "button",
-    "id": "palettebutton",
-    "x": 745,
-    "y": 250,
-    "z": 22835,
+    "id": "button7",
+    "x": 888,
+    "y": 688,
+    "z": 22834,
+    "text": "Hello",
     "clickRoutine": [
       {
         "func": "INPUT",
         "fields": [
           {
-            "type": "palette",
-            "label": "Choose a color",
-            "colors": [
-              "#000000",
-              "#0000FF",
-              "#008000",
-              "#800080",
-              "#FF0000",
-              "#FFFF00"
-            ],
-            "variable": "color",
+            "type": "string",
+            "label": "Type a string",
+            "variable": "string",
             "value": "${PROPERTY text}"
           }
         ]
@@ -576,65 +440,148 @@
         "func": "SET",
         "collection": "thisButton",
         "property": "text",
-        "value": "${color}"
+        "value": "${string}"
       }
-    ],
-    "text": "#800080"
+    ]
   },
-  "bm8j": {
-    "id": "bm8j",
-    "x": 964,
-    "y": 700,
-    "z": 9732,
-    "width": 300,
-    "text": "This button shows how you can remove the option for a Cancel button. This will force players to continue with the selection and not give them a chance to return to the game without confirming.",
-    "movable": false,
-    "css": "font-size: 22px; ",
-    "movableInEdit": false
-  },
-  "jkmt4": {
+  "button6": {
     "type": "button",
+    "id": "button6",
+    "x": 465,
+    "y": 688,
+    "z": 22829,
     "clickRoutine": [
       {
         "func": "INPUT",
         "fields": [
           {
-            "type": "title",
-            "text": "No cancel button."
-          },
-          {
-            "type": "subtitle",
-            "text": "Set cancelButtonText and cancelButtonIcon to null."
-          },
-          {
-            "type": "select",
-            "label": "Options are just arrays of options. Have as many as you need.",
-            "variable": "select",
-            "value": "${PROPERTY text}",
-            "options": [
-              {
-                "value": 1,
-                "text": "Input this"
-              },
-              {
-                "value": 2,
-                "text": "Input that"
-              },
-              {
-                "value": 3,
-                "text": "Input this and that"
-              }
-            ]
+            "type": "slider",
+            "label": "Use slider to select number",
+            "variable": "slider",
+            "value": "${PROPERTY text}"
           }
-        ],
-        "cancelButtonIcon": null,
-        "cancelButtonText": null
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${slider}"
       }
     ],
-    "x": 1062,
-    "y": 550,
-    "z": 22840,
-    "id": "jkmt4",
-    "text": "INPUT"
+    "text": 5
+  },
+  "zjgm7": {
+    "id": "zjgm7",
+    "z": 22811,
+    "parent": "button6",
+    "fixedParent": true,
+    "css": "color: black;font-size: 22px; text-align:left ",
+    "y": 90,
+    "height": 20,
+    "movable": false,
+    "movableInEdit": false,
+    "x": -15,
+    "width": 300,
+    "html": "<b>Slider</b>: The middle example uses <i>min, max, step</i>, and <i>unit</i> parameters for the slider. The example on the right uses the <i>values</i> parameter to create a list of items selectable by the slider."
+  },
+  "button6a": {
+    "type": "button",
+    "id": "button6a",
+    "x": 575,
+    "y": 688,
+    "z": 22829,
+    "text": 50,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "slider",
+            "label": "Use slider to select percent",
+            "min": 0,
+            "max": 100,
+            "step": 10,
+            "unit": " %",
+            "variable": "slider",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${slider}"
+      }
+    ]
+  },
+  "button6b": {
+    "type": "button",
+    "id": "button6b",
+    "x": 675,
+    "y": 688,
+    "z": 22829,
+    "text": "Green",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "slider",
+            "label": "Use slider to select color",
+            "values": [
+              "Red",
+              "Orange",
+              "Yellow",
+              "Green",
+              "Blue",
+              "Indigo",
+              "Violet"
+            ],
+            "unit": " %",
+            "variable": "slider",
+            "value": "${PROPERTY text}"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${slider}"
+      }
+    ]
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Functions - INPUT",
+      "image": "/assets/-1767092614_3482",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1773426013185,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
   }
 }
