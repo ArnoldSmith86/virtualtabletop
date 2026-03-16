@@ -16,6 +16,10 @@
     "save": "save",
     "assets": "save/assets"
   },
+  "libraries": {
+    "Games": "games",
+    "Tutorials": "tutorials"
+  },
 
   "betaServers": {},
   "legacyServers": {}
