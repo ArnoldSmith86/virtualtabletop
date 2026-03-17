@@ -8,6 +8,26 @@ import Logging from './logging.mjs';
 import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
 import Statistics from './statistics.mjs';
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify';
+const { window } = new JSDOM('');
+const purify = DOMPurify(window);
+
+function sanitize(value) {
+  if(typeof value == 'string')
+    return purify.sanitize(value);
+
+  if(Array.isArray(value) ){
+    return value.map(sanitize);
+  }
+
+  if(value && typeof value == 'object'){
+    for(const key in value){
+      value[key] = sanitize(value[key]);
+    }
+    return value;
+  }
+}
 
 export default class Room {
   players = [];
@@ -407,10 +427,10 @@ export default class Room {
     }
 
     for(const variantID in variantInput)
-      Object.assign(variants[variantID], variantInput[variantID]);
+      Object.assign(variants[variantID], sanitize(variantInput[variantID]));
 
     meta.variants = variants;
-    Object.assign(this.state._meta.states[id], meta);
+    Object.assign(variants[variantID], sanitize(variantInput[variantID]));
 
     if(String(id).match(/^PL:/))
       this.writePublicLibraryMetaToFilesystem(id, meta);
