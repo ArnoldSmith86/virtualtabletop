@@ -8,6 +8,7 @@
   "simulateServerLag": 0,
   "customTab": null,
 
+  "roomNamesCaseSensitive": true,
   "allowPublicLibraryEdits": false,
   "adminURL": null,
 
