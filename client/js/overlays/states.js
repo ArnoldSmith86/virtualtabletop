@@ -7,6 +7,17 @@ let detailsInSidebar = false;
 let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
+const LIBRARY_TYPE_STORAGE_KEY = 'vtt.libraryTypeTab';
+
+function setLibraryTypeTab(type) {
+  if($('#filterByType')) $('#filterByType').value = type;
+  try { localStorage.setItem(LIBRARY_TYPE_STORAGE_KEY, type); } catch(e) {}
+  for(const b of $a('.libraryTypeTabs button')) {
+    if(b.parentNode) toggleClass(b, 'active', b.dataset.type === type);
+  }
+  if(typeof updateLibraryFilter === 'function') updateLibraryFilter();
+}
+if(typeof window !== 'undefined') window.setLibraryTypeTab = setLibraryTypeTab;
 
 const loadedLibraryImages = {};
 
@@ -276,8 +287,10 @@ function updateLibraryFilter() {
       if(dom.classList.contains('uploading')) {
         callback(dom, true);
       } else {
+        const categoryDiv = dom.parentElement && dom.parentElement.parentElement;
+        const isPublicLibrary = categoryDiv && $('.title', categoryDiv)?.textContent === 'Public Library';
         const textMatch     = dataset.text.match(filters.text);
-        const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
+        const typeMatch     = !isPublicLibrary || (filters.type !== '' && dataset.type.split(/[,;] */).indexOf(filters.type) != -1);
         const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
@@ -589,12 +602,39 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
-  const previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : 'Games';
+  let previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : (localStorage.getItem(LIBRARY_TYPE_STORAGE_KEY) || Object.keys(config.libraries)[0] || '');
+  const libraryTypes = Object.keys(config.libraries);
+  if(previousType && libraryTypes.indexOf(previousType) === -1)
+    previousType = libraryTypes[0] || '';
   $('#filterByType').dataset.initialized = 'true';
-  let typeHTML = '<option>Any</option>';
-  for(const typeOption of Object.keys(config.libraries))
-    typeHTML += `<option ${previousType && previousType == typeOption ? 'selected' : ''}>${typeOption}</option>`;
+  let typeHTML = `<option value="" ${previousType === '' ? 'selected' : ''}></option>`;
+  for(const typeOption of libraryTypes)
+    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${typeOption}</option>`;
   $('#filterByType').innerHTML = typeHTML;
+
+  const typeTabs = document.createElement('div');
+  typeTabs.className = 'libraryTypeTabs';
+  for(const typeOption of libraryTypes) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = typeOption;
+    btn.dataset.type = typeOption;
+    if(previousType === typeOption)
+      btn.classList.add('active');
+    btn.addEventListener('click', function() {
+      const current = $('#filterByType').value;
+      const next = current === typeOption ? '' : typeOption;
+      setLibraryTypeTab(next);
+    });
+    typeTabs.appendChild(btn);
+  }
+  const publicLib = categories['Public Library'];
+  const titleEl = $('.title', publicLib);
+  const headerWrapper = document.createElement('div');
+  headerWrapper.className = 'libraryCategoryHeader';
+  publicLib.insertBefore(headerWrapper, titleEl);
+  headerWrapper.appendChild(titleEl);
+  headerWrapper.appendChild(typeTabs);
 
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
