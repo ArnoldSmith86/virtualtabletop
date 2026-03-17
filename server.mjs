@@ -15,6 +15,7 @@ import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
 import Statistics from './server/statistics.mjs';
+import User       from './server/user.mjs';
 
 let crawlers = [];
 try { crawlers = JSON.parse(fs.readFileSync('node_modules/crawler-user-agents/crawler-user-agents.json', 'utf8')); } catch {}
