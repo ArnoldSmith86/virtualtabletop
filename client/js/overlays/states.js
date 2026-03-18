@@ -287,8 +287,7 @@ function updateLibraryFilter() {
       if(dom.classList.contains('uploading')) {
         callback(dom, true);
       } else {
-        const categoryDiv = dom.parentElement && dom.parentElement.parentElement;
-        const isPublicLibrary = categoryDiv && $('.title', categoryDiv)?.firstChild?.textContent?.trim() === 'Public Library';
+        const isPublicLibrary = dom.classList.contains('inPublicLibraryCategory');
         const textMatch     = dataset.text.match(filters.text);
         const typeMatch     = !isPublicLibrary || (filters.type !== '' && dataset.type.split(/[,;] */).indexOf(filters.type) != -1);
         const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
@@ -462,6 +461,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
+    if(target == 'Public Library')
+      entry.className += ' inPublicLibraryCategory';
     if(state.showName === false || state.showName === 'only similar')
       entry.className += ' hideMainName';
     if(state.showName === false || state.showName === 'only main')
