@@ -29,7 +29,7 @@
   left: -2px;
 }
 
-#stateFilters>span {
+#stateFilters > span {
   white-space: nowrap;
   padding-left: 5px;
 }
@@ -50,8 +50,7 @@
   left: unset;
   cursor: pointer;
 }
-
-#filterByText:placeholder-shown~#clearSearch {
+#filterByText:placeholder-shown ~ #clearSearch {
   display: none;
 }
 
@@ -66,8 +65,7 @@
   display: none;
 }
 
-#stateFilters select,
-#stateFilters input {
+#stateFilters select, #stateFilters input {
   margin: 0 5px;
 }
 
@@ -83,7 +81,6 @@
   margin: 0;
   background: var(--roomColor, #fff);
 }
-
 .libraryTypeTabs button {
   padding: 10px 16px;
   margin: 0;
@@ -96,11 +93,9 @@
   position: relative;
   bottom: -1px;
 }
-
 .libraryTypeTabs button:hover {
-  background: rgba(0, 0, 0, .04);
+  background: rgba(0,0,0,.04);
 }
-
 .libraryTypeTabs button.active {
   color: #fff;
   background: var(--VTTblue);
@@ -116,23 +111,22 @@
   border: none;
 }
 
-#filterOverflow.empty,
-#filterOverflow:not(.active)>div {
+#filterOverflow.empty, #filterOverflow:not(.active) > div {
   display: none;
 }
 
-#filterOverflow>button {
+#filterOverflow > button {
   padding: 0;
   margin: 0;
   margin-left: 5px;
 }
 
-#filterOverflow>button::before {
+#filterOverflow > button::before {
   font-size: 23px;
   width: 23px;
 }
 
-#filterOverflow>div {
+#filterOverflow > div {
   position: absolute;
   right: 10px;
   margin-top: 5px;
@@ -153,72 +147,19 @@
   overflow: auto;
 }
 
-@media (max-width: 600px),
-(max-height: 375px) {
-  #statesList {
-    overflow: unset;
-  }
-
-  #statesOverlay {
-    overflow: auto;
-  }
+@media (max-width: 600px), (max-height: 375px) {
+  #statesList { overflow: unset; }
+  #statesOverlay { overflow: auto; }
 }
 
-@media (max-width: 2260px),
-(max-height: 1412px) {
-  #statesOverlay {
-    --columns: 9;
-  }
-}
-
-@media (max-width: 2000px),
-(max-height: 1250px) {
-  #statesOverlay {
-    --columns: 8;
-  }
-}
-
-@media (max-width: 1700px),
-(max-height: 1062px) {
-  #statesOverlay {
-    --columns: 7;
-  }
-}
-
-@media (max-width: 1420px),
-(max-height: 887px) {
-  #statesOverlay {
-    --columns: 6;
-  }
-}
-
-@media (max-width: 1120px),
-(max-height: 700px) {
-  #statesOverlay {
-    --columns: 5;
-  }
-}
-
-@media (max-width: 800px),
-(max-height: 500px) {
-  #statesOverlay {
-    --columns: 4;
-  }
-}
-
-@media (max-width: 680px),
-(max-height: 425px) {
-  #statesOverlay {
-    --columns: 3;
-  }
-}
-
-@media (max-width: 520px),
-(max-height: 325px) {
-  #statesOverlay {
-    --columns: 2;
-  }
-}
+@media (max-width: 2260px), (max-height: 1412px) { #statesOverlay { --columns: 9; } }
+@media (max-width: 2000px), (max-height: 1250px) { #statesOverlay { --columns: 8; } }
+@media (max-width: 1700px), (max-height: 1062px) { #statesOverlay { --columns: 7; } }
+@media (max-width: 1420px), (max-height:  887px) { #statesOverlay { --columns: 6; } }
+@media (max-width: 1120px), (max-height:  700px) { #statesOverlay { --columns: 5; } }
+@media (max-width:  800px), (max-height:  500px) { #statesOverlay { --columns: 4; } }
+@media (max-width:  680px), (max-height:  425px) { #statesOverlay { --columns: 3; } }
+@media (max-width:  520px), (max-height:  325px) { #statesOverlay { --columns: 2; } }
 
 #statesList .title {
   border-top: 1px solid black;
@@ -234,7 +175,6 @@
   display: flex;
   align-items: center;
 }
-
 #statesList .libraryTypeTabs {
   flex: 1;
   margin: 0 0 0 1em;
@@ -250,13 +190,10 @@
   flex-grow: 0;
   flex-wrap: nowrap;
   box-shadow: inset 0px 1px 4px #00000055;
-
 }
-
 #statesList .libraryTypeTabs:empty {
   display: none;
 }
-
 #statesList .libraryTypeTabs button {
   border-radius: 100px;
   border-width: 0;
@@ -264,24 +201,20 @@
   padding: 0 1em;
   white-space: nowrap;
 }
-
 #statesList .libraryTypeTabs button.active {
   background-color: var(--VTTblue);
   color: white;
   box-shadow: 0px 1px 2px #00000055;
   pointer-events: none;
 }
-
 #statesList .list {
   display: inline-block;
   padding: 0 0 10px 10px;
 }
-
-#statesList>div {
+#statesList > div {
   position: relative;
 }
-
-#statesList>div.empty {
+#statesList > div.empty {
   display: none;
 }
 
@@ -292,15 +225,13 @@
   z-index: 3;
   margin: -60px 10px 0 0;
 }
-
-#statesList .buttons>button {
+#statesList .buttons > button {
   display: inline-flex;
   position: relative;
   top: -2px;
 }
 
-#emptyLibrary,
-#emptyLibraryByFilter {
+#emptyLibrary, #emptyLibraryByFilter {
   color: black;
   height: calc(var(--size) - 80px + 3px);
   font-style: italic;
@@ -324,27 +255,17 @@
   cursor: pointer;
   user-select: none;
 }
-
 .roomState.visible {
   display: block;
 }
-
 .uploading.roomState {
   --progress: 0;
 }
-
 @keyframes uploadingAnimation {
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 28.28px 0;
-  }
+  from { background-position:  0      0; }
+  to   { background-position: 28.28px 0; }
 }
-
-.uploading.roomState .details::before,
-.uploading.variant::before {
+.uploading.roomState .details::before, .uploading.variant::before {
   --stripesColor1: #0004;
   --stripesColor2: #0006;
   content: '';
@@ -361,12 +282,11 @@
   animation-iteration-count: infinite;
   border-left: 2px solid var(--stripesColor2);
 }
-
 .roomState.activeGame {
   box-shadow: 6px 6px 10px var(--VTTblue), -6px -6px 10px var(--VTTblue), 6px -6px 10px var(--VTTblue), -6px 6px 10px var(--VTTblue);
 }
 
-.roomState>img {
+.roomState > img {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -374,7 +294,7 @@
   top: 0;
 }
 
-.roomState>.details {
+.roomState > .details {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -403,14 +323,11 @@
   margin: 0;
   background: #00000061;
 }
-
 .roomState h4 img.emoji {
   transform: skewX(-10deg);
 }
 
-.roomState .star,
-.roomState>i,
-.roomState .ai-badge {
+.roomState .star, .roomState > i, .roomState .ai-badge {
   display: none;
   position: absolute;
   top: 0;
@@ -424,7 +341,7 @@
   width: calc(var(--size) * var(--starSize));
 }
 
-.roomState>i {
+.roomState > i {
   color: white;
   padding: 9px;
 }
@@ -445,40 +362,34 @@
   display: block;
 }
 
-div:nth-of-type(2)>.list>.roomState .star {
+div:nth-of-type(2) > .list > .roomState .star {
   color: gold;
 }
 
-.roomState.publicLibraryGame .star,
-.roomState.uploading>i.linked,
-.roomState.savedGame>i.linked,
-.roomState.linkedGame>i.linked {
+.roomState.publicLibraryGame .star, .roomState.uploading > i.linked, .roomState.savedGame > i.linked, .roomState.linkedGame > i.linked {
   display: block;
 }
 
 .roomState.hideMainName .details h3 {
   display: none;
 }
-
 .roomState.hideSimilarName:not(.savedGame) .details h4 {
   display: none;
 }
-
 .roomState.savedGame .details h4 {
   padding: 3px 8px 4px 8px;
   margin: 0;
 }
-
 .roomState h4:empty {
   margin: 0px;
   padding: 0px;
 }
 
-.roomState.noImage>img {
+.roomState.noImage > img {
   display: none;
 }
 
-.roomState>img {
+.roomState > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -489,20 +400,18 @@ div:nth-of-type(2)>.list>.roomState .star {
   margin-bottom: 20px;
 }
 
-.details .stats {
+.details .stats{
   margin-bottom: 8px;
 }
 
 
-@media (max-width: 600px),
-(max-height: 375px) {
+@media (max-width: 600px), (max-height: 375px) {
   #statesOverlay h2.title {
     position: unset;
-    margin: 0 !important;
+    margin:  0 !important;
     padding: 4px !important;
     clear: both;
   }
-
   #statesOverlay .buttons {
     position: unset;
     margin-top: 4px;
@@ -511,103 +420,75 @@ div:nth-of-type(2)>.list>.roomState .star {
     text-align: right;
     float: unset;
   }
-
-  #emptyLibrary,
-  #emptyLibraryByFilter {
+  #emptyLibrary, #emptyLibraryByFilter {
     margin: 10px;
     padding: 0;
     height: unset;
     clear: both;
   }
 }
-
-@media (max-width: 320px),
-(max-height: 200px) {
-  #filterOverflow>div {
+@media (max-width: 320px), (max-height: 200px) {
+  #filterOverflow > div {
     padding: 2px;
   }
-
   #filterOverflow span {
     margin-bottom: 2px;
   }
-
-  #statesOverlay,
-  .roomState,
-  #emptyLibrary,
-  #emptyLibraryByFilter {
-    margin: 0;
+  #statesOverlay, .roomState, #emptyLibrary, #emptyLibraryByFilter {
+    margin:  0;
     padding: 0;
   }
-
-  #emptyLibrary,
-  #emptyLibraryByFilter {
+  #emptyLibrary, #emptyLibraryByFilter {
     margin: 4px;
   }
-
   #statesOverlay .list {
     display: block;
     padding: 10px;
   }
-
   #statesOverlay .roomState {
     float: unset;
     height: 48px;
-    width: 100%;
+    width:  100%;
     margin-bottom: 4px;
     box-shadow: unset;
   }
-
   #statesOverlay .roomState.has-ai-badge .details {
     border-top-right-radius: 12px;
   }
-
   #statesOverlay .roomState.has-ai-badge.has-ai-badge img {
     border-top-right-radius: unset;
   }
-
   #statesOverlay .roomState .ai-badge {
     z-index: 1;
   }
-
-  #statesOverlay .roomState>img {
+  #statesOverlay .roomState > img {
     height: 48px;
-    width: 48px;
+    width:  48px;
   }
-
-  #statesOverlay .roomState>.details {
+  #statesOverlay .roomState > .details {
     left: 48px;
     height: 48px;
     background: #00000061;
   }
-
-  .roomState .details h3,
-  .roomState .details h4 {
+  .roomState .details h3, .roomState .details h4 {
     background: none;
     padding: 5px 5px 0 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis
   }
-
   .roomState .details h4 {
     padding: 0 5px;
   }
-
-  .roomState.hideMainName .details h3,
-  .roomState.hideSimilarName .details h4 {
+  .roomState.hideMainName .details h3, .roomState.hideSimilarName .details h4 {
     display: block;
     background: none;
   }
-
   .roomState.savedGame h3 {
     font-size: 1rem;
   }
-
   .roomState.savedGame h4 {
     font-size: 0.6rem;
   }
-
-  .roomState.savedGame br+br {
+  .roomState.savedGame br + br {
     display: none;
   }
 }
@@ -622,29 +503,28 @@ div:nth-of-type(2)>.list>.roomState .star {
   color: var(--overlayFontColor);
 }
 
-#stateDetailsOverlay>.buttons.one {
+#stateDetailsOverlay > .buttons.one {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-#stateDetailsOverlay>.buttons.two {
+#stateDetailsOverlay > .buttons.two {
   position: absolute;
   left: 10px;
   top: 10px;
   z-index: 1;
 }
 
-#stateDetailsOverlay>.buttons>button {
+#stateDetailsOverlay > .buttons > button {
   display: inline-flex;
 }
 
-#stateDetailsOverlay>.buttons>div button {
+#stateDetailsOverlay > .buttons > div button {
   width: 100%;
 }
 
-#stateDetailsOverlay.uploading>.buttons [icon=save],
-#stateDetailsOverlay:not(.uploading)>.buttons>[icon=upload] {
+#stateDetailsOverlay.uploading > .buttons [icon=save], #stateDetailsOverlay:not(.uploading) > .buttons > [icon=upload] {
   display: none;
 }
 
@@ -653,11 +533,7 @@ div:nth-of-type(2)>.list>.roomState .star {
   --similarDetailsHeight: 200px;
   --arrowButtonsSize: 160px;
 }
-
-#mainDetails,
-#similarDetails,
-#variantsList,
-#helpTexts {
+#mainDetails, #similarDetails, #variantsList, #helpTexts {
   position: absolute;
   width: 60%;
   top: 10px;
@@ -669,95 +545,65 @@ div:nth-of-type(2)>.list>.roomState .star {
   border-radius: 20px;
   overflow: auto;
 }
-
 #stateDetailsOverlay img {
   object-fit: cover;
 }
-
-#mainImage,
-#similarImage {
+#mainImage, #similarImage {
   position: fixed;
   height: var(--mainDetailsHeight);
   width: var(--mainDetailsHeight);
 }
-
-#mainImage img,
-#similarImage img,
-.variant-image img,
-#mainImage>div,
-#similarImage div,
-.variant-image div {
+#mainImage img, #similarImage img, .variant-image img, #mainImage > div, #similarImage div, .variant-image div {
   position: absolute;
   height: 100%;
   width: 100%;
   border-radius: 20px 0 0 20px;
 }
-
-#mainImage>div,
-#similarImage div,
-.variant-image div {
+#mainImage > div, #similarImage div, .variant-image div {
   background: #fff8;
 }
-
-#mainDetails>.details>div:nth-of-type(1) {
+#mainDetails > .details > div:nth-of-type(1) {
   position: absolute;
   bottom: 10px;
   left: 10px;
 }
-
-.notEditing .onlyForEdit,
-.editing .hideForEdit {
+.notEditing .onlyForEdit, .editing .hideForEdit {
   display: none !important;
 }
-
-#mainImage>div button,
-#similarImage div button,
-.variant-image div button {
+#mainImage > div button, #similarImage div button, .variant-image div button {
   margin: calc(50% - 17px) auto;
 }
-
-#mainDetails .details,
-#similarDetails .details {
+#mainDetails .details, #similarDetails .details {
   margin-left: var(--mainDetailsHeight);
   padding-left: 20px;
   padding-top: 14px;
   padding-bottom: 14px;
 }
-
-#mainDetails h1,
-#similarDetails h1 {
+#mainDetails h1, #similarDetails h1 {
   color: var(--VTTblue);
   text-align: left;
   margin-top: 0;
   margin-bottom: 8px;
 }
-
-#mainDetails .material-symbols,
-#similarDetails .material-symbols {
+#mainDetails .material-symbols, #similarDetails .material-symbols {
   top: 5px;
   position: relative;
 }
-
-#mainDetails .star,
-#mainDetails #mainImage>i,
-#mainImage span {
+#mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
   position: fixed;
   font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
-
 #mainDetails .star::before {
   font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
-
-#mainDetails #mainImage>i {
+#mainDetails #mainImage > i {
   top: unset;
   color: white;
   padding: 9px;
 }
-
 #mainImage .ai-badge {
   display: none;
   position: absolute;
@@ -774,13 +620,10 @@ div:nth-of-type(2)>.list>.roomState .star {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
   z-index: 0;
 }
-
 #mainImage .ai-badge:not(.hidden) {
   display: block;
 }
-
-#mainImage .active.star,
-#mainImage .active.star+span {
+#mainImage .active.star, #mainImage .active.star + span {
   color: gold;
 }
 
@@ -792,60 +635,52 @@ div:nth-of-type(2)>.list>.roomState .star {
   --starShadow: 0.01;
   --aiSize: 0.13;
 }
-
-#mainDetails #mainImage,
-#linkDetailsOverlay .mainStateImage {
+#mainDetails #mainImage, #linkDetailsOverlay .mainStateImage {
   --size: var(--mainDetailsHeight);
 }
-
 /* star/link/save overlay position */
 #mainDetails #mainImage button.star,
-#mainDetails #mainImage>i,
+#mainDetails #mainImage > i,
 #linkDetailsOverlay .mainStateImage button.star,
-#linkDetailsOverlay .mainStateImage>i,
+#linkDetailsOverlay .mainStateImage > i,
 #statesList .roomState .star,
-#statesList .roomState .star+i {
+#statesList .roomState .star + i {
   margin: calc(var(--starOffset) * var(--size));
   padding: 0;
 }
-
 /* star/link/save shadow */
 #mainDetails #mainImage button.star::before,
-#mainDetails #mainImage>i,
+#mainDetails #mainImage > i,
 #linkDetailsOverlay .mainStateImage button.star::before,
-#linkDetailsOverlay .mainStateImage>i,
+#linkDetailsOverlay .mainStateImage > i,
 #statesList .roomState .star,
-#statesList .roomState .star+i {
+#statesList .roomState .star + i {
   text-shadow: calc(0.5 * var(--starShadow) * var(--size)) calc(0.5 * var(--starShadow) * var(--size)) calc(var(--starShadow) * var(--size)) #444;
 }
-
 /* star count */
-#mainImage .star+span {
+#mainImage .star + span {
   width: calc(var(--size) * var(--starSize) + 2 * var(--starOffset) * var(--size));
   top: calc(0.9 * var(--size) * var(--starSize) + var(--starOffset) * var(--size));
   font-size: calc(0.5 * var(--size) * var(--starSize));
   margin-left: 0;
   text-shadow: calc(0.5 * var(--starShadow) * var(--size)) calc(0.5 * var(--starShadow) * var(--size)) calc(var(--starShadow) * var(--size)) #444;
 }
-
 /* AI badge */
 #statesList .roomState.has-ai-badge img {
   border-top-right-radius: 12px;
 }
-
 #mainDetails #mainImage,
 #linkDetailsOverlay .mainStateImage,
 #statesList .roomState {
   overflow: hidden;
 }
-
 #mainDetails #mainImage .ai-badge,
 #linkDetailsOverlay .mainStateImage .ai-badge,
 #statesList .roomState .ai-badge {
   font-size: calc(0.52 * var(--aiSize) * var(--size));
   padding: calc(0.174 * var(--aiSize) * var(--size)) calc(0.26 * var(--aiSize) * var(--size));
   border-bottom-left-radius: calc(0.43 * var(--aiSize) * var(--size));
-  box-shadow: 0 0 calc(0.174 * var(--aiSize) * var(--size)) rgba(0, 0, 0, .3);
+  box-shadow: 0 0 calc(0.174 * var(--aiSize) * var(--size)) rgba(0,0,0,.3);
 }
 
 
@@ -858,9 +693,7 @@ div:nth-of-type(2)>.list>.roomState .star {
   color: white;
   font-weight: bold;
 }
-
-#mainDetails p,
-#similarDetails p {
+#mainDetails p, #similarDetails p {
   margin-top: 8px;
   margin-bottom: 0;
 }
@@ -872,79 +705,61 @@ div:nth-of-type(2)>.list>.roomState .star {
   width: calc(50% - 15px);
   height: var(--similarDetailsHeight);
 }
-
-#stateDetailsOverlay #similarDetails.hidden,
-#stateDetailsOverlay #helpTexts.hidden {
+#stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
   display: block !important;
 }
-
 #similarDetails .details {
   margin-left: var(--similarDetailsHeight);
 }
-
-#similarDetails>.details>.hideForEdit {
+#similarDetails > .details > .hideForEdit {
   position: relative;
   min-height: 24px;
 }
-
-#similarDetails>.details>.hideForEdit>i.material-symbols {
+#similarDetails > .details > .hideForEdit > i.material-symbols {
   position: absolute;
   top: -2px;
 }
-
-#similarDetails>.details>.hideForEdit>span,
-#similarDetails>.details>.hideForEdit>a {
+#similarDetails > .details > .hideForEdit > span, #similarDetails > .details > .hideForEdit > a {
   margin-left: 28px;
   display: inline-block;
 }
-
-#similarDetails>.details>.hideForEdit>a .material-symbols {
+#similarDetails > .details > .hideForEdit > a .material-symbols {
   line-height: 0;
 }
-
 #similarDetails h1 {
   font-size: 1.3em;
 }
-
 #similarImage {
   height: var(--similarDetailsHeight);
   width: var(--similarDetailsHeight);
 }
-
 #similarDetails a {
   color: var(--overlayFontColor);
 }
-
 #stateDetailsOverlay.notEditing #similarDetails.noImage {
   padding-left: 20px;
 }
-
 #stateDetailsOverlay.notEditing #similarDetails.noImage #similarImage {
   display: none;
 }
-
 #stateDetailsOverlay.notEditing #similarDetails.noImage .details {
   margin-left: 0;
   padding-left: 0;
 }
 
-#prevState,
-#nextState {
+#prevState, #nextState {
   --size: var(--arrowButtonsSize);
   min-height: var(--arrowButtonsSize);
   position: absolute;
-  top: calc(10px + (var(--mainDetailsHeight) - var(--arrowButtonsSize)) / 2);
-  left: calc((20% - var(--arrowButtonsSize)) / 2);
+  top: calc(10px + ( var(--mainDetailsHeight) - var(--arrowButtonsSize) ) / 2);
+  left: calc(( 20% - var(--arrowButtonsSize) ) / 2);
   margin: 0;
 }
-
 #nextState {
   left: unset;
-  right: calc((20% - var(--arrowButtonsSize)) / 2);
+  right: calc(( 20% - var(--arrowButtonsSize) ) / 2);
 }
-
-#prevState button,
-#nextState button {
+#prevState button, #nextState button {
   position: absolute;
   top: -2px;
   left: -2px;
@@ -952,9 +767,7 @@ div:nth-of-type(2)>.list>.roomState .star {
   height: calc(100% + 4px);
   background: #fffa;
 }
-
-#prevState button i,
-#nextState button i {
+#prevState button i, #nextState button i {
   color: black;
   font-size: calc(0.8 * var(--arrowButtonsSize));
   margin: auto;
@@ -991,8 +804,7 @@ div:nth-of-type(2)>.list>.roomState .star {
   --progress: 0;
 }
 
-.uploading.variant>div,
-.uploading.variant>button {
+.uploading.variant > div, .uploading.variant > button {
   position: relative;
 }
 
@@ -1001,8 +813,7 @@ div:nth-of-type(2)>.list>.roomState .star {
   align-items: center;
 }
 
-.variant .variantEdit,
-.variant.editingVariant .variantNoEdit {
+.variant .variantEdit, .variant.editingVariant .variantNoEdit {
   display: none;
 }
 
@@ -1010,12 +821,11 @@ div:nth-of-type(2)>.list>.roomState .star {
   display: flex;
 }
 
-#stateDetailsOverlay.editing .variant.linked .variant-image>.variantEdit,
-.variant.linked [icon=save] {
+#stateDetailsOverlay.editing .variant.linked .variant-image > .variantEdit, .variant.linked [icon=save] {
   display: none;
 }
 
-.variant>div.variantEdit {
+.variant > div.variantEdit {
   width: 100%;
   justify-content: right;
 }
@@ -1023,7 +833,7 @@ div:nth-of-type(2)>.list>.roomState .star {
 .variant .variant-description {
   width: 100%;
   font-size: 0.8rem;
-  line-height: 0.8rem !important;
+  line-height: 0.8rem!important;
   padding: 0 0 5px;
   font-weight: normal;
 }
@@ -1052,7 +862,6 @@ div:nth-of-type(2)>.list>.roomState .star {
   margin: 1px 5px 1px 0;
   border-radius: 3px;
 }
-
 .variant .variant-image img {
   height: 34px;
   width: 34px;
@@ -1114,59 +923,40 @@ div:nth-of-type(2)>.list>.roomState .star {
   padding: 5px;
 }
 
-@media (max-width: 1260px),
-(max-height: 787px),
-(min-width: 1421px) and (min-height: 888px) {
+@media (max-width: 1260px), (max-height: 787px), (min-width: 1421px) and (min-height: 888px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 200px;
     --similarDetailsHeight: 160px;
     --arrowButtonsSize: 100px;
   }
-
-  #mainDetails .details,
-  #similarDetails .details {
+  #mainDetails .details, #similarDetails .details {
     padding-top: 10px;
     padding-bottom: 10px;
   }
-
-  #mainDetails>.details>div+div {
+  #mainDetails > .details > div + div {
     display: inline-block;
     font-size: 14px;
     margin-right: 10px;
   }
-
   #mainDetails .material-symbols {
     font-size: 18px;
     top: 3px;
   }
-
-  #nextState .details,
-  #prevState .details {
+  #nextState .details, #prevState .details {
     display: none;
   }
 }
-
-@media (max-width: 1040px),
-(max-height: 650px),
-(min-width: 1421px) and (min-height: 888px) {
+@media (max-width: 1040px), (max-height: 650px), (min-width: 1421px) and (min-height: 888px) {
   .variant {
     padding: .11rem .5rem;
   }
 }
-
-@media (max-width: 957px),
-(max-height: 600px),
-(max-width: 1000px) and (max-height: 643px),
-(min-width: 1421px) and (min-height: 888px) {
+@media (max-width: 957px), (max-height: 600px), (max-width: 1000px) and (max-height: 643px), (min-width: 1421px) and (min-height: 888px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 150px;
     --similarDetailsHeight: 150px;
   }
-
-  #mainDetails,
-  #similarDetails,
-  #variantsList,
-  #helpTexts {
+  #mainDetails, #similarDetails, #variantsList, #helpTexts {
     position: unset;
     overflow: unset;
     margin: 20px auto;
@@ -1175,230 +965,164 @@ div:nth-of-type(2)>.list>.roomState .star {
     height: unset;
     padding: 20px;
   }
-
-  #stateDetailsOverlay #similarDetails.hidden,
-  #stateDetailsOverlay #helpTexts.hidden {
+  #stateDetailsOverlay #similarDetails.hidden, #stateDetailsOverlay #helpTexts.hidden {
     display: none !important;
   }
-
   #mainDetails {
     position: relative;
     top: 0;
     left: 0;
     margin-top: 60px;
   }
-
-  #mainImage,
-  #similarImage {
+  #mainImage, #similarImage {
     position: relative;
     float: left;
     margin-right: 10px;
   }
-
   #mainImage {
     border-radius: 10px;
   }
-
-  #mainImage img,
-  #similarImage img,
-  #mainImage>div,
-  #similarImage div {
+  #mainImage img, #similarImage img, #mainImage > div, #similarImage div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
   }
-
   #mainDetails.has-ai-badge #mainImage img {
     border-top-right-radius: 12px;
   }
-
-  #mainDetails>.details>div:nth-of-type(1) {
+  #mainDetails > .details > div:nth-of-type(1) {
     position: absolute;
     bottom: unset;
     top: 140px;
     left: 30px;
   }
-
-  #mainDetails .details,
-  #similarDetails .details {
+  #mainDetails .details, #similarDetails .details {
     padding-top: 0;
     padding-bottom: 0;
   }
-
-  #mainDetails .star,
-  #mainDetails #mainImage>i,
-  #mainImage .ai-badge {
+  #mainDetails .star, #mainDetails #mainImage > i, #mainImage .ai-badge {
     position: absolute;
   }
-
   #mainImage .ai-badge {
     font-size: 12px;
     padding: 4px 6px;
     border-radius: 0 10px 0 10px;
   }
-
-  #nextState,
-  #prevState {
+  #nextState, #prevState {
     display: none !important;
   }
-
   .variant {
     padding: .25rem .5rem;
   }
-
   #helpTexts {
     padding: 0 20px 20px 20px;
   }
 }
-
-@media (max-width: 500px),
-(max-height: 312px) {
+@media (max-width: 500px), (max-height: 312px) {
   #stateDetailsOverlay {
     --mainDetailsHeight: 50px;
     --similarDetailsHeight: 50px;
   }
-
-  #mainDetails,
-  #similarDetails,
-  #variantsList,
-  #helpTexts {
+  #mainDetails, #similarDetails, #variantsList, #helpTexts {
     padding: 10px;
     margin: 10px auto;
   }
-
   #mainDetails {
     margin-top: 60px;
   }
-
-  #mainDetails h1,
-  #similarDetails h1 {
+  #mainDetails h1, #similarDetails h1 {
     margin: 8px;
     min-height: 40px;
   }
-
-  #mainDetails .details,
-  #similarDetails .details {
+  #mainDetails .details, #similarDetails .details {
     margin: unset;
     padding: unset;
   }
-
-  #mainDetails>.details>div:nth-of-type(1) {
+  #mainDetails > .details > div:nth-of-type(1) {
     position: unset;
   }
-
-  #mainDetails .star::before,
-  #mainDetails #mainImage>i {
+  #mainDetails .star::before, #mainDetails #mainImage > i {
     font-size: 32px;
     width: 32px;
   }
-
-  #mainImage button,
-  #similarImage button {
+  #mainImage button, #similarImage button {
     font-size: 0;
     padding: 5px;
   }
-
-  #mainImage button::before,
-  #similarImage button::before {
+  #mainImage button::before, #similarImage button::before {
     margin: 0;
   }
-
   #mainImage span {
     display: none;
   }
-
   #mainImage .ai-badge:not(.hidden) {
     display: none;
   }
-
   #variantsList {
     padding: 5px 0;
   }
-
   .variantsList {
     padding: unset;
   }
-
   #variantsList .variant {
     display: block;
   }
-
   #variantsList .variant-image img {
     float: left;
   }
-
-  .variant>div,
-  #variantsList .play {
+  .variant > div, #variantsList .play {
     display: inline-flex;
   }
-
-  .variant>.variant-name {
+  .variant > .variant-name {
     display: block;
     min-height: 40px;
     width: unset;
   }
-
-  .variant>.variantEdit {
+  .variant > .variantEdit {
     flex-direction: column;
     align-items: flex-start;
   }
-
   #stateDetailsOverlay.notEditing #similarDetails.noImage {
     padding-left: 10px;
   }
-
   #helpTexts {
     padding: 0 10px 10px 10px;
   }
-
   #helpTexts h3 {
     margin: 10px 0;
   }
 }
-
-@media (max-width: 270px),
-(max-height: 168px) {
+@media (max-width: 270px), (max-height: 168px) {
   #stateDetailsOverlay.editing #mainDetails {
     margin-top: 0;
   }
-
-  #stateDetailsOverlay.editing>.buttons {
+  #stateDetailsOverlay.editing > .buttons {
     position: unset;
     margin: 10px;
   }
-
   #stateDetailsOverlay.editing .richtext-controls {
     position: unset;
   }
 }
-
-@media (min-width: 1421px) and (min-height: 888px) {
-
-  /* sidebar */
+@media (min-width: 1421px) and (min-height: 888px) { /* sidebar */
   #statesOverlay.withDetails {
     padding-right: calc((var(--size) + 22px) * 3);
   }
-
-  #statesOverlay.withDetails>#stateDetailsOverlay {
+  #statesOverlay.withDetails > #stateDetailsOverlay {
     display: flex !important;
     position: absolute;
     width: calc((var(--size) + 22px) * 3);
     right: 0;
     left: unset;
   }
-
-  #statesOverlay.withDetails #filterOverflow>div {
+  #statesOverlay.withDetails #filterOverflow > div {
     right: calc((var(--size) + 22px) * 3 + 10px);
   }
 
   #stateDetailsOverlay {
     background: var(--roomColor);
   }
-
-  #helpTexts,
-  #mainDetails,
-  #similarDetails,
-  #variantsList {
+  #helpTexts, #mainDetails, #similarDetails, #variantsList {
     background: white;
   }
 }
@@ -1420,104 +1144,67 @@ div:nth-of-type(2)>.list>.roomState .star {
 
 /* stateAddOverlay, variantAddOverlay */
 
-#stateAddOverlay,
-#variantAddOverlay {
+#stateAddOverlay, #variantAddOverlay {
   padding: 0;
   justify-content: center;
 }
-
-#stateAddOverlay h1,
-#variantAddOverlay h1 {
+#stateAddOverlay h1, #variantAddOverlay h1 {
   margin: 0;
 }
-
-#stateAddOverlay input,
-#variantAddOverlay select {
+#stateAddOverlay input, #variantAddOverlay select {
   width: 100%;
   box-sizing: border-box;
 }
-
-#stateAddOverlay>div:not(.titleWithCloseButton),
-#variantAddOverlay>div:not(.titleWithCloseButton) {
+#stateAddOverlay > div:not(.titleWithCloseButton), #variantAddOverlay > div:not(.titleWithCloseButton) {
   display: grid;
   gap: 20px;
   padding: 20px;
   max-width: 850px;
   margin: 0 auto;
 }
-
-#stateAddOverlay>.titleWithCloseButton,
-#variantAddOverlay>.titleWithCloseButton {
+#stateAddOverlay > .titleWithCloseButton, #variantAddOverlay > .titleWithCloseButton {
   max-width: 890px;
 }
-
-#stateAddOverlay>.titleWithCloseButton button,
-#variantAddOverlay>.titleWithCloseButton button {
+#stateAddOverlay > .titleWithCloseButton button, #variantAddOverlay > .titleWithCloseButton button {
   margin-right: 20px;
 }
-
-#stateAddOverlay>div>div:nth-of-type(1),
-#variantAddOverlay>div>div:nth-of-type(1) {
+#stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
   grid-column: 1 / span 2;
 }
-
-@media (max-width: 880px),
-(max-height: 550px) {
-
-  #stateAddOverlay,
-  #variantAddOverlay {
+@media (max-width: 880px), (max-height: 550px) {
+  #stateAddOverlay, #variantAddOverlay {
     justify-content: unset;
   }
-
-  #stateAddOverlay .titleWithCloseButton,
-  #variantAddOverlay .titleWithCloseButton {
+  #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
     margin-top: 20px;
   }
 }
-
-@media (max-width: 600px),
-(max-height: 375px) {
-
-  #stateAddOverlay,
-  #variantAddOverlay {
+@media (max-width: 600px), (max-height: 375px) {
+  #stateAddOverlay, #variantAddOverlay {
     padding: 0;
   }
-
-  #stateAddOverlay>div>div:nth-of-type(1),
-  #variantAddOverlay>div>div:nth-of-type(1) {
+  #stateAddOverlay > div > div:nth-of-type(1), #variantAddOverlay > div > div:nth-of-type(1) {
     grid-column: unset;
   }
 }
-
-@media (max-width: 300px),
-(max-height: 187px) {
-
-  #stateAddOverlay .titleWithCloseButton,
-  #variantAddOverlay .titleWithCloseButton {
+@media (max-width: 300px), (max-height: 187px) {
+  #stateAddOverlay .titleWithCloseButton, #variantAddOverlay .titleWithCloseButton {
     margin-top: 10px;
   }
-
-  #stateAddOverlay h1,
-  #variantAddOverlay h1 {
+  #stateAddOverlay h1, #variantAddOverlay h1 {
     text-align: left;
     margin: 0 50px 10px 5px;
   }
-
-  #stateAddOverlay .titleWithCloseButton button,
-  #variantAddOverlay .titleWithCloseButton button {
+  #stateAddOverlay .titleWithCloseButton button, #variantAddOverlay .titleWithCloseButton button {
     right: 0;
     top: 0;
     margin-right: 10px;
   }
-
-  #stateAddOverlay>div:not(.titleWithCloseButton),
-  #variantAddOverlay>div:not(.titleWithCloseButton) {
+  #stateAddOverlay > div:not(.titleWithCloseButton), #variantAddOverlay > div:not(.titleWithCloseButton) {
     gap: 10px;
     padding: 0;
   }
-
-  #stateAddOverlay>div>div,
-  #variantAddOverlay>div>div {
+  #stateAddOverlay > div > div, #variantAddOverlay > div > div {
     padding: 5px;
     border-radius: 10px;
   }
@@ -1541,7 +1228,7 @@ div:nth-of-type(2)>.list>.roomState .star {
   margin-top: 0;
 }
 
-#stateSaveOverlay>button {
+#stateSaveOverlay > button {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -1552,35 +1239,30 @@ div:nth-of-type(2)>.list>.roomState .star {
   box-sizing: border-box;
 }
 
-#stateSaveOverlay>div>div {
+#stateSaveOverlay > div > div {
   max-width: 600px;
   margin: 0 auto;
 }
 
-@media (max-width: 500px),
-(max-height: 312px) {
+@media (max-width: 500px), (max-height: 312px) {
   #stateSaveOverlay {
     justify-content: unset;
   }
 }
 
-@media (max-width: 300px),
-(max-height: 187px) {
+@media (max-width: 300px), (max-height: 187px) {
   #stateSaveOverlay {
     padding: 0;
   }
-
   #stateSaveOverlay h1 {
     text-align: left;
     margin: 10px 50px 10px 5px;
   }
-
   #stateSaveOverlay .titleWithCloseButton button {
     right: 10px;
     top: 10px;
   }
-
-  #stateSaveOverlay>div>div {
+  #stateSaveOverlay > div > div {
     padding: 5px;
     border-radius: 10px;
   }
@@ -1621,36 +1303,31 @@ div:nth-of-type(2)>.list>.roomState .star {
   box-sizing: border-box;
 }
 
-#shareLinkOverlay>div>div {
+#shareLinkOverlay > div > div {
   max-width: 600px;
   margin: 0 auto;
 }
 
-@media (max-width: 800px),
-(max-height: 500px) {
+@media (max-width: 800px), (max-height: 500px) {
   #shareLinkOverlay {
     justify-content: unset;
   }
 }
 
-@media (max-width: 400px),
-(max-height: 250px) {
+@media (max-width: 400px), (max-height: 250px) {
   #shareLinkOverlay {
     padding: 0;
   }
-
   #shareLinkOverlay h1 {
     position: unset;
     text-align: left;
     margin: 10px 50px 10px 5px;
   }
-
   #shareLinkOverlay .titleWithCloseButton button {
     right: 10px;
     top: 10px;
   }
-
-  #shareLinkOverlay>div>div {
+  #shareLinkOverlay > div > div {
     padding: 5px;
     border-radius: 10px;
   }
@@ -1662,18 +1339,17 @@ div:nth-of-type(2)>.list>.roomState .star {
 
 /* updateImageOverlay */
 
-#updateImageOverlay>h1 {
+#updateImageOverlay > h1 {
   margin-top: 0;
 }
 
-#updateImageOverlay>div:nth-child(2) {
+#updateImageOverlay > div:nth-child(2) {
   display: flex;
   justify-content: space-evenly;
   flex-grow: 1;
 }
 
-#updatePreviousImage,
-#updateCurrentImage {
+#updatePreviousImage, #updateCurrentImage {
   display: inline-flex;
   background: var(--roomColor);
   border-radius: 20px;
@@ -1715,14 +1391,12 @@ div:nth-of-type(2)>.list>.roomState .star {
 }
 
 
-@media (max-width: 1000px),
-(max-height: 625px) {
+@media (max-width: 1000px), (max-height: 625px) {
   #updateImageOverlay {
     padding: 10px;
   }
 
-  #updatePreviousImage,
-  #updateCurrentImage {
+  #updatePreviousImage, #updateCurrentImage {
     padding: 10px;
     margin: 10px;
   }
@@ -1731,22 +1405,17 @@ div:nth-of-type(2)>.list>.roomState .star {
     margin-left: 4px;
   }
 }
-
-@media (max-width: 800px),
-(max-height: 500px) {
+@media (max-width: 800px), (max-height: 500px) {
   #updateImageOverlay h1 {
     display: none;
   }
 }
-
-@media (max-width: 600px),
-(max-height: 375px) {
-  #updateImageOverlay>div:nth-child(2) {
+@media (max-width: 600px), (max-height: 375px) {
+  #updateImageOverlay > div:nth-child(2) {
     flex-direction: column;
   }
 
-  #updatePreviousImage,
-  #updateCurrentImage {
+  #updatePreviousImage, #updateCurrentImage {
     width: unset;
   }
 
@@ -1755,16 +1424,12 @@ div:nth-of-type(2)>.list>.roomState .star {
     max-height: 400px;
   }
 }
-
-@media (max-width: 400px),
-(max-height: 250px) {
+@media (max-width: 400px), (max-height: 250px) {
   #updateButtonBar {
     flex-direction: column;
   }
 }
-
-@media (max-width: 300px),
-(max-height: 187px) {
+@media (max-width: 300px), (max-height: 187px) {
   #updateImageOverlay h2 {
     height: unset;
   }
