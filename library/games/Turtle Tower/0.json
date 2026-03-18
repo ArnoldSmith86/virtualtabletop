@@ -11318,16 +11318,6 @@
     "borderColor": "black",
     "borderWidth": "1"
   },
-  "nhg": {
-    "type": "card",
-    "id": "nhg",
-    "parent": "h086",
-    "deck": "tipsDeck",
-    "cardType": "tipsTurnActions",
-    "x": 1119,
-    "y": 791,
-    "z": 11
-  },
   "tipsTurnActions": {
     "type": "card",
     "id": "tipsTurnActions",
