@@ -3191,7 +3191,7 @@ function jePreProcessText(t, returnValidJSON=true) {
   if(returnValidJSON)
     return t;
 
-  // Convert \n escape sequences within JSON strings to actual newlines for display.
+  // Convert \n escape sequences within JSON strings to actual newlines for display
   let result = '';
   let inString = false;
   let escapeNext = false;
