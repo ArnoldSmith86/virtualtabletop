@@ -7,17 +7,14 @@ let detailsInSidebar = false;
 let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
-const LIBRARY_TYPE_STORAGE_KEY = 'vtt.libraryTypeTab';
 
 function setLibraryTypeTab(type) {
-  if($('#filterByType')) $('#filterByType').value = type;
-  try { localStorage.setItem(LIBRARY_TYPE_STORAGE_KEY, type); } catch(e) {}
-  for(const b of $a('.libraryTypeTabs button')) {
-    if(b.parentNode) toggleClass(b, 'active', b.dataset.type === type);
-  }
-  if(typeof updateLibraryFilter === 'function') updateLibraryFilter();
+  $('#filterByType').value = type;
+  localStorage.setItem('libraryTypeTab', type);
+  for(const b of $a('.libraryTypeTabs button'))
+    toggleClass(b, 'active', b.dataset.type === type);
+  updateLibraryFilter();
 }
-if(typeof window !== 'undefined') window.setLibraryTypeTab = setLibraryTypeTab;
 
 const loadedLibraryImages = {};
 
@@ -603,7 +600,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
-  let previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : (localStorage.getItem(LIBRARY_TYPE_STORAGE_KEY) || Object.keys(config.libraries)[0] || '');
+  let previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : (localStorage.getItem('libraryTypeTab') || Object.keys(config.libraries)[0] || '');
   const libraryTypes = Object.keys(config.libraries);
   if(previousType && libraryTypes.indexOf(previousType) === -1)
     previousType = libraryTypes[0] || '';

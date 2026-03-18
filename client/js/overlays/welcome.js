@@ -84,8 +84,8 @@ async function playButtonClick(updateProgress) {
   $('#statesButton').click();
   $(`#statesList [data-id="${stateID}"]`).click();
 
-  if(share.category == 'tutorial' && typeof window.setLibraryTypeTab === 'function')
-    window.setLibraryTypeTab('Tutorials');
+  if(share.category == 'tutorial')
+    setLibraryTypeTab('Tutorials');
 }
 
 async function joinRoom(newRoomID) {
