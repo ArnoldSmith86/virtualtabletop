@@ -3101,97 +3101,15 @@ function jePostProcessObject(o) {
   return copy;
 }
 
-function jeBuildTextContext() {
-  const stack = [];
+function jePostProcessText(t) {
+  // Convert actual newlines within JSON strings back to \n escape sequences.
+  // Windows clipboards typically use CRLF, so ignore \r and let the following \n be escaped.
+  let result = '';
   let inString = false;
   let escapeNext = false;
-  let stringIsKey = false;
-  let stringValueKey = null;
-  let stringBuffer = '';
-
-  function currentContainer() {
-    return stack[stack.length - 1];
-  }
-
-  return {
-    enterChar(char) {
-      if (inString) {
-        if (escapeNext) {
-          stringBuffer += char;
-          escapeNext = false;
-          return { inString, stringIsKey, stringValueKey };
-        }
-
-        if (char === '\\') {
-          escapeNext = true;
-          stringBuffer += char;
-          return { inString, stringIsKey, stringValueKey };
-        }
-
-        if (char === '"') {
-          inString = false;
-          if (stringIsKey) {
-            const container = currentContainer();
-            if (container && container.type === 'object')
-              container.pendingKey = stringBuffer;
-          }
-          stringBuffer = '';
-          stringIsKey = false;
-          stringValueKey = null;
-          return { inString, stringIsKey, stringValueKey };
-        }
-
-        stringBuffer += char;
-        return { inString, stringIsKey, stringValueKey };
-      }
-
-      if (char === '"') {
-        const container = currentContainer();
-        stringBuffer = '';
-        if (container && container.type === 'object' && container.expectingKey) {
-          inString = true;
-          stringIsKey = true;
-          stringValueKey = null;
-        } else {
-          inString = true;
-          stringIsKey = false;
-          stringValueKey = container && container.type === 'object' ? container.pendingKey : null;
-        }
-        return { inString, stringIsKey, stringValueKey };
-      }
-
-      if (/\s/.test(char))
-        return { inString, stringIsKey, stringValueKey };
-
-      if (char === '{')
-        stack.push({ type: 'object', expectingKey: true, pendingKey: null });
-      else if (char === '[')
-        stack.push({ type: 'array' });
-      else if (char === ':' && currentContainer() && currentContainer().type === 'object')
-        currentContainer().expectingKey = false;
-      else if (char === ',') {
-        const container = currentContainer();
-        if (container && container.type === 'object') {
-          container.expectingKey = true;
-          container.pendingKey = null;
-        }
-      } else if (char === '}' || char === ']')
-        stack.pop();
-
-      return { inString, stringIsKey, stringValueKey };
-    }
-  };
-}
-
-function jePostProcessText(t) {
-  // Convert literal control characters inside html strings into valid JSON escapes.
-  let result = '';
-  let escapeNext = false;
-  const context = jeBuildTextContext();
   
   for (let i = 0; i < t.length; i++) {
     const char = t[i];
-    const { inString, stringValueKey } = context.enterChar(char);
     
     if (escapeNext) {
       result += char;
@@ -3205,23 +3123,18 @@ function jePostProcessText(t) {
       continue;
     }
     
-    if (inString && stringValueKey === 'html' && char < ' ') {
-      if (char === '\n')
-        result += '\\n';
-      else if (char === '\r')
-        result += '\\r';
-      else if (char === '\t')
-        result += '\\t';
-      else if (char === '\b')
-        result += '\\b';
-      else if (char === '\f')
-        result += '\\f';
-      else
-        result += `\\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`;
+    if (char === '"') {
+      inString = !inString;
+      result += char;
       continue;
     }
-
-    result += char;
+    
+    if (inString && char === '\r')
+      continue;
+    else if (inString && char === '\n')
+      result += '\\n';
+    else
+      result += char;
   }
   
   // Handle case where escapeNext is still true at end (shouldn't happen in valid JSON, but be safe)
@@ -3278,34 +3191,32 @@ function jePreProcessText(t, returnValidJSON=true) {
   if(returnValidJSON)
     return t;
 
-  // Convert html string escapes back to literal whitespace for display/editing.
+  // Convert \n escape sequences within JSON strings to actual newlines for display.
   let result = '';
+  let inString = false;
   let escapeNext = false;
-  const context = jeBuildTextContext();
   
   for (let i = 0; i < t.length; i++) {
     const char = t[i];
-    const { inString, stringValueKey } = context.enterChar(char);
     
     if (escapeNext) {
-      if (inString && char === 'n')
+      if (inString && char === 'n') {
         result += '\n';
-      else if (inString && stringValueKey === 'html' && char === 'r')
-        result += '\r';
-      else if (inString && stringValueKey === 'html' && char === 't')
-        result += '\t';
-      else if (inString && stringValueKey === 'html' && char === 'b')
-        result += '\b';
-      else if (inString && stringValueKey === 'html' && char === 'f')
-        result += '\f';
-      else
+      } else {
         result += '\\' + char;
+      }
       escapeNext = false;
       continue;
     }
     
     if (char === '\\') {
       escapeNext = true;
+      continue;
+    }
+    
+    if (char === '"') {
+      inString = !inString;
+      result += char;
       continue;
     }
     
