@@ -587,8 +587,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     for(const uploadingState of categoryUploadingStates)
       insertUploadingState(uploadingState, Object.values(categories)[categoryIndex]);
 
+  const libraryTypeKeys = Object.keys(config.libraries);
   for(const [ title, category ] of Object.entries(categories)) {
-    $('.title', category).prepend(title);
+    const displayTitle = (title === 'Public Library' && libraryTypeKeys.length === 1) ? libraryTypeKeys[0] : title;
+    $('.title', category).prepend(displayTitle);
     $('#statesList').appendChild(category);
   }
 
