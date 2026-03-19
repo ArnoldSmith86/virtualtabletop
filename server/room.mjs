@@ -117,7 +117,7 @@ export default class Room {
         }
 
         if(type != 'link' || meta.importerTemp)
-          fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
+          this.writeStateToFilesystem(stateID, newVariantID, variant);
 
         let variantMeta = {
           players: meta.players,
@@ -598,7 +598,7 @@ export default class Room {
             else
               content._meta = { version: 8 };
             Logging.log(`setting missing file version to ${content._meta.version} for ${id} in room ${this.id}`);
-            fs.writeFileSync(this.variantFilename(id, 0), JSON.stringify(content));
+            this.writeStateToFilesystem(id, 0, content);
           }
         }
       }
@@ -935,7 +935,7 @@ export default class Room {
       language: metadata.language,
       variant:  metadata.variant
     };
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(newState, null, '  '));
+    this.writeStateToFilesystem(stateID, variantID, newState);
     if(setToActiveState)
       this.state._meta.activeState = { stateID, variantID };
     this.sendMetaUpdate();
@@ -944,10 +944,8 @@ export default class Room {
   saveState(player, players, updateCurrentSave) {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
-      const newContent = {...this.state};
-      newContent._meta = { version: this.state._meta.version, gameSettings: this.state._meta.gameSettings };
       this.state._meta.states[stateID].saveDate = +new Date();
-      fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
+      this.writeStateToFilesystem(stateID, 0, this.state);
       return this.sendMetaUpdate();
     }
 
@@ -1129,7 +1127,7 @@ export default class Room {
   async unlinkState(player, stateID) {
     for(const [ variantID, variant ] of Object.entries(this.state._meta.states[stateID].variants)) {
       const variantState = await FileLoader.readVariantFromLink(variant.link);
-      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variantState, null, '  '));
+      this.writeStateToFilesystem(stateID, variantID, variantState);
       delete variant.link;
     }
     delete this.state._meta.states[stateID].link;
@@ -1246,6 +1244,12 @@ export default class Room {
 
     copy._meta.info.lastUpdate = +new Date();
 
+    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+  }
+
+  writeStateToFilesystem(stateID, variantID, state) {
+    const copy = {...state};
+    copy._meta = { version: copy._meta.version, gameSettings: copy._meta.gameSettings };
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 
