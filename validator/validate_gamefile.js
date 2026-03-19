@@ -48,7 +48,7 @@ const FACE_OBJECT_VALID_PROPS = {
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
     icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
     text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
-    html: FACE_OBJECT_COMMON_PROPS
+    html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
 };
 
 // Common properties for all widgets
