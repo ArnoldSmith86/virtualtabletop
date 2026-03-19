@@ -1927,12 +1927,12 @@ class PropertiesModule extends SidebarModule {
     typographyWrap.appendChild(colorInput);
     typographyWrap.appendChild(fontSizeInput);
     typographyWrap.appendChild(this.renderDivider());
-    typographyWrap.appendChild(this.renderSelectionButton(widget, 'B', 'font-weight', 'bold'));
-    typographyWrap.appendChild(this.renderSelectionButton(widget, 'I', 'font-style', 'italic'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-weight', 'bold', 'css', 'default', 'format_bold', 'Bold'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-style', 'italic', 'css', 'default', 'format_italic', 'Italic'));
     typographyWrap.appendChild(this.renderDivider());
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '◀', 'text-align', 'left'));
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '▮', 'text-align', 'center'));
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '▶', 'text-align', 'right'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'left', 'css', 'default', 'format_align_left', 'Align left'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'center', 'css', 'default', 'format_align_center', 'Align center'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'right', 'css', 'default', 'format_align_right', 'Align right'));
 
     textAreaWrap.appendChild(textTitle);
     textAreaWrap.appendChild(textArea);
@@ -1969,9 +1969,15 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
   }
 
-  renderSelectionButton(widget, title, property, value, css='css', cssClass='default') {
+  renderSelectionButton(widget, title, property, value, css='css', cssClass='default', icon=null, tooltip='') {
     const button = document.createElement('button');
+    if (icon)
+      button.setAttribute('icon', icon);
     button.textContent = title;
+    if (tooltip) {
+      button.title = tooltip;
+      button.setAttribute('aria-label', tooltip);
+    }
     button.style.padding = '4px 8px';
     button.style.minWidth = '30px';
     
@@ -2034,7 +2040,10 @@ class PropertiesModule extends SidebarModule {
       wrap.appendChild(unit);
     }
 
-    input.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, input.value+fontSize.unit, cssClass));
+    input.oninput = () => {
+      this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, input.value+fontSize.unit, cssClass));
+      if (widget.applyDeltaToDOM) widget.applyDeltaToDOM({ [css]: widget.get(css) });
+    };
     
     this.addPropertyListener(widget, css, w => {
       if (document.activeElement !== input)
