@@ -156,7 +156,7 @@ function checkURLproperties(connected) {
     }
     if(urlProperties.askID) {
       on('#askIDoverlay button', 'click', function() {
-        roomID = urlProperties.askID + $('#enteredID').value;
+        roomID = normalizeRoomID(urlProperties.askID + $('#enteredID').value);
         toServer('room', { playerName, roomID });
         showOverlay();
       });
