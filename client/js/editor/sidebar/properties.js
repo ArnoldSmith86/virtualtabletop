@@ -103,8 +103,20 @@ async function setCardCount(deck, cardType, count) {
     batchEnd();
 }
 
-function parsePropertyFromCSS(css, prop, defaultValue='', cssClass=null) {
-  if (css === null || typeof css === 'undefined') return defaultValue;
+function isObjectLike(value) {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function hasNestedCSSClasses(css) {
+  return isObjectLike(css) && Object.values(css).some(v => isObjectLike(v));
+}
+
+function parsePropertyFromCSS(css, prop, defaultValue='', cssClass="default") {
+  if (typeof prop !== 'string')
+    return defaultValue;
+
+  if (css === null || typeof css === 'undefined')
+    return defaultValue;
 
   if (typeof css === 'string') {
     const propEsc = prop.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -113,17 +125,23 @@ function parsePropertyFromCSS(css, prop, defaultValue='', cssClass=null) {
     return m ? m[1].trim() : defaultValue;
   }
 
-  if (typeof css === 'object') {
-    if(typeof css[cssClass] === 'object') {
-      return String(css[cssClass][prop]);
-    }
-    else if(typeof css.default === 'object') {
+  if (!isObjectLike(css))
+    return defaultValue;
+
+  if (hasNestedCSSClasses(css)) {
+    const className = cssClass || 'default';
+    if (isObjectLike(css[className]) && typeof css[className][prop] !== 'undefined')
+      return String(css[className][prop]);
+
+    if (className !== 'default' && isObjectLike(css.default) && typeof css.default[prop] !== 'undefined')
       return String(css.default[prop]);
-    }
-    else if (typeof css[prop] !== 'undefined') {
-      return String(css[prop]);
-    }
+
+    return defaultValue;
   }
+
+  if (typeof css[prop] !== 'undefined')
+    return String(css[prop]);
+
   return defaultValue;
 }
 
@@ -140,47 +158,39 @@ function cssStringToObject(str) {
   return out;
 }
 
-function mergePropertyFromCSS(css, prop, value, cssClass=null) {
-  
-  // Editor only writes css as an object
-  if (typeof css === 'string') {
-    css = cssStringToObject(css);
-  }
+function mergePropertyFromCSS(css, prop, value, cssClass='default') {
+  const isDelete = value === null || typeof value === 'undefined' || value === '';
+  let source = css;
 
-  // incoming css is an object -> update appropriate place
-  if (typeof css === 'object' && css !== null) {
-    const out = Array.isArray(css) ? css.slice() : Object.assign({}, css);
+  // Editor writes css as an object; convert strings before merging.
+  if (typeof source === 'string')
+    source = cssStringToObject(source);
 
-    if(cssClass) {
-      if (typeof out[0] === 'object') {
-        if (value === null || typeof value === 'undefined' || value === '')
-          delete out[cssClass][prop];
-        else
-          out[cssClass][prop] = value
-      } else {
-          out[prop] = {[prop]: value};
-      }
-    }
-    else if (typeof out.default === 'object') {
-      if (value === null || typeof value === 'undefined' || value === '')
-        delete out.default[prop];
-      else
-        out.default[prop] = value;
-    }
-    else {
-      if (value === null || typeof value === 'undefined' || value === '')
-        delete out[prop];
-      else
-        out[prop] = value;
-    }
-    return out;
-  }
-  
-  // no css defined yet -> create simple object or return empty on deletion
-  if (!css && value !== null && typeof value !== 'undefined' && value !== '') {
-    return { [prop]: value };
-  }
-  
+  const sourceObject = isObjectLike(source) ? Object.assign({}, source) : {};
+  const sourceIsNested = hasNestedCSSClasses(sourceObject);
+  const out = sourceIsNested ? Object.assign({}, sourceObject) : { default: sourceObject };
+  const className = cssClass || 'default';
+
+  if (!isObjectLike(out.default))
+    out.default = {};
+  if (!isObjectLike(out[className]))
+    out[className] = {};
+
+  if (isDelete)
+    delete out[className][prop];
+  else
+    out[className][prop] = value;
+
+  if (className !== 'default' && Object.keys(out[className]).length === 0)
+    delete out[className];
+
+  // Preserve the shape callers started with to avoid UI regressions.
+  return sourceIsNested ? out : out.default;
+}
+
+function parseFontSize(fontSize) {
+  const [, value, unit] = String(fontSize).trim().match(/^(-?\d*\.?\d+)([a-z%]*)$/i) || [];
+  return value ? { value: +value, unit: unit || null } : null;
 }
 
 /* end helper functions */
@@ -1740,8 +1750,11 @@ class PropertiesModule extends SidebarModule {
     this.renderLargeTextInput(widget, 'Text Content', 'text');
 
     // Color picker: reads/writes text color from widget css (inline string or object.inline)
-    this.renderColorInput(widget, 'Color', 'color', 'css');
-    
+    this.renderColorInput(widget, 'Color', 'color');
+
+    //this is broken for now because it needs to be able to read css units
+    this.renderNumberInput(widget, "Font Size", "font-size", { step: 1, min: 0 }, "16px");
+
     this.addLineBreak();
 
     // Placeholder text (shown when label text is empty in play mode)
@@ -1887,7 +1900,8 @@ class PropertiesModule extends SidebarModule {
     textTitle.style.fontWeight = 'bold';
     textTitle.style.marginTop = '8px';
     textTitle.style.marginBottom = '4px';
-    this.moduleDOM.appendChild(textTitle);
+    
+
     const textAreaWrap = div(this.moduleDOM, 'labelTextAreaWrap');
     const textArea = document.createElement('textarea');
     textArea.className = 'labelPropertyTextArea';
@@ -1898,8 +1912,32 @@ class PropertiesModule extends SidebarModule {
     textArea.style.minHeight = '6em';
     textArea.style.overflowY = 'auto';
     textArea.style.boxSizing = 'border-box';
-    textAreaWrap.appendChild(textArea);
+    
     textArea.oninput = () => this.inputValueUpdated(widget, property, textArea.value);
+
+    const typographyWrap = div(this.moduleDOM, 'labelTypographyWrap');
+    const colorInput = this.renderColorInput(widget, null, 'color');
+    const fontSizeInput = this.renderNumberInput(widget, null, "font-size", { step: 1, min: 0 }, "16px");
+    typographyWrap.style.display = 'flex';
+    typographyWrap.style.gap = '4px';
+    typographyWrap.style.flexdirection = 'row';
+    typographyWrap.style.alignItems = 'center';
+    typographyWrap.style.flexWrap = 'wrap';
+
+    typographyWrap.appendChild(colorInput);
+    typographyWrap.appendChild(fontSizeInput);
+    typographyWrap.appendChild(this.renderDivider());
+    typographyWrap.appendChild(this.renderSelectionButton(widget, 'B', 'font-weight', 'bold'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, 'I', 'font-style', 'italic'));
+    typographyWrap.appendChild(this.renderDivider());
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '◀', 'text-align', 'left'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '▮', 'text-align', 'center'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '▶', 'text-align', 'right'));
+
+    textAreaWrap.appendChild(textTitle);
+    textAreaWrap.appendChild(textArea);
+    textAreaWrap.appendChild(typographyWrap);
+
     this.addPropertyListener(widget, property, w => {
       if (document.activeElement !== textArea)
         textArea.value = w.get(property) || '';
@@ -1931,8 +1969,89 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
   }
 
-  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css') {
-    // ideally the CSS property would be optional and if not specified this function would treat property as a normal widget proterty and read/write color from it. Will change when/if needed by other widgets.
+  renderSelectionButton(widget, title, property, value, css='css', cssClass='default') {
+    const button = document.createElement('button');
+    button.textContent = title;
+    button.style.padding = '4px 8px';
+    button.style.minWidth = '30px';
+    
+    const updateButtonState = (w) => {
+      const currentValue = parsePropertyFromCSS(w.get(css), property, null, cssClass);
+      if (currentValue === value) {
+        button.classList.add('selected');
+      } else {
+        button.classList.remove('selected');
+      }
+    };
+    
+    button.onclick = () => {
+      const currentValue = parsePropertyFromCSS(widget.get(css), property, null, cssClass);
+      const newValue = currentValue === value ? null : value;
+      this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, newValue, cssClass));
+      if (widget.applyDeltaToDOM) widget.applyDeltaToDOM({ [css]: widget.get(css) });
+    };
+    
+    this.addPropertyListener(widget, css, updateButtonState);
+    updateButtonState(widget);
+    
+    return button;
+  }
+
+  renderDivider() {
+    const divider = document.createElement('span');
+    divider.textContent = '|';
+    divider.style.margin = '0 6px';
+    divider.style.color = '#999';
+    return divider;
+  }
+
+  renderNumberInput(widget, title, property, opts = {}, defaultValue = "16px", css='css', cssClass) {
+    const { step = 'any', min, max, placeholder } = opts;
+    const wrap = div(this.moduleDOM);
+    if (title) {
+      const label = document.createElement('label');
+      label.textContent = title;
+      label.style.display = 'inline-block';
+      wrap.appendChild(label);
+    }
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = step;
+    input.style = 'width:40px; border:1px solid #ccc; border-radius:4px; text-align: right;';
+    if (typeof min !== 'undefined') input.min = min;
+    if (typeof max !== 'undefined') input.max = max;
+    if (typeof placeholder !== 'undefined') input.placeholder = placeholder;
+
+    const fontSize = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass))
+
+    input.value = Number(fontSize.value || 0);
+    wrap.appendChild(input);
+
+    if (fontSize.unit) {
+      const unit = document.createElement('span');
+      unit.textContent = fontSize.unit;
+      wrap.appendChild(unit);
+    }
+
+    input.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, input.value+fontSize.unit, cssClass));
+    
+    this.addPropertyListener(widget, css, w => {
+      if (document.activeElement !== input)
+        input.value = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass)).value
+    });
+
+    if (!this.inputUpdaters[widget.id]) this.inputUpdaters[widget.id] = {};
+    if (!this.inputUpdaters[widget.id][css]) this.inputUpdaters[widget.id][css] = [];
+    this.inputUpdaters[widget.id][css].push(() => {
+      if (document.activeElement !== input)
+        input.value = parseFontSize(parsePropertyFromCSS(widget.get(css), property, defaultValue, cssClass)).value
+    });
+
+    return wrap;
+  }
+
+  renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css', cssClass) {
     const colorWrap = div(this.moduleDOM);
     if (title) {
       const colorLabel = document.createElement('label');
@@ -1944,12 +2063,15 @@ class PropertiesModule extends SidebarModule {
     colorInput.type = 'color';
     colorInput.style = "-webkit-appearance: none; -moz-appearance: none; border-radius: 4px; display: inline-block; margin: 3px 3px 0 8px; padding: 0; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0); order: 1; flex-grow: 0; flex-shrink: 0; "
 
-    colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor);
+    colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
     colorWrap.appendChild(colorInput);
-    colorInput.oninput = () => this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value));
+    colorInput.oninput = () => {
+      this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value, cssClass));
+      if (widget.applyDeltaToDOM) widget.applyDeltaToDOM({ [css]: widget.get(css) });
+    };
     this.addPropertyListener(widget, css, w => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(w.get(css), property, defaultColor);
+        colorInput.value = parsePropertyFromCSS(w.get(css), property, defaultColor, cssClass);
     });
     if (!this.inputUpdaters[widget.id])
       this.inputUpdaters[widget.id] = {};
@@ -1957,8 +2079,10 @@ class PropertiesModule extends SidebarModule {
       this.inputUpdaters[widget.id][css] = [];
     this.inputUpdaters[widget.id][css].push(() => {
       if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor);
+        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
     });
+
+    return colorWrap;
   }
 
   renderModule(target) {
