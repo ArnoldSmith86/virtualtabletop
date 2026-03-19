@@ -184,7 +184,11 @@ function mergePropertyFromCSS(css, prop, value, cssClass='default') {
   if (className !== 'default' && Object.keys(out[className]).length === 0)
     delete out[className];
 
-  // Preserve the shape callers started with to avoid UI regressions.
+  // If editing a non-default class, always return nested format (forces CSS to convert if needed).
+  // Otherwise, preserve the original shape to avoid UI regressions.
+  if (className !== 'default' && !isDelete) {
+    return out;  // nested format required for non-default classes
+  }
   return sourceIsNested ? out : out.default;
 }
 
@@ -1749,22 +1753,11 @@ class PropertiesModule extends SidebarModule {
 
     this.renderLargeTextInput(widget, 'Text Content', 'text');
 
-    // Color picker: reads/writes text color from widget css (inline string or object.inline)
-    this.renderColorInput(widget, 'Color', 'color');
-
-    //this is broken for now because it needs to be able to read css units
-    this.renderNumberInput(widget, "Font Size", "font-size", { step: 1, min: 0 }, "16px");
-
     this.addLineBreak();
 
     // Placeholder text (shown when label text is empty in play mode)
-    this.renderObscureProperties(widget, [
-      {
-        property: 'placeholderText',
-        title: 'Placeholder Text (shown when label is empty)',
-        renderer: () => this.renderLargeTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText')
-      }
-    ]);
+    // On-demand with styling via ' ::placeholder' pseudo-selector in nested CSS
+    this.renderOnDemandPlaceholderInput(widget);
 
     this.addSubHeader('Other properties');
     this.renderGenericProperties(widget, ['css','editable', 'placeholderText', 'text' ]);
@@ -1890,61 +1883,123 @@ class PropertiesModule extends SidebarModule {
     centerElementInClientRect(button.children[0], button.getBoundingClientRect());
 
     return button;
-  }    
+  }
 
-  renderLargeTextInput (widget, title, property) {
-    // Large text input for label text (~90% width, 6 lines, scroll if needed)
+  renderStyledTextInput(widget, title, textProperty, cssProperty='css', cssClass='default', includeToolbar=true) {
+    // Reusable helper for text inputs with typography toolbar and CSS syncing.
+    // cssClass: 'default' (simple or nested), or custom like ' ::placeholder' (nested only).
+    // Set cssClass=null to disable CSS toolbar entirely.
+    const allowSimpleObject = cssClass && !cssClass.includes('::');
+
+    const textAreaWrap = div(this.moduleDOM, 'styledTextAreaWrap');
     const textTitle = document.createElement('div');
     textTitle.className = 'labelEditorSectionTitle';
     textTitle.textContent = title;
     textTitle.style.fontWeight = 'bold';
     textTitle.style.marginTop = '8px';
     textTitle.style.marginBottom = '4px';
-    
 
-    const textAreaWrap = div(this.moduleDOM, 'labelTextAreaWrap');
     const textArea = document.createElement('textarea');
     textArea.className = 'labelPropertyTextArea';
     textArea.rows = 6;
-    textArea.value = widget.get(property) || '';
+    textArea.value = widget.get(textProperty) || '';
     textArea.style.width = '90%';
     textArea.style.maxWidth = '100%';
     textArea.style.minHeight = '6em';
     textArea.style.overflowY = 'auto';
     textArea.style.boxSizing = 'border-box';
     
-    textArea.oninput = () => this.inputValueUpdated(widget, property, textArea.value);
+    textArea.oninput = () => this.inputValueUpdated(widget, textProperty, textArea.value);
 
-    const typographyWrap = div(this.moduleDOM, 'labelTypographyWrap');
-    const colorInput = this.renderColorInput(widget, null, 'color');
-    const fontSizeInput = this.renderNumberInput(widget, null, "font-size", { step: 1, min: 0 }, "16px");
+    textAreaWrap.appendChild(textTitle);
+    textAreaWrap.appendChild(textArea);
+
+    if (includeToolbar && cssClass) {
+      const typographyWrap = div(this.moduleDOM, 'labelTypographyWrap');
+      typographyWrap.style.display = 'flex';
+      typographyWrap.style.gap = '4px';
+      typographyWrap.style.flexDirection = 'row';
+      typographyWrap.style.alignItems = 'center';
+      typographyWrap.style.flexWrap = 'wrap';
+
+      const colorInput = this.renderColorInput(widget, null, 'color', '#6d6d6d', cssProperty, cssClass);
+      const fontSizeInput = this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '16px', cssProperty, cssClass);
+
+      typographyWrap.appendChild(colorInput);
+      typographyWrap.appendChild(fontSizeInput);
+      typographyWrap.appendChild(this.renderDivider());
+      typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-weight', 'bold', cssProperty, cssClass, 'format_bold', 'Bold'));
+      typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-style', 'italic', cssProperty, cssClass, 'format_italic', 'Italic'));
+      typographyWrap.appendChild(this.renderDivider());
+      typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'left', cssProperty, cssClass, 'format_align_left', 'Align left'));
+      typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'center', cssProperty, cssClass, 'format_align_center', 'Align center'));
+      typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'right', cssProperty, cssClass, 'format_align_right', 'Align right'));
+
+      textAreaWrap.appendChild(typographyWrap);
+    }
+
+    this.addPropertyListener(widget, textProperty, w => {
+      if (document.activeElement !== textArea)
+        textArea.value = w.get(textProperty) || '';
+    });
+    if (!this.inputUpdaters[widget.id][textProperty])
+      this.inputUpdaters[widget.id][textProperty] = [];
+    this.inputUpdaters[widget.id][textProperty].push(() => { if (document.activeElement !== textArea) textArea.value = widget.get(textProperty) || ''; });
+
+    return textAreaWrap;
+  }
+
+  renderLargeTextInput (widget, title, property) {
+    // Large text input for main label text with typography toolbar and CSS syncing to 'default' class.
+    this.renderStyledTextInput(widget, title, property, 'css', 'default', true);
+  }
+
+  renderPlaceholderTextInput (widget, title, property) {
+    // Placeholder text input with typography toolbar and CSS syncing to ' ::placeholder' pseudo-selector (nested object only).
+    this.renderStyledTextInput(widget, title, property, 'css', ' ::placeholder', true);
+  }
+
+  renderOnDemandPlaceholderInput(widget) {
+    // Render placeholder text input as on-demand property (only when explicitly defined).
+    // Uses ' ::placeholder' pseudo-selector for styling placeholder text appearance.
+    this.renderObscureProperties(widget, [
+      {
+        property: 'placeholderText',
+        title: 'Placeholder Text',
+        renderer: () => this.renderPlaceholderTextInput(widget, 'Placeholder Text (shown when label is empty)', 'placeholderText')
+      }
+    ]);
+  }
+
+  renderStandaloneStyleInput(widget, title, cssProperty='css', cssClass='default') {
+    // Standalone CSS input without text content, for editing CSS properties directly.
+    const wrapper = div(this.moduleDOM, 'standaloneStyleInput');
+    
+    const label = document.createElement('label');
+    label.textContent = title;
+    label.style.display = 'block';
+    label.style.fontWeight = 'bold';
+    label.style.marginTop = '8px';
+    label.style.marginBottom = '4px';
+    wrapper.appendChild(label);
+
+    const typographyWrap = div(wrapper, 'standaloneTypographyWrap');
     typographyWrap.style.display = 'flex';
     typographyWrap.style.gap = '4px';
-    typographyWrap.style.flexdirection = 'row';
+    typographyWrap.style.flexDirection = 'row';
     typographyWrap.style.alignItems = 'center';
     typographyWrap.style.flexWrap = 'wrap';
+
+    const colorInput = this.renderColorInput(widget, null, 'color', '#6d6d6d', cssProperty, cssClass);
+    const fontSizeInput = this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '16px', cssProperty, cssClass);
 
     typographyWrap.appendChild(colorInput);
     typographyWrap.appendChild(fontSizeInput);
     typographyWrap.appendChild(this.renderDivider());
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-weight', 'bold', 'css', 'default', 'format_bold', 'Bold'));
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-style', 'italic', 'css', 'default', 'format_italic', 'Italic'));
-    typographyWrap.appendChild(this.renderDivider());
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'left', 'css', 'default', 'format_align_left', 'Align left'));
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'center', 'css', 'default', 'format_align_center', 'Align center'));
-    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'right', 'css', 'default', 'format_align_right', 'Align right'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-weight', 'bold', cssProperty, cssClass, 'format_bold', 'Bold'));
+    typographyWrap.appendChild(this.renderSelectionButton(widget, '', 'font-style', 'italic', cssProperty, cssClass, 'format_italic', 'Italic'));
 
-    textAreaWrap.appendChild(textTitle);
-    textAreaWrap.appendChild(textArea);
-    textAreaWrap.appendChild(typographyWrap);
-
-    this.addPropertyListener(widget, property, w => {
-      if (document.activeElement !== textArea)
-        textArea.value = w.get(property) || '';
-    });
-    if (!this.inputUpdaters[widget.id][property])
-      this.inputUpdaters[widget.id][property] = [];
-    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== textArea) textArea.value = widget.get(property) || ''; });
+    return wrapper;
   }
 
   renderCheckbox(widget, title, property) {
