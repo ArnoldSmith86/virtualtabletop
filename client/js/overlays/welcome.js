@@ -93,7 +93,7 @@ async function playButtonClick(updateProgress) {
 async function joinRoom(newRoomID) {
   let joined = false;
   return new Promise(function(resolve, reject) {
-    roomID = newRoomID;
+    roomID = normalizeRoomID(newRoomID);
     onMessage('meta', _=>{
       if(joined) return;
       joined = true;

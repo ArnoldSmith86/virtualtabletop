@@ -369,7 +369,11 @@ MinifyHTML().then(function(result) {
   router.get('/library/:folder/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
     try {
-      if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
+      let roomID = String(req.params.room);
+      if(!Config.get('roomNamesCaseSensitive'))
+        roomID = roomID.toLowerCase();
+
+      if(!roomID.match(/^[A-Za-z0-9_-]+$/)) {
         res.send('Invalid characters in room ID.');
         return;
       }
@@ -378,9 +382,9 @@ MinifyHTML().then(function(result) {
         let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
         res.setHeader('Content-Type', 'text/html');
 
-        if(req.params.room) {
-          if(await ensureRoomIsLoaded(req.params.room)) {
-            const room = activeRooms.get(req.params.room);
+        if(roomID) {
+          if(await ensureRoomIsLoaded(roomID)) {
+            const room = activeRooms.get(roomID);
             let game = null;
             if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
               game = room.state._meta.states[room.state._meta.activeState.stateID];
