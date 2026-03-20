@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "131 Working with Variables",
       "image": "/assets/-1937365605_7771",
@@ -23,7 +26,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "title": {
@@ -87,7 +91,7 @@
     "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ",
+    "css": "font-size: 25px; ; white-space: pre-wrap",
     "html": "Refer back to the <a href='https://virtualtabletop.io/tutorial/variables-and-collections'>130 Variables and Collections tutorial</a> for information about the purpose of variables, their limitations, and how to create them. This tutorial is an overview of methods of how to modify and use variables in routines. Additional information is also available in the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions'>Dynamic Expressions wiki</a> and the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations'>Computations wiki</a>.\n\nOther than the basic dynamic expressions described in the button on the left below, VTT supports many types of computations. The buttons are just a brief intro into these concepts. Those operations generally use one of these formats: </p><ul><li><b>var a = <u>operation</u> operand1</b> or <b>operand1 <u>operation</u></b></li><li><b>var b = operand1 <u>operation</u> operand2 [operand3]</b> or <b>var c = <u>operation</u> operand1 operand2 [operand3]</b></li><li><b>var c = operand1 <u>operation1</u> operand2 <u>operation2</u> operand3 <u>operation3</u> operand4</b> (etc. for most math and comparisons)</li></ul>"
   },
   "button3": {
@@ -241,7 +245,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "String operations can create, read, and modify strings. More at <a href='https://virtualtabletop.io/tutorial/strings'>Strings tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#string-operations'>wiki</a>). A few examples are in the button above."
+    "html": "String operations can create, read, and modify strings. More at <a href='https://virtualtabletop.io/tutorial/operations-strings'>Strings tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#string-operations'>wiki</a>). A few examples are in the button above."
   },
   "text4": {
     "id": "text4",
@@ -252,7 +256,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "22px",
+      "white-space": "pre-wrap"
     },
     "html": "Array operations can create, read, and modify arrays. These same operations also work on strings. More at <a href='https://virtualtabletop.io/tutorial/operations-arrays'>Arrays tutorial</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Computations#array-operations'>wiki</a>). A few examples are in the button above.\n\nObjects work similarly to arrays, but are more complicated and outside the scope of the tutorial. See the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>) for examples."
   },
