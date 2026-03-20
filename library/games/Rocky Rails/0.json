@@ -6,8 +6,8 @@
     "id": "2809",
     "z": 1835,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "6744": {
     "deck": "yellow_track_deck",
@@ -7611,8 +7611,8 @@
     "id": "uks9",
     "z": 1804,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "3xzy": {
     "type": "pile",
@@ -7633,8 +7633,8 @@
     "id": "gk2o",
     "z": 1805,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "57m6": {
     "deck": "green_track_deck",
@@ -7643,8 +7643,8 @@
     "id": "57m6",
     "z": 1806,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "bt1m": {
     "deck": "green_track_deck",
@@ -7653,8 +7653,8 @@
     "id": "bt1m",
     "z": 1807,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "482z": {
     "deck": "green_track_deck",
@@ -7663,8 +7663,8 @@
     "id": "482z",
     "z": 1808,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "65ss": {
     "deck": "green_track_deck",
@@ -7673,8 +7673,8 @@
     "id": "65ss",
     "z": 1809,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "5nwy": {
     "deck": "green_track_deck",
@@ -7683,8 +7683,8 @@
     "id": "5nwy",
     "z": 1810,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "272h": {
     "deck": "green_track_deck",
@@ -7693,8 +7693,8 @@
     "id": "272h",
     "z": 1811,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "pyus": {
     "deck": "green_track_deck",
@@ -7703,8 +7703,8 @@
     "id": "pyus",
     "z": 1812,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "ur1i": {
     "deck": "green_track_deck",
@@ -7713,8 +7713,8 @@
     "id": "ur1i",
     "z": 1813,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "wues": {
     "deck": "green_track_deck",
@@ -7723,8 +7723,8 @@
     "id": "wues",
     "z": 1814,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "0r5m": {
     "deck": "green_track_deck",
@@ -7733,8 +7733,8 @@
     "id": "0r5m",
     "z": 1815,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "ey7q": {
     "deck": "green_track_deck",
@@ -7743,8 +7743,8 @@
     "id": "ey7q",
     "z": 1816,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "a7eu": {
     "deck": "green_track_deck",
@@ -7753,8 +7753,8 @@
     "id": "a7eu",
     "z": 1817,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "a0jw": {
     "deck": "green_track_deck",
@@ -7763,8 +7763,8 @@
     "id": "a0jw",
     "z": 1818,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "u9u8": {
     "deck": "green_track_deck",
@@ -7773,8 +7773,8 @@
     "id": "u9u8",
     "z": 1819,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "7jrg": {
     "deck": "green_track_deck",
@@ -7783,8 +7783,8 @@
     "id": "7jrg",
     "z": 1820,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "s6ji": {
     "deck": "green_track_deck",
@@ -7793,8 +7793,8 @@
     "id": "s6ji",
     "z": 1821,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "fhk9": {
     "deck": "green_track_deck",
@@ -7803,8 +7803,8 @@
     "id": "fhk9",
     "z": 1822,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "lnye": {
     "deck": "green_track_deck",
@@ -7813,8 +7813,8 @@
     "id": "lnye",
     "z": 1823,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "j409": {
     "deck": "green_track_deck",
@@ -7823,8 +7823,8 @@
     "id": "j409",
     "z": 1824,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "krqj": {
     "deck": "green_track_deck",
@@ -7833,8 +7833,8 @@
     "id": "krqj",
     "z": 1825,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "1qr6": {
     "deck": "green_track_deck",
@@ -7843,8 +7843,8 @@
     "id": "1qr6",
     "z": 1826,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "4z76": {
     "deck": "green_track_deck",
@@ -7853,8 +7853,8 @@
     "id": "4z76",
     "z": 1827,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "uovt": {
     "deck": "green_track_deck",
@@ -7863,8 +7863,8 @@
     "id": "uovt",
     "z": 1828,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "mc2k": {
     "deck": "green_track_deck",
@@ -7873,8 +7873,8 @@
     "id": "mc2k",
     "z": 1829,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "gefh": {
     "deck": "green_track_deck",
@@ -7883,8 +7883,8 @@
     "id": "gefh",
     "z": 1830,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "in23": {
     "deck": "green_track_deck",
@@ -7893,8 +7893,8 @@
     "id": "in23",
     "z": 1831,
     "parent": "3xzy",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "sb19": {
     "deck": "green_track_deck",
@@ -8022,8 +8022,8 @@
     "id": "faat",
     "z": 1837,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "chsb": {
     "type": "pile",
@@ -8044,8 +8044,8 @@
     "id": "j2wx",
     "z": 1838,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "0nyz": {
     "deck": "orange_track_deck",
@@ -8054,8 +8054,8 @@
     "id": "0nyz",
     "z": 1839,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "66k3": {
     "deck": "orange_track_deck",
@@ -8064,8 +8064,8 @@
     "id": "66k3",
     "z": 1840,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "a04a": {
     "deck": "orange_track_deck",
@@ -8074,8 +8074,8 @@
     "id": "a04a",
     "z": 1841,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "s4rn": {
     "deck": "orange_track_deck",
@@ -8084,8 +8084,8 @@
     "id": "s4rn",
     "z": 1842,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "6wyv": {
     "deck": "orange_track_deck",
@@ -8094,8 +8094,8 @@
     "id": "6wyv",
     "z": 1843,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "f4ss": {
     "deck": "orange_track_deck",
@@ -8104,8 +8104,8 @@
     "id": "f4ss",
     "z": 1844,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "8t3d": {
     "deck": "orange_track_deck",
@@ -8114,8 +8114,8 @@
     "id": "8t3d",
     "z": 1845,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "dxs0": {
     "deck": "orange_track_deck",
@@ -8124,8 +8124,8 @@
     "id": "dxs0",
     "z": 1846,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "wj1i": {
     "deck": "orange_track_deck",
@@ -8134,8 +8134,8 @@
     "id": "wj1i",
     "z": 1847,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "69aq": {
     "deck": "orange_track_deck",
@@ -8144,8 +8144,8 @@
     "id": "69aq",
     "z": 1848,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "skxn": {
     "deck": "orange_track_deck",
@@ -8154,8 +8154,8 @@
     "id": "skxn",
     "z": 1849,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "z74u": {
     "deck": "orange_track_deck",
@@ -8164,8 +8164,8 @@
     "id": "z74u",
     "z": 1850,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "glrq": {
     "deck": "orange_track_deck",
@@ -8174,8 +8174,8 @@
     "id": "glrq",
     "z": 1851,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "xdkz": {
     "deck": "orange_track_deck",
@@ -8184,8 +8184,8 @@
     "id": "xdkz",
     "z": 1852,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "nt6f": {
     "deck": "orange_track_deck",
@@ -8194,8 +8194,8 @@
     "id": "nt6f",
     "z": 1853,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "212w": {
     "deck": "orange_track_deck",
@@ -8204,8 +8204,8 @@
     "id": "212w",
     "z": 1854,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "fw2k": {
     "deck": "orange_track_deck",
@@ -8214,8 +8214,8 @@
     "id": "fw2k",
     "z": 1855,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "m239": {
     "deck": "orange_track_deck",
@@ -8224,8 +8224,8 @@
     "id": "m239",
     "z": 1856,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "k2ps": {
     "deck": "orange_track_deck",
@@ -8234,8 +8234,8 @@
     "id": "k2ps",
     "z": 1857,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "ulgm": {
     "deck": "orange_track_deck",
@@ -8244,8 +8244,8 @@
     "id": "ulgm",
     "z": 1858,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "cu7a": {
     "deck": "orange_track_deck",
@@ -8254,8 +8254,8 @@
     "id": "cu7a",
     "z": 1859,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "wdy0": {
     "deck": "orange_track_deck",
@@ -8264,8 +8264,8 @@
     "id": "wdy0",
     "z": 1860,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "upoy": {
     "deck": "orange_track_deck",
@@ -8274,8 +8274,8 @@
     "id": "upoy",
     "z": 1861,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "s556": {
     "deck": "orange_track_deck",
@@ -8284,8 +8284,8 @@
     "id": "s556",
     "z": 1862,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "680k": {
     "deck": "orange_track_deck",
@@ -8294,8 +8294,8 @@
     "id": "680k",
     "z": 1863,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "fiie": {
     "deck": "orange_track_deck",
@@ -8304,8 +8304,8 @@
     "id": "fiie",
     "z": 1864,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "5ron": {
     "deck": "orange_track_deck",
@@ -8314,8 +8314,8 @@
     "id": "5ron",
     "z": 1865,
     "parent": "chsb",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "vnxd": {
     "deck": "orange_track_deck",
