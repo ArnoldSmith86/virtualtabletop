@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "2809",
-    "z": 1835,
+    "z": 2027,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -14,43 +14,8 @@
     "type": "card",
     "cardType": "vbht",
     "id": "6744",
-    "z": 1771,
+    "z": 1963,
     "parent": "1d2i"
-  },
-  "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true,
-        "disableHolderImageWidget": true
-      }
-    },
-    "info": {
-      "name": "Rocky Rails",
-      "image": "/assets/855077308_31720",
-      "rules": "https://www.riograndegames.com/wp-content/uploads/2024/02/ColoradoMidland.pdf",
-      "bgg": "https://boardgamegeek.com/boardgame/102151/colorado-midland",
-      "year": "2011",
-      "mode": "vs",
-      "time": "60",
-      "attribution": "Layout, board, cards, design, coding, and library image by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>Sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at&nbsp; https://pixabay.com/sound-effects/wrong-answer-129254/.</div>",
-      "lastUpdate": 1773981152758,
-      "skill": "",
-      "description": "Lay track through the Rockies, trying to capitalize on your random mining portfolio.",
-      "similarImage": "",
-      "similarName": "Colorado Midland",
-      "similarDesigner": "John Bohrer",
-      "similarAwards": "",
-      "ruleText": "",
-      "helpText": "<div>Players take seats. Press the Setup button to begin.</div><div><br></div><div>Detailed gameplay and usability information is found by hovering over the brown info boxes in the top-middle of the screen.</div>",
-      "usesAIImagery": false,
-      "showName": true,
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "3-5"
-    }
   },
   "hex1": {
     "id": "hex1",
@@ -356,7 +321,8 @@
     "inheritFrom": "hex_mountain_template",
     "z": 28,
     "parent": "map_anchor",
-    "fixedParent": true
+    "fixedParent": true,
+    "activeFace": 0
   },
   "hex89": {
     "id": "hex89",
@@ -2744,24 +2710,26 @@
   },
   "blocker_template2": {
     "id": "blocker_template2",
-    "x": 258,
-    "y": 345,
+    "x": 248,
+    "y": 336,
     "parent": "map_anchor",
     "fixedParent": true,
     "inheritFrom": "blocker_template"
   },
   "blocker_template4": {
     "id": "blocker_template4",
-    "x": 227,
-    "y": 292,
+    "x": 216,
+    "y": 283,
     "parent": "map_anchor",
     "fixedParent": true,
-    "inheritFrom": "blocker_template"
+    "inheritFrom": "blocker_template",
+    "rotation": 0,
+    "activeFace": 0
   },
   "blocker_template8": {
     "id": "blocker_template8",
-    "x": 196,
-    "y": 665,
+    "x": 186,
+    "y": 656,
     "parent": "map_anchor",
     "fixedParent": true,
     "inheritFrom": "blocker_template",
@@ -2770,22 +2738,22 @@
   },
   "blocker_template9": {
     "id": "blocker_template9",
-    "y": 514,
+    "y": 505,
     "parent": "map_anchor",
     "fixedParent": true,
-    "x": -34,
+    "x": -43,
     "inheritFrom": "blocker_template",
     "rotation": -59
   },
   "blocker_template": {
     "id": "blocker_template",
-    "x": -79,
-    "y": -108,
-    "width": 25,
-    "height": 25,
+    "x": -87,
+    "y": -117,
+    "width": 46,
+    "height": 46,
     "z": 259,
     "movable": false,
-    "image": "/assets/1317407220_2110",
+    "image": "/assets/-549971736_1217",
     "movableInEdit": false
   },
   "auction_instructions": {
@@ -3091,7 +3059,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p0wv",
-    "z": 1337,
+    "z": 1480,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3100,7 +3068,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh",
-    "z": 1322,
+    "z": 1460,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3109,7 +3077,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u406",
-    "z": 1304,
+    "z": 1457,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3118,7 +3086,7 @@
     "type": "card",
     "cardType": "cripple_creek",
     "id": "puba",
-    "z": 1305,
+    "z": 1463,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3127,7 +3095,7 @@
     "type": "card",
     "cardType": "telluride",
     "id": "vpru",
-    "z": 1293,
+    "z": 1452,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3136,7 +3104,7 @@
     "type": "card",
     "cardType": "ouray",
     "id": "kscv",
-    "z": 1297,
+    "z": 1466,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3145,7 +3113,7 @@
     "type": "card",
     "cardType": "lake_city",
     "id": "sjv1",
-    "z": 1309,
+    "z": 1461,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3154,7 +3122,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka",
-    "z": 1315,
+    "z": 1428,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -3163,7 +3131,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q7",
-    "z": 1291,
+    "z": 1465,
     "parent": "ho49",
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;"
   },
@@ -3780,7 +3748,7 @@
     "borderRadius": 10,
     "color_transparent": "#b4b4b4",
     "color_solid": "#b4b4b4",
-    "border_color": "#9c27b0"
+    "border_color": "#dddddd"
   },
   "1_turn_holder": {
     "type": "holder",
@@ -3832,7 +3800,7 @@
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
       }
     },
-    "current_turn_index": "2",
+    "current_turn_index": "5",
     "defaultX": 1093,
     "defaultY": -144,
     "turn_holder": true,
@@ -4064,8 +4032,8 @@
         "player": "${player_name}"
       }
     ],
-    "x": 1093,
-    "y": -144,
+    "x": 4,
+    "y": 4,
     "AlertPlayerRoutine": [
       {
         "func": "GET",
@@ -4288,7 +4256,8 @@
         "routine": "NextTurnRoutine"
       }
     ],
-    "button_border_color": "#9c27b0"
+    "button_border_color": "#607d8b",
+    "parent": "5_turn_holder"
   },
   "1_player_money": {
     "type": "basic",
@@ -5124,7 +5093,7 @@
     "type": "card",
     "cardType": "georgetown",
     "id": "yk26",
-    "z": 1340,
+    "z": 1443,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5133,7 +5102,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p1wv",
-    "z": 1292,
+    "z": 1432,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5149,7 +5118,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p2wv",
-    "z": 1339,
+    "z": 1422,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5165,7 +5134,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p3wv",
-    "z": 1302,
+    "z": 1454,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5181,7 +5150,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p4wv",
-    "z": 1314,
+    "z": 1473,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5197,7 +5166,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p5wv",
-    "z": 1328,
+    "z": 1425,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5213,7 +5182,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p6wv",
-    "z": 1346,
+    "z": 1471,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5232,7 +5201,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p7wv",
-    "z": 1300,
+    "z": 1449,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5248,7 +5217,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p8wv",
-    "z": 1307,
+    "z": 1481,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5264,7 +5233,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p9wv",
-    "z": 1323,
+    "z": 1462,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5283,7 +5252,7 @@
     "type": "card",
     "cardType": "leadville",
     "id": "p10wv",
-    "z": 1344,
+    "z": 1448,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5299,7 +5268,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q8",
-    "z": 1338,
+    "z": 1420,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5315,7 +5284,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q9",
-    "z": 1317,
+    "z": 1476,
     "parent": "ho49",
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;"
   },
@@ -5331,7 +5300,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q10",
-    "z": 1298,
+    "z": 1435,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5350,7 +5319,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q11",
-    "z": 1311,
+    "z": 1450,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5366,7 +5335,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q12",
-    "z": 1324,
+    "z": 1438,
     "parent": "ho49",
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;"
   },
@@ -5382,7 +5351,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q13",
-    "z": 1327,
+    "z": 1434,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5398,7 +5367,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q14",
-    "z": 1341,
+    "z": 1472,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5414,7 +5383,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q15",
-    "z": 1312,
+    "z": 1468,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5430,7 +5399,7 @@
     "type": "card",
     "cardType": "silverton",
     "id": "31q16",
-    "z": 1303,
+    "z": 1459,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5446,7 +5415,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka1",
-    "z": 1351,
+    "z": 1474,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5465,7 +5434,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka2",
-    "z": 1334,
+    "z": 1470,
     "parent": "ho49",
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;"
   },
@@ -5481,7 +5450,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka3",
-    "z": 1299,
+    "z": 1436,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5497,7 +5466,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka4",
-    "z": 1329,
+    "z": 1444,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5513,7 +5482,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka5",
-    "z": 1308,
+    "z": 1427,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5529,7 +5498,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka6",
-    "z": 1294,
+    "z": 1424,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5545,7 +5514,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka7",
-    "z": 1336,
+    "z": 1458,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5561,7 +5530,7 @@
     "type": "card",
     "cardType": "creede",
     "id": "mpka8",
-    "z": 1326,
+    "z": 1479,
     "parent": "ho49",
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;"
   },
@@ -5577,7 +5546,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u407",
-    "z": 1348,
+    "z": 1482,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5596,7 +5565,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u408",
-    "z": 1330,
+    "z": 1433,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5612,7 +5581,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u409",
-    "z": 1333,
+    "z": 1467,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5628,7 +5597,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u410",
-    "z": 1332,
+    "z": 1437,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5644,7 +5613,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u411",
-    "z": 1343,
+    "z": 1477,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5660,7 +5629,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u412",
-    "z": 1320,
+    "z": 1447,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5676,7 +5645,7 @@
     "type": "card",
     "cardType": "crested_butte",
     "id": "u413",
-    "z": 1325,
+    "z": 1453,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5692,7 +5661,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh1",
-    "z": 1335,
+    "z": 1456,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5711,7 +5680,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh2",
-    "z": 1349,
+    "z": 1429,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5730,7 +5699,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh3",
-    "z": 1352,
+    "z": 1440,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5746,7 +5715,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh4",
-    "z": 1306,
+    "z": 1421,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5762,7 +5731,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh5",
-    "z": 1316,
+    "z": 1483,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5778,7 +5747,7 @@
     "type": "card",
     "cardType": "aspen",
     "id": "rgfh6",
-    "z": 1331,
+    "z": 1441,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5794,7 +5763,7 @@
     "type": "card",
     "cardType": "cripple_creek",
     "id": "puba1",
-    "z": 1319,
+    "z": 1430,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5810,7 +5779,7 @@
     "type": "card",
     "cardType": "cripple_creek",
     "id": "puba2",
-    "z": 1310,
+    "z": 1464,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5826,7 +5795,7 @@
     "type": "card",
     "cardType": "cripple_creek",
     "id": "puba3",
-    "z": 1342,
+    "z": 1455,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5842,7 +5811,7 @@
     "type": "card",
     "cardType": "cripple_creek",
     "id": "puba4",
-    "z": 1347,
+    "z": 1439,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5861,7 +5830,7 @@
     "type": "card",
     "cardType": "cripple_creek",
     "id": "puba5",
-    "z": 1313,
+    "z": 1446,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5877,7 +5846,7 @@
     "type": "card",
     "cardType": "ouray",
     "id": "kscv1",
-    "z": 1318,
+    "z": 1478,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5893,7 +5862,7 @@
     "type": "card",
     "cardType": "ouray",
     "id": "kscv2",
-    "z": 1353,
+    "z": 1484,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5909,7 +5878,7 @@
     "type": "card",
     "cardType": "ouray",
     "id": "kscv3",
-    "z": 1290,
+    "z": 1423,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5928,7 +5897,7 @@
     "type": "card",
     "cardType": "ouray",
     "id": "kscv4",
-    "z": 1295,
+    "z": 1445,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5944,7 +5913,7 @@
     "type": "card",
     "cardType": "georgetown",
     "id": "yk27",
-    "z": 1296,
+    "z": 1469,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5960,7 +5929,7 @@
     "type": "card",
     "cardType": "georgetown",
     "id": "yk28",
-    "z": 1301,
+    "z": 1431,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5976,7 +5945,7 @@
     "type": "card",
     "cardType": "georgetown",
     "id": "yk29",
-    "z": 1321,
+    "z": 1426,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -5992,7 +5961,7 @@
     "type": "card",
     "cardType": "telluride",
     "id": "vpru1",
-    "z": 1350,
+    "z": 1451,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -6008,7 +5977,7 @@
     "type": "card",
     "cardType": "telluride",
     "id": "vpru2",
-    "z": 1354,
+    "z": 1475,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -6027,7 +5996,7 @@
     "type": "card",
     "cardType": "lake_city",
     "id": "sjv2",
-    "z": 1345,
+    "z": 1442,
     "css": "color: white; font-size: 18px; overflow: visible; font-weight: 500; text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099;",
     "parent": "ho49"
   },
@@ -6139,7 +6108,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "alo7",
-    "z": 1675,
+    "z": 1867,
     "parent": "3ls4"
   },
   "alo8": {
@@ -6147,7 +6116,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "alo8",
-    "z": 1676,
+    "z": 1868,
     "parent": "3ls4"
   },
   "alo9": {
@@ -6155,7 +6124,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "alo9",
-    "z": 1677,
+    "z": 1869,
     "parent": "3ls4"
   },
   "4yd3": {
@@ -6163,7 +6132,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4yd3",
-    "z": 1678,
+    "z": 1870,
     "parent": "3ls4"
   },
   "adk4": {
@@ -6171,7 +6140,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "adk4",
-    "z": 1679,
+    "z": 1871,
     "parent": "3ls4"
   },
   "e1xf": {
@@ -6179,7 +6148,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "e1xf",
-    "z": 1680,
+    "z": 1872,
     "parent": "3ls4"
   },
   "tbrx": {
@@ -6187,7 +6156,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "tbrx",
-    "z": 1681,
+    "z": 1873,
     "parent": "3ls4"
   },
   "v9p5": {
@@ -6195,7 +6164,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "v9p5",
-    "z": 1682,
+    "z": 1874,
     "parent": "3ls4"
   },
   "r10q": {
@@ -6203,7 +6172,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "r10q",
-    "z": 1683,
+    "z": 1875,
     "parent": "3ls4"
   },
   "r6ja": {
@@ -6211,7 +6180,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "r6ja",
-    "z": 1684,
+    "z": 1876,
     "parent": "3ls4"
   },
   "ej3m": {
@@ -6219,7 +6188,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ej3m",
-    "z": 1685,
+    "z": 1877,
     "parent": "3ls4"
   },
   "2gki": {
@@ -6227,7 +6196,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "2gki",
-    "z": 1686,
+    "z": 1878,
     "parent": "3ls4"
   },
   "flc1": {
@@ -6235,7 +6204,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "flc1",
-    "z": 1687,
+    "z": 1879,
     "parent": "3ls4"
   },
   "29hq": {
@@ -6243,7 +6212,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "29hq",
-    "z": 1688,
+    "z": 1880,
     "parent": "3ls4"
   },
   "hzod": {
@@ -6251,7 +6220,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "hzod",
-    "z": 1689,
+    "z": 1881,
     "parent": "3ls4"
   },
   "90pb": {
@@ -6259,7 +6228,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "90pb",
-    "z": 1690,
+    "z": 1882,
     "parent": "3ls4"
   },
   "78he": {
@@ -6267,7 +6236,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "78he",
-    "z": 1691,
+    "z": 1883,
     "parent": "3ls4"
   },
   "ic6t": {
@@ -6275,7 +6244,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ic6t",
-    "z": 1692,
+    "z": 1884,
     "parent": "3ls4"
   },
   "vxnz": {
@@ -6283,7 +6252,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "vxnz",
-    "z": 1693,
+    "z": 1885,
     "parent": "3ls4"
   },
   "lfwq": {
@@ -6291,7 +6260,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "lfwq",
-    "z": 1694,
+    "z": 1886,
     "parent": "3ls4"
   },
   "8h5f": {
@@ -6299,7 +6268,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "8h5f",
-    "z": 1695,
+    "z": 1887,
     "parent": "3ls4"
   },
   "w24f": {
@@ -6307,7 +6276,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "w24f",
-    "z": 1696,
+    "z": 1888,
     "parent": "3ls4"
   },
   "rhu5": {
@@ -6315,7 +6284,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "rhu5",
-    "z": 1697,
+    "z": 1889,
     "parent": "3ls4"
   },
   "nwfk": {
@@ -6323,7 +6292,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "nwfk",
-    "z": 1698,
+    "z": 1890,
     "parent": "3ls4"
   },
   "dz4t": {
@@ -6331,7 +6300,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "dz4t",
-    "z": 1699,
+    "z": 1891,
     "parent": "3ls4"
   },
   "9l67": {
@@ -6339,7 +6308,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "9l67",
-    "z": 1700,
+    "z": 1892,
     "parent": "3ls4"
   },
   "eosm": {
@@ -6347,7 +6316,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "eosm",
-    "z": 1701,
+    "z": 1893,
     "parent": "3ls4"
   },
   "bxrt": {
@@ -6355,7 +6324,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "bxrt",
-    "z": 1702,
+    "z": 1894,
     "parent": "3ls4"
   },
   "zcco": {
@@ -6363,7 +6332,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "zcco",
-    "z": 1703,
+    "z": 1895,
     "parent": "3ls4"
   },
   "9o7l": {
@@ -6371,7 +6340,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "9o7l",
-    "z": 1704,
+    "z": 1896,
     "parent": "3ls4"
   },
   "6m1e": {
@@ -6379,7 +6348,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "6m1e",
-    "z": 1705,
+    "z": 1897,
     "parent": "3ls4"
   },
   "iqfk": {
@@ -6387,7 +6356,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "iqfk",
-    "z": 1706,
+    "z": 1898,
     "parent": "3ls4"
   },
   "blue_track_deck": {
@@ -6569,7 +6538,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "pbto",
-    "z": 1707,
+    "z": 1899,
     "parent": "7yp3"
   },
   "gs5s": {
@@ -6577,7 +6546,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "gs5s",
-    "z": 1708,
+    "z": 1900,
     "parent": "7yp3"
   },
   "q6lj": {
@@ -6585,7 +6554,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "q6lj",
-    "z": 1709,
+    "z": 1901,
     "parent": "7yp3"
   },
   "mf0v": {
@@ -6593,7 +6562,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "mf0v",
-    "z": 1710,
+    "z": 1902,
     "parent": "7yp3"
   },
   "sq2f": {
@@ -6601,7 +6570,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "sq2f",
-    "z": 1711,
+    "z": 1903,
     "parent": "7yp3"
   },
   "7gka": {
@@ -6609,7 +6578,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "7gka",
-    "z": 1712,
+    "z": 1904,
     "parent": "7yp3"
   },
   "erb6": {
@@ -6617,7 +6586,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "erb6",
-    "z": 1713,
+    "z": 1905,
     "parent": "7yp3"
   },
   "qsce": {
@@ -6625,7 +6594,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "qsce",
-    "z": 1714,
+    "z": 1906,
     "parent": "7yp3"
   },
   "x0bn": {
@@ -6633,7 +6602,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "x0bn",
-    "z": 1715,
+    "z": 1907,
     "parent": "7yp3"
   },
   "32cx": {
@@ -6641,7 +6610,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "32cx",
-    "z": 1716,
+    "z": 1908,
     "parent": "7yp3"
   },
   "gzan": {
@@ -6649,7 +6618,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "gzan",
-    "z": 1717,
+    "z": 1909,
     "parent": "7yp3"
   },
   "r3rx": {
@@ -6657,7 +6626,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "r3rx",
-    "z": 1718,
+    "z": 1910,
     "parent": "7yp3"
   },
   "y7p5": {
@@ -6665,7 +6634,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "y7p5",
-    "z": 1719,
+    "z": 1911,
     "parent": "7yp3"
   },
   "33np": {
@@ -6673,7 +6642,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "33np",
-    "z": 1720,
+    "z": 1912,
     "parent": "7yp3"
   },
   "g2e4": {
@@ -6681,7 +6650,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "g2e4",
-    "z": 1721,
+    "z": 1913,
     "parent": "7yp3"
   },
   "xmu5": {
@@ -6689,7 +6658,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "xmu5",
-    "z": 1722,
+    "z": 1914,
     "parent": "7yp3"
   },
   "icls": {
@@ -6697,7 +6666,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "icls",
-    "z": 1723,
+    "z": 1915,
     "parent": "7yp3"
   },
   "df20": {
@@ -6705,7 +6674,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "df20",
-    "z": 1724,
+    "z": 1916,
     "parent": "7yp3"
   },
   "75qc": {
@@ -6713,7 +6682,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "75qc",
-    "z": 1725,
+    "z": 1917,
     "parent": "7yp3"
   },
   "sovp": {
@@ -6721,7 +6690,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "sovp",
-    "z": 1726,
+    "z": 1918,
     "parent": "7yp3"
   },
   "xs57": {
@@ -6729,7 +6698,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "xs57",
-    "z": 1727,
+    "z": 1919,
     "parent": "7yp3"
   },
   "39qx": {
@@ -6737,7 +6706,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "39qx",
-    "z": 1728,
+    "z": 1920,
     "parent": "7yp3"
   },
   "kfnt": {
@@ -6745,7 +6714,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "kfnt",
-    "z": 1729,
+    "z": 1921,
     "parent": "7yp3"
   },
   "uear": {
@@ -6753,7 +6722,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "uear",
-    "z": 1730,
+    "z": 1922,
     "parent": "7yp3"
   },
   "3f32": {
@@ -6761,7 +6730,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "3f32",
-    "z": 1731,
+    "z": 1923,
     "parent": "7yp3"
   },
   "vdtt": {
@@ -6769,7 +6738,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "vdtt",
-    "z": 1732,
+    "z": 1924,
     "parent": "7yp3"
   },
   "f1va": {
@@ -6777,7 +6746,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "f1va",
-    "z": 1733,
+    "z": 1925,
     "parent": "7yp3"
   },
   "bvvq": {
@@ -6785,7 +6754,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "bvvq",
-    "z": 1734,
+    "z": 1926,
     "parent": "7yp3"
   },
   "27z8": {
@@ -6793,7 +6762,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "27z8",
-    "z": 1735,
+    "z": 1927,
     "parent": "7yp3"
   },
   "7odb": {
@@ -6801,7 +6770,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "7odb",
-    "z": 1736,
+    "z": 1928,
     "parent": "7yp3"
   },
   "acy7": {
@@ -6809,7 +6778,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "acy7",
-    "z": 1737,
+    "z": 1929,
     "parent": "7yp3"
   },
   "5c8p": {
@@ -6817,7 +6786,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "5c8p",
-    "z": 1738,
+    "z": 1930,
     "parent": "7yp3"
   },
   "3ls4": {
@@ -6909,7 +6878,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "zt0y",
-    "z": 1739,
+    "z": 1931,
     "parent": "klo2"
   },
   "cy5x": {
@@ -6917,7 +6886,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "cy5x",
-    "z": 1740,
+    "z": 1932,
     "parent": "klo2"
   },
   "4trf": {
@@ -6925,7 +6894,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4trf",
-    "z": 1741,
+    "z": 1933,
     "parent": "klo2"
   },
   "4mis": {
@@ -6933,7 +6902,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4mis",
-    "z": 1742,
+    "z": 1934,
     "parent": "klo2"
   },
   "mad8": {
@@ -6941,7 +6910,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "mad8",
-    "z": 1743,
+    "z": 1935,
     "parent": "klo2"
   },
   "wmeq": {
@@ -6949,7 +6918,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "wmeq",
-    "z": 1744,
+    "z": 1936,
     "parent": "klo2"
   },
   "cscl": {
@@ -6957,7 +6926,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "cscl",
-    "z": 1745,
+    "z": 1937,
     "parent": "klo2"
   },
   "nq3r": {
@@ -6965,7 +6934,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "nq3r",
-    "z": 1746,
+    "z": 1938,
     "parent": "klo2"
   },
   "ue8v": {
@@ -6973,7 +6942,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ue8v",
-    "z": 1747,
+    "z": 1939,
     "parent": "klo2"
   },
   "lgrq": {
@@ -6981,7 +6950,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "lgrq",
-    "z": 1748,
+    "z": 1940,
     "parent": "klo2"
   },
   "z8kv": {
@@ -6989,7 +6958,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "z8kv",
-    "z": 1749,
+    "z": 1941,
     "parent": "klo2"
   },
   "bhwe": {
@@ -6997,7 +6966,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "bhwe",
-    "z": 1750,
+    "z": 1942,
     "parent": "klo2"
   },
   "v4mc": {
@@ -7005,7 +6974,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "v4mc",
-    "z": 1751,
+    "z": 1943,
     "parent": "klo2"
   },
   "d45d": {
@@ -7013,7 +6982,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "d45d",
-    "z": 1752,
+    "z": 1944,
     "parent": "klo2"
   },
   "tls5": {
@@ -7021,7 +6990,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "tls5",
-    "z": 1753,
+    "z": 1945,
     "parent": "klo2"
   },
   "9pc3": {
@@ -7029,7 +6998,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "9pc3",
-    "z": 1754,
+    "z": 1946,
     "parent": "klo2"
   },
   "wdkf": {
@@ -7037,7 +7006,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "wdkf",
-    "z": 1755,
+    "z": 1947,
     "parent": "klo2"
   },
   "g1iw": {
@@ -7045,7 +7014,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "g1iw",
-    "z": 1756,
+    "z": 1948,
     "parent": "klo2"
   },
   "c6ul": {
@@ -7053,7 +7022,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "c6ul",
-    "z": 1757,
+    "z": 1949,
     "parent": "klo2"
   },
   "997y": {
@@ -7061,7 +7030,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "997y",
-    "z": 1758,
+    "z": 1950,
     "parent": "klo2"
   },
   "l0ee": {
@@ -7069,7 +7038,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "l0ee",
-    "z": 1759,
+    "z": 1951,
     "parent": "klo2"
   },
   "c9qd": {
@@ -7077,7 +7046,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "c9qd",
-    "z": 1760,
+    "z": 1952,
     "parent": "klo2"
   },
   "2x2d": {
@@ -7085,7 +7054,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "2x2d",
-    "z": 1761,
+    "z": 1953,
     "parent": "klo2"
   },
   "dz2z": {
@@ -7093,7 +7062,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "dz2z",
-    "z": 1762,
+    "z": 1954,
     "parent": "klo2"
   },
   "8ht9": {
@@ -7101,7 +7070,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "8ht9",
-    "z": 1763,
+    "z": 1955,
     "parent": "klo2"
   },
   "n0tc": {
@@ -7109,7 +7078,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "n0tc",
-    "z": 1764,
+    "z": 1956,
     "parent": "klo2"
   },
   "f9e8": {
@@ -7117,7 +7086,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "f9e8",
-    "z": 1765,
+    "z": 1957,
     "parent": "klo2"
   },
   "nm73": {
@@ -7125,7 +7094,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "nm73",
-    "z": 1766,
+    "z": 1958,
     "parent": "klo2"
   },
   "01il": {
@@ -7133,7 +7102,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "01il",
-    "z": 1767,
+    "z": 1959,
     "parent": "klo2"
   },
   "anwc": {
@@ -7141,7 +7110,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "anwc",
-    "z": 1768,
+    "z": 1960,
     "parent": "klo2"
   },
   "jvpj": {
@@ -7149,7 +7118,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "jvpj",
-    "z": 1769,
+    "z": 1961,
     "parent": "klo2"
   },
   "p831": {
@@ -7157,7 +7126,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "p831",
-    "z": 1770,
+    "z": 1962,
     "parent": "klo2"
   },
   "pink_track_holder": {
@@ -7252,7 +7221,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4qpy",
-    "z": 1772,
+    "z": 1964,
     "parent": "1d2i"
   },
   "jhib": {
@@ -7260,7 +7229,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "jhib",
-    "z": 1773,
+    "z": 1965,
     "parent": "1d2i"
   },
   "4t4p": {
@@ -7268,7 +7237,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4t4p",
-    "z": 1774,
+    "z": 1966,
     "parent": "1d2i"
   },
   "zne7": {
@@ -7276,7 +7245,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "zne7",
-    "z": 1775,
+    "z": 1967,
     "parent": "1d2i"
   },
   "5pis": {
@@ -7284,7 +7253,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "5pis",
-    "z": 1776,
+    "z": 1968,
     "parent": "1d2i"
   },
   "k04u": {
@@ -7292,7 +7261,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "k04u",
-    "z": 1777,
+    "z": 1969,
     "parent": "1d2i"
   },
   "zkwk": {
@@ -7300,7 +7269,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "zkwk",
-    "z": 1778,
+    "z": 1970,
     "parent": "1d2i"
   },
   "sawb": {
@@ -7308,7 +7277,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "sawb",
-    "z": 1779,
+    "z": 1971,
     "parent": "1d2i"
   },
   "rrbz": {
@@ -7316,7 +7285,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "rrbz",
-    "z": 1780,
+    "z": 1972,
     "parent": "1d2i"
   },
   "u8uc": {
@@ -7324,7 +7293,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "u8uc",
-    "z": 1781,
+    "z": 1973,
     "parent": "1d2i"
   },
   "csm4": {
@@ -7332,7 +7301,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "csm4",
-    "z": 1782,
+    "z": 1974,
     "parent": "1d2i"
   },
   "r7w8": {
@@ -7340,7 +7309,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "r7w8",
-    "z": 1783,
+    "z": 1975,
     "parent": "1d2i"
   },
   "9r7p": {
@@ -7348,7 +7317,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "9r7p",
-    "z": 1784,
+    "z": 1976,
     "parent": "1d2i"
   },
   "0b3i": {
@@ -7356,7 +7325,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "0b3i",
-    "z": 1785,
+    "z": 1977,
     "parent": "1d2i"
   },
   "82vm": {
@@ -7364,7 +7333,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "82vm",
-    "z": 1786,
+    "z": 1978,
     "parent": "1d2i"
   },
   "7nco": {
@@ -7372,7 +7341,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "7nco",
-    "z": 1787,
+    "z": 1979,
     "parent": "1d2i"
   },
   "9ts5": {
@@ -7380,7 +7349,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "9ts5",
-    "z": 1788,
+    "z": 1980,
     "parent": "1d2i"
   },
   "ji7y": {
@@ -7388,7 +7357,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ji7y",
-    "z": 1789,
+    "z": 1981,
     "parent": "1d2i"
   },
   "sbsf": {
@@ -7396,7 +7365,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "sbsf",
-    "z": 1790,
+    "z": 1982,
     "parent": "1d2i"
   },
   "8v1d": {
@@ -7404,7 +7373,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "8v1d",
-    "z": 1791,
+    "z": 1983,
     "parent": "1d2i"
   },
   "lca8": {
@@ -7412,7 +7381,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "lca8",
-    "z": 1792,
+    "z": 1984,
     "parent": "1d2i"
   },
   "762x": {
@@ -7420,7 +7389,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "762x",
-    "z": 1793,
+    "z": 1985,
     "parent": "1d2i"
   },
   "comc": {
@@ -7428,7 +7397,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "comc",
-    "z": 1794,
+    "z": 1986,
     "parent": "1d2i"
   },
   "i0dn": {
@@ -7436,7 +7405,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "i0dn",
-    "z": 1795,
+    "z": 1987,
     "parent": "1d2i"
   },
   "qzr2": {
@@ -7444,7 +7413,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "qzr2",
-    "z": 1796,
+    "z": 1988,
     "parent": "1d2i"
   },
   "rpe3": {
@@ -7452,7 +7421,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "rpe3",
-    "z": 1797,
+    "z": 1989,
     "parent": "1d2i"
   },
   "e2fq": {
@@ -7460,7 +7429,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "e2fq",
-    "z": 1798,
+    "z": 1990,
     "parent": "1d2i"
   },
   "q4by": {
@@ -7468,7 +7437,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "q4by",
-    "z": 1799,
+    "z": 1991,
     "parent": "1d2i"
   },
   "b0cp": {
@@ -7476,7 +7445,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "b0cp",
-    "z": 1800,
+    "z": 1992,
     "parent": "1d2i"
   },
   "hjps": {
@@ -7484,7 +7453,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "hjps",
-    "z": 1801,
+    "z": 1993,
     "parent": "1d2i"
   },
   "xz9n": {
@@ -7492,7 +7461,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "xz9n",
-    "z": 1802,
+    "z": 1994,
     "parent": "1d2i"
   },
   "yellow_track_holder": {
@@ -7601,7 +7570,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "3ud8",
-    "z": 1803,
+    "z": 1995,
     "parent": "3xzy"
   },
   "uks9": {
@@ -7609,7 +7578,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "uks9",
-    "z": 1804,
+    "z": 1996,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7631,7 +7600,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "gk2o",
-    "z": 1805,
+    "z": 1997,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7641,7 +7610,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "57m6",
-    "z": 1806,
+    "z": 1998,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7651,7 +7620,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "bt1m",
-    "z": 1807,
+    "z": 1999,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7661,7 +7630,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "482z",
-    "z": 1808,
+    "z": 2000,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7671,7 +7640,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "65ss",
-    "z": 1809,
+    "z": 2001,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7681,7 +7650,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "5nwy",
-    "z": 1810,
+    "z": 2002,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7691,7 +7660,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "272h",
-    "z": 1811,
+    "z": 2003,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7701,7 +7670,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "pyus",
-    "z": 1812,
+    "z": 2004,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7711,7 +7680,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ur1i",
-    "z": 1813,
+    "z": 2005,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7721,7 +7690,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "wues",
-    "z": 1814,
+    "z": 2006,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7731,7 +7700,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "0r5m",
-    "z": 1815,
+    "z": 2007,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7741,7 +7710,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ey7q",
-    "z": 1816,
+    "z": 2008,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7751,7 +7720,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "a7eu",
-    "z": 1817,
+    "z": 2009,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7761,7 +7730,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "a0jw",
-    "z": 1818,
+    "z": 2010,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7771,7 +7740,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "u9u8",
-    "z": 1819,
+    "z": 2011,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7781,7 +7750,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "7jrg",
-    "z": 1820,
+    "z": 2012,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7791,7 +7760,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "s6ji",
-    "z": 1821,
+    "z": 2013,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7801,7 +7770,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "fhk9",
-    "z": 1822,
+    "z": 2014,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7811,7 +7780,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "lnye",
-    "z": 1823,
+    "z": 2015,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7821,7 +7790,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "j409",
-    "z": 1824,
+    "z": 2016,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7831,7 +7800,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "krqj",
-    "z": 1825,
+    "z": 2017,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7841,7 +7810,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "1qr6",
-    "z": 1826,
+    "z": 2018,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7851,7 +7820,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4z76",
-    "z": 1827,
+    "z": 2019,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7861,7 +7830,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "uovt",
-    "z": 1828,
+    "z": 2020,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7871,7 +7840,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "mc2k",
-    "z": 1829,
+    "z": 2021,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7881,7 +7850,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "gefh",
-    "z": 1830,
+    "z": 2022,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7891,7 +7860,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "in23",
-    "z": 1831,
+    "z": 2023,
     "parent": "3xzy",
     "x": 0,
     "y": 0
@@ -7901,7 +7870,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "sb19",
-    "z": 1832,
+    "z": 2024,
     "parent": "3xzy"
   },
   "jxi3": {
@@ -7909,7 +7878,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "jxi3",
-    "z": 1833,
+    "z": 2025,
     "parent": "3xzy"
   },
   "ejg8": {
@@ -7917,7 +7886,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ejg8",
-    "z": 1834,
+    "z": 2026,
     "parent": "3xzy"
   },
   "orange_track_deck": {
@@ -8012,7 +7981,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "4d7j",
-    "z": 1836,
+    "z": 2028,
     "parent": "chsb"
   },
   "faat": {
@@ -8020,7 +7989,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "faat",
-    "z": 1837,
+    "z": 2029,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8042,7 +8011,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "j2wx",
-    "z": 1838,
+    "z": 2030,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8052,7 +8021,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "0nyz",
-    "z": 1839,
+    "z": 2031,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8062,7 +8031,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "66k3",
-    "z": 1840,
+    "z": 2032,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8072,7 +8041,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "a04a",
-    "z": 1841,
+    "z": 2033,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8082,7 +8051,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "s4rn",
-    "z": 1842,
+    "z": 2034,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8092,7 +8061,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "6wyv",
-    "z": 1843,
+    "z": 2035,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8102,7 +8071,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "f4ss",
-    "z": 1844,
+    "z": 2036,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8112,7 +8081,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "8t3d",
-    "z": 1845,
+    "z": 2037,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8122,7 +8091,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "dxs0",
-    "z": 1846,
+    "z": 2038,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8132,7 +8101,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "wj1i",
-    "z": 1847,
+    "z": 2039,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8142,7 +8111,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "69aq",
-    "z": 1848,
+    "z": 2040,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8152,7 +8121,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "skxn",
-    "z": 1849,
+    "z": 2041,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8162,7 +8131,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "z74u",
-    "z": 1850,
+    "z": 2042,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8172,7 +8141,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "glrq",
-    "z": 1851,
+    "z": 2043,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8182,7 +8151,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "xdkz",
-    "z": 1852,
+    "z": 2044,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8192,7 +8161,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "nt6f",
-    "z": 1853,
+    "z": 2045,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8202,7 +8171,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "212w",
-    "z": 1854,
+    "z": 2046,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8212,7 +8181,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "fw2k",
-    "z": 1855,
+    "z": 2047,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8222,7 +8191,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "m239",
-    "z": 1856,
+    "z": 2048,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8232,7 +8201,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "k2ps",
-    "z": 1857,
+    "z": 2049,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8242,7 +8211,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "ulgm",
-    "z": 1858,
+    "z": 2050,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8252,7 +8221,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "cu7a",
-    "z": 1859,
+    "z": 2051,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8262,7 +8231,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "wdy0",
-    "z": 1860,
+    "z": 2052,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8272,7 +8241,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "upoy",
-    "z": 1861,
+    "z": 2053,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8282,7 +8251,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "s556",
-    "z": 1862,
+    "z": 2054,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8292,7 +8261,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "680k",
-    "z": 1863,
+    "z": 2055,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8302,7 +8271,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "fiie",
-    "z": 1864,
+    "z": 2056,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8312,7 +8281,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "5ron",
-    "z": 1865,
+    "z": 2057,
     "parent": "chsb",
     "x": 0,
     "y": 0
@@ -8322,7 +8291,7 @@
     "type": "card",
     "cardType": "vbht",
     "id": "vnxd",
-    "z": 1866,
+    "z": 2058,
     "parent": "chsb"
   },
   "hex165": {
@@ -8759,9 +8728,9 @@
     "id": "1_player_markers_deck",
     "parent": "1_markers_holder",
     "fixedParent": true,
-    "x": -548,
-    "y": 4,
-    "z": 80059,
+    "x": -458,
+    "y": 6,
+    "z": 80071,
     "cardDefaults": {
       "color_change_index": 1,
       "layer": 80,
@@ -8928,7 +8897,7 @@
       ]
     },
     "player": "",
-    "turn": true,
+    "turn": false,
     "mainColor": "#9c27b0",
     "outlineColor": "#000000bb",
     "textColor": "#000000",
@@ -8961,7 +8930,7 @@
     "contrast_color_opposite": "#000000",
     "color_solid": "#b4b4b4",
     "color_transparent": "#b4b4b4",
-    "border_color": "#FFFFFF"
+    "border_color": "#dddddd"
   },
   "2_turn_holder": {
     "type": "holder",
@@ -9036,7 +9005,7 @@
       ]
     },
     "linkedToSeat": "2_seat",
-    "background_color": "#FFFFFF",
+    "background_color": "transparent",
     "border_color": "transparent",
     "color": "#9c27b0",
     "contrast_color": "#FFFFFF",
@@ -9132,7 +9101,7 @@
   "2_player_anchor": {
     "id": "2_player_anchor",
     "x": -354,
-    "y": 134,
+    "y": 133,
     "width": 35,
     "height": 40,
     "z": 268,
@@ -9154,9 +9123,9 @@
     "id": "2_player_markers_deck",
     "parent": "2_markers_holder",
     "fixedParent": true,
-    "x": -532,
-    "y": 29,
-    "z": 80065,
+    "x": -411,
+    "y": 28,
+    "z": 80072,
     "cardDefaults": {
       "color_change_index": 2,
       "layer": 80,
@@ -9289,7 +9258,7 @@
   "3_player_anchor": {
     "id": "3_player_anchor",
     "x": -354,
-    "y": 315,
+    "y": 309,
     "width": 35,
     "height": 40,
     "z": 269,
@@ -9351,7 +9320,7 @@
     "color": "#9c27b0",
     "color_change_index": 3,
     "contrast_color": "#FFFFFF",
-    "border_color": "#9c27b0",
+    "border_color": "#dddddd",
     "contrast_color_opposite": "#000000",
     "color_solid": "#b4b4b4",
     "color_transparent": "#b4b4b4"
@@ -9528,9 +9497,9 @@
     "id": "3_player_markers_deck",
     "parent": "3_markers_holder",
     "fixedParent": true,
-    "x": -532,
-    "y": 28,
-    "z": 80064,
+    "x": -403,
+    "y": 38,
+    "z": 80073,
     "cardDefaults": {
       "color_change_index": 3,
       "layer": 80,
@@ -9663,7 +9632,7 @@
   "4_player_anchor": {
     "id": "4_player_anchor",
     "x": -354,
-    "y": 494,
+    "y": 486,
     "width": 35,
     "height": 40,
     "z": 270,
@@ -9901,9 +9870,9 @@
     "id": "4_player_markers_deck",
     "parent": "4_markers_holder",
     "fixedParent": true,
-    "x": -532,
-    "y": 27,
-    "z": 80061,
+    "x": -355,
+    "y": 51,
+    "z": 80074,
     "cardDefaults": {
       "color_change_index": 4,
       "layer": 80,
@@ -10036,7 +10005,7 @@
   "5_player_anchor": {
     "id": "5_player_anchor",
     "x": -354,
-    "y": 674,
+    "y": 662,
     "width": 35,
     "height": 40,
     "z": 271,
@@ -10066,7 +10035,7 @@
       ]
     },
     "player": "",
-    "turn": false,
+    "turn": true,
     "mainColor": "#795548",
     "outlineColor": "#000000bb",
     "textColor": "#000000",
@@ -10077,7 +10046,6 @@
     "turn_alert_enabled": true,
     "contrast_color": "black",
     "color_solid": "#dddddd",
-    "contrast_color_opposite": "#000000",
     "color_transparent": "white",
     "audio_your_turn_enabled": true
   },
@@ -10098,10 +10066,10 @@
     "color": "#795548",
     "color_change_index": 5,
     "contrast_color": "#FFFFFF",
-    "border_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
+    "border_color": "white",
     "color_transparent": "#b4b4b4",
-    "color_solid": "#b4b4b4"
+    "color_solid": "#b4b4b4",
+    "contrast_color_opposite": "#000000"
   },
   "5_turn_holder": {
     "type": "holder",
@@ -10142,9 +10110,9 @@
     "background_color_transparent": "#79554848",
     "background_color_solid": "#795548",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
     "color_transparent": "#b4b4b4",
-    "color_solid": "#b4b4b4"
+    "color_solid": "#b4b4b4",
+    "contrast_color_opposite": "#000000"
   },
   "5_board_top_background": {
     "type": "basic",
@@ -10162,9 +10130,9 @@
     "background_color": "#ff980048",
     "background_color_solid": "#795548",
     "color_change_index": 5,
-    "contrast_color_opposite": "#000000",
     "color_transparent": "#b4b4b4",
-    "color_solid": "#b4b4b4"
+    "color_solid": "#b4b4b4",
+    "contrast_color_opposite": "#000000"
   },
   "5_board_base": {
     "type": "holder",
@@ -10176,7 +10144,7 @@
       ]
     },
     "linkedToSeat": "5_seat",
-    "background_color": "transparent",
+    "background_color": "#FFFFFF",
     "border_color": "transparent",
     "color": "#9c27b0",
     "contrast_color": "#FFFFFF",
@@ -10248,10 +10216,10 @@
     "background_color_transparent": "#79554848",
     "background_color_solid": "#795548",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
     "color_change_index": 5,
     "color_transparent": "#b4b4b4",
-    "color_solid": "#b4b4b4"
+    "color_solid": "#b4b4b4",
+    "contrast_color_opposite": "#000000"
   },
   "5_money_edit": {
     "type": "button",
@@ -10277,9 +10245,9 @@
     "id": "5_player_markers_deck",
     "parent": "5_markers_holder",
     "fixedParent": true,
-    "x": -532,
-    "y": 27,
-    "z": 80061,
+    "x": -327,
+    "y": 12,
+    "z": 80075,
     "cardDefaults": {
       "color_change_index": 5,
       "layer": 80,
@@ -10414,7 +10382,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "g4r0",
-    "z": 81488,
+    "z": 81508,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -10433,7 +10401,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "h1b9",
-    "z": 81489,
+    "z": 81509,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -10452,7 +10420,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "83jm",
-    "z": 81498,
+    "z": 81510,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -10468,12 +10436,12 @@
   },
   "history_recent_label": {
     "id": "history_recent_label",
-    "x": 110,
-    "y": 896,
-    "width": 440,
+    "x": 105,
+    "y": 891,
+    "width": 447,
     "height": 98,
     "layer": 5,
-    "z": 30384,
+    "z": 30385,
     "movable": false,
     "movableInEdit": true,
     "activeFace": 0,
@@ -10508,7 +10476,7 @@
     "type": "button",
     "id": "history_toggle",
     "borderRadius": 10,
-    "z": 79046,
+    "z": 79047,
     "backgroundColor": "grey",
     "css": {
       "default": {
@@ -10562,7 +10530,7 @@
         "value": "${visibleToSeats}"
       }
     ],
-    "y": 897,
+    "y": 893,
     "width": 90,
     "background_color_solid": "#009688",
     "background_color_transparent": "#00968848",
@@ -10574,7 +10542,7 @@
     "contrast_color": "black",
     "textShadowBlur": 2,
     "textShadowDistance": 0,
-    "x": 12,
+    "x": 8,
     "height": 50
   },
   "history_holder": {
@@ -10770,7 +10738,7 @@
     "width": 88,
     "height": 40,
     "borderRadius": 10,
-    "z": 79045,
+    "z": 79049,
     "backgroundColor": "grey",
     "text": "Setup",
     "clickRoutine": [
@@ -11175,8 +11143,8 @@
         ]
       }
     ],
-    "x": 13,
-    "y": 954,
+    "x": 8,
+    "y": 951,
     "cursor_styleChangeRoutine": [
       "var newCSS = {}",
       "var newCSS = ${PROPERTY cursorCSS_default}",
@@ -11247,7 +11215,7 @@
         ]
       }
     ],
-    "player_count": 0,
+    "player_count": 1,
     "cursor_style": "solid_player_name",
     "css": {
       "default": {
@@ -11406,7 +11374,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "gaan",
-    "z": 81479,
+    "z": 81499,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -11425,7 +11393,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "5mns",
-    "z": 81480,
+    "z": 81500,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -11444,7 +11412,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "hsp1",
-    "z": 81496,
+    "z": 81501,
     "x": 6,
     "color": "#9c27b0",
     "contrast_color": "#FFFFFF",
@@ -11463,7 +11431,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "tqch",
-    "z": 81482,
+    "z": 81502,
     "x": 6,
     "y": 1,
     "color": "#009688",
@@ -11482,7 +11450,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "987h",
-    "z": 81483,
+    "z": 81503,
     "x": 6,
     "y": 1,
     "color": "#009688",
@@ -11501,7 +11469,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "qsl2",
-    "z": 81485,
+    "z": 81505,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -11520,7 +11488,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "w1ru",
-    "z": 81486,
+    "z": 81506,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -11539,7 +11507,7 @@
     "type": "card",
     "cardType": "ggru",
     "id": "r704",
-    "z": 81487,
+    "z": 81507,
     "x": 6,
     "y": 1,
     "color": "#9c27b0",
@@ -11558,65 +11526,65 @@
     "type": "card",
     "cardType": "ggru",
     "id": "nse2",
-    "z": 81491,
+    "z": 81511,
     "x": 6,
     "y": 1,
     "color": "#795548",
     "background_color_transparent": "#79554848",
     "background_color_solid": "#795548",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
     "color_transparent": "#b4b4b4",
     "color_solid": "#b4b4b4",
     "hoverParent": "5_markers_holder",
-    "player_initial": "J",
+    "player_initial": "",
     "text_rotation": 0,
-    "parent": "5_markers_holder"
+    "parent": "5_markers_holder",
+    "contrast_color_opposite": "#000000"
   },
   "2ccb": {
     "deck": "5_player_markers_deck",
     "type": "card",
     "cardType": "ggru",
     "id": "2ccb",
-    "z": 81492,
+    "z": 81512,
     "x": 6,
     "y": 1,
     "color": "#795548",
     "background_color_transparent": "#79554848",
     "background_color_solid": "#795548",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
     "color_transparent": "#b4b4b4",
     "color_solid": "#b4b4b4",
-    "player_initial": "J",
+    "player_initial": "",
     "text_rotation": 0,
-    "parent": "5_markers_holder"
+    "parent": "5_markers_holder",
+    "contrast_color_opposite": "#000000"
   },
   "3tm3": {
     "deck": "5_player_markers_deck",
     "type": "card",
     "cardType": "ggru",
     "id": "3tm3",
-    "z": 81493,
+    "z": 81513,
     "x": 6,
     "y": 1,
     "color": "#795548",
     "background_color_transparent": "#79554848",
     "background_color_solid": "#795548",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
     "player_initial": "",
     "color_transparent": "#b4b4b4",
     "color_solid": "#b4b4b4",
     "text_rotation": 0,
-    "parent": "5_markers_holder"
+    "parent": "5_markers_holder",
+    "contrast_color_opposite": "#000000"
   },
   "pi80": {
     "deck": "2_player_markers_deck",
     "type": "card",
     "cardType": "ggru",
     "id": "pi80",
-    "z": 81484,
+    "z": 81504,
     "x": 6,
     "y": 1,
     "color": "#009688",
@@ -11636,7 +11604,7 @@
     "height": 40,
     "borderRadius": 100,
     "layer": 80,
-    "z": 81494,
+    "z": 81514,
     "css": {
       "default": {
         "color": "white",
@@ -11701,7 +11669,7 @@
     "borderColor": "black",
     "borderWidth": "1",
     "layer": 100,
-    "onlyVisibleForSeat": "2_seat",
+    "onlyVisibleForSeat": "5_seat",
     "movable": false
   },
   "your_turn_label_animate": {
@@ -11738,7 +11706,7 @@
     },
     "text": "It's Your Turn!",
     "background_color_transparent": "#ffeb3b48",
-    "clickCount": 1406,
+    "clickCount": 1407,
     "animatePropertyChange": [
       {
         "property": "clickCount",
@@ -11754,11 +11722,11 @@
         "value": 1
       }
     ],
-    "contrast_color": "#FFFFFF",
+    "contrast_color": "white",
     "parent": "your_turn_alert_anchor",
     "fixedParent": true,
     "background_color_solid": "#9c27b0",
-    "color_solid": "#9c27b0"
+    "color_solid": "#607d8b"
   },
   "your_turn_label_border": {
     "type": "basic",
@@ -11799,7 +11767,7 @@
         "value": 1
       }
     ],
-    "clickCount": 1270,
+    "clickCount": 1271,
     "borderRadius": 20,
     "movable": false,
     "movableInEdit": false
@@ -12358,5 +12326,40 @@
     "z": 79002,
     "x": 77,
     "y": 413
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true,
+        "disableHolderImageWidget": true
+      }
+    },
+    "info": {
+      "name": "Rocky Rails",
+      "image": "/assets/855077308_31720",
+      "rules": "https://www.riograndegames.com/wp-content/uploads/2024/02/ColoradoMidland.pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/102151/colorado-midland",
+      "year": "2011",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "Layout, board, cards, design, coding, and library image by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br></div><div>The red squiggle icon by Jonathan Cox is released to the Public Domain under CC0.<br><div><br></div><div>Sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at&nbsp; https://pixabay.com/sound-effects/wrong-answer-129254/.</div></div>",
+      "lastUpdate": 1774015394873,
+      "skill": "",
+      "description": "Lay track through the Rockies, trying to capitalize on your random mining portfolio.",
+      "similarImage": "",
+      "similarName": "Colorado Midland",
+      "similarDesigner": "John Bohrer",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "<div>Players take seats. Press the Setup button to begin.</div><div><br></div><div>Detailed gameplay and usability information is found by hovering over the brown info boxes in the top-middle of the screen.</div>",
+      "usesAIImagery": false,
+      "showName": true,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-5"
+    }
   }
 }
