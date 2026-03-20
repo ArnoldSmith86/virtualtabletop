@@ -1,0 +1,1928 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Clear the Kitchen",
+      "image": "/i/noto-emoji/emoji_u1f408_200d_2b1b.svg",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/172507/mmm",
+      "year": "2015",
+      "mode": "coop",
+      "time": "15",
+      "attribution": "Board layout by ArnoldSmith86. Released to public domain under CC0.\n\nImages are Noto Emoji, Material Symbols and Game-icons.net. See About for details.",
+      "lastUpdate": 1774004246854,
+      "skill": "",
+      "description": "A cooperative dice-placement push-your-luck game where you try to finish food patterns efficiently before the cat advances too far.",
+      "similarImage": "",
+      "similarName": "Mmm!",
+      "similarDesigner": "Reiner Knizia",
+      "similarAwards": "2016 Kinderspiel des Jahres Nominee\n2016 JUGuinho Children Game of the Year Finalist\n2015 Spiel der Spiele Game of the Year Winner",
+      "ruleText": "<h2 data-start=\"219\" data-end=\"234\">🎯 Objective</h2><p data-start=\"235\" data-end=\"322\">Work together to <strong data-start=\"252\" data-end=\"295\">remove all food from the pantry (board)</strong> before the cat reaches it.</p><ul data-start=\"324\" data-end=\"453\"><li data-start=\"324\" data-end=\"372\"><p data-start=\"326\" data-end=\"372\">✅ Win: All food spaces are covered with mice</p></li><li data-start=\"373\" data-end=\"453\"><p data-start=\"375\" data-end=\"453\">❌ Lose: The cat reaches the pantry first</p></li></ul><h2 data-start=\"460\" data-end=\"475\"><br></h2><h2 data-start=\"460\" data-end=\"475\">🧩 Core Idea</h2><ul data-start=\"476\" data-end=\"730\"><li data-start=\"476\" data-end=\"551\"><p data-start=\"478\" data-end=\"551\">The board shows <strong data-start=\"494\" data-end=\"533\">food items made of multiple squares</strong> (2-5 spaces each)</p></li><li data-start=\"552\" data-end=\"626\"><p data-start=\"554\" data-end=\"626\">You <strong data-start=\"558\" data-end=\"624\">“eat” food by fully covering all its squares with mouse tokens</strong></p></li><li data-start=\"627\" data-end=\"730\"><p data-start=\"629\" data-end=\"730\">You do this using <strong data-start=\"647\" data-end=\"665\">dice placement</strong> (not movement, not memory)</p></li></ul><h2 data-start=\"737\" data-end=\"775\"><br></h2><h2 data-start=\"737\" data-end=\"775\">🎲 Turn Structure</h2><h3 data-start=\"777\" data-end=\"795\">1. Roll 3 dice</h3><p data-start=\"796\" data-end=\"811\">Each die shows:</p><ul data-start=\"812\" data-end=\"934\"><li data-start=\"812\" data-end=\"867\"><p data-start=\"814\" data-end=\"867\">🧀 food types (bread, fish, cheese, carrot, cucumber)</p></li><li data-start=\"812\" data-end=\"867\"><p data-start=\"814\" data-end=\"867\">❌ or an “X” (no placement)</p></li></ul><h3 data-start=\"941\" data-end=\"970\">2. Place at least ONE die</h3><ul data-start=\"971\" data-end=\"1125\"><li data-start=\"971\" data-end=\"1034\"><p data-start=\"973\" data-end=\"1034\">You <strong data-start=\"977\" data-end=\"1008\">must place at least one die</strong> on a matching food square</p></li><li data-start=\"1035\" data-end=\"1125\"><p data-start=\"1037\" data-end=\"1125\">The symbol must match the food type on the board</p></li></ul><p data-start=\"1037\" data-end=\"1125\">You may:</p><ul data-start=\"1136\" data-end=\"1242\"><li data-start=\"1136\" data-end=\"1174\"><p data-start=\"1138\" data-end=\"1174\">Place more dice immediately<br data-start=\"1165\" data-end=\"1168\">\n<strong data-start=\"1168\" data-end=\"1174\">or</strong></p></li><li data-start=\"1175\" data-end=\"1242\"><p data-start=\"1177\" data-end=\"1242\">Reroll remaining dice (but only if you placed at least one first)</p></li></ul><h3 data-start=\"1249\" data-end=\"1289\">3. Continue or stop (push-your-luck)</h3><p data-start=\"1290\" data-end=\"1301\">You repeat:</p><ul data-start=\"1302\" data-end=\"1345\"><li data-start=\"1302\" data-end=\"1345\"><p data-start=\"1304\" data-end=\"1345\">Place ≥1 die → optionally reroll the rest</p></li></ul><p data-start=\"1304\" data-end=\"1345\">Until:</p><ul data-start=\"1354\" data-end=\"1441\"><li data-start=\"1354\" data-end=\"1378\"><p data-start=\"1356\" data-end=\"1378\">You stop voluntarily</p></li><li data-start=\"1379\" data-end=\"1401\"><p data-start=\"1381\" data-end=\"1401\">You place all dice</p></li><li data-start=\"1402\" data-end=\"1441\"><p data-start=\"1404\" data-end=\"1441\">OR you <strong data-start=\"1411\" data-end=\"1441\">can’t place any die → bust</strong></p></li></ul><h2 data-start=\"1448\" data-end=\"1478\"><br></h2><h2 data-start=\"1448\" data-end=\"1478\">💥 Busting</h2><p data-start=\"1479\" data-end=\"1491\">You bust if:</p><ul data-start=\"1492\" data-end=\"1542\"><li data-start=\"1492\" data-end=\"1542\"><p data-start=\"1494\" data-end=\"1542\">You roll dice that <strong data-start=\"1513\" data-end=\"1542\">cannot be placed anywhere</strong></p></li></ul><p data-start=\"1544\" data-end=\"1559\">➡️ If you bust:</p><ul data-start=\"1560\" data-end=\"1648\"><li data-start=\"1560\" data-end=\"1648\"><p data-start=\"1562\" data-end=\"1648\">You place <strong data-start=\"1572\" data-end=\"1608\">no mouse tokens at all this turn</strong></p></li></ul><h2 data-start=\"1655\" data-end=\"1684\"><br></h2><h2 data-start=\"1655\" data-end=\"1684\">🐭 End of Turn: Place Mice</h2><p data-start=\"1685\" data-end=\"1709\">If you did <strong data-start=\"1696\" data-end=\"1708\">not bust</strong>:</p><ul data-start=\"1710\" data-end=\"1773\"><li data-start=\"1710\" data-end=\"1773\"><p data-start=\"1712\" data-end=\"1773\">Replace each placed die with a <strong data-start=\"1743\" data-end=\"1758\">mouse token</strong> on that square</p></li></ul><p data-start=\"1775\" data-end=\"1810\">This gradually fills up food items.</p><h2 data-start=\"1817\" data-end=\"1839\"><br></h2><h2 data-start=\"1817\" data-end=\"1839\">🍽️ Completing Food</h2><ul data-start=\"1840\" data-end=\"1914\"><li data-start=\"1840\" data-end=\"1914\"><p data-start=\"1842\" data-end=\"1914\">When <strong data-start=\"1847\" data-end=\"1889\">all squares of a food item are covered</strong>, it is “eaten” (secured)</p></li></ul><p data-start=\"1916\" data-end=\"1944\">👉 This matters for the cat…</p><h2 data-start=\"1951\" data-end=\"1989\"><br></h2><h2 data-start=\"1951\" data-end=\"1989\">🐱 Cat Movement</h2>The cat moves <strong data-start=\"2005\" data-end=\"2022\">1 step closer</strong> if:\n<ul data-start=\"2028\" data-end=\"2148\"><li data-start=\"2028\" data-end=\"2048\"><p data-start=\"2030\" data-end=\"2048\">You <strong data-start=\"2034\" data-end=\"2042\">bust</strong>, OR</p></li><li data-start=\"2049\" data-end=\"2148\"><p data-start=\"2051\" data-end=\"2148\">You <strong data-start=\"2055\" data-end=\"2108\">fail to complete at least one food item that turn</strong></p></li></ul><p data-start=\"2051\" data-end=\"2148\"><strong data-start=\"2055\" data-end=\"2108\"></strong>👉 So even a “good” turn can still advance the cat if you didn’t finish food.</p><h2 data-start=\"2450\" data-end=\"2476\"><br></h2><h2 data-start=\"2450\" data-end=\"2476\">⚖️ Important Subtleties</h2><ul data-start=\"2477\" data-end=\"2802\"><li data-start=\"2477\" data-end=\"2580\"><p data-start=\"2479\" data-end=\"2580\">Players decide <strong data-start=\"2494\" data-end=\"2506\">together</strong> where dice go (fully cooperative)</p></li><li data-start=\"2581\" data-end=\"2688\"><p data-start=\"2583\" data-end=\"2688\">Food items have <strong data-start=\"2599\" data-end=\"2618\">different sizes</strong>, making some harder to finish</p></li><li data-start=\"2689\" data-end=\"2802\"><p data-start=\"2691\" data-end=\"2715\">There’s a <strong data-start=\"2701\" data-end=\"2714\">hard mode</strong>:</p><ul data-start=\"2718\" data-end=\"2802\"><li data-start=\"2718\" data-end=\"2802\"><p data-start=\"2720\" data-end=\"2802\">All dice must go in the same row or column</p></li></ul></li></ul>",
+      "helpText": "",
+      "usesAIImagery": false,
+      "showName": true,
+      "players": "1-6",
+      "language": "",
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "holderTemplate": {
+    "type": "holder",
+    "id": "holderTemplate",
+    "x": 642,
+    "y": -153,
+    "width": 128,
+    "height": 128,
+    "icon": "🥖",
+    "dropTarget": [
+      {
+        "type": "dice"
+      },
+      {
+        "type": "card"
+      }
+    ],
+    "z": 4
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 4,
+    "y": 4,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 136,
+    "y": 4,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 268,
+    "y": 4,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 400,
+    "y": 4,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder5": {
+    "type": "holder",
+    "id": "holder5",
+    "x": 532,
+    "y": 4,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 664,
+    "y": 4,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder7": {
+    "type": "holder",
+    "id": "holder7",
+    "x": 796,
+    "y": 4,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder8": {
+    "type": "holder",
+    "id": "holder8",
+    "x": 4,
+    "y": 136,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder9": {
+    "type": "holder",
+    "id": "holder9",
+    "x": 136,
+    "y": 136,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder10": {
+    "type": "holder",
+    "id": "holder10",
+    "x": 268,
+    "y": 136,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder11": {
+    "type": "holder",
+    "id": "holder11",
+    "x": 400,
+    "y": 136,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder12": {
+    "type": "holder",
+    "id": "holder12",
+    "x": 532,
+    "y": 136,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder13": {
+    "type": "holder",
+    "id": "holder13",
+    "x": 664,
+    "y": 136,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder14": {
+    "type": "holder",
+    "id": "holder14",
+    "x": 796,
+    "y": 136,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder15": {
+    "type": "holder",
+    "id": "holder15",
+    "x": 4,
+    "y": 268,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder16": {
+    "type": "holder",
+    "id": "holder16",
+    "x": 136,
+    "y": 268,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder17": {
+    "type": "holder",
+    "id": "holder17",
+    "x": 268,
+    "y": 268,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder18": {
+    "type": "holder",
+    "id": "holder18",
+    "x": 400,
+    "y": 268,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder19": {
+    "type": "holder",
+    "id": "holder19",
+    "x": 532,
+    "y": 268,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder20": {
+    "type": "holder",
+    "id": "holder20",
+    "x": 664,
+    "y": 268,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder21": {
+    "type": "holder",
+    "id": "holder21",
+    "x": 796,
+    "y": 268,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder22": {
+    "type": "holder",
+    "id": "holder22",
+    "x": 4,
+    "y": 400,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder23": {
+    "type": "holder",
+    "id": "holder23",
+    "x": 136,
+    "y": 400,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder24": {
+    "type": "holder",
+    "id": "holder24",
+    "x": 268,
+    "y": 400,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder25": {
+    "type": "holder",
+    "id": "holder25",
+    "x": 400,
+    "y": 400,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder26": {
+    "type": "holder",
+    "id": "holder26",
+    "x": 532,
+    "y": 400,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder27": {
+    "type": "holder",
+    "id": "holder27",
+    "x": 664,
+    "y": 400,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder28": {
+    "type": "holder",
+    "id": "holder28",
+    "x": 796,
+    "y": 400,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder29": {
+    "type": "holder",
+    "id": "holder29",
+    "x": 4,
+    "y": 532,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder30": {
+    "type": "holder",
+    "id": "holder30",
+    "x": 136,
+    "y": 532,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder31": {
+    "type": "holder",
+    "id": "holder31",
+    "x": 268,
+    "y": 532,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder32": {
+    "type": "holder",
+    "id": "holder32",
+    "x": 400,
+    "y": 532,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder33": {
+    "type": "holder",
+    "id": "holder33",
+    "x": 532,
+    "y": 532,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder34": {
+    "type": "holder",
+    "id": "holder34",
+    "x": 664,
+    "y": 532,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder35": {
+    "type": "holder",
+    "id": "holder35",
+    "x": 796,
+    "y": 532,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder36": {
+    "type": "holder",
+    "id": "holder36",
+    "x": 4,
+    "y": 664,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder37": {
+    "type": "holder",
+    "id": "holder37",
+    "x": 136,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder38": {
+    "type": "holder",
+    "id": "holder38",
+    "x": 268,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder39": {
+    "type": "holder",
+    "id": "holder39",
+    "x": 400,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder40": {
+    "type": "holder",
+    "id": "holder40",
+    "x": 532,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder41": {
+    "type": "holder",
+    "id": "holder41",
+    "x": 664,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder42": {
+    "type": "holder",
+    "id": "holder42",
+    "x": 796,
+    "y": 664,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder43": {
+    "type": "holder",
+    "id": "holder43",
+    "x": 4,
+    "y": 796,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder44": {
+    "type": "holder",
+    "id": "holder44",
+    "x": 136,
+    "y": 796,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder45": {
+    "type": "holder",
+    "id": "holder45",
+    "x": 268,
+    "y": 796,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder46": {
+    "type": "holder",
+    "id": "holder46",
+    "x": 400,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder47": {
+    "type": "holder",
+    "id": "holder47",
+    "x": 532,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder48": {
+    "type": "holder",
+    "id": "holder48",
+    "x": 664,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder49": {
+    "type": "holder",
+    "id": "holder49",
+    "x": 796,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "advancedBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "catHolder1": {
+    "type": "holder",
+    "id": "catHolder1",
+    "x": 25,
+    "width": 128,
+    "height": 128,
+    "icon": "🐈‍⬛",
+    "z": 34,
+    "y": 113,
+    "dropTarget": {
+      "id": "cat"
+    }
+  },
+  "catHolder2": {
+    "type": "holder",
+    "id": "catHolder2",
+    "x": 157,
+    "y": 20,
+    "inheritFrom": "catHolder1",
+    "z": 6
+  },
+  "cat": {
+    "id": "cat",
+    "x": 4,
+    "y": 4,
+    "z": 566,
+    "icon": "🐈‍⬛",
+    "width": 120,
+    "height": 120,
+    "resetProperties": {
+      "parent": "catHolder1"
+    },
+    "parent": "catHolder1"
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "z": 1,
+    "movable": true,
+    "faces": [
+      {
+        "icon": "🥕"
+      },
+      {
+        "icon": "🥖"
+      },
+      {
+        "icon": "🥒"
+      },
+      {
+        "icon": "🧀"
+      },
+      {
+        "icon": "🐟"
+      },
+      {
+        "icon": "❌"
+      }
+    ],
+    "rollCount": 124,
+    "resetProperties": {
+      "activeFace": 5
+    },
+    "activeFace": 5,
+    "parent": "diceHolder"
+  },
+  "dice2": {
+    "type": "dice",
+    "id": "dice2",
+    "x": 4,
+    "y": 128,
+    "activeFace": 5,
+    "rollCount": 114,
+    "inheritFrom": {
+      "dice1": [
+        "faces",
+        "width",
+        "height",
+        "movable",
+        "resetProperties"
+      ]
+    },
+    "z": 2,
+    "parent": "diceHolder"
+  },
+  "dice3": {
+    "type": "dice",
+    "id": "dice3",
+    "x": 4,
+    "y": 252,
+    "activeFace": 5,
+    "rollCount": 113,
+    "inheritFrom": {
+      "dice1": [
+        "faces",
+        "width",
+        "height",
+        "movable",
+        "resetProperties"
+      ]
+    },
+    "z": 3,
+    "parent": "diceHolder"
+  },
+  "catHolder3": {
+    "type": "holder",
+    "id": "catHolder3",
+    "x": 291,
+    "y": 40,
+    "inheritFrom": "catHolder1",
+    "z": 19
+  },
+  "catHolder4": {
+    "type": "holder",
+    "id": "catHolder4",
+    "x": 328,
+    "y": 173,
+    "inheritFrom": "catHolder1",
+    "z": 20
+  },
+  "catHolder5": {
+    "type": "holder",
+    "id": "catHolder5",
+    "x": 195,
+    "y": 252,
+    "inheritFrom": "catHolder1",
+    "z": 9
+  },
+  "catHolder6": {
+    "type": "holder",
+    "id": "catHolder6",
+    "x": 64,
+    "y": 344,
+    "inheritFrom": "catHolder1",
+    "z": 21
+  },
+  "catHolder7": {
+    "type": "holder",
+    "id": "catHolder7",
+    "x": 121,
+    "y": 475,
+    "inheritFrom": "catHolder1",
+    "z": 33
+  },
+  "catHolder8": {
+    "type": "holder",
+    "id": "catHolder8",
+    "x": 254,
+    "y": 492,
+    "inheritFrom": "catHolder1",
+    "z": 23
+  },
+  "catHolder9": {
+    "type": "holder",
+    "id": "catHolder9",
+    "x": 385,
+    "y": 598,
+    "inheritFrom": "catHolder1",
+    "z": 32
+  },
+  "catHolder10": {
+    "type": "holder",
+    "id": "catHolder10",
+    "x": 327,
+    "y": 730,
+    "inheritFrom": "catHolder1",
+    "z": 31
+  },
+  "catHolder11": {
+    "type": "holder",
+    "id": "catHolder11",
+    "x": 196,
+    "y": 808,
+    "inheritFrom": "catHolder1",
+    "z": 30
+  },
+  "catHolder12": {
+    "type": "holder",
+    "id": "catHolder12",
+    "x": 65,
+    "y": 780,
+    "inheritFrom": "catHolder1",
+    "z": 16,
+    "icon": "🍽️"
+  },
+  "obrf": {
+    "type": "deck",
+    "id": "obrf",
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "icon",
+            "value": "🐭",
+            "scale": 0.9,
+            "dynamicProperties": {
+              "size": "width"
+            },
+            "css": {
+              "background": "var(--VTTblue)",
+              "border-radius": "100%"
+            }
+          }
+        ]
+      }
+    ],
+    "cardTypes": {
+      "mouse": {}
+    },
+    "cardDefaults": {
+      "height": 120,
+      "width": 120
+    },
+    "parent": "mouseHolder",
+    "x": 21,
+    "y": 21
+  },
+  "znv4": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "znv4",
+    "z": 1295,
+    "parent": "lzzw"
+  },
+  "mouseHolder": {
+    "type": "holder",
+    "id": "mouseHolder",
+    "x": 411,
+    "y": 860,
+    "width": 128,
+    "height": 128,
+    "icon": "🐭",
+    "z": 29
+  },
+  "f523": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "f523",
+    "z": 1297,
+    "parent": "lzzw"
+  },
+  "10e3": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "10e3",
+    "z": 1299,
+    "parent": "lzzw"
+  },
+  "h8ts": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "h8ts",
+    "z": 1301,
+    "parent": "lzzw"
+  },
+  "c386": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "c386",
+    "z": 1303,
+    "parent": "lzzw"
+  },
+  "ke0w": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "ke0w",
+    "z": 1305,
+    "parent": "lzzw"
+  },
+  "kmll": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "kmll",
+    "z": 1307,
+    "parent": "lzzw"
+  },
+  "q3hc": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "q3hc",
+    "z": 1309,
+    "parent": "lzzw"
+  },
+  "uc6z": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "uc6z",
+    "z": 1311,
+    "parent": "lzzw"
+  },
+  "cm5c": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "cm5c",
+    "z": 1313,
+    "parent": "lzzw"
+  },
+  "1l1v": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "1l1v",
+    "z": 1315,
+    "parent": "lzzw"
+  },
+  "0cyt": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "0cyt",
+    "z": 1317,
+    "parent": "lzzw"
+  },
+  "zem5": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "zem5",
+    "z": 1319,
+    "parent": "lzzw"
+  },
+  "jt83": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "jt83",
+    "z": 1321,
+    "parent": "lzzw"
+  },
+  "vask": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "vask",
+    "z": 1323,
+    "parent": "lzzw"
+  },
+  "tc8f": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "tc8f",
+    "z": 1325,
+    "parent": "lzzw"
+  },
+  "v4g5": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "v4g5",
+    "z": 1327,
+    "parent": "lzzw"
+  },
+  "1yhg": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "1yhg",
+    "z": 1329,
+    "parent": "lzzw"
+  },
+  "f5bg": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "f5bg",
+    "z": 1331,
+    "parent": "lzzw"
+  },
+  "m63l": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "m63l",
+    "z": 1333,
+    "parent": "lzzw"
+  },
+  "4lbv": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "4lbv",
+    "z": 1335,
+    "parent": "lzzw"
+  },
+  "yrlc": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "yrlc",
+    "z": 1337,
+    "parent": "lzzw"
+  },
+  "ccvo": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "ccvo",
+    "z": 1339,
+    "parent": "lzzw"
+  },
+  "xuzz": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "xuzz",
+    "z": 1341,
+    "parent": "lzzw"
+  },
+  "ec70": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "ec70",
+    "z": 1343,
+    "parent": "lzzw"
+  },
+  "4gzp": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "4gzp",
+    "z": 1345,
+    "parent": "lzzw"
+  },
+  "6b80": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "6b80",
+    "z": 1347,
+    "parent": "lzzw"
+  },
+  "95tl": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "95tl",
+    "z": 1349,
+    "parent": "lzzw"
+  },
+  "z4vq": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "z4vq",
+    "z": 1351,
+    "parent": "lzzw"
+  },
+  "4s1d": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "4s1d",
+    "z": 1353,
+    "parent": "lzzw"
+  },
+  "r4ks": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "r4ks",
+    "z": 1355,
+    "parent": "lzzw"
+  },
+  "olf4": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "olf4",
+    "z": 1398,
+    "parent": "lzzw"
+  },
+  "fjfl": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "fjfl",
+    "z": 1371,
+    "parent": "lzzw"
+  },
+  "wot2": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "wot2",
+    "z": 1363,
+    "parent": "lzzw"
+  },
+  "pt1l": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "pt1l",
+    "z": 1379,
+    "parent": "lzzw"
+  },
+  "g5f5": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "g5f5",
+    "z": 1377,
+    "parent": "lzzw"
+  },
+  "mqm3": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "mqm3",
+    "z": 1365,
+    "parent": "lzzw"
+  },
+  "q9yw": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "q9yw",
+    "z": 1385,
+    "parent": "lzzw"
+  },
+  "a9rb": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "a9rb",
+    "z": 1375,
+    "parent": "lzzw"
+  },
+  "srkc": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "srkc",
+    "z": 1373,
+    "parent": "lzzw"
+  },
+  "s2eb": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "s2eb",
+    "z": 1357,
+    "parent": "lzzw"
+  },
+  "4gx1": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "4gx1",
+    "z": 1383,
+    "parent": "lzzw"
+  },
+  "v2pn": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "v2pn",
+    "z": 1401,
+    "parent": "lzzw"
+  },
+  "qo4r": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "qo4r",
+    "z": 1381,
+    "parent": "lzzw"
+  },
+  "m99t": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "m99t",
+    "z": 1359,
+    "parent": "lzzw"
+  },
+  "tpxp": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "tpxp",
+    "z": 1361,
+    "parent": "lzzw"
+  },
+  "0pmm": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "0pmm",
+    "z": 1387,
+    "parent": "lzzw"
+  },
+  "ln44": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "ln44",
+    "z": 1369,
+    "parent": "lzzw"
+  },
+  "t0yc": {
+    "deck": "obrf",
+    "type": "card",
+    "cardType": "mouse",
+    "id": "t0yc",
+    "z": 1367,
+    "parent": "lzzw"
+  },
+  "dice2mice": {
+    "type": "button",
+    "id": "dice2mice",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "diceHolder",
+        "type": "dice"
+      },
+      {
+        "func": "GET",
+        "property": "parent",
+        "aggregation": "array"
+      },
+      {
+        "func": "SET",
+        "value": "diceHolder"
+      },
+      {
+        "func": "MOVE",
+        "from": "mouseHolder",
+        "to": "${parent}"
+      }
+    ],
+    "icon": [
+      "🐭",
+      "arrow_forward"
+    ],
+    "y": 762,
+    "x": 497,
+    "width": 120,
+    "z": 2
+  },
+  "diceHolder": {
+    "type": "holder",
+    "id": "diceHolder",
+    "width": 128,
+    "height": 376,
+    "x": 489,
+    "y": 102,
+    "dropTarget": {
+      "type": "dice"
+    },
+    "stackOffsetY": 124,
+    "z": 28
+  },
+  "advancedBoard": {
+    "id": "advancedBoard",
+    "x": 636,
+    "y": 36,
+    "css": {
+      "background": "white"
+    },
+    "width": 928,
+    "height": 928,
+    "movable": false,
+    "layer": 0,
+    "display": false
+  },
+  "holder50": {
+    "type": "holder",
+    "id": "holder50",
+    "x": 4,
+    "y": 4,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder51": {
+    "type": "holder",
+    "id": "holder51",
+    "x": 136,
+    "y": 4,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder52": {
+    "type": "holder",
+    "id": "holder52",
+    "x": 268,
+    "y": 4,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder53": {
+    "type": "holder",
+    "id": "holder53",
+    "x": 400,
+    "y": 4,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder54": {
+    "type": "holder",
+    "id": "holder54",
+    "x": 532,
+    "y": 4,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder55": {
+    "type": "holder",
+    "id": "holder55",
+    "x": 664,
+    "y": 4,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder56": {
+    "type": "holder",
+    "id": "holder56",
+    "x": 796,
+    "y": 4,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder57": {
+    "type": "holder",
+    "id": "holder57",
+    "x": 4,
+    "y": 136,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder58": {
+    "type": "holder",
+    "id": "holder58",
+    "x": 136,
+    "y": 136,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder59": {
+    "type": "holder",
+    "id": "holder59",
+    "x": 268,
+    "y": 136,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder60": {
+    "type": "holder",
+    "id": "holder60",
+    "x": 400,
+    "y": 136,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder61": {
+    "type": "holder",
+    "id": "holder61",
+    "x": 532,
+    "y": 136,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder62": {
+    "type": "holder",
+    "id": "holder62",
+    "x": 664,
+    "y": 136,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder63": {
+    "type": "holder",
+    "id": "holder63",
+    "x": 796,
+    "y": 136,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder64": {
+    "type": "holder",
+    "id": "holder64",
+    "x": 4,
+    "y": 268,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder65": {
+    "type": "holder",
+    "id": "holder65",
+    "x": 136,
+    "y": 268,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder66": {
+    "type": "holder",
+    "id": "holder66",
+    "x": 268,
+    "y": 268,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder67": {
+    "type": "holder",
+    "id": "holder67",
+    "x": 400,
+    "y": 268,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder68": {
+    "type": "holder",
+    "id": "holder68",
+    "x": 532,
+    "y": 268,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder69": {
+    "type": "holder",
+    "id": "holder69",
+    "x": 664,
+    "y": 268,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder70": {
+    "type": "holder",
+    "id": "holder70",
+    "x": 796,
+    "y": 268,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder71": {
+    "type": "holder",
+    "id": "holder71",
+    "x": 4,
+    "y": 400,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder72": {
+    "type": "holder",
+    "id": "holder72",
+    "x": 136,
+    "y": 400,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder73": {
+    "type": "holder",
+    "id": "holder73",
+    "x": 268,
+    "y": 400,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder74": {
+    "type": "holder",
+    "id": "holder74",
+    "x": 400,
+    "y": 400,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder75": {
+    "type": "holder",
+    "id": "holder75",
+    "x": 532,
+    "y": 400,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder76": {
+    "type": "holder",
+    "id": "holder76",
+    "x": 664,
+    "y": 400,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder77": {
+    "type": "holder",
+    "id": "holder77",
+    "x": 796,
+    "y": 400,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder78": {
+    "type": "holder",
+    "id": "holder78",
+    "x": 4,
+    "y": 532,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder79": {
+    "type": "holder",
+    "id": "holder79",
+    "x": 136,
+    "y": 532,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder80": {
+    "type": "holder",
+    "id": "holder80",
+    "x": 268,
+    "y": 532,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder81": {
+    "type": "holder",
+    "id": "holder81",
+    "x": 400,
+    "y": 532,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder82": {
+    "type": "holder",
+    "id": "holder82",
+    "x": 532,
+    "y": 532,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder83": {
+    "type": "holder",
+    "id": "holder83",
+    "x": 664,
+    "y": 532,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder84": {
+    "type": "holder",
+    "id": "holder84",
+    "x": 796,
+    "y": 532,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder85": {
+    "type": "holder",
+    "id": "holder85",
+    "x": 4,
+    "y": 664,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder86": {
+    "type": "holder",
+    "id": "holder86",
+    "x": 136,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder87": {
+    "type": "holder",
+    "id": "holder87",
+    "x": 268,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder88": {
+    "type": "holder",
+    "id": "holder88",
+    "x": 400,
+    "y": 664,
+    "icon": "🐟",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#00f2"
+  },
+  "holder89": {
+    "type": "holder",
+    "id": "holder89",
+    "x": 532,
+    "y": 664,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder90": {
+    "type": "holder",
+    "id": "holder90",
+    "x": 664,
+    "y": 664,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder91": {
+    "type": "holder",
+    "id": "holder91",
+    "x": 796,
+    "y": 664,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "holder92": {
+    "type": "holder",
+    "id": "holder92",
+    "x": 4,
+    "y": 796,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder93": {
+    "type": "holder",
+    "id": "holder93",
+    "x": 136,
+    "y": 796,
+    "icon": "🥖",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#f002"
+  },
+  "holder94": {
+    "type": "holder",
+    "id": "holder94",
+    "x": 268,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder95": {
+    "type": "holder",
+    "id": "holder95",
+    "x": 400,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder96": {
+    "type": "holder",
+    "id": "holder96",
+    "x": 532,
+    "y": 796,
+    "icon": "🥒",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#0f02"
+  },
+  "holder97": {
+    "type": "holder",
+    "id": "holder97",
+    "x": 664,
+    "y": 796,
+    "icon": "🥕",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#aa02"
+  },
+  "holder98": {
+    "type": "holder",
+    "id": "holder98",
+    "x": 796,
+    "y": 796,
+    "icon": "🧀",
+    "inheritFrom": "holderTemplate",
+    "parent": "beginnerBoard",
+    "z": 4,
+    "color": "#ff03"
+  },
+  "beginnerBoard": {
+    "id": "beginnerBoard",
+    "x": 636,
+    "y": 36,
+    "width": 928,
+    "height": 928,
+    "movable": false,
+    "css": {
+      "background": "white"
+    },
+    "layer": 0
+  },
+  "reset": {
+    "type": "button",
+    "id": "reset",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "slider",
+            "values": [
+              "beginner",
+              "advanced"
+            ],
+            "label": "Board",
+            "variable": "board"
+          }
+        ],
+        "header": "New Game",
+        "confirmButtonText": "New Game",
+        "cancelButtonText": "Resume Game"
+      },
+      {
+        "func": "RECALL",
+        "holder": "mouseHolder"
+      },
+      {
+        "func": "RESET"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "beginnerBoard",
+          "advancedBoard"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${board}Board"
+        ],
+        "property": "display"
+      },
+      {
+        "func": "CALL",
+        "widget": "recallDice"
+      }
+    ],
+    "icon": "restart_alt",
+    "z": 3,
+    "x": 19,
+    "y": 17
+  },
+  "recallDice": {
+    "type": "button",
+    "id": "recallDice",
+    "x": 489,
+    "y": 19,
+    "width": 120,
+    "icon": [
+      "arrow_back",
+      "🎲"
+    ],
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "relation": "!=",
+        "value": "diceHolder",
+        "type": "dice"
+      },
+      {
+        "func": "SET",
+        "value": "diceHolder"
+      }
+    ]
+  },
+  "rollDice": {
+    "type": "button",
+    "id": "rollDice",
+    "x": 435,
+    "y": 437,
+    "icon": "delapouite/rolling-dices",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "value": "diceHolder"
+      },
+      {
+        "func": "CLICK"
+      }
+    ]
+  },
+  "lzzw": {
+    "type": "pile",
+    "parent": "mouseHolder",
+    "x": 4,
+    "y": 4,
+    "width": 120,
+    "height": 120,
+    "id": "lzzw"
+  }
+}
