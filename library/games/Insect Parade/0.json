@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Insect Parade",
       "image": "/assets/139221298_46148",
@@ -10,7 +13,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div><div>Layout, design, coding, and library image by LawDawg96. Released to the Public Domain under CC0.</div></div><div><br></div>Grass background by PublicDomainPictures, available under the Pixabay License from&nbsp;https://pixabay.com/photos/grass-lawn-field-meadow-grassy-84622/.<div><br></div><div>Insect icons by Anditii Creative are part of the Insects Icon Set and are available under the Noun Project License from&nbsp;https://thenounproject.com/browse/collection-icon/insects-191593/.</div><div><br></div><div>All other icons have attribution as listed in the About overlay.</div>",
-      "lastUpdate": 1774129102169,
+      "lastUpdate": 1774129280601,
       "skill": "",
       "description": "It was the dress rehearsal for the annual Insect Parade and all the insects were lined up to start. it quickly became chaos as bugs started changing rows and getting out of step. Then it was every species for itself trying to get home before dark.",
       "similarImage": "",
@@ -21,13 +24,10 @@
       "helpText": "Players sit in seats and press the Restart button to begin.<div><br></div><div>Detailed usability information is found in the top left by hovering over the information box.</div>",
       "usesAIImagery": false,
       "showName": true,
-      "players": "2-6",
-      "language": "",
+      "variantImage": "",
       "variant": "",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "",
+      "players": "2-6"
     }
   },
   "space1": {
@@ -2536,7 +2536,7 @@
     "css": {
       "opacity": 0.5
     },
-    "image": "/assets/-1812136133_1622299",
+    "image": "/assets/-1201988004_910982",
     "movableInEdit": false,
     "z": 1
   },
