@@ -88,7 +88,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The previous variant demonstrated how to create variables with basic values using a <b>var variableName = 7</b> syntax or similar type of expression. This variant explains how to create variables in other ways and many of the FUNCTIONS tutorials have examples of this already. Click each button and review the debug output."
+    "html": "The previous variant demonstrated how to create variables with basic values using a <b>var variableName = 7</b> syntax or similar type of expression. This variant explains how to create variables in other ways. Many of the FUNCTIONS tutorials as well as <a href='https://virtualtabletop.io/tutorial/working-with-variables'>131 Working With Variables</a> have examples of how to use variables in routines. Click each button and review the debug output."
   },
   "button3": {
     "type": "button",
