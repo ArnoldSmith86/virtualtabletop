@@ -14,7 +14,7 @@
       "time": "15",
       "attribution": "<div>Layout, board, cards, design, and coding by Vyntoo and DexDouglas. Released to the Public Domain under CC0.</div><div><br></div><div>Ball of Yarn from SVG Repo at https://www.svgrepo.com/svg/284326/ball-of-wool and licensed under CC0.&nbsp;</div><div><br></div><div>Cat Stamps by Yan Liu, available from SVG Repo under CC BY from:</div><div>https://www.svgrepo.com/svg/436056/cat-5</div><div>https://www.svgrepo.com/svg/436055/cat-4</div><div>https://www.svgrepo.com/svg/436054/cat-3</div><div>https://www.svgrepo.com/svg/436052/cat-2</div><div><br></div><div><span id=\"docs-internal-guid-f2a7a6b8-7fff-f399-d64b-90b93d4c1f5a\">Dice icon by Delapouite, available under CC BY 3.0 from https://game-icons.net/1x1/delapouite/rolling-dices.html</span></div><div><span><br></span></div>Library image licensed for use on VTT by El Gran Bulto, 37-year reigning Campion de la Federacion Intergalactica de Lucha Libre en Viña del Mar, Chile!",
       "importerTime": 1769262746338,
-      "lastUpdate": 1774138527317,
+      "lastUpdate": 1774188498241,
       "importer": "PCIO",
       "showName": true,
       "skill": "",
@@ -1257,8 +1257,8 @@
       }
     ],
     "cardDefaults": {
-      "width": 60,
-      "height": 60
+      "width": 50,
+      "height": 50
     }
   },
   "5b79e744-de9d-41fb-9dc6-9f524b88e97c": {
@@ -1646,7 +1646,7 @@
   },
   "227f3150-4f49-4b38-afb2-083bd3c6ddce": {
     "id": "227f3150-4f49-4b38-afb2-083bd3c6ddce",
-    "z": 30168,
+    "z": 30172,
     "type": "card",
     "deck": "yellowDeck",
     "cardType": "type-7c542d7a-7a51-4667-ba7a-0c313dd9ac5f",
@@ -2027,8 +2027,8 @@
     "y": 7,
     "z": 233,
     "cardDefaults": {
-      "width": 60,
-      "height": 60
+      "width": 50,
+      "height": 50
     },
     "cardTypes": {
       "type-7c542d7a-7a51-4667-ba7a-0c313dd9ac5f": {
@@ -2076,8 +2076,8 @@
     "y": 7,
     "z": 350,
     "cardDefaults": {
-      "width": 60,
-      "height": 60
+      "width": 50,
+      "height": 50
     },
     "cardTypes": {
       "type-7c542d7a-7a51-4667-ba7a-0c313dd9ac5f": {
@@ -2125,8 +2125,8 @@
     "y": 7,
     "z": 404,
     "cardDefaults": {
-      "width": 60,
-      "height": 60
+      "width": 50,
+      "height": 50
     },
     "cardTypes": {
       "type-7c542d7a-7a51-4667-ba7a-0c313dd9ac5f": {
