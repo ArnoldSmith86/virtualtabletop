@@ -2092,6 +2092,7 @@ class PropertiesModule extends SidebarModule {
     if (fontSize.unit) {
       const unit = document.createElement('span');
       unit.textContent = fontSize.unit;
+      unit.style.paddingLeft = '3px';
       wrap.appendChild(unit);
     }
 
