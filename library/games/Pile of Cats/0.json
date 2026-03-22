@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Pile of Cats",
       "image": "/assets/362281995_48072",
@@ -11,7 +14,7 @@
       "time": "15",
       "attribution": "<div>Layout, board, cards, design, and coding by Vyntoo and DexDouglas. Released to the Public Domain under CC0.</div><div><br></div><div>Ball of Yarn from SVG Repo at https://www.svgrepo.com/svg/284326/ball-of-wool and licensed under CC0.&nbsp;</div><div><br></div><div>Cat Stamps by Yan Liu, available from SVG Repo under CC BY from:</div><div>https://www.svgrepo.com/svg/436056/cat-5</div><div>https://www.svgrepo.com/svg/436055/cat-4</div><div>https://www.svgrepo.com/svg/436054/cat-3</div><div>https://www.svgrepo.com/svg/436052/cat-2</div><div><br></div><div><span id=\"docs-internal-guid-f2a7a6b8-7fff-f399-d64b-90b93d4c1f5a\">Dice icon by Delapouite, available under CC BY 3.0 from https://game-icons.net/1x1/delapouite/rolling-dices.html</span></div><div><span><br></span></div>Library image licensed for use on VTT by El Gran Bulto, 37-year reigning Campion de la Federacion Intergalactica de Lucha Libre en Viña del Mar, Chile!",
       "importerTime": 1769262746338,
-      "lastUpdate": 1774134812906,
+      "lastUpdate": 1774138527317,
       "importer": "PCIO",
       "showName": true,
       "skill": "",
@@ -23,13 +26,10 @@
       "ruleText": "",
       "helpText": "Click to sit at one of the 4 seats available. When all players have been seated, click the \"New Game\" button.<div><br></div><div>If there are only 2 players, the bottom 2 rows of the pyramid will be removed, along with the balls of yarn, otherwise, all spaces are available in the game.</div><div><br><div>When New Game is selected, one player will be highlighted as the Start Player. That player will drag one of their cats to their pile, and then roll the dice to start the game.</div><div><br></div><div>When you roll the dice, you can select 1 or more dice to sum and place on any ONE pyramid space. For example, you can place a 5 pip die on a space marked 5, alternately you can place a 2 and a 3 pip die on the same spot, or you can place a 5, 2, and 3 pip dice on the space marked 10. After you have placed your dice, you can choose to roll the remaining dice you have, or end your turn. At the end of your turn, you have to ensure the following requirements were met with the dice that were placed THIS turn:</div></div><div><br></div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><div>1. The dice are all either at the bottom of the pyramid or, if on a higher level, are completely supported underneath with other dice or previously placed cats (either yours or your opponents).</div></div><div><div>2. All of the spaces your dice were placed are adjacent to each other (no gaps between dice).</div></div></blockquote><div><div><br></div><div>If both of the requirements were <b>not </b>met, then you bust and all dice you placed this turn are returned to the holder and do not grant you any cat placement. Hit the Next Player button to allow the next player to take their turn.</div><div><br></div><div>If you chose to end your turn and you HAVE met the above requirements, then 1 of 3 things can happen.&nbsp;</div><div><br></div></div><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><div><div>1. If you have any dice that were not placed on the pyramid this turn, simply place your cats on the spots that your dice were successfully placed, click the \"yarn\" on any spaces you successfully placed dice, then click the Next Player button.&nbsp;</div></div><div><div>2. If you have placed all the dice and you have NO dice left in the holder, place your cats on the spots that your dice were successfully placed, click the \"yarn\" on any spaces you successfully placed dice, then click the \"Bonus Turn\" button. When you take a Bonus Turn, you get to start a whole new turn with brand new dice placement that don't need to be adjacent to any of the prior dice placed in the prior turn. If you bust on a bonus turn, it doesn't affect any cats you placed on previous turns, bonus or otherwise.</div></div><div><div>Using bonus turns, you can place many cats on your turn. The first Bonus Turn, you get to roll 4 dice instead of 5, the second Bonus Turn, you roll 3 dice instead of 4, and so on.&nbsp;</div></div><div><div>3. If you have successfully placed dice on three different rows and end your turn, you will also trigger a bonus turn, even if you have additional dice remaining that were not placed this turn.</div></div></blockquote><div><div><br></div><div><u>NOTE:</u> Collecting Yarn only occurs at the <b>end</b> of a successful turn.&nbsp;</div><div><br></div><div><b>Special spaces:</b></div><div>There are three specials spaces on the board. They are explained below:\n<u>8</u>: If you place your dice on the 8 spot and your turn was successful, you can click the yarn and it will be added to your player area.&nbsp;</div><div><u>10</u>: If you successfully place dice on the 10 spot, you can place TWO of your cats on the 10 space.&nbsp;</div><div><u>12</u>: If you successfully place dice on the 12 spot, you can place THREE of your cats on the 12 space.&nbsp;</div><div><br></div><div><b>YARN:&nbsp;</b></div><div>If you have collected yarn from successfully placing a cat on the 8 space, you can then use the yarn to re-roll your dice by clicking the button in the upper right. Spending a yarn will re-roll ALL the dice you <i>just</i> rolled. If some of the dice this turn have already been assigned to a spot on the board, those dice stay there. You only re-roll the dice you just rolled. Be sure that the dice are in the holder before you press the \"yarn re-roll\" button. You can use as much yarn as you like on your turn, even re-rolling the same dice multiple times.&nbsp;</div><div><br></div><div><b>END OF GAME:</b></div><div>As soon as any player places all their cats on the pyramid, they win! The game ends immediately and everyone takes a nice nap on a pile of cats.&nbsp;</div></div>",
       "usesAIImagery": false,
-      "players": "2-4",
-      "language": "en-US",
+      "variantImage": "",
       "variant": "Pile of Cats",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "2-4"
     }
   },
   "dd37d4e7-2e39-4779-bd83-1b9b09c97c0b": {
@@ -69,7 +69,6 @@
             "fontSize": 30,
             "value": "2",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -93,7 +92,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -158,7 +156,6 @@
             "fontSize": 30,
             "value": "4",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -182,7 +179,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -265,7 +261,6 @@
             "fontSize": 30,
             "value": "6",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -289,7 +284,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -337,7 +331,6 @@
             "fontSize": 30,
             "value": "7",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -361,7 +354,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -540,7 +532,6 @@
             "fontSize": 30,
             "value": "1",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -564,7 +555,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -678,8 +668,7 @@
     "type": "card",
     "deck": "yellowDeck",
     "cardType": "type-7c542d7a-7a51-4667-ba7a-0c313dd9ac5f",
-    "parent": "0njv",
-    "hoverParent": "a0fe2ae0-a87f-496c-811c-3edf372fe41d"
+    "parent": "0njv"
   },
   "646ef7ec-4bde-4ff4-bd10-917b94e81e18": {
     "id": "646ef7ec-4bde-4ff4-bd10-917b94e81e18",
@@ -849,7 +838,6 @@
             "fontSize": 30,
             "value": "8",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           },
@@ -882,7 +870,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           },
@@ -1051,7 +1038,6 @@
             "fontSize": 30,
             "value": "3",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -1075,7 +1061,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -1304,7 +1289,6 @@
             "fontSize": 30,
             "value": "5",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -1328,7 +1312,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           }
@@ -1601,7 +1584,6 @@
             "fontSize": 30,
             "value": "10",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 190
           },
@@ -1634,7 +1616,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 190
           },
@@ -1943,7 +1924,7 @@
       },
       {
         "func": "TURN",
-        "turncycle": "forward"
+        "turnCycle": "forward"
       }
     ],
     "text": "Next Player",
@@ -3129,7 +3110,6 @@
             "fontSize": 30,
             "value": "12",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           },
@@ -3162,7 +3142,6 @@
             "fontSize": 30,
             "value": "🐈",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 95
           },
@@ -3521,13 +3500,7 @@
     "z": 35044,
     "backgroundColor": "#fff",
     "borderColor": "#3a8f95ff",
-    "image": "/assets/-1622461087_5946",
     "clickRoutine": [
-      {
-        "func": "SET",
-        "property": "parent",
-        "value": "diceRollerHolder"
-      },
       {
         "func": "SET",
         "collection": [
@@ -3586,7 +3559,18 @@
         "func": "CLICK"
       }
     ],
-    "display": false
+    "display": false,
+    "css": {
+      "default": {
+        "--wcMainOH": "white",
+        "--wcBorderOH": "white"
+      }
+    },
+    "icon": {
+      "name": "delapouite/rolling-dices",
+      "scale": 1.2,
+      "color": "#3a8f95ff"
+    }
   },
   "rollDice": {
     "type": "label",
@@ -3685,14 +3669,6 @@
         "func": "SET",
         "collection": [
           "rowA9"
-        ],
-        "property": "display",
-        "value": true
-      },
-      {
-        "func": "SET",
-        "collection": [
-          "rowA10"
         ],
         "property": "display",
         "value": true
@@ -4333,14 +4309,6 @@
       {
         "func": "SET",
         "collection": [
-          "rowA10"
-        ],
-        "property": "display",
-        "value": false
-      },
-      {
-        "func": "SET",
-        "collection": [
           "rowB1"
         ],
         "property": "display",
@@ -4750,7 +4718,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn3": {
@@ -4786,7 +4753,6 @@
       }
     ],
     "z": 2,
-    "moveable": false,
     "movable": false
   },
   "yarn4": {
@@ -4821,7 +4787,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn5": {
@@ -4856,7 +4821,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn6": {
@@ -4891,7 +4855,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn7": {
@@ -4926,7 +4889,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn8": {
@@ -4962,7 +4924,6 @@
       }
     ],
     "z": 1,
-    "moveable": false,
     "movable": false
   },
   "yarn9": {
@@ -4997,7 +4958,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn10": {
@@ -5032,7 +4992,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn11": {
@@ -5067,7 +5026,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn12": {
@@ -5102,7 +5060,6 @@
         "value": false
       }
     ],
-    "moveable": false,
     "movable": false
   },
   "yarn13": {
@@ -5128,20 +5085,6 @@
         "label": "yarn-p${seatIndex}",
         "mode": "inc",
         "value": -1
-      },
-      {
-        "func": "FOREACH",
-        "loopRoutine": [
-          "var maxX = ${PROPERTY width OF diceRollerHolder} - ${PROPERTY width OF die1}",
-          "var maxY = ${PROPERTY height OF diceRollerHolder} - ${PROPERTY height OF die1}",
-          "var x = randInt 0 ${maxX}",
-          "var y = randInt 0 ${maxY}",
-          {
-            "func": "SET",
-            "property": "parent",
-            "value": "diceRollerHolder"
-          }
-        ]
       },
       {
         "func": "SORT",
@@ -5211,7 +5154,6 @@
     "scale": 0.41,
     "layer": 5,
     "image": "/assets/1533859961_8821",
-    "moveable": false,
     "movable": false,
     "parent": "seat1"
   },
@@ -5223,7 +5165,6 @@
     "scale": 0.41,
     "layer": 5,
     "image": "/assets/1533859961_8821",
-    "moveable": false,
     "movable": false,
     "parent": "seat2"
   },
@@ -5235,7 +5176,6 @@
     "scale": 0.41,
     "layer": 5,
     "image": "/assets/1533859961_8821",
-    "moveable": false,
     "movable": false,
     "parent": "seat3"
   },
@@ -5247,7 +5187,6 @@
     "scale": 0.41,
     "layer": 5,
     "image": "/assets/1533859961_8821",
-    "moveable": false,
     "movable": false,
     "parent": "seat4"
   },
