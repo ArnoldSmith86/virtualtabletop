@@ -203,6 +203,47 @@ function parseFontSize(fontSize) {
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Properties', 'Edit widget properties.');
+    this.widgetPicker = null;
+  }
+
+  startWidgetPicker(targetWidgetID, onPick) {
+    this.widgetPicker = {
+      targetWidgetID,
+      onPick
+    };
+  }
+
+  stopWidgetPicker() {
+    this.widgetPicker = null;
+  }
+
+  isWidgetPickerActive(targetWidgetID = null) {
+    if(!this.widgetPicker)
+      return false;
+    return targetWidgetID === null || this.widgetPicker.targetWidgetID == targetWidgetID;
+  }
+
+  handleWidgetPickerSelection(newSelection) {
+    if(!this.widgetPicker)
+      return false;
+
+    const { targetWidgetID, onPick } = this.widgetPicker;
+    const targetWidget = widgets.get(targetWidgetID);
+    const pickedWidget = newSelection.length == 1 ? newSelection[0] : null;
+
+    if(!targetWidget) {
+      this.stopWidgetPicker();
+      return false;
+    }
+
+    if(pickedWidget && pickedWidget.id != targetWidget.id) {
+      this.stopWidgetPicker();
+      onPick(targetWidget, pickedWidget);
+      setSelection([ targetWidget ]);
+      return true;
+    }
+
+    return false;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -352,6 +393,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
+    if(this.handleWidgetPickerSelection(newSelection))
+      return;
+
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -369,7 +413,9 @@ class PropertiesModule extends SidebarModule {
 
         default:
           this.addHeader(widget.id);
-          this.renderGenericProperties(widget);
+          this.renderBasicSection(widget);
+          this.addSubHeader('Other properties');
+          this.renderGenericProperties(widget, this.basicPropertyExcludeList());
           break;
       }
     }
@@ -1401,10 +1447,316 @@ class PropertiesModule extends SidebarModule {
       }
   }
 
+  basicPropertyExcludeList(extra = []) {
+    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height' ].concat(extra);
+  }
+
+  renderNumberWithSlider(widget, property, title, target, options = {}) {
+    const min = typeof options.min === 'number' ? options.min : -5000;
+    const max = typeof options.max === 'number' ? options.max : 5000;
+    const step = typeof options.step === 'number' ? options.step : 1;
+
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flex = '1 1 300px';
+
+    const label = document.createElement('label');
+    label.textContent = title + ':';
+    wrap.appendChild(label);
+
+    const numberInput = document.createElement('input');
+    numberInput.type = 'number';
+    numberInput.step = String(step);
+    numberInput.min = String(min);
+    numberInput.max = String(max);
+    numberInput.style.width = '72px';
+    numberInput.style.boxSizing = 'border-box';
+    wrap.appendChild(numberInput);
+
+    const rangeInput = document.createElement('input');
+    rangeInput.type = 'range';
+    rangeInput.min = String(min);
+    rangeInput.max = String(max);
+    rangeInput.step = String(step);
+    rangeInput.style.flex = '1 1 auto';
+    wrap.appendChild(rangeInput);
+
+    const clampForRange = value => Math.max(min, Math.min(max, value));
+    const normalizeValue = value => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    };
+
+    const updateInputs = value => {
+      const normalized = normalizeValue(value);
+      if(document.activeElement !== numberInput)
+        numberInput.value = String(normalized);
+      if(document.activeElement !== rangeInput)
+        rangeInput.value = String(clampForRange(normalized));
+    };
+
+    numberInput.oninput = () => {
+      const value = normalizeValue(numberInput.value);
+      this.inputValueUpdated(widget, property, value);
+      if(document.activeElement === numberInput)
+        rangeInput.value = String(clampForRange(value));
+    };
+
+    rangeInput.oninput = () => {
+      const value = normalizeValue(rangeInput.value);
+      this.inputValueUpdated(widget, property, value);
+      if(document.activeElement === rangeInput)
+        numberInput.value = String(value);
+    };
+
+    this.addPropertyListener(widget, property, w=>updateInputs(w.get(property)));
+  }
+
+  renderDualNumberWithSlider(widget, title, left, right, options = {}) {
+    const leftOptions = options.left || options;
+    const rightOptions = options.right || options;
+
+    const sectionTitle = document.createElement('div');
+    sectionTitle.textContent = title + ':';
+    sectionTitle.style.fontWeight = 'bold';
+    sectionTitle.style.marginTop = '8px';
+    this.moduleDOM.appendChild(sectionTitle);
+
+    const row = div(this.moduleDOM);
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '8px';
+    row.style.flexWrap = 'wrap';
+
+    this.renderNumberWithSlider(widget, left.property, left.title, row, leftOptions);
+
+    const separator = document.createElement('span');
+    separator.textContent = '|';
+    separator.style.color = '#777';
+    row.appendChild(separator);
+
+    this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptions);
+  }
+
+  renderPositionLocks(widget) {
+    const row = div(this.moduleDOM);
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '8px';
+    row.style.flexWrap = 'wrap';
+    row.style.marginTop = '6px';
+
+    const lockPosition = document.createElement('input');
+    lockPosition.type = 'checkbox';
+    lockPosition.id = `lockPosition_${widget.id}_${rand().toString(36).substring(3, 7)}`;
+
+    const lockPositionLabel = document.createElement('label');
+    lockPositionLabel.htmlFor = lockPosition.id;
+    lockPositionLabel.textContent = 'Lock position';
+
+    row.appendChild(lockPosition);
+    row.appendChild(lockPositionLabel);
+
+    const separator = document.createElement('span');
+    separator.textContent = '|';
+    separator.style.color = '#777';
+    row.appendChild(separator);
+
+    const lockEditorWrap = document.createElement('span');
+    lockEditorWrap.style.display = 'inline-flex';
+    lockEditorWrap.style.alignItems = 'center';
+    lockEditorWrap.style.gap = '6px';
+
+    const lockInEditor = document.createElement('input');
+    lockInEditor.type = 'checkbox';
+    lockInEditor.id = `lockEditor_${widget.id}_${rand().toString(36).substring(3, 7)}`;
+
+    const lockInEditorLabel = document.createElement('label');
+    lockInEditorLabel.htmlFor = lockInEditor.id;
+    lockInEditorLabel.textContent = 'Also lock in editor';
+
+    lockEditorWrap.appendChild(lockInEditor);
+    lockEditorWrap.appendChild(lockInEditorLabel);
+    row.appendChild(lockEditorWrap);
+
+    const updateLockInputs = w => {
+      const movable = !!w.get('movable');
+      const movableInEdit = !!w.get('movableInEdit');
+      const isLocked = !movable;
+      lockPosition.checked = isLocked;
+      separator.style.display = isLocked ? 'inline' : 'none';
+      lockEditorWrap.style.display = isLocked ? 'inline-flex' : 'none';
+      if(isLocked)
+        lockInEditor.checked = !movableInEdit;
+    };
+
+    lockPosition.onchange = () => {
+      const shouldLock = lockPosition.checked;
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
+      widget.set('movable', !shouldLock);
+      batchEnd();
+    };
+
+    lockInEditor.onchange = () => this.inputValueUpdated(widget, 'movableInEdit', !lockInEditor.checked);
+
+    this.addPropertyListener(widget, 'movable', updateLockInputs);
+    this.addPropertyListener(widget, 'movableInEdit', updateLockInputs);
+  }
+
+  renderLayerSelect(widget) {
+    const wrap = div(this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginTop = '8px';
+
+    const label = document.createElement('label');
+    label.textContent = 'Layer:';
+    wrap.appendChild(label);
+
+    const select = document.createElement('select');
+    const baseMin = -5;
+    const baseMax = 5;
+    const layerNotes = {
+      '-5': 'background',
+      '-3': 'holder',
+      '-2': 'labels',
+      '-1': 'buttons/timers/scoreboard/seats',
+      '0': 'widget base default',
+      '1': 'cards/dice/basic'
+    };
+
+    const addLayerOption = (layerValue, addAtStart = false) => {
+      const value = Number(layerValue);
+      if(!Number.isFinite(value))
+        return;
+
+      const valueString = String(value);
+      if(select.querySelector(`option[value="${valueString}"]`))
+        return;
+
+      const option = document.createElement('option');
+      option.value = valueString;
+      option.textContent = valueString;
+      if(addAtStart)
+        select.insertBefore(option, select.firstChild);
+      else
+        select.appendChild(option);
+    };
+
+    for(let i = baseMin; i <= baseMax; ++i) {
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = typeof layerNotes[String(i)] === 'string' ? `${i} (${layerNotes[String(i)]})` : String(i);
+      select.appendChild(option);
+    }
+
+    const initialLayer = Number(widget.get('layer'));
+    if(initialLayer < baseMin)
+      addLayerOption(initialLayer, true);
+    else if(initialLayer > baseMax)
+      addLayerOption(initialLayer);
+
+    select.onchange = () => this.inputValueUpdated(widget, 'layer', +select.value);
+    this.addPropertyListener(widget, 'layer', w=>{
+      const layerValue = Number(w.get('layer'));
+      if(layerValue < baseMin)
+        addLayerOption(layerValue, true);
+      else if(layerValue > baseMax)
+        addLayerOption(layerValue);
+      select.value = String(w.get('layer'));
+    });
+    wrap.appendChild(select);
+  }
+
+  renderParentWidgetInput(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+
+    const label = document.createElement('label');
+    label.textContent = 'Parent widget:';
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.style.width = '140px';
+    input.value = widget.get('parent') || '';
+    wrap.appendChild(input);
+
+    const pickButton = document.createElement('button');
+    wrap.appendChild(pickButton);
+
+    const updatePickerButton = () => {
+      const isSelectingParent = this.isWidgetPickerActive(widget.id);
+      pickButton.textContent = isSelectingParent ? 'click a widget...' : 'click to select';
+      pickButton.classList.toggle('selected', isSelectingParent);
+    };
+
+    input.onchange = () => {
+      const value = input.value.trim();
+      this.inputValueUpdated(widget, 'parent', value ? value : null);
+    };
+
+    pickButton.onclick = () => {
+      if(this.isWidgetPickerActive(widget.id)) {
+        this.stopWidgetPicker();
+      } else {
+        this.startWidgetPicker(widget.id, (targetWidget, pickedWidget) => {
+          batchStart();
+          setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${targetWidget.id} in editor`);
+          targetWidget.set('parent', pickedWidget.id);
+          batchEnd();
+        });
+      }
+      updatePickerButton();
+    };
+
+    this.addPropertyListener(widget, 'parent', w => {
+      if(document.activeElement !== input)
+        input.value = w.get('parent') || '';
+      updatePickerButton();
+    });
+    updatePickerButton();
+  }
+
+  renderParentWidgetEditor(widget) {
+    this.renderObscureProperties(widget, [
+      {
+        property: 'parent',
+        title: 'add parent widget',
+        renderer: container => this.renderParentWidgetInput(widget, container)
+      }
+    ]);
+  }
+
+  renderBasicSection(widget) {
+    this.addSubHeader('Basic');
+    this.renderDualNumberWithSlider(widget, 'Position', { title: 'X', property: 'x' }, { title: 'Y', property: 'y' }, {
+      left: { min: 0, max: 1600, step: 1 },
+      right: { min: 0, max: 1000, step: 1 }
+    });
+    this.renderPositionLocks(widget);
+    this.renderLayerSelect(widget);
+    this.addLineBreak();
+    this.renderDualNumberWithSlider(widget, 'Size', { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
+      left: { min: 1, max: 1600, step: 1 },
+      right: { min: 1, max: 1000, step: 1 }
+    });
+    this.addLineBreak();
+    this.renderParentWidgetEditor(widget);
+  }
+
   renderForCard(widget) {
     this.addHeader(`Card ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader(`Card properties`);
-    this.renderGenericProperties(widget, [ 'deck', 'x', 'y', 'z' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'deck', 'z' ]));
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
     div(this.moduleDOM, '', `
@@ -1418,6 +1770,7 @@ class PropertiesModule extends SidebarModule {
 
   renderForDeck(widget) {
     this.addHeader(`Deck ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader(`Card types`);
     div(this.moduleDOM, 'buttonBar', `
       <button icon=remove class=removeAll>All</button>
@@ -1463,11 +1816,12 @@ class PropertiesModule extends SidebarModule {
     div(this.moduleDOM, '', `
       <p>These are properties acting on the deck widget itself which has no influence on gameplay. These properties do not apply to the cards. Which is why this section is usually empty.</p>
     `);
-    this.renderGenericProperties(widget, [ 'cardTypes', 'faceTemplates', 'cardDefaults', 'x', 'y', 'z' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'cardTypes', 'faceTemplates', 'cardDefaults', 'z' ]));
   }
 
   renderForDice(widget) {
     this.addHeader(`Dice ${widget.id}`);
+    this.renderBasicSection(widget);
     const widgetFaces = widget.get('faces');
     const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
 
@@ -1561,11 +1915,12 @@ class PropertiesModule extends SidebarModule {
     }
 
     this.addSubHeader(`Dice properties`);
-    this.renderGenericProperties(widget, ['faces','pipSymbols','shape3d']);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['faces','pipSymbols','shape3d']));
   }
 
   renderForHolder(widget) {
     this.addHeader(`Holder ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
       if(!Object.keys(deck.get('cardTypes')).length)
@@ -1660,11 +2015,12 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader(`Holder properties`);
-    this.renderGenericProperties(widget, [ 'dropTarget' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'dropTarget' ]));
   }
 
   renderForSpinner(widget) {
     this.addHeader(`Spinner ${widget.id}`);
+    this.renderBasicSection(widget);
     
     this.addSubHeader('Spinner Options');
     const options = [
@@ -1701,7 +2057,7 @@ class PropertiesModule extends SidebarModule {
     }
 
     this.addSubHeader(`Spinner properties`);
-    this.renderGenericProperties(widget, ['options']);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['options']));
   }
 
   /**
@@ -1710,6 +2066,7 @@ class PropertiesModule extends SidebarModule {
    */
   renderForLabel(widget) {
     this.addHeader(`Label ${widget.id}`);
+    this.renderBasicSection(widget);
 
     // --- Label style presets (preview buttons like deck) ---
     this.addSubHeader('Label style');
@@ -1760,7 +2117,7 @@ class PropertiesModule extends SidebarModule {
     this.renderOnDemandPlaceholderInput(widget);
 
     this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, ['css','editable', 'placeholderText', 'text' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['css','editable', 'placeholderText', 'text' ]));
   }
 
   renderGenericProperties(widget, exclude) {
