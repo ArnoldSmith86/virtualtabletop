@@ -1468,7 +1468,8 @@ button:disabled:hover {
 .inputstring,
 .inputselect,
 .inputpalette,
-.inputchoose{
+.inputchoose,
+.inputslider{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1479,7 +1480,8 @@ button:disabled:hover {
 .inputstring label,
 .inputselect label,
 .inputpalette label,
-.inputchoose label{
+.inputchoose label,
+.inputslider label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1488,6 +1490,7 @@ button:disabled:hover {
     font-weight: 400;
     line-height: 15.6px;
     min-height: 15px;
+    box-sizing: border-box;
 }
 
 .inputcheckbox input{
@@ -1704,6 +1707,50 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   line-height: 42px;
   padding: 8px 8px 0;
 
+}
+.inputslider .countInput{
+  width: 100%;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 0;
+}
+.inputslider .inputSliderValue{
+  padding: 0;
+  font-size: 16px;
+  min-width: var(--input-slider-value-ch, 4ch);
+  text-align: right;
+  color: var(--modalTextColor);
+}
+.inputslider input[type=range] {
+  height: 24px;
+  margin: 4px;
+}
+@-moz-document url-prefix() {
+  .inputslider input[type=range] {
+    margin-right: 6px;
+  }
+}
+.inputslider input[type=range]::-moz-range-track {
+  background-color: var(--VTTblue);
+  height: 24px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-webkit-slider-runnable-track {
+  background-color: var(--VTTblue);
+  height: 28px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
+}
+.inputslider input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
 }
 .countInput input[type=number]{
   font-size: 1.5rem;

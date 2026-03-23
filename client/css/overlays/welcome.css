@@ -123,7 +123,7 @@
 }
 .mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span:not(.ai-badge) {
   position: absolute;
-  font-size: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
@@ -146,8 +146,8 @@
   display: block;
 }
 .mainStateDetails .star::before {
-  font-size: 50px;
-  width: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
+  width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
 .mainStateDetails .mainStateImage > i {
   top: unset;
@@ -159,9 +159,9 @@
 }
 .mainStateImage span:not(.ai-badge) {
   position: absolute;
-  font-size: 16px;
-  top: 51px;
-  width: 62px;
+  top: calc(var(--starOffset) + 100% * var(--starSize));
+  width: calc(var(--starSize) * 100%);
+  font-size: calc(var(--mainDetailsHeight) * 0.08);
   text-align: center;
   color: white;
   font-weight: bold;
@@ -172,7 +172,7 @@
 }
 
 
-@media (min-width: 1200px) and (min-height: 750px) {
+@media (min-width: 1400px) and (min-height: 875px) {
   #linkDetailsOverlay {
     justify-content: center;
   }
@@ -224,6 +224,12 @@
     float: left;
     margin-right: 10px;
   }
+  .mainStateImage {
+    border-radius: 10px;
+  }
+  .mainStateImage.has-ai-badge img {
+    border-top-right-radius: 12px;
+  }
   .mainStateImage img, .mainStateImage > div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
@@ -251,8 +257,11 @@
     padding: unset;
     margin: unset;
   }
-  .mainStateImage .star, .mainStateImage .star + span {
+  .mainStateImage .star, .mainStateImage .star + span, .mainStateImage .ai-badge:not(.hidden) {
     display: none;
+  }
+  .mainStateImage.has-ai-badge img {
+    border-top-right-radius: 10px;
   }
   #linkDetailsOverlay > .mainStateDetails i {
     font-size: 32px;

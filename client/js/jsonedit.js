@@ -1444,12 +1444,15 @@ function jeAddCommands() {
   jeAddResetPropertiesCommand('display');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|choose|color|number|palette|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|choose|color|number|palette|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|choose|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|choose|color|number|palette|select|slider|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|choose|color|number|palette|select|slider|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|choose|color|number|palette|select|slider|string|switch', '');
   jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
-  jeAddFieldCommand('min', 'number', 0);
-  jeAddFieldCommand('max', 'number', 10);
+  jeAddFieldCommand('min', 'number|slider', 0);
+  jeAddFieldCommand('max', 'number|slider', 10);
+  jeAddFieldCommand('step', 'slider', 1);
+  jeAddFieldCommand('unit', 'slider', '');
+  jeAddFieldCommand('values', 'slider', [ 'low', 'medium', 'high' ]);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
   jeAddFieldCommand('regex', 'string', '');
   jeAddFieldCommand('regexHint', 'string', '');
@@ -1479,7 +1482,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ mode', [ 'widgets', 'faces' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'slider', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(MOVE\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(MOVEXY\\) ↦ count', [ 1, 'all' ]);
@@ -3099,7 +3102,8 @@ function jePostProcessObject(o) {
 }
 
 function jePostProcessText(t) {
-  // Convert actual newlines within JSON strings back to \n escape sequences
+  // Convert actual newlines within JSON strings back to \n escape sequences.
+  // Windows clipboards typically use CRLF, so ignore \r and let the following \n be escaped.
   let result = '';
   let inString = false;
   let escapeNext = false;
@@ -3125,12 +3129,12 @@ function jePostProcessText(t) {
       continue;
     }
     
-    if (inString && char === '\n') {
-      // Replace actual newline with \n escape sequence
+    if (inString && char === '\r')
+      continue;
+    else if (inString && char === '\n')
       result += '\\n';
-    } else {
+    else
       result += char;
-    }
   }
   
   // Handle case where escapeNext is still true at end (shouldn't happen in valid JSON, but be safe)

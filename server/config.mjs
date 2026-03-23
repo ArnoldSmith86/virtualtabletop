@@ -34,12 +34,14 @@ class Config {
   resolveAsset(asset) {
     if(!this.publicLibraryAssets) {
       this.publicLibraryAssets = {};
-      for(const category of [ 'games', 'tutorials' ]) {
+      for(const category of Object.values(this.config.libraries)) {
         const name = this.directory('library') + '/' + category;
-        for(const dir of fs.readdirSync(name))
-          if(fs.existsSync(name + '/' + dir + '/assets'))
-            for(const file of fs.readdirSync(name + '/' + dir + '/assets'))
-              this.publicLibraryAssets[file] = name + '/' + dir + '/assets/' + file;
+        if(fs.existsSync(name)) {
+          for(const dir of fs.readdirSync(name))
+            if(fs.existsSync(name + '/' + dir + '/assets'))
+              for(const file of fs.readdirSync(name + '/' + dir + '/assets'))
+                this.publicLibraryAssets[file] = name + '/' + dir + '/assets/' + file;
+        }
       }
     }
 

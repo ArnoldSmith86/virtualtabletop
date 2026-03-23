@@ -1,4 +1,13 @@
 function parseGameURL() {
+  const customLibraryMatch = location.href.match(/\/library\/([^/]+)\/([a-z-]+)$/);
+  if (customLibraryMatch) {
+    return {
+      type: 'public',
+      category: customLibraryMatch[1],
+      id: `PL:${customLibraryMatch[1]}:${customLibraryMatch[2]}`
+    };
+  }
+
   const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)$/);
   if(gameURLmatch) {
     if(gameURLmatch[2]) {
@@ -7,10 +16,12 @@ function parseGameURL() {
         id: gameURLmatch[2]
       };
     } else {
+      const folderMap = { game: 'games', tutorial: 'tutorials' };
+      const folder = folderMap[gameURLmatch[1]] || gameURLmatch[1];
       return {
         type: 'public',
         category: gameURLmatch[1],
-        id: `PL:${gameURLmatch[1]}:${gameURLmatch[3]}`
+        id: `PL:${folder}:${gameURLmatch[3]}`
       };
     }
   }
@@ -32,10 +43,11 @@ function checkForGameURL() {
         $('#welcomeGameType').innerText = gameDetails.category || 'game';
         $('#welcomeGameTypeHint').innerText = gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it';
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
-        toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user' || !state.stars);
-        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
-        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden', !state.usesAIImagery);
-        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden', !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .star'),               'hidden',       gameDetails.type == 'user' || !state.stars);
+        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden',       gameDetails.type == 'public');
+        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', !!state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden',       !state.usesAIImagery);
 
         let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
         document.title = `${state.name} - ${tabSuffix}`;
@@ -45,7 +57,7 @@ function checkForGameURL() {
         checkForGameURL_showError('Game not found!');
       }
     });
-  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/')) {
+  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/') || location.href.includes('/library/')) {
     checkForGameURL_showError('Invalid game name!');
   }
 }
@@ -81,7 +93,7 @@ async function playButtonClick(updateProgress) {
 async function joinRoom(newRoomID) {
   let joined = false;
   return new Promise(function(resolve, reject) {
-    roomID = newRoomID;
+    roomID = normalizeRoomID(newRoomID);
     onMessage('meta', _=>{
       if(joined) return;
       joined = true;
