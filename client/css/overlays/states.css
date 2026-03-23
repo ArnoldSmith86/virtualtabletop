@@ -264,13 +264,13 @@
   position: absolute;
   top: 0;
   background: transparent;
-  font-size: 200%;
+  font-size: calc(var(--size) * var(--starSize));
   text-shadow: 1px 1px 2px #444;
 }
 
 .roomState .star::before {
-  font-size: 32px;
-  width: 32px;
+  font-size: calc(var(--size) * var(--starSize));
+  width: calc(var(--size) * var(--starSize));
 }
 
 .roomState > i {
@@ -309,7 +309,8 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: none;
 }
 .roomState.savedGame .details h4 {
-  margin: 8px;
+  padding: 3px 8px 4px 8px;
+  margin: 0;
 }
 .roomState h4:empty {
   margin: 0px;
@@ -383,6 +384,12 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-bottom: 4px;
     box-shadow: unset;
   }
+  #statesOverlay .roomState.has-ai-badge .details {
+    border-top-right-radius: 12px;
+  }
+  #statesOverlay .roomState.has-ai-badge.has-ai-badge img {
+    border-top-right-radius: unset;
+  }
   #statesOverlay .roomState .ai-badge {
     z-index: 1;
   }
@@ -445,7 +452,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: inline-flex;
 }
 
-#stateDetailsOverlay > .buttons > div > button {
+#stateDetailsOverlay > .buttons > div button {
   width: 100%;
 }
 
@@ -516,13 +523,13 @@ div:nth-of-type(2) > .list > .roomState .star {
 }
 #mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
   position: fixed;
-  font-size: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
 #mainDetails .star::before {
-  font-size: 50px;
-  width: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
+  width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
 #mainDetails #mainImage > i {
   top: unset;
@@ -551,11 +558,69 @@ div:nth-of-type(2) > .list > .roomState .star {
 #mainImage .active.star, #mainImage .active.star + span {
   color: gold;
 }
+
+
+/*** unify library image looks no matter where it is ***/
+:root {
+  --starOffset: 0.03;
+  --starSize: 0.2;
+  --starShadow: 0.01;
+  --aiSize: 0.13;
+}
+#mainDetails #mainImage, #linkDetailsOverlay .mainStateImage {
+  --size: var(--mainDetailsHeight);
+}
+/* star/link/save overlay position */
+#mainDetails #mainImage button.star,
+#mainDetails #mainImage > i,
+#linkDetailsOverlay .mainStateImage button.star,
+#linkDetailsOverlay .mainStateImage > i,
+#statesList .roomState .star,
+#statesList .roomState .star + i {
+  margin: calc(var(--starOffset) * var(--size));
+  padding: 0;
+}
+/* star/link/save shadow */
+#mainDetails #mainImage button.star::before,
+#mainDetails #mainImage > i,
+#linkDetailsOverlay .mainStateImage button.star::before,
+#linkDetailsOverlay .mainStateImage > i,
+#statesList .roomState .star,
+#statesList .roomState .star + i {
+  text-shadow: calc(0.5 * var(--starShadow) * var(--size)) calc(0.5 * var(--starShadow) * var(--size)) calc(var(--starShadow) * var(--size)) #444;
+}
+/* star count */
+#mainImage .star + span {
+  width: calc(var(--size) * var(--starSize) + 2 * var(--starOffset) * var(--size));
+  top: calc(0.9 * var(--size) * var(--starSize) + var(--starOffset) * var(--size));
+  font-size: calc(0.5 * var(--size) * var(--starSize));
+  margin-left: 0;
+  text-shadow: calc(0.5 * var(--starShadow) * var(--size)) calc(0.5 * var(--starShadow) * var(--size)) calc(var(--starShadow) * var(--size)) #444;
+}
+/* AI badge */
+#statesList .roomState.has-ai-badge img {
+  border-top-right-radius: 12px;
+}
+#mainDetails #mainImage,
+#linkDetailsOverlay .mainStateImage,
+#statesList .roomState {
+  overflow: hidden;
+}
+#mainDetails #mainImage .ai-badge,
+#linkDetailsOverlay .mainStateImage .ai-badge,
+#statesList .roomState .ai-badge {
+  font-size: calc(0.52 * var(--aiSize) * var(--size));
+  padding: calc(0.174 * var(--aiSize) * var(--size)) calc(0.26 * var(--aiSize) * var(--size));
+  border-bottom-left-radius: calc(0.43 * var(--aiSize) * var(--size));
+  box-shadow: 0 0 calc(0.174 * var(--aiSize) * var(--size)) rgba(0,0,0,.3);
+}
+
+
 #mainImage span {
   position: absolute;
-  font-size: 16px;
-  top: 51px;
-  width: 62px;
+  top: calc(var(--starOffset) + 100% * var(--starSize));
+  width: calc(var(--starSize) * 100%);
+  font-size: calc(var(--mainDetailsHeight) * 0.08);
   text-align: center;
   color: white;
   font-weight: bold;
@@ -846,10 +911,16 @@ div:nth-of-type(2) > .list > .roomState .star {
     float: left;
     margin-right: 10px;
   }
+  #mainImage {
+    border-radius: 10px;
+  }
   #mainImage img, #similarImage img, #mainImage > div, #similarImage div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
+  }
+  #mainDetails.has-ai-badge #mainImage img {
+    border-top-right-radius: 12px;
   }
   #mainDetails > .details > div:nth-of-type(1) {
     position: absolute;
@@ -904,6 +975,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #mainDetails .star::before, #mainDetails #mainImage > i {
     font-size: 32px;
+    width: 32px;
   }
   #mainImage button, #similarImage button {
     font-size: 0;
@@ -913,6 +985,9 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin: 0;
   }
   #mainImage span {
+    display: none;
+  }
+  #mainImage .ai-badge:not(.hidden) {
     display: none;
   }
   #variantsList {

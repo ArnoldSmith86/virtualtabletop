@@ -52,8 +52,8 @@ class BasicWidget extends ImageWidget {
       this.updateIcon();
   }
 
-  classes() {
-    let classes = super.classes();
+  classes(includeTemporary = true) {
+    let classes = super.classes(includeTemporary);
     if(this.get('html'))
       classes += ' usesHTML';
     return classes;

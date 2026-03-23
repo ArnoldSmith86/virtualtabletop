@@ -457,6 +457,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
+    if(state.usesAIImagery)
+      entry.className += ' has-ai-badge';
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
@@ -546,8 +548,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.modes = state.mode;
     entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
 
-    if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
-      entry.dataset.type = 'Tutorials';
+    if(state.publicLibraryCategory)
+      entry.dataset.type = state.publicLibraryCategory;
     else
       entry.dataset.type = 'Games';
 
@@ -587,16 +589,23 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
+  const previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : 'Games';
+  $('#filterByType').dataset.initialized = 'true';
+  let typeHTML = '<option>Any</option>';
+  for(const typeOption of Object.keys(config.libraries))
+    typeHTML += `<option ${previousType && previousType == typeOption ? 'selected' : ''}>${html(typeOption)}</option>`;
+  $('#filterByType').innerHTML = typeHTML;
+
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
   for(const languageOption of Object.keys(languageOptions).sort())
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${languageOption}">${languageOption.replace(/^$/, 'None')}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, 'None'))}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
-    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
+    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${html(modeOption)}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
@@ -638,11 +647,14 @@ function fillStateDetails(states, state, dom) {
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
+  toggleClass($('#mainDetails'), 'has-ai-badge', !!state.usesAIImagery);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
-  toggleClass($('#mainImage > i'),                     'hidden', !state.link);
-  toggleClass($('#stateDetailsOverlay [icon=upload]'), 'hidden', state.publicLibrary || !config.allowPublicLibraryEdits);
+  toggleClass($('#mainImage > i'),                     'hidden', !state.link && !state.savePlayers);
+  toggleClass($('#publicLibraryUploadButtons'),        'hidden', !config.allowPublicLibraryEdits || (!!state.publicLibrary && Object.keys(config.libraries).length <= 1));
+
+  $('#mainImage > i').textContent = state.savePlayers ? 'save' : 'link';
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
@@ -907,9 +919,27 @@ function fillStateDetails(states, state, dom) {
       variantOperationQueue: []
     });
   };
-  $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
-    toServer('addStateToPublicLibrary', state.id);
-  };
+  const uploadButtonsContainer = $('#publicLibraryUploadButtons');
+  uploadButtonsContainer.innerHTML = '';
+  for (const [category, folder] of Object.entries(config.libraries)) {
+    if (state.publicLibrary && state.publicLibraryCategory === category) {
+      continue;
+    }
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'upload');
+    if (state.publicLibrary) {
+      button.textContent = `Move to ${category}`;
+      button.onclick = function() {
+        toServer('moveStateWithinPublicLibrary', { id: state.id, newLibrary: folder, newCategory: category });
+      };
+    } else {
+      button.textContent = `Add to public library: ${category}`;
+      button.onclick = function() {
+        toServer('addStateToPublicLibrary', { id: state.id, library: folder, category: category });
+      };
+    }
+    uploadButtonsContainer.appendChild(button);
+  }
 
   $('#stateDetailsOverlay .star').onclick = function(e) {
     e.currentTarget.classList.toggle('active');
@@ -1085,7 +1115,8 @@ async function shareLink(state) {
   $('#shareLinkOverlay').classList.toggle('customGame', !state.publicLibrary);
 
   if(state.publicLibrary) {
-    const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
+    const isStandard = state.publicLibraryCategory.toLowerCase() === 'games' || state.publicLibraryCategory.toLowerCase() === 'tutorials';
+    const type = isStandard ? (state.publicLibraryCategory.toLowerCase() === 'tutorials' ? 'tutorial' : 'game') : `library/${state.publicLibrary.split('/')[0]}`;
     url = `${getBaseURL()}/${type}/${name}`;
   } else {
     url = state.link;
@@ -1094,9 +1125,11 @@ async function shareLink(state) {
       url = `${location.origin}${await url.text()}/${name}`;
     } else {
       const baseURL = getBaseURL();
-      if(url.startsWith(`${baseURL}/s/`)) {
+      if(url.startsWith(`${baseURL}/s/`))
         url = `${baseURL}/game/${url.substr(baseURL.length + 3, 8)}/${name}`;
-      }
+      const gameWithHash = url.match(/^(.*\/game\/[0-9a-z]{8}\/.*)(#VTT.*)$/);
+      if(gameWithHash)
+        url = gameWithHash[1];
     }
   }
 
