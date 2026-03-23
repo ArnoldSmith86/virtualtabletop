@@ -749,9 +749,6 @@ export default class Room {
   }
 
   receiveDelta(player, delta) {
-    if(Math.random() < 0.05)
-      return;
-
     for(const widgetID in delta.s) {
       if(delta.s[widgetID] === null) {
         delete this.state[widgetID];
@@ -769,7 +766,7 @@ export default class Room {
     }
     delta.id = ++this.deltaID;
 
-    if(delta.deltaSendId && Math.random() >= 0.05)
+    if(delta.deltaSendId)
       player.send('deltaConfirm', { id: delta.deltaSendId });
 
     if(this.waitingForDeltaFromPlayer == player) {
