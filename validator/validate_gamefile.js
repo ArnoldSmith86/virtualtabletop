@@ -900,8 +900,12 @@ function getCustomPropertyUsage(data) {
         if (typeof value !== 'string' || !value.includes('${'))
             return;
 
-        const pattern = '^' + value
-            .split(placeholderRegex)
+        const staticParts = value.split(placeholderRegex);
+        const staticCharCount = staticParts.reduce((sum, part) => sum + part.length, 0);
+        if (staticCharCount < 2)
+            return;
+
+        const pattern = '^' + staticParts
             .map(escapeRegex)
             .join('.*') + '$';
         const interpolatedPattern = new RegExp(pattern);
