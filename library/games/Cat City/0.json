@@ -6774,7 +6774,63 @@
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
     "x": -121,
-    "y": -88
+    "y": -88,
+    "NewTurnSetupRoutine": [
+      {
+        "func": "CALL",
+        "routine": "SetCurrentTurnIndexRoutine"
+      }
+    ],
+    "NextTurnRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      },
+      {
+        "func": "SELECT",
+        "property": "turn",
+        "relation": "==",
+        "value": true,
+        "collection": "current_turn"
+      },
+      {
+        "func": "GET",
+        "collection": "current_turn",
+        "property": "index",
+        "variable": "current_turn_index"
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "${current_turn_index}_seat"
+        ],
+        "property": "empty_hand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${empty_hand}",
+        "relation": "==",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "NextTurnRoutine"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "CALL",
+            "routine": "NewTurnSetupRoutine"
+          }
+        ]
+      }
+    ],
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "NextTurnRoutine"
+      }
+    ]
   },
   "4kz1": {
     "type": "pile",
@@ -6940,7 +6996,7 @@
       "mode": "vs",
       "time": "45-60",
       "attribution": "<div>Game layout and scripting by Sergio De La Guera and Jonathan Cox, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://www.publicdomainpictures.net/ and are&nbsp;released to the Public Domain&nbsp;under CC0:</div><div><br></div><div>Cover Image: https://www.publicdomainpictures.net/en/view-image.php?image=696819&amp;picture=black-cat-paris-postcard</div><div><br></div><div>The following graphics are from https://game-icons.net and under CC BY 3.0:</div><div>Cat: https://game-icons.net/1x1/lorc/cat.html</div><div>Bastet: https://game-icons.net/1x1/delapouite/bastet.html</div><div>Feline: https://game-icons.net/1x1/delapouite/feline.html</div><div>Canned Fish: https://game-icons.net/1x1/delapouite/canned-fish.html</div><div>Lion: https://game-icons.net/1x1/lorc/lion.html</div><div>Saber Toothed Cat Head: https://game-icons.net/1x1/delapouite/saber-toothed-cat-head.html</div><div>Plain Circle: https://game-icons.net/1x1/delapouite/plain-circle.html</div><div>Money Stack:&nbsp;https://game-icons.net/1x1/delapouite/money-stack.html</div><div><br></div><div>The sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at https://pixabay.com/sound-effects/wrong-answer-129254/.</div>",
-      "lastUpdate": 1773704226267,
+      "lastUpdate": 1774065398451,
       "showName": true,
       "skill": "",
       "description": "Stake your cats turf and extort rival cats for money.",
