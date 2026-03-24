@@ -3577,13 +3577,6 @@
               ],
               "elseRoutine": [
                 "var maxCount = parseFloat ${maxCount}",
-                "var maxCount = ${maxCount} + 1",
-                {
-                  "func": "SET",
-                  "collection": "thisButton",
-                  "property": "maxCount",
-                  "value": "${maxCount}"
-                },
                 {
                   "func": "SET",
                   "collection": "thisCounter",
