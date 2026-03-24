@@ -206,44 +206,124 @@ class PropertiesModule extends SidebarModule {
     this.widgetPicker = null;
   }
 
-  startWidgetPicker(targetWidgetID, onPick) {
+  startWidgetPicker(targetWidgetID, onPick, options = {}) {
+    const pendingWidgetIDs = Array.isArray(options.pendingWidgetIDs) ?
+      [...new Set(options.pendingWidgetIDs.filter(v => typeof v === 'string' && v.trim() !== ''))] : [];
+
     this.widgetPicker = {
       targetWidgetID,
-      onPick
+      onPick,
+      pickerKey: options.pickerKey || null,
+      filter: typeof options.filter === 'function' ? options.filter : null,
+      allowMultiple: !!options.allowMultiple,
+      toggleSelection: options.toggleSelection !== false,
+      pendingWidgetIDs,
+      onPendingChanged: typeof options.onPendingChanged === 'function' ? options.onPendingChanged : null
     };
+
+    if(this.widgetPicker.onPendingChanged)
+      this.widgetPicker.onPendingChanged([ ...this.widgetPicker.pendingWidgetIDs ]);
   }
 
   stopWidgetPicker() {
     this.widgetPicker = null;
   }
 
-  isWidgetPickerActive(targetWidgetID = null) {
+  getWidgetPicker(targetWidgetID = null, pickerKey = null) {
     if(!this.widgetPicker)
+      return null;
+
+    if(targetWidgetID !== null && this.widgetPicker.targetWidgetID != targetWidgetID)
+      return null;
+
+    if(pickerKey !== null && this.widgetPicker.pickerKey !== pickerKey)
+      return null;
+
+    return this.widgetPicker;
+  }
+
+  isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
+    return !!this.getWidgetPicker(targetWidgetID, pickerKey);
+  }
+
+  confirmWidgetPicker() {
+    const picker = this.getWidgetPicker();
+    if(!picker || !picker.allowMultiple)
       return false;
-    return targetWidgetID === null || this.widgetPicker.targetWidgetID == targetWidgetID;
+
+    const targetWidget = widgets.get(picker.targetWidgetID);
+    if(!targetWidget) {
+      this.stopWidgetPicker();
+      return false;
+    }
+
+    const pickedWidgets = picker.pendingWidgetIDs
+      .map(widgetID => widgets.get(widgetID))
+      .filter(pickedWidget => pickedWidget && pickedWidget.id != targetWidget.id);
+
+    this.stopWidgetPicker();
+    picker.onPick(targetWidget, pickedWidgets);
+    setSelection([ targetWidget ]);
+    return true;
   }
 
   handleWidgetPickerSelection(newSelection) {
-    if(!this.widgetPicker)
+    const picker = this.getWidgetPicker();
+    if(!picker)
       return false;
 
-    const { targetWidgetID, onPick } = this.widgetPicker;
-    const targetWidget = widgets.get(targetWidgetID);
-    const pickedWidget = newSelection.length == 1 ? newSelection[0] : null;
+    const targetWidget = widgets.get(picker.targetWidgetID);
 
     if(!targetWidget) {
       this.stopWidgetPicker();
       return false;
     }
 
+    const keepTargetSelection = () => {
+      if(newSelection.length != 1 || newSelection[0].id != targetWidget.id)
+        setSelection([ targetWidget ]);
+    };
+
+    const pickedWidgets = newSelection.filter(pickedWidget => {
+      if(!pickedWidget || pickedWidget.id == targetWidget.id)
+        return false;
+      return !picker.filter || picker.filter(pickedWidget);
+    });
+
+    if(picker.allowMultiple) {
+      if(pickedWidgets.length) {
+        if(pickedWidgets.length == 1) {
+          const pickedWidgetID = pickedWidgets[0].id;
+          const existingIndex = picker.pendingWidgetIDs.indexOf(pickedWidgetID);
+          if(existingIndex == -1)
+            picker.pendingWidgetIDs.push(pickedWidgetID);
+          else if(picker.toggleSelection)
+            picker.pendingWidgetIDs.splice(existingIndex, 1);
+        } else {
+          for(const pickedWidget of pickedWidgets)
+            if(picker.pendingWidgetIDs.indexOf(pickedWidget.id) == -1)
+              picker.pendingWidgetIDs.push(pickedWidget.id);
+        }
+
+        if(picker.onPendingChanged)
+          picker.onPendingChanged([ ...picker.pendingWidgetIDs ]);
+      }
+
+      keepTargetSelection();
+      return true;
+    }
+
+    const pickedWidget = pickedWidgets.length == 1 ? pickedWidgets[0] : null;
+
     if(pickedWidget && pickedWidget.id != targetWidget.id) {
       this.stopWidgetPicker();
-      onPick(targetWidget, pickedWidget);
+      picker.onPick(targetWidget, pickedWidget);
       setSelection([ targetWidget ]);
       return true;
     }
 
-    return false;
+    keepTargetSelection();
+    return true;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -1448,7 +1528,183 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'fixedParent' ].concat(extra);
+    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat' ].concat(extra);
+  }
+
+  isOnDemandPropertyValueSet(value) {
+    return value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '');
+  }
+
+  renderOnDemandSection(widget, title, properties, renderer, target = null, options = {}) {
+    const host = target || this.moduleDOM;
+    const buttonHost = options.buttonHost || host;
+    let expanded = false;
+
+    const isPropertySet = (property, value) => {
+      if(typeof options.isPropertySet === 'function')
+        return options.isPropertySet(property, value, widget);
+      return this.isOnDemandPropertyValueSet(value);
+    };
+
+    const hasAnySetValue = w => properties.some(property => isPropertySet(property, w.get(property)));
+    const expand = (replaceNode = null) => {
+      if(expanded)
+        return;
+      expanded = true;
+      const container = document.createElement('div');
+      container.className = 'obscurePropertyContainer';
+      container.style.paddingLeft = '10px';
+      
+      // If we have a separate buttonHost, remove the button and insert into host (contentWrapper)
+      if(replaceNode && replaceNode.parentNode) {
+        replaceNode.remove();
+      }
+      
+      // Insert content into the target (contentWrapper/block display)
+      if(buttonHost !== host && buttonHost.parentNode === host)
+        host.insertBefore(container, buttonHost);
+      else
+        host.appendChild(container);
+      renderer(container);
+    };
+
+    if(hasAnySetValue(widget)) {
+      expand();
+      return;
+    }
+
+    const button = document.createElement('button');
+    button.className = 'blue';
+    button.textContent = title;
+    button.style.marginTop = '2px';
+    button.style.marginBottom = '1px';
+    buttonHost.appendChild(button);
+
+    const tryExpand = w => {
+      if(hasAnySetValue(w)) {
+        expand(button);
+      }
+    };
+
+    for(const property of properties)
+      this.addPropertyListener(widget, property, tryExpand);
+
+    button.onclick = e => {
+      e.preventDefault();
+      expand(button);
+    };
+  }
+
+  createOnDemandButtonWrapper(target = null) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.flexWrap = 'wrap';
+    wrap.style.gap = '6px';
+    wrap.style.alignItems = 'center';
+    return wrap;
+  }
+
+  createOnDemandSectionStructure(target = null, title = '', options = {}) {
+    const section = div(target || this.moduleDOM);
+
+    if(title) {
+      const titleDOM = document.createElement(options.titleTag || 'div');
+      titleDOM.textContent = title;
+      titleDOM.style.fontWeight = options.titleWeight || 'bold';
+      if(options.titleMarginTop)
+        titleDOM.style.marginTop = options.titleMarginTop;
+      section.appendChild(titleDOM);
+    }
+
+    const contentWrapper = div(section);
+    contentWrapper.style.display = 'block';
+
+    const newPropertiesWrapper = this.createOnDemandButtonWrapper(section);
+
+    return {
+      section,
+      contentWrapper,
+      newPropertiesWrapper
+    };
+  }
+
+  normalizeSeatReference(value) {
+    if(value === undefined || value === null)
+      return null;
+
+    if(Array.isArray(value)) {
+      const normalized = [...new Set(value
+        .map(entry => String(entry || '').trim())
+        .filter(entry => entry.length))];
+      if(!normalized.length)
+        return null;
+      return normalized;
+    }
+
+    if(typeof value === 'string') {
+      const trimmed = value.trim();
+      if(!trimmed.length)
+        return null;
+
+      if(trimmed.startsWith('[') && trimmed.endsWith(']')) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if(Array.isArray(parsed))
+            return this.normalizeSeatReference(parsed);
+        } catch(e) {
+        }
+      }
+
+      return trimmed;
+    }
+
+    return String(value);
+  }
+
+  parseSeatReferenceInput(value) {
+    const normalized = this.normalizeSeatReference(value);
+    if(normalized === null)
+      return null;
+    return normalized;
+  }
+
+  formatSeatReference(value) {
+    const normalized = this.normalizeSeatReference(value);
+    if(normalized === null)
+      return '';
+    if(Array.isArray(normalized))
+      return JSON.stringify(normalized);
+    return normalized;
+  }
+
+  seatReferenceToArray(value) {
+    const normalized = this.normalizeSeatReference(value);
+    if(normalized === null)
+      return [];
+    if(Array.isArray(normalized))
+      return [ ...normalized ];
+    return [ normalized ];
+  }
+
+  seatReferenceFromArray(values) {
+    const unique = [...new Set(values.map(v => String(v || '').trim()).filter(v => v.length))];
+    if(!unique.length)
+      return null;
+    if(unique.length == 1)
+      return unique[0];
+    return unique;
+  }
+
+  seatReferenceEquals(left, right) {
+    const leftValues = this.seatReferenceToArray(left).sort();
+    const rightValues = this.seatReferenceToArray(right).sort();
+    if(leftValues.length != rightValues.length)
+      return false;
+    return leftValues.every((value, index) => value == rightValues[index]);
+  }
+
+  getSeatWidgetIDs() {
+    return widgetFilter(widget => widget.get('type') == 'seat').map(seat => seat.id);
   }
 
   renderNumberWithSlider(widget, property, title, target, options = {}) {
@@ -1701,7 +1957,7 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(lockParentInfo);
 
     const updateParentButtons = () => {
-      const isSelectingParent = this.isWidgetPickerActive(widget.id);
+      const isSelectingParent = this.isWidgetPickerActive(widget.id, 'parent');
       pickButton.textContent = isSelectingParent ? 'click a widget...' : 'click to select';
       pickButton.classList.toggle('selected', isSelectingParent);
 
@@ -1716,7 +1972,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     pickButton.onclick = () => {
-      if(this.isWidgetPickerActive(widget.id)) {
+      if(this.isWidgetPickerActive(widget.id, 'parent')) {
         this.stopWidgetPicker();
       } else {
         this.startWidgetPicker(widget.id, (targetWidget, pickedWidget) => {
@@ -1724,6 +1980,8 @@ class PropertiesModule extends SidebarModule {
           setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${targetWidget.id} in editor`);
           targetWidget.set('parent', pickedWidget.id);
           batchEnd();
+        }, {
+          pickerKey: 'parent'
         });
       }
       updateParentButtons();
@@ -1745,6 +2003,238 @@ class PropertiesModule extends SidebarModule {
     updateParentButtons();
   }
 
+  renderSeatReferenceInput(widget, property, title, target = null, options = {}) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+
+    const label = document.createElement('label');
+    label.textContent = title;
+    wrap.appendChild(label);
+
+    const infoIcon = options.infoText ? this.renderInfoIcon(options.infoText, { size: '18px' }) : null;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.style.width = '180px';
+    input.value = this.formatSeatReference(widget.get(property));
+    wrap.appendChild(input);
+
+    let pickButton = null;
+    const pickerKey = options.pickerKey || property;
+
+    if(options.enablePicker) {
+      pickButton = document.createElement('button');
+      pickButton.style.marginTop = '2px';
+      pickButton.style.marginBottom = '1px';
+      wrap.appendChild(pickButton);
+
+      const updatePickButton = () => {
+        const picker = this.getWidgetPicker(widget.id, pickerKey);
+        const isSelecting = !!picker;
+        pickButton.classList.toggle('selected', isSelecting);
+        if(!isSelecting)
+          pickButton.textContent = 'click to select';
+        else
+          pickButton.textContent = picker.allowMultiple ? 'click to confirm' : 'click a widget...';
+      };
+
+      pickButton.onclick = () => {
+        const picker = this.getWidgetPicker(widget.id, pickerKey);
+
+        if(picker) {
+          if(picker.allowMultiple)
+            this.confirmWidgetPicker();
+          else
+            this.stopWidgetPicker();
+          updatePickButton();
+          return;
+        }
+
+        const currentValue = this.normalizeSeatReference(widget.get(property));
+        const allowMultiple = Array.isArray(currentValue);
+        const pendingWidgetIDs = Array.isArray(currentValue) ? currentValue : [];
+
+        this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+          if(Array.isArray(pickedWidgets)) {
+            const pickedWidgetIDs = pickedWidgets.map(pickedWidget => pickedWidget.id);
+            this.inputValueUpdated(targetWidget, property, this.seatReferenceFromArray(pickedWidgetIDs));
+          } else if(pickedWidgets) {
+            this.inputValueUpdated(targetWidget, property, pickedWidgets.id);
+          }
+        }, {
+          pickerKey,
+          allowMultiple,
+          pendingWidgetIDs,
+          filter: pickedWidget => pickedWidget.get('type') == 'seat',
+          onPendingChanged: () => updatePickButton()
+        });
+
+        updatePickButton();
+      };
+
+      this.addPropertyListener(widget, property, () => updatePickButton());
+      updatePickButton();
+    }
+
+    if(infoIcon)
+      wrap.appendChild(infoIcon);
+
+    input.onchange = () => {
+      const value = this.parseSeatReferenceInput(input.value);
+      this.inputValueUpdated(widget, property, value);
+    };
+
+    this.addPropertyListener(widget, property, w => {
+      if(document.activeElement !== input)
+        input.value = this.formatSeatReference(w.get(property));
+    });
+
+    return { wrap, input, pickButton };
+  }
+
+  getSeatVisibilityMode(widget) {
+    const onlyVisibleForSeat = widget.get('onlyVisibleForSeat');
+    const linkedToSeat = widget.get('linkedToSeat');
+
+    if(this.seatReferenceToArray(onlyVisibleForSeat).length == 0)
+      return 'all';
+
+    if(this.seatReferenceEquals(onlyVisibleForSeat, linkedToSeat))
+      return 'visible';
+
+    const allSeats = this.getSeatWidgetIDs();
+    const linkedSeats = this.seatReferenceToArray(linkedToSeat);
+    const hiddenFromSeats = allSeats.filter(seatID => linkedSeats.indexOf(seatID) == -1);
+
+    if(this.seatReferenceEquals(onlyVisibleForSeat, hiddenFromSeats))
+      return 'hidden';
+
+    return 'custom';
+  }
+
+  renderSeatVisibilityInput(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+
+    const label = document.createElement('label');
+    label.textContent = 'Visible to seats:';
+    wrap.appendChild(label);
+
+    const visibilityInfoIcon = this.renderInfoIcon('Sets to which seats can see this widget. Use this to create private play areas and content for players or teams.', { size: '18px' });
+
+    const modeSelect = document.createElement('select');
+    modeSelect.innerHTML = `
+      <option value="all">visible to all</option>
+      <option value="visible">visible to seat</option>
+      <option value="hidden">hidden from seat</option>
+    `;
+    wrap.appendChild(modeSelect);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.style.width = '180px';
+    wrap.appendChild(input);
+
+    const pickButton = document.createElement('button');
+    pickButton.style.marginTop = '2px';
+    pickButton.style.marginBottom = '1px';
+    wrap.appendChild(pickButton);
+    wrap.appendChild(visibilityInfoIcon);
+
+    const pickerKey = 'onlyVisibleForSeat';
+    const updatePickButton = () => {
+      const picker = this.getWidgetPicker(widget.id, pickerKey);
+      const isSelecting = !!picker;
+      pickButton.classList.toggle('selected', isSelecting);
+      pickButton.textContent = isSelecting ? 'click to confirm' : 'click to select';
+    };
+
+    const updateInputValue = w => {
+      if(document.activeElement !== input)
+        input.value = this.formatSeatReference(w.get('onlyVisibleForSeat'));
+    };
+
+    const updateCustomModeOption = mode => {
+      let customOption = modeSelect.querySelector('option[value="custom"]');
+      if(mode == 'custom') {
+        if(!customOption) {
+          customOption = document.createElement('option');
+          customOption.value = 'custom';
+          customOption.textContent = 'custom';
+          modeSelect.appendChild(customOption);
+        }
+      } else if(customOption) {
+        customOption.remove();
+      }
+    };
+
+    const updateMode = w => {
+      const mode = this.getSeatVisibilityMode(w);
+      updateCustomModeOption(mode);
+      modeSelect.value = mode;
+      updatePickButton();
+      updateInputValue(w);
+    };
+
+    input.onchange = () => {
+      const value = this.parseSeatReferenceInput(input.value);
+      this.inputValueUpdated(widget, 'onlyVisibleForSeat', value);
+    };
+
+    pickButton.onclick = () => {
+      const picker = this.getWidgetPicker(widget.id, pickerKey);
+      if(picker) {
+        this.confirmWidgetPicker();
+        updatePickButton();
+        return;
+      }
+
+      this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+        const pickedWidgetIDs = Array.isArray(pickedWidgets) ? pickedWidgets.map(pickedWidget => pickedWidget.id) : [];
+        if(!pickedWidgetIDs.length)
+          return;
+        this.inputValueUpdated(targetWidget, 'onlyVisibleForSeat', this.seatReferenceFromArray(pickedWidgetIDs));
+      }, {
+        pickerKey,
+        allowMultiple: true,
+        toggleSelection: false,
+        pendingWidgetIDs: [],
+        filter: pickedWidget => pickedWidget.get('type') == 'seat',
+        onPendingChanged: () => updatePickButton()
+      });
+
+      updatePickButton();
+    };
+
+    modeSelect.onchange = () => {
+      if(modeSelect.value == 'all') {
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', null);
+      } else if(modeSelect.value == 'visible') {
+        const linkedToSeat = widget.get('linkedToSeat');
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', linkedToSeat === undefined ? null : linkedToSeat);
+      } else if(modeSelect.value == 'hidden') {
+        const allSeats = this.getSeatWidgetIDs();
+        const linkedSeats = this.seatReferenceToArray(widget.get('linkedToSeat'));
+        const hiddenFromSeats = allSeats.filter(seatID => linkedSeats.indexOf(seatID) == -1);
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', this.seatReferenceFromArray(hiddenFromSeats));
+      }
+
+      updateMode(widget);
+    };
+
+    this.addPropertyListener(widget, 'onlyVisibleForSeat', updateInputValue);
+    this.addPropertyListener(widget, 'onlyVisibleForSeat', updateMode);
+    this.addPropertyListener(widget, 'linkedToSeat', updateMode);
+    this.addPropertyListener(widget, 'onlyVisibleForSeat', () => updatePickButton());
+    updateMode(widget);
+  }
+
   renderInfoIcon(infoText, options = {}) {
     const icon = document.createElement('span');
     icon.className = options.className || 'material-symbols';
@@ -1758,6 +2248,7 @@ class PropertiesModule extends SidebarModule {
     icon.style.fontSize = options.size || '20px';
     icon.style.lineHeight = '1';
     icon.style.userSelect = 'none';
+
     return icon;
   }
 
@@ -1785,7 +2276,42 @@ class PropertiesModule extends SidebarModule {
       right: { min: 1, max: 1000, step: 1 }
     });
     this.addLineBreak();
-    this.renderParentWidgetEditor(widget);
+    this.renderAssociatedWidgetsSection(widget);
+  }
+
+  renderAssociatedWidgetsSection(widget) {
+    const linksSection = this.createOnDemandSectionStructure(this.moduleDOM, "Widget's links", {
+      titleMarginTop: '8px'
+    });
+
+    this.renderOnDemandSection(widget, 'add Parent', [ 'parent', 'fixedParent' ], container => {
+      this.renderParentWidgetInput(widget, container);
+    }, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper,
+      isPropertySet: (property, value) => {
+        if(property == 'fixedParent')
+          return value === true;
+        return this.isOnDemandPropertyValueSet(value);
+      }
+    });
+
+    this.renderOnDemandSection(widget, 'add Seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+      const seatSection = this.createOnDemandSectionStructure(container);
+
+      this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
+        enablePicker: true,
+        pickerKey: 'linkedToSeat',
+        infoText: 'Widgets linked to a seats are only visible when a player ocupies that seat. Use this to decluster the board when fewer players are present.'
+      });
+
+      this.renderOnDemandSection(widget, 'change visibility', [ 'onlyVisibleForSeat' ], nestedContainer => {
+        this.renderSeatVisibilityInput(widget, nestedContainer);
+      }, seatSection.contentWrapper, {
+        buttonHost: seatSection.newPropertiesWrapper
+      });
+    }, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper
+    });
   }
 
   renderForCard(widget) {
