@@ -1448,7 +1448,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height' ].concat(extra);
+    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'fixedParent' ].concat(extra);
   }
 
   renderNumberWithSlider(widget, property, title, target, options = {}) {
@@ -1670,6 +1670,8 @@ class PropertiesModule extends SidebarModule {
       select.value = String(w.get('layer'));
     });
     wrap.appendChild(select);
+  const lockParentInfo = this.renderInfoIcon('Widgets on higher layers will always be displayed on top of widgets on lower layers.');
+    wrap.appendChild(lockParentInfo);
   }
 
   renderParentWidgetInput(widget, target = null) {
@@ -1692,10 +1694,20 @@ class PropertiesModule extends SidebarModule {
     const pickButton = document.createElement('button');
     wrap.appendChild(pickButton);
 
-    const updatePickerButton = () => {
+    const lockParentButton = document.createElement('button');
+    wrap.appendChild(lockParentButton);
+
+    const lockParentInfo = this.renderInfoIcon('When locked the parent of this widget will not change when it is being dragged by a player (or editor). Automation can still change it though.');
+    wrap.appendChild(lockParentInfo);
+
+    const updateParentButtons = () => {
       const isSelectingParent = this.isWidgetPickerActive(widget.id);
       pickButton.textContent = isSelectingParent ? 'click a widget...' : 'click to select';
       pickButton.classList.toggle('selected', isSelectingParent);
+
+      const isParentLocked = !!widget.get('fixedParent');
+      lockParentButton.textContent = isParentLocked ? 'Unlock parent' : 'Lock parent';
+      lockParentButton.classList.toggle('selected', isParentLocked);
     };
 
     input.onchange = () => {
@@ -1714,15 +1726,39 @@ class PropertiesModule extends SidebarModule {
           batchEnd();
         });
       }
-      updatePickerButton();
+      updateParentButtons();
+    };
+
+    lockParentButton.onclick = () => {
+      const shouldLockParent = !widget.get('fixedParent');
+      this.inputValueUpdated(widget, 'fixedParent', shouldLockParent);
+      updateParentButtons();
     };
 
     this.addPropertyListener(widget, 'parent', w => {
       if(document.activeElement !== input)
         input.value = w.get('parent') || '';
-      updatePickerButton();
+      updateParentButtons();
     });
-    updatePickerButton();
+
+    this.addPropertyListener(widget, 'fixedParent', () => updateParentButtons());
+    updateParentButtons();
+  }
+
+  renderInfoIcon(infoText, options = {}) {
+    const icon = document.createElement('span');
+    icon.className = options.className || 'material-symbols';
+    icon.textContent = options.icon || 'info';
+    icon.setAttribute('aria-label', options.ariaLabel || 'Information');
+    icon.title = infoText || '';
+    icon.style.cursor = 'help';
+    icon.style.display = 'inline-block';
+    icon.style.color = options.color || 'var(--VTTblue)';
+    icon.style.fontVariationSettings = options.fontVariationSettings || "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20";
+    icon.style.fontSize = options.size || '20px';
+    icon.style.lineHeight = '1';
+    icon.style.userSelect = 'none';
+    return icon;
   }
 
   renderParentWidgetEditor(widget) {
