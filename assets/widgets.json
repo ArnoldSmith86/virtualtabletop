@@ -3577,6 +3577,7 @@
               ],
               "elseRoutine": [
                 "var maxCount = parseFloat ${maxCount}",
+                "var maxCount = ${maxCount} + 1",
                 {
                   "func": "SET",
                   "collection": "thisCounter",
