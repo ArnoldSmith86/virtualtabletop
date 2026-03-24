@@ -1275,7 +1275,7 @@ function validateGameFile(data, checkMeta) {
                 property: ['_meta', 'info', 'image'],
                 message: 'is not an internal asset: ' + info.image
             });
-        } else if (info.image.match(/[0-9]+$/)[0] > 50000) {
+        } else if (info.image.match(/[0-9]+$/) && info.image.match(/[0-9]+$/)[0] > 50000) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],
