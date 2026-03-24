@@ -1782,7 +1782,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -1857,7 +1856,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -1932,7 +1930,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -2007,7 +2004,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -2082,7 +2078,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -2157,7 +2152,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -2232,7 +2226,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -2307,7 +2300,6 @@
         ]
       }
     ],
-    "city": true,
     "movableInEdit": false,
     "dropLimit": 1
   },
@@ -3697,8 +3689,7 @@
         "value": "${PROPERTY background_color_transparent}"
       }
     ],
-    "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF"
+    "contrast_color": "#FFFFFF"
   },
   "1_seat": {
     "type": "seat",
@@ -3753,10 +3744,8 @@
         "pointer-events": "none"
       }
     },
-    "colorContrast": "#000000",
     "mainColor": "#dddddd",
     "outlineColor": "#000000bb",
-    "passed": false,
     "textColor": "#000000",
     "textShadowBlur": 2,
     "textShadowDistance": 2,
@@ -3863,11 +3852,6 @@
             "collection": "thisButton",
             "property": "player",
             "value": ""
-          },
-          {
-            "func": "SET",
-            "property": "color",
-            "value": "#000000"
           }
         ],
         "elseRoutine": [
@@ -4269,8 +4253,7 @@
     "current_map": 23,
     "turn_alert_enabled": false,
     "audio_your_turn_enabled": true,
-    "audio_enabled": true,
-    "background_color_solid": "#ffeb3b",
+    "background_color_solid": "#607d8b",
     "background_color_transparent": "white",
     "color_options": [
       "#000000",
@@ -4384,8 +4367,7 @@
         "contrast_color_opposite": "#000000"
       }
     ],
-    "contrast_color": "#000000",
-    "money": 10,
+    "contrast_color": "white",
     "text": "C",
     "hideWhenUnused": true
   },
@@ -4406,6 +4388,34 @@
         "handleOffset": 18,
         "handlePosition": "middle right"
       },
+      "clickRoutine": [],
+      "doubleClickRoutine": [
+        "var index = ${PROPERTY deck} charAt 0",
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY cardType}",
+          "relation": "==",
+          "operand2": "cube",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_cube"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_disc"
+            }
+          ]
+        }
+      ],
       "parentChangeRoutine": [
         {
           "func": "GET",
@@ -5808,7 +5818,6 @@
         ]
       }
     ],
-    "hoverParent": "4ge5",
     "parent": "bonus_reserve",
     "fixedParent": true,
     "y": -157
@@ -6326,7 +6335,7 @@
         "text-shadow": "-1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0 1px 5px #00000099"
       }
     },
-    "text": 1,
+    "text": 0,
     "x": -1
   },
   "1_supply_cube_counter": {
@@ -6354,7 +6363,7 @@
         "text-shadow": "-1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0 1px 5px #00000099"
       }
     },
-    "text": 4
+    "text": 0
   },
   "1_reserve_disc_counter": {
     "type": "label",
@@ -6382,7 +6391,7 @@
         "text-shadow": "-1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0 1px 5px #00000099"
       }
     },
-    "text": 0
+    "text": 1
   },
   "1_reserve_cube_counter": {
     "type": "label",
@@ -6409,7 +6418,7 @@
         "text-shadow": "-1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff, 0 1px 5px #00000099"
       }
     },
-    "text": 7
+    "text": 11
   },
   "1_supply_disc_dummy": {
     "id": "1_supply_disc_dummy",
@@ -6970,15 +6979,6 @@
         "operand2": true,
         "thenRoutine": [
           {
-            "func": "SET",
-            "property": "setup_complete",
-            "relation": "=",
-            "value": false,
-            "collection": [
-              "general_routines"
-            ]
-          },
-          {
             "note": "Place widgets on default positions"
           },
           {
@@ -7453,21 +7453,9 @@
           {
             "func": "SHUFFLE",
             "holder": "bonus_reserve"
-          },
-          {
-            "func": "SET",
-            "property": "setup_complete",
-            "relation": "=",
-            "value": true,
-            "collection": [
-              "general_routines"
-            ]
           }
         ]
       }
-    ],
-    "a_fix-it_list": [
-      "add endgame triggers to player aids"
     ],
     "y": 3
   },
@@ -7878,7 +7866,7 @@
     "parent": "2_reserve_disc",
     "fixedParent": true,
     "inheritFrom": "1_reserve_disc_counter",
-    "text": 0
+    "text": 1
   },
   "2_reserve_disc_dummy": {
     "id": "2_reserve_disc_dummy",
@@ -7920,7 +7908,7 @@
     "parent": "2_supply_disc",
     "fixedParent": true,
     "inheritFrom": "1_supply_disc_counter",
-    "text": 1
+    "text": 0
   },
   "2_supply_disc_dummy": {
     "id": "2_supply_disc_dummy",
@@ -7959,7 +7947,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_297",
@@ -8034,7 +8021,7 @@
     "turn_alert_enabled": true,
     "audio_your_turn_enabled": true,
     "contrast_color": "#FFFFFF",
-    "background_color_solid": "#607d8b",
+    "background_color_solid": "#9c27b0",
     "background_color_transparent": "white"
   },
   "2_components": {
@@ -8054,6 +8041,34 @@
         "handlePosition": "middle right"
       },
       "color_change_index": 2,
+      "clickRoutine": [],
+      "doubleClickRoutine": [
+        "var index = ${PROPERTY deck} charAt 0",
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY cardType}",
+          "relation": "==",
+          "operand2": "cube",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_cube"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_disc"
+            }
+          ]
+        }
+      ],
       "parentChangeRoutine": [
         {
           "func": "GET",
@@ -8175,8 +8190,7 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "color_change_index": 1,
-    "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF"
+    "contrast_color": "#FFFFFF"
   },
   "line2_template": {
     "type": "basic",
@@ -8201,8 +8215,7 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "color_change_index": 1,
-    "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF"
+    "contrast_color": "#FFFFFF"
   },
   "line3_template": {
     "type": "basic",
@@ -8227,8 +8240,7 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "color_change_index": 1,
-    "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF"
+    "contrast_color": "#FFFFFF"
   },
   "line4_template": {
     "type": "basic",
@@ -8253,7 +8265,6 @@
     "background_color_transparent": "#b4b4b4",
     "color_change_index": 1,
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "borderRadius": 0,
     "y": 9
   },
@@ -8857,7 +8868,7 @@
     "parent": "3_reserve_disc",
     "fixedParent": true,
     "inheritFrom": "1_reserve_disc_counter",
-    "text": 0
+    "text": 1
   },
   "3_reserve_disc_dummy": {
     "id": "3_reserve_disc_dummy",
@@ -8899,7 +8910,7 @@
     "parent": "3_supply_disc",
     "fixedParent": true,
     "inheritFrom": "1_supply_disc_counter",
-    "text": 1
+    "text": 0
   },
   "3_supply_disc_dummy": {
     "id": "3_supply_disc_dummy",
@@ -9007,7 +9018,7 @@
     "turn_alert_enabled": true,
     "audio_your_turn_enabled": true,
     "contrast_color": "#FFFFFF",
-    "background_color_solid": "#1976d2",
+    "background_color_solid": "#607d8b",
     "background_color_transparent": "white"
   },
   "3_components": {
@@ -9027,6 +9038,34 @@
         "handlePosition": "middle right"
       },
       "color_change_index": 3,
+      "clickRoutine": [],
+      "doubleClickRoutine": [
+        "var index = ${PROPERTY deck} charAt 0",
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY cardType}",
+          "relation": "==",
+          "operand2": "cube",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_cube"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_disc"
+            }
+          ]
+        }
+      ],
       "parentChangeRoutine": [
         {
           "func": "GET",
@@ -9538,7 +9577,7 @@
     "parent": "4_reserve_disc",
     "fixedParent": true,
     "inheritFrom": "1_reserve_disc_counter",
-    "text": 0
+    "text": 1
   },
   "4_reserve_disc_dummy": {
     "id": "4_reserve_disc_dummy",
@@ -9580,7 +9619,7 @@
     "parent": "4_supply_disc",
     "fixedParent": true,
     "inheritFrom": "1_supply_disc_counter",
-    "text": 1
+    "text": 0
   },
   "4_supply_disc_dummy": {
     "id": "4_supply_disc_dummy",
@@ -9601,7 +9640,7 @@
     "parent": "4_reserve_cube",
     "fixedParent": true,
     "inheritFrom": "1_reserve_cube_counter",
-    "text": 6
+    "text": 11
   },
   "4_reserve_cube_dummy": {
     "id": "4_reserve_cube_dummy",
@@ -9622,7 +9661,7 @@
     "parent": "4_supply_cube",
     "fixedParent": true,
     "inheritFrom": "1_supply_cube_counter",
-    "text": 5
+    "text": 0
   },
   "4_supply_cube_dummy": {
     "id": "4_supply_cube_dummy",
@@ -9685,8 +9724,7 @@
     "audio_your_turn_enabled": true,
     "contrast_color": "#FFFFFF",
     "background_color_solid": "#607d8b",
-    "background_color_transparent": "white",
-    "audio_enabled": true
+    "background_color_transparent": "white"
   },
   "4_components": {
     "type": "deck",
@@ -9705,6 +9743,34 @@
         "handleOffset": 18,
         "handlePosition": "middle right"
       },
+      "clickRoutine": [],
+      "doubleClickRoutine": [
+        "var index = ${PROPERTY deck} charAt 0",
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY cardType}",
+          "relation": "==",
+          "operand2": "cube",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_cube"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_disc"
+            }
+          ]
+        }
+      ],
       "parentChangeRoutine": [
         {
           "func": "GET",
@@ -10216,7 +10282,7 @@
     "parent": "5_reserve_disc",
     "fixedParent": true,
     "inheritFrom": "1_reserve_disc_counter",
-    "text": 0
+    "text": 1
   },
   "5_reserve_disc_dummy": {
     "id": "5_reserve_disc_dummy",
@@ -10257,7 +10323,7 @@
     "parent": "5_supply_disc",
     "fixedParent": true,
     "inheritFrom": "1_supply_disc_counter",
-    "text": 1
+    "text": 0
   },
   "5_supply_disc_dummy": {
     "id": "5_supply_disc_dummy",
@@ -10380,6 +10446,34 @@
         "handleOffset": 18,
         "handlePosition": "middle right"
       },
+      "clickRoutine": [],
+      "doubleClickRoutine": [
+        "var index = ${PROPERTY deck} charAt 0",
+        {
+          "func": "IF",
+          "operand1": "${PROPERTY cardType}",
+          "relation": "==",
+          "operand2": "cube",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_cube"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "parent",
+              "relation": "=",
+              "value": "${index}_reserve_disc"
+            }
+          ]
+        }
+      ],
       "parentChangeRoutine": [
         {
           "func": "GET",
@@ -10472,9 +10566,9 @@
         ]
       }
     ],
-    "z": 106,
-    "x": -138,
-    "y": -19,
+    "z": 130,
+    "x": -141,
+    "y": -18,
     "parent": "5_seat_anchor",
     "fixedParent": true
   },
@@ -10488,7 +10582,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
     "parent": "1_reserve_cube"
@@ -10503,7 +10596,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_300",
@@ -10519,7 +10611,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_198",
@@ -10536,7 +10627,6 @@
     "background_color_transparent": "#b4b4b4",
     "x": 2,
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "y": 1,
     "parent": "1_reserve_cube"
   },
@@ -10550,10 +10640,9 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
-    "parent": "1_supply_cube"
+    "parent": "1_reserve_cube"
   },
   "i45s": {
     "deck": "1_components",
@@ -10565,7 +10654,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
     "parent": "1_reserve_cube"
@@ -10580,7 +10668,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_295",
@@ -10596,10 +10683,9 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
-    "parent": "1_supply_cube"
+    "parent": "1_reserve_cube"
   },
   "0wne": {
     "deck": "1_components",
@@ -10611,7 +10697,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_293",
@@ -10627,7 +10712,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
     "parent": "1_reserve_cube"
@@ -10642,7 +10726,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_233",
@@ -10658,7 +10741,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_199",
@@ -10674,7 +10756,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "parent": "1_reserve_cube",
     "y": 1
@@ -10689,7 +10770,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_294",
@@ -10705,7 +10785,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_298",
@@ -10967,16 +11046,15 @@
     "type": "card",
     "cardType": "cube",
     "id": "nd9e",
-    "z": 12453,
+    "z": 12548,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "basic_node_249",
-    "x": 4,
+    "x": 2,
     "y": 1,
-    "activeFace": 1
+    "parent": "3_reserve_cube"
   },
   "8guk": {
     "deck": "3_components",
@@ -11232,15 +11310,16 @@
     "type": "card",
     "cardType": "cube",
     "id": "ar38",
-    "z": 12153,
+    "z": 12549,
     "background_color_transparent": "#b4b4b4",
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "x": 2,
     "y": 1,
-    "parent": "3_reserve_cube"
+    "x": 4,
+    "parent": "basic_node_249",
+    "activeFace": 1
   },
   "3juu": {
     "deck": "3_components",
@@ -11380,7 +11459,7 @@
     "background_color_solid": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "3_supply_disc"
+    "parent": "3_reserve_disc"
   },
   "zygk": {
     "deck": "3_components",
@@ -11419,15 +11498,15 @@
     "type": "card",
     "cardType": "cube",
     "id": "uwa3",
-    "z": 12514,
-    "parent": "4_supply_cube",
+    "z": 1,
     "x": 2,
-    "y": 1,
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000"
+    "contrast_color_opposite": "#000000",
+    "parent": "4_reserve_cube",
+    "y": 1
   },
   "4h99": {
     "deck": "4_components",
@@ -11662,7 +11741,7 @@
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "4_supply_cube"
+    "parent": "4_reserve_cube"
   },
   "7u9t": {
     "deck": "4_components",
@@ -11725,7 +11804,7 @@
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "4_supply_cube"
+    "parent": "4_reserve_cube"
   },
   "fmdu": {
     "deck": "4_components",
@@ -11740,7 +11819,7 @@
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "4_supply_cube"
+    "parent": "4_reserve_cube"
   },
   "f7kc": {
     "deck": "4_components",
@@ -11817,7 +11896,7 @@
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "4_supply_cube"
+    "parent": "4_reserve_cube"
   },
   "fkdo": {
     "deck": "4_components",
@@ -11880,7 +11959,7 @@
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
     "x": 1,
-    "parent": "4_supply_disc"
+    "parent": "4_reserve_disc"
   },
   "sg3v": {
     "deck": "5_components",
@@ -12312,7 +12391,7 @@
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
-    "parent": "5_supply_disc",
+    "parent": "5_reserve_disc",
     "x": 1,
     "y": 1,
     "contrast_color": "#FFFFFF",
@@ -12446,7 +12525,6 @@
         "text-align": "center"
       }
     },
-    "button_background_color": "grey",
     "button_border_color": "#607d8b",
     "current_turn_index": "4",
     "defaultX": 1093,
@@ -12763,7 +12841,7 @@
     "y": -237
   },
   "turn_button_label": {
-    "type": "label",
+    "type": "basic",
     "id": "turn_button_label",
     "parent": "turn_button",
     "fixedParent": true,
@@ -12777,11 +12855,9 @@
         "font-size": "22px",
         "border": "0px solid black",
         "font-weight": "900",
-        "background": "${PROPERTY color}",
+        "background": "transparent",
         "text-align": "center",
-        "pointer-events": "none"
-      },
-      " > textarea": {
+        "pointer-events": "none",
         "text-shadow": "-1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000, 0 1px 5px #00000099"
       }
     },
@@ -13643,7 +13719,7 @@
     "y": 1,
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000",
-    "parent": "2_supply_disc"
+    "parent": "2_reserve_disc"
   },
   "o26s": {
     "deck": "2_components",
@@ -13671,7 +13747,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_232",
@@ -13687,7 +13762,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
     "parent": "1_reserve_cube"
@@ -13702,7 +13776,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
     "parent": "1_reserve_cube"
@@ -13717,7 +13790,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_234",
@@ -13728,30 +13800,29 @@
     "type": "card",
     "cardType": "cube",
     "id": "v46o",
-    "z": 12518,
+    "z": 12531,
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
-    "parent": "1_supply_cube"
+    "parent": "1_reserve_cube"
   },
   "ikgl": {
     "deck": "1_components",
     "type": "card",
     "cardType": "cube",
     "id": "ikgl",
-    "z": 12517,
+    "z": 12535,
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 2,
     "y": 1,
-    "parent": "1_supply_cube"
+    "hoverParent": "basic_node_362",
+    "parent": "1_reserve_cube"
   },
   "m217": {
     "deck": "1_components",
@@ -13763,7 +13834,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_196",
@@ -13779,7 +13849,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "basic_node_197",
@@ -13795,7 +13864,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "parent": "basic_node_225",
     "x": 4,
     "y": 1,
@@ -13811,7 +13879,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "x": 4,
     "y": 1,
     "parent": "city_disc_orange_node_299",
@@ -13829,7 +13896,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "parent": "basic_node_227",
     "activeFace": 1
   },
@@ -13838,15 +13904,14 @@
     "type": "card",
     "cardType": "disc",
     "id": "1w12",
-    "z": 12433,
+    "z": 12537,
     "x": 1,
     "y": 1,
     "color": "#b4b4b4",
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
-    "parent": "1_supply_disc"
+    "parent": "1_reserve_disc"
   },
   "muyb": {
     "deck": "1_components",
@@ -13859,7 +13924,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "y": 1,
     "parent": "basic_node_228",
     "activeFace": 1
@@ -13876,7 +13940,6 @@
     "background_color_solid": "#b4b4b4",
     "background_color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF",
     "parent": "basic_node_229",
     "activeFace": 1
   },
@@ -16940,8 +17003,7 @@
         }
       }
     ],
-    "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#FFFFFF"
+    "contrast_color": "#FFFFFF"
   },
   "2_bag_button": {
     "type": "button",
@@ -17165,7 +17227,6 @@
     "height": 455,
     "layer": 230,
     "z": 1273,
-    "movable": false,
     "css": {
       "": {
         "border": "5px solid white",
@@ -17175,9 +17236,7 @@
     "dropTarget": {
       "label": "ledger_label"
     },
-    "onlyVisibleForSeat": [
-      null
-    ]
+    "onlyVisibleForSeat": []
   },
   "wfln": {
     "type": "label",
@@ -17228,17 +17287,6 @@
           "${PROPERTY id}"
         ]
       }
-    ],
-    "CopyThisToMakeAddendumRoutine": [
-      {
-        "note": "ADDENDUM ADDED TO HISTORY",
-        "func": "CALL",
-        "widget": "history_label",
-        "routine": "AddendumRoutine",
-        "arguments": {
-          "addendum": ""
-        }
-      }
     ]
   },
   "history_toggle": {
@@ -17265,17 +17313,6 @@
       }
     },
     "text": "View Full History",
-    "CopyThisToMakeAddendumRoutine": [
-      {
-        "note": "ADDENDUM ADDED TO HISTORY",
-        "func": "CALL",
-        "widget": "history_label",
-        "routine": "AddendumRoutine",
-        "arguments": {
-          "addendum": ""
-        }
-      }
-    ],
     "clickRoutine": [
       "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF history_holder}",
       "var checkArray = ${visibleToSeats} isArray",
@@ -17346,17 +17383,6 @@
         ]
       }
     ],
-    "CopyThisToMakeAddendumRoutine": [
-      {
-        "note": "ADDENDUM ADDED TO HISTORY",
-        "func": "CALL",
-        "widget": "history_label",
-        "routine": "AddendumRoutine",
-        "arguments": {
-          "addendum": ""
-        }
-      }
-    ],
     "borderRadius": 10
   },
   "extra_office_holder_asdf7": {
@@ -17372,8 +17398,7 @@
     "parent": "2_board",
     "fixedParent": true,
     "inheritFrom": "1_score",
-    "text": 0,
-    "previous_value": 11
+    "text": 0
   },
   "3_score": {
     "type": "label",
@@ -17381,8 +17406,7 @@
     "parent": "3_board",
     "fixedParent": true,
     "inheritFrom": "1_score",
-    "text": 0,
-    "previous_value": 0
+    "text": 0
   },
   "4_score": {
     "type": "label",
@@ -17390,8 +17414,7 @@
     "parent": "4_board",
     "fixedParent": true,
     "inheritFrom": "1_score",
-    "text": 0,
-    "previous_value": 0
+    "text": 0
   },
   "5_score": {
     "type": "label",
@@ -17399,8 +17422,7 @@
     "parent": "5_board",
     "fixedParent": true,
     "inheritFrom": "1_score",
-    "text": 0,
-    "previous_value": 0
+    "text": 0
   },
   "2_points_edit": {
     "type": "button",
@@ -17899,7 +17921,6 @@
     },
     "background_color_solid": "#bf360c",
     "background_color_transparent": "#bf360c48",
-    "passed": false,
     "x": -438,
     "y": 543,
     "height": 130,
@@ -17991,10 +18012,6 @@
       "font-size": "15px",
       "color": "var(--playerColor)"
     },
-    "cursor_default_selected": false,
-    "cursor_invisible_selected": false,
-    "cursor_solid_no_name_selected": false,
-    "cursor_solid_player_name_selected": true,
     "cursor_style": "solid_no_name",
     "clickRoutine": [
       {
@@ -18160,8 +18177,26 @@
     ],
     "y": 3
   },
+  "table": {
+    "id": "table",
+    "width": 1600,
+    "height": 1000,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "tan"
+    },
+    "layer": -10
+  },
   "_meta": {
-    "version": 17,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true,
+        "disableHolderImageWidget": true
+      }
+    },
     "info": {
       "name": "Magical Traders",
       "image": "/assets/-1960760478_4664",
@@ -18171,7 +18206,7 @@
       "mode": "vs",
       "time": "45 - 90",
       "attribution": "All graphical layout, layout design, library image, and coding were completed by Jonathan Cox. It is released to the Public Domain under CC0.",
-      "lastUpdate": 1759895919017,
+      "lastUpdate": 1774320254668,
       "showName": true,
       "skill": "medium",
       "description": "Teleport your traders to claim the best cities!",
@@ -18181,6 +18216,7 @@
       "similarAwards": "2011 Nederlandse Spellenprijs Winner\n2011 Nederlandse Spellenprijs Nominee\n2010 Spiel des Jahres Recommended\n2010 Spiel der Spiele Hit für Experten Recommended\n2010 JoTa Best Heavy Board Game Nominee\n2010 International Gamers Awards - General Strategy; Multi-player Nominee\n2010 Golden Geek Most Innovative Board Game Nominee\n2010 Golden Geek Board Game of the Year Winner\n2010 Golden Geek Best Strategy Board Game Winner\n2009 Meeples Choice Award Winner\n2009 Meeples Choice Award Nominee",
       "ruleText": "Use the \"Rules overview link\" above or to the left to learn the game. All iconography modifications from the original rules are explained below.",
       "helpText": "<div><div><b>ICONOGRAPHY</b></div><div>The original game's iconography has been changed, and you can find detailed explanations of these by hovering your mouse over \"Bonuses Info\" in the top-left corner.</div></div><div><br></div><div><b>SETUP, BOARD SELECTION, &amp; CURRENT TURN</b></div><div>Once all players are seated, click the \"setup\" button to begin the game. A random player will be assigned as the current player to begin the game. The current player has the \"Click to end turn\" button next to their name. Once they have finished their turn, they should click this button to alert the next player that it is their turn.</div><div><br></div><div>The correct board will automatically show, depending on the number of players seated.</div><div><br></div><div><b>MODIFY SCORE</b></div><div>To modify a player's score, click the \"edit points\" button next to their score and input the score change. Finish by clicking the green button.</div><div><b><br></b></div><div><b>PLAYER BOARD</b></div><div>The scoring value of each row and column is automatically calculated. These values are shown on each side of the row or column. They account for all special tiles, and with Rocks they show separate values for each side of that Rock tile.</div><div><br></div><div>When modifying your score, click the \"edit points\" button and input the score change.</div><div><b><br></b></div><div>You may use the small blue pawn to track the row and column that is currently being scored.</div><div><br></div><div><b>ALERT SETTINGS</b></div>At the start of your turn you will hear a soft sound and see a text alert on screen. Clicking anywhere on the screen will remove the text alert. If you do not want to hear the sound and/or see the text alert when it is your turn, click the \"Turn Settings\" button in the bottom left corner and change your preferences.",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
