@@ -3745,7 +3745,7 @@
               "func": "SELECT",
               "source": "DEFAULT",
               "property": "id",
-              "value": "${pieceID}",
+              "value": "${pieceType}",
               "mode": "remove"
             },
             {
