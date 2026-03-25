@@ -18188,6 +18188,27 @@
     },
     "layer": -10
   },
+  "double_click_money_aid": {
+    "id": "double_click_money_aid",
+    "x": 1354,
+    "y": 956,
+    "width": 237,
+    "height": 34,
+    "borderRadius": 5,
+    "layer": 5,
+    "z": 30745,
+    "movable": false,
+    "css": {
+      "background": "brown",
+      "font-size": "14px",
+      "color": "white",
+      "overflow": "hidden",
+      "line-height": "17px",
+      "text-align": "center",
+      "border": "2px solid black"
+    },
+    "text": " Tip: Double click on cubes and discs to move them to their reserve."
+  },
   "_meta": {
     "version": 21,
     "gameSettings": {
@@ -18206,7 +18227,7 @@
       "mode": "vs",
       "time": "45 - 90",
       "attribution": "All graphical layout, layout design, library image, and coding were completed by Jonathan Cox. It is released to the Public Domain under CC0.",
-      "lastUpdate": 1774320254668,
+      "lastUpdate": 1774444148183,
       "showName": true,
       "skill": "medium",
       "description": "Teleport your traders to claim the best cities!",
