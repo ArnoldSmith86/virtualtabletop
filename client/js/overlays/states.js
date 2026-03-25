@@ -622,7 +622,7 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('#filterByType').dataset.initialized = 'true';
   let typeHTML = `<option value="" ${previousType === '' ? 'selected' : ''}></option>`;
   for(const typeOption of libraryTypes)
-    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${typeOption}</option>`;
+    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${html(typeOption)}</option>`;
   $('#filterByType').innerHTML = typeHTML;
 
   if(libraryTypes.length > 1) {
@@ -646,13 +646,13 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
   for(const languageOption of Object.keys(languageOptions).sort())
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${languageOption}">${languageOption.replace(/^$/, 'None')}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, 'None'))}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
-    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
+    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${html(modeOption)}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
