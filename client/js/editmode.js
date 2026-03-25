@@ -1313,27 +1313,13 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   }
 
   if(widget.parent !== undefined) {
-    if(widget.parent === widget.id) {
+    const parentProblem = validateParentAssignment(widget.id, widget.parent);
+    if(parentProblem === 'self') {
       alert(`Widget ${widget.id} cannot set its parent to itself.`);
       batchEnd();
       return;
     }
-
-    let currentParentId = widget.parent;
-    let isDescendant = false;
-    while(currentParentId !== null) {
-      if(currentParentId === widget.id) {
-        isDescendant = true;
-        break;
-      }
-      const currentParent = widgets.get(currentParentId);
-      if(!currentParent || !currentParent.state || !currentParent.get('parent')) {
-        break;
-      }
-      currentParentId = currentParent.get('parent');
-    }
-
-    if(isDescendant) {
+    if(parentProblem === 'descendant') {
       alert(`Widget ${widget.id} cannot set its parent to its descendants.`);
       batchEnd();
       return;

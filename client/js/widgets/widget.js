@@ -1779,24 +1779,12 @@ export class Widget extends StateManaged {
               }
 
               if(a.property === 'parent' && a.value) {
-                if(a.value === w.id) {
+                const parentProblem = validateParentAssignment(w.id, a.value);
+                if(parentProblem === 'self') {
                   problems.push(`Widget ${w.id} cannot set its parent to itself.`);
                   continue;
-                }                
-                let currentParentId = a.value;
-                let isDescendant = false;
-                while(currentParentId !== null) {
-                  if(currentParentId === w.id) {
-                    isDescendant = true;
-                    break;
-                  }
-                  const currentParent = widgets.get(currentParentId);
-                  if(!currentParent || !currentParent.state || !currentParent.get('parent')) {
-                    break;
-                  }
-                  currentParentId = currentParent.get('parent');
                 }
-                if(isDescendant) {
+                if(parentProblem === 'descendant') {
                   problems.push(`Widget ${w.id} cannot set its parent to ${a.value} because ${a.value} is a descendant of ${w.id}.`);
                   continue;
                 }
