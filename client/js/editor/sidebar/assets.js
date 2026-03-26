@@ -56,9 +56,10 @@ function getAssetTargetSize(asset, originalWidth, originalHeight) {
 
             if(key)
                 for(const [ t, template ] of Object.entries(deck.get('faceTemplates')))
-                    for(const [ o, faceObject ] of Object.entries(template.objects))
-                        if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
-                            objects.push([ t, o ]);
+                    if(Array.isArray(template.objects))
+                        for(const [ o, faceObject ] of Object.entries(template.objects))
+                            if(faceObject.dynamicProperties && faceObject.dynamicProperties.value == key)
+                                objects.push([ t, o ]);
 
             for(const [ face, object ] of objects) {
                 const targetFace   = deck.get('faceTemplates')[face];
@@ -178,7 +179,7 @@ class AssetsModule extends SidebarModule {
 
     const table = document.createElement('table');
     const headerRow = table.insertRow();
-    ['Original', /*'JPG',*/ 'WebP', 'PNG'].forEach(col => {
+    ['Source', 'Original', /*'JPG',*/ 'WebP', 'PNG'].forEach(col => {
       const th = document.createElement('th');
       th.textContent = col;
       headerRow.appendChild(th);
@@ -188,6 +189,28 @@ class AssetsModule extends SidebarModule {
     for(const [ i, asset ] of Object.entries(assets)) {
       updateProgress(`Compressing ${+i+1}/${assets.length}`, (+i+1)/assets.length);
       const row = table.insertRow();
+
+      const sourceCell = row.insertCell();
+      const assetName = asset.asset.match(/[^/]+$/)[0];
+      const uniqueIds = [...new Set(asset.uses.map(u => u.widget))];
+      const maxShow = 9;
+      const displayed = uniqueIds.slice(0, maxShow);
+      const moreCount = uniqueIds.length - maxShow;
+      const sourceDiv = document.createElement('div');
+      const bold = (t) => { const b = document.createElement('b'); b.textContent = t; return b; };
+      sourceDiv.appendChild(bold('Asset:'));
+      sourceDiv.appendChild(document.createElement('br'));
+      sourceDiv.appendChild(document.createTextNode(assetName));
+      sourceDiv.appendChild(document.createElement('br'));
+      sourceDiv.appendChild(bold('Widgets:'));
+      sourceDiv.appendChild(document.createElement('br'));
+      for (const id of displayed) {
+        sourceDiv.appendChild(document.createTextNode(id));
+        sourceDiv.appendChild(document.createElement('br'));
+      }
+      if (moreCount > 0)
+        sourceDiv.appendChild(document.createTextNode('... ' + moreCount + ' more widgets ...'));
+      sourceCell.appendChild(sourceDiv);
 
       const processImage = (checkbox) => {
         // Extract sizes from the DOM
@@ -203,11 +226,11 @@ class AssetsModule extends SidebarModule {
         // If there are any qualifying sizes, get the index of the smallest qualifying size
         const minSizeIdx = qualifyingSizes.length ? sizesFromDOM.indexOf(Math.min(...qualifyingSizes)) : -1;
 
-        // Check only the checkbox corresponding to the smallest qualifying size and uncheck others in the row
+        // Check only the checkbox corresponding to the smallest qualifying size and uncheck others in the row (index 0 = Source)
         Array.from(row.cells).forEach((cell, idx) => {
             const cellCheckbox = cell.querySelector('input[type="checkbox"]');
             if (cellCheckbox) {
-                cellCheckbox.checked = idx === minSizeIdx;
+                cellCheckbox.checked = idx === minSizeIdx + 1;
             }
         });
       };
@@ -296,7 +319,7 @@ class AssetsModule extends SidebarModule {
           }
         }
       }
-      while(row.childElementCount < 3)
+      while(row.cells.length < 4)
         row.insertCell();
     }
 
@@ -387,12 +410,13 @@ class AssetsModule extends SidebarModule {
 
     this.addSubHeader('Included Assets');
     div(target, 'buttonBar', `
-      <p>Here you can download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
-      <p>When you upload assets, you can use the same filenames as the original assets to replace them. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog.</p>
+      <p>The Compress Assets button allows you to choose image by image to reduce the file size of the assets by compression or by converting to another file type. Make the desired selection for each image, click the Replace Selected Images button at the bottom of the screen, and then save the game.</p>
+      <button icon=compress id=compressAssetsButton>Compress assets</button>
+      <p>These download buttons will download all the assets used in this game as a zip file so you can process them on your computer (replace/resize/...).</p>
       <button icon=cloud_download id=downloadAllAssetsButton>Download all assets</button>
       <button icon=cloud_download id=downloadAllAssetsByPropertyButton>Download all assets by property</button>
+      <p>You can replace existing assets in your game by using the Upload Assets button. You must use the same filenames as the original assets. Be sure <b>not</b> to zip them again but select all the assets themselves in the file selection dialog. This button is only for replacing existing assets and not uploading new ones.</p>
       <button icon=cloud_upload id=uploadAllAssetsButton>Upload assets</button>
-      <button icon=compress id=compressAssetsButton>Compress assets</button>
     `);
     $('#downloadAllAssetsButton').onclick = e=>this.button_assetDownload(false);
     $('#downloadAllAssetsByPropertyButton').onclick = e=>this.button_assetDownload(true);

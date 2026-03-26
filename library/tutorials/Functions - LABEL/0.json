@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 20,
     "info": {
       "name": "Functions - LABEL",
-      "image": "/assets/-282998185_6535",
+      "image": "/assets/1029979003_3536",
       "rules": "",
       "bgg": "",
       "year": "2021",
@@ -11,18 +11,22 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1673139372004,
+      "lastUpdate": 1768620507440,
       "skill": "",
       "description": "",
-      "variantImage": "",
-      "variant": "",
-      "language": "en-US",
-      "players": "1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": ""
+      "helpText": "",
+      "similarDesigner": "",
+      "players": "1",
+      "language": "en-US",
+      "variant": "",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "8fr3": {

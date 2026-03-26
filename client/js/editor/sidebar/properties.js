@@ -227,6 +227,10 @@ class PropertiesModule extends SidebarModule {
     };
   }
 
+  addDeltaListener(updater) {
+    this.globalInputUpdaters.push(updater);
+  }
+
   addPropertyListener(widget, property, updater) {
     updater(widget);
 
@@ -249,11 +253,14 @@ class PropertiesModule extends SidebarModule {
           if(this.inputUpdaters[widgetID][property])
             for(const updater of this.inputUpdaters[widgetID][property])
               updater(delta.s[widgetID][property]);
+    for(const updater of this.globalInputUpdaters)
+      updater(delta.s);
   }
 
   onSelectionChangedWhileActive(newSelection) {
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
+    this.globalInputUpdaters = [];
 
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
@@ -360,6 +367,8 @@ class PropertiesModule extends SidebarModule {
     const designSelectionDiv = document.createElement('div');
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
+      const oldSelectedButton = $('.selected.deckTemplateButton', target);
+      const oldSelectedButtonIndex = oldSelectedButton ? oldSelectedButton.dataset.index : -1;
       for(const button of $a('.deckTemplateButton', target))
         button.remove();
 
@@ -368,11 +377,12 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(true);
       for(const [ index, deckTemplate ] of Object.entries(deckTemplates)) {
         const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
         templateButton.classList.add('deckTemplateButton');
         templateButton.dataset.index = index;
+        templateButton.classList.toggle('selected', oldSelectedButtonIndex == index);
         templateButton.onclick = e=>{
           for(const button of $a('.deckTemplateButton', target))
             if(button != templateButton)
@@ -454,13 +464,13 @@ class PropertiesModule extends SidebarModule {
     }
     target.append(suitCustomizeDiv);
 
-    function getDeckDefinition() {
+    function getDeckDefinition(standardDeck) {
       const id = generateUniqueWidgetID();
       const cardTypes = {};
       let suitIndex = 0;
 
       for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        const suitURL = `/i/game-icons.net/${suitSymbol}.svg`;
+        const suitURL = suitSymbol;
         for(const rank of parseRankRange(ranks[suitSymbol])) {
           const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
           cardTypes[cT] = {
@@ -471,7 +481,8 @@ class PropertiesModule extends SidebarModule {
           const setCardTypes = (conditions, cardTypesKeys) => {
             if(conditions)
               for(const key of cardTypesKeys)
-                cardTypes[cT][`suit-${key}`] = suitURL;
+                if(standardDeck)
+                  cardTypes[cT][`suit-${key}`] = suitURL;
           };
           if(String(rank).match(/^[0-9]+$/) && rank <= 21) {
             setCardTypes(rank     >=  4,                           ['P11', 'P13', 'P51', 'P53']);
@@ -511,8 +522,12 @@ class PropertiesModule extends SidebarModule {
     createButton.disabled = true;
     createButton.setAttribute('icon', 'add');
     createButton.onclick = async e=>{
+      let standardDeck = false;
+      const deckTemplateButton = document.querySelectorAll('.deckTemplateButton')[0];
+      if (deckTemplateButton && deckTemplateButton.classList.contains('selected'))
+        standardDeck = true
       batchStart();
-      const deck = getDeckDefinition();
+      const deck = getDeckDefinition(standardDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
       await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
 
@@ -589,14 +604,14 @@ class PropertiesModule extends SidebarModule {
           <div>
             <div class=rows>Rows (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <div class=cols>Cols (if multiple cards):<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
-            <div class=card>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
+            <div class=cards>Cards to add:<br><input type=range value=1 max=10> <input type=number value=1 min=0></div>
             <button icon=delete>Delete</button>
           </div>
         </div>
       `);
       dom.dataset.imagePath = imagePath;
       dom.dataset.fileName = fileName;
-      for(const name of [ 'rows', 'cols', 'card' ]) {
+      for(const name of [ 'rows', 'cols', 'cards' ]) {
         $(`.${name} [type=range]`, dom).oninput = e=>$(`.${name} [type=number]`, dom).value=e.target.value;
         $(`.${name} [type=number]`, dom).oninput = e=>$(`.${name} [type=range]`, dom).value=e.target.value;
       }
@@ -623,14 +638,14 @@ class PropertiesModule extends SidebarModule {
                 deckWidth: cols,
                 deckHeight: rows
               };
-              counts[cardType] = $('.card input', previewDiv).value;
+              counts[cardType] = $('.cards input', previewDiv).value;
             }
           }
         } else {
           cardTypes[previewDiv.dataset.fileName] = {
             image: previewDiv.dataset.imagePath
           };
-          counts[previewDiv.dataset.fileName] = $('.card input', previewDiv).value;
+          counts[previewDiv.dataset.fileName] = $('.cards input', previewDiv).value;
         }
       }
 
@@ -726,7 +741,6 @@ class PropertiesModule extends SidebarModule {
 
   deckTemplate_colors(deck) {
     deck.cardDefaults = {
-      outline: '<path stroke="#1f1f1f" stroke-width="8" '
     };
     deck.faceTemplates = [
       {
@@ -776,13 +790,19 @@ class PropertiesModule extends SidebarModule {
             "width": 60,
             "height": 60,
             "color": "#fff",
-            "css": "border-radius:100%; border:1px solid #444; background-size: 80%",
+            "css": "border-radius:100%; border:1px solid #444; background-size: 80%"
+          },
+          {
+            "type": "icon",
+            "x": 21.5,
+            "y": 50,
+            "size": 60,
+            "scale": 0.8,
+            "strokeColor": "#1f1f1f",
+            "strokeWidth": 8,
             "dynamicProperties": {
-              "value": "suit"
-            },
-            "svgReplaces": {
-              "#000": "suitColor",
-              "<path ": "outline"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
@@ -823,7 +843,6 @@ class PropertiesModule extends SidebarModule {
 
   deckTemplate_simple(deck) {
     deck.cardDefaults = {
-      white: "#fff4\" stroke=\"#fff4\" stroke-width=\"20"
     };
     deck.faceTemplates = [
       {
@@ -849,17 +868,15 @@ class PropertiesModule extends SidebarModule {
             }
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 10,
             "y": 70,
-            "width": 83,
-            "height": 83,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "white"
-            },
+            "size": 83,
+            "color": "#fff4",
+            "strokeColor": "#fff4",
+            "strokeWidth": 20,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
             }
           },
           {
@@ -905,17 +922,13 @@ class PropertiesModule extends SidebarModule {
             "color": "white"
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 10,
             "y": 80,
-            "width": 60,
-            "height": 60,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "size": 60,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
@@ -956,15 +969,11 @@ class PropertiesModule extends SidebarModule {
         "radius": 16,
         "objects": [
           {
-            "type": "image",
-            "width": 80,
-            "height": 80,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "type": "icon",
+            "size": 80,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
@@ -1056,31 +1065,23 @@ class PropertiesModule extends SidebarModule {
             }
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 1,
             "y": 28,
-            "width": 23,
-            "height": 23,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "size": 23,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             }
           },
           {
-            "type": "image",
+            "type": "icon",
             "x": 79,
             "y": 110,
-            "width": 23,
-            "height": 23,
-            "color": "transparent",
-            "svgReplaces": {
-              "#000": "suitColor"
-            },
+            "size": 23,
             "dynamicProperties": {
-              "value": "suit"
+              "value": "suit",
+              "color": "suitColor"
             },
             "rotation": 180
           }
@@ -1089,13 +1090,8 @@ class PropertiesModule extends SidebarModule {
     ];
 
     const commonProperties = {
-      type: 'image',
-      width: 16,
-      height: 16,
-      color: 'transparent',
-      svgReplaces: {
-        '#000': 'suitColor'
-      }
+      type: 'icon',
+      size: 16
     }
     for(let row = 0; row < 5; row++) {
       for(let col = 0; col < 3; col++) {
@@ -1104,7 +1100,8 @@ class PropertiesModule extends SidebarModule {
         deck.faceTemplates[1].objects.push(Object.assign({}, commonProperties, {
           x, y,
           dynamicProperties: {
-            value: `suit-P${row + 1}${col + 1}`
+            value: `suit-P${row + 1}${col + 1}`,
+            color: 'suitColor'
           }
         }));
       }
@@ -1117,7 +1114,8 @@ class PropertiesModule extends SidebarModule {
         deck.faceTemplates[1].objects.push(Object.assign({}, commonProperties, {
           x, y,
           dynamicProperties: {
-            value: `suit-S${row + 1}${col + 1}`
+            value: `suit-S${row + 1}${col + 1}`,
+            color: 'suitColor'
           }
         }));
       }
@@ -1242,6 +1240,12 @@ class PropertiesModule extends SidebarModule {
         setCardCount(deck, cardType, cardCount);
       }
 
+      this.addDeltaListener(delta => {
+        for(const props of Object.values(delta))
+          if(props === null || props.deck || props.cardType)
+            return input.setValue(widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length);
+      });
+
       $('[icon=remove]', cardTypeDiv).onclick = e => updateCount(-1);
       $('[icon=add]', cardTypeDiv).onclick = e => updateCount(1);
 
@@ -1325,13 +1329,24 @@ class PropertiesModule extends SidebarModule {
       <button icon=add class=addAll>All</button>
     `);
     this.renderCardTypes(widget);
-    $('.removeAll', this.moduleDOM).onclick = _=>{
-      for(const b of $a('.cardCountDiv [icon=remove]', this.moduleDOM))
-        b.click();
+    $('.removeAll', this.moduleDOM).onclick = async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} removed one card of each type from deck ${widget.id} in editor`);
+      for(const cardType in widget.get('cardTypes')) {
+        const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
+        if(cards.length)
+          await setCardCount(widget, cardType, cards.length - 1);
+      }
+      batchEnd();
     };
-    $('.addAll', this.moduleDOM).onclick = _=>{
-      for(const b of $a('.cardCountDiv [icon=add]', this.moduleDOM))
-        b.click();
+    $('.addAll', this.moduleDOM).onclick = async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} added one card of each type to deck ${widget.id} in editor`);
+      for(const cardType in widget.get('cardTypes')) {
+        const cards = widgetFilter(w=>w.get('deck')==widget.id&&w.get('cardType')==cardType);
+        await setCardCount(widget, cardType, cards.length + 1);
+      }
+      batchEnd();
     };
 
     this.addSubHeader(`Card layers`);
@@ -1628,7 +1643,8 @@ class PropertiesModule extends SidebarModule {
         }, state), parent);
       }
       widgets.delete(widget.id, widget);
-      positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
+      if (parent.children[0]) 
+        positionElementsInArc(parent.children, parent.children[0].clientHeight, 45, parent);
     } else {
       widget.renderReadonlyCopyRaw(state, button);
     }

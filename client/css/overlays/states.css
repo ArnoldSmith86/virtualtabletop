@@ -10,7 +10,7 @@
   padding: 10px;
 }
 
-#stateFilters .material-icons {
+#stateFilters .material-symbols {
   line-height: 0.5;
   position: relative;
   top: 6px;
@@ -24,7 +24,7 @@
   border-radius: 11px;
 }
 
-#filterByTextWrapper .material-icons {
+#filterByTextWrapper .material-symbols {
   font-size: 20px;
   left: -2px;
 }
@@ -67,6 +67,39 @@
 
 #stateFilters select, #stateFilters input {
   margin: 0 5px;
+}
+
+#filterByTypeWrapper.hidden {
+  display: none !important;
+}
+
+.libraryTypeTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0 15px 0 15px;
+  margin: 0;
+  background: var(--roomColor, #fff);
+}
+.libraryTypeTabs button {
+  padding: 10px 16px;
+  margin: 0;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--VTTblue);
+  font: inherit;
+  cursor: pointer;
+  position: relative;
+  bottom: -1px;
+}
+.libraryTypeTabs button:hover {
+  background: rgba(0,0,0,.04);
+}
+.libraryTypeTabs button.active {
+  color: #fff;
+  background: var(--VTTblue);
+  border-bottom-color: var(--VTTblue);
 }
 
 #librarySortWrapper {
@@ -138,6 +171,40 @@
   background: white;
   z-index: 1;
   margin-top: -1px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+}
+#statesList .libraryTypeTabs {
+  flex: 1;
+  margin: 0 0 0 1em;
+  padding: 6px;
+  border: none;
+  min-height: 0;
+  align-items: center;
+  align-content: center;
+  border-radius: 100px;
+  font-size: 0.5em;
+  line-height: 2em;
+  width: auto;
+  flex-grow: 0;
+  flex-wrap: nowrap;
+  box-shadow: inset 0px 1px 4px #00000055;
+}
+#statesList .libraryTypeTabs:empty {
+  display: none;
+}
+#statesList .libraryTypeTabs button {
+  border-radius: 100px;
+  border-width: 0;
+  margin: -1px 0 0 0;
+  padding: 0 1em;
+  white-space: nowrap;
+}
+#statesList .libraryTypeTabs button.active {
+  background-color: var(--VTTblue);
+  color: white;
+  box-shadow: 0px 1px 2px #00000055;
 }
 #statesList .list {
   display: inline-block;
@@ -232,7 +299,6 @@
   bottom: 0;
   right: 0;
   padding: 0;
-  background: #00000061;
   text-shadow: 0 0 3px #000;
   color: white;
 }
@@ -242,7 +308,9 @@
   font-weight: 700;
   font-size: 1.5rem;
   line-height: 1em;
-  margin: 8px 8px 4px 8px;
+  padding: 8px 8px 5px 8px;
+  margin: 0;
+  background: #00000061;
 }
 
 .roomState h4 {
@@ -250,29 +318,47 @@
   font-style: italic;
   font-weight: 700;
   font-size: .8rem;
-  margin: 4px 8px 8px 8px;
+  padding: 3px 8px 4px 8px;
+  margin: 0;
+  background: #00000061;
 }
 .roomState h4 img.emoji {
   transform: skewX(-10deg);
 }
 
-.roomState .star, .roomState > i {
+.roomState .star, .roomState > i, .roomState .ai-badge {
   display: none;
   position: absolute;
   top: 0;
   background: transparent;
-  font-size: 200%;
+  font-size: calc(var(--size) * var(--starSize));
   text-shadow: 1px 1px 2px #444;
 }
 
 .roomState .star::before {
-  font-size: 32px;
-  width: 32px;
+  font-size: calc(var(--size) * var(--starSize));
+  width: calc(var(--size) * var(--starSize));
 }
 
 .roomState > i {
   color: white;
   padding: 9px;
+}
+
+.roomState .ai-badge {
+  right: 0;
+  color: var(--VTTblue);
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 0 10px 0 10px;
+  text-shadow: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.roomState .ai-badge:not(.hidden) {
+  display: block;
 }
 
 div:nth-of-type(2) > .list > .roomState .star {
@@ -283,14 +369,19 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: block;
 }
 
-.roomState.hideName:not(.savedGame) .details {
+.roomState.hideMainName .details h3 {
   display: none;
 }
-.roomState.hideName.savedGame .details h3 {
+.roomState.hideSimilarName:not(.savedGame) .details h4 {
   display: none;
 }
-.roomState.hideName.savedGame .details h4 {
-  margin: 8px;
+.roomState.savedGame .details h4 {
+  padding: 3px 8px 4px 8px;
+  margin: 0;
+}
+.roomState h4:empty {
+  margin: 0px;
+  padding: 0px;
 }
 
 .roomState.noImage > img {
@@ -360,8 +451,14 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin-bottom: 4px;
     box-shadow: unset;
   }
-  #statesOverlay .roomState h3, #statesOverlay .roomState h4 {
-    margin: 2px 4px;
+  #statesOverlay .roomState.has-ai-badge .details {
+    border-top-right-radius: 12px;
+  }
+  #statesOverlay .roomState.has-ai-badge.has-ai-badge img {
+    border-top-right-radius: unset;
+  }
+  #statesOverlay .roomState .ai-badge {
+    z-index: 1;
   }
   #statesOverlay .roomState > img {
     height: 48px;
@@ -370,9 +467,19 @@ div:nth-of-type(2) > .list > .roomState .star {
   #statesOverlay .roomState > .details {
     left: 48px;
     height: 48px;
+    background: #00000061;
   }
-  .roomState.hideName:not(.savedGame) .details {
+  .roomState .details h3, .roomState .details h4 {
+    background: none;
+    padding: 5px 5px 0 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis
+  }
+  .roomState .details h4 {
+    padding: 0 5px;
+  }
+  .roomState.hideMainName .details h3, .roomState.hideSimilarName .details h4 {
     display: block;
+    background: none;
   }
   .roomState.savedGame h3 {
     font-size: 1rem;
@@ -412,7 +519,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   display: inline-flex;
 }
 
-#stateDetailsOverlay > .buttons > div > button {
+#stateDetailsOverlay > .buttons > div button {
   width: 100%;
 }
 
@@ -477,33 +584,110 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin-top: 0;
   margin-bottom: 8px;
 }
-#mainDetails .material-icons, #similarDetails .material-icons {
+#mainDetails .material-symbols, #similarDetails .material-symbols {
   top: 5px;
   position: relative;
 }
 #mainDetails .star, #mainDetails #mainImage > i, #mainImage span {
   position: fixed;
-  font-size: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
 #mainDetails .star::before {
-  font-size: 50px;
-  width: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
+  width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
 #mainDetails #mainImage > i {
   top: unset;
   color: white;
   padding: 9px;
 }
+#mainImage .ai-badge {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: unset;
+  color: var(--VTTblue);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0 0 0 10px;
+  text-shadow: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+#mainImage .ai-badge:not(.hidden) {
+  display: block;
+}
 #mainImage .active.star, #mainImage .active.star + span {
   color: gold;
 }
+
+
+/*** unify library image looks no matter where it is ***/
+:root {
+  --starOffset: 0.03;
+  --starSize: 0.2;
+  --starShadow: 0.01;
+  --aiSize: 0.13;
+}
+#mainDetails #mainImage, #linkDetailsOverlay .mainStateImage {
+  --size: var(--mainDetailsHeight);
+}
+/* star/link/save overlay position */
+#mainDetails #mainImage button.star,
+#mainDetails #mainImage > i,
+#linkDetailsOverlay .mainStateImage button.star,
+#linkDetailsOverlay .mainStateImage > i,
+#statesList .roomState .star,
+#statesList .roomState .star + i {
+  margin: calc(var(--starOffset) * var(--size));
+  padding: 0;
+}
+/* star/link/save shadow */
+#mainDetails #mainImage button.star::before,
+#mainDetails #mainImage > i,
+#linkDetailsOverlay .mainStateImage button.star::before,
+#linkDetailsOverlay .mainStateImage > i,
+#statesList .roomState .star,
+#statesList .roomState .star + i {
+  text-shadow: calc(0.5 * var(--starShadow) * var(--size)) calc(0.5 * var(--starShadow) * var(--size)) calc(var(--starShadow) * var(--size)) #444;
+}
+/* star count */
+#mainImage .star + span {
+  width: calc(var(--size) * var(--starSize) + 2 * var(--starOffset) * var(--size));
+  top: calc(0.9 * var(--size) * var(--starSize) + var(--starOffset) * var(--size));
+  font-size: calc(0.5 * var(--size) * var(--starSize));
+  margin-left: 0;
+  text-shadow: calc(0.5 * var(--starShadow) * var(--size)) calc(0.5 * var(--starShadow) * var(--size)) calc(var(--starShadow) * var(--size)) #444;
+}
+/* AI badge */
+#statesList .roomState.has-ai-badge img {
+  border-top-right-radius: 12px;
+}
+#mainDetails #mainImage,
+#linkDetailsOverlay .mainStateImage,
+#statesList .roomState {
+  overflow: hidden;
+}
+#mainDetails #mainImage .ai-badge,
+#linkDetailsOverlay .mainStateImage .ai-badge,
+#statesList .roomState .ai-badge {
+  font-size: calc(0.52 * var(--aiSize) * var(--size));
+  padding: calc(0.174 * var(--aiSize) * var(--size)) calc(0.26 * var(--aiSize) * var(--size));
+  border-bottom-left-radius: calc(0.43 * var(--aiSize) * var(--size));
+  box-shadow: 0 0 calc(0.174 * var(--aiSize) * var(--size)) rgba(0,0,0,.3);
+}
+
+
 #mainImage span {
   position: absolute;
-  font-size: 16px;
-  top: 51px;
-  width: 62px;
+  top: calc(var(--starOffset) + 100% * var(--starSize));
+  width: calc(var(--starSize) * 100%);
+  font-size: calc(var(--mainDetailsHeight) * 0.08);
   text-align: center;
   color: white;
   font-weight: bold;
@@ -530,7 +714,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   position: relative;
   min-height: 24px;
 }
-#similarDetails > .details > .hideForEdit > i.material-icons {
+#similarDetails > .details > .hideForEdit > i.material-symbols {
   position: absolute;
   top: -2px;
 }
@@ -538,7 +722,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   margin-left: 28px;
   display: inline-block;
 }
-#similarDetails > .details > .hideForEdit > a .material-icons {
+#similarDetails > .details > .hideForEdit > a .material-symbols {
   line-height: 0;
 }
 #similarDetails h1 {
@@ -753,7 +937,7 @@ div:nth-of-type(2) > .list > .roomState .star {
     font-size: 14px;
     margin-right: 10px;
   }
-  #mainDetails .material-icons {
+  #mainDetails .material-symbols {
     font-size: 18px;
     top: 3px;
   }
@@ -794,10 +978,16 @@ div:nth-of-type(2) > .list > .roomState .star {
     float: left;
     margin-right: 10px;
   }
+  #mainImage {
+    border-radius: 10px;
+  }
   #mainImage img, #similarImage img, #mainImage > div, #similarImage div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
+  }
+  #mainDetails.has-ai-badge #mainImage img {
+    border-top-right-radius: 12px;
   }
   #mainDetails > .details > div:nth-of-type(1) {
     position: absolute;
@@ -809,8 +999,13 @@ div:nth-of-type(2) > .list > .roomState .star {
     padding-top: 0;
     padding-bottom: 0;
   }
-  #mainDetails .star, #mainDetails #mainImage > i {
+  #mainDetails .star, #mainDetails #mainImage > i, #mainImage .ai-badge {
     position: absolute;
+  }
+  #mainImage .ai-badge {
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 0 10px 0 10px;
   }
   #nextState, #prevState {
     display: none !important;
@@ -847,6 +1042,7 @@ div:nth-of-type(2) > .list > .roomState .star {
   }
   #mainDetails .star::before, #mainDetails #mainImage > i {
     font-size: 32px;
+    width: 32px;
   }
   #mainImage button, #similarImage button {
     font-size: 0;
@@ -856,6 +1052,9 @@ div:nth-of-type(2) > .list > .roomState .star {
     margin: 0;
   }
   #mainImage span {
+    display: none;
+  }
+  #mainImage .ai-badge:not(.hidden) {
     display: none;
   }
   #variantsList {

@@ -1,0 +1,8 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+	<title>New Project</title>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: #00a2e8 } 
+	</style>
+	<path id="Background" class="shp0" d="M100 200C44.7 200 0 155.3 0 100C0 44.7 44.7 0 100 0C155.3 0 200 44.7 200 100C200 155.3 155.3 200 100 200Z" />
+</svg>

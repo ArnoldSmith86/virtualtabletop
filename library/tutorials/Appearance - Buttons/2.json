@@ -1,0 +1,940 @@
+{
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Appearance - Buttons",
+      "image": "/assets/1091245433_5809",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
+      "showName": false,
+      "lastUpdate": 1763600323638,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Images",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "jdwf": {
+    "type": "holder",
+    "x": 779.5,
+    "y": 745,
+    "z": 7,
+    "id": "jdwf",
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "py7d": {
+    "type": "button",
+    "text": "DEAL",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "x": 71,
+    "y": 429,
+    "z": 27,
+    "id": "py7d"
+  },
+  "9ud8": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 1100,
+        "y": 700,
+        "resetOwner": false
+      }
+    ],
+    "x": 259,
+    "y": 438.5,
+    "z": 28,
+    "id": "9ud8",
+    "width": 150,
+    "height": 75,
+    "image": "/assets/424836472_764230"
+  },
+  "b93e": {
+    "type": "button",
+    "text": "FLIP",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "jdwf"
+      }
+    ],
+    "x": 543.5,
+    "y": 409,
+    "z": 29,
+    "id": "b93e",
+    "height": 150,
+    "width": 75,
+    "image": "/assets/903080458_141288",
+    "css": "--wcBorder:white;--wcBorderOH:black;font-size:30px",
+    "borderColor": "white",
+    "borderColorOH": "black"
+  },
+  "b0a6": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "css": "border-style:none",
+    "x": 781,
+    "y": 436,
+    "z": 31,
+    "id": "b0a6",
+    "image": "/assets/-265470717_353823"
+  },
+  "rf6c": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "css": "border-radius: 6px; border-style:none;",
+    "x": 1059,
+    "y": 425,
+    "z": 52,
+    "id": "rf6c",
+    "layer": 1,
+    "enlarge": 2.5,
+    "image": "/assets/234547111_728632"
+  },
+  "8cko": {
+    "type": "label",
+    "text": "Heading",
+    "css": "font-size: 25px;color:darkgrey",
+    "height": 42,
+    "width": 200,
+    "x": 866,
+    "y": 492,
+    "z": 10,
+    "id": "8cko",
+    "layer": 2,
+    "editable": false,
+    "parent": "rf6c"
+  },
+  "tpj8": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf",
+        "count": 3,
+        "face": 1
+      }
+    ],
+    "css": "background-color:transparent;background-repeat:no-repeat; background-position:center;background-size:70%",
+    "x": 1376,
+    "y": 421,
+    "z": 50,
+    "id": "tpj8",
+    "color": "blue",
+    "image": "/assets/-1499118311_13369",
+    "svgReplaces": {
+      "currentColor": "color"
+    }
+  },
+  "v91x": {
+    "type": "holder",
+    "id": "v91x",
+    "x": 614.5,
+    "y": 748,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 10
+  },
+  "v91xB": {
+    "id": "v91xB",
+    "parent": "v91x",
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "v91x"
+      },
+      {
+        "func": "FLIP",
+        "holder": "v91x",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "v91x"
+      }
+    ],
+    "css": "--wcMain: red; --wcBorder: black; --wcMainOH: #f08080; --wcBorderOH: grey;font-family: Verdana; font-size:.95em; "
+  },
+  "v91xD": {
+    "type": "deck",
+    "id": "v91xD",
+    "parent": "v91x",
+    "cardTypes": {
+      "AC": {
+        "image": "/i/cards-default/AC.svg"
+      },
+      "2C": {
+        "image": "/i/cards-default/2C.svg"
+      },
+      "3C": {
+        "image": "/i/cards-default/3C.svg"
+      },
+      "4C": {
+        "image": "/i/cards-default/4C.svg"
+      },
+      "5C": {
+        "image": "/i/cards-default/5C.svg"
+      },
+      "6C": {
+        "image": "/i/cards-default/6C.svg"
+      },
+      "7C": {
+        "image": "/i/cards-default/7C.svg"
+      },
+      "8C": {
+        "image": "/i/cards-default/8C.svg"
+      },
+      "9C": {
+        "image": "/i/cards-default/9C.svg"
+      },
+      "TC": {
+        "image": "/i/cards-default/TC.svg"
+      },
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
+      },
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
+      },
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
+      },
+      "AD": {
+        "image": "/i/cards-default/AD.svg"
+      },
+      "2D": {
+        "image": "/i/cards-default/2D.svg"
+      },
+      "3D": {
+        "image": "/i/cards-default/3D.svg"
+      },
+      "4D": {
+        "image": "/i/cards-default/4D.svg"
+      },
+      "5D": {
+        "image": "/i/cards-default/5D.svg"
+      },
+      "6D": {
+        "image": "/i/cards-default/6D.svg"
+      },
+      "7D": {
+        "image": "/i/cards-default/7D.svg"
+      },
+      "8D": {
+        "image": "/i/cards-default/8D.svg"
+      },
+      "9D": {
+        "image": "/i/cards-default/9D.svg"
+      },
+      "TD": {
+        "image": "/i/cards-default/TD.svg"
+      },
+      "JD": {
+        "image": "/i/cards-default/JD.svg"
+      },
+      "QD": {
+        "image": "/i/cards-default/QD.svg"
+      },
+      "KD": {
+        "image": "/i/cards-default/KD.svg"
+      },
+      "AH": {
+        "image": "/i/cards-default/AH.svg"
+      },
+      "2H": {
+        "image": "/i/cards-default/2H.svg"
+      },
+      "3H": {
+        "image": "/i/cards-default/3H.svg"
+      },
+      "4H": {
+        "image": "/i/cards-default/4H.svg"
+      },
+      "5H": {
+        "image": "/i/cards-default/5H.svg"
+      },
+      "6H": {
+        "image": "/i/cards-default/6H.svg"
+      },
+      "7H": {
+        "image": "/i/cards-default/7H.svg"
+      },
+      "8H": {
+        "image": "/i/cards-default/8H.svg"
+      },
+      "9H": {
+        "image": "/i/cards-default/9H.svg"
+      },
+      "TH": {
+        "image": "/i/cards-default/TH.svg"
+      },
+      "JH": {
+        "image": "/i/cards-default/JH.svg"
+      },
+      "QH": {
+        "image": "/i/cards-default/QH.svg"
+      },
+      "KH": {
+        "image": "/i/cards-default/KH.svg"
+      },
+      "AS": {
+        "image": "/i/cards-default/AS.svg"
+      },
+      "2S": {
+        "image": "/i/cards-default/2S.svg"
+      },
+      "3S": {
+        "image": "/i/cards-default/3S.svg"
+      },
+      "4S": {
+        "image": "/i/cards-default/4S.svg"
+      },
+      "5S": {
+        "image": "/i/cards-default/5S.svg"
+      },
+      "6S": {
+        "image": "/i/cards-default/6S.svg"
+      },
+      "7S": {
+        "image": "/i/cards-default/7S.svg"
+      },
+      "8S": {
+        "image": "/i/cards-default/8S.svg"
+      },
+      "9S": {
+        "image": "/i/cards-default/9S.svg"
+      },
+      "TS": {
+        "image": "/i/cards-default/TS.svg"
+      },
+      "JS": {
+        "image": "/i/cards-default/JS.svg"
+      },
+      "QS": {
+        "image": "/i/cards-default/QS.svg"
+      },
+      "KS": {
+        "image": "/i/cards-default/KS.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "v91xAC": {
+    "id": "v91xAC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 2966,
+    "parent": "lmaz"
+  },
+  "v91x2C": {
+    "id": "v91x2C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 7625,
+    "parent": "lmaz"
+  },
+  "v91x3C": {
+    "id": "v91x3C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 3408,
+    "parent": "lmaz"
+  },
+  "v91x4C": {
+    "id": "v91x4C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 4210,
+    "parent": "lmaz"
+  },
+  "v91x5C": {
+    "id": "v91x5C",
+    "parent": "lmaz",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 349
+  },
+  "v91x6C": {
+    "id": "v91x6C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 8402,
+    "parent": "lmaz"
+  },
+  "v91x7C": {
+    "id": "v91x7C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 7086,
+    "parent": "lmaz"
+  },
+  "v91x8C": {
+    "id": "v91x8C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 6409,
+    "parent": "lmaz"
+  },
+  "v91x9C": {
+    "id": "v91x9C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 920,
+    "parent": "lmaz"
+  },
+  "v91xTC": {
+    "id": "v91xTC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 7703,
+    "parent": "lmaz"
+  },
+  "v91xJC": {
+    "id": "v91xJC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 7879,
+    "parent": "lmaz"
+  },
+  "v91xQC": {
+    "id": "v91xQC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 7227,
+    "parent": "lmaz"
+  },
+  "v91xKC": {
+    "id": "v91xKC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 3080,
+    "parent": "lmaz"
+  },
+  "v91xAD": {
+    "id": "v91xAD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 2121,
+    "parent": "lmaz"
+  },
+  "v91x2D": {
+    "id": "v91x2D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 860,
+    "parent": "lmaz"
+  },
+  "v91x3D": {
+    "id": "v91x3D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 2891,
+    "parent": "lmaz"
+  },
+  "v91x4D": {
+    "id": "v91x4D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 955,
+    "parent": "lmaz"
+  },
+  "v91x5D": {
+    "id": "v91x5D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 9545,
+    "parent": "lmaz"
+  },
+  "v91x6D": {
+    "id": "v91x6D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 8287,
+    "parent": "lmaz"
+  },
+  "v91x7D": {
+    "id": "v91x7D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 7623,
+    "parent": "lmaz"
+  },
+  "v91x8D": {
+    "id": "v91x8D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 8028,
+    "parent": "lmaz"
+  },
+  "v91x9D": {
+    "id": "v91x9D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 6051,
+    "parent": "lmaz"
+  },
+  "v91xTD": {
+    "id": "v91xTD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 9250,
+    "parent": "lmaz"
+  },
+  "v91xJD": {
+    "id": "v91xJD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 9481,
+    "parent": "lmaz"
+  },
+  "v91xQD": {
+    "id": "v91xQD",
+    "parent": "lmaz",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 1020
+  },
+  "v91xKD": {
+    "id": "v91xKD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 6895,
+    "parent": "lmaz"
+  },
+  "v91xAH": {
+    "id": "v91xAH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 705,
+    "parent": "lmaz"
+  },
+  "v91x2H": {
+    "id": "v91x2H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 4876,
+    "parent": "lmaz"
+  },
+  "v91x3H": {
+    "id": "v91x3H",
+    "parent": "lmaz",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 3492
+  },
+  "v91x4H": {
+    "id": "v91x4H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4H",
+    "z": 2610,
+    "parent": "lmaz"
+  },
+  "v91x5H": {
+    "id": "v91x5H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 2772,
+    "parent": "lmaz"
+  },
+  "v91x6H": {
+    "id": "v91x6H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 2094,
+    "parent": "lmaz"
+  },
+  "v91x7H": {
+    "id": "v91x7H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 9793,
+    "parent": "lmaz"
+  },
+  "v91x8H": {
+    "id": "v91x8H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 9988,
+    "parent": "lmaz"
+  },
+  "v91x9H": {
+    "id": "v91x9H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 8481,
+    "parent": "lmaz"
+  },
+  "v91xTH": {
+    "id": "v91xTH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 7259,
+    "parent": "lmaz"
+  },
+  "v91xJH": {
+    "id": "v91xJH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 4364,
+    "parent": "lmaz"
+  },
+  "v91xQH": {
+    "id": "v91xQH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 9005,
+    "parent": "lmaz"
+  },
+  "v91xKH": {
+    "id": "v91xKH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 9896,
+    "parent": "lmaz"
+  },
+  "v91xAS": {
+    "id": "v91xAS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 6007,
+    "parent": "lmaz"
+  },
+  "v91x2S": {
+    "id": "v91x2S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 3210,
+    "parent": "lmaz"
+  },
+  "v91x3S": {
+    "id": "v91x3S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 9367,
+    "parent": "lmaz"
+  },
+  "v91x4S": {
+    "id": "v91x4S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 952,
+    "parent": "lmaz"
+  },
+  "v91x5S": {
+    "id": "v91x5S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 6705,
+    "parent": "lmaz"
+  },
+  "v91x6S": {
+    "id": "v91x6S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6S",
+    "z": 5556,
+    "parent": "lmaz"
+  },
+  "v91x7S": {
+    "id": "v91x7S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 1937,
+    "parent": "lmaz"
+  },
+  "v91x8S": {
+    "id": "v91x8S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 5930,
+    "parent": "lmaz"
+  },
+  "v91x9S": {
+    "id": "v91x9S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 4509,
+    "parent": "lmaz"
+  },
+  "v91xTS": {
+    "id": "v91xTS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 8957,
+    "parent": "lmaz"
+  },
+  "v91xJS": {
+    "id": "v91xJS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 4133,
+    "parent": "lmaz"
+  },
+  "v91xQS": {
+    "id": "v91xQS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 3998,
+    "parent": "lmaz"
+  },
+  "v91xKS": {
+    "id": "v91xKS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 1912,
+    "parent": "lmaz"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Button Appearance\nImages",
+    "css": "font-size: 60px",
+    "height": 200,
+    "width": 1000,
+    "x": 287,
+    "y": -4,
+    "z": 66,
+    "id": "8fr3"
+  },
+  "p0sg": {
+    "type": "label",
+    "text": "Default button",
+    "x": 60,
+    "y": 353,
+    "z": 44,
+    "id": "p0sg",
+    "width": 100,
+    "height": 50
+  },
+  "6tmy": {
+    "type": "label",
+    "text": "Button with picture with no other modifications except for width ",
+    "x": 214,
+    "y": 381,
+    "z": 74,
+    "id": "6tmy",
+    "width": 250,
+    "height": 40
+  },
+  "qgc4": {
+    "type": "label",
+    "text": "Button with picture & text (using CSS modifications to border color)",
+    "x": 458,
+    "y": 341,
+    "z": 76,
+    "id": "qgc4",
+    "width": 250,
+    "height": 250
+  },
+  "djsg": {
+    "type": "label",
+    "text": "Button with picture (using CSS to remove border)",
+    "x": 704,
+    "y": 385,
+    "z": 73,
+    "id": "djsg",
+    "width": 250,
+    "height": 250
+  },
+  "snq7": {
+    "type": "label",
+    "text": "Sample Universal Game Symbol with svgReplaces to change color",
+    "x": 1293,
+    "y": 369,
+    "z": 81,
+    "id": "snq7",
+    "width": 250,
+    "height": 100
+  },
+  "lrms": {
+    "type": "label",
+    "text": "Standard button with CSS modifications",
+    "x": 363,
+    "y": 918,
+    "z": 67,
+    "id": "lrms",
+    "width": 250,
+    "height": 250
+  },
+  "lmaz": {
+    "type": "pile",
+    "parent": "v91x",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "lmaz"
+  },
+  "mh1x": {
+    "type": "label",
+    "id": "mh1x",
+    "x": 965,
+    "y": 349,
+    "width": 300,
+    "height": 300,
+    "z": 56,
+    "text": "Button with picture & CSS modifications to border shape; shows enlarged view"
+  },
+  "qhx2": {
+    "type": "button",
+    "text": "       2",
+    "clickRoutine": [],
+    "x": 1393,
+    "y": 626,
+    "z": 3872,
+    "id": "qhx2",
+    "height": 50,
+    "image": "/assets/1444052474_484",
+    "css": "padding-bottom:31px;font-size:25px;text-align:left;background-position:25px;background-size:40%",
+    "width": 60,
+    "svgReplaces": {
+      "currentColor": "color"
+    },
+    "color": "white"
+  },
+  "mkou": {
+    "type": "label",
+    "text": "If you want to combine text and one of these universal images on a standard button, you can use CSS along with the shape of the button to create different effects.",
+    "x": 1266,
+    "y": 522,
+    "z": 84,
+    "width": 300,
+    "height": 150,
+    "id": "mkou"
+  },
+  "ma9w": {
+    "id": "ma9w",
+    "x": 427,
+    "y": 147,
+    "width": 700,
+    "height": 150,
+    "z": 63,
+    "css": "font-size:18px",
+    "text": "This tutorial was created before the 'icon' property was available. While the techniques show in this tutorial variant still work, you should consider using icons. See the Icons tutorial for additional information."
+  }
+}

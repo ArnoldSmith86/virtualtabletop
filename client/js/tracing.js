@@ -29,7 +29,10 @@ onLoad(function() {
   window.addEventListener('keydown', function(e) {
     if(!jeEnabled && e.key == 'F9') {
       if(e.ctrlKey)
-        selectFile('TEXT').then(loadTraceFile);
+        selectFile('TEXT').then(loadTraceFile).catch(e=>{
+          if(e.message !== 'File selection cancelled.')
+            alert(`Error: ${e.toString()}`);
+        });
       else if(!tracingEnabled)
         enableTracing();
       else

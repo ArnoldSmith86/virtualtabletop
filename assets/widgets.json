@@ -1,0 +1,3601 @@
+{
+  "widgets": [
+    {
+      "name": "Pawn",
+      "id": "pawn",
+      "preview": "i/icons/pawn.svg",
+      "widgets": [
+        {
+          "id": "pawn",
+          "x": 390,
+          "y": 79,
+          "width": 50.4,
+          "height": 90,
+          "z": 10,
+          "color": "#1f5ca6",
+          "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+          "image": "i/game-pieces/3D/Pawn-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pin",
+      "id": "pin",
+      "widgets": [
+        {
+          "id": "pin",
+          "x": 465,
+          "y": 111,
+          "width": 35,
+          "height": 40,
+          "z": 9,
+          "color": "#1f5ca6",
+          "css": "border-radius: 80% 80% 40% 110%",
+          "image": "/i/game-pieces/3D/Pin-3D.svg",
+          "svgReplaces": {
+            "#borderWidth": "borderWidth",
+            "#borderColor": "borderColor",
+            "#primaryColor": "color"
+          },
+          "borderColor": "black",
+          "borderWidth": "1",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/pin.svg"
+    },
+    {
+      "name": "Marble",
+      "id": "marble",
+      "widgets": [
+        {
+          "id": "marble",
+          "x": 540,
+          "y": 114,
+          "width": 35,
+          "height": 35,
+          "z": 8,
+          "color": "#1f5ca6",
+          "css": "border-radius: 50%;",
+          "image": "/i/game-pieces/3D/Marble-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#ffffff",
+          "borderWidth": 1,
+          "secondaryColor": "#000000",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/marble.svg"
+    },
+    {
+      "name": "Cube",
+      "id": "cube",
+      "widgets": [
+        {
+          "id": "cube",
+          "x": 615,
+          "y": 110,
+          "width": 36,
+          "height": 40,
+          "z": 7,
+          "color": "#1f5ca6",
+          "css": "border-radius: 50%/35%;",
+          "image": "/i/game-pieces/3D/Cube-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "white",
+          "borderWidth": 1,
+          "secondaryColor": "black",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/cube_3d.svg"
+    },
+    {
+      "name": "Village",
+      "id": "village",
+      "widgets": [
+        {
+          "id": "village",
+          "x": 390,
+          "y": 494,
+          "width": 69,
+          "height": 77,
+          "z": 19,
+          "color": "#1f5ca6",
+          "css": "border-radius: 52% 48% 35% 65%/30% 70% 25% 45%;",
+          "image": "/i/game-pieces/3D/Building-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/village_3d.svg"
+    },
+    {
+      "name": "Checker",
+      "id": "checker",
+      "widgets": [
+        {
+          "id": "checker",
+          "x": 445,
+          "y": 190,
+          "width": 75,
+          "height": 75,
+          "z": 6,
+          "activeFace": 1,
+          "classes": "chip",
+          "color": "#1f5ca6",
+          "faces": [
+            {
+              "image": "i/game-pieces/2D/Checkers-2D.svg",
+              "crowned": false
+            },
+            {
+              "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+              "crowned": true
+            }
+          ],
+          "image": "i/game-pieces/2D/Crowned-Checkers-2D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "secondaryColor": "#ffffff",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/checker.svg"
+    },
+    {
+      "name": "Checker (3D)",
+      "id": "checker3D",
+      "widgets": [
+        {
+          "id": "checker3D",
+          "x": 545,
+          "y": 200,
+          "width": 75,
+          "height": 54.75,
+          "z": 5,
+          "activeFace": 1,
+          "classes": "chip3D",
+          "color": "#1f5ca6",
+          "faces": [
+            {
+              "image": "i/game-pieces/3D/Checkers-3D.svg",
+              "crowned": false
+            },
+            {
+              "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+              "crowned": true
+            }
+          ],
+          "image": "i/game-pieces/3D/Crowned-Checkers-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "secondaryColor": "#ffffff",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/checker_3d.svg"
+    },
+    {
+      "name": "Meeple (3D)",
+      "id": "meeple3D",
+      "widgets": [
+        {
+          "id": "meeple3D",
+          "x": 550,
+          "y": 300,
+          "width": 66.5,
+          "height": 70,
+          "z": 3,
+          "color": "#1f5ca6",
+          "css": "border-radius: 45% 65% 70% 30%/ 45% 50% 20% 20%; ",
+          "faces": [
+            {
+              "image": "i/game-pieces/3D/Meeple-3D.svg",
+              "rotation": 0,
+              "state": "alive"
+            },
+            {
+              "image": "i/game-pieces/3D/Meeple240-3D-iso.svg",
+              "rotation": 240,
+              "state": "dead"
+            }
+          ],
+          "image": "i/game-pieces/3D/Meeple-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "state": "alive",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/meeple_3d.svg"
+    },
+    {
+      "name": "Piggy",
+      "id": "piggy",
+      "widgets": [
+        {
+          "id": "piggy",
+          "x": 450,
+          "y": 412,
+          "width": 68.56,
+          "height": 48,
+          "z": 2,
+          "color": "#1f5ca6",
+          "css": "border-radius: 15% 20% 20% 25%/ 15% 20% 50% 75%;",
+          "image": "i/game-pieces/2D/Pig-2D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/2D/Pig-2D.svg"
+    },
+    {
+      "name": "Meeple",
+      "id": "meeple",
+      "widgets": [
+        {
+          "id": "meeple",
+          "x": 450,
+          "y": 303,
+          "width": 56,
+          "height": 56,
+          "z": 4,
+          "color": "#1f5ca6",
+          "css": "border-radius: 100% 100% 25% 25%; ",
+          "image": "i/game-pieces/2D/Meeple-2D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 3,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/meeple.svg"
+    },
+    {
+      "name": "Piggy (3D)",
+      "id": "piggy3D",
+      "widgets": [
+        {
+          "id": "piggy3D",
+          "x": 550,
+          "y": 408,
+          "width": 85.7,
+          "height": 60,
+          "z": 1,
+          "color": "#1f5ca6",
+          "css": "border-radius: 30% 40% 40% 40%/20% 30% 60% 100%; ",
+          "image": "i/game-pieces/3D/Pig-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/3D/Pig-3D.svg"
+    },
+    {
+      "name": "House",
+      "id": "house",
+      "widgets": [
+        {
+          "id": "house",
+          "x": 490,
+          "y": 507,
+          "width": 60,
+          "height": 60,
+          "z": 20,
+          "color": "#1f5ca6",
+          "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+          "image": "/i/game-pieces/3D/House-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#secondaryColor": "secondaryColor",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/house_3d.svg"
+    },
+    {
+      "name": "Beam",
+      "id": "beam",
+      "widgets": [
+        {
+          "id": "beam",
+          "x": 610,
+          "y": 480,
+          "width": 26,
+          "rotation": 60,
+          "z": 21,
+          "activeFace": 1,
+          "color": "#1f5ca6",
+          "faces": [
+            {
+              "image": "i/game-pieces/3D/Road-3D.svg",
+              "rotation": 0
+            },
+            {
+              "image": "i/game-pieces/3D/Road240-3D.svg",
+              "rotation": 60
+            },
+            {
+              "image": "i/game-pieces/3D/Road90-3D.svg",
+              "rotation": 90
+            },
+            {
+              "image": "i/game-pieces/3D/Road120-3D.svg",
+              "rotation": 300
+            }
+          ],
+          "image": "i/game-pieces/3D/Road240-3D.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 1,
+          "note": "Game designer: You can remove any face you may not need. That way you can limit rotation",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/3D/Road-3D.svg"
+    },
+    {
+      "name": "Hex (flat)",
+      "id": "hexFlat",
+      "widgets": [
+        {
+          "id": "hexFlat",
+          "x": 390,
+          "y": 600,
+          "width": 50,
+          "height": 50,
+          "z": 22,
+          "color": "#1f5ca6",
+          "image": "i/game-pieces/2D/Hex-Flat.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "hexType": "flat",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/2D/Hex-Flat.svg"
+    },
+    {
+      "name": "Hex (point)",
+      "id": "hexPoint",
+      "widgets": [
+        {
+          "id": "hexPoint",
+          "x": 465,
+          "y": 600,
+          "width": 50,
+          "height": 50,
+          "z": 23,
+          "color": "#1f5ca6",
+          "image": "i/game-pieces/2D/Hex-Point.svg",
+          "svgReplaces": {
+            "#primaryColor": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "hexType": "point",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/2D/Hex-Point.svg"
+    },
+    {
+      "name": "Hex (flat image)",
+      "id": "hexFlatImage",
+      "widgets": [
+        {
+          "id": "hexFlat",
+          "x": 540,
+          "y": 600,
+          "width": 50,
+          "height": 50,
+          "z": 24,
+          "color": "#1f5ca6",
+          "css": {
+            "default": {
+              "background-color": "${PROPERTY color}",
+              "background-image": "url('${PROPERTY image}')",
+              "background-size": "75% 75%",
+              "background-repeat": "no-repeat",
+              "background-position": "center center",
+              "clip-path": "polygon(25% 6.67%, 75% 6.67%, 100% 50%, 75% 93.33%, 25% 93.33%, 0% 50%)"
+            }
+          },
+          "image": "i/icons/zoom_in.svg",
+          "svgReplaces": {
+            "currentColor": "imageColor"
+          },
+          "hexType": "flat",
+          "imageColor": "#ffffff",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/2D/Hex-Flat.svg"
+    },
+    {
+      "name": "Hex (point image)",
+      "id": "hexPointImage",
+      "widgets": [
+        {
+          "id": "hexPoint",
+          "x": 615,
+          "y": 600,
+          "width": 50,
+          "height": 50,
+          "z": 25,
+          "color": "#1f5ca6",
+          "css": {
+            "default": {
+              "background-color": "${PROPERTY color}",
+              "background-image": "url('${PROPERTY image}')",
+              "background-size": "75% 75%",
+              "background-repeat": "no-repeat",
+              "background-position": "center center",
+              "clip-path": "polygon(93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%, 50% 0%)"
+            }
+          },
+          "image": "i/icons/zoom_out.svg",
+          "svgReplaces": {
+            "currentColor": "imageColor"
+          },
+          "hexType": "point",
+          "imageColor": "#ffffff",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose piece color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#1f5ca6",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "color",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/game-pieces/2D/Hex-Point.svg"
+    },
+    {
+      "name": "Chip",
+      "id": "chip",
+      "widgets": [
+        {
+          "id": "chip",
+          "x": 920,
+          "y": 114,
+          "width": 73,
+          "height": 73,
+          "z": 11,
+          "classes": "pokerChip",
+          "color": "#1f5ca6",
+          "image": "i/game-pieces/2D/Poker-2D.svg",
+          "svgReplaces": {
+            "#accentColor1": "color",
+            "#accentColor2": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth",
+            "#labelColor": "labelColor",
+            "#primaryColor": "color"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "labelColor": "#00000022"
+        }
+      ],
+      "preview": "i/icons/poker_chip.svg"
+    },
+    {
+      "name": "Chip (3D)",
+      "id": "chip3D",
+      "widgets": [
+        {
+          "id": "chip3D",
+          "x": 1010,
+          "y": 123,
+          "width": 75,
+          "height": 54.75,
+          "z": 12,
+          "classes": "pokerChip3D",
+          "color": "#1f5ca6",
+          "css": "color: #ffffffcc; font-size: 1.8rem",
+          "image": "i/game-pieces/3D/Poker-3D.svg",
+          "svgReplaces": {
+            "#accentColor1": "color",
+            "#accentColor2": "color",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth",
+            "#labelColor": "labelColor",
+            "#primaryColor": "color"
+          },
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "labelColor": "#00000022"
+        }
+      ],
+      "preview": "i/icons/poker_chip_3d.svg"
+    },
+    {
+      "name": "Dealer Chip",
+      "id": "dealerChip",
+      "widgets": [
+        {
+          "id": "dealerChip",
+          "x": 920,
+          "y": 207,
+          "width": 73,
+          "height": 73,
+          "z": 13,
+          "classes": "pokerChip",
+          "image": "i/game-pieces/2D/Poker-2D.svg",
+          "svgReplaces": {
+            "#accentColor1": "accentColor1",
+            "#accentColor2": "accentColor2",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth",
+            "#labelColor": "labelColor",
+            "#primaryColor": "primaryColor"
+          },
+          "text": "Dealer",
+          "accentColor1": "#55bb66",
+          "accentColor2": "#55bb66",
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "labelColor": "#ffffff",
+          "primaryColor": "#55bb66"
+        }
+      ],
+      "preview": "i/icons/dealer_chip.svg"
+    },
+    {
+      "name": "Dealer Chip (3D)",
+      "id": "dealerChip3D",
+      "widgets": [
+        {
+          "id": "dealerChip3D",
+          "x": 1010,
+          "y": 216,
+          "width": 75,
+          "height": 54.75,
+          "z": 14,
+          "classes": "pokerChip3D",
+          "css": "font-size:0.9rem",
+          "image": "i/game-pieces/3D/Poker-3D.svg",
+          "svgReplaces": {
+            "#accentColor1": "accentColor1",
+            "#accentColor2": "accentColor2",
+            "#borderColor": "borderColor",
+            "#borderWidth": "borderWidth",
+            "#labelColor": "labelColor",
+            "#primaryColor": "primaryColor"
+          },
+          "text": "Dealer",
+          "accentColor1": "#55bb66",
+          "accentColor2": "#55bb66",
+          "borderColor": "#000000",
+          "borderWidth": 2,
+          "labelColor": "#ffffff",
+          "primaryColor": "#55bb66"
+        }
+      ],
+      "preview": "i/icons/dealer_chip_3d.svg"
+    },
+    {
+      "name": "Stacks of Chips",
+      "id": "stacksOfChips",
+      "widgets": [
+        {
+          "type": "holder",
+          "id": "stacksOfChips",
+          "x": 916,
+          "y": 300,
+          "width": 81,
+          "height": 81,
+          "borderRadius": "100%",
+          "dropTarget": {
+            "classes": "pokerChip"
+          }
+        },
+        {
+          "type": "button",
+          "id": "recall_stacksOfChips",
+          "parent": "stacksOfChips",
+          "fixedParent": true,
+          "y": 83,
+          "width": 81,
+          "height": 35,
+          "movableInEdit": false,
+          "classes": "symbols",
+          "css": {
+            "font-size": "30px"
+          },
+          "text": "recallsort_ascending",
+          "clickRoutine": [
+            {
+              "func": "RECALL",
+              "holder": "${PROPERTY parent}"
+            },
+            {
+              "func": "SORT",
+              "holder": "${PROPERTY parent}",
+              "reverse": true
+            }
+          ]
+        },
+        {
+          "type": "pile",
+          "id": "pile",
+          "parent": "stacksOfChips",
+          "width": 73,
+          "height": 73,
+          "y": 4,
+          "text": 1641,
+          "enterRoutine": [
+            {
+              "func": "GET",
+              "property": "value",
+              "collection": "child",
+              "aggregation": "sum",
+              "variable": "value"
+            },
+            {
+              "func": "SET",
+              "property": "text",
+              "collection": "thisButton",
+              "relation": "+",
+              "value": "${value}"
+            }
+          ],
+          "leaveRoutine": [
+            {
+              "func": "GET",
+              "property": "value",
+              "collection": "child",
+              "aggregation": "sum",
+              "variable": "value"
+            },
+            {
+              "func": "SET",
+              "property": "text",
+              "collection": "thisButton",
+              "relation": "-",
+              "value": "${value}"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "id": "1000c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 1000,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "500c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 500,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "100c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 100,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "25c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 25,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "10c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 10,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "5c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 5,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "1c",
+          "parent": "pile",
+          "deck": "chipDeck",
+          "cardType": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "deck",
+          "id": "chipDeck",
+          "parent": "stacksOfChips",
+          "x": -2,
+          "y": -2,
+          "scale": 0.5,
+          "cardDefaults": {
+            "classes": "pokerChip",
+            "width": 73,
+            "height": 73,
+            "onPileCreation": {
+              "text": 0,
+              "enterRoutine": [
+                {
+                  "func": "GET",
+                  "property": "value",
+                  "collection": "child",
+                  "aggregation": "sum",
+                  "variable": "value"
+                },
+                {
+                  "func": "SET",
+                  "property": "text",
+                  "collection": "thisButton",
+                  "relation": "+",
+                  "value": "${value}"
+                }
+              ],
+              "leaveRoutine": [
+                {
+                  "func": "GET",
+                  "property": "value",
+                  "collection": "child",
+                  "aggregation": "sum",
+                  "variable": "value"
+                },
+                {
+                  "func": "SET",
+                  "property": "text",
+                  "collection": "thisButton",
+                  "relation": "-",
+                  "value": "${value}"
+                }
+              ]
+            }
+          },
+          "cardTypes": {
+            "1": {
+              "value": 1,
+              "accentColor1": "#808080",
+              "accentColor2": "#add8e6",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#d3d3d3",
+              "primaryColor": "#ffffff"
+            },
+            "5": {
+              "value": 5,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#ffff00",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#ed8080",
+              "primaryColor": "#ff0000"
+            },
+            "10": {
+              "value": 10,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#87ceeb",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#b0c4de",
+              "primaryColor": "#000080"
+            },
+            "25": {
+              "value": 25,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#000000",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#22ba22",
+              "primaryColor": "#008000"
+            },
+            "100": {
+              "value": 100,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#ffc0cb",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#ee82ee",
+              "primaryColor": "#4b0082"
+            },
+            "500": {
+              "value": 500,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#808080",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#a9a9a9",
+              "primaryColor": "#000000"
+            },
+            "1000": {
+              "value": 1000,
+              "accentColor1": "#ff0000",
+              "accentColor2": "#daa520",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#ffff00",
+              "primaryColor": "#ffd700"
+            }
+          },
+          "faceTemplates": [
+            {
+              "border": false,
+              "radius": false,
+              "objects": [
+                {
+                  "css": "font-size:1.5rem",
+                  "type": "image",
+                  "x": 0,
+                  "y": 0,
+                  "width": 73,
+                  "height": 73,
+                  "color": "transparent",
+                  "value": "i/game-pieces/2D/Poker-2D.svg",
+                  "dynamicProperties": {
+                    "accentColor1": "accentColor1",
+                    "accentColor2": "accentColor2",
+                    "borderColor": "borderColor",
+                    "borderWidth": "borderWidth",
+                    "labelColor": "labelColor",
+                    "primaryColor": "primaryColor"
+                  },
+                  "svgReplaces": {
+                    "#accentColor1": "accentColor1",
+                    "#accentColor2": "accentColor2",
+                    "#borderColor": "borderColor",
+                    "#borderWidth": "borderWidth",
+                    "#labelColor": "labelColor",
+                    "#primaryColor": "primaryColor"
+                  }
+                },
+                {
+                  "type": "text",
+                  "x": 0,
+                  "y": 26,
+                  "fontSize": 22,
+                  "textAlign": "center",
+                  "width": 73,
+                  "dynamicProperties": {
+                    "value": "value"
+                  },
+                  "css": "color: #222222;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/poker_chip_stack_3d.svg"
+    },
+    {
+      "name": "Stacks of Chips (3D)",
+      "id": "stacksOfChips3D",
+      "widgets": [
+        {
+          "type": "holder",
+          "id": "stacksOfChips3D",
+          "x": 1010,
+          "y": 309,
+          "width": 81,
+          "height": 54,
+          "borderRadius": "100%",
+          "dropOffsetY": -6,
+          "dropTarget": {
+            "classes": "pokerChip3D"
+          }
+        },
+        {
+          "type": "button",
+          "id": "recall_stacksOfChips3D",
+          "parent": "stacksOfChips3D",
+          "fixedParent": true,
+          "y": 56,
+          "width": 81,
+          "height": 35,
+          "movableInEdit": false,
+          "classes": "symbols",
+          "css": {
+            "font-size": "30px"
+          },
+          "text": "recallsort_ascending",
+          "clickRoutine": [
+            {
+              "func": "RECALL",
+              "holder": "${PROPERTY parent}"
+            },
+            {
+              "func": "SORT",
+              "holder": "${PROPERTY parent}",
+              "reverse": true
+            }
+          ]
+        },
+        {
+          "type": "pile",
+          "id": "pile",
+          "parent": "stacksOfChips3D",
+          "width": 73,
+          "height": 73,
+          "y": -6,
+          "text": 1641,
+          "enterRoutine": [
+            {
+              "func": "GET",
+              "property": "value",
+              "collection": "child",
+              "aggregation": "sum",
+              "variable": "value"
+            },
+            {
+              "func": "SET",
+              "property": "text",
+              "collection": "thisButton",
+              "relation": "+",
+              "value": "${value}"
+            }
+          ],
+          "leaveRoutine": [
+            {
+              "func": "GET",
+              "property": "value",
+              "collection": "child",
+              "aggregation": "sum",
+              "variable": "value"
+            },
+            {
+              "func": "SET",
+              "property": "text",
+              "collection": "thisButton",
+              "relation": "-",
+              "value": "${value}"
+            }
+          ]
+        },
+        {
+          "type": "card",
+          "id": "3D1000c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 1000,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "3D500c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 500,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "3D100c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 100,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "3D25c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 25,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "3D10c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 10,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "3D5c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 5,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "card",
+          "id": "3D1c",
+          "parent": "pile",
+          "deck": "chipDeck3D",
+          "cardType": 1,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "type": "deck",
+          "id": "chipDeck3D",
+          "parent": "stacksOfChips3D",
+          "x": -2,
+          "y": -2,
+          "scale": 0.5,
+          "cardDefaults": {
+            "classes": "pokerChip3D",
+            "width": 73,
+            "height": 73,
+            "onPileCreation": {
+              "text": 0,
+              "enterRoutine": [
+                {
+                  "func": "GET",
+                  "property": "value",
+                  "collection": "child",
+                  "aggregation": "sum",
+                  "variable": "value"
+                },
+                {
+                  "func": "SET",
+                  "property": "text",
+                  "collection": "thisButton",
+                  "relation": "+",
+                  "value": "${value}"
+                }
+              ],
+              "leaveRoutine": [
+                {
+                  "func": "GET",
+                  "property": "value",
+                  "collection": "child",
+                  "aggregation": "sum",
+                  "variable": "value"
+                },
+                {
+                  "func": "SET",
+                  "property": "text",
+                  "collection": "thisButton",
+                  "relation": "-",
+                  "value": "${value}"
+                }
+              ]
+            }
+          },
+          "cardTypes": {
+            "1": {
+              "value": 1,
+              "accentColor1": "#808080",
+              "accentColor2": "#add8e6",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#d3d3d3",
+              "primaryColor": "#ffffff"
+            },
+            "5": {
+              "value": 5,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#ffff00",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#ed8080",
+              "primaryColor": "#ff0000"
+            },
+            "10": {
+              "value": 10,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#87ceeb",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#b0c4de",
+              "primaryColor": "#000080"
+            },
+            "25": {
+              "value": 25,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#000000",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#22ba22",
+              "primaryColor": "#008000"
+            },
+            "100": {
+              "value": 100,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#ffc0cb",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#ee82ee",
+              "primaryColor": "#4b0082"
+            },
+            "500": {
+              "value": 500,
+              "accentColor1": "#ffffff",
+              "accentColor2": "#808080",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#a9a9a9",
+              "primaryColor": "#000000"
+            },
+            "1000": {
+              "value": 1000,
+              "accentColor1": "#ff0000",
+              "accentColor2": "#daa520",
+              "borderColor": "#000000",
+              "borderWidth": 2,
+              "labelColor": "#ffff00",
+              "primaryColor": "#ffd700"
+            }
+          },
+          "faceTemplates": [
+            {
+              "border": false,
+              "radius": false,
+              "objects": [
+                {
+                  "css": "font-size:1.3rem",
+                  "type": "image",
+                  "x": 0,
+                  "y": 0,
+                  "width": 73,
+                  "height": 73,
+                  "color": "transparent",
+                  "value": "i/game-pieces/3D/Poker-3D.svg",
+                  "dynamicProperties": {
+                    "accentColor1": "accentColor1",
+                    "accentColor2": "accentColor2",
+                    "borderColor": "borderColor",
+                    "borderWidth": "borderWidth",
+                    "labelColor": "labelColor",
+                    "primaryColor": "primaryColor"
+                  },
+                  "svgReplaces": {
+                    "#accentColor1": "accentColor1",
+                    "#accentColor2": "accentColor2",
+                    "#borderColor": "borderColor",
+                    "#borderWidth": "borderWidth",
+                    "#labelColor": "labelColor",
+                    "#primaryColor": "primaryColor"
+                  }
+                },
+                {
+                  "type": "text",
+                  "x": 0,
+                  "y": 26,
+                  "fontSize": 22,
+                  "textAlign": "center",
+                  "width": 73,
+                  "dynamicProperties": {
+                    "value": "value"
+                  },
+                  "css": "color: #222222;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/poker_chip_stacks.svg"
+    },
+    {
+      "name": "Die",
+      "id": "die",
+      "widgets": [
+        {
+          "type": "dice",
+          "id": "die",
+          "x": 930,
+          "y": 455,
+          "z": 15,
+          "faces": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose number of sides",
+              "fields": [
+                {
+                  "type": "number",
+                  "min": 2,
+                  "value": "6",
+                  "variable": "numvalues"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "faces",
+              "value": null,
+              "collection": "thisButton"
+            },
+            "var myArray = []",
+            {
+              "func": "FOREACH",
+              "range": [
+                1,
+                "${numvalues}"
+              ],
+              "loopRoutine": [
+                "var myArray = ${myArray} concatArray ${value}"
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "faces",
+              "value": "${myArray}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/die.svg"
+    },
+    {
+      "name": "Die (3D)",
+      "id": "die3D",
+      "widgets": [
+        {
+          "type": "dice",
+          "id": "die3D",
+          "x": 1020,
+          "y": 455,
+          "z": 17,
+          "faces": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose number of sides",
+              "fields": [
+                {
+                  "type": "number",
+                  "min": 2,
+                  "value": "6",
+                  "variable": "numvalues"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "faces",
+              "value": null,
+              "collection": "thisButton"
+            },
+            "var myArray = []",
+            {
+              "func": "FOREACH",
+              "range": [
+                1,
+                "${numvalues}"
+              ],
+              "loopRoutine": [
+                "var myArray = ${myArray} concatArray ${value}"
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "faces",
+              "value": "${myArray}",
+              "collection": "thisButton"
+            }
+          ],
+          "pipSymbols": false,
+          "shape3d": true
+        }
+      ],
+      "preview": "i/icons/die.svg"
+    },
+    {
+      "name": "Die (image)",
+      "id": "dieImage",
+      "widgets": [
+        {
+          "type": "dice",
+          "id": "dieImage",
+          "x": 930,
+          "y": 525,
+          "z": 18,
+          "borderColor": "transparent",
+          "color": "transparent",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose die color",
+              "fields": [
+                {
+                  "type": "color",
+                  "value": "#ffffff",
+                  "variable": "newColor"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "cT",
+              "value": "${newColor}",
+              "collection": "thisButton"
+            },
+            "var cL = colorContrast ${PROPERTY cT} 0.2",
+            "var cR = colorContrast ${PROPERTY cT} 0.4",
+            "var cP = colorContrast ${PROPERTY cT} 1",
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "cL",
+              "value": "${cL}"
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "cR",
+              "value": "${cR}"
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "cP",
+              "value": "${cP}"
+            }
+          ],
+          "faces": [
+            {
+              "value": 1,
+              "image": "/i/dice/cube-1-1.svg"
+            },
+            {
+              "value": 1,
+              "image": "/i/dice/cube-1-2.svg"
+            },
+            {
+              "value": 1,
+              "image": "/i/dice/cube-1-3.svg"
+            },
+            {
+              "value": 1,
+              "image": "/i/dice/cube-1-4.svg"
+            },
+            {
+              "value": 2,
+              "image": "/i/dice/cube-2-1.svg"
+            },
+            {
+              "value": 2,
+              "image": "/i/dice/cube-2-2.svg"
+            },
+            {
+              "value": 2,
+              "image": "/i/dice/cube-2-3.svg"
+            },
+            {
+              "value": 2,
+              "image": "/i/dice/cube-2-4.svg"
+            },
+            {
+              "value": 3,
+              "image": "/i/dice/cube-3-1.svg"
+            },
+            {
+              "value": 3,
+              "image": "/i/dice/cube-3-2.svg"
+            },
+            {
+              "value": 3,
+              "image": "/i/dice/cube-3-3.svg"
+            },
+            {
+              "value": 3,
+              "image": "/i/dice/cube-3-4.svg"
+            },
+            {
+              "value": 4,
+              "image": "/i/dice/cube-4-1.svg"
+            },
+            {
+              "value": 4,
+              "image": "/i/dice/cube-4-2.svg"
+            },
+            {
+              "value": 4,
+              "image": "/i/dice/cube-4-3.svg"
+            },
+            {
+              "value": 4,
+              "image": "/i/dice/cube-4-4.svg"
+            },
+            {
+              "value": 5,
+              "image": "/i/dice/cube-5-1.svg"
+            },
+            {
+              "value": 5,
+              "image": "/i/dice/cube-5-2.svg"
+            },
+            {
+              "value": 5,
+              "image": "/i/dice/cube-5-3.svg"
+            },
+            {
+              "value": 5,
+              "image": "/i/dice/cube-5-4.svg"
+            },
+            {
+              "value": 6,
+              "image": "/i/dice/cube-6-1.svg"
+            },
+            {
+              "value": 6,
+              "image": "/i/dice/cube-6-2.svg"
+            },
+            {
+              "value": 6,
+              "image": "/i/dice/cube-6-3.svg"
+            },
+            {
+              "value": 6,
+              "image": "/i/dice/cube-6-4.svg"
+            }
+          ],
+          "imageScale": 1,
+          "svgReplaces": {
+            "topColor": "cT",
+            "leftColor": "cL",
+            "rightColor": "cR",
+            "pipColor": "cP"
+          },
+          "cL": "#cccccc",
+          "cP": "#000000",
+          "cR": "#999999",
+          "cT": "#ffffff"
+        }
+      ],
+      "preview": "i/icons/die.svg"
+    },
+    {
+      "name": "Holder & Standard Deck",
+      "id": "holderStandardDeckOfCards",
+      "widgets": [
+        {
+          "type": "holder",
+          "id": "deckHolder",
+          "x": 115,
+          "y": 570,
+          "dropTarget": {
+            "type": "card"
+          }
+        },
+        {
+          "id": "recall_deckHolder",
+          "parent": "deckHolder",
+          "fixedParent": true,
+          "y": 171.36,
+          "width": 111,
+          "height": 40,
+          "type": "button",
+          "text": "Recall & Shuffle",
+          "movableInEdit": false,
+          "clickRoutine": [
+            {
+              "func": "RECALL",
+              "holder": "${PROPERTY parent}"
+            },
+            {
+              "func": "FLIP",
+              "holder": "${PROPERTY parent}",
+              "face": 0
+            },
+            {
+              "func": "SHUFFLE",
+              "holder": "${PROPERTY parent}"
+            }
+          ]
+        },
+        {
+          "type": "pile",
+          "id": "pile",
+          "parent": "deckHolder",
+          "width": 103,
+          "height": 160
+        },
+        {
+          "id": "A_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 01"
+        },
+        {
+          "id": "2_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 02"
+        },
+        {
+          "id": "3_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 03"
+        },
+        {
+          "id": "4_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 04"
+        },
+        {
+          "id": "5_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 05"
+        },
+        {
+          "id": "6_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 06"
+        },
+        {
+          "id": "7_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 07"
+        },
+        {
+          "id": "8_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 08"
+        },
+        {
+          "id": "9_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 09"
+        },
+        {
+          "id": "T_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 10"
+        },
+        {
+          "id": "J_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 2J"
+        },
+        {
+          "id": "Q_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 3Q"
+        },
+        {
+          "id": "K_C",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "C 4K"
+        },
+        {
+          "id": "A_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 01"
+        },
+        {
+          "id": "2_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 02"
+        },
+        {
+          "id": "3_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 03"
+        },
+        {
+          "id": "4_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 04"
+        },
+        {
+          "id": "5_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 05"
+        },
+        {
+          "id": "6_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 06"
+        },
+        {
+          "id": "7_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 07"
+        },
+        {
+          "id": "8_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 08"
+        },
+        {
+          "id": "9_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 09"
+        },
+        {
+          "id": "T_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 10"
+        },
+        {
+          "id": "J_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 2J"
+        },
+        {
+          "id": "Q_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 3Q"
+        },
+        {
+          "id": "K_D",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "D 4K"
+        },
+        {
+          "id": "A_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 01"
+        },
+        {
+          "id": "2_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 02"
+        },
+        {
+          "id": "3_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 03"
+        },
+        {
+          "id": "4_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 04"
+        },
+        {
+          "id": "5_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 05"
+        },
+        {
+          "id": "6_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 06"
+        },
+        {
+          "id": "7_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 07"
+        },
+        {
+          "id": "8_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 08"
+        },
+        {
+          "id": "9_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 09"
+        },
+        {
+          "id": "T_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 10"
+        },
+        {
+          "id": "J_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 2J"
+        },
+        {
+          "id": "Q_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 3Q"
+        },
+        {
+          "id": "K_H",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "H 4K"
+        },
+        {
+          "id": "A_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 01"
+        },
+        {
+          "id": "2_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 02"
+        },
+        {
+          "id": "3_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 03"
+        },
+        {
+          "id": "4_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 04"
+        },
+        {
+          "id": "5_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 05"
+        },
+        {
+          "id": "6_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 06"
+        },
+        {
+          "id": "7_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 07"
+        },
+        {
+          "id": "8_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 08"
+        },
+        {
+          "id": "9_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 09"
+        },
+        {
+          "id": "T_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 10"
+        },
+        {
+          "id": "J_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 2J"
+        },
+        {
+          "id": "Q_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 3Q"
+        },
+        {
+          "id": "K_S",
+          "parent": "pile",
+          "deck": "deck",
+          "type": "card",
+          "cardType": "S 4K"
+        },
+        {
+          "type": "deck",
+          "id": "deck",
+          "parent": "deckHolder",
+          "x": 12,
+          "y": 41,
+          "cardTypes": {
+            "T 1J": {
+              "image": "/i/cards-default/1J.svg",
+              "suit": "T",
+              "suitColor": "🃏",
+              "suitAlt": "5J",
+              "rank": "J1",
+              "rankA": "J1",
+              "rankFixed": "J1 T"
+            },
+            "T 2J": {
+              "image": "/i/cards-default/2J.svg",
+              "suit": "T",
+              "suitColor": "🃏",
+              "suitAlt": "5J",
+              "rank": "J2",
+              "rankA": "J2",
+              "rankFixed": "J2 T"
+            },
+            "T 3J": {
+              "image": "/i/cards-default/3J.svg",
+              "suit": "T",
+              "suitColor": "🃏",
+              "suitAlt": "5J",
+              "rank": "J3",
+              "rankA": "J3",
+              "rankFixed": "J3 T"
+            },
+            "T 4J": {
+              "image": "/i/cards-default/4J.svg",
+              "suit": "T",
+              "suitColor": "🃏",
+              "suitAlt": "5J",
+              "rank": "J4",
+              "rankA": "J4",
+              "rankFixed": "J4 T"
+            },
+            "C 01": {
+              "image": "/i/cards-default/AC.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "01",
+              "rankA": "5A",
+              "rankFixed": "01 C"
+            },
+            "C 02": {
+              "image": "/i/cards-default/2C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "02",
+              "rankA": "02",
+              "rankFixed": "02 C"
+            },
+            "C 03": {
+              "image": "/i/cards-default/3C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "03",
+              "rankA": "03",
+              "rankFixed": "03 C"
+            },
+            "C 04": {
+              "image": "/i/cards-default/4C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "04",
+              "rankA": "04",
+              "rankFixed": "04 C"
+            },
+            "C 05": {
+              "image": "/i/cards-default/5C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "05",
+              "rankA": "05",
+              "rankFixed": "05 C"
+            },
+            "C 06": {
+              "image": "/i/cards-default/6C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "06",
+              "rankA": "06",
+              "rankFixed": "06 C"
+            },
+            "C 07": {
+              "image": "/i/cards-default/7C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "07",
+              "rankA": "07",
+              "rankFixed": "07 C"
+            },
+            "C 08": {
+              "image": "/i/cards-default/8C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "08",
+              "rankA": "08",
+              "rankFixed": "08 C"
+            },
+            "C 09": {
+              "image": "/i/cards-default/9C.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "09",
+              "rankA": "09",
+              "rankFixed": "09 C"
+            },
+            "C 10": {
+              "image": "/i/cards-default/TC.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "10",
+              "rankA": "10",
+              "rankFixed": "10 C"
+            },
+            "C 2J": {
+              "image": "/i/cards-default/JC.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "2J",
+              "rankA": "2J",
+              "rankFixed": "2J C"
+            },
+            "C 3Q": {
+              "image": "/i/cards-default/QC.svg",
+              "suit": "C",
+              "suitColor": "��",
+              "suitAlt": "1♣",
+              "rank": "3Q",
+              "rankA": "3Q",
+              "rankFixed": "3Q C"
+            },
+            "C 4K": {
+              "image": "/i/cards-default/KC.svg",
+              "suit": "C",
+              "suitColor": "♣",
+              "suitAlt": "1♣",
+              "rank": "4K",
+              "rankA": "4K",
+              "rankFixed": "4K C"
+            },
+            "D 01": {
+              "image": "/i/cards-default/AD.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "01",
+              "rankA": "5A",
+              "rankFixed": "01 D"
+            },
+            "D 02": {
+              "image": "/i/cards-default/2D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "02",
+              "rankA": "02",
+              "rankFixed": "02 D"
+            },
+            "D 03": {
+              "image": "/i/cards-default/3D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "03",
+              "rankA": "03",
+              "rankFixed": "03 D"
+            },
+            "D 04": {
+              "image": "/i/cards-default/4D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "04",
+              "rankA": "04",
+              "rankFixed": "04 D"
+            },
+            "D 05": {
+              "image": "/i/cards-default/5D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "05",
+              "rankA": "05",
+              "rankFixed": "05 D"
+            },
+            "D 06": {
+              "image": "/i/cards-default/6D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "06",
+              "rankA": "06",
+              "rankFixed": "06 D"
+            },
+            "D 07": {
+              "image": "/i/cards-default/7D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "07",
+              "rankA": "07",
+              "rankFixed": "07 D"
+            },
+            "D 08": {
+              "image": "/i/cards-default/8D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "08",
+              "rankA": "08",
+              "rankFixed": "08 D"
+            },
+            "D 09": {
+              "image": "/i/cards-default/9D.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "09",
+              "rankA": "09",
+              "rankFixed": "09 D"
+            },
+            "D 10": {
+              "image": "/i/cards-default/TD.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "10",
+              "rankA": "10",
+              "rankFixed": "10 D"
+            },
+            "D 2J": {
+              "image": "/i/cards-default/JD.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "2J",
+              "rankA": "2J",
+              "rankFixed": "2J D"
+            },
+            "D 3Q": {
+              "image": "/i/cards-default/QD.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "3Q",
+              "rankA": "3Q",
+              "rankFixed": "3Q D"
+            },
+            "D 4K": {
+              "image": "/i/cards-default/KD.svg",
+              "suit": "D",
+              "suitColor": "♦",
+              "suitAlt": "4♦",
+              "rank": "4K",
+              "rankA": "4K",
+              "rankFixed": "4K D"
+            },
+            "H 01": {
+              "image": "/i/cards-default/AH.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "01",
+              "rankA": "5A",
+              "rankFixed": "01 H"
+            },
+            "H 02": {
+              "image": "/i/cards-default/2H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "02",
+              "rankA": "02",
+              "rankFixed": "02 H"
+            },
+            "H 03": {
+              "image": "/i/cards-default/3H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "03",
+              "rankA": "03",
+              "rankFixed": "03 H"
+            },
+            "H 04": {
+              "image": "/i/cards-default/4H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "04",
+              "rankA": "04",
+              "rankFixed": "04 H"
+            },
+            "H 05": {
+              "image": "/i/cards-default/5H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "05",
+              "rankA": "05",
+              "rankFixed": "05 H"
+            },
+            "H 06": {
+              "image": "/i/cards-default/6H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "06",
+              "rankA": "06",
+              "rankFixed": "06 H"
+            },
+            "H 07": {
+              "image": "/i/cards-default/7H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "07",
+              "rankA": "07",
+              "rankFixed": "07 H"
+            },
+            "H 08": {
+              "image": "/i/cards-default/8H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "08",
+              "rankA": "08",
+              "rankFixed": "08 H"
+            },
+            "H 09": {
+              "image": "/i/cards-default/9H.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "09",
+              "rankA": "09",
+              "rankFixed": "09 H"
+            },
+            "H 10": {
+              "image": "/i/cards-default/TH.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "10",
+              "rankA": "10",
+              "rankFixed": "10 H"
+            },
+            "H 2J": {
+              "image": "/i/cards-default/JH.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "2J",
+              "rankA": "2J",
+              "rankFixed": "2J H"
+            },
+            "H 3Q": {
+              "image": "/i/cards-default/QH.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "3Q",
+              "rankA": "3Q",
+              "rankFixed": "3Q H"
+            },
+            "H 4K": {
+              "image": "/i/cards-default/KH.svg",
+              "suit": "H",
+              "suitColor": "♥",
+              "suitAlt": "2♥",
+              "rank": "4K",
+              "rankA": "4K",
+              "rankFixed": "4K H"
+            },
+            "S 01": {
+              "image": "/i/cards-default/AS.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "01",
+              "rankA": "5A",
+              "rankFixed": "01 S"
+            },
+            "S 02": {
+              "image": "/i/cards-default/2S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "02",
+              "rankA": "02",
+              "rankFixed": "02 S"
+            },
+            "S 03": {
+              "image": "/i/cards-default/3S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "03",
+              "rankA": "03",
+              "rankFixed": "03 S"
+            },
+            "S 04": {
+              "image": "/i/cards-default/4S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "04",
+              "rankA": "04",
+              "rankFixed": "04 S"
+            },
+            "S 05": {
+              "image": "/i/cards-default/5S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "05",
+              "rankA": "05",
+              "rankFixed": "05 S"
+            },
+            "S 06": {
+              "image": "/i/cards-default/6S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "06",
+              "rankA": "06",
+              "rankFixed": "06 S"
+            },
+            "S 07": {
+              "image": "/i/cards-default/7S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "07",
+              "rankA": "07",
+              "rankFixed": "07 S"
+            },
+            "S 08": {
+              "image": "/i/cards-default/8S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "08",
+              "rankA": "08",
+              "rankFixed": "08 S"
+            },
+            "S 09": {
+              "image": "/i/cards-default/9S.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "09",
+              "rankA": "09",
+              "rankFixed": "09 S"
+            },
+            "S 10": {
+              "image": "/i/cards-default/TS.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "10",
+              "rankA": "10",
+              "rankFixed": "10 S"
+            },
+            "S 2J": {
+              "image": "/i/cards-default/JS.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "2J",
+              "rankA": "2J",
+              "rankFixed": "2J S"
+            },
+            "S 3Q": {
+              "image": "/i/cards-default/QS.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "3Q",
+              "rankA": "3Q",
+              "rankFixed": "3Q S"
+            },
+            "S 4K": {
+              "image": "/i/cards-default/KS.svg",
+              "suit": "S",
+              "suitColor": "♠",
+              "suitAlt": "3♠",
+              "rank": "4K",
+              "rankA": "4K",
+              "rankFixed": "4K S"
+            }
+          },
+          "faceTemplates": [
+            {
+              "border": false,
+              "radius": false,
+              "objects": [
+                {
+                  "type": "image",
+                  "x": 0,
+                  "y": 0,
+                  "width": 103,
+                  "height": 160,
+                  "color": "transparent",
+                  "value": "/i/cards-default/2B.svg"
+                }
+              ]
+            },
+            {
+              "border": false,
+              "radius": false,
+              "objects": [
+                {
+                  "type": "image",
+                  "x": 0,
+                  "y": 0,
+                  "width": 103,
+                  "height": 160,
+                  "color": "transparent",
+                  "dynamicProperties": {
+                    "value": "image"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/cards.svg"
+    },
+    {
+      "name": "Holder & Blank Deck",
+      "id": "holderBlankDeckOfCards",
+      "widgets": [
+        {
+          "type": "holder",
+          "id": "holderBlankDeckOfCards",
+          "x": 115,
+          "y": 340,
+          "dropTarget": {
+            "type": "card"
+          }
+        },
+        {
+          "id": "recall_holderBlankDeckOfCards",
+          "parent": "holderBlankDeckOfCards",
+          "fixedParent": true,
+          "y": 171.36,
+          "width": 111,
+          "height": 40,
+          "type": "button",
+          "text": "Recall & Shuffle",
+          "movableInEdit": false,
+          "clickRoutine": [
+            {
+              "func": "RECALL",
+              "holder": "${PROPERTY parent}"
+            },
+            {
+              "func": "FLIP",
+              "holder": "${PROPERTY parent}",
+              "face": 0
+            },
+            {
+              "func": "SHUFFLE",
+              "holder": "${PROPERTY parent}"
+            }
+          ]
+        },
+        {
+          "type": "deck",
+          "id": "deck",
+          "parent": "holderBlankDeckOfCards",
+          "x": 12,
+          "y": 41,
+          "cardTypes": {},
+          "faceTemplates": [
+            {
+              "border": false,
+              "radius": false,
+              "objects": [
+                {
+                  "type": "image",
+                  "x": 0,
+                  "y": 0,
+                  "width": 103,
+                  "height": 160,
+                  "color": "transparent",
+                  "value": "/i/cards-default/2B.svg"
+                }
+              ]
+            },
+            {
+              "border": false,
+              "radius": false,
+              "objects": [
+                {
+                  "type": "image",
+                  "x": 0,
+                  "y": 0,
+                  "width": 103,
+                  "height": 160,
+                  "color": "transparent",
+                  "dynamicProperties": {
+                    "value": "image"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/deck.svg"
+    },
+    {
+      "name": "Holder",
+      "id": "holder",
+      "widgets": [
+        {
+          "type": "holder",
+          "id": "holder",
+          "x": 115,
+          "y": 150,
+          "z": 1
+        }
+      ],
+      "preview": "i/icons/holder.svg"
+    },
+    {
+      "name": "Hand",
+      "id": "hand",
+      "widgets": [
+        {
+          "type": "holder",
+          "onEnter": {
+            "activeFace": 1
+          },
+          "onLeave": {
+            "activeFace": 0
+          },
+          "dropOffsetX": 10,
+          "dropOffsetY": 14,
+          "stackOffsetX": 40,
+          "childrenPerOwner": true,
+          "dropShadow": true,
+          "hidePlayerCursors": true,
+          "x": 50,
+          "y": 820,
+          "width": 1500,
+          "height": 180,
+          "id": "hand"
+        }
+      ],
+      "unique": true,
+      "preview": "i/icons/holder_hand.svg"
+    },
+    {
+      "name": "Canvas",
+      "id": "canvas",
+      "widgets": [
+        {
+          "type": "canvas",
+          "id": "canvas",
+          "x": 400,
+          "y": 100,
+          "width": 800,
+          "height": 800,
+          "c00": "*01001001001/1%/1.01.010",
+          "c01": ",01&,1/0101*1/1+1.1'0",
+          "c10": ",,1()0",
+          "c11": "0*1()0",
+          "c13": "+-01$/10",
+          "c14": "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
+          "c15": ".1$0",
+          "c20": ",,1()0",
+          "c21": "0*1()0",
+          "c23": ".-01()0",
+          "c24": "./1/1+1-101/11010110101/101-1/101-1/101,10",
+          "c25": "1()0",
+          "c30": "+01(*1/1/1.1/10101101(/11.1/101-1/1/10",
+          "c31": "*011/1-1/101-1-11.1-101101-1-1/101,11/10",
+          "c33": ".-01()0",
+          "c34": "/-1/101(/1/1-101/101'01/101/1/11.1(0",
+          "c35": "1()0",
+          "c40": "+/1.1(/10101-101.11/11+10101/1(.10",
+          "c41": "/-1/1(/1101-101/101'01/101/101/1/1(010",
+          "c43": ".-01()0",
+          "c44": "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
+          "c45": "1()0",
+          "c50": ".1/01+1/11+101+1/1/01+1.10",
+          "c51": "/-1.1(/10101/101/101/10110101/101/1/1(/1+1*1(0",
+          "c53": ".-01()0",
+          "c54": ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
+          "c55": "1()0",
+          "c61": "0/11*1/1/1.1+1/1-1(/1-1-1/1011-110",
+          "c63": ".-01()0",
+          "c64": "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
+          "c65": "1()0",
+          "c71": "*01/01,11/1.11/101/1-101/1-101/1/11.1/110",
+          "c73": ".-01()0",
+          "c74": "/-1/1(,101/1-101/1-101(/101/1/01/010",
+          "c75": "110101&0",
+          "c81": "--101,101101-101*101/010",
+          "c83": ".-01%.010",
+          "c84": "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
+          "c85": "1%0"
+        },
+        {
+          "type": "button",
+          "id": "canvas-Reset",
+          "parent": "canvas",
+          "fixedParent": true,
+          "x": -50,
+          "y": 0,
+          "width": 50,
+          "height": 50,
+          "movable": false,
+          "movableInEdit": false,
+          "clickRoutine": [
+            {
+              "func": "CANVAS",
+              "canvas": "${PROPERTY parent}",
+              "mode": "reset"
+            }
+          ],
+          "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+          "borderRadius": "50% 0% 0% 0%",
+          "text": "Reset"
+        },
+        {
+          "type": "button",
+          "id": "canvas-Color",
+          "parent": "canvas",
+          "fixedParent": true,
+          "x": -50,
+          "y": 50,
+          "width": 50,
+          "height": 50,
+          "movable": false,
+          "movableInEdit": false,
+          "clickRoutine": [
+            "var parent = ${PROPERTY parent}",
+            {
+              "func": "CANVAS",
+              "canvas": "${parent}",
+              "mode": "inc",
+              "value": 1
+            },
+            "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "color",
+              "value": "${color}"
+            }
+          ],
+          "color": "#1F5CA6",
+          "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+          "borderRadius": "0% 0% 0% 50%"
+        }
+      ],
+      "preview": "i/icons/color.svg"
+    },
+    {
+      "name": "Seat with Counter",
+      "id": "seatWithCounter",
+      "widgets": [
+        {
+          "type": "seat",
+          "index": 1,
+          "x": 840,
+          "y": 90,
+          "id": "seat1",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "SELECT",
+              "property": "type",
+              "value": "seat",
+              "collection": "numSeats"
+            },
+            {
+              "func": "COUNT",
+              "collection": "numSeats",
+              "variable": "numSeats"
+            },
+            {
+              "func": "SET",
+              "property": "index",
+              "value": "${numSeats}",
+              "collection": "thisButton"
+            }
+          ]
+        },
+        {
+          "id": "counterSeat1",
+          "parent": "seat1",
+          "fixedParent": true,
+          "x": -20,
+          "y": -20,
+          "width": 30,
+          "height": 30,
+          "borderRadius": 100,
+          "movable": false,
+          "movableInEdit": false,
+          "clickable": false,
+          "css": {
+            "font-size": "18px",
+            "display": "flex",
+            "align-items": "center",
+            "justify-content": "center",
+            "color": "#6d6d6d",
+            "background": "#e4e4e4",
+            "border": "2px solid #999999"
+          },
+          "text": "0",
+          "ownerGlobalUpdateRoutine": [
+            "var parent = ${PROPERTY parent}",
+            "var COUNT = 0",
+            {
+              "func": "SELECT",
+              "property": "_ancestor",
+              "value": "${PROPERTY hand OF $parent}"
+            },
+            {
+              "func": "COUNT",
+              "owner": "${PROPERTY player OF $parent}"
+            },
+            {
+              "func": "SET",
+              "collection": "thisButton",
+              "property": "text",
+              "value": "${COUNT}"
+            }
+          ],
+          "playerGlobalUpdateRoutine": [
+            {
+              "func": "CALL",
+              "routine": "ownerGlobalUpdateRoutine",
+              "widget": "${PROPERTY id}"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/chair.svg"
+    },
+    {
+      "name": "Seat",
+      "id": "seat",
+      "widgets": [
+        {
+          "type": "seat",
+          "index": 1,
+          "x": 840,
+          "y": 90,
+          "id": "seat1",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "SELECT",
+              "property": "type",
+              "value": "seat",
+              "collection": "numSeats"
+            },
+            {
+              "func": "COUNT",
+              "collection": "numSeats",
+              "variable": "numSeats"
+            },
+            {
+              "func": "SET",
+              "property": "index",
+              "value": "${numSeats}",
+              "collection": "thisButton"
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/seat.svg"
+    },
+    {
+      "name": "Scoreboard",
+      "id": "scoreboard",
+      "widgets": [
+        {
+          "type": "scoreboard",
+          "id": "scoreboard",
+          "x": 1000,
+          "y": 660
+        }
+      ],
+      "preview": "i/icons/scoreboard.svg"
+    },
+    {
+      "name": "Spinner",
+      "id": "spinner",
+      "widgets": [
+        {
+          "type": "spinner",
+          "id": "spinner",
+          "x": 450,
+          "y": 835,
+          "z": 1,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "INPUT",
+              "header": "Choose number of spinner values",
+              "fields": [
+                {
+                  "type": "number",
+                  "min": 2,
+                  "value": "6",
+                  "variable": "numvalues"
+                }
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "options",
+              "value": null,
+              "collection": "thisButton"
+            },
+            "var myArray = []",
+            {
+              "func": "FOREACH",
+              "range": [
+                1,
+                "${numvalues}"
+              ],
+              "loopRoutine": [
+                "var myArray = ${myArray} concatArray ${value}"
+              ]
+            },
+            {
+              "func": "SET",
+              "property": "options",
+              "value": "${myArray}",
+              "collection": "thisButton"
+            }
+          ],
+          "options": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "value": "6"
+        }
+      ],
+      "preview": "i/icons/spinner.svg"
+    },
+    {
+      "name": "Button",
+      "id": "button",
+      "widgets": [
+        {
+          "type": "button",
+          "id": "button",
+          "x": 750,
+          "y": 860,
+          "z": 2,
+          "text": "DEAL",
+          "clickRoutine": []
+        }
+      ],
+      "preview": "i/icons/check_round.svg"
+    },
+    {
+      "name": "Counter",
+      "id": "counter",
+      "widgets": [
+        {
+          "type": "label",
+          "id": "counter",
+          "x": 1058,
+          "y": 890,
+          "width": 65,
+          "height": 40,
+          "css": "font-size: 30px;",
+          "editable": true,
+          "text": 0
+        },
+        {
+          "id": "decCounter",
+          "parent": "counter",
+          "fixedParent": true,
+          "x": -38,
+          "y": 1,
+          "width": 36,
+          "height": 36,
+          "type": "button",
+          "movableInEdit": false,
+          "classes": "symbols",
+          "css": "font-size: 28px",
+          "text": "remove",
+          "clickRoutine": [
+            {
+              "func": "LABEL",
+              "label": "${PROPERTY parent}",
+              "mode": "dec",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "incCounter",
+          "parent": "counter",
+          "fixedParent": true,
+          "x": 68,
+          "y": 1,
+          "width": 36,
+          "height": 36,
+          "type": "button",
+          "movableInEdit": false,
+          "classes": "symbols",
+          "css": "font-size: 28px",
+          "text": "add",
+          "clickRoutine": [
+            {
+              "func": "LABEL",
+              "label": "${PROPERTY parent}",
+              "mode": "inc",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/counter.svg"
+    },
+    {
+      "name": "Timer",
+      "id": "timer",
+      "widgets": [
+        {
+          "type": "timer",
+          "id": "timer",
+          "x": 1005,
+          "y": 825
+        },
+        {
+          "parent": "timer",
+          "fixedParent": true,
+          "id": "pauseTimer",
+          "x": 120,
+          "y": -3,
+          "width": 36,
+          "height": 36,
+          "type": "button",
+          "movableInEdit": false,
+          "clickRoutine": [
+            {
+              "func": "TIMER",
+              "timer": "${PROPERTY parent}"
+            }
+          ],
+          "classes": "symbols",
+          "css": "font-size: 28px",
+          "text": "play_pause"
+        },
+        {
+          "parent": "timer",
+          "fixedParent": true,
+          "id": "resetTimer",
+          "x": 80,
+          "y": -3,
+          "width": 36,
+          "height": 36,
+          "type": "button",
+          "movableInEdit": false,
+          "clickRoutine": [
+            {
+              "func": "TIMER",
+              "timer": "${PROPERTY parent}",
+              "mode": "reset"
+            }
+          ],
+          "classes": "symbols",
+          "css": "font-size: 28px",
+          "text": "reload"
+        }
+      ],
+      "preview": "i/icons/timer.svg"
+    },
+    {
+      "name": "Label",
+      "id": "label",
+      "widgets": [
+        {
+          "type": "label",
+          "id": "label",
+          "x": 1385,
+          "y": 100,
+          "z": 2,
+          "text": "Label"
+        }
+      ],
+      "preview": "symbol:text_fields"
+    },
+    {
+      "name": "Heading",
+      "id": "heading",
+      "widgets": [
+        {
+          "type": "label",
+          "id": "heading",
+          "x": 1335,
+          "y": 150,
+          "width": 200,
+          "height": 42,
+          "z": 3,
+          "css": "font-size: 30px",
+          "text": "Heading"
+        }
+      ],
+      "preview": "symbol:format_h1"
+    },
+    {
+      "name": "Horizontal Rule",
+      "id": "horizontalRule",
+      "widgets": [
+        {
+          "id": "horizontalRule",
+          "x": 1300,
+          "y": 325,
+          "width": 200,
+          "height": 0,
+          "borderRadius": "3px",
+          "z": 26,
+          "css": {
+            "border": "3px solid #666"
+          }
+        }
+      ],
+      "preview": "i/icons/width.svg"
+    },
+    {
+      "name": "Vertical Rule",
+      "id": "verticalRule",
+      "widgets": [
+        {
+          "id": "verticalRule",
+          "x": 1535,
+          "y": 190,
+          "width": 0,
+          "height": 200,
+          "borderRadius": "3px",
+          "z": 27,
+          "css": {
+            "border": "3px solid #666"
+          }
+        }
+      ],
+      "preview": "i/icons/height.svg"
+    },
+    {
+      "name": "Basic Widget",
+      "id": "basicWidget",
+      "widgets": [
+        {
+          "text": "Basic widget",
+          "id": "basicWidget"
+        }
+      ],
+      "preview": "i/icons/widget.svg"
+    },
+    {
+      "name": "Upload Token",
+      "id": "uploadToken",
+      "widgets": [
+        {
+          "id": "customToken",
+          "editorAddToRoomRoutine": [
+            {
+              "func": "UPLOAD",
+              "variable": "newfilename"
+            },
+            {
+              "func": "IF",
+              "condition": "${newfilename}",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "property": "image",
+                  "value": "${newfilename}",
+                  "collection": "thisButton"
+                }
+              ],
+              "elseRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "thisButton"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/upload.svg"
+    },
+    {
+      "name": "Upload Board",
+      "id": "uploadBoard",
+      "widgets": [
+        {
+          "id": "board",
+          "width": 1600,
+          "height": 1000,
+          "layer": -4,
+          "movable": false,
+          "editorAddToRoomRoutine": [
+            {
+              "func": "UPLOAD",
+              "variable": "newfilename"
+            },
+            {
+              "func": "IF",
+              "condition": "${newfilename}",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "property": "image",
+                  "value": "${newfilename}",
+                  "collection": "thisButton"
+                }
+              ],
+              "elseRoutine": [
+                {
+                  "func": "DELETE",
+                  "collection": "thisButton"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "preview": "i/icons/upload.svg"
+    }
+  ],
+  "groups": [
+    {
+      "name": "Cards",
+      "widgets": [
+        "holder",
+        "holderStandardDeckOfCards",
+        "holderBlankDeckOfCards",
+        "hand"
+      ],
+      "collapsed": true
+    },
+    {
+      "name": "Game Pieces",
+      "widgets": [
+        "pawn",
+        "pin",
+        "marble",
+        "cube",
+        "village",
+        "house",
+        "checker",
+        "checker3D",
+        "meeple",
+        "meeple3D",
+        "piggy",
+        "piggy3D",
+        "beam",
+        "hexFlat",
+        "hexPoint",
+        "hexFlatImage",
+        "hexPointImage",
+        "chip",
+        "chip3D",
+        "dealerChip",
+        "dealerChip3D",
+        "stacksOfChips",
+        "stacksOfChips3D",
+        "die",
+        "die3D",
+        "dieImage"
+      ],
+      "collapsed": true
+    },
+    {
+      "name": "Decorative",
+      "widgets": [
+        "heading",
+        "label",
+        "horizontalRule",
+        "verticalRule"
+      ],
+      "collapsed": true
+    },
+    {
+      "name": "Interactive",
+      "widgets": [
+        "canvas",
+        "seat",
+        "seatWithCounter",
+        "scoreboard",
+        "spinner",
+        "button",
+        "counter",
+        "timer"
+      ],
+      "collapsed": true
+    },
+    {
+      "name": "Custom",
+      "widgets": [
+        "uploadBoard",
+        "uploadToken",
+        "basicWidget"
+      ],
+      "collapsed": true
+    }
+  ]
+}

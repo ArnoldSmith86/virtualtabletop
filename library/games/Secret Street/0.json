@@ -1,0 +1,2827 @@
+{
+  "_meta": {
+    "version": 17,
+    "info": {
+      "name": "Secret Street",
+      "image": "/assets/-473308267_5236",
+      "rules": "https://boardgamegeek.com/filepage/285140/rulebook-english",
+      "bgg": "https://boardgamegeek.com/boardgame/422732/agent-avenue",
+      "year": "2024",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "Library image taken from \"The Black Mask\" No. 1, Pulp Magazine published April 1922 and which is in the Public Domain available at&nbsp;https://archive.org/details/bm_1920_08/page/n26/mode/1up?view=theater.<div><br></div><div>Game layout, scripting, and card design initially done by QwertyMartin and available in the Public Domain. Revisions and formatting for VTT by dexdouglas. Released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1747841057530,
+      "showName": true,
+      "skill": "low",
+      "description": "In Secret Streets, two spies are locked in pursuit of one another. Can you recruit the right agents to your team fast enough to catch your nemesis?",
+      "similarImage": "",
+      "similarName": "Agent Avenue",
+      "similarDesigner": "Christian Kudahl, Laura Kudahl",
+      "similarAwards": "2025 Spiel des Jahres Recommended\n2024 Golden Geek Best 2-Player Board Game Nominee",
+      "ruleText": "",
+      "helpText": "<div>This game can be played with 2, 3, or 4 players. If playing with more than 2 players, you will play in 2 teams (red vs blue). If you are the playing as the red player/team, you will sit on the left side of the table. If you are playing as the blue player/team, you will sit on the right side.</div><div><br></div><div>Select if you want to play the Basic or Advanced game. The Advanced game introduces special action cards that you will draw if you land on the black arrows in the corner of the game board. If you are playing the Basic game, treat the arrow spaces as normal spaces.</div><div><br></div><div>When all players are seated and a game is selected, each player will be dealt 4 cards from the main draw deck (the one with a spy wearing a hat). The game will randomly select the starting player (their name will be highlighted).&nbsp;</div><div><br></div><div>On your turn, you will play one card to the face down holder and one to the face up holder. You cannot play two cards with the same name to both spaces. After playing the cards, you will hit the \"Refill Hand\" button to draw back up to 4 cards.</div><div>&nbsp;\n<b>Prior to playing any cards</b>, you can choose to discard a card to your discard pile face down and draw a new card. You can do this multiple times in the same turn but you can only do this a max of 4 times in a game (max of 2 times per player if playing with a teammate).&nbsp;</div><div><br></div><div>Your opponent will \"recruit\"(select) one card and place it in one of their 8 holders. There is a holder for each card type and you should only keep one card type in each holder. The active player will then recruit the remaining card. Then both players will simultaneously move their pawns in a clockwise direction equal to the number of spaces their recruited card indicates. If it is your first card of that type, look at the first number, if it's the second, look at the second number, and if it is your third card, or more, look at the third number. Negative numbers mean you move your pawn backwards that many spaces.</div><div><br></div><div><b>ADVANCED RULE: </b>If you land on a space with a black arrow, immediately draw and resolve a card from the face up \"back alley\" row of 3 cards. Refill the card display immediately. If you land on another black arrow, draw and resolve another card. If both players land on a black arrow at the same time, the active player resolves their actions first, then the opponent.&nbsp;</div><div><br></div><div>After all the cards are resolved, check for a win condition:</div><div><ul><li>If a player reaches the same space, or overtakes their opponent, they win.&nbsp;</li><li>If a player collects 3 codebreaker cards, they win</li><li>If a player&nbsp;collects 3 daredevil cards, their opponent wins</li><li>If the deck runs out of cards and your opponent has <b>less than 2 cards</b> in hand, the player who is closest to the other player wins.</li></ul></div><div><br></div><div>In the event of a tie (meaning both players win, or lose, simultaneously, or both players are equidistant from each other at game end), the ACTIVE player breaks the tie and wins.</div><div><br></div><div>If there is no winner, press the End Turn button to move the highlighting to the next player in turn order.&nbsp;</div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
+    }
+  },
+  "f78b8897-054b-4690-8381-7656d9959efe": {
+    "id": "f78b8897-054b-4690-8381-7656d9959efe",
+    "x": 496.8,
+    "y": 173.9,
+    "z": 5290,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "ef33f31f-d7f5-4290-8cb5-b41006d8190b": {
+    "id": "ef33f31f-d7f5-4290-8cb5-b41006d8190b",
+    "x": 869.9,
+    "y": 546,
+    "z": 5310,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "7af2c010-85e8-4e12-aa02-ee93e8485af6": {
+    "id": "7af2c010-85e8-4e12-aa02-ee93e8485af6",
+    "x": 994.2,
+    "y": 298.1,
+    "z": 5307,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "830d325d-5182-47ad-8a84-1ee55ba6484e": {
+    "id": "830d325d-5182-47ad-8a84-1ee55ba6484e",
+    "x": 621.2,
+    "y": 173.9,
+    "z": 5294,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "d07a0b61-752e-4efc-9d52-e718a3b6596c": {
+    "id": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "x": 7.9,
+    "y": 269.5,
+    "z": 5207,
+    "type": "deck",
+    "cardTypes": {
+      "type-705ffa41-5ad9-4d93-87f4-8130cd395219": {
+        "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "label": "up",
+        "sortingOrder": 1,
+        "newColor": "#9b9b9b",
+        "angle": 180
+      },
+      "type-60a776f8-74f8-4fa7-93c7-fc512a21cea9": {
+        "label": "down",
+        "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "sortingOrder": 2,
+        "newColor": "#9b9b9b",
+        "angle": 0
+      },
+      "type-02516911-ff59-4731-829d-33302264f19d": {
+        "label": "left",
+        "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "sortingOrder": 3,
+        "newColor": "#9b9b9b",
+        "angle": 90
+      },
+      "type-2302bb02-7c28-414c-8213-b6583e13bee6": {
+        "label": "right",
+        "image": "/i/game-icons.net/delapouite/plain-arrow.svg",
+        "sortingOrder": 4,
+        "newColor": "#9b9b9b",
+        "angle": 270
+      },
+      "type-3bee0ca1-5e78-4090-a81a-3ea689b033ab": {
+        "label": "red home",
+        "image": "/i/game-icons.net/delapouite/house.svg",
+        "sortingOrder": 5,
+        "newColor": "#e17a83"
+      },
+      "type-4b645ac0-407a-48db-b3cb-6aa21a2dfc89": {
+        "label": "blue home",
+        "image": "/i/game-icons.net/delapouite/house.svg",
+        "sortingOrder": 6,
+        "newColor": "#a9c7f2"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 100,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 100,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 100,
+            "height": 100,
+            "svgReplaces": {
+              "#000": "newColor"
+            },
+            "dynamicProperties": {
+              "value": "image",
+              "rotation": "angle"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 100
+    }
+  },
+  "7b7ddb53-6812-45f0-b26c-013136dee8fc": {
+    "id": "7b7ddb53-6812-45f0-b26c-013136dee8fc",
+    "x": 4,
+    "y": 4,
+    "z": 6562,
+    "type": "card",
+    "deck": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "cardType": "type-2302bb02-7c28-414c-8213-b6583e13bee6",
+    "activeFace": 1,
+    "hoverParent": "f78b8897-054b-4690-8381-7656d9959efe",
+    "parent": "f78b8897-054b-4690-8381-7656d9959efe",
+    "movable": false
+  },
+  "43231071-4857-483b-ae83-90257e708709": {
+    "id": "43231071-4857-483b-ae83-90257e708709",
+    "x": 496.8,
+    "y": 420.4,
+    "z": 5313,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "1365da5f-597c-4aae-aa26-782ba05cb2c2_label": {
+    "id": "1365da5f-597c-4aae-aa26-782ba05cb2c2_label",
+    "parent": "seat3Discard",
+    "x": -11.200000000000001,
+    "y": -40,
+    "width": 134.4,
+    "height": 40,
+    "type": "label",
+    "text": "Discard",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "linkedToSeat": "seat3",
+    "hideWhenUnused": true
+  },
+  "05c30333-1e62-47f8-a0a9-297b1a8a4cc2": {
+    "id": "05c30333-1e62-47f8-a0a9-297b1a8a4cc2",
+    "x": 869.9,
+    "y": 173.9,
+    "z": 5292,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "508ddd30-fb32-454b-8396-40f08fbb14b3": {
+    "id": "508ddd30-fb32-454b-8396-40f08fbb14b3",
+    "x": 684.5,
+    "y": 705.2,
+    "z": 5300,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "508ddd30-fb32-454b-8396-40f08fbb14b3_label": {
+    "id": "508ddd30-fb32-454b-8396-40f08fbb14b3_label",
+    "parent": "508ddd30-fb32-454b-8396-40f08fbb14b3",
+    "x": -11.200000000000001,
+    "y": -40,
+    "width": 134.4,
+    "height": 40,
+    "type": "label",
+    "text": "Face-up",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "37df98de-d70d-4be4-9340-ee41fd5f2b43": {
+    "id": "37df98de-d70d-4be4-9340-ee41fd5f2b43",
+    "x": 807.8,
+    "y": 705.2,
+    "z": 5299,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true
+  },
+  "37df98de-d70d-4be4-9340-ee41fd5f2b43_label": {
+    "id": "37df98de-d70d-4be4-9340-ee41fd5f2b43_label",
+    "parent": "37df98de-d70d-4be4-9340-ee41fd5f2b43",
+    "x": -11.200000000000001,
+    "y": -40,
+    "width": 134.4,
+    "height": 40,
+    "type": "label",
+    "text": "Face-down",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false
+  },
+  "cc4cebff-544b-485b-9248-e5ac80b50c17": {
+    "id": "cc4cebff-544b-485b-9248-e5ac80b50c17",
+    "x": 496.8,
+    "y": 546,
+    "z": 5312,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "98a900ca-1ab2-4d66-b342-02870a3af2aa": {
+    "id": "98a900ca-1ab2-4d66-b342-02870a3af2aa",
+    "z": 5201,
+    "type": "card",
+    "deck": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "cardType": "type-705ffa41-5ad9-4d93-87f4-8130cd395219",
+    "parent": "cc4cebff-544b-485b-9248-e5ac80b50c17",
+    "activeFace": 1,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "61ef3f37-e4bc-480b-b4bb-35d28970c34d": {
+    "id": "61ef3f37-e4bc-480b-b4bb-35d28970c34d",
+    "x": 496.8,
+    "y": 297.1,
+    "z": 5314,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "3987091e-512f-4412-9a6d-13d6e3f63f99": {
+    "id": "3987091e-512f-4412-9a6d-13d6e3f63f99",
+    "x": 621.2,
+    "y": 546,
+    "z": 5311,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "db654eca-4886-4ee3-905b-1b15d6f44aee": {
+    "id": "db654eca-4886-4ee3-905b-1b15d6f44aee",
+    "x": 10.4,
+    "y": 395.7,
+    "z": 4789,
+    "type": "deck",
+    "cardTypes": {
+      "black": {
+        "label": "Black",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#666565",
+        "sortingOrder": 1
+      },
+      "white": {
+        "label": "White",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#dae0df",
+        "sortingOrder": 2
+      },
+      "red": {
+        "label": "Red",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#ed1b43",
+        "sortingOrder": 3
+      },
+      "orange": {
+        "label": "Orange",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#ff7b23",
+        "sortingOrder": 4
+      },
+      "peach": {
+        "label": "Peach",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#f2948c",
+        "sortingOrder": 5
+      },
+      "yellow": {
+        "label": "Yellow",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#ffce00",
+        "sortingOrder": 6
+      },
+      "green": {
+        "label": "Green",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#69d83a",
+        "sortingOrder": 7
+      },
+      "teal": {
+        "label": "Teal",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#2fd1cd",
+        "sortingOrder": 8
+      },
+      "blue": {
+        "label": "Blue",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#5894f4",
+        "sortingOrder": 9
+      },
+      "purple": {
+        "label": "Purple",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#9458f4",
+        "sortingOrder": 10
+      },
+      "pink": {
+        "label": "Pink",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#ff69b3",
+        "sortingOrder": 11
+      },
+      "brown": {
+        "label": "Brown",
+        "image": "/i/game-pieces/3D/Pawn-3D.svg",
+        "imageColor": "#a8570e",
+        "sortingOrder": 12
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 45,
+            "height": 75,
+            "type": "image",
+            "color": "transparent",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "width": 45,
+            "height": 75,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": false,
+        "radius": false
+      }
+    ],
+    "cardDefaults": {
+      "width": 45,
+      "height": 75
+    }
+  },
+  "36f6c038-8f1a-4da0-b481-f28c148d5860": {
+    "id": "36f6c038-8f1a-4da0-b481-f28c148d5860",
+    "x": 994.2,
+    "y": 421.4,
+    "z": 5306,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "72cdff4f-ae72-45e8-aa88-688acd0de428": {
+    "id": "72cdff4f-ae72-45e8-aa88-688acd0de428",
+    "x": 205,
+    "y": 12,
+    "z": 5302,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "scale": 0.75,
+    "linkedToSeat": "seat1",
+    "hideWhenUnused": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "72cdff4f-ae72-45e8-aa88-688acd0de428_label": {
+    "id": "72cdff4f-ae72-45e8-aa88-688acd0de428_label",
+    "parent": "72cdff4f-ae72-45e8-aa88-688acd0de428",
+    "x": -11.200000000000001,
+    "y": -40,
+    "width": 134.4,
+    "height": 40,
+    "type": "label",
+    "text": "Discard",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "linkedToSeat": "seat1",
+    "hideWhenUnused": true
+  },
+  "a181a7df-a64d-4339-b619-149d66e475e5": {
+    "id": "a181a7df-a64d-4339-b619-149d66e475e5",
+    "x": 994.2,
+    "y": 546,
+    "z": 5308,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "0b4dd270-fd0f-4a1a-b0ac-74bf6cfb6d55": {
+    "id": "0b4dd270-fd0f-4a1a-b0ac-74bf6cfb6d55",
+    "x": 6,
+    "y": 6,
+    "z": 5199,
+    "type": "card",
+    "deck": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "cardType": "type-02516911-ff59-4731-829d-33302264f19d",
+    "parent": "a181a7df-a64d-4339-b619-149d66e475e5",
+    "activeFace": 1,
+    "movable": false
+  },
+  "fb0638dc-b265-4ed5-9655-eaea0410ed1a": {
+    "id": "fb0638dc-b265-4ed5-9655-eaea0410ed1a",
+    "z": 6203,
+    "type": "card",
+    "deck": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "cardType": "type-4b645ac0-407a-48db-b3cb-6aa21a2dfc89",
+    "activeFace": 1,
+    "parent": "blueHome",
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "81e6a742-a6d4-405e-bd36-7049fd68cadc": {
+    "id": "81e6a742-a6d4-405e-bd36-7049fd68cadc",
+    "x": 1293.6,
+    "y": 16,
+    "z": 5304,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "scale": 0.75,
+    "linkedToSeat": "seat2",
+    "hideWhenUnused": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "81e6a742-a6d4-405e-bd36-7049fd68cadc_label": {
+    "id": "81e6a742-a6d4-405e-bd36-7049fd68cadc_label",
+    "parent": "81e6a742-a6d4-405e-bd36-7049fd68cadc",
+    "x": -11.200000000000001,
+    "y": -40,
+    "width": 134.4,
+    "height": 40,
+    "type": "label",
+    "text": "Discard",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "linkedToSeat": "seat2",
+    "hideWhenUnused": true
+  },
+  "3efa8f9e-645b-4a49-9c88-4e6ad98c1958_label": {
+    "id": "3efa8f9e-645b-4a49-9c88-4e6ad98c1958_label",
+    "parent": "seat4Discard",
+    "x": -11.200000000000001,
+    "y": -40,
+    "width": 134.4,
+    "height": 40,
+    "type": "label",
+    "text": "Discard",
+    "twoRowBottomAlign": true,
+    "movableInEdit": false,
+    "linkedToSeat": "seat4",
+    "hideWhenUnused": true
+  },
+  "b6e70fb7-6048-4d16-b681-2c0dbeefd2cc": {
+    "id": "b6e70fb7-6048-4d16-b681-2c0dbeefd2cc",
+    "z": 5196,
+    "type": "card",
+    "deck": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "cardType": "type-3bee0ca1-5e78-4090-a81a-3ea689b033ab",
+    "parent": "redHome",
+    "activeFace": 1,
+    "movable": false,
+    "x": 4,
+    "y": 4
+  },
+  "eee2b2a8-1437-49ed-ab31-ab463614738c": {
+    "id": "eee2b2a8-1437-49ed-ab31-ab463614738c",
+    "x": 994.2,
+    "y": 173.9,
+    "z": 5291,
+    "type": "holder",
+    "width": 112,
+    "height": 112,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "a5f5f32d-b4a8-4d5b-a75a-83539aa7ddc7": {
+    "id": "a5f5f32d-b4a8-4d5b-a75a-83539aa7ddc7",
+    "x": 4,
+    "y": 4,
+    "z": 6210,
+    "type": "card",
+    "deck": "d07a0b61-752e-4efc-9d52-e718a3b6596c",
+    "cardType": "type-60a776f8-74f8-4fa7-93c7-fc512a21cea9",
+    "activeFace": 1,
+    "parent": "eee2b2a8-1437-49ed-ab31-ab463614738c",
+    "movable": false
+  },
+  "hand": {
+    "id": "hand",
+    "x": 497.8,
+    "y": 838.1,
+    "z": 4828,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "inheritChildZ": true,
+    "childrenPerOwner": true,
+    "width": 604.9,
+    "height": 161.9,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "stackOffsetX": 120
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 35,
+    "y": 26,
+    "z": 1,
+    "color": "#ff0000",
+    "colorEmpty": "#ff0000",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ]
+  },
+  "ny7rC": {
+    "id": "ny7rC",
+    "parent": "seat1",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 1416,
+    "y": 30,
+    "color": "blue",
+    "colorEmpty": "blue",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ],
+    "linkedToSeat": "seat2",
+    "turn": true
+  },
+  "ny8rC": {
+    "id": "ny8rC",
+    "parent": "seat2",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "ny9rC": {
+    "id": "ny9rC",
+    "parent": "seat4",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "ny10rC": {
+    "id": "ny10rC",
+    "parent": "seat3",
+    "fixedParent": true,
+    "x": -20,
+    "y": -20,
+    "width": 30,
+    "height": 30,
+    "borderRadius": 100,
+    "movable": false,
+    "movableInEdit": false,
+    "clickable": false,
+    "css": {
+      "font-size": "18px",
+      "display": "flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "color": "#6d6d6d",
+      "background": "#e4e4e4",
+      "border": "2px solid #999999"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "deckHolder": {
+    "type": "holder",
+    "id": "deckHolder",
+    "x": 685,
+    "y": 342,
+    "width": 110,
+    "height": 110,
+    "z": 5309,
+    "inheritChildZ": true,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "drawDeck": {
+    "type": "deck",
+    "id": "drawDeck",
+    "parent": "deckHolder",
+    "x": 13,
+    "y": 13,
+    "z": 4712,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "backColor": "#ffffff"
+    },
+    "cardTypes": {
+      "type-49ac5208-24ea-4fa5-9b06-b126caad73ff": {
+        "label": "",
+        "name": "Enforcer",
+        "move1": "1",
+        "move2": "2",
+        "move3": "3",
+        "sortingOrder": 1
+      },
+      "type-0f91d1e8-6661-4408-b902-f6753c4c8534": {
+        "name": "Sentinel",
+        "move1": "0",
+        "move2": "2",
+        "move3": "6",
+        "sortingOrder": 2
+      },
+      "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216": {
+        "label": "",
+        "name": "Double agent",
+        "move1": "-1",
+        "move2": "6",
+        "move3": "-1",
+        "sortingOrder": 3
+      },
+      "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b": {
+        "name": "Saboteur",
+        "move1": "-1",
+        "move2": "-1",
+        "move3": "-2",
+        "sortingOrder": 4
+      },
+      "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4": {
+        "name": "Codebreaker",
+        "move1": "0",
+        "move2": "0",
+        "move3": "win",
+        "sortingOrder": 5
+      },
+      "type-d58949fc-566a-421c-8221-a648bcf4cd96": {
+        "name": "Daredevil",
+        "move1": "2",
+        "move2": "3",
+        "move3": "lose",
+        "sortingOrder": 6
+      },
+      "type-393ba0fb-8429-430b-94cb-fbebcee67b57": {
+        "name": "Sidekick",
+        "move1": "4",
+        "move2": "",
+        "sortingOrder": 7
+      },
+      "type-2032e41b-6465-4cca-ba56-d45a89f5fd4c": {
+        "name": "Mole",
+        "move1": "-3",
+        "move2": "",
+        "sortingOrder": 8
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 100,
+            "type": "image",
+            "color": "black",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "backColor"
+            },
+            "value": "/i/game-icons.net/delapouite/spy.svg",
+            "width": 100,
+            "height": 100
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 100,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 1.1990407673860912,
+            "fontSize": 16.96551724137931,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "name"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 24.676258992805764,
+            "fontSize": 22.71264367816092,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "move1"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 48.27338129496403,
+            "fontSize": 22.71264367816092,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "move2"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 72.11031175059952,
+            "fontSize": 22.71264367816092,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "move3"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "2d3ad98f-5d4b-419a-b147-53a50fa73ba4": {
+    "id": "2d3ad98f-5d4b-419a-b147-53a50fa73ba4",
+    "z": 18395,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-a667f3d9-bd47-4f6e-b6dc-b965035d854a",
+    "parent": "7iw5"
+  },
+  "67ee67c9-92fd-44e7-8691-1dbf4c6e44eb": {
+    "id": "67ee67c9-92fd-44e7-8691-1dbf4c6e44eb",
+    "z": 18393,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-089f2acd-b9e0-45f9-8241-5f2ca33369cd",
+    "parent": "7iw5"
+  },
+  "252e290a-3634-49c5-bb49-5e54eba3c186": {
+    "id": "252e290a-3634-49c5-bb49-5e54eba3c186",
+    "z": 18397,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-89fbd4c7-a7bf-443d-8296-b9d36802cce2",
+    "parent": "7iw5"
+  },
+  "1555a4f5-9079-45aa-bccb-3a9e1c8c5269": {
+    "id": "1555a4f5-9079-45aa-bccb-3a9e1c8c5269",
+    "z": 18391,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-992b3b4f-0b3b-4a0a-a128-fd701d7f9833",
+    "parent": "7iw5"
+  },
+  "ee212ff4-8afc-442c-a274-0f849e1270ad": {
+    "id": "ee212ff4-8afc-442c-a274-0f849e1270ad",
+    "z": 18389,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-08ee6257-cf35-44a3-aa3a-bedae383b852",
+    "parent": "7iw5"
+  },
+  "4f0f5fb4-1d11-4fea-a6ab-9fa5b82e045c": {
+    "id": "4f0f5fb4-1d11-4fea-a6ab-9fa5b82e045c",
+    "z": 18398,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-6be10bc8-5eb5-4939-96d3-35e0865f5dab",
+    "parent": "7iw5"
+  },
+  "0710a940-6cb1-4fc6-943c-4fd53a839911": {
+    "id": "0710a940-6cb1-4fc6-943c-4fd53a839911",
+    "z": 18388,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-87720df4-3ca0-495c-8d6f-6bfbf1561075",
+    "parent": "7iw5"
+  },
+  "487b25d7-f81d-4310-80e8-8a80fe19b913": {
+    "id": "487b25d7-f81d-4310-80e8-8a80fe19b913",
+    "z": 18385,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-ca624c94-56fb-4be5-bbc1-7a237ffd71ee",
+    "parent": "7iw5"
+  },
+  "5b2c1fe6-ff35-4503-931b-8e6bcdc0849d": {
+    "id": "5b2c1fe6-ff35-4503-931b-8e6bcdc0849d",
+    "z": 18396,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-882914a6-c3df-4b0b-8a7e-10ee2760b56a",
+    "parent": "7iw5"
+  },
+  "14977199-3973-4bb9-b40d-f82ccf92d59b": {
+    "id": "14977199-3973-4bb9-b40d-f82ccf92d59b",
+    "z": 18386,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-a3759520-ea24-4e11-a1e8-abb1d38f9d81",
+    "parent": "7iw5"
+  },
+  "9f448993-4a8c-43ba-a650-0f093df6279d": {
+    "id": "9f448993-4a8c-43ba-a650-0f093df6279d",
+    "z": 18394,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-afe88df3-35ad-4062-93f6-45230c2e74a6",
+    "parent": "7iw5"
+  },
+  "3c4faa16-10b6-4eb7-bbbb-45c970958202": {
+    "id": "3c4faa16-10b6-4eb7-bbbb-45c970958202",
+    "z": 18384,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-0457d3df-7cf6-4f33-886f-1ccf3956f4f0",
+    "parent": "7iw5"
+  },
+  "079fa7eb-fde1-4843-a496-2ac60c62fc1c": {
+    "id": "079fa7eb-fde1-4843-a496-2ac60c62fc1c",
+    "z": 18390,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-572fb4f1-4e06-4f44-965a-9bf45b02ec35",
+    "parent": "7iw5"
+  },
+  "stack1": {
+    "type": "holder",
+    "id": "stack1",
+    "x": 28,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack2": {
+    "type": "holder",
+    "id": "stack2",
+    "x": 116,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack3": {
+    "type": "holder",
+    "id": "stack3",
+    "x": 203,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack4": {
+    "type": "holder",
+    "id": "stack4",
+    "x": 291,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack5": {
+    "type": "holder",
+    "id": "stack5",
+    "x": 29,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack6": {
+    "type": "holder",
+    "id": "stack6",
+    "x": 117,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack7": {
+    "type": "holder",
+    "id": "stack7",
+    "x": 204,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack8": {
+    "type": "holder",
+    "id": "stack8",
+    "x": 292,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "232a6732-19f3-46f9-9327-f7f2278d8e4e": {
+    "id": "232a6732-19f3-46f9-9327-f7f2278d8e4e",
+    "z": 18365,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b",
+    "parent": "v8kj"
+  },
+  "8078ff9b-f7f1-481d-a142-ae4d63ccc436": {
+    "id": "8078ff9b-f7f1-481d-a142-ae4d63ccc436",
+    "z": 18362,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b",
+    "parent": "v8kj"
+  },
+  "cb2dd562-4e6d-411d-8a99-f9e06b95dc33": {
+    "id": "cb2dd562-4e6d-411d-8a99-f9e06b95dc33",
+    "z": 18332,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4",
+    "parent": "v8kj"
+  },
+  "6663f673-03cf-4fe1-81c5-748ea67de3df": {
+    "id": "6663f673-03cf-4fe1-81c5-748ea67de3df",
+    "z": 18349,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b",
+    "parent": "v8kj"
+  },
+  "08bd2538-b38c-4c67-9b7f-8a8c6c0265aa": {
+    "id": "08bd2538-b38c-4c67-9b7f-8a8c6c0265aa",
+    "z": 18331,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-49ac5208-24ea-4fa5-9b06-b126caad73ff",
+    "parent": "v8kj"
+  },
+  "96cceb6d-c862-459f-8d95-32830fe8db76": {
+    "id": "96cceb6d-c862-459f-8d95-32830fe8db76",
+    "z": 18344,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4",
+    "parent": "v8kj"
+  },
+  "d9fccaaf-7019-4764-8947-2c5cbe97b8ed": {
+    "id": "d9fccaaf-7019-4764-8947-2c5cbe97b8ed",
+    "z": 18328,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216",
+    "parent": "v8kj"
+  },
+  "4629a51e-cc29-4df0-af05-02db402649d5": {
+    "id": "4629a51e-cc29-4df0-af05-02db402649d5",
+    "z": 18359,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-0f91d1e8-6661-4408-b902-f6753c4c8534",
+    "parent": "v8kj"
+  },
+  "26a4233e-f6ee-4a1d-8d53-9ec98c426160": {
+    "id": "26a4233e-f6ee-4a1d-8d53-9ec98c426160",
+    "z": 18360,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216",
+    "parent": "v8kj"
+  },
+  "13a87993-b090-4758-8b62-c5fd09efc306": {
+    "id": "13a87993-b090-4758-8b62-c5fd09efc306",
+    "z": 18343,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4",
+    "parent": "v8kj"
+  },
+  "9d878d43-0064-4885-95b0-fde31fa896fa": {
+    "id": "9d878d43-0064-4885-95b0-fde31fa896fa",
+    "z": 18354,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-d58949fc-566a-421c-8221-a648bcf4cd96",
+    "parent": "v8kj"
+  },
+  "128b9bc9-ccb2-4684-853b-4e1ea4597ba2": {
+    "id": "128b9bc9-ccb2-4684-853b-4e1ea4597ba2",
+    "z": 18337,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-49ac5208-24ea-4fa5-9b06-b126caad73ff",
+    "parent": "v8kj"
+  },
+  "490d3b94-9124-4594-8db8-ce152268081a": {
+    "id": "490d3b94-9124-4594-8db8-ce152268081a",
+    "z": 18330,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-d58949fc-566a-421c-8221-a648bcf4cd96",
+    "parent": "v8kj"
+  },
+  "3cc194fa-eef7-4171-924b-0b22fef6b423": {
+    "id": "3cc194fa-eef7-4171-924b-0b22fef6b423",
+    "z": 18342,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-393ba0fb-8429-430b-94cb-fbebcee67b57",
+    "parent": "v8kj"
+  },
+  "85730883-7b40-48e3-a4f3-25ccc80a618b": {
+    "id": "85730883-7b40-48e3-a4f3-25ccc80a618b",
+    "z": 18346,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b",
+    "parent": "v8kj"
+  },
+  "4d7a8409-dcd3-4491-a508-c87a109d9333": {
+    "id": "4d7a8409-dcd3-4491-a508-c87a109d9333",
+    "z": 18329,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4",
+    "parent": "v8kj"
+  },
+  "125d28f8-f417-4ba6-816b-fa6120c2a587": {
+    "id": "125d28f8-f417-4ba6-816b-fa6120c2a587",
+    "z": 18345,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216",
+    "parent": "v8kj"
+  },
+  "22750ae5-9bc4-4be4-85d0-bd935f67f307": {
+    "id": "22750ae5-9bc4-4be4-85d0-bd935f67f307",
+    "z": 18363,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-d58949fc-566a-421c-8221-a648bcf4cd96",
+    "parent": "v8kj"
+  },
+  "e35d780b-1eda-4c65-9976-8864b5c53f8e": {
+    "id": "e35d780b-1eda-4c65-9976-8864b5c53f8e",
+    "z": 18335,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4",
+    "parent": "v8kj"
+  },
+  "f483bfcf-eff2-462b-99a4-4fd86eaa6262": {
+    "id": "f483bfcf-eff2-462b-99a4-4fd86eaa6262",
+    "z": 18333,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b",
+    "parent": "v8kj"
+  },
+  "cfb357aa-0c67-418c-99cc-1a15067da61b": {
+    "id": "cfb357aa-0c67-418c-99cc-1a15067da61b",
+    "z": 18341,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-d58949fc-566a-421c-8221-a648bcf4cd96",
+    "parent": "v8kj"
+  },
+  "4115ab12-d23c-471e-878f-d6e0d306aaf5": {
+    "id": "4115ab12-d23c-471e-878f-d6e0d306aaf5",
+    "z": 18352,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2032e41b-6465-4cca-ba56-d45a89f5fd4c",
+    "parent": "v8kj"
+  },
+  "6c82ca94-4672-491f-a9ac-ce89fbd9bd8e": {
+    "id": "6c82ca94-4672-491f-a9ac-ce89fbd9bd8e",
+    "z": 18353,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-d58949fc-566a-421c-8221-a648bcf4cd96",
+    "parent": "v8kj"
+  },
+  "e504437d-2118-4a51-a7c7-3f20cb18f23f": {
+    "id": "e504437d-2118-4a51-a7c7-3f20cb18f23f",
+    "z": 18334,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-0f91d1e8-6661-4408-b902-f6753c4c8534",
+    "parent": "v8kj"
+  },
+  "8e48eda2-63d0-4462-80a0-953d19402a22": {
+    "id": "8e48eda2-63d0-4462-80a0-953d19402a22",
+    "z": 18340,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216",
+    "parent": "v8kj"
+  },
+  "02072103-fed5-4e5f-9a83-e94b09d1cd34": {
+    "id": "02072103-fed5-4e5f-9a83-e94b09d1cd34",
+    "z": 18350,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216",
+    "parent": "v8kj"
+  },
+  "e11dbe5e-7c1f-4187-ac80-e7ae8b8e5406": {
+    "id": "e11dbe5e-7c1f-4187-ac80-e7ae8b8e5406",
+    "z": 18358,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-0f91d1e8-6661-4408-b902-f6753c4c8534",
+    "parent": "v8kj"
+  },
+  "7bab252b-1ce2-4214-a4c9-45aa16826f57": {
+    "id": "7bab252b-1ce2-4214-a4c9-45aa16826f57",
+    "z": 18339,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-49ac5208-24ea-4fa5-9b06-b126caad73ff",
+    "parent": "v8kj"
+  },
+  "0351cec5-b219-46a3-a0c0-79543e200b60": {
+    "id": "0351cec5-b219-46a3-a0c0-79543e200b60",
+    "z": 18357,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-c5f6b9bd-5c70-4d0d-80ac-b34700d35216",
+    "parent": "v8kj"
+  },
+  "ed0a36a4-2e7d-4d01-99a6-b5748122b76a": {
+    "id": "ed0a36a4-2e7d-4d01-99a6-b5748122b76a",
+    "z": 18348,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-0f91d1e8-6661-4408-b902-f6753c4c8534",
+    "parent": "v8kj"
+  },
+  "f82f04ec-c458-4640-b14f-b67d112e09d9": {
+    "id": "f82f04ec-c458-4640-b14f-b67d112e09d9",
+    "z": 18351,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-0f91d1e8-6661-4408-b902-f6753c4c8534",
+    "parent": "v8kj"
+  },
+  "16188d72-5cef-4567-b633-4aae3f8750b2": {
+    "id": "16188d72-5cef-4567-b633-4aae3f8750b2",
+    "z": 18338,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-49ac5208-24ea-4fa5-9b06-b126caad73ff",
+    "parent": "v8kj"
+  },
+  "9ce826c7-9424-4303-8481-5ccc38d440cb": {
+    "id": "9ce826c7-9424-4303-8481-5ccc38d440cb",
+    "z": 18355,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-d58949fc-566a-421c-8221-a648bcf4cd96",
+    "parent": "v8kj"
+  },
+  "341ee638-2f83-436a-bc28-ffb4a4e2d695": {
+    "id": "341ee638-2f83-436a-bc28-ffb4a4e2d695",
+    "z": 18364,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-49ac5208-24ea-4fa5-9b06-b126caad73ff",
+    "parent": "v8kj"
+  },
+  "9dd90c54-e9f1-4104-ad74-c83ba008ba76": {
+    "id": "9dd90c54-e9f1-4104-ad74-c83ba008ba76",
+    "z": 18361,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-2c1d368b-ca28-4bbc-b2b8-4b666003cea4",
+    "parent": "v8kj"
+  },
+  "55f48086-3a36-4ab3-9248-67b235a17248": {
+    "id": "55f48086-3a36-4ab3-9248-67b235a17248",
+    "z": 18336,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-0f91d1e8-6661-4408-b902-f6753c4c8534",
+    "parent": "v8kj"
+  },
+  "1abbe5e4-3c30-4a53-a58f-c79ddf19f85c": {
+    "id": "1abbe5e4-3c30-4a53-a58f-c79ddf19f85c",
+    "z": 18356,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-30e33c78-feb2-4e34-b45a-4b8d6293e82b",
+    "parent": "v8kj"
+  },
+  "41feac3b-5d46-4f87-a23c-d9a11db7ed49": {
+    "id": "41feac3b-5d46-4f87-a23c-d9a11db7ed49",
+    "z": 18347,
+    "type": "card",
+    "deck": "drawDeck",
+    "cardType": "type-49ac5208-24ea-4fa5-9b06-b126caad73ff",
+    "parent": "v8kj"
+  },
+  "stack9": {
+    "type": "holder",
+    "id": "stack9",
+    "x": 1197,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack10": {
+    "type": "holder",
+    "id": "stack10",
+    "x": 1283,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack11": {
+    "type": "holder",
+    "id": "stack11",
+    "x": 1369,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack12": {
+    "type": "holder",
+    "id": "stack12",
+    "x": 1455,
+    "y": 143,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack13": {
+    "type": "holder",
+    "id": "stack13",
+    "x": 1197,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack14": {
+    "type": "holder",
+    "id": "stack14",
+    "x": 1283,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack15": {
+    "type": "holder",
+    "id": "stack15",
+    "x": 1370,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "stack16": {
+    "type": "holder",
+    "id": "stack16",
+    "x": 1456,
+    "y": 353,
+    "width": 112,
+    "height": 250,
+    "z": 5682,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "scale": 0.75,
+    "stackOffsetY": 28
+  },
+  "b8efd5c8-3b05-4af5-9780-c64c04a1347a": {
+    "id": "b8efd5c8-3b05-4af5-9780-c64c04a1347a",
+    "z": 18392,
+    "type": "card",
+    "deck": "backAlleyDeck",
+    "cardType": "type-93a6a514-d6c9-485d-8369-c821bfb5bd62",
+    "parent": "7iw5"
+  },
+  "ekjh": {
+    "type": "card",
+    "id": "ekjh",
+    "deck": "backAlleyDeck",
+    "cardType": "type-f38dcf60-22ca-4f48-ac84-a06d2fccaccb",
+    "z": 18387,
+    "parent": "7iw5"
+  },
+  "7iw5": {
+    "type": "pile",
+    "parent": "backAlleyHolder",
+    "x": 6,
+    "y": 6,
+    "width": 100,
+    "height": 100,
+    "id": "7iw5"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 27,
+    "y": 882,
+    "z": 1,
+    "color": "#ff0000",
+    "colorEmpty": "#ff0000",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ],
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 1418,
+    "y": 882,
+    "color": "blue",
+    "colorEmpty": "blue",
+    "hideWhenUnused": true,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${PROPERTY colorEmpty}"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      }
+    ],
+    "linkedToSeat": "seat4"
+  },
+  "seat3Discard": {
+    "type": "holder",
+    "id": "seat3Discard",
+    "x": 205.2,
+    "y": 868,
+    "width": 112,
+    "height": 112,
+    "scale": 0.75,
+    "z": 5301,
+    "inheritChildZ": true,
+    "linkedToSeat": "seat3",
+    "hideWhenUnused": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "seat4Discard": {
+    "type": "holder",
+    "id": "seat4Discard",
+    "x": 1293.6,
+    "y": 868,
+    "width": 112,
+    "height": 112,
+    "scale": 0.75,
+    "z": 5303,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "drawDeck"
+      }
+    ],
+    "linkedToSeat": "seat4",
+    "hideWhenUnused": true,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "v8kj": {
+    "type": "pile",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "id": "v8kj"
+  },
+  "startButton": {
+    "type": "button",
+    "id": "startButton",
+    "x": 827,
+    "y": 342,
+    "height": 50,
+    "z": 4708,
+    "text": "Basic Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "backAlleyHolder",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "backAlleyHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "backAlleyHolder"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "count": 4,
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "endTurn"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "RESET",
+        "property": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "advancedGameStart"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder1"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder2"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder3"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyDiscard"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "takeCards"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ],
+    "width": 90
+  },
+  "endTurn": {
+    "type": "button",
+    "id": "endTurn",
+    "x": 837,
+    "y": 375,
+    "height": 50,
+    "z": 4707,
+    "text": "End turn",
+    "clickRoutine": [
+      "var seatCount = length ${activeSeats}",
+      {
+        "func": "IF",
+        "operand1": "${seatCount}",
+        "operand2": 3,
+        "thenRoutine": [
+          "var red1 = ${PROPERTY turn OF seat1} == true",
+          "var red3 = ${PROPERTY turn OF seat3} == true",
+          "var red = ${red1} || ${red3}",
+          {
+            "func": "SELECT",
+            "type": "seat",
+            "property": "id",
+            "relation": "!=",
+            "value": null
+          },
+          {
+            "func": "SET",
+            "property": "turn",
+            "value": false
+          },
+          {
+            "func": "IF",
+            "condition": "${red}",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat2",
+                  "seat4"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "seat1",
+                  "seat3"
+                ],
+                "property": "turn",
+                "value": true
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "TURN"
+          }
+        ]
+      }
+    ],
+    "display": false
+  },
+  "Reset": {
+    "type": "button",
+    "id": "Reset",
+    "x": 462,
+    "y": 16,
+    "z": 16202,
+    "text": "Reset",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to recall all cards and reset the game. Are you sure?"
+          },
+          {
+            "type": "checkbox",
+            "label": "Reset the game",
+            "variable": "owned"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "backAlleyHolder",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "backAlleyHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "backAlleyHolder"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "advancedGameStart"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "endTurn"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "RESET",
+        "property": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder1"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder2"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder3"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyDiscard"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "takeCards"
+        ],
+        "property": "display",
+        "value": false
+      }
+    ],
+    "height": 60,
+    "width": 60,
+    "display": false
+  },
+  "blueHome": {
+    "type": "holder",
+    "id": "blueHome",
+    "x": 746.6,
+    "y": 546,
+    "width": 112,
+    "height": 112,
+    "z": 5305,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "redHome": {
+    "type": "holder",
+    "id": "redHome",
+    "x": 746.6,
+    "y": 173.9,
+    "width": 112,
+    "height": 112,
+    "z": 5293,
+    "inheritChildZ": true,
+    "dropLimit": 1
+  },
+  "redPawn": {
+    "id": "redPawn",
+    "x": 777,
+    "y": 190,
+    "width": 50.4,
+    "height": 90,
+    "z": 24,
+    "color": "#f50505",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "reset": {
+      "x": 777,
+      "y": 190
+    }
+  },
+  "bluePawn": {
+    "id": "bluePawn",
+    "x": 777,
+    "y": 560,
+    "width": 50.4,
+    "height": 90,
+    "z": 26,
+    "color": "#1f5ca6",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "reset": {
+      "x": 777,
+      "y": 560
+    }
+  },
+  "backAlleyHolder1": {
+    "type": "holder",
+    "id": "backAlleyHolder1",
+    "x": 682.5,
+    "y": 10.2,
+    "width": 112,
+    "height": 112,
+    "z": 5296,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "backAlleyDeck"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "display": false
+  },
+  "backAlleyHolder2": {
+    "type": "holder",
+    "id": "backAlleyHolder2",
+    "x": 808.9,
+    "y": 11.7,
+    "width": 112,
+    "height": 112,
+    "z": 5297,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "backAlleyDeck"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "display": false
+  },
+  "backAlleyHolder3": {
+    "type": "holder",
+    "id": "backAlleyHolder3",
+    "x": 935.3,
+    "y": 11.7,
+    "width": 112,
+    "height": 112,
+    "z": 5298,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "backAlleyDeck"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "display": false
+  },
+  "backAlleyHolder": {
+    "type": "holder",
+    "id": "backAlleyHolder",
+    "x": 556.1,
+    "y": 11.7,
+    "width": 112,
+    "height": 112,
+    "z": 5295,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "backAlleyDeck"
+      }
+    ],
+    "display": false
+  },
+  "backAlleyDeck": {
+    "type": "deck",
+    "id": "backAlleyDeck",
+    "parent": "backAlleyHolder",
+    "x": 13,
+    "y": 13,
+    "z": 5054,
+    "cardDefaults": {
+      "width": 100,
+      "height": 100,
+      "enlarge": 3,
+      "backColor": "#ffffff"
+    },
+    "cardTypes": {
+      "type-089f2acd-b9e0-45f9-8241-5f2ca33369cd": {
+        "name": "Diversion",
+        "effect": "Saboteurs go forward",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 1
+      },
+      "type-992b3b4f-0b3b-4a0a-a128-fd701d7f9833": {
+        "name": "Lookout",
+        "effect": "Enforcers get +2",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 2
+      },
+      "type-882914a6-c3df-4b0b-8a7e-10ee2760b56a": {
+        "name": "Evil twin",
+        "effect": "Double agents get x2",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 3
+      },
+      "type-89fbd4c7-a7bf-443d-8296-b9d36802cce2": {
+        "name": "Watson",
+        "effect": "Codebreakers get +3",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 4
+      },
+      "type-93a6a514-d6c9-485d-8369-c821bfb5bd62": {
+        "name": "Chief",
+        "effect": "3x Daredevil = win",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 5
+      },
+      "type-572fb4f1-4e06-4f44-965a-9bf45b02ec35": {
+        "name": "Wheelman",
+        "effect": "Ending on a home space gives +3",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 6
+      },
+      "type-afe88df3-35ad-4062-93f6-45230c2e74a6": {
+        "name": "Master Scheme",
+        "effect": "7 different agents = win",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 7
+      },
+      "type-08ee6257-cf35-44a3-aa3a-bedae383b852": {
+        "name": "Alarms",
+        "effect": "Opponent ending on your home = win",
+        "image": "/i/game-icons.net/various-artists/infinity.svg",
+        "sortingOrder": 8
+      },
+      "type-a3759520-ea24-4e11-a1e8-abb1d38f9d81": {
+        "name": "Camp",
+        "effect": "Recruit a Sentinel from hand",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 9
+      },
+      "type-87720df4-3ca0-495c-8d6f-6bfbf1561075": {
+        "name": "Camouflage",
+        "effect": "Recruit top card of draw pile",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 10
+      },
+      "type-6be10bc8-5eb5-4939-96d3-35e0865f5dab": {
+        "name": "Brainwashing",
+        "effect": "Put 1 opponent agent in play into your hand",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 11,
+        "size": 13
+      },
+      "type-f38dcf60-22ca-4f48-ac84-a06d2fccaccb": {
+        "name": "Trouble Trouble",
+        "effect": "Reveal 2 matching agents, recruit one, keep the other",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 12,
+        "size": 12.5
+      },
+      "type-0457d3df-7cf6-4f33-886f-1ccf3956f4f0": {
+        "name": "Reconaissance",
+        "effect": "Move 1 space forward",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 13
+      },
+      "type-a667f3d9-bd47-4f6e-b6dc-b965035d854a": {
+        "name": "New Blood",
+        "effect": "Recruit 1 agent from hand you don't already have",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 14,
+        "size": 13
+      },
+      "type-ca624c94-56fb-4be5-bbc1-7a237ffd71ee": {
+        "name": "Discreet Trip",
+        "effect": "Put 1 of your agents in your hand. You may recruit it.",
+        "image": "/i/noto-emoji/emoji_u26a1.svg",
+        "sortingOrder": 15,
+        "size": 14.2
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 100,
+            "type": "image",
+            "color": "black",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "backColor"
+            },
+            "value": "/i/game-icons.net/delapouite/lock-spy.svg",
+            "width": 100,
+            "height": 100
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 100,
+            "type": "image",
+            "color": "white",
+            "value": ""
+          },
+          {
+            "type": "text",
+            "x": 3,
+            "y": 0,
+            "fontSize": 12,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 100,
+            "dynamicProperties": {
+              "value": "name"
+            }
+          },
+          {
+            "type": "text",
+            "x": 3,
+            "y": 18,
+            "textAlign": "center",
+            "textFont": null,
+            "width": 94,
+            "dynamicProperties": {
+              "value": "effect",
+              "fontSize": "size"
+            }
+          },
+          {
+            "type": "image",
+            "x": 68,
+            "y": 70,
+            "color": "transparent",
+            "width": 30,
+            "height": 30,
+            "svgReplaces": {
+              "#primaryColor": "imageColor",
+              "#labelColor": "imageLabelColor"
+            },
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ]
+  },
+  "backAlleyDiscard": {
+    "type": "holder",
+    "id": "backAlleyDiscard",
+    "x": 1059,
+    "y": 23,
+    "width": 112,
+    "height": 112,
+    "scale": 0.75,
+    "z": 5302,
+    "inheritChildZ": true,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "dropTarget": [
+      {
+        "deck": "backAlleyDeck"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "display": false
+  },
+  "backAlleyDiscardLabel": {
+    "type": "label",
+    "id": "backAlleyDiscardLabel",
+    "parent": "backAlleyDiscard",
+    "x": -11,
+    "y": -40,
+    "width": 134,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Discard",
+    "twoRowBottomAlign": true
+  },
+  "advancedGameStart": {
+    "type": "button",
+    "id": "advancedGameStart",
+    "x": 827,
+    "y": 402,
+    "width": 90,
+    "height": 50,
+    "z": 4708,
+    "text": "Advanced Game",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Ready to start?",
+        "fields": [
+          {
+            "type": "text",
+            "text": "Is everyone seated?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "deckHolder",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "deckHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "deckHolder"
+      },
+      {
+        "func": "RECALL",
+        "holder": "backAlleyHolder",
+        "owned": "${owned}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "backAlleyHolder",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "backAlleyHolder"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "count": 4,
+        "to": [
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "backAlleyHolder",
+        "to": [
+          "backAlleyHolder1",
+          "backAlleyHolder2",
+          "backAlleyHolder3"
+        ],
+        "face": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "startButton"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "endTurn"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "Reset"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "RESET",
+        "property": "reset"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder1"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder2"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyHolder3"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "backAlleyDiscard"
+        ],
+        "property": "display",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "advancedGameStart"
+        ],
+        "property": "display",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "takeCards"
+        ],
+        "property": "display",
+        "value": true
+      }
+    ]
+  },
+  "takeCards": {
+    "type": "button",
+    "id": "takeCards",
+    "x": 959,
+    "y": 731,
+    "height": 50,
+    "z": 4707,
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "to": [
+          "seat1",
+          "seat2",
+          "seat4",
+          "seat3"
+        ],
+        "fillTo": 4,
+        "from": "deckHolder",
+        "face": 1
+      }
+    ],
+    "text": "Refill Hand",
+    "display": false
+  }
+}

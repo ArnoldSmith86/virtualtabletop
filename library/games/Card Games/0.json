@@ -580,18 +580,48 @@
                     ],
                     "loopRoutine": [
                       {
-                        "func": "MOVE",
-                        "from": "deckHolder",
-                        "to": "tempHolder",
-                        "count": "${cutSize}"
+                        "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+                        "func": "IF",
+                        "condition": "${cutSize}",
+                        "thenRoutine": [
+                          {
+                            "func": "MOVE",
+                            "from": "deckHolder",
+                            "to": "tempHolder",
+                            "count": "${cutSize}"
+                          }
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "MOVE",
+                            "from": "deckHolder",
+                            "to": "tempHolder",
+                            "count": "all"
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    "func": "MOVE",
-                    "from": "tempHolder",
-                    "to": "deckHolder",
-                    "count": "${cardCount}"
+                    "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+                    "func": "IF",
+                    "condition": "${cardCount}",
+                    "thenRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "tempHolder",
+                        "to": "deckHolder",
+                        "count": "${cardCount}"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "tempHolder",
+                        "to": "deckHolder",
+                        "count": "all"
+                      }
+                    ]
                   }
                 ],
                 "elseRoutine": [
@@ -599,22 +629,67 @@
                   "var max = ${cardCount} - 5",
                   "var random = randInt 5 ${cardCount}",
                   {
-                    "func": "MOVE",
-                    "from": "deckHolder",
-                    "to": "tempHolder",
-                    "count": "${random}"
+                    "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+                    "func": "IF",
+                    "condition": "${random}",
+                    "thenRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "deckHolder",
+                        "to": "tempHolder",
+                        "count": "${random}"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "deckHolder",
+                        "to": "tempHolder",
+                        "count": "all"
+                      }
+                    ]
                   },
                   {
-                    "func": "MOVE",
-                    "from": "deckHolder",
-                    "to": "tempHolder",
-                    "count": "${cardCount}"
+                    "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+                    "func": "IF",
+                    "condition": "${cardCount}",
+                    "thenRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "deckHolder",
+                        "to": "tempHolder",
+                        "count": "${cardCount}"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "deckHolder",
+                        "to": "tempHolder",
+                        "count": "all"
+                      }
+                    ]
                   },
                   {
-                    "func": "MOVE",
-                    "from": "tempHolder",
-                    "to": "deckHolder",
-                    "count": "${cardCount}"
+                    "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+                    "func": "IF",
+                    "condition": "${cardCount}",
+                    "thenRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "tempHolder",
+                        "to": "deckHolder",
+                        "count": "${cardCount}"
+                      }
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "MOVE",
+                        "from": "tempHolder",
+                        "to": "deckHolder",
+                        "count": "all"
+                      }
+                    ]
                   }
                 ]
               }
@@ -1288,10 +1363,10 @@
     "svgReplaces": {
       "currentColor": "deckSuitsColor"
     },
+    "image": "i/icons/clubs.svg",
     "deckSuitsColor": "",
     "deckSuitsUni": "♣",
-    "deckSuits": "clubs",
-    "image": "i/icons/clubs.svg"
+    "deckSuits": "clubs"
   },
   "choose11": {
     "inheritFrom": {
@@ -3167,19 +3242,43 @@
     ],
     "dealStandardRoutine": [
       {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5",
-          "seat6",
-          "seat7",
-          "seat8"
+        "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+        "func": "IF",
+        "condition": "${PROPERTY cardCount OF settingsDecks}",
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4",
+              "seat5",
+              "seat6",
+              "seat7",
+              "seat8"
+            ],
+            "count": "${PROPERTY cardCount OF settingsDecks}"
+          }
         ],
-        "count": "${PROPERTY cardCount OF settingsDecks}"
+        "elseRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4",
+              "seat5",
+              "seat6",
+              "seat7",
+              "seat8"
+            ],
+            "count": "all"
+          }
+        ]
       }
     ],
     "dealSizeScalarRoutine": [
@@ -3199,19 +3298,43 @@
         "loopRoutine": [
           "// Deal specified number of cards around to each seat as many times as possible before running out of cards",
           {
-            "func": "MOVE",
-            "from": "deckHolder",
-            "to": [
-              "seat1",
-              "seat2",
-              "seat3",
-              "seat4",
-              "seat5",
-              "seat6",
-              "seat7",
-              "seat8"
+            "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+            "func": "IF",
+            "condition": "${dealCount}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5",
+                  "seat6",
+                  "seat7",
+                  "seat8"
+                ],
+                "count": "${dealCount}"
+              }
             ],
-            "count": "${dealCount}"
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5",
+                  "seat6",
+                  "seat7",
+                  "seat8"
+                ],
+                "count": "all"
+              }
+            ]
           }
         ]
       },
@@ -3238,19 +3361,43 @@
         "in": "${dealCount}",
         "loopRoutine": [
           {
-            "func": "MOVE",
-            "from": "deckHolder",
-            "to": [
-              "seat1",
-              "seat2",
-              "seat3",
-              "seat4",
-              "seat5",
-              "seat6",
-              "seat7",
-              "seat8"
+            "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+            "func": "IF",
+            "condition": "${dealCount.$key}",
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5",
+                  "seat6",
+                  "seat7",
+                  "seat8"
+                ],
+                "count": "${dealCount.$key}"
+              }
             ],
-            "count": "${dealCount.$key}"
+            "elseRoutine": [
+              {
+                "func": "MOVE",
+                "from": "deckHolder",
+                "to": [
+                  "seat1",
+                  "seat2",
+                  "seat3",
+                  "seat4",
+                  "seat5",
+                  "seat6",
+                  "seat7",
+                  "seat8"
+                ],
+                "count": "all"
+              }
+            ]
           }
         ]
       }
@@ -5648,9 +5795,10 @@
       "x": 780,
       "y": 370
     },
-    "z": 80258,
+    "z": 81016,
     "customFaceCount": 6,
-    "deckSuitsColor": ""
+    "deckSuitsColor": "",
+    "layer": -1
   },
   "scoreButton": {
     "type": "button",
@@ -7542,6 +7690,9 @@
       ],
       [
         "tarotDeck"
+      ],
+      [
+        "deckLaMenche"
       ]
     ],
     "hideCardsArray": [
@@ -8243,7 +8394,7 @@
         "func": "MOVE",
         "from": "tempHolder",
         "to": "capturedHolder${seatIndex}",
-        "count": 0
+        "count": "all"
       }
     ],
     "css": {
@@ -8384,10 +8535,10 @@
     ],
     "roundLabel": "",
     "y": 650,
-    "scale": 0,
     "rounds": [
       "Card Points"
-    ]
+    ],
+    "scale": 0
   },
   "seat1": {
     "type": "seat",
@@ -9894,7 +10045,7 @@
             "func": "MOVE",
             "from": "tempHolder",
             "to": "dummyHand",
-            "count": 0
+            "count": "all"
           },
           {
             "func": "IF",
@@ -11624,7 +11775,7 @@
     "id": "scoreboard3",
     "y": 86,
     "width": 175,
-    "height": 430,
+    "height": 480,
     "movable": false,
     "movableInEdit": false,
     "autosizeColumns": false,
@@ -11662,7 +11813,8 @@
       "S",
       "G",
       "J1",
-      "J2"
+      "J2",
+      "Match"
     ],
     "showAllRounds": true,
     "scoreProperty": "scoreCoiffeur",
@@ -11821,7 +11973,7 @@
         ]
       }
     ],
-    "x": 270,
+    "x": 240,
     "seats": [
       "seat1",
       "seat2",
@@ -11906,7 +12058,8 @@
       10
     ],
     "x": 60,
-    "text": "Convert"
+    "text": "Convert",
+    "scale": 0
   },
   "3pScoreCoiffeurButton": {
     "type": "button",
@@ -12199,8 +12352,7 @@
       "seat7"
     ],
     "x": 60,
-    "text": "Convert",
-    "scale": 0
+    "text": "Convert"
   },
   "showHandButton": {
     "type": "button",
@@ -13449,6 +13601,10 @@
         0
       ],
       [
+        "scoreboard",
+        1
+      ],
+      [
         "transferScoreButton",
         1
       ],
@@ -13497,6 +13653,10 @@
         0
       ],
       [
+        "tarokBonusTable1",
+        0
+      ],
+      [
         "passCardsButton",
         0
       ],
@@ -13518,6 +13678,10 @@
       ],
       [
         "secretAgentLabel",
+        0
+      ],
+      [
+        "ultiBidTable",
         0
       ]
     ],
@@ -13862,11 +14026,7 @@
     "sort2": "suit",
     "text": "Schieber Jass",
     "roundsTemp": [
-      "Card Points",
-      "Weis",
-      "Stock",
-      "All Tricks",
-      "Multiplier"
+      "Card Points"
     ],
     "settingsArray": [
       [
@@ -13968,7 +14128,7 @@
       ]
     ],
     "gameID": true,
-    "hintText": "\"Declare contract using bid widgets or Message button. \\a\\a When appropriate, record Weis and Stock in the small scoreboard using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a After round ends, press Add Card Points button. Five points are automatically added to winner of last trick. The All Tricks bonus is calculated automatically. The multiplier is calculated automatically based on the Activity Log.\\a\\a Press Transfer Score button. Sum of scores is multiplied by the contract multiplier and transferred to the main scoreboard.\\a\\a End of game scoring when both teams are nearing the final score must be determined manually. If using the Add Card Points button to assist, remember that 5 points are always added to the last player pressing the Take button, if if that is not the last trick of the round.\"",
+    "hintText": "\"Declare contract using bid widgets or Message button. \\a\\a When appropriate, record Weis and Stock in the small scoreboard using the scrollbar to highlight the row and press the red/green +/- buttons.\\a\\a After round ends, press Add Card Points button. Five points are automatically added to winner of last trick. The All Tricks bonus is calculated automatically. The multiplier is calculated automatically based on the Activity Log.\\a\\a Press Transfer Score button. Sum of scores is multiplied by the contract multiplier and transferred to the main scoreboard.\\a\\a End of game scoring when both teams are nearing the final score must be determined manually. If using the Add Card Points button to assist, remember that 5 points are always added to the last player pressing the Take button, if if that is not the last trick of the round.\\a\\aFor tournament, 12hands, no weiss/stock, no match\"",
     "trumpIndicator": true,
     "sortExceptionsRoutine": [
       "var trump = ${PROPERTY trump OF trump}",
@@ -14072,7 +14232,7 @@
         "func": "IF",
         "condition": "${red}",
         "thenRoutine": [
-          "var multiplier = 2"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14080,7 +14240,7 @@
         "operand1": "${contract}",
         "operand2": "Obenabe",
         "thenRoutine": [
-          "var multiplier = 3"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14088,7 +14248,7 @@
         "operand1": "${contract}",
         "operand2": "Undenufe",
         "thenRoutine": [
-          "var multiplier = 4"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14096,7 +14256,7 @@
         "operand1": "${contract}",
         "operand2": "Slalom",
         "thenRoutine": [
-          "var multiplier = 4"
+          "var multiplier = 1"
         ]
       },
       {
@@ -14182,27 +14342,27 @@
       "Diamonds": [
         "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
         "#fcf2c7",
-        "x2"
+        "x1"
       ],
       "Hearts": [
         "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
         "#fcf2c7",
-        "x2"
+        "x1"
       ],
       "Obenabe": [
         "Obenabe",
         "#e3e9fc",
-        "No trumps\\ax3"
+        "No trumps\\ax1"
       ],
       "Undenufe": [
         "Undenufe",
         "#e3e9fc",
-        "No trumps\\aRank inverted\\ax4"
+        "No trumps\\aRank inverted\\ax1"
       ],
       "Slalom": [
         "Slalom",
         "#e3e9fc",
-        "No trumps\\a Alternate O & U rank\\ax4"
+        "No trumps\\a Alternate O & U rank\\ax1"
       ]
     },
     "contractChoiceRoutine": [
@@ -14303,6 +14463,468 @@
             ]
           }
         ]
+      }
+    ],
+    "version1": {
+      "contractArray": {
+        "Spades": [
+          "Spades <img src='/i/noto-emoji/emoji_u2660.svg' height=18 />",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Clubs": [
+          "Clubs <img src='/i/noto-emoji/emoji_u2663.svg' height=18/>",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Diamonds": [
+          "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
+          "#fcf2c7",
+          "x2"
+        ],
+        "Hearts": [
+          "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
+          "#fcf2c7",
+          "x2"
+        ],
+        "Obenabe": [
+          "Obenabe",
+          "#e3e9fc",
+          "No trumps\\ax3"
+        ],
+        "Undenufe": [
+          "Undenufe",
+          "#e3e9fc",
+          "No trumps\\aRank inverted\\ax4"
+        ],
+        "Slalom": [
+          "Slalom",
+          "#e3e9fc",
+          "No trumps\\a Alternate O & U rank\\ax4"
+        ]
+      },
+      "roundsTemp": [
+        "Card Points",
+        "Weis",
+        "Stock",
+        "All Tricks",
+        "Multiplier"
+      ],
+      "contractChoiceRoutine": [
+        "var contractType = ${PROPERTY auctionType OF contractType}",
+        "var isIn = ${contractType} in ${PROPERTY noTrumpBids}",
+        {
+          "func": "IF",
+          "condition": "${isIn}",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "trump"
+              ],
+              "property": "customFace",
+              "value": 5
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Spades",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Clubs",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Diamonds",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Hearts",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 4
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scoreExceptionsRoutine": [
+        "// Add 5 points to player taking last trick",
+        "var result = ${points}",
+        "var last = ${PROPERTY lastPressedBy OF takeButton}",
+        {
+          "func": "IF",
+          "operand1": "${value}",
+          "operand2": "${last}",
+          "thenRoutine": [
+            "var result = ${result} + 5"
+          ]
+        },
+        "// Add 100 points to team that takes all 9 tricks",
+        "var tricksS = parseFloat ${PROPERTY tricks OF seat1}",
+        "var tricksW = parseFloat ${PROPERTY tricks OF seat3}",
+        "var tricksN = parseFloat ${PROPERTY tricks OF seat5}",
+        "var tricksE = parseFloat ${PROPERTY tricks OF seat5}",
+        "var allNS = ${tricksS} + ${tricksN}",
+        "var allEW = ${tricksE} + ${tricksW}",
+        "var allNS = ${allNS} == 9",
+        "var allEW = ${allEW} == 9",
+        {
+          "func": "IF",
+          "condition": "${allNS}",
+          "thenRoutine": [
+            {
+              "func": "SCORE",
+              "mode": "set",
+              "property": "tempScore",
+              "round": 4,
+              "seats": "seat1",
+              "value": "100"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "condition": "${allEW}",
+              "thenRoutine": [
+                {
+                  "func": "SCORE",
+                  "mode": "set",
+                  "property": "tempScore",
+                  "round": 4,
+                  "seats": "seat3",
+                  "value": "100"
+                }
+              ]
+            }
+          ]
+        },
+        "\\ Show contract multiplier",
+        "var multiplier = 1",
+        "var contract = ${PROPERTY auctionType OF contractType}",
+        "var hearts = ${contract} == 'Hearts'",
+        "var diamonds = ${contract} == 'Diamonds'",
+        "var red = ${hearts} || ${diamonds}",
+        {
+          "func": "IF",
+          "condition": "${red}",
+          "thenRoutine": [
+            "var multiplier = 2"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Obenabe",
+          "thenRoutine": [
+            "var multiplier = 3"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Undenufe",
+          "thenRoutine": [
+            "var multiplier = 4"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Slalom",
+          "thenRoutine": [
+            "var multiplier = 4"
+          ]
+        },
+        {
+          "func": "SCORE",
+          "mode": "set",
+          "property": "tempScore",
+          "round": 5,
+          "seats": [
+            "seat1",
+            "seat3"
+          ],
+          "value": "${multiplier}"
+        }
+      ]
+    },
+    "version2": {
+      "contractArray": {
+        "Spades": [
+          "Spades <img src='/i/noto-emoji/emoji_u2660.svg' height=18 />",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Clubs": [
+          "Clubs <img src='/i/noto-emoji/emoji_u2663.svg' height=18/>",
+          "#e3f0d6",
+          "x1"
+        ],
+        "Diamonds": [
+          "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
+          "#fcf2c7",
+          "x1"
+        ],
+        "Hearts": [
+          "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
+          "#fcf2c7",
+          "x1"
+        ],
+        "Obenabe": [
+          "Obenabe",
+          "#e3e9fc",
+          "No trumps\\ax1"
+        ],
+        "Undenufe": [
+          "Undenufe",
+          "#e3e9fc",
+          "No trumps\\aRank inverted\\ax1"
+        ],
+        "Slalom": [
+          "Slalom",
+          "#e3e9fc",
+          "No trumps\\a Alternate O & U rank\\ax1"
+        ]
+      },
+      "roundsTemp": [
+        "Card Points"
+      ],
+      "contractChoiceRoutine": [
+        "var contractType = ${PROPERTY auctionType OF contractType}",
+        "var isIn = ${contractType} in ${PROPERTY noTrumpBids}",
+        {
+          "func": "IF",
+          "condition": "${isIn}",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "collection": [
+                "trump"
+              ],
+              "property": "customFace",
+              "value": 5
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Spades",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Clubs",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Diamonds",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "func": "IF",
+              "operand1": "${contractType}",
+              "operand2": "Hearts",
+              "thenRoutine": [
+                {
+                  "func": "SET",
+                  "collection": [
+                    "trump"
+                  ],
+                  "property": "customFace",
+                  "value": 4
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scoreExceptionsRoutine": [
+        "// Add 5 points to player taking last trick",
+        "var result = ${points}",
+        "var last = ${PROPERTY lastPressedBy OF takeButton}",
+        {
+          "func": "IF",
+          "operand1": "${value}",
+          "operand2": "${last}",
+          "thenRoutine": [
+            "var result = ${result} + 5"
+          ]
+        },
+        "// Add 100 points to team that takes all 9 tricks",
+        "var tricksS = parseFloat ${PROPERTY tricks OF seat1}",
+        "var tricksW = parseFloat ${PROPERTY tricks OF seat3}",
+        "var tricksN = parseFloat ${PROPERTY tricks OF seat5}",
+        "var tricksE = parseFloat ${PROPERTY tricks OF seat5}",
+        "var allNS = ${tricksS} + ${tricksN}",
+        "var allEW = ${tricksE} + ${tricksW}",
+        "var allNS = ${allNS} == 9",
+        "var allEW = ${allEW} == 9",
+        {
+          "func": "IF",
+          "condition": "${allNS}",
+          "thenRoutine": [
+            {
+              "func": "SCORE",
+              "mode": "set",
+              "property": "tempScore",
+              "round": 4,
+              "seats": "seat1",
+              "value": "100"
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "IF",
+              "condition": "${allEW}",
+              "thenRoutine": [
+                {
+                  "func": "SCORE",
+                  "mode": "set",
+                  "property": "tempScore",
+                  "round": 4,
+                  "seats": "seat3",
+                  "value": "100"
+                }
+              ]
+            }
+          ]
+        },
+        "\\ Show contract multiplier",
+        "var multiplier = 1",
+        "var contract = ${PROPERTY auctionType OF contractType}",
+        "var hearts = ${contract} == 'Hearts'",
+        "var diamonds = ${contract} == 'Diamonds'",
+        "var red = ${hearts} || ${diamonds}",
+        {
+          "func": "IF",
+          "condition": "${red}",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Obenabe",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Undenufe",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "IF",
+          "operand1": "${contract}",
+          "operand2": "Slalom",
+          "thenRoutine": [
+            "var multiplier = 1"
+          ]
+        },
+        {
+          "func": "SCORE",
+          "mode": "set",
+          "property": "tempScore",
+          "round": 5,
+          "seats": [
+            "seat1",
+            "seat3"
+          ],
+          "value": "${multiplier}"
+        }
+      ]
+    },
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "Regular"
+      },
+      {
+        "value": "2",
+        "text": "Tournament"
       }
     ]
   },
@@ -18388,9 +19010,91 @@
     ],
     "text": "200",
     "gameID": true,
-    "hintText": "\"After round is over, press Add Card Points button to display totals of captured points on the small tempoarary scoreboard. Compare to bid to determine what declarers' scores and opponsents' scores should be. If scores are correct, you can press the Transfer Score button.  Otherwise, when ready to enter final score on main scoreboard, use green/red +/- buttons.\"",
+    "hintText": "\"After round is over, press Add Card Points button to display totals of captured points on the small tempoarary scoreboard. Compare to bid to determine what declarers' scores and opponsents' scores should be. If scores are correct, you can press the Transfer Score button.  Otherwise, when ready to enter final score on main scoreboard, use green/red +/- buttons.\\a\\aFor Kitty version, minimum bid 65 / target 350 points / Discarded cards go to contractor's opponents\"",
     "y": -567,
-    "movable": false
+    "movable": false,
+    "version1": {
+      "settingsArray": [
+        [
+          "showBidSuit",
+          false
+        ]
+      ],
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          9
+        ],
+        [
+          "hideCards",
+          5
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "teamScore",
+          true
+        ],
+        [
+          "tempScore",
+          true
+        ]
+      ]
+    },
+    "version2": {
+      "settingsArray": [
+        [
+          "showBidSuit",
+          false
+        ],
+        [
+          "showTricks",
+          false
+        ],
+        [
+          "showBidHistory",
+          true
+        ]
+      ],
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          9
+        ],
+        [
+          "hideCards",
+          3
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "teamScore",
+          true
+        ],
+        [
+          "tempScore",
+          true
+        ]
+      ]
+    },
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "No Kitty"
+      },
+      {
+        "value": "2",
+        "text": "With Kitty"
+      }
+    ]
   },
   "itemsHolder8": {
     "inheritFrom": {
@@ -20298,13 +21002,13 @@
         "func": "MOVE",
         "from": "capturedHolder${indexDeclarer}",
         "to": "${toDeclarer}",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "MOVE",
         "from": "capturedHolder${indexPartner}",
         "to": "${toPartner}",
-        "count": 0
+        "count": "all"
       }
     ],
     "transferButtonReturn": false,
@@ -21267,19 +21971,19 @@
         "func": "MOVE",
         "from": "trackTrickHolder1",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "MOVE",
         "from": "trackTrickHolder2",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "MOVE",
         "from": "trackTrickHolder3",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "SELECT",
@@ -22715,7 +23419,7 @@
         "func": "MOVE",
         "from": "hand",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "FOREACH",
@@ -22757,13 +23461,13 @@
             "func": "MOVE",
             "from": "tempHolder",
             "to": "seat${seatNum}",
-            "count": 0
+            "count": "all"
           },
           {
             "func": "MOVE",
             "from": "tempHolder",
             "to": "deckHolder",
-            "count": 0
+            "count": "all"
           },
           {
             "func": "SELECT",
@@ -22792,7 +23496,7 @@
             "func": "MOVE",
             "from": "tempHolder",
             "to": "deckHolder",
-            "count": 0
+            "count": "all"
           }
         ]
       },
@@ -25253,7 +25957,7 @@
         "func": "MOVE",
         "from": "hand",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "SELECT",
@@ -26250,8 +26954,7 @@
       "Do not have to follow suit to play. If suit of Mighty led and only card left in that suit, must play it. If Mighty led, other players follow suit if able (not trumps).",
       "Do not have to follow suit to play. If Ripper leads, Joker is lowest card. If Joker leads 1st or last trick, Joker is lowest card and second player's card determines trick suit. If Joker leads any other trick, that player declears trick suit.",
       "If led and player asks, then Joker must be played and loses. Cannot play on 1st trick."
-    ],
-    "player": "Who's Your Agent?"
+    ]
   },
   "playerAid7": {
     "type": "scoreboard",
@@ -28011,10 +28714,8 @@
     },
     "roundsTemp": [
       "Card Points",
-      "Suit/Grand Value",
-      "Null Value",
-      "Multipliers",
-      "Adjustments"
+      "Base",
+      "Multipliers"
     ],
     "displayArray": [
       [
@@ -28409,18 +29110,26 @@
         ]
       }
     ],
-    "playerAidDetail1": "Skat",
-    "playerAidDetail2": "Hand",
-    "playerAidDetail3": "Win",
-    "playerAidDetail4": "Lose",
     "messageArray": [
       {
         "value": "Default",
         "text": "Click here to choose message"
       },
       {
+        "value": "Null",
+        "text": "Null"
+      },
+      {
+        "value": "Grand",
+        "text": "Grand"
+      },
+      {
         "value": "Ouvert",
         "text": "Ouvert (show cards)"
+      },
+      {
+        "value": "Hand",
+        "text": "Hand"
       },
       {
         "value": "Schneider",
@@ -28439,8 +29148,8 @@
         "text": "Rekontra (double score again)"
       },
       {
-        "value": "Spitze",
-        "text": "Spitze (win last trick with lowest trump)"
+        "value": "Ramsch",
+        "text": "Ramsch"
       }
     ],
     "0deckSuitsText": [
@@ -28479,7 +29188,77 @@
       "G",
       "N"
     ],
-    "movable": false
+    "movable": false,
+    "version1": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          10
+        ],
+        [
+          "deckType",
+          5
+        ],
+        [
+          "hideCards",
+          6
+        ],
+        [
+          "seatCount",
+          3
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "variableScore",
+          2
+        ]
+      ]
+    },
+    "version2": {
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          10
+        ],
+        [
+          "deckType",
+          0
+        ],
+        [
+          "hideCards",
+          6
+        ],
+        [
+          "seatCount",
+          3
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "variableScore",
+          2
+        ]
+      ]
+    },
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "German Deck"
+      },
+      {
+        "value": "2",
+        "text": "French Deck"
+      }
+    ]
   },
   "playerAid30": {
     "type": "scoreboard",
@@ -29199,7 +29978,7 @@
         "func": "MOVE",
         "from": "hand",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       },
       "var seats = ${PROPERTY seatCount OF settingsDecks}",
       "var thisCount = ${seats} + 'PDeal'",
@@ -29207,19 +29986,43 @@
       "var round = ${PROPERTY currentRound OF scoreboard}",
       "var thisCount = ${thisCount.$round}",
       {
-        "func": "MOVE",
-        "from": "deckHolder",
-        "to": [
-          "seat1",
-          "seat2",
-          "seat3",
-          "seat4",
-          "seat5",
-          "seat6",
-          "seat7",
-          "seat8"
+        "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+        "func": "IF",
+        "condition": "${thisCount}",
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4",
+              "seat5",
+              "seat6",
+              "seat7",
+              "seat8"
+            ],
+            "count": "${thisCount}"
+          }
         ],
-        "count": "${thisCount}"
+        "elseRoutine": [
+          {
+            "func": "MOVE",
+            "from": "deckHolder",
+            "to": [
+              "seat1",
+              "seat2",
+              "seat3",
+              "seat4",
+              "seat5",
+              "seat6",
+              "seat7",
+              "seat8"
+            ],
+            "count": "all"
+          }
+        ]
       },
       {
         "func": "CALL",
@@ -29332,7 +30135,7 @@
             "func": "MOVE",
             "from": "tempHolder",
             "to": "offHolder",
-            "count": 0
+            "count": "all"
           },
           {
             "func": "SELECT",
@@ -29356,7 +30159,7 @@
         "func": "MOVE",
         "from": "tempHolder",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "SHUFFLE",
@@ -32847,13 +33650,13 @@
         "func": "MOVE",
         "from": "hand",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "MOVE",
         "from": "deckHolder",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       "// Move non-black cards to the deckHolder and set the ally card aside",
       {
@@ -32981,7 +33784,7 @@
         "func": "MOVE",
         "from": "tempHolder",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "SHUFFLE",
@@ -33429,13 +34232,13 @@
         "func": "MOVE",
         "from": "deckHolder",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "MOVE",
         "from": "tempHolder",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "SELECT",
@@ -34171,14 +34974,24 @@
       "gameID37 - Tute Subastado",
       "gameID38 - Felsõs",
       "gameID39 - Schafkopf (3P)",
-      "gameID40 - Slovenian Tarok (3P)",
+      "gameID40 - Slovenian Tarok",
       "gameID41 - Chwech",
       "gameID42 - Knaves",
       "gameID43 - Bid Whist",
       "gameID44 - Papayou",
       "gameID45 - Schafkopf (4P)",
       "gameID46 - Color Whist",
-      "gameID47 - Cross Purposes (4P)"
+      "gameID47 - Cross Purposes (4P)",
+      "gameID48 - Ulti",
+      "gameID49 - Schafkopf Palatinate (3P)",
+      "gameID50 - Botifarra",
+      "gameID51 - Bauerntarock",
+      "gameID52 - Dobbm",
+      "gameID53 - Bavarian Tarock (Haferltarock)",
+      "gameID54 - Wallachen",
+      "gameID55 - Sheepshead",
+      "gameID56 - Sechser-Schieber",
+      "gameID57 - La Mèn'che"
     ],
     "GamesByName": [
       "1000 - gameID14",
@@ -34186,7 +34999,10 @@
       "99 - gameID26",
       "Agony Aunt - gameID33",
       "Auctions (Similar to Bids) - gameID35",
+      "Bauerntarock - gameID51",
+      "Bavarian Tarock (Haferltarock) - gameID53",
       "Bid Whist - gameID43",
+      "Botifarra - gameID50",
       "Bouncers - gameID28",
       "Chwech - gameID41",
       "Coiffeur Jass (3P) - gameID6",
@@ -34200,6 +35016,7 @@
       "Czech Taroky - gameID5",
       "Default - gameID0",
       "Differenzler Jass - gameID4",
+      "Dobbm - gameID52",
       "Doppelkopf - gameID9",
       "Felsõs - gameID38",
       "French Tarot - gameID32",
@@ -34212,6 +35029,7 @@
       "Knaves - gameID42",
       "Königrufen - gameID20",
       "La Bâtarde - gameID31",
+      "La Mèn'che - gameID57",
       "Mighty - gameID18",
       "Mittlere Jass - gameID2",
       "Molotow Jass - gameID21",
@@ -34219,16 +35037,21 @@
       "Pitch Pawnee 10 Point - gameID3",
       "Schafkopf (3P) - gameID39",
       "Schafkopf (4P) - gameID45",
+      "Schafkopf Palatinate (3P) - gameID49",
       "Schieber Jass - gameID1",
+      "Sechser-Schieber - gameID56",
       "Secret Agent - gameID34",
+      "Sheepshead - gameID55",
       "Sidi Barrani Jass - gameID7",
       "Skat - gameID30",
-      "Slovenian Tarok (3P) - gameID40",
+      "Slovenian Tarok - gameID40",
       "Spades - gameID17",
       "State (Similar to Ohio) - gameID22",
       "Tracktrick - gameID19",
       "Truco - gameID23",
-      "Tute Subastado - gameID37"
+      "Tute Subastado - gameID37",
+      "Ulti - gameID48",
+      "Wallachen - gameID54"
     ],
     "clickRoutine": [
       "var textArray = []",
@@ -34875,7 +35698,7 @@
       "color": "white",
       "font-size": "26px"
     },
-    "text": "Slovenian Tarok (3P)",
+    "text": "Slovenian Tarok",
     "displayArray": [
       [
         "transferScoreButton",
@@ -34890,8 +35713,12 @@
         1
       ],
       [
-        "tarokBonusTable",
+        "tarokBonusTable1",
         1
+      ],
+      [
+        "tarokBonusTable",
+        0
       ]
     ],
     "gameID": true,
@@ -34901,12 +35728,36 @@
         "text": "Click here to choose message"
       },
       {
+        "value": "Called King: Spades",
+        "text": "Called King: Spades"
+      },
+      {
+        "value": "Called King: Clubs",
+        "text": "Called King: Clubs"
+      },
+      {
+        "value": "Called King: Hearts",
+        "text": "Called King: Hearts"
+      },
+      {
+        "value": "Called King: Diamonds",
+        "text": "Called King: Diamonds"
+      },
+      {
         "value": "Pass",
         "text": "Pass"
       },
       {
+        "value": "Wait",
+        "text": "Wait (Forehand only)"
+      },
+      {
+        "value": "Klop (Minus Points taken or +/-70)",
+        "text": "Klop (Minus Points taken or +/-70) (Forehand only)"
+      },
+      {
         "value": "Three (10+ Diff)",
-        "text": "Three (10+ Diff)"
+        "text": "Three (10+ Diff) (Forehand only)"
       },
       {
         "value": "Two (20+ Diff)",
@@ -34917,6 +35768,18 @@
         "text": "One (30+ Diff)"
       },
       {
+        "value": "Solo Three (40+ Diff)",
+        "text": "Solo Three (40+ Diff)"
+      },
+      {
+        "value": "Solo Two (50+ Diff)",
+        "text": "Solo Two (50+ Diff)"
+      },
+      {
+        "value": "Solo One (60+ Diff)",
+        "text": "Solo One (60+ Diff)"
+      },
+      {
         "value": "Beggar (70)",
         "text": "Beggar (70)"
       },
@@ -34925,8 +35788,16 @@
         "text": "Solo Without (80)"
       },
       {
-        "value": "Klop",
-        "text": "Klop (Minus Points taken or +/-70)"
+        "value": "Open Beggar (90)",
+        "text": "Open Beggar (90)"
+      },
+      {
+        "value": "Solo Without / Win all tricks / No-trump (125)",
+        "text": "Solo Without / Win all tricks / No-trump (125)"
+      },
+      {
+        "value": "Solo Without / Win all tricks (500)",
+        "text": "Solo Without / Win all tricks (500)"
       }
     ],
     "roundsTemp": [
@@ -34975,7 +35846,7 @@
       ],
       [
         "seatCount",
-        3
+        4
       ],
       [
         "tempScore",
@@ -35002,7 +35873,225 @@
       "var result = ${points}"
     ],
     "movable": false,
-    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen. If playing a contract where each player scores alone, use the Declarer button for the Declarer. The other players should each use the white Separate button.\""
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen. If playing a contract where each player scores alone, use the Declarer button for the Declarer. The other players should each use the white Separate button.\"",
+    "version1": {
+      "messageArray": [
+        {
+          "value": "Default",
+          "text": "Click here to choose message"
+        },
+        {
+          "value": "Pass",
+          "text": "Pass"
+        },
+        {
+          "value": "Three (10+ Diff)",
+          "text": "Three (10+ Diff)"
+        },
+        {
+          "value": "Two (20+ Diff)",
+          "text": "Two (20+ Diff)"
+        },
+        {
+          "value": "One (30+ Diff)",
+          "text": "One (30+ Diff)"
+        },
+        {
+          "value": "Beggar (70)",
+          "text": "Beggar (70)"
+        },
+        {
+          "value": "Solo Without (80)",
+          "text": "Solo Without (80)"
+        },
+        {
+          "value": "Klop",
+          "text": "Klop (Minus Points taken or +/-70)"
+        }
+      ],
+      "displayArray": [
+        [
+          "transferScoreButton",
+          0
+        ],
+        [
+          "playerAidButton",
+          1
+        ],
+        [
+          "talonButton",
+          1
+        ],
+        [
+          "tarokBonusTable",
+          1
+        ],
+        [
+          "tarokBonusTable1",
+          0
+        ]
+      ],
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          16
+        ],
+        [
+          "deckType",
+          2
+        ],
+        [
+          "seatCount",
+          3
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "variableScore",
+          3
+        ]
+      ]
+    },
+    "version2": {
+      "messageArray": [
+        {
+          "value": "Default",
+          "text": "Click here to choose message"
+        },
+        {
+          "value": "Called King: Spades",
+          "text": "Called King: Spades"
+        },
+        {
+          "value": "Called King: Clubs",
+          "text": "Called King: Clubs"
+        },
+        {
+          "value": "Called King: Hearts",
+          "text": "Called King: Hearts"
+        },
+        {
+          "value": "Called King: Diamonds",
+          "text": "Called King: Diamonds"
+        },
+        {
+          "value": "Pass",
+          "text": "Pass"
+        },
+        {
+          "value": "Wait",
+          "text": "Wait (Forehand only)"
+        },
+        {
+          "value": "Klop (Minus Points taken or +/-70)",
+          "text": "Klop (Minus Points taken or +/-70) (Forehand only)"
+        },
+        {
+          "value": "Three (10+ Diff)",
+          "text": "Three (10+ Diff) (Forehand only)"
+        },
+        {
+          "value": "Two (20+ Diff)",
+          "text": "Two (20+ Diff)"
+        },
+        {
+          "value": "One (30+ Diff)",
+          "text": "One (30+ Diff)"
+        },
+        {
+          "value": "Solo Three (40+ Diff)",
+          "text": "Solo Three (40+ Diff)"
+        },
+        {
+          "value": "Solo Two (50+ Diff)",
+          "text": "Solo Two (50+ Diff)"
+        },
+        {
+          "value": "Solo One (60+ Diff)",
+          "text": "Solo One (60+ Diff)"
+        },
+        {
+          "value": "Beggar (70)",
+          "text": "Beggar (70)"
+        },
+        {
+          "value": "Solo Without (80)",
+          "text": "Solo Without (80)"
+        },
+        {
+          "value": "Open Beggar (90)",
+          "text": "Open Beggar (90)"
+        },
+        {
+          "value": "Solo Without / Win all tricks / No-trump (125)",
+          "text": "Solo Without / Win all tricks / No-trump (125)"
+        },
+        {
+          "value": "Solo Without / Win all tricks (500)",
+          "text": "Solo Without / Win all tricks (500)"
+        }
+      ],
+      "displayArray": [
+        [
+          "transferScoreButton",
+          0
+        ],
+        [
+          "playerAidButton",
+          1
+        ],
+        [
+          "talonButton",
+          1
+        ],
+        [
+          "tarokBonusTable1",
+          1
+        ],
+        [
+          "tarokBonusTable",
+          0
+        ]
+      ],
+      "settingsDecksArray": [
+        [
+          "cardCount",
+          16
+        ],
+        [
+          "deckType",
+          2
+        ],
+        [
+          "seatCount",
+          4
+        ],
+        [
+          "tempScore",
+          true
+        ],
+        [
+          "variableScore",
+          3
+        ]
+      ]
+    },
+    "versionArray": [
+      {
+        "value": "0",
+        "text": "Click here to choose version"
+      },
+      {
+        "value": "1",
+        "text": "3-players"
+      },
+      {
+        "value": "2",
+        "text": "4-players"
+      }
+    ]
   },
   "playerAid40": {
     "id": "playerAid40",
@@ -35014,7 +36103,50 @@
     "movable": false,
     "movableInEdit": false,
     "onlyVisibleForSeat": [],
-    "playerAid": true
+    "playerAid": true,
+    "onlyVisibleForSeatChangeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY versionNumber OF versionButton}",
+        "operand2": "1",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playerAid40a"
+            ],
+            "property": "display",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playerAid40b"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "playerAid40a"
+            ],
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "playerAid40b"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ]
   },
   "playerAid40a": {
     "id": "playerAid40a",
@@ -35039,7 +36171,7 @@
         "margin": "0px"
       }
     },
-    "html": "<h3>Basics</h3><p><strong>Black Suits:</strong> K, Q, C, J, 10, 9, 8, 7        <strong><span style='color:red'>Red Suits:</span></strong><span style='color:red'> K, Q, C, J, 1, 2, 3, 4      </span> <strong>     Trumps:</strong> Skis, XXI, XX, … II, I<strong><br>Points:</strong> K (5pts), Q (4pts), C (3pts), J (2pts), Skis/XXI/I (5pts), other cards (1pt).<br>Must follow suit, must trump.</p><h3>Bidding, Contracts, and Gameplay</h3><p>(A player who is dealt no trump cards must ask for a new deal, and a game of compulsory klop is played.)<br><br>1. Players whose first turn to speak was earlier have <strong>seniority</strong> in the bidding, and can equal the bids of junior players by holding. A junior player has to bid higher than a senior player or pass. A player who has passed cannot bid again during the auction. The winner of the bidding can play the bid contract or convert to a higher one.<br><br>Klop is played if everybody has passed (each player will score separately).<br><br>In a positive contract, the declarer's side wins if at the end of the play they have at least 35 2/3 of the available 70 points.<br><br>2. Talon is exposed for these contracts: Three (take 3 in a row), Two (take 2 in a column), One (take any card). Other exposed cards go to the defenders captured pile. Declarer's discarded cards go to his captured trick pile (Kings, Skis,XXI,I may never be discarded).<br><br>3. After a positive contract (Three, Two, One) has been chosen and the talon exchanged, there is a <strong>round of bonus announcement</strong> (no bonuses for Solo Without). Beginning with the declarer, each player can pass or make one or more announcements on behalf of their side. Both members of the defender's team will win or lose the same amount (including bonuses, except the penalty for lost XXI, which applies only to the player who lost it).<br><br>4. <strong>Beggar & Solo Without:</strong> declarer plays first. <strong>Other contracts:</strong> Forehand plays first.  </p><h3>Special Rules and Scoring</h3><p><strong>Negative contracts (Beggar & Klop):</strong> 1. You must beat the highest card on the table if possible. 2. You are not allowed to play the pagat unless it's the only card you can play. There's no LostXXI penalty.<br><br><strong>Klop:</strong> trick winner takes a face-down card from the talon. Individually score captured points as negative. A player who loses (takes more than 35 2/3 card points) scores -70. Any player who wins (taking no tricks) score is +70. If any player wins or loses, then only the winners and losers score.<br><br><strong>Pagat Ultimo:</strong> Only the holder of the pagat can announce this, the pagat actually has to win the trick - if not, the bonus is lost even if the trick is won by the partner of the person playing the pagat. If this bonus is not announced, but you play the pagat to the last trick, you are deemed to be attempting to score the bonus. If the bonus is announced, the side making the announcement is obliged to keep the card for as long as they can.<br><br><strong>Lost XXI Rule:</strong> In 'solo without', the declarer does not suffer any penalty if the XXI is in the talon. The penalty for captured XXI also applies if the XXI is found in the talon when it is exposed and the declarer chooses not take the part of the talon which includes it.</p>"
+    "html": "<h3>Basics (3-player)</h3><p><strong>Black Suits:</strong> K, Q, C, J, 10, 9, 8, 7        <strong><span style='color:red'>Red Suits:</span></strong><span style='color:red'> K, Q, C, J, 1, 2, 3, 4      </span> <strong>     Trumps:</strong> Skis, XXI, XX, … II, I<strong><br>Points:</strong> K (5pts), Q (4pts), C (3pts), J (2pts), Skis/XXI/I (5pts), other cards (1pt).<br>Must follow suit, must trump.</p><h3>Bidding, Contracts, and Gameplay</h3><p>(A player who is dealt no trump cards must ask for a new deal, and a game of compulsory klop is played.)<br><br>1. Players whose first turn to speak was earlier have <strong>seniority</strong> in the bidding, and can equal the bids of junior players by holding. A junior player has to bid higher than a senior player or pass. A player who has passed cannot bid again during the auction. The winner of the bidding can play the bid contract or convert to a higher one.<br><br>Klop is played if everybody has passed (each player will score separately).<br><br>In a positive contract, the declarer's side wins if at the end of the play they have at least 35 2/3 of the available 70 points.<br><br>2. Talon is exposed for these contracts: Three (take 3 in a row), Two (take 2 in a column), One (take any card). Other exposed cards go to the defenders captured pile. Declarer's discarded cards go to his captured trick pile (Kings, Skis,XXI,I may never be discarded).<br><br>3. After a positive contract (Three, Two, One) has been chosen and the talon exchanged, there is a <strong>round of bonus announcement</strong> (no bonuses for Solo Without). Beginning with the declarer, each player can pass or make one or more announcements on behalf of their side. Both members of the defender's team will win or lose the same amount (including bonuses, except the penalty for lost XXI, which applies only to the player who lost it).<br><br>4. <strong>Beggar & Solo Without:</strong> declarer plays first. <strong>Other contracts:</strong> Forehand plays first.  </p><h3>Special Rules and Scoring</h3><p><strong>Negative contracts (Beggar & Klop):</strong> 1. You must beat the highest card on the table if possible. 2. You are not allowed to play the pagat unless it's the only card you can play. There's no LostXXI penalty.<br><br><strong>Klop:</strong> trick winner takes a face-down card from the talon. Individually score captured points as negative. A player who loses (takes more than 35 2/3 card points) scores -70. Any player who wins (taking no tricks) score is +70. If any player wins or loses, then only the winners and losers score.<br><br><strong>Pagat Ultimo:</strong> Only the holder of the pagat can announce this, the pagat actually has to win the trick - if not, the bonus is lost even if the trick is won by the partner of the person playing the pagat. If this bonus is not announced, but you play the pagat to the last trick, you are deemed to be attempting to score the bonus. If the bonus is announced, the side making the announcement is obliged to keep the card for as long as they can.<br><br><strong>Lost XXI Rule:</strong> In 'solo without', the declarer does not suffer any penalty if the XXI is in the talon. The penalty for captured XXI also applies if the XXI is found in the talon when it is exposed and the declarer chooses not take the part of the talon which includes it.</p>"
   },
   "tarokBonusTable": {
     "id": "tarokBonusTable",
@@ -36906,13 +38038,13 @@
         "func": "MOVE",
         "from": "deckHolder",
         "to": "tempHolder",
-        "count": 0
+        "count": "all"
       },
       {
         "func": "MOVE",
         "from": "tempHolder",
         "to": "deckHolder",
-        "count": 0
+        "count": "all"
       }
     ],
     "jokerArray": [
@@ -37203,19 +38335,6 @@
     "cardType": "CD",
     "clonedFrom": "cloneMe",
     "id": "764e"
-  },
-  "20kf": {
-    "x": 1626,
-    "y": 987,
-    "width": 103,
-    "height": 160,
-    "z": 68,
-    "text": "cloneMe",
-    "staged": false,
-    "type": "card",
-    "cardType": "CS",
-    "clonedFrom": "cloneMe",
-    "id": "20kf"
   },
   "49bc": {
     "x": 1626,
@@ -37593,140 +38712,6 @@
       "font-size": "26px"
     },
     "text": "Right below here is the card clone master"
-  },
-  "seat6": {
-    "inheritFrom": {
-      "seat1": [
-        "!player",
-        "!color",
-        "!textColor",
-        "!mainColor",
-        "!sortDirection"
-      ]
-    },
-    "type": "seat",
-    "id": "seat6",
-    "index": 6,
-    "x": 1010,
-    "y": 160,
-    "scale": 0,
-    "score": [],
-    "tricks": 0,
-    "turn": false,
-    "tempScore": [],
-    "scoreCoiffeur": [
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " "
-    ],
-    "showing": false,
-    "player": "",
-    "mainColor": "#ffffff",
-    "textColor": "#000000",
-    "glowColor": "#000000",
-    "color": "#999999"
-  },
-  "bidValue6": {
-    "inheritFrom": {
-      "bidValue1": "*"
-    },
-    "id": "bidValue6",
-    "parent": "seat6",
-    "text": "",
-    "image": "",
-    "deckSuitsColor": "",
-    "deckSuitsUni": "",
-    "deckSuits": ""
-  },
-  "bidSuit6": {
-    "inheritFrom": {
-      "bidSuit1": "*"
-    },
-    "id": "bidSuit6",
-    "parent": "seat6",
-    "text": "",
-    "deckSuitsColor": "",
-    "deckSuitsUni": "",
-    "deckSuits": "",
-    "chooser": "",
-    "image": ""
-  },
-  "holder6": {
-    "inheritFrom": {
-      "holder1": "*"
-    },
-    "type": "holder",
-    "id": "holder6",
-    "parent": "seat6",
-    "x": -135,
-    "y": -45,
-    "onEnter": {
-      "activeFace": 1
-    },
-    "dropLimit": 0
-  },
-  "backHolder6": {
-    "inheritFrom": {
-      "backHolder1": "*"
-    },
-    "type": "holder",
-    "id": "backHolder6",
-    "x": -120,
-    "y": -60,
-    "parent": "seat6",
-    "dropLimit": 0
-  },
-  "count6": {
-    "id": "count6",
-    "parent": "seat6",
-    "inheritFrom": {
-      "count1": "*"
-    },
-    "text": 0,
-    "backColor": "#e4e4e4",
-    "textColor": "#6d6d6d"
-  },
-  "showHolder6": {
-    "inheritFrom": {
-      "showHolder1": "*"
-    },
-    "type": "holder",
-    "id": "showHolder6",
-    "x": -225,
-    "y": -70,
-    "parent": "seat6",
-    "scale": 0
-  },
-  "teamGroup6": {
-    "inheritFrom": {
-      "teamGroup1": "*"
-    },
-    "id": "teamGroup6",
-    "parent": "seat6",
-    "activeFace": 0,
-    "scale": 0,
-    "index": 6,
-    "text": "A"
-  },
-  "capturedHolder6": {
-    "inheritFrom": {
-      "capturedHolder1": "*"
-    },
-    "type": "holder",
-    "id": "capturedHolder6",
-    "x": -383,
-    "y": 5,
-    "parent": "seat6",
-    "scale": 0,
-    "dropLimit": 0
   },
   "playerAid18": {
     "type": "scoreboard",
@@ -39928,25 +40913,25 @@
     "y": -1
   },
   "_meta": {
-    "version": 15,
+    "version": 17,
     "info": {
       "name": "Card Games",
-      "image": "/assets/-2012896688_55008",
+      "image": "/assets/-595255614_12546",
       "rules": "",
       "bgg": "",
       "year": "",
       "mode": "vs",
       "time": "5-60",
-      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, and Shobu.</span></div><div><div><br></div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li><span style=\"color: var(--overlayFontColor);\">Lorc</span></li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul><div>Player Aids:</div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul></div></div>",
-      "lastUpdate": 1717945108975,
+      "attribution": "The room and most game elements and mechanics are by LawDawg96 and are released into the Public Domain under CC0.<div><br></div><div>Additional contributions to game pre-sets and player aids&nbsp;<span style=\"color: var(--overlayFontColor);\">released into the Public Domain under CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">by anewcar, jade-alarm, jkandell, and Shobu.</span></div><div><div><br></div><div>Player Aids:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks and Cards</div></div></div><div><ul><li>Crow</li><ul><li>Card design by LawDawg96 and released to the Public Domain under CC0.</li><li>Ally/friend icon used in Auction pre-set by Random Panda and available under CC BY 3.0 at https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Items (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
+      "lastUpdate": 1749351497850,
       "showName": true,
       "skill": "",
-      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations including:\n\n99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bid Whist, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi, Israeli Whist, Klaverjassen, Königrufen, La Bâtarde, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schieber Jass, Secret Agent, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado\n\nv2.0",
+      "description": "This room can be used to play many types of card games. It is especially suited for trick taking and point-trick types of games.  It is highly customizable with many games available with pre-set configurations.\n\nv2.0.1",
       "similarImage": "",
       "similarName": "",
       "similarAwards": "",
       "ruleText": "",
-      "helpText": "<div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Taroky (54 cards)</li><li>Tarot (78 cards)</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game preset.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
+      "helpText": "<div><i><font color=\"#2d5da8\"><b>List of Games:</b></font></i></div><div><i><font color=\"#2d5da8\"><b><br></b></font></i></div><div><span style=\"white-space-collapse: collapse;\">99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bauerntarock, Bavarian Tarock (Haferltarock), Bid Whist, Botifarra, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Dobbm, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi,&nbsp;Israeli Whist, Klaverjassen, Königrufen, La Bâtarde,&nbsp;La Mèn'che, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schafkopf Palatinate, Schieber Jass, Sechser-Schieber Secret Agent, Sheepshead, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado, Ulti, Wallachen</span></div><div><i><font color=\"#2d5da8\"><b><br></b></font></i></div><div><i><font color=\"#2d5da8\"><b>Game Button</b></font></i><div><br></div>Use the Game button to automatically configure the room to a particular game type. If a game type is available in the drop-down menu, it will configure the room using the option settings described below for the most common variation of that game type. Even if you use an available pre-set, you can still change other values using the Option Buttons described below.</div><div><br></div><div>If a game pre-set is not available, you can still play many games by configuring the options. The only limitation is that there will be very little automation.</div><div><br></div><div>To the right of the Game button is the name of the current pre-set game. In many rooms, hovering over that text with the cursor will display tips on how to use the automation in that particular pre-set game.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Option Buttons</b></font></i><br></div></div><div><br></div>Use the option buttons in the lower right to set up room as desired.&nbsp;<div><br></div><div><b>Visuals and Other</b></div><div><ul><li><b>Play Holder</b></li><ul><li>Clicking a card in the hand sends the card to the play holder but click to play can be turned off. See Playing A Card in the automation section below for more information.</li><li>Cards are played to either a common holder in the middle of the board or to the holders adjacent to each seat. The common holder is off by default.</li><li>The common holder can display cards spread out or in a pile. When spread out, the space between cards will get smaller if there are more than 5 so they all fit without extending past the holder. About 12 cards fit before it becomes difficult to identify the cards.</li><li>The play holder can force cards to be face up when they enter or face down.</li><li>A mini-holder can be added on top of the normal holder for captured cards. This is useful in games that require some or all captured cards to be displayed face up during play.</li></ul></ul><ul><li><b>Bid &amp; Score Displays</b></li><ul><li>The scoreboard on the left side of the screen can be displayed or hidden.</li><li>The count of tricks taken per player in this round can be displayed or hidden. The total trick count is always displayed beneath the Recall &amp; Shuffle button.</li><li>The white, square bid value widgets to the left at each player's seat can be displayed or hidden.</li><li>The white, square bid suit widgets to the right at each player's seat can be displayed or hidden.</li><li>The discard holder below the trick count score can be displayed or hidden.</li><li>An activity log showing a history of bidding and other messages can be displayed or hidden.</li><li>Bidding values can be displayed to everyone or kept private until the player chooses to reveal them.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Other</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">The turn button can be set to move the glowing turn indicator on the seats clockwise or counter-clockwise.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">You can change the background color of the room to a different color.</span></li></ul></ul><div><div><b>Decks and Players</b></div><div><ul><li><b>Players</b></li><ul><li>The number of players can be set between 2 and 8. Each player count has pre-defined seats that cannot be changed. Changing the player count while players are seated will kick all players out of existing seats.</li><li>A dummy hand can be added to seat 1 (bottom-center). Cards can be dealt to the dummy hand either face up or face down. All players may see and interact with the dummy hand.</li></ul></ul><ul><li><b>Cards and Decks</b></li><ul><li>Available decks:</li><ul><li>Standard 52 card French-suited deck</li><li>Two standard 52 card decks</li><li>Taroky (54 cards)</li><li>Tarot (78 cards)</li><li>Crow (similar to Rook)</li><li>Spanish (1-12, clubs, coins, cups, swords)</li><li>German (5-A, acorns, bells, leaves, hearts)</li><li>Swiss (6-A, acorns, bells, roses, shields)</li></ul><li>The number of jokers can be set between 0 (default) and 4. The first joker added is the black 1, the second is a red 2, the third is another black 1, and the fourth is another red 2.</li><li>You can set the number of cards dealt to each seat (including the dummy, when used) from 0 to any value.</li><li>There are options to remove certain cards. This works on the standard, Spanish and Crow decks, but not Tarot.</li><li>A delete button can be displayed in the room. To use this feature, check the box in the settings, drag cards that should be removed from the deck to the Discard holder, and press the red Delete button. All cards in the Discard holder are deleted from the room after confirming your intent in a pop-up menu. Those cards can only be returned to the room by reloading the game preset.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Scoring</b></li><ul><li>Team/partnership scoring using North-South and East-West partners is available when playing a 4-player game.</li><li>Small widgets can be added to indicate \"teams\" that change from round-to-round. This makes variable partnership scoring automated when using certain pre-sets. Otherwise, this is just a visual reminder.</li><li>A smaller, temporary scoreboard on the left side of the screen can also be displayed or hidden (default). This is used to calculate bonuses and other values before entering a final tally in the main scoreboard. The temporary scoreboard records only one round of scores. This is mainly used by pre-sets.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automation</b></font></i><div><br></div>Several widgets and buttons are available in the room to assist with automating some basic tasks.</div></div></div><div><div><ul><li><b>Deal</b></li><ul><li>This will deal the number of cards set in the Decks &amp; Players button automatically to each seat (and to the dummy hand, if being used).</li><li>This button only deals cards in the holder next to it. To start a new round, first press the Recall &amp; Shuffle button.</li></ul></ul></div><div><ul><li><b>Recall &amp; Shuffle</b></li><ul><li>This ends the current round, erases the activity log, and recalls and shuffles the cards.</li></ul></ul><div><ul><li><b>Take 1</b></li><ul><li>This sends one card from the main deck holder to the hand of the player pressing the button.</li></ul></ul></div></div></div><div><ul><li><b>Playing A Card</b></li><ul><li>When click to play is enabled:</li><ul><li>Any player can play the first trick of a new round. After that, the turn indicator moves to the next player. The turn indicator must be correct for click-to-play to work.</li><li>During a player's turn, clicking on a card will immediately play it to the selected play area.</li><li>While players are waiting for their turn, they can click on a card to stage it for play (it will raise up a few pixels above the other cards). Any card in that position when the turn indicator moves to that player will be immediately played.</li><li>If any of these scenarios are incompatible with the game you are playing, turn click to play off. You can always manually drag cards, even when click to play is enabled.</li></ul><li>The circles with numbers on the upper-left of each seat indicate the number of cards in that player's hand.</li></ul></ul></div><div><ul><li><b>Primary Scoreboard</b></li><ul><li>The red and green buttons above the scoreboard decrease and increase the score for the current round for the player pressing the button. Note: the +/- buttons may work on the secondary scoreboard instead; see below.</li><li>A new round is created every time the Recall &amp; Shuffle button is pressed.</li><li>Players can also click on the scoreboard widget directly. A pop-up prompts for which player score to set, which round, and a value. Entering data this way immediately overrides existing values in the selected round for the selected player.</li><li>If a score system was selected in the options menu, then an Add Card Points button, trump indicator, declarer indicator, and possibly a Transfer Score button are displayed at the bottom of the scoreboard.</li><ul><li>The trump indicator is set automatically based on the last bid suit button pressed by a player or by rolling the die (only displayed in some games in the upper right-hand corner for a random trump). But you can override that by clicking on the square trump widget to rotate through the options. If card point values are different for trump cards or when a bid of \"no trumps\" or \"all trumps\" changes point values, then this widget must be set correctly before entering scores. The indicator can be dragged around the room.</li><li>The Declarer indicator shows the player making the last bid. But you can override that by clicking on it to rotate through the names of the players.</li><li>The Add Card Points button will apply the pre-defined point values to the secondary scoreboard for the current round. If there are points already in the current round, pressing the button will replace the existing values with the new ones. Only cards in the holders near each players' seat are counted. There are 3 holders near each players' seat (not all are visible) and all 3 will be counted for that player.</li><li>The Transfer Score button is available in some pre-set games to move and/or convert scores between the secondary scoreboard and the main scoreboard. If available, check the game tips by hovering over the name of the pre-set. If not available, you need to manually enter values in the primary scoreboard before pressing the Recall &amp; Shuffle button.</li></ul></ul></ul><ul><li><b>Secondary Scoreboard</b></li><ul><li>The secondary scoreboard is a smaller scoreboard below the main one. It is used in many pre-sets as a temporary place to calculate interim scores, such as the value of captured card points.</li><li>In addition to the Card Points row, other rows may be available. Drag the slider to the right of the secondary scoreboard up and down to highlight different rows. The red and green +/- buttons work on whichever row is highlighted.</li><li>The red and green +/- buttons can only work on one scoreboard at a time. To reenable the buttons on the primary scoreboard, move the slider all the back up to the top.</li></ul></ul><ul><li><b>Bidding</b></li><ul><li>The square widget on the left side of the player's seat is used to indicate a bid value. The widget on the right is used to indicate the bid's suit.</li><li>Pressing either widget will open a menu in the middle of the screen only visible to that player. On that menu, the player can press numbers and/or suits to indicate a bid. Numbers are entered like a calculator one at a time. Use the blank square to erase a number entry and start over.</li><li>Bids are immediately reflected on the white square widgets for other players to see unless secret bidding is enabled.</li><li>Pressing the green Bid button will optionally display the bid in an activity log in the lower right corner in reverse chronological order. If secret bidding is enabled, the activity log only reports that the player made a bid. The bid history is erased when the cards are recalled for the next round.</li><li>If additional messages are enabled in the pre-set, then a white rectangular Message button appears above the activity log. Pressing that button allows players to choose from a selection of game-related messages that are posted in the activity log.</li><li>To close the bidding menu, press the Close button, the geen Bid button, or once again press one of the white square bidding widgets.</li><li>If secret bidding was enabled in the settings, then at the appropriate time, each player should press the Actions button to the right of the hand. In the pop-up menu, press the Show Bids button. Press the Actions button again to close the pop-up.</li></ul></ul><ul><li><b>Sorting</b></li><ul><li>A Sort button to the left of the hand will sort cards in the hand only for the player pressing the button. Suits are always sorted left to right in order: clubs, diamonds, hearts, spades when using the standard deck. Other decks have similar default sorting.</li><li>The first time a player presses the Sort button, the player is prompted to choose how to sort by value within each suit: high to low or low to high. After making the selection, the player will not see the option again until a new pre-set game is selected.</li><li>After making selections, all subsequent deals to those players will automatically be sorted.</li><li>In some pre-set games, pressing the sort button again after trumps is chosen will change the sort order.</li><li>Some pre-set games also add an additional sort button for unique behavior linked to that game.</li></ul></ul><ul><li><b>Take</b></li><ul><li>The Take button moves all cards played in the round to a holder belonging to the player pressing the button. The cards are turned face-down and placed into a pile.</li><ul><li>If using the common play holder, the cards are moved to the holder near the player's seat.</li><li>If not using the common play holder, the cards are moved to a holder behind and just slightly above and to the right of the holder near the player's seat. This holder is invisible, but can be used, so be careful if manually dragging cards.</li><li>If using the mini-holder to display captured cards, cards can be manually dragged from the holder with the captured cards to the mini-holder. Some games pre-sets do that automatically.</li></ul><li>Clicking the button will increase the count of the number of tricks taken by 1 in the trick scoring widget on the right side of the room.</li><li>The turn indicator moves to the seat of the player pressing the button to lead the next trick.</li></ul></ul><ul><li><b>Actions</b></li><ul><li>This displays a pop-up menu with other buttons that can be used in the game.</li><li>The Show Hand button will create a mini holder over the seat of the player pressing the button. Copies of the cards in the hand of the player will be displayed there in miniature. No player can interact with those copies. They appear and disappear as needed to reflect the cards in the hand of that player.</li><li>The Show Bid button is used as described above to reveal bids that had been secret.</li><li>The Show Arrow button displays a black and white arrow to the left of the hand that can point up or down. This is used in some pre-set games to indicate when low cards are high and vice versa.</li></ul></ul><ul><li><b>Items</b></li><ul><li>This displays a pop-up menu with multiple widgets that can be dragged around and used in the game.</li><li>Most of the widgets (except for the 4 card suits) change color to reflect the color of the player that took it.</li><li>The Label widget can be dragged by grabbing the thick border and you can type short messages in it by clicking in the text area.</li><li>The widgets with numbers can be clicked to change.</li><ul><li>The circular widgets change from 1 to x1, 6 to x6, etc.</li><li>The square widget is a doubling cube and cycles through x2, x4, x8, x16, x32, x64.</li></ul><li>To remove a single widget from the board, just drop it anywhere on the Items \"tray\".</li><li>A player can delete all of their own widgets by pressing the Recall Mine button.</li><li>Any player can delete all of the widgets in the room by pressing the Recall All button.</li></ul></ul><ul><li><b>Reset Scores</b></li><ul><li>The reset scores button will erase all player scores in the scoreboard widget and the trick count in the trick scoring widget. It also deletes all widgets taken from the Items \"tray\".</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Making a New Pre-Set</i></b><br></div></div><div><br></div><div>If you are interested in adding your own pre-set (and hopefully contribute it back to the public library), then see the wiki discussion at&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>",
       "similarDesigner": "",
       "variantImage": "",
       "variant": "",
@@ -43025,5 +44010,3426 @@
         "align-items": "center"
       }
     }
+  },
+  "tarokBonusTable1": {
+    "id": "tarokBonusTable1",
+    "x": 1250,
+    "y": 286,
+    "width": 350,
+    "height": 180,
+    "layer": -1,
+    "z": 74,
+    "movable": false,
+    "image": "/assets/-880949750_4011",
+    "scale": 0
+  },
+  "playerAid40b": {
+    "id": "playerAid40b",
+    "parent": "playerAid40",
+    "fixedParent": true,
+    "x": -105,
+    "y": 125,
+    "height": 960,
+    "borderRadius": 4,
+    "z": 80474,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue",
+        "font-size": "13.5px"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Basics (4-player)</h3><p><strong>Black Suits:</strong> K, Q, C, J, 10, 9, 8, 7        <strong><span style='color:red'>Red Suits:</span></strong><span style='color:red'> K, Q, C, J, 1, 2, 3, 4      </span> <strong>     Trumps:</strong> Skis, XXI, XX, … II, I<strong><br>Points:</strong> K (4 1&frasl;3 pts), Q (3 1&frasl;3 pts), C (2 1&frasl;3 pts), J (1 1&frasl;3 pts), Skis/XXI/I (4 1&frasl;3 pts), other cards (1&frasl;3 pt).</p><h3>Gameplay</h3><p><strong>I. CONTRACT SELECTION</strong><br>Forehand speaks first and <strong>must wait</strong><br>Players whose first turn to speak was earlier have <strong>seniority</strong> in the bidding, and can equal the bids of junior players by holding. A junior player has to bid higher than a senior player or pass. A player who has passed cannot bid again during the auction. The winner of the bidding can play the bid contract or convert to a higher one.<br><br>Klop is played if everybody has passed (each player will score separately). A Klop is also played if a player is dealt no trump cards (he must ask for a new deal, and a game of compulsory klop is played)<br><br><strong>II. CALL A PARTNER</strong><br> If the contract is one in which declarer gets a partner, the declarer names a suit. The holder of the king of that suit becomes declarer's partner but does not tell anyone who they are. You also play alone if the called king happens to be in the talon (If the king called by the declarer happens to be in the talon, then the declarer can win the remainder of the talon (the part not taken) by picking up the part of the talon that contains the called king and winning a trick with that king.<br><br><strong>III. TALON EXCHANGE</strong><br> <strong>After the contract selection is made</strong>, the Talon is exposed for these positive contracts: <br>Three / Solo Three (declarer takes 3 cards in a row), Two / Solo Two (takes 2 in a column), One / Solo One(takes any single card). <br>Declarer's discarded cards go to his captured trick pile (Kings, Skis,XXI,I may never be discarded).<br>Other exposed cards go to the defenders captured pile.<br><br>If the contract is Solo Three, Solo Two or Solo one, the declarer can, after exchanging cards with the talon, increase the contract to <strong>All Tricks / No-trump</strong>. This is the normal way in which this contract arises - it cannot be bid directly with the talon. <br><br><strong>IV. ANNOUNCEMENTS</strong><br>After a contract of Three /  Solo Three, Two / Solo Two, One / Solo One (but not for Solo Without) has been chosen and the talon exchanged, each player (beginning with the declarer) can pass or make one or more announcements on behalf of their side. <br>Both members of the defender's team will win or lose the same amount (except the penalty for lost XXI, which applies only to the player who lost it).<br><br><strong>V. DOUBLING</strong><br>Contract and bonuses can be doubled (independently) by defenders (up to x16 if declarer side also double). IT's illegal to double an announcement unless the player doubling knows for certain that they are on the opposite team from the announcer.<br><br><strong>VI. THE PLAY </strong><br><strong>Beggar, Solo Without,Open Beggar, All-Tricks:</strong> declarer plays first.<br> <strong>Other contracts:</strong> Forehand plays first.<br><br><strong>Positive contracts</strong> (Three,Solo Three, Two, Solo Two, One, Solo One, Solo Without, All-Tricks): <br>Must follow suit, must trump.<br>In a positive contract, the declarer's side wins if at the end of the play they have at least 35 2&frasl;3 of the available 70 points. Difference is calculated from 35 pts. <br><br><strong>Negative contracts</strong> (Beggar, Open Beggar & Klop):<br> 1. You must beat the highest card on the table if possible (must trump still apply). 2. You are not allowed to play the pagat unless it's the only card you can play. 3. There's no LostXXI penalty.</strong><br>Beggar: Declarer must take no tricks.<br>Klop: trick winner takes a face-down card from the talon. Individually score captured points as negative. A player who loses (takes more than 35 2 2&frasl;3 pts) scores -70. Any player who wins (taking no tricks) scores +70. If any player wins or loses, then only the winners and losers score.<br></p><h3>Notes</h3><p><strong>Pagat (I) Ultimo:</strong> Only the holder of the pagat (I) can announce this, the pagat actually has to win the trick - if not, the bonus is lost even if the trick is won by the partner of the person playing the pagat. If this bonus is not announced, but you play the pagat to the last trick, you are deemed to be attempting to score the bonus. If the bonus is announced, the side making the announcement is obliged to keep the card for as long as they can.<br><br><strong>King Ultimo</strong>: win the called king in the last trick (only the called player can announce this). Either partner can win the last trick with the called king in it.<br><br><strong>Lost XXI Rule:</strong> The penalty for captured XXI still applies if the XXI is found in the talon when it is exposed and the declarer chooses not take the part of the talon which includes it. In Solo Without, the declarer does not suffer any penalty if the XXI is in the talon. </p>",
+    "width": 1490,
+    "display": false
+  },
+  "playerAid30b": {
+    "id": "playerAid30b",
+    "parent": "playerAid30",
+    "x": -813,
+    "y": -213,
+    "width": 745,
+    "height": 730,
+    "z": 80503,
+    "movable": false,
+    "enlarge": 0,
+    "image": "/assets/-2196274_31743"
+  },
+  "gameID48": {
+    "id": "gameID48",
+    "x": -221,
+    "y": -312,
+    "z": 80610,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Ulti",
+    "displayArray": [
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "ultiBidTable",
+        1
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Use Items button during play to take out widgets as needed to indicate various game conditions.\\a\\a After round is over, press Add Card Points button. To score bonus points in the small scoreboard, move the scrollbar to highlight the row and press the green/red +/- buttons.\\a\\a When score on the temporary scoreboard is correct, move scrollbar all the way to the top and then the green/red +/- buttons will work on the main scoreboard.\"",
+    "roundsTemp": [
+      "Card Points",
+      "Marriage"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        0,
+        0,
+        0
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ]
+    ],
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "dealRoutine": [
+      {
+        "func": "MOVE",
+        "from": "deckHolder",
+        "to": "hand",
+        "count": 2
+      },
+      {
+        "func": "CALL",
+        "widget": "routines",
+        "routine": "autoSortRoutine"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 140
+      }
+    ],
+    "scoreExceptionsRoutine": [
+      "var result = ${points}",
+      "var last = ${PROPERTY lastPressedBy OF takeButton}",
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "operand2": "${last}",
+        "thenRoutine": [
+          "var result = ${result} + 10"
+        ]
+      }
+    ]
+  },
+  "playerAid48": {
+    "id": "playerAid48",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid48a": {
+    "id": "playerAid48a",
+    "parent": "playerAid48",
+    "fixedParent": true,
+    "x": 71,
+    "y": 189,
+    "width": 1230,
+    "height": 760,
+    "borderRadius": 4,
+    "z": 80611,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Auction</h3><br>The first player must name a contract and discard any two cards into the talon. If another player wants to bid: they pick up the talon, discard any two cards to form a new talon, then announce a contract with a higher value than the previous one. <br>Some contracts can be combined. Hearts is a preferential suit, contracts and bonuses are worth double in it.<br>The auction goes around until three consecutives passes, it means that players can overbid themselves. Last one bidding becomes the declarer, the other two are the defenders.<h3>The Play</h3><br>Declarer leads to the first trick, after naming trumps if applicable.<br><strong>Players must follow suit, must beat the highest card in the trick if they can, and play trumps if they’re void of the led suit.</strong><br>Players can announce marriages (KQ) values (without naming their suit) when playing their card to the first trick (Examples: I have a 20. I have a 40 and a 20. I have two 20s).<br>A defender can announce Kontra on any element of the contract before playing their first card. Re-kontra (by the declarer) and higher kontra levels are announced at the end of the first trick.<br><br><h3>Contracts</h3><br>No-trump contracts are standalone contracts, and there are no point values in cards or the last trick.<br><br>- Surrender : declarer can give up, with just a simple Pass contract, before the first trick and lose a doubled game.<br>- Simple :  Win more points (trick + marriages) than the opponents combined<br>- Ulti :  Win the last trick with the 7 of trumps<br><br>- 20-100 :  Win 100 points with only one 20 meld (and no 40 meld).<br>- 40-100 : Win 100 points with the 40 meld (and no 20 meld).<br><br>- 4 Aces : Win all four Aces.<br><br>- Nullo : Lose all tricks. No-trumps.<br>- Slam : Win all tricks. Can be trumps or no-trumps.<br><br>- Open Nullo : Lose all tricks, everyone plays with open cards after first trick.<br>- Open Slam : Win all tricks, everyone plays with open cards after first trick.<h3>Bonuses</h3><br>Silent bonuses are not announced, but can be achieved by any side.<br>Losing an Ulti, must be paid out even if it’s silent, and has an extra penalty that equals its base value (2,4 or 8 points). This penalty is not affected by Kontra levels.<br>"
+  },
+  "ultiBidTable": {
+    "id": "ultiBidTable",
+    "x": 1243,
+    "y": 269,
+    "width": 350,
+    "height": 550,
+    "layer": -1,
+    "z": 81018,
+    "movable": false,
+    "image": "/assets/81054462_33075",
+    "scale": 0
+  },
+  "gameID49": {
+    "id": "gameID49",
+    "x": -88,
+    "y": -312,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Schafkopf Palatinate (3P)",
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a After round is over, press Add Card Points button.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Simple (1)",
+        "text": "Simple (1)"
+      },
+      {
+        "value": "Solo (2)",
+        "text": "Solo (2) "
+      },
+      {
+        "value": "Heart Solo (3)",
+        "text": "Heart Solo (3)"
+      },
+      {
+        "value": "Solo Tout (4)",
+        "text": "Solo Tout (4)"
+      },
+      {
+        "value": "Solo Tout Heart (6)",
+        "text": "Solo Tout Heart (6)"
+      },
+      {
+        "value": "Top Three Trumps",
+        "text": "Top Three Trumps (+1 ..)"
+      },
+      {
+        "value": "Surrender",
+        "text": "Surrender"
+      },
+      {
+        "value": "Refuse Surrender",
+        "text": "Refuse Surrender (must score Schneider)"
+      },
+      {
+        "value": "Double",
+        "text": "Double"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "capturedHolder",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "sort1": "sortSchafkopf",
+    "transferButtonReturn": false,
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          "var seat = 'seat' + ${key}",
+          "var cardPoints = ${PROPERTY tempScore OF $seat}",
+          "var cardPoints = ${cardPoints.0}",
+          "var value = ${value} - ${cardPoints}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "playerAid49": {
+    "id": "playerAid49",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid49a": {
+    "id": "playerAid49a",
+    "parent": "playerAid49",
+    "fixedParent": true,
+    "x": 212,
+    "y": 219,
+    "width": 900,
+    "height": 150,
+    "borderRadius": 4,
+    "z": 80604,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Suits</h3><p>Rank/points: A(11), 10(10), K(4), Q(3), J(2), 9, 8, 7<p>Trump suit: Q<font size=5 >&#9827;</font>, Q<font size=5 >&#9824;</font>, Q<font size=5 >&#9829;</font>, Q<font size=5 >&#9830;</font>, J<font size=5 >&#9827;</font>, J<font size=5 >&#9824;</font>, J<font size=5 >&#9829;</font>, J<font size=5 >&#9830;</font>, (any suit)A, 10, K, 9, 8, 7"
+  },
+  "gameID50": {
+    "id": "gameID50",
+    "x": 45,
+    "y": -312,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Botifarra",
+    "gameID": true,
+    "hintText": "\"A (5pts), K (4pts), Q (3pts), J (2pts), 10 (1pts) + 1pt per trick\"",
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        12
+      ],
+      [
+        "hideCards",
+        1
+      ],
+      [
+        "seatCount",
+        4
+      ],
+      [
+        "teamScore",
+        true
+      ],
+      [
+        "tempScore",
+        true
+      ]
+    ],
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ]
+    ]
+  },
+  "gameID51": {
+    "id": "gameID51",
+    "x": 1700,
+    "y": 1235,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Bauerntarock",
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "customFaceCount": 7,
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "Talon",
+        "text": "Talon"
+      },
+      {
+        "value": "No Talon",
+        "text": "No Talon"
+      },
+      {
+        "value": "Double",
+        "text": "Double"
+      },
+      {
+        "value": "Re-Double",
+        "text": "Re-Double"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points",
+      "Spatz"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        11
+      ],
+      [
+        "hideCards",
+        4
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "transferButtonReturn": false,
+    "dealRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 137
+      }
+    ],
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ]
+  },
+  "gameID52": {
+    "id": "gameID52",
+    "x": 1833,
+    "y": 1235,
+    "z": 80630,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Dobbm",
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "customFaceCount": 7,
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "Talon",
+        "text": "Talon"
+      },
+      {
+        "value": "Solo",
+        "text": "Solo"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        8
+      ],
+      [
+        "hideCards",
+        4
+      ],
+      [
+        "seatCount",
+        4
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "transferButtonReturn": false,
+    "dealRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 137
+      }
+    ],
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ]
+  },
+  "gameID53": {
+    "id": "gameID53",
+    "x": 1966,
+    "y": 1235,
+    "z": 80643,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Bavarian Tarock (Haferltarock)",
+    "0deckSuitsColor": [
+      "",
+      "",
+      "#e50932",
+      "",
+      "#e50932",
+      "",
+      ""
+    ],
+    "customFaceCount": 7,
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "Talon",
+        "text": "Talon"
+      },
+      {
+        "value": "No Talon",
+        "text": "No Talon"
+      }
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        11
+      ],
+      [
+        "hideCards",
+        4
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortAceTen",
+    "sort2": "suit",
+    "transferButtonReturn": false,
+    "dealRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "roundSlider"
+        ],
+        "property": "y",
+        "value": 137
+      }
+    ]
+  },
+  "seat6": {
+    "id": "seat6",
+    "x": 1010,
+    "y": 160,
+    "type": "seat",
+    "inheritFrom": {
+      "seat1": [
+        "!player",
+        "!color",
+        "!textColor",
+        "!mainColor",
+        "!sortDirection"
+      ]
+    },
+    "index": 6,
+    "scale": 0,
+    "score": [],
+    "tricks": 0,
+    "turn": false,
+    "tempScore": [],
+    "scoreCoiffeur": [
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+    "showing": false,
+    "player": "",
+    "mainColor": "#ffffff",
+    "textColor": "#000000",
+    "glowColor": "#000000",
+    "color": "#999999"
+  },
+  "bidValue6": {
+    "inheritFrom": {
+      "bidValue1": "*"
+    },
+    "id": "bidValue6",
+    "parent": "seat6",
+    "text": "",
+    "image": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": ""
+  },
+  "bidSuit6": {
+    "inheritFrom": {
+      "bidSuit1": "*"
+    },
+    "id": "bidSuit6",
+    "parent": "seat6",
+    "text": "",
+    "deckSuitsColor": "",
+    "deckSuitsUni": "",
+    "deckSuits": "",
+    "chooser": "",
+    "image": ""
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "parent": "seat6",
+    "x": -135,
+    "y": -45,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 0
+  },
+  "backHolder6": {
+    "inheritFrom": {
+      "backHolder1": "*"
+    },
+    "type": "holder",
+    "id": "backHolder6",
+    "x": -120,
+    "y": -60,
+    "parent": "seat6",
+    "dropLimit": 0
+  },
+  "count6": {
+    "id": "count6",
+    "parent": "seat6",
+    "inheritFrom": {
+      "count1": "*"
+    },
+    "text": 0,
+    "backColor": "#e4e4e4",
+    "textColor": "#6d6d6d"
+  },
+  "showHolder6": {
+    "inheritFrom": {
+      "showHolder1": "*"
+    },
+    "type": "holder",
+    "id": "showHolder6",
+    "x": -225,
+    "y": -70,
+    "parent": "seat6",
+    "scale": 0
+  },
+  "teamGroup6": {
+    "inheritFrom": {
+      "teamGroup1": "*"
+    },
+    "id": "teamGroup6",
+    "parent": "seat6",
+    "activeFace": 0,
+    "scale": 0,
+    "index": 6,
+    "text": "A"
+  },
+  "capturedHolder6": {
+    "inheritFrom": {
+      "capturedHolder1": "*"
+    },
+    "type": "holder",
+    "id": "capturedHolder6",
+    "x": -383,
+    "y": 5,
+    "parent": "seat6",
+    "scale": 0,
+    "dropLimit": 0
+  },
+  "gameID54": {
+    "id": "gameID54",
+    "x": 177,
+    "z": 80605,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Wallachen",
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ],
+      [
+        "scoreButton",
+        0
+      ],
+      [
+        "trump",
+        1
+      ],
+      [
+        "bidWinner",
+        0
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"\"",
+    "messageArray": [
+      {
+        "value": "Default",
+        "text": "Click here to choose message"
+      },
+      {
+        "value": "Pass",
+        "text": "Pass"
+      },
+      {
+        "value": "6",
+        "text": "6"
+      },
+      {
+        "value": "7",
+        "text": "7"
+      },
+      {
+        "value": "8",
+        "text": "8"
+      },
+      {
+        "value": "9",
+        "text": "9"
+      },
+      {
+        "value": "Bettel",
+        "text": "Bettel"
+      },
+      {
+        "value": "Mord",
+        "text": "Mord"
+      }
+    ],
+    "nextTrump": 0,
+    "settingsArray": [
+      [
+        "centerShow",
+        false
+      ],
+      [
+        "showBidHistory",
+        true
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        10
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        3
+      ],
+      [
+        "tempScore",
+        false
+      ]
+    ],
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "calcBidRoutine": [
+      "var bidValues = '0,3,0,1,2' split ','",
+      "var result = 0",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "holder${thisSeatIndex}",
+        "collection": "bidCards"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "source": "bidCards",
+            "property": "suit",
+            "value": "${value}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "var suitTotal = ${COUNT} * ${bidValues.$value}",
+          "var result = ${result} + ${suitTotal}"
+        ]
+      }
+    ],
+    "playEnterRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "dropShadowOwner"
+      },
+      {
+        "func": "IF",
+        "operand1": "${dropShadowOwner}",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calcBidRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "99Bid${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${result}"
+          }
+        ]
+      }
+    ],
+    "playLeaveRoutine": [
+      {
+        "func": "GET",
+        "collection": "child",
+        "property": "dropShadowOwner"
+      },
+      {
+        "func": "IF",
+        "operand1": "${dropShadowOwner}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "calcBidRoutine"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "99Bid${thisSeatIndex}"
+            ],
+            "property": "text",
+            "value": "${result}"
+          }
+        ]
+      }
+    ],
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "takeSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "scoreSpecial"
+        ],
+        "property": "scale",
+        "value": 1
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "nextTrump",
+        "value": 0
+      }
+    ],
+    "scoreSpecialRoutine": [
+      "var bidValues = '0,3,0,1,2' split ','",
+      "var nextTrumpArray = '2,3,4,1' split ','",
+      "var contractValues = '0,30,20,10' split ','",
+      "var bidArray = []",
+      "var winnerArray = []",
+      "var allWinners = 0",
+      "// Calculate what each player bid.",
+      {
+        "func": "FOREACH",
+        "in": [
+          "holder1",
+          "holder3",
+          "holder7"
+        ],
+        "loopRoutine": [
+          "var bidTotal = 0",
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "_ancestor",
+            "value": "${value}",
+            "collection": "bidCards"
+          },
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "SELECT",
+                "source": "bidCards",
+                "property": "suit",
+                "value": "${value}"
+              },
+              {
+                "func": "COUNT"
+              },
+              "var suitTotal = ${COUNT} * ${bidValues.$value}",
+              "var bidTotal = ${bidTotal} + ${suitTotal}"
+            ]
+          },
+          "var bidArray = push ${bidTotal}"
+        ]
+      },
+      "// Calculate which and how many players made bid.",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var tricksTotal = ${PROPERTY _totals OF trickCount}",
+          {
+            "func": "IF",
+            "operand1": "${tricksTotal.$value}",
+            "operand2": "${bidArray.$key}",
+            "thenRoutine": [
+              "var allWinners = ${allWinners} + 1",
+              "var thisHolder = 'holder' + ${value}",
+              "var winnerArray = push ${thisHolder}"
+            ],
+            "elseRoutine": [
+              "var winnerArray = push 'null'"
+            ]
+          }
+        ]
+      },
+      "// Calculate which player, if any, tried for extra points through a bid declaration or hand reveal",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "holder1",
+          "holder3",
+          "holder7"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "GET",
+        "property": "_ancestor",
+        "variable": "declared"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${declared}"
+      },
+      {
+        "func": "GET",
+        "property": "parent"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${parent}"
+      },
+      {
+        "func": "GET",
+        "property": "index"
+      },
+      "var showHolder = 'showHolder' + ${index}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY scale OF $showHolder}",
+        "relation": ">",
+        "operand2": 0,
+        "thenRoutine": [
+          "var revealed = ${declared}"
+        ]
+      },
+      "// Calculate if player that declared or revealed got enough tricks",
+      "var declaredWon = ${declared} in ${winnerArray}",
+      "// Calculate and enter score",
+      {
+        "func": "FOREACH",
+        "in": [
+          1,
+          3,
+          7
+        ],
+        "loopRoutine": [
+          "var thisHolder = 'holder' + ${value}",
+          "var didWin = ${thisHolder} in ${winnerArray}",
+          "var points = 0",
+          "// Add 1 point for each trick captured no matter what",
+          "var points = ${tricksTotal.$value}",
+          "// Add 10, 20, or 30 points depending on whether 3, 2, or 1 players met their goal",
+          {
+            "func": "IF",
+            "condition": "${didWin}",
+            "thenRoutine": [
+              "var thisContractValue = ${contractValues.$allWinners}",
+              "var points = ${points} + ${thisContractValue}"
+            ]
+          },
+          "// If the person declaring or revealing won their bid, then give that player 30 points for declaring or 60 points for revealing",
+          {
+            "func": "IF",
+            "condition": "${declaredWon}",
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${declared}",
+                "operand2": "${thisHolder}",
+                "thenRoutine": [
+                  "var points = ${points} + 30",
+                  {
+                    "func": "IF",
+                    "operand1": "${revealed}",
+                    "relation": "!=",
+                    "operand2": null,
+                    "thenRoutine": [
+                      "var points = ${points} + 30"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "// If the person declaring or revealing did not win their bid, then give the other players 30 points for declaring or 60 points for revealing",
+          {
+            "func": "IF",
+            "condition": "${declaredWon}",
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${declared}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "IF",
+                    "operand1": "${declared}",
+                    "relation": "!=",
+                    "operand2": "${thisHolder}",
+                    "thenRoutine": [
+                      "var points = ${points} + 30",
+                      {
+                        "func": "IF",
+                        "operand1": "${revealed}",
+                        "relation": "!=",
+                        "operand2": null,
+                        "thenRoutine": [
+                          "var points = ${points} + 30"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "seat${value}",
+            "value": "${points}"
+          }
+        ]
+      },
+      "\\ Set trump for next round",
+      "var nextTrump = ${nextTrumpArray.$allWinners}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "nextTrump",
+        "value": "${nextTrump}"
+      }
+    ],
+    "takeSpecialRoutine": [
+      {
+        "func": "MOVE",
+        "from": "centerHolder",
+        "to": "backHolder${seatIndex}",
+        "count": 999,
+        "face": 0
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": false
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "seat${seatIndex}"
+        ],
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "SCORE",
+        "mode": "inc",
+        "value": 1,
+        "property": "tricks",
+        "seats": "${seatID}",
+        "round": 1
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "tricksCount"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "y": -312
+  },
+  "gameID55": {
+    "id": "gameID55",
+    "x": 310,
+    "y": -312,
+    "z": 80609,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Sheepshead",
+    "capturedArray": [],
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Bid using square white bid widget and Message button.\\a\\a Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\\a\\a After round is over, press Add Card Points button. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The Card Points row should automatically show the same for each player on the same 'team' for this round. \\a\\a When ready to enter final score on main scoreboard, do so using the red/green +/- buttons.\"",
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [],
+      [],
+      []
+    ],
+    "settingsArray": [
+      [
+        "capturedHolder",
+        false
+      ],
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        true
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        6
+      ],
+      [
+        "hideCards",
+        6
+      ],
+      [
+        "seatCount",
+        5
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ],
+      [
+        "contractType",
+        false
+      ]
+    ],
+    "sort1": "sortSheepshead",
+    "transferButtonReturn": false,
+    "preSetExceptionsRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "trump"
+        ],
+        "property": "scale",
+        "value": 0
+      }
+    ],
+    "sortPreExceptionsRoutine": [
+      "var auctionType = ${PROPERTY auctionType OF contractType}",
+      "var noQueens = ${PROPERTY noQueensArray} includes ${auctionType}",
+      {
+        "func": "IF",
+        "condition": "${noQueens}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "C 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 15.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "S 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 3.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "H 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 21.5
+          },
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "D 3Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": 9.5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SELECT",
+            "type": "card",
+            "property": "rank",
+            "value": "Q"
+          },
+          {
+            "func": "SET",
+            "property": "sortSchafkopf",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round."
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          "var seat = 'seat' + ${key}",
+          "var cardPoints = ${PROPERTY tempScore OF $seat}",
+          "var cardPoints = ${cardPoints.0}",
+          "var value = ${value} - ${cardPoints}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "playerAid55": {
+    "id": "playerAid55",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid55a": {
+    "id": "playerAid55a",
+    "parent": "playerAid55",
+    "fixedParent": true,
+    "x": 212,
+    "y": 219,
+    "width": 900,
+    "height": 150,
+    "borderRadius": 4,
+    "z": 80604,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Suits</h3><p>Rank/points: A(11), 10(10), K(4), Q(3), J(2), 9, 8, 7<p>Trump suit: Q<font size=5 >&#9827;</font>, Q<font size=5 >&#9824;</font>, Q<font size=5 >&#9829;</font>, Q<font size=5 >&#9830;</font>, J<font size=5 >&#9827;</font>, J<font size=5 >&#9824;</font>, J<font size=5 >&#9829;</font>, J<font size=5 >&#9830;</font>, A<font size=5 >&#9830;</font>, 10<font size=5 >&#9830;</font>, 9<font size=5 >&#9830;</font>, 8<font size=5 >&#9830;</font>, 7<font size=5 >&#9830;</font><br>Non-Trump suits: A, 10, K, 9, 8, 7"
+  },
+  "gameID56": {
+    "id": "gameID56",
+    "x": 575,
+    "y": 1235,
+    "z": 80615,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "Sechser-Schieber",
+    "contractArray": {
+      "Spades": [
+        "Spades <img src='/i/noto-emoji/emoji_u2660.svg' height=18 />",
+        "#e3f0d6",
+        "x1"
+      ],
+      "Clubs": [
+        "Clubs <img src='/i/noto-emoji/emoji_u2663.svg' height=18/>",
+        "#e3f0d6",
+        "x1"
+      ],
+      "Diamonds": [
+        "Diamonds <img src='/i/noto-emoji/emoji_u2666.svg' height=18/>",
+        "#fcf2c7",
+        "x1"
+      ],
+      "Hearts": [
+        "Hearts <img src='/i/noto-emoji/emoji_u2665.svg' height=18/>",
+        "#fcf2c7",
+        "x1"
+      ]
+    },
+    "displayArray": [
+      [
+        "playerAidButton",
+        0
+      ],
+      [
+        "reverseSortButton",
+        1
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Can push contract 3 times, 2nd same value beats first\"",
+    "noTrumpBids": [
+      "Obenabe",
+      "Undenufe",
+      "Slalom"
+    ],
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": [
+      [],
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        14,
+        10,
+        20,
+        3,
+        4
+      ],
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        10,
+        2,
+        3,
+        4
+      ],
+      [
+        0,
+        11,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0,
+        10,
+        2,
+        3,
+        4
+      ]
+    ],
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "turnDirection",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "cardCount",
+        9
+      ],
+      [
+        "hideCards",
+        8
+      ],
+      [
+        "deckType",
+        1
+      ],
+      [
+        "seatCount",
+        6
+      ],
+      [
+        "teamScore",
+        false
+      ],
+      [
+        "tempScore",
+        true
+      ],
+      [
+        "contractType",
+        true
+      ],
+      [
+        "variableScore",
+        2
+      ]
+    ],
+    "sort1": "sortDefault",
+    "sort2": "suit",
+    "transferButtonReturn": false,
+    "trumpIndicator": true,
+    "contractChoiceRoutine": [
+      "var contractType = ${PROPERTY auctionType OF contractType}",
+      "var isIn = ${contractType} in ${PROPERTY noTrumpBids}",
+      {
+        "func": "IF",
+        "condition": "${isIn}",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "trump"
+            ],
+            "property": "customFace",
+            "value": 5
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Spades",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Clubs",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Diamonds",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${contractType}",
+            "operand2": "Hearts",
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "trump"
+                ],
+                "property": "customFace",
+                "value": 4
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "scoreExceptionsRoutine": [
+      "// Add 5 points to player taking last trick",
+      "var result = ${points}",
+      "var last = ${PROPERTY lastPressedBy OF takeButton}",
+      {
+        "func": "IF",
+        "operand1": "${value}",
+        "operand2": "${last}",
+        "thenRoutine": [
+          "var result = ${result} + 5"
+        ]
+      },
+      "// Add 100 points to team that takes all 9 tricks",
+      "var tricksS = parseFloat ${PROPERTY tricks OF seat1}",
+      "var tricksW = parseFloat ${PROPERTY tricks OF seat3}",
+      "var tricksN = parseFloat ${PROPERTY tricks OF seat5}",
+      "var tricksE = parseFloat ${PROPERTY tricks OF seat5}",
+      "var allNS = ${tricksS} + ${tricksN}",
+      "var allEW = ${tricksE} + ${tricksW}",
+      "var allNS = ${allNS} == 9",
+      "var allEW = ${allEW} == 9",
+      {
+        "func": "IF",
+        "condition": "${allNS}",
+        "thenRoutine": [
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "tempScore",
+            "round": 4,
+            "seats": "seat1",
+            "value": "100"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "condition": "${allEW}",
+            "thenRoutine": [
+              {
+                "func": "SCORE",
+                "mode": "set",
+                "property": "tempScore",
+                "round": 4,
+                "seats": "seat3",
+                "value": "100"
+              }
+            ]
+          }
+        ]
+      },
+      "\\ Show contract multiplier",
+      "var multiplier = 1",
+      "var contract = ${PROPERTY auctionType OF contractType}",
+      "var hearts = ${contract} == 'Hearts'",
+      "var diamonds = ${contract} == 'Diamonds'",
+      "var red = ${hearts} || ${diamonds}",
+      {
+        "func": "IF",
+        "condition": "${red}",
+        "thenRoutine": [
+          "var multiplier = 1"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${contract}",
+        "operand2": "Obenabe",
+        "thenRoutine": [
+          "var multiplier = 1"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${contract}",
+        "operand2": "Undenufe",
+        "thenRoutine": [
+          "var multiplier = 1"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${contract}",
+        "operand2": "Slalom",
+        "thenRoutine": [
+          "var multiplier = 1"
+        ]
+      },
+      {
+        "func": "SCORE",
+        "mode": "set",
+        "property": "tempScore",
+        "round": 5,
+        "seats": [
+          "seat1",
+          "seat3"
+        ],
+        "value": "${multiplier}"
+      }
+    ],
+    "sortExceptionsRoutine": [
+      "var trump = ${PROPERTY trump OF trump}",
+      "var isNum = ${trump} / 1",
+      {
+        "func": "IF",
+        "operand1": "${isNum}",
+        "operand2": "${trump}",
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "suit",
+            "value": "${trump}",
+            "collection": "trumpSuit"
+          },
+          {
+            "func": "IF",
+            "condition": "${reverseSort}",
+            "thenRoutine": [
+              {
+                "func": "SORT",
+                "collection": "trumpSuit",
+                "key": "sortJassTrump"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SORT",
+                "collection": "trumpSuit",
+                "key": "sortJassTrump",
+                "reverse": "${PROPERTY sortDirection OF $seatID}"
+              }
+            ]
+          },
+          {
+            "func": "SORT",
+            "key": "suit"
+          }
+        ]
+      }
+    ],
+    "takeRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY auctionType OF contractType}",
+        "operand2": "Slalom",
+        "thenRoutine": [
+          {
+            "func": "CLICK",
+            "collection": [
+              "arrow"
+            ]
+          }
+        ]
+      }
+    ],
+    "transferExceptionsRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Transferring score ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?"
+          }
+        ],
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No"
+      },
+      {
+        "func": "FOREACH",
+        "in": "${PROPERTY _totals OF tempScoreboard}",
+        "loopRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${key}",
+            "operand2": 2,
+            "thenRoutine": [
+              "var key = 3"
+            ]
+          },
+          "var seat = 'seat' + ${key}",
+          "var multiplier = ${PROPERTY tempScore OF seat1}",
+          "var multiplier = ${multiplier.4}",
+          "var value = ${value} - ${multiplier}",
+          "var value = ${value} * ${multiplier}",
+          {
+            "func": "SCORE",
+            "mode": "set",
+            "property": "score",
+            "round": "${PROPERTY currentRound OF scoreboard}",
+            "seats": "${seat}",
+            "value": "${value}"
+          }
+        ]
+      }
+    ]
+  },
+  "gameID57": {
+    "id": "gameID57",
+    "x": 1567,
+    "y": -567,
+    "z": 80613,
+    "movable": false,
+    "css": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "26px"
+    },
+    "text": "La Mèn'che",
+    "displayArray": [
+      [
+        "playerAidButton",
+        1
+      ],
+      [
+        "transferScoreButton",
+        0
+      ],
+      [
+        "scoreboard",
+        0
+      ]
+    ],
+    "gameID": true,
+    "hintText": "\"Set teams, once known, using the Declarer and Opponent buttons at the top of the screen.\"",
+    "roundsTemp": [
+      "Card Points"
+    ],
+    "scoreSystem": {
+      "1": {
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "J": 1,
+        "Q": 2,
+        "K": 3,
+        "A": 4
+      },
+      "2": {
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "J": 1,
+        "K": 3,
+        "A": 4,
+        "Q": 2
+      },
+      "3": {
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "J": 1,
+        "Q": 2,
+        "K": 3,
+        "A": 4
+      },
+      "4": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "10": 0,
+        "J": 1,
+        "K": 3,
+        "A": 4,
+        "Q": 2
+      }
+    },
+    "settingsArray": [
+      [
+        "showTricks",
+        false
+      ],
+      [
+        "showBidValue",
+        false
+      ],
+      [
+        "showBidHistory",
+        false
+      ],
+      [
+        "showBidSuit",
+        false
+      ]
+    ],
+    "settingsDecksArray": [
+      [
+        "deckType",
+        8
+      ],
+      [
+        "cardCount",
+        4
+      ],
+      [
+        "hideCards",
+        0
+      ],
+      [
+        "seatCount",
+        4
+      ],
+      [
+        "teamScore",
+        true
+      ],
+      [
+        "tempScore",
+        true
+      ]
+    ],
+    "showTempScoreTotals": true,
+    "sort1": "sortDefault",
+    "sort2": "order",
+    "transferButtonReturn": false,
+    "scoreExceptionsRoutine": [
+      "var result = ${points}",
+      "var scores = ${PROPERTY scoreSystem}",
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "_ancestor",
+        "value": "backHolder${value}",
+        "collection": "capturedCards"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "capturedCards",
+        "loopRoutine": [
+          "var suit = ${PROPERTY suit OF $widgetID}",
+          "var suitScores = ${scores.$suit}",
+          "var rank = ${PROPERTY rank OF $widgetID}",
+          "var rankScore = ${suitScores.$rank}",
+          "var result = ${result} + ${rankScore}"
+        ]
+      }
+    ]
+  },
+  "playerAid57": {
+    "id": "playerAid57",
+    "x": 115,
+    "y": -126,
+    "width": 1,
+    "height": 1,
+    "layer": 14,
+    "movable": false,
+    "movableInEdit": false,
+    "onlyVisibleForSeat": [],
+    "playerAid": true
+  },
+  "playerAid57a": {
+    "id": "playerAid57a",
+    "parent": "playerAid57",
+    "fixedParent": true,
+    "x": 187,
+    "y": 175,
+    "width": 1000,
+    "height": 780,
+    "borderRadius": 4,
+    "z": 80631,
+    "css": {
+      "default": {
+        "background": "white",
+        "border": "5px solid blue"
+      },
+      " h3": {
+        "text-align": "center",
+        "font-size": "25px",
+        "color": "blue",
+        "border-bottom": "1px solid blue",
+        "margin": "0px"
+      }
+    },
+    "html": "<h3>Setup</h3><br>A/ Deal 4 cards to each player B/ Forehand selects trump C/ Remaining cards are dealt D/ Players announce their Triumph cards (except 7<font size=5 >&#9827;</font>), E/ Forehand leads first trick.<br><h3>Deck</h3><br>                       Standard                         Triumph<br>x, 8<font size=5 >&#9824;</font>, 9<font size=5 >&#9824;</font>, 10<font size=5 >&#9824;</font>, J<font size=5 >&#9824;</font>, Q<font size=5 >&#9824;</font>, K<font size=5 >&#9824;</font>, A<font size=5 >&#9824;</font><br>7<font size=5 >&#9830;</font>, 8<font size=5 >&#9830;</font>, 9<font size=5 >&#9830;</font>, 10<font size=5 >&#9830;</font>, J<font size=5 >&#9830;</font>, x, K<font size=5 >&#9830;</font>, A<font size=5 >&#9830;</font>,            Q<font size=5 >&#9830;</font><br>7<font size=5 >&#9829;</font>, 8<font size=5 >&#9829;</font>, 9<font size=5 >&#9829;</font>, 10<font size=5 >&#9829;</font>, J<font size=5 >&#9829;</font>, x, K<font size=5 >&#9829;</font>, A<font size=5 >&#9829;</font>,        Q<font size=5 >&#9829;</font><br>x, 8<font size=5 >&#9827;</font>, 9<font size=5 >&#9827;</font>, 10<font size=5 >&#9827;</font>, J<font size=5 >&#9827;</font>, x, K<font size=5 >&#9827;</font>, A<font size=5 >&#9827;</font>,          7<font size=5 >&#9827;</font>, Q<font size=5 >&#9827;</font><br>                                                                   Joker<br><br>Points: A (4pts), K (3pts), Q (2pts), J (1pt)<br><br><h3>Hierarchy</h3><p>Triumph (Q<font size=5 >&#9827;</font>> Q<font size=5 >&#9829;</font>> Q<font size=5 >&#9830;</font>> Joker> 7<font size=5 >&#9827;</font>) > Trump suit > Non-Trump suit<br><h3>Trick Play</h3><strong><br>If able to follow led suit: must either follow led suit, play a Trump or play a Triumph. <br>If unable to follow led suit: may play anything.</strong><br><br>Triumphs belong to their own suit, and are no part of the trump suit :<br>- if a Trumph is led : must follow its suit, play a Trump or play another Triumph<br>- A player must play a Triumph if it's his last card of the led suit (he can still play a Trump or another Triumph)<br><br>The Joker is suitless. If a joker is led to a trick, the second card will set the trick suit.<br><br><h3>Scoring</h3><br>Team which scores 21pts or more gives a token to the other team. If score is a draw, the pot is kept for the next hand, which will worth double. First team with 0 token wins the game"
+  },
+  "deckLaMenche": {
+    "type": "deck",
+    "id": "deckLaMenche",
+    "parent": "deckHolder",
+    "x": 4,
+    "y": 4,
+    "width": 86,
+    "height": 86,
+    "movable": true,
+    "movableInEdit": true,
+    "cardTypes": {
+      "T 1J": {
+        "image": "/i/cards-default/1J.svg",
+        "suitImage": "/i/noto-emoji/emoji_u1f0cf.svg",
+        "rankImage": "/i/noto-emoji/emoji_u1f0cf.svg",
+        "suit": 0,
+        "rankJoker": 1,
+        "suitColor": "🃏",
+        "suitAlt": "5J",
+        "rank": "",
+        "rankA": "J1",
+        "rankFixed": "J1 T",
+        "sortDefault": 1,
+        "order": 1,
+        "valueColor": "gold",
+        "dotMark": "..\n"
+      },
+      "C 01": {
+        "rank": "8",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P22": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P42": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 9,
+        "sortDefault": 9
+      },
+      "C 02": {
+        "rank": "9",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P32": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit-S21": "i/icons/clubs.svg",
+        "suit-S23": "i/icons/clubs.svg",
+        "suit-S31": "i/icons/clubs.svg",
+        "suit-S33": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 8,
+        "sortDefault": 8
+      },
+      "C 03": {
+        "rank": "10",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "suit-S12": "i/icons/clubs.svg",
+        "suit-S21": "i/icons/clubs.svg",
+        "suit-S23": "i/icons/clubs.svg",
+        "suit-S31": "i/icons/clubs.svg",
+        "suit-S33": "i/icons/clubs.svg",
+        "suit-S42": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 7,
+        "sortDefault": 7
+      },
+      "C 04": {
+        "rank": "J",
+        "rankImage": "/assets/-1936516067_36132",
+        "suitImage": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 6,
+        "sortDefault": 6
+      },
+      "C 05": {
+        "rank": "K",
+        "suitImage": "i/icons/clubs.svg",
+        "rankImage": "/assets/-604240792_36033",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 5,
+        "sortDefault": 5
+      },
+      "C 06": {
+        "rank": "A",
+        "suitImage": "i/icons/clubs.svg",
+        "rankImage": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 4,
+        "sortDefault": 4
+      },
+      "C 07": {
+        "rank": "7",
+        "suitImage": "i/icons/clubs.svg",
+        "suit-P11": "i/icons/clubs.svg",
+        "suit-P13": "i/icons/clubs.svg",
+        "suit-P22": "i/icons/clubs.svg",
+        "suit-P31": "i/icons/clubs.svg",
+        "suit-P33": "i/icons/clubs.svg",
+        "suit-P51": "i/icons/clubs.svg",
+        "suit-P53": "i/icons/clubs.svg",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 3,
+        "sortDefault": 3,
+        "valueColor": "gold",
+        "dotMark": "."
+      },
+      "C 08": {
+        "rank": "Q",
+        "suitImage": "i/icons/clubs.svg",
+        "rankImage": "/assets/-359721987_40577",
+        "redOrBlack": "black",
+        "suit": 1,
+        "order": 2,
+        "sortDefault": 2,
+        "valueColor": "gold",
+        "dotMark": "..\n.\n.."
+      },
+      "D 01": {
+        "rank": "7",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P22": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 25,
+        "sortDefault": 25
+      },
+      "D 02": {
+        "rank": "8",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P22": "i/icons/diamonds.svg",
+        "suit-P31": "i/icons/diamonds.svg",
+        "suit-P33": "i/icons/diamonds.svg",
+        "suit-P42": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 24,
+        "sortDefault": 24
+      },
+      "D 03": {
+        "rank": "9",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P32": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit-S21": "i/icons/diamonds.svg",
+        "suit-S23": "i/icons/diamonds.svg",
+        "suit-S31": "i/icons/diamonds.svg",
+        "suit-S33": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 23,
+        "sortDefault": 23
+      },
+      "D 04": {
+        "rank": "10",
+        "suitImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/diamonds.svg",
+        "suit-P13": "i/icons/diamonds.svg",
+        "suit-P51": "i/icons/diamonds.svg",
+        "suit-P53": "i/icons/diamonds.svg",
+        "suit-S12": "i/icons/diamonds.svg",
+        "suit-S21": "i/icons/diamonds.svg",
+        "suit-S23": "i/icons/diamonds.svg",
+        "suit-S31": "i/icons/diamonds.svg",
+        "suit-S33": "i/icons/diamonds.svg",
+        "suit-S42": "i/icons/diamonds.svg",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 22,
+        "sortDefault": 22
+      },
+      "D 05": {
+        "rank": "J",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "/assets/-696466837_31225",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 21,
+        "sortDefault": 21
+      },
+      "D 06": {
+        "rank": "K",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "/assets/-862690059_30988",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 20,
+        "sortDefault": 20
+      },
+      "D 07": {
+        "rank": "A",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "i/icons/diamonds.svg",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 19,
+        "sortDefault": 19
+      },
+      "D 08": {
+        "rank": "Q",
+        "suitImage": "i/icons/diamonds.svg",
+        "rankImage": "/assets/-132931377_41422",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 2,
+        "order": 18,
+        "sortDefault": 18,
+        "valueColor": "gold",
+        "dotMark": "..\n."
+      },
+      "S 01": {
+        "rank": "8",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P22": "i/icons/spades.svg",
+        "suit-P31": "i/icons/spades.svg",
+        "suit-P33": "i/icons/spades.svg",
+        "suit-P42": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 32,
+        "sortDefault": 32
+      },
+      "S 02": {
+        "rank": "9",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P32": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 31,
+        "sortDefault": 31
+      },
+      "S 03": {
+        "rank": "10",
+        "suitImage": "i/icons/spades.svg",
+        "suit-P11": "i/icons/spades.svg",
+        "suit-P13": "i/icons/spades.svg",
+        "suit-P51": "i/icons/spades.svg",
+        "suit-P53": "i/icons/spades.svg",
+        "suit-S12": "i/icons/spades.svg",
+        "suit-S21": "i/icons/spades.svg",
+        "suit-S23": "i/icons/spades.svg",
+        "suit-S31": "i/icons/spades.svg",
+        "suit-S33": "i/icons/spades.svg",
+        "suit-S42": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 30,
+        "sortDefault": 30
+      },
+      "S 04": {
+        "rank": "J",
+        "rankImage": "/assets/2115758924_42014",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 29,
+        "sortDefault": 29
+      },
+      "S 05": {
+        "rank": "Q",
+        "rankImage": "/assets/1085111785_36695",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 28,
+        "sortDefault": 28
+      },
+      "S 06": {
+        "rank": "K",
+        "rankImage": "/assets/-1882019559_61400",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 27,
+        "sortDefault": 27
+      },
+      "S 07": {
+        "rank": "A",
+        "rankImage": "i/icons/spades.svg",
+        "suitImage": "i/icons/spades.svg",
+        "redOrBlack": "black",
+        "suit": 3,
+        "order": 26,
+        "sortDefault": 26
+      },
+      "H 01": {
+        "rank": "7",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P22": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 17,
+        "sortDefault": 17
+      },
+      "H 02": {
+        "rank": "8",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P22": "i/icons/hearts.svg",
+        "suit-P31": "i/icons/hearts.svg",
+        "suit-P33": "i/icons/hearts.svg",
+        "suit-P42": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 16,
+        "sortDefault": 16
+      },
+      "H 03": {
+        "rank": "9",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P32": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit-S21": "i/icons/hearts.svg",
+        "suit-S23": "i/icons/hearts.svg",
+        "suit-S31": "i/icons/hearts.svg",
+        "suit-S33": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 15,
+        "sortDefault": 15
+      },
+      "H 04": {
+        "rank": "10",
+        "suitImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "suit-P11": "i/icons/hearts.svg",
+        "suit-P13": "i/icons/hearts.svg",
+        "suit-P51": "i/icons/hearts.svg",
+        "suit-P53": "i/icons/hearts.svg",
+        "suit-S12": "i/icons/hearts.svg",
+        "suit-S21": "i/icons/hearts.svg",
+        "suit-S23": "i/icons/hearts.svg",
+        "suit-S31": "i/icons/hearts.svg",
+        "suit-S33": "i/icons/hearts.svg",
+        "suit-S42": "i/icons/hearts.svg",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 14,
+        "sortDefault": 14
+      },
+      "H 05": {
+        "rank": "J",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "/assets/-560751544_37381",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 13,
+        "sortDefault": 13
+      },
+      "H 06": {
+        "rank": "K",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "/assets/-511606639_49182",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 12,
+        "sortDefault": 12
+      },
+      "H 07": {
+        "rank": "A",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "i/icons/hearts.svg",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 11,
+        "sortDefault": 11
+      },
+      "H 08": {
+        "rank": "Q",
+        "suitImage": "i/icons/hearts.svg",
+        "rankImage": "/assets/-1553973424_45799",
+        "suitColor": "#e50932",
+        "redOrBlack": "red",
+        "suit": 4,
+        "order": 10,
+        "sortDefault": 10,
+        "valueColor": "gold",
+        "dotMark": "..\n.."
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "valueColor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 53,
+            "height": 110,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "css": {
+              "background-size": "100% 100%"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 40,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "dotMark",
+              "color": "suitColor"
+            },
+            "css": {
+              "line-height": "10px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 77,
+            "y": 100,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "dotMark",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "line-height": "10px"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": 25,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 100,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "deck2Mark",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P11"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P12"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 25,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P13"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P21"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P22"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 48.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P23"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P31"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P32"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 72,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P33"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P41"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P42"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 95.5,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P43"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P51"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P52"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 119,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-P53"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S11"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S12"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 40.6,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S13"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S21"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S22"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 56.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S23"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S31"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S32"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 87.7,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S33"
+            }
+          },
+          {
+            "type": "image",
+            "x": 25,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S41"
+            }
+          },
+          {
+            "type": "image",
+            "x": 43.5,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S42"
+            }
+          },
+          {
+            "type": "image",
+            "x": 62,
+            "y": 103.3,
+            "width": 16,
+            "height": 16,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit-S43"
+            }
+          }
+        ]
+      }
+    ],
+    "inheritFrom": {
+      "deck1": [
+        "cardDefaults"
+      ]
+    },
+    "deckType": 8,
+    "staged": false
   }
 }

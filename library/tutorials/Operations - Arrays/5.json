@@ -1,0 +1,89 @@
+{
+  "8fr3": {
+    "type": "label",
+    "text": "Array Example: Random Word",
+    "css": "font-size: 60px",
+    "height": 160,
+    "width": 1000,
+    "x": 280,
+    "z": 26392,
+    "id": "8fr3",
+    "y": 1
+  },
+  "m247": {
+    "type": "label",
+    "text": "The button creates an array using Split. Then uses Shuffle to choose one random word from that list.",
+    "x": 501,
+    "y": 421,
+    "z": 26425,
+    "id": "m247",
+    "width": 500,
+    "height": 150,
+    "css": {
+      "font-size": "26px"
+    }
+  },
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
+    "info": {
+      "name": "Operations - Arrays",
+      "image": "/assets/-2038908983_7396",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1763605491581,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "Example: Random Word",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "Word 5-5": {
+    "type": "label",
+    "css": "font-size: 30px",
+    "height": 42,
+    "width": 300,
+    "x": 859,
+    "y": 284,
+    "z": 26428,
+    "id": "Word 5-5",
+    "text": "alpha"
+  },
+  "Word Button": {
+    "type": "button",
+    "id": "Word Button",
+    "x": 717,
+    "y": 264,
+    "z": 19,
+    "text": "Random Word",
+    "target": "Word 5-5",
+    "clickRoutine": [
+      "var words = 'alpha,bravo,charlie,delta,echo,foxtrot,golf,hotel,india,juliet,kilo,lima,mike,november,oscar,papa,quebec,romeo,sierra,tango,uniform,victor,whiskey,x-ray,yankee,zulu' split ',' //Split the list of words into an array using commas as a split point",
+      "var wordsShuffled = ${words} shuffle",
+      "var wordsShuffled = ${wordsShuffled} pop",
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY target}",
+        "value": "${wordsShuffled}"
+      }
+    ]
+  }
+}

@@ -1,20 +1,32 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - CALL",
-      "image": "/assets/-1658309957_6437",
+      "image": "/assets/-2104081309_3468",
       "rules": "",
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1768608708153,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
       "players": "1",
       "language": "en-US",
       "variant": "",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1622743126000
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "8fr3": {
@@ -82,10 +94,10 @@
   "cm1u": {
     "classes": "classicPiece",
     "color": "#e84242",
-    "width": 90,
-    "height": 90,
-    "x": 166.5,
-    "y": 43,
+    "width": 56,
+    "height": 84,
+    "x": 183.5,
+    "y": 46,
     "z": 28,
     "id": "cm1u",
     "rotation": 341.574682785958,
@@ -178,11 +190,27 @@
         "widget": "n5eu"
       },
       {
-        "Note": " Once the subroutine is finished, it returns it and moves the number of cards based on the spinner and the number passed in 'result'.",
-        "func": "MOVE",
-        "from": "n4cw",
-        "to": "kq0w",
-        "count": "${result}"
+        "note": "This was added by the automatic file migration because the behavior of MOVE with count=0 changed.",
+        "func": "IF",
+        "condition": "${result}",
+        "thenRoutine": [
+          {
+            "Note": " Once the subroutine is finished, it returns it and moves the number of cards based on the spinner and the number passed in 'result'.",
+            "func": "MOVE",
+            "from": "n4cw",
+            "to": "kq0w",
+            "count": "${result}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "Note": " Once the subroutine is finished, it returns it and moves the number of cards based on the spinner and the number passed in 'result'.",
+            "func": "MOVE",
+            "from": "n4cw",
+            "to": "kq0w",
+            "count": "all"
+          }
+        ]
       }
     ],
     "x": 778,
@@ -239,24 +267,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -737,7 +747,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -753,9 +762,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }

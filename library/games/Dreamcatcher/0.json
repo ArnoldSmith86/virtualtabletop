@@ -3397,7 +3397,8 @@
       "variant": "",
       "language": "",
       "players": "4-10",
-      "similarDesigner": "Jean-Louis Roubira"
+      "similarDesigner": "Jean-Louis Roubira",
+      "usesAIImagery": true
     }
   },
   "Background": {

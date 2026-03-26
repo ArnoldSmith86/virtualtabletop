@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-8"
+      "players": "2-8",
+      "usesAIImagery": true
     }
   },
   "iozm": {

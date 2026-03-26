@@ -3,7 +3,7 @@
     "version": 15,
     "info": {
       "name": "Rockets and Robots",
-      "image": "/assets/1503295198_188157",
+      "image": "/assets/1997865668_35278",
       "showName": true,
       "time": "30",
       "mode": "vs",
@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-6"
+      "players": "2-6",
+      "usesAIImagery": true
     }
   },
   "hand": {

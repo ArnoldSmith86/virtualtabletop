@@ -409,66 +409,6 @@ function populateAddWidgetOverlay() {
     return id
   });
 
-/* Don't add old-style game pieces; replaced by svg
-  // Populate the game panel pieces. The real piece choosing happens in popups.
-  addPieceToAddWidgetOverlay( new BasicWidget('add-pin0'), {
-    classes: 'pinPiece',
-    color: VTTblue,
-    width: 35.85,
-    height: 43.83,
-    x: 380,
-    y: 80
-  });
-  addPieceToAddWidgetOverlay( new BasicWidget('add-checkers0'), {
-    faces: [
-      { classes: "checkersPiece"         },
-      { classes: "checkersPiece crowned" }
-    ],
-    color: VTTblue,
-    width: 73.5,
-    height: 73.5,
-    x: 380 + 60,
-    y: 80 + Math.round((43.83 - 73.5)/2)
-  });
-  addPieceToAddWidgetOverlay( new BasicWidget('add-classic0'), {
-    classes: 'classicPiece',
-    color: VTTblue,
-    width: 56,
-    height: 84,
-    x: 380 + 150,
-    y: 80 + Math.round((43.83 - 84)/2)
-  });
-*/
-
-/* Don't add the unicode symbols
-  // Next the unicode symbols
-  const centerStyle = 'color:black;display:flex;justify-content:center;align-items:center;text-align:center;';
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeS'), {
-    text: '🐻',
-    css: 'font-size:25px;'+centerStyle,
-    width: 25,
-    height: 25,
-    x: 380,
-    y: 175
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeM'), {
-    text: '🔥',
-    css: 'font-size:50px;'+centerStyle,
-    width: 50,
-    height: 50,
-    x: 440,
-    y: 175
-  });
-
-  addWidgetToAddWidgetOverlay(new BasicWidget('add-unicodeL'), {
-    text: '♞',
-    css: 'font-size:100px;'+centerStyle,
-    x: 500,
-    y: 150
-  });
-*/
-
   //Add svg game pieces
   // First row
   addPieceToAddWidgetOverlay(new BasicWidget('Pawn3DSVG'), {
@@ -583,7 +523,6 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 1,
-    crowned: true,
     secondaryColor: "#ffffff"
   });
 
@@ -616,7 +555,6 @@ function populateAddWidgetOverlay() {
 
     borderColor: "#000000",
     borderWidth: 1,
-    crowned: true,
     secondaryColor: "#ffffff"
   });
 
@@ -1348,6 +1286,20 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
+
+    if(widget.type === 'deck') {
+      const prev = previousState.cardTypes;
+      const next = widget.cardTypes;
+      if(prev && next && !Array.isArray(prev) && !Array.isArray(next) && typeof prev === 'object' && typeof next === 'object') {
+        const prevKeys = Object.keys(prev);
+        const nextKeys = Object.keys(next);
+        const removed = prevKeys.filter(k => !next[k]);
+        const added = nextKeys.filter(k => !prev[k]);
+        if(removed.length === 1 && added.length === 1)
+          for(const card of widgetFilter(w => w.get('type') === 'card' && w.get('deck') === widget.id && w.get('cardType') === removed[0]))
+            await card.set('cardType', added[0]);
+      }
+    }
   }
 
   batchEnd();
@@ -1510,42 +1462,72 @@ export function initializeEditMode(currentMetaData) {
       width: 800,
       height: 800,
 
-      c00: "*01001001001/1%/1.01.010",
-      c01: ",01&,1/0101*1/1+1.1'0",
-      c10: ",,1()0",
-      c11: "0*1()0",
+      activeColorChangeRoutine: [
+        {
+          "func": "CALL",
+          "routine": "selectButtonRoutine",
+          "arguments": {
+            "buttonType": "-Color"
+          }
+        }
+      ],
+      lineWidthChangeRoutine: [
+        {
+          "func": "CALL",
+          "routine": "selectButtonRoutine",
+          "arguments": {
+            "buttonType": "-Size"
+          }
+        }
+      ],
+      selectButtonRoutine: [
+        {
+          "func": "SELECT",
+          "type": "button",
+          "property": "parent",
+          "value": "${PROPERTY id}"
+        },
+        {
+          "func": "FOREACH",
+          "loopRoutine": [
+            "var isColor = ${widgetID} endsWith ${buttonType}",
+            {
+              "func": "IF",
+              "condition": "${isColor}",
+              "thenRoutine": [
+                "var buttonID = ${widgetID}"
+              ]
+            }
+          ]
+        },
+        {
+          "func": "CALL",
+          "widget": "${buttonID}",
+          "routine": "canvasRoutine"
+        }
+      ],
+
       c13: "+-01$/10",
       c14: "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
       c15: ".1$0",
-      c20: ",,1()0",
-      c21: "0*1()0",
       c23: ".-01()0",
       c24: "./1/1+1-101/11010110101/101-1/101-1/101,10",
       c25: "1()0",
-      c30: "+01(*1/1/1.1/10101101(/11.1/101-1/1/10",
-      c31: "*011/1-1/101-1-11.1-101101-1-1/101,11/10",
       c33: ".-01()0",
       c34: "/-1/101(/1/1-101/101'01/101/1/11.1(0",
       c35: "1()0",
-      c40: "+/1.1(/10101-101.11/11+10101/1(.10",
-      c41: "/-1/1(/1101-101/101'01/101/101/1/1(010",
       c43: ".-01()0",
       c44: "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
       c45: "1()0",
-      c50: ".1/01+1/11+101+1/1/01+1.10",
-      c51: "/-1.1(/10101/101/101/10110101/101/1/1(/1+1*1(0",
       c53: ".-01()0",
       c54: ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
       c55: "1()0",
-      c61: "0/11*1/1/1.1+1/1-1(/1-1-1/1011-110",
       c63: ".-01()0",
       c64: "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
       c65: "1()0",
-      c71: "*01/01,11/1.11/101/1-101/1-101/1/11.1/110",
       c73: ".-01()0",
       c74: "/-1/1(,101/1-101/1-101(/101/1/01/010",
       c75: "110101&0",
-      c81: "--101,101101-101*101/010",
       c83: ".-01%.010",
       c84: "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
       c85: "1%0"
@@ -1572,9 +1554,83 @@ export function initializeEditMode(currentMetaData) {
           mode: "reset"
         }
       ],
-      css: "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; ",
+      css: "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
       borderRadius: '50% 0% 0% 0%',
       text: "Reset"
+    })
+    await addWidgetLocal({
+      type: "button",
+      id: id+"-Size",
+
+      parent: id,
+      fixedParent: true,
+
+      x: -50,
+      y: 60,
+      width: 50,
+      height: 40,
+
+      movable: false,
+      movableInEdit: false,
+
+      canvasRoutine: [
+        "var parent = ${PROPERTY parent}",
+        "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+        "var step = floor ${step}",
+        "var percentage = 10 + ${step} * 10",
+        "var percentage = min ${percentage} 100",
+        "var percentage = max ${percentage} 10",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "lineSize",
+          "value": "${percentage}"
+        }
+      ],
+      clickRoutine: [
+        "var parent = ${PROPERTY parent}",
+        "var lineSize = ${PROPERTY lineSize} + 10",
+        "var lineSize = ${lineSize} % 110",
+        {
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "lineSize",
+          "value": "${lineSize}"
+        },
+        "var newSize = max ${lineSize} 10",
+        "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
+        {
+          "func": "SET",
+          "collection": [
+            "${parent}"
+          ],
+          "property": "lineWidth",
+          "value": "${newWidth}"
+        }
+      ],
+      "css": {
+        "default": {
+          "border-width": "1px",
+          "background-color": "#f0f0f0",
+          "--wcBorder": "#555",
+          "--wcBorderOH": "black ",
+          "background-repeat": "no-repeat",
+          "background-position": "50% 50%",
+          "background-size": "${PROPERTY lineSize}%"
+        },
+        "::after": {
+          "content": "\"Line Width\"",
+          "position": "absolute",
+          "margin-top": "-5.1em",
+          "color": "white",
+          "background-color": "#0d2f5e",
+          "width": "50px",
+          "font-size": "0.6rem"
+        }
+      },
+      borderRadius: 0,
+      image: "/i/game-icons.net/delapouite/plain-circle.svg",
+      lineSize: 10,
     })
     await addWidgetLocal({
       type: "button",
@@ -1584,7 +1640,7 @@ export function initializeEditMode(currentMetaData) {
       fixedParent: true,
 
       x: -50,
-      y: 50,
+      y: 100,
       width: 50,
       height: 50,
 
@@ -1594,17 +1650,24 @@ export function initializeEditMode(currentMetaData) {
       clickRoutine: [
         "var parent = ${PROPERTY parent}",
         {
-          func: "CANVAS",
-          canvas: '${parent}',
-          mode: "inc",
-          value: 1
+          "func": "CANVAS",
+          "canvas": "${parent}",
+          "mode": "inc",
+          "value": 1
         },
+        {
+          "func": "CALL",
+          "routine": "colorRoutine"
+        }
+      ],
+      colorRoutine: [
+        "var parent = ${PROPERTY parent}",
         "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
         {
-          func: "SET",
-          collection: "thisButton",
-          property: "color",
-          value: "${color}"
+          "func": "SET",
+          "collection": "thisButton",
+          "property": "color",
+          "value": "${color}"
         }
       ],
       color: "#1F5CA6",

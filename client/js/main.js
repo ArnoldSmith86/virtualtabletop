@@ -130,7 +130,10 @@ function checkURLproperties(connected) {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
-          $('#filterByType').value = 'Tutorials';
+          setLibraryTypeTab('Tutorials');
+        } else if(location.hash == '#About') {
+          urlProperties.about = true;
+          $('#aboutButton').click();
         } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
@@ -153,7 +156,7 @@ function checkURLproperties(connected) {
     }
     if(urlProperties.askID) {
       on('#askIDoverlay button', 'click', function() {
-        roomID = urlProperties.askID + $('#enteredID').value;
+        roomID = normalizeRoomID(urlProperties.askID + $('#enteredID').value);
         toServer('room', { playerName, roomID });
         showOverlay();
       });
@@ -228,6 +231,7 @@ function setScale() {
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
+  refreshIgnoreZoomWidgets();
 }
 
 function getScale() {
@@ -238,14 +242,95 @@ function getRoomRectangle() {
   return roomRectangle;
 }
 
-export async function shuffleWidgets(collection) {
-  // Fisher–Yates shuffle
+export async function shuffleWidgets(collection, mode = "true random", modeValue = 1, reverseForNonRandom = false) {
   const len = collection.length;
   let indexes = [...Array(len).keys()];
-  for (let i = len-1; i > 0; i--) {
-    let j = Math.floor(rand() * (i+1));
-    [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+  if (reverseForNonRandom)
+    indexes = indexes.reverse();
+
+  let randFunc = (typeof rand === "function") ? rand : Math.random;
+  
+  const fisherYates = () => {
+    for (let i = len-1; i > 0; i--) {
+      let j = Math.floor(rand() * (i+1));
+      [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+    }
+  };
+
+  let fisherYatesSeeded = null;
+  if (mode === "seeded") {
+    let seed = modeValue;
+    const seededRand = function() {
+      const x = Math.sin(seed++) * 10000;
+      return Math.round((x - Math.floor(x))*1000000)/1000000;
+    };
+
+    fisherYatesSeeded = () => {
+      for (let i = len-1; i > 0; i--) {
+        let j = Math.floor(seededRand() * (i+1));
+        [indexes[i], indexes[j]] = [indexes[j], indexes[i]];
+      }
+    };
   }
+  
+  const riffleShuffle = () => {
+    const mid = Math.floor(len * (0.45 + randFunc() * 0.1));
+    let left = indexes.slice(0, mid);
+    let right = indexes.slice(mid);
+    const riffled = [];
+    while (left.length || right.length) {
+      if (left.length && (!right.length || randFunc() < 0.5))
+        riffled.push(left.shift());
+      if (right.length && (!left.length || randFunc() >= 0.5))
+        riffled.push(right.shift());
+    }
+    indexes = riffled;
+  };
+  
+  const overhandShuffle = () => {
+    let newIndexes = [];
+    let i = 0;
+    while (i < indexes.length) {
+      let maxPacketSize = Math.max(1, Math.floor(len * 0.4));
+      let packetSize = Math.floor(randFunc() * maxPacketSize) + 1;
+      let packet = indexes.slice(i, i + packetSize);
+      newIndexes.push(packet);
+      i += packetSize;
+    }
+    newIndexes.reverse();
+    indexes = newIndexes.flat();
+  };
+  
+  const reverseMode = () => {
+    indexes.reverse();
+  };
+  
+  let iterations = (mode === "riffle" || mode === "overhand") ? modeValue : 1;
+  for (let i = 0; i < iterations; i++) {
+    switch (mode) {
+      case "true random":
+        if (reverseForNonRandom)
+          indexes = indexes.reverse();
+        fisherYates();
+        break;
+      case "seeded":
+        fisherYatesSeeded();
+        break;
+      case "riffle":
+        riffleShuffle();
+        break;
+      case "overhand":
+        overhandShuffle();
+        break;
+      case "reverse":
+        reverseMode();
+        break;
+      default:
+        fisherYates();
+        break;
+    }
+  }
+
   for (let i of indexes) {
     await collection[i].bringToFront();
   }
@@ -312,15 +397,25 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   }
 }
 
-async function uploadAsset(multipleCallback) {
+async function uploadAsset(multipleCallback, fileTypes) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
-      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      let uploadPath = await _uploadAsset(f).catch(e=>{
+        alert(`Uploading failed: ${e.toString()}`);
+        return null;
+      });
       multipleCallback(uploadPath, f.name)
+    }).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Error: ${e.toString()}`);
     });
   }
   else {
-    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+    return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Uploading failed: ${e.toString()}`);
+      return null;
+    });
   }
 }
 
@@ -344,6 +439,22 @@ async function _uploadAsset(file) {
     return response.text();
 }
 
+function splitSVG(svg) {
+  let x = 0, y = 0, first = 1;
+  return svg.replace(/([Mm])([^a-zA-Z]+)/g, (m, a, b) => {
+    let [X, Y] = b.match(/[+-]?(\d*\.\d+|\d+)([eE][+-]?\d+)?/g);
+    if(a == 'M') {
+      x = +X;
+      y = +Y;
+    } else {
+      x += +X;
+      y += +Y;
+      m = `M${x.toFixed(2)} ${y.toFixed(2)}`;
+    }
+    return first ? (first = 0, m) : `"/><path fill="#000" d="${m}`;
+  });
+}
+
 const svgCache = {};
 function getSVG(url, replaces, callback) {
   if(typeof svgCache[url] == 'string') {
@@ -352,8 +463,16 @@ function getSVG(url, replaces, callback) {
       return svgCache[cacheKey];
 
     let svg = svgCache[url];
-    for(const replace in replaces)
-      svg = svg.split(replace).join(replaces[replace]);
+    if(replaces && Object.values(replaces).filter(v=>Array.isArray(v)).length)
+      svg = splitSVG(svg);
+    for(const replace in replaces) {
+      if(Array.isArray(replaces[replace])) {
+        for(const r of asArray(replaces[replace]))
+          svg = svg.replace(replace, r);
+      } else {
+        svg = svg.split(replace).join(replaces[replace]);
+      }
+    }
     svgCache[cacheKey] = 'data:image/svg+xml,'+encodeURIComponent(svg);
     return svgCache[cacheKey];
   }
@@ -363,12 +482,12 @@ function getSVG(url, replaces, callback) {
     fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
-      for(const c of callbacks)
-        c();
+      for(const [ c, r ] of callbacks)
+        c(getSVG(url, r, _=>{}));
     });
   }
 
-  svgCache[url].push(callback);
+  svgCache[url].push([ callback, replaces ]);
   return '';
 }
 
@@ -376,19 +495,20 @@ async function loadEditMode() {
   if(edit === null) {
     edit = false;
     Object.assign(window, {
-      $, $a, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
-      setJEenabled, setJEroutineLogging, setZoomAndOffset, toggleEditMode, getEdit,
+      $, $a, $c, div, progressButton, loadImage, on, onMessage, showOverlay, sleep, rand, shuffleArray,
+      setJEenabled, setJEroutineLogging, setZoomAndOffset, resetZoomAndPan, toggleEditMode, getEdit,
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,
       toHex, contrastAnyColor,
       asArray, compute_ops,
-      eventCoords
+      eventCoords,
+      getCurrentGameSettings, legacyMode, getEnabledLegacyModes
     });
     $('body').classList.add('loadingEditMode');
     const editmode = await import('./edit.js');
@@ -421,6 +541,7 @@ async function toggleEditMode() {
   else
     $('body').classList.add('edit');
   edit = !edit;
+  resetZoomAndPan();
   if(edit)
     openEditor();
   showOverlay();
@@ -537,7 +658,7 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/'))
+  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/') && !location.href.includes('/library/'))
     startWebSocket();
 
   onMessage('warning', alert);

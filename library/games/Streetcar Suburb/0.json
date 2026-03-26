@@ -1,0 +1,6224 @@
+{
+  "6393": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "6393",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "backgroundColor": {
+    "id": "backgroundColor",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "background": "linear-gradient(to bottom, #86b3ff 0%, #e9f1ff 100%)"
+    },
+    "movableInEdit": false,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "houseHolder": {
+    "type": "holder",
+    "id": "houseHolder",
+    "x": -140,
+    "y": 513,
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex2": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex2",
+    "x": 434,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex3": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex3",
+    "x": 565,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex4": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex4",
+    "x": 695,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex5": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex5",
+    "x": 826,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex6": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex6",
+    "x": 957,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex7": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex7",
+    "x": 1088,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex8": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex8",
+    "x": 1218,
+    "y": 34,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex10": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex10",
+    "x": 369,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex11": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex11",
+    "x": 500,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex12": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex12",
+    "x": 630,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex13": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex13",
+    "x": 761,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex14": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex14",
+    "x": 892,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex15": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex15",
+    "x": 1023,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex16": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex16",
+    "x": 1153,
+    "y": 147,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex18": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex18",
+    "x": 434,
+    "y": 260,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex19": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex19",
+    "x": 565,
+    "y": 260,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex20": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex20",
+    "x": 695,
+    "y": 260,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex21": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex21",
+    "x": 826,
+    "y": 260,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex22": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex22",
+    "x": 957,
+    "y": 260,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex23": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex23",
+    "x": 1088,
+    "y": 260,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex27": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex27",
+    "x": 500,
+    "y": 374,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex28": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex28",
+    "x": 630,
+    "y": 374,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex29": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex29",
+    "x": 761,
+    "y": 374,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex30": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex30",
+    "x": 892,
+    "y": 374,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex31": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex31",
+    "x": 1023,
+    "y": 374,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex34": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex34",
+    "x": 434,
+    "y": 487,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex35": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex35",
+    "x": 565,
+    "y": 487,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex36": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex36",
+    "x": 695,
+    "y": 487,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex37": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex37",
+    "x": 826,
+    "y": 487,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex38": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex38",
+    "x": 957,
+    "y": 487,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex42": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex42",
+    "x": 369,
+    "y": 600,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex43": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex43",
+    "x": 500,
+    "y": 600,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex44": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex44",
+    "x": 630,
+    "y": 600,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex45": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex45",
+    "x": 761,
+    "y": 600,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex46": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex46",
+    "x": 892,
+    "y": 600,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex47": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex47",
+    "x": 1023,
+    "y": 600,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex49": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex49",
+    "x": 303,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex50": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex50",
+    "x": 434,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex51": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex51",
+    "x": 565,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex52": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex52",
+    "x": 695,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex53": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex53",
+    "x": 826,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex54": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex54",
+    "x": 957,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex55": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex55",
+    "x": 1088,
+    "y": 713,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex57": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex57",
+    "x": 238,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex58": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex58",
+    "x": 369,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex59": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex59",
+    "x": 500,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex60": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex60",
+    "x": 630,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex61": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex61",
+    "x": 761,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex62": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex62",
+    "x": 892,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex63": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex63",
+    "x": 1023,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex64": {
+    "inheritFrom": {
+      "hex1": "*"
+    },
+    "type": "holder",
+    "id": "hex64",
+    "x": 1153,
+    "y": 827,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1535,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Reset'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "restart",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          },
+          {
+            "type": "select",
+            "label": "Choose method for marking lines",
+            "value": "${PROPERTY lineType}",
+            "variable": "lineType",
+            "options": [
+              {
+                "value": "click",
+                "text": "Click lines"
+              },
+              {
+                "value": "draw",
+                "text": "Draw lines"
+              }
+            ]
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineType",
+        "value": "${lineType}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${lineType}",
+        "operand2": "click",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "canvas",
+              "draw1",
+              "erase1",
+              "draw2",
+              "erase2"
+            ],
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "lineMaster"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "canvas",
+              "draw1",
+              "erase1",
+              "draw2",
+              "erase2"
+            ],
+            "property": "display",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "lineMaster"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      },
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "turnIndex"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "draw${turnIndex}"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "houseHolder"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "houseHolder"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          64
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "houseHolder",
+            "to": "hex${value}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "clonedFrom",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "mode": "remove",
+        "property": "parent",
+        "relation": "in",
+        "value": [
+          "blueCubes",
+          "yellowCubes",
+          "whiteCubes",
+          "blackCubes"
+        ]
+      },
+      {
+        "func": "DELETE"
+      },
+      {
+        "func": "CANVAS",
+        "canvas": "canvas",
+        "mode": "reset"
+      },
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "set",
+        "value": "${turnIndex}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvas"
+        ],
+        "property": "lineWidth",
+        "value": 3.5
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": []
+      },
+      {
+        "func": "GET",
+        "collection": [
+          "seat1"
+        ],
+        "property": "mainColor",
+        "variable": "color"
+      },
+      {
+        "func": "SELECT",
+        "property": "line",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "transparent"
+      }
+    ],
+    "z": 1,
+    "seatColorRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "draw${thisIndex}"
+        ]
+      }
+    ],
+    "color": "#f44336",
+    "lineType": "click"
+  },
+  "blueCubes": {
+    "type": "holder",
+    "id": "blueCubes",
+    "y": 308,
+    "width": 66,
+    "height": 66,
+    "dropTarget": {
+      "color": "blue"
+    },
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 1,
+        "relation": "<",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "leaveRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "COUNT"
+      },
+      {
+        "func": "IF",
+        "operand1": 0,
+        "relation": "==",
+        "operand2": "${COUNT}",
+        "thenRoutine": [
+          {
+            "func": "CLONE",
+            "source": "child"
+          },
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "${thisID}"
+          },
+          {
+            "func": "MOVE",
+            "from": "${thisID}",
+            "to": "${thisID}"
+          }
+        ]
+      }
+    ],
+    "classes": "transparent",
+    "layer": 3,
+    "x": 54,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "yellowCubes": {
+    "type": "holder",
+    "id": "yellowCubes",
+    "x": 124,
+    "y": 308,
+    "dropTarget": {
+      "color": "yellow"
+    },
+    "inheritFrom": {
+      "blueCubes": "*"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "whiteCubes": {
+    "type": "holder",
+    "id": "whiteCubes",
+    "x": 1355,
+    "y": 308,
+    "dropTarget": {
+      "color": "white"
+    },
+    "inheritFrom": {
+      "blueCubes": "*"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "blackCubes": {
+    "type": "holder",
+    "id": "blackCubes",
+    "x": 1425,
+    "y": 308,
+    "dropTarget": {
+      "color": "black"
+    },
+    "inheritFrom": {
+      "blueCubes": "*"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hex1": {
+    "type": "holder",
+    "id": "hex1",
+    "x": 303,
+    "width": 140,
+    "height": 140,
+    "css": {
+      "default": {
+        "clip-path": "polygon(93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%, 50% 0%)",
+        "border": "none !important"
+      }
+    },
+    "y": 34,
+    "grid": [
+      {
+        "x": 130.77,
+        "y": 226.5,
+        "offsetX": -26,
+        "offsetY": -83
+      },
+      {
+        "x": 130.77,
+        "y": 226.5,
+        "offsetX": 39,
+        "offsetY": 30
+      }
+    ],
+    "classes": "transparent",
+    "movableInEdit": false,
+    "stackOffsetX": 15,
+    "stackOffsetY": 15,
+    "layer": 2,
+    "dropOffsetX": 42,
+    "dropOffsetY": 42,
+    "doubleClickRoutine": [
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 1,
+        "thenRoutine": [
+          "// Select the cubes in adjacent hexes",
+          {
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "_centerAbsoluteX"
+          },
+          {
+            "func": "GET",
+            "collection": "thisButton",
+            "property": "_centerAbsoluteY"
+          },
+          "var minX = ${_centerAbsoluteX} - 165",
+          "var maxX = ${_centerAbsoluteX} + 110",
+          "var minY = ${_centerAbsoluteY} - 165",
+          "var maxY = ${_centerAbsoluteY} + 110",
+          {
+            "func": "SELECT",
+            "property": "token",
+            "value": "cube"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteX",
+            "relation": ">=",
+            "value": "${minX}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteX",
+            "relation": "<=",
+            "value": "${maxX}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteY",
+            "relation": ">=",
+            "value": "${minY}"
+          },
+          {
+            "func": "SELECT",
+            "source": "DEFAULT",
+            "property": "_absoluteY",
+            "relation": "<=",
+            "value": "${maxY}"
+          },
+          {
+            "func": "COUNT"
+          },
+          "// If there are no cubes in adjacent hexes, then continue",
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 0,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "parent",
+                "value": "${PROPERTY id}"
+              },
+              {
+                "func": "GET",
+                "property": "houseColor"
+              },
+              {
+                "func": "MOVE",
+                "to": "${houseColor}House${seatIndex}"
+              },
+              "// Select the houses in adjacent hexes",
+              {
+                "func": "SELECT",
+                "type": "card",
+                "property": "deck",
+                "value": "houseDeck"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteX",
+                "relation": ">=",
+                "value": "${minX}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteX",
+                "relation": "<=",
+                "value": "${maxX}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteY",
+                "relation": ">=",
+                "value": "${minY}"
+              },
+              {
+                "func": "SELECT",
+                "source": "DEFAULT",
+                "property": "_absoluteY",
+                "relation": "<=",
+                "value": "${maxY}"
+              },
+              {
+                "func": "COUNT"
+              },
+              "// If there are only 3 houses, then determine colors using checksums",
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 3,
+                "thenRoutine": [
+                  {
+                    "func": "GET",
+                    "property": "checksum",
+                    "aggregation": "sum",
+                    "variable": "sum"
+                  },
+                  "// Set up the array for this group of colors",
+                  "var colorString = ${PROPERTY colorArray} getIndex ${sum}",
+                  "var colorGroup = ${colorString} split '.'",
+                  "var length = length ${colorGroup}",
+                  "var length = ${length} - 1",
+                  "var base = ${colorGroup.0}",
+                  "var colorGroup = remove 0 1",
+                  "// Move the base color into position",
+                  {
+                    "func": "GET",
+                    "collection": "thisButton",
+                    "property": "_absoluteX"
+                  },
+                  {
+                    "func": "GET",
+                    "collection": "thisButton",
+                    "property": "_absoluteY"
+                  },
+                  "var x = ${_absoluteX} + 43",
+                  {
+                    "func": "IF",
+                    "operand1": "${length}",
+                    "operand2": 3,
+                    "thenRoutine": [
+                      "// For 4 cubes",
+                      "var y = ${_absoluteY} + 87"
+                    ],
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${length}",
+                        "operand2": 2,
+                        "thenRoutine": [
+                          "// For 3 cubes",
+                          "var y = ${_absoluteY} + 70"
+                        ],
+                        "elseRoutine": [
+                          "// For 2 cubes",
+                          "var y = ${_absoluteY} + 56"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "${base}Cubes",
+                    "max": 1
+                  },
+                  {
+                    "func": "MOVE",
+                    "to": "tempHolder"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "tempHolder"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "thisHolderID"
+                  },
+                  {
+                    "func": "SELECT",
+                    "property": "id",
+                    "value": "${thisHolderID}"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "parent",
+                    "value": null
+                  },
+                  {
+                    "func": "SET",
+                    "property": "x",
+                    "value": "${x}"
+                  },
+                  {
+                    "func": "SET",
+                    "property": "y",
+                    "value": "${y}"
+                  },
+                  "// Move the other cubes into position",
+                  {
+                    "func": "FOREACH",
+                    "in": "${colorGroup}",
+                    "loopRoutine": [
+                      {
+                        "func": "SELECT",
+                        "property": "parent",
+                        "value": "${value}Cubes",
+                        "max": 1
+                      },
+                      {
+                        "func": "MOVE",
+                        "to": "tempHolder"
+                      },
+                      {
+                        "func": "SELECT",
+                        "property": "parent",
+                        "value": "tempHolder"
+                      },
+                      {
+                        "func": "GET",
+                        "property": "id",
+                        "variable": "nextID"
+                      },
+                      {
+                        "func": "MOVE",
+                        "to": "${thisHolderID}"
+                      },
+                      "var thisHolderID = ${nextID}"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "colorArray": [
+      0,
+      1,
+      2,
+      "blue.blue.blue",
+      "blue.blue",
+      "yellow.yellow",
+      "yellow.yellow.yellow",
+      7,
+      8,
+      9,
+      "blue.blue",
+      "blue.yellow.white.black",
+      "yellow.yellow",
+      13,
+      "blue.blue",
+      "blue.yellow.white.black",
+      "yellow.yellow",
+      "white.white",
+      "white.white",
+      19,
+      20,
+      "blue.yellow.white.black",
+      "blue.yellow.white.black",
+      23,
+      "white.white.white",
+      "black.black",
+      "black.black",
+      27,
+      "white.white",
+      29,
+      30,
+      31,
+      "black.black",
+      33,
+      34,
+      35,
+      "black.black.black"
+    ],
+    "z": 1,
+    "color": "#f44336"
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(6)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "inUse": false,
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "// If you always want this seat to be a specific color, add a `staticColor` property wtih the hex color as the value",
+      "// If you want this seat to do other things, scroll all the way to the bottom and lock for comments about adding functions depending on whether the seat is being used or not. If you need functions that activate whenever there is a status change (being used or not), add those at the end of this clickRoutine.",
+      "// Check if another player is picking this seat",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY inUse}",
+        "thenRoutine": [
+          "// If another player is currently picking this seat, notify the play and end",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Pick another seat. Another player is getting this one ready."
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// If another player does not have the INPUT overlay on this seat active then flag it as active and CALL the routines needed to use the seat",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": true
+          },
+          {
+            "func": "DELAY"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateColorArrayRoutine",
+            "variable": "availableColors"
+          },
+          {
+            "func": "CALL",
+            "routine": "useSeatRoutine"
+          },
+          "// Update player color and name to match player's selections.",
+          "var playerColor = ${result.0}",
+          "var playerName = ${result.1}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "colorContrastRoutine": [
+      "// Use color functions to automatically adjust contrast for best visibility",
+      "var newText = colorContrast ${PROPERTY mainColor}",
+      "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "textColor",
+        "value": "${newText}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "glowColor",
+        "value": "${newGlow}"
+      }
+    ],
+    "doubleClickRoutine": [
+      "// A quick way to enter a seat with current playerName and random available color.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY inUse}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColors"
+              },
+              "var arrayLen = length ${availableColors}",
+              "var arrayLen = ${arrayLen} - 1",
+              "var random = randInt 0 ${arrayLen}",
+              "var arrayColor = ${availableColors} getIndex ${random}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var color = ${PROPERTY staticColor}"
+                ],
+                "elseRoutine": [
+                  "var color = ${arrayColor}"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${color}"
+              },
+              {
+                "func": "CALL",
+                "routine": "colorContrastRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${playerName}"
+              },
+              "var playerColor = ${color}"
+            ]
+          }
+        ]
+      }
+    ],
+    "updateColorArrayRoutine": [
+      "// Select all active seats except the current one and get color into an array.",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "value": "${PROPERTY id}",
+        "mode": "remove"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "aggregation": "array",
+        "variable": "seatColors"
+      },
+      "var result = ${PROPERTY colorArray}",
+      "// Remove colors used in other seats from the list of available colors for this player's overlay choices",
+      {
+        "func": "FOREACH",
+        "in": "${seatColors}",
+        "loopRoutine": [
+          "var isUsedIndex = ${result} indexOf ${value}",
+          "var result = ${isUsedIndex} remove 1"
+        ]
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY staticColor}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          "var color = ${PROPERTY staticColor}"
+        ],
+        "elseRoutine": [
+          "var color = ${PROPERTY color}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          "// If seat is empty, then prompt for name (and color if not static).",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${availableColors}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "// If seat is occupied by the player pressing the button, allow player to change name, color if not static, or get up from seat.",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name and choice of player color (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "palette",
+                        "label": "Your Color:",
+                        "colors": "${availableColors}",
+                        "variable": "color",
+                        "value": "${playerColor}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "// If seat is occupied by other than the player clicking, then confirm removal.",
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "// If player is leaving or getting kicked from seat, update color and player properties to empty values",
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "// Evaluate scenarios for what properties need to change",
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              "// Double check to make sure that another player has not chosen the same color if multiple seat INPUT overlays were open at the same time",
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColorsRecheck"
+              },
+              "var doubleCheck = ${availableColorsRecheck} indexOf ${color}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var doubleCheck = 99"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${doubleCheck}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "// Make updates to player color and name array for the return to the clickRoutine and SET the properties on this seat",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "color",
+                    "value": "${color}"
+                  },
+                  "var result = push ${color}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "player",
+                    "value": "${name}"
+                  },
+                  "var result = push ${name}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "mainColor",
+                    "value": "${result.0}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "colorContrastRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Choose again. That color was recently selected by another player."
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "inUse",
+                    "value": false
+                  },
+                  {
+                    "func": "CLICK",
+                    "collection": "thisButton"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          "// If there is anything else this seat needs to do after a player has left, add that here.",
+          "var thisIndex = ${PROPERTY index}",
+          {
+            "func": "CALL",
+            "routine": "seatColorRoutine",
+            "widget": "restartButton"
+          }
+        ],
+        "elseRoutine": [
+          "// If there is anything else this seat needs to do after it has been claimed, do that here.",
+          "var thisIndex = ${PROPERTY index}",
+          {
+            "func": "CALL",
+            "routine": "seatColorRoutine",
+            "widget": "restartButton"
+          }
+        ]
+      }
+    ],
+    "x": 29,
+    "y": 850,
+    "z": 1
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "width": 172,
+    "height": 48,
+    "borderRadius": 8,
+    "css": {
+      "default": {
+        "cursor": "pointer",
+        "gap": "5px",
+        "font-size": "21px",
+        "box-shadow": "0 2px 5px #00000066",
+        "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+        "background": "${PROPERTY mainColor}",
+        "color": "white",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+        "box-sizing": "border-box"
+      },
+      ".seated.turn": {
+        "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'!'",
+        "font-size": "18px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY outlineColor}",
+        "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "right": "-12px",
+        "top": "-12px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(6)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "hideWhenUnused": true,
+    "colorArray": [
+      "#000000",
+      "#dddddd",
+      "#f44336",
+      "#f06292",
+      "#9c27b0",
+      "#3f51b5",
+      "#1976d2",
+      "#00bcd4",
+      "#009688",
+      "#4caf50",
+      "#8bc34a",
+      "#cddc39",
+      "#ffeb3b",
+      "#ffc107",
+      "#ff9800",
+      "#bf360c",
+      "#795548",
+      "#607d8b"
+    ],
+    "mainColor": "#dddddd",
+    "outlineColor": "#000000bb",
+    "textColor": "#000000",
+    "textShadowBlur": 2,
+    "textShadowDistance": 2,
+    "clickRoutine": [
+      "// If you always want this seat to be a specific color, add a `staticColor` property wtih the hex color as the value",
+      "// If you want this seat to do other things, scroll all the way to the bottom and lock for comments about adding functions depending on whether the seat is being used or not. If you need functions that activate whenever there is a status change (being used or not), add those at the end of this clickRoutine.",
+      "// Check if another player is picking this seat",
+      {
+        "func": "IF",
+        "condition": "${PROPERTY inUse}",
+        "thenRoutine": [
+          "// If another player is currently picking this seat, notify the play and end",
+          {
+            "func": "INPUT",
+            "fields": [
+              {
+                "type": "title",
+                "text": "Pick another seat. Another player is getting this one ready."
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          "// If another player does not have the INPUT overlay on this seat active then flag it as active and CALL the routines needed to use the seat",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": true
+          },
+          {
+            "func": "DELAY"
+          },
+          {
+            "func": "CALL",
+            "routine": "updateColorArrayRoutine",
+            "variable": "availableColors"
+          },
+          {
+            "func": "CALL",
+            "routine": "useSeatRoutine"
+          },
+          "// Update player color and name to match player's selections.",
+          "var playerColor = ${result.0}",
+          "var playerName = ${result.1}",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "inUse",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "colorContrastRoutine": [
+      "// Use color functions to automatically adjust contrast for best visibility",
+      "var newText = colorContrast ${PROPERTY mainColor}",
+      "var newGlow = colorContrast ${PROPERTY mainColor} 0.3",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "textColor",
+        "value": "${newText}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "glowColor",
+        "value": "${newGlow}"
+      }
+    ],
+    "doubleClickRoutine": [
+      "// A quick way to enter a seat with current playerName and random available color.",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY inUse}",
+        "relation": "!=",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "operand2": "",
+            "thenRoutine": [
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColors"
+              },
+              "var arrayLen = length ${availableColors}",
+              "var arrayLen = ${arrayLen} - 1",
+              "var random = randInt 0 ${arrayLen}",
+              "var arrayColor = ${availableColors} getIndex ${random}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var color = ${PROPERTY staticColor}"
+                ],
+                "elseRoutine": [
+                  "var color = ${arrayColor}"
+                ]
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "mainColor",
+                "value": "${color}"
+              },
+              {
+                "func": "CALL",
+                "routine": "colorContrastRoutine"
+              },
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "player",
+                "value": "${playerName}"
+              },
+              "var playerColor = ${color}"
+            ]
+          }
+        ]
+      }
+    ],
+    "updateColorArrayRoutine": [
+      "// Select all active seats except the current one and get color into an array.",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": ""
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "id",
+        "value": "${PROPERTY id}",
+        "mode": "remove"
+      },
+      {
+        "func": "GET",
+        "property": "color",
+        "aggregation": "array",
+        "variable": "seatColors"
+      },
+      "var result = ${PROPERTY colorArray}",
+      "// Remove colors used in other seats from the list of available colors for this player's overlay choices",
+      {
+        "func": "FOREACH",
+        "in": "${seatColors}",
+        "loopRoutine": [
+          "var isUsedIndex = ${result} indexOf ${value}",
+          "var result = ${isUsedIndex} remove 1"
+        ]
+      }
+    ],
+    "useSeatRoutine": [
+      "var leaveSeat = false",
+      "var name = ${PROPERTY player}",
+      "var result = []",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY staticColor}",
+        "relation": "!=",
+        "operand2": null,
+        "thenRoutine": [
+          "var color = ${PROPERTY staticColor}"
+        ],
+        "elseRoutine": [
+          "var color = ${PROPERTY color}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          "// If seat is empty, then prompt for name (and color if not static).",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "INPUT",
+                "header": "Enter your name and choice of player color.",
+                "fields": [
+                  {
+                    "type": "string",
+                    "label": "Your Name:",
+                    "variable": "name",
+                    "value": "${playerName}"
+                  },
+                  {
+                    "type": "palette",
+                    "label": "Your Color:",
+                    "colors": "${availableColors}",
+                    "variable": "color",
+                    "value": "${playerColor}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "// If seat is occupied by the player pressing the button, allow player to change name, color if not static, or get up from seat.",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "header": "Enter/change your name and choice of player color (or leave seat).",
+                    "fields": [
+                      {
+                        "type": "string",
+                        "label": "Your Name:",
+                        "variable": "name",
+                        "value": "${playerName}"
+                      },
+                      {
+                        "type": "palette",
+                        "label": "Your Color:",
+                        "colors": "${availableColors}",
+                        "variable": "color",
+                        "value": "${playerColor}"
+                      },
+                      {
+                        "type": "subtitle",
+                        "text": "All done?",
+                        "css": "background-color: var(--VTTblue);color:white;"
+                      },
+                      {
+                        "type": "checkbox",
+                        "label": "Stand up from seat",
+                        "variable": "leaveSeat",
+                        "value": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              "// If seat is occupied by other than the player clicking, then confirm removal.",
+              {
+                "func": "INPUT",
+                "header": "Are you sure you want to remove ${PROPERTY player} from this seat?",
+                "cancelButtonText": "Cancel",
+                "confirmButtonText": "Okay",
+                "fields": [
+                  {
+                    "type": "checkbox",
+                    "label": "Remove this player from their seat",
+                    "variable": "leaveSeat",
+                    "value": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "// If player is leaving or getting kicked from seat, update color and player properties to empty values",
+      {
+        "func": "IF",
+        "condition": "${leaveSeat}",
+        "thenRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY staticColor}",
+            "relation": "!=",
+            "operand2": null,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": "${color}"
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": "thisButton",
+                "property": "color",
+                "value": null
+              }
+            ]
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "player",
+            "value": ""
+          }
+        ],
+        "elseRoutine": [
+          "// Evaluate scenarios for what properties need to change",
+          "var updatePlayerandColor = false",
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "${playerName}",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${PROPERTY player}",
+            "relation": "==",
+            "operand2": "",
+            "thenRoutine": [
+              "var updatePlayerandColor = true"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${name}",
+            "elseRoutine": [
+              "var updatePlayerandColor = false"
+            ]
+          },
+          {
+            "func": "IF",
+            "condition": "${updatePlayerandColor}",
+            "thenRoutine": [
+              "// Double check to make sure that another player has not chosen the same color if multiple seat INPUT overlays were open at the same time",
+              {
+                "func": "CALL",
+                "routine": "updateColorArrayRoutine",
+                "variable": "availableColorsRecheck"
+              },
+              "var doubleCheck = ${availableColorsRecheck} indexOf ${color}",
+              {
+                "func": "IF",
+                "operand1": "${PROPERTY staticColor}",
+                "relation": "!=",
+                "operand2": null,
+                "thenRoutine": [
+                  "var doubleCheck = 99"
+                ]
+              },
+              {
+                "func": "IF",
+                "operand1": "${doubleCheck}",
+                "relation": ">=",
+                "operand2": 0,
+                "thenRoutine": [
+                  "// Make updates to player color and name array for the return to the clickRoutine and SET the properties on this seat",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "color",
+                    "value": "${color}"
+                  },
+                  "var result = push ${color}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "player",
+                    "value": "${name}"
+                  },
+                  "var result = push ${name}",
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "mainColor",
+                    "value": "${result.0}"
+                  },
+                  {
+                    "func": "CALL",
+                    "routine": "colorContrastRoutine"
+                  }
+                ],
+                "elseRoutine": [
+                  {
+                    "func": "INPUT",
+                    "fields": [
+                      {
+                        "type": "title",
+                        "text": "Choose again. That color was recently selected by another player."
+                      }
+                    ]
+                  },
+                  {
+                    "func": "SET",
+                    "collection": "thisButton",
+                    "property": "inUse",
+                    "value": false
+                  },
+                  {
+                    "func": "CLICK",
+                    "collection": "thisButton"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player}",
+        "relation": "==",
+        "operand2": "",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "mainColor",
+            "value": "#dddddd"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "textColor",
+            "value": "#000000"
+          },
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "glowColor",
+            "value": null
+          },
+          "// If there is anything else this seat needs to do after a player has left, add that here.",
+          "var thisIndex = ${PROPERTY index}",
+          {
+            "func": "CALL",
+            "routine": "seatColorRoutine",
+            "widget": "restartButton"
+          }
+        ],
+        "elseRoutine": [
+          "// If there is anything else this seat needs to do after it has been claimed, do that here.",
+          "var thisIndex = ${PROPERTY index}",
+          {
+            "func": "CALL",
+            "routine": "seatColorRoutine",
+            "widget": "restartButton"
+          }
+        ]
+      }
+    ],
+    "x": 1342,
+    "index": 2,
+    "y": 850,
+    "z": 1,
+    "inUse": false
+  },
+  "canvas": {
+    "type": "canvas",
+    "id": "canvas",
+    "x": 238,
+    "width": 1125,
+    "height": 1125,
+    "resolution": 500,
+    "colorMap": [
+      "transparent",
+      "#dddddd",
+      "#dddddd"
+    ],
+    "layer": 1,
+    "movable": false,
+    "movableInEdit": false,
+    "lineWidth": 3.5,
+    "css": {
+      "border": "none"
+    },
+    "z": 1,
+    "color": "#f44336",
+    "display": false
+  },
+  "draw1": {
+    "id": "draw1",
+    "x": 42,
+    "y": 911,
+    "icon": {
+      "name": "stylus_note",
+      "color": "${PROPERTY color}"
+    },
+    "width": 60,
+    "height": 60,
+    "clickRoutine": [
+      "var seatPID = 'seat' + ${PROPERTY pID}",
+      {
+        "func": "GET",
+        "collection": [
+          "${seatPID}"
+        ],
+        "property": "mainColor",
+        "variable": "color"
+      },
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "change",
+        "color": "${color}",
+        "value": "${PROPERTY pID}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      },
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "set",
+        "value": "${PROPERTY pID}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvas"
+        ],
+        "property": "lineWidth",
+        "value": 3.5
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2",
+          "erase1",
+          "erase2"
+        ],
+        "property": "border",
+        "value": "1px solid #00000000"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "border",
+        "value": "1px dashed black"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "border": "${PROPERTY border}"
+    },
+    "borderRadius": 100,
+    "border": "1px solid #00000000",
+    "pID": 1,
+    "z": 1,
+    "color": "grey",
+    "display": false
+  },
+  "erase1": {
+    "id": "erase1",
+    "x": 115,
+    "y": 911,
+    "icon": {
+      "name": "ink_eraser",
+      "color": "grey"
+    },
+    "width": 60,
+    "height": 60,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "collection": [
+          "canvas"
+        ],
+        "mode": "set",
+        "value": 0
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "canvas"
+        ],
+        "property": "lineWidth",
+        "value": 6
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2",
+          "erase1",
+          "erase2"
+        ],
+        "property": "border",
+        "value": "1px solid #00000000"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "border",
+        "value": "1px dashed black"
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false,
+    "border": "1px solid #00000000",
+    "css": {
+      "border": "${PROPERTY border}"
+    },
+    "borderRadius": 100,
+    "z": 1,
+    "color": "#f44336",
+    "display": false
+  },
+  "draw2": {
+    "id": "draw2",
+    "x": 1357,
+    "y": 910,
+    "inheritFrom": {
+      "draw1": "*"
+    },
+    "border": "1px solid #00000000",
+    "pID": 2,
+    "z": 1,
+    "color": "grey",
+    "display": false
+  },
+  "erase2": {
+    "id": "erase2",
+    "x": 1430,
+    "y": 910,
+    "inheritFrom": {
+      "erase1": "*"
+    },
+    "border": "1px solid #00000000",
+    "z": 1,
+    "color": "#f44336",
+    "display": false
+  },
+  "rules": {
+    "id": "rules",
+    "x": 152,
+    "width": 1294,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-1417409669_239566",
+    "layer": 4,
+    "css": {
+      "border": "2px solid black"
+    },
+    "onlyVisibleForSeat": [],
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": [
+          "rulesButton"
+        ]
+      }
+    ],
+    "height": 1000,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "rulesButton": {
+    "type": "button",
+    "id": "rulesButton",
+    "x": 15,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "css": {
+      "default": {
+        "font-size": "40px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Rules'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "icon": "lists",
+    "clickRoutine": [
+      "var visibleToSeats = ${PROPERTY onlyVisibleForSeat OF rules}",
+      "var checkArray = ${visibleToSeats} isArray",
+      {
+        "func": "IF",
+        "condition": "${checkArray}",
+        "elseRoutine": [
+          "var visibleToSeats = []"
+        ]
+      },
+      "var inVisibility = ${visibleToSeats} indexOf ${seatID}",
+      {
+        "func": "IF",
+        "operand1": "${inVisibility}",
+        "relation": ">",
+        "operand2": -1,
+        "thenRoutine": [
+          "var visibleToSeats = remove ${inVisibility} 1"
+        ],
+        "elseRoutine": [
+          "var visibleToSeats = push ${seatID}"
+        ]
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "rules"
+        ],
+        "property": "onlyVisibleForSeat",
+        "value": "${visibleToSeats}"
+      }
+    ],
+    "z": 1,
+    "color": "#f44336"
+  },
+  "score1": {
+    "id": "score1",
+    "width": 65,
+    "height": 35,
+    "css": {
+      "background": "silver",
+      "color": "black",
+      "font-size": "28px"
+    },
+    "borderRadius": 8,
+    "type": "label",
+    "editable": true,
+    "text": 0,
+    "x": 84,
+    "y": 780,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "score1U": {
+    "type": "button",
+    "id": "score1U",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": 78,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "score1D": {
+    "type": "button",
+    "id": "score1D",
+    "parent": "score1",
+    "fixedParent": true,
+    "x": -52,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "score2": {
+    "id": "score2",
+    "width": 65,
+    "height": 35,
+    "css": {
+      "background": "silver",
+      "color": "black",
+      "font-size": "28px"
+    },
+    "borderRadius": 8,
+    "type": "label",
+    "editable": true,
+    "text": 0,
+    "x": 1395,
+    "y": 780,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "score2U": {
+    "type": "button",
+    "id": "score2U",
+    "parent": "score2",
+    "fixedParent": true,
+    "x": 78,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "+",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "score2D": {
+    "type": "button",
+    "id": "score2D",
+    "parent": "score2",
+    "fixedParent": true,
+    "x": -52,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "28px",
+        "color": "black",
+        "background": "silver",
+        "border": "3px solid black"
+      },
+      ":hover": {
+        "background": "#80808080"
+      }
+    },
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY parent}"
+        ],
+        "property": "text",
+        "relation": "-",
+        "value": 1
+      }
+    ],
+    "backgroundColor": "#000000",
+    "borderColor": "#ffffff",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "3cz8": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "3cz8",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "7q6r": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "7q6r",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "ms1d": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "ms1d",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "uvqr": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "uvqr",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "96az": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "96az",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hnm5": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "hnm5",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "b2i7": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "b2i7",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "d22w": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "d22w",
+    "dragging": "Mike",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "p8x2": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "p8x2",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "g3tm": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "g3tm",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "sjpr": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "sjpr",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "16wx": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "16wx",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "rdxa": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "rdxa",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "zjw0": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "zjw0",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "ic3y": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "ic3y",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "306z": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "306z",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "00kj": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "00kj",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "h0c5": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "h0c5",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "xfjb": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "xfjb",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "satw": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "satw",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "fkh7": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "fkh7",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "yw6y": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "yw6y",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "qwoz": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "qwoz",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "qvr6": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "qvr6",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "qq73": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "qq73",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "ppeo": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "ppeo",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "sr7j": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "sr7j",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "path": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "path",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "gqdq": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "gqdq",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "fo37": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "fo37",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "hkit": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "hkit",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "zfpt": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "zfpt",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "w1la": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "w1la",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "8omj": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "8omj",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "cwj9": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "cwj9",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "qcjf": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "qcjf",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "ul5j": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "ul5j",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "73rp": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "73rp",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "71kl": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "71kl",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "w7ub": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "w7ub",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "0izs": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "0izs",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "8i6x": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "8i6x",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "bwzg": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "bwzg",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "2pg7": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "2pg7",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "33g0": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "33g0",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "r1vb": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "r1vb",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "ky3k": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "ky3k",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "v1zy": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blueHouse",
+    "id": "v1zy",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "n2ag": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "yellowHouse",
+    "id": "n2ag",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "sh78": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "whiteHouse",
+    "id": "sh78",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "eysx": {
+    "deck": "houseDeck",
+    "type": "card",
+    "cardType": "blackHouse",
+    "id": "eysx",
+    "parent": "housePile",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "blueHouse1": {
+    "type": "holder",
+    "id": "blueHouse1",
+    "x": 88,
+    "y": 472,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#3532ff80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blueHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "whiteHouse1": {
+    "type": "holder",
+    "id": "whiteHouse1",
+    "x": 88,
+    "y": 622,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ffffffbb"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "whiteHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "yellowHouse1": {
+    "type": "holder",
+    "id": "yellowHouse1",
+    "x": 88,
+    "y": 547,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ede10080"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "yellowHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "blackHouse1": {
+    "type": "holder",
+    "id": "blackHouse1",
+    "x": 88,
+    "y": 698,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#000000aa"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blackHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "blueHouse2": {
+    "type": "holder",
+    "id": "blueHouse2",
+    "x": 1399,
+    "y": 472,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#3532ff80"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blueHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "yellowHouse2": {
+    "type": "holder",
+    "id": "yellowHouse2",
+    "x": 1399,
+    "y": 547,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ede10080"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "yellowHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "whiteHouse2": {
+    "type": "holder",
+    "id": "whiteHouse2",
+    "x": 1399,
+    "y": 622,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#ffffffbb"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "whiteHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "blackHouse2": {
+    "type": "holder",
+    "id": "blackHouse2",
+    "x": 1399,
+    "y": 698,
+    "width": 60,
+    "height": 60,
+    "css": {
+      "background": "#000000aa"
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": {
+      "cardType": "blackHouse"
+    },
+    "z": 1,
+    "color": "#f44336"
+  },
+  "turnButton1": {
+    "type": "button",
+    "id": "turnButton1",
+    "x": 210,
+    "y": 628,
+    "width": 50,
+    "height": 50,
+    "borderRadius": 100,
+    "layer": 3,
+    "classes": "symbols",
+    "css": {
+      "default": {
+        "font-size": "39px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'Turn'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "TURN"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "turn",
+        "value": true
+      },
+      {
+        "func": "GET",
+        "property": "index",
+        "variable": "turnIndex"
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "draw${turnIndex}"
+        ]
+      }
+    ],
+    "z": 1,
+    "color": "#f44336"
+  },
+  "turnButton2": {
+    "inheritFrom": {
+      "turnButton1": "*"
+    },
+    "type": "button",
+    "id": "turnButton2",
+    "x": 1291,
+    "y": 628,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "librarySetupButton": {
+    "type": "button",
+    "id": "librarySetupButton",
+    "x": 760,
+    "y": 1161,
+    "text": "Save for PL",
+    "clickRoutine": [
+      "// Used to reset the same ready for the PL",
+      {
+        "func": "CLICK",
+        "collection": [
+          "restartButton"
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "houseHolder"
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SELECT",
+        "property": "hoverTarget",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "hoverTarget",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2"
+        ],
+        "property": "color",
+        "value": "grey"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "draw1",
+          "draw2"
+        ],
+        "property": "border",
+        "value": "1px solid #00000000"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "blueCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "blueCube1"
+      },
+      {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "blueCubeMaster"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "yellowCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "yellowCube1"
+      },
+      {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "yellowCubeMaster"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "whiteCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "whiteCube1"
+      },
+      {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "whiteCubeMaster"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "blackCubes"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "blackCube1"
+      },
+      {
+        "func": "SET",
+        "property": "clonedFrom",
+        "value": "blackCubeMaster"
+      },
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "houseHolder"
+      },
+      {
+        "func": "SET",
+        "property": "id",
+        "value": "housePile"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "restartButton"
+        ],
+        "property": "lineType",
+        "value": "click"
+      },
+      "// Leave the z reset for last",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      }
+    ],
+    "z": 1,
+    "color": "#f44336"
+  },
+  "tempHolder": {
+    "type": "holder",
+    "id": "tempHolder",
+    "x": -137,
+    "y": 635,
+    "width": 70,
+    "height": 70,
+    "z": 1,
+    "color": "#f44336"
+  },
+  "houseDeck": {
+    "type": "deck",
+    "id": "houseDeck",
+    "parent": "houseHolder",
+    "x": 4,
+    "y": 4,
+    "cardDefaults": {
+      "classes": "transition",
+      "layer": 2,
+      "borderWidth": 2,
+      "width": 60,
+      "height": 60,
+      "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+      "doubleClickRoutine": [
+        {
+          "func": "CALL",
+          "routine": "doubleClickRoutine",
+          "widget": "${PROPERTY parent}"
+        }
+      ]
+    },
+    "cardTypes": {
+      "blueHouse": {
+        "primaryColor": "#3532ff",
+        "borderColor": "#ffffff",
+        "checksum": 1,
+        "houseColor": "blue"
+      },
+      "yellowHouse": {
+        "primaryColor": "#ede100",
+        "borderColor": "#ffffff",
+        "checksum": 2,
+        "houseColor": "yellow"
+      },
+      "whiteHouse": {
+        "primaryColor": "#ffffff",
+        "borderColor": "#808080",
+        "checksum": 8,
+        "houseColor": "white"
+      },
+      "blackHouse": {
+        "primaryColor": "#000000",
+        "borderColor": "#ffffff",
+        "checksum": 12,
+        "houseColor": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "transparent",
+            "value": "/i/game-pieces/3D/House-3D.svg",
+            "width": 60,
+            "height": 60,
+            "svgReplaces": {
+              "#primaryColor": "primaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "hoverParent": "houseHolder",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "boardImage": {
+    "id": "boardImage",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "image": "/assets/-294869202_53646",
+    "z": 1,
+    "color": "#f44336"
+  },
+  "line2": {
+    "inheritFrom": {
+      "lineMaster": "*"
+    },
+    "id": "line2",
+    "x": -97,
+    "y": 328,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "lineMaster": {
+    "id": "lineMaster",
+    "x": -120.1,
+    "y": 328.1,
+    "width": 75,
+    "height": 0,
+    "borderRadius": "3px",
+    "rotation": 90,
+    "layer": 5,
+    "z": 1,
+    "color": "transparent",
+    "css": {
+      "border": "3px solid ${PROPERTY color}",
+      "cursor": "url('/i/cursors/paint brush no hand.svg') 2 0, auto"
+    },
+    "grid": [
+      {
+        "x": 130.1,
+        "y": 226.1,
+        "offsetX": 10,
+        "offsetY": 102,
+        "rotation": 90
+      },
+      {
+        "x": 130.1,
+        "y": 226.1,
+        "offsetX": 76,
+        "offsetY": -13,
+        "rotation": 90
+      },
+      {
+        "x": 130.1,
+        "y": 226.1,
+        "offsetX": 42,
+        "offsetY": 47,
+        "rotation": 330
+      },
+      {
+        "x": 130.1,
+        "y": 226.1,
+        "offsetX": -24,
+        "offsetY": -67,
+        "rotation": 330
+      },
+      {
+        "x": 130.1,
+        "y": 226.1,
+        "offsetX": -21,
+        "offsetY": 46,
+        "rotation": 210
+      },
+      {
+        "x": 130.1,
+        "y": 226.1,
+        "offsetX": 44,
+        "offsetY": -67,
+        "rotation": 210
+      }
+    ],
+    "line": true,
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY color}",
+        "operand2": "transparent",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "${playerColor}"
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "color",
+            "value": "transparent"
+          }
+        ]
+      }
+    ],
+    "movable": false,
+    "movableInEdit": false
+  },
+  "line3": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line3",
+    "x": 432.29999999999995,
+    "y": 499.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line4": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line4",
+    "x": 1082.8,
+    "y": 499.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line5": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line5",
+    "x": 1019.8,
+    "y": 498.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line6": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line6",
+    "x": 952.6999999999999,
+    "y": 499.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line7": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line7",
+    "x": 889.6999999999999,
+    "y": 498.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line8": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line8",
+    "x": 822.5999999999999,
+    "y": 499.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line9": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line9",
+    "x": 759.5999999999999,
+    "y": 498.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line10": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line10",
+    "x": 692.5,
+    "y": 499.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line11": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line11",
+    "x": 629.5,
+    "y": 498.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line12": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line12",
+    "x": 562.4,
+    "y": 499.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line13": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line13",
+    "x": 499.4,
+    "y": 498.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line14": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line14",
+    "x": 496.4,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line15": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line15",
+    "x": 564.4,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line16": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line16",
+    "x": 626.5,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line17": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line17",
+    "x": 694.5,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line18": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line18",
+    "x": 756.5999999999999,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line19": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line19",
+    "x": 824.5999999999999,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line20": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line20",
+    "x": 886.6999999999999,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line21": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line21",
+    "x": 954.6999999999999,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line22": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line22",
+    "x": 1016.8,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line23": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line23",
+    "x": 1084.8,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line24": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line24",
+    "x": 1146.8999999999999,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line25": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line25",
+    "x": 1116.8,
+    "y": 439.20000000000005,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line26": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line26",
+    "x": 986.6999999999999,
+    "y": 439.20000000000005,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line27": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line27",
+    "x": 856.5999999999999,
+    "y": 439.20000000000005,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line28": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line28",
+    "x": 726.5,
+    "y": 439.20000000000005,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line29": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line29",
+    "x": 596.4,
+    "y": 439.20000000000005,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line30": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line30",
+    "x": 466.29999999999995,
+    "y": 439.20000000000005,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line31": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line31",
+    "x": 434.29999999999995,
+    "y": 385.20000000000005,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line32": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line32",
+    "x": 369.29999999999995,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line33": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line33",
+    "x": 432.29999999999995,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line34": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line34",
+    "x": 499.4,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line35": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line35",
+    "x": 562.4,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line36": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line36",
+    "x": 629.5,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line37": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line37",
+    "x": 692.5,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line38": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line38",
+    "x": 759.5999999999999,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line39": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line39",
+    "x": 822.5999999999999,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line40": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line40",
+    "x": 889.6999999999999,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line41": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line41",
+    "x": 952.6999999999999,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line42": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line42",
+    "x": 1019.8,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line43": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line43",
+    "x": 1082.8,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line44": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line44",
+    "x": 1149.8999999999999,
+    "y": 272.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line45": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line45",
+    "x": 1212.8999999999999,
+    "y": 273.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line46": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line46",
+    "x": 1180.8999999999999,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line47": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line47",
+    "x": 1050.8,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line48": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line48",
+    "x": 920.6999999999999,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line49": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line49",
+    "x": 790.5999999999999,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line50": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line50",
+    "x": 660.5,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line51": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line51",
+    "x": 530.4,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line52": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line52",
+    "x": 400.29999999999995,
+    "y": 328.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line53": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line53",
+    "x": 1246.8999999999999,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line54": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line54",
+    "x": 1116.8,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line55": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line55",
+    "x": 986.6999999999999,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line56": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line56",
+    "x": 856.5999999999999,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line57": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line57",
+    "x": 726.5,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line58": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line58",
+    "x": 596.4,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line59": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line59",
+    "x": 466.29999999999995,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line60": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line60",
+    "x": 336.2,
+    "y": 213.1,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line61": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line61",
+    "x": 1214.8999999999999,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line62": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line62",
+    "x": 1084.8,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line63": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line63",
+    "x": 1277,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line64": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line64",
+    "x": 1311,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line65": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line65",
+    "x": 1280,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line66": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line66",
+    "x": 1212.8999999999999,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line67": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line67",
+    "x": 1146.8999999999999,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line68": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line68",
+    "x": 1180.8999999999999,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line69": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line69",
+    "x": 1149.8999999999999,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line70": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line70",
+    "x": 1082.8,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line71": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line71",
+    "x": 954.6999999999999,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line72": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line72",
+    "x": 1016.8,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line73": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line73",
+    "x": 1050.8,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line74": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line74",
+    "x": 1019.8,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line75": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line75",
+    "x": 952.6999999999999,
+    "y": 47.00000000000003,
+    "color": "transparent",
+    "z": 1,
+    "rotation": 330
+  },
+  "line76": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line76",
+    "x": 824.5999999999999,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line77": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line77",
+    "x": 886.6999999999999,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line78": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line78",
+    "x": 920.6999999999999,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line79": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line79",
+    "x": 889.6999999999999,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line80": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line80",
+    "x": 822.5999999999999,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line81": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line81",
+    "x": 694.5,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line82": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line82",
+    "x": 756.5999999999999,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line83": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line83",
+    "x": 790.5999999999999,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line84": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line84",
+    "x": 759.5999999999999,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line85": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line85",
+    "x": 692.5,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line86": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line86",
+    "x": 564.4,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line87": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line87",
+    "x": 626.5,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line88": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line88",
+    "x": 660.5,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line89": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line89",
+    "x": 629.5,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line90": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line90",
+    "x": 562.4,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line91": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line91",
+    "x": 434.29999999999995,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line92": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line92",
+    "x": 496.4,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line93": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line93",
+    "x": 530.4,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line94": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line94",
+    "x": 499.4,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line95": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line95",
+    "x": 432.29999999999995,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line96": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line96",
+    "x": 304.2,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line97": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line97",
+    "x": 366.29999999999995,
+    "y": 159.1,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line98": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line98",
+    "x": 400.29999999999995,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line99": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line99",
+    "x": 369.29999999999995,
+    "y": 46.00000000000003,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line100": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line100",
+    "x": 302.2,
+    "y": 47.00000000000003,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line101": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line101",
+    "x": 270.2,
+    "y": 102.00000000000003,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line113": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line113",
+    "x": 1246.8999999999999,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line114": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line114",
+    "x": 1116.8,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line115": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line115",
+    "x": 986.6999999999999,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line116": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line116",
+    "x": 856.5999999999999,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line117": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line117",
+    "x": 726.5,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line118": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line118",
+    "x": 596.4,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line119": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line119",
+    "x": 466.29999999999995,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line120": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line120",
+    "x": 336.2,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line121": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line121",
+    "x": 1180.8999999999999,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line122": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line122",
+    "x": 1050.8,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line123": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line123",
+    "x": 920.6999999999999,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line124": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line124",
+    "x": 790.5999999999999,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line125": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line125",
+    "x": 660.5,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line126": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line126",
+    "x": 530.4,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line127": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line127",
+    "x": 400.29999999999995,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line128": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line128",
+    "x": 270.2,
+    "y": 780.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line129": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line129",
+    "x": 1212.8999999999999,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line130": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line130",
+    "x": 1149.8999999999999,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line131": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line131",
+    "x": 1149.8999999999999,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line132": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line132",
+    "x": 1214.8999999999999,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line133": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line133",
+    "x": 206.1,
+    "y": 891.4,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line134": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line134",
+    "x": 236.2,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line135": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line135",
+    "x": 1082.8,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line136": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line136",
+    "x": 1019.8,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line137": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line137",
+    "x": 952.6999999999999,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line138": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line138",
+    "x": 889.6999999999999,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line139": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line139",
+    "x": 822.5999999999999,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line140": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line140",
+    "x": 759.5999999999999,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line141": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line141",
+    "x": 692.5,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line142": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line142",
+    "x": 629.5,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line143": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line143",
+    "x": 562.4,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line144": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line144",
+    "x": 499.4,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line145": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line145",
+    "x": 432.29999999999995,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line146": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line146",
+    "x": 369.29999999999995,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line147": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line147",
+    "x": 302.2,
+    "y": 951.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line148": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line148",
+    "x": 239.2,
+    "y": 950.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line149": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line149",
+    "x": 1146.8999999999999,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line150": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line150",
+    "x": 1084.8,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line151": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line151",
+    "x": 1016.8,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line152": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line152",
+    "x": 954.6999999999999,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line153": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line153",
+    "x": 886.6999999999999,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line154": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line154",
+    "x": 824.5999999999999,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line155": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line155",
+    "x": 756.5999999999999,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line156": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line156",
+    "x": 694.5,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line157": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line157",
+    "x": 626.5,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line158": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line158",
+    "x": 564.4,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line159": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line159",
+    "x": 496.4,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line160": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line160",
+    "x": 434.29999999999995,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line161": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line161",
+    "x": 366.29999999999995,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line162": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line162",
+    "x": 304.2,
+    "y": 837.4,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line163": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line163",
+    "x": 1082.8,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line164": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line164",
+    "x": 1019.8,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line165": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line165",
+    "x": 952.6999999999999,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line166": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line166",
+    "x": 889.6999999999999,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line167": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line167",
+    "x": 822.5999999999999,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line168": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line168",
+    "x": 759.5999999999999,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line169": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line169",
+    "x": 692.5,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line170": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line170",
+    "x": 629.5,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line171": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line171",
+    "x": 562.4,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line172": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line172",
+    "x": 499.4,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line173": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line173",
+    "x": 432.29999999999995,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line174": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line174",
+    "x": 369.29999999999995,
+    "y": 724.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line175": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line175",
+    "x": 302.2,
+    "y": 725.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line176": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line176",
+    "x": 1116.8,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line177": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line177",
+    "x": 986.6999999999999,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line178": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line178",
+    "x": 856.5999999999999,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line179": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line179",
+    "x": 726.5,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line180": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line180",
+    "x": 596.4,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line181": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line181",
+    "x": 466.29999999999995,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line182": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line182",
+    "x": 336.2,
+    "y": 665.3,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line183": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line183",
+    "x": 1084.8,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line184": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line184",
+    "x": 1016.8,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line185": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line185",
+    "x": 954.6999999999999,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line186": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line186",
+    "x": 886.6999999999999,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line187": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line187",
+    "x": 824.5999999999999,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line188": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line188",
+    "x": 756.5999999999999,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line189": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line189",
+    "x": 694.5,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line190": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line190",
+    "x": 626.5,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line191": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line191",
+    "x": 564.4,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line192": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line192",
+    "x": 496.4,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line193": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line193",
+    "x": 434.29999999999995,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 210,
+    "color": "transparent"
+  },
+  "line194": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line194",
+    "x": 366.29999999999995,
+    "y": 611.3,
+    "z": 1,
+    "rotation": 330,
+    "color": "transparent"
+  },
+  "line195": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line195",
+    "x": 1050.8,
+    "y": 554.2,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line196": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line196",
+    "x": 920.6999999999999,
+    "y": 554.2,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line197": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line197",
+    "x": 790.5999999999999,
+    "y": 554.2,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line198": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line198",
+    "x": 660.5,
+    "y": 554.2,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line199": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line199",
+    "x": 530.4,
+    "y": 554.2,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "line200": {
+    "inheritFrom": {
+      "line2": "*"
+    },
+    "id": "line200",
+    "x": 400.29999999999995,
+    "y": 554.2,
+    "z": 1,
+    "rotation": 90,
+    "color": "transparent"
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": "/* Card transitions */\n\n.transition {\n  transition: transform 1000ms\n}\n\n.transition.dragging {\n  transition: none\n}"
+    },
+    "info": {
+      "name": "Streetcar Suburb",
+      "image": "/assets/1703120472_28004",
+      "rules": "https://streetcar.drew-edwards.com/home",
+      "bgg": "https://boardgamegeek.com/boardgame/355847/streetcar-suburb",
+      "year": "2022",
+      "mode": "vs",
+      "time": "15",
+      "attribution": "This is an original game by Drew Edwards available under CC BY-NC 4.0. The hex board, the rules overlay, and the library image are also available under CC BY-NC 4.0.<div><br></div><div>The cube design, coding, and room layout are by LawDawg and are released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1769020496502,
+      "showName": true,
+      "skill": "",
+      "description": "Transform an unsustainable suburb of single-family houses into an affordable, diverse, and walkable town. Remove single-family housing limits to let citizens build, then connect new buildings with streetcar lines of your own color to score points.",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Drew Edwards",
+      "similarAwards": "",
+      "ruleText": "Click on the rules button in the upper left corner of the room when sitting in a seat to display the rules.",
+      "helpText": "Players sit in seats. Press the restart button to begin and assign a random starting player. When starting a game, choose whether to draw lines on the map by clicking on the line or by drawing on a canvas.<div><br></div><div>Line color is set to the player's seat color.</div><div><br></div><div>If clicking on a line, click it again to erase it.</div><div><br></div><div>If using the canvas, click and drag to draw a line between hexes. The player whose turn it is has their player color set as the active drawing color. To change to the other player's color use either the turn button or click on the colored pen icon at the bottom of the page near the player's seat. To erase part of a drawing, click on the eraser icon near the player's seat to change the cursor to an eraser.<div><br></div><div>Double click a house or the hex it is in to send that cube into the appropriate holder for end of game scoring and to automatically build, when permitted by the rules, a stack of cubes in that holder. You can also manually drag and drop houses and cubes. Cubes stack on top of each other and can be dragged as a group.</div></div>",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2"
+    }
+  },
+  "blueCube1": {
+    "type": "holder",
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent transition",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-691333523_1805",
+    "token": "cube",
+    "clonedFrom": "blueCubeMaster",
+    "y": 4,
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "blueCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "x": 4,
+    "dragging": "Mike",
+    "z": 1,
+    "color": "#f44336",
+    "id": "blueCube1",
+    "parent": "blueCubes"
+  },
+  "yellowCube1": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent transition",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/1977876427_1801",
+    "token": "cube",
+    "clonedFrom": "yellowCubeMaster",
+    "dragging": "LawDawg",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "yellowCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "z": 1,
+    "color": "#f44336",
+    "id": "yellowCube1",
+    "parent": "yellowCubes"
+  },
+  "whiteCube1": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent transition",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-1731024678_1801",
+    "token": "cube",
+    "dragging": "Mike",
+    "clonedFrom": "whiteCubeMaster",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "whiteCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "z": 1,
+    "color": "#f44336",
+    "id": "whiteCube1",
+    "parent": "whiteCubes"
+  },
+  "blackCube1": {
+    "type": "holder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "movable": true,
+    "classes": "transparent transition",
+    "css": {
+      "default": {
+        "background-image": "url('${PROPERTY bgImage}')",
+        "background-repeat": "no-repeat",
+        "background-size": "100%",
+        "background-position": "50%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -32,
+    "dropTarget": {
+      "token": "cube"
+    },
+    "bgImage": "/assets/-148598130_1801",
+    "token": "cube",
+    "dragging": "Mike",
+    "clonedFrom": "blackCubeMaster",
+    "layer": 3,
+    "enterRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY parent}",
+        "operand2": "blackCubes",
+        "thenRoutine": [
+          {
+            "func": "DELETE",
+            "collection": "child"
+          }
+        ]
+      }
+    ],
+    "z": 1,
+    "color": "#f44336",
+    "id": "blackCube1",
+    "parent": "blackCubes"
+  },
+  "housePile": {
+    "type": "pile",
+    "parent": "houseHolder",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "housePile"
+  }
+}

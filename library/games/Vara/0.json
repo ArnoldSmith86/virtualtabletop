@@ -1,0 +1,532 @@
+{
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 1027,
+    "y": 422,
+    "z": 5,
+    "width": 150,
+    "height": 150,
+    "css": {
+      "background": "#ffffff80"
+    },
+    "dropTarget": {},
+    "dropOffsetX": 25,
+    "dropOffsetY": 80,
+    "dropLimit": 2,
+    "enterRoutine": [
+      "var stop = false",
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "${PROPERTY id}",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "GET",
+        "property": "id",
+        "variable": "lastHolder"
+      },
+      {
+        "func": "COUNT",
+        "holder": "${PROPERTY id}"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 2,
+        "thenRoutine": [
+          {
+            "func": "FOREACH",
+            "range": [
+              4
+            ],
+            "loopRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${stop}",
+                "operand2": false,
+                "thenRoutine": [
+                  {
+                    "func": "SELECT",
+                    "property": "parent",
+                    "value": "${lastHolder}"
+                  },
+                  {
+                    "func": "COUNT"
+                  },
+                  {
+                    "func": "GET",
+                    "property": "id",
+                    "variable": "lastHolder"
+                  },
+                  {
+                    "func": "IF",
+                    "operand1": "${COUNT}",
+                    "operand2": 1,
+                    "elseRoutine": [
+                      {
+                        "func": "IF",
+                        "operand1": "${value}",
+                        "relation": "<",
+                        "operand2": 4,
+                        "thenRoutine": [
+                          "var stop = true",
+                          {
+                            "func": "MOVE",
+                            "collection": "child",
+                            "from": "${PROPERTY id}",
+                            "to": "${lastHolder}"
+                          }
+                        ],
+                        "elseRoutine": [
+                          {
+                            "func": "SET",
+                            "collection": "child",
+                            "property": "y",
+                            "value": 150
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "holder2": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder2",
+    "x": 939,
+    "y": 634
+  },
+  "holder3": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder3",
+    "x": 727,
+    "y": 722
+  },
+  "holder4": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder4",
+    "x": 514,
+    "y": 634
+  },
+  "holder5": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder5",
+    "x": 427,
+    "y": 422
+  },
+  "holder6": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder6",
+    "x": 514,
+    "y": 209
+  },
+  "holder7": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder7",
+    "x": 726,
+    "y": 122
+  },
+  "holder8": {
+    "inheritFrom": {
+      "holder1": "*"
+    },
+    "type": "holder",
+    "id": "holder8",
+    "x": 939,
+    "y": 209
+  },
+  "background": {
+    "id": "background",
+    "width": 1920,
+    "height": 960,
+    "scale": 1.09,
+    "layer": -4,
+    "movable": false,
+    "css": {
+      "opacity": "0.6"
+    },
+    "image": "/assets/-52589506_548214"
+  },
+  "pieceMaster": {
+    "type": "holder",
+    "id": "pieceMaster",
+    "x": 764,
+    "y": -103,
+    "width": 100,
+    "height": 40,
+    "borderRadius": 0,
+    "z": 1354,
+    "movable": true,
+    "classes": "transparent",
+    "css": {
+      "default": {
+        "background-image": "url(\"data:image/svg+xml,%3Csvg version='1.2' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' width='100' height='20'%3E%3Cpath fill='${PROPERTY color}' d='m0 0h100v20h-100z'/%3E%3C/svg%3E\")",
+        "background-repeat": "no-repeat",
+        "background-position-y": "100%"
+      }
+    },
+    "dropLimit": 1,
+    "dropOffsetX": -1,
+    "dropOffsetY": -25,
+    "dropTarget": {},
+    "color": "%23104114"
+  },
+  "piece1": {
+    "type": "holder",
+    "id": "piece1",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%2301413c",
+    "z": 1666,
+    "resetProperties": {
+      "parent": "piece2"
+    },
+    "parent": "piece2"
+  },
+  "piece2": {
+    "type": "holder",
+    "id": "piece2",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%2301413c",
+    "z": 1577,
+    "resetProperties": {
+      "parent": "piece3"
+    },
+    "parent": "piece3"
+  },
+  "piece15": {
+    "type": "holder",
+    "id": "piece15",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%23a58184",
+    "z": 1507,
+    "resetProperties": {
+      "parent": "piece16"
+    },
+    "parent": "piece16"
+  },
+  "piece16": {
+    "type": "holder",
+    "id": "piece16",
+    "x": 1250,
+    "y": 850,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%23a58184",
+    "z": 1521,
+    "resetProperties": {
+      "parent": null,
+      "x": 1250,
+      "y": 850
+    }
+  },
+  "piece14": {
+    "type": "holder",
+    "id": "piece14",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%23a58184",
+    "z": 1676,
+    "resetProperties": {
+      "parent": "piece15"
+    },
+    "parent": "piece15"
+  },
+  "piece13": {
+    "type": "holder",
+    "id": "piece13",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%23a58184",
+    "z": 1592,
+    "resetProperties": {
+      "parent": "piece14"
+    },
+    "parent": "piece14"
+  },
+  "piece12": {
+    "type": "holder",
+    "id": "piece12",
+    "x": 250,
+    "y": 850,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%236e4800",
+    "z": 1516,
+    "resetProperties": {
+      "parent": null,
+      "x": 250,
+      "y": 850
+    }
+  },
+  "piece11": {
+    "type": "holder",
+    "id": "piece11",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%236e4800",
+    "z": 1477,
+    "resetProperties": {
+      "parent": "piece12"
+    },
+    "parent": "piece12"
+  },
+  "piece10": {
+    "type": "holder",
+    "id": "piece10",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%236e4800",
+    "z": 1485,
+    "resetProperties": {
+      "parent": "piece11"
+    },
+    "parent": "piece11"
+  },
+  "piec9": {
+    "type": "holder",
+    "id": "piec9",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%236e4800",
+    "z": 1587,
+    "resetProperties": {
+      "parent": "piece10"
+    },
+    "parent": "piece10"
+  },
+  "piece8": {
+    "type": "holder",
+    "id": "piece8",
+    "x": 1250,
+    "y": 160,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%233e175a",
+    "z": 1680,
+    "resetProperties": {
+      "parent": null,
+      "x": 1250,
+      "y": 160
+    }
+  },
+  "piece7": {
+    "type": "holder",
+    "id": "piece7",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%233e175a",
+    "z": 1656,
+    "resetProperties": {
+      "parent": "piece8"
+    },
+    "parent": "piece8"
+  },
+  "piece6": {
+    "type": "holder",
+    "id": "piece6",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%233e175a",
+    "z": 1681,
+    "resetProperties": {
+      "parent": "piece7"
+    },
+    "parent": "piece7"
+  },
+  "piece5": {
+    "type": "holder",
+    "id": "piece5",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%233e175a",
+    "z": 1686,
+    "resetProperties": {
+      "parent": "piece6"
+    },
+    "parent": "piece6"
+  },
+  "piece4": {
+    "type": "holder",
+    "id": "piece4",
+    "x": 250,
+    "y": 160,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%2301413c",
+    "z": 1513,
+    "resetProperties": {
+      "parent": null,
+      "x": 250,
+      "y": 160
+    }
+  },
+  "piece3": {
+    "type": "holder",
+    "id": "piece3",
+    "x": -1,
+    "y": -25,
+    "inheritFrom": {
+      "pieceMaster": "*"
+    },
+    "color": "%2301413c",
+    "z": 1517,
+    "resetProperties": {
+      "parent": "piece4"
+    },
+    "parent": "piece4"
+  },
+  "restartButton": {
+    "type": "button",
+    "id": "restartButton",
+    "x": 1545,
+    "y": 5,
+    "width": 50,
+    "height": 50,
+    "z": 1,
+    "classes": "symbols",
+    "color": "white",
+    "css": {
+      "default": {
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "\"Reset\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "80px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "title",
+            "text": "Restarting game ..."
+          },
+          {
+            "type": "subtitle",
+            "text": "This will completely reset the board and start a new game. Are you sure?"
+          }
+        ],
+        "confirmButtonText": "Yes"
+      },
+      {
+        "func": "RESET"
+      }
+    ],
+    "icon": {
+      "name": "restart_alt",
+      "scale": 1.2
+    }
+  },
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Vara",
+      "image": "/assets/-348087019_29018",
+      "rules": "",
+      "bgg": "https://boardgamegeek.com/boardgame/11730/diam",
+      "year": "2003",
+      "mode": "vs",
+      "time": "10",
+      "attribution": "Layout, design, and library image by LawDawg96. Released to the Public Domain under CC0.<br><div><br></div><div>Wood grain background by RyanPro available under the Pixabay license from https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</div>",
+      "lastUpdate": 1764011815674,
+      "showName": true,
+      "skill": "",
+      "description": "Place, move, and stack tokens to align two of your own color at the same height on opposite sides of the board.",
+      "similarImage": "",
+      "similarName": "Diam",
+      "similarDesigner": "Alain Couchot",
+      "similarAwards": "1998 Concours International de Créateurs de Jeux de Société\n2005 As d'Or - Jeu de l'Année Nominee",
+      "ruleText": "<b>Objective:</b><div><br></div><div>Be the first to get two tokens of the same color at the same height on opposite sides of the board. The matching tokens must be on level two to four. Tokens on the first level do not count.</div><div><br></div><div><b>Setup:</b></div><div><b><br></b></div><div>Each player has a reserve of tokens off the board.</div><div><ul><li>2 players: Each player selects two colors.</li><li>3 players: One player selects two colors. The other players select one color each.</li><li>4 players: Each player selects a single color.</li></ul><div>Decide which player goes first.</div></div><div><br></div><div><b>Game Play:</b><br><div><br></div></div><div>During your turn either place a token from your reserve or move one of your tokens already on the board to an adjacent space. Stacks may never exceed 4 tokens high.</div><div><ul><li>Using the reserve. Place your token either</li><ul><li>On any empty space on the board or</li><li>On top of any stack on the board that is less than 4 tokens high.</li></ul><li>Moving tokens. Move one of your own tokens on the board to an adjacent space.</li><ul><li>The adjacent space may be empty or occupied. If occupied, stack your token on top of the tokens already in the space.</li><li>When moving a token that has pieces stacked above it, the entire stack moves with it. In this implementation, click and drag the lower token to move all the tokens above it.</li></ul></ul><div><div><b>Turns:</b></div><div><ul><li>2 players: Players alternate turns.</li><li>4 players: The players are in teams of two. Alternate turns between teams and players. A player may not place a token from the partner's reserve, but may move a partner's token already on the board.</li><li>3 players: The two single-color players form a team against the player controlling two colors. Use the same turn structure and team rules as the 4- player game.&nbsp;</li></ul><div><b>Winning:</b></div></div></div></div><div><br></div><div>The first player (or team) to get two tokens of the same color at the same height (level two to four) on opposite spaces on the board wins. If multiple players meet the win condition simultaneously, the win goes to the player (or team) whose matching pawns are on the highest level.</div>",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Operations - Routines",
+      "image": "/assets/786542630_8010",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1770162707266,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "variantImage": "",
+      "variant": "editorAddToRoomRoutine",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "editorAddToRoomRoutine",
+    "layer": -3
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ; white-space: pre-wrap",
+    "html": "This routine is for game developers only and is not used in game play. It works in connection with the Widgets Sidebar button in the JSON Editor. When saving widgets to local storage for use in other games or rooms, a <b>editorAddToRoomRoutine</b> can be manually added. It works exactly like other VTT routines except that it activates when the widget is added to the room in Edit Mode. The routine is then deleted from the widget that is added to the room.\n\nThere is no button in the JSON Editor to automatically add this routine and it appears in orange instead of yellow in the colored JSON available in the editor."
+  },
+  "button1": {
+    "type": "button",
+    "id": "button1",
+    "x": 743,
+    "y": 402,
+    "z": 22840,
+    "text": "Demo",
+    "editorAddToRoomRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Choose piece color",
+        "fields": [
+          {
+            "type": "color",
+            "value": "#1f5ca6",
+            "variable": "newColor"
+          }
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${newColor}",
+        "collection": "thisButton"
+      }
+    ]
+  },
+  "text1": {
+    "id": "text1",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The button above contains an <b>editorAddToRoomRoutine</b>. An example of something you may want to include there is a routine to pick a color that should be set on the widget. For example, this is done on the VTT-provided game pieces using the routine demonstrated in the example above. You can see how this works by adding the button to your local storage and then adding it to the room."
+  }
+}

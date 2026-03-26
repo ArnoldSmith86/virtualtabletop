@@ -1,8 +1,8 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
-let roomID = self.location.pathname.replace(/.*\//, '');
+let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
 
 export const widgets = new Map();
@@ -36,6 +36,27 @@ let overlayShownForEmptyRoom = false;
 let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
+
+function normalizeRoomID(roomID) {
+  if(!config.roomNamesCaseSensitive)
+    roomID = roomID.toLowerCase();
+  return roomID;
+}
+
+function applyCustomCss(gameSettings) {
+  let style = document.getElementById('globalCss');
+  if (style)
+    style.innerHTML = '';
+  if (gameSettings && (gameSettings.globalCss || gameSettings.cursorCss)) {
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'globalCss';
+      document.head.appendChild(style);
+    }
+    const cssText = (gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '');
+    style.appendChild(document.createTextNode(mapAssetURLs(cssText)));
+  }
+}
 
 function generateUniqueWidgetID() {
   let id;
@@ -262,6 +283,20 @@ async function updateWidgetId(widget, oldID) {
     }
   }
 
+  // If widget is a deck, update dropTarget properties on holder widgets.
+  if (widget.type === 'deck') {
+    for (const w of widgetFilter(w => w.get('dropTarget') && asArray(w.get('dropTarget')).some(d => d && d.deck === oldID))) {
+      if(Array.isArray(w.get('dropTarget'))) {
+        const dropTarget = w.get('dropTarget').map(d =>
+          d && d.deck === oldID ? { ...d, deck: id } : d
+        );
+        await w.set('dropTarget', dropTarget);
+      } else {
+        await w.set('dropTarget', { ...w.get('dropTarget'), deck: id });
+      }
+    }
+  }
+
   // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
   if(widget.type == 'seat') {
     for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
@@ -289,6 +324,16 @@ export function batchStart() {
 export function batchEnd() {
   --batchDepth;
   sendDelta();
+}
+
+export function flushDelta() {
+  const currentBatchDepth = batchDepth;
+  const currentDeltaCause = delta.c;
+  batchDepth = 0;
+  sendDelta();
+  if(currentDeltaCause)
+    delta.c = currentDeltaCause;
+  batchDepth = currentBatchDepth;
 }
 
 function setDeltaCause(cause) {
@@ -440,6 +485,9 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
+  // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
+  currentGameSettings = args._meta.gameSettings || {};
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   const topSurface = $('#topSurface');
@@ -475,6 +523,8 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  resetZoomAndPan();
+
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
@@ -484,7 +534,11 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    $('#statesButton').click();
+    if(urlProperties.about) {
+      $('#aboutButton').click();
+    } else {
+      $('#statesButton').click();
+    }
     overlayShownForEmptyRoom = true;
   }
 
@@ -548,7 +602,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
+    if(!w.isLimbo)
+      await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
   }
 }
@@ -585,5 +640,10 @@ export function widgetFilter(callback) {
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('meta', (args) => {
+    if(args.meta) {
+      applyCustomCss(args.meta.gameSettings);
+    }
+  });
   setScale();
 });
