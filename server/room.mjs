@@ -440,38 +440,47 @@ export default class Room {
   getPublicLibraryGames() {
     if(!Room.publicLibrary) {
       Room.publicLibrary = {};
-      for(const [ subLibrary, folder ] of Object.entries(Config.get('libraries'))) {
-        const categoryPath = Config.directory('library') + '/' + folder;
-        if(fs.existsSync(categoryPath)) {
-          for(const dir of fs.readdirSync(categoryPath)) {
-            const gameDir = categoryPath + '/' + dir;
-            if(fs.lstatSync(gameDir).isDirectory()) {
-              for(const file of fs.readdirSync(gameDir)) {
-                if(file.match(/json$/)) {
-                  const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
-                  const id = 'PL:' + folder + ':' + gameFile._meta.info.name;
+
+      const scanFolder = (subLibrary, folder, currentPath, relativePath) => {
+        if(!fs.existsSync(currentPath)) return;
+        for(const entry of fs.readdirSync(currentPath)) {
+          const entryPath = currentPath + '/' + entry;
+          const entryRelativePath = relativePath ? relativePath + '/' + entry : entry;
+          if(fs.lstatSync(entryPath).isDirectory()) {
+            let hasJson = false;
+            for(const file of fs.readdirSync(entryPath)) {
+              if(file.match(/json$/)) {
+                try {
+                  const gameFile = JSON.parse(fs.readFileSync(entryPath + '/' + file));
+                  const name = gameFile._meta?.info?.name || entry;
+                  const id = 'PL:' + folder + ':' + name;
                   if(!Room.publicLibrary[id]) {
-                    Room.publicLibrary[id] = gameFile._meta.info;
-                    Room.publicLibrary[id].publicLibrary = folder + '/' + dir;
+                    Room.publicLibrary[id] = Object.assign({ name }, gameFile._meta?.info || {});
+                    Room.publicLibrary[id].publicLibrary = folder + '/' + entryRelativePath;
                     Room.publicLibrary[id].publicLibraryCategory = subLibrary;
                     Room.publicLibrary[id].variants = [];
                   }
                   Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
-                    players: gameFile._meta.info.players,
-                    language: gameFile._meta.info.language,
-                    variant: gameFile._meta.info.variant,
-                    variantImage: gameFile._meta.info.variantImage,
-                    publicLibrary: folder + '/' + dir + '/' + file
+                    players: gameFile._meta?.info?.players,
+                    language: gameFile._meta?.info?.language,
+                    variant: gameFile._meta?.info?.variant,
+                    variantImage: gameFile._meta?.info?.variantImage,
+                    publicLibrary: folder + '/' + entryRelativePath + '/' + file
                   };
-                  delete gameFile._meta.info.players;
-                  delete gameFile._meta.info.language;
-                  delete gameFile._meta.info.variant;
-                  delete gameFile._meta.info.variantImage;
+                  hasJson = true;
+                } catch(e) {
+                  Logging.log(`WARNING: Could not load public library game ${entryPath}/${file}: ${e}`);
                 }
               }
             }
+            if(!hasJson)
+              scanFolder(subLibrary, folder, entryPath, entryRelativePath);
           }
         }
+      };
+
+      for(const [ subLibrary, folder ] of Object.entries(Config.get('libraries'))) {
+        scanFolder(subLibrary, folder, Config.directory('library') + '/' + folder, '');
       }
     }
     Statistics.updateDataInsideStates(Room.publicLibrary);

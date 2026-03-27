@@ -709,3 +709,5 @@ window.onkeyup = function(event) {
       $('#buttonInputCancel').click();
   }
 }
+
+$('body').classList.add(window.location.search == '?admin' ? 'admin' : 'normal');
