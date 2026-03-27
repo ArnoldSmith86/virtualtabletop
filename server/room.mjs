@@ -452,19 +452,20 @@ export default class Room {
               if(file.match(/json$/)) {
                 try {
                   const gameFile = JSON.parse(fs.readFileSync(entryPath + '/' + file));
-                  const name = gameFile._meta?.info?.name || entry;
+                  const metaInfo = (gameFile._meta && gameFile._meta.info) || {};
+                  const name = metaInfo.name || entry;
                   const id = 'PL:' + folder + ':' + name;
                   if(!Room.publicLibrary[id]) {
-                    Room.publicLibrary[id] = Object.assign({ name }, gameFile._meta?.info || {});
+                    Room.publicLibrary[id] = Object.assign({ name }, metaInfo);
                     Room.publicLibrary[id].publicLibrary = folder + '/' + entryRelativePath;
                     Room.publicLibrary[id].publicLibraryCategory = subLibrary;
                     Room.publicLibrary[id].variants = [];
                   }
                   Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
-                    players: gameFile._meta?.info?.players,
-                    language: gameFile._meta?.info?.language,
-                    variant: gameFile._meta?.info?.variant,
-                    variantImage: gameFile._meta?.info?.variantImage,
+                    players: metaInfo.players,
+                    language: metaInfo.language,
+                    variant: metaInfo.variant,
+                    variantImage: metaInfo.variantImage,
                     publicLibrary: folder + '/' + entryRelativePath + '/' + file
                   };
                   hasJson = true;
