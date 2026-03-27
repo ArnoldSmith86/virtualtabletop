@@ -1528,7 +1528,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat' ].concat(extra);
+    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat' ].concat(extra);
   }
 
   isOnDemandPropertyValueSet(value) {
@@ -1753,16 +1753,20 @@ class PropertiesModule extends SidebarModule {
         rangeInput.value = String(clampForRange(normalized));
     };
 
+    const setValue = typeof options.setValue === 'function'
+      ? options.setValue
+      : value => this.inputValueUpdated(widget, property, value);
+
     numberInput.oninput = () => {
       const value = normalizeValue(numberInput.value);
-      this.inputValueUpdated(widget, property, value);
+      setValue(value);
       if(document.activeElement === numberInput)
         rangeInput.value = String(clampForRange(value));
     };
 
     rangeInput.oninput = () => {
       const value = normalizeValue(rangeInput.value);
-      this.inputValueUpdated(widget, property, value);
+      setValue(value);
       if(document.activeElement === rangeInput)
         numberInput.value = String(value);
     };
@@ -1773,6 +1777,61 @@ class PropertiesModule extends SidebarModule {
   renderDualNumberWithSlider(widget, title, left, right, options = {}) {
     const leftOptions = options.left || options;
     const rightOptions = options.right || options;
+    const isSizePair = left.property == 'width' && right.property == 'height';
+    let syncingAspectRatio = false;
+
+    const isRatioLockEnabled = () => {
+      const lockValue = widget.get('lockSizeRatio');
+      return lockValue === undefined || lockValue === null ? true : !!lockValue;
+    };
+
+    const leftOptionsWithRatio = Object.assign({}, leftOptions, {
+      setValue: value => {
+        if(!isSizePair || syncingAspectRatio || !isRatioLockEnabled()) {
+          this.inputValueUpdated(widget, 'width', value);
+          return;
+        }
+
+        const width = Number(widget.get('width'));
+        const height = Number(widget.get('height'));
+        if(!Number.isFinite(width) || !Number.isFinite(height) || width <= 0) {
+          this.inputValueUpdated(widget, 'width', value);
+          return;
+        }
+
+        const ratio = height / width;
+        const newHeight = Math.max(1, Math.round(value * ratio));
+
+        syncingAspectRatio = true;
+        this.inputValueUpdated(widget, 'width', value);
+        this.inputValueUpdated(widget, 'height', newHeight);
+        syncingAspectRatio = false;
+      }
+    });
+
+    const rightOptionsWithRatio = Object.assign({}, rightOptions, {
+      setValue: value => {
+        if(!isSizePair || syncingAspectRatio || !isRatioLockEnabled()) {
+          this.inputValueUpdated(widget, 'height', value);
+          return;
+        }
+
+        const width = Number(widget.get('width'));
+        const height = Number(widget.get('height'));
+        if(!Number.isFinite(width) || !Number.isFinite(height) || height <= 0) {
+          this.inputValueUpdated(widget, 'height', value);
+          return;
+        }
+
+        const ratio = width / height;
+        const newWidth = Math.max(1, Math.round(value * ratio));
+
+        syncingAspectRatio = true;
+        this.inputValueUpdated(widget, 'height', value);
+        this.inputValueUpdated(widget, 'width', newWidth);
+        syncingAspectRatio = false;
+      }
+    });
 
     const sectionTitle = document.createElement('div');
     sectionTitle.textContent = title + ':';
@@ -1786,14 +1845,43 @@ class PropertiesModule extends SidebarModule {
     row.style.gap = '8px';
     row.style.flexWrap = 'wrap';
 
-    this.renderNumberWithSlider(widget, left.property, left.title, row, leftOptions);
+    this.renderNumberWithSlider(widget, left.property, left.title, row, leftOptionsWithRatio);
 
     const separator = document.createElement('span');
     separator.textContent = '|';
     separator.style.color = '#777';
     row.appendChild(separator);
 
-    this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptions);
+    this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptionsWithRatio);
+  }
+
+  renderSizeRatioLock(widget) {
+    const wrap = div(this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+    wrap.style.marginTop = '6px';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = `lockSizeRatio_${widget.id}_${rand().toString(36).substring(3, 7)}`;
+
+    const label = document.createElement('label');
+    label.htmlFor = input.id;
+    label.textContent = 'Lock size ratio';
+
+    wrap.appendChild(input);
+    wrap.appendChild(label);
+
+    const updateInput = w => {
+      const value = w.get('lockSizeRatio');
+      input.checked = value === undefined || value === null ? true : !!value;
+    };
+
+    input.onchange = () => this.inputValueUpdated(widget, 'lockSizeRatio', input.checked);
+
+    this.addPropertyListener(widget, 'lockSizeRatio', updateInput);
   }
 
   renderPositionLocks(widget) {
@@ -2275,6 +2363,7 @@ class PropertiesModule extends SidebarModule {
       left: { min: 1, max: 1600, step: 1 },
       right: { min: 1, max: 1000, step: 1 }
     });
+    this.renderSizeRatioLock(widget);
     this.addLineBreak();
     this.renderAssociatedWidgetsSection(widget);
   }
