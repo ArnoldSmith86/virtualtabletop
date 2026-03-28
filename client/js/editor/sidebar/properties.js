@@ -2658,9 +2658,11 @@ class PropertiesModule extends SidebarModule {
       checkbox.id = `inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}_${rand().toString(36).substring(3, 7)}`;
 
       if(modeValue === 'excluded') {
+        checkbox.classList.add('inheritExcludeCheckbox');
         // For exclude mode, check if property IS in the exclude list.
         checkbox.checked = currentProps.includes(prop);
       } else {
+        checkbox.classList.add('inheritIncludeCheckbox');
         // For include mode, check if property IS in the selection
         checkbox.checked = currentProps.includes(prop);
       }

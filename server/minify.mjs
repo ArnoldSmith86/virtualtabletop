@@ -87,6 +87,7 @@ export default async function minifyHTML() {
     'client/css/editor/dragtoolbar.css',
     'client/css/editor/sidebar.css',
     'client/css/editor/sidebarModules.css',
+    'client/css/editor/sidebarProperties.css',
 
     'client/css/editmode.css',
     'client/css/jsonedit.css',

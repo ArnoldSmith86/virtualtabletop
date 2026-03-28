@@ -1,0 +1,65 @@
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox,
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  border-radius: 2px;
+  background: #fff;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox::before,
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox::before {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  transform: scale(0);
+  transition: transform 0.08s ease-out;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox {
+  border: 1px solid #c43636;
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox {
+  border: 1px solid #2f8a3b;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox::before {
+  content: 'x';
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox::before {
+  content: '✓';
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox:checked {
+  background: #c43636;
+  border-color: #c43636;
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox:checked {
+  background: #2f8a3b;
+  border-color: #2f8a3b;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox:checked::before,
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox:checked::before {
+  transform: scale(1);
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox:focus-visible {
+  outline: 2px solid #c43636;
+  outline-offset: 1px;
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox:focus-visible {
+  outline: 2px solid #2f8a3b;
+  outline-offset: 1px;
+}
