@@ -2384,6 +2384,7 @@ class PropertiesModule extends SidebarModule {
     const listContainer = div(container);
     listContainer.style.paddingLeft = '10px';
     listContainer.style.marginBottom = '8px';
+    const expandedStates = {};
 
     const updateList = () => {
       listContainer.innerHTML = '';
@@ -2400,7 +2401,14 @@ class PropertiesModule extends SidebarModule {
         listContainer.appendChild(emptyMsg);
       } else {
         for(const [widgetId, mode] of Object.entries(inheritFromObj)) {
-          this.renderInheritFromWidgetRow(listContainer, widget, widgetId, mode, () => updateList());
+          this.renderInheritFromWidgetRow(
+            listContainer,
+            widget,
+            widgetId,
+            mode,
+            !!expandedStates[widgetId],
+            expanded => expandedStates[widgetId] = expanded
+          );
         }
       }
     };
@@ -2443,11 +2451,11 @@ class PropertiesModule extends SidebarModule {
     return Array.from(allProps).sort();
   }
 
-  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, onExpandChanged) {
+  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, initialExpanded = false, onExpandChanged = () => {}) {
     const sourceWidget = widgets && widgets.get(sourceWidgetId);
     if(!sourceWidget) return;
 
-    let expanded = false;
+    let expanded = !!initialExpanded;
 
     const rowWrap = div(container);
     rowWrap.style.display = 'flex';
@@ -2569,6 +2577,7 @@ class PropertiesModule extends SidebarModule {
     toggleArrow.onclick = () => {
       expanded = !expanded;
       toggleArrow.textContent = expanded ? '▼' : '▶';
+      onExpandChanged(expanded);
       if(expanded) {
         propsContainer.style.display = dropdown.value === 'all' ? 'none' : 'block';
         renderCheckboxes();
@@ -2576,6 +2585,12 @@ class PropertiesModule extends SidebarModule {
         propsContainer.style.display = 'none';
       }
     };
+
+    if(expanded) {
+      toggleArrow.textContent = '▼';
+      propsContainer.style.display = dropdown.value === 'all' ? 'none' : 'block';
+      renderCheckboxes();
+    }
   }
 
   renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode) {
