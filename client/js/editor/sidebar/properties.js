@@ -2420,6 +2420,7 @@ class PropertiesModule extends SidebarModule {
     listContainer.style.paddingLeft = '10px';
     listContainer.style.marginBottom = '8px';
     const expandedStates = {};
+    const modeStates = {};
 
     const updateList = () => {
       listContainer.innerHTML = '';
@@ -2441,6 +2442,8 @@ class PropertiesModule extends SidebarModule {
             widget,
             widgetId,
             mode,
+            modeStates[widgetId] || null,
+            nextMode => modeStates[widgetId] = nextMode,
             !!expandedStates[widgetId],
             expanded => expandedStates[widgetId] = expanded
           );
@@ -2453,6 +2456,18 @@ class PropertiesModule extends SidebarModule {
     this.renderInheritFromAddButton(container, widget);
 
     this.addPropertyListener(widget, 'inheritFrom', () => updateList());
+  }
+
+  normalizeInheritFromObject(inheritFrom) {
+    if(typeof inheritFrom === 'string') {
+      const sourceWidgetId = inheritFrom.trim();
+      return sourceWidgetId ? { [sourceWidgetId]: '*' } : {};
+    }
+
+    if(inheritFrom && typeof inheritFrom === 'object' && !Array.isArray(inheritFrom))
+      return Object.assign({}, inheritFrom);
+
+    return {};
   }
 
   getAllPropertiesForInherit(sourceWidget, targetWidget) {
@@ -2486,7 +2501,7 @@ class PropertiesModule extends SidebarModule {
     return Array.from(allProps).sort();
   }
 
-  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, initialExpanded = false, onExpandChanged = () => {}) {
+  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, preferredMode = null, onModeChanged = () => {}, initialExpanded = false, onExpandChanged = () => {}) {
     const sourceWidget = widgets && widgets.get(sourceWidgetId);
     if(!sourceWidget) return;
 
@@ -2544,6 +2559,14 @@ class PropertiesModule extends SidebarModule {
     if(modeArray) {
       if(hasMixedMode) {
         currentModeValue = 'mixed';
+      } else if(modeArray.length === 0) {
+        // Empty arrays are ambiguous; preserve the user's most recently chosen
+        // mode for this row when available.
+        if(preferredMode === 'selected' || preferredMode === 'excluded') {
+          currentModeValue = preferredMode;
+        } else {
+          currentModeValue = 'selected';
+        }
       } else if(modeArray.length > 0 && modeArray[0].startsWith('!')) {
         currentModeValue = 'excluded';
       } else {
@@ -2571,7 +2594,7 @@ class PropertiesModule extends SidebarModule {
     deleteBtn.setAttribute('icon', 'delete');
     deleteBtn.title = 'Remove this inherit source';
     deleteBtn.onclick = () => {
-      const inheritFrom = Object.assign({}, widget.get('inheritFrom') || {});
+      const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
       delete inheritFrom[sourceWidgetId];
       const finalValue = Object.keys(inheritFrom).length === 0 ? null : inheritFrom;
       this.inputValueUpdated(widget, 'inheritFrom', finalValue);
@@ -2593,7 +2616,9 @@ class PropertiesModule extends SidebarModule {
         return;
       }
 
-      const inheritFrom = Object.assign({}, widget.get('inheritFrom') || {});
+      onModeChanged(dropdown.value);
+
+      const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
       let newMode = '*';
 
       if(dropdown.value === 'all') {
@@ -2689,7 +2714,20 @@ class PropertiesModule extends SidebarModule {
       ? currentMode.map(p => p.startsWith('!') ? p.substring(1) : p)
       : [];
 
-    const hasBlockedProps = allProps.some(prop => targetWidget.state[prop] !== undefined);
+    const isPropertyDeclaredOnTarget = prop => {
+      const state = targetWidget.state || {};
+      const defaults = targetWidget.defaults || {};
+
+      if(!Object.prototype.hasOwnProperty.call(state, prop))
+        return false;
+
+      if(!Object.prototype.hasOwnProperty.call(defaults, prop))
+        return true;
+
+      return JSON.stringify(state[prop]) !== JSON.stringify(defaults[prop]);
+    };
+
+    const hasBlockedProps = allProps.some(prop => isPropertyDeclaredOnTarget(prop));
     if(hasBlockedProps) {
       const tip = document.createElement('div');
       tip.textContent = 'Some properties are not copied because they are declared in the current widget.';
@@ -2705,7 +2743,7 @@ class PropertiesModule extends SidebarModule {
       checkboxWrap.style.fontSize = '12px';
       checkboxWrap.style.marginBottom = '3px';
 
-      const isDeclaredOnTarget = targetWidget.state[prop] !== undefined;
+      const isDeclaredOnTarget = isPropertyDeclaredOnTarget(prop);
       if(isDeclaredOnTarget) {
         checkboxWrap.classList.add('inheritFromDeclaredProperty');
       }
@@ -2735,7 +2773,7 @@ class PropertiesModule extends SidebarModule {
       }
 
       checkbox.onchange = () => {
-        const inheritFrom = Object.assign({}, targetWidget.get('inheritFrom') || {});
+        const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
         const selectedProps = [];
 
         // Collect all checked boxes
@@ -2811,7 +2849,7 @@ class PropertiesModule extends SidebarModule {
 
       this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
         if(pickedWidgets) {
-          const inheritFrom = Object.assign({}, targetWidget.get('inheritFrom') || {});
+          const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
           inheritFrom[pickedWidgets.id] = '*'; // Default to copy all
           this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
         }
