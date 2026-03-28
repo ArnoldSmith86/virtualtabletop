@@ -2368,10 +2368,10 @@ class PropertiesModule extends SidebarModule {
     this.renderAssociatedWidgetsSection(widget);
   }
 
-  renderInheritFromButton(widget, target = null) {
+  renderInheritFromButton(widget, target = null, options = {}) {
     this.renderOnDemandSection(widget, 'add Inherit From', ['inheritFrom'], container => {
       this.renderInheritFromEditor(container, widget);
-    }, target || this.moduleDOM);
+    }, target || this.moduleDOM, options);
   }
 
   renderInheritFromEditor(container, widget) {
@@ -2747,7 +2747,9 @@ class PropertiesModule extends SidebarModule {
       buttonHost: linksSection.newPropertiesWrapper
     });
 
-    this.renderInheritFromButton(widget, linksSection.contentWrapper);
+    this.renderInheritFromButton(widget, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper
+    });
   }
 
   renderForCard(widget) {
