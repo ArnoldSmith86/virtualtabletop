@@ -2018,6 +2018,38 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(lockParentInfo);
   }
 
+  renderRotationInput(widget) {
+    const wrap = div(this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginTop = '8px';
+
+    const label = document.createElement('label');
+    label.textContent = 'Rotation:';
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = 1;
+    input.style = 'width: 60px; border: 1px solid #ccc; border-radius: 4px; text-align: right;';
+    
+    input.value = widget.get('rotation') || 0;
+    wrap.appendChild(input);
+
+    const unit = document.createElement('span');
+    unit.textContent = 'degrees';
+    unit.style.paddingLeft = '3px';
+    wrap.appendChild(unit);
+
+    input.oninput = () => this.inputValueUpdated(widget, 'rotation', +input.value);
+    
+    this.addPropertyListener(widget, 'rotation', w => {
+      if (document.activeElement !== input)
+        input.value = w.get('rotation') || 0;
+    });
+  }
+
   renderParentWidgetInput(widget, target = null) {
     const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'flex';
@@ -2358,6 +2390,8 @@ class PropertiesModule extends SidebarModule {
     });
     this.renderPositionLocks(widget);
     this.renderLayerSelect(widget);
+    this.addLineBreak();
+    this.renderRotationInput(widget);
     this.addLineBreak();
     this.renderDualNumberWithSlider(widget, 'Size', { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
       left: { min: 1, max: 1600, step: 1 },
