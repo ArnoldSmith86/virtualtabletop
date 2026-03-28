@@ -2456,7 +2456,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   getAllPropertiesForInherit(sourceWidget, targetWidget) {
-    const blacklist = ['id', 'type', 'deck', 'cardType'];
+    const blacklist = ['id', 'type', 'deck', 'cardType', 'inheritFrom'];
     const allProps = new Set();
 
     // Add properties from source widget (state + defaults)
