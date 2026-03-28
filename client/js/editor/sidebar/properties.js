@@ -2534,14 +2534,25 @@ class PropertiesModule extends SidebarModule {
       { value: 'excluded', label: 'exclude selected' }
     ];
 
+    const modeArray = Array.isArray(mode) ? mode : null;
+    const hasExcluded = modeArray ? modeArray.some(p => typeof p === 'string' && p.startsWith('!')) : false;
+    const hasIncluded = modeArray ? modeArray.some(p => typeof p === 'string' && !p.startsWith('!')) : false;
+    const hasMixedMode = !!(modeArray && hasExcluded && hasIncluded);
+
     // Determine current mode
     let currentModeValue = 'all';
-    if(Array.isArray(mode)) {
-      if(mode.length > 0 && mode[0].startsWith('!')) {
+    if(modeArray) {
+      if(hasMixedMode) {
+        currentModeValue = 'mixed';
+      } else if(modeArray.length > 0 && modeArray[0].startsWith('!')) {
         currentModeValue = 'excluded';
       } else {
         currentModeValue = 'selected';
       }
+    }
+
+    if(hasMixedMode) {
+      modes.unshift({ value: 'mixed', label: 'invalid mix (include + exclude)' });
     }
 
     modes.forEach(modeOption => {
@@ -2556,10 +2567,9 @@ class PropertiesModule extends SidebarModule {
 
     // Delete button
     const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = '−';
-    deleteBtn.style.padding = '2px 6px';
-    deleteBtn.style.minWidth = '30px';
-    deleteBtn.style.fontSize = '12px';
+    deleteBtn.classList.add('inheritFromIconActionButton', 'inheritFromRemoveWidgetButton');
+    deleteBtn.setAttribute('icon', 'delete');
+    deleteBtn.title = 'Remove this inherit source';
     deleteBtn.onclick = () => {
       const inheritFrom = Object.assign({}, widget.get('inheritFrom') || {});
       delete inheritFrom[sourceWidgetId];
@@ -2579,6 +2589,10 @@ class PropertiesModule extends SidebarModule {
 
     // Update mode change handler
     dropdown.onchange = () => {
+      if(dropdown.value === 'mixed') {
+        return;
+      }
+
       const inheritFrom = Object.assign({}, widget.get('inheritFrom') || {});
       let newMode = '*';
 
@@ -2599,13 +2613,17 @@ class PropertiesModule extends SidebarModule {
 
     const renderCheckboxes = () => {
       propsContainer.innerHTML = '';
-      if(dropdown.value === 'all') {
-        propsContainer.style.display = 'none';
+      const currentInheritFrom = widget.get('inheritFrom') || {};
+      const currentMode = currentInheritFrom[sourceWidgetId] || '*';
+
+      if(dropdown.value === 'mixed') {
+        propsContainer.style.display = 'block';
+        this.renderInheritFromMixedModeError(propsContainer, currentMode);
         return;
       }
 
       propsContainer.style.display = 'block';
-      this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, mode);
+      this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, currentMode);
     };
 
     // Toggle expand/collapse
@@ -2614,7 +2632,7 @@ class PropertiesModule extends SidebarModule {
       toggleArrow.textContent = expanded ? '▼' : '▶';
       onExpandChanged(expanded);
       if(expanded) {
-        propsContainer.style.display = dropdown.value === 'all' ? 'none' : 'block';
+        propsContainer.style.display = 'block';
         renderCheckboxes();
       } else {
         propsContainer.style.display = 'none';
@@ -2623,14 +2641,40 @@ class PropertiesModule extends SidebarModule {
 
     if(expanded) {
       toggleArrow.textContent = '▼';
-      propsContainer.style.display = dropdown.value === 'all' ? 'none' : 'block';
+      propsContainer.style.display = 'block';
       renderCheckboxes();
     }
   }
 
+  renderInheritFromMixedModeError(container, modeList) {
+    const errorWrap = div(container);
+    errorWrap.classList.add('inheritFromMixedModeError');
+
+    const title = document.createElement('div');
+    title.textContent = 'Invalid inherit mode: include and exclude entries are mixed.';
+    errorWrap.appendChild(title);
+
+    const hint = document.createElement('div');
+    hint.textContent = 'Switch mode to copy all/copy selected/exclude selected to fix this row.';
+    errorWrap.appendChild(hint);
+
+    const modeInput = document.createElement('input');
+    modeInput.type = 'text';
+    modeInput.readOnly = true;
+    modeInput.value = Array.isArray(modeList) ? modeList.join(', ') : String(modeList || '');
+    modeInput.classList.add('inheritFromMixedModeInput');
+    errorWrap.appendChild(modeInput);
+  }
+
   renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode) {
     const title = document.createElement('div');
-    title.textContent = modeValue === 'excluded' ? 'Exclude properties:' : 'Include properties:';
+    if(modeValue === 'excluded') {
+      title.textContent = 'Exclude properties:';
+    } else if(modeValue === 'all') {
+      title.textContent = 'All properties (read-only preview):';
+    } else {
+      title.textContent = 'Include properties:';
+    }
     title.style.fontWeight = 'bold';
     title.style.fontSize = '12px';
     title.style.marginBottom = '6px';
@@ -2645,6 +2689,14 @@ class PropertiesModule extends SidebarModule {
       ? currentMode.map(p => p.startsWith('!') ? p.substring(1) : p)
       : [];
 
+    const hasBlockedProps = allProps.some(prop => targetWidget.state[prop] !== undefined);
+    if(hasBlockedProps) {
+      const tip = document.createElement('div');
+      tip.textContent = 'Some properties are not copied because they are declared in the current widget.';
+      tip.classList.add('inheritFromBlockedHint');
+      container.appendChild(tip);
+    }
+
     allProps.forEach(prop => {
       const checkboxWrap = div(container);
       checkboxWrap.style.display = 'flex';
@@ -2653,11 +2705,22 @@ class PropertiesModule extends SidebarModule {
       checkboxWrap.style.fontSize = '12px';
       checkboxWrap.style.marginBottom = '3px';
 
+      const isDeclaredOnTarget = targetWidget.state[prop] !== undefined;
+      if(isDeclaredOnTarget) {
+        checkboxWrap.classList.add('inheritFromDeclaredProperty');
+      }
+
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.id = `inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}_${rand().toString(36).substring(3, 7)}`;
+      checkbox.dataset.property = prop;
 
-      if(modeValue === 'excluded') {
+      const isReadOnlyAllMode = modeValue === 'all';
+
+      if(isReadOnlyAllMode) {
+        checkbox.classList.add('inheritReadOnlyCheckbox');
+        checkbox.checked = true;
+      } else if(modeValue === 'excluded') {
         checkbox.classList.add('inheritExcludeCheckbox');
         // For exclude mode, check if property IS in the exclude list.
         checkbox.checked = currentProps.includes(prop);
@@ -2667,16 +2730,20 @@ class PropertiesModule extends SidebarModule {
         checkbox.checked = currentProps.includes(prop);
       }
 
+      if(isReadOnlyAllMode || isDeclaredOnTarget) {
+        checkbox.disabled = true;
+      }
+
       checkbox.onchange = () => {
         const inheritFrom = Object.assign({}, targetWidget.get('inheritFrom') || {});
         const selectedProps = [];
 
         // Collect all checked boxes
-        const allCheckboxes = container.querySelectorAll('input[type="checkbox"]');
+        const allCheckboxes = container.querySelectorAll('input[type="checkbox"][data-property]');
 
         for(let i = 0; i < allCheckboxes.length; i++) {
-          if(allCheckboxes[i].checked) {
-            selectedProps.push(allProps[i]);
+          if(allCheckboxes[i].checked && !allCheckboxes[i].disabled) {
+            selectedProps.push(allCheckboxes[i].dataset.property);
           }
         }
 
@@ -2699,17 +2766,33 @@ class PropertiesModule extends SidebarModule {
       label.htmlFor = checkbox.id;
       label.textContent = prop;
       label.style.cursor = 'pointer';
+      if(isDeclaredOnTarget) {
+        label.classList.add('inheritFromDeclaredPropertyLabel');
+        label.title = 'Not copied: this property is currently declared in this widget.';
+      }
       checkboxWrap.appendChild(label);
+
+      if(isDeclaredOnTarget) {
+        const clearBtn = document.createElement('button');
+        clearBtn.type = 'button';
+        clearBtn.classList.add('inheritFromIconActionButton', 'inheritFromClearPropertyButton');
+        clearBtn.setAttribute('icon', 'ink_eraser');
+        clearBtn.title = 'Remove this property from the current widget so inheritance can apply.';
+        clearBtn.onclick = () => {
+          this.inputValueUpdated(targetWidget, prop, undefined);
+          const refreshedMode = (targetWidget.get('inheritFrom') || {})[sourceWidget.id] || '*';
+          container.innerHTML = '';
+          this.renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, refreshedMode);
+        };
+        checkboxWrap.appendChild(clearBtn);
+      }
     });
   }
 
   renderInheritFromAddButton(container, widget) {
     const addBtn = document.createElement('button');
     addBtn.textContent = '+ Add widget';
-    addBtn.style.marginTop = '8px';
-    addBtn.style.marginBottom = '8px';
-    addBtn.style.paddingLeft = '6px';
-    addBtn.className = 'blue';
+    addBtn.classList.add('blue', 'inheritFromAddWidgetButton');
     const pickerKey = 'inheritFrom';
 
     const updateAddButton = () => {
