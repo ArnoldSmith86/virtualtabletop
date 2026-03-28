@@ -246,6 +246,23 @@ class PropertiesModule extends SidebarModule {
     return !!this.getWidgetPicker(targetWidgetID, pickerKey);
   }
 
+  // Keep picker button labels/selected state consistent across render functions.
+  updatePickerButtonState(button, targetWidgetID, pickerKey, labels = {}) {
+    const picker = this.getWidgetPicker(targetWidgetID, pickerKey);
+    const isSelecting = !!picker;
+    button.classList.toggle('selected', isSelecting);
+    if(!isSelecting) {
+      button.textContent = labels.idle || 'click to select';
+      return;
+    }
+    if(labels.forceActive)
+      button.textContent = labels.forceActive;
+    else if(picker.allowMultiple)
+      button.textContent = labels.activeMultiple || 'click to confirm';
+    else
+      button.textContent = labels.activeSingle || 'click a widget...';
+  }
+
   confirmWidgetPicker() {
     const picker = this.getWidgetPicker();
     if(!picker || !picker.allowMultiple)
@@ -332,7 +349,7 @@ class PropertiesModule extends SidebarModule {
     let inputDOM = null;
 
     const wrapperDOM = div(target || this.moduleDOM, 'genericInput', `
-      <label for=${id} style="display:inline-block;width:100px">${html(labelText)}</label>
+      <label class="genericInputLabel" for=${id}>${html(labelText)}</label>
       <select>
         <option>not set</option>
         <option>text</option>
@@ -1552,8 +1569,7 @@ class PropertiesModule extends SidebarModule {
         return;
       expanded = true;
       const container = document.createElement('div');
-      container.className = 'obscurePropertyContainer';
-      container.style.paddingLeft = '10px';
+      container.className = 'obscurePropertyContainer onDemandContent';
       
       // If we have a separate buttonHost, remove the button and insert into host (contentWrapper)
       if(replaceNode && replaceNode.parentNode) {
@@ -1574,10 +1590,8 @@ class PropertiesModule extends SidebarModule {
     }
 
     const button = document.createElement('button');
-    button.className = 'blue';
+    button.className = 'blue onDemandAddButton compactActionButton';
     button.textContent = title;
-    button.style.marginTop = '2px';
-    button.style.marginBottom = '1px';
     buttonHost.appendChild(button);
 
     const tryExpand = w => {
@@ -1597,10 +1611,7 @@ class PropertiesModule extends SidebarModule {
 
   createOnDemandButtonWrapper(target = null) {
     const wrap = div(target || this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.flexWrap = 'wrap';
-    wrap.style.gap = '6px';
-    wrap.style.alignItems = 'center';
+    wrap.className = 'onDemandButtonWrapper';
     return wrap;
   }
 
@@ -1610,14 +1621,20 @@ class PropertiesModule extends SidebarModule {
     if(title) {
       const titleDOM = document.createElement(options.titleTag || 'div');
       titleDOM.textContent = title;
-      titleDOM.style.fontWeight = options.titleWeight || 'bold';
+      titleDOM.className = 'onDemandSectionTitle';
+      // Apply optional title overrides in one place.
+      const titleStyle = [];
+      if(options.titleWeight)
+        titleStyle.push(`font-weight:${options.titleWeight}`);
       if(options.titleMarginTop)
-        titleDOM.style.marginTop = options.titleMarginTop;
+        titleStyle.push(`margin-top:${options.titleMarginTop}`);
+      if(titleStyle.length)
+        titleDOM.style.cssText = titleStyle.join(';');
       section.appendChild(titleDOM);
     }
 
     const contentWrapper = div(section);
-    contentWrapper.style.display = 'block';
+    contentWrapper.className = 'onDemandContentWrapper';
 
     const newPropertiesWrapper = this.createOnDemandButtonWrapper(section);
 
@@ -1713,10 +1730,7 @@ class PropertiesModule extends SidebarModule {
     const step = typeof options.step === 'number' ? options.step : 1;
 
     const wrap = div(target || this.moduleDOM);
-    wrap.style.display = 'inline-flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.flex = '1 1 300px';
+    wrap.className = 'numberWithSliderWrap';
 
     const label = document.createElement('label');
     label.textContent = title + ':';
@@ -1727,8 +1741,7 @@ class PropertiesModule extends SidebarModule {
     numberInput.step = String(step);
     numberInput.min = String(min);
     numberInput.max = String(max);
-    numberInput.style.width = '72px';
-    numberInput.style.boxSizing = 'border-box';
+    numberInput.className = 'numberWithSliderNumber';
     wrap.appendChild(numberInput);
 
     const rangeInput = document.createElement('input');
@@ -1736,7 +1749,7 @@ class PropertiesModule extends SidebarModule {
     rangeInput.min = String(min);
     rangeInput.max = String(max);
     rangeInput.step = String(step);
-    rangeInput.style.flex = '1 1 auto';
+    rangeInput.className = 'numberWithSliderRange';
     wrap.appendChild(rangeInput);
 
     const clampForRange = value => Math.max(min, Math.min(max, value));
@@ -1835,21 +1848,17 @@ class PropertiesModule extends SidebarModule {
 
     const sectionTitle = document.createElement('div');
     sectionTitle.textContent = title + ':';
-    sectionTitle.style.fontWeight = 'bold';
-    sectionTitle.style.marginTop = '8px';
+    sectionTitle.className = 'dualNumberTitle';
     this.moduleDOM.appendChild(sectionTitle);
 
     const row = div(this.moduleDOM);
-    row.style.display = 'flex';
-    row.style.alignItems = 'center';
-    row.style.gap = '8px';
-    row.style.flexWrap = 'wrap';
+    row.className = 'dualNumberRow';
 
     this.renderNumberWithSlider(widget, left.property, left.title, row, leftOptionsWithRatio);
 
     const separator = document.createElement('span');
     separator.textContent = '|';
-    separator.style.color = '#777';
+    separator.className = 'dualNumberSeparator';
     row.appendChild(separator);
 
     this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptionsWithRatio);
@@ -1857,11 +1866,7 @@ class PropertiesModule extends SidebarModule {
 
   renderSizeRatioLock(widget) {
     const wrap = div(this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.flexWrap = 'wrap';
-    wrap.style.marginTop = '6px';
+    wrap.className = 'sizeRatioLockRow controlRowBase controlRowWrap controlRowMt6';
 
     const input = document.createElement('input');
     input.type = 'checkbox';
@@ -1886,11 +1891,7 @@ class PropertiesModule extends SidebarModule {
 
   renderPositionLocks(widget) {
     const row = div(this.moduleDOM);
-    row.style.display = 'flex';
-    row.style.alignItems = 'center';
-    row.style.gap = '8px';
-    row.style.flexWrap = 'wrap';
-    row.style.marginTop = '6px';
+    row.className = 'positionLocksRow controlRowBase controlRowWrap controlRowMt6';
 
     const lockPosition = document.createElement('input');
     lockPosition.type = 'checkbox';
@@ -1905,13 +1906,11 @@ class PropertiesModule extends SidebarModule {
 
     const separator = document.createElement('span');
     separator.textContent = '|';
-    separator.style.color = '#777';
+    separator.className = 'positionLocksSeparator';
     row.appendChild(separator);
 
     const lockEditorWrap = document.createElement('span');
-    lockEditorWrap.style.display = 'inline-flex';
-    lockEditorWrap.style.alignItems = 'center';
-    lockEditorWrap.style.gap = '6px';
+    lockEditorWrap.className = 'lockEditorWrap';
 
     const lockInEditor = document.createElement('input');
     lockInEditor.type = 'checkbox';
@@ -1932,8 +1931,9 @@ class PropertiesModule extends SidebarModule {
       const movableInEdit = !!w.get('movableInEdit');
       const isLocked = !movable;
       lockPosition.checked = isLocked;
-      separator.style.display = (isLocked || !movableInEdit) ? 'inline' : 'none';
-      lockEditorWrap.style.display = (isLocked || !movableInEdit) ? 'inline-flex' : 'none';
+      const showDetails = isLocked || !movableInEdit;
+      separator.classList.toggle('isVisible', showDetails);
+      lockEditorWrap.classList.toggle('isVisible', showDetails);
       lockInEditor.checked = !movableInEdit;
     };
 
@@ -1953,10 +1953,7 @@ class PropertiesModule extends SidebarModule {
 
   renderLayerSelect(widget) {
     const wrap = div(this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.marginTop = '8px';
+    wrap.className = 'layerSelectRow controlRowBase controlRowMt8';
 
     const label = document.createElement('label');
     label.textContent = 'Layer:';
@@ -2021,10 +2018,7 @@ class PropertiesModule extends SidebarModule {
 
   renderRotationInput(widget) {
     const wrap = div(this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.marginTop = '8px';
+    wrap.className = 'rotationInputRow controlRowBase controlRowMt8';
 
     const label = document.createElement('label');
     label.textContent = 'Rotation:';
@@ -2033,14 +2027,14 @@ class PropertiesModule extends SidebarModule {
     const input = document.createElement('input');
     input.type = 'number';
     input.step = 1;
-    input.style = 'width: 60px; border: 1px solid #ccc; border-radius: 4px; text-align: right;';
+    input.className = 'rotationNumberInput';
     
     input.value = widget.get('rotation') || 0;
     wrap.appendChild(input);
 
     const unit = document.createElement('span');
     unit.textContent = 'degrees';
-    unit.style.paddingLeft = '3px';
+    unit.className = 'rotationUnit';
     wrap.appendChild(unit);
 
     input.oninput = () => this.inputValueUpdated(widget, 'rotation', +input.value);
@@ -2053,10 +2047,7 @@ class PropertiesModule extends SidebarModule {
 
   renderParentWidgetInput(widget, target = null) {
     const wrap = div(target || this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.flexWrap = 'wrap';
+    wrap.className = 'parentWidgetRow controlRowBase controlRowWrap';
 
     const label = document.createElement('label');
     label.textContent = 'Parent widget:';
@@ -2064,7 +2055,7 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.style.width = '140px';
+    input.className = 'parentWidgetInput';
     input.value = widget.get('parent') || '';
     wrap.appendChild(input);
 
@@ -2078,9 +2069,11 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(lockParentInfo);
 
     const updateParentButtons = () => {
-      const isSelectingParent = this.isWidgetPickerActive(widget.id, 'parent');
-      pickButton.textContent = isSelectingParent ? 'click a widget...' : 'click to select';
-      pickButton.classList.toggle('selected', isSelectingParent);
+      // Reuse shared picker button rendering for consistency.
+      this.updatePickerButtonState(pickButton, widget.id, 'parent', {
+        idle: 'click to select',
+        activeSingle: 'click a widget...'
+      });
 
       const isParentLocked = !!widget.get('fixedParent');
       lockParentButton.textContent = isParentLocked ? 'Unlock parent' : 'Lock parent';
@@ -2126,10 +2119,7 @@ class PropertiesModule extends SidebarModule {
 
   renderSeatReferenceInput(widget, property, title, target = null, options = {}) {
     const wrap = div(target || this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.flexWrap = 'wrap';
+    wrap.className = 'seatReferenceRow controlRowBase controlRowWrap';
 
     const label = document.createElement('label');
     label.textContent = title;
@@ -2139,7 +2129,7 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.style.width = '180px';
+    input.className = 'seatReferenceInput';
     input.value = this.formatSeatReference(widget.get(property));
     wrap.appendChild(input);
 
@@ -2148,18 +2138,16 @@ class PropertiesModule extends SidebarModule {
 
     if(options.enablePicker) {
       pickButton = document.createElement('button');
-      pickButton.style.marginTop = '2px';
-      pickButton.style.marginBottom = '1px';
+      pickButton.className = 'pickerActionButton compactActionButton';
       wrap.appendChild(pickButton);
 
       const updatePickButton = () => {
-        const picker = this.getWidgetPicker(widget.id, pickerKey);
-        const isSelecting = !!picker;
-        pickButton.classList.toggle('selected', isSelecting);
-        if(!isSelecting)
-          pickButton.textContent = 'click to select';
-        else
-          pickButton.textContent = picker.allowMultiple ? 'click to confirm' : 'click a widget...';
+        // Keep seat picker labels aligned with shared picker behavior.
+        this.updatePickerButtonState(pickButton, widget.id, pickerKey, {
+          idle: 'click to select',
+          activeSingle: 'click a widget...',
+          activeMultiple: 'click to confirm'
+        });
       };
 
       pickButton.onclick = () => {
@@ -2238,10 +2226,7 @@ class PropertiesModule extends SidebarModule {
 
   renderSeatVisibilityInput(widget, target = null) {
     const wrap = div(target || this.moduleDOM);
-    wrap.style.display = 'flex';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '6px';
-    wrap.style.flexWrap = 'wrap';
+    wrap.className = 'seatVisibilityRow controlRowBase controlRowWrap';
 
     const label = document.createElement('label');
     label.textContent = 'Visible to seats:';
@@ -2259,21 +2244,21 @@ class PropertiesModule extends SidebarModule {
 
     const input = document.createElement('input');
     input.type = 'text';
-    input.style.width = '180px';
+    input.className = 'seatVisibilityInput';
     wrap.appendChild(input);
 
     const pickButton = document.createElement('button');
-    pickButton.style.marginTop = '2px';
-    pickButton.style.marginBottom = '1px';
+    pickButton.className = 'pickerActionButton compactActionButton';
     wrap.appendChild(pickButton);
     wrap.appendChild(visibilityInfoIcon);
 
     const pickerKey = 'onlyVisibleForSeat';
     const updatePickButton = () => {
-      const picker = this.getWidgetPicker(widget.id, pickerKey);
-      const isSelecting = !!picker;
-      pickButton.classList.toggle('selected', isSelecting);
-      pickButton.textContent = isSelecting ? 'click to confirm' : 'click to select';
+      // Visibility picker always confirms multi-selection.
+      this.updatePickerButtonState(pickButton, widget.id, pickerKey, {
+        idle: 'click to select',
+        forceActive: 'click to confirm'
+      });
     };
 
     const updateInputValue = w => {
@@ -2358,17 +2343,21 @@ class PropertiesModule extends SidebarModule {
 
   renderInfoIcon(infoText, options = {}) {
     const icon = document.createElement('span');
-    icon.className = options.className || 'material-symbols';
+    icon.className = (options.className || 'material-symbols') + ' editorInfoIcon';
     icon.textContent = options.icon || 'info';
     icon.setAttribute('aria-label', options.ariaLabel || 'Information');
     icon.title = infoText || '';
-    icon.style.cursor = 'help';
-    icon.style.display = 'inline-block';
-    icon.style.color = options.color || 'var(--VTTblue)';
-    icon.style.fontVariationSettings = options.fontVariationSettings || "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20";
-    icon.style.fontSize = options.size || '20px';
-    icon.style.lineHeight = '1';
-    icon.style.userSelect = 'none';
+
+    // Keep optional icon styling in one inline assignment.
+    const iconStyle = [];
+    if(options.color)
+      iconStyle.push(`color:${options.color}`);
+    if(options.fontVariationSettings)
+      iconStyle.push(`font-variation-settings:${options.fontVariationSettings}`);
+    if(options.size)
+      iconStyle.push(`font-size:${options.size}`);
+    if(iconStyle.length)
+      icon.style.cssText = iconStyle.join(';');
 
     return icon;
   }
@@ -2412,13 +2401,11 @@ class PropertiesModule extends SidebarModule {
   renderInheritFromEditor(container, widget) {
     const title = document.createElement('div');
     title.textContent = 'Inherit properties from:';
-    title.style.fontWeight = 'bold';
-    title.style.marginBottom = '8px';
+    title.className = 'inheritFromTitle';
     container.appendChild(title);
 
     const listContainer = div(container);
-    listContainer.style.paddingLeft = '10px';
-    listContainer.style.marginBottom = '8px';
+    listContainer.className = 'inheritFromList';
     const expandedStates = {};
 
     const updateList = () => {
@@ -2431,8 +2418,7 @@ class PropertiesModule extends SidebarModule {
       if(Object.keys(inheritFromObj).length === 0) {
         const emptyMsg = document.createElement('div');
         emptyMsg.textContent = 'No widgets selected yet.';
-        emptyMsg.style.color = '#888';
-        emptyMsg.style.fontSize = '12px';
+        emptyMsg.className = 'inheritFromEmpty';
         listContainer.appendChild(emptyMsg);
       } else {
         for(const [widgetId, mode] of Object.entries(inheritFromObj)) {
@@ -2493,40 +2479,25 @@ class PropertiesModule extends SidebarModule {
     let expanded = !!initialExpanded;
 
     const rowWrap = div(container);
-    rowWrap.style.display = 'flex';
-    rowWrap.style.alignItems = 'flex-start';
-    rowWrap.style.gap = '6px';
-    rowWrap.style.marginBottom = '8px';
-    rowWrap.style.padding = '6px';
-    rowWrap.style.border = '1px solid #ddd';
-    rowWrap.style.borderRadius = '4px';
-    rowWrap.style.backgroundColor = '#f9f9f9';
+    rowWrap.className = 'inheritFromRow';
 
     // Expand/collapse arrow
     const toggleArrow = document.createElement('button');
     toggleArrow.textContent = expanded ? '▼' : '▶';
-    toggleArrow.style.border = 'none';
-    toggleArrow.style.background = 'none';
-    toggleArrow.style.cursor = 'pointer';
-    toggleArrow.style.padding = '0';
-    toggleArrow.style.minWidth = '20px';
-    toggleArrow.style.fontSize = '14px';
-    toggleArrow.style.color = '#666';
+    toggleArrow.className = 'inheritFromToggle';
     rowWrap.appendChild(toggleArrow);
 
     // Widget info
     const widgetInfo = document.createElement('div');
-    widgetInfo.style.flex = '1';
+    widgetInfo.className = 'inheritFromWidgetInfo';
     widgetInfo.textContent = `${sourceWidget.get('type')} #${sourceWidgetId}`;
-    widgetInfo.style.fontSize = '13px';
-    widgetInfo.style.color = '#333';
     rowWrap.appendChild(widgetInfo);
 
     // Mode dropdown
     const dropdownContainer = div(rowWrap);
-    dropdownContainer.style.minWidth = '110px';
+    dropdownContainer.className = 'inheritFromModeWrap';
     const dropdown = document.createElement('select');
-    dropdown.style.fontSize = '12px';
+    dropdown.className = 'inheritFromModeSelect';
 
     const modes = [
       { value: 'all', label: 'copy all' },
@@ -2557,9 +2528,7 @@ class PropertiesModule extends SidebarModule {
     // Delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = '−';
-    deleteBtn.style.padding = '2px 6px';
-    deleteBtn.style.minWidth = '30px';
-    deleteBtn.style.fontSize = '12px';
+    deleteBtn.className = 'inheritFromDeleteBtn';
     deleteBtn.onclick = () => {
       const inheritFrom = Object.assign({}, widget.get('inheritFrom') || {});
       delete inheritFrom[sourceWidgetId];
@@ -2570,12 +2539,7 @@ class PropertiesModule extends SidebarModule {
 
     // Property checkboxes container (initially hidden)
     const propsContainer = div(container);
-    propsContainer.style.paddingLeft = '30px';
-    propsContainer.style.marginBottom = '6px';
-    propsContainer.style.display = 'none';
-    propsContainer.style.borderLeft = '2px solid #ddd';
-    propsContainer.style.paddingTop = '6px';
-    propsContainer.style.paddingBottom = '6px';
+    propsContainer.className = 'inheritFromProps';
 
     // Update mode change handler
     dropdown.onchange = () => {
@@ -2597,14 +2561,23 @@ class PropertiesModule extends SidebarModule {
       renderCheckboxes();
     };
 
+    const setPropsOpenState = isOpen => {
+      propsContainer.classList.toggle('isOpen', isOpen);
+    };
+
     const renderCheckboxes = () => {
       propsContainer.innerHTML = '';
       if(dropdown.value === 'all') {
-        propsContainer.style.display = 'none';
+        setPropsOpenState(false);
         return;
       }
 
-      propsContainer.style.display = 'block';
+      if(!expanded) {
+        setPropsOpenState(false);
+        return;
+      }
+
+      setPropsOpenState(true);
       this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, mode);
     };
 
@@ -2614,16 +2587,14 @@ class PropertiesModule extends SidebarModule {
       toggleArrow.textContent = expanded ? '▼' : '▶';
       onExpandChanged(expanded);
       if(expanded) {
-        propsContainer.style.display = dropdown.value === 'all' ? 'none' : 'block';
         renderCheckboxes();
       } else {
-        propsContainer.style.display = 'none';
+        setPropsOpenState(false);
       }
     };
 
     if(expanded) {
       toggleArrow.textContent = '▼';
-      propsContainer.style.display = dropdown.value === 'all' ? 'none' : 'block';
       renderCheckboxes();
     }
   }
@@ -2631,10 +2602,7 @@ class PropertiesModule extends SidebarModule {
   renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode) {
     const title = document.createElement('div');
     title.textContent = modeValue === 'excluded' ? 'Exclude properties:' : 'Include properties:';
-    title.style.fontWeight = 'bold';
-    title.style.fontSize = '12px';
-    title.style.marginBottom = '6px';
-    title.style.color = '#555';
+    title.className = 'inheritFromPropsTitle';
     container.appendChild(title);
 
     // Get all properties from both widgets
@@ -2647,11 +2615,7 @@ class PropertiesModule extends SidebarModule {
 
     allProps.forEach(prop => {
       const checkboxWrap = div(container);
-      checkboxWrap.style.display = 'flex';
-      checkboxWrap.style.alignItems = 'center';
-      checkboxWrap.style.gap = '4px';
-      checkboxWrap.style.fontSize = '12px';
-      checkboxWrap.style.marginBottom = '3px';
+      checkboxWrap.className = 'inheritFromPropRow';
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
@@ -2698,7 +2662,7 @@ class PropertiesModule extends SidebarModule {
       const label = document.createElement('label');
       label.htmlFor = checkbox.id;
       label.textContent = prop;
-      label.style.cursor = 'pointer';
+      label.className = 'inheritFromPropLabel';
       checkboxWrap.appendChild(label);
     });
   }
@@ -2706,20 +2670,15 @@ class PropertiesModule extends SidebarModule {
   renderInheritFromAddButton(container, widget) {
     const addBtn = document.createElement('button');
     addBtn.textContent = '+ Add widget';
-    addBtn.style.marginTop = '8px';
-    addBtn.style.marginBottom = '8px';
-    addBtn.style.paddingLeft = '6px';
-    addBtn.className = 'blue';
+    addBtn.className = 'blue inheritFromAddButton';
     const pickerKey = 'inheritFrom';
 
     const updateAddButton = () => {
-      const picker = this.getWidgetPicker(widget.id, pickerKey);
-      const isSelecting = !!picker;
-      addBtn.classList.toggle('selected', isSelecting);
-      if(!isSelecting)
-        addBtn.textContent = '+ Add widget';
-      else
-        addBtn.textContent = 'click a widget...';
+      // Reuse shared picker rendering and custom idle text.
+      this.updatePickerButtonState(addBtn, widget.id, pickerKey, {
+        idle: '+ Add widget',
+        activeSingle: 'click a widget...'
+      });
     };
 
     addBtn.onclick = () => {
@@ -3287,21 +3246,13 @@ class PropertiesModule extends SidebarModule {
 
     const textAreaWrap = div(this.moduleDOM, 'styledTextAreaWrap');
     const textTitle = document.createElement('div');
-    textTitle.className = 'labelEditorSectionTitle';
+    textTitle.className = 'labelEditorSectionTitle styledTextTitle propertySectionLabel';
     textTitle.textContent = title;
-    textTitle.style.fontWeight = 'bold';
-    textTitle.style.marginTop = '8px';
-    textTitle.style.marginBottom = '4px';
 
     const textArea = document.createElement('textarea');
-    textArea.className = 'labelPropertyTextArea';
+    textArea.className = 'labelPropertyTextArea styledTextArea';
     textArea.rows = 6;
     textArea.value = widget.get(textProperty) || '';
-    textArea.style.width = '90%';
-    textArea.style.maxWidth = '100%';
-    textArea.style.minHeight = '6em';
-    textArea.style.overflowY = 'auto';
-    textArea.style.boxSizing = 'border-box';
     
     textArea.oninput = () => this.inputValueUpdated(widget, textProperty, textArea.value);
 
@@ -3309,12 +3260,7 @@ class PropertiesModule extends SidebarModule {
     textAreaWrap.appendChild(textArea);
 
     if (includeToolbar && cssClass) {
-      const typographyWrap = div(this.moduleDOM, 'labelTypographyWrap');
-      typographyWrap.style.display = 'flex';
-      typographyWrap.style.gap = '4px';
-      typographyWrap.style.flexDirection = 'row';
-      typographyWrap.style.alignItems = 'center';
-      typographyWrap.style.flexWrap = 'wrap';
+      const typographyWrap = div(this.moduleDOM, 'labelTypographyWrap typographyToolbarRow');
 
       const colorInput = this.renderColorInput(widget, null, 'color', '#6d6d6d', cssProperty, cssClass);
       const fontSizeInput = this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '16px', cssProperty, cssClass);
@@ -3370,19 +3316,11 @@ class PropertiesModule extends SidebarModule {
     const wrapper = div(this.moduleDOM, 'standaloneStyleInput');
     
     const label = document.createElement('label');
+    label.className = 'propertySectionLabel';
     label.textContent = title;
-    label.style.display = 'block';
-    label.style.fontWeight = 'bold';
-    label.style.marginTop = '8px';
-    label.style.marginBottom = '4px';
     wrapper.appendChild(label);
 
-    const typographyWrap = div(wrapper, 'standaloneTypographyWrap');
-    typographyWrap.style.display = 'flex';
-    typographyWrap.style.gap = '4px';
-    typographyWrap.style.flexDirection = 'row';
-    typographyWrap.style.alignItems = 'center';
-    typographyWrap.style.flexWrap = 'wrap';
+    const typographyWrap = div(wrapper, 'standaloneTypographyWrap typographyToolbarRow');
 
     const colorInput = this.renderColorInput(widget, null, 'color', '#6d6d6d', cssProperty, cssClass);
     const fontSizeInput = this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '16px', cssProperty, cssClass);
@@ -3420,6 +3358,7 @@ class PropertiesModule extends SidebarModule {
 
   renderSelectionButton(widget, title, property, value, css='css', cssClass='default', icon=null, tooltip='') {
     const button = document.createElement('button');
+    button.classList.add('propertySelectionButton');
     if (icon)
       button.setAttribute('icon', icon);
     button.textContent = title;
@@ -3427,9 +3366,6 @@ class PropertiesModule extends SidebarModule {
       button.title = tooltip;
       button.setAttribute('aria-label', tooltip);
     }
-    button.style.padding = '4px 8px';
-    button.style.minWidth = '30px';
-    
     const updateButtonState = (w) => {
       const currentValue = parsePropertyFromCSS(w.get(css), property, null, cssClass);
       if (currentValue === value) {
@@ -3454,9 +3390,8 @@ class PropertiesModule extends SidebarModule {
 
   renderDivider() {
     const divider = document.createElement('span');
+    divider.className = 'propertyDivider';
     divider.textContent = '|';
-    divider.style.margin = '0 6px';
-    divider.style.color = '#999';
     return divider;
   }
 
@@ -3465,15 +3400,15 @@ class PropertiesModule extends SidebarModule {
     const wrap = div(this.moduleDOM);
     if (title) {
       const label = document.createElement('label');
+      label.className = 'numberInputLabel';
       label.textContent = title;
-      label.style.display = 'inline-block';
       wrap.appendChild(label);
     }
 
     const input = document.createElement('input');
     input.type = 'number';
     input.step = step;
-    input.style = 'width:40px; border:1px solid #ccc; border-radius:4px; text-align: right;';
+    input.className = 'propertyNumberInput';
     if (typeof min !== 'undefined') input.min = min;
     if (typeof max !== 'undefined') input.max = max;
     if (typeof placeholder !== 'undefined') input.placeholder = placeholder;
@@ -3485,8 +3420,8 @@ class PropertiesModule extends SidebarModule {
 
     if (fontSize.unit) {
       const unit = document.createElement('span');
+      unit.className = 'numberInputUnit';
       unit.textContent = fontSize.unit;
-      unit.style.paddingLeft = '3px';
       wrap.appendChild(unit);
     }
 
@@ -3514,13 +3449,13 @@ class PropertiesModule extends SidebarModule {
     const colorWrap = div(this.moduleDOM);
     if (title) {
       const colorLabel = document.createElement('label');
+      colorLabel.className = 'colorInputLabel';
       colorLabel.textContent = title;
-      colorLabel.style.display = 'inline-block';
       colorWrap.appendChild(colorLabel);
     }
     const colorInput = document.createElement('input');
     colorInput.type = 'color';
-    colorInput.style = "-webkit-appearance: none; -moz-appearance: none; border-radius: 4px; display: inline-block; margin: 3px 3px 0 8px; padding: 0; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0); order: 1; flex-grow: 0; flex-shrink: 0; "
+    colorInput.className = 'propertyColorInput';
 
     colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
     colorWrap.appendChild(colorInput);

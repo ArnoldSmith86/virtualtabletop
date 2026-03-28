@@ -1,3 +1,4 @@
+/* Inherit From: include/exclude custom checkboxes */
 .tune.editorModule input[type=checkbox].inheritExcludeCheckbox,
 .tune.editorModule input[type=checkbox].inheritIncludeCheckbox {
   -webkit-appearance: none;
@@ -62,4 +63,312 @@
 .tune.editorModule input[type=checkbox].inheritIncludeCheckbox:focus-visible {
   outline: 2px solid #2f8a3b;
   outline-offset: 1px;
+}
+
+/* Inherit From: row/list layout and controls */
+.tune.editorModule .inheritFromTitle {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.tune.editorModule .inheritFromList {
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+
+.tune.editorModule .inheritFromEmpty {
+  color: #888;
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.tune.editorModule .inheritFromToggle {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.tune.editorModule .inheritFromWidgetInfo {
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+}
+
+.tune.editorModule .inheritFromModeWrap {
+  min-width: 110px;
+}
+
+.tune.editorModule .inheritFromModeSelect {
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromDeleteBtn {
+  padding: 2px 6px;
+  min-width: 30px;
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromProps {
+  padding-left: 30px;
+  margin-bottom: 6px;
+  display: none;
+  border-left: 2px solid #ddd;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.tune.editorModule .inheritFromProps.isOpen {
+  display: block;
+}
+
+.tune.editorModule .inheritFromPropsTitle {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.tune.editorModule .inheritFromPropRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .inheritFromPropLabel {
+  cursor: pointer;
+}
+
+.tune.editorModule .inheritFromAddButton {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 6px;
+}
+
+/* On-demand sections: shared expandable property blocks */
+.tune.editorModule .onDemandContent {
+  padding-left: 10px;
+}
+
+.tune.editorModule .onDemandButtonWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.tune.editorModule .onDemandSectionTitle {
+  font-weight: bold;
+}
+
+.tune.editorModule .onDemandContentWrapper {
+  display: block;
+}
+
+/* Number + slider reusable rows */
+.tune.editorModule .numberWithSliderWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 300px;
+}
+
+.tune.editorModule .numberWithSliderNumber {
+  width: 72px;
+  box-sizing: border-box;
+}
+
+.tune.editorModule .numberWithSliderRange {
+  flex: 1 1 auto;
+}
+
+.tune.editorModule .dualNumberTitle {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.tune.editorModule .dualNumberRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tune.editorModule .dualNumberSeparator,
+.tune.editorModule .positionLocksSeparator {
+  color: #777;
+}
+
+/* Lock controls: size lock and position lock rows */
+.tune.editorModule .sizeRatioLockRow {
+  flex-wrap: wrap;
+}
+
+.tune.editorModule .positionLocksRow {
+  gap: 8px;
+}
+
+.tune.editorModule .lockEditorWrap {
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .lockEditorWrap.isVisible {
+  display: inline-flex;
+}
+
+.tune.editorModule .positionLocksSeparator {
+  display: none;
+}
+
+.tune.editorModule .positionLocksSeparator.isVisible {
+  display: inline;
+}
+
+/* Layer/rotation/basic input rows */
+.tune.editorModule .rotationNumberInput {
+  width: 60px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: right;
+}
+
+.tune.editorModule .rotationUnit,
+.tune.editorModule .numberInputUnit {
+  padding-left: 3px;
+}
+
+/* Widget linking rows: parent + seat reference + visibility */
+.tune.editorModule .parentWidgetRow,
+.tune.editorModule .seatReferenceRow,
+.tune.editorModule .seatVisibilityRow {
+  flex-wrap: wrap;
+}
+
+.tune.editorModule .parentWidgetInput {
+  width: 140px;
+}
+
+.tune.editorModule .seatReferenceInput,
+.tune.editorModule .seatVisibilityInput {
+  width: 180px;
+}
+
+/* Reusable info icon in property controls */
+.tune.editorModule .editorInfoIcon {
+  cursor: help;
+  display: inline-block;
+  color: var(--VTTblue);
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+  font-size: 20px;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Styled text editors and typography toolbar */
+.tune.editorModule .styledTextArea {
+  width: 90%;
+  max-width: 100%;
+  min-height: 6em;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.tune.editorModule .typographyToolbarRow {
+  display: flex;
+  gap: 4px;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tune.editorModule .propertySelectionButton {
+  padding: 4px 8px;
+  min-width: 30px;
+}
+
+.tune.editorModule .propertyDivider {
+  margin: 0 6px;
+  color: #999;
+}
+
+/* Generic property input primitives (number/color + labels) */
+.tune.editorModule .numberInputLabel,
+.tune.editorModule .colorInputLabel {
+  display: inline-block;
+}
+
+/* Shared utilities used by multiple render* blocks */
+.tune.editorModule .controlRowBase {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .controlRowWrap {
+  flex-wrap: wrap;
+}
+
+.tune.editorModule .controlRowMt8 {
+  margin-top: 8px;
+}
+
+.tune.editorModule .controlRowMt6 {
+  margin-top: 6px;
+}
+
+.tune.editorModule .compactActionButton {
+  margin-top: 2px;
+  margin-bottom: 1px;
+}
+
+.tune.editorModule .propertySectionLabel {
+  display: block;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.tune.editorModule .genericInputLabel {
+  display: inline-block;
+  width: 100px;
+}
+
+.tune.editorModule .propertyNumberInput {
+  width: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: right;
+}
+
+.tune.editorModule .propertyColorInput {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 3px 3px 0 8px;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255,255,255,0);
+  order: 1;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
