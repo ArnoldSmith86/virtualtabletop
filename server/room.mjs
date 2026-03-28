@@ -117,7 +117,7 @@ export default class Room {
         }
 
         if(type != 'link' || meta.importerTemp)
-          fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
+          this.writeStateToFilesystem(stateID, newVariantID, variant);
 
         let variantMeta = {
           players: meta.players,
@@ -186,9 +186,20 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  addStateToPublicLibrary(player, id) {
+  addStateToPublicLibrary(player, args) {
     if(!Config.get('allowPublicLibraryEdits'))
       return;
+
+    let id, folder, category;
+    if (typeof args === 'string') {
+      id = args;
+      folder = 'games';
+      category = 'Games';
+    } else {
+      id = args.id;
+      folder = args.library;
+      category = args.category;
+    }
 
     for(const usedAsset in this.getAssetListForState(id))
       if(!Config.resolveAsset(usedAsset))
@@ -198,9 +209,10 @@ export default class Room {
     for(const variantID in this.state._meta.states[id].variants)
       variantData[variantID] = JSON.parse(fs.readFileSync(this.variantFilename(id, variantID)));
 
-    this.state._meta.states[id].publicLibrary = `games/${this.state._meta.states[id].name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
-    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary);
-    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary + '/assets');
+    this.state._meta.states[id].publicLibrary = `${folder}/${this.state._meta.states[id].name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
+    this.state._meta.states[id].publicLibraryCategory = category;
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary, { recursive: true });
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary + '/assets', { recursive: true });
 
     Room.publicLibrary['PL:NEW'] = this.state._meta.states['PL:NEW'] = this.state._meta.states[id];
     for(const variantID in this.state._meta.states[id].variants) {
@@ -213,6 +225,36 @@ export default class Room {
     this.publicLibraryUpdatedCallback();
 
     this.removeState(player, id);
+  }
+
+  moveStateWithinPublicLibrary(player, args) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    const id = args.id;
+    const folder = args.newLibrary;
+    const category = args.newCategory;
+
+    const state = this.state._meta.states[id];
+    if(!state || !state.publicLibrary || state.publicLibraryCategory === category)
+      return;
+
+    const oldPublicLibrary = state.publicLibrary;
+    const newPublicLibraryPath = `${folder}/${state.name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
+    
+    // Check if new path exists, ignore move if it maps entirely to the exact same folder string.
+    if(oldPublicLibrary === newPublicLibraryPath) {
+      // Just update metadata if only the category text somehow changed but path remains the same
+      state.publicLibraryCategory = category;
+    } else {
+      fs.mkdirSync(Config.directory('library') + '/' + folder, { recursive: true });
+      fs.renameSync(Config.directory('library') + '/' + oldPublicLibrary, Config.directory('library') + '/' + newPublicLibraryPath);
+      state.publicLibrary = newPublicLibraryPath;
+      state.publicLibraryCategory = category;
+    }
+
+    // Refresh memory cache
+    this.reloadPublicLibraryGames();
   }
 
   broadcast(func, args, exceptPlayer) {
@@ -398,31 +440,34 @@ export default class Room {
   getPublicLibraryGames() {
     if(!Room.publicLibrary) {
       Room.publicLibrary = {};
-      for(const subLibrary of [ 'Games', 'Tutorials' ]) {
-        for(const dir of fs.readdirSync(Config.directory('library') + '/' + subLibrary.toLowerCase())) {
-          const gameDir = Config.directory('library') + '/' + subLibrary.toLowerCase() + '/' + dir;
-          if(fs.lstatSync(gameDir).isDirectory()) {
-            for(const file of fs.readdirSync(gameDir)) {
-              if(file.match(/json$/)) {
-                const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
-                const id = 'PL:' + subLibrary.toLowerCase() + ':' + gameFile._meta.info.name;
-                if(!Room.publicLibrary[id]) {
-                  Room.publicLibrary[id] = gameFile._meta.info;
-                  Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
-                  Room.publicLibrary[id].publicLibraryCategory = subLibrary;
-                  Room.publicLibrary[id].variants = [];
+      for(const [ subLibrary, folder ] of Object.entries(Config.get('libraries'))) {
+        const categoryPath = Config.directory('library') + '/' + folder;
+        if(fs.existsSync(categoryPath)) {
+          for(const dir of fs.readdirSync(categoryPath)) {
+            const gameDir = categoryPath + '/' + dir;
+            if(fs.lstatSync(gameDir).isDirectory()) {
+              for(const file of fs.readdirSync(gameDir)) {
+                if(file.match(/json$/)) {
+                  const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
+                  const id = 'PL:' + folder + ':' + gameFile._meta.info.name;
+                  if(!Room.publicLibrary[id]) {
+                    Room.publicLibrary[id] = gameFile._meta.info;
+                    Room.publicLibrary[id].publicLibrary = folder + '/' + dir;
+                    Room.publicLibrary[id].publicLibraryCategory = subLibrary;
+                    Room.publicLibrary[id].variants = [];
+                  }
+                  Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
+                    players: gameFile._meta.info.players,
+                    language: gameFile._meta.info.language,
+                    variant: gameFile._meta.info.variant,
+                    variantImage: gameFile._meta.info.variantImage,
+                    publicLibrary: folder + '/' + dir + '/' + file
+                  };
+                  delete gameFile._meta.info.players;
+                  delete gameFile._meta.info.language;
+                  delete gameFile._meta.info.variant;
+                  delete gameFile._meta.info.variantImage;
                 }
-                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
-                  players: gameFile._meta.info.players,
-                  language: gameFile._meta.info.language,
-                  variant: gameFile._meta.info.variant,
-                  variantImage: gameFile._meta.info.variantImage,
-                  publicLibrary: subLibrary.toLowerCase() + '/' + dir + '/' + file
-                };
-                delete gameFile._meta.info.players;
-                delete gameFile._meta.info.language;
-                delete gameFile._meta.info.variant;
-                delete gameFile._meta.info.variantImage;
               }
             }
           }
@@ -436,9 +481,13 @@ export default class Room {
   getStateDetails(stateID) {
     if(stateID.match(/^PL:/)) {
       const [ , category, name ] = stateID.split(':');
-      for(const [ id, state ] of Object.entries(this.state._meta.states))
-        if(state.publicLibrary && state.publicLibraryCategory.toLowerCase() == `${category}s` && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name)
-          return Object.assign({}, state, { id });
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        if(state.publicLibrary) {
+          if(state.publicLibrary.startsWith(category + '/') && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name) {
+            return Object.assign({}, state, { id });
+          }
+        }
+      }
     } else {
       return this.state._meta.states[stateID];
     }
@@ -549,7 +598,7 @@ export default class Room {
             else
               content._meta = { version: 8 };
             Logging.log(`setting missing file version to ${content._meta.version} for ${id} in room ${this.id}`);
-            fs.writeFileSync(this.variantFilename(id, 0), JSON.stringify(content));
+            this.writeStateToFilesystem(id, 0, content);
           }
         }
       }
@@ -886,7 +935,7 @@ export default class Room {
       language: metadata.language,
       variant:  metadata.variant
     };
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(newState, null, '  '));
+    this.writeStateToFilesystem(stateID, variantID, newState);
     if(setToActiveState)
       this.state._meta.activeState = { stateID, variantID };
     this.sendMetaUpdate();
@@ -895,10 +944,8 @@ export default class Room {
   saveState(player, players, updateCurrentSave) {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
-      const newContent = {...this.state};
-      newContent._meta = { version: this.state._meta.version, gameSettings: this.state._meta.gameSettings };
       this.state._meta.states[stateID].saveDate = +new Date();
-      fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
+      this.writeStateToFilesystem(stateID, 0, this.state);
       return this.sendMetaUpdate();
     }
 
@@ -1080,7 +1127,7 @@ export default class Room {
   async unlinkState(player, stateID) {
     for(const [ variantID, variant ] of Object.entries(this.state._meta.states[stateID].variants)) {
       const variantState = await FileLoader.readVariantFromLink(variant.link);
-      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variantState, null, '  '));
+      this.writeStateToFilesystem(stateID, variantID, variantState);
       delete variant.link;
     }
     delete this.state._meta.states[stateID].link;
@@ -1197,6 +1244,12 @@ export default class Room {
 
     copy._meta.info.lastUpdate = +new Date();
 
+    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+  }
+
+  writeStateToFilesystem(stateID, variantID, state) {
+    const copy = {...state};
+    copy._meta = { version: copy._meta.version, gameSettings: copy._meta.gameSettings };
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 

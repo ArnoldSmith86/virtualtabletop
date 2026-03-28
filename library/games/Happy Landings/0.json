@@ -3,7 +3,7 @@
     "version": 17,
     "info": {
       "name": "Happy Landings",
-      "image": "/assets/1344848875_59898",
+      "image": "/assets/-1319298561_47568",
       "rules": "https://boardgamegeek.com/filepage/265335/havalandi-english-rulebook",
       "bgg": "https://boardgamegeek.com/boardgame/396543/havalandi",
       "year": "2023",
@@ -20,6 +20,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "Click to sit at any seat. Once all players are seated, choose Board A or Board B. If you are playing with 2 players, the board will automatically have some of the spaces filled with neutral pieces. If you are playing a 4-player game, 3 of your 20 balloons will be removed. A random player will be selected to start the game. Their name will be glowing. If you need to revert to the starting setup, hit the Reset button. The two scoring objectives for the game are in the upper right. They are randomly selected when the game is loaded and when resetting, but you can click to change either of these.&nbsp;<div><br></div><div>On your turn, click the die next to your name to roll. Click and drag the hot air balloon the full number of spaces that you rolled to determine your line of sight. When you are at a corner hex, the balloon's line of sight is along each of the two edges of the board it is next to.&nbsp;</div><div><br></div><div>Drag a circular balloon token from either of your holders, according to the rules and place it on the board. If you are done with your turn, hit the \"End Turn\" button to shift the turn to the next player in clockwise order.&nbsp;</div><div><br></div><div>When you score points, you can increment them with the + - buttons above your player name, or you can select the value and type in a new amount.&nbsp;</div>",
+      "usesAIImagery": true,
       "variantImage": "",
       "variant": "Happy Landings",
       "language": "en-US",

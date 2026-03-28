@@ -473,6 +473,12 @@
   },
   "_meta": {
     "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Collude for Food",
       "image": "/assets/1332299817_10460",

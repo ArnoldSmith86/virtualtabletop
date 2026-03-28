@@ -365,13 +365,23 @@ class GameSettingsModule extends SidebarModule {
       <br><br>
       See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2581">pull request #2581</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
       `, target);
-   this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
-     <b>Legacy Behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe. This behavior is used for older games and can be enabled by checking this box.
-     <br><br>
-     <b>Default Behavior</b>: These objects are rendered directly into the DOM which should be faster and easier to work with. This is the default for new games and is used when this box is unchecked.
-     <br><br>
-     See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2729">pull request #2729</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
-     `, target);
+    this.addCheckbox('Use iframes for card face HTML objects', 'useIframeForHtmlCards', `
+      <b>Legacy Behavior</b>: Card face objects with <code>type: 'html'</code> are rendered in an iframe. This behavior is used for older games and can be enabled by checking this box.
+      <br><br>
+      <b>Default Behavior</b>: These objects are rendered directly into the DOM which should be faster and easier to work with. This is the default for new games and is used when this box is unchecked.
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2729">pull request #2729</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+      `, target);
+    this.addCheckbox('Disable holder image support', 'disableHolderImageWidget', `
+      <b>Problem</b>: Holders now support image, icon, and text properties natively, but some games manually implemented this functionality before it was supported and may break with the new behavior.
+      <br><br>
+      <b>Old behavior</b>: Holders did not natively support image/icon/text properties, requiring manual workarounds.<br>
+      <b>New behavior</b>: Holders support image, icon, and text properties directly.
+      <br><br>
+      This legacy mode disables the native image/icon/text support for holders, restoring the old behavior.
+      <br><br>
+      See <a href="https://github.com/ArnoldSmith86/virtualtabletop/pull/2634">pull request #2634</a> for technical details. Also see the <a href="https://github.com/ArnoldSmith86/virtualtabletop/wiki/Legacy-Mode">Legacy Mode wiki</a> page.
+      `, target);
 
     this.addSubHeader('UI Settings');
     this.addDropdown('Cursor Visibility', 'cursorVisibility', 'Changes the visibility of other players\' cursor indicators in the room.', [
