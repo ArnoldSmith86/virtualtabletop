@@ -1923,6 +1923,8 @@ class PropertiesModule extends SidebarModule {
 
     lockEditorWrap.appendChild(lockInEditor);
     lockEditorWrap.appendChild(lockInEditorLabel);
+    const lockInEditorInfo = this.renderInfoIcon('This only applies to mouse input. You can still edit position in this sidebar');
+    lockEditorWrap.appendChild(lockInEditorInfo);
     row.appendChild(lockEditorWrap);
 
     const updateLockInputs = w => {
@@ -1930,10 +1932,9 @@ class PropertiesModule extends SidebarModule {
       const movableInEdit = !!w.get('movableInEdit');
       const isLocked = !movable;
       lockPosition.checked = isLocked;
-      separator.style.display = isLocked ? 'inline' : 'none';
-      lockEditorWrap.style.display = isLocked ? 'inline-flex' : 'none';
-      if(isLocked)
-        lockInEditor.checked = !movableInEdit;
+      separator.style.display = (isLocked || !movableInEdit) ? 'inline' : 'none';
+      lockEditorWrap.style.display = (isLocked || !movableInEdit) ? 'inline-flex' : 'none';
+      lockInEditor.checked = !movableInEdit;
     };
 
     lockPosition.onchange = () => {
