@@ -1,0 +1,3323 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Epicaricacy",
+      "image": "/assets/-1488220984_48618",
+      "rules": "https://boardgamegeek.com/filepage/233606/schadenfreude-official-english-rules-scan",
+      "bgg": "https://boardgamegeek.com/boardgame/324711/schadenfreude",
+      "year": "2020",
+      "mode": "vs",
+      "time": "15-20",
+      "attribution": "<div>Game layout and scripting by Sergio De La Guera, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://pixabay.com and are used under the Pixabay Content License:</div><div><br></div><div>Cover Image: https://pixabay.com/photos/protection-helmet-armor-historical-3153941/</div><div><br></div><div>The following graphics are from https://game-icons.net and under CC BY 3.0:</div><div><br></div>* Hearts: https://game-icons.net/1x1/skoll/hearts.html\n* Diamonds: https://game-icons.net/1x1/skoll/diamonds.html\n* Spades: https://game-icons.net/1x1/skoll/spades.html\n<div>* Clubs: https://game-icons.net/1x1/skoll/clubs.html&nbsp;&nbsp;</div><div>* Round Star: https://game-icons.net/1x1/delapouite/round-star.html</div>",
+      "lastUpdate": 1771101962215,
+      "showName": true,
+      "skill": "",
+      "description": "Second highest wins the trick, but avoid collecting duplicate valued cards to score.",
+      "similarImage": "",
+      "similarName": "Schadenfreude",
+      "similarDesigner": "ctr",
+      "similarAwards": "",
+      "ruleText": "(see rules overview link)",
+      "helpText": "",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "Epicaricacy",
+      "language": "",
+      "players": "3-5"
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "z93lB": {
+    "id": "z93lB",
+    "y": 866,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "New Round",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Are you sure you want to start a new round?"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "5p-holder",
+          "3p-holder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "5p-holder",
+          "3p-holder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "5p-holder",
+          "3p-holder"
+        ]
+      },
+      {
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 5,
+        "thenRoutine": [
+          "var handsize = 10",
+          {
+            "func": "FOREACH",
+            "collection": "activeSeats",
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "5p-holder",
+                "to": "${widgetID}",
+                "count": "${handsize}"
+              },
+              {
+                "func": "SORT",
+                "holder": "hand",
+                "key": [
+                  "suit",
+                  "rank"
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "5p-holder"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": 34
+              },
+              "var handsize = 12",
+              {
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "5p-holder",
+                    "to": "${widgetID}",
+                    "count": "${handsize}"
+                  },
+                  {
+                    "func": "SORT",
+                    "holder": "hand",
+                    "key": [
+                      "suit",
+                      "rank"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "5p-holder"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": -300
+              },
+              "var handsize = 12",
+              {
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "3p-holder",
+                    "to": "${widgetID}",
+                    "count": "${handsize}"
+                  },
+                  {
+                    "func": "SORT",
+                    "holder": "hand",
+                    "key": [
+                      "suit",
+                      "rank"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 1204
+  },
+  "berzerker-holder": {
+    "type": "holder",
+    "id": "berzerker-holder",
+    "x": 1656,
+    "y": 490,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-berzerker": {
+    "type": "deck",
+    "id": "deck-berzerker",
+    "parent": "berzerker-holder",
+    "x": 10,
+    "y": 62,
+    "z": 6,
+    "cardDefaults": {
+      "class": "deckofcards",
+      "css": {
+        "font-weight": "bold"
+      },
+      "cssImage": {
+        "opacity": "0.3"
+      }
+    },
+    "cardTypes": {
+      "black-10": {
+        "bgcolor": "grey",
+        "number": "10",
+        "suit": "berzerker",
+        "image": "/i/game-icons.net/lorc/flat-paw-print.svg",
+        "sortingOrder": 9
+      },
+      "blue-10": {
+        "bgcolor": "#92c2eb",
+        "number": "10",
+        "suit": "berzerker",
+        "image": "/i/game-icons.net/lorc/checked-shield.svg",
+        "sortingOrder": 24
+      },
+      "pink-10": {
+        "bgcolor": "#d4816b",
+        "number": "10",
+        "suit": "berzerker",
+        "image": "/i/game-icons.net/delapouite/deer-track.svg",
+        "sortingOrder": 39
+      },
+      "green-10": {
+        "bgcolor": "#78afaa",
+        "number": "10",
+        "suit": "berzerker",
+        "image": "/i/game-icons.net/delapouite/frog-foot.svg",
+        "sortingOrder": 54
+      },
+      "berzerker-1": {
+        "bgcolor": "white",
+        "image": "/i/game-icons.net/delapouite/charging-bull.svg",
+        "number": "BRZKR",
+        "suit": "berzerker-special",
+        "sortingOrder": 64
+      },
+      "rare-berzerker": {
+        "bgcolor": "white",
+        "image": "/i/game-icons.net/caro-asercion/deer-head.svg",
+        "number": "RARE",
+        "suit": "berzerker",
+        "sortingOrder": 61
+      },
+      "flag-berzerker": {
+        "bgcolor": "white",
+        "image": "/i/game-icons.net/lorc/flying-flag.svg",
+        "number": "FLAG",
+        "suit": "berzerker",
+        "sortingOrder": 63
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 100,
+            "height": 160,
+            "color": "#e1797c"
+          },
+          {
+            "type": "image",
+            "x": 11,
+            "y": 45,
+            "width": 80,
+            "height": 80,
+            "color": "#e1797c",
+            "value": "/i/game-icons.net/delapouite/charging-bull.svg",
+            "svgReplaces": {
+              "#000": "billcolor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -2,
+            "y": 0,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 100,
+            "dynamicProperties": {
+              "value": "earned",
+              "color": "backcolor"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 7
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 45,
+            "width": 83,
+            "height": 140,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor",
+              "css": "cssImage"
+            },
+            "svgReplaces": {
+              "#000": "imagecolor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 0,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "number",
+              "color": "textcolor"
+            }
+          },
+          {
+            "type": "text",
+            "x": 2,
+            "y": 28,
+            "fontSize": 40,
+            "textAlign": "center",
+            "width": 50,
+            "dynamicProperties": {
+              "color": "textcolor"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 7
+      }
+    ]
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "index": 1,
+    "x": 106,
+    "y": 30,
+    "width": 170,
+    "height": 40,
+    "z": 12776,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "text": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ]
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "index": 2,
+    "x": 421,
+    "y": 30,
+    "width": 170,
+    "height": 40,
+    "z": 12786,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "text": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ],
+    "turn": true
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "index": 3,
+    "x": 726,
+    "y": 30,
+    "width": 170,
+    "height": 40,
+    "z": 12678,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "text": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ]
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "index": 4,
+    "x": 1028,
+    "y": 30,
+    "width": 170,
+    "height": 40,
+    "z": 12679,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "text": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ]
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "index": 5,
+    "x": 1334,
+    "y": 30,
+    "width": 170,
+    "height": 40,
+    "z": 12775,
+    "movable": false,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      }
+    },
+    "hideWhenUnused": true,
+    "foreground": "#000000",
+    "text": 8,
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "FOREACH",
+        "range": 7,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "holder-p1-l$value}"
+          },
+          {
+            "func": "SET",
+            "property": "css",
+            "value": "background:${PROPERTY foreground}"
+          }
+        ]
+      }
+    ]
+  },
+  "label-scoretext-p1": {
+    "id": "label-scoretext-p1",
+    "parent": "seat-p1",
+    "x": 32,
+    "y": 57,
+    "height": 30,
+    "z": 16306,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Points"
+  },
+  "label-score-p1": {
+    "type": "label",
+    "id": "label-score-p1",
+    "parent": "seat-p1",
+    "x": 50,
+    "y": 78,
+    "width": 65,
+    "height": 40,
+    "z": 16423,
+    "movable": false,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0
+  },
+  "holder-p1": {
+    "type": "holder",
+    "id": "holder-p1",
+    "parent": "seat-p1",
+    "x": 26,
+    "y": 548,
+    "width": 115,
+    "z": 11339,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "label-scoretext-p2": {
+    "id": "label-scoretext-p2",
+    "parent": "seat-p2",
+    "x": 32,
+    "y": 57,
+    "height": 30,
+    "z": 16306,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Points"
+  },
+  "label-scoretext-p3": {
+    "id": "label-scoretext-p3",
+    "parent": "seat-p3",
+    "x": 32,
+    "y": 57,
+    "height": 30,
+    "z": 16306,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Points"
+  },
+  "label-scoretext-p4": {
+    "id": "label-scoretext-p4",
+    "parent": "seat-p4",
+    "x": 32,
+    "y": 57,
+    "height": 30,
+    "z": 16306,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Points"
+  },
+  "label-scoretext-p5": {
+    "id": "label-scoretext-p5",
+    "parent": "seat-p5",
+    "x": 32,
+    "y": 57,
+    "height": 30,
+    "z": 16306,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Points"
+  },
+  "label-score-p2": {
+    "type": "label",
+    "id": "label-score-p2",
+    "parent": "seat-p2",
+    "x": 50,
+    "y": 78,
+    "width": 65,
+    "height": 40,
+    "z": 16423,
+    "movable": false,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0
+  },
+  "label-score-p3": {
+    "type": "label",
+    "id": "label-score-p3",
+    "parent": "seat-p3",
+    "x": 50,
+    "y": 78,
+    "width": 65,
+    "height": 40,
+    "z": 16423,
+    "movable": false,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0
+  },
+  "label-score-p4": {
+    "type": "label",
+    "id": "label-score-p4",
+    "parent": "seat-p4",
+    "x": 50,
+    "y": 78,
+    "width": 65,
+    "height": 40,
+    "z": 16423,
+    "movable": false,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0
+  },
+  "label-score-p5": {
+    "type": "label",
+    "id": "label-score-p5",
+    "parent": "seat-p5",
+    "x": 50,
+    "y": 78,
+    "width": 65,
+    "height": 40,
+    "z": 16423,
+    "movable": false,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px silver"
+      }
+    },
+    "editable": true,
+    "text": 0
+  },
+  "holder-p2": {
+    "type": "holder",
+    "id": "holder-p2",
+    "parent": "seat-p2",
+    "x": 26,
+    "y": 548,
+    "width": 115,
+    "z": 11339,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "holder-p3": {
+    "type": "holder",
+    "id": "holder-p3",
+    "parent": "seat-p3",
+    "x": 26,
+    "y": 548,
+    "width": 115,
+    "z": 11339,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "holder-p4": {
+    "type": "holder",
+    "id": "holder-p4",
+    "parent": "seat-p4",
+    "x": 26,
+    "y": 548,
+    "width": 115,
+    "z": 11339,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "holder-p5": {
+    "type": "holder",
+    "id": "holder-p5",
+    "parent": "seat-p5",
+    "x": 26,
+    "y": 548,
+    "width": 115,
+    "z": 11339,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "holder-p6": {
+    "type": "holder",
+    "id": "holder-p6",
+    "parent": "seat-p1",
+    "x": -56,
+    "y": 126,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p7": {
+    "type": "holder",
+    "id": "holder-p7",
+    "parent": "seat-p2",
+    "x": -56,
+    "y": 126,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p8": {
+    "type": "holder",
+    "id": "holder-p8",
+    "parent": "seat-p3",
+    "x": -56,
+    "y": 126,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p9": {
+    "type": "holder",
+    "id": "holder-p9",
+    "parent": "seat-p4",
+    "x": -56,
+    "y": 126,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p10": {
+    "type": "holder",
+    "id": "holder-p10",
+    "parent": "seat-p5",
+    "x": -56,
+    "y": 126,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-discard": {
+    "type": "holder",
+    "id": "holder-discard",
+    "x": 1332,
+    "y": 804,
+    "z": 11460
+  },
+  "label-discard": {
+    "id": "label-discard",
+    "parent": "holder-discard",
+    "x": 6,
+    "y": -25,
+    "height": 30,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Discard"
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 236,
+    "y": 804,
+    "width": 956,
+    "z": 11428,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 73,
+    "height": 172
+  },
+  "label-deck": {
+    "id": "label-deck",
+    "parent": "5p-holder",
+    "x": 6,
+    "y": -25,
+    "height": 30,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Deck"
+  },
+  "z94lB": {
+    "id": "z94lB",
+    "y": 861,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "New Game",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Are you sure you want to start a new game?"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "5p-holder",
+          "3p-holder"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "5p-holder",
+          "3p-holder"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "5p-holder",
+          "3p-holder"
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "SELECT",
+        "property": "type",
+        "value": "label"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": 0
+      },
+      {
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 5,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "3p-holder",
+            "relation": "=="
+          },
+          {
+            "func": "SET",
+            "collection": "DEFAULT",
+            "property": "y",
+            "value": "-300"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "5p-holder"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": 804
+          },
+          "var handsize = 10",
+          {
+            "func": "FOREACH",
+            "collection": "activeSeats",
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "5p-holder",
+                "to": "${widgetID}",
+                "count": "${handsize}"
+              },
+              {
+                "func": "SORT",
+                "holder": "hand",
+                "key": [
+                  "suit",
+                  "rank"
+                ]
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 4,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "3p-holder",
+                "relation": "=="
+              },
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "y",
+                "value": "-300"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "5p-holder"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": 804
+              },
+              "var handsize = 12",
+              {
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "5p-holder",
+                    "to": "${widgetID}",
+                    "count": "${handsize}"
+                  },
+                  {
+                    "func": "SORT",
+                    "holder": "hand",
+                    "key": [
+                      "suit",
+                      "rank"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "3p-holder",
+                "relation": "=="
+              },
+              {
+                "func": "SET",
+                "collection": "DEFAULT",
+                "property": "y",
+                "value": "804"
+              },
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "5p-holder"
+              },
+              {
+                "func": "SET",
+                "property": "y",
+                "value": -300
+              },
+              "var handsize = 12",
+              {
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "3p-holder",
+                    "to": "${widgetID}",
+                    "count": "${handsize}"
+                  },
+                  {
+                    "func": "SORT",
+                    "holder": "hand",
+                    "key": [
+                      "suit",
+                      "rank"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "x": 114
+  },
+  "l2e3": {
+    "deck": "deck-berzerker",
+    "type": "card",
+    "cardType": "black-10",
+    "id": "l2e3",
+    "z": 15196,
+    "parent": "qktx"
+  },
+  "1z4q": {
+    "deck": "deck-berzerker",
+    "type": "card",
+    "cardType": "blue-10",
+    "id": "1z4q",
+    "z": 15197,
+    "parent": "qktx"
+  },
+  "n0nh": {
+    "deck": "deck-berzerker",
+    "type": "card",
+    "cardType": "pink-10",
+    "id": "n0nh",
+    "z": 15198,
+    "parent": "qktx"
+  },
+  "ps3k": {
+    "deck": "deck-berzerker",
+    "type": "card",
+    "cardType": "green-10",
+    "id": "ps3k",
+    "z": 15199,
+    "parent": "qktx"
+  },
+  "qktx": {
+    "type": "pile",
+    "parent": "berzerker-holder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "qktx"
+  },
+  "x8qu": {
+    "deck": "deck-berzerker",
+    "type": "card",
+    "cardType": "rare-berzerker",
+    "id": "x8qu",
+    "z": 15200,
+    "parent": "qktx"
+  },
+  "8ltt": {
+    "deck": "deck-berzerker",
+    "type": "card",
+    "cardType": "flag-berzerker",
+    "id": "8ltt",
+    "z": 15201,
+    "parent": "qktx"
+  },
+  "berzerker-special-card": {
+    "type": "card",
+    "id": "berzerker-special-card",
+    "parent": "qktx",
+    "deck": "deck-berzerker",
+    "cardType": "berzerker-1",
+    "z": 15202
+  },
+  "button-score-dec-ten-p1": {
+    "type": "button",
+    "id": "button-score-dec-ten-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": -71,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p1"
+  },
+  "button-score-dec-p1": {
+    "type": "button",
+    "id": "button-score-dec-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": -33,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p1"
+  },
+  "button-score-inc-p1": {
+    "type": "button",
+    "id": "button-score-inc-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": 59,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p1"
+  },
+  "button-score-inc-ten-p1": {
+    "type": "button",
+    "id": "button-score-inc-ten-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": 97,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p1"
+  },
+  "button-score-dec-ten-p2": {
+    "type": "button",
+    "id": "button-score-dec-ten-p2",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": -71,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p2"
+  },
+  "button-score-dec-p2": {
+    "type": "button",
+    "id": "button-score-dec-p2",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": -33,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p2"
+  },
+  "button-score-inc-p2": {
+    "type": "button",
+    "id": "button-score-inc-p2",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": 63,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p2"
+  },
+  "button-score-inc-ten-p2": {
+    "type": "button",
+    "id": "button-score-inc-ten-p2",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": 101,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p2"
+  },
+  "button-score-dec-ten-p3": {
+    "type": "button",
+    "id": "button-score-dec-ten-p3",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": -71,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p3"
+  },
+  "button-score-dec-p3": {
+    "type": "button",
+    "id": "button-score-dec-p3",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": -33,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p3"
+  },
+  "button-score-inc-p3": {
+    "type": "button",
+    "id": "button-score-inc-p3",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": 63,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p3"
+  },
+  "button-score-inc-ten-p3": {
+    "type": "button",
+    "id": "button-score-inc-ten-p3",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": 101,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p3"
+  },
+  "button-score-dec-ten-p4": {
+    "type": "button",
+    "id": "button-score-dec-ten-p4",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": -71,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p4"
+  },
+  "button-score-dec-p4": {
+    "type": "button",
+    "id": "button-score-dec-p4",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": -33,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p4"
+  },
+  "button-score-inc-p4": {
+    "type": "button",
+    "id": "button-score-inc-p4",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": 63,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p4"
+  },
+  "button-score-inc-ten-p4": {
+    "type": "button",
+    "id": "button-score-inc-ten-p4",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": 101,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p4"
+  },
+  "button-score-dec-ten-p5": {
+    "type": "button",
+    "id": "button-score-dec-ten-p5",
+    "parent": "label-score-p5",
+    "fixedParent": true,
+    "x": -71,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p5"
+  },
+  "button-score-dec-p5": {
+    "type": "button",
+    "id": "button-score-dec-p5",
+    "parent": "label-score-p5",
+    "fixedParent": true,
+    "x": -33,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "-1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p5"
+  },
+  "button-score-inc-p5": {
+    "type": "button",
+    "id": "button-score-inc-p5",
+    "parent": "label-score-p5",
+    "fixedParent": true,
+    "x": 63,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "linkedToSeat": "seat-p5"
+  },
+  "button-score-inc-ten-p5": {
+    "type": "button",
+    "id": "button-score-inc-ten-p5",
+    "parent": "label-score-p5",
+    "fixedParent": true,
+    "x": 101,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+10",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 10
+      }
+    ],
+    "linkedToSeat": "seat-p5"
+  },
+  "5p-deck": {
+    "type": "deck",
+    "id": "5p-deck",
+    "cardDefaults": {
+      "css": {
+        "border": "1px solid white",
+        "border-radius": "16px"
+      }
+    },
+    "cardTypes": {
+      "-3 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "-2 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": "-2",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "-1 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": "-1",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "1 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 1
+      },
+      "2 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 2
+      },
+      "3 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 3
+      },
+      "4 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 4
+      },
+      "5 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 5
+      },
+      "6 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 6
+      },
+      "7 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 7
+      },
+      "8 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 8
+      },
+      "9 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 9
+      },
+      "-3 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "-2 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": "-2",
+        "rankImage": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "-1 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": "-1",
+        "rankImage": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "1 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 1
+      },
+      "2 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 2
+      },
+      "3 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 3
+      },
+      "4 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 4
+      },
+      "5 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 5
+      },
+      "6 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 6
+      },
+      "7 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 7
+      },
+      "8 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 8
+      },
+      "9 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 9
+      },
+      "-3 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "-2 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": "-2",
+        "rankImage": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "-1 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": "-1",
+        "rankImage": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "1 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 1
+      },
+      "2 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 2
+      },
+      "3 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 3
+      },
+      "4 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 4
+      },
+      "5 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 5
+      },
+      "6 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 6
+      },
+      "7 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 7
+      },
+      "8 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 8
+      },
+      "9 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 9
+      },
+      "-3 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "-2 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": "-2",
+        "rankImage": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "-1 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": "-1",
+        "rankImage": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "1 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 1
+      },
+      "2 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 2
+      },
+      "3 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 3
+      },
+      "4 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 4
+      },
+      "5 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 5
+      },
+      "6 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 6
+      },
+      "7 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 7
+      },
+      "8 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 8
+      },
+      "9 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 9
+      },
+      "0 of round-star": {
+        "suit": "delapouite/round-star",
+        "suitColor": "#ff8000",
+        "rank": "0"
+      },
+      "10 of round-star": {
+        "suit": "delapouite/round-star",
+        "suitColor": "#ff8000",
+        "rank": "10"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "black"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 10,
+            "y": 70,
+            "size": 83,
+            "color": "#fff4",
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "x": 2,
+            "fontSize": 60,
+            "textAlign": "left",
+            "color": "white",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "5p-holder"
+  },
+  "label-deck1": {
+    "id": "label-deck1",
+    "parent": "3p-holder",
+    "x": 6,
+    "y": -25,
+    "height": 30,
+    "z": 16372,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "color": "dimgray",
+      "text-align": "center",
+      "text-shadow": "1px 1px 1px white"
+    },
+    "text": "Deck"
+  },
+  "3p-deck": {
+    "type": "deck",
+    "id": "3p-deck",
+    "parent": "3p-holder",
+    "cardDefaults": {},
+    "cardTypes": {
+      "-3 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/diamonds.svg"
+      },
+      "1 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 1
+      },
+      "2 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 2
+      },
+      "3 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 3
+      },
+      "4 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 4
+      },
+      "5 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 5
+      },
+      "6 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 6
+      },
+      "7 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 7
+      },
+      "8 of diamonds": {
+        "suit": "skoll/diamonds",
+        "suitColor": "#0080ff",
+        "rank": 8
+      },
+      "-3 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/hearts.svg"
+      },
+      "1 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 1
+      },
+      "2 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 2
+      },
+      "3 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 3
+      },
+      "4 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 4
+      },
+      "5 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 5
+      },
+      "6 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 6
+      },
+      "7 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 7
+      },
+      "8 of hearts": {
+        "suit": "skoll/hearts",
+        "suitColor": "#e50932",
+        "rank": 8
+      },
+      "-3 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/clubs.svg"
+      },
+      "1 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 1
+      },
+      "2 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 2
+      },
+      "3 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 3
+      },
+      "4 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 4
+      },
+      "5 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 5
+      },
+      "6 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 6
+      },
+      "7 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 7
+      },
+      "8 of clubs": {
+        "suit": "skoll/clubs",
+        "suitColor": "#009f50",
+        "rank": 8
+      },
+      "-3 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": "-3",
+        "rankImage": "/i/game-icons.net/skoll/spades.svg"
+      },
+      "1 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 1
+      },
+      "2 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 2
+      },
+      "3 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 3
+      },
+      "4 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 4
+      },
+      "5 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 5
+      },
+      "6 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 6
+      },
+      "7 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 7
+      },
+      "8 of spades": {
+        "suit": "skoll/spades",
+        "suitColor": "#000000",
+        "rank": 8
+      },
+      "0 of round-star": {
+        "suit": "delapouite/round-star",
+        "suitColor": "#ff8000",
+        "rank": "0"
+      },
+      "10 of round-star": {
+        "suit": "delapouite/round-star",
+        "suitColor": "#ff8000",
+        "rank": "10"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "black"
+          }
+        ],
+        "radius": 16
+      },
+      {
+        "radius": 16,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "color": "suitColor"
+            }
+          },
+          {
+            "type": "icon",
+            "x": 10,
+            "y": 70,
+            "size": 83,
+            "color": "#fff4",
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 0,
+            "fontSize": 60,
+            "textAlign": "left",
+            "color": "white",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "rank"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "3p-holder": {
+    "type": "holder",
+    "id": "3p-holder",
+    "x": 1445,
+    "y": -300,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "5p-holder": {
+    "type": "holder",
+    "id": "5p-holder",
+    "x": 1445,
+    "y": 804,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "ojme": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-3 of diamonds",
+    "id": "ojme",
+    "z": 48842,
+    "parent": "d6ml"
+  },
+  "e6jb": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-2 of diamonds",
+    "id": "e6jb",
+    "z": 48838,
+    "parent": "d6ml"
+  },
+  "itzj": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-1 of diamonds",
+    "id": "itzj",
+    "z": 48829,
+    "parent": "d6ml"
+  },
+  "5zs0": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "1 of diamonds",
+    "id": "5zs0",
+    "z": 48835,
+    "parent": "d6ml"
+  },
+  "yy07": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "2 of diamonds",
+    "id": "yy07",
+    "z": 48820,
+    "parent": "d6ml"
+  },
+  "ruj3": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "3 of diamonds",
+    "id": "ruj3",
+    "z": 48822,
+    "parent": "d6ml"
+  },
+  "utaz": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "4 of diamonds",
+    "id": "utaz",
+    "z": 48841,
+    "parent": "d6ml"
+  },
+  "gtrx": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "5 of diamonds",
+    "id": "gtrx",
+    "z": 48811,
+    "parent": "d6ml"
+  },
+  "5uuk": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "6 of diamonds",
+    "id": "5uuk",
+    "z": 48815,
+    "parent": "d6ml"
+  },
+  "di12": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "7 of diamonds",
+    "id": "di12",
+    "z": 48840,
+    "parent": "d6ml"
+  },
+  "p0ly": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "8 of diamonds",
+    "id": "p0ly",
+    "z": 48845,
+    "parent": "d6ml"
+  },
+  "9t1l": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "9 of diamonds",
+    "id": "9t1l",
+    "z": 48827,
+    "parent": "d6ml"
+  },
+  "9rsi": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-3 of hearts",
+    "id": "9rsi",
+    "z": 48834,
+    "parent": "d6ml"
+  },
+  "6bda": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-2 of hearts",
+    "id": "6bda",
+    "z": 48832,
+    "parent": "d6ml"
+  },
+  "k6ke": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-1 of hearts",
+    "id": "k6ke",
+    "z": 48847,
+    "parent": "d6ml"
+  },
+  "3x2o": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "1 of hearts",
+    "id": "3x2o",
+    "z": 48814,
+    "parent": "d6ml"
+  },
+  "lplx": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "2 of hearts",
+    "id": "lplx",
+    "z": 48825,
+    "parent": "d6ml"
+  },
+  "00a9": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "3 of hearts",
+    "id": "00a9",
+    "z": 48839,
+    "parent": "d6ml"
+  },
+  "b0kj": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "4 of hearts",
+    "id": "b0kj",
+    "z": 48843,
+    "parent": "d6ml"
+  },
+  "xdny": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "5 of hearts",
+    "id": "xdny",
+    "z": 48856,
+    "parent": "d6ml"
+  },
+  "nse8": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "6 of hearts",
+    "id": "nse8",
+    "z": 48851,
+    "parent": "d6ml"
+  },
+  "vufp": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "7 of hearts",
+    "id": "vufp",
+    "z": 48813,
+    "parent": "d6ml"
+  },
+  "54sf": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "8 of hearts",
+    "id": "54sf",
+    "z": 48819,
+    "parent": "d6ml"
+  },
+  "pqb1": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "9 of hearts",
+    "id": "pqb1",
+    "z": 48855,
+    "parent": "d6ml"
+  },
+  "1ex0": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-3 of clubs",
+    "id": "1ex0",
+    "z": 48824,
+    "parent": "d6ml"
+  },
+  "7qo3": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-2 of clubs",
+    "id": "7qo3",
+    "z": 48844,
+    "parent": "d6ml"
+  },
+  "26e7": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-1 of clubs",
+    "id": "26e7",
+    "z": 48821,
+    "parent": "d6ml"
+  },
+  "0i2k": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "1 of clubs",
+    "id": "0i2k",
+    "z": 48826,
+    "parent": "d6ml"
+  },
+  "4ymd": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "2 of clubs",
+    "id": "4ymd",
+    "z": 48817,
+    "parent": "d6ml"
+  },
+  "bxw1": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "3 of clubs",
+    "id": "bxw1",
+    "z": 48807,
+    "parent": "d6ml"
+  },
+  "kccr": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "4 of clubs",
+    "id": "kccr",
+    "z": 48846,
+    "parent": "d6ml"
+  },
+  "t39n": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "5 of clubs",
+    "id": "t39n",
+    "z": 48808,
+    "parent": "d6ml"
+  },
+  "ewtu": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "6 of clubs",
+    "id": "ewtu",
+    "z": 48816,
+    "parent": "d6ml"
+  },
+  "3az8": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "7 of clubs",
+    "id": "3az8",
+    "z": 48830,
+    "parent": "d6ml"
+  },
+  "bwym": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "8 of clubs",
+    "id": "bwym",
+    "z": 48823,
+    "parent": "d6ml"
+  },
+  "qt4j": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "9 of clubs",
+    "id": "qt4j",
+    "z": 48837,
+    "parent": "d6ml"
+  },
+  "x1f1": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-3 of spades",
+    "id": "x1f1",
+    "z": 48852,
+    "parent": "d6ml"
+  },
+  "eek5": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-2 of spades",
+    "id": "eek5",
+    "z": 48810,
+    "parent": "d6ml"
+  },
+  "v335": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "-1 of spades",
+    "id": "v335",
+    "z": 48812,
+    "parent": "d6ml"
+  },
+  "9xsd": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "1 of spades",
+    "id": "9xsd",
+    "z": 48809,
+    "parent": "d6ml"
+  },
+  "xixq": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "2 of spades",
+    "id": "xixq",
+    "z": 48833,
+    "parent": "d6ml"
+  },
+  "uwwh": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "3 of spades",
+    "id": "uwwh",
+    "z": 48828,
+    "parent": "d6ml"
+  },
+  "2y9b": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "4 of spades",
+    "id": "2y9b",
+    "z": 48836,
+    "parent": "d6ml"
+  },
+  "1pfq": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "5 of spades",
+    "id": "1pfq",
+    "z": 48818,
+    "parent": "d6ml"
+  },
+  "wldd": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "6 of spades",
+    "id": "wldd",
+    "z": 48854,
+    "parent": "d6ml"
+  },
+  "3eb4": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "7 of spades",
+    "id": "3eb4",
+    "z": 48831,
+    "parent": "d6ml"
+  },
+  "au7a": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "8 of spades",
+    "id": "au7a",
+    "z": 48848,
+    "parent": "d6ml"
+  },
+  "hfwk": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "9 of spades",
+    "id": "hfwk",
+    "z": 48850,
+    "parent": "d6ml"
+  },
+  "seqe": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "0 of round-star",
+    "id": "seqe",
+    "z": 48849,
+    "parent": "d6ml"
+  },
+  "6vq5": {
+    "deck": "5p-deck",
+    "type": "card",
+    "cardType": "10 of round-star",
+    "id": "6vq5",
+    "z": 48853,
+    "parent": "d6ml"
+  },
+  "66mj": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "-3 of diamonds",
+    "id": "66mj",
+    "z": 48805,
+    "parent": "b8zk"
+  },
+  "u2ac": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "1 of diamonds",
+    "id": "u2ac",
+    "z": 48804,
+    "parent": "b8zk"
+  },
+  "ekj2": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "2 of diamonds",
+    "id": "ekj2",
+    "z": 48771,
+    "parent": "b8zk"
+  },
+  "5wwb": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "3 of diamonds",
+    "id": "5wwb",
+    "z": 48778,
+    "parent": "b8zk"
+  },
+  "rpn7": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "4 of diamonds",
+    "id": "rpn7",
+    "z": 48791,
+    "parent": "b8zk"
+  },
+  "1mts": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "5 of diamonds",
+    "id": "1mts",
+    "z": 48773,
+    "parent": "b8zk"
+  },
+  "jf9i": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "6 of diamonds",
+    "id": "jf9i",
+    "z": 48806,
+    "parent": "b8zk"
+  },
+  "uev2": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "7 of diamonds",
+    "id": "uev2",
+    "z": 48770,
+    "parent": "b8zk"
+  },
+  "2khd": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "8 of diamonds",
+    "id": "2khd",
+    "z": 48802,
+    "parent": "b8zk"
+  },
+  "wvbl": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "-3 of hearts",
+    "id": "wvbl",
+    "z": 48788,
+    "parent": "b8zk"
+  },
+  "5zjw": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "1 of hearts",
+    "id": "5zjw",
+    "z": 48796,
+    "parent": "b8zk"
+  },
+  "xcva": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "2 of hearts",
+    "id": "xcva",
+    "z": 48801,
+    "parent": "b8zk"
+  },
+  "aao9": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "3 of hearts",
+    "id": "aao9",
+    "z": 48790,
+    "parent": "b8zk"
+  },
+  "3gfw": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "4 of hearts",
+    "id": "3gfw",
+    "z": 48779,
+    "parent": "b8zk"
+  },
+  "fsr2": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "5 of hearts",
+    "id": "fsr2",
+    "z": 48780,
+    "parent": "b8zk"
+  },
+  "fqsy": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "6 of hearts",
+    "id": "fqsy",
+    "z": 48786,
+    "parent": "b8zk"
+  },
+  "7ihm": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "7 of hearts",
+    "id": "7ihm",
+    "z": 48795,
+    "parent": "b8zk"
+  },
+  "u6lj": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "8 of hearts",
+    "id": "u6lj",
+    "z": 48800,
+    "parent": "b8zk"
+  },
+  "f2aw": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "-3 of clubs",
+    "id": "f2aw",
+    "z": 48774,
+    "parent": "b8zk"
+  },
+  "a7dz": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "1 of clubs",
+    "id": "a7dz",
+    "z": 48772,
+    "parent": "b8zk"
+  },
+  "i6d8": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "2 of clubs",
+    "id": "i6d8",
+    "z": 48803,
+    "parent": "b8zk"
+  },
+  "julw": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "3 of clubs",
+    "id": "julw",
+    "z": 48794,
+    "parent": "b8zk"
+  },
+  "yup7": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "4 of clubs",
+    "id": "yup7",
+    "z": 48799,
+    "parent": "b8zk"
+  },
+  "x7q9": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "5 of clubs",
+    "id": "x7q9",
+    "z": 48785,
+    "parent": "b8zk"
+  },
+  "wbw1": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "6 of clubs",
+    "id": "wbw1",
+    "z": 48797,
+    "parent": "b8zk"
+  },
+  "36gy": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "7 of clubs",
+    "id": "36gy",
+    "z": 48783,
+    "parent": "b8zk"
+  },
+  "4nj9": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "8 of clubs",
+    "id": "4nj9",
+    "z": 48777,
+    "parent": "b8zk"
+  },
+  "079q": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "-3 of spades",
+    "id": "079q",
+    "z": 48775,
+    "parent": "b8zk"
+  },
+  "3yu0": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "1 of spades",
+    "id": "3yu0",
+    "z": 48787,
+    "parent": "b8zk"
+  },
+  "4odm": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "2 of spades",
+    "id": "4odm",
+    "z": 48798,
+    "parent": "b8zk"
+  },
+  "z160": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "3 of spades",
+    "id": "z160",
+    "z": 48781,
+    "parent": "b8zk"
+  },
+  "68b2": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "4 of spades",
+    "id": "68b2",
+    "z": 48769,
+    "parent": "b8zk"
+  },
+  "t6s3": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "5 of spades",
+    "id": "t6s3",
+    "z": 48789,
+    "parent": "b8zk"
+  },
+  "mekq": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "6 of spades",
+    "id": "mekq",
+    "z": 48793,
+    "parent": "b8zk"
+  },
+  "3ae6": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "7 of spades",
+    "id": "3ae6",
+    "z": 48792,
+    "parent": "b8zk"
+  },
+  "09kc": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "8 of spades",
+    "id": "09kc",
+    "z": 48782,
+    "parent": "b8zk"
+  },
+  "8ze8": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "0 of round-star",
+    "id": "8ze8",
+    "z": 48784,
+    "parent": "b8zk"
+  },
+  "yxhh": {
+    "deck": "3p-deck",
+    "type": "card",
+    "cardType": "10 of round-star",
+    "id": "yxhh",
+    "z": 48776,
+    "parent": "b8zk"
+  },
+  "b8zk": {
+    "type": "pile",
+    "parent": "3p-holder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "b8zk"
+  },
+  "holder-p11": {
+    "type": "holder",
+    "id": "holder-p11",
+    "parent": "seat-p1",
+    "x": -56,
+    "y": 317,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p12": {
+    "type": "holder",
+    "id": "holder-p12",
+    "parent": "seat-p2",
+    "x": -56,
+    "y": 317,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p13": {
+    "type": "holder",
+    "id": "holder-p13",
+    "parent": "seat-p3",
+    "x": -56,
+    "y": 317,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p14": {
+    "type": "holder",
+    "id": "holder-p14",
+    "parent": "seat-p4",
+    "x": -56,
+    "y": 317,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "holder-p15": {
+    "type": "holder",
+    "id": "holder-p15",
+    "parent": "seat-p5",
+    "x": -56,
+    "y": 317,
+    "z": 11339,
+    "inheritChildZ": true,
+    "onEnter": {
+      "activeFace": 1
+    },
+    "width": 286,
+    "height": 191,
+    "stackOffsetX": 55
+  },
+  "d6ml": {
+    "type": "pile",
+    "parent": "5p-holder",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "d6ml"
+  }
+}

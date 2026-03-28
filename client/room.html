@@ -106,11 +106,8 @@
           <input id="filterByText" name="filterByText" placeholder="Search" />
           <i class="material-symbols" id="clearSearch">close</i>
         </span>
-        <span id="filterByTypeWrapper" data-priority="6">
-          <i class="material-symbols">casino</i>
-          <select id="filterByType"><option>Any</option>
-            <option selected>Games</option><option>Tutorials</option>
-          </select>
+        <span id="filterByTypeWrapper" data-priority="6" class="hidden" aria-hidden="true">
+          <select id="filterByType"></select>
         </span>
         <span id="filterByPlayersWrapper" data-priority="2">
           <i class="material-symbols">person</i>
@@ -151,7 +148,7 @@
       </div>
       <div id="statesList">
         <template id="template-stateslist-category" type="text/template">
-          <h2 class="title">Title</h2>
+          <h2 class="title"><div class="libraryTypeTabs"></div></h2>
           <div class="buttons"></div>
           <div class="list"></div>
         </template>
@@ -257,7 +254,7 @@
           <button icon="edit_off" disabled>Read-only</button>
           <button icon="edit">Edit</button>
           <button icon="delete" class="red">Delete</button>
-          <button icon="upload" class="hidden">Add to public library</button>
+          <div id="publicLibraryUploadButtons" class="hidden"></div>
         </div>
         <button icon="save" class="onlyForEdit green">Save</button>
         <button icon="upload" class="onlyForEdit" disabled>Uploading</button>
@@ -268,7 +265,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
-          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
+          <span class="ai-badge hideForEdit" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
@@ -340,7 +337,7 @@
         </div>
         <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
-      <div id="helpTexts" data-showfor="ruleText|helpText|attribution">
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery">
         <h3 data-showfor="ruleText">How to play the game</h3>
         <div data-field="ruleText" data-html="true"></div>
         <h3 data-showfor="helpText">How to use this implementation</h3>

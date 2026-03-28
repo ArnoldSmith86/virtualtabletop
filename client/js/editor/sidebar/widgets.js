@@ -1472,9 +1472,21 @@ class WidgetsModule extends SidebarModule {
       reader.onload = async event => {
         try {
           const newData = JSON.parse(event.target.result);
-          const { widgets: newWidgets, groups: newGroups } = newData;
-
-          if (!Array.isArray(newWidgets)) {
+          let newWidgets;
+          const newGroups = Array.isArray(newData.groups) ? newData.groups : [];
+          if (Array.isArray(newData.widgets)) {
+            const first = newData.widgets[0];
+            const isSingleTemplateFile = typeof newData.name === 'string' && typeof first === 'object' && first !== null && !Array.isArray(first.widgets) && 'type' in first;
+            if (isSingleTemplateFile) {
+              newWidgets = [{
+                id: newData.id || `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+                name: newData.name,
+                widgets: newData.widgets
+              }];
+            } else {
+              newWidgets = newData.widgets;
+            }
+          } else {
             throw new Error('Invalid file format: "widgets" property must be an array.');
           }
 
@@ -1482,12 +1494,21 @@ class WidgetsModule extends SidebarModule {
           const existingIds = new Set(existingWidgets.map(w => w.id));
 
           for (const widget of newWidgets) {
-            if (typeof widget !== 'object' || widget === null || !Array.isArray(widget.widgets)) {
+            if (typeof widget !== 'object' || widget === null) {
               console.warn('Skipping invalid widget:', widget);
               continue;
             }
-
-            const newWidget = JSON.parse(JSON.stringify(widget));
+            let newWidget;
+            if (Array.isArray(widget.widgets)) {
+              newWidget = JSON.parse(JSON.stringify(widget));
+            } else {
+              const state = JSON.parse(JSON.stringify(widget));
+              newWidget = {
+                id: state.id || `local-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
+                name: state.name || state.id || 'Imported',
+                widgets: [state]
+              };
+            }
 
             if (newWidget.id && existingIds.has(newWidget.id)) {
               const index = existingWidgets.findIndex(w => w.id === newWidget.id);
