@@ -1788,7 +1788,7 @@ class PropertiesModule extends SidebarModule {
     const leftOptionsWithRatio = Object.assign({}, leftOptions, {
       setValue: value => {
         if(!isSizePair || syncingAspectRatio || !isRatioLockEnabled()) {
-          this.inputValueUpdated(widget, 'width', value);
+          this.inputValueUpdated(widget, left.property, value);
           return;
         }
 
@@ -1803,8 +1803,8 @@ class PropertiesModule extends SidebarModule {
         const newHeight = Math.max(1, Math.round(value * ratio));
 
         syncingAspectRatio = true;
-        this.inputValueUpdated(widget, 'width', value);
-        this.inputValueUpdated(widget, 'height', newHeight);
+        this.inputValueUpdated(widget, left.property, value);
+        this.inputValueUpdated(widget, right.property, newHeight);
         syncingAspectRatio = false;
       }
     });
@@ -1812,7 +1812,7 @@ class PropertiesModule extends SidebarModule {
     const rightOptionsWithRatio = Object.assign({}, rightOptions, {
       setValue: value => {
         if(!isSizePair || syncingAspectRatio || !isRatioLockEnabled()) {
-          this.inputValueUpdated(widget, 'height', value);
+          this.inputValueUpdated(widget, right.property, value);
           return;
         }
 
@@ -1827,8 +1827,8 @@ class PropertiesModule extends SidebarModule {
         const newWidth = Math.max(1, Math.round(value * ratio));
 
         syncingAspectRatio = true;
-        this.inputValueUpdated(widget, 'height', value);
-        this.inputValueUpdated(widget, 'width', newWidth);
+        this.inputValueUpdated(widget, right.property, value);
+        this.inputValueUpdated(widget, left.property, newWidth);
         syncingAspectRatio = false;
       }
     });
