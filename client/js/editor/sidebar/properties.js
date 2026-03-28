@@ -2788,10 +2788,10 @@ class PropertiesModule extends SidebarModule {
         if(modeValue === 'excluded') {
           // Convert checked items to excluded list.
           const finalMode = selectedProps.map(p => '!' + p);
-          inheritFrom[sourceWidget.id] = finalMode.length > 0 ? finalMode : '*';
+          inheritFrom[sourceWidget.id] = finalMode;
         } else {
           // Include mode: just store selected properties
-          inheritFrom[sourceWidget.id] = selectedProps.length > 0 ? selectedProps : '*';
+          inheritFrom[sourceWidget.id] = selectedProps;
         }
 
         this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
