@@ -14,15 +14,21 @@ async function removeGame(t, index) {
     .click('.remove-game');
 }
 
+const tabHasActive = ClientFunction((index) => {
+  const btns = document.querySelectorAll('.libraryTypeTabs button');
+  return btns[index] ? btns[index].classList.contains('active') : false;
+});
+
 function publicLibraryTest(game, variant, md5, tests) {
   test(`Public library: ${game} (variant ${variant})`, async t => {
     await ClientFunction(prepareClient)();
     await ClientFunction(_=>++window.customRandomSeed)(); // game library overhaul removed the Math.random call for generating a new state ID
+    const tabIndex = +(game.includes(' - '));
+    await t.pressKey('esc').click('#statesButton');
+    if (!(await tabHasActive(tabIndex))) {
+      await t.click(Selector('.libraryTypeTabs button').nth(tabIndex));
+    }
     await t
-      .pressKey('esc')
-      .click('#statesButton')
-      .click('#filterByType')
-      .click('#filterByType > option:nth-child(1)')
       .click(Selector('.roomState h3').withExactText(game).parent().parent())
       .click(Selector(`.variantsList > div:nth-child(${variant+1}) > button`));
     await setName(t);

@@ -88,7 +88,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The previous variant demonstrated how to create variables with basic values using a <b>var variableName = 7</b> syntax or similar type of expression. This variant explains how to create variables in other ways. A tutorial focused on how to manipulate and modify variables using dynamic expressions and other operations is in the works, but many of the FUNCTIONS tutorials have examples of this already. Click each button and review the debug output."
+    "html": "The previous variant demonstrated how to create variables with basic values using a <b>var variableName = 7</b> syntax or similar type of expression. This variant explains how to create variables in other ways. Many of the FUNCTIONS tutorials as well as <a href='https://virtualtabletop.io/tutorial/working-with-variables'>131 Working With Variables</a> have examples of how to use variables in routines. Click each button and review the debug output."
   },
   "button3": {
     "type": "button",
@@ -210,7 +210,8 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "22px",
+      "white-space": "pre-wrap"
     },
     "html": "Variables can be assigned to the value of another variable using the syntax <b>${variable name}</b>. If the other variable is an array, you can append the index like <b>${variable name.index}</b> to get the value associated with that index.\n\nAnd a variable can be set to the value of any widget property.  Use <b>{PROPERTY text}</b> for the text property of this widget and <b>{PROPERTY text OF widgetID}</b> for another widget."
   },
@@ -287,7 +288,10 @@
     "html": "Similar to arrays, you can create variables with object values by hard-coding them into widgets. That example is demonstated above. You could also use a <b>loopRoutine</b> to create the key-value pairs, but that is beyond the scope of this tutorial. For more about objects see the <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Dynamic-Expressions#complex-objects'>Complex Objects wiki</a>."
   },
   "_meta": {
-    "version": 17,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "130 Variables and Collections",
       "image": "/assets/565198158_9346",
@@ -297,7 +301,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1763354878086,
+      "lastUpdate": 1763354878085,
       "showName": false,
       "skill": "",
       "description": "",
@@ -307,6 +311,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "Variables: Creating",
       "language": "en-US",
