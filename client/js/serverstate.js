@@ -2,7 +2,7 @@ import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
-let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
+let roomID = self.location.pathname.replace(/.*\//, '');
 let isLoading = true;
 
 export const widgets = new Map();
@@ -19,12 +19,6 @@ let overlayShownForEmptyRoom = false;
 let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
-
-function normalizeRoomID(roomID) {
-  if(!config.roomNamesCaseSensitive)
-    roomID = roomID.toLowerCase();
-  return roomID;
-}
 
 function applyCustomCss(gameSettings) {
   let style = document.getElementById('globalCss');

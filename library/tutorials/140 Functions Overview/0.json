@@ -21,7 +21,7 @@
     "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ; white-space: pre-wrap",
+    "css": "font-size: 25px; ",
     "html": "Functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) are the key to automating activities in VTT. Functions are bits of JSON code that tell the VTT engine to take some action within specified (or default) parameters. Functions only work inside <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-routines'>routines</a> which are a kind of widget property. Each function and its parameters are described in the wiki and there is a separate tutorial for each function.\n\nAn important technical note about functions and routines: they operate on the local browser of the player that took the action. The resulting changes are sent to the VTT servers and then broadcast out to the other players to see the change. You can simulate this by having the same room open in two different browser windows (use a second browser or incognito mode to simulate distinct players). This means there might be a slight processing delay and it means that if you are debugging problems (see the last button in this tutorial), you can only see the debug output for room changes that your browser initiated."
   },
   "text1": {
@@ -77,7 +77,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables, collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>), or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties-overview'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples.",
+    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables or collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>) or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples.",
     "height": 445
   },
   "text5": {
@@ -95,7 +95,7 @@
     "height": 445
   },
   "_meta": {
-    "version": 21,
+    "version": 19,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -121,8 +121,7 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1",
-      "usesAIImagery": false
+      "players": "1"
     }
   },
   "button1": {

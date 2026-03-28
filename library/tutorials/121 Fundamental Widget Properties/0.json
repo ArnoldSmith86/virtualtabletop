@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 19,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -23,7 +23,6 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "usesAIImagery": false,
       "variantImage": "",
       "variant": "X, Y, and Parent",
       "language": "en-US",
@@ -62,8 +61,8 @@
     "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ; white-space: pre-wrap",
-    "html": "The VTT play area is 1600 pixels wide by 1000 high. The 0,0 coordinate is in the upper left corner. The property <b>x</b> is a widget's horizontal position in the room and <b>y</b> is the vertical position. The <b>x,y</b> position is for the upper left corner of a (usually invisible) square that surrounds the widget. There is an area of the room visible in Edit Mode (use the magnifying glass icon on the top row) that surrounds the play area and extends to -800,-850 and 2400,1850. Some games that use a lot of widgets keep some of them invisible to the players offscreen. A widget's <b>x,y</b> position is relative to its parent. A widget without a parent uses the room's 0,0 position and a widget with a parent uses its parent's 0,0 position.\n\nA widget can have a parent and it then becomes a `child`. Parent/child status is important for many things, including positional information and other topics covered in variants of this tutorial. A widget is a child if its <b>parent</b> property is set to the <b>id</b> of another widget. There is no corresponding property on the parent that shows which children widgets are linked to it."
+    "css": "font-size: 25px; ",
+    "html": "The VTT play area is 1600 pixels wide by 1000 high. The 0,0 coordinate is in the upper left corner. The property <b>x</b> is a widget's horizontal position in the room and <b>y</b> is the vertical position. The <b>x,y</b> position is for the upper left corner of a (usually invisible) square that surrounds the widget. There is an area of the room visible in Edit Mode (use the magnifying glass icon on the top row) that surrounds the play area and extends to -800,-850 and 2400,1850. Some games that use a lot of widgets keep some of them invisible to the players offscreen. A widget's <b>x,y</b> position is relative to its parent. A widget without a parent uses the room's 0,0 position and a widget with a parent uses its parent's 0,0 position.\n\nA widget can have a parent and it then becomes a `child`. Parent/child status is important for many things, including positional information and other topics covered in variants of this tutorial. A widget is a child if its <b>parent</b> property set to the <b>id</b> of another widget. There is no corresponding property on the parent that shows which children widgets are linked to it."
   },
   "button4": {
     "type": "button",
@@ -142,8 +141,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px",
-      "white-space": "pre-wrap"
+      "font-size": "22px"
     },
     "html": "The square around the button is another widget for demo. They both have the same coordinates, width, and height. For purposes of setting coordinates, every widget is treated like a rectangle. Same for the pawn. If you select it, the yellow outline shape follows the pawn. But the 0,0 coords are where the upper left corner of the box are. You can verify this in Edit Mode by putting the cursor there and seeing the cursor coords in white text in the upper right.  ",
     "layer": -2
@@ -157,8 +155,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px",
-      "white-space": "pre-wrap"
+      "font-size": "22px"
     },
     "html": "In Edit Mode, add  <b>parent: pawn1</b> to the red checker. Its position immediately changes to a location that is x:65 and y:402 relative to the upper left corner of the pawn. The green checker is parented to the title widget at the top of the screen. As soon as you move it, it loses its parent and the x,y coords become relative to the room. The orange checker is the same except it has <b>fixedParent: true</b> so it keeps the same parent and relative coords even as it moves.",
     "layer": -2
@@ -174,7 +171,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "A widget's parent will change when it is moved from a holder or dropped in a holder. When players are dragging widgets around, the only way to change parent is to drop in a holder or on a pile. Using automation, parent can be set to any widget. Look at the card as you move it around. You can also change a parent in a routine by using SET. You can optionally change the <b>x,y</b> coords at the same time. The button above demonstrates that.",
+    "html": "A widget's parent will change when it is moved from a holder or dropped in a holder. When players are dragging widgets around, the only way to change parent is to drop in a holder or on a pile. Using automation, parent can be set to any widget. Look at the card as you move it around. You can also change a parent in a routine by using SET. You can optioally change the <b>x,y</b> coords at the same time. The button above demonstrates that.",
     "layer": -2
   },
   "basic1": {

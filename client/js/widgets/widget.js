@@ -752,12 +752,6 @@ export class Widget extends StateManaged {
             variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
           variables[field.variable] = dom.value
-        } else if(field.type == 'slider') {
-          if (Array.isArray(field.values)) {
-            variables[field.variable] = field.values[dom.value];
-          } else {
-            variables[field.variable] = Number(dom.value);
-          }
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
           variables[field.variable] = dom.value;
         }

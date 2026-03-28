@@ -130,7 +130,7 @@ function checkURLproperties(connected) {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
-          setLibraryTypeTab('Tutorials');
+          $('#filterByType').value = 'Tutorials';
         } else if(location.hash == '#About') {
           urlProperties.about = true;
           $('#aboutButton').click();
@@ -156,7 +156,7 @@ function checkURLproperties(connected) {
     }
     if(urlProperties.askID) {
       on('#askIDoverlay button', 'click', function() {
-        roomID = normalizeRoomID(urlProperties.askID + $('#enteredID').value);
+        roomID = urlProperties.askID + $('#enteredID').value;
         toServer('room', { playerName, roomID });
         showOverlay();
       });
@@ -658,7 +658,7 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/') && !location.href.includes('/library/'))
+  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/'))
     startWebSocket();
 
   onMessage('warning', alert);

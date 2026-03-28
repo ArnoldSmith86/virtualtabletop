@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 21,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - Icon",
       "image": "/assets/1481362664_5448",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1770833039980,
+      "lastUpdate": 1764515386368,
       "showName": false,
       "skill": "",
       "description": "",
@@ -23,11 +26,7 @@
       "variantImage": "",
       "variant": "Advanced",
       "language": "en-US",
-      "players": "1",
-      "usesAIImagery": false
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "players": "1"
     }
   },
   "notes1": {
@@ -51,7 +50,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees, opacity is 0.5, and hoverOpacity is 1.",
+    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees.",
     "x": 343
   },
   "example1": {
@@ -76,9 +75,7 @@
     "icon": {
       "name": "build",
       "rotation": 45,
-      "color": "purple",
-      "opacity": 0.5,
-      "hoverOpacity": 1
+      "color": "purple"
     },
     "text": "Settings",
     "color": "Red"
@@ -110,7 +107,7 @@
       "font-size": "25px",
       "color": "black"
     },
-    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, rotation, flip, opacity, color, strokeColor, strokeWidth, hoverColor, hoverStrokeColor, hoverStrokeWidth, and hoverOpacity. Those settings apply individually to each icon."
+    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, rotation, and orientation. Those settings apply individually to each icon."
   },
   "example4": {
     "id": "example4",
@@ -192,7 +189,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "The widget above combines aspects of rotation, scale, offset, and hoverColor to create a custom look."
+    "text": "The widget above combines aspects of rotation, scale, and offset to create a custom look."
   },
   "notes3": {
     "id": "notes3",
@@ -204,7 +201,7 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works. This example changes hoverColor."
+    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works."
   },
   "example5": {
     "id": "example5",
@@ -223,7 +220,8 @@
         "name": "🌲",
         "flip": "vertical"
       }
-    ]
+    ],
+    "iconColor": "blue"
   },
   "notes5": {
     "id": "notes5",

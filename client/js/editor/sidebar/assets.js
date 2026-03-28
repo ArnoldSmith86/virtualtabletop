@@ -179,7 +179,7 @@ class AssetsModule extends SidebarModule {
 
     const table = document.createElement('table');
     const headerRow = table.insertRow();
-    ['Source', 'Original', /*'JPG',*/ 'WebP', 'PNG'].forEach(col => {
+    ['Original', /*'JPG',*/ 'WebP', 'PNG'].forEach(col => {
       const th = document.createElement('th');
       th.textContent = col;
       headerRow.appendChild(th);
@@ -189,28 +189,6 @@ class AssetsModule extends SidebarModule {
     for(const [ i, asset ] of Object.entries(assets)) {
       updateProgress(`Compressing ${+i+1}/${assets.length}`, (+i+1)/assets.length);
       const row = table.insertRow();
-
-      const sourceCell = row.insertCell();
-      const assetName = asset.asset.match(/[^/]+$/)[0];
-      const uniqueIds = [...new Set(asset.uses.map(u => u.widget))];
-      const maxShow = 9;
-      const displayed = uniqueIds.slice(0, maxShow);
-      const moreCount = uniqueIds.length - maxShow;
-      const sourceDiv = document.createElement('div');
-      const bold = (t) => { const b = document.createElement('b'); b.textContent = t; return b; };
-      sourceDiv.appendChild(bold('Asset:'));
-      sourceDiv.appendChild(document.createElement('br'));
-      sourceDiv.appendChild(document.createTextNode(assetName));
-      sourceDiv.appendChild(document.createElement('br'));
-      sourceDiv.appendChild(bold('Widgets:'));
-      sourceDiv.appendChild(document.createElement('br'));
-      for (const id of displayed) {
-        sourceDiv.appendChild(document.createTextNode(id));
-        sourceDiv.appendChild(document.createElement('br'));
-      }
-      if (moreCount > 0)
-        sourceDiv.appendChild(document.createTextNode('... ' + moreCount + ' more widgets ...'));
-      sourceCell.appendChild(sourceDiv);
 
       const processImage = (checkbox) => {
         // Extract sizes from the DOM
@@ -226,11 +204,11 @@ class AssetsModule extends SidebarModule {
         // If there are any qualifying sizes, get the index of the smallest qualifying size
         const minSizeIdx = qualifyingSizes.length ? sizesFromDOM.indexOf(Math.min(...qualifyingSizes)) : -1;
 
-        // Check only the checkbox corresponding to the smallest qualifying size and uncheck others in the row (index 0 = Source)
+        // Check only the checkbox corresponding to the smallest qualifying size and uncheck others in the row
         Array.from(row.cells).forEach((cell, idx) => {
             const cellCheckbox = cell.querySelector('input[type="checkbox"]');
             if (cellCheckbox) {
-                cellCheckbox.checked = idx === minSizeIdx + 1;
+                cellCheckbox.checked = idx === minSizeIdx;
             }
         });
       };
@@ -319,7 +297,7 @@ class AssetsModule extends SidebarModule {
           }
         }
       }
-      while(row.cells.length < 4)
+      while(row.childElementCount < 3)
         row.insertCell();
     }
 

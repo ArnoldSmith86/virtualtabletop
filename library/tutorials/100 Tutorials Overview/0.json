@@ -1,9 +1,6 @@
 {
   "_meta": {
-    "version": 21,
-    "gameSettings": {
-      "legacyModes": {}
-    },
+    "version": 17,
     "info": {
       "name": "100 Tutorials Overview",
       "image": "/assets/428365547_7210",
@@ -13,7 +10,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1773959721631,
+      "lastUpdate": 1749051046015,
       "showName": false,
       "skill": "",
       "description": "",
@@ -23,7 +20,6 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "usesAIImagery": false,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
@@ -53,7 +49,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "All the functions, many key properties, some widget types, and other important aspects of how to create and modify games in VTT are demonstrated in the tutorials. You can access them through various links on <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Tutorials'>the wiki</a>, by clicking the graduation cap icon <span class='material-symbols' style='vertical-align:-0.15em; color:#1f5ca6;'>school</span> at the top of the Edit Mode <span class='material-symbols' style='vertical-align:-0.15em; color:#1f5ca6;'>construction</span> toolbar, or by using the Game Shelf <span class='symbols' style='vertical-align:-0.15em; color:#1f5ca6;'>[library]</span>. On the Game Shelf, look for the &quotPublic Library&quot entry and click the button to swap between &quotGames&quot and &quotTutorials.&quot Tutorials are listed alphabetically by name and have a library image that represents what the tutorial is about or the category it falls under. To get the most out of the tutorials, follow the suggestions in each tutorial about what buttons to click, etc. Be sure to use Edit Mode by clicking on Edit Mode <span class='material-symbols' style='vertical-align:-0.15em; color:#1f5ca6;'>construction</span> (the button will either be on the left or bottom of the screen) or by using the ctrl-j keyboard shortcut. When in Edit Mode, look at the JSON by making sure the curly brackets icon <span class='material-symbols' style='vertical-align:-0.15em; color:#1f5ca6;'>data_object</span> on the far right is highlighted. And after a routine executes, look at the debug output by clicking on the bug icon <span class='material-symbols' style='vertical-align:-0.15em; color:#1f5ca6;'>pest_control</span> on the far right. An overview of major types of tutorials follows."
+    "html": "All the functions, many key properties, some widget types, and other important aspects of how to create and modify games in VTT are demonstrated in the tutorials. You can access them through various links on <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Tutorials'>the wiki</a>, by clicking the graduation cap icon at the top of the Edit Mode toolbar, or by using the game shelf and changing the type (the dice icon) from Games to Tutorials. Tutorials are listed alphabetically by name and have a library image that tries to represent what the tutorial is about or the category it falls under. To get the most out of the tutorials, follow the suggestions in each tutorial about what buttons to click, etc. Be sure to use Edit Mode by clicking on the Edit Mode button (the wrench and hammer icon that will either be on the left or bottom of the screen) or by using the ctrl-j keyboard shortcut. When in Edit Mode, look at the JSON by making sure the curly brackets icon on the far right is highlighted. And after a routine executes, look at the debug output by clicking on the bug icon on the far right. An overview of major types of tutorials follows."
   },
   "text1": {
     "id": "text1",
@@ -64,8 +60,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px",
-      "white-space": "pre-wrap"
+      "font-size": "22px"
     },
     "html": "At the beginning of the tutorials are a few that cover basic but important concepts in using JSON to create games on VTT. You should look at all of these first and in order. They are numbered for reference.\n\n100 Tutorials Overview\n101 JSON Syntax and Punctuation\n110 Widget Types\n120 Widget Properties Overview\n121 Fundamental Widget Properties\n130 Variables and Collections\n131 Working with Variables\n140 Functions Overview"
   },
@@ -91,8 +86,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px",
-      "white-space": "pre-wrap"
+      "font-size": "22px"
     },
     "html": "Other tutorials broadly fall into these categories:\n\nAppearance\n\nOperations and Routines\n\nProperties\n\nTypes\n\nXtras"
   },

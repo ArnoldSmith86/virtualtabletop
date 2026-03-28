@@ -21,7 +21,7 @@
     "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ; white-space: pre-wrap",
+    "css": "font-size: 25px; ",
     "html": "Widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets'>wiki</a>) are the visual representation of objects you need for playing a game. Each widget type in VTT has its own uses, properties, and purposes. Depending on the widget, players can interact with, move, and change various aspects of widgets. Widgets are most commonly added to a room in Edit Mode by clicking on the + symbol at the top of the screen in the middle of the blue and white icons and then selecting the type of widget to add. Widgets added this way get a random name consisting of 4 alphanumeric characters and are placed in the room in a consistent place and with the default properties associated with that type of widget.\n\nBasic widgets (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#basicwidget'>wiki</a>) are a catch-all category. A widget that is not another type is a basic widget by default. Thus, basic widgets are very common and have a wide variety of uses. In Edit Mode, view the JSON of each of the examples of basic widgets below."
   },
   "text1": {
@@ -74,7 +74,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The basic widget above was created like the one to the left. After adding it, an image property was added that is an image of one of the thousands of images available in VTT. See the <a href='https://virtualtabletop.io/tutorial/properties-icon'>Icons tutorial</a> for more. This widget also has a simple <b>clickRoutine</b> that will change the color of the symbol to your player color when you click on it. See the <a href='https://virtualtabletop.io/tutorial/operations-routines'>Routines tutorial</a> for more."
+    "html": "The basic widget above was created like the one to the left. After adding it, an image property was added that is an image of one of the thousands of images available in VTT. See the <a href='http://localhost:8272/tutorial/appearance-icons-symbols-and-emojis'>Icons tutorial</a> for more. This widget also has a simple <b>clickRoutine</b> that will change the color of the symbol to your player color when you click on it. See the <a href='https://virtualtabletop.io/tutorial/operations - routines'>Routines tutorial</a> for more."
   },
   "text5": {
     "id": "text5",
@@ -90,7 +90,7 @@
     "html": "This basic widget is like the previous, but the image is the public library image for this tutorial. Images you upload get a name like the one in the JSON for the widget above. You cannot change that name. It is unique to each image, but also once an image has been uploaded to the VTT servers for one game, it can be used in any game or room."
   },
   "_meta": {
-    "version": 21,
+    "version": 19,
     "gameSettings": {
       "legacyModes": {}
     },
@@ -113,7 +113,6 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "usesAIImagery": false,
       "variantImage": "",
       "variant": "Basic Widgets",
       "language": "en-US",

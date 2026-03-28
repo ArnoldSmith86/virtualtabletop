@@ -10,9 +10,9 @@ class ImageWidget extends Widget {
     });
   }
 
-  applyDeltaToDOM(delta, skipTextUpdate=false) {
+  applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(!skipTextUpdate && (delta.text !== undefined || delta.icon !== undefined))
+    if(delta.text !== undefined || delta.icon !== undefined)
       setText(this.domElement, this.get('icon') ? '' : this.get('text'));
 
     if(delta.icon !== undefined || delta.text !== undefined || delta.width !== undefined || delta.height !== undefined || delta.textColor !== undefined || this.getWithPropertyReplacements_checkDelta('icon', delta))
@@ -39,10 +39,12 @@ class ImageWidget extends Widget {
     return p;
   }
 
-  css(skipImage=false) {
+  css() {
     let css = super.css();
-    if(!skipImage && this.get('image'))
+
+    if(this.get('image'))
       css += '; background-image: url("' + this.getImage() + '")';
+
     return css;
   }
 
@@ -61,10 +63,6 @@ class ImageWidget extends Widget {
   }
 
   getDefaultIconScale() {
-    return 1;
-  }
-
-  getDefaultIconOpacity() {
     return 1;
   }
 
@@ -95,6 +93,6 @@ class ImageWidget extends Widget {
     if(this.symbolWrapper)
       this.symbolWrapper.remove();
     if(this.get('icon'))
-      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor(), this.getDefaultIconOpacity());
+      this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getWithPropertyReplacements('icon'), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor());
   }
 }

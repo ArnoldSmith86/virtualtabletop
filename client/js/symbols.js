@@ -312,11 +312,11 @@ function optimalSquareSize(count, width, height) {
   return cell_size;
 }
 
-function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFontSize=100, step=10) {
+function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight) {
   element.textContent = text; // Set the text
 
   // Start with a large font size and decrease until it fits
-  let fontSize = initialFontSize;
+  let fontSize = 100; // Start with a large multiple of 10px
 
   // Set the font size and measure the height and width of the element
   while (fontSize >= 10) {
@@ -330,14 +330,14 @@ function setTextAndAdjustFontSize(element, text, maxWidth, maxHeight, initialFon
       break; // The element fits, exit the loop
     }
 
-    fontSize -= step; // Reduce the font size
+    fontSize -= 10; // Reduce the font size by 10px
   }
 
   element.style.setProperty('--maxWidth', `${maxWidth}px`);
   element.style.setProperty('--maxHeight', `${maxHeight}px`);
 }
 
-function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor, defaultOpacity=1) {
+function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, defaultColor, defaultHoverColor) {
   const outerWrapper = div(target, 'symbolOuterWrapper', `
     <div class="symbolWrapper"></div>
     <div class="symbolText"></div>
@@ -393,9 +393,7 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
       strokeWidth: asArray(symbol.strokeWidth || 0),
       hoverColor: symbol.hoverColor || symbol.color || defaultHoverColor || defaultColor,
       hoverStrokeColor: asArray(symbol.hoverStrokeColor || symbol.strokeColor || "transparent"),
-      hoverStrokeWidth: asArray(symbol.hoverStrokeWidth !== null && symbol.hoverStrokeWidth !== undefined ? symbol.hoverStrokeWidth : symbol.strokeWidth || 0),
-      opacity: (symbol.opacity === 0 || symbol.opacity) ? symbol.opacity : defaultOpacity,
-      hoverOpacity: (symbol.hoverOpacity === 0 || symbol.hoverOpacity) ? symbol.hoverOpacity : ((symbol.opacity === 0 || symbol.opacity) ? symbol.opacity : defaultOpacity),
+      hoverStrokeWidth: asArray(symbol.hoverStrokeWidth !== null && symbol.hoverStrokeWidth !== undefined ? symbol.hoverStrokeWidth : symbol.strokeWidth || 0)
     };
 
     const details = getIconDetails(symbol.name);
@@ -441,8 +439,6 @@ function generateSymbolsDiv(target, width, height, symbols, text, defaultScale, 
     icon.style.setProperty('--hoverStrokeColor', `${symbol.hoverStrokeColor[0]}`);
     icon.style.setProperty('--strokeWidth', `${(symbol.strokeWidth[0])/512*maxSize}px`);
     icon.style.setProperty('--hoverStrokeWidth', `${(symbol.hoverStrokeWidth[0])/512*maxSize}px`);
-    icon.style.setProperty('--opacity', `${symbol.opacity}`);
-    icon.style.setProperty('--hoverOpacity', `${symbol.hoverOpacity}`);
   }
 
   return outerWrapper;

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf coverage",
-    "clobber": "npm run clean && rm -rf save",
+    "clobber": "npm clean && rm -rf save",
     "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --inspect server.mjs",
     "start": "node server.mjs",
     "stresstest": "node tests/server/loadtest.js",

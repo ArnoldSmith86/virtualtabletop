@@ -39,17 +39,7 @@ const validators = {
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
     any: v=>true
-};
-
-const FACE_OBJECT_COMMON_PROPS = ['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
-
-const FACE_OBJECT_VALID_PROPS = {
-    _common: FACE_OBJECT_COMMON_PROPS,
-    image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
-    icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
-    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
-    html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
-};
+}
 
 // Common properties for all widgets
 const COMMON_PROPERTIES = {
@@ -129,7 +119,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any'
     },
     Label: {
         ...COMMON_PROPERTIES,
@@ -227,14 +217,13 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const objType = (obj.type && String(obj.type).toLowerCase()) || '';
-                        const validObjProps = FACE_OBJECT_VALID_PROPS[objType] || FACE_OBJECT_VALID_PROPS._common;
+                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note', 'size'];
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
                                 problems.push({
                                     widget: p.widgetId,
                                     property: [...propertyPath, faceIndex, 'objects', objIndex, prop],
-                                    message: `invalid property for type "${obj.type || 'unknown'}". Valid properties: ${validObjProps.join(', ')}`
+                                    message: `invalid property. Valid object properties: ${validObjProps.join(', ')}`
                                 });
                             }
                         }
@@ -874,57 +863,7 @@ function customWidgetChecks(widget, widgets, problems) {
 
 function getCustomPropertyUsage(data) {
     const customProperties = new Set();
-    const declaredCustomProperties = new Set();
-    const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
-    const canvasPropertyRegex = /^c[0-9]+$/;
-    const customRoutineRegex = /^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/;
-    const placeholderRegex = /\$\{[^}]+\}/g;
-    const escapeRegex = value=>value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-    function isCustomWidgetProperty(widget, prop) {
-        const wtype = getWidgetType(widget);
-        const known = WIDGET_PROPERTIES[wtype] || {};
-        return !(wtype == 'Canvas' && canvasPropertyRegex.test(prop))
-            && !(prop in known)
-            && !customRoutineRegex.test(prop);
-    }
-
-    for (const [, widget] of widgetEntries) {
-        for (const prop of Object.keys(widget)) {
-            if (isCustomWidgetProperty(widget, prop))
-                declaredCustomProperties.add(prop);
-        }
-    }
-
-    function addPropertyPatternMatches(value) {
-        if (typeof value !== 'string' || !value.includes('${'))
-            return;
-
-        const staticParts = value.split(placeholderRegex);
-        const staticCharCount = staticParts.reduce((sum, part) => sum + part.length, 0);
-        if (staticCharCount < 2)
-            return;
-
-        const pattern = '^' + staticParts
-            .map(escapeRegex)
-            .join('.*') + '$';
-        const interpolatedPattern = new RegExp(pattern);
-
-        for (const prop of declaredCustomProperties) {
-            if (interpolatedPattern.test(prop))
-                customProperties.add(prop);
-        }
-    }
-
-    function addPropertyUsage(value) {
-        const property = typeof value === 'string' ? value : Array.isArray(value) ? value[0] : null;
-        if (typeof property !== 'string')
-            return;
-
-        customProperties.add(property);
-        addPropertyPatternMatches(property);
-    }
-
+    
     // Helper function to extract property names from ${PROPERTY xxx} syntax
     function extractPropertyFromSyntax(value) {
         if (typeof value === 'string') {
@@ -1013,19 +952,19 @@ function getCustomPropertyUsage(data) {
                 if (func === 'CALL' && key === 'routine' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value[0]);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value);
                 } else if (func === 'SCORE' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value);
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    customProperties.add(value);
                 }
             }
 
@@ -1035,7 +974,11 @@ function getCustomPropertyUsage(data) {
     }
     
     // Scan all widgets
-    for (const [, widget] of widgetEntries) {
+    for (const [key, widget] of Object.entries(data)) {
+        if (key === "_meta" || typeof widget !== 'object' || widget === null) {
+            continue;
+        }
+        
         // Scan widget properties
         scanForProperties(widget);
 
@@ -1275,7 +1218,7 @@ function validateGameFile(data, checkMeta) {
                 property: ['_meta', 'info', 'image'],
                 message: 'is not an internal asset: ' + info.image
             });
-        } else if (info.image.match(/[0-9]+$/) && info.image.match(/[0-9]+$/)[0] > 50000) {
+        } else if (info.image.match(/[0-9]+$/)[0] > 50000) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],

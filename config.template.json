@@ -8,7 +8,6 @@
   "simulateServerLag": 0,
   "customTab": null,
 
-  "roomNamesCaseSensitive": true,
   "allowPublicLibraryEdits": false,
   "adminURL": null,
 
@@ -16,10 +15,6 @@
     "library": "library",
     "save": "save",
     "assets": "save/assets"
-  },
-  "libraries": {
-    "Games": "games",
-    "Tutorials": "tutorials"
   },
 
   "betaServers": {},
