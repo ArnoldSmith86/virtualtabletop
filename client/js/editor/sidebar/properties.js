@@ -2419,11 +2419,12 @@ class PropertiesModule extends SidebarModule {
     const listContainer = div(container);
     listContainer.style.paddingLeft = '10px';
     listContainer.style.marginBottom = '8px';
+    const listEntriesContainer = div(listContainer);
     const expandedStates = {};
     const modeStates = {};
 
     const updateList = () => {
-      listContainer.innerHTML = '';
+      listEntriesContainer.innerHTML = '';
       const inheritFrom = widget.get('inheritFrom');
       const inheritFromObj = typeof inheritFrom === 'string'
         ? { [inheritFrom]: '*' }
@@ -2434,11 +2435,11 @@ class PropertiesModule extends SidebarModule {
         emptyMsg.textContent = 'No widgets selected yet.';
         emptyMsg.style.color = '#888';
         emptyMsg.style.fontSize = '12px';
-        listContainer.appendChild(emptyMsg);
+        listEntriesContainer.appendChild(emptyMsg);
       } else {
         for(const [widgetId, mode] of Object.entries(inheritFromObj)) {
           this.renderInheritFromWidgetRow(
-            listContainer,
+            listEntriesContainer,
             widget,
             widgetId,
             mode,
@@ -2453,7 +2454,7 @@ class PropertiesModule extends SidebarModule {
 
     updateList();
 
-    this.renderInheritFromAddButton(container, widget);
+    this.renderInheritFromAddButton(listContainer, widget);
 
     this.addPropertyListener(widget, 'inheritFrom', () => updateList());
   }
