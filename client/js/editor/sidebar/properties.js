@@ -1528,7 +1528,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat' ].concat(extra);
+    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
   }
 
   isOnDemandPropertyValueSet(value) {
@@ -2403,6 +2403,446 @@ class PropertiesModule extends SidebarModule {
     this.renderAssociatedWidgetsSection(widget);
   }
 
+  renderInheritFromButton(widget, target = null, options = {}) {
+    this.renderOnDemandSection(widget, 'add Inherit From', ['inheritFrom'], container => {
+      this.renderInheritFromEditor(container, widget);
+    }, target || this.moduleDOM, options);
+  }
+
+  renderInheritFromEditor(container, widget) {
+    const title = document.createElement('div');
+    title.textContent = 'Inherit properties from:';
+    title.classList.add('inheritFromTitle');
+    container.appendChild(title);
+
+    const listContainer = div(container);
+    listContainer.classList.add('inheritFromListContainer');
+    const listEntriesContainer = div(listContainer);
+    listEntriesContainer.classList.add('inheritFromListEntries');
+    const expandedStates = {};
+    const modeStates = {};
+
+    const updateList = () => {
+      listEntriesContainer.innerHTML = '';
+      const inheritFrom = widget.get('inheritFrom');
+      const inheritFromObj = typeof inheritFrom === 'string'
+        ? { [inheritFrom]: '*' }
+        : (inheritFrom || {});
+
+      if(Object.keys(inheritFromObj).length === 0) {
+        const emptyMsg = document.createElement('div');
+        emptyMsg.textContent = 'No widgets selected yet.';
+        emptyMsg.classList.add('inheritFromEmptyMessage');
+        listEntriesContainer.appendChild(emptyMsg);
+      } else {
+        for(const [widgetId, mode] of Object.entries(inheritFromObj)) {
+          this.renderInheritFromWidgetRow(
+            listEntriesContainer,
+            widget,
+            widgetId,
+            mode,
+            modeStates[widgetId] || null,
+            nextMode => modeStates[widgetId] = nextMode,
+            !!expandedStates[widgetId],
+            expanded => expandedStates[widgetId] = expanded
+          );
+        }
+      }
+    };
+
+    updateList();
+
+    this.renderInheritFromAddButton(listContainer, widget);
+
+    this.addPropertyListener(widget, 'inheritFrom', () => updateList());
+  }
+
+  normalizeInheritFromObject(inheritFrom) {
+    if(typeof inheritFrom === 'string') {
+      const sourceWidgetId = inheritFrom.trim();
+      return sourceWidgetId ? { [sourceWidgetId]: '*' } : {};
+    }
+
+    if(inheritFrom && typeof inheritFrom === 'object' && !Array.isArray(inheritFrom))
+      return Object.assign({}, inheritFrom);
+
+    return {};
+  }
+
+  getAllPropertiesForInherit(sourceWidget, targetWidget) {
+    const blacklist = ['id', 'type', 'deck', 'cardType', 'inheritFrom'];
+    const allProps = new Set();
+
+    // Add properties from source widget (state + defaults)
+    if(sourceWidget.state) {
+      Object.keys(sourceWidget.state)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+    if(sourceWidget.defaults) {
+      Object.keys(sourceWidget.defaults)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+
+    // Add properties from target widget (state + defaults)
+    if(targetWidget.state) {
+      Object.keys(targetWidget.state)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+    if(targetWidget.defaults) {
+      Object.keys(targetWidget.defaults)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+
+    return Array.from(allProps).sort();
+  }
+
+  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, preferredMode = null, onModeChanged = () => {}, initialExpanded = false, onExpandChanged = () => {}) {
+    const sourceWidget = widgets && widgets.get(sourceWidgetId);
+    if(!sourceWidget) return;
+
+    let expanded = !!initialExpanded;
+
+    const rowWrap = div(container);
+    rowWrap.classList.add('inheritFromRowWrap');
+
+    // Expand/collapse arrow
+    const toggleArrow = document.createElement('button');
+    toggleArrow.textContent = expanded ? '▼' : '▶';
+    toggleArrow.classList.add('inheritFromToggleArrow');
+    rowWrap.appendChild(toggleArrow);
+
+    // Widget info
+    const widgetInfo = document.createElement('div');
+    widgetInfo.classList.add('inheritFromWidgetInfo');
+    widgetInfo.textContent = `${sourceWidget.get('type')} #${sourceWidgetId}`;
+    rowWrap.appendChild(widgetInfo);
+
+    // Mode dropdown
+    const dropdownContainer = div(rowWrap);
+    dropdownContainer.classList.add('inheritFromDropdownContainer');
+    const dropdown = document.createElement('select');
+    dropdown.classList.add('inheritFromDropdown');
+
+    const modes = [
+      { value: 'all', label: 'copy all' },
+      { value: 'selected', label: 'copy selected' },
+      { value: 'excluded', label: 'exclude selected' }
+    ];
+
+    const modeArray = Array.isArray(mode) ? mode : null;
+    const hasExcluded = modeArray ? modeArray.some(p => typeof p === 'string' && p.startsWith('!')) : false;
+    const hasIncluded = modeArray ? modeArray.some(p => typeof p === 'string' && !p.startsWith('!')) : false;
+    const hasMixedMode = !!(modeArray && hasExcluded && hasIncluded);
+
+    // Determine current mode
+    let currentModeValue = 'all';
+    if(modeArray) {
+      if(hasMixedMode) {
+        currentModeValue = 'mixed';
+      } else if(modeArray.length === 0) {
+        // Empty arrays are ambiguous; preserve the user's most recently chosen
+        // mode for this row when available.
+        if(preferredMode === 'selected' || preferredMode === 'excluded') {
+          currentModeValue = preferredMode;
+        } else {
+          currentModeValue = 'selected';
+        }
+      } else if(modeArray.length > 0 && modeArray[0].startsWith('!')) {
+        currentModeValue = 'excluded';
+      } else {
+        currentModeValue = 'selected';
+      }
+    }
+
+    if(hasMixedMode) {
+      modes.unshift({ value: 'mixed', label: 'invalid mix (include + exclude)' });
+    }
+
+    modes.forEach(modeOption => {
+      const opt = document.createElement('option');
+      opt.value = modeOption.value;
+      opt.textContent = modeOption.label;
+      opt.selected = currentModeValue === modeOption.value;
+      dropdown.appendChild(opt);
+    });
+
+    dropdownContainer.appendChild(dropdown);
+
+    // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('inheritFromIconActionButton', 'inheritFromRemoveWidgetButton');
+    deleteBtn.setAttribute('icon', 'delete');
+    deleteBtn.title = 'Remove this inherit source';
+    deleteBtn.onclick = () => {
+      const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
+      delete inheritFrom[sourceWidgetId];
+      const finalValue = Object.keys(inheritFrom).length === 0 ? null : inheritFrom;
+      this.inputValueUpdated(widget, 'inheritFrom', finalValue);
+    };
+    rowWrap.appendChild(deleteBtn);
+
+    // Property checkboxes container (initially hidden)
+    const propsContainer = div(container);
+    propsContainer.classList.add('inheritFromPropsContainer', 'inheritFromHidden');
+
+    // Update mode change handler
+    dropdown.onchange = () => {
+      if(dropdown.value === 'mixed') {
+        return;
+      }
+
+      onModeChanged(dropdown.value);
+
+      const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
+      let newMode = '*';
+
+      if(dropdown.value === 'all') {
+        newMode = '*';
+      } else if(dropdown.value === 'selected') {
+        // Start with no properties selected by default.
+        newMode = [];
+      } else if(dropdown.value === 'excluded') {
+        // Start with no properties excluded by default.
+        newMode = [];
+      }
+
+      inheritFrom[sourceWidgetId] = newMode;
+      this.inputValueUpdated(widget, 'inheritFrom', inheritFrom);
+      renderCheckboxes();
+    };
+
+    const renderCheckboxes = () => {
+      propsContainer.innerHTML = '';
+      const currentInheritFrom = widget.get('inheritFrom') || {};
+      const currentMode = currentInheritFrom[sourceWidgetId] || '*';
+
+      if(dropdown.value === 'mixed') {
+        propsContainer.classList.remove('inheritFromHidden');
+        this.renderInheritFromMixedModeError(propsContainer, currentMode);
+        return;
+      }
+
+      propsContainer.classList.remove('inheritFromHidden');
+      this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, currentMode);
+    };
+
+    // Toggle expand/collapse
+    toggleArrow.onclick = () => {
+      expanded = !expanded;
+      toggleArrow.textContent = expanded ? '▼' : '▶';
+      onExpandChanged(expanded);
+      if(expanded) {
+        propsContainer.classList.remove('inheritFromHidden');
+        renderCheckboxes();
+      } else {
+        propsContainer.classList.add('inheritFromHidden');
+      }
+    };
+
+    if(expanded) {
+      toggleArrow.textContent = '▼';
+      propsContainer.classList.remove('inheritFromHidden');
+      renderCheckboxes();
+    }
+  }
+
+  renderInheritFromMixedModeError(container, modeList) {
+    const errorWrap = div(container);
+    errorWrap.classList.add('inheritFromMixedModeError');
+
+    const title = document.createElement('div');
+    title.textContent = 'Invalid inherit mode: include and exclude entries are mixed.';
+    errorWrap.appendChild(title);
+
+    const hint = document.createElement('div');
+    hint.textContent = 'Switch mode to copy all/copy selected/exclude selected to fix this row.';
+    errorWrap.appendChild(hint);
+
+    const modeInput = document.createElement('input');
+    modeInput.type = 'text';
+    modeInput.readOnly = true;
+    modeInput.value = Array.isArray(modeList) ? modeList.join(', ') : String(modeList || '');
+    modeInput.classList.add('inheritFromMixedModeInput');
+    errorWrap.appendChild(modeInput);
+  }
+
+  renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode) {
+    const title = document.createElement('div');
+    if(modeValue === 'excluded') {
+      title.textContent = 'Exclude properties:';
+    } else if(modeValue === 'all') {
+      title.textContent = 'All properties (read-only preview):';
+    } else {
+      title.textContent = 'Include properties:';
+    }
+    title.classList.add('inheritFromPropertiesTitle');
+    container.appendChild(title);
+
+    // Get all properties from both widgets
+    const allProps = this.getAllPropertiesForInherit(sourceWidget, targetWidget);
+
+    // Parse current selection
+    const currentProps = Array.isArray(currentMode)
+      ? currentMode.map(p => p.startsWith('!') ? p.substring(1) : p)
+      : [];
+
+    const isPropertyDeclaredOnTarget = prop => {
+      const state = targetWidget.state || {};
+      const defaults = targetWidget.defaults || {};
+
+      if(!Object.prototype.hasOwnProperty.call(state, prop))
+        return false;
+
+      if(!Object.prototype.hasOwnProperty.call(defaults, prop))
+        return true;
+
+      return JSON.stringify(state[prop]) !== JSON.stringify(defaults[prop]);
+    };
+
+    const hasBlockedProps = allProps.some(prop => isPropertyDeclaredOnTarget(prop));
+    if(hasBlockedProps) {
+      const tip = document.createElement('div');
+      tip.textContent = 'Some properties are not copied because they are declared in the current widget.';
+      tip.classList.add('inheritFromBlockedHint');
+      container.appendChild(tip);
+    }
+
+    allProps.forEach(prop => {
+      const checkboxWrap = div(container);
+      checkboxWrap.classList.add('inheritFromCheckboxWrap');
+
+      const isDeclaredOnTarget = isPropertyDeclaredOnTarget(prop);
+      if(isDeclaredOnTarget) {
+        checkboxWrap.classList.add('inheritFromDeclaredProperty');
+      }
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}_${rand().toString(36).substring(3, 7)}`;
+      checkbox.dataset.property = prop;
+
+      const isReadOnlyAllMode = modeValue === 'all';
+
+      if(isReadOnlyAllMode) {
+        checkbox.classList.add('inheritReadOnlyCheckbox');
+        checkbox.checked = true;
+      } else if(modeValue === 'excluded') {
+        checkbox.classList.add('inheritExcludeCheckbox');
+        // For exclude mode, check if property IS in the exclude list.
+        checkbox.checked = currentProps.includes(prop);
+      } else {
+        checkbox.classList.add('inheritIncludeCheckbox');
+        // For include mode, check if property IS in the selection
+        checkbox.checked = currentProps.includes(prop);
+      }
+
+      if(isReadOnlyAllMode || isDeclaredOnTarget) {
+        checkbox.disabled = true;
+      }
+
+      checkbox.onchange = () => {
+        const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
+        const selectedProps = [];
+
+        // Collect all checked boxes
+        const allCheckboxes = container.querySelectorAll('input[type="checkbox"][data-property]');
+
+        for(let i = 0; i < allCheckboxes.length; i++) {
+          if(allCheckboxes[i].checked && !allCheckboxes[i].disabled) {
+            selectedProps.push(allCheckboxes[i].dataset.property);
+          }
+        }
+
+        if(modeValue === 'excluded') {
+          // Convert checked items to excluded list.
+          const finalMode = selectedProps.map(p => '!' + p);
+          inheritFrom[sourceWidget.id] = finalMode;
+        } else {
+          // Include mode: just store selected properties
+          inheritFrom[sourceWidget.id] = selectedProps;
+        }
+
+        this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
+        // Do NOT close/re-render the parent - just update this checkbox group
+      };
+
+      checkboxWrap.appendChild(checkbox);
+
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.id;
+      label.textContent = prop;
+      label.classList.add('inheritFromPropertyLabel');
+      if(isDeclaredOnTarget) {
+        label.classList.add('inheritFromDeclaredPropertyLabel');
+        label.title = 'Not copied: this property is currently declared in this widget.';
+      }
+      checkboxWrap.appendChild(label);
+
+      if(isDeclaredOnTarget) {
+        const clearBtn = document.createElement('button');
+        clearBtn.type = 'button';
+        clearBtn.classList.add('inheritFromIconActionButton', 'inheritFromClearPropertyButton');
+        clearBtn.setAttribute('icon', 'ink_eraser');
+        clearBtn.title = 'Remove this property from the current widget so inheritance can apply.';
+        clearBtn.onclick = () => {
+          this.inputValueUpdated(targetWidget, prop, undefined);
+          const refreshedMode = (targetWidget.get('inheritFrom') || {})[sourceWidget.id] || '*';
+          container.innerHTML = '';
+          this.renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, refreshedMode);
+        };
+        checkboxWrap.appendChild(clearBtn);
+      }
+    });
+  }
+
+  renderInheritFromAddButton(container, widget) {
+    const addBtn = document.createElement('button');
+    addBtn.textContent = '+ Add widget';
+    addBtn.classList.add('blue', 'inheritFromAddWidgetButton');
+    const pickerKey = 'inheritFrom';
+
+    const updateAddButton = () => {
+      const picker = this.getWidgetPicker(widget.id, pickerKey);
+      const isSelecting = !!picker;
+      addBtn.classList.toggle('selected', isSelecting);
+      if(!isSelecting)
+        addBtn.textContent = '+ Add widget';
+      else
+        addBtn.textContent = 'click a widget...';
+    };
+
+    addBtn.onclick = () => {
+      const currentInheritFrom = widget.get('inheritFrom') || {};
+      const alreadySelected = Object.keys(typeof currentInheritFrom === 'string' ? { [currentInheritFrom]: '*' } : currentInheritFrom);
+
+      this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+        if(pickedWidgets) {
+          const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
+          inheritFrom[pickedWidgets.id] = '*'; // Default to copy all
+          this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
+        }
+        this.stopWidgetPicker();
+        updateAddButton();
+      }, {
+        pickerKey: pickerKey,
+        allowMultiple: false,
+        pendingWidgetIDs: [],
+        onPendingChanged: updateAddButton,
+        filter: pickedWidget => {
+          // Can't inherit from self or already selected
+          return pickedWidget.id !== widget.id && !alreadySelected.includes(pickedWidget.id);
+        }
+      });
+      updateAddButton();
+    };
+
+    container.appendChild(addBtn);
+  }
+
   renderAssociatedWidgetsSection(widget) {
     const linksSection = this.createOnDemandSectionStructure(this.moduleDOM, "Widget's links", {
       titleMarginTop: '8px'
@@ -2434,6 +2874,10 @@ class PropertiesModule extends SidebarModule {
         buttonHost: seatSection.newPropertiesWrapper
       });
     }, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper
+    });
+
+    this.renderInheritFromButton(widget, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper
     });
   }
