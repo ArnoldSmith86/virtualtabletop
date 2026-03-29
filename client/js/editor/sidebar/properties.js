@@ -2412,14 +2412,13 @@ class PropertiesModule extends SidebarModule {
   renderInheritFromEditor(container, widget) {
     const title = document.createElement('div');
     title.textContent = 'Inherit properties from:';
-    title.style.fontWeight = 'bold';
-    title.style.marginBottom = '8px';
+    title.classList.add('inheritFromTitle');
     container.appendChild(title);
 
     const listContainer = div(container);
-    listContainer.style.paddingLeft = '10px';
-    listContainer.style.marginBottom = '8px';
+    listContainer.classList.add('inheritFromListContainer');
     const listEntriesContainer = div(listContainer);
+    listEntriesContainer.classList.add('inheritFromListEntries');
     const expandedStates = {};
     const modeStates = {};
 
@@ -2433,8 +2432,7 @@ class PropertiesModule extends SidebarModule {
       if(Object.keys(inheritFromObj).length === 0) {
         const emptyMsg = document.createElement('div');
         emptyMsg.textContent = 'No widgets selected yet.';
-        emptyMsg.style.color = '#888';
-        emptyMsg.style.fontSize = '12px';
+        emptyMsg.classList.add('inheritFromEmptyMessage');
         listEntriesContainer.appendChild(emptyMsg);
       } else {
         for(const [widgetId, mode] of Object.entries(inheritFromObj)) {
@@ -2509,40 +2507,25 @@ class PropertiesModule extends SidebarModule {
     let expanded = !!initialExpanded;
 
     const rowWrap = div(container);
-    rowWrap.style.display = 'flex';
-    rowWrap.style.alignItems = 'flex-start';
-    rowWrap.style.gap = '6px';
-    rowWrap.style.marginBottom = '8px';
-    rowWrap.style.padding = '6px';
-    rowWrap.style.border = '1px solid #ddd';
-    rowWrap.style.borderRadius = '4px';
-    rowWrap.style.backgroundColor = '#f9f9f9';
+    rowWrap.classList.add('inheritFromRowWrap');
 
     // Expand/collapse arrow
     const toggleArrow = document.createElement('button');
     toggleArrow.textContent = expanded ? '▼' : '▶';
-    toggleArrow.style.border = 'none';
-    toggleArrow.style.background = 'none';
-    toggleArrow.style.cursor = 'pointer';
-    toggleArrow.style.padding = '0';
-    toggleArrow.style.minWidth = '20px';
-    toggleArrow.style.fontSize = '14px';
-    toggleArrow.style.color = '#666';
+    toggleArrow.classList.add('inheritFromToggleArrow');
     rowWrap.appendChild(toggleArrow);
 
     // Widget info
     const widgetInfo = document.createElement('div');
-    widgetInfo.style.flex = '1';
+    widgetInfo.classList.add('inheritFromWidgetInfo');
     widgetInfo.textContent = `${sourceWidget.get('type')} #${sourceWidgetId}`;
-    widgetInfo.style.fontSize = '13px';
-    widgetInfo.style.color = '#333';
     rowWrap.appendChild(widgetInfo);
 
     // Mode dropdown
     const dropdownContainer = div(rowWrap);
-    dropdownContainer.style.minWidth = '110px';
+    dropdownContainer.classList.add('inheritFromDropdownContainer');
     const dropdown = document.createElement('select');
-    dropdown.style.fontSize = '12px';
+    dropdown.classList.add('inheritFromDropdown');
 
     const modes = [
       { value: 'all', label: 'copy all' },
@@ -2604,12 +2587,7 @@ class PropertiesModule extends SidebarModule {
 
     // Property checkboxes container (initially hidden)
     const propsContainer = div(container);
-    propsContainer.style.paddingLeft = '30px';
-    propsContainer.style.marginBottom = '6px';
-    propsContainer.style.display = 'none';
-    propsContainer.style.borderLeft = '2px solid #ddd';
-    propsContainer.style.paddingTop = '6px';
-    propsContainer.style.paddingBottom = '6px';
+    propsContainer.classList.add('inheritFromPropsContainer', 'inheritFromHidden');
 
     // Update mode change handler
     dropdown.onchange = () => {
@@ -2643,12 +2621,12 @@ class PropertiesModule extends SidebarModule {
       const currentMode = currentInheritFrom[sourceWidgetId] || '*';
 
       if(dropdown.value === 'mixed') {
-        propsContainer.style.display = 'block';
+        propsContainer.classList.remove('inheritFromHidden');
         this.renderInheritFromMixedModeError(propsContainer, currentMode);
         return;
       }
 
-      propsContainer.style.display = 'block';
+      propsContainer.classList.remove('inheritFromHidden');
       this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, currentMode);
     };
 
@@ -2658,16 +2636,16 @@ class PropertiesModule extends SidebarModule {
       toggleArrow.textContent = expanded ? '▼' : '▶';
       onExpandChanged(expanded);
       if(expanded) {
-        propsContainer.style.display = 'block';
+        propsContainer.classList.remove('inheritFromHidden');
         renderCheckboxes();
       } else {
-        propsContainer.style.display = 'none';
+        propsContainer.classList.add('inheritFromHidden');
       }
     };
 
     if(expanded) {
       toggleArrow.textContent = '▼';
-      propsContainer.style.display = 'block';
+      propsContainer.classList.remove('inheritFromHidden');
       renderCheckboxes();
     }
   }
@@ -2701,10 +2679,7 @@ class PropertiesModule extends SidebarModule {
     } else {
       title.textContent = 'Include properties:';
     }
-    title.style.fontWeight = 'bold';
-    title.style.fontSize = '12px';
-    title.style.marginBottom = '6px';
-    title.style.color = '#555';
+    title.classList.add('inheritFromPropertiesTitle');
     container.appendChild(title);
 
     // Get all properties from both widgets
@@ -2738,11 +2713,7 @@ class PropertiesModule extends SidebarModule {
 
     allProps.forEach(prop => {
       const checkboxWrap = div(container);
-      checkboxWrap.style.display = 'flex';
-      checkboxWrap.style.alignItems = 'center';
-      checkboxWrap.style.gap = '4px';
-      checkboxWrap.style.fontSize = '12px';
-      checkboxWrap.style.marginBottom = '3px';
+      checkboxWrap.classList.add('inheritFromCheckboxWrap');
 
       const isDeclaredOnTarget = isPropertyDeclaredOnTarget(prop);
       if(isDeclaredOnTarget) {
@@ -2804,7 +2775,7 @@ class PropertiesModule extends SidebarModule {
       const label = document.createElement('label');
       label.htmlFor = checkbox.id;
       label.textContent = prop;
-      label.style.cursor = 'pointer';
+      label.classList.add('inheritFromPropertyLabel');
       if(isDeclaredOnTarget) {
         label.classList.add('inheritFromDeclaredPropertyLabel');
         label.title = 'Not copied: this property is currently declared in this widget.';

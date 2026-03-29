@@ -1,3 +1,84 @@
+.tune.editorModule .inheritFromTitle {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.tune.editorModule .inheritFromListContainer {
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+
+.tune.editorModule .inheritFromEmptyMessage {
+  color: #888;
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromRowWrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.tune.editorModule .inheritFromToggleArrow {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.tune.editorModule .inheritFromWidgetInfo {
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+}
+
+.tune.editorModule .inheritFromDropdownContainer {
+  min-width: 110px;
+}
+
+.tune.editorModule .inheritFromDropdown {
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromPropsContainer {
+  padding-left: 30px;
+  margin-bottom: 6px;
+  border-left: 2px solid #ddd;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.tune.editorModule .inheritFromHidden {
+  display: none;
+}
+
+.tune.editorModule .inheritFromPropertiesTitle {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.tune.editorModule .inheritFromCheckboxWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .inheritFromPropertyLabel {
+  cursor: pointer;
+}
+
 .tune.editorModule input[type=checkbox].inheritExcludeCheckbox,
 .tune.editorModule input[type=checkbox].inheritIncludeCheckbox,
 .tune.editorModule input[type=checkbox].inheritReadOnlyCheckbox {
