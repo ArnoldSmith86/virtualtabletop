@@ -1917,7 +1917,7 @@
       "time": "30",
       "attribution": "Design, layout, cards, and library image by LawDawg and released to the Public Domain under CC0.<div><br></div><div>All icons and graphics in the room have their attribution listed under the About overlay.</div>",
       "importerTime": 1775063367553,
-      "lastUpdate": 1775355337687,
+      "lastUpdate": 1775400799561,
       "importer": "TTS",
       "skill": "",
       "description": "Each of eight shapes has a random set of rules that must be followed when placing on your board. Can you get all shapes on the board before time runs out?",
@@ -8516,28 +8516,31 @@
   "timer": {
     "type": "timer",
     "id": "timer",
-    "x": 1407,
-    "y": 484,
+    "x": 1433,
+    "y": 606,
     "css": {
-      "color": "black"
+      "color": "black",
+      "font-size": "45px"
     },
     "countdown": true,
     "start": 60000,
-    "milliseconds": 60000,
-    "z": 1
+    "z": 1,
+    "width": 120,
+    "height": 50,
+    "milliseconds": 60000
   },
   "timerReset": {
     "type": "button",
     "id": "timerReset",
     "parent": "timer",
     "fixedParent": true,
-    "x": 80,
-    "y": -3,
-    "width": 36,
-    "height": 36,
+    "x": 9,
+    "y": 69,
+    "width": 45,
+    "height": 45,
     "movableInEdit": false,
     "classes": "symbols",
-    "css": "font-size: 28px",
+    "css": "font-size: 35px",
     "text": "reload",
     "clickRoutine": [
       {
@@ -8553,13 +8556,13 @@
     "id": "timerPlay",
     "parent": "timer",
     "fixedParent": true,
-    "x": 120,
-    "y": -3,
-    "width": 36,
-    "height": 36,
+    "x": 84,
+    "y": 69,
+    "width": 45,
+    "height": 45,
     "movableInEdit": false,
     "classes": "symbols",
-    "css": "font-size: 28px",
+    "css": "font-size: 35px",
     "text": "play_pause",
     "clickRoutine": [
       {
