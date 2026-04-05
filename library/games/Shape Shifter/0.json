@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "r4e1",
-    "z": 8,
+    "z": 7,
     "parent": "zwr7"
   },
   "level1": {
@@ -105,7 +105,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "lz6a",
-    "z": 9,
+    "z": 6,
     "parent": "zwr7"
   },
   "oljv": {
@@ -113,7 +113,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "oljv",
-    "z": 7,
+    "z": 8,
     "parent": "zwr7"
   },
   "t7bp": {
@@ -121,7 +121,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "t7bp",
-    "z": 5,
+    "z": 9,
     "parent": "zwr7"
   },
   "2lpq": {
@@ -129,7 +129,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "2lpq",
-    "z": 4,
+    "z": 5,
     "parent": "zwr7"
   },
   "2r4x": {
@@ -137,7 +137,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "2r4x",
-    "z": 6,
+    "z": 2,
     "parent": "zwr7"
   },
   "wzvd": {
@@ -145,7 +145,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "wzvd",
-    "z": 2,
+    "z": 4,
     "parent": "zwr7"
   },
   "level2": {
@@ -355,7 +355,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "bvbw",
-    "z": 13,
+    "z": 12,
     "parent": "zwr7"
   },
   "s4u8": {
@@ -363,7 +363,7 @@
     "type": "card",
     "cardType": "2-2",
     "id": "s4u8",
-    "z": 14,
+    "z": 16,
     "parent": "zwr7"
   },
   "tcyk": {
@@ -371,7 +371,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "tcyk",
-    "z": 21,
+    "z": 19,
     "parent": "zwr7"
   },
   "yehi": {
@@ -379,7 +379,7 @@
     "type": "card",
     "cardType": "2-4",
     "id": "yehi",
-    "z": 23,
+    "z": 24,
     "parent": "zwr7"
   },
   "tn4k": {
@@ -387,7 +387,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "tn4k",
-    "z": 11,
+    "z": 10,
     "parent": "zwr7"
   },
   "ejg4": {
@@ -395,7 +395,7 @@
     "type": "card",
     "cardType": "2-2",
     "id": "ejg4",
-    "z": 16,
+    "z": 14,
     "parent": "zwr7"
   },
   "lr8z": {
@@ -403,7 +403,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "lr8z",
-    "z": 18,
+    "z": 20,
     "parent": "zwr7"
   },
   "bgw8": {
@@ -419,7 +419,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "clam",
-    "z": 10,
+    "z": 11,
     "parent": "zwr7"
   },
   "pyaf": {
@@ -435,7 +435,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "i6eq",
-    "z": 19,
+    "z": 18,
     "parent": "zwr7"
   },
   "cno9": {
@@ -451,7 +451,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "vo6n",
-    "z": 12,
+    "z": 13,
     "parent": "zwr7"
   },
   "ig29": {
@@ -467,7 +467,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "yv0o",
-    "z": 20,
+    "z": 21,
     "parent": "zwr7"
   },
   "tlzy": {
@@ -475,7 +475,7 @@
     "type": "card",
     "cardType": "2-4",
     "id": "tlzy",
-    "z": 24,
+    "z": 23,
     "parent": "zwr7"
   },
   "level3": {
@@ -1917,7 +1917,7 @@
       "time": "30",
       "attribution": "Design, layout, cards, and library image by LawDawg and released to the Public Domain under CC0.<div><br></div><div>All icons and graphics in the room have their attribution listed under the About overlay.</div>",
       "importerTime": 1775063367553,
-      "lastUpdate": 1775354794121,
+      "lastUpdate": 1775355337687,
       "importer": "TTS",
       "skill": "",
       "description": "Each of eight shapes has a random set of rules that must be followed when placing on your board. Can you get all shapes on the board before time runs out?",
@@ -2176,7 +2176,8 @@
       "#DB0A28": "sColor",
       "#FF222D": "sColor"
     },
-    "z": 1
+    "z": 1,
+    "activeFace": 0
   },
   "1_penalty": {
     "type": "basic",
@@ -2884,7 +2885,8 @@
           }
         ]
       }
-    ]
+    ],
+    "color": "#999998"
   },
   "1_seatArea": {
     "id": "1_seatArea",
@@ -3550,7 +3552,8 @@
         ]
       }
     ],
-    "index": 2
+    "index": 2,
+    "color": "#999998"
   },
   "3_seatArea": {
     "id": "3_seatArea",
@@ -4187,7 +4190,8 @@
         ]
       }
     ],
-    "index": 3
+    "index": 3,
+    "color": "#999998"
   },
   "4_seatArea": {
     "id": "4_seatArea",
@@ -4824,7 +4828,8 @@
         ]
       }
     ],
-    "index": 4
+    "index": 4,
+    "color": "#999998"
   },
   "5_seatArea": {
     "id": "5_seatArea",
@@ -5461,7 +5466,8 @@
         ]
       }
     ],
-    "index": 5
+    "index": 5,
+    "color": "#999998"
   },
   "6_seatArea": {
     "id": "6_seatArea",
@@ -6098,7 +6104,8 @@
         ]
       }
     ],
-    "index": 6
+    "index": 6,
+    "color": "#999998"
   },
   "1_board": {
     "id": "1_board",
@@ -6124,7 +6131,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 2,
     "pID": 2,
     "parent": "2_tokenHolder"
   },
@@ -6136,7 +6143,7 @@
     "pID": 2,
     "x": 50,
     "y": 2,
-    "z": 1,
+    "z": 3,
     "parent": "2_tokenHolder"
   },
   "piece12": {
@@ -6147,7 +6154,7 @@
     "pID": 2,
     "x": 73,
     "y": 2,
-    "z": 1,
+    "z": 4,
     "parent": "2_tokenHolder"
   },
   "piece13": {
@@ -6158,7 +6165,7 @@
     "pID": 2,
     "x": 96,
     "y": 2,
-    "z": 1,
+    "z": 5,
     "parent": "2_tokenHolder"
   },
   "piece14": {
@@ -6169,7 +6176,7 @@
     "pID": 2,
     "x": 119,
     "y": 2,
-    "z": 1,
+    "z": 6,
     "parent": "2_tokenHolder"
   },
   "piece15": {
@@ -6180,7 +6187,7 @@
     "pID": 2,
     "x": 142,
     "y": 2,
-    "z": 1,
+    "z": 7,
     "parent": "2_tokenHolder"
   },
   "piece16": {
@@ -6191,7 +6198,7 @@
     "pID": 2,
     "x": 165,
     "y": 2,
-    "z": 1,
+    "z": 8,
     "parent": "2_tokenHolder"
   },
   "piece17": {
@@ -6213,7 +6220,7 @@
     "pID": 3,
     "x": 27,
     "y": 2,
-    "z": 1,
+    "z": 2,
     "parent": "3_tokenHolder"
   },
   "piece19": {
@@ -6224,7 +6231,7 @@
     "pID": 3,
     "x": 50,
     "y": 2,
-    "z": 1,
+    "z": 3,
     "parent": "3_tokenHolder"
   },
   "piece20": {
@@ -6235,7 +6242,7 @@
     "pID": 3,
     "x": 73,
     "y": 2,
-    "z": 1,
+    "z": 4,
     "parent": "3_tokenHolder"
   },
   "piece21": {
@@ -6246,7 +6253,7 @@
     "pID": 3,
     "x": 96,
     "y": 2,
-    "z": 1,
+    "z": 5,
     "parent": "3_tokenHolder"
   },
   "piece22": {
@@ -6257,7 +6264,7 @@
     "pID": 3,
     "x": 119,
     "y": 2,
-    "z": 1,
+    "z": 6,
     "parent": "3_tokenHolder"
   },
   "piece23": {
@@ -6268,7 +6275,7 @@
     "pID": 3,
     "x": 142,
     "y": 2,
-    "z": 1,
+    "z": 7,
     "parent": "3_tokenHolder"
   },
   "piece24": {
@@ -6277,7 +6284,7 @@
     },
     "id": "piece24",
     "pID": 3,
-    "z": 1,
+    "z": 8,
     "x": 165,
     "y": 2,
     "parent": "3_tokenHolder"
@@ -6301,7 +6308,7 @@
     "pID": 4,
     "x": 27,
     "y": 2,
-    "z": 1,
+    "z": 2,
     "parent": "4_tokenHolder"
   },
   "piece27": {
@@ -6312,7 +6319,7 @@
     "pID": 4,
     "x": 50,
     "y": 2,
-    "z": 1,
+    "z": 3,
     "parent": "4_tokenHolder"
   },
   "piece28": {
@@ -6323,7 +6330,7 @@
     "pID": 4,
     "x": 73,
     "y": 2,
-    "z": 1,
+    "z": 4,
     "parent": "4_tokenHolder"
   },
   "piece29": {
@@ -6334,7 +6341,7 @@
     "pID": 4,
     "x": 96,
     "y": 2,
-    "z": 1,
+    "z": 5,
     "parent": "4_tokenHolder"
   },
   "piece30": {
@@ -6345,7 +6352,7 @@
     "pID": 4,
     "x": 119,
     "y": 2,
-    "z": 1,
+    "z": 6,
     "parent": "4_tokenHolder"
   },
   "piece31": {
@@ -6356,7 +6363,7 @@
     "pID": 4,
     "x": 142,
     "y": 2,
-    "z": 1,
+    "z": 7,
     "parent": "4_tokenHolder"
   },
   "piece32": {
@@ -6365,7 +6372,7 @@
     },
     "id": "piece32",
     "pID": 4,
-    "z": 1,
+    "z": 8,
     "x": 165,
     "y": 2,
     "parent": "4_tokenHolder"
@@ -6389,7 +6396,7 @@
     "pID": 5,
     "x": 27,
     "y": 2,
-    "z": 1,
+    "z": 2,
     "parent": "5_tokenHolder"
   },
   "piece35": {
@@ -6400,7 +6407,7 @@
     "pID": 5,
     "x": 50,
     "y": 2,
-    "z": 1,
+    "z": 3,
     "parent": "5_tokenHolder"
   },
   "piece36": {
@@ -6411,7 +6418,7 @@
     "pID": 5,
     "x": 73,
     "y": 2,
-    "z": 1,
+    "z": 4,
     "parent": "5_tokenHolder"
   },
   "piece37": {
@@ -6422,7 +6429,7 @@
     "pID": 5,
     "x": 96,
     "y": 2,
-    "z": 1,
+    "z": 5,
     "parent": "5_tokenHolder"
   },
   "piece38": {
@@ -6433,7 +6440,7 @@
     "pID": 5,
     "x": 119,
     "y": 2,
-    "z": 1,
+    "z": 6,
     "parent": "5_tokenHolder"
   },
   "piece39": {
@@ -6444,7 +6451,7 @@
     "pID": 5,
     "x": 142,
     "y": 2,
-    "z": 1,
+    "z": 7,
     "parent": "5_tokenHolder"
   },
   "piece40": {
@@ -6453,7 +6460,7 @@
     },
     "id": "piece40",
     "pID": 5,
-    "z": 1,
+    "z": 8,
     "x": 165,
     "y": 2,
     "parent": "5_tokenHolder"
@@ -6477,7 +6484,7 @@
     "pID": 6,
     "x": 27,
     "y": 2,
-    "z": 1,
+    "z": 2,
     "parent": "6_tokenHolder"
   },
   "piece43": {
@@ -6488,7 +6495,7 @@
     "pID": 6,
     "x": 50,
     "y": 2,
-    "z": 1,
+    "z": 3,
     "parent": "6_tokenHolder"
   },
   "piece44": {
@@ -6499,7 +6506,7 @@
     "pID": 6,
     "x": 73,
     "y": 2,
-    "z": 1,
+    "z": 4,
     "parent": "6_tokenHolder"
   },
   "piece46": {
@@ -6510,7 +6517,7 @@
     "pID": 6,
     "x": 119,
     "y": 2,
-    "z": 1,
+    "z": 6,
     "parent": "6_tokenHolder"
   },
   "piece48": {
@@ -6519,7 +6526,7 @@
     },
     "id": "piece48",
     "pID": 6,
-    "z": 1,
+    "z": 8,
     "x": 165,
     "y": 2,
     "hoverParent": "6_tokenHolder",
@@ -7379,7 +7386,7 @@
             "source": [
               "${thisBoard}"
             ],
-            "xOffset": 500,
+            "xOffset": 478,
             "recursive": true,
             "properties": {
               "onlyVisibleForSeat": null,
@@ -7749,7 +7756,6 @@
   },
   "piece01": {
     "id": "piece01",
-    "parent": "1_tokenHolder",
     "x": 4,
     "y": 2,
     "width": 50.4,
@@ -7767,7 +7773,8 @@
     "borderColor": "black",
     "borderWidth": 1,
     "pID": 1,
-    "pawn": true
+    "pawn": true,
+    "parent": "1_tokenHolder"
   },
   "piece03": {
     "id": "piece03",
@@ -7776,7 +7783,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 3,
     "color": "#ffff00",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7797,7 +7804,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 4,
     "color": "#ffa500",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7818,7 +7825,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 5,
     "color": "#ff0000",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7839,7 +7846,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 6,
     "color": "#0000ff",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7860,7 +7867,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 7,
     "color": "#008000",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7880,7 +7887,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 8,
     "color": "#ff69b4",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7909,12 +7916,11 @@
   },
   "piece02": {
     "id": "piece02",
-    "parent": "1_tokenHolder",
     "x": 27,
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 1,
+    "z": 2,
     "color": "#ffffff",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7926,7 +7932,9 @@
     "borderColor": "black",
     "borderWidth": 1,
     "pID": 1,
-    "pawn": true
+    "pawn": true,
+    "hoverParent": "1_tokenHolder",
+    "parent": "1_tokenHolder"
   },
   "piece45": {
     "inheritFrom": {
@@ -7936,7 +7944,7 @@
     "pID": 6,
     "x": 96,
     "y": 2,
-    "z": 1,
+    "z": 5,
     "hoverParent": "6_tokenHolder",
     "parent": "6_tokenHolder"
   },
@@ -7948,7 +7956,7 @@
     "pID": 6,
     "x": 142,
     "y": 2,
-    "z": 1,
+    "z": 7,
     "parent": "6_tokenHolder"
   },
   "1_deal": {
@@ -8871,7 +8879,7 @@
       {
         "func": "SET",
         "property": "color",
-        "value": "#999999"
+        "value": "#999998"
       },
       {
         "func": "SELECT",
@@ -8891,6 +8899,19 @@
           "requestCardHolder4-5"
         ],
         "key": "cardType"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          6
+        ],
+        "loopRoutine": [
+          {
+            "func": "SORT",
+            "holder": "${value}_tokenHolder",
+            "key": "id"
+          }
+        ]
       }
     ]
   }
