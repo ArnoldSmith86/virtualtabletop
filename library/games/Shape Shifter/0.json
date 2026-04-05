@@ -4,7 +4,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "r4e1",
-    "z": 5777,
+    "z": 8,
     "parent": "zwr7"
   },
   "level1": {
@@ -88,7 +88,7 @@
       "classes": "transitions",
       "layer": 3
     },
-    "z": 4544,
+    "z": 1,
     "hoverParent": "requestCardHolder1-3",
     "parent": "requestCardHolder1-3"
   },
@@ -97,7 +97,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "z1h8",
-    "z": 5769,
+    "z": 3,
     "parent": "zwr7"
   },
   "lz6a": {
@@ -105,7 +105,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "lz6a",
-    "z": 5797,
+    "z": 9,
     "parent": "zwr7"
   },
   "oljv": {
@@ -113,7 +113,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "oljv",
-    "z": 5764,
+    "z": 7,
     "parent": "zwr7"
   },
   "t7bp": {
@@ -121,7 +121,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "t7bp",
-    "z": 5782,
+    "z": 5,
     "parent": "zwr7"
   },
   "2lpq": {
@@ -129,7 +129,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "2lpq",
-    "z": 5801,
+    "z": 4,
     "parent": "zwr7"
   },
   "2r4x": {
@@ -137,7 +137,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "2r4x",
-    "z": 5783,
+    "z": 6,
     "parent": "zwr7"
   },
   "wzvd": {
@@ -145,7 +145,7 @@
     "type": "card",
     "cardType": "1-1",
     "id": "wzvd",
-    "z": 5759,
+    "z": 2,
     "parent": "zwr7"
   },
   "level2": {
@@ -346,7 +346,7 @@
       "classes": "transitions",
       "layer": 3
     },
-    "z": 4542,
+    "z": 1,
     "hoverParent": "requestCardHolder1-3",
     "parent": "requestCardHolder1-3"
   },
@@ -355,7 +355,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "bvbw",
-    "z": 5773,
+    "z": 13,
     "parent": "zwr7"
   },
   "s4u8": {
@@ -363,7 +363,7 @@
     "type": "card",
     "cardType": "2-2",
     "id": "s4u8",
-    "z": 5785,
+    "z": 14,
     "parent": "zwr7"
   },
   "tcyk": {
@@ -371,7 +371,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "tcyk",
-    "z": 5772,
+    "z": 21,
     "parent": "zwr7"
   },
   "yehi": {
@@ -379,7 +379,7 @@
     "type": "card",
     "cardType": "2-4",
     "id": "yehi",
-    "z": 5779,
+    "z": 23,
     "parent": "zwr7"
   },
   "tn4k": {
@@ -387,7 +387,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "tn4k",
-    "z": 5760,
+    "z": 11,
     "parent": "zwr7"
   },
   "ejg4": {
@@ -395,7 +395,7 @@
     "type": "card",
     "cardType": "2-2",
     "id": "ejg4",
-    "z": 5758,
+    "z": 16,
     "parent": "zwr7"
   },
   "lr8z": {
@@ -403,7 +403,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "lr8z",
-    "z": 5755,
+    "z": 18,
     "parent": "zwr7"
   },
   "bgw8": {
@@ -411,7 +411,7 @@
     "type": "card",
     "cardType": "2-4",
     "id": "bgw8",
-    "z": 5766,
+    "z": 25,
     "parent": "zwr7"
   },
   "clam": {
@@ -419,7 +419,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "clam",
-    "z": 5775,
+    "z": 10,
     "parent": "zwr7"
   },
   "pyaf": {
@@ -427,7 +427,7 @@
     "type": "card",
     "cardType": "2-2",
     "id": "pyaf",
-    "z": 5754,
+    "z": 17,
     "parent": "zwr7"
   },
   "i6eq": {
@@ -435,7 +435,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "i6eq",
-    "z": 5774,
+    "z": 19,
     "parent": "zwr7"
   },
   "cno9": {
@@ -443,7 +443,7 @@
     "type": "card",
     "cardType": "2-4",
     "id": "cno9",
-    "z": 5770,
+    "z": 22,
     "parent": "zwr7"
   },
   "vo6n": {
@@ -451,7 +451,7 @@
     "type": "card",
     "cardType": "2-1",
     "id": "vo6n",
-    "z": 5762,
+    "z": 12,
     "parent": "zwr7"
   },
   "ig29": {
@@ -459,7 +459,7 @@
     "type": "card",
     "cardType": "2-2",
     "id": "ig29",
-    "z": 5776,
+    "z": 15,
     "parent": "zwr7"
   },
   "yv0o": {
@@ -467,7 +467,7 @@
     "type": "card",
     "cardType": "2-3",
     "id": "yv0o",
-    "z": 5791,
+    "z": 20,
     "parent": "zwr7"
   },
   "tlzy": {
@@ -475,7 +475,7 @@
     "type": "card",
     "cardType": "2-4",
     "id": "tlzy",
-    "z": 5792,
+    "z": 24,
     "parent": "zwr7"
   },
   "level3": {
@@ -809,7 +809,7 @@
       "classes": "transitions",
       "layer": 3
     },
-    "z": 4540,
+    "z": 1,
     "hoverParent": "requestCardHolder1-3",
     "parent": "requestCardHolder1-3"
   },
@@ -818,7 +818,7 @@
     "type": "card",
     "cardType": "3-1",
     "id": "qjbt",
-    "z": 5794,
+    "z": 26,
     "parent": "zwr7"
   },
   "i3qu": {
@@ -826,7 +826,7 @@
     "type": "card",
     "cardType": "3-2",
     "id": "i3qu",
-    "z": 5787,
+    "z": 37,
     "parent": "zwr7"
   },
   "bfj5": {
@@ -834,7 +834,7 @@
     "type": "card",
     "cardType": "3-3",
     "id": "bfj5",
-    "z": 5800,
+    "z": 43,
     "parent": "zwr7"
   },
   "6z1a": {
@@ -842,7 +842,7 @@
     "type": "card",
     "cardType": "3-4",
     "id": "6z1a",
-    "z": 5761,
+    "z": 44,
     "parent": "zwr7"
   },
   "gvje": {
@@ -850,7 +850,7 @@
     "type": "card",
     "cardType": "3-5",
     "id": "gvje",
-    "z": 5780,
+    "z": 45,
     "parent": "zwr7"
   },
   "66k5": {
@@ -858,7 +858,7 @@
     "type": "card",
     "cardType": "3-6",
     "id": "66k5",
-    "z": 5778,
+    "z": 46,
     "parent": "zwr7"
   },
   "jcvj": {
@@ -866,7 +866,7 @@
     "type": "card",
     "cardType": "3-7",
     "id": "jcvj",
-    "z": 5757,
+    "z": 47,
     "parent": "zwr7"
   },
   "9b4n": {
@@ -874,7 +874,7 @@
     "type": "card",
     "cardType": "3-8",
     "id": "9b4n",
-    "z": 5798,
+    "z": 48,
     "parent": "zwr7"
   },
   "kxfv": {
@@ -882,7 +882,7 @@
     "type": "card",
     "cardType": "3-9",
     "id": "kxfv",
-    "z": 5795,
+    "z": 49,
     "parent": "zwr7"
   },
   "ybrl": {
@@ -890,7 +890,7 @@
     "type": "card",
     "cardType": "3-10",
     "id": "ybrl",
-    "z": 5756,
+    "z": 27,
     "parent": "zwr7"
   },
   "7gpq": {
@@ -898,7 +898,7 @@
     "type": "card",
     "cardType": "3-11",
     "id": "7gpq",
-    "z": 5786,
+    "z": 28,
     "parent": "zwr7"
   },
   "rfvw": {
@@ -906,7 +906,7 @@
     "type": "card",
     "cardType": "3-12",
     "id": "rfvw",
-    "z": 5789,
+    "z": 29,
     "parent": "zwr7"
   },
   "lg1m": {
@@ -914,7 +914,7 @@
     "type": "card",
     "cardType": "3-13",
     "id": "lg1m",
-    "z": 5771,
+    "z": 30,
     "parent": "zwr7"
   },
   "iuyo": {
@@ -922,7 +922,7 @@
     "type": "card",
     "cardType": "3-14",
     "id": "iuyo",
-    "z": 5767,
+    "z": 31,
     "parent": "zwr7"
   },
   "bm5h": {
@@ -930,7 +930,7 @@
     "type": "card",
     "cardType": "3-15",
     "id": "bm5h",
-    "z": 5784,
+    "z": 32,
     "parent": "zwr7"
   },
   "z3bv": {
@@ -938,7 +938,7 @@
     "type": "card",
     "cardType": "3-16",
     "id": "z3bv",
-    "z": 5763,
+    "z": 33,
     "parent": "zwr7"
   },
   "rlkv": {
@@ -946,7 +946,7 @@
     "type": "card",
     "cardType": "3-17",
     "id": "rlkv",
-    "z": 5788,
+    "z": 34,
     "parent": "zwr7"
   },
   "h53m": {
@@ -954,7 +954,7 @@
     "type": "card",
     "cardType": "3-18",
     "id": "h53m",
-    "z": 5796,
+    "z": 35,
     "parent": "zwr7"
   },
   "ea2i": {
@@ -962,7 +962,7 @@
     "type": "card",
     "cardType": "3-19",
     "id": "ea2i",
-    "z": 5793,
+    "z": 36,
     "parent": "zwr7"
   },
   "n85t": {
@@ -970,7 +970,7 @@
     "type": "card",
     "cardType": "3-20",
     "id": "n85t",
-    "z": 5790,
+    "z": 38,
     "parent": "zwr7"
   },
   "8fxx": {
@@ -978,7 +978,7 @@
     "type": "card",
     "cardType": "3-21",
     "id": "8fxx",
-    "z": 5799,
+    "z": 39,
     "parent": "zwr7"
   },
   "dyuj": {
@@ -986,7 +986,7 @@
     "type": "card",
     "cardType": "3-22",
     "id": "dyuj",
-    "z": 5781,
+    "z": 40,
     "parent": "zwr7"
   },
   "t4tg": {
@@ -994,7 +994,7 @@
     "type": "card",
     "cardType": "3-23",
     "id": "t4tg",
-    "z": 5765,
+    "z": 41,
     "parent": "zwr7"
   },
   "z591": {
@@ -1002,7 +1002,7 @@
     "type": "card",
     "cardType": "3-24",
     "id": "z591",
-    "z": 5768,
+    "z": 42,
     "parent": "zwr7"
   },
   "level4": {
@@ -1453,7 +1453,7 @@
       "classes": "transitions",
       "layer": 3
     },
-    "z": 4546,
+    "z": 1,
     "parent": "requestCardHolder4-5"
   },
   "jjeq": {
@@ -1461,7 +1461,7 @@
     "type": "card",
     "cardType": "4-1",
     "id": "jjeq",
-    "z": 5806,
+    "z": 2,
     "parent": "hxwe"
   },
   "zwpk": {
@@ -1469,7 +1469,7 @@
     "type": "card",
     "cardType": "4-2",
     "id": "zwpk",
-    "z": 5816,
+    "z": 13,
     "parent": "hxwe"
   },
   "s5j6": {
@@ -1477,7 +1477,7 @@
     "type": "card",
     "cardType": "4-3",
     "id": "s5j6",
-    "z": 5827,
+    "z": 19,
     "parent": "hxwe"
   },
   "fmkh": {
@@ -1485,7 +1485,7 @@
     "type": "card",
     "cardType": "4-4",
     "id": "fmkh",
-    "z": 5820,
+    "z": 20,
     "parent": "hxwe"
   },
   "fatg": {
@@ -1493,7 +1493,7 @@
     "type": "card",
     "cardType": "4-5",
     "id": "fatg",
-    "z": 5810,
+    "z": 21,
     "parent": "hxwe"
   },
   "pr8i": {
@@ -1501,7 +1501,7 @@
     "type": "card",
     "cardType": "4-6",
     "id": "pr8i",
-    "z": 5830,
+    "z": 22,
     "parent": "hxwe"
   },
   "bvkp": {
@@ -1509,7 +1509,7 @@
     "type": "card",
     "cardType": "4-7",
     "id": "bvkp",
-    "z": 5831,
+    "z": 23,
     "parent": "hxwe"
   },
   "973f": {
@@ -1517,7 +1517,7 @@
     "type": "card",
     "cardType": "4-8",
     "id": "973f",
-    "z": 5823,
+    "z": 24,
     "parent": "hxwe"
   },
   "5c4u": {
@@ -1525,7 +1525,7 @@
     "type": "card",
     "cardType": "4-9",
     "id": "5c4u",
-    "z": 5818,
+    "z": 25,
     "parent": "hxwe"
   },
   "bhcm": {
@@ -1533,7 +1533,7 @@
     "type": "card",
     "cardType": "4-10",
     "id": "bhcm",
-    "z": 5829,
+    "z": 3,
     "parent": "hxwe"
   },
   "unkb": {
@@ -1541,7 +1541,7 @@
     "type": "card",
     "cardType": "4-11",
     "id": "unkb",
-    "z": 5826,
+    "z": 4,
     "parent": "hxwe"
   },
   "gx5x": {
@@ -1549,7 +1549,7 @@
     "type": "card",
     "cardType": "4-12",
     "id": "gx5x",
-    "z": 5828,
+    "z": 5,
     "parent": "hxwe"
   },
   "nc2v": {
@@ -1557,7 +1557,7 @@
     "type": "card",
     "cardType": "4-13",
     "id": "nc2v",
-    "z": 5805,
+    "z": 6,
     "parent": "hxwe"
   },
   "4fqm": {
@@ -1565,7 +1565,7 @@
     "type": "card",
     "cardType": "4-14",
     "id": "4fqm",
-    "z": 5825,
+    "z": 7,
     "parent": "hxwe"
   },
   "yovi": {
@@ -1573,7 +1573,7 @@
     "type": "card",
     "cardType": "4-15",
     "id": "yovi",
-    "z": 5803,
+    "z": 8,
     "parent": "hxwe"
   },
   "3vrl": {
@@ -1581,7 +1581,7 @@
     "type": "card",
     "cardType": "4-16",
     "id": "3vrl",
-    "z": 5814,
+    "z": 9,
     "parent": "hxwe"
   },
   "nk31": {
@@ -1589,7 +1589,7 @@
     "type": "card",
     "cardType": "4-17",
     "id": "nk31",
-    "z": 5833,
+    "z": 10,
     "parent": "hxwe"
   },
   "q8ii": {
@@ -1597,7 +1597,7 @@
     "type": "card",
     "cardType": "4-18",
     "id": "q8ii",
-    "z": 5815,
+    "z": 11,
     "parent": "hxwe"
   },
   "29ll": {
@@ -1605,7 +1605,7 @@
     "type": "card",
     "cardType": "4-19",
     "id": "29ll",
-    "z": 5802,
+    "z": 12,
     "parent": "hxwe"
   },
   "ee86": {
@@ -1613,7 +1613,7 @@
     "type": "card",
     "cardType": "4-20",
     "id": "ee86",
-    "z": 5807,
+    "z": 14,
     "parent": "hxwe"
   },
   "tye9": {
@@ -1621,7 +1621,7 @@
     "type": "card",
     "cardType": "4-21",
     "id": "tye9",
-    "z": 5822,
+    "z": 15,
     "parent": "hxwe"
   },
   "qsjx": {
@@ -1629,7 +1629,7 @@
     "type": "card",
     "cardType": "4-22",
     "id": "qsjx",
-    "z": 5817,
+    "z": 16,
     "parent": "hxwe"
   },
   "3aw2": {
@@ -1637,7 +1637,7 @@
     "type": "card",
     "cardType": "4-23",
     "id": "3aw2",
-    "z": 5804,
+    "z": 17,
     "parent": "hxwe"
   },
   "l5or": {
@@ -1645,7 +1645,7 @@
     "type": "card",
     "cardType": "4-24",
     "id": "l5or",
-    "z": 5808,
+    "z": 18,
     "parent": "hxwe"
   },
   "level5": {
@@ -1834,7 +1834,7 @@
       "classes": "transitions",
       "layer": 3
     },
-    "z": 4548,
+    "z": 1,
     "parent": "requestCardHolder4-5"
   },
   "rv7h": {
@@ -1842,7 +1842,7 @@
     "type": "card",
     "cardType": "5-1",
     "id": "rv7h",
-    "z": 5811,
+    "z": 26,
     "parent": "hxwe"
   },
   "tqo1": {
@@ -1850,7 +1850,7 @@
     "type": "card",
     "cardType": "5-2",
     "id": "tqo1",
-    "z": 5809,
+    "z": 27,
     "parent": "hxwe"
   },
   "tbkl": {
@@ -1858,7 +1858,7 @@
     "type": "card",
     "cardType": "5-3",
     "id": "tbkl",
-    "z": 5824,
+    "z": 28,
     "parent": "hxwe"
   },
   "wevd": {
@@ -1866,7 +1866,7 @@
     "type": "card",
     "cardType": "5-4",
     "id": "wevd",
-    "z": 5821,
+    "z": 29,
     "parent": "hxwe"
   },
   "w5tv": {
@@ -1874,7 +1874,7 @@
     "type": "card",
     "cardType": "5-5",
     "id": "w5tv",
-    "z": 5812,
+    "z": 30,
     "parent": "hxwe"
   },
   "cjtz": {
@@ -1882,7 +1882,7 @@
     "type": "card",
     "cardType": "5-6",
     "id": "cjtz",
-    "z": 5813,
+    "z": 31,
     "parent": "hxwe"
   },
   "1b0c": {
@@ -1890,7 +1890,7 @@
     "type": "card",
     "cardType": "5-7",
     "id": "1b0c",
-    "z": 5819,
+    "z": 32,
     "parent": "hxwe"
   },
   "q33c": {
@@ -1898,7 +1898,7 @@
     "type": "card",
     "cardType": "5-8",
     "id": "q33c",
-    "z": 5832,
+    "z": 33,
     "parent": "hxwe"
   },
   "_meta": {
@@ -1917,7 +1917,7 @@
       "time": "30",
       "attribution": "Design, layout, cards, and library image by LawDawg and released to the Public Domain under CC0.<div><br></div><div>All icons and graphics in the room have their attribution listed under the About overlay.</div>",
       "importerTime": 1775063367553,
-      "lastUpdate": 1775333368121,
+      "lastUpdate": 1775354794121,
       "importer": "TTS",
       "skill": "",
       "description": "Each of eight shapes has a random set of rules that must be followed when placing on your board. Can you get all shapes on the board before time runs out?",
@@ -1926,7 +1926,7 @@
       "similarDesigner": "Lauge Luchau",
       "similarAwards": "2013/Spring Parents' Choice Gold Award Winner\n2012 MinD-Spieletipp Winner\n2012 Guldbrikken Best Adult Game Nominee\n2012 Golden Geek Best Abstract Board Game Nominee\n2011 Spiel des Jahres Recommended\n2011 Meeples Choice Award Nominee\n2011 Kinderspielexperten \"8-to-13-year-olds\" Nominee\n2011 Deutscher Lernspielpreis \"9 years and up\" Nominee\n2011 Årets Spill Best Family Game Nominee",
       "ruleText": "",
-      "helpText": "Players take seats and click the restart button to begin. Choose number number of minutes to put on the timer (default is 1).<div><br></div><div>Use the numbered blue buttons to deal cards for the level of difficulty (1-5) you desire on the top row. Use the bottom row if using one the rules variants to handicap players or create two simultaneous conditions for some shapes.</div><div><br></div><div>Click the play arrow to start the timer.</div><div><br></div><div>Drag and drop pieces onto your board. Only you can see your board.</div><div><br></div><div>When the timer runs out, you can click the eye icons next to a seat to show a copy of that board (that no one can interact with) to all players.</div><div><br></div><div>Use the +/- buttons or click on the penalty button to change score.</div><div><br></div><div>Press the numbered blue buttons to deal the next group of cards and press the play arrow to start the timer. Continue for as many rounds as you want.&nbsp;</div>",
+      "helpText": "Players take seats and click the restart button to begin. Choose number number of minutes to put on the timer (default is 1).<div><br></div><div>Use the numbered blue buttons to deal cards for the level of difficulty (1-5) you desire on the top row. Use the bottom row if using one the rules variants to handicap players or create two simultaneous conditions for some shapes.</div><div><br></div><div>Information about the symbols used to represent the rules can be found in the hoverable player aids in the bottom right.</div><div><br></div><div>Click the play arrow to start the timer.</div><div><br></div><div>Drag and drop pieces onto your board. Only you can see your board.</div><div><br></div><div>When the timer runs out, you can click the eye icons next to a seat to show a copy of that board (that no one can interact with) to all players.</div><div><br></div><div>Use the +/- buttons or click on the penalty button to change score.</div><div><br></div><div>Press the numbered blue buttons to deal the next group of cards and press the play arrow to start the timer. Continue for as many rounds as you want.&nbsp;</div>",
       "usesAIImagery": false,
       "showName": true,
       "variantImage": "",
@@ -2035,39 +2035,6 @@
     "parent": "holderGroup",
     "z": 1
   },
-  "10_holder": {
-    "inheritFrom": {
-      "1_holder": "*"
-    },
-    "type": "holder",
-    "id": "10_holder",
-    "x": 111,
-    "y": 282,
-    "parent": "holderGroup",
-    "z": 1
-  },
-  "11_holder": {
-    "inheritFrom": {
-      "1_holder": "*"
-    },
-    "type": "holder",
-    "id": "11_holder",
-    "x": 222,
-    "y": 282,
-    "parent": "holderGroup",
-    "z": 1
-  },
-  "12_holder": {
-    "inheritFrom": {
-      "1_holder": "*"
-    },
-    "type": "holder",
-    "id": "12_holder",
-    "x": 333,
-    "y": 282,
-    "parent": "holderGroup",
-    "z": 1
-  },
   "13_holder": {
     "inheritFrom": {
       "1_holder": "*"
@@ -2137,7 +2104,8 @@
     "svgReplaces": {
       "#000": "sColor"
     },
-    "sColor": "#ffffff"
+    "sColor": "#ffffff",
+    "z": 1
   },
   "3_shape": {
     "inheritFrom": {
@@ -2146,7 +2114,8 @@
     "id": "3_shape",
     "parent": "3_holder",
     "sColor": "#ffff00",
-    "image": "/i/game-icons.net/delapouite/round-star.svg"
+    "image": "/i/game-icons.net/delapouite/round-star.svg",
+    "z": 1
   },
   "4_shape": {
     "inheritFrom": {
@@ -2162,7 +2131,8 @@
       "#424242": "sColor",
       "#212121": "sColor",
       "#FFF170": "sColor"
-    }
+    },
+    "z": 1
   },
   "5_shape": {
     "inheritFrom": {
@@ -2171,7 +2141,8 @@
     "id": "5_shape",
     "parent": "5_holder",
     "sColor": "#ff0000",
-    "image": "/i/game-icons.net/skoll/hearts.svg"
+    "image": "/i/game-icons.net/skoll/hearts.svg",
+    "z": 1
   },
   "6_shape": {
     "inheritFrom": {
@@ -2180,7 +2151,8 @@
     "id": "6_shape",
     "parent": "6_holder",
     "sColor": "#0000ff",
-    "image": "/i/game-icons.net/delapouite/plain-circle.svg"
+    "image": "/i/game-icons.net/delapouite/plain-circle.svg",
+    "z": 1
   },
   "7_shape": {
     "inheritFrom": {
@@ -2189,7 +2161,8 @@
     "id": "7_shape",
     "parent": "7_holder",
     "sColor": "#008000",
-    "image": "/i/game-icons.net/lorc/clover.svg"
+    "image": "/i/game-icons.net/lorc/clover.svg",
+    "z": 1
   },
   "8_shape": {
     "inheritFrom": {
@@ -2202,7 +2175,8 @@
     "svgReplaces": {
       "#DB0A28": "sColor",
       "#FF222D": "sColor"
-    }
+    },
+    "z": 1
   },
   "1_penalty": {
     "type": "basic",
@@ -2948,7 +2922,8 @@
       "1_seatArea": "!color",
       "2_seat": "color"
     },
-    "linkedToSeat": "2_seat"
+    "linkedToSeat": "2_seat",
+    "z": 1
   },
   "2_penalty": {
     "type": "basic",
@@ -2958,7 +2933,8 @@
       "1_penalty": "*"
     },
     "value": 0,
-    "text": "0 penalty"
+    "text": "0 penalty",
+    "z": 1
   },
   "2_seat": {
     "type": "seat",
@@ -3583,7 +3559,8 @@
       "1_seatArea": "!color",
       "3_seat": "color"
     },
-    "linkedToSeat": "3_seat"
+    "linkedToSeat": "3_seat",
+    "z": 1
   },
   "3_penalty": {
     "type": "basic",
@@ -3593,7 +3570,8 @@
       "1_penalty": "*"
     },
     "value": 0,
-    "text": "0 penalty"
+    "text": "0 penalty",
+    "z": 1
   },
   "3_seat": {
     "type": "seat",
@@ -4218,7 +4196,8 @@
       "1_seatArea": "!color",
       "4_seat": "color"
     },
-    "linkedToSeat": "4_seat"
+    "linkedToSeat": "4_seat",
+    "z": 1
   },
   "4_penalty": {
     "type": "basic",
@@ -4228,7 +4207,8 @@
       "1_penalty": "*"
     },
     "value": 0,
-    "text": "0 penalty"
+    "text": "0 penalty",
+    "z": 1
   },
   "4_seat": {
     "type": "seat",
@@ -4853,7 +4833,8 @@
       "1_seatArea": "!color",
       "5_seat": "color"
     },
-    "linkedToSeat": "5_seat"
+    "linkedToSeat": "5_seat",
+    "z": 1
   },
   "5_penalty": {
     "type": "basic",
@@ -4863,7 +4844,8 @@
       "1_penalty": "*"
     },
     "value": 0,
-    "text": "0 penalty"
+    "text": "0 penalty",
+    "z": 1
   },
   "5_seat": {
     "type": "seat",
@@ -5488,7 +5470,8 @@
       "1_seatArea": "!color",
       "6_seat": "color"
     },
-    "linkedToSeat": "6_seat"
+    "linkedToSeat": "6_seat",
+    "z": 1
   },
   "6_penalty": {
     "type": "basic",
@@ -5498,7 +5481,8 @@
       "1_penalty": "*"
     },
     "value": 0,
-    "text": "0 penalty"
+    "text": "0 penalty",
+    "z": 1
   },
   "6_seat": {
     "type": "seat",
@@ -6128,7 +6112,8 @@
     "layer": 1,
     "hidePlayerCursors": true,
     "onlyVisibleForSeat": "1_seat",
-    "linkedToSeat": ""
+    "linkedToSeat": "",
+    "z": 1
   },
   "piece10": {
     "inheritFrom": {
@@ -6139,7 +6124,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 2,
+    "z": 1,
     "pID": 2,
     "parent": "2_tokenHolder"
   },
@@ -6151,7 +6136,7 @@
     "pID": 2,
     "x": 50,
     "y": 2,
-    "z": 3,
+    "z": 1,
     "parent": "2_tokenHolder"
   },
   "piece12": {
@@ -6162,7 +6147,7 @@
     "pID": 2,
     "x": 73,
     "y": 2,
-    "z": 4,
+    "z": 1,
     "parent": "2_tokenHolder"
   },
   "piece13": {
@@ -6173,7 +6158,7 @@
     "pID": 2,
     "x": 96,
     "y": 2,
-    "z": 5,
+    "z": 1,
     "parent": "2_tokenHolder"
   },
   "piece14": {
@@ -6184,7 +6169,7 @@
     "pID": 2,
     "x": 119,
     "y": 2,
-    "z": 6,
+    "z": 1,
     "parent": "2_tokenHolder"
   },
   "piece15": {
@@ -6195,7 +6180,7 @@
     "pID": 2,
     "x": 142,
     "y": 2,
-    "z": 7,
+    "z": 1,
     "parent": "2_tokenHolder"
   },
   "piece16": {
@@ -6206,7 +6191,7 @@
     "pID": 2,
     "x": 165,
     "y": 2,
-    "z": 8,
+    "z": 1,
     "parent": "2_tokenHolder"
   },
   "piece17": {
@@ -6228,7 +6213,7 @@
     "pID": 3,
     "x": 27,
     "y": 2,
-    "z": 2,
+    "z": 1,
     "parent": "3_tokenHolder"
   },
   "piece19": {
@@ -6239,7 +6224,7 @@
     "pID": 3,
     "x": 50,
     "y": 2,
-    "z": 3,
+    "z": 1,
     "parent": "3_tokenHolder"
   },
   "piece20": {
@@ -6250,7 +6235,7 @@
     "pID": 3,
     "x": 73,
     "y": 2,
-    "z": 4,
+    "z": 1,
     "parent": "3_tokenHolder"
   },
   "piece21": {
@@ -6261,7 +6246,7 @@
     "pID": 3,
     "x": 96,
     "y": 2,
-    "z": 5,
+    "z": 1,
     "parent": "3_tokenHolder"
   },
   "piece22": {
@@ -6272,7 +6257,7 @@
     "pID": 3,
     "x": 119,
     "y": 2,
-    "z": 6,
+    "z": 1,
     "parent": "3_tokenHolder"
   },
   "piece23": {
@@ -6283,7 +6268,7 @@
     "pID": 3,
     "x": 142,
     "y": 2,
-    "z": 7,
+    "z": 1,
     "parent": "3_tokenHolder"
   },
   "piece24": {
@@ -6292,7 +6277,7 @@
     },
     "id": "piece24",
     "pID": 3,
-    "z": 8,
+    "z": 1,
     "x": 165,
     "y": 2,
     "parent": "3_tokenHolder"
@@ -6316,7 +6301,7 @@
     "pID": 4,
     "x": 27,
     "y": 2,
-    "z": 2,
+    "z": 1,
     "parent": "4_tokenHolder"
   },
   "piece27": {
@@ -6327,7 +6312,7 @@
     "pID": 4,
     "x": 50,
     "y": 2,
-    "z": 3,
+    "z": 1,
     "parent": "4_tokenHolder"
   },
   "piece28": {
@@ -6338,7 +6323,7 @@
     "pID": 4,
     "x": 73,
     "y": 2,
-    "z": 4,
+    "z": 1,
     "parent": "4_tokenHolder"
   },
   "piece29": {
@@ -6349,7 +6334,7 @@
     "pID": 4,
     "x": 96,
     "y": 2,
-    "z": 5,
+    "z": 1,
     "parent": "4_tokenHolder"
   },
   "piece30": {
@@ -6360,7 +6345,7 @@
     "pID": 4,
     "x": 119,
     "y": 2,
-    "z": 6,
+    "z": 1,
     "parent": "4_tokenHolder"
   },
   "piece31": {
@@ -6371,7 +6356,7 @@
     "pID": 4,
     "x": 142,
     "y": 2,
-    "z": 7,
+    "z": 1,
     "parent": "4_tokenHolder"
   },
   "piece32": {
@@ -6380,7 +6365,7 @@
     },
     "id": "piece32",
     "pID": 4,
-    "z": 8,
+    "z": 1,
     "x": 165,
     "y": 2,
     "parent": "4_tokenHolder"
@@ -6404,7 +6389,7 @@
     "pID": 5,
     "x": 27,
     "y": 2,
-    "z": 2,
+    "z": 1,
     "parent": "5_tokenHolder"
   },
   "piece35": {
@@ -6415,7 +6400,7 @@
     "pID": 5,
     "x": 50,
     "y": 2,
-    "z": 3,
+    "z": 1,
     "parent": "5_tokenHolder"
   },
   "piece36": {
@@ -6426,7 +6411,7 @@
     "pID": 5,
     "x": 73,
     "y": 2,
-    "z": 4,
+    "z": 1,
     "parent": "5_tokenHolder"
   },
   "piece37": {
@@ -6437,7 +6422,7 @@
     "pID": 5,
     "x": 96,
     "y": 2,
-    "z": 5,
+    "z": 1,
     "parent": "5_tokenHolder"
   },
   "piece38": {
@@ -6448,7 +6433,7 @@
     "pID": 5,
     "x": 119,
     "y": 2,
-    "z": 6,
+    "z": 1,
     "parent": "5_tokenHolder"
   },
   "piece39": {
@@ -6459,7 +6444,7 @@
     "pID": 5,
     "x": 142,
     "y": 2,
-    "z": 7,
+    "z": 1,
     "parent": "5_tokenHolder"
   },
   "piece40": {
@@ -6468,7 +6453,7 @@
     },
     "id": "piece40",
     "pID": 5,
-    "z": 8,
+    "z": 1,
     "x": 165,
     "y": 2,
     "parent": "5_tokenHolder"
@@ -6492,7 +6477,7 @@
     "pID": 6,
     "x": 27,
     "y": 2,
-    "z": 2,
+    "z": 1,
     "parent": "6_tokenHolder"
   },
   "piece43": {
@@ -6503,7 +6488,7 @@
     "pID": 6,
     "x": 50,
     "y": 2,
-    "z": 3,
+    "z": 1,
     "parent": "6_tokenHolder"
   },
   "piece44": {
@@ -6514,7 +6499,7 @@
     "pID": 6,
     "x": 73,
     "y": 2,
-    "z": 4,
+    "z": 1,
     "parent": "6_tokenHolder"
   },
   "piece46": {
@@ -6525,7 +6510,7 @@
     "pID": 6,
     "x": 119,
     "y": 2,
-    "z": 6,
+    "z": 1,
     "parent": "6_tokenHolder"
   },
   "piece48": {
@@ -6534,7 +6519,7 @@
     },
     "id": "piece48",
     "pID": 6,
-    "z": 8,
+    "z": 1,
     "x": 165,
     "y": 2,
     "hoverParent": "6_tokenHolder",
@@ -6657,7 +6642,8 @@
     "dropTarget": {
       "pID": 2
     },
-    "stackOffsetX": 23
+    "stackOffsetX": 23,
+    "z": 1
   },
   "3_tokenHolder": {
     "type": "holder",
@@ -6669,7 +6655,8 @@
     "dropTarget": {
       "pID": 3
     },
-    "stackOffsetX": 23
+    "stackOffsetX": 23,
+    "z": 1
   },
   "4_tokenHolder": {
     "type": "holder",
@@ -6681,7 +6668,8 @@
     "dropTarget": {
       "pID": 4
     },
-    "stackOffsetX": 23
+    "stackOffsetX": 23,
+    "z": 1
   },
   "5_tokenHolder": {
     "type": "holder",
@@ -6693,7 +6681,8 @@
     "dropTarget": {
       "pID": 5
     },
-    "stackOffsetX": 23
+    "stackOffsetX": 23,
+    "z": 1
   },
   "6_tokenHolder": {
     "type": "holder",
@@ -6705,7 +6694,8 @@
     "dropTarget": {
       "pID": 6
     },
-    "stackOffsetX": 23
+    "stackOffsetX": 23,
+    "z": 1
   },
   "1_lines": {
     "id": "1_lines",
@@ -6720,14 +6710,15 @@
     "height": 400,
     "x": 50,
     "y": 50,
-    "layer": -1
+    "layer": -1,
+    "z": 1
   },
   "pawnHolder1": {
     "type": "holder",
     "id": "pawnHolder1",
     "parent": "1_board",
     "layer": 1,
-    "z": 2,
+    "z": 1,
     "x": 170,
     "y": 435,
     "width": 40,
@@ -6772,7 +6763,8 @@
     "type": "holder",
     "id": "pawnHolder2",
     "x": 30,
-    "y": 311
+    "y": 311,
+    "z": 1
   },
   "pawnHolder3": {
     "inheritFrom": {
@@ -6781,7 +6773,8 @@
     "type": "holder",
     "id": "pawnHolder3",
     "x": 30,
-    "y": 158
+    "y": 158,
+    "z": 1
   },
   "pawnHolder4": {
     "inheritFrom": {
@@ -6790,7 +6783,8 @@
     "type": "holder",
     "id": "pawnHolder4",
     "x": 100,
-    "y": 33
+    "y": 33,
+    "z": 1
   },
   "pawnHolder5": {
     "inheritFrom": {
@@ -6799,7 +6793,8 @@
     "type": "holder",
     "id": "pawnHolder5",
     "x": 240,
-    "y": 33
+    "y": 33,
+    "z": 1
   },
   "pawnHolder6": {
     "inheritFrom": {
@@ -6808,7 +6803,8 @@
     "type": "holder",
     "id": "pawnHolder6",
     "x": 310,
-    "y": 106
+    "y": 106,
+    "z": 1
   },
   "pawnHolder7": {
     "inheritFrom": {
@@ -6817,7 +6813,8 @@
     "type": "holder",
     "id": "pawnHolder7",
     "x": 310,
-    "y": 232
+    "y": 232,
+    "z": 1
   },
   "pawnHolder8": {
     "inheritFrom": {
@@ -6826,7 +6823,8 @@
     "type": "holder",
     "id": "pawnHolder8",
     "x": 310,
-    "y": 356
+    "y": 356,
+    "z": 1
   },
   "2_board": {
     "inheritFrom": {
@@ -6840,14 +6838,16 @@
     "onlyVisibleForSeat": "2_seat",
     "linkedToSeat": "",
     "x": 505,
-    "y": 482
+    "y": 482,
+    "z": 1
   },
   "2_lines": {
     "inheritFrom": {
       "1_lines": "*"
     },
     "id": "2_lines",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder9": {
     "inheritFrom": {
@@ -6856,7 +6856,8 @@
     },
     "type": "holder",
     "id": "pawnHolder9",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder10": {
     "inheritFrom": {
@@ -6865,7 +6866,8 @@
     },
     "type": "holder",
     "id": "pawnHolder10",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder11": {
     "inheritFrom": {
@@ -6874,7 +6876,8 @@
     },
     "type": "holder",
     "id": "pawnHolder11",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder12": {
     "inheritFrom": {
@@ -6883,7 +6886,8 @@
     },
     "type": "holder",
     "id": "pawnHolder12",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder13": {
     "inheritFrom": {
@@ -6892,7 +6896,8 @@
     },
     "type": "holder",
     "id": "pawnHolder13",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder14": {
     "inheritFrom": {
@@ -6901,7 +6906,8 @@
     },
     "type": "holder",
     "id": "pawnHolder14",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder15": {
     "inheritFrom": {
@@ -6910,7 +6916,8 @@
     },
     "type": "holder",
     "id": "pawnHolder15",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "pawnHolder16": {
     "inheritFrom": {
@@ -6919,7 +6926,8 @@
     },
     "type": "holder",
     "id": "pawnHolder16",
-    "parent": "2_board"
+    "parent": "2_board",
+    "z": 1
   },
   "3_board": {
     "inheritFrom": {
@@ -6933,14 +6941,16 @@
     "onlyVisibleForSeat": "3_seat",
     "linkedToSeat": "",
     "x": 505,
-    "y": 482
+    "y": 482,
+    "z": 1
   },
   "3_lines": {
     "inheritFrom": {
       "1_lines": "*"
     },
     "id": "3_lines",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder17": {
     "inheritFrom": {
@@ -6949,7 +6959,8 @@
     },
     "type": "holder",
     "id": "pawnHolder17",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder18": {
     "inheritFrom": {
@@ -6958,7 +6969,8 @@
     },
     "type": "holder",
     "id": "pawnHolder18",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder19": {
     "inheritFrom": {
@@ -6967,7 +6979,8 @@
     },
     "type": "holder",
     "id": "pawnHolder19",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder20": {
     "inheritFrom": {
@@ -6976,7 +6989,8 @@
     },
     "type": "holder",
     "id": "pawnHolder20",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder21": {
     "inheritFrom": {
@@ -6985,7 +6999,8 @@
     },
     "type": "holder",
     "id": "pawnHolder21",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder22": {
     "inheritFrom": {
@@ -6994,7 +7009,8 @@
     },
     "type": "holder",
     "id": "pawnHolder22",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder23": {
     "inheritFrom": {
@@ -7003,7 +7019,8 @@
     },
     "type": "holder",
     "id": "pawnHolder23",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "pawnHolder24": {
     "inheritFrom": {
@@ -7012,7 +7029,8 @@
     },
     "type": "holder",
     "id": "pawnHolder24",
-    "parent": "3_board"
+    "parent": "3_board",
+    "z": 1
   },
   "4_board": {
     "inheritFrom": {
@@ -7026,14 +7044,16 @@
     "onlyVisibleForSeat": "4_seat",
     "linkedToSeat": "",
     "x": 505,
-    "y": 482
+    "y": 482,
+    "z": 1
   },
   "4_lines": {
     "inheritFrom": {
       "1_lines": "*"
     },
     "id": "4_lines",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder25": {
     "inheritFrom": {
@@ -7042,7 +7062,8 @@
     },
     "type": "holder",
     "id": "pawnHolder25",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder26": {
     "inheritFrom": {
@@ -7051,7 +7072,8 @@
     },
     "type": "holder",
     "id": "pawnHolder26",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder27": {
     "inheritFrom": {
@@ -7060,7 +7082,8 @@
     },
     "type": "holder",
     "id": "pawnHolder27",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder28": {
     "inheritFrom": {
@@ -7069,7 +7092,8 @@
     },
     "type": "holder",
     "id": "pawnHolder28",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder29": {
     "inheritFrom": {
@@ -7078,7 +7102,8 @@
     },
     "type": "holder",
     "id": "pawnHolder29",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder30": {
     "inheritFrom": {
@@ -7087,7 +7112,8 @@
     },
     "type": "holder",
     "id": "pawnHolder30",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder31": {
     "inheritFrom": {
@@ -7096,7 +7122,8 @@
     },
     "type": "holder",
     "id": "pawnHolder31",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "pawnHolder32": {
     "inheritFrom": {
@@ -7105,7 +7132,8 @@
     },
     "type": "holder",
     "id": "pawnHolder32",
-    "parent": "4_board"
+    "parent": "4_board",
+    "z": 1
   },
   "5_board": {
     "inheritFrom": {
@@ -7119,14 +7147,16 @@
     "onlyVisibleForSeat": "5_seat",
     "linkedToSeat": "",
     "x": 505,
-    "y": 482
+    "y": 482,
+    "z": 1
   },
   "5_lines": {
     "inheritFrom": {
       "1_lines": "*"
     },
     "id": "5_lines",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder33": {
     "inheritFrom": {
@@ -7135,7 +7165,8 @@
     },
     "type": "holder",
     "id": "pawnHolder33",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder34": {
     "inheritFrom": {
@@ -7144,7 +7175,8 @@
     },
     "type": "holder",
     "id": "pawnHolder34",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder35": {
     "inheritFrom": {
@@ -7153,7 +7185,8 @@
     },
     "type": "holder",
     "id": "pawnHolder35",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder36": {
     "inheritFrom": {
@@ -7162,7 +7195,8 @@
     },
     "type": "holder",
     "id": "pawnHolder36",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder37": {
     "inheritFrom": {
@@ -7171,7 +7205,8 @@
     },
     "type": "holder",
     "id": "pawnHolder37",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder38": {
     "inheritFrom": {
@@ -7180,7 +7215,8 @@
     },
     "type": "holder",
     "id": "pawnHolder38",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder39": {
     "inheritFrom": {
@@ -7189,7 +7225,8 @@
     },
     "type": "holder",
     "id": "pawnHolder39",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "pawnHolder40": {
     "inheritFrom": {
@@ -7198,7 +7235,8 @@
     },
     "type": "holder",
     "id": "pawnHolder40",
-    "parent": "5_board"
+    "parent": "5_board",
+    "z": 1
   },
   "6_board": {
     "inheritFrom": {
@@ -7212,14 +7250,16 @@
     "onlyVisibleForSeat": "6_seat",
     "linkedToSeat": "",
     "x": 505,
-    "y": 482
+    "y": 482,
+    "z": 1
   },
   "6_lines": {
     "inheritFrom": {
       "1_lines": "*"
     },
     "id": "6_lines",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder41": {
     "inheritFrom": {
@@ -7228,7 +7268,8 @@
     },
     "type": "holder",
     "id": "pawnHolder41",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder42": {
     "inheritFrom": {
@@ -7237,7 +7278,8 @@
     },
     "type": "holder",
     "id": "pawnHolder42",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder43": {
     "inheritFrom": {
@@ -7246,7 +7288,8 @@
     },
     "type": "holder",
     "id": "pawnHolder43",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder44": {
     "inheritFrom": {
@@ -7255,7 +7298,8 @@
     },
     "type": "holder",
     "id": "pawnHolder44",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder45": {
     "inheritFrom": {
@@ -7264,7 +7308,8 @@
     },
     "type": "holder",
     "id": "pawnHolder45",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder46": {
     "inheritFrom": {
@@ -7273,7 +7318,8 @@
     },
     "type": "holder",
     "id": "pawnHolder46",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder47": {
     "inheritFrom": {
@@ -7282,7 +7328,8 @@
     },
     "type": "holder",
     "id": "pawnHolder47",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "pawnHolder48": {
     "inheritFrom": {
@@ -7291,7 +7338,8 @@
     },
     "type": "holder",
     "id": "pawnHolder48",
-    "parent": "6_board"
+    "parent": "6_board",
+    "z": 1
   },
   "cover": {
     "id": "cover",
@@ -7371,7 +7419,8 @@
           }
         ]
       }
-    ]
+    ],
+    "z": 1
   },
   "1_look": {
     "id": "1_look",
@@ -7530,7 +7579,8 @@
           }
         ]
       }
-    ]
+    ],
+    "z": 1
   },
   "2_look": {
     "inheritFrom": {
@@ -7540,7 +7590,8 @@
     "x": 194,
     "y": 9,
     "parent": "2_seatArea",
-    "icon": "visibility_off"
+    "icon": "visibility_off",
+    "z": 1
   },
   "3_look": {
     "inheritFrom": {
@@ -7550,7 +7601,8 @@
     "x": 194,
     "y": 9,
     "parent": "3_seatArea",
-    "icon": "visibility_off"
+    "icon": "visibility_off",
+    "z": 1
   },
   "4_look": {
     "inheritFrom": {
@@ -7560,7 +7612,8 @@
     "x": 194,
     "y": 9,
     "parent": "4_seatArea",
-    "icon": "visibility_off"
+    "icon": "visibility_off",
+    "z": 1
   },
   "5_look": {
     "inheritFrom": {
@@ -7570,7 +7623,8 @@
     "x": 194,
     "y": 9,
     "parent": "5_seatArea",
-    "icon": "visibility_off"
+    "icon": "visibility_off",
+    "z": 1
   },
   "6_look": {
     "inheritFrom": {
@@ -7580,7 +7634,8 @@
     "x": 194,
     "y": 9,
     "parent": "6_seatArea",
-    "icon": "visibility_off"
+    "icon": "visibility_off",
+    "z": 1
   },
   "restartButton": {
     "type": "button",
@@ -7721,7 +7776,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 3,
+    "z": 1,
     "color": "#ffff00",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7742,7 +7797,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 4,
+    "z": 1,
     "color": "#ffa500",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7763,7 +7818,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 5,
+    "z": 1,
     "color": "#ff0000",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7784,7 +7839,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 6,
+    "z": 1,
     "color": "#0000ff",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7805,7 +7860,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 7,
+    "z": 1,
     "color": "#008000",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7825,7 +7880,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 8,
+    "z": 1,
     "color": "#ff69b4",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7859,7 +7914,7 @@
     "y": 2,
     "width": 50.4,
     "height": 90,
-    "z": 2,
+    "z": 1,
     "color": "#ffffff",
     "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
     "image": "i/game-pieces/3D/Pawn-3D.svg",
@@ -7881,7 +7936,7 @@
     "pID": 6,
     "x": 96,
     "y": 2,
-    "z": 5,
+    "z": 1,
     "hoverParent": "6_tokenHolder",
     "parent": "6_tokenHolder"
   },
@@ -7893,7 +7948,7 @@
     "pID": 6,
     "x": 142,
     "y": 2,
-    "z": 7,
+    "z": 1,
     "parent": "6_tokenHolder"
   },
   "1_deal": {
@@ -7902,7 +7957,7 @@
     "x": 1409,
     "y": 12,
     "height": 40,
-    "z": 2081,
+    "z": 1,
     "text": "1-3",
     "clickRoutine": [
       {
@@ -7952,14 +8007,15 @@
     "width": 888,
     "height": 450,
     "layer": -3,
-    "movable": false
+    "movable": false,
+    "z": 1
   },
   "discardHolder": {
     "type": "holder",
     "id": "discardHolder",
     "x": 1494,
     "y": 292,
-    "z": 82,
+    "z": 1,
     "layer": 2,
     "color": "#ffffff80",
     "icon": "delapouite/trash-can",
@@ -7971,7 +8027,7 @@
     "x": 1409,
     "y": 57,
     "height": 40,
-    "z": 2081,
+    "z": 1,
     "clickRoutine": [
       {
         "func": "FOREACH",
@@ -8019,7 +8075,7 @@
     "x": 1409,
     "y": 102,
     "height": 40,
-    "z": 2081,
+    "z": 1,
     "clickRoutine": [
       {
         "func": "FOREACH",
@@ -8077,7 +8133,7 @@
     "dropTarget": {
       "type": "card"
     },
-    "z": 8,
+    "z": 1,
     "scale": 0.8
   },
   "requestCardHolder4-5": {
@@ -8087,7 +8143,7 @@
     "y": 145,
     "scale": 0.8,
     "layer": 2,
-    "z": 7,
+    "z": 1,
     "dropTarget": {
       "type": "card"
     }
@@ -8110,23 +8166,12 @@
     "height": 160,
     "id": "hxwe"
   },
-  "background": {
-    "id": "background",
-    "width": 1600,
-    "height": 1000,
-    "layer": -6,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "background": "#deeaf0"
-    }
-  },
   "4_deal": {
     "type": "button",
     "id": "4_deal",
     "x": 1409,
     "height": 40,
-    "z": 2081,
+    "z": 1,
     "text": "1-3",
     "clickRoutine": [
       {
@@ -8176,7 +8221,7 @@
     "id": "5_deal",
     "x": 1409,
     "height": 40,
-    "z": 2081,
+    "z": 1,
     "clickRoutine": [
       {
         "func": "FOREACH",
@@ -8225,7 +8270,7 @@
     "id": "6_deal",
     "x": 1409,
     "height": 40,
-    "z": 2081,
+    "z": 1,
     "clickRoutine": [
       {
         "func": "FOREACH",
@@ -8315,7 +8360,8 @@
         "relation": "+",
         "value": 1
       }
-    ]
+    ],
+    "z": 1
   },
   "1_scoreDown": {
     "type": "button",
@@ -8356,7 +8402,8 @@
         "relation": "-",
         "value": 1
       }
-    ]
+    ],
+    "z": 1
   },
   "2_scoreUp": {
     "inheritFrom": {
@@ -8365,7 +8412,8 @@
     },
     "type": "button",
     "id": "2_scoreUp",
-    "parent": "2_seatArea"
+    "parent": "2_seatArea",
+    "z": 1
   },
   "3_scoreUp": {
     "inheritFrom": {
@@ -8374,7 +8422,8 @@
     },
     "type": "button",
     "id": "3_scoreUp",
-    "parent": "3_seatArea"
+    "parent": "3_seatArea",
+    "z": 1
   },
   "4_scoreUp": {
     "inheritFrom": {
@@ -8383,7 +8432,8 @@
     },
     "type": "button",
     "id": "4_scoreUp",
-    "parent": "4_seatArea"
+    "parent": "4_seatArea",
+    "z": 1
   },
   "5_scoreUp": {
     "inheritFrom": {
@@ -8392,7 +8442,8 @@
     },
     "type": "button",
     "id": "5_scoreUp",
-    "parent": "5_seatArea"
+    "parent": "5_seatArea",
+    "z": 1
   },
   "6_scoreUp": {
     "inheritFrom": {
@@ -8401,7 +8452,8 @@
     },
     "type": "button",
     "id": "6_scoreUp",
-    "parent": "6_seatArea"
+    "parent": "6_seatArea",
+    "z": 1
   },
   "2_scoreDown": {
     "inheritFrom": {
@@ -8410,7 +8462,8 @@
     },
     "type": "button",
     "id": "2_scoreDown",
-    "parent": "2_seatArea"
+    "parent": "2_seatArea",
+    "z": 1
   },
   "3_scoreDown": {
     "inheritFrom": {
@@ -8419,7 +8472,8 @@
     },
     "type": "button",
     "id": "3_scoreDown",
-    "parent": "3_seatArea"
+    "parent": "3_seatArea",
+    "z": 1
   },
   "4_scoreDown": {
     "inheritFrom": {
@@ -8428,7 +8482,8 @@
     },
     "type": "button",
     "id": "4_scoreDown",
-    "parent": "4_seatArea"
+    "parent": "4_seatArea",
+    "z": 1
   },
   "5_scoreDown": {
     "inheritFrom": {
@@ -8437,7 +8492,8 @@
     },
     "type": "button",
     "id": "5_scoreDown",
-    "parent": "5_seatArea"
+    "parent": "5_seatArea",
+    "z": 1
   },
   "6_scoreDown": {
     "inheritFrom": {
@@ -8446,7 +8502,8 @@
     },
     "type": "button",
     "id": "6_scoreDown",
-    "parent": "6_seatArea"
+    "parent": "6_seatArea",
+    "z": 1
   },
   "timer": {
     "type": "timer",
@@ -8458,7 +8515,8 @@
     },
     "countdown": true,
     "start": 60000,
-    "milliseconds": 60000
+    "milliseconds": 60000,
+    "z": 1
   },
   "timerReset": {
     "type": "button",
@@ -8479,7 +8537,8 @@
         "timer": "${PROPERTY parent}",
         "mode": "reset"
       }
-    ]
+    ],
+    "z": 1
   },
   "timerPlay": {
     "type": "button",
@@ -8498,6 +8557,340 @@
       {
         "func": "TIMER",
         "timer": "${PROPERTY parent}"
+      }
+    ],
+    "z": 1
+  },
+  "aidAnchor": {
+    "id": "aidAnchor",
+    "x": -297,
+    "y": -196,
+    "width": 35,
+    "height": 40,
+    "z": 1,
+    "movable": false,
+    "color": "#f1ff29",
+    "css": "border-radius: 80% 80% 40% 110%",
+    "image": "/i/game-pieces/3D/Pin-3D.svg",
+    "svgReplaces": {
+      "#borderWidth": "borderWidth",
+      "#borderColor": "borderColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "black",
+    "borderWidth": "1"
+  },
+  "aidDeck": {
+    "type": "deck",
+    "id": "aidDeck",
+    "parent": "aidAnchor",
+    "fixedParent": true,
+    "x": 52,
+    "y": 45,
+    "z": 1,
+    "cardDefaults": {
+      "parent": "aidAnchor",
+      "fixedParent": true,
+      "movable": false,
+      "movableInEdit": true,
+      "clickable": false,
+      "width": 100,
+      "height": 40,
+      "layer": 100,
+      "enlargeWidth": 1100,
+      "enlargeY": 25,
+      "enlargeX": -1,
+      "css": {
+        "default": {
+          "overflow": "visible !important",
+          "white-space": "collapse"
+        },
+        " .frontFont": {
+          "font-size": "14px"
+        },
+        "#enlarged": {
+          "top": "calc(var(--roomTop) + ${PROPERTY enlargeY}px * var(--scale))",
+          "left": "calc(var(--roomLeft) + (max(${PROPERTY enlargeX}px, 0px) + min(1px, max(0px, (0px - ${PROPERTY enlargeX}px))) * (800 - ${PROPERTY enlargeWidth} / 2) + min(1px, max(0px, (-1px - ${PROPERTY enlargeX}px))) * ((1600 - ${PROPERTY enlargeWidth}) - (800 - ${PROPERTY enlargeWidth} / 2))) * var(--scale))",
+          "right": "unset",
+          "bottom": "unset",
+          "transform-origin": "top left"
+        },
+        "#enlarged > .active": {
+          "display": "none"
+        },
+        "#enlarged > .cardFace:nth-child(2)": {
+          "display": "block"
+        },
+        " .aidWrap": {
+          "font-size": "1.15em",
+          "border": "0.1875em solid black",
+          "border-radius": "0.5em",
+          "overflow": "hidden",
+          "background": "#e7e2d7"
+        },
+        " .aidHeader": {
+          "border-top": "0.125em solid black",
+          "border-bottom": "0.125em solid black",
+          "background": "#d8d2c4",
+          "margin": "0 -0.4em 0.4em -0.4em",
+          "padding": "0.3em 0.4em"
+        },
+        " .aidBody > * + .aidHeader": {
+          "margin-top": "0.4em"
+        },
+        " .aidHeaderMain": {
+          "font-size": "1.5em",
+          "font-weight": "bold",
+          "text-align": "center"
+        },
+        " .aidBody": {
+          "padding": "0.5em"
+        },
+        " .aidBody p": {
+          "margin": "0 0 0.5em 0"
+        },
+        " .aidBody p:last-child": {
+          "margin-bottom": "0"
+        },
+        " .aidEmphasis": {
+          "font-weight": "bold"
+        },
+        " .aidColumns": {
+          "column-count": "3",
+          "column-gap": "1em"
+        },
+        " .aidIndent1": {
+          "display": "block",
+          "padding-left": "0.75em"
+        },
+        " .aidIndent2": {
+          "display": "block",
+          "padding-left": "1.5em"
+        },
+        " .aidIndent3": {
+          "display": "block",
+          "padding-left": "2.25em"
+        },
+        " .aidTable": {
+          "width": "100%",
+          "border-collapse": "separate",
+          "border-spacing": "0 0.25em"
+        },
+        " .aidTable th": {
+          "text-align": "left",
+          "padding": "0.15em 0.4em",
+          "font-weight": "bold",
+          "opacity": "0.7"
+        },
+        " .aidTable td": {
+          "padding": "0.2em 0.4em",
+          "background": "rgba(0,0,0,0.05)",
+          "border-radius": "0.4em"
+        },
+        " .aidTable tr": {
+          "vertical-align": "middle"
+        },
+        " .aidTable tr:nth-child(even) td": {
+          "background": "rgba(0,0,0,0.08)"
+        },
+        " .aidIcon": {
+          "display": "inline-block",
+          "width": "1em",
+          "height": "1em",
+          "vertical-align": "middle",
+          "background-color": "var(--iconColor, currentColor)",
+          "mask": "var(--icon) no-repeat center / contain",
+          "-webkit-mask": "var(--icon) no-repeat center / contain",
+          "transform": "translateY(-0.1em)",
+          "margin": "0 0.15em"
+        },
+        " .aidList": {
+          "padding-left": "1.25em",
+          "margin": "0 0 0.5em 0"
+        },
+        " .aidList li": {
+          "padding": "0.25em 0.5em",
+          "margin-bottom": "0.1em",
+          "background": "rgba(0,0,0,0.05)",
+          "border-radius": "0.5em",
+          "font-size": "0.85em",
+          "line-height": "1"
+        },
+        " .aidList li:last-child": {
+          "margin-bottom": "0"
+        }
+      }
+    },
+    "cardTypes": {
+      "level1-3": {
+        "hintText": "<span class='frontFont'>Hover for level 1-3 card info</span>",
+        "detail": "\n      <div class='aidWrap'>\n        <div class='aidHeader'>\n          <div class='aidHeaderMain'>Overview</div>\n        </div>\n        <div class='aidBody'>\n          <p>\n            Each level of card (1-5) is indicated on the back. On the front, in the upper left corner is a number and sometimes a letter. The details for levels 1-3 are described below. Levels 4-5 are on another hoverable player aid.\n          </p>\n          <div class='aidHeader'>\n            <div class='aidHeaderMain'>Level 1</div>\n          </div>\n          <p>\n            This pawn can be placed anywhere on the board.\n          </p>       \n          <div class='aidHeader'>\n            <div class='aidHeaderMain'>Level 2</div>\n          </div>\n         <p>\n         This pawn can be placed anywhere on the board that corresponds to the dark brown circles on the card. \n          </p>\n          <div class='aidHeader'>\n            <div class='aidHeaderMain'>Level 3</div>\n          </div>\n          <p>\n          There are three types of these cards. The lines in blue on the images show what is meant by adjacent, across, and sharing a corner.\n          </p>\n          <span class='aidIndent1'><b><u>3a</u> Adjacent:</b> This pawn must be next to the color shown on the card. </span>            \n          <img src='/assets/1871227700_5916' height='150' />\n          <br>\n          <br>\n          <span class='aidIndent1'><b><u>3b</u> Across:</b> This pawn must be across from the color shown on the card. </span>            \n          <img src='/assets/-907065835_9054' height='150' />\n          <br>\n          <br>\n          <span class='aidIndent1'><b><u>3c</u> Sharing a corner:</b> This pawn must share a corner with the color shown on the card. </span>            \n          <img src='/assets/-1798546435_7638' height='150' />\n        </div>\n      </div>\n      </div>\n    "
+      },
+      "level4-5": {
+        "hintText": "<span class='frontFont'>Hover for level 4-5 card info</span>",
+        "detail": "\n      <div class='aidWrap'>\n        <div class='aidHeader'>\n          <div class='aidHeaderMain'>Overview</div>\n        </div>\n        <div class='aidBody'>\n          <p>\n            Each level of card (1-5) is indicated on the back. On the front, in the upper left corner is a number and sometimes a letter. The details for levels 4-5 are described below. Levels 1-3 are on another hoverable player aid.\n          </p>\n          <div class='aidHeader'>\n            <div class='aidHeaderMain'>Level 4</div>\n          </div>\n          <p>\n            There are three types of these cards.\n          </p>\n          <span class='aidIndent1'><b><u>4a</u>:</b> This pawn must do the same thing as the color shown on the card.</span>\n          <br>\n          <span class='aidIndent1'><b><u>4b</u>:</b> This pawn cannot be adjacent to or across from the color shown on the card. Look at the level 3 cards for an image of what is meant by adjacent and across.</span>\n           <br>\n           <span class='aidIndent1'><b><u>4c</u>:</b> This pawn must be at least two spaces away from the color on the card.</span>\n          <div class='aidHeader'>\n            <div class='aidHeaderMain'>Level 5</div>\n          </div>\n         <p>\n         This pawn must do the opposite of the whatever the color on the card is doing. \n          </p>\n          <span class='aidIndent1'><b><u>Leval 1</u>:</b> There is no opposite so the pawn can be placed anywhere on the board. </span>            \n          <br>\n          <span class='aidIndent1'><b><u>Level 2</u>:</b> Opposite means the light-colored spaces on the card.</span>            \n          <br>\n          <span class='aidIndent1'><b><u>Level 3</u>:</b> Opposite means any space that does not meet the criteria for the card (adjacent, across, or sharing a corner).</span>\n          <br>\n          <span class='aidIndent1'><b><u>Level 4</u>:</b> Opposite for <u><b>4a</b></u> cards means doing the opposite of the color on the card. Opposite for <u><b>4b</b></u> cards means adjacent to or across from the color on the card. Opposite for <u><b>4c</b></u> cards means not two spaces away from the color on the card.</span>\n          <br>\n          <span class='aidIndent1'><b><u>Level 5</u>:</b> Opposite means the same as the color on the card.</span>\n        </div>\n      </div>\n      </div>\n    "
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 2,
+        "radius": 8,
+        "properties": {
+          "enlarge": 1
+        },
+        "objects": [
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "css": "background-color:#deb887;text-align: center; padding:0 2px",
+            "dynamicProperties": {
+              "value": "hintText"
+            },
+            "width": 100,
+            "height": 40
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "html",
+            "dynamicProperties": {
+              "value": "detail",
+              "width": "enlargeWidth",
+              "height": "enlargeHeight"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "12_holder": {
+    "inheritFrom": {
+      "1_holder": "*"
+    },
+    "type": "holder",
+    "id": "12_holder",
+    "x": 333,
+    "y": 282,
+    "parent": "holderGroup",
+    "z": 1
+  },
+  "10_holder": {
+    "inheritFrom": {
+      "1_holder": "*"
+    },
+    "type": "holder",
+    "id": "10_holder",
+    "x": 111,
+    "y": 282,
+    "parent": "holderGroup",
+    "z": 1
+  },
+  "11_holder": {
+    "inheritFrom": {
+      "1_holder": "*"
+    },
+    "type": "holder",
+    "id": "11_holder",
+    "x": 222,
+    "y": 282,
+    "parent": "holderGroup",
+    "z": 1
+  },
+  "background": {
+    "id": "background",
+    "width": 1600,
+    "height": 1000,
+    "layer": -6,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#deeaf0"
+    },
+    "z": 1
+  },
+  "cardInfo1-3": {
+    "type": "card",
+    "id": "cardInfo1-3",
+    "deck": "aidDeck",
+    "cardType": "level1-3",
+    "x": 1757,
+    "y": 1151,
+    "z": 1
+  },
+  "e8ja": {
+    "deck": "aidDeck",
+    "type": "card",
+    "cardType": "level4-5",
+    "id": "e8ja",
+    "z": 1,
+    "x": 1757,
+    "y": 1099
+  },
+  "librarySetupButton": {
+    "type": "button",
+    "id": "librarySetupButton",
+    "x": 769,
+    "y": 1150,
+    "z": 1,
+    "text": "Save for PL",
+    "clickRoutine": [
+      "// Used to reset the same ready for the PL",
+      {
+        "func": "CLICK",
+        "collection": [
+          "restartButton"
+        ]
+      },
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "player",
+        "value": ""
+      },
+      {
+        "func": "SET",
+        "property": "turn",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "mainColor",
+        "value": "#dddddd"
+      },
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "#999999"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "relation": "!=",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": 1
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "requestCardHolder1-3",
+          "requestCardHolder4-5"
+        ],
+        "key": "cardType"
       }
     ]
   }
