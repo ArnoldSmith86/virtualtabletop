@@ -4100,6 +4100,7 @@
     "id": "+holder",
     "x": 1243,
     "y": 25,
+    "z": 1,
     "dropTarget": {
       "deck": "+deck"
     },
