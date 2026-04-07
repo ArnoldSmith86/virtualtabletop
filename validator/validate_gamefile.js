@@ -874,7 +874,57 @@ function customWidgetChecks(widget, widgets, problems) {
 
 function getCustomPropertyUsage(data) {
     const customProperties = new Set();
-    
+    const declaredCustomProperties = new Set();
+    const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
+    const canvasPropertyRegex = /^c[0-9]+$/;
+    const customRoutineRegex = /^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/;
+    const placeholderRegex = /\$\{[^}]+\}/g;
+    const escapeRegex = value=>value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    function isCustomWidgetProperty(widget, prop) {
+        const wtype = getWidgetType(widget);
+        const known = WIDGET_PROPERTIES[wtype] || {};
+        return !(wtype == 'Canvas' && canvasPropertyRegex.test(prop))
+            && !(prop in known)
+            && !customRoutineRegex.test(prop);
+    }
+
+    for (const [, widget] of widgetEntries) {
+        for (const prop of Object.keys(widget)) {
+            if (isCustomWidgetProperty(widget, prop))
+                declaredCustomProperties.add(prop);
+        }
+    }
+
+    function addPropertyPatternMatches(value) {
+        if (typeof value !== 'string' || !value.includes('${'))
+            return;
+
+        const staticParts = value.split(placeholderRegex);
+        const staticCharCount = staticParts.reduce((sum, part) => sum + part.length, 0);
+        if (staticCharCount < 2)
+            return;
+
+        const pattern = '^' + staticParts
+            .map(escapeRegex)
+            .join('.*') + '$';
+        const interpolatedPattern = new RegExp(pattern);
+
+        for (const prop of declaredCustomProperties) {
+            if (interpolatedPattern.test(prop))
+                customProperties.add(prop);
+        }
+    }
+
+    function addPropertyUsage(value) {
+        const property = typeof value === 'string' ? value : Array.isArray(value) ? value[0] : null;
+        if (typeof property !== 'string')
+            return;
+
+        customProperties.add(property);
+        addPropertyPatternMatches(property);
+    }
+
     // Helper function to extract property names from ${PROPERTY xxx} syntax
     function extractPropertyFromSyntax(value) {
         if (typeof value === 'string') {
@@ -963,19 +1013,19 @@ function getCustomPropertyUsage(data) {
                 if (func === 'CALL' && key === 'routine' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
-                    customProperties.add(value[0]);
+                    addPropertyUsage(value);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SCORE' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 }
             }
 
@@ -985,11 +1035,7 @@ function getCustomPropertyUsage(data) {
     }
     
     // Scan all widgets
-    for (const [key, widget] of Object.entries(data)) {
-        if (key === "_meta" || typeof widget !== 'object' || widget === null) {
-            continue;
-        }
-        
+    for (const [, widget] of widgetEntries) {
         // Scan widget properties
         scanForProperties(widget);
 
@@ -1229,7 +1275,7 @@ function validateGameFile(data, checkMeta) {
                 property: ['_meta', 'info', 'image'],
                 message: 'is not an internal asset: ' + info.image
             });
-        } else if (info.image.match(/[0-9]+$/)[0] > 50000) {
+        } else if (info.image.match(/[0-9]+$/) && info.image.match(/[0-9]+$/)[0] > 50000) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],

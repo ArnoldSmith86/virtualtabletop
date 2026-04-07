@@ -130,7 +130,7 @@ function checkURLproperties(connected) {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
-          $('#filterByType').value = 'Tutorials';
+          setLibraryTypeTab('Tutorials');
         } else if(location.hash == '#About') {
           urlProperties.about = true;
           $('#aboutButton').click();
