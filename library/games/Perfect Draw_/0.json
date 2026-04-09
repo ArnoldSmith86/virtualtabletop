@@ -4061,8 +4061,8 @@
     "id": "45g3",
     "z": 1725,
     "parent": "b4pd",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "sdpx": {
     "deck": "xi9bD",
@@ -4071,8 +4071,8 @@
     "id": "sdpx",
     "z": 1727,
     "parent": "b4pd",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "b4pd": {
     "type": "pile",
@@ -4090,8 +4090,8 @@
     "id": "mjxq",
     "z": 1729,
     "parent": "b4pd",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "fn0s": {
     "deck": "xi9bD",
