@@ -7,6 +7,23 @@ let isLoading = true;
 
 export const widgets = new Map();
 
+export function validateParentAssignment(widgetId, proposedParentId) {
+  if(proposedParentId == null)
+    return null;
+  if(proposedParentId === widgetId)
+    return 'self';
+  let currentParentId = proposedParentId;
+  while(currentParentId !== null) {
+    if(currentParentId === widgetId)
+      return 'descendant';
+    const currentParent = widgets.get(currentParentId);
+    if(!currentParent || !currentParent.state || !currentParent.get('parent'))
+      break;
+    currentParentId = currentParent.get('parent');
+  }
+  return null;
+}
+
 let deferredCards = {};
 let deferredChildren = {};
 

@@ -1878,6 +1878,18 @@ export class Widget extends StateManaged {
                 continue;
               }
 
+              if(a.property === 'parent' && a.value) {
+                const parentProblem = validateParentAssignment(w.id, a.value);
+                if(parentProblem === 'self') {
+                  problems.push(`Widget ${w.id} cannot set its parent to itself.`);
+                  continue;
+                }
+                if(parentProblem === 'descendant') {
+                  problems.push(`Widget ${w.id} cannot set its parent to ${a.value} because ${a.value} is a descendant of ${w.id}.`);
+                  continue;
+                }
+              }
+
               if(a.relation == '+' && w.get(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
