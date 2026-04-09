@@ -1,0 +1,5274 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Perfect Draw!",
+      "image": "/assets/448742934_10656",
+      "rules": "",
+      "bgg": "https://doublesummon.itch.io/perfect-draw-ttrpg",
+      "year": "2024",
+      "mode": "vs",
+      "time": "120",
+      "attribution": "<div>Game name, design, text, and graphics by Nora Jean Haynes, Iris Cassandra Saintclaire, and Thunderderder. Published by Double Summon Games: https://doublesummon.itch.io/perfect-draw-ttrpg and https://www.fiverr.com/thunderderder. Approved for use on Virtualtabletop.io with permission from the rights holders.</div><div>\n</div><div>Additional graphics from https://game-icons.net/ available as listed on the About overlay.</div><div>\n</div><div>Urbanist Font by Corey Hu, available under SIL Open Font License, Version 1.1.</div><div><br></div><div>Room Layout by Littlemitten and released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1775692826812,
+      "skill": "",
+      "description": "\"Perfect Draw! is a tabletop role-playing game based on the Powered By The Apocalypse framework that combines Trading Card Games with collaborative storytelling - allowing you to tell stories similar to card game anime like Yu-Gi-Oh!, Duel Masters, and CardFight! Vanguard\"",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "Nora Jean Haynes and Iris Cassandra Saintclaire",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "<div>Card creation: The blank cards to the left of GM's field have text boxes you can edit. The other decks can be changed in edit mode.</div>",
+      "usesAIImagery": false,
+      "showName": "only main",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
+    },
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ""
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 40,
+    "childrenPerOwner": true,
+    "hidePlayerCursors": true,
+    "y": 840,
+    "width": 400,
+    "height": 153,
+    "id": "hand",
+    "x": 600,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid"
+    },
+    "dropShadow": true
+  },
+  "a4q6": {
+    "type": "dice",
+    "x": 1066,
+    "y": 28,
+    "z": 115,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "a4q6",
+    "color": "blue"
+  },
+  "a4q7": {
+    "type": "dice",
+    "x": 1122,
+    "y": 28,
+    "z": 38,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "a4q7",
+    "color": "blue"
+  },
+  "oit2": {
+    "movable": false,
+    "height": 1000,
+    "layer": -5,
+    "id": "oit2",
+    "css": {
+      "background-image": "url(/assets/-658532480_46380)",
+      "background-repeat": "repeat"
+    },
+    "width": 1600,
+    "movableInEdit": false
+  },
+  "pg4": {
+    "type": "dice",
+    "x": 401,
+    "y": 652,
+    "z": 110,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "pg4",
+    "color": "red"
+  },
+  "pg6": {
+    "type": "dice",
+    "x": 461,
+    "y": 653,
+    "z": 116,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "pg6",
+    "color": "red"
+  },
+  "xi12b": {
+    "type": "holder",
+    "id": "xi12b",
+    "x": 14,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background": "white"
+    },
+    "z": 50,
+    "height": 154,
+    "y": 640
+  },
+  "xi7bB": {
+    "id": "xi7bB",
+    "parent": "xi12b",
+    "fixedParent": true,
+    "y": 151,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "default": {
+        "font-family": "Urbanist"
+      }
+    },
+    "x": -2
+  },
+  "xi7bD": {
+    "type": "deck",
+    "id": "xi7bD",
+    "x": 11,
+    "y": 36,
+    "cardTypes": {
+      "card1": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card2": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card3": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card4": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "back",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "face",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 353,
+    "cardDefaults": {
+      "width": 100,
+      "height": 140,
+      "enlarge": 4,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      },
+      "back": "/assets/-1569446033_3396"
+    },
+    "parent": "xi12b"
+  },
+  "gie8": {
+    "type": "label",
+    "text": 0,
+    "id": "gie8",
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47,
+    "parent": "xi16b",
+    "x": 45,
+    "y": 5
+  },
+  "gie8U": {
+    "id": "gie8U",
+    "parent": "gie8",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie8D": {
+    "id": "gie8D",
+    "parent": "gie8",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt9q": {
+    "type": "label",
+    "text": "Life",
+    "z": 27,
+    "id": "kt9q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "parent": "xi16b",
+    "y": 40,
+    "x": 12
+  },
+  "qzlq8": {
+    "type": "holder",
+    "id": "qzlq8",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "x": 6,
+    "y": 6,
+    "parent": "epl1",
+    "layer": 0,
+    "z": 20
+  },
+  "xi16b": {
+    "id": "xi16b",
+    "x": 252,
+    "y": 640,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 66,
+    "layer": -3
+  },
+  "wpoo5": {
+    "type": "label",
+    "text": "Deck",
+    "z": 89,
+    "id": "wpoo5",
+    "rotation": 90,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "height": 25,
+    "layer": -4,
+    "parent": "xi12b",
+    "x": -37,
+    "y": 43
+  },
+  "6ln3": {
+    "type": "label",
+    "text": "Battlefield",
+    "x": 12,
+    "y": 9,
+    "z": 10,
+    "id": "6ln3",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "parent": "epl1",
+    "layer": 0
+  },
+  "field5": {
+    "id": "field5",
+    "width": 506,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "height": 146,
+    "movable": false,
+    "parent": "epl1",
+    "layer": 0
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 390,
+    "y": 718,
+    "height": 50,
+    "z": 25,
+    "color": "red",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433"
+      }
+    },
+    "width": 120
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 5,
+    "x": 715,
+    "y": 32,
+    "height": 25,
+    "z": 25,
+    "color": "blue",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433"
+      }
+    }
+  },
+  "gie11": {
+    "type": "label",
+    "text": 0,
+    "id": "gie11",
+    "x": 589,
+    "y": 28,
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47
+  },
+  "gie11U": {
+    "id": "gie11U",
+    "parent": "gie11",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie11D": {
+    "id": "gie11D",
+    "parent": "gie11",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt12q": {
+    "type": "label",
+    "text": "Life",
+    "x": 556,
+    "y": 65,
+    "z": 27,
+    "id": "kt12q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    }
+  },
+  "xi23b": {
+    "id": "xi23b",
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 64,
+    "layer": -3,
+    "x": 540,
+    "y": 20
+  },
+  "xi24b": {
+    "id": "xi24b",
+    "x": 921,
+    "y": 20,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 98,
+    "height": 64,
+    "layer": -3
+  },
+  "gie12": {
+    "type": "label",
+    "text": 0,
+    "id": "gie12",
+    "x": 970,
+    "y": 27,
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47
+  },
+  "gie12U": {
+    "id": "gie12U",
+    "parent": "gie12",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie12D": {
+    "id": "gie12D",
+    "parent": "gie12",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt13q": {
+    "type": "label",
+    "text": "Response",
+    "x": 937,
+    "y": 63,
+    "z": 27,
+    "id": "kt13q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "height": 25
+  },
+  "field8": {
+    "id": "field8",
+    "x": 14,
+    "y": 308,
+    "width": 506,
+    "borderRadius": 0,
+    "z": 77,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "#2F3433"
+    },
+    "height": 30,
+    "movable": false,
+    "layer": -5
+  },
+  "i3cl": {
+    "type": "label",
+    "text": "Staples",
+    "x": 25,
+    "y": 318,
+    "z": 354,
+    "id": "i3cl",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "white",
+        "font-size": "14px",
+        "text-align": "right"
+      }
+    },
+    "height": 25,
+    "width": 90
+  },
+  "3tta": {
+    "type": "label",
+    "text": "(Use a counter to mark the Staple you used last turn)",
+    "x": 121,
+    "y": 318,
+    "z": 355,
+    "id": "3tta",
+    "width": 368,
+    "height": 25,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bolditalics",
+        "color": "white",
+        "font-size": "14px",
+        "text-align": "left"
+      }
+    }
+  },
+  "o220": {
+    "x": 449,
+    "y": 397,
+    "width": 48,
+    "height": 48,
+    "classes": "pokerChip",
+    "color": "#2F3433",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "z": 117,
+    "id": "o220"
+  },
+  "njrn2": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn2",
+    "enlarge": 4,
+    "x": 14,
+    "y": 346,
+    "width": 102
+  },
+  "axfj": {
+    "type": "holder",
+    "id": "axfj",
+    "x": 149,
+    "y": 98,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "height": 154,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid"
+    },
+    "z": 99
+  },
+  "axfjD": {
+    "type": "deck",
+    "id": "axfjD",
+    "parent": "axfj",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "card1": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card2": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card3": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card4": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card5": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card6": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card7": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      },
+      "card8": {
+        "cardName": "Card Name",
+        "cardText": "Card Text",
+        "cardFooter": "{Strength} Type",
+        "cardImage": "/i/game-icons.net/lorc/wyvern.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/-1569446033_3396"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 140,
+            "color": "transparent",
+            "value": "/assets/1185280421_37356"
+          },
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "value": "<div class=name>${PROPERTY cardName}</div><img src=${PROPERTY cardImage} class=image><div class=text>${PROPERTY cardText}</div><div class=footer>${PROPERTY cardFooter}</div>",
+            "width": 100,
+            "height": 140,
+            "css": {
+              "body": {
+                "font-family": "Urbanist",
+                "text-align": "left",
+                "color": "#2F3433",
+                "font-size": "6px"
+              },
+              ".name": {
+                "font-family": "Urbanist-bold",
+                "position": "absolute",
+                "left": "12px",
+                "top": "4px",
+                "width": "76px"
+              },
+              ".text": {
+                "position": "absolute",
+                "left": "12px",
+                "top": "76px",
+                "width": "76px"
+              },
+              ".footer": {
+                "font-size": "6px",
+                "position": "absolute",
+                "left": "12px",
+                "top": "125px",
+                "width": "76px"
+              },
+              ".image": {
+                "position": "absolute",
+                "left": "8px",
+                "top": "16px",
+                "max-width": "84px",
+                "max-height": "55px"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "height": 140,
+      "width": 100,
+      "enlarge": 4
+    }
+  },
+  "nnjo": {
+    "type": "label",
+    "text": "Urbanist",
+    "x": 1666,
+    "y": 94,
+    "z": 357,
+    "id": "nnjo",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "white",
+        "font-size": "20px"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    }
+  },
+  "nnjo1": {
+    "type": "label",
+    "text": "Urbanist Bold",
+    "x": 1641,
+    "y": 114,
+    "z": 357,
+    "id": "nnjo1",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "white",
+        "font-size": "20px"
+      },
+      "@font-face": {
+        "font-family": "Urbanist-bold",
+        "font-style": "normal",
+        "src": "url(/assets/1318104775_42636) format('woff2')"
+      }
+    },
+    "width": 200
+  },
+  "nnjo2": {
+    "type": "label",
+    "text": "Urbanist Bold Italics",
+    "x": 1666,
+    "y": 134,
+    "z": 357,
+    "id": "nnjo2",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bolditalics",
+        "color": "white",
+        "font-size": "20px"
+      },
+      "@font-face": {
+        "font-family": "Urbanist-bolditalics",
+        "font-style": "italic",
+        "src": "url(/assets/-166120722_44088) format('woff2')"
+      }
+    },
+    "width": 200
+  },
+  "isy0": {
+    "type": "holder",
+    "id": "isy0",
+    "x": 282,
+    "y": 98,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "height": 154,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid"
+    },
+    "z": 100
+  },
+  "isy0D": {
+    "type": "deck",
+    "id": "isy0D",
+    "parent": "isy0",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "card1": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "back",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "face",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 140,
+      "enlarge": 4,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      },
+      "back": "/assets/-1569446033_3396"
+    },
+    "z": 353
+  },
+  "49s19": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s19",
+    "z": 2194,
+    "parent": "q60i"
+  },
+  "rjco13": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco13",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s19",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j22ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j22ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s19",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs39": {
+    "type": "label",
+    "z": 358,
+    "id": "qs39",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s19",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "ustmB1": {
+    "id": "ustmB1",
+    "parent": "axfj",
+    "fixedParent": true,
+    "y": 158,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "default": {
+        "font-family": "Urbanist"
+      }
+    }
+  },
+  "ustmB2": {
+    "id": "ustmB2",
+    "parent": "isy0",
+    "fixedParent": true,
+    "y": 158,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "default": {
+        "font-family": "Urbanist"
+      }
+    }
+  },
+  "485w": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card1",
+    "id": "485w",
+    "z": 2038,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "23gr": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card2",
+    "id": "23gr",
+    "z": 2039,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "fwif": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card3",
+    "id": "fwif",
+    "z": 2040,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "qguo": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card4",
+    "id": "qguo",
+    "z": 2041,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "e5wi": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card5",
+    "id": "e5wi",
+    "z": 2042,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "wfna": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card6",
+    "id": "wfna",
+    "z": 2043,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "ohly": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card7",
+    "id": "ohly",
+    "z": 2044,
+    "activeFace": 1,
+    "parent": "yvbt"
+  },
+  "6wcw": {
+    "deck": "axfjD",
+    "type": "card",
+    "cardType": "card8",
+    "id": "6wcw",
+    "z": 2046,
+    "parent": "yvbt",
+    "activeFace": 1
+  },
+  "m248": {
+    "type": "holder",
+    "x": 416,
+    "y": 99,
+    "id": "m248",
+    "width": 114,
+    "height": 154,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid"
+    },
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "qzlq9": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq9",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 106,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl1",
+    "layer": 0
+  },
+  "qzlq10": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq10",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 206,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl1",
+    "layer": 0
+  },
+  "qzlq11": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq11",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 306,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl1",
+    "layer": 0
+  },
+  "qzlq16": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq16",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 406,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl1",
+    "layer": 0
+  },
+  "epl1": {
+    "parent": null,
+    "x": 14,
+    "y": 481,
+    "width": 506,
+    "height": 146,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "epl1"
+  },
+  "epl2": {
+    "x": 543,
+    "y": 481,
+    "width": 506,
+    "height": 146,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "epl2"
+  },
+  "qzlq17": {
+    "type": "holder",
+    "id": "qzlq17",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "x": 6,
+    "y": 6,
+    "parent": "epl2",
+    "layer": 0,
+    "z": 20
+  },
+  "6ln5": {
+    "type": "label",
+    "text": "Battlefield",
+    "x": 12,
+    "y": 9,
+    "z": 10,
+    "id": "6ln5",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "parent": "epl2",
+    "layer": 0
+  },
+  "field10": {
+    "id": "field10",
+    "width": 506,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "height": 146,
+    "movable": false,
+    "parent": "epl2",
+    "layer": 0
+  },
+  "qzlq18": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq18",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 106,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl2",
+    "layer": 0
+  },
+  "qzlq19": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq19",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 206,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl2",
+    "layer": 0
+  },
+  "qzlq20": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq20",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 306,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl2",
+    "layer": 0
+  },
+  "qzlq21": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq21",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 406,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl2",
+    "layer": 0
+  },
+  "epl3": {
+    "x": 1072,
+    "y": 481,
+    "width": 506,
+    "height": 146,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "epl3"
+  },
+  "qzlq22": {
+    "type": "holder",
+    "id": "qzlq22",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "x": 6,
+    "y": 6,
+    "parent": "epl3",
+    "layer": 0,
+    "z": 20
+  },
+  "6ln6": {
+    "type": "label",
+    "text": "Battlefield",
+    "x": 12,
+    "y": 9,
+    "z": 10,
+    "id": "6ln6",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "parent": "epl3",
+    "layer": 0
+  },
+  "field11": {
+    "id": "field11",
+    "width": 506,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "height": 146,
+    "movable": false,
+    "parent": "epl3",
+    "layer": 0
+  },
+  "qzlq23": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq23",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 106,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl3",
+    "layer": 0
+  },
+  "qzlq24": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq24",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 206,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl3",
+    "layer": 0
+  },
+  "qzlq25": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq25",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 306,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl3",
+    "layer": 0
+  },
+  "qzlq26": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq26",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 406,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl3",
+    "layer": 0
+  },
+  "epl4": {
+    "x": 540,
+    "y": 99,
+    "width": 506,
+    "height": 146,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "epl4"
+  },
+  "qzlq27": {
+    "type": "holder",
+    "id": "qzlq27",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "classes": "transparent",
+    "x": 6,
+    "y": 6,
+    "parent": "epl4",
+    "layer": 0,
+    "z": 20
+  },
+  "6ln7": {
+    "type": "label",
+    "text": "Battlefield",
+    "x": 12,
+    "y": 9,
+    "z": 10,
+    "id": "6ln7",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "parent": "epl4",
+    "layer": 0
+  },
+  "field12": {
+    "id": "field12",
+    "width": 506,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "height": 146,
+    "movable": false,
+    "parent": "epl4",
+    "layer": 0
+  },
+  "qzlq28": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq28",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 106,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl4",
+    "layer": 0
+  },
+  "qzlq29": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq29",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 206,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl4",
+    "layer": 0
+  },
+  "qzlq30": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq30",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 306,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl4",
+    "layer": 0
+  },
+  "qzlq31": {
+    "type": "holder",
+    "z": 20,
+    "id": "qzlq31",
+    "width": 100,
+    "height": 140,
+    "borderRadius": 0,
+    "dropShadow": true,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "x": 406,
+    "classes": "transparent",
+    "y": 6,
+    "parent": "epl4",
+    "layer": 0
+  },
+  "xi14b": {
+    "type": "holder",
+    "id": "xi14b",
+    "x": 133,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background": "white"
+    },
+    "z": 50,
+    "height": 154,
+    "y": 640
+  },
+  "wpoo6": {
+    "type": "label",
+    "text": "Graveyard",
+    "z": 89,
+    "id": "wpoo6",
+    "rotation": 90,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "height": 25,
+    "layer": -4,
+    "parent": "xi14b",
+    "x": -37,
+    "y": 43
+  },
+  "xi18b": {
+    "id": "xi18b",
+    "x": 252,
+    "y": 719,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 66,
+    "layer": -3
+  },
+  "gie10": {
+    "type": "label",
+    "text": 0,
+    "id": "gie10",
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47,
+    "parent": "xi18b",
+    "x": 45,
+    "y": 5
+  },
+  "gie10U": {
+    "id": "gie10U",
+    "parent": "gie10",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie10D": {
+    "id": "gie10D",
+    "parent": "gie10",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt11q": {
+    "type": "label",
+    "text": "Advantage",
+    "z": 27,
+    "id": "kt11q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "parent": "xi18b",
+    "y": 40,
+    "x": 12,
+    "height": 25
+  },
+  "ustmB": {
+    "id": "ustmB",
+    "parent": "ustm",
+    "fixedParent": true,
+    "y": 158,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "default": {
+        "font-family": "Urbanist"
+      }
+    }
+  },
+  "2mxg": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "weak-warrior",
+    "id": "2mxg",
+    "z": 969,
+    "parent": "q7ir"
+  },
+  "n0fb": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "weak-warrior",
+    "id": "n0fb",
+    "z": 981,
+    "parent": "q7ir"
+  },
+  "v0vz": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "weak-warrior",
+    "id": "v0vz",
+    "z": 993,
+    "parent": "q7ir"
+  },
+  "8ujr": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "weak-item",
+    "id": "8ujr",
+    "z": 999,
+    "parent": "q7ir"
+  },
+  "x7qt": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "normal-item",
+    "id": "x7qt",
+    "z": 1001,
+    "parent": "q7ir"
+  },
+  "4pk1": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "strong-item",
+    "id": "4pk1",
+    "z": 1003,
+    "parent": "q7ir"
+  },
+  "aiel": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "weak-warrior",
+    "id": "aiel",
+    "z": 1005,
+    "parent": "q7ir"
+  },
+  "02l0": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "normal-warrior",
+    "id": "02l0",
+    "z": 1049,
+    "hoverParent": "ustm",
+    "parent": "q7ir"
+  },
+  "ustmD": {
+    "type": "deck",
+    "id": "ustmD",
+    "parent": "ustm",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "weak-item": {
+        "face": "/assets/-55865234_19658",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "normal-item": {
+        "face": "/assets/-1878155069_19564",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "strong-item": {
+        "face": "/assets/1214028491_18586",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "weak-warrior": {
+        "face": "/assets/-1667062225_21434",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "normal-warrior": {
+        "face": "/assets/2117887419_20890",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "strong-warrior": {
+        "face": "/assets/1494711932_21818",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "back",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "face",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 100,
+      "height": 140,
+      "enlarge": 4,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      },
+      "back": "/assets/-1569446033_3396"
+    }
+  },
+  "q7ir": {
+    "type": "pile",
+    "width": 100,
+    "height": 147,
+    "id": "q7ir",
+    "z": 1873,
+    "hoverParent": "ustm",
+    "parent": "ustm"
+  },
+  "ustm": {
+    "type": "holder",
+    "id": "ustm",
+    "x": 15,
+    "y": 98,
+    "dropTarget": {
+      "type": "card"
+    },
+    "css": {
+      "border": "#2F3433 4px solid"
+    },
+    "borderRadius": 0,
+    "width": 114,
+    "height": 154
+  },
+  "pg5": {
+    "type": "dice",
+    "x": 930,
+    "y": 652,
+    "z": 110,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "pg5",
+    "color": "green"
+  },
+  "pg7": {
+    "type": "dice",
+    "x": 1459,
+    "y": 652,
+    "z": 110,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "pg7",
+    "color": "orange"
+  },
+  "pg8": {
+    "type": "dice",
+    "x": 990,
+    "y": 653,
+    "z": 116,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "pg8",
+    "color": "green"
+  },
+  "pg9": {
+    "type": "dice",
+    "x": 1519,
+    "y": 653,
+    "z": 116,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "id": "pg9",
+    "color": "orange"
+  },
+  "xi13b": {
+    "type": "holder",
+    "id": "xi13b",
+    "x": 543,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background": "white"
+    },
+    "z": 50,
+    "height": 154,
+    "y": 640
+  },
+  "xi8bB": {
+    "id": "xi8bB",
+    "parent": "xi13b",
+    "fixedParent": true,
+    "y": 151,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "default": {
+        "font-family": "Urbanist"
+      }
+    },
+    "x": -2
+  },
+  "xi8bD": {
+    "type": "deck",
+    "id": "xi8bD",
+    "x": 11,
+    "y": 36,
+    "cardTypes": {
+      "card1": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card2": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card3": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card4": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "back",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "face",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 353,
+    "cardDefaults": {
+      "width": 100,
+      "height": 140,
+      "enlarge": 4,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      },
+      "back": "/assets/-1569446033_3396"
+    },
+    "parent": "xi13b"
+  },
+  "wpoo7": {
+    "type": "label",
+    "text": "Deck",
+    "z": 89,
+    "id": "wpoo7",
+    "rotation": 90,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "height": 25,
+    "layer": -4,
+    "parent": "xi13b",
+    "x": -37,
+    "y": 43
+  },
+  "xi15b": {
+    "type": "holder",
+    "id": "xi15b",
+    "x": 1072,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background": "white"
+    },
+    "z": 50,
+    "height": 154,
+    "y": 640
+  },
+  "xi9bB": {
+    "id": "xi9bB",
+    "parent": "xi15b",
+    "fixedParent": true,
+    "y": 151,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "css": {
+      "default": {
+        "font-family": "Urbanist"
+      }
+    },
+    "x": -2
+  },
+  "xi9bD": {
+    "type": "deck",
+    "id": "xi9bD",
+    "x": 11,
+    "y": 36,
+    "cardTypes": {
+      "card1": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card2": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card3": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      },
+      "card4": {
+        "face": "/assets/1185280421_37356",
+        "offsetX": 0,
+        "offsetY": 0,
+        "deckWidth": 1,
+        "deckHeight": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "back",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "css": {
+              "background-size": "calc(var(--width) * var(--deckWidth) * 1px) calc(var(--height) * var(--deckHeight) * 1px)",
+              "background-position": "calc(var(--width) * var(--offsetX) * -1px) calc(var(--height) * var(--offsetY) * -1px)"
+            },
+            "dynamicProperties": {
+              "value": "face",
+              "width": "width",
+              "height": "height"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 353,
+    "cardDefaults": {
+      "width": 100,
+      "height": 140,
+      "enlarge": 4,
+      "css": {
+        "--offsetX": "${PROPERTY offsetX}",
+        "--offsetY": "${PROPERTY offsetY}",
+        "--deckWidth": "${PROPERTY deckWidth}",
+        "--deckHeight": "${PROPERTY deckHeight}",
+        "--width": "${PROPERTY width}",
+        "--height": "${PROPERTY height}"
+      },
+      "back": "/assets/-1569446033_3396"
+    },
+    "parent": "xi15b"
+  },
+  "wpoo8": {
+    "type": "label",
+    "text": "Deck",
+    "z": 89,
+    "id": "wpoo8",
+    "rotation": 90,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "height": 25,
+    "layer": -4,
+    "parent": "xi15b",
+    "x": -37,
+    "y": 43
+  },
+  "ae7n": {
+    "deck": "xi7bD",
+    "type": "card",
+    "cardType": "card4",
+    "id": "ae7n",
+    "z": 1822,
+    "parent": "2u8u"
+  },
+  "eb55": {
+    "deck": "xi7bD",
+    "type": "card",
+    "cardType": "card1",
+    "id": "eb55",
+    "z": 1824,
+    "parent": "2u8u"
+  },
+  "dtf9": {
+    "deck": "xi7bD",
+    "type": "card",
+    "cardType": "card3",
+    "id": "dtf9",
+    "z": 1821,
+    "parent": "2u8u"
+  },
+  "2e9f": {
+    "deck": "xi7bD",
+    "type": "card",
+    "cardType": "card2",
+    "id": "2e9f",
+    "z": 1823,
+    "parent": "2u8u"
+  },
+  "xi17b": {
+    "id": "xi17b",
+    "x": 781,
+    "y": 640,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 66,
+    "layer": -3
+  },
+  "gie9": {
+    "type": "label",
+    "text": 0,
+    "id": "gie9",
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47,
+    "parent": "xi17b",
+    "x": 45,
+    "y": 5
+  },
+  "gie9U": {
+    "id": "gie9U",
+    "parent": "gie9",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie9D": {
+    "id": "gie9D",
+    "parent": "gie9",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt10q": {
+    "type": "label",
+    "text": "Life",
+    "z": 27,
+    "id": "kt10q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "parent": "xi17b",
+    "y": 40,
+    "x": 12
+  },
+  "xi19b": {
+    "id": "xi19b",
+    "x": 1310,
+    "y": 640,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 66,
+    "layer": -3
+  },
+  "gie13": {
+    "type": "label",
+    "text": 0,
+    "id": "gie13",
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47,
+    "parent": "xi19b",
+    "x": 45,
+    "y": 5
+  },
+  "gie13U": {
+    "id": "gie13U",
+    "parent": "gie13",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie13D": {
+    "id": "gie13D",
+    "parent": "gie13",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt14q": {
+    "type": "label",
+    "text": "Life",
+    "z": 27,
+    "id": "kt14q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "parent": "xi19b",
+    "y": 40,
+    "x": 12
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 919,
+    "y": 718,
+    "height": 50,
+    "z": 25,
+    "color": "green",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433"
+      }
+    },
+    "width": 120,
+    "index": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 1448,
+    "y": 718,
+    "height": 50,
+    "z": 25,
+    "color": "orange",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433"
+      }
+    },
+    "width": 120,
+    "index": 3
+  },
+  "xi20b": {
+    "type": "holder",
+    "id": "xi20b",
+    "x": 662,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background": "white"
+    },
+    "z": 50,
+    "height": 154,
+    "y": 640
+  },
+  "wpoo9": {
+    "type": "label",
+    "text": "Graveyard",
+    "z": 89,
+    "id": "wpoo9",
+    "rotation": 90,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "height": 25,
+    "layer": -4,
+    "parent": "xi20b",
+    "x": -37,
+    "y": 43
+  },
+  "xi21b": {
+    "type": "holder",
+    "id": "xi21b",
+    "x": 1191,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 114,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background": "white"
+    },
+    "z": 50,
+    "height": 154,
+    "y": 640
+  },
+  "wpoo10": {
+    "type": "label",
+    "text": "Graveyard",
+    "z": 89,
+    "id": "wpoo10",
+    "rotation": 90,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px",
+        "text-align": "left"
+      }
+    },
+    "height": 25,
+    "layer": -4,
+    "parent": "xi21b",
+    "x": -37,
+    "y": 43
+  },
+  "xi22b": {
+    "id": "xi22b",
+    "x": 781,
+    "y": 719,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 66,
+    "layer": -3
+  },
+  "gie14": {
+    "type": "label",
+    "text": 0,
+    "id": "gie14",
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47,
+    "parent": "xi22b",
+    "x": 45,
+    "y": 5
+  },
+  "gie14U": {
+    "id": "gie14U",
+    "parent": "gie14",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie14D": {
+    "id": "gie14D",
+    "parent": "gie14",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt15q": {
+    "type": "label",
+    "text": "Advantage",
+    "z": 27,
+    "id": "kt15q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "parent": "xi22b",
+    "y": 40,
+    "x": 12,
+    "height": 25
+  },
+  "xi25b": {
+    "id": "xi25b",
+    "x": 1310,
+    "y": 719,
+    "width": 125,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "white"
+    },
+    "z": 96,
+    "height": 66,
+    "layer": -3
+  },
+  "gie15": {
+    "type": "label",
+    "text": 0,
+    "id": "gie15",
+    "width": 34,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "color": "#2F3433",
+        "font-size": "30px",
+        "font-weight": "bold"
+      },
+      "@font-face": {
+        "font-family": "Urbanist",
+        "font-style": "normal",
+        "src": "url(/assets/1684093304_42704) format('woff2')"
+      }
+    },
+    "editable": true,
+    "height": 41,
+    "z": 47,
+    "parent": "xi25b",
+    "x": 45,
+    "y": 5
+  },
+  "gie15U": {
+    "id": "gie15U",
+    "parent": "gie15",
+    "fixedParent": true,
+    "x": 37,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "text": "add"
+  },
+  "gie15D": {
+    "id": "gie15D",
+    "parent": "gie15",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "kt16q": {
+    "type": "label",
+    "text": "Advantage",
+    "z": 27,
+    "id": "kt16q",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "18px"
+      }
+    },
+    "parent": "xi25b",
+    "y": 40,
+    "x": 12,
+    "height": 25
+  },
+  "jbjl12": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl12",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 4px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "i06m"
+  },
+  "jbjl13": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl13",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border": "#2F3433 4px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "i06m",
+    "height": 26
+  },
+  "njrn3": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn3",
+    "enlarge": 4,
+    "x": 118,
+    "y": 346
+  },
+  "jbjl16": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl16",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "1xv1"
+  },
+  "jbjl17": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl17",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "1xv1",
+    "height": 26
+  },
+  "jbjl20": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl20",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn4",
+    "height": 26
+  },
+  "jbjl21": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl21",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn4"
+  },
+  "njrn4": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn4",
+    "enlarge": 4,
+    "x": 220,
+    "y": 346
+  },
+  "njrn5": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn5",
+    "enlarge": 4,
+    "x": 322,
+    "y": 346
+  },
+  "jbjl24": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl24",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn5",
+    "height": 26
+  },
+  "jbjl25": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl25",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn5"
+  },
+  "njrn6": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn6",
+    "enlarge": 4,
+    "x": 424,
+    "y": 346
+  },
+  "jbjl28": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl28",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 4px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn6",
+    "height": 26
+  },
+  "jbjl29": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl29",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 4px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn6"
+  },
+  "i06m": {
+    "parent": "njrn2",
+    "x": 0,
+    "y": 0,
+    "width": 94,
+    "height": 121,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "i06m"
+  },
+  "1xv1": {
+    "parent": "njrn3",
+    "x": 0,
+    "y": 0,
+    "width": 94,
+    "height": 121,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "1xv1"
+  },
+  "field9": {
+    "id": "field9",
+    "x": 543,
+    "y": 308,
+    "width": 506,
+    "borderRadius": 0,
+    "z": 77,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "#2F3433"
+    },
+    "height": 30,
+    "movable": false,
+    "layer": -5
+  },
+  "field13": {
+    "id": "field13",
+    "x": 1072,
+    "y": 308,
+    "width": 506,
+    "borderRadius": 0,
+    "z": 77,
+    "css": {
+      "border": "#2F3433 4px solid",
+      "background-color": "#2F3433"
+    },
+    "height": 30,
+    "movable": false,
+    "layer": -5
+  },
+  "i4cl": {
+    "type": "label",
+    "text": "Staples",
+    "x": 554,
+    "y": 318,
+    "z": 354,
+    "id": "i4cl",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "white",
+        "font-size": "14px",
+        "text-align": "right"
+      }
+    },
+    "height": 25,
+    "width": 90
+  },
+  "i5cl": {
+    "type": "label",
+    "text": "Staples",
+    "x": 1083,
+    "y": 318,
+    "z": 354,
+    "id": "i5cl",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "white",
+        "font-size": "14px",
+        "text-align": "right"
+      }
+    },
+    "height": 25,
+    "width": 90
+  },
+  "4tta": {
+    "type": "label",
+    "text": "(Use a counter to mark the Staple you used last turn)",
+    "x": 650,
+    "y": 318,
+    "z": 355,
+    "id": "4tta",
+    "width": 368,
+    "height": 25,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bolditalics",
+        "color": "white",
+        "font-size": "14px",
+        "text-align": "left"
+      }
+    }
+  },
+  "5tta": {
+    "type": "label",
+    "text": "(Use a counter to mark the Staple you used last turn)",
+    "x": 1179,
+    "y": 318,
+    "z": 355,
+    "id": "5tta",
+    "width": 368,
+    "height": 25,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bolditalics",
+        "color": "white",
+        "font-size": "14px",
+        "text-align": "left"
+      }
+    }
+  },
+  "o221": {
+    "x": 978,
+    "y": 397,
+    "width": 48,
+    "height": 48,
+    "classes": "pokerChip",
+    "color": "#2F3433",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "z": 117,
+    "id": "o221"
+  },
+  "o222": {
+    "x": 1507,
+    "y": 397,
+    "width": 48,
+    "height": 48,
+    "classes": "pokerChip",
+    "color": "#2F3433",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "color",
+      "#accentColor2": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "labelColor",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "labelColor": "#00000022",
+    "z": 117,
+    "id": "o222"
+  },
+  "njrn7": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn7",
+    "enlarge": 4,
+    "x": 543,
+    "y": 346,
+    "width": 102
+  },
+  "i7m": {
+    "parent": "njrn7",
+    "x": 0,
+    "y": 0,
+    "width": 94,
+    "height": 121,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "i7m"
+  },
+  "jbjl14": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl14",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 4px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "i7m"
+  },
+  "jbjl15": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl15",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border": "#2F3433 4px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "i7m",
+    "height": 26
+  },
+  "njrn8": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn8",
+    "enlarge": 4,
+    "x": 1072,
+    "y": 346,
+    "width": 102
+  },
+  "i8m": {
+    "parent": "njrn8",
+    "x": 0,
+    "y": 0,
+    "width": 94,
+    "height": 121,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "i8m"
+  },
+  "jbjl18": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl18",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 4px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "i8m"
+  },
+  "jbjl19": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl19",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border": "#2F3433 4px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "i8m",
+    "height": 26
+  },
+  "njrn9": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn9",
+    "enlarge": 4,
+    "x": 647,
+    "y": 346
+  },
+  "1xv2": {
+    "parent": "njrn9",
+    "x": 0,
+    "y": 0,
+    "width": 94,
+    "height": 121,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "1xv2"
+  },
+  "jbjl22": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl22",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "1xv2"
+  },
+  "jbjl23": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl23",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "1xv2",
+    "height": 26
+  },
+  "njrn10": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn10",
+    "enlarge": 4,
+    "x": 1176,
+    "y": 346
+  },
+  "1xv3": {
+    "parent": "njrn10",
+    "x": 0,
+    "y": 0,
+    "width": 94,
+    "height": 121,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "1xv3"
+  },
+  "jbjl26": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl26",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "1xv3"
+  },
+  "jbjl27": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl27",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "1xv3",
+    "height": 26
+  },
+  "njrn11": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn11",
+    "enlarge": 4,
+    "x": 749,
+    "y": 346
+  },
+  "jbjl30": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl30",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn11",
+    "height": 26
+  },
+  "jbjl31": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl31",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn11"
+  },
+  "njrn12": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn12",
+    "enlarge": 4,
+    "x": 1278,
+    "y": 346
+  },
+  "jbjl32": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl32",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn12",
+    "height": 26
+  },
+  "jbjl33": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl33",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn12"
+  },
+  "njrn13": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn13",
+    "enlarge": 4,
+    "x": 851,
+    "y": 346
+  },
+  "jbjl34": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl34",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn13",
+    "height": 26
+  },
+  "jbjl35": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl35",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn13"
+  },
+  "njrn14": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn14",
+    "enlarge": 4,
+    "x": 1380,
+    "y": 346
+  },
+  "jbjl36": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl36",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn14",
+    "height": 26
+  },
+  "jbjl37": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl37",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 2px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn14"
+  },
+  "njrn15": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn15",
+    "enlarge": 4,
+    "x": 953,
+    "y": 346
+  },
+  "jbjl38": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl38",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 4px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn15",
+    "height": 26
+  },
+  "jbjl39": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl39",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 4px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn15"
+  },
+  "njrn16": {
+    "height": 125,
+    "layer": -3,
+    "editorGroup": true,
+    "movable": false,
+    "id": "njrn16",
+    "enlarge": 4,
+    "x": 1482,
+    "y": 346
+  },
+  "jbjl40": {
+    "type": "label",
+    "z": 105,
+    "id": "jbjl40",
+    "width": 94,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "color": "#2F3433",
+        "font-size": "12px",
+        "vertical-align": "middle",
+        "background-color": "white",
+        "border-top": "#2F3433 4px solid",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 4px solid",
+        "border-bottom": "#2F3433 1px solid",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn16",
+    "height": 26
+  },
+  "jbjl41": {
+    "type": "label",
+    "y": 35,
+    "z": 102,
+    "id": "jbjl41",
+    "width": 94,
+    "height": 86,
+    "editable": true,
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "10px",
+        "background-color": "white",
+        "border-left": "#2F3433 2px solid",
+        "border-right": "#2F3433 4px solid",
+        "border-bottom": "#2F3433 4px solid",
+        "border-top": "none",
+        "padding": "2px"
+      }
+    },
+    "layer": 1,
+    "parent": "njrn16"
+  },
+  "sbdj": {
+    "deck": "xi8bD",
+    "type": "card",
+    "cardType": "card1",
+    "id": "sbdj",
+    "z": 2252,
+    "parent": "vv6g"
+  },
+  "fwm7": {
+    "deck": "xi8bD",
+    "type": "card",
+    "cardType": "card2",
+    "id": "fwm7",
+    "z": 2251,
+    "parent": "vv6g"
+  },
+  "q7su": {
+    "deck": "xi8bD",
+    "type": "card",
+    "cardType": "card3",
+    "id": "q7su",
+    "z": 2249,
+    "parent": "vv6g"
+  },
+  "nvu0": {
+    "deck": "xi8bD",
+    "type": "card",
+    "cardType": "card4",
+    "id": "nvu0",
+    "z": 2250,
+    "parent": "vv6g"
+  },
+  "45g3": {
+    "deck": "xi9bD",
+    "type": "card",
+    "cardType": "card1",
+    "id": "45g3",
+    "z": 1725,
+    "parent": "b4pd",
+    "x": null,
+    "y": null
+  },
+  "sdpx": {
+    "deck": "xi9bD",
+    "type": "card",
+    "cardType": "card2",
+    "id": "sdpx",
+    "z": 1727,
+    "parent": "b4pd",
+    "x": null,
+    "y": null
+  },
+  "b4pd": {
+    "type": "pile",
+    "parent": "xi15b",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "id": "b4pd"
+  },
+  "mjxq": {
+    "deck": "xi9bD",
+    "type": "card",
+    "cardType": "card3",
+    "id": "mjxq",
+    "z": 1729,
+    "parent": "b4pd",
+    "x": null,
+    "y": null
+  },
+  "fn0s": {
+    "deck": "xi9bD",
+    "type": "card",
+    "cardType": "card4",
+    "id": "fn0s",
+    "z": 1861,
+    "parent": "b4pd"
+  },
+  "yvbt": {
+    "type": "pile",
+    "parent": "axfj",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "id": "yvbt"
+  },
+  "2u8u": {
+    "type": "pile",
+    "parent": "xi12b",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "id": "2u8u"
+  },
+  "8yqd": {
+    "id": "8yqd",
+    "x": 1005,
+    "y": 840,
+    "html": "\n  <h2>Turn Actions</h2>\n  <div>\n  <h3>Draw a Card</h3>\n  <p>Take the top card of your deck and add it to your hand. If there are no cards in your deck, you can pay 1 life to shuffle your graveyard into your deck.</p>\n  <h3>Play a Card From Your Hand</h3>\n  <p>You can play a single card from your hand onto the field. You can do this once per turn. Alternatively you can choose to discard a card to play an additional staple this turn.</p>\n<h3>Play a Staple or Invocation</h3>\n  <p>You can use a single staple from your staple list. You can not use the same staple you used last time you used a staple. If you have an invocation in your hand, you can play that from your hand instead.</p>\n  </div>\n  <div>\n  <h3>Attack With Warriors</h3>\n  <p>Each warrior you control can attack. If the opponent has no warriors, then you can attack directly; otherwise you must attack a warrior or item the opponent controls.\nIf the card you attacked has less strength then the card you attacked with, it is destroyed. If it has more, your card is destroyed. Otherwise, Decide the Outcome of a Clash.\nIf you’ve attacked directly, deal damage to the opponent depending on the warrior’s strength.</p>\n<ul>\n<li>{Normal} warriors deal 1 life worth of damage.</li>\n<li>{Strong} warriors deal 2 life worth of damage.</li>\n<li>{Weak} warriors do not damage players’ life.</li>\n</ul>\n</div>\n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "7px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0"
+      },
+      " h3": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "font-size": "12px",
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " div": {
+        "width": "50%",
+        "float": "left"
+      },
+      " ul": {
+        "margin": "0",
+        "margin-top": "4px"
+      },
+      " ul li": {
+        "padding-left": "4px"
+      }
+    },
+    "enlarge": 2,
+    "width": 420,
+    "height": 145,
+    "layer": -1
+  },
+  "ie2s": {
+    "type": "label",
+    "text": "Urbanist Italics",
+    "x": 1668,
+    "y": 157,
+    "z": 357,
+    "id": "ie2s",
+    "css": {
+      "default": {
+        "font-family": "Urbanist-italics",
+        "color": "white",
+        "font-size": "20px"
+      },
+      "@font-face": {
+        "font-family": "Urbanist-italics",
+        "font-style": "italic",
+        "src": "url(/assets/-2081599578_43992) format('woff2')"
+      }
+    },
+    "width": 150
+  },
+  "9yqd": {
+    "id": "9yqd",
+    "x": 168,
+    "y": 840,
+    "html": "\n  <h2>Begin Card Game Combat</h2>\n\n  <p>When you initiate card game combat with one or more opponents, first define the stakes of the battle for each player; then, check each player’s list of baggage. For each relevant baggage for this battle, that player gains 1 Advantage.</p>\n<p>Finally, decide on whether the fight is a Filler, Significant, or Finale fight, and decide the order of competitors’ turns. The first competitor then begins their turn.</p>\n<p>If a player prepared for the fight, they can Create a Card, and shuffle it into their deck before the fight starts.\nRemember that warriors cannot attack if it is the first turn of the game, and that players do not draw a card if it is the first turn of the game.</p>\n\n<table>\n  <tr>\n    <th></th>\n    <th>Life</th>\n    <th>Cards</th>\n    <th>Response Moves</th>\n    <th>Lashout Against Losing</th>\n    <th>Backup Plan</th>\n  </tr>\n  <tr>\n    <th>Filler</th>\n    <td>2</td>\n    <td>1</td>\n    <td>1</td>\n    <td>1</td>\n    <td>0</td>\n  </tr>\n  <tr>\n    <th>Significant</th>\n    <td>3</td>\n    <td>2</td>\n    <td>2</td>\n    <td>1</td>\n    <td>1</td>\n  </tr>\n  <tr>\n    <th>Finale</th>\n    <td>4</td>\n    <td>3</td>\n    <td>3</td>\n    <td>2</td>\n    <td>1</td>\n  </tr>\n</table>\n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "8px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0",
+        "margin-bottom": "2px"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " table": {
+        "width": "100%",
+        "background": "#2F3433",
+        "border-collapse": "collapse",
+        "position": "absolute",
+        "bottom": "0"
+      },
+      " th": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "color": "white",
+        "border": "#2F3433 1px solid"
+      },
+      " td": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "background": "white",
+        "border": "#2F3433 1px solid",
+        "text-align": "center"
+      }
+    },
+    "enlarge": 2,
+    "width": 420,
+    "height": 145,
+    "z": 120,
+    "layer": -1
+  },
+  "10yqd": {
+    "id": "10yqd",
+    "x": 6,
+    "y": 840,
+    "html": "\n  <h2>Advantage</h2>\n  <p>You spend advantage in the following ways:</p>\n  <ul>\n<li>Draw 1 additional card at the beginning of your turn.</li>\n<li>Place a card of your choice from your deck at the top of your deck.</li>\n<li>Stay at 1 life when you would otherwise lose your last life.</li>\n<li>Improve a “Decide the Outcome of a Clash” result.</li>\n<li>Use “Counter Your Opponent’s Play”.</li>\n<li>Succeed at “Protect Against a Response” on a 7-9.</li>\n<li>Use “Draw the Perfect Card” to Create a Card.</li>\n</ul>\n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "7px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0",
+        "margin-bottom": "2px"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " ul": {
+        "margin": "0",
+        "padding-left": "8px"
+      }
+    },
+    "enlarge": 2,
+    "height": 145,
+    "z": 120,
+    "width": 150,
+    "layer": -1
+  },
+  "11yqd": {
+    "id": "11yqd",
+    "x": 1437,
+    "y": 840,
+    "html": "\n  <h2>Combat Tension Questions</h2>\n  <ul>\n<li>Have you lost at least half your life in this card game?</li>\n<li>Has your opponent used your baggage to gain an advantage over you?</li>\n<li>Has something or someone you care about more than yourself been put at risk?</li>\n</ul>\n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "10px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0",
+        "margin-bottom": "2px"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " ul": {
+        "margin": "0",
+        "padding-left": "10px"
+      }
+    },
+    "enlarge": 2,
+    "height": 145,
+    "z": 120,
+    "width": 150,
+    "layer": -1
+  },
+  "vv6g": {
+    "type": "pile",
+    "parent": "xi13b",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "id": "vv6g"
+  },
+  "12yqd": {
+    "id": "12yqd",
+    "x": 16,
+    "html": "\n  <h2>Opponent Moves</h2>\n<div><h3>Use a Response Move</h3>\n  <p>When the player does something in a card game and you choose to use a response move, counter the effect of a players’ card, and describe how this happens. The player rolls Protect Against a Response.</p></div>\n<div><h3>Lash Out Against Losing</h3>\n  <p>When it looks like you might lose, lash out against that possibility. Define new consequences for the game. If you lashed out in a way related to a participating players’ baggage, you can use an additional response move this game.</p></div>\n<h3>Reveal Your Backup Plan</h3>\n  <p>When your first plan has been dealt with, reveal your new plan or the way in which you’ve been tricking the player this whole time. You may Establish a Plan to Win again next turn.</p>\n\n  \n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "7px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0"
+      },
+      " h3": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "font-size": "12px",
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " div": {
+        "width": "33%",
+        "float": "left"
+      }
+    },
+    "enlarge": 2,
+    "width": 506,
+    "layer": -4,
+    "z": 127,
+    "height": 80,
+    "y": 3
+  },
+  "13yqd": {
+    "id": "13yqd",
+    "x": 1191,
+    "y": 7,
+    "html": "\n  <h2>Establish a Plan to Win Examples</h2>\n<table>\n  <tr>\n    <th>1</th>\n    <td><b>Create a Payoff:</b> Play a {Normal} warrior or a {Strong} item that pays off a central play pattern or strategy of the deck.\nUse a Simple Card Move.</td>\n  </tr>\n  <tr>\n    <th>2</th>\n    <td><b>Create an Impenetrable Threat:</b> Play a {Strong} warrior with up to three protection or power increasing effects.\nUse a Simple Card Move.</td>\n\n  </tr>\n  <tr>\n    <th>3</th>\n    <td><b>Severely Disadvantage the Player:</b> Play an invocation, a {Normal} warrior or {Strong} item that makes it difficult for the player to play in a standard manner.\nUse a Simple Card Move.</td>\n\n  </tr>\n  <tr>\n    <th>4</th>\n    <td><b>Put a Timer on the Game:</b> Play a {Strong} item that will win you the game once X more turns have passed (X is equal to the players’ starting life total), or that will let you Combo Off in Y more turns (Y is equal to the players’ starting life total -1).\nUse two Simple Card Moves.</td>\n\n  </tr>\n</table>\n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "8px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " table": {
+        "width": "100%",
+        "background": "#2F3433",
+        "border-collapse": "collapse"
+      },
+      " th": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "color": "white",
+        "border": "#2F3433 1px solid"
+      },
+      " td": {
+        "font-family": "Urbanist",
+        "background": "white",
+        "border": "#2F3433 1px solid",
+        "text-align": "center"
+      },
+      " b": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal"
+      }
+    },
+    "enlarge": 2,
+    "width": 160,
+    "height": 253,
+    "z": 128,
+    "layer": -1
+  },
+  "14yqd": {
+    "id": "14yqd",
+    "x": 1370,
+    "y": 7,
+    "html": "\n  <h2>Power Card Moves Examples</h2>\n<table>\n  <tr>\n    <th>1</th>\n    <td><b>Protect Your Game Plan:</b> Play a {Normal} warrior, {Normal} item, or invocation that protects the deck’s gameplan, such as by making it harder to remove a key game piece, or harder for the player to perform a disruptive action.\nUse a Simple Card Move.</td>\n  </tr>\n  <tr>\n    <th>2</th>\n    <td><b>Create a New Threat:</b> Play a {Normal} warrior with 1-2 features that makes it a threat to the player. Use One or Two Simple Card Moves.\n</td>\n\n  </tr>\n  <tr>\n    <th>3</th>\n    <td><b>Create an Advantage:</b>  Play a {Normal} warrior or a {Strong} item with some form of protection that creates an advantage for you in some minor but useful way.\nUse a Simple Card Move.</td>\n\n  </tr>\n  <tr>\n    <th>4</th>\n    <td><b>Remove the Immediate Problems:</b> Play an invocation that deals with one or more problems the player has created. Use Zero, One, or Two Simple Card Moves (depending on circumstance).</td>\n\n  </tr>\n   <tr>\n    <th>5</th>\n    <td><b>Disrupt the Players’ Plans:</b> Play a {Normal} warrior or {Normal} item that disrupts the players’ plans and/or gives them a disadvantage of some kind.\nUse a Simple Card Move.</td>\n\n  </tr>\n   <tr>\n    <th>6</th>\n    <td><b>Dawdle:</b> Use a Simple Card Move up to 4 times.</td>\n\n  </tr>\n</table>\n  ",
+    "css": {
+      "default": {
+        "text-align": "left",
+        "border": "#2F3433 4px solid",
+        "background": "white",
+        "font-family": "Urbanist-italics",
+        "color": "#2F3433",
+        "font-size": "8px"
+      },
+      " h2": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "text-align": "center",
+        "color": "white",
+        "font-size": "16px",
+        "background": "#2F3433",
+        "margin": "0"
+      },
+      " p": {
+        "margin": "0",
+        "margin-left": "4px"
+      },
+      " table": {
+        "width": "100%",
+        "background": "#2F3433",
+        "border-collapse": "collapse"
+      },
+      " th": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal",
+        "color": "white",
+        "border": "#2F3433 1px solid"
+      },
+      " td": {
+        "font-family": "Urbanist",
+        "background": "white",
+        "border": "#2F3433 1px solid",
+        "text-align": "center"
+      },
+      " b": {
+        "font-family": "Urbanist-bold",
+        "font-weight": "normal"
+      }
+    },
+    "enlarge": 2,
+    "width": 210,
+    "height": 249,
+    "z": 129,
+    "layer": -1
+  },
+  "m249": {
+    "type": "holder",
+    "x": 1065,
+    "y": 99,
+    "id": "m249",
+    "width": 114,
+    "height": 154,
+    "borderRadius": 0,
+    "css": {
+      "border": "#2F3433 4px solid"
+    },
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "qsvm": {
+    "deck": "ustmD",
+    "type": "card",
+    "cardType": "strong-warrior",
+    "id": "qsvm",
+    "z": 2262,
+    "hoverParent": "ustm",
+    "parent": "q7ir",
+    "activeFace": 1
+  },
+  "fumble": {
+    "id": "fumble",
+    "x": 598,
+    "y": 255,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "skoll/box-trap",
+      "scale": 0.8,
+      "offsetX": -0.02,
+      "offsetY": -0.05,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "teamwork": {
+    "id": "teamwork",
+    "x": 849,
+    "y": 253,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "delapouite/human-pyramid",
+      "scale": 0.9,
+      "offsetX": 0,
+      "offsetY": -0.05,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "blocker": {
+    "id": "blocker",
+    "x": 748,
+    "y": 255,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "delapouite/shield-bash",
+      "scale": 0.8,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "piercer": {
+    "id": "piercer",
+    "x": 698,
+    "y": 255,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "lorc/pierced-body",
+      "scale": 0.8,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "sniper": {
+    "id": "sniper",
+    "x": 648,
+    "y": 255,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "delapouite/human-target",
+      "scale": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "strengthen": {
+    "id": "strengthen",
+    "x": 798,
+    "y": 255,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "lorc/strong",
+      "scale": 0.9,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "pressure": {
+    "id": "pressure",
+    "x": 498,
+    "y": 255,
+    "width": 46,
+    "height": 46,
+    "icon": {
+      "name": "lorc/back-pain",
+      "scale": 0.8,
+      "offsetX": -0.02,
+      "offsetY": -0.05,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    },
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "borderRadius": 25
+  },
+  "overwork": {
+    "id": "overwork",
+    "x": 548,
+    "y": 255,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "lorc/ball-glow",
+      "scale": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    },
+    "width": 46,
+    "height": 46
+  },
+  "underwhelm": {
+    "id": "underwhelm",
+    "x": 900,
+    "y": 254,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "delapouite/armor-downgrade",
+      "scale": 0.9,
+      "offsetX": 0,
+      "offsetY": 0.03,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "overwhelm": {
+    "id": "overwhelm",
+    "x": 950,
+    "y": 254,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "delapouite/armor-upgrade",
+      "scale": 0.9,
+      "offsetX": 0,
+      "offsetY": 0.03,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "followup": {
+    "id": "followup",
+    "x": 1000,
+    "y": 254,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "lorc/double-shot",
+      "scale": 0.8,
+      "offsetX": -0.03,
+      "offsetY": -0.03,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "inconspicuous": {
+    "id": "inconspicuous",
+    "x": 1050,
+    "y": 254,
+    "width": 46,
+    "height": 46,
+    "borderRadius": 25,
+    "css": {
+      "background": "black",
+      "border": "2px solid #2F3433"
+    },
+    "icon": {
+      "name": "delapouite/spy",
+      "scale": 1,
+      "offsetX": 0,
+      "offsetY": -0.02,
+      "rotation": 0,
+      "color": "white",
+      "strokeWidth": 0
+    }
+  },
+  "49s20": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s20",
+    "z": 2195,
+    "parent": "q60i"
+  },
+  "rjco14": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco14",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s20",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j23ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j23ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s20",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs40": {
+    "type": "label",
+    "z": 358,
+    "id": "qs40",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s20",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "49s21": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s21",
+    "z": 2196,
+    "parent": "q60i"
+  },
+  "rjco15": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco15",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s21",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j24ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j24ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s21",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs41": {
+    "type": "label",
+    "z": 358,
+    "id": "qs41",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s21",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "49s22": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s22",
+    "z": 2197,
+    "parent": "q60i"
+  },
+  "rjco16": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco16",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s22",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j25ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j25ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s22",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs42": {
+    "type": "label",
+    "z": 358,
+    "id": "qs42",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s22",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "49s23": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s23",
+    "z": 2198,
+    "parent": "q60i"
+  },
+  "rjco17": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco17",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s23",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j26ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j26ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s23",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs43": {
+    "type": "label",
+    "z": 358,
+    "id": "qs43",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s23",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "49s24": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s24",
+    "z": 2199,
+    "parent": "q60i"
+  },
+  "rjco18": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco18",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s24",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j27ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j27ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s24",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs44": {
+    "type": "label",
+    "z": 358,
+    "id": "qs44",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s24",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "49s25": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s25",
+    "z": 2234,
+    "parent": "q60i"
+  },
+  "rjco19": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco19",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s25",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j28ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j28ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s25",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs45": {
+    "type": "label",
+    "z": 358,
+    "id": "qs45",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s25",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "49s26": {
+    "deck": "isy0D",
+    "type": "card",
+    "cardType": "card1",
+    "id": "49s26",
+    "z": 2259,
+    "parent": "q60i"
+  },
+  "rjco20": {
+    "type": "label",
+    "z": 1103,
+    "id": "rjco20",
+    "css": {
+      "default": {
+        "font-family": "Urbanist",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "width": 76,
+    "height": 44,
+    "editable": true,
+    "parent": "49s26",
+    "layer": 0,
+    "y": 76,
+    "x": 12,
+    "movableInEdit": false
+  },
+  "j29ln": {
+    "type": "label",
+    "z": 358,
+    "id": "j29ln",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "8px"
+      }
+    },
+    "editable": true,
+    "parent": "49s26",
+    "layer": 0,
+    "x": 12,
+    "y": 4,
+    "movableInEdit": false
+  },
+  "qs46": {
+    "type": "label",
+    "z": 358,
+    "id": "qs46",
+    "width": 76,
+    "height": 10,
+    "css": {
+      "default": {
+        "font-family": "Urbanist-bold",
+        "text-align": "left",
+        "color": "#2F3433",
+        "font-size": "6px"
+      }
+    },
+    "editable": true,
+    "parent": "49s26",
+    "layer": 0,
+    "x": 12,
+    "y": 126,
+    "movableInEdit": false
+  },
+  "q60i": {
+    "type": "pile",
+    "parent": "isy0",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "id": "q60i"
+  }
+}
