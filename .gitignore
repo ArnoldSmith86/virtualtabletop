@@ -9,4 +9,4 @@ save
 *.heapsnapshot
 .DS_Store
 .appimage/temp/
-.appimage/out/
+.appimage/out/.vscode/
