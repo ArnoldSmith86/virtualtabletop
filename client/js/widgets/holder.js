@@ -12,6 +12,7 @@ class Holder extends ImageWidget {
       typeClasses: 'widget holder',
       color: 'white',
       textColor: '#0004',
+      iconColor: null,
 
       dropTarget: { type: 'card' },
       dropOffsetX: 4,
@@ -33,6 +34,8 @@ class Holder extends ImageWidget {
 
   applyDeltaToDOM(delta) {
     this.base.applyDeltaToDOM.call(this, delta, true);
+    if(delta.iconColor !== undefined)
+      this.updateIcon();
     if(this.textWrapper && !this.get('text')) {
       this.textWrapper.remove();
       this.textWrapper = null;
@@ -113,8 +116,29 @@ class Holder extends ImageWidget {
     return 0.85;
   }
 
+  getDefaultIconColor() {
+    return this.get('iconColor') || super.getDefaultIconColor();
+  }
+
   getDefaultIconOpacity() {
+    if(this.get('iconColor') !== null && this.get('iconColor') !== undefined)
+      return 1;
     return 0.2;
+  }
+
+  getIconWithColorOverride() {
+    const icon = this.getWithPropertyReplacements('icon');
+    const iconColor = this.get('iconColor');
+    if(iconColor === null || iconColor === undefined || icon === null || icon === undefined)
+      return icon;
+
+    const overrideColor = symbol=>{
+      if(typeof symbol == 'object' && symbol !== null)
+        return Object.assign({}, symbol, { color: iconColor, opacity: 1 });
+      return { name: symbol, color: iconColor, opacity: 1 };
+    };
+
+    return Array.isArray(icon) ? icon.map(overrideColor) : overrideColor(icon);
   }
 
   async onChildAdd(child, oldParentID) {
@@ -246,7 +270,10 @@ class Holder extends ImageWidget {
 
       setTextAndAdjustFontSize(this.textWrapper, this.get('text'), this.textWrapper.clientWidth, this.textWrapper.clientHeight, 25, 1);
     } else {
-      super.updateIcon();
+      if(this.symbolWrapper)
+        this.symbolWrapper.remove();
+      if(this.get('icon'))
+        this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getIconWithColorOverride(), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor(), this.getDefaultIconOpacity());
     }
   }
 }
