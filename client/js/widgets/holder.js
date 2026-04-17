@@ -273,7 +273,7 @@ class Holder extends ImageWidget {
       if(this.symbolWrapper)
         this.symbolWrapper.remove();
       if(this.get('icon'))
-        this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getIconWithColorOverride(), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor(), this.getDefaultIconOpacity());
+        this.symbolWrapper = generateSymbolsDiv(this.domElement, this.get('width'), this.get('height'), this.getIconWithColorOverride(), this.get('text'), this.getDefaultIconScale(), this.getDefaultIconColor(), this.getDefaultIconHoverColor(), this.getDefaultIconOpacity(), this.get('textColor'), this.get('textColor'));
     }
   }
 }
