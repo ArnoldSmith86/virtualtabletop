@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "20",
       "attribution": "<div>Game layout and scripting by Andy Pymont, released to the public domain by CC0.</div><div><br></div><div>The library image is the painting <i>King Lear, act III, scene II, a heath, a storm, with thunder and lightning, enter Lear and Fool</i>, by James Stephanoff (England, 1853) which is in the public domain.<br><br></div><div>The symbols for the four elemental suits and on the card back are from https://game-icons.net and are used under the CC BY 3.0 license:</div><div><br></div><div>Lorc</div><div>• Air: https://game-icons.net/1x1/lorc/air-zigzag.html<br></div><div>• Earth: https://game-icons.net/1x1/lorc/tree-branch.html<br></div><div>• Fire: https://game-icons.net/1x1/lorc/small-fire.html<br></div><div>• Lightning: https://game-icons.net/1x1/lorc/power-lightning.html<br></div><div>• Water: https://game-icons.net/1x1/lorc/big-wave.html<br></div>",
-      "lastUpdate": 1776691621000,
+      "lastUpdate": 1776699217000,
       "showName": true,
       "skill": "",
       "description": "Can you master the magic of the four elements, or will you be zapped by your opponents?",
@@ -70,17 +70,7 @@
     "height": 50,
     "hideWhenUnused": true,
     "z": 1,
-    "score": [],
-    "getTotalScoreRoutine": [
-      "var result = 0",
-      {
-        "func": "FOREACH",
-        "in": "${PROPERTY score}",
-        "loopRoutine": [
-          "var result = ${result} + ${value}"
-        ]
-      }
-    ]
+    "score": []
   },
   "seat-p2": {
     "type": "seat",
@@ -93,8 +83,7 @@
         "width",
         "hideWhenUnused",
         "css",
-        "clickRoutine",
-        "getTotalScoreRoutine"
+        "clickRoutine"
       ]
     },
     "x": 275,
@@ -114,8 +103,7 @@
         "width",
         "hideWhenUnused",
         "css",
-        "clickRoutine",
-        "getTotalScoreRoutine"
+        "clickRoutine"
       ]
     },
     "x": 540,
@@ -135,8 +123,7 @@
         "width",
         "hideWhenUnused",
         "css",
-        "clickRoutine",
-        "getTotalScoreRoutine"
+        "clickRoutine"
       ]
     },
     "x": 805,
@@ -155,8 +142,7 @@
         "width",
         "hideWhenUnused",
         "css",
-        "clickRoutine",
-        "getTotalScoreRoutine"
+        "clickRoutine"
       ]
     },
     "x": 1070,
@@ -175,8 +161,7 @@
         "width",
         "hideWhenUnused",
         "css",
-        "clickRoutine",
-        "getTotalScoreRoutine"
+        "clickRoutine"
       ]
     },
     "x": 1335,
@@ -266,9 +251,6 @@
     "type": "deck",
     "id": "deck",
     "parent": "holder-draw",
-    "width": 100,
-    "height": 160,
-    "movable": false,
     "movableInEdit": false,
     "fixedParent": true,
     "faceTemplates": [
@@ -1559,9 +1541,6 @@
   "deck-markers": {
     "type": "deck",
     "id": "deck-markers",
-    "width": 100,
-    "height": 160,
-    "movable": false,
     "movableInEdit": false,
     "cardDefaults": {
       "width": 100,
@@ -1812,8 +1791,6 @@
   "deck-starters": {
     "type": "deck",
     "id": "deck-starters",
-    "width": 100,
-    "height": 160,
     "fixedParent": true,
     "parent": "holder-starters",
     "cardTypes": {
