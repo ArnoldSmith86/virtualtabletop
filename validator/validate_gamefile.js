@@ -98,7 +98,7 @@ const COMMON_PROPERTIES = {
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
-    enterRoutine: getRoutineValidator({}, {'child': 1}),
+    enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
