@@ -71,6 +71,7 @@ function initializeEditor(currentMetaData) {
     new TreeModule(),
     new DebugModule(),
     new AssetsModule(),
+    new FilesModule(),
     new ToolboxModule(),
     new GameSettingsModule()
   ]);

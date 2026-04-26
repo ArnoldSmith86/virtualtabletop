@@ -571,10 +571,6 @@
   position: relative;
 }
 
-.sidebarButton[icon] {
-  padding-right: 0px;
-}
-
 .sidebarButton span {
   display: none;
   position: absolute;
@@ -861,4 +857,305 @@ div.widget-name {
 
 .drag-over {
   background-color: #f0f0f0;
+}
+
+/* Files panel */
+.filesPanel-help {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: var(--textColor);
+}
+.filesPanel-help summary {
+  cursor: pointer;
+  padding: 4px 0;
+  list-style: none;
+}
+.filesPanel-help summary::-webkit-details-marker { display: none; }
+.filesPanel-help summary::before { content: '▶ '; }
+.filesPanel-help[open] summary::before { content: '▼ '; }
+.filesPanel-helpBody { padding-left: 1em; margin-top: 4px; }
+.filesPanel-helpBody p { margin: 6px 0; }
+.filesPanel-experimental { font-style: italic; opacity: 0.9; }
+.filesPanel-handlerList { margin: 4px 0 0 1em; padding-left: 1em; }
+.filesPanel-handlerList li { margin: 2px 0; }
+.filesPanel-dropZone {
+  border: 2px dashed var(--modalBorderColor);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: var(--textColor);
+  margin-bottom: 12px;
+  transition: background 0.2s;
+}
+.filesPanel-dropZone.drag-over {
+  background: var(--backgroundHighlightColor1);
+}
+.filesPanel-tableWrap {
+  margin-top: 8px;
+  overflow-x: auto;
+}
+.filesPanel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+.filesPanel-table th {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--modalBorderColor);
+  font-weight: 600;
+}
+.filesPanel-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--modalBorderColor);
+  vertical-align: middle;
+}
+.filesPanel-dirRow td {
+  background: var(--backgroundHighlightColor1);
+  font-weight: 600;
+  padding: 4px 8px;
+}
+.filesPanel-cellThumb {
+  width: 36px;
+  padding-right: 4px !important;
+}
+.filesPanel-thumbWrap {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.filesPanel-thumbWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: default;
+}
+.filesPanel-cellName {
+  word-break: break-all;
+  max-width: 140px;
+}
+.filesPanel-cellSummary {
+  min-width: 0;
+}
+.filesPanel-summaryText {
+  margin-right: 4px;
+}
+.filesPanel-cellActions {
+  white-space: nowrap;
+}
+.filesPanel-rowButtons {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.filesPanel-formRow td {
+  background: var(--backgroundHighlightColor1);
+  padding: 10px;
+  border-bottom: 1px solid var(--modalBorderColor);
+}
+.filesPanel-editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.filesPanel-formRowInner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filesPanel-formRowInner label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.filesPanel-formOptions {
+  margin-left: 0;
+}
+.filesPanel-formButtons {
+  display: flex;
+  gap: 8px;
+}
+.filesPanel-tree {
+  margin-top: 8px;
+}
+.filesPanel-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.filesPanel-dir {
+  margin: 4px 0;
+}
+.filesPanel-dirName {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.filesPanel-dirName:hover {
+  background: var(--backgroundHighlightColor1);
+}
+.filesPanel-dir .filesPanel-children {
+  margin-left: 12px;
+  display: none;
+}
+.filesPanel-dir.open .filesPanel-children {
+  display: block;
+}
+.filesPanel-file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 6px 0;
+  padding: 6px;
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  border: 1px solid var(--modalBorderColor);
+}
+.filesPanel-preview {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.filesPanel-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.filesPanel-fileName {
+  flex: 0 1 auto;
+  min-width: 0;
+  word-break: break-all;
+}
+.filesPanel-actions {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.filesPanel-handlerSelect {
+  min-width: 180px;
+  padding: 4px 8px;
+}
+.filesPanel-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.filesPanel-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.filesPanel-run {
+  flex-shrink: 0;
+}
+
+.filesPanel-log {
+  margin-top: 12px;
+  border-top: 1px solid var(--modalBorderColor);
+  padding-top: 8px;
+}
+.filesPanel-logEntries {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+}
+.filesPanel-logEntry {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--modalBorderColor);
+  word-break: break-all;
+}
+.filesPanel-logTime {
+  color: var(--textColor);
+  opacity: 0.8;
+}
+.filesPanel-logFile {
+  font-weight: bold;
+}
+.filesPanel-logWidgets {
+  font-size: 0.95em;
+  opacity: 0.9;
+}
+.filesPanel-logEntry.filesPanel-logError .filesPanel-logErrorText {
+  color: var(--errorColor, #c00);
+  font-size: 0.9em;
+}
+
+.filesPanel-assetPicker {
+  display: block;
+  margin-top: 4px;
+}
+.filesPanel-assetThumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.filesPanel-assetThumb {
+  padding: 0;
+  border: 2px solid var(--modalBorderColor);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.filesPanel-assetThumb:hover {
+  border-color: var(--textColor);
+  opacity: 0.9;
+}
+.filesPanel-assetThumb.filesPanel-assetSelected {
+  border-color: var(--VTTblue, #1f5ca6);
+  border-width: 3px;
+  box-shadow: 0 0 0 1px var(--VTTblue, #1f5ca6);
+}
+.filesPanel-assetThumb img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.filesPanel-assetHoverPreview {
+  position: fixed;
+  z-index: 10000;
+  padding: 6px;
+  background: var(--backgroundColor);
+  border: 1px solid var(--modalBorderColor);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+.filesPanel-assetHoverPreview.filesPanel-assetHoverPreview-visible {
+  opacity: 1;
+  visibility: visible;
+}
+.filesPanel-assetHoverPreview img {
+  display: block;
+  max-width: 280px;
+  max-height: 280px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
