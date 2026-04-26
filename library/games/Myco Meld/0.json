@@ -1,0 +1,2181 @@
+{
+  "hlpy Yellow_01.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_01.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_01.svg",
+    "z": 17449,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "hlpy Yellow_02.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_02.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_02.svg",
+    "z": 17485,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "hlpy Yellow_03.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_03.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_03.svg",
+    "z": 17491,
+    "parent": "08vm",
+    "activeFace": 1
+  },
+  "hlpy Yellow_04.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_04.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_04.svg",
+    "z": 17488,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "hlpy Yellow_05.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_05.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_05.svg",
+    "z": 17494,
+    "parent": "08vm"
+  },
+  "hlpy Yellow_06.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_06.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_06.svg",
+    "z": 17437,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "hlpy Yellow_08.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_08.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_08.svg",
+    "z": 17476,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "hlpy Yellow_07.svg": {
+    "type": "card",
+    "id": "hlpy Yellow_07.svg",
+    "deck": "hlpy",
+    "cardType": "Yellow_07.svg",
+    "z": 17443,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "hlpy": {
+    "id": "hlpy",
+    "type": "deck",
+    "cardTypes": {
+      "Yellow_01.svg": {
+        "image": "/assets/286075944_19374",
+        "rank": 1
+      },
+      "Yellow_02.svg": {
+        "image": "/assets/-1238114060_16258",
+        "rank": 2
+      },
+      "Yellow_03.svg": {
+        "image": "/assets/-1763267602_20829",
+        "rank": 3
+      },
+      "Yellow_04.svg": {
+        "image": "/assets/916747986_18713",
+        "rank": 4
+      },
+      "Yellow_05.svg": {
+        "image": "/assets/-2028252478_20825",
+        "rank": 5
+      },
+      "Yellow_06.svg": {
+        "image": "/assets/-121146657_20829",
+        "rank": 6
+      },
+      "Yellow_07.svg": {
+        "image": "/assets/-291548543_20825",
+        "rank": 7
+      },
+      "Yellow_08.svg": {
+        "image": "/assets/-267856376_20825"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/assets/-253845892_21429",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 104,
+      "enlarge": 3,
+      "dropTarget": {
+        "isPlayerToken": true
+      }
+    },
+    "z": 14642,
+    "y": -95,
+    "x": 1200,
+    "dropTarget": {
+      "isPlayerToken": true
+    }
+  },
+  "9pjz Red_01.svg": {
+    "type": "card",
+    "id": "9pjz Red_01.svg",
+    "deck": "9pjz",
+    "cardType": "Red_01.svg",
+    "z": 17446,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz Red_04.svg": {
+    "type": "card",
+    "id": "9pjz Red_04.svg",
+    "deck": "9pjz",
+    "cardType": "Red_04.svg",
+    "z": 17455,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz Red_02.svg": {
+    "type": "card",
+    "id": "9pjz Red_02.svg",
+    "deck": "9pjz",
+    "cardType": "Red_02.svg",
+    "z": 17452,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz Red_03.svg": {
+    "type": "card",
+    "id": "9pjz Red_03.svg",
+    "deck": "9pjz",
+    "cardType": "Red_03.svg",
+    "z": 17458,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz Red_06.svg": {
+    "type": "card",
+    "id": "9pjz Red_06.svg",
+    "deck": "9pjz",
+    "cardType": "Red_06.svg",
+    "z": 17436,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz Red_05.svg": {
+    "type": "card",
+    "id": "9pjz Red_05.svg",
+    "deck": "9pjz",
+    "cardType": "Red_05.svg",
+    "z": 17473,
+    "parent": "08vm",
+    "activeFace": 1
+  },
+  "9pjz Red_07.svg": {
+    "type": "card",
+    "id": "9pjz Red_07.svg",
+    "deck": "9pjz",
+    "cardType": "Red_07.svg",
+    "z": 17432,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz Red_08.svg": {
+    "type": "card",
+    "id": "9pjz Red_08.svg",
+    "deck": "9pjz",
+    "cardType": "Red_08.svg",
+    "z": 17479,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "9pjz": {
+    "id": "9pjz",
+    "type": "deck",
+    "cardTypes": {
+      "Red_01.svg": {
+        "image": "/assets/-436044716_24057",
+        "rank": 1
+      },
+      "Red_04.svg": {
+        "image": "/assets/-1945451898_24057",
+        "rank": 4
+      },
+      "Red_02.svg": {
+        "image": "/assets/1993675813_24057",
+        "rank": 2
+      },
+      "Red_03.svg": {
+        "image": "/assets/1441323994_24061",
+        "rank": 3
+      },
+      "Red_06.svg": {
+        "image": "/assets/1942715292_24061",
+        "rank": 6
+      },
+      "Red_05.svg": {
+        "image": "/assets/1251416214_24057",
+        "rank": 5
+      },
+      "Red_07.svg": {
+        "image": "/assets/484289271_24057",
+        "rank": 7
+      },
+      "Red_08.svg": {
+        "image": "/assets/-1564186239_24057"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/assets/1774384512_25445",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 104,
+      "enlarge": 3,
+      "dropTarget": {
+        "isPlayerToken": true
+      }
+    },
+    "z": 14637,
+    "x": 1100,
+    "y": -95,
+    "dropTarget": {
+      "isPlayerToken": true
+    }
+  },
+  "0kjg": {
+    "id": "0kjg",
+    "type": "deck",
+    "cardTypes": {
+      "Blue_02.svg": {
+        "image": "/assets/-1097773282_20272",
+        "rank": 2
+      },
+      "Blue_04.svg": {
+        "image": "/assets/1314348391_33755",
+        "rank": 4
+      },
+      "Blue_01.svg": {
+        "image": "/assets/2002282583_20097",
+        "rank": 1
+      },
+      "Blue_07.svg": {
+        "image": "/assets/-1497178030_33755",
+        "rank": 7
+      },
+      "Blue_03.svg": {
+        "image": "/assets/-285834864_33742",
+        "rank": 3
+      },
+      "Blue_06.svg": {
+        "image": "/assets/-2049580119_33757",
+        "rank": 6
+      },
+      "Blue_05.svg": {
+        "image": "/assets/371471988_33755",
+        "rank": 5
+      },
+      "Blue_08.svg": {
+        "image": "/assets/1524868401_33755"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/assets/2126080397_24229",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 104,
+      "enlarge": 3,
+      "dropTarget": {
+        "isPlayerToken": true
+      }
+    },
+    "z": 14758,
+    "x": 1400,
+    "y": -96,
+    "dropTarget": {
+      "isPlayerToken": true
+    }
+  },
+  "0kjg Blue_02.svg": {
+    "type": "card",
+    "id": "0kjg Blue_02.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_02.svg",
+    "z": 17461,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "0kjg Blue_04.svg": {
+    "type": "card",
+    "id": "0kjg Blue_04.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_04.svg",
+    "z": 17464,
+    "parent": "08vm",
+    "activeFace": 1
+  },
+  "0kjg Blue_01.svg": {
+    "type": "card",
+    "id": "0kjg Blue_01.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_01.svg",
+    "z": 17433,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "0kjg Blue_07.svg": {
+    "type": "card",
+    "id": "0kjg Blue_07.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_07.svg",
+    "z": 17440,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "0kjg Blue_03.svg": {
+    "type": "card",
+    "id": "0kjg Blue_03.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_03.svg",
+    "z": 17467,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "0kjg Blue_06.svg": {
+    "type": "card",
+    "id": "0kjg Blue_06.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_06.svg",
+    "z": 17439,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "0kjg Blue_05.svg": {
+    "type": "card",
+    "id": "0kjg Blue_05.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_05.svg",
+    "z": 17470,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "0kjg Blue_08.svg": {
+    "type": "card",
+    "id": "0kjg Blue_08.svg",
+    "deck": "0kjg",
+    "cardType": "Blue_08.svg",
+    "z": 17482,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs": {
+    "id": "errs",
+    "type": "deck",
+    "cardTypes": {
+      "Green_01.svg": {
+        "image": "/assets/-2123590626_33109",
+        "rank": 1
+      },
+      "Green_07.svg": {
+        "image": "/assets/-1158603650_33109",
+        "rank": 7
+      },
+      "Green_08.svg": {
+        "image": "/assets/-1164564821_33109",
+        "rank": 8
+      },
+      "Green_06.svg": {
+        "image": "/assets/-1263441036_33111",
+        "rank": 6
+      },
+      "Green_02.svg": {
+        "image": "/assets/-1667084242_33109",
+        "rank": 2
+      },
+      "Green_03.svg": {
+        "image": "/assets/1902124488_33111",
+        "rank": 3
+      },
+      "Green_04.svg": {
+        "image": "/assets/-1488988082_33109",
+        "rank": 4
+      },
+      "Green_05.svg": {
+        "image": "/assets/-1401265058_33109",
+        "rank": 5
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "value": "/assets/259900097_21101",
+            "dynamicProperties": {
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image",
+              "height": "height",
+              "width": "width"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "width": 104,
+      "enlarge": 3,
+      "dropTarget": {
+        "isPlayerToken": true
+      }
+    },
+    "z": 14647,
+    "x": 1300,
+    "y": -95,
+    "dropTarget": {
+      "isPlayerToken": true
+    }
+  },
+  "errs Green_01.svg": {
+    "type": "card",
+    "id": "errs Green_01.svg",
+    "deck": "errs",
+    "cardType": "Green_01.svg",
+    "z": 17349,
+    "parent": "08vm",
+    "activeFace": 1
+  },
+  "errs Green_07.svg": {
+    "type": "card",
+    "id": "errs Green_07.svg",
+    "deck": "errs",
+    "cardType": "Green_07.svg",
+    "z": 17343,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs Green_08.svg": {
+    "type": "card",
+    "id": "errs Green_08.svg",
+    "deck": "errs",
+    "cardType": "Green_08.svg",
+    "z": 17339,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs Green_06.svg": {
+    "type": "card",
+    "id": "errs Green_06.svg",
+    "deck": "errs",
+    "cardType": "Green_06.svg",
+    "z": 17341,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs Green_02.svg": {
+    "type": "card",
+    "id": "errs Green_02.svg",
+    "deck": "errs",
+    "cardType": "Green_02.svg",
+    "z": 17345,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs Green_03.svg": {
+    "type": "card",
+    "id": "errs Green_03.svg",
+    "deck": "errs",
+    "cardType": "Green_03.svg",
+    "z": 17347,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs Green_04.svg": {
+    "type": "card",
+    "id": "errs Green_04.svg",
+    "deck": "errs",
+    "cardType": "Green_04.svg",
+    "z": 17353,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "errs Green_05.svg": {
+    "type": "card",
+    "id": "errs Green_05.svg",
+    "deck": "errs",
+    "cardType": "Green_05.svg",
+    "z": 17351,
+    "activeFace": 1,
+    "parent": "08vm"
+  },
+  "removedCards": {
+    "type": "holder",
+    "id": "removedCards",
+    "x": -129,
+    "z": 90,
+    "y": -2
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 8,
+    "stackOffsetX": 85,
+    "childrenPerOwner": true,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "x": 427,
+    "width": 700,
+    "height": 180,
+    "id": "hand",
+    "z": 183,
+    "y": 813,
+    "classes": "transparent",
+    "movableInEdit": false
+  },
+  "button": {
+    "id": "button",
+    "x": 1320,
+    "y": 837,
+    "z": 77942,
+    "text": "Lay Hand",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "owner",
+        "value": "${playerName}",
+        "collection": "handCards",
+        "sortBy": {
+          "key": "z",
+          "reverse": false
+        }
+      },
+      {
+        "func": "FOREACH",
+        "collection": "handCards",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "zone-${seatID}",
+            "count": "all",
+            "face": 0
+          }
+        ]
+      }
+    ],
+    "borderRadius": 0,
+    "width": 120,
+    "height": 60,
+    "classes": "borderfx",
+    "css": {
+      "--baseColor": "#0038FF",
+      "--lightColor": "white",
+      "color": "white",
+      "font-size": "20px",
+      "paint-order": "stroke fill",
+      "-webkit-text-stroke": "0.2em black"
+    },
+    "movable": false,
+    "movableInEdit": false
+  },
+  "PlayersHolder": {
+    "type": "holder",
+    "id": "PlayersHolder",
+    "x": 4,
+    "width": 350,
+    "height": 1000,
+    "z": 184,
+    "classes": "transparent"
+  },
+  "Player1Seat": {
+    "type": "seat",
+    "id": "Player1Seat",
+    "parent": "PlayersHolder",
+    "fixedParent": true,
+    "x": 40,
+    "width": 250,
+    "height": 30,
+    "z": 77932,
+    "css": {
+      "default": {
+        "font-size": "2em",
+        "border-width": "3px"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorContrast": "#000000",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Color",
+                "colors": [
+                  "#f44336"
+                ],
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "colorChangeRoutine": [],
+    "playerChangeRoutine": [
+      "var seatID = ${PROPERTY id} substr 0 7",
+      "var namePlateToChange = ${seatID} + 'Name'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${namePlateToChange}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY player}"
+      },
+      "var colorContrast = colorContrast ${playerColor}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "colorContrast",
+        "value": "${colorContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${seatID}ReadyButton"
+      },
+      {
+        "func": "SET",
+        "property": "status",
+        "value": ""
+      }
+    ],
+    "y": 24,
+    "turn": true,
+    "movableInEdit": false
+  },
+  "Player2Seat": {
+    "type": "seat",
+    "id": "Player2Seat",
+    "parent": "PlayersHolder",
+    "fixedParent": true,
+    "x": 40,
+    "y": 225,
+    "width": 250,
+    "height": 30,
+    "z": 77895,
+    "css": {
+      "default": {
+        "font-size": "2em",
+        "border-width": "3px"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorContrast": "#000000",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Color",
+                "colors": [
+                  "#9c27b0"
+                ],
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "colorChangeRoutine": [],
+    "playerChangeRoutine": [
+      "var seatID = ${PROPERTY id} substr 0 7",
+      "var namePlateToChange = ${seatID} + 'Name'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${namePlateToChange}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY player}"
+      },
+      "var colorContrast = colorContrast ${playerColor}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "colorContrast",
+        "value": "${colorContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${seatID}ReadyButton"
+      },
+      {
+        "func": "SET",
+        "property": "status",
+        "value": ""
+      }
+    ],
+    "index": 2,
+    "movableInEdit": false
+  },
+  "Player3Seat": {
+    "type": "seat",
+    "id": "Player3Seat",
+    "parent": "PlayersHolder",
+    "fixedParent": true,
+    "x": 40,
+    "y": 426,
+    "width": 250,
+    "height": 30,
+    "z": 77903,
+    "css": {
+      "default": {
+        "font-size": "2em",
+        "border-width": "3px"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorContrast": "#000000",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Color",
+                "colors": [
+                  "#1976d2"
+                ],
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "colorChangeRoutine": [],
+    "playerChangeRoutine": [
+      "var seatID = ${PROPERTY id} substr 0 7",
+      "var namePlateToChange = ${seatID} + 'Name'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${namePlateToChange}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY player}"
+      },
+      "var colorContrast = colorContrast ${playerColor}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "colorContrast",
+        "value": "${colorContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${seatID}ReadyButton"
+      },
+      {
+        "func": "SET",
+        "property": "status",
+        "value": ""
+      }
+    ],
+    "index": 3,
+    "movableInEdit": false
+  },
+  "Player4Seat": {
+    "type": "seat",
+    "id": "Player4Seat",
+    "parent": "PlayersHolder",
+    "fixedParent": true,
+    "x": 40,
+    "y": 627,
+    "width": 250,
+    "height": 30,
+    "z": 77898,
+    "css": {
+      "default": {
+        "font-size": "2em",
+        "border-width": "3px"
+      }
+    },
+    "hideWhenUnused": true,
+    "colorContrast": "#000000",
+    "clickRoutine": [
+      "var playerPrefix = substr ${playerName} 0 5",
+      {
+        "func": "IF",
+        "operand1": "${playerPrefix}",
+        "operand2": "Guest",
+        "thenRoutine": [
+          {
+            "func": "INPUT",
+            "header": "Enter your name and choice of player color.",
+            "fields": [
+              {
+                "type": "string",
+                "label": "Name",
+                "variable": "playerName",
+                "value": "${playerName}"
+              },
+              {
+                "type": "palette",
+                "label": "Color",
+                "colors": [
+                  "#ff9800"
+                ],
+                "variable": "playerColor",
+                "value": "${playerColor}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      }
+    ],
+    "colorChangeRoutine": [],
+    "playerChangeRoutine": [
+      "var seatID = ${PROPERTY id} substr 0 7",
+      "var namePlateToChange = ${seatID} + 'Name'",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${namePlateToChange}"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "${PROPERTY player}"
+      },
+      "var colorContrast = colorContrast ${playerColor}",
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "SET",
+        "property": "colorContrast",
+        "value": "${colorContrast}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${seatID}ReadyButton"
+      },
+      {
+        "func": "SET",
+        "property": "status",
+        "value": ""
+      }
+    ],
+    "index": 4,
+    "movableInEdit": false
+  },
+  "zone-Player1Seat": {
+    "type": "holder",
+    "id": "zone-Player1Seat",
+    "x": 886,
+    "y": 24,
+    "width": 700,
+    "height": 180,
+    "z": 124,
+    "css": "background:#fff6",
+    "dropOffsetX": 0,
+    "dropOffsetY": 14,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 85
+  },
+  "zone-Player2Seat": {
+    "type": "holder",
+    "id": "zone-Player2Seat",
+    "x": 886,
+    "y": 225,
+    "width": 700,
+    "height": 180,
+    "z": 133,
+    "css": "background:#fff6",
+    "dropOffsetX": 0,
+    "dropOffsetY": 14,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 85
+  },
+  "zone-Player3Seat": {
+    "type": "holder",
+    "id": "zone-Player3Seat",
+    "x": 886,
+    "y": 426,
+    "width": 700,
+    "height": 180,
+    "z": 131,
+    "css": "background:#fff6",
+    "dropOffsetX": 0,
+    "dropOffsetY": 14,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 85
+  },
+  "zone-Player4Seat": {
+    "type": "holder",
+    "id": "zone-Player4Seat",
+    "x": 886,
+    "y": 627,
+    "width": 700,
+    "height": 180,
+    "z": 135,
+    "css": "background:#fff6",
+    "dropOffsetX": 0,
+    "dropOffsetY": 14,
+    "dropShadow": true,
+    "hidePlayerCursors": true,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 85
+  },
+  "Table Cards": {
+    "type": "holder",
+    "id": "Table Cards",
+    "x": 641,
+    "y": 79,
+    "width": 200,
+    "height": 700,
+    "z": 155,
+    "dropTarget": [
+      {
+        "deck": "hlpy"
+      },
+      {
+        "deck": "9pjz"
+      },
+      {
+        "deck": "errs"
+      },
+      {
+        "deck": "0kjg"
+      }
+    ],
+    "classes": "transparent"
+  },
+  "button1": {
+    "id": "button1",
+    "x": 1460,
+    "y": 837,
+    "z": 77941,
+    "text": "Draw 1",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "MushroomDeck",
+        "to": "${seatID}",
+        "count": 1,
+        "face": 1
+      }
+    ],
+    "width": 120,
+    "height": 60,
+    "borderRadius": 0,
+    "classes": "borderfx",
+    "css": {
+      "--baseColor": "#2E6F40",
+      "--lightColor": "white",
+      "color": "white",
+      "font-size": "20px",
+      "paint-order": "stroke fill",
+      "-webkit-text-stroke": "0.2em black"
+    },
+    "movable": false,
+    "movableInEdit": false
+  },
+  "button2": {
+    "id": "button2",
+    "x": 1460,
+    "y": 916,
+    "z": 77944,
+    "text": "Start / Next Round",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "MushroomDeck",
+        "excludeCollection": [
+          "removedCards"
+        ]
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "DealCards"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "rank"
+      }
+    ],
+    "width": 120,
+    "height": 60,
+    "borderRadius": 0,
+    "classes": "borderfx",
+    "css": {
+      "--baseColor": "#cd071e",
+      "--lightColor": "white",
+      "color": "white",
+      "font-size": "20px",
+      "paint-order": "stroke fill",
+      "-webkit-text-stroke": "0.2em black"
+    },
+    "movableInEdit": false,
+    "movable": false
+  },
+  "DealCards": {
+    "type": "button",
+    "id": "DealCards",
+    "x": -133,
+    "y": 182,
+    "width": 120,
+    "height": 60,
+    "borderRadius": 0,
+    "z": 77933,
+    "text": "Deal Cards",
+    "clickRoutine": [
+      {
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 3,
+        "thenRoutine": [
+          {
+            "func": "SELECT",
+            "property": "cardType",
+            "relation": "in",
+            "value": [
+              "Blue_08.svg",
+              "Red_08.svg",
+              "Green_08.svg",
+              "Yellow_08.svg"
+            ],
+            "collection": "removedCards"
+          },
+          {
+            "func": "MOVE",
+            "collection": "removedCards",
+            "to": "removedCards",
+            "count": "all"
+          },
+          {
+            "func": "SHUFFLE",
+            "holder": "MushroomDeck"
+          },
+          {
+            "func": "MOVE",
+            "to": [
+              "Player1Seat",
+              "Player2Seat",
+              "Player3Seat",
+              "Player4Seat"
+            ],
+            "fillTo": 8,
+            "from": "MushroomDeck",
+            "face": 0
+          },
+          "var spreadX = 700",
+          "var spreadY = 250",
+          {
+            "func": "FOREACH",
+            "range": 4,
+            "loopRoutine": [
+              {
+                "func": "MOVEXY",
+                "from": "MushroomDeck",
+                "count": 1,
+                "face": 0,
+                "x": "${spreadX}",
+                "y": "${spreadY}"
+              },
+              "var spreadX = ${spreadX}",
+              "var spreadY = ${spreadY} + 40"
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 2,
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "relation": "in",
+                "value": [
+                  "Blue_06.svg",
+                  "Blue_07.svg",
+                  "Blue_08.svg",
+                  "Red_06.svg",
+                  "Red_07.svg",
+                  "Red_08.svg",
+                  "Green_06.svg",
+                  "Green_07.svg",
+                  "Green_08.svg",
+                  "Yellow_06.svg",
+                  "Yellow_07.svg",
+                  "Yellow_08.svg"
+                ],
+                "collection": "removedCards"
+              },
+              {
+                "func": "MOVE",
+                "collection": "removedCards",
+                "to": "removedCards",
+                "count": "all"
+              },
+              "var spreadY = 90",
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "relation": "in",
+                "value": [
+                  "Blue_01.svg",
+                  "Blue_02.svg",
+                  "Blue_03.svg",
+                  "Blue_04.svg",
+                  "Blue_05.svg"
+                ],
+                "max": 1,
+                "random": true,
+                "collection": "tableBlue"
+              },
+              {
+                "func": "SET",
+                "collection": "tableBlue",
+                "property": "parent",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": "tableBlue",
+                "property": "x",
+                "value": 700
+              },
+              {
+                "func": "SET",
+                "collection": "tableBlue",
+                "property": "y",
+                "value": "${spreadY}"
+              },
+              {
+                "func": "SET",
+                "collection": "tableBlue",
+                "property": "activeFace",
+                "value": 0
+              },
+              "var spreadY = ${spreadY} + 150",
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "relation": "in",
+                "value": [
+                  "Red_01.svg",
+                  "Red_02.svg",
+                  "Red_03.svg",
+                  "Red_04.svg",
+                  "Red_05.svg"
+                ],
+                "max": 1,
+                "random": true,
+                "collection": "tableRed"
+              },
+              {
+                "func": "SET",
+                "collection": "tableRed",
+                "property": "parent",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": "tableRed",
+                "property": "x",
+                "value": 700
+              },
+              {
+                "func": "SET",
+                "collection": "tableRed",
+                "property": "y",
+                "value": "${spreadY}"
+              },
+              {
+                "func": "SET",
+                "collection": "tableRed",
+                "property": "activeFace",
+                "value": 0
+              },
+              "var spreadY = ${spreadY} + 150",
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "relation": "in",
+                "value": [
+                  "Green_01.svg",
+                  "Green_02.svg",
+                  "Green_03.svg",
+                  "Green_04.svg",
+                  "Green_05.svg"
+                ],
+                "max": 1,
+                "random": true,
+                "collection": "tableGreen"
+              },
+              {
+                "func": "SET",
+                "collection": "tableGreen",
+                "property": "parent",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": "tableGreen",
+                "property": "x",
+                "value": 700
+              },
+              {
+                "func": "SET",
+                "collection": "tableGreen",
+                "property": "y",
+                "value": "${spreadY}"
+              },
+              {
+                "func": "SET",
+                "collection": "tableGreen",
+                "property": "activeFace",
+                "value": 0
+              },
+              "var spreadY = ${spreadY} + 150",
+              {
+                "func": "SELECT",
+                "property": "cardType",
+                "relation": "in",
+                "value": [
+                  "Yellow_01.svg",
+                  "Yellow_02.svg",
+                  "Yellow_03.svg",
+                  "Yellow_04.svg",
+                  "Yellow_05.svg"
+                ],
+                "max": 1,
+                "random": true,
+                "collection": "tableYellow"
+              },
+              {
+                "func": "SET",
+                "collection": "tableYellow",
+                "property": "parent",
+                "value": null
+              },
+              {
+                "func": "SET",
+                "collection": "tableYellow",
+                "property": "x",
+                "value": 700
+              },
+              {
+                "func": "SET",
+                "collection": "tableYellow",
+                "property": "y",
+                "value": "${spreadY}"
+              },
+              {
+                "func": "SET",
+                "collection": "tableYellow",
+                "property": "activeFace",
+                "value": 0
+              },
+              {
+                "func": "SHUFFLE",
+                "holder": "MushroomDeck"
+              },
+              {
+                "func": "MOVE",
+                "to": [
+                  "Player1Seat",
+                  "Player2Seat",
+                  "Player3Seat",
+                  "Player4Seat"
+                ],
+                "fillTo": 7,
+                "from": "MushroomDeck",
+                "face": 0
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SHUFFLE",
+                "holder": "MushroomDeck"
+              },
+              {
+                "func": "MOVE",
+                "to": [
+                  "Player1Seat",
+                  "Player2Seat",
+                  "Player3Seat",
+                  "Player4Seat"
+                ],
+                "fillTo": 7,
+                "from": "MushroomDeck",
+                "face": 0
+              },
+              "var spreadX = 700",
+              "var spreadY = 250",
+              {
+                "func": "FOREACH",
+                "range": 4,
+                "loopRoutine": [
+                  {
+                    "func": "MOVEXY",
+                    "from": "MushroomDeck",
+                    "count": 1,
+                    "face": 0,
+                    "x": "${spreadX}",
+                    "y": "${spreadY}"
+                  },
+                  "var spreadX = ${spreadX}",
+                  "var spreadY = ${spreadY} + 40"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "movableInEdit": false
+  },
+  "MushroomDeck": {
+    "type": "holder",
+    "id": "MushroomDeck",
+    "x": 171,
+    "y": 822,
+    "z": 185,
+    "classes": "transparent"
+  },
+  "decCounter": {
+    "id": "decCounter",
+    "parent": "counter4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "incCounter": {
+    "id": "incCounter",
+    "parent": "counter4",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "decCounter1": {
+    "id": "decCounter1",
+    "parent": "counter3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "incCounter1": {
+    "id": "incCounter1",
+    "parent": "counter3",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "decCounter2": {
+    "id": "decCounter2",
+    "parent": "counter2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "incCounter2": {
+    "id": "incCounter2",
+    "parent": "counter2",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "decCounter3": {
+    "id": "decCounter3",
+    "parent": "counter1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "incCounter3": {
+    "id": "incCounter3",
+    "parent": "counter1",
+    "fixedParent": true,
+    "x": 68,
+    "y": 1,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "counter4": {
+    "type": "label",
+    "id": "counter4",
+    "x": 145,
+    "y": 670,
+    "width": 65,
+    "height": 40,
+    "z": 17,
+    "css": "\n  font-size: 30px; \n  color: white;\n  paint-order: stroke fill;\n  -webkit-text-stroke: 0.2em black;\n  ",
+    "editable": true,
+    "text": 0
+  },
+  "counter2": {
+    "type": "label",
+    "id": "counter2",
+    "x": 144,
+    "y": 266,
+    "width": 65,
+    "height": 40,
+    "css": "\n  font-size: 30px; \n  color: white;\n  paint-order: stroke fill;\n  -webkit-text-stroke: 0.2em black;\n  ",
+    "editable": true,
+    "text": 0,
+    "z": 3
+  },
+  "counter1": {
+    "type": "label",
+    "id": "counter1",
+    "x": 144,
+    "y": 71,
+    "width": 65,
+    "height": 40,
+    "z": 2,
+    "css": "\n  font-size: 30px; \n  color: white;\n  paint-order: stroke fill;\n  -webkit-text-stroke: 0.2em black;\n  ",
+    "editable": true,
+    "text": 0
+  },
+  "counter3": {
+    "type": "label",
+    "id": "counter3",
+    "x": 145,
+    "y": 466,
+    "width": 65,
+    "height": 40,
+    "z": 16,
+    "css": "\n  font-size: 30px; \n  color: white;\n  paint-order: stroke fill;\n  -webkit-text-stroke: 0.2em black;\n  ",
+    "editable": true,
+    "text": 0
+  },
+  "board1": {
+    "id": "board1",
+    "width": 1600,
+    "height": 1000,
+    "layer": -4,
+    "movable": false,
+    "image": "/assets/505522240_59578",
+    "movableInEdit": false
+  },
+  "spinner": {
+    "type": "spinner",
+    "id": "spinner",
+    "x": 42,
+    "y": 904,
+    "z": 17092,
+    "options": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "value": 3,
+    "width": 70,
+    "height": 70,
+    "angle": 14288,
+    "valueChangeRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "seat",
+        "turn": "Player${value}Seat"
+      }
+    ],
+    "css": {
+      "::after": {
+        "content": "\"Choose first player.\"",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "-70px",
+        "color": "white",
+        "font-size": "30px",
+        "white-space": "nowrap",
+        "background": "rgba(0,0,0,0.75)",
+        "padding": "4px 8px",
+        "border-radius": "4px",
+        "paint-order": "stroke fill",
+        "-webkit-text-stroke": "0.05em black"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    }
+  },
+  "4gbf": {
+    "id": "4gbf",
+    "x": 1320,
+    "y": 916,
+    "width": 120,
+    "height": 60,
+    "borderRadius": 0,
+    "z": 127,
+    "classes": "borderfx",
+    "css": {
+      "--baseColor": "#EFBF04",
+      "--lightColor": "white",
+      "color": "white",
+      "font-size": "20px",
+      "paint-order": "stroke fill",
+      "-webkit-text-stroke": "0.2em black"
+    },
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "movableInEdit": false,
+    "movable": false
+  },
+  "button3": {
+    "id": "button3",
+    "x": 1180,
+    "y": 837,
+    "z": 77942,
+    "text": "Claim Cards",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "tokenSeat",
+        "value": "${seatID}",
+        "collection": "myTokens"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "myTokens",
+        "loopRoutine": [
+          {
+            "func": "GET",
+            "collection": [
+              "${widgetID}"
+            ],
+            "property": "parent",
+            "variable": "claimedCardID"
+          },
+          {
+            "func": "IF",
+            "condition": "${claimedCardID}",
+            "thenRoutine": [
+              {
+                "func": "SELECT",
+                "property": "id",
+                "value": "${claimedCardID}",
+                "collection": "claimedCard"
+              },
+              {
+                "func": "MOVE",
+                "collection": "claimedCard",
+                "to": "${seatID}",
+                "count": "all",
+                "face": 1
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "${widgetID}"
+                ],
+                "property": "parent",
+                "value": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "hand",
+        "key": "rank"
+      }
+    ],
+    "borderRadius": 0,
+    "width": 120,
+    "height": 60,
+    "classes": "borderfx",
+    "css": {
+      "--baseColor": "#8A00C4",
+      "--lightColor": "white",
+      "color": "white",
+      "font-size": "20px",
+      "paint-order": "stroke fill",
+      "-webkit-text-stroke": "0.2em black"
+    },
+    "movable": false,
+    "movableInEdit": false
+  },
+  "Player1Token1": {
+    "id": "Player1Token1",
+    "x": 50,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "z": 5,
+    "image": "/assets/-1028260123_2097",
+    "isPlayerToken": true,
+    "tokenSeat": "Player1Seat"
+  },
+  "Player1Token2": {
+    "id": "Player1Token2",
+    "x": 105,
+    "y": 114,
+    "width": 50,
+    "height": 50,
+    "z": 77945,
+    "image": "/assets/886307194_2180",
+    "isPlayerToken": true,
+    "tokenSeat": "Player1Seat"
+  },
+  "Player1Token3": {
+    "id": "Player1Token3",
+    "x": 160,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "z": 8,
+    "image": "/assets/886307194_2180",
+    "isPlayerToken": true,
+    "tokenSeat": "Player1Seat"
+  },
+  "Player1Token4": {
+    "id": "Player1Token4",
+    "x": 215,
+    "y": 115,
+    "width": 50,
+    "height": 50,
+    "z": 9,
+    "image": "/assets/886307194_2180",
+    "isPlayerToken": true,
+    "tokenSeat": "Player1Seat"
+  },
+  "Player2Token1": {
+    "id": "Player2Token1",
+    "x": 50,
+    "y": 314,
+    "width": 50,
+    "height": 50,
+    "z": 77955,
+    "image": "/assets/1513375823_2100",
+    "isPlayerToken": true,
+    "tokenSeat": "Player2Seat"
+  },
+  "Player2Token2": {
+    "id": "Player2Token2",
+    "x": 105,
+    "y": 314,
+    "width": 50,
+    "height": 50,
+    "z": 18,
+    "image": "/assets/2125881571_2183",
+    "isPlayerToken": true,
+    "tokenSeat": "Player2Seat"
+  },
+  "Player2Token3": {
+    "id": "Player2Token3",
+    "x": 160,
+    "y": 314,
+    "width": 50,
+    "height": 50,
+    "z": 19,
+    "image": "/assets/2125881571_2183",
+    "isPlayerToken": true,
+    "tokenSeat": "Player2Seat"
+  },
+  "Player2Token4": {
+    "id": "Player2Token4",
+    "x": 215,
+    "y": 314,
+    "width": 50,
+    "height": 50,
+    "z": 20,
+    "image": "/assets/2125881571_2183",
+    "isPlayerToken": true,
+    "tokenSeat": "Player2Seat"
+  },
+  "Player3Token1": {
+    "id": "Player3Token1",
+    "x": 50,
+    "y": 513,
+    "width": 50,
+    "height": 50,
+    "z": 11,
+    "image": "/assets/914028807_2098",
+    "isPlayerToken": true,
+    "tokenSeat": "Player3Seat"
+  },
+  "Player3Token2": {
+    "id": "Player3Token2",
+    "x": 105,
+    "y": 513,
+    "width": 50,
+    "height": 50,
+    "z": 16,
+    "image": "/assets/-2138062586_2181",
+    "isPlayerToken": true,
+    "tokenSeat": "Player3Seat"
+  },
+  "Player3Token3": {
+    "id": "Player3Token3",
+    "x": 160,
+    "y": 513,
+    "width": 50,
+    "height": 50,
+    "z": 22,
+    "image": "/assets/-2138062586_2181",
+    "isPlayerToken": true,
+    "tokenSeat": "Player3Seat"
+  },
+  "Player3Token4": {
+    "id": "Player3Token4",
+    "x": 215,
+    "y": 513,
+    "width": 50,
+    "height": 50,
+    "z": 23,
+    "image": "/assets/-2138062586_2181",
+    "isPlayerToken": true,
+    "tokenSeat": "Player3Seat"
+  },
+  "Player4Token1": {
+    "id": "Player4Token1",
+    "x": 50,
+    "y": 709,
+    "width": 50,
+    "height": 50,
+    "z": 12,
+    "image": "/assets/-1815582879_2099",
+    "isPlayerToken": true,
+    "tokenSeat": "Player4Seat"
+  },
+  "Player4Token2": {
+    "id": "Player4Token2",
+    "x": 105,
+    "y": 709,
+    "width": 50,
+    "height": 50,
+    "z": 15,
+    "image": "/assets/1322213954_2183",
+    "isPlayerToken": true,
+    "tokenSeat": "Player4Seat"
+  },
+  "Player4Token3": {
+    "id": "Player4Token3",
+    "x": 160,
+    "y": 709,
+    "width": 50,
+    "height": 50,
+    "z": 26,
+    "image": "/assets/1322213954_2183",
+    "isPlayerToken": true,
+    "tokenSeat": "Player4Seat"
+  },
+  "Player4Token4": {
+    "id": "Player4Token4",
+    "x": 215,
+    "y": 709,
+    "width": 50,
+    "height": 50,
+    "z": 27,
+    "image": "/assets/1322213954_2183",
+    "isPlayerToken": true,
+    "tokenSeat": "Player4Seat"
+  },
+  "08vm": {
+    "type": "pile",
+    "parent": "MushroomDeck",
+    "width": 104,
+    "height": 160,
+    "id": "08vm",
+    "z": 17418
+  },
+  "label": {
+    "type": "label",
+    "id": "label",
+    "x": -123,
+    "y": -33,
+    "z": 19,
+    "text": "Filtered Cards"
+  },
+  "label1": {
+    "type": "label",
+    "id": "label1",
+    "x": -122,
+    "y": 249,
+    "z": 21,
+    "text": "We call this on Next Round",
+    "height": 70
+  },
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Myco Meld",
+      "image": "/assets/-1495707272_16962",
+      "rules": "https://boardgamegeek.com/filepage/300415/english-rules-for-mushroom-sort",
+      "bgg": "https://boardgamegeek.com/boardgame/445688/mushroom-sort",
+      "year": "2025",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<div>The Mushroom Girl icons were made by Olesya Kozlova (https://thenounproject.com/browse/collection-icon/mushroom-8280/) and are under the Public Domain License. The background image is \"Gnome stump house in autumn forest\" by upklyak (https://www.freepik.com/free-vector/gnome-stump-house-autumn-forest_143368136.htm) under the Free License. The font used in the title is Aladin, by Google Fonts (licensed under the SIL Open Font License, Version 1.1).</div><div><br></div><div>The room layout, design, coding, and library image by Habanero are released to the Public Domain under CC0.</div>",
+      "lastUpdate": 1777074710889,
+      "skill": "Low",
+      "description": "Search the forest for the best hidden mushrooms in this deduction poker-like game.",
+      "similarImage": "",
+      "similarName": "Mushroom Sort",
+      "similarDesigner": "Muneyuki Yokouchi (横内宗幸)",
+      "similarAwards": "",
+      "ruleText": "<i><b>Myco Meld</b></i> is a poker-like game where your starting hand isn't your own, but everyone else's potential hand instead.\n\nThe game is played with 32 cards divided into 4 suits, with ranks ranging 1 through 8. Players arrange their initial hand in ascending rank order and place it facedown before them in their tableau. Starting with the one card they then draw, players have to try and deduce where other cards they need might be to form the strongest poker hand. After four turns of claiming facedown cards (3 mushrooms and 1 pot, which reveals the card for everyone), they then gather their claimed cards and compare hands. In the final turn, players may claim one of the Center Cards.\n\n<div>The strength of your hand is similar to Poker (Pair, Straight, Full House, etc.). The players with the strongest and second-strongest hands score points for that round. The game continues for as many rounds as there are players.</div><div><br></div><div>Hand Scores:</div><div><br></div><div>Rank / 1st Place / 2nd Place</div><div><h4><b>2–3 Players:</b></h4>&nbsp; &nbsp; 1 | 5 pts | 3 pts | 4 of a Kind<br>&nbsp; &nbsp; 2 | 3 pts | 2 pts | Full House<br>&nbsp; &nbsp; 3 | 3 pts | 1 pt&nbsp; | Straight<br>&nbsp; &nbsp; 4 | 4 pts | 1 pt&nbsp; | 3 of a Kind, or a 4 Straight<br>&nbsp; &nbsp; 5 | 2 pts | 1 pt&nbsp; | Pair<br>&nbsp; &nbsp; 6 | 2 pts | 1 pt&nbsp; | All other cards<br><h4><b>4 Players:</b></h4>&nbsp; &nbsp; 1 | 5 pts | 4 pts | 4 of a Kind<br>&nbsp; &nbsp; 2 | 4 pts | 2 pts | Full House<br>&nbsp; &nbsp; 3 | 3 pts | 2 pts | Straight<br>&nbsp; &nbsp; 4 | 3 pts | 2 pts (3oaK) or 1 pt (4S) | 3 of a Kind, or a 4 Straight<br>&nbsp; &nbsp; 5 | 2 pts | 1 pt&nbsp; | Pair<br>&nbsp; &nbsp; 6 | 2 pts | 1 pt&nbsp; | All other cards</div>",
+      "helpText": "<div>The game is mostly automated, with correct setups depending on player count. Here's what you'll need to do.</div><div><br></div><div><ol><li>Press the dial to randomly determine the first player.</li><li>Press \"Start\" to deal initial hands.</li><li>Press \"Lay Hand\" after sorting your hand in numeral order. Your cards should then be placed onto the tableau in the same order. If it isn't for some reason, rearrange them (and report it as a bug).</li><li>In turn order, manually draw 1 card from the 4 in the center. There might be one left over, in which case it's unused.</li><li>Place your tokens on the cards you claim. When the round is over and all 4 tokens have been placed, press 'Claim Cards\" to get your claimed cards.</li><li>Compare poker hands against the score chart.</li><li>Press \"Start / Next Round\" to automatically gather all non-removed cards and re-deal for the next round.</li></ol></div>",
+      "usesAIImagery": false,
+      "showName": "only similar",
+      "variantImage": "",
+      "variant": "",
+      "language": "",
+      "players": "2-4"
+    },
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ".widget.basic.borderfx {\n  /* === MAIN VARIABLES === */\n  --baseColor: #0099ff;\n  --lightColor: #ffffff;\n\n  /* === AUTO DERIVED SHADES === */\n  --baseTop: color-mix(in srgb, var(--baseColor) 70%, white 25%);\n  --baseBottom: color-mix(in srgb, var(--baseColor) 85%, black 20%);\n  --borderRaised: color-mix(in srgb, var(--baseColor) 55%, black 45%);\n  --borderPressed: color-mix(in srgb, var(--baseColor) 40%, white 60%);\n\n  /* edge tracer uses this */\n  --edgeColor: var(--lightColor);\n\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  text-align: center;\n  border-radius: 12px;\n  border: 2px outset var(--borderRaised);\n  background: linear-gradient(160deg, var(--baseTop), var(--baseBottom));\n  box-shadow:\n    0 4px 0 color-mix(in srgb, var(--baseColor) 30%, black 70%),\n    0 6px 10px rgba(0,0,0,.6);\n  cursor: pointer;\n  overflow: hidden;\n  transition: transform .1s ease, box-shadow .1s ease, border-color .1s ease, color .1s ease;\n}\n\n/* === PRESSED LOOK (steady glow + inset shading) === */\n.widget.basic.borderfx:active {\n  transform: translateY(3px);\n  border: 2px inset var(--borderPressed);\n  text-shadow:\n    0 0 6px currentColor,\n    0 0 12px color-mix(in srgb, currentColor 70%, white 30%);\n  box-shadow:\n    inset 0 2px 4px rgba(0,0,0,.55),\n    inset 0 -2px 3px rgba(255,255,255,.15);\n}\n\n/* === EDGE TRACER LIGHT === */\n.widget.basic.borderfx::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  border-radius: inherit;\n  pointer-events: none;\n  background:\n    linear-gradient(90deg,  var(--edgeColor) 0%, transparent 100%) top left    / 0% 2px no-repeat,\n    linear-gradient(180deg, var(--edgeColor) 0%, transparent 100%) top right   / 2px 0% no-repeat,\n    linear-gradient(270deg, var(--edgeColor) 0%, transparent 100%) bottom right/ 0% 2px no-repeat,\n    linear-gradient(0deg,   var(--edgeColor) 0%, transparent 100%) bottom left / 2px 0% no-repeat;\n  opacity: 0;\n  transition: opacity .15s ease-out;\n}\n\n/* === HOVER ANIMATION === */\n.widget.basic.borderfx:hover:not(:active)::before {\n  opacity: 1;\n  animation: edge-fill 1.5s linear infinite alternate;\n}\n\n/* === CLOCKWISE EDGE LIGHT === */\n@keyframes edge-fill {\n  0%   { background-size: 0% 3px, 3px 0%, 0% 2px, 2px 0%; }\n  25%  { background-size: 100% 3px, 3px 0%, 0% 3px, 3px 0%; }\n  50%  { background-size: 100% 3px, 3px 100%, 0% 3px, 3px 0%; }\n  75%  { background-size: 100% 3px, 3px 100%, 100% 3px, 3px 0%; }\n  100% { background-size: 100% 3px, 3px 100%, 100% 3px, 3px 100%; }\n}\n"
+    }
+  }
+}
