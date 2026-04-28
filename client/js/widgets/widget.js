@@ -2330,6 +2330,10 @@ export class Widget extends StateManaged {
     );
   }
 
+  isInvisible() {
+    return !this.get('display') || this.get('parent') && widgets.has(this.get('parent')) && widgets.get(this.get('parent')).isInvisible();
+  }
+
   async moveToHolder(holder) {
     if(this.inRemovalQueue)
       return;
