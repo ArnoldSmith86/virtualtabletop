@@ -39,7 +39,7 @@ function compareDropTarget(widget, t, exclude){
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
-    if(t.isInvisible())
+    if(!t.isVisible())
       continue;
 
     // if the holder has a drop limit and it's reached, skip the holder
