@@ -2303,11 +2303,6 @@ export class Widget extends StateManaged {
   }
 
   isVisible() {
-    if(!this.get('display'))
-      return false;
-    if(this.get('parent') && widgets.has(this.get('parent')) && !widgets.get(this.get('parent')).isVisible())
-      return false;
-
     // Ensure the element exists
     if (!this.domElement) return false;
 
