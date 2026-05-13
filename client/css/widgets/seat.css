@@ -1,22 +1,49 @@
 .seat {
-  background-color: #ffffff;
+  background-color: var(--color);
 
-  font-size: 25px;
-  color:#222222;
+  font-size: 21px;
+  color:#ffffff;
   font-weight:bold;
 
-  border-width: 7px;
+  border-width: 2px;
   border-style: solid;
-  border-color: var(--color);
+  border-color: #000000bb;
+
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px #00000066;
+  text-shadow: 2px 2px 2px #000000bb, -2px 2px 2px #000000bb, 2px -2px 2px #000000bb, -2px -2px 2px #000000bb;
 
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  --wcShadowTurn: 0px 0px 20px 5px var(--color);
+  cursor: pointer;
+  gap: 5px;
 }
 
 .seat.seated.turn {
-  box-shadow: var(--wcShadowTurn);
+  box-shadow: 0px 0px 20px 5px var(--glowColor);
+}
+
+.seated.turn::after {
+  content: '!';
+  font-size: 18px;
+  line-height: 1em;
+  white-space: wrap;
+  background-color: #000000bb;
+  border: 2px solid var(--color);
+  background-size: 200% auto;
+  color: #ffffff;
+  text-shadow: 0 1px 5px #000000cc;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  position: absolute;
+  right: -0.6em;
+  top: -0.6em;
+  padding: 2px;
+  border-radius: 100px;
+  box-shadow: 0 0 5px #000000bb;
+  pointer-events: none;
 }
