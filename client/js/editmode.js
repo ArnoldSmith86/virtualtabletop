@@ -1250,6 +1250,20 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
     return;
   }
 
+  if(widget.parent !== undefined) {
+    const parentProblem = validateParentAssignment(widget.id, widget.parent);
+    if(parentProblem === 'self') {
+      alert(`Widget ${widget.id} cannot set its parent to itself.`);
+      batchEnd();
+      return;
+    }
+    if(parentProblem === 'descendant') {
+      alert(`Widget ${widget.id} cannot set its parent to its descendants.`);
+      batchEnd();
+      return;
+    }
+  }
+
   if(applyChangesFromUI)
     await applyEditOptions(widget);
 
