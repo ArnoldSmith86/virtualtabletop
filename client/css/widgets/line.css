@@ -1,0 +1,26 @@
+/* Hide all .controlPoint elements by default */
+.controlPoint {
+  border: solid #000000;
+  background-color: #f3f3f3;
+  text-align: center;
+  display: none;
+}
+
+/* Ensure .controlPoint is visible when hovered, but only in jsonEdit or edit mode */
+body.jsonEdit .controlPoint:hover,
+body.edit .controlPoint:hover {
+    display: flex;
+}
+
+/* .lineWrapper {
+} */
+
+/* Show .controlPoint when body has jsonEdit or edit class AND it OR parent has selectedInEdit */
+body.jsonEdit .selectedInEdit > .controlPoint,
+body.edit .selectedInEdit > .controlPoint,
+body.jsonEdit .selectedInEdit > * > .controlPoint,
+body.edit .selectedInEdit > * > .controlPoint,
+.selectedInEdit .controlPoint {
+    display: flex !important;
+}
+
