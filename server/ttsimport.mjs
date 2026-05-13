@@ -276,7 +276,7 @@ async function convertTTS(content, linkContent) {
   if(json.TableURL) {
     widgets.back = {
       id: 'back',
-      width: 1600,
+      width: 1778,
       height: 1000,
       layer: -9,
       movable: false,

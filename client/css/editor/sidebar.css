@@ -246,7 +246,7 @@ body.lightsOff #editorModules {
 }
 
 /* iconify sidebar icons */
-@media (max-width: 1600px) {
+@media (max-width: 1778px) {
   :root {
     --editSidebarWidth: 36px;
   }
