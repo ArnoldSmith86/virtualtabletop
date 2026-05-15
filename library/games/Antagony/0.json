@@ -23,7 +23,8 @@
       "players": "2",
       "language": "en-GB",
       "variant": "Antagony",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   },
   "2esl": {

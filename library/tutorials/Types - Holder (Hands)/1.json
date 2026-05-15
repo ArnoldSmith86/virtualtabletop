@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 4,
+    "version": 20,
     "info": {
       "name": "Types - Holder (Hand)",
       "image": "/assets/701433125_6681",
@@ -11,7 +11,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051205358,
+      "lastUpdate": 1768189154584,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,10 +20,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Custom Visibility",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Custom Visibility",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "w2ab": {
@@ -75,12 +78,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -249,7 +246,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -265,9 +261,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -910,7 +907,9 @@
       "width": 500,
       "height": 200
     },
-    "layer": 10
+    "layer": 10,
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "redCover": {
     "type": "holder",
@@ -928,7 +927,9 @@
       "width": 500,
       "height": 200
     },
-    "id": "redCover"
+    "id": "redCover",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "gu7h": {
     "type": "label",

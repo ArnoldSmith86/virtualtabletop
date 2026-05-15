@@ -1,0 +1,58 @@
+name: Monthly AppImage release
+
+on:
+  schedule:
+    # First day of each month, 08:00 UTC
+    - cron: '0 8 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rsync
+
+      - name: Build AppImages (full + light)
+        run: |
+          chmod +x .appimage/build-appimage.sh
+          .appimage/build-appimage.sh
+          .appimage/build-appimage.sh --light
+
+      - name: Write release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          chmod +x .github/scripts/monthly-appimage-release-notes.sh
+          .github/scripts/monthly-appimage-release-notes.sh
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="monthly-$(date -u +%Y-%m)"
+          TITLE="Monthly AppImages $(date -u +%Y-%m)"
+          shopt -s nullglob
+          ASSETS=(.appimage/out/*.AppImage)
+          if [[ ${#ASSETS[@]} -eq 0 ]]; then
+            echo "No AppImage files found in .appimage/out/"
+            exit 1
+          fi
+          gh release create "$TAG" \
+            --title "$TITLE" \
+            --notes-file release_notes.md \
+            --target "${{ github.sha }}" \
+            "${ASSETS[@]}"

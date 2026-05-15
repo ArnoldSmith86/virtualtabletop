@@ -57,7 +57,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2"
+      "players": "2",
+      "usesAIImagery": true
     }
   },
   "diceBag": {

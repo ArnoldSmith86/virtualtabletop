@@ -8,3 +8,5 @@ save
 *.tgz
 *.heapsnapshot
 .DS_Store
+.appimage/temp/
+.appimage/out/.vscode/

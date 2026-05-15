@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "Default",
       "language": "en-US",
-      "players": "3-4"
+      "players": "3-4",
+      "usesAIImagery": true
     }
   },
   "wy2u": {

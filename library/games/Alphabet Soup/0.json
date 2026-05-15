@@ -3,14 +3,13 @@
     "version": 13,
     "info": {
       "name": "Alphabet Soup",
-      "image": "/assets/-914344625_43565",
+      "image": "/assets/1812420244_48966",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/1293/boggle",
       "year": "1971",
       "mode": "vs",
       "time": "10",
-      "link": "",
-      "attribution": "The room design and all game elements are by LawDawg96 are are released into the Public Domain as CC0.<div><br></div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"black and white cube dice with letters on the sides in a plain white bowl\".&nbsp;</div><div><br></div>",
+      "attribution": "The room design and all game elements are by LawDawg96 are are released into the Public Domain as CC0.<div><br></div><div>The library image is a crop of an image by Suxu and is available under the Pixabay License at&nbsp;https://pixabay.com/vectors/alphabet-letter-block-blocks-1168050/.</div><div><br></div>",
       "lastUpdate": 1690320459772,
       "showName": true,
       "skill": "",
@@ -20,11 +19,12 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "Players sit in seats. Press the restart button at the bottom to choose options. Click start button at top to begin. Players type words into the space below their seat and press Enter key. Words form a list below the player's seat that only that player can see. That list can be edited in case of a mistake.<div><br></div><div>When the timer ends, all player lists are displayed. You can click on any player's list to see possible misspellings indicated using the browser's built-in spell checker. A \"Validate\" button will appear to give you the option to automatically remove all duplicates, all words shorter than the value set in the options menu, and alphabetize the lists so it is easier to compare.</div><div><br></div><div>Manually calculate scores and click on the scoreboard to enter the scores.</div>",
+      "similarDesigner": "Bill Cooke, Allan Turoff",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1-8",
-      "similarDesigner": "Bill Cooke, Allan Turoff"
+      "players": "1-8"
     }
   },
   "base": {

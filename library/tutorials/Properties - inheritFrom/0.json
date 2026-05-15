@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 19,
+    "version": 21,
     "gameSettings": {
       "legacyModes": {
         "convertNumericVarParametersToNumbers": true,
@@ -17,7 +17,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1764391925791,
+      "lastUpdate": 1774681187072,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -29,7 +29,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "spinner2": {
@@ -803,8 +804,7 @@
     "movableInEdit": true,
     "inheritFrom": {
       "spinner1": [
-        "value",
-        "angle"
+        "!css"
       ]
     },
     "options": [

@@ -16,7 +16,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1764515386371,
+      "lastUpdate": 1770833039983,
       "showName": false,
       "skill": "",
       "description": "",
@@ -29,7 +29,8 @@
       "variantImage": "",
       "variant": "CSS Demo",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "header": {

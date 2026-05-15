@@ -1272,6 +1272,20 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
+
+    if(widget.type === 'deck') {
+      const prev = previousState.cardTypes;
+      const next = widget.cardTypes;
+      if(prev && next && !Array.isArray(prev) && !Array.isArray(next) && typeof prev === 'object' && typeof next === 'object') {
+        const prevKeys = Object.keys(prev);
+        const nextKeys = Object.keys(next);
+        const removed = prevKeys.filter(k => !next[k]);
+        const added = nextKeys.filter(k => !prev[k]);
+        if(removed.length === 1 && added.length === 1)
+          for(const card of widgetFilter(w => w.get('type') === 'card' && w.get('deck') === widget.id && w.get('cardType') === removed[0]))
+            await card.set('cardType', added[0]);
+      }
+    }
   }
 
   batchEnd();

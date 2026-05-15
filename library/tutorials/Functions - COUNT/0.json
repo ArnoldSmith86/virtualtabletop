@@ -8,7 +8,7 @@
     "parent": "dtc6"
   },
   "_meta": {
-    "version": 9,
+    "version": 20,
     "info": {
       "name": "Functions - COUNT",
       "image": "/assets/-228948855_3915",
@@ -19,7 +19,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068049604,
+      "lastUpdate": 1768609263087,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -28,10 +28,12 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "8fr3": {
@@ -55,7 +57,16 @@
     "layer": -3,
     "z": 124,
     "css": "font-size: 25px; ",
-    "text": "COUNT is a very basic but important function. It can either be used to count the widgets in a collection or a holder. Optionally, you can also count cards owned by a player."
+    "text": "COUNT is a very basic but important function. It can either be used to count the widgets in a collection or a holder. Optionally, you can also count cards owned by a player.",
+    "clickRoutine": [
+      "// Used just to prevent validation problems",
+      {
+        "func": "VAR",
+        "variables": {
+          "dummy": "${PROPERTY myCustomProperty}"
+        }
+      }
+    ]
   },
   "bm4j": {
     "text": "The button above creats a collection of every widget in the room. It then performs a COUNT on that collection and reports the result in the text area above the button.",
@@ -98,24 +109,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1064,7 +1057,9 @@
     "y": 820,
     "width": 1500,
     "height": 180,
-    "id": "hand"
+    "id": "hand",
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "jkmt": {
     "type": "button",

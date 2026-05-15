@@ -165,7 +165,7 @@
     "y": 4
   },
   "_meta": {
-    "version": 4,
+    "version": 20,
     "info": {
       "name": "Types - Holder (Hand)",
       "image": "/assets/701433125_6681",
@@ -176,7 +176,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051205359,
+      "lastUpdate": 1768189174638,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -185,10 +185,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Seats",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Seats",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "qaui": {
@@ -241,24 +244,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -739,7 +724,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -755,9 +739,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1196,7 +1181,9 @@
     "onLeave": {
       "activeFace": 0
     },
-    "stackOffsetX": 40
+    "stackOffsetX": 40,
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "deckHolder": {
     "type": "holder",

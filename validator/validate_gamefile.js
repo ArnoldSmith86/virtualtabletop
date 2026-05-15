@@ -39,7 +39,17 @@ const validators = {
     vttSymbol: v=>v === null || typeof v === 'string', // TODO: replace with actual VTT symbol name check if available
     countOrAll: v=>v === 'all' || typeof v === 'number' || 'number or "all" expected',
     any: v=>true
-}
+};
+
+const FACE_OBJECT_COMMON_PROPS = ['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
+
+const FACE_OBJECT_VALID_PROPS = {
+    _common: FACE_OBJECT_COMMON_PROPS,
+    image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
+    icon: [...FACE_OBJECT_COMMON_PROPS, 'color', 'size', 'strokeColor', 'strokeWidth', 'hoverColor', 'hoverStrokeColor', 'hoverStrokeWidth', 'hoverOpacity', 'name', 'scale', 'offsetX', 'offsetY', 'flip', 'opacity', 'text'],
+    text: [...FACE_OBJECT_COMMON_PROPS, 'color', 'fontSize', 'textAlign'],
+    html: [...FACE_OBJECT_COMMON_PROPS, 'fontSize', 'textAlign']
+};
 
 // Common properties for all widgets
 const COMMON_PROPERTIES = {
@@ -88,10 +98,11 @@ const COMMON_PROPERTIES = {
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
-    enterRoutine: getRoutineValidator({}, {'child': 1}),
+    enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
+    editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
     animatePropertyChange: 'any',
     resetProperties: 'object',
@@ -118,7 +129,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset'
     },
     Label: {
         ...COMMON_PROPERTIES,
@@ -216,13 +227,14 @@ const WIDGET_PROPERTIES = {
                             }
                         }
                         
-                        const validObjProps = ['type', 'x', 'y', 'width', 'height', 'fontSize', 'textAlign', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'svgReplaces', 'value', 'color', 'note', 'size'];
+                        const objType = (obj.type && String(obj.type).toLowerCase()) || '';
+                        const validObjProps = FACE_OBJECT_VALID_PROPS[objType] || FACE_OBJECT_VALID_PROPS._common;
                         for(const prop of Object.keys(obj)) {
                             if(!validObjProps.includes(prop)) {
                                 problems.push({
                                     widget: p.widgetId,
                                     property: [...propertyPath, faceIndex, 'objects', objIndex, prop],
-                                    message: `invalid property. Valid object properties: ${validObjProps.join(', ')}`
+                                    message: `invalid property for type "${obj.type || 'unknown'}". Valid properties: ${validObjProps.join(', ')}`
                                 });
                             }
                         }
@@ -300,6 +312,20 @@ function parsePropertySyntax(string) {
     const match               = string.match(new RegExp(`^\\$\\{(?:${property})\\}` + '\x24'));
 
     return match;
+}
+
+function validateGetProperty(value, context, propertyPath = []) {
+    if (typeof value === 'string' && value.length > 0) {
+        return validators.property(value, context);
+    }
+    if (Array.isArray(value) && value.length > 0) {
+        return validators.property(value[0], context);
+    }
+    return [{
+        widget: context.widgetId,
+        property: propertyPath,
+        message: 'GET property must be a non-empty string or array'
+    }];
 }
 
 function validateRoutine(routine, context, propertyPath = []) {
@@ -489,11 +515,11 @@ function validateRoutine(routine, context, propertyPath = []) {
             const newContext = Object.assign({}, JSON.parse(JSON.stringify(context)), {recursionCheck, calledCustomRoutines: context.calledCustomRoutines});
             if(typeof operation.arguments === 'object' && operation.arguments !== null)
                 for(const key of Object.keys(operation.arguments))
-                    if(typeof operation.arguments[key] === 'string')
-                        newContext.validVariables[operation.arguments[key]] = 1;
+                    newContext.validVariables[key] = 1;
+            newContext.validCollections['caller'] = 1;
             for(const widget of Object.values(context.widgets))
                 if(Array.isArray(widget[operation.routine]))
-                    validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]);
+                    problems.push(...validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]));
         }
         if(func === 'CALL')
             context.validVariables[operation.variable || 'result'] = 1;
@@ -513,6 +539,10 @@ function validateRoutine(routine, context, propertyPath = []) {
         }
         if(func === 'SELECT')
             context.validCollections[operation.collection || 'DEFAULT'] = 1;
+        if(func === 'TURN')
+            context.validCollections[operation.collection || 'TURN'] = 1;
+        if(func === 'UPLOAD')
+            context.validVariables[operation.variable || 'uploadedFileName'] = 1;
         if(func === 'VAR' && typeof operation.variables === 'object' && operation.variables !== null)
             for(const key of Object.keys(operation.variables))
                 context.validVariables[key] = 1;
@@ -649,7 +679,7 @@ const operationProps = {
     },
     'GET': {
         'collection':  'inCollection',
-        'property':    'property',
+        'property':    validateGetProperty,
         'variable':    'string',
         'aggregation': getEnumValidator(['first', 'last', 'sum', 'average', 'median', 'min', 'max', 'array']),
         'skipMissing': 'boolean'
@@ -769,6 +799,10 @@ const operationProps = {
         'source': 'inCollection',
         'collection': 'string'
     },
+    'UPLOAD': {
+        'fileTypes': v=>Array.isArray(v) && v.every(x=>typeof x === 'string'),
+        'variable': 'string'
+    },
     'VAR': {
         'variables': 'object'
     }
@@ -840,7 +874,57 @@ function customWidgetChecks(widget, widgets, problems) {
 
 function getCustomPropertyUsage(data) {
     const customProperties = new Set();
-    
+    const declaredCustomProperties = new Set();
+    const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
+    const canvasPropertyRegex = /^c[0-9]+$/;
+    const customRoutineRegex = /^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/;
+    const placeholderRegex = /\$\{[^}]+\}/g;
+    const escapeRegex = value=>value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    function isCustomWidgetProperty(widget, prop) {
+        const wtype = getWidgetType(widget);
+        const known = WIDGET_PROPERTIES[wtype] || {};
+        return !(wtype == 'Canvas' && canvasPropertyRegex.test(prop))
+            && !(prop in known)
+            && !customRoutineRegex.test(prop);
+    }
+
+    for (const [, widget] of widgetEntries) {
+        for (const prop of Object.keys(widget)) {
+            if (isCustomWidgetProperty(widget, prop))
+                declaredCustomProperties.add(prop);
+        }
+    }
+
+    function addPropertyPatternMatches(value) {
+        if (typeof value !== 'string' || !value.includes('${'))
+            return;
+
+        const staticParts = value.split(placeholderRegex);
+        const staticCharCount = staticParts.reduce((sum, part) => sum + part.length, 0);
+        if (staticCharCount < 2)
+            return;
+
+        const pattern = '^' + staticParts
+            .map(escapeRegex)
+            .join('.*') + '$';
+        const interpolatedPattern = new RegExp(pattern);
+
+        for (const prop of declaredCustomProperties) {
+            if (interpolatedPattern.test(prop))
+                customProperties.add(prop);
+        }
+    }
+
+    function addPropertyUsage(value) {
+        const property = typeof value === 'string' ? value : Array.isArray(value) ? value[0] : null;
+        if (typeof property !== 'string')
+            return;
+
+        customProperties.add(property);
+        addPropertyPatternMatches(property);
+    }
+
     // Helper function to extract property names from ${PROPERTY xxx} syntax
     function extractPropertyFromSyntax(value) {
         if (typeof value === 'string') {
@@ -929,33 +1013,34 @@ function getCustomPropertyUsage(data) {
                 if (func === 'CALL' && key === 'routine' && typeof value === 'string') {
                     customProperties.add(value);
                 } else if (func === 'GET' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
+                } else if (func === 'GET' && key === 'property' && Array.isArray(value) && typeof value[0] === 'string') {
+                    addPropertyUsage(value);
                 } else if (func === 'RESET' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SELECT' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SCORE' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
-                    customProperties.add(value);
+                    addPropertyUsage(value);
                 }
             }
-            
+
             // Recursively scan nested objects
             scanForProperties(value);
         }
     }
     
     // Scan all widgets
-    for (const [key, widget] of Object.entries(data)) {
-        if (key === "_meta" || typeof widget !== 'object' || widget === null) {
-            continue;
-        }
-        
+    for (const [, widget] of widgetEntries) {
         // Scan widget properties
         scanForProperties(widget);
+
+        if(widget.type === 'scoreboard')
+            customProperties.add(widget.scoreProperty || 'score');
     }
     
     return [...customProperties];
@@ -1031,7 +1116,7 @@ function validateGameFile(data, checkMeta) {
                 'name', 'image', 'rules', 'bgg', 'year', 'mode', 'time', 'attribution', 
                 'lastUpdate', 'language', 'showName', 'skill', 'description', 'similarImage', 
                 'similarName', 'similarDesigner', 'similarAwards', 'ruleText', 'helpText', 
-                'players', 'variant', 'variantImage', 'importer', 'importerTime'
+                'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery'
             ];
             for (const prop of Object.keys(data._meta.info)) {
                 if (!infoProps.includes(prop)) {
@@ -1190,12 +1275,105 @@ function validateGameFile(data, checkMeta) {
                 property: ['_meta', 'info', 'image'],
                 message: 'is not an internal asset: ' + info.image
             });
-        } else if (info.image.match(/[0-9]+$/)[0] > 50000) {
+        } else if (info.image.match(/[0-9]+$/) && info.image.match(/[0-9]+$/)[0] > 50000) {
             problems.push({
                 widget: '',
                 property: ['_meta', 'info', 'image'],
                 message: 'image is bigger than 50000 - a good target is 600x600 @ WebP 60% quality'
             });
+        }
+        
+        // Players validation
+        if (info.players === undefined || info.players === null || String(info.players).trim() === '') {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'players'],
+                message: 'is missing or empty'
+            });
+        } else {
+            const playersStr = String(info.players).trim();
+            const tokens = playersStr.split(',');
+            for (let i = 0; i < tokens.length; i++) {
+                const token = tokens[i].trim();
+                const match = token.match(/^([0-9]+)(-([0-9]+)|\+)?$/);
+                if (!match) {
+                    problems.push({
+                        widget: '',
+                        property: ['_meta', 'info', 'players'],
+                        message: `invalid player count format: "${token}" (expected format: "2", "2-4", "2+", or comma-separated values like "2,4,6")`
+                    });
+                } else {
+                    const min = parseInt(match[1], 10);
+                    if (match[2] === '+') {
+                        // "2+" format is valid
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (minimum must be at least 1)`
+                            });
+                        }
+                    } else if (match[2] && match[2].startsWith('-')) {
+                        // Range format "2-4"
+                        const max = parseInt(match[3], 10);
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (minimum must be at least 1)`
+                            });
+                        } else if (max < min) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count range: "${token}" (maximum ${max} is less than minimum ${min})`
+                            });
+                        }
+                    } else {
+                        // Single number format "2"
+                        if (min < 1) {
+                            problems.push({
+                                widget: '',
+                                property: ['_meta', 'info', 'players'],
+                                message: `invalid player count: "${token}" (must be at least 1)`
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Mode validation
+        if (info.mode === undefined || info.mode === null || String(info.mode).trim() === '') {
+            problems.push({
+                widget: '',
+                property: ['_meta', 'info', 'mode'],
+                message: 'is missing or empty'
+            });
+        } else {
+            const modeStr = String(info.mode).trim();
+            const allowedModes = ['vs', 'coop', 'solo', 'teams', 'asymmetrical', 'tutorial'];
+            
+            // Split by comma or semicolon
+            const modes = modeStr.split(/[,;] /);
+            
+            if (modes.length === 0) {
+                problems.push({
+                    widget: '',
+                    property: ['_meta', 'info', 'mode'],
+                    message: 'mode contains only separators (comma/semicolon)'
+                });
+            } else {
+                for (const mode of modes) {
+                    if (!allowedModes.includes(mode.toLowerCase())) {
+                        problems.push({
+                            widget: '',
+                            property: ['_meta', 'info', 'mode'],
+                            message: `invalid mode value: "${mode}" (allowed values: ${allowedModes.join(', ')}, or comma/semicolon-separated combinations)`
+                        });
+                    }
+                }
+            }
         }
     }
     return problems;

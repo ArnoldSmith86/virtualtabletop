@@ -362,7 +362,7 @@
     "width": 1200
   },
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - CLICK",
       "image": "/assets/-1155107578_3739",
@@ -373,7 +373,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068021664,
+      "lastUpdate": 1768608837978,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -382,10 +382,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Modes",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Modes",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

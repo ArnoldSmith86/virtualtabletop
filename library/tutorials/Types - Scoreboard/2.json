@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 20,
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,12 +18,15 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1748992108991,
+      "lastUpdate": 1768669357838,
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Totals and Teams",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Totals and Teams",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "seat1": {
@@ -119,7 +122,16 @@
     "css": "font-size: 22px; ",
     "text": "Scoreboards contain a read-only property, '_totals'. It is an array of values corresponding to the sum of all scores (total) for each player. The first (0-index) value in the array is always null. Non-numeric values are treated as 0. Other values are listed in order corresponding to the seat index number of each seat.\n\nTeam scoring is also available by using a complex object form of the 'seats' property. When teams are setup, the '_totals' property will show team totals.",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "clickRoutine": [
+      "// This is only here to remove validation errors",
+      {
+        "func": "VAR",
+        "variables": {
+          "dummy1": "${PROPERTY score}"
+        }
+      }
+    ]
   },
   "header": {
     "id": "header",
@@ -336,11 +348,6 @@
     "y": 650,
     "z": 269,
     "text": "Change Score",
-    "cssOptions": {
-      ".scoreboard td:nth-child(3)": {
-        "background": "lightblue"
-      }
-    },
     "clickRoutine": [
       {
         "func": "SCORE",
@@ -489,8 +496,7 @@
       ".scoreboard tr:nth-child(3)": {
         "background": "${ROPERTY highlight1}"
       }
-    },
-    "highlight0": "lightblue"
+    }
   },
   "scoreboard3": {
     "type": "scoreboard",

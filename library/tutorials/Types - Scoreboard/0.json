@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 12,
+    "version": 20,
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,12 +18,15 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1748992108988,
+      "lastUpdate": 1768190453826,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Basic",
       "language": "en-US",
       "players": "1"
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "seat1": {
@@ -34,6 +37,12 @@
     "x": -37,
     "y": 10,
     "color": "red",
+    "bids": [
+      3,
+      4
+    ],
+    "movableInEdit": false,
+    "player": "Player 1",
     "score": [
       1,
       2,
@@ -41,13 +50,7 @@
       4,
       5,
       6
-    ],
-    "bids": [
-      3,
-      4
-    ],
-    "movableInEdit": false,
-    "player": "Player 1"
+    ]
   },
   "seat3": {
     "type": "seat",
@@ -159,7 +162,17 @@
     "css": "font-size: 25px; ",
     "text": "Scoreboard uses a property in seats to display numerical information in table form and total those numbers. Working in conjunction with routines and the SCORE function (shown in a different tutorial), the property on the seat can be updated and cause real-time changes to the scoreboard data. This room shows most of the options available when using scoreboards. The seats along the left side are pre-filled with player and score information to populate the data on the scoreboards in this room. Use the JSON Editor (ctrl-J) to look in the seats and scoreboards to see how missing or non-numeric data is handled.",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "clickRoutine": [
+      "// This is only here to remove validation errors",
+      {
+        "func": "VAR",
+        "variables": {
+          "dummy1": "${PROPERTY score}",
+          "dummy2": "${PROPERTY bids}"
+        }
+      }
+    ]
   },
   "header": {
     "id": "header",

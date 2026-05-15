@@ -26,6 +26,8 @@ const router = express.Router();
 const savedir = Config.directory('save');
 const assetsdir = Config.directory('assets');
 const sharedLinks = fs.existsSync(savedir + '/shares.json') ? JSON.parse(fs.readFileSync(savedir + '/shares.json')) : {};
+const customWidgets = fs.existsSync(path.resolve() + '/assets/widgets.json') ? JSON.parse(fs.readFileSync(path.resolve() + '/assets/widgets.json')) : { widgets: [], groups: [] };
+
 
 const serverStart = +new Date();
 
@@ -258,7 +260,7 @@ MinifyHTML().then(function(result) {
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const isPublicLibraryGame = req.params.share.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.sendStatus(404);
 
@@ -273,7 +275,7 @@ MinifyHTML().then(function(result) {
   });
 
   async function shareDetails(shareID) {
-    const isPublicLibraryGame = shareID.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    const isPublicLibraryGame = shareID.match(/^PL:([a-z-]+):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${shareID}`])
       return null;
 
@@ -295,6 +297,22 @@ MinifyHTML().then(function(result) {
     } catch(e) {
       return res.status(404).send('Invalid share.');
     }
+  });
+
+  router.get('/api/widgets', function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(customWidgets));
+  });
+
+  router.put('/api/widgets', bodyParser.json({ limit: '10mb' }), function(req, res, next) {
+    if (!Config.get('allowPublicLibraryEdits')) return res.status(403).send('Public library edits are disabled.');
+    const data = req.body;
+    if (typeof data === 'object' && data !== null) {
+      customWidgets.widgets = Array.isArray(data.widgets) ? data.widgets : [];
+      customWidgets.groups = Array.isArray(data.groups) ? data.groups : [];
+    }
+    fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
+    res.send('OK');
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
@@ -348,9 +366,14 @@ MinifyHTML().then(function(result) {
   router.get('/game/:plName', gameRoomHandler);
   router.get('/game/:shareID/:name', gameRoomHandler);
   router.get('/tutorial/:plName', gameRoomHandler);
+  router.get('/library/:folder/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
     try {
-      if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
+      let roomID = String(req.params.room);
+      if(!Config.get('roomNamesCaseSensitive'))
+        roomID = roomID.toLowerCase();
+
+      if(!roomID.match(/^[A-Za-z0-9_-]+$/)) {
         res.send('Invalid characters in room ID.');
         return;
       }
@@ -359,9 +382,9 @@ MinifyHTML().then(function(result) {
         let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
         res.setHeader('Content-Type', 'text/html');
 
-        if(req.params.room) {
-          if(await ensureRoomIsLoaded(req.params.room)) {
-            const room = activeRooms.get(req.params.room);
+        if(roomID) {
+          if(await ensureRoomIsLoaded(roomID)) {
+            const room = activeRooms.get(roomID);
             let game = null;
             if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
               game = room.state._meta.states[room.state._meta.activeState.stateID];
@@ -375,7 +398,9 @@ MinifyHTML().then(function(result) {
             }
           }
         } else {
-          const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
+          const routeFolderMap = { game: 'games', tutorial: 'tutorials' };
+          const routeFolder = req.params.folder || routeFolderMap[req.url.split('/')[1]] || req.url.split('/')[1];
+          const share = await shareDetails(req.params.shareID || `PL:${routeFolder}:${req.params.plName}`);
           if(share && req.url.split('/')[1] == 'tutorial') {
             ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
             ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;
@@ -510,3 +535,4 @@ autosaveRooms();
       process.exit();
   });
 });
+

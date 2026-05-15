@@ -174,7 +174,7 @@ class Card extends Widget {
                 const extraStyles = typeof css == 'object' ? this.cssToStylesheet(css, usedProperties, true) : '';
                 const html = `<!DOCTYPE html>\n` +
                     `<html><head><link rel="stylesheet" href="fonts.css"><style>html,body {height: 100%; margin: 0;} html {font-size: 14px; font-family: 'Roboto', sans-serif;} body {overflow: hidden;}${extraStyles}` +
-                    `</style></head><body class="${object.classes || ""}">${content}</body></html>`;
+                    `</style></head><body class="${object.classes || ""}">${mapAssetURLs(content)}</body></html>`;
                 objectDiv.srcdoc = html;
               } else {
                 let inlineCSS = '';

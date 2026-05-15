@@ -1,15 +1,21 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Ascent",
-      "image": "/assets/-440946409_17832",
+      "image": "/assets/-1114695345_78465",
       "rules": "",
       "bgg": "https://boardgamegeek.com/boardgame/41/cant-stop",
       "year": "1980",
       "mode": "vs",
       "time": "15",
-      "attribution": "<div>The room layout and game design are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><br><div>The mountain background and library image were created using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"watercolor painting, symmetrical rocky mountain snow covered peak.\" The underwater image used the following prompt: \"colorful symmetrical underwate scene from surface to bottom 50 feet below, boat, marine life, coral reef.\"<br></div>",
+      "attribution": "<div>The room layout, game design, and library image are by LawDawg96 and are released to the Public Domain under CC0.</div><div><br></div><div>The rolling dice and stop sign icons are by Delapouite and are availabe under CC BY 3.0 from https://game-icons.net/.</div><div><br></div><div>The mountain background is by LUCASGREY and is available under the Pixabay License at&nbsp;https://pixabay.com/vectors/everest-czomolungma-himalayas-4828404/.</div><div><br></div><div>The underwater background is by Echonn and is available under the Pixabay License at&nbsp;https://pixabay.com/illustrations/ocean-sea-underwater-coral-reef-8984053/.</div>",
       "lastUpdate": 1713027750477,
       "showName": true,
       "skill": "",
@@ -20,6 +26,7 @@
       "similarAwards": "2021 5 Seasons Best International Filler Game Winner\n1982 Spiel des Jahres Recommended\n1981 Spiel des Jahres Recommended",
       "ruleText": "Roll 4 dice. Divide the dice into pairs and sum the pips. At most, there are 3 possible combinations. Pick a pair of sums that correspond to a column of the same number on the board. For each sum in the pair, if you have one of your 3 climbers remaining, you must enter it onto the board if you can.<div><ul><li>If you have a marker in that column, enter the climber onto the space above the marker.</li><li>If you do not have a marker in that column, enter the climber in the lowest space in that column.</li><li>If you already have a climber in that column, do not enter another climber but instead move the existing climber up one space in that column.</li></ul><div>Repeat for the other sum of the pair. If the pair is a double (for example, 7 and 7), then either move the existing climber up two spaces, or enter a climber into the column (at the bottom or above the marker) and then move it up one more space.</div><div><br></div><div>After rolling the dice, so long as any single die allows a climber to be advanced or entered, you must do so. Then you can choose whether to consolidate your gains or press your luck.</div><div><ul><li>If you consolidate your gains, replace each climber with a marker and return the climbers to your pool. When it is your turn, roll the dice again and start the process over, but entering climbers one space above existing markers.</li><li>If none of your dice allow a legal play, then your turn is over. All the climbers are returned to your pool. When it is your turn, roll the dice again and start the process over.</li></ul><div>When a player gets a marker (not a climber) in the top space in a column, that column is closed. Return all other climbers and markers in that column to the players.</div></div><div><br></div><div>The first to claim the designated number of columns wins the game. The default is 3, but any value between 1 and 11 can be chosen in the settings.&nbsp; The game works best with no more than 4 players, but this online version allows up to 6. If you have more than 4 players, you should consider making the number of columns needed to win either 2 or 1.</div><div><br></div><div>This online version of the game also has several variations of the timing of turns.</div><div><ul><li><b>Traditional</b>. Each player completes their turn in sequence. A turn ends only when a player fails to make a roll that allows a legal play or when the player decides to stop and consolidate the gains.</li><li><b>Simultaneous turns</b>. All players roll dice and make selections at the same time. Players can keep playing as long as they press their luck until either they fail to make a roll that allows a legal play or they decide to stop. Once all players have failed or stopped, a turn button appears at the top of the screen.&nbsp; Press that to begin the next round.</li><li><b>Lightning</b>. This mode is a complete free-for-all.&nbsp; Players can play without any regard for turns or rounds. The first to reach the top of the designated number of columns wins.</li></ul></div></div>",
       "helpText": "Players take seats. Choose settings using the gear icon and press the reset button in the upper-right corner to begin the game.<div><br></div><div>Interact with the room based on the following instructions and diagram that represents a seat area. Except for the seat widget itself, players can only press can see but cannot press buttons outside the seat area they are sitting in.</div><div><br></div><div><img src=\"/assets/209212507_148646\" class=\"richtextAsset\"></div><div><ul><li><span style=\"color: var(--overlayFontColor);\"><b>1. Dice</b></span><span style=\"color: var(--overlayFontColor);\">. You cannot click on, move, or interact with the dice directly. They roll when you click the roll dice button (#6).</span></li><li><b><span style=\"color: var(--overlayFontColor);\">2.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Seat</span></b><span style=\"color: var(--overlayFontColor);\">. Used at the beginning of the game. Click to choose a seat and pick a color. Click again to change color, get up from seat, or force another player to get up from seat. When playing traditional rules, the seat of the player whose turn it is will be highlighted and has the exclamation mark in the upper-right corner of the seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">3.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Columns won</span></b><span style=\"color: var(--overlayFontColor);\">. This displays the count of the number of columns this player has won (reached the top with a marker first). Under the default rules, the game automatically ends after winning 3 columns. When the victory condition is satisfied, all play immediately ends, interactive buttons are hidden, and the a trophy icon is displayed below the winner's seat.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">4.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Markers and climbers</span></b><span style=\"color: var(--overlayFontColor);\">. The markers (solid color circles) are used to indicate the level of each column that a player has safely reached. There is an unlimited number of markers. The climbers (bi-color squares) are used to indicate the level that a player is currently pursuing based on the roll of the dice in the current turn. There are 3 climbers per player. When a player ends the turn to lock in the gains, the climbers are replaced by markers on the board. Under the default rules, all climber and marker activity is automated and players cannot interact with or move the climbers or markers in any way. You can modify that using the settings button at any time without interfering with the progress of the game.</span></li><li><b><span style=\"color: var(--overlayFontColor);\">5.&nbsp;</span><span style=\"color: var(--overlayFontColor);\">Dice pair sums</span></b><span style=\"color: var(--overlayFontColor);\">. These circles represent the 3 possible sums of the combinations of pairs of dice. Players choose which columns to enter or advance climbers into by clicking the appropriate circle. Click to select and click again to de-select or click a die in another pair to change the selction. Automation routines constrain choices to number(s) permitted by rule.</span></li></ul><ul><ul><li>Missing pairs or a single missing circle that is part of a pair are not available to be selected by rule (or represent a duplicate pair). The missing circles are hidden to simplify the display and make decisions easier and faster.</li><li>White and yellow circles are available for a player to use. White circles indicate the player does not yet have a climber in that column for this turn. Yellow circles indicate the player already has a climber in that column.</li><li>Solid black borders indicate the player does not yet have a marker in that column.</li><li>Dashed player-colored borders indicate the player has a marker in that column.</li><li>Green circles are the columns the player has chosen to enter or advance a climber in the current turn.</li></ul><li><span style=\"color: var(--overlayFontColor);\"><b>6. Roll button</b></span><span style=\"color: var(--overlayFontColor);\">. Click this button to roll the dice. The button is hidden when the action is not available.</span><br></li><li><span style=\"color: var(--overlayFontColor);\"><b>7. Confirm climber choice</b>. Click this button to confirm the choices made in the dice pair sums area. When clicked, climbers will automatically be moved to (or advanced in) columns corresponding to the numbers in the green circles. The button is hidden when the action is not available or when a player has not yet selected columns by clicking on the dice pair sums circles.</span></li><li><b>8. End turn</b>. Once a player has entered climber(s) onto the board, the player must decide whether to keep rolling or end the turn. Pressing this button ends the turn. The button is hidden when the action is not available.</li></ul><div>If a player presses his or her luck and the dice do not permit a valid move, a red X is displayed below the seat. Press that X to return the climbers to the player and end the turn.</div></div><div><br></div><div>In the settings menu, there is an option to reverse the direction of the board (going from top to bottom) using an underwater background image instead of the default mountain background.</div>",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "",
       "language": "",
@@ -115,19 +122,6 @@
       }
     ],
     "markers": []
-  },
-  "background": {
-    "id": "background",
-    "width": 1000,
-    "height": 1000,
-    "layer": -4,
-    "movable": false,
-    "movableInEdit": false,
-    "css": {
-      "opacity": 0.3,
-      "transition": "linear 2s"
-    },
-    "image": "/assets/-1958895190_1915587"
   },
   "boardBase": {
     "id": "boardBase",
@@ -3861,7 +3855,7 @@
       }
     ],
     "text": "settings",
-    "classes": "material-icons",
+    "classes": "material-symbols",
     "y": 2,
     "toWin": 3,
     "noMove": true,
@@ -4065,10 +4059,18 @@
           {
             "func": "SET",
             "collection": [
-              "background"
+              "background1"
             ],
-            "property": "image",
-            "value": "/assets/-1958895190_1915587"
+            "property": "display",
+            "value": true
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "background2"
+            ],
+            "property": "display",
+            "value": false
           },
           {
             "func": "SELECT",
@@ -4099,10 +4101,18 @@
           {
             "func": "SET",
             "collection": [
-              "background"
+              "background1"
             ],
-            "property": "image",
-            "value": "/assets/1814401656_181298"
+            "property": "display",
+            "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "background2"
+            ],
+            "property": "display",
+            "value": true
           },
           {
             "func": "SELECT",
@@ -6470,5 +6480,44 @@
     "movable": false,
     "id": "6x5y",
     "parent": "markerHolder1"
+  },
+  "seatAreaBackground": {
+    "id": "seatAreaBackground",
+    "x": 1000,
+    "width": 600,
+    "height": 1000,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "background": "#f0f0f0"
+    },
+    "layer": -3
+  },
+  "background1": {
+    "id": "background1",
+    "x": -210,
+    "y": -130,
+    "width": 1450,
+    "height": 1250,
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.3
+    },
+    "image": "/assets/-1213642769_13873"
+  },
+  "background2": {
+    "id": "background2",
+    "layer": -4,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "opacity": 0.25
+    },
+    "image": "/assets/548038420_168532",
+    "width": 1000,
+    "height": 1000,
+    "display": false
   }
 }

@@ -23,7 +23,8 @@
       "players": "2-4",
       "language": "",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   },
   "NextPlayerButton": {

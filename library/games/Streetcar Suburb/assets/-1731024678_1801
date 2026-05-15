@@ -1,0 +1,30 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79 88" width="79" height="88">
+	<style>
+		.s0 { fill: #ffffff;stroke: #808080;stroke-linecap: round;stroke-linejoin: round;stroke-width: 2 } 
+		.s1 { opacity: .5;mix-blend-mode: multiply;fill: #000000 }
+		.s2 { opacity: .2;mix-blend-mode: multiply;fill: #000000 }
+		.s3 { opacity: 0;mix-blend-mode: multiply;fill: #000000 }
+		.s4 { fill: none;stroke: #ffffff;stroke-linecap: round;stroke-linejoin: round;stroke-width: .4 }
+		.s5 { opacity: .7;fill: #ffffff;stroke: #ffffff;stroke-linejoin: round;stroke-width: .4 }
+	</style>
+	<g>
+		<g id="Layer_2">
+			<g id="Layer_1-2">
+				<path class="s0" d="m76.05 22.8l0.12 42.4-36.89 21.3-36.66-21.3-0.12-42.4 36.9-21.3z"/>
+				<path class="s1" d="m2.5 22.8l36.66 21.3 0.12 42.4-36.66-21.3z"/>
+				<path class="s2" d="m39.16 44.1l36.89-21.3 0.12 42.4-36.89 21.3z"/>
+				<path class="s3" d="m2.5 22.8l36.9-21.3 36.65 21.3-36.89 21.3z"/>
+				<path class="s4" d="m75.55 23.1l-36.39 21-35.85-20.83"/>
+				<path class="s4" d="m39.16 85.85v-41.75"/>
+				<path fill-rule="evenodd" class="s5" d="m9.85 35.54l7.33 4.26 0.03 8.48-7.33-4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m24.52 44.06l7.33 4.26 0.03 8.48-7.33-4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m9.9 52.5l7.33 4.26 0.03 8.48-7.33-4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m24.57 61.02l7.33 4.26 0.03 8.48-7.33-4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m46.54 47.84l7.38-4.26 0.12 8.48-7.38 4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m61.29 39.32l7.38-4.26 0.12 8.48-7.38 4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m46.66 65.32l7.38-4.26 0.12 8.48-7.38 4.26z"/>
+				<path fill-rule="evenodd" class="s5" d="m61.41 56.8l7.38-4.26 0.12 8.48-7.38 4.26z"/>
+			</g>
+		</g>
+	</g>
+</svg>

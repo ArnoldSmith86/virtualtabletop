@@ -6749,7 +6749,8 @@
       "players": "6",
       "language": "en-US",
       "variant": "",
-      "variantImage": ""
+      "variantImage": "",
+      "usesAIImagery": true
     }
   },
   "seat4": {

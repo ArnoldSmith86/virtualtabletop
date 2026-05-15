@@ -22,12 +22,14 @@
   color: var(--color);
   transform: translate(var(--offsetX), var(--offsetY)) rotate(var(--rotation)) scale(var(--flipX, 1), var(--flipY, 1));
   background-image: var(--image);
+  opacity: var(--opacity, 1);
   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
 }
 .widget:hover > .symbolOuterWrapper > .symbolWrapper > div, .dice:hover > .diceFaces > .diceFace > .symbolOuterWrapper > .symbolWrapper > div, .card:hover > .cardFace > .cardFaceObject > .symbolOuterWrapper > .symbolWrapper > div {
   background-image: var(--hoverImage);
   color: var(--hoverColor);
   -webkit-text-stroke: var(--hoverStrokeWidth) var(--hoverStrokeColor);
+  opacity: var(--hoverOpacity, var(--opacity, 1));
 }
 
 .symbolOuterWrapper > .symbolText {

@@ -17,10 +17,20 @@
     "z": 28,
     "css": "font-size: 20px; ",
     "text": "Menus of options are an important technique for more advanced games. You can use menus to choose the number of players or set various rule/variant options. Menus are also frequently used to save space on the screen by keeping groups of related widgets off-screen until needed.  Making a menu system is not difficult.  Just follow these basic steps.\n\n1) Create a trigger to activate the menu.  It could be loaded as the starting screen at the beginning of the game.  Commonly, it is called up by a button, but any game action involving a 'Routine' could activate the menu. The trigger should call one widget (usually the menu background) from off screen and position it at the desired coordinates on screen.\n\n2) Pick a menu background and upload it as a widget. Make it the size you need. Or you could just use a holder widget and set its color.\n\n3) Add buttons to the menu and set their 'parent' property to the background widget and set the desired x,y coordinates.\n\n4) In each button, create a JSON 'clickRoutine' that does what is needed for the game.  The button should also include lines to 'close' the menu by sending it back off-screen.  You should also have a close button, commonly an 'x' to close the menu without taking any other actions.\n\nIn the examples below, all of the widgets used on the menus are stored off-screen at negative x coordinates (although y coordinates above 1,000 are also common). You can see these in the JSON Editor (ctrl-J) by pressing the magnifying glass on the menu.",
-    "width": 1200
+    "width": 1200,
+    "clickRoutine": [
+      "// This is only here to avoid validation issues",
+      {
+        "func": "VAR",
+        "variables": {
+          "dummy1": "${PROPERTY imageNote1}",
+          "dummy2": "${PROPERTY cssNote1}"
+        }
+      }
+    ]
   },
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Xtras - Menus",
       "image": "/assets/-1505187436_4098",
@@ -31,7 +41,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748992332989,
+      "lastUpdate": 1768191443614,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -40,10 +50,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Basic",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Basic",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "openMenu": {
@@ -85,7 +98,7 @@
     "movable": false,
     "movableInEdit": false,
     "x": -1000,
-    "image Note1": "This is an example of a custom widget as the background for the menu system."
+    "imageNote1": "This is an example of a custom widget as the background for the menu system."
   },
   "theSpinner": {
     "type": "spinner",
@@ -160,7 +173,7 @@
     "svgReplaces": {
       "currentColor": "color"
     },
-    "image Note1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
+    "imageNote1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
   },
   "showSpinner": {
     "type": "button",
@@ -285,7 +298,7 @@
     "height": 400,
     "z": 4,
     "css": "background: linear-gradient(to bottom right, blue, lightblue)",
-    "css Note1": "This is an example of using a holder as a background for the menu system.  CSS properties were used to change the color characteristics of the holder."
+    "cssNote1": "This is an example of using a holder as a background for the menu system.  CSS properties were used to change the color characteristics of the holder."
   },
   "wvl1": {
     "type": "button",
@@ -326,7 +339,7 @@
       "currentColor": "color"
     },
     "parent": "aBackground",
-    "image Note1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
+    "imageNote1": "This symbol is just one of several available at https://virtualtabletop.io/Assets or in the library under assets. You can change the color to anything you want using the 'svgReplaces' property."
   },
   "fe9c": {
     "type": "holder",
@@ -377,24 +390,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -875,7 +870,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -891,9 +885,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1320,11 +1315,7 @@
     "id": "player1",
     "x": 20.5,
     "y": 585,
-    "width": null,
-    "height": null,
-    "z": 7,
-    "movable": null,
-    "movableInEdit": null
+    "z": 7
   },
   "1m7f": {
     "type": "button",

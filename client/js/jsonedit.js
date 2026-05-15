@@ -516,7 +516,7 @@ const jeCommands = [
     name: 'show advanced options',
     context: '^.* ↦ icon( ↦ |$)',
     call: async function() {
-      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null };
+      const newValue = { name: '###SELECT ME###', scale: 1, offsetX: 0, offsetY: 0, rotation: 0, flip: '', opacity: null, color: '', strokeColor: '', strokeWidth: 0, hoverColor: '', hoverStrokeColor: '', hoverStrokeWidth: null, hoverOpacity: null };
       if(Array.isArray(jeGetValueAt('icon'))) {
         const current = jeGetValueAt('icon');
         const name = current[jeGetKeyAfter('icon')];
@@ -713,7 +713,14 @@ const jeCommands = [
     context: '^deck ↦ cardTypes',
     call: async function(options) {
 
-      let csv = await selectFile('TEXT')
+      let csv;
+      try {
+        csv = await selectFile('TEXT');
+      } catch(e) {
+        if(e.message !== 'File selection cancelled.')
+          alert(`Error: ${e.toString()}`);
+        return;
+      }
 
       //source : https://stackoverflow.com/questions/8493195/how-can-i-parse-a-csv-string-with-javascript-which-contains-comma-in-data/41563966#41563966
 
@@ -1189,13 +1196,16 @@ const jeCommands = [
   }
 ];
 
-function jeRoutineCall(callback, synchronous) {
+function jeRoutineCall(callback, synchronous, command) {
   const f = function() {
     let routineIndex = -1;
+    let commandFound = !command;
     for(let i=jeContext.length-1; i>=0; --i) {
-      if(String(jeContext[i]).match(/Routine$/)) {
+      if(commandFound && String(jeContext[i]).match(/Routine$/)) {
         routineIndex = i;
         break;
+      } else if(!commandFound && String(jeContext[i]) == `(${command})`) {
+        commandFound = true;
       }
     }
 
@@ -1333,10 +1343,10 @@ function jeAddRoutineOperationCommands(command, defaults) {
             "reverse": false
           };
           jeSetAndSelect('z');
-        }) :
+        }, false, command) :
         jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
           jeInsert(jeContext.slice(1, routineIndex+2), property, defaults[property]);
-        }),
+        }, false, command),
       show: jeRoutineCall(function(routineIndex, routine, operationIndex, operation) {
         return operation && operation[property] === undefined;
       }, true)
@@ -1390,6 +1400,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
+  jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
   jeAddRoutineOperationCommands('VAR', { variables: {} });
 
   jeAddRoutineExpressionCommands('random', 'randInt 1 10');
@@ -1433,12 +1444,15 @@ function jeAddCommands() {
   jeAddResetPropertiesCommand('display');
 
   jeAddFieldCommand('text', 'subtitle|title|text', '');
-  jeAddFieldCommand('label', 'checkbox|choose|color|number|palette|select|string|switch', '');
-  jeAddFieldCommand('value', 'checkbox|choose|color|number|palette|select|string|switch', '');
-  jeAddFieldCommand('variable', 'checkbox|choose|color|number|palette|select|string|switch', '');
+  jeAddFieldCommand('label', 'checkbox|choose|color|number|palette|select|slider|string|switch', '');
+  jeAddFieldCommand('value', 'checkbox|choose|color|number|palette|select|slider|string|switch', '');
+  jeAddFieldCommand('variable', 'checkbox|choose|color|number|palette|select|slider|string|switch', '');
   jeAddFieldCommand('colors', 'palette', [ '#000000' ]);
-  jeAddFieldCommand('min', 'number', 0);
-  jeAddFieldCommand('max', 'number', 10);
+  jeAddFieldCommand('min', 'number|slider', 0);
+  jeAddFieldCommand('max', 'number|slider', 10);
+  jeAddFieldCommand('step', 'slider', 1);
+  jeAddFieldCommand('unit', 'slider', '');
+  jeAddFieldCommand('values', 'slider', [ 'low', 'medium', 'high' ]);
   jeAddFieldCommand('options', 'select', [ { value: 'value', text: 'text' } ]);
   jeAddFieldCommand('regex', 'string', '');
   jeAddFieldCommand('regexHint', 'string', '');
@@ -1468,7 +1482,7 @@ function jeAddCommands() {
   jeAddEnumCommands('^.*\\(IF\\) ↦ relation', [ '<', '<=', '==', '!=', '>', '>=' ]);
   jeAddEnumCommands('^.*\\(IF\\) ↦ (operand1|operand2|condition)', [ '${}' ]);
   jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ mode', [ 'widgets', 'faces' ]);
-  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'string', 'subtitle', 'switch', 'text', 'title' ]);
+  jeAddEnumCommands('^.*\\(INPUT\\) ↦ fields ↦ [0-9]+ ↦ type', [ 'checkbox', 'choose', 'color', 'number', 'palette', 'select', 'slider', 'string', 'subtitle', 'switch', 'text', 'title' ]);
   jeAddEnumCommands('^.*\\(LABEL\\) ↦ mode', [ 'set', 'dec', 'inc', 'append' ]);
   jeAddEnumCommands('^.*\\(MOVE\\) ↦ count', [ 1, 'all' ]);
   jeAddEnumCommands('^.*\\(MOVEXY\\) ↦ count', [ 1, 'all' ]);
@@ -2041,8 +2055,7 @@ function jeCommandOptions() {
 export async function jeClick(widget, e) {
   if(e.ctrlKey) {
     jeSelectWidget(widget, e.shiftKey || e.which == 3 || e.button == 2);
-  } else {
-    await widget.click();
+    return true;
   }
 }
 
@@ -3089,7 +3102,8 @@ function jePostProcessObject(o) {
 }
 
 function jePostProcessText(t) {
-  // Convert actual newlines within JSON strings back to \n escape sequences
+  // Convert actual newlines within JSON strings back to \n escape sequences.
+  // Windows clipboards typically use CRLF, so ignore \r and let the following \n be escaped.
   let result = '';
   let inString = false;
   let escapeNext = false;
@@ -3115,12 +3129,12 @@ function jePostProcessText(t) {
       continue;
     }
     
-    if (inString && char === '\n') {
-      // Replace actual newline with \n escape sequence
+    if (inString && char === '\r')
+      continue;
+    else if (inString && char === '\n')
       result += '\\n';
-    } else {
+    else
       result += char;
-    }
   }
   
   // Handle case where escapeNext is still true at end (shouldn't happen in valid JSON, but be safe)
@@ -3991,12 +4005,9 @@ function jeInitEventListeners() {
       e.stopPropagation();
       e.stopImmediatePropagation();
       if (jeTabSearchActive) {
-        if (jeTabSearchFilter.length > 0) {
-          // Execute highlighted button when there's a search filter
-          const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
-          if (buttons.length > 0) {
-            buttons[0].click();
-          }
+        const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
+        if (buttons.length > 0) {
+          buttons[0].click();
           jeTabSearchActive = false;
           jeTabSearchFilter = '';
           jeTabSearchHighlightIndex = -1;

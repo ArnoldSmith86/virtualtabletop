@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="290.6972pt"
+   height="293.96677pt"
+   viewBox="0 0 290.69721 293.96677"
+   version="1.1"
+   id="svg3"
+   sodipodi:docname="Mushroom_Token_Blue.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="namedview3"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     inkscape:zoom="1.243299"
+     inkscape:cx="196.65422"
+     inkscape:cy="244.91293"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3" />
+  <g
+     id="#ffffffff"
+     transform="translate(-7.2704741,-10.98198)">
+    <path
+       fill="#ffffff"
+       opacity="1"
+       d="m 134.18106,18.183511 c 18.73173,-1.394579 39.55534,-3.486449 56.10011,7.384929 22.69361,13.248501 32.04362,39.618724 51.50434,56.290281 16.51308,15.023423 36.576,27.891569 46.27467,48.778569 11.85393,29.31786 -4.81764,65.57691 -34.61091,75.90947 -20.34818,7.70189 -42.12263,3.04272 -63.1681,2.82086 -0.19017,22.15478 -0.60219,45.48229 -11.31511,65.51352 -19.99952,33.43821 -77.39913,31.02938 -94.894759,-3.61323 -2.155258,-8.08222 -1.204409,-17.33715 3.613227,-24.34174 8.906288,-13.18511 23.327512,-22.37666 29.286162,-37.59025 -18.795124,-0.47542 -37.812111,4.27883 -56.417063,-0.31695 -27.130901,-5.35645 -48.112977,-31.79006 -47.257212,-59.42808 0,-15.53053 8.716119,-29.41294 19.143767,-40.25262 C 46.227496,94.441628 65.086009,84.77466 76.464507,67.595981 91.678095,47.501366 106.89169,22.050298 134.18106,18.183511 Z"
+       id="path1"
+       style="fill:#0000ff;stroke:#ffffff;stroke-width:12;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

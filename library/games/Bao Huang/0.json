@@ -6387,7 +6387,8 @@
       "variantImage": "",
       "variant": "216 cards",
       "language": "en-US",
-      "players": "5"
+      "players": "5",
+      "usesAIImagery": true
     }
   },
   "seat4": {

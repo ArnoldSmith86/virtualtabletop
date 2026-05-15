@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 21,
     "info": {
       "name": "Ad Populum",
       "image": "/assets/-884620048_5504",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "40-60",
       "attribution": "Implementation, assets and scripting are by Mitchell Stolycia and are released via CC BY 4.0.",
-      "lastUpdate": 1760639226214,
+      "lastUpdate": 1776274437478,
       "showName": true,
       "skill": "",
       "description": "Eight contestants enter the house. Over the course of five weeks, the least popular are publicly voted out until only three remain.\n\nThis... is Ad Populum.",
@@ -22,8 +22,13 @@
       "helpText": "<div>Players (you!) will always be referred to as \"players\".</div><div><br></div><div>Cards representing the contestants in the house and the ghost which \nhaunts it are referred to as \"people\" or a \"person\".</div><div><br></div><div><b>Setup</b></div><div><ol><li>Take your seats.</li><li>Press the <i>Setup</i> button.</li><li>Choose the type of setup you would like.</li><ul><li>If a custom setup of person cards is desired, drag the cards you would like to the eight red-bordered holders before clicking setup. Any of these holders left empty will be filled with a random person.</li></ul><li>Any cards not used will still be present and visible, in case you want to setup again.</li></ol></div><div><b>Your turn</b></div><blockquote><div>To play, drag cards from your hand (bottom right) to the board.</div><div><br></div><div>Bets are placed by dragging the five betting chips from next to your seat to the play area.</div><div><br></div><div>To make a secret bet, drag a card onto the table and place a betting chip on top of it.</div></blockquote><div><b>End turn</b></div><blockquote><div>End your turn by clicking&nbsp;<i>End turn</i>. This will refill your hand to eight cards automatically.</div></blockquote><div><b>Scoring</b></div><blockquote><div>Scoring only occurs at the end of the game. Do this manually by using the counters by your seats.</div></blockquote><div><b>Red X cards</b></div><blockquote><div>The red X cards are used to represent a person who has been voted off the show (has the least popularity at the end of a round).</div></blockquote><div><b>Complex person abilities</b></div><blockquote><div>Some of the person abilities are complicated to&nbsp;manually perform in VTT.&nbsp;For this reason, an <i>Ability </i>button will appear when playing with any of the following three people: <b>cyan; grey; and pale yellow.</b></div><div><br></div><div>Only click the&nbsp;<i>Ability&nbsp;</i>button on your turn.</div><div>An input menu will pop up. Follow the instructions accordingly.</div><div><br></div><div>The <b>pale yellow person</b> has a designated holder. When used, half of the selected player's hand will be randomly dealt to this holder. The player who lost these cards should manually draw them before ending their turn.</div><div>Should this ability be used again before the player can retrieve their cards, remove the existing pile from the holder to free up space.</div></blockquote>",
       "players": "2-5",
       "language": "en-GB",
-      "variant": "Ad Populum",
-      "variantImage": "/assets/-884620048_5504"
+      "variant": "Ad Populum"
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   },
   "2xwe 5.jpg": {
@@ -8564,5 +8569,135 @@
     "width": 87,
     "height": 150,
     "id": "5zvf"
+  },
+  "t1": {
+    "type": "label",
+    "id": "t1",
+    "x": 259,
+    "y": 3,
+    "width": 87,
+    "height": 20,
+    "z": 34,
+    "movable": false,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "A"
+  },
+  "t2": {
+    "type": "label",
+    "id": "t2",
+    "x": 349,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "B"
+  },
+  "t3": {
+    "type": "label",
+    "id": "t3",
+    "x": 438,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "C"
+  },
+  "t4": {
+    "type": "label",
+    "id": "t4",
+    "x": 528,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "D"
+  },
+  "t5": {
+    "type": "label",
+    "id": "t5",
+    "x": 617,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "E"
+  },
+  "t6": {
+    "type": "label",
+    "id": "t6",
+    "x": 707,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "F"
+  },
+  "t7": {
+    "type": "label",
+    "id": "t7",
+    "x": 796,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "G"
+  },
+  "t8": {
+    "type": "label",
+    "id": "t8",
+    "x": 886,
+    "y": 3,
+    "width": 87,
+    "z": 34,
+    "css": {
+      "default": {
+        "font-size": "20px",
+        "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        "color": "black"
+      }
+    },
+    "text": "H"
   }
 }
