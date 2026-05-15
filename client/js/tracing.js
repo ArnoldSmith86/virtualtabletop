@@ -58,8 +58,7 @@ onLoad(function() {
       widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
       url: location.href,
       userAgent: navigator.userAgent,
-      playerName,
-      html: document.documentElement.outerHTML
+      playerName
     };
     preventReconnect();
     connection.close();
