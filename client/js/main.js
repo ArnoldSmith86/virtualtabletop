@@ -39,6 +39,9 @@ function compareDropTarget(widget, t, exclude){
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    if(!t.isVisible())
+      continue;
+
     // if the holder has a drop limit and it's reached, skip the holder
     if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
       // don't skip it if the dragged widget is already its child
