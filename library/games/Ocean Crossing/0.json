@@ -1,0 +1,8469 @@
+{
+  "2124": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "2124",
+    "z": 26623,
+    "parent": "h131"
+  },
+  "4336": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "4336",
+    "z": 26487,
+    "parent": "mqu2"
+  },
+  "5226": {
+    "deck": "deck-buildings-seat-p1",
+    "type": "card",
+    "cardType": "building",
+    "id": "5226",
+    "z": 26597,
+    "parent": "44aq"
+  },
+  "5301": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "5301",
+    "z": 26489,
+    "parent": "mqu2"
+  },
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Ocean Crossing",
+      "image": "/assets/137295342_48354",
+      "rules": "https://boardgamegeek.com/boardgame/191231/via-nebula/files",
+      "bgg": "https://boardgamegeek.com/boardgame/191231/via-nebula",
+      "year": "2016",
+      "mode": "vs",
+      "time": "50",
+      "attribution": "Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.\n\n<div>The following graphics are from http://www.freepik.com and are used under the&nbsp;Freepik license:</div><div>* Crane: https://www.freepik.com/icon/crane_11100710\n</div>* Water Waves: https://www.freepik.com/icon/waves_8061665\n* Coin: https://www.freepik.com/icon/coin_11280638\n* Wild Card Icon: https://www.freepik.com/icon/tile_5849895",
+      "lastUpdate": 1779565194655,
+      "showName": true,
+      "skill": "",
+      "description": "Clear the land and cross the ocean to be the first to build out your settlements.",
+      "similarImage": "",
+      "similarName": "Via Nebula",
+      "similarDesigner": "Martin Wallace",
+      "similarAwards": "2016 Golden Geek Best Family Board Game Nominee",
+      "ruleText": "(see rules overview link)",
+      "helpText": "<div>* Currently this implementation supports 3p-4p only. There must be at least 3 players seated in order to see the proper resource tiles get dealt onto the board.</div><div><br></div><div>* Starter tiles are outlined in white. After starting the game, remove those tiles from the board and manually replace each of them with the number of resources marked on the tile.</div>",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "3-4"
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "disableHolderImageWidget": true
+      }
+    }
+  },
+  "bbwxD": {
+    "id": "bbwxD",
+    "parent": "label-seat-p1",
+    "fixedParent": true,
+    "x": -40,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "bbwxU": {
+    "id": "bbwxU",
+    "parent": "label-seat-p1",
+    "fixedParent": true,
+    "x": 55,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "label-seat-p1": {
+    "type": "label",
+    "id": "label-seat-p1",
+    "x": 106,
+    "width": 50,
+    "height": 40,
+    "z": 4603,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "28px",
+        "color": "aliceblue",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px black"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p1",
+    "y": 66
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 162,
+    "z": 24,
+    "parent": "box-seat-p1",
+    "width": 260,
+    "y": 2,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "indianred",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    }
+  },
+  "box-seat-p1": {
+    "id": "box-seat-p1",
+    "x": 5,
+    "y": 4,
+    "width": 510,
+    "height": 195,
+    "layer": -3,
+    "z": 62062,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "gray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 795,
+    "y": 825,
+    "z": 62107,
+    "width": 310,
+    "height": 170,
+    "stackOffsetX": 150,
+    "dropTarget": [
+      {
+        "class": "contract"
+      },
+      {
+        "deck": "deck-neutral-contracts"
+      }
+    ],
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 3,
+    "inheritChildZ": true,
+    "childrenPerOwner": true
+  },
+  "holder-market": {
+    "type": "holder",
+    "id": "holder-market",
+    "x": 5,
+    "y": 825,
+    "width": 610,
+    "height": 170,
+    "z": 62009,
+    "stackOffsetX": 150,
+    "dropTarget": {
+      "deck": "deck-neutral-contracts"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "dropLimit": 4
+  },
+  "board": {
+    "id": "board",
+    "x": 605,
+    "width": 1000,
+    "height": 812,
+    "layer": -4,
+    "z": 12,
+    "movable": false,
+    "image": "/assets/1155025023_177356",
+    "movableInEdit": false
+  },
+  "hex-a1": {
+    "type": "holder",
+    "id": "hex-a1",
+    "parent": "board",
+    "y": 728,
+    "width": 85,
+    "height": 85,
+    "layer": -2,
+    "z": 4543,
+    "classes": "transparent",
+    "css": {
+      "border-radius": "100%",
+      "background": "transparent",
+      "border": "0px solid"
+    },
+    "dropLimit": 1,
+    "dropTarget": {
+      "class": "tile"
+    },
+    "preventPiles": true,
+    "dropOffsetX": -8,
+    "dropOffsetY": -8,
+    "movableInEdit": false,
+    "x": 17
+  },
+  "hex-a2": {
+    "type": "holder",
+    "id": "hex-a2",
+    "parent": "board",
+    "x": 17,
+    "y": 643,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a3": {
+    "type": "holder",
+    "id": "hex-a3",
+    "parent": "board",
+    "x": 17,
+    "y": 558,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a4": {
+    "type": "holder",
+    "id": "hex-a4",
+    "parent": "board",
+    "x": 17,
+    "y": 473,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a5": {
+    "type": "holder",
+    "id": "hex-a5",
+    "parent": "board",
+    "x": 17,
+    "y": 388,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a6": {
+    "type": "holder",
+    "id": "hex-a6",
+    "parent": "board",
+    "x": 17,
+    "y": 303,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a7": {
+    "type": "holder",
+    "id": "hex-a7",
+    "parent": "board",
+    "x": 17,
+    "y": 218,
+    "inheritFrom": "hex-a1",
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "70%",
+        "opacity": 0.5,
+        "padding": "5px 5px 5px 5px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": -8,
+    "dropOffsetY": -8,
+    "dropTarget": {
+      "class": "tile"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "image": "/assets/1445853962_21465"
+  },
+  "hex-a8": {
+    "type": "holder",
+    "id": "hex-a8",
+    "parent": "board",
+    "x": 17,
+    "y": 133,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a9": {
+    "type": "holder",
+    "id": "hex-a9",
+    "parent": "board",
+    "x": 17,
+    "y": 48,
+    "inheritFrom": "hex-a1"
+  },
+  "hex-a10": {
+    "type": "holder",
+    "id": "hex-a10",
+    "parent": "board",
+    "x": 91,
+    "y": 685,
+    "inheritFrom": "hex-a1",
+    "z": 4545
+  },
+  "hex-a11": {
+    "type": "holder",
+    "id": "hex-a11",
+    "parent": "board",
+    "x": 91,
+    "y": 600,
+    "inheritFrom": "hex-a1",
+    "z": 4545,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "80%",
+        "width": "80%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "80%",
+        "opacity": 0.2,
+        "padding": "13px 5px 5px 13px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": -9,
+    "dropOffsetY": -9,
+    "dropTarget": {
+      "class": "tile"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "image": "/i/game-icons.net/sbed/cancel.svg"
+  },
+  "hex-a12": {
+    "type": "holder",
+    "id": "hex-a12",
+    "parent": "board",
+    "x": 91,
+    "y": 516,
+    "inheritFrom": "hex-a1",
+    "z": 14,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "80%",
+        "width": "80%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "80%",
+        "opacity": 0.5,
+        "padding": "7px 7px 7px 7px",
+        "margin": "3px 3px 3px 3px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": -8,
+    "dropOffsetY": -8,
+    "dropTarget": {
+      "class": "half-tile"
+    },
+    "onEnter": {
+      "activeFace": 1
+    },
+    "preventPiles": true,
+    "dropLimit": 2,
+    "layer": 0,
+    "image": "/assets/-1201947382_14185"
+  },
+  "hex-a13": {
+    "type": "holder",
+    "id": "hex-a13",
+    "parent": "board",
+    "x": 91,
+    "y": 430,
+    "inheritFrom": "hex-a1",
+    "z": 4545
+  },
+  "hex-a14": {
+    "type": "holder",
+    "id": "hex-a14",
+    "parent": "board",
+    "x": 91,
+    "y": 345,
+    "inheritFrom": "hex-a7",
+    "z": 4545
+  },
+  "hex-a15": {
+    "type": "holder",
+    "id": "hex-a15",
+    "parent": "board",
+    "x": 91,
+    "y": 260,
+    "inheritFrom": "hex-a1",
+    "z": 4545
+  },
+  "hex-a16": {
+    "type": "holder",
+    "id": "hex-a16",
+    "parent": "board",
+    "x": 91,
+    "y": 175,
+    "inheritFrom": "hex-a1",
+    "z": 4545
+  },
+  "hex-a17": {
+    "type": "holder",
+    "id": "hex-a17",
+    "parent": "board",
+    "x": 91,
+    "y": 90,
+    "inheritFrom": "hex-a11",
+    "z": 4545
+  },
+  "hex-a18": {
+    "type": "holder",
+    "id": "hex-a18",
+    "parent": "board",
+    "x": 91,
+    "y": 5,
+    "inheritFrom": "hex-a1",
+    "z": 4545
+  },
+  "hex-a19": {
+    "type": "holder",
+    "id": "hex-a19",
+    "parent": "board",
+    "x": 164,
+    "y": 728,
+    "inheritFrom": "hex-a1",
+    "z": 4546
+  },
+  "hex-a20": {
+    "type": "holder",
+    "id": "hex-a20",
+    "parent": "board",
+    "x": 164,
+    "y": 643,
+    "inheritFrom": "hex-a1",
+    "z": 4546
+  },
+  "hex-a21": {
+    "type": "holder",
+    "id": "hex-a21",
+    "parent": "board",
+    "x": 164,
+    "y": 558,
+    "inheritFrom": "hex-a7",
+    "z": 4546
+  },
+  "hex-a22": {
+    "type": "holder",
+    "id": "hex-a22",
+    "parent": "board",
+    "x": 164,
+    "y": 473,
+    "inheritFrom": "hex-a1",
+    "z": 4546
+  },
+  "hex-a23": {
+    "type": "holder",
+    "id": "hex-a23",
+    "parent": "board",
+    "x": 164,
+    "y": 388,
+    "inheritFrom": "hex-a11",
+    "z": 4546
+  },
+  "hex-a24": {
+    "type": "holder",
+    "id": "hex-a24",
+    "parent": "board",
+    "x": 164,
+    "y": 303,
+    "inheritFrom": "hex-a12",
+    "z": 15
+  },
+  "hex-a25": {
+    "type": "holder",
+    "id": "hex-a25",
+    "parent": "board",
+    "x": 164,
+    "y": 218,
+    "inheritFrom": "hex-a1",
+    "z": 4546
+  },
+  "hex-a26": {
+    "type": "holder",
+    "id": "hex-a26",
+    "parent": "board",
+    "x": 164,
+    "y": 133,
+    "inheritFrom": "hex-a1",
+    "z": 4546
+  },
+  "hex-a27": {
+    "type": "holder",
+    "id": "hex-a27",
+    "parent": "board",
+    "x": 164,
+    "y": 48,
+    "inheritFrom": "hex-a1",
+    "z": 4546
+  },
+  "hex-a28": {
+    "type": "holder",
+    "id": "hex-a28",
+    "parent": "board",
+    "x": 238,
+    "y": 685,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a29": {
+    "type": "holder",
+    "id": "hex-a29",
+    "parent": "board",
+    "x": 238,
+    "y": 600,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a30": {
+    "type": "holder",
+    "id": "hex-a30",
+    "parent": "board",
+    "x": 238,
+    "y": 515,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a31": {
+    "type": "holder",
+    "id": "hex-a31",
+    "parent": "board",
+    "x": 238,
+    "y": 430,
+    "inheritFrom": "hex-a7",
+    "z": 4547
+  },
+  "hex-a32": {
+    "type": "holder",
+    "id": "hex-a32",
+    "parent": "board",
+    "x": 238,
+    "y": 345,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a33": {
+    "type": "holder",
+    "id": "hex-a33",
+    "parent": "board",
+    "x": 238,
+    "y": 260,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a34": {
+    "type": "holder",
+    "id": "hex-a34",
+    "parent": "board",
+    "x": 238,
+    "y": 175,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a35": {
+    "type": "holder",
+    "id": "hex-a35",
+    "parent": "board",
+    "x": 238,
+    "y": 90,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a36": {
+    "type": "holder",
+    "id": "hex-a36",
+    "parent": "board",
+    "x": 238,
+    "y": 5,
+    "inheritFrom": "hex-a1",
+    "z": 4547
+  },
+  "hex-a37": {
+    "type": "holder",
+    "id": "hex-a37",
+    "parent": "board",
+    "x": 311,
+    "y": 729,
+    "inheritFrom": "hex-a12",
+    "z": 16
+  },
+  "hex-a38": {
+    "type": "holder",
+    "id": "hex-a38",
+    "parent": "board",
+    "x": 311,
+    "y": 644,
+    "inheritFrom": "hex-a1",
+    "z": 4548
+  },
+  "hex-a39": {
+    "type": "holder",
+    "id": "hex-a39",
+    "parent": "board",
+    "x": 311,
+    "y": 559,
+    "inheritFrom": "hex-a7",
+    "z": 4548
+  },
+  "hex-a40": {
+    "type": "holder",
+    "id": "hex-a40",
+    "parent": "board",
+    "x": 311,
+    "y": 474,
+    "inheritFrom": "hex-a1",
+    "z": 4548
+  },
+  "hex-a41": {
+    "type": "holder",
+    "id": "hex-a41",
+    "parent": "board",
+    "x": 311,
+    "y": 389,
+    "inheritFrom": "hex-a1",
+    "z": 4548
+  },
+  "hex-a42": {
+    "type": "holder",
+    "id": "hex-a42",
+    "parent": "board",
+    "x": 311,
+    "y": 304,
+    "inheritFrom": "hex-a1",
+    "z": 4548
+  },
+  "hex-a43": {
+    "type": "holder",
+    "id": "hex-a43",
+    "parent": "board",
+    "x": 311,
+    "y": 219,
+    "inheritFrom": "hex-a1",
+    "z": 4548
+  },
+  "hex-a44": {
+    "type": "holder",
+    "id": "hex-a44",
+    "parent": "board",
+    "x": 311,
+    "y": 134,
+    "inheritFrom": "hex-a7",
+    "z": 4548
+  },
+  "hex-a45": {
+    "type": "holder",
+    "id": "hex-a45",
+    "parent": "board",
+    "x": 311,
+    "y": 49,
+    "inheritFrom": "hex-a12",
+    "z": 17
+  },
+  "hex-a46": {
+    "type": "holder",
+    "id": "hex-a46",
+    "parent": "board",
+    "x": 385,
+    "y": 685,
+    "inheritFrom": "hex-a7",
+    "z": 4549
+  },
+  "hex-a47": {
+    "type": "holder",
+    "id": "hex-a47",
+    "parent": "board",
+    "x": 385,
+    "y": 600,
+    "inheritFrom": "hex-a11",
+    "z": 4549
+  },
+  "hex-a48": {
+    "type": "holder",
+    "id": "hex-a48",
+    "parent": "board",
+    "x": 385,
+    "y": 515,
+    "inheritFrom": "hex-a12",
+    "z": 18
+  },
+  "hex-a49": {
+    "type": "holder",
+    "id": "hex-a49",
+    "parent": "board",
+    "x": 385,
+    "y": 430,
+    "inheritFrom": "hex-a1",
+    "z": 4549
+  },
+  "hex-a50": {
+    "type": "holder",
+    "id": "hex-a50",
+    "parent": "board",
+    "x": 385,
+    "y": 345,
+    "inheritFrom": "hex-a1",
+    "z": 4549
+  },
+  "hex-a51": {
+    "type": "holder",
+    "id": "hex-a51",
+    "parent": "board",
+    "x": 385,
+    "y": 260,
+    "inheritFrom": "hex-a7",
+    "z": 4549
+  },
+  "hex-a52": {
+    "type": "holder",
+    "id": "hex-a52",
+    "parent": "board",
+    "x": 385,
+    "y": 175,
+    "inheritFrom": "hex-a1",
+    "z": 4549
+  },
+  "hex-a53": {
+    "type": "holder",
+    "id": "hex-a53",
+    "parent": "board",
+    "x": 385,
+    "y": 90,
+    "inheritFrom": "hex-a1",
+    "z": 4549
+  },
+  "hex-a54": {
+    "type": "holder",
+    "id": "hex-a54",
+    "parent": "board",
+    "x": 385,
+    "y": 5,
+    "inheritFrom": "hex-a1",
+    "z": 4549
+  },
+  "hex-a55": {
+    "type": "holder",
+    "id": "hex-a55",
+    "parent": "board",
+    "x": 457,
+    "y": 727,
+    "inheritFrom": "hex-a1",
+    "z": 4550
+  },
+  "hex-a56": {
+    "type": "holder",
+    "id": "hex-a56",
+    "parent": "board",
+    "x": 457,
+    "y": 642,
+    "inheritFrom": "hex-a1",
+    "z": 4550
+  },
+  "hex-a57": {
+    "type": "holder",
+    "id": "hex-a57",
+    "parent": "board",
+    "x": 457,
+    "y": 557,
+    "inheritFrom": "hex-a1",
+    "z": 4550
+  },
+  "hex-a58": {
+    "type": "holder",
+    "id": "hex-a58",
+    "parent": "board",
+    "x": 457,
+    "y": 472,
+    "inheritFrom": "hex-a1",
+    "z": 4550
+  },
+  "hex-a59": {
+    "type": "holder",
+    "id": "hex-a59",
+    "parent": "board",
+    "x": 457,
+    "y": 387,
+    "inheritFrom": "hex-a7",
+    "z": 4550
+  },
+  "hex-a60": {
+    "type": "holder",
+    "id": "hex-a60",
+    "parent": "board",
+    "x": 457,
+    "y": 303,
+    "inheritFrom": "hex-a12",
+    "z": 26
+  },
+  "hex-a61": {
+    "type": "holder",
+    "id": "hex-a61",
+    "parent": "board",
+    "x": 457,
+    "y": 217,
+    "inheritFrom": "hex-a1",
+    "z": 4550
+  },
+  "hex-a62": {
+    "type": "holder",
+    "id": "hex-a62",
+    "parent": "board",
+    "x": 457,
+    "y": 132,
+    "inheritFrom": "hex-a7",
+    "z": 4550
+  },
+  "hex-a63": {
+    "type": "holder",
+    "id": "hex-a63",
+    "parent": "board",
+    "x": 457,
+    "y": 49,
+    "inheritFrom": "hex-a12",
+    "z": 19
+  },
+  "hex-a64": {
+    "type": "holder",
+    "id": "hex-a64",
+    "parent": "board",
+    "x": 531,
+    "y": 685,
+    "inheritFrom": "hex-a7",
+    "z": 4551
+  },
+  "hex-a65": {
+    "type": "holder",
+    "id": "hex-a65",
+    "parent": "board",
+    "x": 531,
+    "y": 600,
+    "inheritFrom": "hex-a1",
+    "z": 4551
+  },
+  "hex-a66": {
+    "type": "holder",
+    "id": "hex-a66",
+    "parent": "board",
+    "x": 531,
+    "y": 515,
+    "inheritFrom": "hex-a7",
+    "z": 4551
+  },
+  "hex-a67": {
+    "type": "holder",
+    "id": "hex-a67",
+    "parent": "board",
+    "x": 531,
+    "y": 430,
+    "inheritFrom": "hex-a1",
+    "z": 4551
+  },
+  "hex-a68": {
+    "type": "holder",
+    "id": "hex-a68",
+    "parent": "board",
+    "x": 531,
+    "y": 345,
+    "inheritFrom": "hex-a12",
+    "z": 20
+  },
+  "hex-a69": {
+    "type": "holder",
+    "id": "hex-a69",
+    "parent": "board",
+    "x": 531,
+    "y": 260,
+    "inheritFrom": "hex-a1",
+    "z": 4551
+  },
+  "hex-a70": {
+    "type": "holder",
+    "id": "hex-a70",
+    "parent": "board",
+    "x": 531,
+    "y": 175,
+    "inheritFrom": "hex-a11",
+    "z": 4551
+  },
+  "hex-a71": {
+    "type": "holder",
+    "id": "hex-a71",
+    "parent": "board",
+    "x": 531,
+    "y": 90,
+    "inheritFrom": "hex-a1",
+    "z": 4551
+  },
+  "hex-a72": {
+    "type": "holder",
+    "id": "hex-a72",
+    "parent": "board",
+    "x": 531,
+    "y": 5,
+    "inheritFrom": "hex-a1",
+    "z": 4551
+  },
+  "hex-a73": {
+    "type": "holder",
+    "id": "hex-a73",
+    "parent": "board",
+    "x": 605,
+    "y": 727,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a74": {
+    "type": "holder",
+    "id": "hex-a74",
+    "parent": "board",
+    "x": 605,
+    "y": 642,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a75": {
+    "type": "holder",
+    "id": "hex-a75",
+    "parent": "board",
+    "x": 605,
+    "y": 557,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a76": {
+    "type": "holder",
+    "id": "hex-a76",
+    "parent": "board",
+    "x": 605,
+    "y": 472,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a77": {
+    "type": "holder",
+    "id": "hex-a77",
+    "parent": "board",
+    "x": 605,
+    "y": 387,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a78": {
+    "type": "holder",
+    "id": "hex-a78",
+    "parent": "board",
+    "x": 605,
+    "y": 302,
+    "inheritFrom": "hex-a7",
+    "z": 4552
+  },
+  "hex-a79": {
+    "type": "holder",
+    "id": "hex-a79",
+    "parent": "board",
+    "x": 605,
+    "y": 217,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a80": {
+    "type": "holder",
+    "id": "hex-a80",
+    "parent": "board",
+    "x": 605,
+    "y": 132,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a81": {
+    "type": "holder",
+    "id": "hex-a81",
+    "parent": "board",
+    "x": 605,
+    "y": 47,
+    "inheritFrom": "hex-a1",
+    "z": 4552
+  },
+  "hex-a82": {
+    "type": "holder",
+    "id": "hex-a82",
+    "parent": "board",
+    "x": 677,
+    "y": 685,
+    "inheritFrom": "hex-a1",
+    "z": 4553
+  },
+  "hex-a83": {
+    "type": "holder",
+    "id": "hex-a83",
+    "parent": "board",
+    "x": 677,
+    "y": 600,
+    "inheritFrom": "hex-a11",
+    "z": 4553
+  },
+  "hex-a84": {
+    "type": "holder",
+    "id": "hex-a84",
+    "parent": "board",
+    "x": 677,
+    "y": 515,
+    "inheritFrom": "hex-a1",
+    "z": 4553
+  },
+  "hex-a85": {
+    "type": "holder",
+    "id": "hex-a85",
+    "parent": "board",
+    "x": 677,
+    "y": 430,
+    "inheritFrom": "hex-a7",
+    "z": 4553
+  },
+  "hex-a86": {
+    "type": "holder",
+    "id": "hex-a86",
+    "parent": "board",
+    "x": 677,
+    "y": 345,
+    "inheritFrom": "hex-a1",
+    "z": 4553
+  },
+  "hex-a87": {
+    "type": "holder",
+    "id": "hex-a87",
+    "parent": "board",
+    "x": 677,
+    "y": 260,
+    "inheritFrom": "hex-a11",
+    "z": 4553
+  },
+  "hex-a88": {
+    "type": "holder",
+    "id": "hex-a88",
+    "parent": "board",
+    "x": 677,
+    "y": 175,
+    "inheritFrom": "hex-a1",
+    "z": 4553
+  },
+  "hex-a89": {
+    "type": "holder",
+    "id": "hex-a89",
+    "parent": "board",
+    "x": 677,
+    "y": 90,
+    "inheritFrom": "hex-a1",
+    "z": 4553
+  },
+  "hex-a90": {
+    "type": "holder",
+    "id": "hex-a90",
+    "parent": "board",
+    "x": 677,
+    "y": 5,
+    "inheritFrom": "hex-a1",
+    "z": 4553
+  },
+  "hex-a91": {
+    "type": "holder",
+    "id": "hex-a91",
+    "parent": "board",
+    "x": 752,
+    "y": 727,
+    "inheritFrom": "hex-a7",
+    "z": 4554
+  },
+  "hex-a92": {
+    "type": "holder",
+    "id": "hex-a92",
+    "parent": "board",
+    "x": 752,
+    "y": 642,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a93": {
+    "type": "holder",
+    "id": "hex-a93",
+    "parent": "board",
+    "x": 752,
+    "y": 557,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a94": {
+    "type": "holder",
+    "id": "hex-a94",
+    "parent": "board",
+    "x": 752,
+    "y": 472,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a95": {
+    "type": "holder",
+    "id": "hex-a95",
+    "parent": "board",
+    "x": 752,
+    "y": 387,
+    "inheritFrom": "hex-a11",
+    "z": 4554
+  },
+  "hex-a96": {
+    "type": "holder",
+    "id": "hex-a96",
+    "parent": "board",
+    "x": 752,
+    "y": 302,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a97": {
+    "type": "holder",
+    "id": "hex-a97",
+    "parent": "board",
+    "x": 752,
+    "y": 217,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a98": {
+    "type": "holder",
+    "id": "hex-a98",
+    "parent": "board",
+    "x": 752,
+    "y": 132,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a99": {
+    "type": "holder",
+    "id": "hex-a99",
+    "parent": "board",
+    "x": 752,
+    "y": 47,
+    "inheritFrom": "hex-a1",
+    "z": 4554
+  },
+  "hex-a100": {
+    "type": "holder",
+    "id": "hex-a100",
+    "parent": "board",
+    "x": 825,
+    "y": 685,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a101": {
+    "type": "holder",
+    "id": "hex-a101",
+    "parent": "board",
+    "x": 825,
+    "y": 600,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a102": {
+    "type": "holder",
+    "id": "hex-a102",
+    "parent": "board",
+    "x": 825,
+    "y": 515,
+    "inheritFrom": "hex-a7",
+    "z": 4555
+  },
+  "hex-a103": {
+    "type": "holder",
+    "id": "hex-a103",
+    "parent": "board",
+    "x": 825,
+    "y": 430,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a104": {
+    "type": "holder",
+    "id": "hex-a104",
+    "parent": "board",
+    "x": 825,
+    "y": 345,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a105": {
+    "type": "holder",
+    "id": "hex-a105",
+    "parent": "board",
+    "x": 825,
+    "y": 260,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a106": {
+    "type": "holder",
+    "id": "hex-a106",
+    "parent": "board",
+    "x": 825,
+    "y": 175,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a107": {
+    "type": "holder",
+    "id": "hex-a107",
+    "parent": "board",
+    "x": 825,
+    "y": 90,
+    "inheritFrom": "hex-a1",
+    "z": 4555
+  },
+  "hex-a108": {
+    "type": "holder",
+    "id": "hex-a108",
+    "parent": "board",
+    "x": 825,
+    "y": 5,
+    "inheritFrom": "hex-a12",
+    "z": 21
+  },
+  "hex-a109": {
+    "type": "holder",
+    "id": "hex-a109",
+    "parent": "board",
+    "x": 898,
+    "y": 727,
+    "inheritFrom": "hex-a12",
+    "z": 22
+  },
+  "hex-a110": {
+    "type": "holder",
+    "id": "hex-a110",
+    "parent": "board",
+    "x": 898,
+    "y": 642,
+    "inheritFrom": "hex-a12",
+    "z": 23
+  },
+  "hex-a111": {
+    "type": "holder",
+    "id": "hex-a111",
+    "parent": "board",
+    "x": 898,
+    "y": 557,
+    "inheritFrom": "hex-a1",
+    "z": 4556
+  },
+  "hex-a112": {
+    "type": "holder",
+    "id": "hex-a112",
+    "parent": "board",
+    "x": 898,
+    "y": 472,
+    "inheritFrom": "hex-a1",
+    "z": 4556
+  },
+  "hex-a113": {
+    "type": "holder",
+    "id": "hex-a113",
+    "parent": "board",
+    "x": 898,
+    "y": 387,
+    "inheritFrom": "hex-a11",
+    "z": 4556
+  },
+  "hex-a114": {
+    "type": "holder",
+    "id": "hex-a114",
+    "parent": "board",
+    "x": 898,
+    "y": 302,
+    "inheritFrom": "hex-a12",
+    "z": 24
+  },
+  "hex-a115": {
+    "type": "holder",
+    "id": "hex-a115",
+    "parent": "board",
+    "x": 898,
+    "y": 217,
+    "inheritFrom": "hex-a12",
+    "z": 25
+  },
+  "hex-a116": {
+    "type": "holder",
+    "id": "hex-a116",
+    "parent": "board",
+    "x": 898,
+    "y": 132,
+    "inheritFrom": "hex-a7",
+    "z": 4556
+  },
+  "hex-a117": {
+    "type": "holder",
+    "id": "hex-a117",
+    "parent": "board",
+    "x": 898,
+    "y": 47,
+    "inheritFrom": "hex-a11",
+    "z": 4556
+  },
+  "deck-wood": {
+    "type": "deck",
+    "id": "deck-wood",
+    "x": 4,
+    "y": 4,
+    "z": 1,
+    "cardDefaults": {
+      "class": "resource",
+      "width": 38,
+      "height": 38,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:saddlebrown;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "wood": {
+        "color": "saddlebrown",
+        "image": "/i/game-pieces/3D/Cube-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-wood"
+  },
+  "holder-wood": {
+    "type": "holder",
+    "id": "holder-wood",
+    "x": 544,
+    "y": 363,
+    "width": 51,
+    "height": 51,
+    "z": 62130,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "holder-wheat": {
+    "type": "holder",
+    "id": "holder-wheat",
+    "x": 544,
+    "y": 449,
+    "width": 51,
+    "height": 51,
+    "z": 62131,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-wheat": {
+    "type": "deck",
+    "id": "deck-wheat",
+    "parent": "holder-wheat",
+    "x": 4,
+    "y": 4,
+    "z": 2,
+    "cardDefaults": {
+      "class": "resource",
+      "width": 38,
+      "height": 38,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:goldenrod;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "wheat": {
+        "color": "gold",
+        "image": "/i/game-pieces/3D/Cube-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-stone": {
+    "type": "holder",
+    "id": "holder-stone",
+    "x": 544,
+    "y": 534,
+    "width": 51,
+    "height": 51,
+    "z": 62132,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "deck-stone": {
+    "type": "deck",
+    "id": "deck-stone",
+    "x": 4,
+    "y": 4,
+    "z": 3,
+    "cardDefaults": {
+      "class": "resource",
+      "width": 38,
+      "height": 38,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:gray;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "stone": {
+        "color": "gray",
+        "image": "/i/game-pieces/3D/Marble-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-stone"
+  },
+  "f87j": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "f87j",
+    "z": 26481,
+    "parent": "mqu2"
+  },
+  "deck-pig": {
+    "type": "deck",
+    "id": "deck-pig",
+    "x": 4,
+    "y": 4,
+    "z": 4,
+    "cardDefaults": {
+      "class": "resource",
+      "width": 38,
+      "height": 38,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:violet;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "pig": {
+        "color": "violet",
+        "image": "i/game-pieces/2D/Pig-2D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-pig"
+  },
+  "holder-pig": {
+    "type": "holder",
+    "id": "holder-pig",
+    "x": 544,
+    "y": 620,
+    "width": 51,
+    "height": 51,
+    "z": 62133,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "1s10": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "1s10",
+    "z": 26456,
+    "parent": "7egd"
+  },
+  "4oef": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "4oef",
+    "z": 26464,
+    "parent": "6mkg"
+  },
+  "dydu": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "dydu",
+    "z": 26512,
+    "parent": "czao"
+  },
+  "cpto": {
+    "deck": "deck-buildings-seat-p1",
+    "type": "card",
+    "cardType": "building",
+    "id": "cpto",
+    "z": 26600,
+    "parent": "44aq"
+  },
+  "cmdf": {
+    "deck": "deck-buildings-seat-p1",
+    "type": "card",
+    "cardType": "building",
+    "id": "cmdf",
+    "z": 26599,
+    "parent": "44aq"
+  },
+  "ah8h": {
+    "deck": "deck-buildings-seat-p1",
+    "type": "card",
+    "cardType": "building",
+    "id": "ah8h",
+    "z": 26598,
+    "parent": "44aq"
+  },
+  "gt10": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wood-4",
+    "id": "gt10",
+    "z": 26708,
+    "parent": "nzdu"
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 1612,
+    "y": 947,
+    "height": 50,
+    "z": 74,
+    "clickRoutine": [],
+    "url_pig": "i/game-pieces/2D/Pig-2D.svg",
+    "text": "Code",
+    "width": 70,
+    "url_brick": "/i/game-pieces/3D/Cube-3D.svg",
+    "url_wood": "/i/game-pieces/3D/Cube-3D.svg",
+    "url_wheat": "/i/game-pieces/3D/Cube-3D.svg",
+    "url_stone": "/i/game-pieces/3D/Marble-3D.svg",
+    "color_brick": "crimson",
+    "color_pig": "violet",
+    "color_stone": "gray",
+    "color_wheat": "gold",
+    "color_wood": "saddlebrown",
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px"
+    }
+  },
+  "k83m": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wood-3",
+    "id": "k83m",
+    "z": 26718,
+    "parent": "nzdu"
+  },
+  "x6bj": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "pig-4",
+    "id": "x6bj",
+    "z": 26727,
+    "parent": "nzdu"
+  },
+  "sw4l": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wheat-4",
+    "id": "sw4l",
+    "z": 26719,
+    "parent": "nzdu"
+  },
+  "8rpe": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wheat-3",
+    "id": "8rpe",
+    "z": 26711,
+    "parent": "nzdu"
+  },
+  "barl": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "brick-4",
+    "id": "barl",
+    "z": 26716,
+    "parent": "nzdu"
+  },
+  "1ixh": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "brick-3",
+    "id": "1ixh",
+    "z": 26714,
+    "parent": "nzdu"
+  },
+  "k1lk": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "brick-4",
+    "id": "k1lk",
+    "z": 26721,
+    "parent": "nzdu"
+  },
+  "z1k0": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "brick-3",
+    "id": "z1k0",
+    "z": 26715,
+    "parent": "nzdu"
+  },
+  "3p1q": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "stone-4",
+    "id": "3p1q",
+    "z": 26724,
+    "parent": "nzdu"
+  },
+  "a125": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "stone-4",
+    "id": "a125",
+    "z": 26720,
+    "parent": "nzdu"
+  },
+  "07t9": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "stone-3",
+    "id": "07t9",
+    "z": 26713,
+    "parent": "nzdu"
+  },
+  "50kz": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "stone-3",
+    "id": "50kz",
+    "z": 26709,
+    "parent": "nzdu"
+  },
+  "v838": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "pig-3",
+    "id": "v838",
+    "z": 26722,
+    "parent": "nzdu"
+  },
+  "9k62": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "pig-3",
+    "id": "9k62",
+    "z": 26726,
+    "parent": "nzdu"
+  },
+  "hsio": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "pig-4",
+    "id": "hsio",
+    "z": 26717,
+    "parent": "nzdu"
+  },
+  "fang": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wood-4",
+    "id": "fang",
+    "z": 26725,
+    "parent": "nzdu"
+  },
+  "eyom": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wood-3",
+    "id": "eyom",
+    "z": 26723,
+    "parent": "nzdu"
+  },
+  "uqns": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wheat-4",
+    "id": "uqns",
+    "z": 26712,
+    "parent": "nzdu"
+  },
+  "4vu5": {
+    "deck": "deck-resource-tiles-4p",
+    "type": "card",
+    "cardType": "wheat-3",
+    "id": "4vu5",
+    "z": 26710,
+    "parent": "nzdu"
+  },
+  "mr4d": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "b",
+    "id": "mr4d",
+    "z": 26578,
+    "parent": "lze6"
+  },
+  "0ct4": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "a",
+    "id": "0ct4",
+    "z": 26570,
+    "parent": "lze6"
+  },
+  "tmtt": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "c",
+    "id": "tmtt",
+    "z": 26573,
+    "parent": "lze6"
+  },
+  "37rr": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "c",
+    "id": "37rr",
+    "z": 26558,
+    "parent": "lze6"
+  },
+  "holder-contracts-seat-p1": {
+    "type": "holder",
+    "id": "holder-contracts-seat-p1",
+    "z": 62069,
+    "height": 320,
+    "width": 155,
+    "scale": 0.6,
+    "y": -62,
+    "stackOffsetY": 35,
+    "x": -30,
+    "parent": "box-seat-p1",
+    "dropTarget": {
+      "class": "contract"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "button-endturn-seat-p1": {
+    "type": "button",
+    "id": "button-endturn-seat-p1",
+    "x": 438,
+    "z": 49,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "height": 50,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "indianred"
+    },
+    "width": 70,
+    "parent": "box-seat-p1",
+    "y": 2
+  },
+  "2hww": {
+    "deck": "deck-buildings-seat-p1",
+    "type": "card",
+    "cardType": "building",
+    "id": "2hww",
+    "z": 26601,
+    "parent": "44aq"
+  },
+  "deck-brick": {
+    "type": "deck",
+    "id": "deck-brick",
+    "parent": "holder-brick",
+    "x": 4,
+    "y": 4,
+    "z": 27,
+    "cardDefaults": {
+      "class": "resource",
+      "width": 38,
+      "height": 38,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:crimson;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      }
+    },
+    "cardTypes": {
+      "brick": {
+        "color": "crimson",
+        "image": "/i/game-pieces/3D/Cube-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 38,
+            "height": 38,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-brick": {
+    "type": "holder",
+    "id": "holder-brick",
+    "x": 544,
+    "y": 277,
+    "width": 51,
+    "height": 51,
+    "z": 62129,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "vgin": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "a",
+    "id": "vgin",
+    "z": 26587,
+    "parent": "13lg"
+  },
+  "0hir": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "a",
+    "id": "0hir",
+    "z": 26584,
+    "parent": "13lg"
+  },
+  "gcfa": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "b",
+    "id": "gcfa",
+    "z": 2,
+    "parent": "hand",
+    "x": 154,
+    "y": 4,
+    "owner": "robin",
+    "activeFace": 1
+  },
+  "qti9": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "b",
+    "id": "qti9",
+    "z": 26585,
+    "parent": "13lg"
+  },
+  "uh1h": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "c",
+    "id": "uh1h",
+    "z": 26586,
+    "parent": "13lg"
+  },
+  "8nda": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "c",
+    "id": "8nda",
+    "z": 26589,
+    "parent": "13lg"
+  },
+  "gerb": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "d",
+    "id": "gerb",
+    "z": 26588,
+    "parent": "13lg"
+  },
+  "cy90": {
+    "deck": "deck-private-contracts",
+    "type": "card",
+    "cardType": "d",
+    "id": "cy90",
+    "z": 1,
+    "parent": "hand",
+    "x": 4,
+    "y": 4,
+    "owner": "robin",
+    "activeFace": 1
+  },
+  "holder-neutral-contracts": {
+    "type": "holder",
+    "id": "holder-neutral-contracts",
+    "x": 625,
+    "y": 825,
+    "height": 170,
+    "z": 62103,
+    "dropTarget": {
+      "class": "contract"
+    },
+    "width": 160,
+    "onEnter": {
+      "activeFace": 0
+    }
+  },
+  "deck-neutral-contracts": {
+    "type": "deck",
+    "id": "deck-neutral-contracts",
+    "x": 4,
+    "y": 4,
+    "z": 28,
+    "cardDefaults": {
+      "class": "contract",
+      "width": 150,
+      "height": 160,
+      "cssText": "color:black;font-weight:bold;text-shadow:1px 1px 1px silver",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:26px; height:26px; background-color:black;color:white;font-size:26px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "vpColor": "gold",
+      "bgColor": "silver",
+      "backColor": "black",
+      "textColor": "black",
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "color_brick": "crimson",
+      "color_pig": "violet",
+      "color_stone": "gray",
+      "color_wheat": "gold",
+      "color_wood": "saddlebrown",
+      "url_brick": "/i/game-pieces/3D/Cube-3D.svg",
+      "url_pig": "i/game-pieces/2D/Pig-2D.svg",
+      "url_stone": "/i/game-pieces/3D/Marble-3D.svg",
+      "url_wheat": "/i/game-pieces/3D/Cube-3D.svg",
+      "url_wood": "/i/game-pieces/3D/Cube-3D.svg"
+    },
+    "cardTypes": {
+      "a": {
+        "imageVP": "/assets/-323292057_24413",
+        "url_brick": "",
+        "url_wheat": "",
+        "url_wood": "",
+        "textTitle": "ABUNDANCE",
+        "textCaption": "Activate any resource tile on board for free (do not collect it, and do not place a meeple)"
+      },
+      "b": {
+        "imageVP": "/assets/-37556730_24307",
+        "url_wood": "",
+        "textTitle": "ARCHITECT",
+        "textCaption": "At endgame, gain 1 VP per contract you fulfilled, including this one"
+      },
+      "c": {
+        "imageVP": "/assets/-323292057_24413",
+        "url_pig": "",
+        "url_stone": "",
+        "url_wood": "",
+        "textTitle": "ADVENTURERS",
+        "textCaption": "Place a meadow tile onto any forbidden space for free"
+      },
+      "d": {
+        "imageVP": "/assets/-1895770007_21951",
+        "textTitle": "MAYOR",
+        "textCaption": "Gain 2 additional action points this turn for free"
+      },
+      "e": {
+        "imageVP": "/assets/-906309576_25181",
+        "url_wheat": "",
+        "url_wood": "",
+        "textTitle": "CARAVAN",
+        "textCaption": "Remove up to 1 resource from one of your spaces on board or from your storage area"
+      },
+      "f": {
+        "imageVP": "/assets/-1895770007_21951",
+        "url_stone": "",
+        "textTitle": "DISTILLERY",
+        "textCaption": "Gain 1 additional action point this turn for free"
+      },
+      "g": {
+        "imageVP": "/assets/-37556730_24307",
+        "url_brick": "",
+        "url_pig": "",
+        "url_stone": "",
+        "url_wheat": "",
+        "url_wood": "",
+        "imageWildCard": "/assets/-182885773_27811",
+        "textTitle": "LAZY EXPLORER",
+        "textCaption": "At endgame, gain 1 VP per unrevealed meadow tile stack on your player board"
+      },
+      "h": {
+        "imageVP": "/assets/-1895770007_21951",
+        "url_wheat": "",
+        "textTitle": "EXPORTATION",
+        "textCaption": "Remove up to 2 resources from one of your spaces on board or from your storage area"
+      },
+      "i": {
+        "imageVP": "/assets/-1895770007_21951",
+        "url_brick": "",
+        "textTitle": "STORE",
+        "textCaption": "Swap 1 resource from one of your spaces on board with 1 resource from the general supply"
+      },
+      "j": {
+        "imageVP": "/assets/-37556730_24307",
+        "url_wheat": "",
+        "textTitle": "MERCHANT",
+        "textCaption": "At endgame, gain 1 VP per resource tile you collected"
+      },
+      "k": {
+        "imageVP": "/assets/-906309576_25181",
+        "url_pig": "",
+        "url_wood": "",
+        "textTitle": "WORKSHOP",
+        "textCaption": "Place a meadow tile onto any hazardous water space for free"
+      },
+      "l": {
+        "imageVP": "/assets/-906309576_25181",
+        "url_brick": "",
+        "url_pig": "",
+        "url_stone": "",
+        "url_wheat": "",
+        "url_wood": "",
+        "imageWildCard": "/assets/-507540822_31886",
+        "textTitle": "PRIEST",
+        "textCaption": "At endgame, gain 3 VP"
+      },
+      "m": {
+        "imageVP": "/assets/-1895770007_21951",
+        "url_brick": "",
+        "textTitle": "BY AIR!",
+        "textCaption": "Move an existing meadow tile on board to any water space for free"
+      },
+      "n": {
+        "imageVP": "/assets/-323292057_24413",
+        "url_brick": "",
+        "url_pig": "",
+        "url_stone": "",
+        "textTitle": "SAWMILL",
+        "textCaption": "Choose any resource from the general supply and place it onto one of your building sites"
+      },
+      "o": {
+        "imageVP": "/assets/-323292057_24413",
+        "url_brick": "",
+        "url_pig": "",
+        "url_stone": "",
+        "url_wheat": "",
+        "url_wood": "",
+        "imageWildCard": "/assets/-182885773_27811",
+        "textTitle": "SMUGGLER",
+        "textCaption": "Transport any resource on board to one of your building sites for free, ignoring path restrictions"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 150,
+            "height": 160,
+            "type": "image",
+            "value": "",
+            "dynamicProperties": {
+              "color": "backColor"
+            }
+          },
+          {
+            "note": "this is the card back face",
+            "type": "image",
+            "x": -40,
+            "y": -95,
+            "width": 230,
+            "height": 350,
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "dynamicProperties": {
+              "color": "bgColor"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 7
+      },
+      {
+        "objects": [
+          {
+            "width": 150,
+            "height": 160,
+            "type": "image",
+            "value": "",
+            "dynamicProperties": {
+              "color": "bgColor"
+            }
+          },
+          {
+            "note": "image of VP coin",
+            "type": "image",
+            "x": 0,
+            "y": 2,
+            "width": 150,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageVP"
+            }
+          },
+          {
+            "note": "image resource brick (furthest left)",
+            "type": "image",
+            "x": 3,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_brick",
+              "opacity": "opacity_brick"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_brick",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource wood (second-to-left)",
+            "type": "image",
+            "x": 31,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_wood"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_wood",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource wheat (middle)",
+            "type": "image",
+            "x": 59,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_wheat"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_wheat",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource stone (second-to-right)",
+            "type": "image",
+            "x": 87,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_stone"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_stone",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource pig (furthest right)",
+            "type": "image",
+            "x": 115,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_pig"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_pig",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image wild card",
+            "type": "image",
+            "x": 14,
+            "y": 40,
+            "width": 120,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageWildCard"
+            }
+          },
+          {
+            "note": "title of card",
+            "type": "text",
+            "x": 0,
+            "y": 73,
+            "fontSize": "16",
+            "textAlign": "center",
+            "width": 150,
+            "dynamicProperties": {
+              "value": "textTitle",
+              "css": "cssText"
+            }
+          },
+          {
+            "note": "caption paragraph",
+            "type": "text",
+            "x": 2,
+            "y": 92,
+            "fontSize": "13",
+            "textAlign": "center",
+            "width": 145,
+            "dynamicProperties": {
+              "value": "textCaption",
+              "color": "textColor"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 7
+      }
+    ],
+    "parent": "holder-neutral-contracts"
+  },
+  "hlpk": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "a",
+    "id": "hlpk",
+    "z": 26559,
+    "parent": "lze6"
+  },
+  "3qtm": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "e",
+    "id": "3qtm",
+    "z": 26561,
+    "parent": "lze6"
+  },
+  "o87z": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "e",
+    "id": "o87z",
+    "z": 26564,
+    "parent": "lze6"
+  },
+  "f28x": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "f",
+    "id": "f28x",
+    "z": 26572,
+    "parent": "lze6"
+  },
+  "o0hn": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "f",
+    "id": "o0hn",
+    "z": 4,
+    "parent": "holder-market",
+    "x": 454,
+    "y": 4,
+    "activeFace": 1
+  },
+  "bklt": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "f",
+    "id": "bklt",
+    "z": 26565,
+    "parent": "lze6"
+  },
+  "ove0": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "h",
+    "id": "ove0",
+    "z": 26567,
+    "parent": "lze6"
+  },
+  "p5wq": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "i",
+    "id": "p5wq",
+    "z": 26554,
+    "parent": "lze6"
+  },
+  "ch6l": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "i",
+    "id": "ch6l",
+    "z": 26568,
+    "parent": "lze6"
+  },
+  "v5zu": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "i",
+    "id": "v5zu",
+    "z": 26575,
+    "parent": "lze6"
+  },
+  "8rxf": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "j",
+    "id": "8rxf",
+    "z": 26553,
+    "parent": "lze6"
+  },
+  "70tn": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "k",
+    "id": "70tn",
+    "z": 26556,
+    "parent": "lze6"
+  },
+  "mc6l": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "k",
+    "id": "mc6l",
+    "z": 3,
+    "parent": "holder-market",
+    "x": 304,
+    "y": 4,
+    "activeFace": 1
+  },
+  "ux6j": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "l",
+    "id": "ux6j",
+    "z": 26563,
+    "parent": "lze6"
+  },
+  "r1z3": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "m",
+    "id": "r1z3",
+    "z": 2,
+    "parent": "holder-market",
+    "x": 154,
+    "y": 4,
+    "activeFace": 1
+  },
+  "m0j4": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "m",
+    "id": "m0j4",
+    "z": 26562,
+    "parent": "lze6"
+  },
+  "deck-private-contracts": {
+    "type": "deck",
+    "id": "deck-private-contracts",
+    "parent": "holder-private-contracts",
+    "x": 4,
+    "y": 4,
+    "z": 29,
+    "cardDefaults": {
+      "class": "contract",
+      "width": 150,
+      "height": 160,
+      "cssText": "color:black;font-weight:bold;text-shadow:1px 1px 1px silver",
+      "pilesWith": {
+        "type": "card"
+      },
+      "vpColor": "gold",
+      "bgColor": "silver",
+      "backColor": "black",
+      "textColor": "black",
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "color_brick": "crimson",
+      "color_pig": "violet",
+      "color_stone": "gray",
+      "color_wheat": "gold",
+      "color_wood": "saddlebrown",
+      "url_brick": "/i/game-pieces/3D/Cube-3D.svg",
+      "url_pig": "i/game-pieces/2D/Pig-2D.svg",
+      "url_stone": "/i/game-pieces/3D/Marble-3D.svg",
+      "url_wheat": "/i/game-pieces/3D/Cube-3D.svg",
+      "url_wood": "/i/game-pieces/3D/Cube-3D.svg"
+    },
+    "cardTypes": {
+      "a": {
+        "imageVP": "/assets/-1895770007_21951",
+        "url_brick": "",
+        "url_stone": "",
+        "textTitle": "QUIET TOWN",
+        "textCaption": "At endgame, gain 4 VP"
+      },
+      "b": {
+        "imageVP": "/assets/-323292057_24413",
+        "url_wheat": "",
+        "url_wood": "",
+        "textTitle": "EXPRESS DELIVERY",
+        "textCaption": "Choose any resource from the general supply and place it onto one of your building sites"
+      },
+      "c": {
+        "imageVP": "/assets/-906309576_25181",
+        "url_pig": "",
+        "url_wheat": "",
+        "textTitle": "SECRET PLAN",
+        "textCaption": "Draw a card from the draw pile and add it to your hand"
+      },
+      "d": {
+        "imageVP": "/assets/-906309576_25181",
+        "url_brick": "",
+        "url_pig": "",
+        "textTitle": "SHORTCUT",
+        "textCaption": "Remove 2 meadow tiles from your player board for free"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 150,
+            "height": 160,
+            "type": "image",
+            "value": "",
+            "dynamicProperties": {
+              "color": "backColor"
+            }
+          },
+          {
+            "note": "this is the card back face",
+            "type": "image",
+            "x": -40,
+            "y": -95,
+            "width": 230,
+            "height": 350,
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "dynamicProperties": {
+              "color": "bgColor"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 7
+      },
+      {
+        "objects": [
+          {
+            "width": 150,
+            "height": 160,
+            "type": "image",
+            "value": "",
+            "dynamicProperties": {
+              "color": "bgColor"
+            }
+          },
+          {
+            "note": "image of VP coin",
+            "type": "image",
+            "x": 0,
+            "y": 2,
+            "width": 150,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageVP"
+            }
+          },
+          {
+            "note": "image resource brick (furthest left)",
+            "type": "image",
+            "x": 3,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_brick",
+              "opacity": "opacity_brick"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_brick",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource wood (second-to-left)",
+            "type": "image",
+            "x": 31,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_wood"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_wood",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource wheat (middle)",
+            "type": "image",
+            "x": 59,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_wheat"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_wheat",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource stone (second-to-right)",
+            "type": "image",
+            "x": 87,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_stone"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_stone",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "image resource pig (furthest right)",
+            "type": "image",
+            "x": 115,
+            "y": 40,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "url_pig"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color_pig",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "note": "title of card",
+            "type": "text",
+            "x": 0,
+            "y": 75,
+            "fontSize": "16",
+            "textAlign": "center",
+            "width": 150,
+            "dynamicProperties": {
+              "value": "textTitle",
+              "css": "cssText"
+            }
+          },
+          {
+            "note": "caption paragraph",
+            "type": "text",
+            "x": 2,
+            "y": 95,
+            "fontSize": "13",
+            "textAlign": "center",
+            "width": 145,
+            "dynamicProperties": {
+              "value": "textCaption",
+              "color": "textColor"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 7
+      }
+    ]
+  },
+  "holder-private-contracts": {
+    "type": "holder",
+    "id": "holder-private-contracts",
+    "x": 859,
+    "y": 1022,
+    "height": 170,
+    "z": 62122,
+    "dropTarget": {
+      "deck": "deck-private-contracts"
+    },
+    "width": 160
+  },
+  "holder-buildingsites-seat-p1": {
+    "type": "holder",
+    "id": "holder-buildingsites-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 418,
+    "y": 106,
+    "height": 110,
+    "scale": 0.6,
+    "z": 62015,
+    "dropTarget": {
+      "deck": "deck-buildingsites-seat-p1"
+    },
+    "width": 110,
+    "dropOffsetX": 7,
+    "dropOffsetY": 7
+  },
+  "holder-buildings-seat-p1": {
+    "type": "holder",
+    "id": "holder-buildings-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 369,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62077,
+    "dropTarget": {
+      "deck": "deck-buildings-seat-p1"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "70%",
+        "width": "70%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "70%",
+        "opacity": 0.3,
+        "padding": "10px 10px 10px 10px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Building-3D.svg"
+  },
+  "deck-buildings-seat-p1": {
+    "type": "deck",
+    "id": "deck-buildings-seat-p1",
+    "parent": "holder-buildings-seat-p1",
+    "x": 4,
+    "y": 4,
+    "z": 5,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildings-seat-p1"
+      }
+    },
+    "cardTypes": {
+      "building": {
+        "color": "indianred",
+        "image": "/i/game-pieces/3D/Building-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "deck-craftsman-seat-p1": {
+    "type": "deck",
+    "id": "deck-craftsman-seat-p1",
+    "x": 4,
+    "y": 4,
+    "z": 32,
+    "cardDefaults": {
+      "class": "house",
+      "width": 45,
+      "height": 45,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-craftsman-seat-p1"
+      }
+    },
+    "cardTypes": {
+      "craftsman": {
+        "color": "indianred",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 45,
+            "height": 45,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-craftsman-seat-p1"
+  },
+  "holder-craftsman-seat-p1": {
+    "type": "holder",
+    "id": "holder-craftsman-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 163,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62076,
+    "dropTarget": {
+      "deck": "deck-craftsman-seat-p1"
+    },
+    "dropOffsetY": 12,
+    "dropOffsetX": 12,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "65%",
+        "width": "65%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "65%",
+        "opacity": 0.3,
+        "padding": "12px 12px 12px 12px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg"
+  },
+  "holder-meadow-tiles": {
+    "type": "holder",
+    "id": "holder-meadow-tiles",
+    "x": 518,
+    "y": 162,
+    "height": 111,
+    "scale": 0.64,
+    "z": 62141,
+    "dropTarget": {
+      "deck": "deck-meadow-tiles"
+    }
+  },
+  "deck-meadow-tiles": {
+    "type": "deck",
+    "id": "deck-meadow-tiles",
+    "parent": "holder-meadow-tiles",
+    "x": 4,
+    "y": 4,
+    "z": 6,
+    "cardDefaults": {
+      "class": "tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      }
+    },
+    "cardTypes": {
+      "meadow-tile": {
+        "text": "",
+        "image": "/assets/2017214303_18600"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "t0jb": {
+    "deck": "deck-starter-tiles",
+    "type": "card",
+    "cardType": "wood-starter",
+    "id": "t0jb",
+    "z": 26749,
+    "parent": "hex-a27",
+    "x": -8,
+    "y": -8
+  },
+  "8d3e": {
+    "deck": "deck-starter-tiles",
+    "type": "card",
+    "cardType": "brick-starter",
+    "id": "8d3e",
+    "z": 26748,
+    "parent": "hex-a86",
+    "x": -8,
+    "y": -8
+  },
+  "xae9": {
+    "deck": "deck-starter-tiles",
+    "type": "card",
+    "cardType": "wheat-starter",
+    "id": "xae9",
+    "z": 26728,
+    "parent": "holder-starter-tiles",
+    "x": 4,
+    "y": 4
+  },
+  "6l59": {
+    "deck": "deck-starter-tiles",
+    "type": "card",
+    "cardType": "stone-starter",
+    "id": "6l59",
+    "z": 26750,
+    "x": -8,
+    "y": -8,
+    "parent": "hex-a9"
+  },
+  "9yca": {
+    "deck": "deck-starter-tiles",
+    "type": "card",
+    "cardType": "pig-starter",
+    "id": "9yca",
+    "z": 26751,
+    "parent": "hex-a75",
+    "x": -8,
+    "y": -8
+  },
+  "holder-exploits-seat-p1": {
+    "type": "holder",
+    "id": "holder-exploits-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 75,
+    "y": -62,
+    "width": 105,
+    "height": 320,
+    "scale": 0.6,
+    "z": 62070,
+    "dropOffsetX": 2,
+    "dropOffsetY": -8,
+    "stackOffsetY": 37,
+    "dropTarget": {
+      "class": "tile"
+    }
+  },
+  "holder-temp": {
+    "type": "holder",
+    "id": "holder-temp",
+    "x": 1211,
+    "y": 1005,
+    "height": 111,
+    "scale": 0.64,
+    "z": 62143,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "button-resource-tiles": {
+    "type": "button",
+    "id": "button-resource-tiles",
+    "parent": "holder-resource-tiles-4p",
+    "fixedParent": true,
+    "y": 111,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "recallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-neutral-contracts": {
+    "type": "button",
+    "id": "button-neutral-contracts",
+    "parent": "holder-neutral-contracts",
+    "fixedParent": true,
+    "y": 270,
+    "width": 160,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "recallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-starter-tiles": {
+    "type": "button",
+    "id": "button-starter-tiles",
+    "parent": "holder-starter-tiles",
+    "fixedParent": true,
+    "y": 111,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "recallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-meadow-tiles": {
+    "type": "button",
+    "id": "button-meadow-tiles",
+    "parent": "holder-meadow-tiles",
+    "fixedParent": true,
+    "y": -611,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "recallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-private-contracts": {
+    "type": "button",
+    "id": "button-private-contracts",
+    "parent": "holder-private-contracts",
+    "fixedParent": true,
+    "y": 170,
+    "width": 160,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "recallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "rm8o": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "rm8o",
+    "z": 26511,
+    "parent": "czao"
+  },
+  "h76l": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "h76l",
+    "z": 26522,
+    "parent": "czao"
+  },
+  "41tu": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "41tu",
+    "z": 26507,
+    "parent": "czao"
+  },
+  "gf2w": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "gf2w",
+    "z": 26517,
+    "parent": "czao"
+  },
+  "so9t": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "so9t",
+    "z": 26527,
+    "parent": "czao"
+  },
+  "ucmp": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "ucmp",
+    "z": 26516,
+    "parent": "czao"
+  },
+  "em92": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "em92",
+    "z": 26525,
+    "parent": "czao"
+  },
+  "gpbi": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "gpbi",
+    "z": 26520,
+    "parent": "czao"
+  },
+  "kumv": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "kumv",
+    "z": 26526,
+    "parent": "czao"
+  },
+  "y8v1": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "y8v1",
+    "z": 26510,
+    "parent": "czao"
+  },
+  "dp30": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "dp30",
+    "z": 26513,
+    "parent": "czao"
+  },
+  "1ztf": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "1ztf",
+    "z": 26528,
+    "parent": "czao"
+  },
+  "9cbs": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "9cbs",
+    "z": 26505,
+    "parent": "czao"
+  },
+  "arg4": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "arg4",
+    "z": 26515,
+    "parent": "czao"
+  },
+  "ja7q": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "ja7q",
+    "z": 26508,
+    "parent": "czao"
+  },
+  "zpc0": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "zpc0",
+    "z": 26521,
+    "parent": "czao"
+  },
+  "5f4i": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "5f4i",
+    "z": 26506,
+    "parent": "czao"
+  },
+  "hhuc": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "hhuc",
+    "z": 26519,
+    "parent": "czao"
+  },
+  "00f3": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "00f3",
+    "z": 26496,
+    "parent": "mqu2"
+  },
+  "4cx1": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "4cx1",
+    "z": 26484,
+    "parent": "mqu2"
+  },
+  "nkci": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "nkci",
+    "z": 26503,
+    "parent": "mqu2"
+  },
+  "yahi": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "yahi",
+    "z": 26494,
+    "parent": "mqu2"
+  },
+  "x2m3": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "x2m3",
+    "z": 26491,
+    "parent": "mqu2"
+  },
+  "7e0c": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "7e0c",
+    "z": 26482,
+    "parent": "mqu2"
+  },
+  "syvn": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "syvn",
+    "z": 26502,
+    "parent": "mqu2"
+  },
+  "7ape": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "7ape",
+    "z": 26483,
+    "parent": "mqu2"
+  },
+  "1pic": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "1pic",
+    "z": 26501,
+    "parent": "mqu2"
+  },
+  "8gyy": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "8gyy",
+    "z": 26500,
+    "parent": "mqu2"
+  },
+  "vmc8": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "vmc8",
+    "z": 26493,
+    "parent": "mqu2"
+  },
+  "g10w": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "g10w",
+    "z": 26498,
+    "parent": "mqu2"
+  },
+  "lkhy": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "lkhy",
+    "z": 26504,
+    "parent": "mqu2"
+  },
+  "dlnf": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "dlnf",
+    "z": 26495,
+    "parent": "mqu2"
+  },
+  "kyjo": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "kyjo",
+    "z": 26492,
+    "parent": "mqu2"
+  },
+  "9j06": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "9j06",
+    "z": 26488,
+    "parent": "mqu2"
+  },
+  "6azw": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "6azw",
+    "z": 26499,
+    "parent": "mqu2"
+  },
+  "er6e": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "er6e",
+    "z": 26472,
+    "parent": "6mkg"
+  },
+  "pd18": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "pd18",
+    "z": 26468,
+    "parent": "6mkg"
+  },
+  "fhwn": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "fhwn",
+    "z": 26469,
+    "parent": "6mkg"
+  },
+  "3zp3": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "3zp3",
+    "z": 26470,
+    "parent": "6mkg"
+  },
+  "zbnn": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "zbnn",
+    "z": 26466,
+    "parent": "6mkg"
+  },
+  "8ehg": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "8ehg",
+    "z": 26463,
+    "parent": "6mkg"
+  },
+  "1cr7": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "1cr7",
+    "z": 26479,
+    "parent": "6mkg"
+  },
+  "qf6l": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "qf6l",
+    "z": 26474,
+    "parent": "6mkg"
+  },
+  "4nx7": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "4nx7",
+    "z": 26460,
+    "parent": "6mkg"
+  },
+  "up4o": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "up4o",
+    "z": 26458,
+    "parent": "6mkg"
+  },
+  "r25p": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "r25p",
+    "z": 26461,
+    "parent": "6mkg"
+  },
+  "awpy": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "awpy",
+    "z": 26477,
+    "hoverParent": "holder-wheat",
+    "parent": "6mkg"
+  },
+  "ok00": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "ok00",
+    "z": 26465,
+    "parent": "6mkg"
+  },
+  "6eyg": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "6eyg",
+    "z": 26473,
+    "parent": "6mkg"
+  },
+  "dk8f": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "dk8f",
+    "z": 26475,
+    "parent": "6mkg"
+  },
+  "uczn": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "uczn",
+    "z": 26476,
+    "parent": "6mkg"
+  },
+  "27gj": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "27gj",
+    "z": 26457,
+    "parent": "6mkg"
+  },
+  "6e5d": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "6e5d",
+    "z": 26478,
+    "parent": "6mkg"
+  },
+  "jkuc": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "jkuc",
+    "z": 26436,
+    "parent": "7egd"
+  },
+  "pwq5": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "pwq5",
+    "z": 26444,
+    "parent": "7egd"
+  },
+  "04ba": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "04ba",
+    "z": 26448,
+    "parent": "7egd"
+  },
+  "ium5": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "ium5",
+    "z": 26443,
+    "parent": "7egd"
+  },
+  "dhyh": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "dhyh",
+    "z": 26454,
+    "parent": "7egd"
+  },
+  "oz5k": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "oz5k",
+    "z": 26442,
+    "parent": "7egd"
+  },
+  "8x1s": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "8x1s",
+    "z": 26438,
+    "parent": "7egd"
+  },
+  "1r2v": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "1r2v",
+    "z": 26439,
+    "parent": "7egd"
+  },
+  "xycb": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "xycb",
+    "z": 26453,
+    "parent": "7egd"
+  },
+  "12ic": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "12ic",
+    "z": 26437,
+    "parent": "7egd"
+  },
+  "popu": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "popu",
+    "z": 26455,
+    "parent": "7egd"
+  },
+  "hif6": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "hif6",
+    "z": 26449,
+    "parent": "7egd"
+  },
+  "qmfg": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "qmfg",
+    "z": 26447,
+    "parent": "7egd"
+  },
+  "szf6": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "szf6",
+    "z": 26446,
+    "parent": "7egd"
+  },
+  "a37z": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "a37z",
+    "z": 26450,
+    "parent": "7egd"
+  },
+  "3a46": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "3a46",
+    "z": 26433,
+    "parent": "7egd"
+  },
+  "z8ie": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "z8ie",
+    "z": 26440,
+    "parent": "7egd"
+  },
+  "sq42": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "sq42",
+    "z": 26435,
+    "parent": "7egd"
+  },
+  "eq8w": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "eq8w",
+    "z": 26548,
+    "parent": "gv5d"
+  },
+  "slnj": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "slnj",
+    "z": 26546,
+    "parent": "gv5d"
+  },
+  "holder-tiles-a-seat-p1": {
+    "type": "holder",
+    "id": "holder-tiles-a-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 142,
+    "y": 106,
+    "width": 110,
+    "height": 110,
+    "scale": 0.6,
+    "z": 61997,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "60%",
+        "width": "60%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "60%",
+        "opacity": 0.8,
+        "padding": "23px 23px 23px 23px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": 7,
+    "dropOffsetY": 7,
+    "dropTarget": {
+      "deck": "deck-meadow-tiles"
+    },
+    "image": "/assets/-323292057_24413"
+  },
+  "holder-tiles-b-seat-p1": {
+    "type": "holder",
+    "id": "holder-tiles-b-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 211,
+    "inheritFrom": "holder-tiles-a-seat-p1",
+    "y": 106
+  },
+  "holder-tiles-c-seat-p1": {
+    "type": "holder",
+    "id": "holder-tiles-c-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 279,
+    "inheritFrom": "holder-tiles-a-seat-p1",
+    "y": 106
+  },
+  "holder-tiles-d-seat-p1": {
+    "type": "holder",
+    "id": "holder-tiles-d-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 348,
+    "inheritFrom": "holder-tiles-a-seat-p1",
+    "y": 106
+  },
+  "box-seat-p2": {
+    "id": "box-seat-p2",
+    "x": 5,
+    "y": 209,
+    "width": 510,
+    "height": 195,
+    "layer": -3,
+    "z": 62095,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "gray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "x": 162,
+    "z": 24,
+    "parent": "box-seat-p2",
+    "width": 260,
+    "y": 2,
+    "index": 2,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "royalblue",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    }
+  },
+  "label-seat-p2": {
+    "type": "label",
+    "id": "label-seat-p2",
+    "x": 106,
+    "width": 50,
+    "height": 40,
+    "z": 4603,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "28px",
+        "color": "aliceblue",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px black"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p2",
+    "y": 66
+  },
+  "bbwxD1": {
+    "id": "bbwxD1",
+    "parent": "label-seat-p2",
+    "fixedParent": true,
+    "x": -40,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "bbwxU1": {
+    "id": "bbwxU1",
+    "parent": "label-seat-p2",
+    "fixedParent": true,
+    "x": 55,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "holder-contracts-seat-p2": {
+    "type": "holder",
+    "id": "holder-contracts-seat-p2",
+    "z": 62069,
+    "height": 320,
+    "width": 155,
+    "scale": 0.6,
+    "y": -62,
+    "stackOffsetY": 35,
+    "x": -30,
+    "parent": "box-seat-p2",
+    "dropTarget": {
+      "class": "contract"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "button-endturn-seat-p2": {
+    "type": "button",
+    "id": "button-endturn-seat-p2",
+    "x": 438,
+    "z": 49,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "height": 50,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "royalblue"
+    },
+    "width": 70,
+    "parent": "box-seat-p2",
+    "y": 2
+  },
+  "holder-buildingsites-seat-p2": {
+    "type": "holder",
+    "id": "holder-buildingsites-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 418,
+    "y": 106,
+    "height": 110,
+    "scale": 0.6,
+    "z": 62015,
+    "dropTarget": {
+      "deck": "deck-buildingsites-seat-p2"
+    },
+    "width": 110,
+    "dropOffsetX": 7,
+    "dropOffsetY": 7
+  },
+  "holder-buildings-seat-p2": {
+    "type": "holder",
+    "id": "holder-buildings-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 369,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62077,
+    "dropTarget": {
+      "deck": "deck-buildings-seat-p2"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "70%",
+        "width": "70%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "70%",
+        "opacity": 0.3,
+        "padding": "10px 10px 10px 10px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Building-3D.svg"
+  },
+  "deck-buildings-seat-p2": {
+    "type": "deck",
+    "id": "deck-buildings-seat-p2",
+    "parent": "holder-buildings-seat-p2",
+    "x": 4,
+    "y": 4,
+    "z": 7,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildings-seat-p2"
+      }
+    },
+    "cardTypes": {
+      "building": {
+        "color": "royalblue",
+        "image": "/i/game-pieces/3D/Building-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-craftsman-seat-p2": {
+    "type": "holder",
+    "id": "holder-craftsman-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 163,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62076,
+    "dropTarget": {
+      "deck": "deck-craftsman-seat-p2"
+    },
+    "dropOffsetY": 12,
+    "dropOffsetX": 12,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "65%",
+        "width": "65%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "65%",
+        "opacity": 0.3,
+        "padding": "12px 12px 12px 12px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg"
+  },
+  "deck-craftsman-seat-p2": {
+    "type": "deck",
+    "id": "deck-craftsman-seat-p2",
+    "x": 4,
+    "y": 4,
+    "z": 33,
+    "cardDefaults": {
+      "class": "house",
+      "width": 45,
+      "height": 45,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-craftsman-seat-p2"
+      }
+    },
+    "cardTypes": {
+      "craftsman": {
+        "color": "royalblue",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 45,
+            "height": 45,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-craftsman-seat-p2"
+  },
+  "holder-exploits-seat-p2": {
+    "type": "holder",
+    "id": "holder-exploits-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 75,
+    "y": -62,
+    "width": 105,
+    "height": 320,
+    "scale": 0.6,
+    "z": 62070,
+    "dropOffsetX": 2,
+    "dropOffsetY": -8,
+    "stackOffsetY": 37,
+    "dropTarget": {
+      "class": "tile"
+    }
+  },
+  "holder-tiles-a-seat-p2": {
+    "type": "holder",
+    "id": "holder-tiles-a-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 142,
+    "y": 106,
+    "width": 110,
+    "height": 110,
+    "scale": 0.6,
+    "z": 61997,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "60%",
+        "width": "60%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "60%",
+        "opacity": 0.8,
+        "padding": "23px 23px 23px 23px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": 7,
+    "dropOffsetY": 7,
+    "dropTarget": {
+      "deck": "deck-meadow-tiles"
+    },
+    "image": "/assets/-323292057_24413"
+  },
+  "holder-tiles-b-seat-p2": {
+    "type": "holder",
+    "id": "holder-tiles-b-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 211,
+    "inheritFrom": "holder-tiles-a-seat-p2",
+    "y": 106
+  },
+  "holder-tiles-c-seat-p2": {
+    "type": "holder",
+    "id": "holder-tiles-c-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 279,
+    "inheritFrom": "holder-tiles-a-seat-p2",
+    "y": 106
+  },
+  "holder-tiles-d-seat-p2": {
+    "type": "holder",
+    "id": "holder-tiles-d-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 348,
+    "inheritFrom": "holder-tiles-a-seat-p2",
+    "y": 106
+  },
+  "box-seat-p3": {
+    "id": "box-seat-p3",
+    "x": 6,
+    "y": 414,
+    "width": 510,
+    "height": 195,
+    "layer": -3,
+    "z": 62096,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "gray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 162,
+    "z": 24,
+    "parent": "box-seat-p3",
+    "width": 260,
+    "y": 2,
+    "index": 3,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "darkgreen",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    }
+  },
+  "label-seat-p3": {
+    "type": "label",
+    "id": "label-seat-p3",
+    "x": 106,
+    "width": 50,
+    "height": 40,
+    "z": 4603,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "28px",
+        "color": "aliceblue",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px black"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p3",
+    "y": 66
+  },
+  "bbwxD2": {
+    "id": "bbwxD2",
+    "parent": "label-seat-p3",
+    "fixedParent": true,
+    "x": -40,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "bbwxU2": {
+    "id": "bbwxU2",
+    "parent": "label-seat-p3",
+    "fixedParent": true,
+    "x": 55,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "holder-contracts-seat-p3": {
+    "type": "holder",
+    "id": "holder-contracts-seat-p3",
+    "z": 62069,
+    "height": 320,
+    "width": 155,
+    "scale": 0.6,
+    "y": -62,
+    "stackOffsetY": 35,
+    "x": -30,
+    "parent": "box-seat-p3",
+    "dropTarget": {
+      "class": "contract"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "button-endturn-seat-p3": {
+    "type": "button",
+    "id": "button-endturn-seat-p3",
+    "x": 438,
+    "z": 49,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "height": 50,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "darkgreen"
+    },
+    "width": 70,
+    "parent": "box-seat-p3",
+    "y": 2
+  },
+  "holder-buildingsites-seat-p3": {
+    "type": "holder",
+    "id": "holder-buildingsites-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 418,
+    "y": 106,
+    "height": 110,
+    "scale": 0.6,
+    "z": 62015,
+    "dropTarget": {
+      "deck": "deck-buildingsites-seat-p3"
+    },
+    "width": 110,
+    "dropOffsetX": 7,
+    "dropOffsetY": 7
+  },
+  "holder-buildings-seat-p3": {
+    "type": "holder",
+    "id": "holder-buildings-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 369,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62077,
+    "dropTarget": {
+      "deck": "deck-buildings-seat-p3"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "70%",
+        "width": "70%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "70%",
+        "opacity": 0.3,
+        "padding": "10px 10px 10px 10px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Building-3D.svg"
+  },
+  "deck-buildings-seat-p3": {
+    "type": "deck",
+    "id": "deck-buildings-seat-p3",
+    "parent": "holder-buildings-seat-p3",
+    "x": 4,
+    "y": 4,
+    "z": 8,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildings-seat-p3"
+      }
+    },
+    "cardTypes": {
+      "building": {
+        "color": "darkgreen",
+        "image": "/i/game-pieces/3D/Building-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-craftsman-seat-p3": {
+    "type": "holder",
+    "id": "holder-craftsman-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 163,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62076,
+    "dropTarget": {
+      "deck": "deck-craftsman-seat-p3"
+    },
+    "dropOffsetY": 12,
+    "dropOffsetX": 12,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "65%",
+        "width": "65%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "65%",
+        "opacity": 0.3,
+        "padding": "12px 12px 12px 12px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg"
+  },
+  "deck-craftsman-seat-p3": {
+    "type": "deck",
+    "id": "deck-craftsman-seat-p3",
+    "x": 4,
+    "y": 4,
+    "z": 34,
+    "cardDefaults": {
+      "class": "house",
+      "width": 45,
+      "height": 45,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-craftsman-seat-p3"
+      }
+    },
+    "cardTypes": {
+      "craftsman": {
+        "color": "darkgreen",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 45,
+            "height": 45,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-craftsman-seat-p3"
+  },
+  "holder-exploits-seat-p3": {
+    "type": "holder",
+    "id": "holder-exploits-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 75,
+    "y": -62,
+    "width": 105,
+    "height": 320,
+    "scale": 0.6,
+    "z": 62070,
+    "dropOffsetX": 2,
+    "dropOffsetY": -8,
+    "stackOffsetY": 37,
+    "dropTarget": {
+      "class": "tile"
+    }
+  },
+  "holder-tiles-a-seat-p3": {
+    "type": "holder",
+    "id": "holder-tiles-a-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 142,
+    "y": 106,
+    "width": 110,
+    "height": 110,
+    "scale": 0.6,
+    "z": 61997,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "60%",
+        "width": "60%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "60%",
+        "opacity": 0.8,
+        "padding": "23px 23px 23px 23px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": 7,
+    "dropOffsetY": 7,
+    "dropTarget": {
+      "deck": "deck-meadow-tiles"
+    },
+    "image": "/assets/-323292057_24413"
+  },
+  "holder-tiles-b-seat-p3": {
+    "type": "holder",
+    "id": "holder-tiles-b-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 211,
+    "inheritFrom": "holder-tiles-a-seat-p3",
+    "y": 106
+  },
+  "holder-tiles-c-seat-p3": {
+    "type": "holder",
+    "id": "holder-tiles-c-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 279,
+    "inheritFrom": "holder-tiles-a-seat-p3",
+    "y": 106
+  },
+  "holder-tiles-d-seat-p3": {
+    "type": "holder",
+    "id": "holder-tiles-d-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 348,
+    "inheritFrom": "holder-tiles-a-seat-p3",
+    "y": 106
+  },
+  "box-seat-p4": {
+    "id": "box-seat-p4",
+    "x": 6,
+    "y": 619,
+    "width": 510,
+    "height": 195,
+    "layer": -3,
+    "z": 62096,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "gray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 162,
+    "z": 50,
+    "parent": "box-seat-p4",
+    "width": 260,
+    "y": 2,
+    "index": 4,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "mediumpurple",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      }
+    },
+    "turn": true
+  },
+  "label-seat-p4": {
+    "type": "label",
+    "id": "label-seat-p4",
+    "x": 106,
+    "width": 50,
+    "height": 40,
+    "z": 4603,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "28px",
+        "color": "aliceblue",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px black"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "parent": "seat-p4",
+    "y": 66
+  },
+  "bbwxD3": {
+    "id": "bbwxD3",
+    "parent": "label-seat-p4",
+    "fixedParent": true,
+    "x": -40,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "bbwxU3": {
+    "id": "bbwxU3",
+    "parent": "label-seat-p4",
+    "fixedParent": true,
+    "x": 55,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 24px; background-color:darkorange; border:5px solid gold",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "holder-contracts-seat-p4": {
+    "type": "holder",
+    "id": "holder-contracts-seat-p4",
+    "z": 62069,
+    "height": 320,
+    "width": 155,
+    "scale": 0.6,
+    "y": -62,
+    "stackOffsetY": 35,
+    "x": -30,
+    "parent": "box-seat-p4",
+    "dropTarget": {
+      "class": "contract"
+    },
+    "onEnter": {
+      "activeFace": 1
+    }
+  },
+  "button-endturn-seat-p4": {
+    "type": "button",
+    "id": "button-endturn-seat-p4",
+    "x": 438,
+    "z": 49,
+    "text": "End Turn",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "height": 50,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px",
+      "background-color": "mediumpurple"
+    },
+    "width": 70,
+    "parent": "box-seat-p4",
+    "y": 2
+  },
+  "holder-buildingsites-seat-p4": {
+    "type": "holder",
+    "id": "holder-buildingsites-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 418,
+    "y": 106,
+    "height": 110,
+    "scale": 0.6,
+    "z": 62015,
+    "dropTarget": {
+      "deck": "deck-buildingsites-seat-p4"
+    },
+    "width": 110,
+    "dropOffsetX": 7,
+    "dropOffsetY": 7
+  },
+  "holder-buildings-seat-p4": {
+    "type": "holder",
+    "id": "holder-buildings-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 369,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62077,
+    "dropTarget": {
+      "deck": "deck-buildings-seat-p4"
+    },
+    "dropOffsetX": 6,
+    "dropOffsetY": 6,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "70%",
+        "width": "70%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "70%",
+        "opacity": 0.3,
+        "padding": "10px 10px 10px 10px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Building-3D.svg"
+  },
+  "deck-buildings-seat-p4": {
+    "type": "deck",
+    "id": "deck-buildings-seat-p4",
+    "parent": "holder-buildings-seat-p4",
+    "x": 4,
+    "y": 4,
+    "z": 9,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildings-seat-p4"
+      }
+    },
+    "cardTypes": {
+      "building": {
+        "color": "mediumpurple",
+        "image": "/i/game-pieces/3D/Building-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-craftsman-seat-p4": {
+    "type": "holder",
+    "id": "holder-craftsman-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 163,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62076,
+    "dropTarget": {
+      "deck": "deck-craftsman-seat-p4"
+    },
+    "dropOffsetY": 12,
+    "dropOffsetX": 12,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "65%",
+        "width": "65%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "65%",
+        "opacity": 0.3,
+        "padding": "12px 12px 12px 12px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg"
+  },
+  "deck-craftsman-seat-p4": {
+    "type": "deck",
+    "id": "deck-craftsman-seat-p4",
+    "x": 4,
+    "y": 4,
+    "z": 35,
+    "cardDefaults": {
+      "class": "house",
+      "width": 45,
+      "height": 45,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-craftsman-seat-p4"
+      }
+    },
+    "cardTypes": {
+      "craftsman": {
+        "color": "mediumpurple",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 45,
+            "height": 45,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "holder-craftsman-seat-p4"
+  },
+  "holder-exploits-seat-p4": {
+    "type": "holder",
+    "id": "holder-exploits-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 75,
+    "y": -62,
+    "width": 105,
+    "height": 320,
+    "scale": 0.6,
+    "z": 62070,
+    "dropOffsetX": 2,
+    "dropOffsetY": -8,
+    "stackOffsetY": 37,
+    "dropTarget": {
+      "class": "tile"
+    }
+  },
+  "holder-tiles-a-seat-p4": {
+    "type": "holder",
+    "id": "holder-tiles-a-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 142,
+    "y": 106,
+    "width": 110,
+    "height": 110,
+    "scale": 0.6,
+    "z": 61997,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "60%",
+        "width": "60%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "60%",
+        "opacity": 0.8,
+        "padding": "23px 23px 23px 23px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "border-radius": "100%",
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropOffsetX": 7,
+    "dropOffsetY": 7,
+    "dropTarget": {
+      "deck": "deck-meadow-tiles"
+    },
+    "image": "/assets/-323292057_24413"
+  },
+  "holder-tiles-b-seat-p4": {
+    "type": "holder",
+    "id": "holder-tiles-b-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 211,
+    "inheritFrom": "holder-tiles-a-seat-p4",
+    "y": 106
+  },
+  "holder-tiles-c-seat-p4": {
+    "type": "holder",
+    "id": "holder-tiles-c-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 279,
+    "inheritFrom": "holder-tiles-a-seat-p4",
+    "y": 106
+  },
+  "holder-tiles-d-seat-p4": {
+    "type": "holder",
+    "id": "holder-tiles-d-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 348,
+    "inheritFrom": "holder-tiles-a-seat-p4",
+    "y": 106
+  },
+  "oi81": {
+    "deck": "deck-buildings-seat-p2",
+    "type": "card",
+    "cardType": "building",
+    "id": "oi81",
+    "z": 26659,
+    "parent": "6dli"
+  },
+  "yooy": {
+    "deck": "deck-buildings-seat-p2",
+    "type": "card",
+    "cardType": "building",
+    "id": "yooy",
+    "z": 26660,
+    "parent": "6dli"
+  },
+  "k1mn": {
+    "deck": "deck-buildings-seat-p2",
+    "type": "card",
+    "cardType": "building",
+    "id": "k1mn",
+    "z": 26657,
+    "parent": "6dli"
+  },
+  "36i3": {
+    "deck": "deck-buildings-seat-p2",
+    "type": "card",
+    "cardType": "building",
+    "id": "36i3",
+    "z": 26661,
+    "parent": "6dli"
+  },
+  "mw0w": {
+    "deck": "deck-buildings-seat-p2",
+    "type": "card",
+    "cardType": "building",
+    "id": "mw0w",
+    "z": 26658,
+    "parent": "6dli"
+  },
+  "d7fd": {
+    "deck": "deck-buildings-seat-p3",
+    "type": "card",
+    "cardType": "building",
+    "id": "d7fd",
+    "z": 26670,
+    "parent": "j5tw"
+  },
+  "co5p": {
+    "deck": "deck-buildings-seat-p3",
+    "type": "card",
+    "cardType": "building",
+    "id": "co5p",
+    "z": 26672,
+    "parent": "j5tw"
+  },
+  "lu4z": {
+    "deck": "deck-buildings-seat-p3",
+    "type": "card",
+    "cardType": "building",
+    "id": "lu4z",
+    "z": 26671,
+    "parent": "j5tw"
+  },
+  "dhin": {
+    "deck": "deck-buildings-seat-p3",
+    "type": "card",
+    "cardType": "building",
+    "id": "dhin",
+    "z": 26669,
+    "parent": "j5tw"
+  },
+  "14va": {
+    "deck": "deck-buildings-seat-p3",
+    "type": "card",
+    "cardType": "building",
+    "id": "14va",
+    "z": 26673,
+    "parent": "j5tw"
+  },
+  "jvjt": {
+    "deck": "deck-craftsman-seat-p1",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "jvjt",
+    "z": 26603,
+    "parent": "lq55"
+  },
+  "8hfw": {
+    "deck": "deck-craftsman-seat-p1",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "8hfw",
+    "z": 26602,
+    "parent": "lq55"
+  },
+  "nkdz": {
+    "deck": "deck-craftsman-seat-p2",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "nkdz",
+    "z": 26662,
+    "parent": "n3d6"
+  },
+  "35q0": {
+    "deck": "deck-craftsman-seat-p2",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "35q0",
+    "z": 26663,
+    "hoverParent": "holder-craftsman-seat-p2",
+    "parent": "n3d6"
+  },
+  "ov00": {
+    "deck": "deck-craftsman-seat-p3",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "ov00",
+    "z": 26675,
+    "hoverParent": "holder-craftsman-seat-p3",
+    "parent": "ulkc"
+  },
+  "96ym": {
+    "deck": "deck-craftsman-seat-p3",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "96ym",
+    "z": 26674,
+    "parent": "ulkc"
+  },
+  "8xnp": {
+    "deck": "deck-craftsman-seat-p4",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "8xnp",
+    "z": 26687,
+    "parent": "1h1g"
+  },
+  "vwan": {
+    "deck": "deck-craftsman-seat-p4",
+    "type": "card",
+    "cardType": "craftsman",
+    "id": "vwan",
+    "z": 26686,
+    "parent": "1h1g"
+  },
+  "rtsn": {
+    "deck": "deck-buildings-seat-p4",
+    "type": "card",
+    "cardType": "building",
+    "id": "rtsn",
+    "z": 26685,
+    "parent": "8qlw"
+  },
+  "0udu": {
+    "deck": "deck-buildings-seat-p4",
+    "type": "card",
+    "cardType": "building",
+    "id": "0udu",
+    "z": 26682,
+    "parent": "8qlw"
+  },
+  "zmjc": {
+    "deck": "deck-buildings-seat-p4",
+    "type": "card",
+    "cardType": "building",
+    "id": "zmjc",
+    "z": 26681,
+    "parent": "8qlw"
+  },
+  "s8q1": {
+    "deck": "deck-buildings-seat-p4",
+    "type": "card",
+    "cardType": "building",
+    "id": "s8q1",
+    "z": 26683,
+    "parent": "8qlw"
+  },
+  "suot": {
+    "deck": "deck-buildings-seat-p4",
+    "type": "card",
+    "cardType": "building",
+    "id": "suot",
+    "z": 26684,
+    "parent": "8qlw"
+  },
+  "h4j5": {
+    "deck": "deck-buildingsites-seat-p3",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "h4j5",
+    "z": 26667,
+    "activeFace": 1,
+    "parent": "cat9"
+  },
+  "5rwx": {
+    "deck": "deck-buildingsites-seat-p3",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "5rwx",
+    "z": 26664,
+    "activeFace": 1,
+    "parent": "cat9"
+  },
+  "i8o7": {
+    "deck": "deck-buildingsites-seat-p3",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "i8o7",
+    "z": 26665,
+    "activeFace": 1,
+    "parent": "cat9"
+  },
+  "4buf": {
+    "deck": "deck-buildingsites-seat-p2",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "4buf",
+    "z": 26654,
+    "activeFace": 1,
+    "parent": "qtuu"
+  },
+  "oina": {
+    "deck": "deck-buildingsites-seat-p2",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "oina",
+    "z": 26653,
+    "activeFace": 1,
+    "parent": "qtuu"
+  },
+  "oe78": {
+    "deck": "deck-buildingsites-seat-p2",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "oe78",
+    "z": 26655,
+    "activeFace": 1,
+    "parent": "qtuu"
+  },
+  "cr44": {
+    "deck": "deck-buildingsites-seat-p1",
+    "type": "card",
+    "cardType": "half-tile",
+    "id": "cr44",
+    "z": 26593,
+    "activeFace": 1,
+    "parent": "gasr"
+  },
+  "z7xs": {
+    "deck": "deck-buildingsites-seat-p1",
+    "type": "card",
+    "cardType": "half-tile",
+    "id": "z7xs",
+    "z": 26592,
+    "activeFace": 1,
+    "parent": "gasr"
+  },
+  "ss5s": {
+    "deck": "deck-buildingsites-seat-p1",
+    "type": "card",
+    "cardType": "half-tile",
+    "id": "ss5s",
+    "z": 26594,
+    "activeFace": 1,
+    "parent": "gasr"
+  },
+  "x7ym": {
+    "deck": "deck-buildingsites-seat-p4",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "x7ym",
+    "z": 26676,
+    "parent": "6vhj",
+    "activeFace": 1
+  },
+  "w53i": {
+    "deck": "deck-buildingsites-seat-p4",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "w53i",
+    "z": 26677,
+    "activeFace": 1,
+    "parent": "6vhj"
+  },
+  "5s70": {
+    "deck": "deck-buildingsites-seat-p4",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "5s70",
+    "z": 26679,
+    "activeFace": 1,
+    "parent": "6vhj"
+  },
+  "button-guide": {
+    "type": "button",
+    "id": "button-guide",
+    "x": 1510,
+    "y": 894,
+    "width": 70,
+    "height": 50,
+    "z": 73,
+    "css": {
+      "font-weight": "bold",
+      "border-radius": "7px"
+    },
+    "text": "Hide Guide",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Show Guide",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-guide"
+            ],
+            "property": "text",
+            "value": "Hide Guide"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-guide-actiontypes"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-guide"
+            ],
+            "property": "text",
+            "value": "Show Guide"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "label-guide-actiontypes"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "label-guide-actiontypes": {
+    "type": "label",
+    "id": "label-guide-actiontypes",
+    "x": 1121,
+    "y": 833,
+    "z": 4613,
+    "text": "Action Types (2x action points per turn):\n\n* Activate a resource tile (1x)\n* Place a building site (1x)\n* Place a meadow tile onto water (1x)\n* Place a meadow tile onto hazardous water (2x)\n* Transport a resource onto a building site (1x)\n* Complete a building contract (1x)",
+    "css": {
+      "font-weight": "bold",
+      "text-align": "left"
+    },
+    "height": 150,
+    "width": 380
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "x": 1510,
+    "y": 947,
+    "width": 70,
+    "height": 50,
+    "z": 75,
+    "classes": "symbols",
+    "css": {
+      "font-size": "40px",
+      "font-weight": "bold",
+      "border-radius": "7px"
+    },
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "RESET",
+        "property": "button-resetReset"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "recallRoutine",
+        "widget": "button-meadow-tiles"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "recallRoutine",
+        "widget": "button-resource-tiles"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "recallRoutine",
+        "widget": "button-starter-tiles"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "recallRoutine",
+        "widget": "button-neutral-contracts"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "recallRoutine",
+        "widget": "button-private-contracts"
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "clickRoutine",
+        "widget": [
+          "button-holder-brick"
+        ]
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "clickRoutine",
+        "widget": [
+          "button-holder-wood"
+        ]
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "clickRoutine",
+        "widget": [
+          "button-holder-wheat"
+        ]
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "clickRoutine",
+        "widget": [
+          "button-holder-stone"
+        ]
+      },
+      {
+        "func": "CALL",
+        "return": true,
+        "routine": "clickRoutine",
+        "widget": "button-holder-pig"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-meadow-tiles",
+          "holder-resource-tiles-4p",
+          "holder-resource-tiles-3p",
+          "holder-starter-tiles",
+          "holder-neutral-contracts",
+          "holder-private-contracts",
+          "holder-brick",
+          "holder-wood",
+          "holder-wheat",
+          "holder-stone",
+          "holder-pig",
+          "holder-craftsman-seat-p1",
+          "holder-buildings-seat-p1",
+          "holder-buildingsites-seat-p1",
+          "holder-craftsman-seat-p2",
+          "holder-buildings-seat-p2",
+          "holder-buildingsites-seat-p2",
+          "holder-craftsman-seat-p3",
+          "holder-buildings-seat-p3",
+          "holder-buildingsites-seat-p3",
+          "holder-craftsman-seat-p4",
+          "holder-buildings-seat-p4",
+          "holder-buildingsites-seat-p4"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder-meadow-tiles",
+          "holder-resource-tiles-4p",
+          "holder-resource-tiles-3p",
+          "holder-starter-tiles",
+          "holder-neutral-contracts",
+          "holder-private-contracts",
+          "holder-brick",
+          "holder-wood",
+          "holder-wheat",
+          "holder-stone",
+          "holder-pig",
+          "holder-craftsman-seat-p1",
+          "holder-buildings-seat-p1",
+          "holder-buildingsites-seat-p1",
+          "holder-craftsman-seat-p2",
+          "holder-buildings-seat-p2",
+          "holder-buildingsites-seat-p2",
+          "holder-craftsman-seat-p3",
+          "holder-buildings-seat-p3",
+          "holder-buildingsites-seat-p3",
+          "holder-craftsman-seat-p4",
+          "holder-buildings-seat-p4",
+          "holder-buildingsites-seat-p4"
+        ]
+      },
+      {
+        "note": "Get player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "note": "Deal each player 2 private contracts",
+            "func": "MOVE",
+            "from": "holder-private-contracts",
+            "to": "${widgetID}",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-resource-tiles-4p",
+            "to": "holder-temp",
+            "count": 20
+          },
+          {
+            "note": "Deal each player their meadow tiles",
+            "func": "FOREACH",
+            "collection": "activeSeats",
+            "loopRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-meadow-tiles",
+                "to": "holder-tiles-a-${widgetID}",
+                "count": 3
+              },
+              {
+                "func": "MOVE",
+                "from": "holder-meadow-tiles",
+                "to": "holder-tiles-b-${widgetID}",
+                "count": 3
+              },
+              {
+                "func": "MOVE",
+                "from": "holder-meadow-tiles",
+                "to": "holder-tiles-c-${widgetID}",
+                "count": 3
+              },
+              {
+                "func": "MOVE",
+                "from": "holder-meadow-tiles",
+                "to": "holder-tiles-d-${widgetID}",
+                "count": 3
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "MOVE",
+                "from": "holder-resource-tiles-3p",
+                "to": "holder-temp",
+                "count": 20
+              },
+              {
+                "note": "Deal each player their meadow tiles",
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "func": "MOVE",
+                    "from": "holder-meadow-tiles",
+                    "to": "holder-tiles-a-${widgetID}",
+                    "count": 4
+                  },
+                  {
+                    "func": "MOVE",
+                    "from": "holder-meadow-tiles",
+                    "to": "holder-tiles-b-${widgetID}",
+                    "count": 4
+                  },
+                  {
+                    "func": "MOVE",
+                    "from": "holder-meadow-tiles",
+                    "to": "holder-tiles-c-${widgetID}",
+                    "count": 4
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${COUNT}",
+                "operand2": 2,
+                "thenRoutine": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "holder-starter-tiles",
+        "to": "holder-temp",
+        "count": 4
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "holder-temp"
+      },
+      {
+        "func": "SELECT",
+        "type": "holder",
+        "property": "id",
+        "relation": "in",
+        "value": [
+          "hex-a1",
+          "hex-a2",
+          "hex-a6",
+          "hex-a8",
+          "hex-a9",
+          "hex-a10",
+          "hex-a18",
+          "hex-a19",
+          "hex-a27",
+          "hex-a30",
+          "hex-a41",
+          "hex-a43",
+          "hex-a52",
+          "hex-a55",
+          "hex-a56",
+          "hex-a73",
+          "hex-a75",
+          "hex-a79",
+          "hex-a81",
+          "hex-a86",
+          "hex-a93",
+          "hex-a94",
+          "hex-a98",
+          "hex-a112"
+        ],
+        "random": true,
+        "collection": "collectionResourceTiles"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "collectionResourceTiles",
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder-temp",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "note": "Deal out 4 neutral contracts to the public market",
+        "func": "MOVE",
+        "from": "holder-neutral-contracts",
+        "to": "holder-market",
+        "count": 4
+      },
+      {
+        "note": "Reset scores to 0",
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-${widgetID}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ]
+  },
+  "button-holder-pig": {
+    "type": "button",
+    "id": "button-holder-pig",
+    "parent": "holder-pig",
+    "fixedParent": true,
+    "y": -651,
+    "width": 51,
+    "height": 20,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-holder-stone": {
+    "type": "button",
+    "id": "button-holder-stone",
+    "parent": "holder-stone",
+    "fixedParent": true,
+    "y": -651,
+    "width": 51,
+    "height": 20,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-holder-wheat": {
+    "type": "button",
+    "id": "button-holder-wheat",
+    "parent": "holder-wheat",
+    "fixedParent": true,
+    "y": -651,
+    "width": 51,
+    "height": 20,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-holder-wood": {
+    "type": "button",
+    "id": "button-holder-wood",
+    "parent": "holder-wood",
+    "fixedParent": true,
+    "y": -651,
+    "width": 51,
+    "height": 20,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "button-holder-brick": {
+    "type": "button",
+    "id": "button-holder-brick",
+    "parent": "holder-brick",
+    "fixedParent": true,
+    "y": -651,
+    "width": 51,
+    "height": 20,
+    "movableInEdit": false,
+    "text": "Recall",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-buildingsites-seat-p1": {
+    "type": "deck",
+    "id": "deck-buildingsites-seat-p1",
+    "parent": "holder-buildingsites-seat-p1",
+    "x": 4,
+    "y": 4,
+    "z": 10,
+    "cardDefaults": {
+      "class": "half-tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildingsites-seat-p1"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 180
+        }
+      ]
+    },
+    "cardTypes": {
+      "half-tile": {
+        "text": "",
+        "image": "/assets/2018812228_15599"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "deck-buildingsites-seat-p2": {
+    "type": "deck",
+    "id": "deck-buildingsites-seat-p2",
+    "parent": "holder-buildingsites-seat-p2",
+    "x": 4,
+    "y": 4,
+    "z": 11,
+    "cardDefaults": {
+      "class": "half-tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildingsites-seat-p2"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 180
+        }
+      ]
+    },
+    "cardTypes": {
+      "quarry0": {
+        "text": "",
+        "image": "/assets/-231970116_14694"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "deck-buildingsites-seat-p3": {
+    "type": "deck",
+    "id": "deck-buildingsites-seat-p3",
+    "parent": "holder-buildingsites-seat-p3",
+    "x": 4,
+    "y": 4,
+    "z": 12,
+    "cardDefaults": {
+      "class": "half-tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildingsites-seat-p3"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 180
+        }
+      ]
+    },
+    "cardTypes": {
+      "quarry0": {
+        "text": "",
+        "image": "/assets/-1213417859_12975"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "deck-buildingsites-seat-p4": {
+    "type": "deck",
+    "id": "deck-buildingsites-seat-p4",
+    "parent": "holder-buildingsites-seat-p4",
+    "x": 4,
+    "y": 4,
+    "z": 13,
+    "cardDefaults": {
+      "class": "half-tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-buildingsites-seat-p4"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "clickRoutine": [
+        {
+          "func": "ROTATE",
+          "collection": "thisButton",
+          "angle": 180
+        }
+      ]
+    },
+    "cardTypes": {
+      "quarry0": {
+        "text": "",
+        "image": "/assets/1141180006_16555"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "tl6m": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "j",
+    "id": "tl6m",
+    "z": 26569,
+    "parent": "lze6"
+  },
+  "w23f": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "b",
+    "id": "w23f",
+    "z": 26557,
+    "parent": "lze6"
+  },
+  "holder-trash": {
+    "type": "holder",
+    "id": "holder-trash",
+    "x": 1490,
+    "y": 798,
+    "height": 111,
+    "z": 62116,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "scale": 0.64,
+    "dropOffsetX": 7,
+    "dropOffsetY": 7
+  },
+  "holder-trash-seat-p1": {
+    "type": "holder",
+    "id": "holder-trash-seat-p1",
+    "parent": "box-seat-p1",
+    "x": 440,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62079,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "preventPiles": true,
+    "stackOffsetX": 15,
+    "image": "/i/game-icons.net/delapouite/trash-can.svg"
+  },
+  "holder-trash-seat-p2": {
+    "type": "holder",
+    "id": "holder-trash-seat-p2",
+    "parent": "box-seat-p2",
+    "x": 440,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62079,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "preventPiles": true,
+    "stackOffsetX": 15,
+    "image": "/i/game-icons.net/delapouite/trash-can.svg"
+  },
+  "holder-trash-seat-p3": {
+    "type": "holder",
+    "id": "holder-trash-seat-p3",
+    "parent": "box-seat-p3",
+    "x": 440,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62079,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "preventPiles": true,
+    "stackOffsetX": 15,
+    "image": "/i/game-icons.net/delapouite/trash-can.svg"
+  },
+  "holder-trash-seat-p4": {
+    "type": "holder",
+    "id": "holder-trash-seat-p4",
+    "parent": "box-seat-p4",
+    "x": 440,
+    "y": 59,
+    "width": 67,
+    "height": 67,
+    "z": 62079,
+    "css": {
+      "::after": {
+        "content": "\"\"",
+        "display": "block",
+        "height": "90%",
+        "width": "90%",
+        "color": "${PROPERTY color}",
+        "background": "url(\"${PROPERTY image}\") no-repeat center",
+        "background-size": "90%",
+        "opacity": 0.3,
+        "padding": "0px 4px 0px 4px",
+        "transform": "rotate(${PROPERTY imageRotation}deg)"
+      },
+      "default": {
+        "background": "${PROPERTY background}",
+        "border": "none"
+      }
+    },
+    "dropTarget": {
+      "type": "card"
+    },
+    "preventPiles": true,
+    "stackOffsetX": 15,
+    "image": "/i/game-icons.net/delapouite/trash-can.svg"
+  },
+  "efmm": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "efmm",
+    "z": 26550,
+    "parent": "gv5d"
+  },
+  "beo7": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "beo7",
+    "z": 26533,
+    "parent": "gv5d"
+  },
+  "c116": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "c116",
+    "z": 26545,
+    "parent": "gv5d"
+  },
+  "khl4": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "khl4",
+    "z": 26543,
+    "parent": "gv5d"
+  },
+  "5zpj": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "5zpj",
+    "z": 26539,
+    "parent": "gv5d"
+  },
+  "9shx": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "9shx",
+    "z": 26531,
+    "parent": "gv5d"
+  },
+  "vsr1": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "vsr1",
+    "z": 26535,
+    "parent": "gv5d"
+  },
+  "kgc6": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "kgc6",
+    "z": 26552,
+    "parent": "gv5d"
+  },
+  "00ar": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "00ar",
+    "z": 26536,
+    "parent": "gv5d"
+  },
+  "p78p": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "p78p",
+    "z": 26544,
+    "parent": "gv5d"
+  },
+  "qr8a": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "qr8a",
+    "z": 26542,
+    "parent": "gv5d"
+  },
+  "dfab": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "dfab",
+    "z": 26538,
+    "parent": "gv5d"
+  },
+  "wowp": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "wowp",
+    "z": 26549,
+    "parent": "gv5d"
+  },
+  "sosf": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "sosf",
+    "z": 26537,
+    "parent": "gv5d"
+  },
+  "2y95": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "2y95",
+    "z": 26532,
+    "parent": "gv5d"
+  },
+  "c98o": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "c98o",
+    "z": 26530,
+    "parent": "gv5d"
+  },
+  "i9w9": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "i9w9",
+    "z": 26534,
+    "parent": "gv5d"
+  },
+  "mn0m": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "mn0m",
+    "z": 26541,
+    "parent": "gv5d"
+  },
+  "jt0u": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "jt0u",
+    "z": 26547,
+    "parent": "gv5d"
+  },
+  "ca0i": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "ca0i",
+    "z": 26540,
+    "parent": "gv5d"
+  },
+  "7w3i": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "7w3i",
+    "z": 26529,
+    "parent": "gv5d"
+  },
+  "vl0r": {
+    "deck": "deck-brick",
+    "type": "card",
+    "cardType": "brick",
+    "id": "vl0r",
+    "z": 26551,
+    "parent": "gv5d"
+  },
+  "oxjq": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "oxjq",
+    "z": 26434,
+    "parent": "7egd"
+  },
+  "dpri": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "dpri",
+    "z": 26445,
+    "parent": "7egd"
+  },
+  "16hb": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "16hb",
+    "z": 26451,
+    "parent": "7egd"
+  },
+  "bhk2": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "bhk2",
+    "z": 26441,
+    "parent": "7egd"
+  },
+  "fly9": {
+    "deck": "deck-wood",
+    "type": "card",
+    "cardType": "wood",
+    "id": "fly9",
+    "z": 26452,
+    "parent": "7egd"
+  },
+  "sgi2": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "sgi2",
+    "z": 26471,
+    "parent": "6mkg"
+  },
+  "je5x": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "je5x",
+    "z": 26462,
+    "parent": "6mkg"
+  },
+  "pzgn": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "pzgn",
+    "z": 26480,
+    "parent": "6mkg"
+  },
+  "xaul": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "xaul",
+    "z": 26467,
+    "parent": "6mkg"
+  },
+  "tm4c": {
+    "deck": "deck-wheat",
+    "type": "card",
+    "cardType": "wheat",
+    "id": "tm4c",
+    "z": 26459,
+    "parent": "6mkg"
+  },
+  "dhlv": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "dhlv",
+    "z": 26490,
+    "parent": "mqu2"
+  },
+  "owmv": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "owmv",
+    "z": 26486,
+    "parent": "mqu2"
+  },
+  "g6e6": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "g6e6",
+    "z": 26485,
+    "parent": "mqu2"
+  },
+  "0oop": {
+    "deck": "deck-stone",
+    "type": "card",
+    "cardType": "stone",
+    "id": "0oop",
+    "z": 26497,
+    "parent": "mqu2"
+  },
+  "yhez": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "yhez",
+    "z": 26523,
+    "parent": "czao"
+  },
+  "jw14": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "jw14",
+    "z": 26514,
+    "parent": "czao"
+  },
+  "ue3p": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "ue3p",
+    "z": 26524,
+    "parent": "czao"
+  },
+  "rv9x": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "rv9x",
+    "z": 26509,
+    "parent": "czao"
+  },
+  "kyw4": {
+    "deck": "deck-pig",
+    "type": "card",
+    "cardType": "pig",
+    "id": "kyw4",
+    "z": 26518,
+    "parent": "czao"
+  },
+  "uaf9": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "uaf9",
+    "z": 26619,
+    "parent": "h131"
+  },
+  "oxrd": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "oxrd",
+    "z": 26647,
+    "parent": "h131"
+  },
+  "rqxc": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "rqxc",
+    "z": 26621,
+    "parent": "h131"
+  },
+  "tcnv": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "tcnv",
+    "z": 26606,
+    "parent": "h131"
+  },
+  "ipyu": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "ipyu",
+    "z": 26605,
+    "parent": "h131"
+  },
+  "eqnk": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "eqnk",
+    "z": 26615,
+    "parent": "h131"
+  },
+  "ktjg": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "ktjg",
+    "z": 26607,
+    "parent": "h131"
+  },
+  "pwz9": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "pwz9",
+    "z": 26644,
+    "parent": "h131"
+  },
+  "cyzr": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "cyzr",
+    "z": 26620,
+    "parent": "h131"
+  },
+  "gumu": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "gumu",
+    "z": 26643,
+    "parent": "h131"
+  },
+  "nsjo": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "nsjo",
+    "z": 26604,
+    "parent": "h131"
+  },
+  "cd96": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "cd96",
+    "z": 26626,
+    "parent": "h131"
+  },
+  "lm2j": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "lm2j",
+    "z": 26648,
+    "parent": "h131"
+  },
+  "o94o": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "o94o",
+    "z": 26613,
+    "parent": "h131"
+  },
+  "he24": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "he24",
+    "z": 26634,
+    "parent": "h131"
+  },
+  "6h0w": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "6h0w",
+    "z": 26642,
+    "parent": "h131"
+  },
+  "y2j8": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "y2j8",
+    "z": 26635,
+    "parent": "h131"
+  },
+  "k46u": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "k46u",
+    "z": 26649,
+    "parent": "h131"
+  },
+  "qvf4": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "qvf4",
+    "z": 26651,
+    "parent": "h131"
+  },
+  "sm8p": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "sm8p",
+    "z": 26627,
+    "parent": "h131"
+  },
+  "9xur": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "9xur",
+    "z": 26639,
+    "parent": "h131"
+  },
+  "2bdn": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "2bdn",
+    "z": 26640,
+    "parent": "h131"
+  },
+  "eblv": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "eblv",
+    "z": 26638,
+    "parent": "h131"
+  },
+  "u7wu": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "u7wu",
+    "z": 26636,
+    "parent": "h131"
+  },
+  "enhu": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "enhu",
+    "z": 26618,
+    "parent": "h131"
+  },
+  "kx1a": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "kx1a",
+    "z": 26632,
+    "parent": "h131"
+  },
+  "q94t": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "q94t",
+    "z": 26646,
+    "parent": "h131"
+  },
+  "lksz": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "lksz",
+    "z": 26637,
+    "parent": "h131"
+  },
+  "4cex": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "4cex",
+    "z": 26628,
+    "parent": "h131"
+  },
+  "oxiv": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "oxiv",
+    "z": 26645,
+    "parent": "h131"
+  },
+  "ca6k": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "ca6k",
+    "z": 26624,
+    "parent": "h131"
+  },
+  "7ag5": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "7ag5",
+    "z": 26641,
+    "parent": "h131"
+  },
+  "w684": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "w684",
+    "z": 26616,
+    "parent": "h131"
+  },
+  "risa": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "risa",
+    "z": 26617,
+    "parent": "h131"
+  },
+  "2pkz": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "2pkz",
+    "z": 26612,
+    "parent": "h131"
+  },
+  "f4k2": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "f4k2",
+    "z": 26650,
+    "parent": "h131"
+  },
+  "djuc": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "djuc",
+    "z": 26633,
+    "parent": "h131"
+  },
+  "mysu": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "mysu",
+    "z": 26631,
+    "parent": "h131"
+  },
+  "67uz": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "67uz",
+    "z": 26609,
+    "parent": "h131"
+  },
+  "d9vc": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "d9vc",
+    "z": 26629,
+    "parent": "h131"
+  },
+  "kxbs": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "kxbs",
+    "z": 26610,
+    "parent": "h131"
+  },
+  "ixow": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "ixow",
+    "z": 26614,
+    "parent": "h131"
+  },
+  "69x1": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "69x1",
+    "z": 26611,
+    "parent": "h131"
+  },
+  "7wdu": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "7wdu",
+    "z": 26630,
+    "parent": "h131"
+  },
+  "b00x": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "b00x",
+    "z": 26608,
+    "parent": "h131"
+  },
+  "j1wv": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "j1wv",
+    "z": 26625,
+    "parent": "h131"
+  },
+  "rpqo": {
+    "deck": "deck-meadow-tiles",
+    "type": "card",
+    "cardType": "meadow-tile",
+    "id": "rpqo",
+    "z": 26622,
+    "parent": "h131"
+  },
+  "6dli": {
+    "type": "pile",
+    "x": 6,
+    "y": 6,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "6dli",
+    "z": 22166,
+    "parent": "holder-buildings-seat-p2"
+  },
+  "j5tw": {
+    "type": "pile",
+    "parent": "holder-buildings-seat-p3",
+    "x": 6,
+    "y": 6,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "j5tw"
+  },
+  "8qlw": {
+    "type": "pile",
+    "parent": "holder-buildings-seat-p4",
+    "x": 6,
+    "y": 6,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "8qlw"
+  },
+  "7egd": {
+    "type": "pile",
+    "parent": "holder-wood",
+    "x": 4,
+    "y": 4,
+    "width": 34,
+    "height": 34,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:saddlebrown;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "right",
+    "id": "7egd"
+  },
+  "6mkg": {
+    "type": "pile",
+    "parent": "holder-wheat",
+    "x": 4,
+    "y": 4,
+    "width": 34,
+    "height": 34,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:goldenrod;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "right",
+    "id": "6mkg"
+  },
+  "mqu2": {
+    "type": "pile",
+    "parent": "holder-stone",
+    "x": 4,
+    "y": 4,
+    "width": 34,
+    "height": 34,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:gray;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "right",
+    "id": "mqu2"
+  },
+  "czao": {
+    "type": "pile",
+    "width": 34,
+    "height": 34,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:violet;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "right",
+    "id": "czao",
+    "z": 40,
+    "parent": "holder-pig"
+  },
+  "a8ve": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "i",
+    "id": "a8ve",
+    "z": 26571,
+    "parent": "lze6"
+  },
+  "duic": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "f",
+    "id": "duic",
+    "z": 26566,
+    "parent": "lze6"
+  },
+  "gv5d": {
+    "type": "pile",
+    "width": 38,
+    "height": 38,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:crimson;color:white;font-size:14px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "right",
+    "id": "gv5d",
+    "z": 39,
+    "hoverParent": "holder-brick",
+    "parent": "holder-brick"
+  },
+  "6elq": {
+    "deck": "deck-buildingsites-seat-p1",
+    "type": "card",
+    "cardType": "half-tile",
+    "id": "6elq",
+    "z": 26595,
+    "activeFace": 1,
+    "parent": "gasr"
+  },
+  "vmz5": {
+    "deck": "deck-buildingsites-seat-p1",
+    "type": "card",
+    "cardType": "half-tile",
+    "id": "vmz5",
+    "z": 26596,
+    "parent": "gasr"
+  },
+  "gyym": {
+    "deck": "deck-buildingsites-seat-p2",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "gyym",
+    "z": 26652,
+    "activeFace": 1,
+    "parent": "qtuu"
+  },
+  "errp": {
+    "deck": "deck-buildingsites-seat-p2",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "errp",
+    "z": 26656,
+    "activeFace": 1,
+    "parent": "qtuu"
+  },
+  "qtuu": {
+    "type": "pile",
+    "parent": "holder-buildingsites-seat-p2",
+    "x": 7,
+    "y": 7,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "qtuu"
+  },
+  "x97q": {
+    "deck": "deck-buildingsites-seat-p3",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "x97q",
+    "z": 26666,
+    "activeFace": 1,
+    "parent": "cat9"
+  },
+  "fbz9": {
+    "deck": "deck-buildingsites-seat-p3",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "fbz9",
+    "z": 26668,
+    "parent": "cat9"
+  },
+  "cat9": {
+    "type": "pile",
+    "parent": "holder-buildingsites-seat-p3",
+    "x": 7,
+    "y": 7,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "cat9"
+  },
+  "3hum": {
+    "deck": "deck-buildingsites-seat-p4",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "3hum",
+    "z": 26678,
+    "activeFace": 1,
+    "parent": "6vhj"
+  },
+  "ue25": {
+    "deck": "deck-buildingsites-seat-p4",
+    "type": "card",
+    "cardType": "quarry0",
+    "id": "ue25",
+    "z": 26680,
+    "parent": "6vhj"
+  },
+  "6vhj": {
+    "type": "pile",
+    "parent": "holder-buildingsites-seat-p4",
+    "x": 7,
+    "y": 7,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "6vhj"
+  },
+  "gasr": {
+    "type": "pile",
+    "parent": "holder-buildingsites-seat-p1",
+    "x": 7,
+    "y": 7,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "gasr"
+  },
+  "li5o": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "d",
+    "id": "li5o",
+    "z": 26555,
+    "parent": "lze6"
+  },
+  "fj0x": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "g",
+    "id": "fj0x",
+    "z": 26560,
+    "parent": "lze6"
+  },
+  "holder-endgame-tile": {
+    "type": "holder",
+    "id": "holder-endgame-tile",
+    "x": 518,
+    "height": 111,
+    "scale": 0.64,
+    "z": 62142,
+    "y": 73
+  },
+  "deck-endgame-tile": {
+    "type": "deck",
+    "id": "deck-endgame-tile",
+    "parent": "holder-endgame-tile",
+    "x": 4,
+    "y": 4,
+    "z": 36,
+    "cardDefaults": {
+      "class": "tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:white;font-weight:bold;text-shadow:2px 1px 2px black",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "image": "/assets/2017214303_18600"
+    },
+    "cardTypes": {
+      "endgame-tile": {
+        "colorResource": "saddlebrown",
+        "textResource": "END\nGAME",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": ""
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 30,
+            "y": 50,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageResource"
+            },
+            "svgReplaces": {
+              "#primaryColor": "colorResource",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 46,
+            "width": 100,
+            "fontSize": "17",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textResource",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 34,
+            "y": 10,
+            "width": 34,
+            "height": 34,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageVP"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "92c9": {
+    "deck": "deck-endgame-tile",
+    "type": "card",
+    "cardType": "endgame-tile",
+    "id": "92c9",
+    "z": 37,
+    "x": 4,
+    "y": 4,
+    "hoverParent": "holder-endgame-tile",
+    "parent": "holder-endgame-tile"
+  },
+  "igwt": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "n",
+    "id": "igwt",
+    "z": 1,
+    "parent": "holder-market",
+    "x": 4,
+    "y": 4,
+    "activeFace": 1
+  },
+  "ogvn": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "n",
+    "id": "ogvn",
+    "z": 26576,
+    "parent": "lze6"
+  },
+  "0k1u": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "o",
+    "id": "0k1u",
+    "z": 26579,
+    "parent": "lze6"
+  },
+  "0w6c": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "o",
+    "id": "0w6c",
+    "z": 26574,
+    "parent": "lze6"
+  },
+  "hixg": {
+    "deck": "deck-neutral-contracts",
+    "type": "card",
+    "cardType": "h",
+    "id": "hixg",
+    "z": 26577,
+    "parent": "lze6"
+  },
+  "button-resource-tiles1": {
+    "type": "button",
+    "id": "button-resource-tiles1",
+    "parent": "holder-resource-tiles-3p",
+    "fixedParent": true,
+    "y": 111,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall",
+    "recallRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "holder-resource-tiles-3p": {
+    "type": "holder",
+    "id": "holder-resource-tiles-3p",
+    "x": 1339,
+    "y": 1113,
+    "height": 111,
+    "scale": 0.64,
+    "z": 62149,
+    "dropTarget": {
+      "deck": "deck-resource-tiles-3p"
+    }
+  },
+  "deck-resource-tiles-3p": {
+    "type": "deck",
+    "id": "deck-resource-tiles-3p",
+    "parent": "holder-resource-tiles-3p",
+    "x": 4,
+    "y": 4,
+    "z": 31,
+    "cardDefaults": {
+      "class": "tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:aliceblue;font-weight:bold;text-shadow:2px 1px 2px black",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "image": "/assets/2017214303_18600",
+      "imageVP": "/assets/-2073194861_21696",
+      "vpColor": "silver",
+      "borderColor": "black",
+      "borderWidth": "2px"
+    },
+    "cardTypes": {
+      "wood-3": {
+        "colorResource": "saddlebrown",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wood-2": {
+        "colorResource": "saddlebrown",
+        "textResource": "x2",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wheat-3": {
+        "colorResource": "gold",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wheat-2": {
+        "colorResource": "gold",
+        "textResource": "x2",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "brick-3": {
+        "colorResource": "crimson",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "brick-2": {
+        "colorResource": "crimson",
+        "textResource": "x2",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "stone-3": {
+        "colorResource": "gray",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Marble-3D.svg"
+      },
+      "stone-2": {
+        "colorResource": "gray",
+        "textResource": "x2",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Marble-3D.svg"
+      },
+      "pig-3": {
+        "colorResource": "violet",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/2D/Pig-2D.svg"
+      },
+      "pig-2": {
+        "colorResource": "violet",
+        "textResource": "x2",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/2D/Pig-2D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 30,
+            "y": 50,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageResource"
+            },
+            "svgReplaces": {
+              "#primaryColor": "colorResource",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 57,
+            "width": 100,
+            "fontSize": "22",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textResource",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 34,
+            "y": 10,
+            "width": 34,
+            "height": 34,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageVP"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 15,
+            "width": 100,
+            "fontSize": "30",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textVP",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "holder-resource-tiles-4p": {
+    "type": "holder",
+    "id": "holder-resource-tiles-4p",
+    "x": 1342,
+    "y": 1004,
+    "height": 111,
+    "scale": 0.64,
+    "z": 62148,
+    "dropTarget": {
+      "deck": "deck-resource-tiles-4p"
+    }
+  },
+  "deck-resource-tiles-4p": {
+    "type": "deck",
+    "id": "deck-resource-tiles-4p",
+    "parent": "holder-resource-tiles-4p",
+    "x": 4,
+    "y": 4,
+    "z": 31,
+    "cardDefaults": {
+      "class": "tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:aliceblue;font-weight:bold;text-shadow:2px 1px 2px black",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "image": "/assets/2017214303_18600",
+      "imageVP": "/assets/-2073194861_21696",
+      "vpColor": "silver",
+      "borderColor": "black",
+      "borderWidth": "2px"
+    },
+    "cardTypes": {
+      "wood-4": {
+        "colorResource": "saddlebrown",
+        "textResource": "x4",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wood-3": {
+        "colorResource": "saddlebrown",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wheat-4": {
+        "colorResource": "gold",
+        "textResource": "x4",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wheat-3": {
+        "colorResource": "gold",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "brick-4": {
+        "colorResource": "crimson",
+        "textResource": "x4",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "brick-3": {
+        "colorResource": "crimson",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "stone-4": {
+        "colorResource": "gray",
+        "textResource": "x4",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/3D/Marble-3D.svg"
+      },
+      "stone-3": {
+        "colorResource": "gray",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/3D/Marble-3D.svg"
+      },
+      "pig-4": {
+        "colorResource": "violet",
+        "textResource": "x4",
+        "textVP": "",
+        "imageVP": "/assets/-323292057_24413",
+        "imageResource": "/i/game-pieces/2D/Pig-2D.svg"
+      },
+      "pig-3": {
+        "colorResource": "violet",
+        "textResource": "x3",
+        "textVP": "",
+        "imageVP": "/assets/1494476945_21777",
+        "imageResource": "/i/game-pieces/2D/Pig-2D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 30,
+            "y": 50,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageResource"
+            },
+            "svgReplaces": {
+              "#primaryColor": "colorResource",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 57,
+            "width": 100,
+            "fontSize": "22",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textResource",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 34,
+            "y": 10,
+            "width": 34,
+            "height": 34,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageVP"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 15,
+            "width": 100,
+            "fontSize": "30",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textVP",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "dwvo": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wood-3",
+    "id": "dwvo",
+    "z": 26705,
+    "parent": "tnfz"
+  },
+  "90yw": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wood-2",
+    "id": "90yw",
+    "z": 26690,
+    "parent": "tnfz"
+  },
+  "xn2q": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wheat-3",
+    "id": "xn2q",
+    "z": 26692,
+    "parent": "tnfz"
+  },
+  "xigg": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wheat-2",
+    "id": "xigg",
+    "z": 26695,
+    "parent": "tnfz"
+  },
+  "aedp": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "brick-3",
+    "id": "aedp",
+    "z": 26707,
+    "parent": "tnfz"
+  },
+  "popt": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "brick-2",
+    "id": "popt",
+    "z": 26697,
+    "parent": "tnfz"
+  },
+  "17ut": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "stone-3",
+    "id": "17ut",
+    "z": 26704,
+    "parent": "tnfz"
+  },
+  "gi58": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "stone-2",
+    "id": "gi58",
+    "z": 26688,
+    "parent": "tnfz"
+  },
+  "6xol": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "pig-3",
+    "id": "6xol",
+    "z": 26703,
+    "parent": "tnfz"
+  },
+  "hg1j": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "pig-2",
+    "id": "hg1j",
+    "z": 26693,
+    "parent": "tnfz"
+  },
+  "uev0": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wood-3",
+    "id": "uev0",
+    "z": 26699,
+    "parent": "tnfz"
+  },
+  "4o4h": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wood-2",
+    "id": "4o4h",
+    "z": 26691,
+    "parent": "tnfz"
+  },
+  "fec7": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wheat-3",
+    "id": "fec7",
+    "z": 26698,
+    "parent": "tnfz"
+  },
+  "oslo": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "wheat-2",
+    "id": "oslo",
+    "z": 26702,
+    "parent": "tnfz"
+  },
+  "j005": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "brick-3",
+    "id": "j005",
+    "z": 26694,
+    "parent": "tnfz"
+  },
+  "tfs1": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "brick-2",
+    "id": "tfs1",
+    "z": 26706,
+    "parent": "tnfz"
+  },
+  "hhz5": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "stone-3",
+    "id": "hhz5",
+    "z": 26700,
+    "parent": "tnfz"
+  },
+  "m9eb": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "stone-2",
+    "id": "m9eb",
+    "z": 26701,
+    "parent": "tnfz"
+  },
+  "iw0v": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "pig-3",
+    "id": "iw0v",
+    "z": 26689,
+    "parent": "tnfz"
+  },
+  "2evr": {
+    "deck": "deck-resource-tiles-3p",
+    "type": "card",
+    "cardType": "pig-2",
+    "id": "2evr",
+    "z": 26696,
+    "parent": "tnfz"
+  },
+  "holder-starter-tiles": {
+    "type": "holder",
+    "id": "holder-starter-tiles",
+    "x": 1489,
+    "y": 1001,
+    "height": 111,
+    "scale": 0.64,
+    "z": 62100,
+    "dropTarget": {
+      "deck": "deck-starter-tiles"
+    }
+  },
+  "deck-starter-tiles": {
+    "type": "deck",
+    "id": "deck-starter-tiles",
+    "parent": "holder-starter-tiles",
+    "x": 4,
+    "y": 4,
+    "z": 30,
+    "cardDefaults": {
+      "class": "tile",
+      "width": 100,
+      "height": 100,
+      "cssText": "color:aliceblue;font-weight:bold;text-shadow:2px 2px 2px black",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "css": {
+        "clip-path": "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)"
+      },
+      "image": "/assets/499670529_12647",
+      "imageVP": "/assets/-2073194861_21696",
+      "vpColor": "silver",
+      "borderColor": "black",
+      "borderWidth": "1px"
+    },
+    "cardTypes": {
+      "wood-starter": {
+        "colorResource": "saddlebrown",
+        "textResource": "x5",
+        "textVP": "*",
+        "imageVP": "",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "brick-starter": {
+        "colorResource": "crimson",
+        "textResource": "x5",
+        "textVP": "*",
+        "imageVP": "",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "wheat-starter": {
+        "colorResource": "gold",
+        "textResource": "x5",
+        "textVP": "*",
+        "imageVP": "",
+        "imageResource": "/i/game-pieces/3D/Cube-3D.svg"
+      },
+      "stone-starter": {
+        "colorResource": "gray",
+        "textResource": "x5",
+        "textVP": "*",
+        "imageVP": "",
+        "imageResource": "/i/game-pieces/3D/Marble-3D.svg"
+      },
+      "pig-starter": {
+        "colorResource": "violet",
+        "textResource": "x5",
+        "textVP": "*",
+        "imageVP": "",
+        "imageResource": "/i/game-pieces/2D/Pig-2D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 100,
+            "height": 100,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "image",
+            "x": 30,
+            "y": 50,
+            "width": 40,
+            "height": 40,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageResource"
+            },
+            "svgReplaces": {
+              "#primaryColor": "colorResource",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 1,
+            "y": 57,
+            "width": 100,
+            "fontSize": "22",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textResource",
+              "css": "cssText"
+            }
+          },
+          {
+            "type": "image",
+            "x": 34,
+            "y": 14,
+            "width": 34,
+            "height": 34,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "imageVP"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 5,
+            "width": 100,
+            "fontSize": "50",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "textVP",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "lze6": {
+    "type": "pile",
+    "width": 150,
+    "height": 160,
+    "handleCSS": "position:sticky; width:26px; height:26px; background-color:black;color:white;font-size:26px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "lze6",
+    "z": 16388,
+    "hoverParent": "holder-neutral-contracts",
+    "parent": "holder-neutral-contracts"
+  },
+  "tnfz": {
+    "type": "pile",
+    "parent": "holder-resource-tiles-3p",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "tnfz"
+  },
+  "h131": {
+    "type": "pile",
+    "parent": "holder-meadow-tiles",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "h131"
+  },
+  "nzdu": {
+    "type": "pile",
+    "parent": "holder-resource-tiles-4p",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 100,
+    "handleCSS": "position:sticky; width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "nzdu"
+  },
+  "13lg": {
+    "type": "pile",
+    "parent": "holder-private-contracts",
+    "x": 4,
+    "y": 4,
+    "width": 150,
+    "height": 160,
+    "id": "13lg"
+  },
+  "44aq": {
+    "type": "pile",
+    "parent": "holder-buildings-seat-p1",
+    "x": 6,
+    "y": 6,
+    "width": 55,
+    "height": 55,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "44aq"
+  },
+  "lq55": {
+    "type": "pile",
+    "parent": "holder-craftsman-seat-p1",
+    "x": 12,
+    "y": 12,
+    "width": 45,
+    "height": 45,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "lq55"
+  },
+  "n3d6": {
+    "type": "pile",
+    "parent": "holder-craftsman-seat-p2",
+    "x": 12,
+    "y": 12,
+    "width": 45,
+    "height": 45,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "n3d6"
+  },
+  "1h1g": {
+    "type": "pile",
+    "parent": "holder-craftsman-seat-p4",
+    "x": 12,
+    "y": 12,
+    "width": 45,
+    "height": 45,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "1h1g"
+  },
+  "ulkc": {
+    "type": "pile",
+    "parent": "holder-craftsman-seat-p3",
+    "x": 12,
+    "y": 12,
+    "width": 45,
+    "height": 45,
+    "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+    "handlePosition": "right",
+    "id": "ulkc"
+  }
+}
