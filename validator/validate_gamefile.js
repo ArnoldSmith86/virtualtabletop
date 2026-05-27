@@ -517,9 +517,30 @@ function validateRoutine(routine, context, propertyPath = []) {
                 for(const key of Object.keys(operation.arguments))
                     newContext.validVariables[key] = 1;
             newContext.validCollections['caller'] = 1;
-            for(const widget of Object.values(context.widgets))
-                if(Array.isArray(widget[operation.routine]))
-                    problems.push(...validateRoutine(widget[operation.routine], Object.assign(newContext, {widgetId: widget.id}), [operation.routine]));
+            const checkedRoutines = new Set();
+            for(const widget of Object.values(context.widgets)) {
+                let routine = widget[operation.routine];
+                let widgetId = widget.id;
+                let routinePath = [operation.routine];
+                if(!Array.isArray(routine) && widget.type === 'card') {
+                    const deck = context.widgets[widget.deck] || {};
+                    const cardType = deck.cardTypes && deck.cardTypes[widget.cardType];
+                    if(cardType && Array.isArray(cardType[operation.routine])) {
+                        routine = cardType[operation.routine];
+                        widgetId = deck.id;
+                        routinePath = ['cardTypes', widget.cardType, operation.routine];
+                    } else if(deck.cardDefaults && Array.isArray(deck.cardDefaults[operation.routine])) {
+                        routine = deck.cardDefaults[operation.routine];
+                        widgetId = deck.id;
+                        routinePath = ['cardDefaults', operation.routine];
+                    }
+                }
+                const routineKey = `${widgetId}.${routinePath.join('.')}`;
+                if(Array.isArray(routine) && !checkedRoutines.has(routineKey)) {
+                    checkedRoutines.add(routineKey);
+                    problems.push(...validateRoutine(routine, Object.assign(newContext, {widgetId}), routinePath));
+                }
+            }
         }
         if(func === 'CALL')
             context.validVariables[operation.variable || 'result'] = 1;
@@ -549,6 +570,25 @@ function validateRoutine(routine, context, propertyPath = []) {
     }
     
     return problems;
+}
+
+function validateDeckCardRoutines(deck, context, problems) {
+    const cardProperties = [[deck.cardDefaults, ['cardDefaults']]];
+    if(typeof deck.cardTypes === 'object' && deck.cardTypes !== null)
+        for(const [cardType, properties] of Object.entries(deck.cardTypes))
+            cardProperties.push([properties, ['cardTypes', cardType]]);
+
+    for(const [properties, path] of cardProperties) {
+        if(typeof properties !== 'object' || properties === null)
+            continue;
+        for(const [prop, value] of Object.entries(properties))
+            if(Array.isArray(value) && (WIDGET_PROPERTIES.Card[prop] || prop.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)))
+                problems.push(...validateRoutine(value, Object.assign({}, context, {
+                    widgetId: deck.id,
+                    validVariables: {...SUPER_GLOBALS.variables},
+                    validCollections: {...SUPER_GLOBALS.collections}
+                }), [...path, prop]));
+    }
 }
 
 function getEnumValidator(values) {
@@ -1219,6 +1259,11 @@ function validateGameFile(data, checkMeta) {
                 }
             }
         }        
+
+        if(wtype === 'Deck') {
+            const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
+            validateDeckCardRoutines(widget, context, problems);
+        }
     }
     
     for (const [key, widget] of Object.entries(data)) {
