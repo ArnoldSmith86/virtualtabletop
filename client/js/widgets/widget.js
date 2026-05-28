@@ -244,6 +244,9 @@ export class Widget extends StateManaged {
       });
     }
 
+    if(delta.ignoreZoom !== undefined || delta.parent !== undefined)
+      this.refreshIgnoreZoomDescendants();
+
     for(const key in delta) {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
@@ -668,7 +671,7 @@ export class Widget extends StateManaged {
     let y = this.get('y');
     let scaleValue = this.get('scale');
 
-    if(this.get('ignoreZoom')) {
+    if(this.get('ignoreZoom') && !this.hasIgnoreZoomAncestor()) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
 
@@ -697,7 +700,23 @@ export class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom', 'parent' ];
+  }
+
+  refreshIgnoreZoomDescendants() {
+    for(const child of this.childArray) {
+      if(child.get('ignoreZoom'))
+        child.applyCSS({ ignoreZoom: true });
+      child.refreshIgnoreZoomDescendants();
+    }
+  }
+
+  hasIgnoreZoomAncestor() {
+    for(let parentID = this.get('parent'); widgets.has(parentID); parentID = widgets.get(parentID).get('parent')) {
+      if(widgets.get(parentID).get('ignoreZoom'))
+        return true;
+    }
+    return false;
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
