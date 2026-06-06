@@ -11389,7 +11389,7 @@
       "y": 590.25
     },
     "activeFace": 1,
-    "x": 60,
+    "x": 20,
     "bv7": [
       {
         "name": "sentiment_extremely_dissatisfied",
@@ -13371,6 +13371,7 @@
           "offMarket15",
           "offMarket16",
           "offMarket17",
+          "offMarket18",
           "offMarket19",
           "offMarket20",
           "offMarket21",
@@ -15378,7 +15379,6 @@
     ],
     "contrast_color": "black",
     "layer": 2,
-    "color_solid": "#8b008b",
     "color_transparent": "#8b008b48",
     "contrast_color_opposite": "white",
     "static_color": "#8b008b",
@@ -15390,6 +15390,7 @@
     "hideWhenUnused": true,
     "hand": "hand1",
     "bgColor": "#ddb8df",
+    "color_solid": "#dddddd",
     "glowColor": "#919191"
   },
   "1_board": {
@@ -15453,11 +15454,11 @@
       }
     ],
     "border_style": "solid",
-    "color_solid": "#8b008b",
     "color_transparent": "#8b008b48",
     "glow_color": "a",
     "contrast_color_opposite": "white",
-    "height": 186
+    "height": 186,
+    "color_solid": "#b4b4b4"
   },
   "1_turn_holder": {
     "type": "holder",
@@ -15823,7 +15824,7 @@
     ],
     "contrast_color": "black",
     "contrast_color_opposite": "white",
-    "button_background_color": "#8b008b",
+    "button_background_color": "#dddddd",
     "rotation": -90,
     "x": 4,
     "y": 4
@@ -15870,8 +15871,8 @@
     "textShadowDistance": 2,
     "contrast_color": "black",
     "contrast_color_opposite": "white",
-    "color_solid": "#a0522d",
-    "color_transparent": "#a0522d48",
+    "color_solid": "#dddddd",
+    "color_transparent": "white",
     "audio_your_turn_enabled": true,
     "turn_alert_enabled": true,
     "static_color": "#a0522d",
@@ -15881,8 +15882,7 @@
     "z": 1,
     "hideWhenUnused": true,
     "hand": "hand2",
-    "bgColor": "#e3cfc3",
-    "glowColor": "#919191"
+    "bgColor": "#e3cfc3"
   },
   "2_board": {
     "type": "basic",
@@ -15899,11 +15899,11 @@
     "background_color_transparent": "#9c27b048",
     "color": "#9c27b0",
     "color_change_index": 2,
-    "contrast_color": "black",
-    "contrast_color_opposite": "white",
+    "contrast_color": "#FFFFFF",
+    "contrast_color_opposite": "#000000",
     "border_style": "solid",
-    "color_solid": "#a0522d",
-    "color_transparent": "#a0522d48",
+    "color_solid": "#b4b4b4",
+    "color_transparent": "#b4b4b4",
     "glow_color": "a",
     "activeFace": 0,
     "z": 1
@@ -15958,8 +15958,8 @@
     "textShadowBlur": 2,
     "textShadowDistance": 2,
     "contrast_color": "black",
-    "color_solid": "#ff1493",
-    "color_transparent": "#ff149348",
+    "color_solid": "#dddddd",
+    "color_transparent": "white",
     "contrast_color_opposite": "white",
     "audio_your_turn_enabled": true,
     "turn_alert_enabled": true,
@@ -15970,8 +15970,7 @@
     "z": 1,
     "hideWhenUnused": true,
     "hand": "hand3",
-    "bgColor": "#fcbbe1",
-    "glowColor": "#919191"
+    "bgColor": "#fcbbe1"
   },
   "3_board": {
     "type": "basic",
@@ -15988,11 +15987,11 @@
     "background_color_transparent": "#607d8b48",
     "color": "#607d8b",
     "color_change_index": 3,
-    "contrast_color": "black",
+    "contrast_color": "#FFFFFF",
     "border_style": "solid",
-    "color_solid": "#ff1493",
-    "color_transparent": "#ff149348",
-    "contrast_color_opposite": "white",
+    "color_solid": "#b4b4b4",
+    "color_transparent": "#b4b4b4",
+    "contrast_color_opposite": "#000000",
     "glow_color": "a",
     "activeFace": 0,
     "z": 1
@@ -16050,7 +16049,7 @@
     "audio_your_turn_enabled": true,
     "turn_alert_enabled": true,
     "contrast_color_opposite": "white",
-    "color_solid": "#71c9c4",
+    "color_solid": "#dddddd",
     "color_transparent": "#71c9c448",
     "static_color": "#71c9c4",
     "static_color_transparent": "#71c9c448",
@@ -16088,7 +16087,7 @@
     "background_color_transparent": "#00968848",
     "border_style": "solid",
     "color_change_index": 4,
-    "color_solid": "#71c9c4",
+    "color_solid": "#b4b4b4",
     "color_transparent": "#71c9c448",
     "contrast_color": "black",
     "contrast_color_opposite": "white",
@@ -18879,7 +18878,7 @@
       ]
     },
     "id": "block2",
-    "x": 100,
+    "x": 60,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -19084,7 +19083,7 @@
       ]
     },
     "id": "block3",
-    "x": 140,
+    "x": 100,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -19476,7 +19475,7 @@
       ]
     },
     "id": "block6",
-    "x": 20,
+    "x": 220,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -19616,7 +19615,7 @@
       ]
     },
     "id": "block4",
-    "x": 220,
+    "x": 140,
     "y": 50,
     "rotation": -30,
     "z": 1,
@@ -20261,7 +20260,7 @@
     "text": "It's Your Turn!",
     "background_color_solid": "#9c27b0",
     "background_color_transparent": "#ffeb3b48",
-    "clickCount": 1844,
+    "clickCount": 1850,
     "animatePropertyChange": [
       {
         "property": "clickCount",
@@ -20280,7 +20279,7 @@
     "contrast_color": "black",
     "parent": "your_turn_alert_anchor",
     "fixedParent": true,
-    "color_solid": "#8b008b"
+    "color_solid": "#dddddd"
   },
   "your_turn_label_border": {
     "type": "basic",
@@ -20321,7 +20320,7 @@
         "value": 1
       }
     ],
-    "clickCount": 1708,
+    "clickCount": 1714,
     "borderRadius": 20,
     "movable": false,
     "movableInEdit": false
@@ -25749,7 +25748,7 @@
     },
     "y": 338,
     "x": 30,
-    "text": "Take 1. Show to others. Put on draw pile. Click pile handle to shuffle.",
+    "text": "Take 1. Show to others. Put on YOUR draw pile. Click Fill Hand button.",
     "textColor": "#0008",
     "leaveRoutine": [
       {
@@ -25771,6 +25770,17 @@
             "collection": "thisButton",
             "property": "display",
             "value": false
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "fillHandButton1",
+              "fillHandButton2",
+              "fillHandButton3",
+              "fillHandButton4"
+            ],
+            "property": "display",
+            "value": true
           }
         ]
       }
@@ -25939,7 +25949,7 @@
     "cardType": "cave15",
     "id": "l9ho",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "fpr0": {
     "deck": "caveDeck",
@@ -25947,7 +25957,7 @@
     "cardType": "cave16",
     "id": "fpr0",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "q8rl": {
     "deck": "caveDeck",
@@ -25955,7 +25965,7 @@
     "cardType": "cave18",
     "id": "q8rl",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "curseDeckHolder": {
     "type": "holder",
@@ -26316,7 +26326,7 @@
     "cardType": "cave16",
     "id": "1izv",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "ivuh": {
     "deck": "caveDeck",
@@ -26324,7 +26334,7 @@
     "cardType": "cave16",
     "id": "ivuh",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "wze7": {
     "deck": "caveDeck",
@@ -26332,7 +26342,7 @@
     "cardType": "cave16",
     "id": "wze7",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "4u0m": {
     "deck": "caveDeck",
@@ -26340,7 +26350,7 @@
     "cardType": "cave16",
     "id": "4u0m",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "ku5x": {
     "deck": "caveDeck",
@@ -26348,7 +26358,7 @@
     "cardType": "cave16",
     "id": "ku5x",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "2n9l": {
     "deck": "caveDeck",
@@ -26356,7 +26366,7 @@
     "cardType": "cave18",
     "id": "2n9l",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "8ajm": {
     "deck": "caveDeck",
@@ -26364,7 +26374,7 @@
     "cardType": "cave18",
     "id": "8ajm",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "ktb7": {
     "deck": "caveDeck",
@@ -26372,7 +26382,7 @@
     "cardType": "cave18",
     "id": "ktb7",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "6obu": {
     "deck": "caveDeck",
@@ -26380,7 +26390,7 @@
     "cardType": "cave17",
     "id": "6obu",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "0mi7": {
     "deck": "caveDeck",
@@ -26388,7 +26398,7 @@
     "cardType": "cave17",
     "id": "0mi7",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "5phe": {
     "deck": "caveDeck",
@@ -26396,7 +26406,7 @@
     "cardType": "cave17",
     "id": "5phe",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "zg3t": {
     "deck": "caveDeck",
@@ -26404,7 +26414,7 @@
     "cardType": "cave17",
     "id": "zg3t",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "1rf3": {
     "deck": "caveDeck",
@@ -26412,7 +26422,7 @@
     "cardType": "cave15",
     "id": "1rf3",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "prgi": {
     "deck": "caveDeck",
@@ -26420,7 +26430,7 @@
     "cardType": "cave15",
     "id": "prgi",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "c6a1": {
     "deck": "caveDeck",
@@ -26428,7 +26438,7 @@
     "cardType": "cave15",
     "id": "c6a1",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "z49f": {
     "deck": "curseDeck",
@@ -33079,7 +33089,7 @@
     "cardType": "cave19",
     "id": "ghyh",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "ki66": {
     "deck": "caveDeck",
@@ -33087,7 +33097,7 @@
     "cardType": "cave20",
     "id": "ki66",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "cssx": {
     "deck": "caveDeck",
@@ -33095,7 +33105,7 @@
     "cardType": "cave19",
     "id": "cssx",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "pw20": {
     "deck": "caveDeck",
@@ -33103,7 +33113,7 @@
     "cardType": "cave19",
     "id": "pw20",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "8lqv": {
     "deck": "caveDeck",
@@ -33111,7 +33121,7 @@
     "cardType": "cave20",
     "id": "8lqv",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "x25s": {
     "deck": "caveDeck",
@@ -33119,7 +33129,7 @@
     "cardType": "cave20",
     "id": "x25s",
     "z": 1,
-    "parent": "pileunusedCaves"
+    "parent": "pile3"
   },
   "muiscaHolder0": {
     "type": "holder",
@@ -36727,6 +36737,28 @@
       {
         "func": "SET",
         "collection": [
+          "1_board",
+          "2_board",
+          "3_board",
+          "4_board"
+        ],
+        "property": "color_solid",
+        "value": "#b4b4b4"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "1_seat",
+          "2_seat",
+          "3_seat",
+          "4_seat"
+        ],
+        "property": "color_solid",
+        "value": "#dddddd"
+      },
+      {
+        "func": "SET",
+        "collection": [
           "instructions1"
         ],
         "property": "display",
@@ -36914,7 +36946,7 @@
       "mode": "vs",
       "time": "30-60",
       "attribution": "<div>Room layout, card and tile design, coding, and library image by LawDawg and released to the Public Domain under CC0. Seat area layout design and coding by Jonathan Cox, released to the public domain under CC0.</div><div><br></div><div>Board map layouts:</div><div><ul><li>Maps 1-7 and 201-206 from the setup guide in the rules.</li><li>Maps 8-30 by tom tom (1qwerty) from https://boardgamegeek.com/filepage/172663/40-custom-maps-for-the-quest-for-el-dorado, used with permission, and released to the Public Domain under CC0.</li><li>Maps 101-106 by cosminul (based on 1querty's maps) from https://boardgamegeek.com/thread/2956366/maps-needed/page/1, used with permission, and released to the Public Domain under CC0.</li><li>Maps 207-209 and 301-305 by Rob1012 from https://boardgamegeek.com/filepage/251675/14-maps-for-dangers-and-muisca-expansion, used with permission, and released to the Public Domain under CC0.</li></ul></div><div>Available under the Pixabay license:</div><div><ul><li>Wood grain background by RyanPro, https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</li><li>Mayan pyramid by sinisamaric1, https://pixabay.com/vectors/mayan-travel-temple-pyramid-mexico-4454152/</li><li>Sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD, https://pixabay.com/sound-effects/wrong-answer-129254/.</li></ul><div>Icons on the cards and tiles have attribution as listed in the About overlay.</div></div>",
-      "lastUpdate": 1780775703183,
+      "lastUpdate": 1780789199034,
       "skill": "",
       "description": "Buy and discard cards to build the best deck to help your explorer find the lost temple.",
       "similarImage": "",
@@ -37005,6 +37037,102 @@
     },
     "x": -550,
     "y": -325
+  },
+  "fillHandButton1": {
+    "type": "button",
+    "id": "fillHandButton1",
+    "x": 331,
+    "y": 898,
+    "width": 100,
+    "borderRadius": 10,
+    "z": 1,
+    "color": "white",
+    "css": {
+      "default": {
+        "font-size": "30px",
+        "--wcMain": "black",
+        "--wcBorder": "white",
+        "--wcMainOH": "grey",
+        "--wcBorderOH": "black"
+      },
+      "::after": {
+        "content": "'+4 to Hand'",
+        "display": "none",
+        "position": "absolute",
+        "margin-top": "100px",
+        "margin-left": "0px",
+        "color": "black",
+        "font-size": "14px",
+        "font-family": "roboto"
+      },
+      ":hover::after": {
+        "display": "block"
+      }
+    },
+    "display": false,
+    "ignoreZoom": true,
+    "onlyVisibleForSeat": "1_seat",
+    "text": "Fill Hand",
+    "pID": 1,
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "${PROPERTY pID}_draw_holder"
+        ]
+      },
+      {
+        "func": "MOVE",
+        "from": "${PROPERTY pID}_draw_holder",
+        "to": "hand${PROPERTY pID}",
+        "fillTo": 4
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "display",
+        "value": false
+      }
+    ]
+  },
+  "fillHandButton2": {
+    "inheritFrom": {
+      "fillHandButton1": "*"
+    },
+    "type": "button",
+    "id": "fillHandButton2",
+    "onlyVisibleForSeat": "2_seat",
+    "text": "Fill Hand",
+    "pID": 2,
+    "x": 331,
+    "y": 898,
+    "z": 1
+  },
+  "fillHandButton3": {
+    "inheritFrom": {
+      "fillHandButton1": "*"
+    },
+    "type": "button",
+    "id": "fillHandButton3",
+    "onlyVisibleForSeat": "3_seat",
+    "text": "Fill Hand",
+    "pID": 3,
+    "x": 331,
+    "y": 898,
+    "z": 1
+  },
+  "fillHandButton4": {
+    "inheritFrom": {
+      "fillHandButton1": "*"
+    },
+    "type": "button",
+    "id": "fillHandButton4",
+    "onlyVisibleForSeat": "4_seat",
+    "text": "Fill Hand",
+    "pID": 4,
+    "x": 331,
+    "y": 898,
+    "z": 1
   },
   "pilecardDeckHolder": {
     "type": "pile",
