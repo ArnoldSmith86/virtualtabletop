@@ -92,9 +92,45 @@ onLoad(function() {
   let dragStartY = 0;
   let panStartX = 0;
   let panStartY = 0;
+  let isSpacePanModifierActive = false;
   let lastWheelZoomTime = 0;
   const minWheelZoomInterval = 40; // milliseconds between zoom events
   let zoomControlsHidden = true;
+
+  function isEditableElement(target) {
+    if (!target) return false;
+
+    const editableTags = ['INPUT', 'TEXTAREA', 'SELECT'];
+    return editableTags.includes(target.tagName) || target.isContentEditable;
+  }
+
+  function handleSpaceKeyDown(e) {
+    if ((e.code === 'Space' || e.key === ' ') && !e.repeat && !isEditableElement(e.target)) {
+      isSpacePanModifierActive = true;
+      document.body.classList.add('spacePanActive');
+      if (e.target === document.body) e.preventDefault();
+    }
+  }
+
+  function handleSpaceKeyUp(e) {
+    if (e.code === 'Space' || e.key === ' ') {
+      isSpacePanModifierActive = false;
+      document.body.classList.remove('spacePanActive');
+      if (edit && isDraggingPan) {
+        isDraggingPan = false;
+        document.body.classList.remove('panning');
+      }
+    }
+  }
+
+  function handleWindowBlur() {
+    isSpacePanModifierActive = false;
+    document.body.classList.remove('spacePanActive');
+    if (isDraggingPan) {
+      isDraggingPan = false;
+      document.body.classList.remove('panning');
+    }
+  }
 
   // Button click toggles zoom controls panel
   on('#zoom2xButton', 'click', function(e){
@@ -146,7 +182,30 @@ onLoad(function() {
 
   // Drag to pan functionality (left mouse only)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan && !elementIsMovableWidget(e.target)) {
+    const spacePan = edit && isSpacePanModifierActive;
+    if(e.button !== 0 || overlayActive)
+      return;
+
+    // If Space is held in edit mode, always prevent selection rectangle
+    if(spacePan) {
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+      // If zoomed in, start panning regardless of widget under cursor
+      if(zoomScale > 1 && !isDraggingPan) {
+        isDraggingPan = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+        panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+        $('body').classList.add('panning');
+      }
+      return;
+    }
+
+    // Normal pan behavior when not in edit/space-pan
+    if(zoomScale > 1 && !isDraggingPan && !elementIsMovableWidget(e.target) && !edit) {
       isDraggingPan = true;
       dragStartX = e.clientX;
       dragStartY = e.clientY;
@@ -178,8 +237,14 @@ onLoad(function() {
   });
 
   on('body', 'mousemove', function(e){
-    if(isDraggingPan)
+    if(isDraggingPan) {
+      if(edit && !isSpacePanModifierActive) {
+        isDraggingPan = false;
+        $('body').classList.remove('panning');
+        return;
+      }
       setPan(panStartX + (e.clientX - dragStartX), panStartY + (e.clientY - dragStartY));
+    }
   });
 
   on('body', 'mouseup', function(e){
@@ -262,4 +327,8 @@ onLoad(function() {
       $('body').classList.remove('panning');
     }
   });
+
+  window.addEventListener('keydown', handleSpaceKeyDown);
+  window.addEventListener('keyup', handleSpaceKeyUp);
+  window.addEventListener('blur', handleWindowBlur);
 });

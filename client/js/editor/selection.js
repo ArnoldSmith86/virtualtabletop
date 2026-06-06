@@ -10,6 +10,13 @@ let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
+  // While Space is held (edit-space-pan), never show selection rectangles
+  if(document.body.classList.contains('spacePanActive')) {
+    if(selectionRectangleActive)
+      hideSelectionRectangle();
+    e.preventDefault();
+    return true;
+  }
   if(e.touches && e.touches.length == 2)
     hideSelectionRectangle();
 
