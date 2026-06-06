@@ -11389,7 +11389,7 @@
       "y": 590.25
     },
     "activeFace": 1,
-    "x": 20,
+    "x": 60,
     "bv7": [
       {
         "name": "sentiment_extremely_dissatisfied",
@@ -12377,7 +12377,7 @@
     "id": "4bgg",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "2dtj": {
     "deck": "cardDeck",
@@ -12385,7 +12385,7 @@
     "cardType": "white2",
     "id": "2dtj",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "r8rn": {
@@ -12395,7 +12395,7 @@
     "id": "r8rn",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "oz1c": {
     "deck": "cardDeck",
@@ -12403,7 +12403,7 @@
     "cardType": "green1",
     "id": "oz1c",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "r1cd": {
@@ -12412,7 +12412,7 @@
     "cardType": "green2",
     "id": "r1cd",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "3upf": {
@@ -12421,7 +12421,7 @@
     "cardType": "green3",
     "id": "3upf",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "o8t4": {
@@ -12431,7 +12431,7 @@
     "id": "o8t4",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "5wuz": {
     "deck": "cardDeck",
@@ -12440,7 +12440,7 @@
     "id": "5wuz",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "gjde": {
     "deck": "cardDeck",
@@ -12448,7 +12448,7 @@
     "cardType": "gold1",
     "id": "gjde",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "9fl6": {
@@ -12457,7 +12457,7 @@
     "cardType": "gold2",
     "id": "9fl6",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "qkow": {
@@ -12467,7 +12467,7 @@
     "id": "qkow",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "89ok": {
     "deck": "cardDeck",
@@ -12476,7 +12476,7 @@
     "id": "89ok",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "ciok": {
     "deck": "cardDeck",
@@ -12485,7 +12485,7 @@
     "id": "ciok",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "mbw2": {
     "deck": "cardDeck",
@@ -12493,7 +12493,7 @@
     "cardType": "blue1",
     "id": "mbw2",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "yu62": {
@@ -12503,7 +12503,7 @@
     "id": "yu62",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "vtaj": {
     "deck": "cardDeck",
@@ -12511,7 +12511,7 @@
     "cardType": "pink1",
     "id": "vtaj",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "gadd": {
@@ -12520,7 +12520,7 @@
     "cardType": "pink2",
     "id": "gadd",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "ptht": {
@@ -12529,7 +12529,7 @@
     "cardType": "pink3",
     "id": "ptht",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "mmvh": {
@@ -12538,7 +12538,7 @@
     "cardType": "pink4",
     "id": "mmvh",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "2h2k": {
@@ -12548,7 +12548,7 @@
     "id": "2h2k",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "kl2d": {
     "deck": "cardDeck",
@@ -12557,7 +12557,7 @@
     "id": "kl2d",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "rjaz": {
     "deck": "cardDeck",
@@ -12565,7 +12565,7 @@
     "cardType": "green1",
     "id": "rjaz",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "8whl": {
@@ -12574,7 +12574,7 @@
     "cardType": "green1",
     "id": "8whl",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "wc6s": {
@@ -12583,7 +12583,7 @@
     "cardType": "green1",
     "id": "wc6s",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "uiqd": {
@@ -12592,7 +12592,7 @@
     "cardType": "green1",
     "id": "uiqd",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "661q": {
@@ -12601,7 +12601,7 @@
     "cardType": "green1",
     "id": "661q",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "sile": {
@@ -12610,7 +12610,7 @@
     "cardType": "green1",
     "id": "sile",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "kzgn": {
@@ -12619,7 +12619,7 @@
     "cardType": "green1",
     "id": "kzgn",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "z5so": {
@@ -12628,7 +12628,7 @@
     "cardType": "green1",
     "id": "z5so",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "drid": {
@@ -12637,7 +12637,7 @@
     "cardType": "green1",
     "id": "drid",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "463b": {
@@ -12646,7 +12646,7 @@
     "cardType": "green1",
     "id": "463b",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "iaiq": {
@@ -12655,7 +12655,7 @@
     "cardType": "green1",
     "id": "iaiq",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "eswg": {
@@ -12664,7 +12664,7 @@
     "cardType": "gold1",
     "id": "eswg",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "td1c": {
@@ -12673,7 +12673,7 @@
     "cardType": "gold1",
     "id": "td1c",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "ukzd": {
@@ -12682,7 +12682,7 @@
     "cardType": "gold1",
     "id": "ukzd",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "t5y3": {
@@ -12691,7 +12691,7 @@
     "cardType": "gold1",
     "id": "t5y3",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "7efo": {
@@ -12700,7 +12700,7 @@
     "cardType": "gold1",
     "id": "7efo",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "4npa": {
@@ -12709,7 +12709,7 @@
     "cardType": "gold1",
     "id": "4npa",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "b888": {
@@ -12718,7 +12718,7 @@
     "cardType": "gold1",
     "id": "b888",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "vw6d": {
@@ -12727,7 +12727,7 @@
     "cardType": "gold1",
     "id": "vw6d",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "wz9e": {
@@ -12736,7 +12736,7 @@
     "cardType": "gold1",
     "id": "wz9e",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "h82v": {
@@ -12745,7 +12745,7 @@
     "cardType": "gold1",
     "id": "h82v",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "zpyf": {
@@ -12754,7 +12754,7 @@
     "cardType": "gold1",
     "id": "zpyf",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "bnw8": {
@@ -12763,7 +12763,7 @@
     "cardType": "gold1",
     "id": "bnw8",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "va9d": {
@@ -12772,7 +12772,7 @@
     "cardType": "gold1",
     "id": "va9d",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "wx8c": {
@@ -12781,7 +12781,7 @@
     "cardType": "gold1",
     "id": "wx8c",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "g5n7": {
@@ -12790,7 +12790,7 @@
     "cardType": "gold1",
     "id": "g5n7",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "cfub": {
@@ -12799,7 +12799,7 @@
     "cardType": "blue1",
     "id": "cfub",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "410z": {
@@ -12808,7 +12808,7 @@
     "cardType": "blue1",
     "id": "410z",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "npoa": {
@@ -12817,7 +12817,7 @@
     "cardType": "blue1",
     "id": "npoa",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "s7sg": {
@@ -12826,7 +12826,7 @@
     "cardType": "white1",
     "id": "s7sg",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "jxfv": {
@@ -12836,7 +12836,7 @@
     "id": "jxfv",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "erzk": {
     "deck": "cardDeck",
@@ -12845,7 +12845,7 @@
     "id": "erzk",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "3xfb": {
     "deck": "cardDeck",
@@ -12854,7 +12854,7 @@
     "id": "3xfb",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "sgwk": {
     "deck": "cardDeck",
@@ -12862,7 +12862,7 @@
     "cardType": "white4",
     "id": "sgwk",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "672v": {
@@ -12871,7 +12871,7 @@
     "cardType": "white4",
     "id": "672v",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "b1ur": {
@@ -12881,7 +12881,7 @@
     "id": "b1ur",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "ly6u": {
     "deck": "cardDeck",
@@ -12890,7 +12890,7 @@
     "id": "ly6u",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "zmz2": {
     "deck": "cardDeck",
@@ -12898,7 +12898,7 @@
     "cardType": "green3",
     "id": "zmz2",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "5o16": {
@@ -12908,7 +12908,7 @@
     "id": "5o16",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "ildh": {
     "deck": "cardDeck",
@@ -12917,7 +12917,7 @@
     "id": "ildh",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "mfg6": {
     "deck": "cardDeck",
@@ -12926,7 +12926,7 @@
     "id": "mfg6",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "p2op": {
     "deck": "cardDeck",
@@ -12935,7 +12935,7 @@
     "id": "p2op",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "nf0d": {
     "deck": "cardDeck",
@@ -12944,7 +12944,7 @@
     "id": "nf0d",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "jlrr": {
     "deck": "cardDeck",
@@ -12952,7 +12952,7 @@
     "cardType": "blue3",
     "id": "jlrr",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "xzob": {
@@ -12962,7 +12962,7 @@
     "id": "xzob",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "kaj4": {
     "deck": "cardDeck",
@@ -12970,7 +12970,7 @@
     "cardType": "gold2",
     "id": "kaj4",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "5m9x": {
@@ -12979,7 +12979,7 @@
     "cardType": "gold2",
     "id": "5m9x",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "4stu": {
@@ -12989,7 +12989,7 @@
     "id": "4stu",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "42vs": {
     "deck": "cardDeck",
@@ -12998,7 +12998,7 @@
     "id": "42vs",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "nfck": {
     "deck": "cardDeck",
@@ -13007,7 +13007,7 @@
     "id": "nfck",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "ir3b": {
     "deck": "cardDeck",
@@ -13016,7 +13016,7 @@
     "id": "ir3b",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "5x1y": {
     "deck": "cardDeck",
@@ -13025,7 +13025,7 @@
     "id": "5x1y",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "5x0e": {
     "deck": "cardDeck",
@@ -13034,7 +13034,7 @@
     "id": "5x0e",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "34m9": {
     "deck": "cardDeck",
@@ -13042,7 +13042,7 @@
     "cardType": "pink1",
     "id": "34m9",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "ty7a": {
@@ -13052,7 +13052,7 @@
     "id": "ty7a",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "cyfl": {
     "deck": "cardDeck",
@@ -13060,7 +13060,7 @@
     "cardType": "pink2",
     "id": "cyfl",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "wwo2": {
@@ -13070,7 +13070,7 @@
     "id": "wwo2",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "g7g0": {
     "deck": "cardDeck",
@@ -13079,7 +13079,7 @@
     "id": "g7g0",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "l4uf": {
     "deck": "cardDeck",
@@ -13088,7 +13088,7 @@
     "id": "l4uf",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "a9yv": {
     "deck": "cardDeck",
@@ -13096,7 +13096,7 @@
     "cardType": "pink4",
     "id": "a9yv",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "vbvv": {
@@ -13105,7 +13105,7 @@
     "cardType": "pink4",
     "id": "vbvv",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "iie7": {
@@ -13115,7 +13115,7 @@
     "id": "iie7",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "d328": {
     "deck": "cardDeck",
@@ -13124,7 +13124,7 @@
     "id": "d328",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "7rcc": {
     "deck": "cardDeck",
@@ -13133,7 +13133,7 @@
     "id": "7rcc",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "aegl": {
     "deck": "cardDeck",
@@ -13142,7 +13142,7 @@
     "id": "aegl",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "restartButton": {
     "type": "button",
@@ -14498,7 +14498,7 @@
     "cardType": "cave1",
     "id": "3lcr",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "ktqr": {
     "deck": "caveDeck",
@@ -14506,7 +14506,7 @@
     "cardType": "cave4",
     "id": "ktqr",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "hg8p": {
     "deck": "caveDeck",
@@ -14514,7 +14514,7 @@
     "cardType": "cave5",
     "id": "hg8p",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "i1q9": {
     "deck": "caveDeck",
@@ -14522,7 +14522,7 @@
     "cardType": "cave6",
     "id": "i1q9",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "mrsb": {
     "deck": "caveDeck",
@@ -14530,7 +14530,7 @@
     "cardType": "cave7",
     "id": "mrsb",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "wywu": {
     "deck": "caveDeck",
@@ -14538,7 +14538,7 @@
     "cardType": "cave8",
     "id": "wywu",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "rl0t": {
     "deck": "caveDeck",
@@ -14546,7 +14546,7 @@
     "cardType": "cave9",
     "id": "rl0t",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "skwh": {
     "deck": "caveDeck",
@@ -14554,7 +14554,7 @@
     "cardType": "cave10",
     "id": "skwh",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "xgpd": {
     "deck": "caveDeck",
@@ -14562,7 +14562,7 @@
     "cardType": "cave11",
     "id": "xgpd",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "qk5y": {
     "deck": "caveDeck",
@@ -14570,7 +14570,7 @@
     "cardType": "cave12",
     "id": "qk5y",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "1aqk": {
     "deck": "caveDeck",
@@ -14578,7 +14578,7 @@
     "cardType": "cave13",
     "id": "1aqk",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "4til": {
     "deck": "caveDeck",
@@ -14586,7 +14586,7 @@
     "cardType": "cave14",
     "id": "4til",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "opve": {
     "deck": "caveDeck",
@@ -14594,7 +14594,7 @@
     "cardType": "cave1",
     "id": "opve",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "5qvt": {
     "deck": "caveDeck",
@@ -14602,7 +14602,7 @@
     "cardType": "cave2",
     "id": "5qvt",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "x4kw": {
     "deck": "caveDeck",
@@ -14610,7 +14610,7 @@
     "cardType": "cave2",
     "id": "x4kw",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "q5nu": {
     "deck": "caveDeck",
@@ -14618,7 +14618,7 @@
     "cardType": "cave2",
     "id": "q5nu",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "stmp": {
     "deck": "caveDeck",
@@ -14626,7 +14626,7 @@
     "cardType": "cave3",
     "id": "stmp",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "dx0g": {
     "deck": "caveDeck",
@@ -14634,7 +14634,7 @@
     "cardType": "cave3",
     "id": "dx0g",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "g2mw": {
     "deck": "caveDeck",
@@ -14642,7 +14642,7 @@
     "cardType": "cave4",
     "id": "g2mw",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "f6pd": {
     "deck": "caveDeck",
@@ -14650,7 +14650,7 @@
     "cardType": "cave5",
     "id": "f6pd",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "nrdi": {
     "deck": "caveDeck",
@@ -14658,7 +14658,7 @@
     "cardType": "cave5",
     "id": "nrdi",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "p29v": {
     "deck": "caveDeck",
@@ -14666,7 +14666,7 @@
     "cardType": "cave6",
     "id": "p29v",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "0m8m": {
     "deck": "caveDeck",
@@ -14674,7 +14674,7 @@
     "cardType": "cave7",
     "id": "0m8m",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "44rb": {
     "deck": "caveDeck",
@@ -14682,7 +14682,7 @@
     "cardType": "cave7",
     "id": "44rb",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "fgm6": {
     "deck": "caveDeck",
@@ -14690,7 +14690,7 @@
     "cardType": "cave8",
     "id": "fgm6",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "j25b": {
     "deck": "caveDeck",
@@ -14698,7 +14698,7 @@
     "cardType": "cave8",
     "id": "j25b",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "hv2s": {
     "deck": "caveDeck",
@@ -14706,7 +14706,7 @@
     "cardType": "cave8",
     "id": "hv2s",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "of9m": {
     "deck": "caveDeck",
@@ -14714,7 +14714,7 @@
     "cardType": "cave9",
     "id": "of9m",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "ysz5": {
     "deck": "caveDeck",
@@ -14722,7 +14722,7 @@
     "cardType": "cave9",
     "id": "ysz5",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "deln": {
     "deck": "caveDeck",
@@ -14730,7 +14730,7 @@
     "cardType": "cave9",
     "id": "deln",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "g898": {
     "deck": "caveDeck",
@@ -14738,7 +14738,7 @@
     "cardType": "cave10",
     "id": "g898",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "wauc": {
     "deck": "caveDeck",
@@ -14746,7 +14746,7 @@
     "cardType": "cave10",
     "id": "wauc",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "g0ex": {
     "deck": "caveDeck",
@@ -14754,7 +14754,7 @@
     "cardType": "cave11",
     "id": "g0ex",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "ncsp": {
     "deck": "caveDeck",
@@ -14762,7 +14762,7 @@
     "cardType": "cave12",
     "id": "ncsp",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "z4zk": {
     "deck": "caveDeck",
@@ -14770,7 +14770,7 @@
     "cardType": "cave13",
     "id": "z4zk",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "jdz9": {
     "deck": "caveDeck",
@@ -14778,7 +14778,7 @@
     "cardType": "cave14",
     "id": "jdz9",
     "z": 1,
-    "parent": "pile3"
+    "parent": "pilecaveDeckHolder"
   },
   "1_seat_anchor": {
     "id": "1_seat_anchor",
@@ -18914,7 +18914,7 @@
       ]
     },
     "id": "block2",
-    "x": 60,
+    "x": 100,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -19119,7 +19119,7 @@
       ]
     },
     "id": "block3",
-    "x": 100,
+    "x": 140,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -19324,7 +19324,7 @@
       ]
     },
     "id": "block5",
-    "x": 140,
+    "x": 180,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -19511,7 +19511,7 @@
       ]
     },
     "id": "block6",
-    "x": 180,
+    "x": 20,
     "y": 50,
     "z": 1,
     "rotation": -30,
@@ -20296,7 +20296,7 @@
     "text": "It's Your Turn!",
     "background_color_solid": "#9c27b0",
     "background_color_transparent": "#ffeb3b48",
-    "clickCount": 1823,
+    "clickCount": 1827,
     "animatePropertyChange": [
       {
         "property": "clickCount",
@@ -20356,7 +20356,7 @@
         "value": 1
       }
     ],
-    "clickCount": 1687,
+    "clickCount": 1691,
     "borderRadius": 20,
     "movable": false,
     "movableInEdit": false
@@ -20436,7 +20436,7 @@
     },
     "borderColor": "black",
     "borderWidth": 1,
-    "parent": "2_seat",
+    "parent": "1_seat",
     "scale": 0.85,
     "movable": false,
     "movableInEdit": false,
@@ -25490,7 +25490,7 @@
     "cardType": "white5",
     "id": "akxv",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "apw8": {
@@ -25499,7 +25499,7 @@
     "cardType": "white5",
     "id": "apw8",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "mh0u": {
@@ -25508,7 +25508,7 @@
     "cardType": "white5",
     "id": "mh0u",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "cku2": {
@@ -25518,7 +25518,7 @@
     "id": "cku2",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "hldf": {
     "deck": "cardDeck",
@@ -25526,7 +25526,7 @@
     "cardType": "pink7",
     "id": "hldf",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "wp3b": {
@@ -25536,7 +25536,7 @@
     "id": "wp3b",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "awdh": {
     "deck": "cardDeck",
@@ -25545,7 +25545,7 @@
     "id": "awdh",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "4z45": {
     "deck": "cardDeck",
@@ -25553,7 +25553,7 @@
     "cardType": "pink8",
     "id": "4z45",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "vy3u": {
@@ -25562,7 +25562,7 @@
     "cardType": "pink8",
     "id": "vy3u",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "dmuv": {
@@ -25572,7 +25572,7 @@
     "id": "dmuv",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "m1ig": {
     "deck": "cardDeck",
@@ -25580,7 +25580,7 @@
     "cardType": "pink9",
     "id": "m1ig",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "n0ar": {
@@ -25590,7 +25590,7 @@
     "id": "n0ar",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "182w": {
     "deck": "cardDeck",
@@ -25598,7 +25598,7 @@
     "cardType": "white6",
     "id": "182w",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "nmkk": {
@@ -25607,7 +25607,7 @@
     "cardType": "white7",
     "id": "nmkk",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "ex5u": {
@@ -25616,7 +25616,7 @@
     "cardType": "gold6",
     "id": "ex5u",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "p4rr": {
@@ -25625,7 +25625,7 @@
     "cardType": "green7",
     "id": "p4rr",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "9vqx": {
@@ -25634,7 +25634,7 @@
     "cardType": "pink10",
     "id": "9vqx",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "5bcn": {
@@ -25643,7 +25643,7 @@
     "cardType": "pink11",
     "id": "5bcn",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "mm1j": {
@@ -25652,7 +25652,7 @@
     "cardType": "pink12",
     "id": "mm1j",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "46lg": {
@@ -25661,7 +25661,7 @@
     "cardType": "pink13",
     "id": "46lg",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "koer": {
@@ -25670,7 +25670,7 @@
     "cardType": "pink14",
     "id": "koer",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "m1tt": {
@@ -25679,7 +25679,7 @@
     "cardType": "pink15",
     "id": "m1tt",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "refillButton1": {
@@ -25728,7 +25728,7 @@
     "cardType": "silver1",
     "id": "bjam",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "b7mn": {
@@ -25737,7 +25737,7 @@
     "cardType": "silver2",
     "id": "b7mn",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "s4nv": {
@@ -25746,7 +25746,7 @@
     "cardType": "silver3",
     "id": "s4nv",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "hsc3": {
@@ -25755,7 +25755,7 @@
     "cardType": "silver4",
     "id": "hsc3",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "offMarket18": {
@@ -25840,7 +25840,7 @@
     "id": "2inr",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "h8iw": {
     "deck": "cardDeck",
@@ -25848,7 +25848,7 @@
     "cardType": "black",
     "id": "h8iw",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "4a2s": {
@@ -25857,7 +25857,7 @@
     "cardType": "black",
     "id": "4a2s",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "8ck7": {
@@ -25866,7 +25866,7 @@
     "cardType": "black",
     "id": "8ck7",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "xbgc": {
@@ -25875,7 +25875,7 @@
     "cardType": "black",
     "id": "xbgc",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "lm7s": {
@@ -25884,7 +25884,7 @@
     "cardType": "black",
     "id": "lm7s",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "1i8j": {
@@ -25893,7 +25893,7 @@
     "cardType": "black",
     "id": "1i8j",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "vw04": {
@@ -25902,7 +25902,7 @@
     "cardType": "black",
     "id": "vw04",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "1g8y": {
@@ -25911,7 +25911,7 @@
     "cardType": "black",
     "id": "1g8y",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "bm3g": {
@@ -25920,7 +25920,7 @@
     "cardType": "black",
     "id": "bm3g",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "xsih": {
@@ -25930,7 +25930,7 @@
     "id": "xsih",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "sl5g": {
     "deck": "cardDeck",
@@ -25939,7 +25939,7 @@
     "id": "sl5g",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "k5yt": {
     "deck": "cardDeck",
@@ -25947,7 +25947,7 @@
     "cardType": "black",
     "id": "k5yt",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "i5ox": {
@@ -25956,7 +25956,7 @@
     "cardType": "black",
     "id": "i5ox",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "beis": {
@@ -25965,7 +25965,7 @@
     "cardType": "black",
     "id": "beis",
     "z": 1,
-    "parent": "pile0",
+    "parent": "pilecurseDeckHolder",
     "activeFace": 1
   },
   "l9ho": {
@@ -25974,7 +25974,7 @@
     "cardType": "cave15",
     "id": "l9ho",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "fpr0": {
     "deck": "caveDeck",
@@ -25982,7 +25982,7 @@
     "cardType": "cave16",
     "id": "fpr0",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "q8rl": {
     "deck": "caveDeck",
@@ -25990,7 +25990,7 @@
     "cardType": "cave18",
     "id": "q8rl",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "curseDeckHolder": {
     "type": "holder",
@@ -26022,6 +26022,12 @@
     ],
     "ignoreZoom": true,
     "layer": -1,
+    "css": {
+      "default": {},
+      " .holderTextOnly": {
+        "font-size": "18px !important"
+      }
+    },
     "display": false
   },
   "curseDeck": {
@@ -26336,7 +26342,7 @@
     "cardType": "curse1",
     "id": "cf07",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "1izv": {
     "deck": "caveDeck",
@@ -26344,7 +26350,7 @@
     "cardType": "cave16",
     "id": "1izv",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "ivuh": {
     "deck": "caveDeck",
@@ -26352,7 +26358,7 @@
     "cardType": "cave16",
     "id": "ivuh",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "wze7": {
     "deck": "caveDeck",
@@ -26360,7 +26366,7 @@
     "cardType": "cave16",
     "id": "wze7",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "4u0m": {
     "deck": "caveDeck",
@@ -26368,7 +26374,7 @@
     "cardType": "cave16",
     "id": "4u0m",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "ku5x": {
     "deck": "caveDeck",
@@ -26376,7 +26382,7 @@
     "cardType": "cave16",
     "id": "ku5x",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "2n9l": {
     "deck": "caveDeck",
@@ -26384,7 +26390,7 @@
     "cardType": "cave18",
     "id": "2n9l",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "8ajm": {
     "deck": "caveDeck",
@@ -26392,7 +26398,7 @@
     "cardType": "cave18",
     "id": "8ajm",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "ktb7": {
     "deck": "caveDeck",
@@ -26400,7 +26406,7 @@
     "cardType": "cave18",
     "id": "ktb7",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "6obu": {
     "deck": "caveDeck",
@@ -26408,7 +26414,7 @@
     "cardType": "cave17",
     "id": "6obu",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "0mi7": {
     "deck": "caveDeck",
@@ -26416,7 +26422,7 @@
     "cardType": "cave17",
     "id": "0mi7",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "5phe": {
     "deck": "caveDeck",
@@ -26424,7 +26430,7 @@
     "cardType": "cave17",
     "id": "5phe",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "zg3t": {
     "deck": "caveDeck",
@@ -26432,7 +26438,7 @@
     "cardType": "cave17",
     "id": "zg3t",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "1rf3": {
     "deck": "caveDeck",
@@ -26440,7 +26446,7 @@
     "cardType": "cave15",
     "id": "1rf3",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "prgi": {
     "deck": "caveDeck",
@@ -26448,7 +26454,7 @@
     "cardType": "cave15",
     "id": "prgi",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "c6a1": {
     "deck": "caveDeck",
@@ -26456,7 +26462,7 @@
     "cardType": "cave15",
     "id": "c6a1",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "z49f": {
     "deck": "curseDeck",
@@ -26464,7 +26470,7 @@
     "cardType": "curse2",
     "id": "z49f",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "tcyr": {
     "deck": "curseDeck",
@@ -26472,7 +26478,7 @@
     "cardType": "curse3",
     "id": "tcyr",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "dmgl": {
     "deck": "curseDeck",
@@ -26480,7 +26486,7 @@
     "cardType": "curse4",
     "id": "dmgl",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "ktlp": {
     "deck": "curseDeck",
@@ -26488,7 +26494,7 @@
     "cardType": "curse5",
     "id": "ktlp",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "t9ge": {
     "deck": "curseDeck",
@@ -26496,7 +26502,7 @@
     "cardType": "curse6",
     "id": "t9ge",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "g7ac": {
     "deck": "curseDeck",
@@ -26504,7 +26510,7 @@
     "cardType": "curse7",
     "id": "g7ac",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "xoxi": {
     "deck": "curseDeck",
@@ -26512,7 +26518,7 @@
     "cardType": "curse8",
     "id": "xoxi",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "a4te": {
     "deck": "curseDeck",
@@ -26520,7 +26526,7 @@
     "cardType": "curse9",
     "id": "a4te",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "0cvx": {
     "deck": "curseDeck",
@@ -26528,7 +26534,7 @@
     "cardType": "curse1",
     "id": "0cvx",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "z5bx": {
     "deck": "curseDeck",
@@ -26536,7 +26542,7 @@
     "cardType": "curse1",
     "id": "z5bx",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "fim3": {
     "deck": "curseDeck",
@@ -26544,7 +26550,7 @@
     "cardType": "curse1",
     "id": "fim3",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "f2vd": {
     "deck": "curseDeck",
@@ -26552,7 +26558,7 @@
     "cardType": "curse1",
     "id": "f2vd",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "vubn": {
     "deck": "curseDeck",
@@ -26560,7 +26566,7 @@
     "cardType": "curse1",
     "id": "vubn",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "vmsx": {
     "deck": "curseDeck",
@@ -26568,7 +26574,7 @@
     "cardType": "curse3",
     "id": "vmsx",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "egcq": {
     "deck": "curseDeck",
@@ -26576,7 +26582,7 @@
     "cardType": "curse3",
     "id": "egcq",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "u0zo": {
     "deck": "curseDeck",
@@ -26584,7 +26590,7 @@
     "cardType": "curse2",
     "id": "u0zo",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "d1fu": {
     "deck": "curseDeck",
@@ -26592,7 +26598,7 @@
     "cardType": "curse2",
     "id": "d1fu",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "asod": {
     "deck": "curseDeck",
@@ -26600,7 +26606,7 @@
     "cardType": "curse8",
     "id": "asod",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "1pps": {
     "deck": "curseDeck",
@@ -26608,7 +26614,7 @@
     "cardType": "curse9",
     "id": "1pps",
     "z": 1,
-    "parent": "pile2"
+    "parent": "pilecardDeckHolder"
   },
   "outCurseHolder": {
     "type": "holder",
@@ -32600,7 +32606,7 @@
     "id": "tnos",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "cgce": {
     "deck": "cardDeck",
@@ -32609,7 +32615,7 @@
     "id": "cgce",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "7e0n": {
     "deck": "cardDeck",
@@ -32618,7 +32624,7 @@
     "id": "7e0n",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "qg1f": {
     "deck": "cardDeck",
@@ -32627,7 +32633,7 @@
     "id": "qg1f",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "cark": {
     "deck": "cardDeck",
@@ -32636,7 +32642,7 @@
     "id": "cark",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "h9q7": {
     "deck": "cardDeck",
@@ -32645,7 +32651,7 @@
     "id": "h9q7",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "fibg": {
     "deck": "cardDeck",
@@ -32654,7 +32660,7 @@
     "id": "fibg",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "2mq6": {
     "deck": "cardDeck",
@@ -32663,7 +32669,7 @@
     "id": "2mq6",
     "z": 1,
     "activeFace": 1,
-    "parent": "pile0"
+    "parent": "pilecurseDeckHolder"
   },
   "offMarket20": {
     "type": "holder",
@@ -33107,7 +33113,7 @@
     "cardType": "cave19",
     "id": "ghyh",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "ki66": {
     "deck": "caveDeck",
@@ -33115,7 +33121,7 @@
     "cardType": "cave20",
     "id": "ki66",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "cssx": {
     "deck": "caveDeck",
@@ -33123,7 +33129,7 @@
     "cardType": "cave19",
     "id": "cssx",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "pw20": {
     "deck": "caveDeck",
@@ -33131,7 +33137,7 @@
     "cardType": "cave19",
     "id": "pw20",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "8lqv": {
     "deck": "caveDeck",
@@ -33139,7 +33145,7 @@
     "cardType": "cave20",
     "id": "8lqv",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "x25s": {
     "deck": "caveDeck",
@@ -33147,7 +33153,7 @@
     "cardType": "cave20",
     "id": "x25s",
     "z": 1,
-    "parent": "6sua"
+    "parent": "pileunusedCaves"
   },
   "muiscaHolder0": {
     "type": "holder",
@@ -36407,7 +36413,7 @@
         "detail": "\n      <div class='aidWrap'>\n        <div class='aidHeader'>\n          <div class='aidHeaderMain'>Creating/Editing</div>\n        </div>\n        <div class='aidBody'>\n<b>Scale</b> and hex grids limit the way maps can be made. The most important thing to remember is that you should not move the board and you shoud not add map tiles to the board unless the scale is = 1. The entire board background is red as a reminder when the scale is not 1.To set scale equal to one, click once on (or drag to the middle) the small white button in the slider. Once the map is fully created, you can use the scale button and drag the entire board around (by clicking and dragging anywhere in the play area not on a tile) to get the best fit within the play area.<br><br>If you start with an existing map and the scale is not 1, set the scale to 1 and then move each tile (and barrier) slightly to find the new place the grid aligns with. Then you can add new tiles.<br><br>To add new tiles, double click any where in the play area, select the expansion, and then select an available tile (or multiple tiles). The tiles will be added to the location where you double clicked and then you drag them from there. Click a tile to rotate it.<br><br>You can optionally add the barriers. They do not snap into location to allow maximum flexibility. Drag them by the icon in their middle to avoid offset effects when dropping them. The barriers are randomized at the start of play. There is no way to force specific barriers into specific locations.\n        </div>\n           <div class='aidHeader'>\n          <div class='aidHeaderMain'>Saving</div>\n        </div>\n        <div class='aidBody'>\nSaving a game only saves it to the room in its current state. If you want the save to persistent once you load another VTT module, then you must save the game to your room. See the wiki for instructions (click on the question mark icon in Edit Mode) if you do not know how to do that.<br><br>Before saving the game, consider making a screenshot. If you do not add a screenshot, when selecting maps you will only get the name and number of the map. To take a screenshot, get your screen capturing software ready. Then press the red and white PNG icon button and follow the prompt. Save the screenshot to your device.<br><br>To save the map, press the red and white save icon and follow the prompts. You can overwrite an existing game (except 0, 100, 200, 300) or create a new one. You can upload a screenshot image or not. And you must give the game a name (unless overwriting and keeping the same name).<br><br>You can also delete a game (except the blank ones) using the red and white trash icon. To do so, follow the prompts after pressing that button.\n        </div>\n      </div>\n    "
       },
       "base": {
-        "hintText": "Base  xxxxxx",
+        "hintText": "Base    xxxxxx",
         "enlargeWidth": 1145,
         "enlargeHeight": 710,
         "detail": "\n      <div class='aidWrap'>\n        <div class='aidHeader'>\n          <div class='aidHeaderMain'>Base Game</div>\n        </div>\n        <div class='aidBodyImage'>\n<img src='/assets/-2093416781_90020' height='50'/><br><img src='/assets/182258500_109980' height='200'/><img src='/assets/-566962735_34660' height='150' style='margin-left:100px'/></div>\n           <div class='aidHeader'>\n          <div class='aidHeaderMain'>Info</div>\n        </div>\n        <div class='aidBody'>\n          <ol class='aidList'>\n            <li>This is your <b>personal hand</b>. It is only visible to you. This is the only area on the board that has limited visibility. It will automatically refill up to 4 cards at the end of your turn. The number of cards in each players' hand is shown in the number next to the player's name on the seat.</li>\n            <li>This is the <b>play area</b> for the player whose turn it is. Move cards from your hand to here to play them. The color helps indicate the active player.</li>\n            <li>This is the <b>draw pile</b> for the player whose turn it is. When it is your turn, cards automatically move from #4 in your seat area to here. If you get to draw a card(s) during your turn drag them from here to your hand. If your draw pile is empty, press the black and white &quotGet Discards & Shuffle&quot button to refill the draw pile from the discard pile.</li>\n            <li>This is where <b>draw cards</b> are held for players awaiting their turn.</li>\n            <li>This is the <b>discard pile</b> for the player whose turn it is. Put any cards here that you do not want in your hand, but that are not being removed from the game. Cards in the play area will automatically be moved here at the end of your turn.</li>\n            <li>This is where the <b>discard cards</b> are held for players awaiting their turn.</li>\n            <li>Store <b>cave tokens</b> here until they are used.</li>\n            <li>Put <b>barriers</b> that you collected here for scoring in case of a tie.</li>\n            <li>The button above the 9 is the <b>turn button</b>. Press it at the end of your turn to automate card movement. The seat area of the player whose turn it is will be emphasized. The initial starting player has a blue pawn next to their name. The button below the 9 will briefly emphasize the <b>location</b> of the player tokens. The <b>arrow</b> is movable and can be dragged around the room as a demonstration aid.</li>\n             <li>The cards at the top of the screen are <b>off market</b>.</li>\n             <li>You should not need these buttons during gameplay. They are mainly for setting up the board. However, you could use the <b>lock/unlock button</b> to move the map around or the <b>show/hide market button</b> to hide the cards.</li>\n             <li>The cards on the right are <b>on market</b>.</li>\n             <li>Move to these holders any cave tokens and cards (and curse tokens in one of the expansions) that are being <b>removed from play</b> and no longer available for use by players.</li>\n        </div>\n      </div>\n    "
@@ -36490,7 +36496,7 @@
     "z": 1,
     "x": 643,
     "y": 1220,
-    "width": 50,
+    "width": 47,
     "display": false
   },
   "exp1Tooltip": {
@@ -36498,7 +36504,7 @@
     "id": "exp1Tooltip",
     "deck": "tooltips_deck",
     "cardType": "exp1",
-    "x": 695,
+    "x": 693,
     "y": 1220,
     "width": 50,
     "height": 20,
@@ -36787,7 +36793,7 @@
           {
             "func": "SET",
             "property": "id",
-            "value": "pile${key}"
+            "value": "pile${value}"
           }
         ]
       },
@@ -36902,7 +36908,7 @@
       "mode": "vs",
       "time": "30-60",
       "attribution": "<div>Room layout, card and tile design, coding, and library image by LawDawg and released to the Public Domain under CC0. Seat area layout design and coding by Jonathan Cox, released to the public domain under CC0.</div><div><br></div><div>Board map layouts:</div><div><ul><li>Maps 1-7 and 201-206 from the setup guide in the rules.</li><li>Maps 8-30 by tom tom (1qwerty) from https://boardgamegeek.com/filepage/172663/40-custom-maps-for-the-quest-for-el-dorado, used with permission, and released to the Public Domain under CC0.</li><li>Maps 101-106 by cosminul (based on 1querty's maps) from https://boardgamegeek.com/thread/2956366/maps-needed/page/1, used with permission, and released to the Public Domain under CC0.</li><li>Maps 207-209 and 301-305 by Rob1012 from https://boardgamegeek.com/filepage/251675/14-maps-for-dangers-and-muisca-expansion, used with permission, and released to the Public Domain under CC0.</li></ul></div><div>Available under the Pixabay license:</div><div><ul><li>Wood grain background by RyanPro, https://pixabay.com/photos/trees-wood-yellow-wood-oak-1915247/</li><li>Mayan pyramid by sinisamaric1, https://pixabay.com/vectors/mayan-travel-temple-pyramid-mexico-4454152/</li><li>Sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD, https://pixabay.com/sound-effects/wrong-answer-129254/.</li></ul><div>Icons on the cards and tiles have attribution as listed in the About overlay.</div></div>",
-      "lastUpdate": 1780754101251,
+      "lastUpdate": 1780755121512,
       "skill": "",
       "description": "Buy and discard cards to build the best deck to help your explorer find the lost temple.",
       "similarImage": "",
@@ -36994,7 +37000,7 @@
     "x": -550,
     "y": -325
   },
-  "pile2": {
+  "pilecardDeckHolder": {
     "type": "pile",
     "parent": "curseDeckHolder",
     "x": 0,
@@ -37006,36 +37012,9 @@
     "handleOffset": 0,
     "handlePosition": "center",
     "movable": false,
-    "id": "pile2"
+    "id": "pilecardDeckHolder"
   },
-  "6sua": {
-    "type": "pile",
-    "parent": "unusedCaves",
-    "x": 0,
-    "y": 0,
-    "width": 75,
-    "height": 75,
-    "handleCSS": "font-size:20px",
-    "handleSize": 40,
-    "handleOffset": 0,
-    "handlePosition": "center",
-    "movable": false,
-    "id": "6sua"
-  },
-  "pile0": {
-    "type": "pile",
-    "parent": "cardDeckHolder",
-    "x": 0,
-    "y": 0,
-    "width": 90,
-    "height": 120,
-    "handleCSS": "font-size:20px;color:white;background:black",
-    "handleSize": 25,
-    "handleOffset": 10,
-    "handlePosition": "top left",
-    "id": "pile0"
-  },
-  "pile3": {
+  "pilecaveDeckHolder": {
     "type": "pile",
     "parent": "caveDeckHolder",
     "x": 0,
@@ -37047,6 +37026,33 @@
     "handleOffset": 0,
     "handlePosition": "center",
     "movable": false,
-    "id": "pile3"
+    "id": "pilecaveDeckHolder"
+  },
+  "pilecurseDeckHolder": {
+    "type": "pile",
+    "parent": "cardDeckHolder",
+    "x": 0,
+    "y": 0,
+    "width": 90,
+    "height": 120,
+    "handleCSS": "font-size:20px;color:white;background:black",
+    "handleSize": 25,
+    "handleOffset": 10,
+    "handlePosition": "top left",
+    "id": "pilecurseDeckHolder"
+  },
+  "pileunusedCaves": {
+    "type": "pile",
+    "parent": "unusedCaves",
+    "x": 0,
+    "y": 0,
+    "width": 75,
+    "height": 75,
+    "handleCSS": "font-size:20px",
+    "handleSize": 40,
+    "handleOffset": 0,
+    "handlePosition": "center",
+    "movable": false,
+    "id": "pileunusedCaves"
   }
 }
