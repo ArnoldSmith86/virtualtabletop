@@ -27,9 +27,15 @@
   },
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Marble Markets",
-      "lastUpdate": 1780033113002,
+      "lastUpdate": 1780706459617,
       "image": "/assets/-370044544_62341",
       "time": "45",
       "mode": "vs",
@@ -51,16 +57,10 @@
       "attribution": "Layout, components, cards, design, and coding by Jonathan Cox (email: Contact@GettingGames.com for inquiries) and released to the Public Domain under CC0.<div><br>The sound while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at https://pixabay.com/sound-effects/wrong-answer-129254/.</div>",
       "usesAIImagery": false,
       "showName": true
-    },
-    "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
     }
   },
   "shxd": {
-    "image": "/assets/180212015_693822",
+    "image": "/assets/-1282746226_137212",
     "movable": false,
     "width": 1600,
     "height": 1000,
@@ -112,28 +112,28 @@
     "y": 41,
     "cardTypes": {
       "plus 1": {
-        "image": "/assets/-303665010_5875"
+        "image": "/assets/137057520_3726"
       },
       "plus 2": {
-        "image": "/assets/954512326_6616"
+        "image": "/assets/-702933954_4038"
       },
       "plus 3": {
-        "image": "/assets/-1193002576_6966"
+        "image": "/assets/350029179_4178"
       },
       "minus 1": {
-        "image": "/assets/298620567_4486"
+        "image": "/assets/-1851636530_3558"
       },
       "minus 2": {
-        "image": "/assets/1333729930_5040"
+        "image": "/assets/1368183090_3866"
       },
       "minus 3": {
-        "image": "/assets/-574214869_5145"
+        "image": "/assets/2118349830_3996"
       },
       "dividend": {
-        "image": "/assets/1095993859_5759"
+        "image": "/assets/440705402_3950"
       },
       "sickness": {
-        "image": "/assets/-8400107_4598"
+        "image": "/assets/-975281426_3378"
       }
     },
     "faceTemplates": [
@@ -1651,7 +1651,7 @@
     },
     "cardTypes": {
       "plus 1": {
-        "image": "/assets/854199169_4974"
+        "image": "/assets/-1094067809_3514"
       }
     },
     "faceTemplates": [
@@ -6834,16 +6834,16 @@
     },
     "cardTypes": {
       "t8gm": {
-        "image": "/assets/-2139135431_4873"
+        "image": "/assets/1468735052_1560"
       },
       "zrcr": {
-        "image": "/assets/-625433972_4551"
+        "image": "/assets/-258627393_1582"
       },
       "zv9x": {
-        "image": "/assets/-232773994_5140"
+        "image": "/assets/130606615_1586"
       },
       "lhhz": {
-        "image": "/assets/-565392165_5128"
+        "image": "/assets/-1269533121_1436"
       }
     },
     "faceTemplates": [
@@ -8046,7 +8046,7 @@
         "hintText": "Hover for more information",
         "enlargeWidth": 600,
         "enlargeHeight": 600,
-        "detail": "\n      <div class='aidWrap'>\n        <div class='aidHeader'>\n          <div class='aidHeaderMain'>On Your Turn</div>\n        </div>\n        <div class='aidBody'>\nPlace all three of your discs onto the board. Each disc must be adjacent to a previously placed disc of the same color, or that color's starting hex. Activate any effect the disc covers:<br>\n<img src='/assets/-303665010_5875' height='30' /> -> Increase the stock matching the color that covered this icon by 1 on the track.<br>\n <img src='/assets/298620567_4486' height='30' /> -> Decrease the stock matching the color that covered this icon by 1 on the track.<br>\n  <img src='/assets/1095993859_5759' height='30' /> -> All players gain $2 for each stock of the color that covered this icon.<br>\n   <img src='/assets/-8400107_4598' height='30' /> -> All players lose $2 for each stock of the color that covered this icon. If they don't have enough money, they must sell stocks at half (rounded down) value until they have enough to cover this penalty.<br><br>\nIn addition to the mandatory placement of discs, up to two optional Buy/Sell actions may be performed. These can be before and/or after placing discs, but not during disc placement. To use this optional action to Buy, pay the value of a stock with at least 1 stock in the supply and take that stock into your portfolio. To use the action to sell instead, gain money equal to the value of one of your stocks and then return that stock to the supply.\n        </div>\n           <div class='aidHeader'>\n          <div class='aidHeaderMain'>Endgame</div>\n        </div>\n        <div class='aidBody'>\nThe game ends after any player turn where both conditions are met:<br>\n• 0 or 1 black background icon ($$ or //) are visible on the board.<br>\n• The +5 icon has been covered.<br><br>\nThe game also ends in the rare case where there are not enough tokens left in the bag to deal 3 out to a player. The current number of discs in the bag is shown in the bottom-left.<br><br>\nPlayer scores are the sum of their held money and the stock value of all stocks in their portfolio. This is automatically calculated and displayed by clicking the 'Reveal Endgame Money Totals' button below this. Most money wins!\n        </div>\n      </div>\n    "
+        "detail": "\n      <div class='aidWrap'>\n        <div class='aidHeader'>\n          <div class='aidHeaderMain'>On Your Turn</div>\n        </div>\n        <div class='aidBody'>\nPlace all three of your discs onto the board. Each disc must be adjacent to a previously placed disc of the same color, or that color's starting hex. Activate any effect the disc covers:<br>\n<img src='/assets/137057520_3726' height='30' /> -> Increase the stock matching the color that covered this icon by 1 on the track.<br>\n <img src='/assets/-1851636530_3558' height='30' /> -> Decrease the stock matching the color that covered this icon by 1 on the track.<br>\n  <img src='/assets/440705402_3950' height='30' /> -> All players gain $2 for each stock of the color that covered this icon.<br>\n   <img src='/assets/-975281426_3378' height='30' /> -> All players lose $2 for each stock of the color that covered this icon. If they don't have enough money, they must sell stocks at half (rounded down) value until they have enough to cover this penalty.<br><br>\nIn addition to the mandatory placement of discs, up to two optional Buy/Sell actions may be performed. These can be before and/or after placing discs, but not during disc placement. To use this optional action to Buy, pay the value of a stock with at least 1 stock in the supply and take that stock into your portfolio. To use the action to sell instead, gain money equal to the value of one of your stocks and then return that stock to the supply.\n        </div>\n           <div class='aidHeader'>\n          <div class='aidHeaderMain'>Endgame</div>\n        </div>\n        <div class='aidBody'>\nThe game ends after any player turn where both conditions are met:<br>\n• 0 or 1 black background icon ($$ or //) are visible on the board.<br>\n• The +5 icon has been covered.<br><br>\nThe game also ends in the rare case where there are not enough tokens left in the bag to deal 3 out to a player. The current number of discs in the bag is shown in the bottom-left.<br><br>\nPlayer scores are the sum of their held money and the stock value of all stocks in their portfolio. This is automatically calculated and displayed by clicking the 'Reveal Endgame Money Totals' button below this. Most money wins!\n        </div>\n      </div>\n    "
       }
     },
     "faceTemplates": [
