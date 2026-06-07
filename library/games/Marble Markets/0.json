@@ -35,7 +35,7 @@
     },
     "info": {
       "name": "Marble Markets",
-      "lastUpdate": 1780793408870,
+      "lastUpdate": 1780794780294,
       "image": "/assets/1509127492_27914",
       "time": "45",
       "mode": "vs",
@@ -6806,6 +6806,9 @@
     "x": -577,
     "y": -16,
     "cardDefaults": {
+      "borderColor": "#ffffff",
+      "borderWidth": 3,
+      "secondaryColor": "#000000",
       "layer": 20,
       "width": 60,
       "height": 60,
@@ -6834,16 +6837,16 @@
     },
     "cardTypes": {
       "t8gm": {
-        "image": "/assets/1468735052_1560"
+        "color": "#eaff5b"
       },
       "zrcr": {
-        "image": "/assets/-258627393_1582"
+        "color": "#ff8a00"
       },
       "zv9x": {
-        "image": "/assets/130606615_1586"
+        "color": "#c328f0"
       },
       "lhhz": {
-        "image": "/assets/-1269533121_1436"
+        "color": "#00ccff"
       }
     },
     "faceTemplates": [
@@ -6857,10 +6860,14 @@
             "y": 0,
             "width": 60,
             "height": 60,
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#secondaryColor": "secondaryColor",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            },
             "color": "transparent",
-            "dynamicProperties": {
-              "value": "image"
-            }
+            "value": "/i/game-pieces/3D/Marble-3D.svg"
           }
         ]
       }
@@ -8148,7 +8155,7 @@
         "border": "0px solid black"
       }
     },
-    "text": 90,
+    "text": 96,
     "color_solid": "#b4b4b4",
     "color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
@@ -15341,5 +15348,65 @@
     "color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
     "contrast_color_opposite": "#000000"
+  },
+  "w5hf": {
+    "deck": "marbles_deck",
+    "type": "card",
+    "cardType": "t8gm",
+    "id": "w5hf",
+    "z": 37009,
+    "parent": "marbles_holder",
+    "x": 4,
+    "y": 4
+  },
+  "nqvt": {
+    "deck": "marbles_deck",
+    "type": "card",
+    "cardType": "zrcr",
+    "id": "nqvt",
+    "z": 37010,
+    "parent": "marbles_holder",
+    "x": 4,
+    "y": 4
+  },
+  "m0hw": {
+    "deck": "marbles_deck",
+    "type": "card",
+    "cardType": "zrcr",
+    "id": "m0hw",
+    "z": 37011,
+    "parent": "marbles_holder",
+    "x": 4,
+    "y": 4
+  },
+  "x6bf": {
+    "deck": "marbles_deck",
+    "type": "card",
+    "cardType": "zrcr",
+    "id": "x6bf",
+    "z": 37012,
+    "parent": "marbles_holder",
+    "x": 4,
+    "y": 4
+  },
+  "al7t": {
+    "deck": "marbles_deck",
+    "type": "card",
+    "cardType": "zv9x",
+    "id": "al7t",
+    "z": 37013,
+    "parent": "marbles_holder",
+    "x": 4,
+    "y": 4
+  },
+  "moln": {
+    "deck": "marbles_deck",
+    "type": "card",
+    "cardType": "lhhz",
+    "id": "moln",
+    "z": 37014,
+    "parent": "marbles_holder",
+    "x": 4,
+    "y": 4
   }
 }
