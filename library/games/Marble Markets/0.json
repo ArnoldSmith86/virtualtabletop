@@ -35,7 +35,7 @@
     },
     "info": {
       "name": "Marble Markets",
-      "lastUpdate": 1780794780294,
+      "lastUpdate": 1780926089081,
       "image": "/assets/1509127492_27914",
       "time": "45",
       "mode": "vs",
@@ -8601,27 +8601,7 @@
     "color_solid": "#b4b4b4",
     "color_transparent": "#b4b4b4",
     "contrast_color": "#FFFFFF",
-    "contrast_color_opposite": "#000000",
-    "value": 769,
-    "color_solidChangeRoutine": [
-      "var index = ${thisID} charAt 0",
-      {
-        "func": "GET",
-        "collection": [
-          "${index}_seat"
-        ],
-        "property": "player"
-      },
-      {
-        "func": "SET",
-        "collection": "thisButton",
-        "property": "text",
-        "relation": "=",
-        "value": "      Modify ${player}'s Money"
-      }
-    ],
-    "previous_value": 769,
-    "text": "      Modify 's Money"
+    "contrast_color_opposite": "#000000"
   },
   "a_modify_values_type_anchor": {
     "id": "a_modify_values_type_anchor",
@@ -15259,7 +15239,7 @@
     "contrast_color_opposite": "#000000",
     "previous_value": 20,
     "value": 20,
-    "index": 41,
+    "index": 4,
     "onlyVisibleForSeat": "4_seat",
     "owner_name": "",
     "glow_color": "none",
