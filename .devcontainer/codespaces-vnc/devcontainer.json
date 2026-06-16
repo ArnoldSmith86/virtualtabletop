@@ -1,0 +1,31 @@
+{
+    "name": "virtualtabletop-vnc",
+    "onCreateCommand": {
+        "set node.js version": ". ${NVM_DIR}/nvm.sh; nvm install 16; nvm use 16",
+        "setup testcafe": ". .devcontainer/testcafe-setup/install.sh"
+    },
+    "updateContentCommand": "npm install",
+    "postStartCommand": "npm run debug",
+    "forwardPorts": [8272,9229,6080,5900],
+    "portsAttributes": {
+        "8272": {
+            "label": "virtualtabletop",
+            "onAutoForward": "notify"
+        },
+        "9229": {
+            "label": "Node.JS debugger",
+            "onAutoForward": "ignore"
+        },
+        "6080": {
+            "label": "noVNC",
+            "onAutoForward": "notify"
+        },
+        "5900": {
+            "label": "VNC",
+            "onAutoForward": "ignore"
+        }
+    },
+    "otherPortsAttributes": {
+        "onAutoForward": "ignore"
+    }
+}
