@@ -4633,8 +4633,8 @@
     "id": "3r9i",
     "z": 752,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "86vw": {
     "deck": "deck-p1",
@@ -4643,8 +4643,8 @@
     "id": "86vw",
     "z": 768,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "7qkd": {
     "deck": "deck-p1",
@@ -4653,8 +4653,8 @@
     "id": "7qkd",
     "z": 739,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "x3uj": {
     "deck": "deck-p1",
@@ -4672,8 +4672,8 @@
     "id": "p4w9",
     "z": 770,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "gvdc": {
     "deck": "deck-p1",
@@ -4691,8 +4691,8 @@
     "id": "33qe",
     "z": 764,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "iu31": {
     "deck": "deck-p1",
@@ -4701,8 +4701,8 @@
     "id": "iu31",
     "z": 757,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "edv0": {
     "deck": "deck-p1",
@@ -4769,8 +4769,8 @@
     "id": "oe3r",
     "z": 750,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "2mit": {
     "deck": "deck-p1",
@@ -4779,8 +4779,8 @@
     "id": "2mit",
     "z": 742,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "pcb2": {
     "deck": "deck-p1",
@@ -4789,8 +4789,8 @@
     "id": "pcb2",
     "z": 747,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "ag1x": {
     "deck": "deck-p1",
@@ -4799,8 +4799,8 @@
     "id": "ag1x",
     "z": 754,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "wcsb": {
     "deck": "deck-p1",
@@ -4809,8 +4809,8 @@
     "id": "wcsb",
     "z": 760,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "e41c": {
     "deck": "deck-p1",
@@ -4828,8 +4828,8 @@
     "id": "owjh",
     "z": 767,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "7t3b": {
     "deck": "deck-p1",
@@ -4838,8 +4838,8 @@
     "id": "7t3b",
     "z": 759,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "qttl": {
     "deck": "deck-p1",
@@ -4848,8 +4848,8 @@
     "id": "qttl",
     "z": 753,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "7kz0": {
     "deck": "deck-p1",
@@ -4867,8 +4867,8 @@
     "id": "9ybu",
     "z": 762,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "jt4x": {
     "deck": "deck-p1",
@@ -4877,8 +4877,8 @@
     "id": "jt4x",
     "z": 755,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "8be7": {
     "deck": "deck-p1",
@@ -4896,8 +4896,8 @@
     "id": "s3vi",
     "z": 740,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "lrrg": {
     "deck": "deck-p1",
@@ -4906,8 +4906,8 @@
     "id": "lrrg",
     "z": 744,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "9s1e": {
     "deck": "deck-p1",
@@ -4916,8 +4916,8 @@
     "id": "9s1e",
     "z": 749,
     "parent": "9e06",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "lg3j": {
     "deck": "deck-p1",
@@ -4968,8 +4968,8 @@
     "id": "nz44",
     "z": 792,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "19s0": {
     "deck": "deck-p2",
@@ -5005,8 +5005,8 @@
     "id": "8q4g",
     "z": 786,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "k7c0": {
     "deck": "deck-p2",
@@ -5024,8 +5024,8 @@
     "id": "4e1t",
     "z": 783,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "f3ee": {
     "deck": "deck-p2",
@@ -5070,8 +5070,8 @@
     "id": "bww0",
     "z": 793,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "uig7": {
     "deck": "deck-p2",
@@ -5116,8 +5116,8 @@
     "id": "jhk4",
     "z": 791,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "rn63": {
     "deck": "deck-p2",
@@ -5153,8 +5153,8 @@
     "id": "off8",
     "z": 798,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "w5qz": {
     "deck": "deck-p2",
@@ -5181,8 +5181,8 @@
     "id": "ynrc",
     "z": 784,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "g0km": {
     "deck": "deck-p2",
@@ -5218,8 +5218,8 @@
     "id": "jhpo",
     "z": 772,
     "parent": "gk8c",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "l2bn": {
     "deck": "deck-p2",
