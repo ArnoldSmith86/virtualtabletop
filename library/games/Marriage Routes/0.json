@@ -243,36 +243,6 @@
       }
     }
   },
-  "d9kw": {
-    "deck": "goods_board_deck",
-    "type": "card",
-    "cardType": "1",
-    "id": "d9kw",
-    "z": 176,
-    "parent": "09o0",
-    "x": null,
-    "y": null
-  },
-  "zoaj": {
-    "deck": "goods_board_deck",
-    "type": "card",
-    "cardType": "2",
-    "id": "zoaj",
-    "z": 426,
-    "parent": "azfv",
-    "x": null,
-    "y": null
-  },
-  "54mz": {
-    "deck": "goods_board_deck",
-    "type": "card",
-    "cardType": "5",
-    "id": "54mz",
-    "z": 451,
-    "parent": "5hou",
-    "x": null,
-    "y": null
-  },
   "zs7c": {
     "image": "/assets/1228811787_74012",
     "movable": false,
@@ -1825,8 +1795,8 @@
     "id": "bejh",
     "z": 42214,
     "parent": "400x",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "400x": {
     "type": "pile",
@@ -1847,8 +1817,8 @@
     "id": "1sus",
     "z": 42215,
     "parent": "400x",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "ra5z": {
     "deck": "1_cube_deck",
@@ -5008,8 +4978,8 @@
     "id": "3dfy",
     "z": 42302,
     "parent": "jcip",
-    "x": null,
-    "y": null
+    "x": 0,
+    "y": 0
   },
   "jcip": {
     "type": "pile",
@@ -7551,26 +7521,6 @@
     "x": 188,
     "parent": "good_cards_supply",
     "fixedParent": true
-  },
-  "gir0": {
-    "deck": "goods_card_deck",
-    "type": "card",
-    "cardType": "2",
-    "id": "gir0",
-    "z": 5795,
-    "parent": "7i5a",
-    "x": null,
-    "y": null
-  },
-  "l2et": {
-    "deck": "goods_card_deck",
-    "type": "card",
-    "cardType": "5",
-    "id": "l2et",
-    "z": 5820,
-    "parent": "aggr",
-    "x": null,
-    "y": null
   },
   "0cf3": {
     "deck": "goods_card_deck",
