@@ -17,6 +17,11 @@ class SidebarModule {
     (target || this.moduleDOM).append(h);
   }
 
+  addLineBreak(target) {
+    const h = document.createElement('br');
+    (target || this.moduleDOM).append(h);
+  }
+
   click(e) {
     let target = e.ctrlKey ? $('#editorModuleBottomLeft') : $('#editorModuleTopLeft');
     if(e.button == 2)
