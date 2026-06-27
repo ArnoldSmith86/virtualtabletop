@@ -541,7 +541,8 @@
     "parent": "S&M_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "share_holder2": {
     "type": "holder",
@@ -579,7 +580,8 @@
     "parent": "CEN_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "CEN_common": {
     "type": "card",
@@ -648,7 +650,8 @@
     "parent": "GM&O_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "share_holder4": {
     "type": "holder",
@@ -702,7 +705,8 @@
     "parent": "M&C_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "share_holder5": {
     "type": "holder",
@@ -740,7 +744,8 @@
     "parent": "NO&J_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "NO&J_common": {
     "type": "card",
@@ -792,7 +797,8 @@
     "parent": "N&P_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "N&P_common": {
     "type": "card",
@@ -845,7 +851,8 @@
     "parent": "VC_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "VC_common": {
     "type": "card",
@@ -897,7 +904,8 @@
     "parent": "W&W_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "W&W_common": {
     "type": "card",
@@ -945,8 +953,8 @@
   "cube_holder": {
     "type": "holder",
     "id": "cube_holder",
-    "x": 951,
-    "y": 391,
+    "x": 952,
+    "y": 381,
     "width": 25,
     "height": 25,
     "z": 1,
@@ -5670,7 +5678,7 @@
     "type": "card",
     "cardType": "purple_cube",
     "id": "piwr157",
-    "z": 1,
+    "z": 18,
     "default_parent": "cube_holder312",
     "parent": "cube_holder312"
   },
@@ -5730,7 +5738,8 @@
     "parent": "T&A_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "T&A_common": {
     "type": "card",
@@ -5772,7 +5781,8 @@
     "parent": "V&T_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "V&T_common": {
     "type": "card",
@@ -5859,7 +5869,8 @@
     "parent": "W&A_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "W&A_common": {
     "type": "card",
@@ -5893,7 +5904,8 @@
     "parent": "NC_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "NC_common": {
     "type": "card",
@@ -5935,7 +5947,8 @@
     "parent": "N&C_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "N&C_common": {
     "type": "card",
@@ -5978,7 +5991,8 @@
     "parent": "MC_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "MC_common": {
     "type": "card",
@@ -6020,7 +6034,8 @@
     "parent": "SOU_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "SOU_common": {
     "type": "card",
@@ -6062,7 +6077,8 @@
     "parent": "M&T_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "M&T_common": {
     "type": "card",
@@ -6104,7 +6120,8 @@
     "parent": "ET_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "ET_common": {
     "type": "card",
@@ -6147,7 +6164,8 @@
     "parent": "SS_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "SS_common": {
     "type": "card",
@@ -6189,7 +6207,8 @@
     "parent": "M&W_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "M&W_common": {
     "type": "card",
@@ -6231,7 +6250,8 @@
     "parent": "GEO_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "GEO_common": {
     "type": "card",
@@ -6596,7 +6616,6 @@
   "cube_on_stock_template": {
     "type": "holder",
     "id": "cube_on_stock_template",
-    "x": -2,
     "width": 35,
     "height": 35,
     "z": 1,
@@ -6613,7 +6632,8 @@
         ]
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "x": -40
   },
   "share_holder_1": {
     "type": "holder",
@@ -9615,7 +9635,8 @@
     "inheritFrom": "cube_on_stock_template",
     "parent": "C&SC_charter",
     "fixedParent": true,
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "SC_charter": {
     "type": "card",
@@ -9638,7 +9659,8 @@
     "parent": "SC_charter",
     "fixedParent": true,
     "inheritFrom": "cube_on_stock_template",
-    "z": 1
+    "z": 1,
+    "x": -2
   },
   "2_commons_holder": {
     "type": "holder",
@@ -12206,8 +12228,11 @@
   },
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
-      "name": "Antebellum Rails",
+      "name": "Rails Before the War",
       "image": "/assets/-1356032425_47462",
       "rules": "https://www.riograndegames.com/wp-content/uploads/2020/04/GMO_Rules_BGG.pdf",
       "bgg": "https://boardgamegeek.com/boardgame/36424/gulf-mobile-and-ohio",
@@ -12215,7 +12240,7 @@
       "mode": "vs",
       "time": "45-60",
       "attribution": "<div><b>Automation</b> <b>design, room layout, and testing&nbsp;</b>by Jonathan and&nbsp;Nestor and&nbsp;<b>player aid code</b> by LawDawg. All released to the public domain under CC0.<b></b></div><b>Map</b> by Cole Wehrle, available under Creative Commons license, from&nbsp;https://boardgamegeek.com/image/1955737/cole-wehrle.<br><b>Library image</b>: Baldwin 4-4-0 locomotive of 1856, photographed courtesy of The Baldwin Locomotive Works; published in <em data-start=\"740\" data-end=\"756\">The Locomotive</em> journal (October 1925), via Internet Archive / Carnegie Library of Pittsburgh. In the public domain and available at https://commons.wikimedia.org/wiki/Category:1856_locomotives.<div><b>Sound</b> while changing turns is \"Wrong Answer\" by UNIVERSFIELD and is available under the Pixabay License at https://pixabay.com/sound-effects/wrong-answer-129254/.</div>",
-      "lastUpdate": 1782006604766,
+      "lastUpdate": 1782074665597,
       "skill": "",
       "description": "Build the South’s first rail networks, compete for cities, and shape the region’s industrial future in the years before the Civil War.",
       "similarImage": "",
@@ -12227,12 +12252,9 @@
       "usesAIImagery": false,
       "showName": true,
       "variantImage": "",
-      "variant": "Antebellum Rails",
+      "variant": "Rails Before the War",
       "language": "en-US",
       "players": "3-5"
-    },
-    "gameSettings": {
-      "legacyModes": {}
     }
   },
   "share_holder73": {
