@@ -25,7 +25,52 @@ function sendUserTraceEvent() {
   sendTraceEvent('user report', { starttime, description });
 }
 
+function collectClientDetails() {
+  return {
+    undoProtocol,
+    delta,
+    mouseStatus,
+    mouseTarget,
+    jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
+    lastExecutedOperation,
+    bodyClass: $('body').className,
+    activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
+    jsonEditor: $('#jeText') && $('#jeText').innerText,
+    activeButtons: [...$a('button.active')].map(b=>b.getAttribute('icon') || b.id),
+    widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
+    url: location.href,
+    userAgent: navigator.userAgent,
+    playerName,
+    html: document.documentElement.outerHTML
+  };
+}
+
+function openFeedbackOverlay() {
+  const details = collectClientDetails();
+  $('#feedbackOverlay textarea').value = '';
+  showOverlay('feedbackOverlay');
+  $('#feedbackOverlay button').onclick = async function() {
+    try {
+      details.message = $('#feedbackOverlay textarea').value;
+      const res = await fetch('clientError', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(details)
+      });
+      const text = await res.text();
+      if(text.match(/^[a-z0-9]{8}$/))
+        showOverlay();
+      else
+        $('#feedbackOverlay textarea').value = "Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + text;
+    } catch(e) {
+      $('#feedbackOverlay textarea').value = "Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + e.message + "\n" + e.stack;
+    }
+  };
+}
+
 onLoad(function() {
+  on('#feedbackButton', 'click', openFeedbackOverlay);
+
   window.addEventListener('keydown', function(e) {
     if(!jeEnabled && e.key == 'F9') {
       if(e.ctrlKey)
@@ -45,21 +90,7 @@ onLoad(function() {
   const errorHandler = function(error) {
     const details = {
       error: String(error.message) + '\n' + String(error.stack),
-      undoProtocol,
-      delta,
-      mouseStatus,
-      mouseTarget,
-      jeLoggingData: typeof jeLoggingRoutineGetData == 'function' ? jeLoggingRoutineGetData() : null,
-      lastExecutedOperation,
-      bodyClass: $('body').className,
-      activeOverlay: [...$a('.overlay')].filter(o=>o.style.display!='none').map(o=>o.id),
-      jsonEditor: $('#jeText') && $('#jeText').innerText,
-      activeButtons: [...$a('button.active')].map(b=>b.getAttribute('icon') || b.id),
-      widgetsState: [...widgets.keys()].map(id=>widgets.get(id).state),
-      url: location.href,
-      userAgent: navigator.userAgent,
-      playerName,
-      html: document.documentElement.outerHTML
+      ...collectClientDetails()
     };
     preventReconnect();
     connection.close();

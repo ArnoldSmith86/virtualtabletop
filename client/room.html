@@ -31,6 +31,7 @@
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
     <div class="divider"></div>
+    <button id="feedbackButton" class="toolbarButton"><span class="tooltip">Feedback</span></button>
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
@@ -563,6 +564,13 @@
         <pre id="clientErrorStack"></pre>
       </details>
       <p><button>Submit and Reload</button></p>
+    </div>
+
+    <div id="feedbackOverlay" class="overlay">
+      <h1>Feedback</h1>
+      <p>Found a bug or have a suggestion? Let us know!</p>
+      <p><textarea style="height: 150px; width: 100%"></textarea></p>
+      <p><button>Submit</button></p>
     </div>
 
     <div id="connectionLostOverlay" class="overlay" style="display:none;">
