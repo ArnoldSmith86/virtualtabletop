@@ -540,8 +540,20 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
+    @media (max-height: 340px) {
+      body:not(.horizontalToolbar,.aspectTooGood) #feedbackButton {
+        display: none;
+      }
+    }
+
     @media (max-height: 290px) {
       body:not(.horizontalToolbar,.aspectTooGood) #toolbar .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body.aspectTooGood #feedbackButton {
         display: none;
       }
     }
@@ -602,6 +614,12 @@ body.aspectTooGood.hiddenToolbar {
 
     @media (max-width: 250px) {
       body.aspectTooGood #zoom2xButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 440px) {
+      body.horizontalToolbar #feedbackButton {
         display: none;
       }
     }

@@ -48,14 +48,21 @@ function collectClientDetails() {
 function openFeedbackOverlay() {
   const details = collectClientDetails();
   $('#feedbackOverlay textarea').value = '';
+  $('#feedbackIncludeState').checked = true;
   showOverlay('feedbackOverlay');
-  $('#feedbackOverlay button').onclick = async function() {
+
+  for(const closeButton of $a('#feedbackOverlay button[icon=close]'))
+    closeButton.onclick = _=>showOverlay();
+
+  $('#feedbackOverlay button[icon=check]').onclick = async function() {
+    // only send room-identifying details (URL, game state, etc.) when the player opts in
+    const report = $('#feedbackIncludeState').checked ? details : { userAgent: details.userAgent };
+    report.message = $('#feedbackOverlay textarea').value;
     try {
-      details.message = $('#feedbackOverlay textarea').value;
       const res = await fetch('clientError', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(details)
+        body: JSON.stringify(report)
       });
       const text = await res.text();
       if(text.match(/^[a-z0-9]{8}$/))
