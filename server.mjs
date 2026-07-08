@@ -366,8 +366,8 @@ MinifyHTML().then(function(result) {
   router.get('/game/:plName', gameRoomHandler);
   router.get('/game/:shareID/:name', gameRoomHandler);
   router.get('/tutorial/:plName', gameRoomHandler);
-  router.get('/game/:shareID/:name/ROOM:([A-Za-z0-9_-]+)', gameRoomHandler);
-  router.get('/tutorial/:plName/ROOM:([A-Za-z0-9_-]+)', gameRoomHandler);
+  router.get('/game/:shareID/:name/ROOM\\::roomInPath', gameRoomHandler);
+  router.get('/tutorial/:plName/ROOM\\::roomInPath', gameRoomHandler);
   router.get('/library/:folder/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
     try {

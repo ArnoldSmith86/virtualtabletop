@@ -234,9 +234,9 @@ class RoutineStringPopup extends RoutinePopup {
 }
 
 class RoutineNumberPopup extends RoutinePopup {
-  constructor(options) {
+  constructor(options={}) {
     super();
-    this.options = options ?? {};
+    this.options = options;
   }
 
   show() {
@@ -259,9 +259,9 @@ class RoutineNumberPopup extends RoutinePopup {
 }
 
 class RoutineEnumPopup extends RoutinePopup {
-  constructor(options) {
+  constructor(options={}) {
     super();
-    this.options = options ?? {};
+    this.options = options;
   }
 
   show() {
@@ -347,7 +347,7 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
   dom.style.cursor = 'pointer';
   dom.style.color = 'gray';
   dom.style.display = 'inline-block';
-  infoHTML = infoHTML.replace(/\[([^\]]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic=${topicName}>${topicInfo ?? topicName}</span>`);
+  infoHTML = infoHTML.replace(/\[([^\]]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic=${topicName}>${topicInfo != null ? topicInfo : topicName}</span>`);
   dom.addEventListener('click', e=>{
     e.stopPropagation();
     const popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename);

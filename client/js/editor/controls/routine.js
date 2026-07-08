@@ -84,8 +84,10 @@ class RoutineOperationEditor {
     }
 
     const value = this.operation && typeof this.operation[property] != 'undefined' ? this.operation[property] : this.getDefaults()[property];
-    if(this.getDisplayMap()[property])
-      return this.getDisplayMap()[property][value] ?? value;
+    if(this.getDisplayMap()[property]) {
+      const displayValue = this.getDisplayMap()[property][value];
+      return displayValue != null ? displayValue : value;
+    }
     return value;
   }
 
@@ -167,7 +169,7 @@ class CountRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   getDefinedVariables() {
-    return [ this.operation.variable ?? this.getDefaults().variable ];
+    return [ this.operation.variable != null ? this.operation.variable : this.getDefaults().variable ];
   }
 
   getDisplayMap() {
@@ -309,7 +311,7 @@ class SelectRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   getDefinedCollections() {
-    return [ this.operation.collection ?? 'DEFAULT' ];
+    return [ this.operation.collection != null ? this.operation.collection : 'DEFAULT' ];
   }
 
   getDisplayMap() {
