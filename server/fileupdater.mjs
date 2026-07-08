@@ -1,4 +1,4 @@
-export const VERSION = 21;
+export const VERSION = 22;
 
 export default function FileUpdater(state) {
   const v = state._meta.version;
@@ -136,6 +136,7 @@ function updateRoutine(routine, v, globalProperties) {
   v<11 && v11OwnerMOVEXY(routine);
   v<15 && v15SkipTurnRoutine(routine);
   v<16 && v16UpdateCountParameter(routine);
+  v<22 && v22UpdateFillToParameter(routine);
 }
 
 function v2UpdateSelectDefault(routine) {
@@ -498,6 +499,28 @@ function v16UpdateCountParameter(routine) {
             ]
           };
         }
+      }
+    }
+  }
+}
+
+function v22UpdateFillToParameter(routine) {
+  for(const key in routine) {
+    if(routine[key] && routine[key].func == 'MOVE' && typeof routine[key].fillTo != 'undefined') {
+      if(!routine[key].fillTo) {
+        routine[key].fillTo = null;
+      } else if(typeof routine[key].fillTo == 'string' && routine[key].fillTo.includes('$')) {
+        routine[key] = {
+          note: `This was added by the automatic file migration because the behavior of MOVE with fillTo=0 changed.`,
+          func: 'IF',
+          condition: routine[key].fillTo,
+          thenRoutine: [
+            {...routine[key]}
+          ],
+          elseRoutine: [
+            Object.assign({}, routine[key], { fillTo: null })
+          ]
+        };
       }
     }
   }
