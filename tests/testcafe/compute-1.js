@@ -4,4 +4,4 @@ import { computeTest } from './compute-util.js';
 
 setupTestEnvironment();
 
-computeTest(compute_ops.slice(0, 28), 'ops 1-28');
+computeTest(compute_ops, compute_ops.slice(0, 28), 'ops 1-28');

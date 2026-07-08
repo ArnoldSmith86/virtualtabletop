@@ -11,41 +11,58 @@ function opToString(op) {
   return JSON.stringify(op).replace(/"/g, "'");
 }
 
-export function computeTest(ops, label) {
+// operators whose results depend on window.customRandomSeed (a global counter incremented
+// on every draw - see rand() in domhelpers.js). Splitting the Compute test across shards
+// means each shard's operators no longer see the same cumulative draw count they would in
+// a single unsharded run, so any randomness-consuming operator tested here must first
+// "replay" (execute without asserting) every randomness-consuming operator that precedes it
+// in the full compute_ops list to advance the counter to the same state.
+const RANDOM_CONSUMING_OPS = [ 'random', 'shuffle', 'randInt', 'randRange', 'colorCreateHue' ];
+
+async function runOperator(t, op) {
+  const operators = [ 0, 1, '${obj.12}', 0.1, '', '0', '${str}', true, '${obj.$str}', null, undefined, [], '${PROPERTY arr}', {}, '${PROPERTY obj}' ];
+  const clickRoutine = [ "var str = 'as0d'", "var obj = ${PROPERTY obj}", 'var results = []' ];
+  let i = 0;
+  for(const op1 of operators) {
+    for(const op2 of operators) {
+      for(const op3 of operators) {
+        clickRoutine.push(`var results.${i++} = ${op.name} ${opToString(op1)} ${opToString(op2)} ${opToString(op3)}`);
+      }
+    }
+  }
+  clickRoutine.push({
+    func: 'SET',
+    property: 'results',
+    value: '${results}',
+    collection: 'thisButton'
+  });
+
+  const state = {};
+  state[`button${op.name}`] = {
+    id: `button${op.name}`,
+    type: 'button',
+    obj: { '12': 2, 'as0d': false },
+    arr: [ 'a', '1', 1, 'as0d', false, [], {} ],
+    clickRoutine
+  };
+  await setRoomState(state);
+  await t.click(`#w_button${escapeID(op.name)}`);
+}
+
+export function computeTest(allOps, ops, label) {
   test(`Compute (${label})`, async t => {
     await ClientFunction(prepareClient)();
     await setName(t);
     await setLegacyMode('convertNumericVarParametersToNumbers', true);
     await setLegacyMode('useOneAsDefaultForVarParameters', true);
 
-    for(const op of ops) {
-      const operators = [ 0, 1, '${obj.12}', 0.1, '', '0', '${str}', true, '${obj.$str}', null, undefined, [], '${PROPERTY arr}', {}, '${PROPERTY obj}' ];
-      const clickRoutine = [ "var str = 'as0d'", "var obj = ${PROPERTY obj}", 'var results = []' ];
-      let i = 0;
-      for(const op1 of operators) {
-        for(const op2 of operators) {
-          for(const op3 of operators) {
-            clickRoutine.push(`var results.${i++} = ${op.name} ${opToString(op1)} ${opToString(op2)} ${opToString(op3)}`);
-          }
-        }
-      }
-      clickRoutine.push({
-        func: 'SET',
-        property: 'results',
-        value: '${results}',
-        collection: 'thisButton'
-      });
+    const precedingOps = allOps.slice(0, allOps.indexOf(ops[0]));
+    for(const op of precedingOps)
+      if(RANDOM_CONSUMING_OPS.includes(op.name))
+        await runOperator(t, op);
 
-      const state = {};
-      state[`button${op.name}`] = {
-        id: `button${op.name}`,
-        type: 'button',
-        obj: { '12': 2, 'as0d': false },
-        arr: [ 'a', '1', 1, 'as0d', false, [], {} ],
-        clickRoutine
-      };
-      await setRoomState(state);
-      await t.click(`#w_button${escapeID(op.name)}`);
+    for(const op of ops) {
+      await runOperator(t, op);
       await compareState(t, op.hash);
     }
   });
