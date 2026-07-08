@@ -1,6 +1,7 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
+import { dropTargets } from './main.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
@@ -333,7 +334,7 @@ function receiveDelta(delta) {
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined && widgets.has(widgetID))
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
@@ -607,8 +608,12 @@ export function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
   } else {
-    if(delta.s[widgetID] === undefined)
+    if(delta.s[widgetID] === undefined) {
+      // widget was removed (e.g. by a routine flushing a DELETE via DELAY) before this stray property update was queued; drop it
+      if(!widgets.has(widgetID))
+        return;
       delta.s[widgetID] = {};
+    }
     if(delta.s[widgetID] !== null)
       delta.s[widgetID][property] = value;
   }
