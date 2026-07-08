@@ -11,14 +11,14 @@
   border: 1px solid #ccc;
 }
 
-.accordion-section h3 {
+.inline-popup .accordion-section h3 {
   cursor: pointer;
 }
 
-.accordion-content {
+.inline-popup .accordion-content {
   display: none;
 }
 
-.accordion-content.open {
+.inline-popup .accordion-content.open {
   display: block;
 }

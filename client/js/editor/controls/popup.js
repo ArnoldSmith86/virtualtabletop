@@ -3,6 +3,11 @@ class Popup {
     this.source = source;
     this.domElement = document.createElement('div');
     this.domElement.classList.add('inline-popup');
+    this.changeListeners = [];
+    this.cancelListeners = [];
+    this.boundOnClick = this.onClick.bind(this);
+    this.boundOnOutsideClick = this.onOutsideClick.bind(this);
+    this.boundOnKeyDown = this.onKeyDown.bind(this);
   }
 
   addAccordionSection(title, contentHTML='') {
@@ -24,7 +29,13 @@ class Popup {
   }
 
   hide() {
+    document.removeEventListener('click', this.boundOnOutsideClick);
+    document.removeEventListener('keydown', this.boundOnKeyDown);
+    endCustomSelection();
     this.domElement.remove();
+    for(const listener of this.cancelListeners)
+      listener();
+    this.cancelListeners = [];
   }
 
   moveIntoView() {
@@ -46,6 +57,33 @@ class Popup {
     this.hide();
   }
 
+  onKeyDown(e) {
+    if(e.key == 'Escape')
+      this.hide();
+  }
+
+  onOutsideClick(e) {
+    // clicking widgets in the room is part of the interaction while a custom selection is active
+    if(customSelectionCallback)
+      return;
+    if(!this.domElement.contains(e.target))
+      this.hide();
+  }
+
+  registerCancelListener(listener) {
+    this.cancelListeners.push(listener);
+  }
+
+  registerChangeListener(listener) {
+    this.changeListeners.push(listener);
+  }
+
+  reset() {
+    this.domElement.innerHTML = '';
+    this.changeListeners = [];
+    this.cancelListeners = [];
+  }
+
   setSource(source) {
     this.source = source;
   }
@@ -62,7 +100,10 @@ class Popup {
     this.domElement.style.left = `${sourceRect.left}px`;
     this.domElement.style.top = `${sourceRect.bottom}px`;
     this.moveIntoView();
-    this.domElement.addEventListener('click', this.onClick.bind(this));
+    this.domElement.addEventListener('click', this.boundOnClick);
+    document.addEventListener('keydown', this.boundOnKeyDown);
+    // defer so the click that opened the popup doesn't immediately close it
+    setTimeout(_=>document.addEventListener('click', this.boundOnOutsideClick), 0);
   }
 }
 
@@ -91,14 +132,9 @@ class InfoPopup extends Popup {
 class RoutinePopup extends Popup {
   constructor(source) {
     super(source);
-    this.changeListeners = [];
   }
 
   onClick(e) {
-  }
-
-  registerChangeListener(listener) {
-    this.changeListeners.push(listener);
   }
 
   setNewValue(value) {
@@ -115,8 +151,8 @@ class RoutinePopup extends Popup {
 
   show(showVariables=true, showCollections=true) {
     super.show();
-    this.setTitle(this.operation.func);
-    commonInfoButton($('h1', this.domElement), this.operation.func);
+    this.setTitle(this.operation && this.operation.func ? this.operation.func : 'var');
+    commonInfoButton($('h1', this.domElement), this.operation && this.operation.func);
     $('h1', this.domElement).append(' - ' + this.parameterNames.join(', '));
     //commonInfoButton($('h1', this.domElement), parameterName);
     //infoButton($('h1', this.domElement), 'Parameters are the values that are passed to the operation.', 'parameters', 'tutorial-parameters');
@@ -208,7 +244,7 @@ class RoutineOperationPopup extends RoutinePopup {
   show() {
     super.show(false, false);
     for(const type of routineOperationTypes()) {
-      if(type.constructor.name != 'UnknownRoutineOperationEditor') {
+      if(!(type instanceof UnknownRoutineOperationEditor)) {
         button(this.domElement, type.getExampleWithDefaults(), _=>this.setNewValue(type.getDefaults().func));
         this.domElement.append(document.createElement('br'));
       }
@@ -227,7 +263,8 @@ class RoutineStringPopup extends RoutinePopup {
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
     const input = document.createElement('input');
     input.type = 'text';
-    input.value = this.operation[this.parameterNames[0]];
+    const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    input.value = currentValue != null ? currentValue : '';
     input.addEventListener('change', _=>this.setNewValue(input.value));
     valueContent.append(input);
   }
@@ -282,8 +319,7 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     super.show(false, showCollections);
     const [ title, content ] = this.addAccordionSection('Holders')
     this.holderSelection = new WidgetSelection([], widgets=>{
-      this.notifyChangeListeners(widgets.map(w=>w.id));
-      this.moveIntoView();
+      this.setNewValue(widgets.map(w=>w.id));
     });
     this.holderSelection.render();
     content.appendChild(this.holderSelection.domElement);
@@ -296,8 +332,14 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
   }
 
   setNewValue(value) {
-    const collectionParameter = this.parameterNames[1] !== undefined ? this.parameterNames[1] : this.parameterNames[0];
-    this.notifyChangeListeners({ [collectionParameter]: value });
+    // widget ids arrive as an array and belong to the first (holder-like) parameter;
+    // collection names are strings and belong to the second parameter if there is one
+    const holderParameter = this.parameterNames[0];
+    const collectionParameter = this.parameterNames[1];
+    if(Array.isArray(value) || collectionParameter === undefined)
+      this.notifyChangeListeners({ [holderParameter]: value });
+    else
+      this.notifyChangeListeners({ [holderParameter]: undefined, [collectionParameter]: value });
   }
 
   show() {
@@ -350,6 +392,10 @@ class RoutineForeachSourcePopup extends RoutinePopup {
   }
 }
 
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, c=>({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 function button(appendTo, text, onClick) {
   const button = document.createElement('button');
   button.textContent = text;
@@ -360,11 +406,13 @@ function button(appendTo, text, onClick) {
 
 async function newRoutineValues(popup) {
   return new Promise(resolve=>{
+    popup.reset();
     popup.show();
     popup.registerChangeListener(value=>{
+      resolve(value); // before hide() so the cancel listener's resolve(undefined) is ignored
       popup.hide();
-      resolve(value);
     });
+    popup.registerCancelListener(_=>resolve(undefined));
   });
 }
 

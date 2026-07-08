@@ -8,17 +8,17 @@ class WidgetSelection {
 
   addWidgetEntry(widget) {
     const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${widget.id}</td>
-      <td>${widget.get('type')}</td>
-      <td><button>Remove</button></td>
-    `;
+    for(const text of [ widget.id, widget.get('type') ]) {
+      const cell = document.createElement('td');
+      cell.textContent = text; // widget ids and types come from untrusted room state
+      row.appendChild(cell);
+    }
+    const actionCell = document.createElement('td');
+    button(actionCell, 'Remove', _=>this.removeWidget(widget));
+    row.appendChild(actionCell);
     row.dataset.widgetId = widget.id;
     this.widgetRows[widget.id] = row;
     $('table', this.domElement).appendChild(row);
-    $('button', row).addEventListener('click', _=>{
-      this.removeWidget(widget);
-    });
   }
 
   removeWidget(widget) {

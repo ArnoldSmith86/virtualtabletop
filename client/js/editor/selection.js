@@ -9,7 +9,7 @@ let selectionRectangleEnd = null;
 let draggingDragButton = null;
 let widgetRectangles = null;
 
-let customSelection = false;
+let customSelection = null;
 let customSelectionCallback = null;
 
 export function editInputHandler(name, e) {
@@ -196,8 +196,9 @@ function setCustomSelection(selectedWidgets) {
 }
 
 function endCustomSelection() {
-  for(const widget of customSelection)
-    widget.setHighlighted(null, false);
+  if(customSelection)
+    for(const widget of customSelection)
+      widget.setHighlighted(null, false);
   customSelection = null;
   customSelectionCallback = null;
 }

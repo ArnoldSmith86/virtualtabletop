@@ -77,7 +77,7 @@ class RoutineOperationEditor {
   getDisplayedValue(property) {
     if(property.match(/,/)) {
       for(const p of property.split(',')) {
-        if(this.operation && typeof this.operation[p] != 'undefined' || this.getDefaults()[p] !== null)
+        if((this.operation && typeof this.operation[p] != 'undefined') || this.getDefaults()[p] !== null)
           return this.getDisplayedValue(p);
       }
       return '?';
@@ -117,14 +117,16 @@ class RoutineOperationEditor {
     const dom = document.createElement('div');
     this.domElement = dom;
     dom.classList.add('routine-editor-operation');
-    dom.innerHTML = this.operation.func || this.operation;
 
-    dom.innerHTML = this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${this.getDisplayedValue(p)}</span>`);
+    // escapeHTML because parameter values come from untrusted room state
+    dom.innerHTML = this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${escapeHTML(this.getDisplayedValue(p))}</span>`);
     for(const [ index, span ] of [...$a('span', dom)].entries()) {
       span.addEventListener('click', async _=>{
         this.popups[index].setSource(span);
         this.popups[index].setOperationDetails(this.operation, span.dataset.parameter.split(','), this.widget, this.variables, this.collections);
-        this.onNewValue(await newRoutineValues(this.popups[index]));
+        const values = await newRoutineValues(this.popups[index]);
+        if(values !== undefined) // undefined means the popup was dismissed
+          this.onNewValue(values);
       });
       span.style.cursor = 'pointer';
     }
@@ -1046,6 +1048,14 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
       return this.operation ? this.operation.replace(/^var ([^ ]+) .*$/, '$1') : 'variable';
     if(property == 'expression')
       return this.operation ? this.operation.replace(/^.* = (.*)$/, '$1') : 'expression';
+  }
+
+  onNewValue(values) {
+    // the operation is a string like "var x = 1", so rebuild it instead of assigning object keys
+    const variable = typeof values.variable == 'string' && values.variable !== '' ? values.variable : this.getDisplayedValue('variable');
+    const expression = typeof values.expression == 'string' && values.expression !== '' ? values.expression : this.getDisplayedValue('expression');
+    this.operation = `var ${variable} = ${expression}`;
+    this.notifyChangeListeners(this.operation);
   }
 
   isMatching(operation) {
