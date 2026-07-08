@@ -87,7 +87,6 @@
       {
         "func": "LABEL",
         "label": "Result-copy001-copy001",
-        "significantDigits": 3,
         "value": "${COMPUTE}"
       }
     ],
@@ -484,7 +483,13 @@
     "id": "v1uu"
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Appearance - Hexagons",
       "image": "/assets/583165380_6053",
@@ -495,7 +500,7 @@
       "time": "0",
       "attribution": "Calculator for hexagons: https://hexagoncalculator.apphb.com/\n\nGood reference guide:\nhttps://www.redblobgames.com/grids/hexagons/",
       "showName": false,
-      "lastUpdate": 1749052212000,
+      "lastUpdate": 1763598270572,
       "skill": "",
       "description": "",
       "similarImage": "",

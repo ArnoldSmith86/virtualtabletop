@@ -73,6 +73,10 @@ export function setZoomLevel(zoomLevel) {
   refreshIgnoreZoomWidgets();
 }
 
+export function getZoomLevel() {
+  return zoomScale;
+}
+
 function resetZoomAndPan() {
   if(edit) {
     setZoomLevel(1);

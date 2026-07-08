@@ -102,30 +102,35 @@ async function inputHandler(name, e) {
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
       }
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
+        let editClickHandled = false;
         if(edit && !isMiddleMouseButton)
-          await editClick(widget, e.button);
+          editClickHandled = await editClick(widget, e.button);
         else if(jeEnabled && !isMiddleMouseButton)
-          await jeClick(widget, e);
-        else if(!target.classList.contains('longtouch')) {
-          if(!widget.get('doubleClickRoutine')) {
-            setDeltaCause(`${playerName} clicked ${widget.id}`);
-            await widget.click();
-          } else if(doubleClickTimeout) {
-            clearTimeout(doubleClickTimeout);
-            doubleClickTimeout = null;
-            setDeltaCause(`${playerName} double clicked ${widget.id}`);
-            await widget.doubleClick();
-          } else {
-            doubleClickTimeout = setTimeout(async () => {
-              doubleClickTimeout = null;
-              batchStart();
+          editClickHandled = await jeClick(widget, e);
+
+        if(!editClickHandled) {
+          if(!target.classList.contains('longtouch')) {
+            if(!widget.get('doubleClickRoutine')) {
               setDeltaCause(`${playerName} clicked ${widget.id}`);
               await widget.click();
-              batchEnd();
-            }, 350);
+            } else if(doubleClickTimeout) {
+              clearTimeout(doubleClickTimeout);
+              doubleClickTimeout = null;
+              setDeltaCause(`${playerName} double clicked ${widget.id}`);
+              await widget.doubleClick();
+            } else {
+              doubleClickTimeout = setTimeout(async () => {
+                doubleClickTimeout = null;
+                batchStart();
+                setDeltaCause(`${playerName} clicked ${widget.id}`);
+                await widget.click();
+                batchEnd();
+              }, 350);
+            }
+          } else {
+            widget.domElement.classList.remove('longtouch');
           }
-        } else
-          widget.domElement.classList.remove('longtouch');
+        }
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {

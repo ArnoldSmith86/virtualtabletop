@@ -153,11 +153,11 @@ export function shuffleArray(array) {
 }
 
 export function mapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])\/(assets|i)\//g, '$1$2/');
+  return String(str).replaceAll(/(^|["' (=])\/(assets|i)\//g, '$1$2/');
 }
 
 export function unmapAssetURLs(str) {
-  return String(str).replaceAll(/(^|["' (])(assets|i)\//g, '$1/$2/');
+  return String(str).replaceAll(/(^|["' (=])(assets|i)\//g, '$1/$2/');
 }
 
 export function escapeID(id) {
@@ -257,6 +257,56 @@ export function formField(field, dom, id) {
     dom.appendChild(input);
     dom.appendChild(underlineelement);
     dom.appendChild(spanafter);
+    input.id = id;
+  }
+
+  if(field.type == 'slider') {
+    const values = field.values;
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('countInput', 'inputsliderCompact');
+    const input = document.createElement('input');
+    input.type = 'range';
+    const valueSpan = document.createElement('span');
+    valueSpan.classList.add('inputSliderValue');
+
+    if (Array.isArray(values)) {
+      input.min = 0;
+      input.max = Math.max(0, values.length - 1);
+      input.step = 1;
+      input.value = values.indexOf(field.value);
+      const valueCh = Math.max(...values.map(x => String(x).length)) + 1;
+      valueSpan.style.setProperty('--input-slider-value-ch', valueCh + 'ch');
+      const updateValue = () => { valueSpan.textContent = values[input.value]; };
+      updateValue();
+      input.addEventListener('input', updateValue);
+    } else {
+      const min = field.min !== undefined ? field.min : 0;
+      const max = field.max !== undefined ? field.max : 10;
+      const step = field.step !== undefined ? field.step : 1;
+      const value = field.value !== undefined ? Number(field.value) : min;
+      const unit = field.unit != null ? String(field.unit) : '';
+      let decimals = 0;
+      const num = Number(step);
+      if (Number.isFinite(num) && !(num >= 1 && Number.isInteger(num))) {
+        const s = num.toFixed(14).replace(/0+$/, '');
+        const i = s.indexOf('.');
+        decimals = i === -1 ? 0 : Math.min(s.length - i - 1, 10);
+      }
+      const format = v => Number(v).toFixed(decimals) + unit;
+      const valueCh = Math.max(format(min).length, format(max).length) + 1;
+      valueSpan.style.setProperty('--input-slider-value-ch', valueCh + 'ch');
+      input.min = min;
+      input.max = max;
+      input.step = step;
+      input.value = Math.max(min, Math.min(max, value));
+      const updateValue = () => { valueSpan.textContent = format(input.value); };
+      updateValue();
+      input.addEventListener('input', updateValue);
+    }
+
+    wrapper.appendChild(valueSpan);
+    wrapper.appendChild(input);
+    dom.appendChild(wrapper);
     input.id = id;
   }
 
@@ -474,38 +524,70 @@ export function onLoad(callback) {
   window.addEventListener('DOMContentLoaded', callback);
 }
 
-export function selectFile(getContents, multipleCallback) {
+export function selectFile(getContents, multipleCallback, fileTypes) {
   return new Promise((resolve, reject) => {
     const upload = document.createElement('input');
     upload.type = 'file';
     if (typeof multipleCallback === 'function') upload.setAttribute('multiple', true);
-    upload.addEventListener('change', function(e) {
-      if(!getContents && typeof multipleCallback !== 'function')
-        return resolve(e.target.files[0]);
+    if (Array.isArray(fileTypes)) upload.setAttribute('accept', fileTypes.join(','));
 
-      for(const file of e.target.files) {
-        if(!getContents && typeof multipleCallback === 'function') {
-          multipleCallback(file);
-          continue;
+    const cancelHandler = () => {
+      window.removeEventListener('focus', cancelHandler);
+      setTimeout(() => {
+        if (upload.files.length === 0) {
+          reject(new Error('File selection cancelled.'));
+        }
+      }, 300);
+    };
+    window.addEventListener('focus', cancelHandler);
+
+    upload.addEventListener('change', function(e) {
+      window.removeEventListener('focus', cancelHandler);
+      if (e.target.files.length === 0) {
+        return reject(new Error('File selection cancelled.'));
+      }
+
+      if (typeof multipleCallback === 'function') {
+        for (const file of e.target.files) {
+          if(!getContents) {
+            multipleCallback(file);
+            continue;
+          }
+  
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            multipleCallback({ content: event.target.result, name: file.name });
+          };
+          if (getContents === 'BINARY') {
+            reader.readAsArrayBuffer(file);
+          } else if (getContents === 'TEXT') {
+            reader.readAsText(file);
+          } else {
+            reader.readAsDataURL(file);
+          }
+        }
+        resolve(); // Resolve the promise once all files are being processed
+      } else {
+        const file = e.target.files[0];
+        if(!getContents) {
+          resolve(file);
+          return;
         }
 
-        const name = file.name;
         const reader = new FileReader();
-        reader.addEventListener('load', function(e) {
-          if(typeof multipleCallback === 'function')
-            multipleCallback({ content: e.target.result, name });
-          else
-            resolve({ content: e.target.result, name });
-        });
-        if(getContents == 'BINARY')
+        reader.onload = (event) => {
+          resolve({ content: event.target.result, name: file.name });
+        };
+        if (getContents === 'BINARY') {
           reader.readAsArrayBuffer(file);
-        else if(getContents == 'TEXT')
+        } else if (getContents === 'TEXT') {
           reader.readAsText(file);
-        else
+        } else {
           reader.readAsDataURL(file);
+        }
       }
     });
-    upload.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+    upload.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
 }
 

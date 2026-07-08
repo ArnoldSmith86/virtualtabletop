@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 4,
+    "version": 20,
     "info": {
       "name": "Types - Seat",
       "image": "/assets/-1938910465_5823",
@@ -11,7 +11,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051218355,
+      "lastUpdate": 1768669476443,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -20,10 +20,13 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Board Demo",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Board Demo",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "bsbm": {
@@ -76,24 +79,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -574,7 +559,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -590,9 +574,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1192,7 +1177,8 @@
       "seat1"
     ],
     "stackOffsetX": 40,
-    "css": "background-color: #e8424240"
+    "css": "background-color: #e8424240",
+    "hoverInheritVisibleForSeat": false
   },
   "boardHolder2": {
     "type": "holder",
@@ -1210,7 +1196,8 @@
       "seat2"
     ],
     "stackOffsetX": 40,
-    "css": "background-color: #e0cb0b40"
+    "css": "background-color: #e0cb0b40",
+    "hoverInheritVisibleForSeat": false
   },
   "boardHolder3": {
     "type": "holder",
@@ -1228,7 +1215,8 @@
     "onlyVisibleForSeat": [
       "seat3"
     ],
-    "css": "background-color: #4c5fea40"
+    "css": "background-color: #4c5fea40",
+    "hoverInheritVisibleForSeat": false
   },
   "boardHolder4": {
     "type": "holder",
@@ -1246,7 +1234,8 @@
     "onlyVisibleForSeat": [
       "seat4"
     ],
-    "css": "background-color: #23ca5b40"
+    "css": "background-color: #23ca5b40",
+    "hoverInheritVisibleForSeat": false
   },
   "viewGreenBoard": {
     "type": "button",

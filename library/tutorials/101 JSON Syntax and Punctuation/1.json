@@ -1,6 +1,12 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "101 JSON Syntax and Punctuation",
       "image": "/assets/-586736647_8799",
@@ -10,7 +16,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749051058125,
+      "lastUpdate": 1763354323448,
       "showName": false,
       "skill": "",
       "description": "",
@@ -23,7 +29,8 @@
       "variantImage": "",
       "variant": "Parentheses, Brackets, Spaces",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "title": {
@@ -73,6 +80,13 @@
         "property": "x",
         "aggregation": "array",
         "variable": "xArray2"
+      },
+      {
+        "func": "VAR",
+        "variables": {
+          "exampleArray": "${PROPERTY exampleArray}",
+          "exampleOjbect": "${PROPERTY exampleObject}"
+        }
       }
     ],
     "text": "[ ]",
@@ -127,7 +141,7 @@
     "css": {
       "font-size": "50px"
     },
-    "exampleOjbect": {
+    "exampleObject": {
       "key1": "value1",
       "key2": "value2"
     }

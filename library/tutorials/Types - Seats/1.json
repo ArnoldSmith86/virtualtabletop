@@ -197,7 +197,7 @@
     "y": 4
   },
   "_meta": {
-    "version": 9,
+    "version": 20,
     "info": {
       "name": "Types - Seat",
       "image": "/assets/-1938910465_5823",
@@ -208,7 +208,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749051218351,
+      "lastUpdate": 1768669394127,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -217,10 +217,13 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "Advanced",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Advanced",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "qaui": {
@@ -292,24 +295,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1247,7 +1232,9 @@
     "onLeave": {
       "activeFace": 0
     },
-    "stackOffsetX": 40
+    "stackOffsetX": 40,
+    "dropShadow": true,
+    "hidePlayerCursors": true
   },
   "deckHolder": {
     "type": "holder",

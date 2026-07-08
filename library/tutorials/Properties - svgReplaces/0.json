@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Properties - svgReplaces",
       "image": "/assets/-1110037130_7179",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1748991723174,
+      "lastUpdate": 1764391955099,
       "showName": false,
       "skill": "",
       "description": "",
@@ -222,7 +225,6 @@
     },
     "borderColor": "#000000",
     "borderWidth": 1,
-    "crowned": true,
     "secondaryColor": "#ffffff",
     "z": 10103,
     "id": "32dh",

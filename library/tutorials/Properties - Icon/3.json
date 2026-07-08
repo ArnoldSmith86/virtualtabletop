@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 21,
     "info": {
       "name": "Properties - Icon",
       "image": "/assets/1481362664_5448",
@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1752115985153,
+      "lastUpdate": 1770833039980,
       "showName": false,
       "skill": "",
       "description": "",
@@ -23,7 +23,11 @@
       "variantImage": "",
       "variant": "Advanced",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "notes1": {
@@ -36,7 +40,7 @@
       "font-size": "19px"
     },
     "text": "This is the same as the first example in the Colors variant of this tutorial except that the scale of the icon is set to 2.",
-    "x": 196
+    "x": 47
   },
   "notes2": {
     "id": "notes2",
@@ -47,36 +51,12 @@
     "css": {
       "font-size": "19px"
     },
-    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees.",
-    "x": 489
-  },
-  "notes3": {
-    "id": "notes3",
-    "x": 1074,
-    "y": 425,
-    "width": 250,
-    "z": 446,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "The widget above combines aspects of rotation, scale, and offset to create a custom look."
-  },
-  "notes9": {
-    "id": "notes9",
-    "y": 425,
-    "width": 250,
-    "z": 445,
-    "movable": false,
-    "css": {
-      "font-size": "19px"
-    },
-    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works.",
-    "x": 781
+    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees, opacity is 0.5, and hoverOpacity is 1.",
+    "x": 343
   },
   "example1": {
     "id": "example1",
-    "x": 269,
+    "x": 120,
     "y": 318,
     "z": 448,
     "icon": {
@@ -89,20 +69,21 @@
   },
   "example2": {
     "id": "example2",
-    "x": 552,
+    "x": 411,
     "y": 319,
     "z": 311,
     "movable": false,
     "icon": {
       "name": "build",
       "rotation": 45,
-      "color": "purple"
+      "color": "purple",
+      "opacity": 0.5,
+      "hoverOpacity": 1
     },
     "text": "Settings",
     "color": "Red"
   },
   "header": {
-    "type": "label",
     "id": "header",
     "x": 290,
     "y": 1,
@@ -114,7 +95,8 @@
       "font-size": "60px",
       "color": "black"
     },
-    "text": "Icons: Advanced"
+    "text": "Icons: Advanced",
+    "type": "label"
   },
   "overview": {
     "id": "overview",
@@ -128,11 +110,11 @@
       "font-size": "25px",
       "color": "black"
     },
-    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, and rotation. Those settings apply individually to each icon."
+    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, rotation, flip, opacity, color, strokeColor, strokeWidth, hoverColor, hoverStrokeColor, hoverStrokeWidth, and hoverOpacity. Those settings apply individually to each icon."
   },
   "example4": {
     "id": "example4",
-    "x": 1126,
+    "x": 992,
     "y": 310,
     "z": 449,
     "movable": false,
@@ -163,12 +145,11 @@
         "color": "green",
         "hoverColor": "black"
       }
-    ],
-    "iconColor": "blue"
+    ]
   },
   "example3": {
     "id": "example3",
-    "x": 837,
+    "x": 702,
     "y": 307,
     "borderRadius": 8,
     "z": 449,
@@ -200,5 +181,60 @@
         "hoverColor": "white"
       }
     ]
+  },
+  "notes4": {
+    "id": "notes4",
+    "x": 935,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The widget above combines aspects of rotation, scale, offset, and hoverColor to create a custom look."
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 639,
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works. This example changes hoverColor."
+  },
+  "example5": {
+    "id": "example5",
+    "x": 1283,
+    "y": 310,
+    "z": 449,
+    "movable": false,
+    "borderRadius": 8,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "🐕‍🦺",
+        "flip": "horizontal"
+      },
+      {
+        "name": "🌲",
+        "flip": "vertical"
+      }
+    ]
+  },
+  "notes5": {
+    "id": "notes5",
+    "x": 1231,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Flip will mirror an icon around its axis. It accepts 'horizontal', 'vertical', or 'both' as values. The dog above is flipped horizontally and the tree is flipped vertically."
   }
 }

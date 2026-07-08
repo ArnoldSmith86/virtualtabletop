@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 20,
     "info": {
       "name": "No Monkey",
       "image": "/assets/877300828_15826",
@@ -10,7 +10,7 @@
       "mode": "vs",
       "time": "15",
       "attribution": "Library image \"Devolution\" is original work by Mitchell Stolycia available for use under CC BY 4.0.<div>\n<div>Original game layout inspired by Robin Harn's Herd Hero mod, released to the Public Domain under CC0.</div><div><br></div><div>Additional scripting and modifications by DexDouglas and Mitchell Stolycia released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and are used under CC BY 3.0:\n* Card Play https://game-icons.net/1x1/quoting/card-play.html\n* Trash Can https://game-icons.net/1x1/delapouite/trash-can.html\n* Card Joker https://game-icons.net/1x1/delapouite/card-joker.html\n* Cat https://game-icons.net/1x1/lorc/cat.html\n* Mite https://game-icons.net/1x1/carl-olsen/mite-alt.html\n* Sea Turtle https://game-icons.net/1x1/delapouite/sea-turtle.html\n* Chicken https://game-icons.net/1x1/delapouite/chicken.html\n* Koala https://game-icons.net/1x1/delapouite/koala.html\n* Kangaroo https://game-icons.net/1x1/delapouite/kangaroo.html\n* Squid https://game-icons.net/1x1/lorc/squid.html\n* Elephant https://game-icons.net/1x1/delapouite/elephant.html\n* Donkey https://game-icons.net/1x1/skoll/donkey.html\n* Dolphin https://game-icons.net/1x1/delapouite/dolphin.html<br></div></div>",
-      "lastUpdate": 1750721578471,
+      "lastUpdate": 1766590957182,
       "showName": true,
       "skill": "Low",
       "description": "No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse. If you ever draw a card that matches one already in your hand, you bust and toss all the cards away, giving no one the chance to score them.",
@@ -20,16 +20,21 @@
       "similarAwards": "2023 Gra Roku Best Party Game Winner",
       "ruleText": "<span style=\"white-space-collapse: collapse;\">No Monkey is a push-your-luck card game that encourages you to draw cards and steal from your opponents with no remorse.&nbsp;</span><div><span style=\"white-space-collapse: collapse;\"><br></span><div><span style=\"white-space-collapse: collapse;\">At the start of your turn, if you have any cards face up in front of you, you will bank those cards. If you don't have any cards, you have two options, draw a card, or end your turn. If you have no cards drawn, you should draw a card.&nbsp;</span></div><div><span style=\"white-space-collapse: collapse;\"><br></span></div><div><span style=\"white-space-collapse: collapse;\">If your newly drawn card matches a card that is face up in front of any other player, you can choose to steal their collected card(s) and add it to the cards you are collecting this turn by hitting the \"yoink\" button to the left of that card. If you do this, you must steal that value of card from all of the players who have it.</span></div><div><span style=\"white-space-collapse: collapse;\"><br>If you draw a card that matches any of the cards you have collected that turn, you might bust. If your newly drawn card brings you to 3 cards or less, nothing happens, even if you have matches in those first 3 cards. If you draw a card and you now have 4 cards or more and any of them match the newly drawn card, you end your turn and bust. All cards move to to the discard. <b>NOTE: stealing a card does not cause you to bust. You can only bust by drawing a card.</b></span></div><div><span style=\"white-space-collapse: collapse;\"><b><br></b></span></div><div><span style=\"white-space-collapse: collapse;\">When the last card is drawn, stealing can still occur, and then the player whose turn it is collects their cards for that turn. Then hit the \"End Game Score\" button to collect all the players remaining cards, and tally the value in each players score pile. Highest score wins, tied players share the victory.</span></div></div>",
       "helpText": "Click to sit at one of the seats. When everyone is seated, push \"New Game\" and the game will select a start player. Click \"Draw Cards\" to draw one card at a time from the deck into the holder. When you are satisfied with your cards, you can click \"End Turn &amp; Collect\" to sort the cards into holders under your name. If you bust on your turn, hit \"End Turn &amp; Bust\" to send the cards to the discard holder.<div><br><div>If you draw a card that someone else has in their holder, you can steal it from them by pressing the blue button to the left of their cards underneath their name. This will move those cards into the central holder. If you steal a card type, you must click each button to steal them from each player.&nbsp;</div><div><br></div><div>If it comes back to your turn and you still have cards in your holders under your name, you will automatically collect those cards. This will move the cards to a score pile holder to the right of your name. You can check to see how many cards are in each players score pile by the small number in the bottom right of that pile.&nbsp;</div><div><br></div><div>When the deck runs out, press the \"End Game Score\" button to automatically move any remaining cards to the piles and calculate the cards in each pile. The score will be displayed under your name. Highest score wins. Tied players share the victory.&nbsp;</div></div>",
-      "variantImage": "",
-      "variant": "No Monkey",
+      "players": "2-5",
       "language": "en-US",
-      "players": "2-5"
+      "variant": "No Monkey"
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   },
   "holder-discard": {
     "type": "holder",
     "id": "holder-discard",
-    "x": 1456,
+    "x": 1457,
     "y": 808,
     "z": 5370,
     "preventPiles": true,
@@ -157,7 +162,7 @@
   "button-draw": {
     "type": "button",
     "id": "button-draw",
-    "x": 1091,
+    "x": 1096,
     "width": 90,
     "height": 70,
     "z": 12085,
@@ -192,8 +197,8 @@
     "type": "label",
     "id": "label-discard",
     "parent": "holder-discard",
-    "x": -13,
-    "y": -46,
+    "x": -10,
+    "y": -42,
     "width": 133,
     "height": 40,
     "movableInEdit": false,
@@ -1091,20 +1096,21 @@
           }
         ]
       }
-    ]
+    ],
+    "turn": true
   },
   "label-p5": {
     "type": "label",
     "id": "label-p5",
-    "x": 1382,
-    "y": 75,
+    "y": 51,
     "width": 65,
     "height": 40,
     "z": 11964,
     "css": "font-size: 30px; font-weight:bold",
     "editable": true,
     "text": 0,
-    "linkedToSeat": "seat-p5"
+    "parent": "seat-p5",
+    "x": 45
   },
   "holder-p3-l2": {
     "type": "holder",
@@ -2022,9 +2028,9 @@
     "type": "button",
     "id": "bustDiscard",
     "parent": "holder-market-1",
-    "x": 571,
-    "y": -55,
-    "width": 160,
+    "x": 1288,
+    "y": -90,
+    "width": 100,
     "height": 50,
     "z": 12085,
     "color": "white",
@@ -2061,7 +2067,7 @@
   "collect": {
     "type": "button",
     "id": "collect",
-    "x": 379,
+    "x": 545,
     "y": 761,
     "z": 12085,
     "css": {
@@ -2949,8 +2955,7 @@
           }
         ]
       }
-    ],
-    "turn": true
+    ]
   },
   "holder-p1-l8": {
     "type": "holder",
@@ -3486,6 +3491,12 @@
         ],
         "loopRoutine": [
           {
+            "func": "CLICK",
+            "collection": [
+              "collect-cards-p${value}"
+            ]
+          },
+          {
             "func": "SELECT",
             "type": "card",
             "property": "parent",
@@ -3503,12 +3514,6 @@
             ],
             "property": "text",
             "value": "${points}"
-          },
-          {
-            "func": "CLICK",
-            "collection": [
-              "collect-cards-p${value}"
-            ]
           }
         ]
       }
@@ -3518,12 +3523,12 @@
   "deckReminder": {
     "type": "label",
     "id": "deckReminder",
-    "x": 128,
-    "y": 726,
+    "x": 1205,
+    "y": 738,
     "z": 11965,
-    "text": "90-card deck containing eleven cards each numbered 1-5 and seven cards each numbered 6-10",
+    "text": "Deck contains: 11 x 1-5   7 x 6-10",
     "css": "color:black;font-size:16pt",
-    "width": 1000,
+    "height": 80,
     "display": false
   },
   "rvx9": {
@@ -3877,720 +3882,720 @@
     "type": "card",
     "cardType": "1",
     "id": "mf77",
-    "parent": "ah6m",
-    "z": 19233
+    "parent": "k38k",
+    "z": 20769
   },
   "8vfv": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "8vfv",
-    "z": 19222,
-    "parent": "ah6m"
+    "z": 20706,
+    "parent": "k38k"
   },
   "2enh": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "2enh",
-    "z": 19203,
-    "parent": "ah6m"
+    "z": 20714,
+    "parent": "k38k"
   },
   "qvxg": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "qvxg",
-    "z": 19154,
-    "parent": "ah6m"
+    "z": 20690,
+    "parent": "k38k"
   },
   "iz3i": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "iz3i",
-    "z": 19217,
-    "parent": "ah6m"
+    "z": 20749,
+    "parent": "k38k"
   },
   "ay9l": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "ay9l",
-    "z": 19186,
-    "parent": "ah6m"
+    "z": 20772,
+    "parent": "k38k"
   },
   "0nth": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "0nth",
-    "z": 19200,
-    "parent": "ah6m"
+    "z": 20691,
+    "parent": "k38k"
   },
   "pgj3": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "pgj3",
-    "z": 19158,
-    "parent": "ah6m"
+    "z": 20734,
+    "parent": "k38k"
   },
   "7gof": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "7gof",
-    "z": 19210,
-    "parent": "ah6m"
+    "z": 20715,
+    "parent": "k38k"
   },
   "qsuo": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "qsuo",
-    "z": 19193,
-    "parent": "ah6m"
+    "z": 20730,
+    "parent": "k38k"
   },
   "2xd6": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "1",
     "id": "2xd6",
-    "z": 19211,
-    "parent": "ah6m"
+    "z": 20702,
+    "parent": "k38k"
   },
   "sks7": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "sks7",
-    "z": 19213,
-    "parent": "ah6m"
+    "z": 20767,
+    "parent": "k38k"
   },
   "9tox": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "9tox",
-    "z": 19205,
-    "parent": "ah6m"
+    "z": 20747,
+    "parent": "k38k"
   },
   "u6ru": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "u6ru",
-    "z": 19234,
-    "parent": "ah6m"
+    "z": 20750,
+    "parent": "k38k"
   },
   "3n87": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "3n87",
-    "z": 19215,
-    "parent": "ah6m"
+    "z": 20754,
+    "parent": "k38k"
   },
   "u3yk": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "u3yk",
-    "z": 19206,
-    "parent": "ah6m"
+    "z": 20744,
+    "parent": "k38k"
   },
   "jw9b": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "jw9b",
-    "z": 19236,
-    "parent": "ah6m"
+    "z": 20725,
+    "parent": "k38k"
   },
   "xo11": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "xo11",
-    "z": 19208,
-    "parent": "ah6m"
+    "z": 20743,
+    "parent": "k38k"
   },
   "nrx7": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "nrx7",
-    "z": 19225,
-    "parent": "ah6m"
+    "z": 20703,
+    "parent": "k38k"
   },
   "a9qj": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "a9qj",
-    "z": 19180,
-    "parent": "ah6m"
+    "z": 20699,
+    "parent": "k38k"
   },
   "j0xk": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "j0xk",
-    "z": 19182,
-    "parent": "ah6m"
+    "z": 20728,
+    "parent": "k38k"
   },
   "juop": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "2",
     "id": "juop",
-    "z": 19156,
-    "parent": "ah6m"
+    "z": 20736,
+    "parent": "k38k"
   },
   "l08h": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "l08h",
-    "z": 19196,
-    "parent": "ah6m"
+    "z": 20746,
+    "parent": "k38k"
   },
   "y4l0": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "y4l0",
-    "z": 19166,
-    "parent": "ah6m"
+    "z": 20742,
+    "parent": "k38k"
   },
   "j4zb": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "j4zb",
-    "z": 19167,
-    "parent": "ah6m"
+    "z": 20768,
+    "parent": "k38k"
   },
   "n5uz": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "n5uz",
-    "z": 19155,
-    "parent": "ah6m"
+    "z": 20708,
+    "parent": "k38k"
   },
   "77xd": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "77xd",
-    "z": 19201,
-    "parent": "ah6m"
+    "z": 20718,
+    "parent": "k38k"
   },
   "vi62": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "vi62",
-    "z": 19170,
-    "parent": "ah6m"
+    "z": 20745,
+    "parent": "k38k"
   },
   "ohtf": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "ohtf",
-    "z": 19152,
-    "parent": "ah6m"
+    "z": 20692,
+    "parent": "k38k"
   },
   "rw00": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "rw00",
-    "z": 19224,
-    "parent": "ah6m"
+    "z": 20770,
+    "parent": "k38k"
   },
   "f4nl": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "f4nl",
-    "z": 19169,
-    "parent": "ah6m"
+    "z": 20727,
+    "parent": "k38k"
   },
   "2q3e": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "2q3e",
-    "z": 19221,
-    "parent": "ah6m"
+    "z": 20709,
+    "parent": "k38k"
   },
   "214a": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "3",
     "id": "214a",
-    "z": 19220,
-    "parent": "ah6m"
+    "z": 20775,
+    "parent": "k38k"
   },
   "wxnt": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "wxnt",
-    "z": 19228,
-    "parent": "ah6m"
+    "z": 20721,
+    "parent": "k38k"
   },
   "nuy3": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "nuy3",
-    "z": 19191,
-    "parent": "ah6m"
+    "z": 20701,
+    "parent": "k38k"
   },
   "j8h5": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "j8h5",
-    "z": 19192,
-    "parent": "ah6m"
+    "z": 20759,
+    "parent": "k38k"
   },
   "wf6y": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "wf6y",
-    "z": 19232,
-    "parent": "ah6m"
+    "z": 20700,
+    "parent": "k38k"
   },
   "2qu5": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "2qu5",
-    "z": 19239,
-    "parent": "ah6m"
+    "z": 20697,
+    "parent": "k38k"
   },
   "grpc": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "grpc",
-    "z": 19195,
-    "parent": "ah6m"
+    "z": 20764,
+    "parent": "k38k"
   },
   "7a1k": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "7a1k",
-    "z": 19178,
-    "parent": "ah6m"
+    "z": 20712,
+    "parent": "k38k"
   },
   "vqbu": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "vqbu",
-    "z": 19187,
-    "parent": "ah6m"
+    "z": 20689,
+    "parent": "k38k"
   },
   "3mc4": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "3mc4",
-    "z": 19171,
-    "parent": "ah6m"
+    "z": 20717,
+    "parent": "k38k"
   },
   "gb77": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "gb77",
-    "z": 19237,
-    "parent": "ah6m"
+    "z": 20758,
+    "parent": "k38k"
   },
   "9ih1": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "4",
     "id": "9ih1",
-    "z": 19161,
-    "parent": "ah6m"
+    "z": 20731,
+    "parent": "k38k"
   },
   "ybb0": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "ybb0",
-    "z": 19218,
-    "parent": "ah6m"
+    "z": 20722,
+    "parent": "k38k"
   },
   "knbm": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "knbm",
-    "z": 19153,
-    "parent": "ah6m"
+    "z": 20713,
+    "parent": "k38k"
   },
   "ndl0": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "ndl0",
-    "z": 19183,
-    "parent": "ah6m"
+    "z": 20719,
+    "parent": "k38k"
   },
   "oisd": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "oisd",
-    "z": 19202,
-    "parent": "ah6m"
+    "z": 20748,
+    "parent": "k38k"
   },
   "mx2k": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "mx2k",
-    "z": 19241,
-    "parent": "ah6m"
+    "z": 20738,
+    "parent": "k38k"
   },
   "96jp": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "96jp",
-    "z": 19177,
-    "parent": "ah6m"
+    "z": 20732,
+    "parent": "k38k"
   },
   "l5dz": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "l5dz",
-    "z": 19157,
-    "parent": "ah6m"
+    "z": 20695,
+    "parent": "k38k"
   },
   "yijp": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "yijp",
-    "z": 19164,
-    "parent": "ah6m"
+    "z": 20776,
+    "parent": "k38k"
   },
   "9yjd": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "9yjd",
-    "z": 19235,
-    "parent": "ah6m"
+    "z": 20753,
+    "parent": "k38k"
   },
   "uaw4": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "uaw4",
-    "z": 19238,
-    "parent": "ah6m"
+    "z": 20710,
+    "parent": "k38k"
   },
   "0art": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "5",
     "id": "0art",
-    "z": 19160,
-    "parent": "ah6m"
+    "z": 20762,
+    "parent": "k38k"
   },
   "78iz": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "78iz",
-    "z": 19197,
-    "parent": "ah6m"
+    "z": 20757,
+    "parent": "k38k"
   },
   "up78": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "up78",
-    "z": 19230,
-    "parent": "ah6m"
+    "z": 20733,
+    "parent": "k38k"
   },
   "m0b9": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "m0b9",
-    "z": 19199,
-    "parent": "ah6m"
+    "z": 20760,
+    "parent": "k38k"
   },
   "tcvx": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "tcvx",
-    "z": 19214,
-    "parent": "ah6m"
+    "z": 20773,
+    "parent": "k38k"
   },
   "tedy": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "tedy",
-    "z": 19194,
-    "parent": "ah6m"
+    "z": 20737,
+    "parent": "k38k"
   },
   "b3lk": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "b3lk",
-    "z": 19231,
-    "parent": "ah6m"
+    "z": 20726,
+    "parent": "k38k"
   },
   "6qan": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "6",
     "id": "6qan",
-    "z": 19181,
-    "parent": "ah6m"
+    "z": 20741,
+    "parent": "k38k"
   },
   "7npe": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "7npe",
-    "z": 19159,
-    "parent": "ah6m"
+    "z": 20755,
+    "parent": "k38k"
   },
   "nm4j": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "nm4j",
-    "z": 19223,
-    "parent": "ah6m"
+    "z": 20693,
+    "parent": "k38k"
   },
   "x4vs": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "x4vs",
-    "z": 19227,
-    "parent": "ah6m"
+    "z": 20704,
+    "parent": "k38k"
   },
   "t0fz": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "t0fz",
-    "z": 19189,
-    "parent": "ah6m"
+    "z": 20774,
+    "parent": "k38k"
   },
   "00dm": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "00dm",
-    "z": 19179,
-    "parent": "ah6m"
+    "z": 20688,
+    "parent": "k38k"
   },
   "fx06": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "fx06",
-    "z": 19172,
-    "parent": "ah6m"
+    "z": 20761,
+    "parent": "k38k"
   },
   "ghlc": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "7",
     "id": "ghlc",
-    "z": 19198,
-    "parent": "ah6m"
+    "z": 20765,
+    "parent": "k38k"
   },
   "96fm": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "96fm",
-    "z": 19174,
-    "parent": "ah6m"
+    "z": 20771,
+    "parent": "k38k"
   },
   "eahe": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "eahe",
-    "z": 19168,
-    "parent": "ah6m"
+    "z": 20740,
+    "parent": "k38k"
   },
   "c8fw": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "c8fw",
-    "z": 19219,
-    "parent": "ah6m"
+    "z": 20751,
+    "parent": "k38k"
   },
   "nvvw": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "nvvw",
-    "z": 19173,
-    "parent": "ah6m"
+    "z": 20716,
+    "parent": "k38k"
   },
   "fhne": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "fhne",
-    "z": 19226,
-    "parent": "ah6m"
+    "z": 20705,
+    "parent": "k38k"
   },
   "wk1r": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "wk1r",
-    "z": 19207,
-    "parent": "ah6m"
+    "z": 20756,
+    "parent": "k38k"
   },
   "ohjc": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "8",
     "id": "ohjc",
-    "z": 19163,
-    "parent": "ah6m"
+    "z": 20739,
+    "parent": "k38k"
   },
   "ws1q": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "ws1q",
-    "z": 19212,
-    "parent": "ah6m"
+    "z": 20752,
+    "parent": "k38k"
   },
   "z37x": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "z37x",
-    "z": 19204,
-    "parent": "ah6m"
+    "z": 20720,
+    "parent": "k38k"
   },
   "q1ww": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "q1ww",
-    "z": 19229,
-    "parent": "ah6m"
+    "z": 20724,
+    "parent": "k38k"
   },
   "op8u": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "op8u",
-    "z": 19209,
-    "parent": "ah6m"
+    "z": 20711,
+    "parent": "k38k"
   },
   "ig9z": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "ig9z",
-    "z": 19190,
-    "parent": "ah6m"
+    "z": 20763,
+    "parent": "k38k"
   },
   "wuqe": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "wuqe",
-    "z": 19240,
-    "parent": "ah6m"
+    "z": 20729,
+    "parent": "k38k"
   },
   "upoz": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "9",
     "id": "upoz",
-    "z": 19176,
-    "parent": "ah6m"
+    "z": 20696,
+    "parent": "k38k"
   },
   "goe6": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "goe6",
-    "z": 19165,
-    "parent": "ah6m"
+    "z": 20687,
+    "parent": "k38k"
   },
   "ptyh": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "ptyh",
-    "z": 19162,
-    "parent": "ah6m"
+    "z": 20694,
+    "parent": "k38k"
   },
   "9qzc": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "9qzc",
-    "z": 19188,
-    "parent": "ah6m"
+    "z": 20735,
+    "parent": "k38k"
   },
   "ueek": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "ueek",
-    "z": 19184,
-    "parent": "ah6m"
+    "z": 20698,
+    "parent": "k38k"
   },
   "oy6w": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "oy6w",
-    "z": 19185,
-    "parent": "ah6m"
+    "z": 20707,
+    "parent": "k38k"
   },
   "4e2h": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "4e2h",
-    "z": 19216,
-    "parent": "ah6m"
+    "z": 20723,
+    "parent": "k38k"
   },
   "34sm": {
     "deck": "deck-cards",
     "type": "card",
     "cardType": "10",
     "id": "34sm",
-    "z": 19175,
-    "parent": "ah6m"
+    "z": 20766,
+    "parent": "k38k"
   },
   "button-snatch-p5-l9": {
     "type": "button",
@@ -4922,29 +4927,6 @@
       }
     ]
   },
-  "ah6m": {
-    "type": "pile",
-    "parent": "holder-deck",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 140,
-    "handleCSS": {
-      "border": "2px solid black",
-      "font-size": "24px",
-      "color": "white",
-      "font-weight": "bold",
-      "text-align": "center",
-      "line-height": "32px",
-      "background-color": "gray",
-      "text-shadow": "2px 2px 3px black",
-      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
-    },
-    "handleSize": "auto",
-    "handleOffset": 15,
-    "handlePosition": "top right",
-    "id": "ah6m"
-  },
   "displayB1": {
     "type": "button",
     "id": "displayB1",
@@ -4979,5 +4961,28 @@
         ]
       }
     ]
+  },
+  "k38k": {
+    "type": "pile",
+    "parent": "holder-deck",
+    "x": 4,
+    "y": 4,
+    "width": 100,
+    "height": 140,
+    "handleCSS": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "32px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "handleSize": "auto",
+    "handleOffset": 15,
+    "handlePosition": "top right",
+    "id": "k38k"
   }
 }

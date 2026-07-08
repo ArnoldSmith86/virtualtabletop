@@ -21,7 +21,7 @@
     "z": 129,
     "movable": false,
     "movableInEdit": false,
-    "css": "font-size: 25px; ",
+    "css": "font-size: 25px; ; white-space: pre-wrap",
     "html": "Functions (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions'>wiki</a>) are the key to automating activities in VTT. Functions are bits of JSON code that tell the VTT engine to take some action within specified (or default) parameters. Functions only work inside <a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#predefined-routines'>routines</a> which are a kind of widget property. Each function and its parameters are described in the wiki and there is a separate tutorial for each function.\n\nAn important technical note about functions and routines: they operate on the local browser of the player that took the action. The resulting changes are sent to the VTT servers and then broadcast out to the other players to see the change. You can simulate this by having the same room open in two different browser windows (use a second browser or incognito mode to simulate distinct players). This means there might be a slight processing delay and it means that if you are debugging problems (see the last button in this tutorial), you can only see the debug output for room changes that your browser initiated."
   },
   "text1": {
@@ -77,7 +77,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables or collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>) or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples.",
+    "html": "Functions make changes to a room, sometimes visible and sometimes not. Changes made depend on the function and what input is given: variables, collections (<a href='https://virtualtabletop.io/tutorial/variables-and-collections'>tutorial</a>), or properties (<a href='https://virtualtabletop.io/tutorial/widget-properties-overview'>tutorial</a>). Output also depends on the function. Some work only with certain widget types, and others work with any. Usually the result of a function will be to modify a variable, collection, or property. Click the button above for examples.",
     "height": 445
   },
   "text5": {
@@ -89,13 +89,16 @@
     "movable": false,
     "movableInEdit": false,
     "css": {
-      "font-size": "22px"
+      "font-size": "21px"
     },
-    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples.",
+    "html": "When developing a game, use the debug output (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Edit-Mode#Debug'>wiki</a>) to get a better idea of what is happening. Sometimes the problems are obvious because you see a red arrow. Other times, you may get a red arrow, but that is not really the problem. The validation table may report things that are not really problems. And often, there will be no red arrows but things still are not as expected. Review the tutorials and wiki and do not be afraid to ask for help on Discord. Click the button above for examples.",
     "height": 445
   },
   "_meta": {
-    "version": 17,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "140 Functions Overview",
       "image": "/assets/-1101786700_7105",
@@ -105,7 +108,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1749054237187,
+      "lastUpdate": 1763355837690,
       "showName": false,
       "skill": "",
       "description": "",
@@ -118,7 +121,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "button1": {
@@ -128,7 +132,11 @@
     "y": 402,
     "z": 22841,
     "clickRoutine": [
-      "// The most common and intuitive routine. Buttons are a typical example, but a `clickRoutine` can be on any widget except decks. As long as the widget is visible and the `clickable` property is true, then the routine will activate."
+      "// The most common and intuitive routine. Buttons are a typical example, but a `clickRoutine` can be on any widget except decks. As long as the widget is visible and the `clickable` property is true, then the routine will activate.",
+      {
+        "func": "CALL",
+        "routine": "customRoutine"
+      }
     ],
     "text": "Routines",
     "changeRoutine": [
@@ -148,7 +156,7 @@
       "// Activated whenever a child is removed from this widget. Warning: depending on how this happens, a `leaveRoutine` can be triggered from 1 to 4 times for a single widget. Most commonly it happens twice. So keep in mind that the `leaveRoutine` will usually trigger multiple times for each widget that will no longer be a child of this widget."
     ],
     "customRoutine": [
-      "// Like with custom properties, you can create any routine name you want as long as it ends with `Routine`. The limitation, however, is that these kinds of routines are only activated by using the CALL function within some other kind of routine."
+      "// Like with custom properties, you can create any routine name you want as long as it ends with `Routine`. The limitation, however, is that these kinds of routines are only activated by using the CALL function within some other kind of routine. For example the 'clickRoutine' CALLs this customRoutine."
     ],
     "layer": 2
   },
@@ -231,7 +239,7 @@
     "id": "button5",
     "z": 22847,
     "clickRoutine": [
-      "// The COUNT function below is identical to the first one in the Defaults button. It attempts to count the collection named `DEFAULT`. However, there is no collection so the debug report says the collection DEFAULT does not exist or is not an array. That is the explanation of the problem. COUNT needs a holder or a collection as input and there is not one.",
+      "// The COUNT function below is identical to the first one in the Defaults button. It attempts to count the collection named `DEFAULT`. However, there is no collection so the debug report says the collection DEFAULT does not exist or is not an array. That is the explanation of the problem. COUNT needs a holder or a collection as input and there is not one. The error also shows up in the validator table for this button and for button3.",
       {
         "func": "COUNT"
       },
@@ -358,42 +366,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
-      "T 3J": {
-        "image": "/i/cards-default/3J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J3",
-        "rankA": "J3",
-        "rankFixed": "J3 T"
-      },
-      "T 4J": {
-        "image": "/i/cards-default/4J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J4",
-        "rankA": "J4",
-        "rankFixed": "J4 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf coverage",
-    "clobber": "npm clean && rm -rf save",
+    "clobber": "npm run clean && rm -rf save",
     "debug": "nodemon -e js,mjs,css,html,json --ignore save/ --ignore coverage/ --ignore tests/ --inspect server.mjs",
     "start": "node server.mjs",
     "stresstest": "node tests/server/loadtest.js",
@@ -67,6 +67,6 @@
     "jest-environment-jsdom": "^30.2.0",
     "json-diff": "^1.0.6",
     "nodemon": "^3.1.10",
-    "testcafe": "^3.7.2"
+    "testcafe": "^3.7.3"
   }
 }

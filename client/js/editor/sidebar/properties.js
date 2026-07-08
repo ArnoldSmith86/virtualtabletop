@@ -367,6 +367,8 @@ class PropertiesModule extends SidebarModule {
     const designSelectionDiv = document.createElement('div');
     const updateDesignPreview = _=>{
       const oldScrollTop = this.moduleDOM.scrollTop;
+      const oldSelectedButton = $('.selected.deckTemplateButton', target);
+      const oldSelectedButtonIndex = oldSelectedButton ? oldSelectedButton.dataset.index : -1;
       for(const button of $a('.deckTemplateButton', target))
         button.remove();
 
@@ -380,6 +382,7 @@ class PropertiesModule extends SidebarModule {
         const templateButton = this.renderWidgetButton(new Deck(deck.id), deckTemplate(deck), designSelectionDiv);
         templateButton.classList.add('deckTemplateButton');
         templateButton.dataset.index = index;
+        templateButton.classList.toggle('selected', oldSelectedButtonIndex == index);
         templateButton.onclick = e=>{
           for(const button of $a('.deckTemplateButton', target))
             if(button != templateButton)

@@ -1,6 +1,10 @@
 {
   "_meta": {
-    "version": 9,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {},
+      "globalCss": ".transition {\n  transition: transform 600ms;\n}\n\n.transition.dragging {\n  transition: none;\n}\n\n.pile .card {\n  box-shadow: none;\n}\n.pile .card:last-child {\n  box-shadow: 0 3px 4px #00000055;\n}"
+    },
     "info": {
       "name": "Types - Deck",
       "image": "/assets/-1566725886_4080",
@@ -9,9 +13,9 @@
       "year": "2022",
       "mode": "Tutorial",
       "time": "",
-      "attribution": "The example cards in this room come from various public library games.  Attribution for the images in each deck follows.\n\n\nShape sorter deck:\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)\n\nTutti Frutti deck:\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.\n\nLost Temples deck:\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  -  By lorc): https://game-icons.net/1x1/lorc/cut-diamond.html\n\n  -  By faithtoken (gold ore): https://game-icons.net/1x1/faithtoken/ore.html",
+      "attribution": "The example cards in the Basic variant of this tutorial come from various public library games.  Attribution for the images in each deck follows.\n\n\nShape sorter deck:\n\nImages released under CC BY 3.0:\nhttps://game-icons.net/1x1/delapouite/plain-square.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/plain-circle.html (by Delapouite)\nhttps://game-icons.net/1x1/delapouite/seven-pointed-star.html (by Delapouite)\nhttps://game-icons.net/1x1/darkzaitzev/star-shuriken.html (by DarkZaitzev)\nhttps://game-icons.net/1x1/skoll/divided-square.html (by Skoll)\nhttps://game-icons.net/1x1/sbed/health-normal.html (by sbed)\n\nTutti Frutti deck:\n\nThe fruit images are CC BY 3.0 from Game Developer Studio available at https://opengameart.org/content/fruit-icons-redo.\n\nThe yogurt, spoon, and ice cream images are CC0 and available at:\n - https://publicdomainvectors.org/en/free-clipart/Vector-illustration-of-yogurt-cup/24664.html\n - https://publicdomainvectors.org/en/free-clipart/Metallic-spoon/50510.html\n - https://publicdomainvectors.org/en/free-clipart/Color-vector-image-of-three-ice-cream-scoops-in-a-cone/5813.html\n\nCard back created at https://pattern.monster/leaves-9/ under MIT License available at https://github.com/catchspider2002/svelte-svg-patterns.\n\nLost Temples deck:\n\nThe jungle image used on the tiles is available under the Pexels License and is available at:\n\nhttps://www.pexels.com/photo/lush-palm-trees-growing-in-tropical-forest-4669542/\n\nThe various icons are available under CC BY 3.0 as follows:\n\n  -  By lorc): https://game-icons.net/1x1/lorc/cut-diamond.html\n\n  -  By faithtoken (gold ore): https://game-icons.net/1x1/faithtoken/ore.html",
       "showName": false,
-      "lastUpdate": 1748992056737,
+      "lastUpdate": 1763148954679,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -26,39 +30,102 @@
       "players": "1"
     }
   },
-  "8fr3": {
-    "id": "8fr3",
-    "x": 400,
-    "y": -2,
-    "width": 800,
-    "height": 60,
-    "z": 74,
-    "movable": false,
-    "movableInEdit": false,
-    "css": "font-size: 60px;text-align:center",
-    "text": "Decks: HTML"
+  "btn1": {
+    "type": "button",
+    "id": "btn1",
+    "x": 40,
+    "y": 300,
+    "z": 3,
+    "text": "Example 1",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "example1",
+          "example2",
+          "example3",
+          "example4"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recall1",
+          "recall2",
+          "recall3",
+          "recall4"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "example1",
+        "key": "cardType",
+        "reverse": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "example1"
+        ],
+        "property": "x",
+        "value": 175
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example1",
+        "x": 325,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example1",
+        "x": 465,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example1",
+        "x": 605,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example1",
+        "x": 745,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      }
+    ]
   },
-  "406b": {
-    "id": "406b",
-    "x": 108,
-    "y": 114,
-    "width": 1400,
-    "height": 150,
-    "layer": -3,
-    "z": 127,
-    "css": "font-size: 25px; ",
-    "text": "Decks 'faceTemplates' and 'cardTypes' also work with HTML. You can use styled text, embedded images, and most other things allowed in html."
+  "example1": {
+    "type": "holder",
+    "id": "example1",
+    "x": 175,
+    "y": 255,
+    "z": 128,
+    "dropTarget": {
+      "type": "card"
+    }
   },
-  "pwezB": {
-    "id": "pwezB",
+  "recall1": {
+    "type": "button",
+    "id": "recall1",
     "parent": "example1",
     "fixedParent": true,
     "y": 171.36,
     "width": 111,
     "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
     "movableInEdit": false,
+    "text": "Recall & Shuffle",
     "clickRoutine": [
       {
         "func": "RECALL",
@@ -75,38 +142,406 @@
       }
     ]
   },
-  "example1": {
+  "btn2": {
+    "type": "button",
+    "id": "btn2",
+    "x": 40,
+    "y": 450,
+    "z": 3,
+    "text": "Example 2",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "example1",
+          "example2",
+          "example3",
+          "example4"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recall1",
+          "recall2",
+          "recall3",
+          "recall4"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "example2",
+        "key": "cardType",
+        "reverse": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "example2"
+        ],
+        "property": "x",
+        "value": 175
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example2",
+        "x": 360,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example2",
+        "x": 520,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example2",
+        "x": 680,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example2",
+        "x": 840,
+        "y": 265,
+        "face": 1,
+        "resetOwner": false
+      }
+    ]
+  },
+  "example2": {
     "type": "holder",
-    "id": "example1",
-    "x": 106,
-    "y": 357,
-    "z": 129,
+    "id": "example2",
+    "x": 1700,
+    "y": 255,
+    "z": 130,
     "dropTarget": {
       "type": "card"
     }
+  },
+  "recall2": {
+    "type": "button",
+    "id": "recall2",
+    "parent": "example2",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "details1": {
+    "id": "details1",
+    "parent": "example1",
+    "x": 150,
+    "y": 200,
+    "width": 1200,
+    "z": 10052,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This is an example of a deck using HTML. It demonstrates many of the foundational features and core elements of an html deck. It creates classes such as <b>title</b> and <b>modifier</b>, for example, in the <b>css</b> property of the <b>cardDefaults</b>. Those classes are then applied in the <b>faceTemplates</b> and then further modified in the <b>cardTypes</b>."
+  },
+  "details2": {
+    "id": "details2",
+    "parent": "example2",
+    "x": 150,
+    "y": 200,
+    "width": 1200,
+    "z": 10052,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This deck is part of a deck from the public library game Wildscapes. It demonstrates how to add tables, including how to add images to the tables. The images in the 'elkB' card are by Bloodline Studies and are available under the Flaticon license at <a href='https://www.flaticon.com/free-icon/animal_13272945'>https://www.flaticon.com/free-icon/animal_13272945</a>.\n\nIn this example, the css and its custom classes are added to the <b>faceTemplates</b>.",
+    "layer": -3
+  },
+  "name1": {
+    "id": "name1",
+    "x": 850,
+    "y": 50,
+    "width": 450,
+    "height": 50,
+    "z": 10055,
+    "css": "font-size: 40px; ",
+    "parent": "example1",
+    "fixedParent": true,
+    "movable": false,
+    "movableInEdit": false,
+    "html": "Ex 1: Simple HTML"
+  },
+  "name2": {
+    "id": "name2",
+    "x": 850,
+    "y": 50,
+    "width": 450,
+    "height": 50,
+    "z": 10055,
+    "css": "font-size: 40px; ",
+    "parent": "example2",
+    "fixedParent": true,
+    "movable": false,
+    "movableInEdit": false,
+    "html": "Ex 2: Wildscapes Deck"
+  },
+  "example3": {
+    "type": "holder",
+    "id": "example3",
+    "x": 1700,
+    "y": 255,
+    "z": 130,
+    "dropTarget": {
+      "type": "card"
+    }
+  },
+  "recall3": {
+    "type": "button",
+    "id": "recall3",
+    "parent": "example3",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "details3": {
+    "id": "details3",
+    "parent": "example3",
+    "x": 150,
+    "y": 275,
+    "width": 1200,
+    "z": 10052,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This deck is based on the Dvorak blank card game system. You can learn more about the game at <a href='https://dvorakgame.co.uk/index.php/Main_Page'>https://dvorakgame.co.uk/index.php/Main_Page</a>.",
+    "layer": -3
+  },
+  "name3": {
+    "id": "name3",
+    "x": 1050,
+    "y": 50,
+    "width": 450,
+    "height": 50,
+    "z": 10060,
+    "css": "font-size: 40px; ",
+    "parent": "example3",
+    "fixedParent": true,
+    "text": "Ex 3: Dvorak Deck",
+    "movable": false,
+    "movableInEdit": false
+  },
+  "btn3": {
+    "type": "button",
+    "id": "btn3",
+    "x": 40,
+    "z": 4,
+    "text": "Example 3",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "example1",
+          "example2",
+          "example3",
+          "example4"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recall1",
+          "recall2",
+          "recall3",
+          "recall4"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "example3",
+        "key": "cardType",
+        "reverse": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "example3"
+        ],
+        "property": "x",
+        "value": 175
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example3",
+        "x": 360,
+        "y": 200,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example3",
+        "x": 570,
+        "y": 200,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example3",
+        "x": 780,
+        "y": 200,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "example3",
+        "x": 990,
+        "y": 200,
+        "face": 1,
+        "resetOwner": false
+      }
+    ],
+    "y": 600
+  },
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "html": "Decks: HTML",
+    "layer": -3
+  },
+  "detail": {
+    "id": "detail",
+    "x": 108,
+    "y": 94,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 127,
+    "movable": false,
+    "css": "font-size: 25px; ",
+    "html": "Deck's <b>faceTemplates</b> and <b>cardTypes</b> properties also work with HTML. You can use styled text, embedded images, classes, and most other things allowed in html and css. Each deck has a <b>transition</b> class that works with the global room css (edit mode side bar under 'Game Settings') to simulate card movement."
   },
   "deck1": {
     "type": "deck",
     "id": "deck1",
     "parent": "example1",
-    "x": 5,
-    "y": 7,
     "z": 1,
     "cardDefaults": {
+      "classes": "transition",
+      "css": {
+        " .html": {
+          "border-radius": "5px",
+          "border": "2px solid rgba(0, 0, 0, 0.4)",
+          "background": "white",
+          "display": "flex",
+          "flex-direction": "column",
+          "overflow": "hidden"
+        },
+        " .flex": {
+          "flex": 1,
+          "position": "relative"
+        },
+        " .title": {
+          "font-size": "21px",
+          "background": "${PROPERTY bgcolor}",
+          "font-weight": "bold",
+          "border-bottom": "1px solid #666",
+          "padding": "4px"
+        },
+        " p": {
+          "margin": "0",
+          "padding": "4px"
+        },
+        " .test": {
+          "color": "red"
+        },
+        " .footer": {
+          "border-top": "1px solid #666",
+          "text-align": "center"
+        },
+        " .modifier": {
+          "position": "absolute",
+          "padding": "0 5px 0 0",
+          "bottom": "3px",
+          "right": "-0.5px",
+          "line-height": "1.6",
+          "min-width": "1.6em",
+          "background": "#999",
+          "border-radius": "50px 0 0 50px",
+          "text-align": "right",
+          "color": "white"
+        },
+        " img": {
+          "vertical-align": "middle"
+        }
+      },
       "titlesize": "24px",
       "enlarge": 3
     },
     "cardTypes": {
       "c1": {
         "title": "Title",
-        "content": "This is the <b>content</b> section.<br>Gives <img src=\"i/icons/village_3d.svg\" width=\"25px\" height=\"25px\">",
+        "content": "<p>This is the <b>content</b> section.</p>",
         "modifier": "+4",
-        "bgcolor": "#ccf"
+        "modifierColor": "green",
+        "bgcolor": "#ccf",
+        "footer": "Gain <img src=\"i/icons/village_3d.svg\" width=\"25px\" height=\"25px\">"
       },
       "c2": {
         "title": "Multi-line title",
-        "content": "This card auto reflows for the larger title",
+        "content": "<p>This card auto reflows for the larger title</p>",
         "modifier": "-1",
+        "modifierColor": "red",
         "bgcolor": "#ccf"
       },
       "c3": {
@@ -116,7 +551,7 @@
       },
       "c5": {
         "title": "Font-size",
-        "content": "<p style='font-size: 10pt'>10pt</p>"
+        "content": "<p style='font-size: 16pt'>16pt</p><p style='font-size: 14pt'>14pt</p><p style='font-size: 12pt'>12pt</p><p style='font-size: 10pt'>10pt</p>"
       }
     },
     "css": {
@@ -147,24 +582,186 @@
         "objects": [
           {
             "type": "html",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "classes": "html",
+            "color": "black",
+            "value": "<div class=\"title\">${PROPERTY title}</div><div class=\"flex\">${PROPERTY content}<div class=\"modifier\" style=\"background-color: ${PROPERTY modifierColor}\">${PROPERTY modifier}</div></div><div class=\"footer\">${PROPERTY footer}</div>"
+          }
+        ]
+      }
+    ]
+  },
+  "mc9q": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c1",
+    "id": "mc9q",
+    "z": 76085,
+    "activeFace": 1,
+    "x": 325,
+    "y": 265
+  },
+  "mked": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c2",
+    "id": "mked",
+    "z": 76086,
+    "activeFace": 1,
+    "x": 465,
+    "y": 265
+  },
+  "7l0e": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c3",
+    "id": "7l0e",
+    "z": 76087,
+    "activeFace": 1,
+    "x": 605,
+    "y": 265
+  },
+  "uco4": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "c5",
+    "id": "uco4",
+    "z": 76088,
+    "x": 745,
+    "y": 265,
+    "activeFace": 1
+  },
+  "0lpz": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "bearA",
+    "id": "0lpz",
+    "z": 76044,
+    "parent": "tj4g"
+  },
+  "p3wx": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "bearB",
+    "id": "p3wx",
+    "z": 76043,
+    "parent": "tj4g"
+  },
+  "bk5v": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "elkA",
+    "id": "bk5v",
+    "z": 76041,
+    "parent": "tj4g"
+  },
+  "6tqh": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "elkB",
+    "id": "6tqh",
+    "z": 76042,
+    "parent": "tj4g"
+  },
+  "deck2": {
+    "type": "deck",
+    "id": "deck2",
+    "parent": "example2",
+    "cardDefaults": {
+      "enlarge": 4,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "bearA": {
+        "title": "Bear",
+        "subTitle": "Mating Pairs",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%'><tr><td>Pairs</td><td>Points</td></tr><tr><td>1</td><td style='color:red'>4</td></tr><tr><td>2</td><td style='color:red'>11</td></tr><tr><td>3</td><td style='color:red'>19</td></tr><tr><td>4</td><td style='color:red'>27</td></tr></table><p style='line-height: 0.9em'>Score for number of pairs of adjacent bears with no other adjacent bears.</p>",
+        "bgTitleColor": "#603f1f",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10.5px"
+      },
+      "bearB": {
+        "title": "Bear",
+        "subTitle": "Mother & Cubs",
+        "letter": "B",
+        "content": "<div style='line-height: 0.9em'><span style='color:red'>10</span> points per group of 3 adjacent bears (any shape) with no other adjacent bears.</div>",
+        "bgTitleColor": "#603f1f",
+        "textTitleColor": "#fff",
+        "contentFontSize": "13px"
+      },
+      "elkA": {
+        "title": "Elk",
+        "subTitle": "Lines",
+        "letter": "A",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr style='color:red'><td>2</td><td>5</td><td>9</td><td>12</td></tr></table><p style='line-height: 0.9em'>Score for number of elk in a straight line (flat side touching flat side) in any orientation. Count each elk only once. Groups may be adjacent.</p>",
+        "bgTitleColor": "#d6ad84",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      },
+      "elkB": {
+        "title": "Elk",
+        "subTitle": "Formation",
+        "letter": "B",
+        "content": "<table style='border-spacing: 0px;line-height: 0.9em; width:100%; text-align:center'><tr><td><img src='/assets/1227168721_15496' height='12'/></td><td><img src='/assets/1280254170_12896' height='20'/></td><td><img src='/assets/701974715_20032' height='20'/></td><td><img src='/assets/701974715_20032' height='20'/></td></tr><tr style='color:red'><td>2</td><td>5</td><td>9</td><td>13</td></tr></table><p style='line-height: 0.9em'>Score for each exact shape (any orientation). Count each elk only once. Groups may be adjacent.</p>",
+        "bgTitleColor": "#d6ad84",
+        "textTitleColor": "#fff",
+        "contentFontSize": "10px"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#ffffff",
+            "width": 103,
+            "height": 160
+          },
+          {
+            "type": "html",
             "css": {
               "body": {
-                "background": "white",
+                "background": "${PROPERTY bgTitleColor}50",
                 "display": "flex",
-                "flex-direction": "column"
-              },
-              ".flex": {
-                "flex": 1
+                "flex-direction": "column",
+                "font-size": "${PROPERTY contentFontSize}"
               },
               ".title": {
                 "font-size": "22px",
-                "background": "${PROPERTY bgcolor}"
+                "background": "${PROPERTY bgTitleColor}",
+                "text-align": "center",
+                "color": "${PROPERTY textTitleColor}"
               },
-              "body > div": {
-                "padding": "8px"
+              ".subtitle": {
+                "font-size": "11px",
+                "background": "${PROPERTY bgTitleColor}",
+                "text-align": "center",
+                "color": "${PROPERTY textTitleColor}"
               },
-              ".test": {
-                "color": "red"
+              " .content": {
+                "display": "flex",
+                "flex-direction": "column",
+                "justify-content": "space-between",
+                "align-content": "space-between",
+                "font-size": "${PROPERTY contentFontSize}",
+                "padding": "4px"
+              },
+              " table": {
+                "table-layout": "fixed"
+              },
+              " table tr td": {
+                "border-right": "1px solid gray"
+              },
+              " table tr td:last-of-type": {
+                "border-right": "0px solid gray"
               }
             },
             "x": 0,
@@ -173,50 +770,858 @@
             "height": 160,
             "classes": "html",
             "color": "black",
-            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"flex\">${PROPERTY content}</div>"
+            "value": "<div class=\"title\"> ${PROPERTY title}</div><div class=\"subtitle\"> ${PROPERTY subTitle}</div><div class=\"content\">${PROPERTY content}</div>"
+          },
+          {
+            "type": "text",
+            "x": 93,
+            "y": 1,
+            "fontSize": 12,
+            "width": 103,
+            "dynamicProperties": {
+              "value": "letter",
+              "color": "textTitleColor"
+            }
           }
         ]
       }
     ]
   },
-  "qdtp": {
-    "deck": "deck1",
-    "type": "card",
-    "cardType": "c1",
-    "id": "qdtp",
-    "z": 19,
-    "x": 672,
-    "y": 365,
-    "activeFace": 1
+  "deck3": {
+    "type": "deck",
+    "id": "deck3",
+    "parent": "example3",
+    "cardDefaults": {
+      "height": 300,
+      "width": 200,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "demo1": {
+        "bgColor": "#990",
+        "bodyText": "Action (Global): Card description goes here. -3/+1",
+        "cornerValue": "4/6",
+        "flavorText": "Quotes to make things interesting. ~ Somebody's name",
+        "name": "Dr. No Name",
+        "subName": "Category~Subcategory"
+      },
+      "demo2": {
+        "bgColor": "#000099",
+        "bodyText": "Do the things. All the things.",
+        "cornerValue": "PM",
+        "flavorText": "Add some more text here. ~ Infamous Person",
+        "name": "Death Ray",
+        "subName": "Category~Subcategory"
+      },
+      "demo3": {
+        "bgColor": "#000099",
+        "clonedFrom": "cloneMe",
+        "cornerValue": "1/1",
+        "flavorText": "This card has a quote but not body text. Because why not? ~ Famous Person",
+        "name": "Evil Henchman's Secret Lair",
+        "subName": "Category~Subcategory"
+      },
+      "demo4": {
+        "bgColor": "#aaa",
+        "bodyText": "Action (Local): Card description goes here. +2/+3",
+        "cornerValue": "NG",
+        "name": "A.C.R.O.N.Y.M.",
+        "subName": "Category~Subcategory"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 300,
+            "color": "black",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "html",
+            "css": {
+              "body": {
+                "background": "#ffffff",
+                "display": "flex",
+                "flex-direction": "column"
+              },
+              ".header": {
+                "display": "flex",
+                "justify-content": "space-between",
+                "align-items": "center",
+                "background": "${PROPERTY bgColor}",
+                "padding": "4px"
+              },
+              ".title": {
+                "font-size": "18px",
+                "color": "white",
+                "margin": "0"
+              },
+              ".title2": {
+                "font-size": "12px",
+                "color": "white",
+                "margin": "0"
+              },
+              ".corner": {
+                "background": "white",
+                "padding": "3px",
+                "border-radius": "4px",
+                "font-size": "10px",
+                "margin-left": "1px",
+                "flex-shrink": "0",
+                "display": "none"
+              },
+              ".corner:not(:empty)": {
+                "display": "block"
+              },
+              ".bodyText": {
+                "font-size": "15px",
+                "padding": "4px"
+              },
+              ".bodyFlavor": {
+                "font-size": "15px",
+                "padding": "4px",
+                "font-style": "italic",
+                "font-weight": "bold"
+              },
+              "body > div": {
+                "padding": "1px"
+              }
+            },
+            "x": 0,
+            "y": 0,
+            "width": 200,
+            "height": 300,
+            "classes": "html",
+            "color": "black",
+            "value": "<div class='header'><div><div class='title'>${PROPERTY name}</div><div class='title2'>${PROPERTY subName}</div></div><div class='corner'>${PROPERTY cornerValue}</div></div><div class='bodyText'>${PROPERTY bodyText}</div><div class='bodyFlavor'>${PROPERTY flavorText}</div>"
+          }
+        ]
+      }
+    ]
   },
-  "qr59": {
-    "deck": "deck1",
+  "w9gq": {
+    "deck": "deck3",
     "type": "card",
-    "cardType": "c2",
-    "id": "qr59",
-    "z": 18,
-    "x": 550,
-    "y": 365,
-    "activeFace": 1
+    "cardType": "demo1",
+    "id": "w9gq",
+    "z": 76051,
+    "parent": "9dyg"
   },
-  "c2md": {
-    "deck": "deck1",
+  "qlj6": {
+    "deck": "deck3",
     "type": "card",
-    "cardType": "c3",
-    "id": "c2md",
-    "z": 17,
-    "x": 428,
-    "y": 365,
-    "activeFace": 1
+    "cardType": "demo2",
+    "id": "qlj6",
+    "z": 76052,
+    "parent": "9dyg"
   },
-  "tzot": {
-    "deck": "deck1",
+  "eyh8": {
+    "deck": "deck3",
     "type": "card",
-    "cardType": "c5",
-    "id": "tzot",
-    "z": 11,
-    "x": 306,
-    "y": 365,
-    "activeFace": 1
+    "cardType": "demo3",
+    "id": "eyh8",
+    "z": 76049,
+    "parent": "9dyg"
+  },
+  "o6iy": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "demo4",
+    "id": "o6iy",
+    "z": 76050,
+    "parent": "9dyg"
+  },
+  "example4": {
+    "type": "holder",
+    "id": "example4",
+    "x": 1700,
+    "y": 255,
+    "z": 128,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 158,
+    "height": 208
+  },
+  "recall4": {
+    "type": "button",
+    "id": "recall4",
+    "parent": "example4",
+    "fixedParent": true,
+    "y": 217,
+    "width": 111,
+    "height": 40,
+    "movableInEdit": false,
+    "text": "Recall & Shuffle",
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ],
+    "x": 26
+  },
+  "details4": {
+    "id": "details4",
+    "parent": "example4",
+    "x": 180,
+    "y": 150,
+    "width": 1200,
+    "z": 10052,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This is a deck demonstrating sophisticated design technqiues to make professional-looking cards. The images are all generated by AI using Gemini. Click on the cards to see the back and double click to rotate them 90 degrees. They are hard to set up at the beginning, but very easy to maintain and add new cards."
+  },
+  "name4": {
+    "id": "name4",
+    "x": 850,
+    "y": 50,
+    "width": 470,
+    "height": 50,
+    "z": 10055,
+    "css": "font-size: 40px; ",
+    "parent": "example4",
+    "fixedParent": true,
+    "movable": false,
+    "movableInEdit": false,
+    "html": "Ex 4: Sample Magic Deck"
+  },
+  "btn4": {
+    "type": "button",
+    "id": "btn4",
+    "x": 40,
+    "z": 4,
+    "text": "Example 4",
+    "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": [
+          "example1",
+          "example2",
+          "example3",
+          "example4"
+        ],
+        "property": "x",
+        "value": 1700
+      },
+      {
+        "func": "CLICK",
+        "collection": [
+          "recall1",
+          "recall2",
+          "recall3",
+          "recall4"
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": "example4",
+        "key": "cardType",
+        "reverse": true
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "example4"
+        ],
+        "property": "x",
+        "value": 175
+      },
+      {
+        "func": "MOVE",
+        "from": "example4",
+        "to": "example4Spread1",
+        "face": 1,
+        "count": 6
+      },
+      {
+        "func": "MOVE",
+        "from": "example4",
+        "to": "example4Spread2",
+        "face": 1,
+        "count": 5
+      }
+    ],
+    "y": 750
+  },
+  "y7qt": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Blue Wizard",
+    "id": "y7qt",
+    "z": 76074,
+    "parent": "yvfz"
+  },
+  "gagt": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Lizard Man",
+    "id": "gagt",
+    "z": 76081,
+    "parent": "yvfz"
+  },
+  "ixbw": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Alpaca Warrior",
+    "id": "ixbw",
+    "z": 76080,
+    "parent": "yvfz"
+  },
+  "miiw": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Goblin Sapper",
+    "id": "miiw",
+    "z": 76076,
+    "parent": "yvfz"
+  },
+  "36mf": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Rat Broodmother",
+    "id": "36mf",
+    "z": 76084,
+    "parent": "yvfz"
+  },
+  "jiwo": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Land Green",
+    "id": "jiwo",
+    "z": 76078,
+    "parent": "yvfz"
+  },
+  "fram": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Land Red",
+    "id": "fram",
+    "z": 76077,
+    "parent": "yvfz"
+  },
+  "ozn7": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Land Blue",
+    "id": "ozn7",
+    "z": 76079,
+    "parent": "yvfz"
+  },
+  "iu1r": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Land White",
+    "id": "iu1r",
+    "z": 76083,
+    "parent": "yvfz"
+  },
+  "hn98": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Land Black",
+    "id": "hn98",
+    "z": 76075,
+    "parent": "yvfz"
+  },
+  "vr7m": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "Land Hybrid",
+    "id": "vr7m",
+    "z": 76082,
+    "parent": "yvfz"
+  },
+  "example4Spread1": {
+    "type": "holder",
+    "id": "example4Spread1",
+    "parent": "example4",
+    "fixedParent": true,
+    "y": 300,
+    "width": 940,
+    "height": 208,
+    "z": 131,
+    "stackOffsetX": 155,
+    "x": 169
+  },
+  "example4Spread2": {
+    "type": "holder",
+    "id": "example4Spread2",
+    "parent": "example4",
+    "fixedParent": true,
+    "y": 508,
+    "width": 940,
+    "height": 208,
+    "z": 131,
+    "stackOffsetX": 155,
+    "x": 169
+  },
+  "deck4": {
+    "type": "deck",
+    "id": "deck4",
+    "parent": "example4",
+    "x": 4,
+    "y": 4,
+    "cardDefaults": {
+      "icon": "/i/icons/vtt_logo.svg",
+      "enlarge": 2,
+      "rarity": "common",
+      "credit": "Image: Google Gemini",
+      "classes": "transition",
+      "doubleClickRoutine": [
+        {
+          "func": "IF",
+          "condition": "${PROPERTY rotation}",
+          "thenRoutine": [
+            {
+              "func": "SET",
+              "property": "rotation",
+              "value": 0,
+              "collection": [
+                "${PROPERTY id}"
+              ]
+            }
+          ],
+          "elseRoutine": [
+            {
+              "func": "SET",
+              "property": "rotation",
+              "value": 90,
+              "collection": [
+                "${PROPERTY id}"
+              ]
+            }
+          ]
+        }
+      ],
+      "width": 150,
+      "height": 200,
+      "css": {
+        "default": {
+          "box-shadow": "0 2px 3px #0005",
+          "border-radius": "10px",
+          "border": "1px solid #0005",
+          "font-family": "Metamorphous"
+        },
+        " .setIcon": {
+          "vertical-align": "middle",
+          "height": "1.5em",
+          "padding": "1px",
+          "border-radius": "500px"
+        },
+        " .setIcon.common": {
+          "background-color": "white"
+        },
+        " .setIcon.uncommon": {
+          "filter": "invert(100%) brightness(50%) contrast(150%) saturate(0%) hue-rotate(180deg) saturate(5%)"
+        },
+        " .setIcon.rare": {
+          "filter": "invert(75%) sepia(50%) saturate(500%) hue-rotate(00deg) brightness(90%) contrast(100%)"
+        },
+        " .setIcon.mythic": {
+          "filter": "invert(30%) sepia(100%) saturate(700%) hue-rotate(330deg) brightness(150%)"
+        },
+        " .cardFace .cardFaceObject": {
+          "display": "flex",
+          "flex-direction": "column",
+          "align-content": "space-between",
+          "justify-content": "space-between",
+          "gap": 0
+        },
+        " .title": {
+          "z-index": "2",
+          "position": "relative",
+          "display": "flex",
+          "align-items": "center",
+          "align-content": "space-between",
+          "justify-content": "space-between",
+          "border": "3px double black",
+          "border-radius": "1em 20px 2.5em 0.2in",
+          "margin": "5px 5px 0 5px",
+          "font-size": "8px",
+          "background-color": "white"
+        },
+        " .title .name": {
+          "padding": "2px 0px 2px 2px",
+          "flex-grow": 1,
+          "font-weight": "bold"
+        },
+        " .cost": {
+          "margin": "1px"
+        },
+        " .costsymbol": {
+          "display": "inline-block",
+          "margin": "1px",
+          "padding": "2px",
+          "width": "0.9em",
+          "border-width": "1px",
+          "border-style": "solid",
+          "border-color": "#0005",
+          "border-radius": "10px",
+          "line-height": "0.9em",
+          "text-align": "center",
+          "background-color": "gray"
+        },
+        " .costsymbol::before": {
+          "font-size": "0.8em",
+          "font-weight": "bold",
+          "content": "'X'",
+          "width": "100%",
+          "color": "white",
+          "display": "block",
+          "text-shadow": "0 0 3px black"
+        },
+        " .hybrid": {
+          "background-color": "gold"
+        },
+        " .hybrid .description": {
+          "background-color": "#fbf1bb"
+        },
+        " .black": {
+          "background-color": "black"
+        },
+        " .black .description": {
+          "background-color": "#ccc"
+        },
+        " .costsymbol.k": {
+          "background-color": "black"
+        },
+        " .costsymbol.k::before": {
+          "content": "'K'"
+        },
+        " .blue": {
+          "background-color": "#3968d5"
+        },
+        " .blue .description": {
+          "background-color": "#cad6f4"
+        },
+        " .costsymbol.b::before": {
+          "content": "'B'"
+        },
+        " .costsymbol.b": {
+          "background-color": "#3968d5"
+        },
+        " .green": {
+          "background-color": "#05a31f"
+        },
+        " .green .description": {
+          "background-color": "#bce6c3"
+        },
+        " .costsymbol.g": {
+          "background-color": "#05a31f"
+        },
+        " .costsymbol.g::before": {
+          "content": "'G'"
+        },
+        " .white": {
+          "background-color": "#ddd"
+        },
+        " .white .description": {
+          "background-color": "#f4f4f4"
+        },
+        " .costsymbol.w": {
+          "background-color": "#ddd"
+        },
+        " .costsymbol.w::before": {
+          "content": "'W'",
+          "color": "black"
+        },
+        " .red": {
+          "background-color": "#ff0000"
+        },
+        " .red .description": {
+          "background-color": "#fcbbbb"
+        },
+        " .costsymbol.r": {
+          "background-color": "red",
+          "color": "white"
+        },
+        " .costsymbol.r::before": {
+          "content": "'R'"
+        },
+        " .toughness": {
+          "font-size": "12px",
+          "padding": "0 8px",
+          "position": "absolute",
+          "bottom": "2px",
+          "right": "2px",
+          "border": "1px solid white",
+          "color": "white",
+          "background": "black",
+          "z-index": "2",
+          "border-radius": "1em"
+        },
+        " .toughness:empty": {
+          "display": "none"
+        },
+        " .description.Basic.Land": {
+          "max-height": "1px",
+          "padding": "0",
+          "margin-bottom": 5,
+          "min-height": "10px",
+          "background": "none",
+          "border-width": "0"
+        },
+        " .flavor:empty": {
+          "display": "none"
+        },
+        " .type": {
+          "z-index": "2",
+          "font-weight": "bold",
+          "font-size": "6px",
+          "border": "3px double black",
+          "border-radius": "2em",
+          "margin": "0 5px",
+          "padding": "1px 1px 1px 5px",
+          "background-color": "white",
+          "display": "flex",
+          "align-items": "center",
+          "align-content": "space-between",
+          "justify-content": "space-between"
+        },
+        " .supertype::after": {
+          "content": "' '"
+        },
+        " .subtype": {
+          "flex-grow": 1
+        },
+        " .subtype::before": {
+          "content": "' - '"
+        },
+        " .description": {
+          "font-size": "6px",
+          "border-radius": "0 0 5px 5px",
+          "border-right": "1px solid black",
+          "border-bottom": "1px solid black",
+          "border-left": "1px solid black",
+          "margin": "-10px 5px 5px 5px",
+          "flex-grow": 1,
+          "flex-shrink": 0,
+          "min-height": "50px",
+          "padding": "10px 5px 5px 5px",
+          "z-index": "1",
+          "background": "#fffB"
+        },
+        " .flavor": {
+          "font-size": "5px",
+          "font-style": "italic"
+        },
+        " .picture": {
+          "flex-grow": 1,
+          "background-size": "cover",
+          "margin": "-10px 5px",
+          "z-index": "1",
+          "background-position": "top center",
+          "border-left": "1px solid black",
+          "border-right": "1px solid black",
+          "height": "100px"
+        },
+        " .credit": {
+          "font-family": "Roboto",
+          "z-index": "0",
+          "font-size": "5px",
+          "margin": "-15px 5px 5px 5px",
+          "padding": "10px 3px 1px 3px",
+          "background": "black",
+          "color": "white",
+          "border-radius": "0 0 5px 5px"
+        }
+      }
+    },
+    "cardTypes": {
+      "Blue Wizard": {
+        "name": "Blue Wizard",
+        "cost": "<span class='costsymbol b'></span><span class='costsymbol b'></span>",
+        "color": "blue",
+        "image": "/assets/877612317_30786",
+        "toughness": "3 / 1",
+        "magicType": "Creature",
+        "superType": "",
+        "subType": "Human",
+        "description": "<p><strong>TAP:</strong> Wreck shit up.</p>",
+        "flavor": "They enjoy doing that."
+      },
+      "Lizard Man": {
+        "name": "Lizard Man",
+        "cost": "<span class='costsymbol'></span><span class='costsymbol g'></span>",
+        "color": "green",
+        "image": "/assets/1282686449_35150",
+        "toughness": "1 / 4",
+        "magicType": "Creature",
+        "superType": "",
+        "subType": "Lizard",
+        "description": "<p>When Lizard Man attacks add a +1/+1 token on any creature.</p>",
+        "flavor": "Venom be thy weapon."
+      },
+      "Alpaca Warrior": {
+        "name": "Alpaca Warrior",
+        "cost": "<span class='costsymbol w'></span><span class='costsymbol w'></span>",
+        "color": "white",
+        "image": "/assets/-107190370_33274",
+        "toughness": "2 / 2",
+        "magicType": "Creature",
+        "superType": "",
+        "subType": "Fluffy",
+        "rarity": "rare",
+        "description": "<p><strong>Blessed</strong> (Damage dealt by this creature also causes you to gain that much life.)</p>",
+        "flavor": "Watch out, they spit."
+      },
+      "Goblin Sapper": {
+        "name": "Goblin Sapper",
+        "cost": "<span class='costsymbol r'></span>",
+        "color": "red",
+        "rarity": "uncommon",
+        "image": "/assets/658487443_32020",
+        "toughness": "1 / 1",
+        "magicType": "Creature",
+        "subType": "Goblin",
+        "description": "<p><strong>Quick</strong> (This creature deals combat damage before creatures without quick)</p>",
+        "flavor": "Bombs away!"
+      },
+      "Rat Broodmother": {
+        "name": "Rat Broodmother",
+        "cost": "<span class='costsymbol k'></span>",
+        "color": "black",
+        "image": "/assets/-1720022513_28930",
+        "toughness": "1 / 2",
+        "magicType": "Creature",
+        "superType": "",
+        "subType": "Rat",
+        "description": "<p>Whenever Rat Broodmother attacks put two 1/1 Rat tokens on the board under your control.</p>",
+        "flavor": "I don't think these ones are hungry for pizza."
+      },
+      "Land Green": {
+        "name": "Woods",
+        "color": "green",
+        "image": "/assets/-1493012605_49326",
+        "magicType": "Basic Land",
+        "subType": "Woods"
+      },
+      "Land Red": {
+        "name": "Mountain",
+        "color": "red",
+        "image": "/assets/1675390234_20442",
+        "magicType": "Basic Land",
+        "subType": "Mountain"
+      },
+      "Land Blue": {
+        "name": "Island",
+        "color": "blue",
+        "image": "/assets/558760225_29464",
+        "magicType": "Basic Land",
+        "subType": "Island"
+      },
+      "Land White": {
+        "name": "Plains",
+        "color": "white",
+        "image": "/assets/-1565006920_24458",
+        "magicType": "Basic Land",
+        "subType": "Plains"
+      },
+      "Land Black": {
+        "name": "Swamp",
+        "color": "black",
+        "image": "/assets/-1987876512_19120",
+        "magicType": "Basic Land",
+        "subType": "Swamp"
+      },
+      "Land Hybrid": {
+        "name": "Amorphous",
+        "color": "hybrid",
+        "image": "/assets/-449163882_35344",
+        "magicType": "Land",
+        "superType": "Legendary",
+        "rarity": "mythic",
+        "subType": "Amorphous",
+        "description": "<p>Amorphous enters the battlefield tapped.</p><p><strong>TAP:</strong> Add 1 of any color to your mana pool.</p>",
+        "flavor": "What kind of alchemy is this?!"
+      }
+    },
+    "classes": "gothic_font",
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 150,
+            "height": 200,
+            "css": "background-position:center;background-size:200%;border:8px solid black;",
+            "color": "transparent",
+            "value": "/assets/152416292_72570"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "html",
+            "x": 0,
+            "y": 0,
+            "width": 150,
+            "height": 200,
+            "value": "<div class='title'><span class='name'>${PROPERTY name}</span><span class='cost'>${PROPERTY cost}</span></div><div class='picture' style='background-image:url(${PROPERTY image})'></div><div class='type'><span class='supertype'>${PROPERTY superType}</span><span class='regularType'>${PROPERTY magicType}</span><span class='subtype'>${PROPERTY subType}</span><img class='setIcon ${PROPERTY rarity}' src='${PROPERTY icon}'></div><div class='description ${PROPERTY magicType}'>${PROPERTY description}<div class='flavor'>${PROPERTY flavor}</div></div><div class='credit'>${PROPERTY credit}</div><div class='toughness'>${PROPERTY toughness}</div>",
+            "dynamicProperties": {
+              "classes": "color"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "tj4g": {
+    "type": "pile",
+    "parent": "example2",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "tj4g"
+  },
+  "9dyg": {
+    "type": "pile",
+    "parent": "example3",
+    "x": 4,
+    "y": 4,
+    "width": 200,
+    "height": 300,
+    "id": "9dyg"
+  },
+  "yvfz": {
+    "type": "pile",
+    "parent": "example4",
+    "x": 4,
+    "y": 4,
+    "width": 150,
+    "height": 200,
+    "id": "yvfz"
   }
 }
