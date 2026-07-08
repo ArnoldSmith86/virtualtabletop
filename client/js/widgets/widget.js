@@ -2615,7 +2615,7 @@ export class Widget extends StateManaged {
       await this.set('rotation', degrees);
   }
 
-  setHighlighted(isHighlighted, isCustomHighlighted=false) {
+  setHighlighted(isHighlighted, isCustomHighlighted=null) {
     if(isHighlighted !== null && this.isHighlighted != isHighlighted) {
       this.isHighlighted = isHighlighted;
       if(isHighlighted)
