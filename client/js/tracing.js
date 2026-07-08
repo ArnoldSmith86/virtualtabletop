@@ -57,6 +57,12 @@ function isFeedbackOverlayOpen() {
 }
 
 function openFeedbackOverlay() {
+  // tracing.js's onLoad callback (and so this click handler) is registered before main.js's,
+  // so main.js's isLoading guard on .toolbarButton clicks never gets a chance to run for this
+  // button - check it here directly instead
+  if(isLoading)
+    return;
+
   // re-clicking the toolbar button while the overlay is already open should just close it,
   // not clobber the saved previous-overlay/tab and wipe out whatever the player had typed
   if(isFeedbackOverlayOpen()) {
@@ -82,23 +88,31 @@ function openFeedbackOverlay() {
   for(const closeButton of $a('#feedbackOverlay button[icon=close]'))
     closeButton.onclick = _=>closeFeedbackOverlay();
 
-  $('#feedbackOverlay button[icon=check]').onclick = async function() {
-    // only send room-identifying details (URL, game state, etc.) when the player opts in
-    const report = $('#feedbackIncludeState').checked ? details : { userAgent: details.userAgent };
-    report.message = $('#feedbackOverlay textarea').value;
+  const submitButton = $('#feedbackOverlay button[icon=check]');
+  submitButton.disabled = false;
+  submitButton.onclick = async function() {
+    // guard against double submits (double-click, or clicking again during a slow request)
+    if(submitButton.disabled)
+      return;
+    submitButton.disabled = true;
     try {
+      // only send room-identifying details (URL, game state, etc.) when the player opts in
+      const report = $('#feedbackIncludeState').checked ? details : { userAgent: details.userAgent };
+      report.message = $('#feedbackOverlay textarea').value;
       const res = await fetch('clientError', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(report)
       });
       const text = await res.text();
-      if(text.match(/^[a-z0-9]{8}$/))
+      if(res.ok && text.match(/^[a-z0-9]{8}$/))
         closeFeedbackOverlay();
       else
         showFeedbackError("Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + text);
     } catch(e) {
       showFeedbackError("Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + e.message + "\n" + e.stack);
+    } finally {
+      submitButton.disabled = false;
     }
   };
 }
