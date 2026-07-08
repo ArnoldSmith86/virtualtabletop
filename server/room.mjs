@@ -1280,7 +1280,14 @@ export default class Room {
   }
 
   zoom(args) {
-    const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`) : [];
+    const unsafeKeys = [ '__proto__', 'constructor', 'prototype' ];
+    const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`).filter(p=>!unsafeKeys.includes(p)) : [];
+
+    const level = Number(args.level);
+    const panX = Number(args.panX);
+    const panY = Number(args.panY);
+    if(!Number.isFinite(level) || !Number.isFinite(panX) || !Number.isFinite(panY))
+      return;
 
     // Persist zoom settings into gameSettings (per-player or for all)
     if(!this.state._meta.gameSettings)
@@ -1288,7 +1295,7 @@ export default class Room {
     if(!this.state._meta.gameSettings.zoom)
       this.state._meta.gameSettings.zoom = { perPlayer: {}, all: null };
 
-    const payload = { level: args.level, panX: args.panX, panY: args.panY };
+    const payload = { level: Math.max(1, Math.min(10, level)), panX, panY };
     if(args.disableUserControls !== undefined)
       payload.disableUserControls = args.disableUserControls !== false;
     if(players.length === 0) {

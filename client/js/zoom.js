@@ -1,56 +1,61 @@
 import { onMessage } from './connection.js';
-import { onLoad } from './domhelpers.js';
+import { $, onLoad } from './domhelpers.js';
 import { getCurrentGameSettings } from './legacymodes.js';
 import { playerName } from './overlays/players.js';
 
 let zoomScale = 1;
 let enableUserZoom = localStorage.getItem('enableUserZoom') !== 'false';
 let allowGameZoomControl = localStorage.getItem('allowGameZoomControl') !== 'false';
+let lastAppliedZoomKey = null;
+
+function getZoomTarget(gs) {
+  const zoomSettings = (gs && gs.zoom) || {};
+  return (zoomSettings.perPlayer || {})[playerName] || zoomSettings.all || null;
+}
 
 function applyServerZoomSetting(gs) {
   if(edit || !allowGameZoomControl)
     return;
-  const zoomSettings = gs.zoom || {};
-  const target = (zoomSettings.perPlayer || {})[playerName] || zoomSettings.all;
+  const target = getZoomTarget(gs);
+  const targetKey = target ? JSON.stringify(target) : null;
   if(target && Number.isFinite(Number(target.level)) && Number.isFinite(Number(target.panX)) && Number.isFinite(Number(target.panY))) {
-    const zl = Math.max(1, Math.min(10, Number(target.level)));
-    setZoomLevel(zl);
-    setPan(Number(target.panX)*scale, Number(target.panY)*scale);
+    // Only re-snap the viewport when the game re-locked it or the target actually
+    // changed - otherwise every unrelated meta update (player join/leave, star
+    // toggle, ...) would undo a player's manual pan/zoom while disableUserControls is false.
+    if(target.disableUserControls !== false || targetKey !== lastAppliedZoomKey) {
+      const zl = Math.max(1, Math.min(10, Number(target.level)));
+      setZoomLevel(zl);
+      setPan(Number(target.panX)*scale, Number(target.panY)*scale);
+    }
   }
+  lastAppliedZoomKey = targetKey;
   updateZoomUIState(gs);
 }
 
-onMessage('meta', args=>applyServerZoomSetting(args.meta.gameSettings));
-onMessage('state', args=>applyServerZoomSetting(args._meta.gameSettings));
+onMessage('meta', args=>applyServerZoomSetting(args.meta && args.meta.gameSettings));
+onMessage('state', args=>applyServerZoomSetting(args._meta && args._meta.gameSettings));
 
 function isGameOverrideActive() {
   if(edit || !allowGameZoomControl)
     return false;
-  const gs = getCurrentGameSettings() || {};
-  const zoomSettings = gs.zoom || {};
-  const perPlayer = zoomSettings.perPlayer || {};
-  const target = perPlayer[playerName] || zoomSettings.all;
+  const target = getZoomTarget(getCurrentGameSettings());
   if(!target)
     return false;
   return target.disableUserControls !== false;
 }
 
 function updateZoomUIState(gs) {
-  let override = isGameOverrideActive();
-  if(gs) {
-    const zoomSettings = gs.zoom || {};
-    const target = (zoomSettings.perPlayer || {})[playerName] || zoomSettings.all;
-    if(target) {
-      const disableUserControls = target.disableUserControls !== false;
-      if(!disableUserControls) {
-        $('#zoomOverrideMsg').style.display = 'none';
-        $('#zoomSlider').disabled = false;
-        $('body').classList.remove('noPanning');
-        return;
-      } else {
-        override = allowGameZoomControl;
-      }
+  const target = getZoomTarget(gs);
+  let override = false;
+  if(target) {
+    const disableUserControls = target.disableUserControls !== false;
+    if(!disableUserControls) {
+      $('#zoomOverrideMsg').style.display = 'none';
+      $('#zoomSlider').disabled = false;
+      $('body').classList.remove('noPanning');
+      return;
     }
+    override = allowGameZoomControl;
   }
   $('#zoomOverrideMsg').style.display = override ? '' : 'none';
   $('#zoomSlider').disabled = override;
@@ -77,12 +82,25 @@ export function getZoomLevel() {
   return zoomScale;
 }
 
-function resetZoomAndPan() {
+function resetZoomAndPan(gameSettings) {
   if(edit) {
     setZoomLevel(1);
     setPan(0, 0);
   } else {
-    applyServerZoomSetting(getCurrentGameSettings());
+    const gs = gameSettings || getCurrentGameSettings();
+    if(getZoomTarget(gs)) {
+      // The view was just reset (new game loaded, or returning from edit mode which
+      // always forces 1x) - always re-apply in full, regardless of the dedup in
+      // applyServerZoomSetting that skips unchanged targets on routine meta updates.
+      lastAppliedZoomKey = null;
+      applyServerZoomSetting(gs);
+    } else {
+      // No zoom saved with this game - start from the default view instead of
+      // carrying over whatever zoom/pan the previous game (or the player) left behind.
+      setZoomLevel(1);
+      setPan(0, 0);
+      lastAppliedZoomKey = null;
+    }
   }
   $('body').classList.remove('panning');
 }
@@ -197,8 +215,10 @@ onLoad(function() {
   on('#allowGameZoomControl', 'change', function(e) {
     allowGameZoomControl = e.target.checked;
     localStorage.setItem('allowGameZoomControl', allowGameZoomControl);
-    if(allowGameZoomControl)
+    if(allowGameZoomControl) {
+      lastAppliedZoomKey = null; // force re-applying the game's target now that control is regained
       applyServerZoomSetting(getCurrentGameSettings());
+    }
     updateZoomUIState(getCurrentGameSettings());
   });
 

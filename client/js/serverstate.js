@@ -506,7 +506,7 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
-  resetZoomAndPan();
+  resetZoomAndPan(args._meta.gameSettings);
 
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
