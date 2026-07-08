@@ -1,7 +1,7 @@
 import { compute_ops } from '../../client/js/compute.js';
 import { setupTestEnvironment } from './test-util.js';
-import { computeTest } from './compute-util.js';
+import { computeTest, computeShard } from './compute-util.js';
 
 setupTestEnvironment();
 
-computeTest(compute_ops, compute_ops.slice(28, 56), 'ops 29-56');
+computeTest(compute_ops, computeShard(compute_ops, 1, 4), 'ops shard 2/4');

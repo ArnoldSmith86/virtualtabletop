@@ -49,6 +49,14 @@ async function runOperator(t, op) {
   await t.click(`#w_button${escapeID(op.name)}`);
 }
 
+// Splits allOps into totalShards contiguous chunks and returns the chunk at shardIndex
+// (0-based). Deriving the boundaries from allOps.length instead of hard-coding them means a
+// newly added compute op is always picked up by some shard.
+export function computeShard(allOps, shardIndex, totalShards) {
+  const size = Math.ceil(allOps.length / totalShards);
+  return allOps.slice(shardIndex * size, (shardIndex + 1) * size);
+}
+
 export function computeTest(allOps, ops, label) {
   test(`Compute (${label})`, async t => {
     await ClientFunction(prepareClient)();

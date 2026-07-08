@@ -2,11 +2,11 @@ import { Selector, ClientFunction } from 'testcafe';
 
 import { compute_ops } from '../../client/js/compute.js';
 import { prepareClient, setName, setRoomState, setupTestEnvironment } from './test-util.js';
-import { computeTest } from './compute-util.js';
+import { computeTest, computeShard } from './compute-util.js';
 
 setupTestEnvironment();
 
-computeTest(compute_ops, compute_ops.slice(83, 110), 'ops 84-110');
+computeTest(compute_ops, computeShard(compute_ops, 3, 4), 'ops shard 4/4');
 
 test('Dynamic expressions', async t => {
   await t.resizeWindow(1280, 800);
