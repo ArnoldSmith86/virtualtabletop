@@ -45,14 +45,24 @@ function collectClientDetails() {
   };
 }
 
+let feedbackPreviousOverlay = null;
+let feedbackPreviousActiveTab = null;
+
 function openFeedbackOverlay() {
   const details = collectClientDetails();
+
+  // remember what was showing so we can return to it instead of just closing everything
+  feedbackPreviousOverlay = [...$a('.overlay')].find(o=>o.id != 'feedbackOverlay' && o.style.display != 'none');
+  feedbackPreviousActiveTab = $('.toolbarTab.active');
+  for(const tabButton of $a('.toolbarTab'))
+    toggleClass(tabButton, 'active', false);
+
   $('#feedbackOverlay textarea').value = '';
   $('#feedbackIncludeState').checked = true;
   showOverlay('feedbackOverlay');
 
   for(const closeButton of $a('#feedbackOverlay button[icon=close]'))
-    closeButton.onclick = _=>showOverlay();
+    closeButton.onclick = _=>closeFeedbackOverlay();
 
   $('#feedbackOverlay button[icon=check]').onclick = async function() {
     // only send room-identifying details (URL, game state, etc.) when the player opts in
@@ -66,13 +76,19 @@ function openFeedbackOverlay() {
       });
       const text = await res.text();
       if(text.match(/^[a-z0-9]{8}$/))
-        showOverlay();
+        closeFeedbackOverlay();
       else
         $('#feedbackOverlay textarea').value = "Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + text;
     } catch(e) {
       $('#feedbackOverlay textarea').value = "Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + e.message + "\n" + e.stack;
     }
   };
+}
+
+function closeFeedbackOverlay() {
+  if(feedbackPreviousActiveTab)
+    toggleClass(feedbackPreviousActiveTab, 'active', true);
+  showOverlay(feedbackPreviousOverlay && feedbackPreviousOverlay.id, true);
 }
 
 onLoad(function() {
