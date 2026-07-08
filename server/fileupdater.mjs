@@ -522,6 +522,13 @@ function v22UpdateFillToParameter(routine) {
           ]
         };
       }
+    } else if(routine[key] && routine[key].func == 'IF' && String(routine[key].note).includes('count=0 changed')) {
+      // v16UpdateCountParameter wraps a MOVE with a dynamic `count` into a new IF at this
+      // same array level, after this array's own IF/FOREACH children were already recursed
+      // into above in updateRoutine() - so its branches (copies of the original MOVE) never
+      // otherwise get a chance to run through this fillTo migration.
+      v22UpdateFillToParameter(routine[key].thenRoutine);
+      v22UpdateFillToParameter(routine[key].elseRoutine);
     }
   }
 }
