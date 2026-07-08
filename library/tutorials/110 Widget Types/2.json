@@ -1,0 +1,551 @@
+{
+  "title": {
+    "id": "title",
+    "x": 400,
+    "y": -2,
+    "width": 800,
+    "height": 60,
+    "z": 74,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 60px;text-align:center",
+    "text": "Widget Types: Other"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 108,
+    "y": 80,
+    "width": 1400,
+    "height": 150,
+    "layer": -3,
+    "z": 129,
+    "movable": false,
+    "movableInEdit": false,
+    "css": "font-size: 25px; ",
+    "html": "This variant of the tutorial covers the remaining widget types not previously discussed. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/types-canvas'>Canvas</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#canvas'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-dice'>Dice</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#dice'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-scoreboard'>Scoreboards (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#scoreboard'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-spinner'>Spinners</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/types-timer'>Timers</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#timer'>wiki</a>). Each of these types of widgets, except for dice, are available under the Interactive section of the add widget overlay."
+  },
+  "text1": {
+    "id": "text1",
+    "x": 4,
+    "y": 552,
+    "width": 300,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The default canvas is above (except that it is smaller to fit this tutorial). It is a limited drawing tool. Users can choose a color, erase the drawing, or change the thickness of the line using the buttons to the left."
+  },
+  "text2": {
+    "id": "text2",
+    "x": 325,
+    "y": 552,
+    "width": 300,
+    "z": 121,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Several types of 2D and 3D animated dice are available. Options are available to represent dice from 2 to 20 faces. They can be highly customized with colors, images, and text."
+  },
+  "text3": {
+    "id": "text3",
+    "x": 651,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The default scoreboard is above. A scoreboard requires seats in order to function. Scorekeeping can be automated by using routines, but scoreboards support click-to-change capability."
+  },
+  "text4": {
+    "id": "text4",
+    "x": 964,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "Spinners, like dice, are animated. They serve the same function as dice, just in a different visual format. The default spinner is above."
+  },
+  "text5": {
+    "id": "text5",
+    "x": 1294,
+    "y": 552,
+    "width": 300,
+    "z": 9732,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The default timer is above. Timers can count up or down. They can also be used in some sophisticated automation routines. However, timers are known to have some bugs and quirks and frequently glitch. So be careful in relying on them in building games."
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "110 Widget Types",
+      "image": "/assets/-1812256112_6351",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "",
+      "lastUpdate": 1763354511339,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "Other",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "dice1": {
+    "type": "dice",
+    "id": "dice1",
+    "x": 364,
+    "y": 338,
+    "z": 9733,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "dice2": {
+    "type": "dice",
+    "id": "dice2",
+    "x": 491,
+    "y": 341,
+    "z": 9734,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pipSymbols": false,
+    "shape3d": true
+  },
+  "dice3": {
+    "type": "dice",
+    "id": "dice3",
+    "x": 425,
+    "y": 447,
+    "z": 9735,
+    "borderColor": "transparent",
+    "color": "transparent",
+    "faces": [
+      {
+        "value": 1,
+        "image": "/i/dice/cube-1-1.svg"
+      },
+      {
+        "value": 1,
+        "image": "/i/dice/cube-1-2.svg"
+      },
+      {
+        "value": 1,
+        "image": "/i/dice/cube-1-3.svg"
+      },
+      {
+        "value": 1,
+        "image": "/i/dice/cube-1-4.svg"
+      },
+      {
+        "value": 2,
+        "image": "/i/dice/cube-2-1.svg"
+      },
+      {
+        "value": 2,
+        "image": "/i/dice/cube-2-2.svg"
+      },
+      {
+        "value": 2,
+        "image": "/i/dice/cube-2-3.svg"
+      },
+      {
+        "value": 2,
+        "image": "/i/dice/cube-2-4.svg"
+      },
+      {
+        "value": 3,
+        "image": "/i/dice/cube-3-1.svg"
+      },
+      {
+        "value": 3,
+        "image": "/i/dice/cube-3-2.svg"
+      },
+      {
+        "value": 3,
+        "image": "/i/dice/cube-3-3.svg"
+      },
+      {
+        "value": 3,
+        "image": "/i/dice/cube-3-4.svg"
+      },
+      {
+        "value": 4,
+        "image": "/i/dice/cube-4-1.svg"
+      },
+      {
+        "value": 4,
+        "image": "/i/dice/cube-4-2.svg"
+      },
+      {
+        "value": 4,
+        "image": "/i/dice/cube-4-3.svg"
+      },
+      {
+        "value": 4,
+        "image": "/i/dice/cube-4-4.svg"
+      },
+      {
+        "value": 5,
+        "image": "/i/dice/cube-5-1.svg"
+      },
+      {
+        "value": 5,
+        "image": "/i/dice/cube-5-2.svg"
+      },
+      {
+        "value": 5,
+        "image": "/i/dice/cube-5-3.svg"
+      },
+      {
+        "value": 5,
+        "image": "/i/dice/cube-5-4.svg"
+      },
+      {
+        "value": 6,
+        "image": "/i/dice/cube-6-1.svg"
+      },
+      {
+        "value": 6,
+        "image": "/i/dice/cube-6-2.svg"
+      },
+      {
+        "value": 6,
+        "image": "/i/dice/cube-6-3.svg"
+      },
+      {
+        "value": 6,
+        "image": "/i/dice/cube-6-4.svg"
+      }
+    ],
+    "imageScale": 1,
+    "svgReplaces": {
+      "topColor": "cT",
+      "leftColor": "cL",
+      "rightColor": "cR",
+      "pipColor": "cP"
+    },
+    "cL": "#cccccc",
+    "cP": "#000000",
+    "cR": "#999999",
+    "cT": "#ffffff"
+  },
+  "scoreboard": {
+    "type": "scoreboard",
+    "id": "scoreboard",
+    "x": 643,
+    "y": 316,
+    "z": 2
+  },
+  "spinner": {
+    "type": "spinner",
+    "id": "spinner",
+    "x": 1049,
+    "y": 361,
+    "z": 9,
+    "options": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "value": "6"
+  },
+  "timmer": {
+    "type": "timer",
+    "id": "timmer",
+    "x": 1324,
+    "y": 400
+  },
+  "timerR": {
+    "type": "button",
+    "id": "timerR",
+    "parent": "timmer",
+    "fixedParent": true,
+    "x": 80,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "reload",
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ]
+  },
+  "timerP": {
+    "type": "button",
+    "id": "timerP",
+    "parent": "timmer",
+    "fixedParent": true,
+    "x": 120,
+    "y": -3,
+    "width": 36,
+    "height": 36,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "play_pause",
+    "clickRoutine": [
+      {
+        "func": "TIMER",
+        "timer": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "rcx1-Reset": {
+    "type": "button",
+    "id": "rcx1-Reset",
+    "parent": "canvas",
+    "fixedParent": true,
+    "x": -50,
+    "y": 0,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "CANVAS",
+        "canvas": "${PROPERTY parent}",
+        "mode": "reset"
+      }
+    ],
+    "css": "border-width: 1px;  --wcBorder: #555; --wcBorderOH: black; --wcMainOH: #0d2f5e; font-size:16px",
+    "borderRadius": "50% 0% 0% 0%",
+    "text": "Reset"
+  },
+  "rcx1-Size": {
+    "type": "button",
+    "id": "rcx1-Size",
+    "parent": "canvas",
+    "fixedParent": true,
+    "x": -50,
+    "y": 60,
+    "width": 50,
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "canvasRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var step = (${PROPERTY lineWidth OF $parent} - 1) / (${PROPERTY resolution OF $parent} / 200)",
+      "var step = floor ${step}",
+      "var percentage = 10 + ${step} * 10",
+      "var percentage = min ${percentage} 100",
+      "var percentage = max ${percentage} 10",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${percentage}"
+      }
+    ],
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var lineSize = ${PROPERTY lineSize} + 10",
+      "var lineSize = ${lineSize} % 110",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "lineSize",
+        "value": "${lineSize}"
+      },
+      "var newSize = max ${lineSize} 10",
+      "var newWidth = 1 + (${newSize} - 10) / 10 * (${PROPERTY resolution OF $parent} / 200)",
+      {
+        "func": "SET",
+        "collection": [
+          "${parent}"
+        ],
+        "property": "lineWidth",
+        "value": "${newWidth}"
+      }
+    ],
+    "css": {
+      "default": {
+        "border-width": "1px",
+        "background-color": "#f0f0f0",
+        "--wcBorder": "#555",
+        "--wcBorderOH": "black ",
+        "background-repeat": "no-repeat",
+        "background-position": "50% 50%",
+        "background-size": "${PROPERTY lineSize}%"
+      },
+      "::after": {
+        "content": "\"Line Width\"",
+        "position": "absolute",
+        "margin-top": "-5.1em",
+        "color": "white",
+        "background-color": "#0d2f5e",
+        "width": "50px",
+        "font-size": "0.6rem"
+      }
+    },
+    "borderRadius": 0,
+    "image": "/i/game-icons.net/delapouite/plain-circle.svg",
+    "lineSize": 10
+  },
+  "rcx1-Color": {
+    "type": "button",
+    "id": "rcx1-Color",
+    "parent": "canvas",
+    "fixedParent": true,
+    "x": -50,
+    "y": 100,
+    "width": 50,
+    "height": 50,
+    "movable": false,
+    "movableInEdit": false,
+    "clickRoutine": [
+      "var parent = ${PROPERTY parent}",
+      {
+        "func": "CANVAS",
+        "canvas": "${parent}",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "CALL",
+        "routine": "colorRoutine"
+      }
+    ],
+    "colorRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var color = ${PROPERTY colorMap OF $parent} getIndex ${PROPERTY activeColor OF $parent}",
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "color",
+        "value": "${color}"
+      }
+    ],
+    "color": "#1F5CA6",
+    "css": "border-width: 1px; background-color: var(--color);  --wcBorder: #555; --wcBorderOH: black  ",
+    "borderRadius": "0% 0% 0% 50%"
+  },
+  "canvas": {
+    "type": "canvas",
+    "id": "canvas",
+    "x": 46,
+    "y": 315,
+    "width": 200,
+    "height": 200,
+    "activeColorChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Color"
+        }
+      }
+    ],
+    "lineWidthChangeRoutine": [
+      {
+        "func": "CALL",
+        "routine": "selectButtonRoutine",
+        "arguments": {
+          "buttonType": "-Size"
+        }
+      }
+    ],
+    "selectButtonRoutine": [
+      {
+        "func": "SELECT",
+        "type": "button",
+        "property": "parent",
+        "value": "${PROPERTY id}"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var isColor = ${widgetID} endsWith ${buttonType}",
+          {
+            "func": "IF",
+            "condition": "${isColor}",
+            "thenRoutine": [
+              "var buttonID = ${widgetID}"
+            ]
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "widget": "${buttonID}",
+        "routine": "canvasRoutine"
+      }
+    ],
+    "c13": "+-01$/10",
+    "c14": "01/1.1/1/1.1/1/1.1/1.101.1.101.1.101.1-1-1-1-1.010",
+    "c15": ".1$0",
+    "c23": ".-01()0",
+    "c24": "./1/1+1-101/11010110101/101-1/101-1/101,10",
+    "c25": "1()0",
+    "c33": ".-01()0",
+    "c34": "/-1/101(/1/1-101/101'01/101/1/11.1(0",
+    "c35": "1()0",
+    "c43": ".-01()0",
+    "c44": "/1$01-1-1-1-1-101'-1-1-101'-101.1.1/110",
+    "c45": "1()0",
+    "c53": ".-01()0",
+    "c54": ",01-1-1-1-1-1/101(/1/101/101/101/101/101(.10",
+    "c55": "1()0",
+    "c63": ".-01()0",
+    "c64": "0/1/01,11/11/11/101/101'01/101-1/1/11.1/10",
+    "c65": "1()0",
+    "c73": ".-01()0",
+    "c74": "/-1/1(,101/1-101/1-101(/101/1/01/010",
+    "c75": "110101&0",
+    "c83": ".-01%.010",
+    "c84": "*1/1+1,11/1/101/101/101/101/101/101/1/11/1/01/010010",
+    "c85": "1%0"
+  }
+}

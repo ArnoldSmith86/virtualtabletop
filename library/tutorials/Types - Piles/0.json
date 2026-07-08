@@ -1,0 +1,1291 @@
+{
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Types - Pile",
+      "image": "/assets/-507593653_3537",
+      "rules": "",
+      "bgg": "",
+      "year": "2021",
+      "mode": "Tutorial",
+      "time": "",
+      "attribution": "BASIC: N/A<div><br></div><div>--------</div><div><br></div><div>ADVANCED:&nbsp;&nbsp;<span style=\"color: var(--overlayFontColor);\">The rank icon images are by user Ingegneus and are released into the Public Domain through CC0.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">--------</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><span style=\"color: var(--overlayFontColor);\">DECORATION:&nbsp;&nbsp;</span><span style=\"color: var(--overlayFontColor);\">The paper clip icon is from https://www.nicepng.com/ourpic/u2q8r5q8y3q8i1w7_quantum-professional-t-paper-clip-transparent-png/ and is available under the NicePNG.com License for personal use.</span></div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div>The brown envelope images are by user mousewax and are released into the Public Domain through CC0.</div><div><br></div><div>--------</div><div><br></div><div>PILESNAPRANGE: N/A</div>",
+      "showName": false,
+      "lastUpdate": 1770580693106,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "similarDesigner": "",
+      "usesAIImagery": false,
+      "variantImage": "",
+      "variant": "Basic",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "dl5d": {
+    "type": "holder",
+    "id": "dl5d",
+    "x": 29,
+    "y": 769,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 31
+  },
+  "dl5dB": {
+    "id": "dl5dB",
+    "parent": "dl5d",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "dl5dD": {
+    "type": "deck",
+    "id": "dl5dD",
+    "parent": "dl5d",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px"
+      }
+    }
+  },
+  "dl5d_4_S": {
+    "id": "dl5d_4_S",
+    "parent": "txvh",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 04",
+    "z": 4061
+  },
+  "dl5d_5_S": {
+    "id": "dl5d_5_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 9751,
+    "parent": "txvh"
+  },
+  "dl5d_6_S": {
+    "id": "dl5d_6_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 3926,
+    "parent": "txvh"
+  },
+  "dl5d_7_S": {
+    "id": "dl5d_7_S",
+    "parent": "txvh",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 8968
+  },
+  "dl5d_8_S": {
+    "id": "dl5d_8_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 4941,
+    "parent": "txvh"
+  },
+  "dl5d_9_S": {
+    "id": "dl5d_9_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 3014,
+    "parent": "txvh"
+  },
+  "dl5d_T_S": {
+    "id": "dl5d_T_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 3697,
+    "parent": "txvh"
+  },
+  "dl5d_J_S": {
+    "id": "dl5d_J_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 2635,
+    "parent": "txvh"
+  },
+  "dl5d_Q_S": {
+    "id": "dl5d_Q_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 4245,
+    "parent": "txvh"
+  },
+  "dl5d_K_S": {
+    "id": "dl5d_K_S",
+    "deck": "dl5dD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 4493,
+    "parent": "txvh"
+  },
+  "8fr3": {
+    "id": "8fr3",
+    "x": 608,
+    "width": 400,
+    "height": 60,
+    "z": 74,
+    "css": "font-size: 60px",
+    "text": "Piles: Basic",
+    "y": -2,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "yrr5": {
+    "type": "holder",
+    "id": "yrr5",
+    "x": 330,
+    "y": 769,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 45
+  },
+  "yrr5B": {
+    "id": "yrr5B",
+    "parent": "yrr5",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "yrr5D": {
+    "type": "deck",
+    "id": "yrr5D",
+    "parent": "yrr5",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "handleSize": 60,
+        "handlePosition": "bottom left",
+        "handleOffset": 50
+      }
+    }
+  },
+  "yrr5_8_S": {
+    "id": "yrr5_8_S",
+    "parent": "6wbq",
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 9904
+  },
+  "yrr5_9_S": {
+    "id": "yrr5_9_S",
+    "parent": "6wbq",
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 1819
+  },
+  "yrr5_T_S": {
+    "id": "yrr5_T_S",
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 8280,
+    "parent": "6wbq"
+  },
+  "yrr5_J_S": {
+    "id": "yrr5_J_S",
+    "parent": "6wbq",
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 1589
+  },
+  "yrr5_Q_S": {
+    "id": "yrr5_Q_S",
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 7843,
+    "parent": "6wbq"
+  },
+  "yrr5_K_S": {
+    "id": "yrr5_K_S",
+    "parent": "6wbq",
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 4777
+  },
+  "7puf": {
+    "type": "holder",
+    "id": "7puf",
+    "x": 632,
+    "y": 769,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 46
+  },
+  "7pufB": {
+    "id": "7pufB",
+    "parent": "7puf",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "7pufD": {
+    "type": "deck",
+    "id": "7pufD",
+    "parent": "7puf",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "scale": 0.7,
+        "enlarge": 3,
+        "rotation": 10,
+        "text": "**",
+        "grid": [
+          {
+            "x": 103,
+            "y": 60
+          }
+        ]
+      }
+    }
+  },
+  "7puf_5_S": {
+    "id": "7puf_5_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 05",
+    "z": 9967,
+    "parent": "gmkp"
+  },
+  "7puf_6_S": {
+    "id": "7puf_6_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 06",
+    "z": 9972,
+    "parent": "gmkp"
+  },
+  "7puf_7_S": {
+    "id": "7puf_7_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 07",
+    "z": 9969,
+    "parent": "gmkp"
+  },
+  "7puf_8_S": {
+    "id": "7puf_8_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 08",
+    "z": 9976,
+    "parent": "gmkp"
+  },
+  "7puf_9_S": {
+    "id": "7puf_9_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 09",
+    "z": 9968,
+    "parent": "gmkp"
+  },
+  "7puf_T_S": {
+    "id": "7puf_T_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 10",
+    "z": 9975,
+    "parent": "gmkp"
+  },
+  "7puf_J_S": {
+    "id": "7puf_J_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 2J",
+    "z": 9974,
+    "parent": "gmkp"
+  },
+  "7puf_Q_S": {
+    "id": "7puf_Q_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "z": 9971,
+    "parent": "gmkp"
+  },
+  "7puf_K_S": {
+    "id": "7puf_K_S",
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 4K",
+    "z": 9973,
+    "parent": "gmkp"
+  },
+  "tfpv": {
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 07",
+    "id": "tfpv",
+    "z": 9207,
+    "parent": "6wbq"
+  },
+  "erso": {
+    "type": "holder",
+    "x": 1413.5,
+    "y": 769,
+    "z": 44,
+    "id": "erso",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SET",
+        "property": "handleCSS",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "rotation",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "scale",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "enlarge",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "grid",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "handleSize",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "handlePosition",
+        "value": null
+      },
+      {
+        "func": "SET",
+        "property": "handleOffset",
+        "value": null
+      }
+    ]
+  },
+  "oulw": {
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 04",
+    "id": "oulw",
+    "z": 2434,
+    "parent": "6wbq"
+  },
+  "7hqh": {
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 05",
+    "id": "7hqh",
+    "z": 7996,
+    "parent": "6wbq"
+  },
+  "8ryc": {
+    "deck": "yrr5D",
+    "type": "card",
+    "cardType": "S 06",
+    "id": "8ryc",
+    "z": 1418,
+    "parent": "6wbq"
+  },
+  "dur8": {
+    "deck": "7pufD",
+    "type": "card",
+    "cardType": "S 04",
+    "id": "dur8",
+    "z": 9970,
+    "parent": "gmkp"
+  },
+  "kwza": {
+    "id": "kwza",
+    "z": 81,
+    "x": 1435,
+    "y": 944,
+    "text": "Eraser",
+    "css": "font-size: 25px; ",
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false
+  },
+  "q6fg": {
+    "id": "q6fg",
+    "z": 80,
+    "x": 73,
+    "text": "1",
+    "height": 30,
+    "css": "font-size: 25px; ",
+    "width": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "y": 720
+  },
+  "q7fg": {
+    "id": "q7fg",
+    "z": 95,
+    "x": 375,
+    "y": 720,
+    "height": 30,
+    "css": "font-size: 25px; ",
+    "width": 40,
+    "movable": false,
+    "text": "2"
+  },
+  "q8fg": {
+    "id": "q8fg",
+    "z": 94,
+    "x": 676,
+    "y": 720,
+    "height": 30,
+    "css": "font-size: 25px; ",
+    "width": 40,
+    "movable": false,
+    "text": "3"
+  },
+  "406b": {
+    "id": "406b",
+    "z": 96,
+    "x": 46,
+    "y": 85,
+    "css": "font-size: 18px; ",
+    "width": 1500,
+    "height": 500,
+    "text": "Piles can be customized by editing the 'cardDefaults' property in the deck. To do this, add a 'onPileCreation' property. That property will exist in every card in the deck.  When cards from those decks form a new pile, the specified properties will be passed on to the pile.\n\nTo see this in action, drag a few cards individually out of any one pile and make a new pile in the room.  Look at the JSON for the pile.  Then drag the pile to the Eraser holder on the end.  Note how all the special properties are removed.  Finally, move the cards individually out of the Eraser and make a new pile.\n\nPiles only update when new piles form or when a routine is applied to them.  To see this, drag an entire pile from a deck to the Eraser and back again. The Eraser actively removes properties added to piles.  But when the pile returns to its holder it is still the same pile so no properties get applied.  Then take a few individual cards out and make a new pile in the room to watch the changes to a new pile.  Next, drag a pile into the 'Make Blue' holder. It contains an 'enterRoutine' which changes the 'handleCSS' property to make the color of the pile handle blue. Then drag a few individual cards out and make another pile.  The pile handle reverts to what is contained in the cards' 'onPileCreation' property.\n\nFinally, note that piles will only form if both cards have the same value for 'onPileCreation.' Try to form piles from cards from different decks below and it will not happen.\n\nIn deck #1, the pile is customized by changing the 'handleCSS' property. Regular CSS parameters can be used just like with other widgets. A special paramater of '--FontSize' has been added to control the size of the font in the pile handle. If you want the handle to appear behind the cards, include 'z-index:-1' in the 'handleCSS'.\n\nDeck #2 shows how to use properties unique to piles for positioning and size: 'handleSize', 'handleOffset', and 'handlePosition'.\n\nDeck #3 demonstrates other attributes than can be included in 'onPileCreation' such as scale, rotation, enlarge, text, grid. Almost any widget property can be applied, but faces is one notable exception that does not work.\n\nDeck #4 contains 10 cards that will not pile, even with its own deck, because 'pileSnapRange' is set to 0. There is a variant of this tutorial that demonstrates that property. \n",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -3
+  },
+  "wpw1": {
+    "type": "holder",
+    "x": 1173,
+    "y": 769,
+    "z": 98,
+    "id": "wpw1",
+    "enterRoutine": [
+      {
+        "func": "SELECT",
+        "type": "pile",
+        "property": "parent",
+        "value": "${thisID}"
+      },
+      {
+        "func": "SET",
+        "property": "handleCSS",
+        "value": "background:blue;color:white;"
+      }
+    ]
+  },
+  "kwza1": {
+    "id": "kwza1",
+    "z": 81,
+    "x": 1170,
+    "y": 944,
+    "css": "font-size: 25px; ",
+    "height": 40,
+    "movable": false,
+    "movableInEdit": false,
+    "text": "Make Blue",
+    "width": 120
+  },
+  "6wbq": {
+    "type": "pile",
+    "parent": "yrr5",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "handleSize": 60,
+    "handlePosition": "bottom left",
+    "handleOffset": 50,
+    "id": "6wbq"
+  },
+  "txvh": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "handleCSS": "background:green;color:white; border-radius:5px; --FontSize:30px",
+    "id": "txvh",
+    "z": 9983,
+    "parent": "dl5d"
+  },
+  "gmkp": {
+    "type": "pile",
+    "parent": "7puf",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "scale": 0.7,
+    "enlarge": 3,
+    "rotation": 10,
+    "text": "**",
+    "grid": [
+      {
+        "x": 103,
+        "y": 60
+      }
+    ],
+    "id": "gmkp"
+  },
+  "jmhg": {
+    "type": "holder",
+    "x": 933,
+    "y": 769,
+    "z": 99,
+    "id": "jmhg"
+  },
+  "dl6dD": {
+    "type": "deck",
+    "id": "dl6dD",
+    "x": 12,
+    "y": 41,
+    "cardTypes": {
+      "S 04": {
+        "image": "/i/cards-default/4S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "04",
+        "rankA": "04",
+        "rankFixed": "04 S"
+      },
+      "S 05": {
+        "image": "/i/cards-default/5S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "05",
+        "rankA": "05",
+        "rankFixed": "05 S"
+      },
+      "S 06": {
+        "image": "/i/cards-default/6S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "06",
+        "rankA": "06",
+        "rankFixed": "06 S"
+      },
+      "S 07": {
+        "image": "/i/cards-default/7S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "07",
+        "rankA": "07",
+        "rankFixed": "07 S"
+      },
+      "S 08": {
+        "image": "/i/cards-default/8S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "08",
+        "rankA": "08",
+        "rankFixed": "08 S"
+      },
+      "S 09": {
+        "image": "/i/cards-default/9S.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "09",
+        "rankA": "09",
+        "rankFixed": "09 S"
+      },
+      "S 10": {
+        "image": "/i/cards-default/TS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "10",
+        "rankA": "10",
+        "rankFixed": "10 S"
+      },
+      "S 2J": {
+        "image": "/i/cards-default/JS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "2J",
+        "rankA": "2J",
+        "rankFixed": "2J S"
+      },
+      "S 3Q": {
+        "image": "/i/cards-default/QS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "3Q",
+        "rankA": "3Q",
+        "rankFixed": "3Q S"
+      },
+      "S 4K": {
+        "image": "/i/cards-default/KS.svg",
+        "suit": "S",
+        "suitColor": "♠",
+        "suitAlt": "3♠",
+        "rank": "4K",
+        "rankA": "4K",
+        "rankFixed": "4K S"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg",
+            "color": "transparent"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ],
+    "cardDefaults": {
+      "onPileCreation": {
+        "pileSnapRange": 0
+      }
+    },
+    "z": 9980,
+    "parent": "jmhg"
+  },
+  "rsuv": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 04",
+    "id": "rsuv",
+    "z": 9985,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "rwcc": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 05",
+    "id": "rwcc",
+    "z": 9986,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "zg4a": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 06",
+    "id": "zg4a",
+    "z": 9987,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "kggo": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 07",
+    "id": "kggo",
+    "z": 9988,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "umat": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 08",
+    "id": "umat",
+    "z": 9989,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "p59o": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 09",
+    "id": "p59o",
+    "z": 9990,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "quya": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 10",
+    "id": "quya",
+    "z": 9991,
+    "parent": "jmhg",
+    "x": 4,
+    "y": 4
+  },
+  "7lky": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 2J",
+    "id": "7lky",
+    "z": 10005,
+    "x": 4,
+    "y": 4,
+    "parent": "jmhg"
+  },
+  "7aly": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 3Q",
+    "id": "7aly",
+    "z": 10007,
+    "x": 4,
+    "y": 4,
+    "parent": "jmhg"
+  },
+  "pyih": {
+    "deck": "dl6dD",
+    "type": "card",
+    "cardType": "S 4K",
+    "id": "pyih",
+    "z": 10009,
+    "x": 4,
+    "y": 4,
+    "parent": "jmhg"
+  },
+  "8pufB": {
+    "id": "8pufB",
+    "parent": "jmhg",
+    "fixedParent": true,
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "q9fg": {
+    "id": "q9fg",
+    "z": 94,
+    "x": 978,
+    "y": 720,
+    "height": 30,
+    "css": "font-size: 25px; ",
+    "width": 40,
+    "movable": false,
+    "text": "4"
+  }
+}

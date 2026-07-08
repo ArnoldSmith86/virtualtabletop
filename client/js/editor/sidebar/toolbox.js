@@ -62,7 +62,7 @@ class ToolboxModule extends SidebarModule {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
     for(const state of widgetBuffer) {
-      if(!widgetBuffer.filter(w=>w.id==state.parent).length && !widgets.has(state.parent)) {
+      if(state.parent && !widgetBuffer.filter(w=>w.id==state.parent).length && !widgets.has(state.parent)) {
         delete state.parent;
         delete state.x;
         delete state.y;

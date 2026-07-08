@@ -1,20 +1,32 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - CLICK",
-      "image": "/assets/-594063130_6827",
+      "image": "/assets/-1155107578_3739",
       "rules": "",
       "bgg": "",
       "year": "2020",
       "mode": "Tutorial",
       "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1768608801565,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
       "players": "1",
       "language": "en-US",
       "variant": "Basic",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1624554755000
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "yqji": {
@@ -131,12 +143,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "1J": {
-        "image": "/i/cards-default/1J.svg"
-      },
-      "2J": {
-        "image": "/i/cards-default/2J.svg"
-      },
       "AC": {
         "image": "/i/cards-default/AC.svg"
       },
@@ -305,7 +311,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -321,9 +326,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }

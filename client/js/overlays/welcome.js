@@ -1,4 +1,13 @@
 function parseGameURL() {
+  const customLibraryMatch = location.href.match(/\/library\/([^/]+)\/([a-z-]+)$/);
+  if (customLibraryMatch) {
+    return {
+      type: 'public',
+      category: customLibraryMatch[1],
+      id: `PL:${customLibraryMatch[1]}:${customLibraryMatch[2]}`
+    };
+  }
+
   const gameURLmatch = location.href.match(/\/(game|tutorial)\/(?:([0-9a-z]{8})\/)?([a-z-]+)(?:\/ROOM:([A-Za-z0-9_-]+))?$/);
   if(gameURLmatch) {
     if(gameURLmatch[2]) {
@@ -8,10 +17,12 @@ function parseGameURL() {
         roomID: gameURLmatch[4]
       };
     } else {
+      const folderMap = { game: 'games', tutorial: 'tutorials' };
+      const folder = folderMap[gameURLmatch[1]] || gameURLmatch[1];
       return {
         type: 'public',
         category: gameURLmatch[1],
-        id: `PL:${gameURLmatch[1]}:${gameURLmatch[3]}`,
+        id: `PL:${folder}:${gameURLmatch[3]}`,
         roomID: gameURLmatch[4]
       };
     }
@@ -34,8 +45,11 @@ function checkForGameURL() {
         $('#welcomeGameType').innerText = gameDetails.category || 'game';
         $('#welcomeGameTypeHint').innerText = gameDetails.category == 'tutorial' ? 'check it out' : 'start playing it';
         $('#welcomeUserGenerated').style.display = gameDetails.type == 'public' ? 'none' : 'block';
-        toggleClass($('#linkDetailsOverlay .star'),               'hidden', gameDetails.type == 'user' || !state.stars);
-        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden', gameDetails.type == 'public');
+        toggleClass($('#linkDetailsOverlay .star'),               'hidden',       gameDetails.type == 'user' || !state.stars);
+        toggleClass($('#linkDetailsOverlay .mainStateImage > i'), 'hidden',       gameDetails.type == 'public');
+        toggleClass($('#linkDetailsOverlay .mainStateImage'),     'has-ai-badge', !!state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .ai-badge'),           'hidden',       !state.usesAIImagery);
+        toggleClass($('#linkDetailsOverlay .ai-imagery-notice'),  'hidden',       !state.usesAIImagery);
 
         let tabSuffix = config.customTab || config.serverName || 'VirtualTabletop.io';
         document.title = `${state.name} - ${tabSuffix}`;
@@ -47,7 +61,7 @@ function checkForGameURL() {
         checkForGameURL_showError('Game not found!');
       }
     });
-  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/')) {
+  } else if(location.href.includes('/game/') || location.href.includes('/tutorial/') || location.href.includes('/library/')) {
     checkForGameURL_showError('Invalid game name!');
   }
 }
@@ -57,7 +71,7 @@ function checkForGameURL_showError(text) {
   div($('#topSurface'), '', `
     <button icon=close>Create an empty room</button>
   `);
-  $('#topSurface button').onclick = _=>location.href = config.externalURL;
+  $('#topSurface button').onclick = _=>location.href = getBaseURL();
 }
 
 async function playButtonClick(updateProgress) {
@@ -74,16 +88,14 @@ async function playButtonClick(updateProgress) {
   $('#statesButton').click();
   $(`#statesList [data-id="${stateID}"]`).click();
 
-  if(share.category == 'tutorial') {
-    $('#filterByType').value = 'Tutorials';
-    updateLibraryFilter();
-  }
+  if(share.category == 'tutorial')
+    setLibraryTypeTab('Tutorials');
 }
 
 async function joinRoom(newRoomID) {
   let joined = false;
   return new Promise(function(resolve, reject) {
-    roomID = newRoomID;
+    roomID = normalizeRoomID(newRoomID);
     onMessage('meta', _=>{
       if(joined) return;
       joined = true;
@@ -114,7 +126,8 @@ async function addSharedGame(shareID) {
 onLoad(function() {
   progressButton($('#welcomePlayButton'), playButtonClick);
 
-  $('#closeLinkDetails').onclick = _=>location.href = config.externalURL;
+  $('#roomURLDisplay').innerHTML = `${getBaseURL()}/`;
+  $('#closeLinkDetails').onclick = _=>location.href = getBaseURL();
 
   // press play button when pressing enter
   for(const button of $a('#welcomeJoinRoom, #welcomePlayerName')) {

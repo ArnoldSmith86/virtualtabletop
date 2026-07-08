@@ -13,6 +13,9 @@ let customSelection = false;
 let customSelectionCallback = null;
 
 export function editInputHandler(name, e) {
+  if(e.touches && e.touches.length == 2)
+    hideSelectionRectangle();
+
   const isRightMouseButton = name.startsWith('mouse') && (e.button == 2 || e.buttons == 2);
   if(isRightMouseButton) {
     $('#editorToolbar [icon=highlight_alt]').classList.toggle('active', !selectionModeActive);
@@ -202,9 +205,7 @@ function endCustomSelection() {
 export async function editClick(widget) {
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
-  } else {
-    setDeltaCause(`${getPlayerDetails().playerName} clicked ${widget.id} in editor`);
-    await widget.click();
+    return true;
   }
 }
 

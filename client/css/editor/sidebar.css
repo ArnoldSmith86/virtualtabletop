@@ -302,3 +302,29 @@ body.lightsOff #editorModules {
     display: none;
   }
 }
+
+#editorSidebar button {
+  position: relative;
+}
+
+#editorSidebar button[data-badge]::after {
+  content: attr(data-badge);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #ffd700;
+  color: #000;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  transform: translate(-25%, -25%);
+}
+
+#editorSidebar button[data-badge=""]::after {
+  display: none;
+}
