@@ -65,6 +65,11 @@
     opacity: 0.8;
   }
 
+  #feedbackOverlay .feedbackError {
+    color: darkred;
+    white-space: pre-wrap;
+  }
+
   @media (max-width: 500px), (max-height: 312px) {
     #feedbackOverlay {
       justify-content: unset;

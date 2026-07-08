@@ -48,17 +48,35 @@ function collectClientDetails() {
 let feedbackPreviousOverlay = null;
 let feedbackPreviousActiveTab = null;
 
+function isFeedbackOverlayOpen() {
+  // 'flex' is the exact value showOverlay() sets when opening it; checking for that specific
+  // value (rather than just != 'none') avoids two false positives: the untouched inline style
+  // is '' (not 'none') before any overlay has ever been shown, and this self-heals correctly
+  // if some other toolbar action opened a different overlay and hid this one along the way
+  return $('#feedbackOverlay').style.display == 'flex';
+}
+
 function openFeedbackOverlay() {
+  // re-clicking the toolbar button while the overlay is already open should just close it,
+  // not clobber the saved previous-overlay/tab and wipe out whatever the player had typed
+  if(isFeedbackOverlayOpen()) {
+    closeFeedbackOverlay();
+    return;
+  }
+
   const details = collectClientDetails();
 
-  // remember what was showing so we can return to it instead of just closing everything
-  feedbackPreviousOverlay = [...$a('.overlay')].find(o=>o.id != 'feedbackOverlay' && o.style.display != 'none');
+  // remember what was showing so we can return to it instead of just closing everything;
+  // only elements explicitly shown by a previous showOverlay() call count (their inline
+  // style is 'flex'/'grid') - an untouched overlay's inline style is still '', not 'none'
+  feedbackPreviousOverlay = [...$a('.overlay')].find(o=>o.id != 'feedbackOverlay' && (o.style.display == 'flex' || o.style.display == 'grid'));
   feedbackPreviousActiveTab = $('.toolbarTab.active');
   for(const tabButton of $a('.toolbarTab'))
     toggleClass(tabButton, 'active', false);
 
   $('#feedbackOverlay textarea').value = '';
   $('#feedbackIncludeState').checked = true;
+  $('#feedbackOverlay .feedbackError').style.display = 'none';
   showOverlay('feedbackOverlay');
 
   for(const closeButton of $a('#feedbackOverlay button[icon=close]'))
@@ -78,18 +96,38 @@ function openFeedbackOverlay() {
       if(text.match(/^[a-z0-9]{8}$/))
         closeFeedbackOverlay();
       else
-        $('#feedbackOverlay textarea').value = "Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + text;
+        showFeedbackError("Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + text);
     } catch(e) {
-      $('#feedbackOverlay textarea').value = "Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + e.message + "\n" + e.stack;
+      showFeedbackError("Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + e.message + "\n" + e.stack);
     }
   };
+}
+
+function showFeedbackError(message) {
+  // keep whatever the player already typed instead of overwriting it with the error
+  const errorField = $('#feedbackOverlay .feedbackError');
+  errorField.textContent = message;
+  errorField.style.display = '';
 }
 
 function closeFeedbackOverlay() {
   if(feedbackPreviousActiveTab)
     toggleClass(feedbackPreviousActiveTab, 'active', true);
-  showOverlay(feedbackPreviousOverlay && feedbackPreviousOverlay.id, true);
+  // no `forced` here: the previous overlay's display is already 'none', so a plain
+  // showOverlay toggles it back on without leaving the whole overlay system stuck
+  // in the crash-reporter-only "forced" state
+  showOverlay(feedbackPreviousOverlay && feedbackPreviousOverlay.id);
 }
+
+// registered before main.js's window.onkeyup (tracing.js is concatenated earlier), so
+// stopImmediatePropagation here pre-empts the generic Escape handling (which would just
+// close everything via #activeGameButton instead of restoring the previous overlay/tab)
+window.addEventListener('keyup', function(e) {
+  if(e.key == 'Escape' && isFeedbackOverlayOpen()) {
+    e.stopImmediatePropagation();
+    closeFeedbackOverlay();
+  }
+});
 
 onLoad(function() {
   on('#feedbackButton', 'click', openFeedbackOverlay);
