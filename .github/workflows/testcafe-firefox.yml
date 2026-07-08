@@ -19,7 +19,10 @@ jobs:
       matrix:
         testfile:
           - editor.js
-          - functions.js
+          - compute-1.js
+          - compute-2.js
+          - compute-3.js
+          - compute-4.js
           - publiclibrary-1.js
           - publiclibrary-2.js
           - publiclibrary-3.js
