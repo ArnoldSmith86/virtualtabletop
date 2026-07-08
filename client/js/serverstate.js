@@ -388,7 +388,7 @@ function addDeltaEntryToUndoProtocol(delta) {
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
     } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
-    } else {
+    } else if(widgets.has(widgetID)) {
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
         undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];
