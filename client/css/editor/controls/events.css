@@ -1,0 +1,119 @@
+.events-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 8px;
+}
+
+.events-editor-event {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.events-editor-event-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor1);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.events-editor-toggle {
+  font-size: 18px;
+}
+
+.events-editor-label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.events-editor-property {
+  color: var(--VTTblue);
+  font-family: monospace;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+body.edit.darkMode .events-editor-property {
+  color: var(--textHighlightColor7);
+}
+
+.events-editor-event-header .info-button {
+  cursor: pointer;
+  color: gray;
+}
+
+.events-editor-event-header .info-button:hover {
+  color: var(--VTTblue);
+}
+
+.events-editor-remove {
+  font-size: 16px;
+  color: gray;
+  cursor: pointer;
+}
+
+.events-editor-remove:hover {
+  color: var(--textHighlightColor3);
+}
+
+.events-editor-event-content {
+  padding: 4px 0;
+}
+
+.events-editor-event-content .routine-editor {
+  margin: 0 6px;
+}
+
+.events-editor-add,
+.routine-editor-add-operation {
+  align-self: flex-start;
+  border: 1px dashed var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: gray;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.events-editor-add:hover,
+.routine-editor-add-operation:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
+.routine-editor-operation {
+  position: relative;
+  padding-right: 24px;
+}
+
+.routine-editor-operation-remove {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  font-size: 15px;
+  color: gray;
+  cursor: pointer;
+}
+
+.routine-editor-operation-remove:hover {
+  color: var(--textHighlightColor3);
+}
+
+.add-event-entry {
+  margin-bottom: 6px;
+}
+
+.add-event-description {
+  font-size: 11px;
+  color: gray;
+  margin: 1px 2px 4px 2px;
+  max-width: 300px;
+}

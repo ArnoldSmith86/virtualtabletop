@@ -44,9 +44,37 @@ class RoutineEditor {
 
   render() {
     this.domElement.innerHTML = '';
-    for(const operation of this.operations) {
-      this.domElement.append(operation.render());
+    for(const [ index, operation ] of this.operations.entries()) {
+      const operationDOM = operation.render();
+
+      const removeButton = document.createElement('span');
+      removeButton.className = 'material-symbols routine-editor-operation-remove';
+      removeButton.textContent = 'delete';
+      removeButton.title = 'Remove this operation';
+      removeButton.addEventListener('click', e=>{
+        e.stopPropagation();
+        this.routine.splice(index, 1);
+        this.notifyChangeListeners(this.routine);
+        this.onPropertyChange(this.routine);
+      });
+      operationDOM.append(removeButton);
+
+      this.domElement.append(operationDOM);
     }
+
+    const addButton = button(this.domElement, 'add operation', async _=>{
+      const popup = new RoutineOperationPopup();
+      popup.setSource(addButton);
+      popup.setOperationDetails({}, [ 'func' ], this.widget, this.variables, this.collections);
+      const values = await newRoutineValues(popup);
+      if(values !== undefined) {
+        this.routine.push(typeof values == 'string' ? values : JSON.parse(JSON.stringify(values)));
+        this.notifyChangeListeners(this.routine);
+        this.onPropertyChange(this.routine);
+      }
+    });
+    addButton.className = 'routine-editor-add-operation';
+
     return this.domElement;
   }
 }
@@ -209,9 +237,9 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
-    if(Array.isArray(this.operation.thenRoutine) && this.operation.thenRoutine.length > 0)
+    if(Array.isArray(this.operation.thenRoutine))
       this.renderSubroutine(this.domElement, 'thenRoutine');
-    if(Array.isArray(this.operation.elseRoutine) && this.operation.elseRoutine.length > 0) {
+    if(Array.isArray(this.operation.elseRoutine)) {
       this.domElement.append('ELSE');
       this.renderSubroutine(this.domElement, 'elseRoutine');
     }
@@ -242,7 +270,7 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
-    if(Array.isArray(this.operation.loopRoutine) && this.operation.loopRoutine.length > 0)
+    if(Array.isArray(this.operation.loopRoutine))
       this.renderSubroutine(this.domElement, 'loopRoutine');
     return this.domElement;
   }
