@@ -34,6 +34,12 @@ class RoutineEditor {
       variables = [...new Set([...variables, ...routineOperationEditor.getDefinedVariables()])];
       // add collections of operation to collections
       collections = [...new Set([...collections, ...routineOperationEditor.getDefinedCollections()])];
+      // in-place collections (arrays of widget ids) used in the routine become suggestions too
+      if(operation && typeof operation == 'object')
+        for(const key of [ 'collection', 'source', 'excludeCollection' ])
+          if(Array.isArray(operation[key]))
+            collections.push([ ...operation[key] ]);
+      collections = collections.filter((c, i)=>collections.findIndex(x=>JSON.stringify(x) == JSON.stringify(c)) == i);
     }
     this.render();
   }
@@ -79,11 +85,40 @@ class RoutineEditor {
   }
 }
 
+// how predefined variables are displayed in the operation summaries
+const predefinedVariableLabels = {
+  '${playerName}': 'player clicking the widget',
+  '${playerColor}': "clicking player's color",
+  '${seatID}': "clicking player's seat",
+  '${seatIndex}': "clicking player's seat index",
+  '${thisID}': 'this widget',
+  '${mouseCoords}': 'mouse position',
+  '${activePlayers}': 'all player names',
+  '${activeColors}': 'all player colors',
+  '${activeSeats}': 'occupied seat ids'
+};
+
 class RoutineOperationEditor {
   constructor(template, popups) {
     this.changeListeners = [];
     this.template = template;
     this.popups = popups;
+  }
+
+  classifyParameter(parameterName, value) {
+    if(parameterName == 'func')
+      return 'func';
+    if(typeof value == 'string' && value.match(/\$\{[^}]+\}/))
+      return 'variable';
+    if(parameterName == 'variable')
+      return 'variable';
+    if([ 'collection', 'source', 'excludeCollection' ].indexOf(parameterName) != -1)
+      return 'collection';
+    if([ 'from', 'to', 'holder', 'widget', 'timer', 'label', 'canvas', 'seats' ].indexOf(parameterName) != -1)
+      return 'widget';
+    if(typeof value == 'number')
+      return 'number';
+    return 'value';
   }
 
   getDefaults() {
@@ -103,24 +138,23 @@ class RoutineOperationEditor {
   }
 
   getDisplayedValue(property) {
-    if(property.match(/,/)) {
-      for(const p of property.split(',')) {
-        if((this.operation && typeof this.operation[p] != 'undefined') || this.getDefaults()[p] !== null)
-          return this.getDisplayedValue(p);
-      }
+    const resolved = this.resolveParameter(property);
+    if(resolved === null)
       return '?';
-    }
 
-    const value = this.operation && typeof this.operation[property] != 'undefined' ? this.operation[property] : this.getDefaults()[property];
-    if(this.getDisplayMap()[property]) {
-      const displayValue = this.getDisplayMap()[property][value];
-      return displayValue != null ? displayValue : value;
+    const value = this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : this.getDefaults()[resolved];
+    if(this.getDisplayMap()[resolved]) {
+      const displayValue = this.getDisplayMap()[resolved][value];
+      if(displayValue != null)
+        return displayValue;
     }
+    if(typeof value == 'string' && predefinedVariableLabels[value])
+      return predefinedVariableLabels[value];
     return value;
   }
 
   getExampleWithDefaults() {
-    return this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p));
+    return this.template.replace(/\[[^\]]*\]/g, '').replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>this.getDisplayedValue(p));
   }
 
   notifyChangeListeners(value) {
@@ -147,18 +181,81 @@ class RoutineOperationEditor {
     dom.classList.add('routine-editor-operation');
 
     // escapeHTML because parameter values come from untrusted room state
-    dom.innerHTML = this.template.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, p)=>`<span class="routine-editor-operation-parameter" data-parameter="${p}">${escapeHTML(this.getDisplayedValue(p))}</span>`);
-    for(const [ index, span ] of [...$a('span', dom)].entries()) {
-      span.addEventListener('click', async _=>{
-        this.popups[index].setSource(span);
-        this.popups[index].setOperationDetails(this.operation, span.dataset.parameter.split(','), this.widget, this.variables, this.collections);
-        const values = await newRoutineValues(this.popups[index]);
+    let popupIndex = 0;
+    const parameterSpan = (spec)=>{
+      const index = popupIndex++;
+      const resolved = this.resolveParameter(spec);
+      const rawValue = resolved !== null && this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : (resolved !== null ? this.getDefaults()[resolved] : undefined);
+      const category = this.classifyParameter(resolved, rawValue);
+      return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}" data-parameter="${spec}" data-popup-index="${index}">${escapeHTML(this.getDisplayedValue(spec))}</span>`;
+    };
+
+    // segments in square brackets only show details when one of their parameters is explicitly set
+    let hasHiddenSegment = false;
+    let html = '';
+    for(const segment of this.template.split(/(\[[^\]]*\])/)) {
+      const optional = segment.charAt(0) == '[';
+      const text = optional ? segment.slice(1, -1) : segment;
+      const explicitlySet = (text.match(/\{([a-zA-Z0-9,]+)\}/g) || []).some(spec=>
+        spec.slice(1, -1).split(',').some(p=>this.operation && typeof this.operation == 'object' && typeof this.operation[p] != 'undefined'));
+      const rendered = text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>parameterSpan(spec));
+      if(optional && !explicitlySet) {
+        html += `<span class="routine-editor-operation-optional">${rendered}</span>`;
+        hasHiddenSegment = true;
+      } else {
+        html += rendered;
+      }
+    }
+    dom.innerHTML = html;
+
+    if(hasHiddenSegment) {
+      const more = document.createElement('span');
+      more.className = 'material-symbols routine-editor-operation-more';
+      more.textContent = 'more_horiz';
+      more.title = 'Show parameters that use their default values';
+      more.addEventListener('click', e=>{
+        e.stopPropagation();
+        dom.classList.toggle('show-details');
+      });
+      dom.append(more);
+    }
+
+    for(const span of $a('span[data-popup-index]', dom)) {
+      span.addEventListener('click', async e=>{
+        e.stopPropagation();
+        const popup = this.popups[+span.dataset.popupIndex];
+        popup.setSource(span);
+        popup.setOperationDetails(this.operation, span.dataset.parameter.split(','), this.widget, this.variables, this.collections);
+        const values = await newRoutineValues(popup);
         if(values !== undefined) // undefined means the popup was dismissed
           this.onNewValue(values);
       });
-      span.style.cursor = 'pointer';
     }
     return dom;
+  }
+
+  resolveParameter(property) {
+    if(property.match(/,/)) {
+      for(const p of property.split(',')) {
+        if((this.operation && typeof this.operation[p] != 'undefined') || this.getDefaults()[p] !== null)
+          return p;
+      }
+      return null;
+    }
+    return property;
+  }
+
+  renderFoldToggle() {
+    const toggle = document.createElement('span');
+    toggle.className = 'material-symbols routine-editor-fold-toggle';
+    toggle.textContent = 'unfold_less';
+    toggle.title = 'Fold or unfold the nested routines';
+    toggle.addEventListener('click', e=>{
+      e.stopPropagation();
+      const folded = this.domElement.classList.toggle('folded');
+      toggle.textContent = folded ? 'unfold_more' : 'unfold_less';
+    });
+    this.domElement.append(toggle);
   }
 
   renderSubroutine(dom, property) {
@@ -180,7 +277,7 @@ class RoutineOperationEditor {
 
 class CountRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} widgets owned by {owner} in {holder,collection} and store as {variable}', [
+    super('{func} widgets[ owned by {owner}] in {holder,collection} and store as {variable}', [
       new RoutineOperationPopup(),
       new RoutineStringPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
@@ -237,10 +334,14 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
+    this.renderFoldToggle();
     if(Array.isArray(this.operation.thenRoutine))
       this.renderSubroutine(this.domElement, 'thenRoutine');
     if(Array.isArray(this.operation.elseRoutine)) {
-      this.domElement.append('ELSE');
+      const elseLabel = document.createElement('div');
+      elseLabel.className = 'routine-editor-else';
+      elseLabel.textContent = 'ELSE';
+      this.domElement.append(elseLabel);
       this.renderSubroutine(this.domElement, 'elseRoutine');
     }
     return this.domElement;
@@ -270,6 +371,7 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
+    this.renderFoldToggle();
     if(Array.isArray(this.operation.loopRoutine))
       this.renderSubroutine(this.domElement, 'loopRoutine');
     return this.domElement;
@@ -278,7 +380,7 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
 
 class MoveRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {fillTo,count} widgets from {from,collection} to {to}, flipping them to face {face}', [
+    super('{func} {fillTo,count} widgets from {from,collection} to {to}[, flipping them to face {face}]', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineHoldersOrCollectionSourcePopup(),
@@ -313,7 +415,7 @@ class MoveRoutineOperationEditor extends RoutineOperationEditor {
 
 class SelectRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {max} {type} from {source} having {property} {relation} {value} and {mode} {collection}', [
+    super('{func} {max} {type} from {source}[ having {property} {relation} {value}] and {mode} {collection}', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineEnumPopup({ values: [ 'all', 'button', 'canvas', 'card', 'deck', 'dice', 'holder', 'label', 'pile', 'scoreboard', 'seat', 'spinner', 'timer' ] }),
@@ -360,7 +462,7 @@ class SelectRoutineOperationEditor extends RoutineOperationEditor {
 
 class AudioRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {source} at volume {maxVolume} to {player}, {count} time(s)', [
+    super('{func} {source} at volume {maxVolume}[ to {player}][, {count} time(s)]', [
       new RoutineOperationPopup(),
       new RoutineStringPopup(),
       new RoutineNumberPopup(),
@@ -381,6 +483,12 @@ class AudioRoutineOperationEditor extends RoutineOperationEditor {
     };
   }
 
+  classifyParameter(parameterName, value) {
+    if(parameterName == 'source')
+      return 'value'; // a url, not a collection
+    return super.classifyParameter(parameterName, value);
+  }
+
   getDisplayMap() {
     return {
       player: { 'null': 'everyone' }
@@ -394,7 +502,7 @@ class AudioRoutineOperationEditor extends RoutineOperationEditor {
 
 class CallRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {routine} on {widget}, store result as {variable}, arguments {arguments}', [
+    super('{func} {routine} on {widget}[, store result as {variable}][, arguments {arguments}]', [
       new RoutineOperationPopup(),
       new RoutineStringPopup(),
       new RoutineWidgetIDPopup(),
@@ -441,7 +549,7 @@ class CallRoutineOperationEditor extends RoutineOperationEditor {
 
 class CanvasRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {mode} on {collection} using value {value} and color {color}', [
+    super('{func} {mode} on {collection}[ using value {value}][ and color {color}]', [
       new RoutineOperationPopup(),
       new RoutineEnumPopup({ values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ] }),
       new RoutineHoldersOrCollectionSourcePopup(),
@@ -469,7 +577,7 @@ class CanvasRoutineOperationEditor extends RoutineOperationEditor {
 
 class ClickRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} widgets in {collection}, {count} time(s), mode {mode}', [
+    super('{func} widgets in {collection}[, {count} time(s)][, mode {mode}]', [
       new RoutineOperationPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
       new RoutineNumberPopup(),
@@ -493,7 +601,7 @@ class ClickRoutineOperationEditor extends RoutineOperationEditor {
 
 class CloneRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {count} time(s) from {source} offset by ({xOffset}, {yOffset}) into {collection}, properties {properties}', [
+    super('{func} {count} time(s) from {source}[ offset by ({xOffset}, {yOffset})] into {collection}[, properties {properties}]', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
@@ -567,7 +675,7 @@ class DeleteRoutineOperationEditor extends RoutineOperationEditor {
 
 class FlipRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {count} widgets from {holder,collection} to face {face}, faceCycle {faceCycle}', [
+    super('{func} {count} widgets from {holder,collection}[ to face {face}][, faceCycle {faceCycle}]', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineHoldersOrCollectionSourcePopup(),
@@ -631,7 +739,7 @@ class GetRoutineOperationEditor extends RoutineOperationEditor {
 
 class InputRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} fields {fields}, confirm {confirmButtonText}, cancel {cancelButtonText}', [
+    super('{func} fields {fields}[, confirm {confirmButtonText}][, cancel {cancelButtonText}]', [
       new RoutineOperationPopup(),
       new RoutineJSONPopup(),
       new RoutineStringPopup(),
@@ -663,7 +771,7 @@ class InputRoutineOperationEditor extends RoutineOperationEditor {
 
 class LabelRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {label,collection} to {value}, mode {mode}', [
+    super('{func} {label,collection} to {value}[, mode {mode}]', [
       new RoutineOperationPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
       new RoutineStringPopup(),
@@ -688,7 +796,7 @@ class LabelRoutineOperationEditor extends RoutineOperationEditor {
 
 class MovexyRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {count} widgets from {from} to ({x}, {y}), flipping to face {face}', [
+    super('{func} {count} widgets from {from} to ({x}, {y})[, flipping to face {face}]', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineWidgetIDPopup(),
@@ -722,7 +830,7 @@ class MovexyRoutineOperationEditor extends RoutineOperationEditor {
 
 class RecallRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} cards into {holder}, owned {owned}, inHolder {inHolder}, excluding {excludeCollection}', [
+    super('{func} cards into {holder}[, owned {owned}][, inHolder {inHolder}][, excluding {excludeCollection}]', [
       new RoutineOperationPopup(),
       new RoutineWidgetIDPopup(),
       new RoutineEnumPopup({ values: [ true, false ] }),
@@ -770,7 +878,7 @@ class ResetRoutineOperationEditor extends RoutineOperationEditor {
 
 class RotateRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {count} widgets in {holder,collection} by {angle} degrees, mode {mode}', [
+    super('{func} {count} widgets in {holder,collection} by {angle} degrees[, mode {mode}]', [
       new RoutineOperationPopup(),
       new RoutineNumberPopup({ specialValues: [ 'all' ] }),
       new RoutineHoldersOrCollectionSourcePopup(),
@@ -797,7 +905,7 @@ class RotateRoutineOperationEditor extends RoutineOperationEditor {
 
 class ScoreRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {property} in {seats}, round {round}, mode {mode}, value {value}', [
+    super('{func} {property} in {seats}[, round {round}], mode {mode}, value {value}', [
       new RoutineOperationPopup(),
       new RoutineStringPopup(),
       new RoutineWidgetIDPopup(),
@@ -863,7 +971,7 @@ class SetRoutineOperationEditor extends RoutineOperationEditor {
 
 class ShuffleRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {holder,collection}, mode {mode}, modeValue {modeValue}', [
+    super('{func} {holder,collection}[, mode {mode}][, modeValue {modeValue}]', [
       new RoutineOperationPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
       new RoutineEnumPopup({ values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ] }),
@@ -888,7 +996,7 @@ class ShuffleRoutineOperationEditor extends RoutineOperationEditor {
 
 class SortRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {holder,collection} by {key}, reverse {reverse}', [
+    super('{func} {holder,collection} by {key}[, reverse {reverse}]', [
       new RoutineOperationPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
       new RoutineJSONPopup(),
@@ -921,7 +1029,7 @@ class SortRoutineOperationEditor extends RoutineOperationEditor {
 
 class SwaphandsRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} hands among {source}, interval {interval}, direction {direction}', [
+    super('{func} hands among {source}[, interval {interval}][, direction {direction}]', [
       new RoutineOperationPopup(),
       new RoutineHoldersOrCollectionSourcePopup({ specialValues: [ 'all' ] }),
       new RoutineNumberPopup(),
@@ -949,7 +1057,7 @@ class SwaphandsRoutineOperationEditor extends RoutineOperationEditor {
 
 class TimerRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} {timer,collection}, mode {mode}, value {value}, seconds {seconds}', [
+    super('{func} {timer,collection}, mode {mode}[, value {value}][, seconds {seconds}]', [
       new RoutineOperationPopup(),
       new RoutineHoldersOrCollectionSourcePopup(),
       new RoutineEnumPopup({ values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ] }),
@@ -976,7 +1084,7 @@ class TimerRoutineOperationEditor extends RoutineOperationEditor {
 
 class TurnRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
-    super('{func} to {turn}, cycle {turnCycle}, among {source}, store as {collection}', [
+    super('{func} to {turn}, cycle {turnCycle}[, among {source}][, store as {collection}]', [
       new RoutineOperationPopup(),
       new RoutineStringPopup(),
       new RoutineEnumPopup({ values: [ 'forward', 'backward', 'random', 'position', 'seat' ] }),

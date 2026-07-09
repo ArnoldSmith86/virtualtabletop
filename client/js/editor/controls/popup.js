@@ -137,6 +137,24 @@ class InfoPopup extends Popup {
 
 let openRoutinePopup = null; // only one parameter popup is open at a time
 
+const predefinedVariableDescriptions = {
+  playerName: 'name of the player who started the routine',
+  playerColor: 'color of the player who started the routine',
+  seatID: 'seat id of the player who started the routine (null without a seat)',
+  seatIndex: 'seat index of the player who started the routine (null without a seat)',
+  thisID: 'id of the widget that contains the routine',
+  mouseCoords: '[x, y] cursor position of the player who started the routine',
+  activePlayers: 'array of the names of all active players',
+  activeColors: 'array of the colors of all active players',
+  activeSeats: 'array of the ids of all occupied seats'
+};
+
+const predefinedCollectionDescriptions = {
+  playerSeats: 'all seats occupied by the player who started the routine',
+  activeSeats: 'all seats with an active player',
+  thisButton: 'the widget that contains the routine (not necessarily a button)'
+};
+
 class RoutinePopup extends Popup {
   constructor(source) {
     super(source);
@@ -149,6 +167,10 @@ class RoutinePopup extends Popup {
   }
 
   onClick(e) {
+  }
+
+  setNewCollectionValue(value) {
+    this.setNewValue(value);
   }
 
   setNewValue(value) {
@@ -185,24 +207,12 @@ class RoutinePopup extends Popup {
         button(variablesContent, variable, _=>this.setNewValue(`\$\{${variable}\}`));
 
       const [ predefinedVariablesTitle, predefinedVariablesContent ] = this.addAccordionSection('Predefined Variables');
-      infoButton(predefinedVariablesTitle, `
-        <pre>
-        Each routine begins with a number of predefined variables:
-      
-        activeColors - array of colors of active players in the room
-        activePlayers - array of active players' names in the room
-        activeSeats - array of the id of every seat in the room with a seated player
-        mouseCoords - [x,y] array of mouse/cursor coordinates of player clicking the widget
-        playerColor - color of player clicking the widget
-        playerName - name of the player clicking the widget
-        seatID - id of the first seat the active player is in. Set to null if the player is not in a seat
-        seatIndex - index number of the seatID. Set to null if the player is not in a seat
-        thisID - id of the widget that contains the routine
-        </pre>
-      `);
-      
-      for(const variable of ['activeColors', 'activePlayers', 'activeSeats', 'mouseCoords', 'playerColor', 'playerName', 'seatID', 'seatIndex', 'thisID'])
-        button(predefinedVariablesContent, variable, _=>this.setNewValue(`\$\{${variable}\}`));
+      infoButton(predefinedVariablesTitle, 'Each routine begins with a number of predefined variables that describe the player who started it and the room.');
+      for(const variable in predefinedVariableDescriptions) {
+        const entry = div(predefinedVariablesContent, 'popup-entry');
+        button(entry, variable, _=>this.setNewValue(`\$\{${variable}\}`));
+        div(entry, 'popup-entry-description').textContent = predefinedVariableDescriptions[variable];
+      }
 
       const [ widgetPropertiesTitle, widgetPropertiesContent ] = this.addAccordionSection('Widget Properties');
       infoButton(widgetPropertiesTitle, `
@@ -220,21 +230,23 @@ class RoutinePopup extends Popup {
         A collection is, as its name implies, a collection of widgets. Collections can be created in two different ways.
 
         A [SELECT statement](SELECT) will create a collection and name it according to the collection parameter. If no collection parameter is provided, it will be named DEFAULT.
+
+        You can also list widget ids directly, like [ "widget1", "widget2" ] - such in-place collections used elsewhere in the routine are offered here as well.
         </pre>
       `);
-      for(const collection of this.collections.sort())
-        button(collectionsContent, collection, _=>this.setNewValue(collection));
+      const sortedCollections = [...this.collections].sort((a, b)=>JSON.stringify(a) < JSON.stringify(b) ? -1 : 1);
+      for(const collection of sortedCollections) {
+        const label = typeof collection == 'string' ? collection : `[ ${collection.join(', ')} ]`;
+        button(collectionsContent, label, _=>this.setNewCollectionValue(typeof collection == 'string' ? collection : [ ...collection ]));
+      }
 
       const [ predefinedCollectionsTitle, predefinedCollectionsContent ] = this.addAccordionSection('Predefined Collections');
-      infoButton(predefinedCollectionsTitle, `
-        <pre>
-        playerSeats - the collection of all seats occupied by the player
-        activeSeats - the collection of all seats with an active player
-        thisButton - the widget that contains the routine (not necessarily a button)
-        </pre>
-      `);
-      for(const collection of ['playerSeats', 'activeSeats', 'thisButton'])
-        button(predefinedCollectionsContent, collection, _=>this.setNewValue(collection));
+      infoButton(predefinedCollectionsTitle, 'Each routine begins with a number of predefined collections.');
+      for(const collection in predefinedCollectionDescriptions) {
+        const entry = div(predefinedCollectionsContent, 'popup-entry');
+        button(entry, collection, _=>this.setNewCollectionValue(collection));
+        div(entry, 'popup-entry-description').textContent = predefinedCollectionDescriptions[collection];
+      }
     }
 
     this.moveIntoView();
@@ -365,15 +377,25 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
     super();
   }
 
-  setNewValue(value) {
-    // widget ids arrive as an array and belong to the first (holder-like) parameter;
-    // collection names are strings and belong to the second parameter if there is one
+  setNewCollectionValue(value) {
+    // a collection (whether a name or an in-place array of widget ids) belongs to the
+    // second parameter if there is one; the first (holder-like) parameter is cleared
+    // because the engine prefers it over the collection
     const holderParameter = this.parameterNames[0];
     const collectionParameter = this.parameterNames[1];
-    if(Array.isArray(value) || collectionParameter === undefined)
+    if(collectionParameter === undefined)
       this.notifyChangeListeners({ [holderParameter]: value });
     else
       this.notifyChangeListeners({ [holderParameter]: undefined, [collectionParameter]: value });
+  }
+
+  setNewValue(value) {
+    // widget ids arrive as an array and belong to the first (holder-like) parameter;
+    // collection names are strings and belong to the second parameter if there is one
+    if(Array.isArray(value))
+      this.notifyChangeListeners({ [this.parameterNames[0]]: value });
+    else
+      this.setNewCollectionValue(value);
   }
 
   show() {

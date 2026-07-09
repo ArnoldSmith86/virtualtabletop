@@ -101,6 +101,17 @@ body.edit.darkMode .inline-popup button:hover {
   cursor: pointer;
 }
 
+.inline-popup .popup-entry {
+  margin-bottom: 4px;
+}
+
+.inline-popup .popup-entry-description {
+  font-size: 11px;
+  color: gray;
+  margin: 0 2px 2px 2px;
+  max-width: 300px;
+}
+
 .inline-popup table {
   border-collapse: collapse;
   width: 100%;
