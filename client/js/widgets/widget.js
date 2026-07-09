@@ -244,9 +244,6 @@ export class Widget extends StateManaged {
       });
     }
 
-    if(delta.ignoreZoom !== undefined || delta.parent !== undefined)
-      this.refreshIgnoreZoomDescendants();
-
     for(const key in delta) {
       const isGlobalUpdateRoutine = key.match(/^(?:(.*)G|g)lobalUpdateRoutine$/);
       if(isGlobalUpdateRoutine) {
@@ -671,7 +668,13 @@ export class Widget extends StateManaged {
     let y = this.get('y');
     let scaleValue = this.get('scale');
 
-    if(this.get('ignoreZoom') && !this.hasIgnoreZoomAncestor()) {
+    // The inverse-zoom compensation below is computed in the room's coordinate
+    // frame, so it is only correct for a top-level widget sitting directly on the
+    // surface. A widget nested inside another widget lives in its parent's frame
+    // and simply inherits the parent's zoom behaviour, so its parent's ignoreZoom
+    // effectively controls it: it stays put inside a compensating ancestor and
+    // zooms along with a non-compensating one. Only compensate at the top level.
+    if(this.get('ignoreZoom') && !this.isNestedInWidget()) {
       const computedStyle = getComputedStyle(document.documentElement);
       const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
 
@@ -700,30 +703,19 @@ export class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    // Only ignoreZoom widgets have a transform that depends on their parent (the
-    // inverse-zoom compensation looks at the ancestor chain), so only they need
-    // to recompute it on reparent. Keeping 'parent' out of the list for everyone
-    // else avoids a redundant transform write on every card move/drop.
+    // Only an ignoreZoom widget has a transform that depends on its parent: it
+    // compensates for zoom when top-level but not when nested, so reparenting it
+    // between those states must recompute the transform. Keeping 'parent' out of
+    // the list otherwise avoids a redundant transform write on every card move.
     const properties = [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
     if(this.get('ignoreZoom'))
       properties.push('parent');
     return properties;
   }
 
-  refreshIgnoreZoomDescendants() {
-    for(const child of this.childArray) {
-      if(child.get('ignoreZoom'))
-        child.applyCSS({ ignoreZoom: true });
-      child.refreshIgnoreZoomDescendants();
-    }
-  }
-
-  hasIgnoreZoomAncestor() {
-    for(let parentID = this.get('parent'); widgets.has(parentID); parentID = widgets.get(parentID).get('parent')) {
-      if(widgets.get(parentID).get('ignoreZoom'))
-        return true;
-    }
-    return false;
+  isNestedInWidget() {
+    const parentID = this.get('parent');
+    return parentID != null && widgets.has(parentID);
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
