@@ -63,6 +63,11 @@ function openFeedbackOverlay() {
   if(isLoading)
     return;
 
+  // while a forced overlay (connection lost, crash) is up, showOverlay() below would no-op,
+  // so bail before touching tab state that closeFeedbackOverlay() would never restore
+  if(isOverlayActive() == 'forced')
+    return;
+
   // re-clicking the toolbar button while the overlay is already open should just close it,
   // not clobber the saved previous-overlay/tab and wipe out whatever the player had typed
   if(isFeedbackOverlayOpen()) {
@@ -83,6 +88,7 @@ function openFeedbackOverlay() {
   $('#feedbackOverlay textarea').value = '';
   $('#feedbackIncludeState').checked = true;
   $('#feedbackOverlay .feedbackError').style.display = 'none';
+  $('#feedbackOverlay .feedbackThanks').style.display = 'none';
   showOverlay('feedbackOverlay');
 
   for(const closeButton of $a('#feedbackOverlay button[icon=close]'))
@@ -98,6 +104,7 @@ function openFeedbackOverlay() {
     try {
       // only send room-identifying details (URL, game state, etc.) when the player opts in
       const report = $('#feedbackIncludeState').checked ? details : { userAgent: details.userAgent };
+      report.type = 'feedback';
       report.message = $('#feedbackOverlay textarea').value;
       const res = await fetch('clientError', {
         method: 'PUT',
@@ -105,13 +112,22 @@ function openFeedbackOverlay() {
         body: JSON.stringify(report)
       });
       const text = await res.text();
-      if(res.ok && text.match(/^[a-z0-9]{8}$/))
-        closeFeedbackOverlay();
-      else
+      if(res.ok && text.match(/^[a-z0-9]{8}$/)) {
+        // show a short confirmation before returning to whatever was open before;
+        // the button stays disabled so the thanks window can't produce a second report
+        const thanks = $('#feedbackOverlay .feedbackThanks');
+        thanks.style.display = '';
+        setTimeout(function() {
+          thanks.style.display = 'none';
+          if(isFeedbackOverlayOpen())
+            closeFeedbackOverlay();
+        }, 1500);
+      } else {
         showFeedbackError("Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + text);
+        submitButton.disabled = false;
+      }
     } catch(e) {
       showFeedbackError("Submitting your feedback failed. Please report this on Discord or GitHub:\n\n" + e.message + "\n" + e.stack);
-    } finally {
       submitButton.disabled = false;
     }
   };
@@ -130,7 +146,11 @@ function closeFeedbackOverlay() {
   // no `forced` here: the previous overlay's display is already 'none', so a plain
   // showOverlay toggles it back on without leaving the whole overlay system stuck
   // in the crash-reporter-only "forced" state
-  showOverlay(feedbackPreviousOverlay && feedbackPreviousOverlay.id);
+  const previousID = feedbackPreviousOverlay && feedbackPreviousOverlay.id;
+  if(previousID == 'statesOverlay')
+    showStatesOverlay(previousID); // its normal open path also refreshes the filter layout
+  else
+    showOverlay(previousID);
 }
 
 // registered before main.js's window.onkeyup (tracing.js is concatenated earlier), so
