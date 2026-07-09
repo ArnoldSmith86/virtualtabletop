@@ -700,7 +700,14 @@ export class Widget extends StateManaged {
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom', 'parent' ];
+    // Only ignoreZoom widgets have a transform that depends on their parent (the
+    // inverse-zoom compensation looks at the ancestor chain), so only they need
+    // to recompute it on reparent. Keeping 'parent' out of the list for everyone
+    // else avoids a redundant transform write on every card move/drop.
+    const properties = [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
+    if(this.get('ignoreZoom'))
+      properties.push('parent');
+    return properties;
   }
 
   refreshIgnoreZoomDescendants() {
