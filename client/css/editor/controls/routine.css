@@ -101,3 +101,18 @@ body.edit.darkMode .routine-editor-operation-parameter {
   font-size: 12px;
   margin: 2px 0 0 12px;
 }
+
+.routine-editor-operation.folded .routine-editor-add-else {
+  display: none;
+}
+
+.inline-popup label {
+  display: block;
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.inline-popup label input {
+  width: 80px;
+  margin-left: 6px;
+}

@@ -1,0 +1,228 @@
+/**
+ * @jest-environment jsdom
+ */
+import fs from 'fs';
+
+// The routine editor files are plain scripts that the server concatenates into
+// the editor bundle, so load them the same way here and provide the handful of
+// globals they use from other bundle files.
+beforeAll(() => {
+  window.$ = (selector, parent) => (parent || document).querySelector(selector);
+  window.$a = (selector, parent) => (parent || document).querySelectorAll(selector);
+  window.div = (parent, className, html) => {
+    const d = document.createElement('div');
+    if (className) d.className = className;
+    if (html) d.innerHTML = html;
+    if (parent) parent.append(d);
+    return d;
+  };
+  window.customSelectionCallback = null;
+  window.endCustomSelection = () => {};
+
+  const editorDiv = document.createElement('div');
+  editorDiv.id = 'editor';
+  document.body.append(editorDiv);
+
+  const files = [
+    'client/js/editor/controls/widgetselection.js',
+    'client/js/editor/controls/popup.js',
+    'client/js/editor/controls/routine.js',
+    'client/js/editor/controls/events.js'
+  ];
+  const code = files.map(f => fs.readFileSync(f, 'utf8')).join('\n');
+  const exposed = [
+    'RoutineEditor', 'RoutineOperationEditor', 'IfRoutineOperationEditor', 'ForeachRoutineOperationEditor',
+    'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
+    'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata',
+    'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
+    'EventsEditor'
+  ];
+  // eval in test scope so the plain-script class declarations see the jsdom globals
+  eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
+});
+
+describe('routine operation metadata', () => {
+  test('every operation renders an example without leaking template syntax', () => {
+    for (const { example } of routineOperationExamples()) {
+      expect(example).not.toMatch(/\{[a-zA-Z,]+\}|\[ having|\[,/); // unresolved placeholders or leaked brackets
+      expect(example).not.toContain('undefined');
+    }
+  });
+
+  test('operations resolve to the right editor', () => {
+    expect(editorForOperation({ func: 'MOVE' })).toBeInstanceOf(RoutineOperationEditor);
+    expect(editorForOperation({ func: 'IF' })).toBeInstanceOf(IfRoutineOperationEditor);
+    expect(editorForOperation({ func: 'FOREACH' })).toBeInstanceOf(ForeachRoutineOperationEditor);
+    expect(editorForOperation('var x = 1')).toBeInstanceOf(VarStringRoutineOperationEditor);
+    expect(editorForOperation('// hello')).toBeInstanceOf(CommentRoutineOperationEditor);
+    expect(editorForOperation({ func: 'BOGUS' })).toBeInstanceOf(UnknownRoutineOperationEditor);
+  });
+});
+
+describe('operation rendering', () => {
+  function renderOperation(operation, variables = [], collections = []) {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, variables, collections);
+    return { editor, dom: editor.render() };
+  }
+
+  test('escapes html in parameter values from room state', () => {
+    const { dom } = renderOperation({ func: 'MOVE', collection: '<img src=x onerror=alert(1)>' });
+    expect(dom.querySelector('img')).toBeNull();
+    expect(dom.textContent).toContain('<img src=x onerror=alert(1)>');
+  });
+
+  test('hides segments whose parameters use defaults and reveals them via the more chip', () => {
+    const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
+    expect(dom.querySelector('.routine-editor-operation-optional')).not.toBeNull();
+    const more = dom.querySelector('.routine-editor-operation-more');
+    expect(more).not.toBeNull();
+    more.dispatchEvent(new Event('click'));
+    expect(dom.classList.contains('show-details')).toBe(true);
+  });
+
+  test('shows optional segments when their parameter is explicitly set', () => {
+    const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2', face: 0 });
+    expect(dom.querySelector('.routine-editor-operation-optional')).toBeNull();
+  });
+
+  test('classifies parameter chips for color coding', () => {
+    const { dom } = renderOperation({ func: 'SELECT', value: '${myVar}', collection: 'stuff' });
+    expect(dom.querySelector('.routine-editor-parameter-func')).not.toBeNull();
+    expect(dom.querySelector('.routine-editor-parameter-variable')).not.toBeNull();
+    expect(dom.querySelector('.routine-editor-parameter-collection')).not.toBeNull();
+  });
+
+  test('shows verbose labels for predefined variables', () => {
+    const { editor } = renderOperation({ func: 'AUDIO', player: '${playerName}' });
+    expect(editor.getDisplayedValue('player')).toBe('player clicking the widget');
+  });
+
+  test('IF switches between condition and operand templates', () => {
+    const { editor: operandIf } = renderOperation({ func: 'IF', operand1: 1 });
+    expect(operandIf.getTemplate()).toContain('{operand1} {relation} {operand2}');
+    const { editor: conditionIf } = renderOperation({ func: 'IF', condition: '${x}' });
+    expect(conditionIf.getTemplate()).toContain('{condition}');
+  });
+
+  test('IF renders THEN editor and an add-ELSE button', () => {
+    const { dom } = renderOperation({ func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] });
+    expect(dom.querySelector('.routine-editor')).not.toBeNull();
+    expect(dom.querySelector('.routine-editor-add-else')).not.toBeNull();
+  });
+
+  test('rendering IF does not add routine arrays to the operation', () => {
+    const operation = { func: 'IF', operand1: 1 };
+    renderOperation(operation);
+    expect(operation.thenRoutine).toBeUndefined();
+  });
+
+  test('var statements render and rebuild correctly', () => {
+    const { editor } = renderOperation('var x = 1');
+    expect(editor.getDisplayedValue('variable')).toBe('x');
+    expect(editor.getDisplayedValue('expression')).toBe('1');
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    editor.onNewValue({ variable: 'y' });
+    expect(result).toBe('var y = 1');
+  });
+
+  test('complex var statements fall back to raw editing', () => {
+    const { editor } = renderOperation('var $dynamic.${key} = 1 + 2');
+    expect(editor.getTemplate()).toBe('var {variable} = {expression}');
+    const { editor: raw } = renderOperation('var x'); // no " = ", unrepresentable
+    expect(raw.getTemplate()).toBe('{statement}');
+  });
+
+  test('unknown operations are edited as whole JSON', () => {
+    const { editor } = renderOperation({ func: 'BOGUS', foo: 1 });
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    editor.onNewValue({ func: 'CLICK' });
+    expect(result).toEqual({ func: 'CLICK' });
+    expect(result.json).toBeUndefined();
+  });
+});
+
+describe('routine editor state handling', () => {
+  test('collects defined variables, collections and in-place collections', () => {
+    const editor = new RoutineEditor({ state: {} }, [
+      { func: 'COUNT', variable: 'cards' },
+      { func: 'SELECT', collection: 'mine' },
+      { func: 'SET', collection: [ 'w1', 'w2' ] },
+      { func: 'MOVE', to: 'h1' }
+    ]);
+    const move = editor.operations[3];
+    expect(move.variables).toContain('cards');
+    expect(move.collections).toContainEqual('mine');
+    expect(move.collections).toContainEqual([ 'w1', 'w2' ]);
+  });
+
+  test('removing an operation splices the routine', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'SHUFFLE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    editor.domElement.querySelector('.routine-editor-operation-remove').dispatchEvent(new Event('click'));
+    expect(notified).toHaveLength(1);
+    expect(notified[0].func).toBe('SHUFFLE');
+  });
+
+  test('ignores echoes of its own edits but applies remote changes', () => {
+    const routine = [ { func: 'FLIP' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    const domBefore = editor.domElement.innerHTML;
+    editor.onPropertyChange([ { func: 'FLIP' } ]); // echo
+    expect(editor.routine).toBe(routine); // not replaced
+    editor.onPropertyChange([ { func: 'SHUFFLE' } ]); // remote change
+    expect(editor.routine[0].func).toBe('SHUFFLE');
+  });
+});
+
+describe('events editor', () => {
+  test('never hands its working arrays to the widget (aliasing would suppress later updates)', () => {
+    const widget = { state: { clickRoutine: [ { func: 'FLIP' } ] } };
+    let received = null;
+    const eventsEditor = new EventsEditor(widget, (property, value) => received = value);
+    eventsEditor.expandedEvents.clickRoutine = true;
+    eventsEditor.render();
+    const routineEditor = eventsEditor.routineEditors.clickRoutine;
+    expect(routineEditor.routine).not.toBe(widget.state.clickRoutine);
+    routineEditor.routineChanged();
+    expect(received).toEqual(routineEditor.routine);
+    expect(received).not.toBe(routineEditor.routine);
+    expect(received[0]).not.toBe(routineEditor.routine[0]);
+  });
+});
+
+describe('popup parameter routing', () => {
+  test('collection values clear the holder-style alternative', () => {
+    const popup = new RoutineHoldersOrCollectionSourcePopup();
+    popup.setOperationDetails({ func: 'MOVE' }, [ 'from', 'collection' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.setNewCollectionValue([ 'w1', 'w2' ]);
+    expect('from' in value).toBe(true);
+    expect(value.from).toBeUndefined();
+    expect(value.collection).toEqual([ 'w1', 'w2' ]);
+  });
+
+  test('widget picker arrays go to the holder-style parameter', () => {
+    const popup = new RoutineHoldersOrCollectionSourcePopup();
+    popup.setOperationDetails({ func: 'MOVE' }, [ 'from', 'collection' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.setNewValue([ 'h1' ]);
+    expect(value.from).toEqual([ 'h1' ]);
+  });
+
+  test('FOREACH source popup clears competing parameters', () => {
+    const popup = new RoutineForeachSourcePopup();
+    popup.setOperationDetails({ func: 'FOREACH', 'in': [ 1 ] }, [ 'in', 'range', 'collection' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.setNewCollectionValue('mine');
+    expect(value.collection).toBe('mine');
+    expect('in' in value && value['in'] === undefined).toBe(true);
+  });
+});

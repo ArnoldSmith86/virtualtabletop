@@ -258,25 +258,24 @@ class RoutineOperationPopup extends RoutinePopup {
     super();
   }
 
-  setNewValue(value) {
-    if(value) {
+  setNewValue(newOperation) {
+    if(typeof newOperation == 'string') {
+      this.notifyChangeListeners(newOperation);
+    } else {
+      // keep nothing of the old operation except the new func
       const newValue = {};
       for(const key in this.operation)
         newValue[key] = undefined;
-      newValue.func = value;
+      Object.assign(newValue, newOperation);
       this.notifyChangeListeners(newValue);
-    } else {
-      this.notifyChangeListeners("var variable = 1");
     }
   }
 
   show() {
     super.show(false, false);
-    for(const type of routineOperationTypes()) {
-      if(!(type instanceof UnknownRoutineOperationEditor)) {
-        button(this.domElement, type.getExampleWithDefaults(), _=>this.setNewValue(type.getDefaults().func));
-        this.domElement.append(document.createElement('br'));
-      }
+    for(const { example, newOperation } of routineOperationExamples()) {
+      button(this.domElement, example, _=>this.setNewValue(newOperation));
+      this.domElement.append(document.createElement('br'));
     }
   }
 }
@@ -447,23 +446,56 @@ class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
   }
 }
 
-class RoutineIfConditionPopup extends RoutinePopup {
-  constructor() {
-    super();
-  }
-
-  show() {
-    super.show(true);
-  }
-}
-
 class RoutineForeachSourcePopup extends RoutinePopup {
   constructor() {
     super();
   }
 
+  setNewCollectionValue(value) {
+    this.notifyChangeListeners({ 'in': undefined, range: undefined, collection: value });
+  }
+
+  setNewValue(value) {
+    // variables and manual input iterate over their content via "in"
+    this.notifyChangeListeners({ 'in': value, range: undefined, collection: undefined });
+  }
+
   show() {
-    super.show(true);
+    const [ rangeTitle, rangeContent ] = this.addAccordionSection('Range');
+    infoButton(rangeTitle, 'Iterate over a range of numbers. The loopRoutine receives each number as the variable value.');
+    const inputs = {};
+    for(const name of [ 'start', 'end', 'step' ]) {
+      const label = document.createElement('label');
+      label.textContent = name;
+      const input = document.createElement('input');
+      input.type = 'number';
+      inputs[name] = input;
+      label.append(input);
+      rangeContent.append(label);
+    }
+    inputs.start.value = 1;
+    inputs.end.value = 10;
+    inputs.step.value = 1;
+    button(rangeContent, 'use range', _=>{
+      this.notifyChangeListeners({ 'in': undefined, range: [ +inputs.start.value || 0, +inputs.end.value || 0, +inputs.step.value || 1 ], collection: undefined });
+    });
+
+    const [ inTitle, inContent ] = this.addAccordionSection('Object / Array');
+    infoButton(inTitle, 'Iterate over the entries of an object, array or string. The loopRoutine receives key and value for each entry.');
+    const textarea = document.createElement('textarea');
+    textarea.placeholder = '[ "first", "second" ]';
+    textarea.addEventListener('change', _=>{
+      try {
+        const value = JSON.parse(textarea.value);
+        textarea.classList.remove('inputError');
+        this.setNewValue(value);
+      } catch(e) {
+        textarea.classList.add('inputError');
+      }
+    });
+    inContent.append(textarea);
+
+    super.show(true, true);
   }
 }
 

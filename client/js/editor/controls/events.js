@@ -126,6 +126,7 @@ class EventsEditor {
     this.domElement = document.createElement('div');
     this.domElement.classList.add('events-editor');
     this.expandedEvents = {};
+    this.routineEditors = {}; // kept across renders so folding and other UI state survive
     this.render();
   }
 
@@ -144,6 +145,14 @@ class EventsEditor {
   }
 
   onPropertyChange() {
+    // update existing editors in place (a no-op for echoes of our own edits)
+    // and re-render the section so added/removed handlers appear
+    for(const property in this.routineEditors) {
+      if(Array.isArray(this.widget.state[property]))
+        this.routineEditors[property].onPropertyChange(this.widget.state[property]);
+      else
+        delete this.routineEditors[property];
+    }
     this.render();
   }
 
@@ -182,6 +191,7 @@ class EventsEditor {
         e.stopPropagation();
         if(confirm(`Remove ${property} and all its operations?`)) {
           delete this.expandedEvents[property];
+          delete this.routineEditors[property];
           this.onChange(property, undefined);
           this.render();
         }
@@ -196,9 +206,14 @@ class EventsEditor {
       if(expanded) {
         const contentDOM = div(eventDOM, 'events-editor-event-content');
         contentDOM.addEventListener('click', e=>e.stopPropagation());
-        const routineEditor = new RoutineEditor(this.widget, this.widget.state[property]);
-        routineEditor.registerChangeListener(v=>this.onChange(property, v));
-        contentDOM.append(routineEditor.domElement);
+        if(!this.routineEditors[property]) {
+          // clone in both directions: the editor mutates its own copy, and the widget must
+          // never share references with it (deltas would alias widget state to the editor's
+          // arrays and make later set() calls no-op because the state already "changed")
+          this.routineEditors[property] = new RoutineEditor(this.widget, JSON.parse(JSON.stringify(this.widget.state[property])));
+          this.routineEditors[property].registerChangeListener(v=>this.onChange(property, JSON.parse(JSON.stringify(v))));
+        }
+        contentDOM.append(this.routineEditors[property].domElement);
       }
     }
 
