@@ -10,7 +10,10 @@ let lastAppliedZoomKey = null;
 
 function getZoomTarget(gs) {
   const zoomSettings = (gs && gs.zoom) || {};
-  return (zoomSettings.perPlayer || {})[playerName] || zoomSettings.all || null;
+  const perPlayer = zoomSettings.perPlayer || {};
+  // own-property check so a player named e.g. "constructor" doesn't inherit from Object.prototype
+  const perPlayerTarget = Object.prototype.hasOwnProperty.call(perPlayer, playerName) ? perPlayer[playerName] : null;
+  return perPlayerTarget || zoomSettings.all || null;
 }
 
 function applyServerZoomSetting(gs) {
