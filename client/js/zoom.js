@@ -8,6 +8,9 @@ let enableUserZoom = localStorage.getItem('enableUserZoom') !== 'false';
 let allowGameZoomControl = localStorage.getItem('allowGameZoomControl') !== 'false';
 let lastAppliedZoomKey = null;
 
+// clean up the key used by the old lock-zoom button that this feature replaced
+localStorage.removeItem('zoomLocked');
+
 function getZoomTarget(gs) {
   const zoomSettings = (gs && gs.zoom) || {};
   const perPlayer = zoomSettings.perPlayer || {};

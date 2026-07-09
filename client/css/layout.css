@@ -704,19 +704,6 @@ body.aspectTooGood.hiddenToolbar {
       background-color: var(--VTTblue);
     }
 
-    #lockZoomButton {
-      padding: 5px;
-    }
-
-    #lockZoomButton::before {
-      font-family: "Material Symbols" !important;
-      content: 'lock_open_right';
-    }
-
-    #lockZoomButton.locked::before {
-      content: 'lock';
-    }
-
     body.horizontalToolbar #zoomControls {
       top: -91px;
       left: unset;
