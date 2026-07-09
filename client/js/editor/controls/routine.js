@@ -93,7 +93,7 @@ const routineOperationMetadata = {
     template: '{func} {count} widgets from {holder,collection}[ to face {face}][, faceCycle {faceCycle}]',
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
       collection: { type: 'collection', default: 'DEFAULT' },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'next' } },
       faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
@@ -152,7 +152,7 @@ const routineOperationMetadata = {
     parameters: {
       fillTo: { type: 'number', default: null },
       count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
-      from: { type: 'widgets', default: null },
+      from: { type: 'widgets', default: null, display: { 'null': '?' } },
       collection: { type: 'collection', default: 'DEFAULT' },
       to: { type: 'widgets', default: null, display: { 'null': '?' } },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } }
@@ -234,7 +234,7 @@ const routineOperationMetadata = {
   SHUFFLE: {
     template: '{func} {holder,collection}[, mode {mode}][, modeValue {modeValue}]',
     parameters: {
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
       collection: { type: 'collection', default: 'DEFAULT' },
       mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
       modeValue: { type: 'number', default: 1 }
@@ -835,6 +835,17 @@ function editorForOperation(operation) {
   }
   return new UnknownRoutineOperationEditor();
 }
+
+// pre-filled simple versions of common operations, offered first when adding one
+const simpleRoutineOperationExamples = [
+  { example: 'MOVE 1 card from a to b', newOperation: { func: 'MOVE', count: 1, from: null, to: null } },
+  { example: 'MOVE all cards from a to b', newOperation: { func: 'MOVE', count: 'all', from: null, to: null } },
+  { example: 'FLIP the top card of a holder', newOperation: { func: 'FLIP', count: 1, holder: null } },
+  { example: 'SHUFFLE a holder', newOperation: { func: 'SHUFFLE', holder: null } },
+  { example: 'RECALL all cards to their holder', newOperation: { func: 'RECALL', holder: null } },
+  { example: 'AUDIO plays a sound', newOperation: { func: 'AUDIO', source: '' } },
+  { example: 'TURN moves to the next player', newOperation: { func: 'TURN' } }
+];
 
 // the choices offered when adding an operation or switching its type
 function routineOperationExamples() {

@@ -276,10 +276,17 @@ class RoutineOperationPopup extends RoutinePopup {
 
   show() {
     super.show(false, false);
-    for(const { example, newOperation } of routineOperationExamples()) {
-      button(this.domElement, example, _=>this.setNewValue(newOperation));
-      this.domElement.append(document.createElement('br'));
+    const [ , commonContent ] = this.addAccordionSection('Common Actions');
+    for(const { example, newOperation } of simpleRoutineOperationExamples) {
+      button(commonContent, example, _=>this.setNewValue(newOperation));
+      commonContent.append(document.createElement('br'));
     }
+    const [ , allContent ] = this.addAccordionSection('All Operations');
+    for(const { example, newOperation } of routineOperationExamples()) {
+      button(allContent, example, _=>this.setNewValue(newOperation));
+      allContent.append(document.createElement('br'));
+    }
+    this.moveIntoView();
   }
 }
 

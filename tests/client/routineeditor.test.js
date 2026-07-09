@@ -33,7 +33,7 @@ beforeAll(() => {
   const exposed = [
     'RoutineEditor', 'RoutineOperationEditor', 'IfRoutineOperationEditor', 'ForeachRoutineOperationEditor',
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
-    'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata',
+    'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor'
   ];
@@ -46,6 +46,17 @@ describe('routine operation metadata', () => {
     for (const { example } of routineOperationExamples()) {
       expect(example).not.toMatch(/\{[a-zA-Z,]+\}|\[ having|\[,/); // unresolved placeholders or leaked brackets
       expect(example).not.toContain('undefined');
+    }
+  });
+
+  test('simple operation recipes reference valid operations', () => {
+    expect(simpleRoutineOperationExamples.length).toBeGreaterThan(3);
+    for (const { example, newOperation } of simpleRoutineOperationExamples) {
+      expect(typeof example).toBe('string');
+      expect(routineOperationMetadata[newOperation.func]).toBeDefined();
+      for (const key in newOperation)
+        if (key != 'func')
+          expect(routineOperationMetadata[newOperation.func].parameters[key]).toBeDefined();
     }
   });
 
