@@ -30,7 +30,7 @@ class Popup {
 
   hide() {
     document.removeEventListener('click', this.boundOnOutsideClick);
-    document.removeEventListener('keydown', this.boundOnKeyDown);
+    document.removeEventListener('keydown', this.boundOnKeyDown, true);
     this.domElement.remove();
     for(const listener of this.cancelListeners)
       listener();
@@ -57,8 +57,10 @@ class Popup {
   }
 
   onKeyDown(e) {
-    if(e.key == 'Escape')
+    if(e.key == 'Escape') {
+      e.stopPropagation();
       this.hide();
+    }
   }
 
   onOutsideClick(e) {
@@ -84,7 +86,7 @@ class Popup {
     // also drop document listeners from a previous show() so a bubbling click
     // that re-opens this popup cannot immediately close it again
     document.removeEventListener('click', this.boundOnOutsideClick);
-    document.removeEventListener('keydown', this.boundOnKeyDown);
+    document.removeEventListener('keydown', this.boundOnKeyDown, true);
     this.domElement.innerHTML = '';
     this.changeListeners = [];
     this.cancelListeners = [];
@@ -107,7 +109,8 @@ class Popup {
     this.domElement.style.top = `${sourceRect.bottom}px`;
     this.moveIntoView();
     this.domElement.addEventListener('click', this.boundOnClick);
-    document.addEventListener('keydown', this.boundOnKeyDown);
+    // capture phase so Escape only closes the popup instead of also deselecting in the editor
+    document.addEventListener('keydown', this.boundOnKeyDown, true);
     // defer so the click that opened the popup doesn't immediately close it
     setTimeout(_=>document.addEventListener('click', this.boundOnOutsideClick), 0);
   }

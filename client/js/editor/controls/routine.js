@@ -390,18 +390,43 @@ class RoutineEditor {
     for(const [ index, operation ] of this.operations.entries()) {
       const operationDOM = operation.render();
 
-      const removeButton = document.createElement('span');
-      removeButton.className = 'material-symbols routine-editor-operation-remove';
-      removeButton.textContent = 'delete';
-      removeButton.title = 'Remove this operation';
-      removeButton.addEventListener('click', e=>{
-        e.stopPropagation();
+      const buttonsDOM = document.createElement('span');
+      buttonsDOM.className = 'routine-editor-operation-buttons';
+      const operationButton = (icon, title, onClick)=>{
+        const buttonDOM = document.createElement('span');
+        buttonDOM.className = 'material-symbols';
+        buttonDOM.textContent = icon;
+        buttonDOM.title = title;
+        buttonDOM.addEventListener('click', e=>{
+          e.stopPropagation();
+          onClick();
+        });
+        buttonsDOM.append(buttonDOM);
+      };
+      if(index > 0)
+        operationButton('arrow_upward', 'Move this operation up', _=>{
+          this.routine.splice(index-1, 0, this.routine.splice(index, 1)[0]);
+          this.routineChanged();
+        });
+      if(index < this.operations.length-1)
+        operationButton('arrow_downward', 'Move this operation down', _=>{
+          this.routine.splice(index+1, 0, this.routine.splice(index, 1)[0]);
+          this.routineChanged();
+        });
+      operationButton('delete', 'Remove this operation', _=>{
         this.routine.splice(index, 1);
         this.routineChanged();
       });
-      operationDOM.append(removeButton);
+      operationDOM.append(buttonsDOM);
 
       this.domElement.append(operationDOM);
+    }
+
+    if(!this.operations.length) {
+      const emptyHint = document.createElement('div');
+      emptyHint.className = 'routine-editor-empty';
+      emptyHint.textContent = 'No operations yet.';
+      this.domElement.append(emptyHint);
     }
 
     const addButton = button(this.domElement, 'add operation', async _=>{
@@ -553,7 +578,9 @@ class RoutineOperationEditor {
       const resolved = this.resolveParameter(spec);
       const rawValue = resolved !== null && this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : (resolved !== null ? this.getDefaults()[resolved] : undefined);
       const category = this.classifyParameter(resolved, rawValue);
-      return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}" data-parameter="${spec}">${escapeHTML(this.getDisplayedValue(spec))}</span>`;
+      const displayed = this.getDisplayedValue(spec);
+      const missing = displayed === '?' ? ' routine-editor-parameter-missing' : '';
+      return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
     };
 
     // segments in square brackets only show details when one of their parameters is explicitly set

@@ -163,7 +163,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.domElement.querySelector('.routine-editor-operation-remove').dispatchEvent(new Event('click'));
+    [...editor.domElement.querySelectorAll('.routine-editor-operation-buttons .material-symbols')].find(b => b.textContent == 'delete').dispatchEvent(new Event('click'));
     expect(notified).toHaveLength(1);
     expect(notified[0].func).toBe('SHUFFLE');
   });

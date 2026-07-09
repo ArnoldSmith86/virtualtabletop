@@ -217,6 +217,13 @@ class EventsEditor {
       }
     }
 
+    if(!this.eventProperties().length) {
+      const emptyHint = document.createElement('div');
+      emptyHint.className = 'events-editor-empty';
+      emptyHint.textContent = 'This widget does not react to any events yet.';
+      this.domElement.append(emptyHint);
+    }
+
     const addButton = button(this.domElement, 'Add Event', _=>{
       const popup = new AddEventPopup(addButton, this.eventProperties(), property=>{
         this.expandedEvents[property] = true;

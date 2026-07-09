@@ -116,3 +116,38 @@ body.edit.darkMode .routine-editor-operation-parameter {
   width: 80px;
   margin-left: 6px;
 }
+
+.routine-editor-parameter-missing {
+  outline: 1px dashed var(--textHighlightColor3);
+  color: var(--textHighlightColor3);
+}
+
+.routine-editor-operation-buttons {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  display: flex;
+  gap: 3px;
+}
+
+.routine-editor-operation-buttons .material-symbols {
+  font-size: 15px;
+  color: gray;
+  cursor: pointer;
+}
+
+.routine-editor-operation-buttons .material-symbols:hover {
+  color: var(--VTTblue);
+}
+
+.routine-editor-operation {
+  padding-right: 60px;
+}
+
+.routine-editor-empty,
+.events-editor-empty {
+  color: gray;
+  font-size: 12px;
+  font-style: italic;
+  margin: 2px 0;
+}
