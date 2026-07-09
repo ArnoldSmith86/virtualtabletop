@@ -338,7 +338,7 @@ export function receiveDelta(delta) {
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] !== null && !widgets.has(widgetID))
+    if(delta.s[widgetID] !== null && !widgets.has(widgetID) && delta.s[widgetID].id !== undefined) // entries without id are property updates, not creations - ignore them for widgets that no longer exist
       addWidget(delta.s[widgetID]);
 
   for(const widgetID in delta.s) {

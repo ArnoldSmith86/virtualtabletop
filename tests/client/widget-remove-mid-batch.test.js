@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { batchStart, batchEnd, flushDelta, receiveDelta, sendPropertyUpdate, widgets } from '../../client/js/serverstate.js';
 
 import { createWidget, removeWidget } from './client-util.js';
@@ -60,12 +62,23 @@ describe("Scenarios: Removing a widget mid-batch", () => {
     describe("When a delta received afterwards contains a stray property update (e.g. 'parent') for that same widget ID", () => {
       test("Then receiving it does not throw and the widget is not resurrected", () => {
         const id = testWidget.get('id');
+        const parentID = `${testName}-late-parent`;
+        const consoleError = jest.spyOn(console, 'error');
 
         expect(() => receiveDelta({ s: { [id]: null } })).not.toThrow();
         expect(widgets.has(id)).toBe(false);
 
-        expect(() => receiveDelta({ s: { [id]: { parent: 'someOtherWidget' } } })).not.toThrow();
+        expect(() => receiveDelta({ s: { [id]: { parent: parentID } } })).not.toThrow();
         expect(widgets.has(id)).toBe(false);
+
+        // the stray entry must not have been treated as a widget creation and parked in
+        // deferredChildren; otherwise it resurfaces as an id-less addWidget() error here
+        createWidget({ id: parentID, type: 'widget' });
+        expect(consoleError).not.toHaveBeenCalled();
+        expect(widgets.has(id)).toBe(false);
+
+        removeWidget(parentID);
+        consoleError.mockRestore();
       });
     });
   });
