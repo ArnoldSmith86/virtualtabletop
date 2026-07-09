@@ -821,7 +821,8 @@ function customRoutineChecks(operation, problems, context, operationPath) {
 function customWidgetChecks(widget, widgets, problems) {
     if(widget.type === 'deck') {
         for(const prop of ['width', 'height', 'movable', 'layer', 'clickable']) {
-            if(widget[prop] !== undefined) {
+            const matchingCardDefaultSet = ['width', 'height'].includes(prop) && widget.cardDefaults && widget.cardDefaults[prop] !== undefined;
+            if(widget[prop] !== undefined && !matchingCardDefaultSet) {
                 problems.push({
                     widget: widget.id,
                     property: [prop],
