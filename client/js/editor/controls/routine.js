@@ -1066,12 +1066,17 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
 class UnknownRoutineOperationEditor extends RoutineOperationEditor {
   constructor() {
     super('{json}', [
-      new RoutineStringPopup()
+      new RoutineFullOperationJSONPopup()
     ]);
   }
 
   getDisplayedValue(property) {
     return JSON.stringify(this.operation);
+  }
+
+  onNewValue(values) {
+    // the popup edits the entire operation, so replace it instead of merging keys
+    this.notifyChangeListeners(values);
   }
 
   isMatching(operation) {

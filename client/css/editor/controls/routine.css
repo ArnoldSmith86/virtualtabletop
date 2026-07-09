@@ -1,13 +1,45 @@
 .routine-editor {
-  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 8px;
 }
+
+.routine-editor .routine-editor {
+  margin: 4px 0 4px 12px;
+  padding-left: 8px;
+  border-left: 2px solid var(--backgroundHighlightColor1);
+}
+
 .routine-editor-operation {
-  border-left: 1px solid #222;
-  padding: 5px;
-  padding-left: 1px;
+  background: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--VTTblue);
+  border-radius: 0 4px 4px 0;
+  padding: 5px 8px;
+  line-height: 1.8;
+  font-size: 13px;
 }
 
 .routine-editor-operation-parameter {
-  color: #88f;
+  display: inline-block;
+  background: var(--backgroundColor);
+  color: var(--VTTblue);
   font-weight: bold;
+  border-radius: 4px;
+  padding: 0 5px;
+  line-height: 1.4;
+  cursor: pointer;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+body.edit.darkMode .routine-editor-operation-parameter {
+  color: var(--textHighlightColor7);
+}
+
+.routine-editor-operation-parameter:hover {
+  outline: 1px solid var(--VTTblue);
 }

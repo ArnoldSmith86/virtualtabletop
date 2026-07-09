@@ -274,7 +274,7 @@ class PropertiesModule extends SidebarModule {
 
         default:
           if(Array.isArray(widget.get('clickRoutine'))) {
-            this.addHeader('Routine Editor Demo');
+            this.addHeader('Click Routine');
             const routineEditor = new RoutineEditor(widget, widget.get('clickRoutine'));
             this.addPropertyListener(widget, 'clickRoutine', _=>{
               if(Array.isArray(widget.get('clickRoutine')))

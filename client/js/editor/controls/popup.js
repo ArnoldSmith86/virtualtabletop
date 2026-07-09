@@ -31,7 +31,6 @@ class Popup {
   hide() {
     document.removeEventListener('click', this.boundOnOutsideClick);
     document.removeEventListener('keydown', this.boundOnKeyDown);
-    endCustomSelection();
     this.domElement.remove();
     for(const listener of this.cancelListeners)
       listener();
@@ -66,6 +65,9 @@ class Popup {
     // clicking widgets in the room is part of the interaction while a custom selection is active
     if(customSelectionCallback)
       return;
+    // clicks inside any popup (e.g. a nested info popup) never dismiss other popups
+    if(e.target.closest && e.target.closest('.inline-popup'))
+      return;
     if(!this.domElement.contains(e.target))
       this.hide();
   }
@@ -79,6 +81,10 @@ class Popup {
   }
 
   reset() {
+    // also drop document listeners from a previous show() so a bubbling click
+    // that re-opens this popup cannot immediately close it again
+    document.removeEventListener('click', this.boundOnOutsideClick);
+    document.removeEventListener('keydown', this.boundOnKeyDown);
     this.domElement.innerHTML = '';
     this.changeListeners = [];
     this.cancelListeners = [];
@@ -129,9 +135,17 @@ class InfoPopup extends Popup {
   }
 }
 
+let openRoutinePopup = null; // only one parameter popup is open at a time
+
 class RoutinePopup extends Popup {
   constructor(source) {
     super(source);
+  }
+
+  hide() {
+    if(openRoutinePopup === this)
+      openRoutinePopup = null;
+    super.hide();
   }
 
   onClick(e) {
@@ -150,6 +164,9 @@ class RoutinePopup extends Popup {
   }
 
   show(showVariables=true, showCollections=true) {
+    if(openRoutinePopup && openRoutinePopup !== this)
+      openRoutinePopup.hide();
+    openRoutinePopup = this;
     super.show();
     this.setTitle(this.operation && this.operation.func ? this.operation.func : 'var');
     commonInfoButton($('h1', this.domElement), this.operation && this.operation.func);
@@ -276,6 +293,16 @@ class RoutineNumberPopup extends RoutinePopup {
     this.options = options;
   }
 
+  setNewValue(value) {
+    // for parameter alternatives like {fillTo,count} the last one is the normal
+    // parameter and the ones before it override it in the engine, so clear those
+    const values = {};
+    for(const parameter of this.parameterNames)
+      values[parameter] = undefined;
+    values[this.parameterNames[this.parameterNames.length-1]] = value;
+    this.notifyChangeListeners(values);
+  }
+
   show() {
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
@@ -315,6 +342,13 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     super();
   }
 
+  hide() {
+    // this popup starts widget selections, so end them when it goes away;
+    // other popups (e.g. info popups) must not interfere with a running selection
+    endCustomSelection();
+    super.hide();
+  }
+
   show(showCollections=false) {
     super.show(false, showCollections);
     const [ title, content ] = this.addAccordionSection('Holders')
@@ -352,12 +386,16 @@ class RoutineJSONPopup extends RoutinePopup {
     super();
   }
 
+  getCurrentValue() {
+    return this.operation[this.parameterNames[0]];
+  }
+
   show() {
     super.show(true, false);
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
     infoButton(valueTitle, 'Enter a JSON value (object, array, string, number, boolean or null).');
     const textarea = document.createElement('textarea');
-    const currentValue = this.operation[this.parameterNames[0]];
+    const currentValue = this.getCurrentValue();
     textarea.value = JSON.stringify(typeof currentValue != 'undefined' ? currentValue : null, null, '  ');
     textarea.addEventListener('change', _=>{
       try {
@@ -369,6 +407,21 @@ class RoutineJSONPopup extends RoutinePopup {
       }
     });
     valueContent.append(textarea);
+  }
+}
+
+class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
+  constructor() {
+    super();
+  }
+
+  getCurrentValue() {
+    return this.operation;
+  }
+
+  setNewValue(value) {
+    // this popup edits the entire operation instead of a single parameter
+    this.notifyChangeListeners(value);
   }
 }
 
@@ -422,9 +475,6 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
     dom.innerHTML += `<span class=material-symbols>school</span>`;
   if(videoFilename)
     dom.innerHTML += `<span class=material-symbols>movie</span>`;
-  dom.style.cursor = 'pointer';
-  dom.style.color = 'gray';
-  dom.style.display = 'inline-block';
   infoHTML = infoHTML.replace(/\[([^\]]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic=${topicName}>${topicInfo != null ? topicInfo : topicName}</span>`);
   dom.addEventListener('click', e=>{
     e.stopPropagation();
