@@ -496,11 +496,26 @@ MinifyHTML().then(function(result) {
     }).catch(next);
   });
 
+  const feedbackCooldowns = new Map();
   router.put('/clientError', bodyParser.json({ limit: '50mb' }), function(req, res, next) {
     if(typeof req.body == 'object') {
-      const errorID = Math.random().toString(36).substring(2, 10);
+      // the feedback button makes this endpoint one click away for every visitor, so
+      // rate limit those reports (crash reports stay unlimited - they can't be spammed
+      // without actually crashing the client)
+      if(req.body.type == 'feedback') {
+        if(feedbackCooldowns.size > 1000)
+          for(const [ ip, time ] of feedbackCooldowns)
+            if(Date.now() - time > 15000)
+              feedbackCooldowns.delete(ip);
+        if(Date.now() - (feedbackCooldowns.get(req.ip) || 0) < 15000) {
+          res.send('Please wait a few seconds before sending more feedback.');
+          return;
+        }
+        feedbackCooldowns.set(req.ip, Date.now());
+      }
+      const errorID = Math.random().toString(36).substring(2, 10).padEnd(8, '0');
       fs.writeFileSync(savedir + '/errors/' + errorID + '.json', JSON.stringify(req.body, null, '  '));
-      Logging.log(`ERROR: Client error ${errorID}: ${req.body.message}`);
+      Logging.log(`${req.body.type == 'feedback' ? 'Feedback' : 'ERROR: Client error'} ${errorID}: ${req.body.message}`);
       res.send(errorID);
     } else {
       res.send('not a valid JSON object');

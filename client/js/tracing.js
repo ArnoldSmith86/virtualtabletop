@@ -47,6 +47,7 @@ function collectClientDetails() {
 
 let feedbackPreviousOverlay = null;
 let feedbackPreviousActiveTab = null;
+let feedbackThanksTimeout = null;
 
 function isFeedbackOverlayOpen() {
   // 'flex' is the exact value showOverlay() sets when opening it; checking for that specific
@@ -69,11 +70,14 @@ function openFeedbackOverlay() {
     return;
 
   // re-clicking the toolbar button while the overlay is already open should just close it,
-  // not clobber the saved previous-overlay/tab and wipe out whatever the player had typed
+  // not clobber the saved previous-overlay/tab state
   if(isFeedbackOverlayOpen()) {
     closeFeedbackOverlay();
     return;
   }
+
+  // a stale success timer from a manually dismissed thanks screen must not close this new overlay
+  clearTimeout(feedbackThanksTimeout);
 
   const details = collectClientDetails();
 
@@ -85,7 +89,7 @@ function openFeedbackOverlay() {
   for(const tabButton of $a('.toolbarTab'))
     toggleClass(tabButton, 'active', false);
 
-  $('#feedbackOverlay textarea').value = '';
+  // the textarea is deliberately not cleared here so an accidental close doesn't lose the draft
   $('#feedbackIncludeState').checked = true;
   $('#feedbackOverlay .feedbackError').style.display = 'none';
   $('#feedbackOverlay .feedbackThanks').style.display = 'none';
@@ -115,9 +119,10 @@ function openFeedbackOverlay() {
       if(res.ok && text.match(/^[a-z0-9]{8}$/)) {
         // show a short confirmation before returning to whatever was open before;
         // the button stays disabled so the thanks window can't produce a second report
+        $('#feedbackOverlay textarea').value = '';
         const thanks = $('#feedbackOverlay .feedbackThanks');
         thanks.style.display = '';
-        setTimeout(function() {
+        feedbackThanksTimeout = setTimeout(function() {
           thanks.style.display = 'none';
           if(isFeedbackOverlayOpen())
             closeFeedbackOverlay();
@@ -141,6 +146,7 @@ function showFeedbackError(message) {
 }
 
 function closeFeedbackOverlay() {
+  clearTimeout(feedbackThanksTimeout);
   if(feedbackPreviousActiveTab)
     toggleClass(feedbackPreviousActiveTab, 'active', true);
   // no `forced` here: the previous overlay's display is already 'none', so a plain
