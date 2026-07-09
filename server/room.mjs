@@ -1281,7 +1281,7 @@ export default class Room {
 
   zoom(args) {
     const unsafeKeys = [ '__proto__', 'constructor', 'prototype' ];
-    const players = Array.isArray(args.players) ? args.players.map(p=>`${p}`).filter(p=>!unsafeKeys.includes(p)) : [];
+    const players = Array.isArray(args.players) ? args.players.slice(0, 100).map(p=>`${p}`.substr(0, 128)).filter(p=>!unsafeKeys.includes(p)) : [];
 
     const level = Number(args.level);
     const panX = Number(args.panX);
@@ -1294,8 +1294,13 @@ export default class Room {
       this.state._meta.gameSettings = {};
     if(!this.state._meta.gameSettings.zoom)
       this.state._meta.gameSettings.zoom = { perPlayer: {}, all: null };
+    const zoomSettings = this.state._meta.gameSettings.zoom;
 
-    const payload = { level: Math.max(1, Math.min(10, level)), panX, panY };
+    // seq distinguishes a re-issued (possibly identical) ZOOM from an unrelated
+    // meta update, so clients can re-apply it even when nothing else changed
+    zoomSettings.seq = (zoomSettings.seq || 0) + 1;
+
+    const payload = { level: Math.max(1, Math.min(10, level)), panX, panY, seq: zoomSettings.seq };
     if(args.disableUserControls !== undefined)
       payload.disableUserControls = args.disableUserControls !== false;
     if(players.length === 0) {

@@ -2207,7 +2207,7 @@ export class Widget extends StateManaged {
               disableUserControls: disableUserControls,
             });
 
-            if(isTargetedPlayer) {
+            if(isTargetedPlayer && !edit) {
               // Respect user's override preference
               const allowOverride = localStorage.getItem('allowGameZoomControl') !== 'false';
               if(allowOverride) {

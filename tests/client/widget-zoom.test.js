@@ -69,4 +69,37 @@ describe("Scenarios: ZOOM function", () => {
       });
     });
   });
+
+  describe("Given a widget with a valid ZOOM targeting all players", () => {
+    beforeAll(async () => {
+      await testWidget.set('clickRoutine', [
+        { "func": "ZOOM", "level": 3, "panX": 0, "panY": 0, "player": null }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then it applies the requested zoom level locally", async () => {
+        await expect(testWidget.click()).resolves.toBe(true);
+        expect(getZoomLevel()).toBe(3);
+      });
+    });
+
+    describe("When clicked while in edit mode", () => {
+      beforeAll(async () => {
+        await testWidget.set('clickRoutine', [
+          { "func": "ZOOM", "level": 7, "panX": 0, "panY": 0, "player": null }
+        ]);
+        window.edit = true;
+      });
+      afterAll(() => {
+        window.edit = false;
+      });
+
+      test("Then it does not change the editor viewport", async () => {
+        const levelBefore = getZoomLevel();
+        await expect(testWidget.click()).resolves.toBe(true);
+        expect(getZoomLevel()).toBe(levelBefore);
+      });
+    });
+  });
 });

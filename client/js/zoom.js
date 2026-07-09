@@ -32,8 +32,8 @@ function applyServerZoomSetting(gs) {
   updateZoomUIState(gs);
 }
 
+// full state loads are handled by receiveStateFromServer -> resetZoomAndPan(gameSettings)
 onMessage('meta', args=>applyServerZoomSetting(args.meta && args.meta.gameSettings));
-onMessage('state', args=>applyServerZoomSetting(args._meta && args._meta.gameSettings));
 
 function isGameOverrideActive() {
   if(edit || !allowGameZoomControl)
