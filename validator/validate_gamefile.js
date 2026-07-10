@@ -637,7 +637,7 @@ function validateContextMenuOptions(v, context, propertyPath = []) {
     if (v.image !== undefined && v.image !== null && typeof v.image !== 'string' && !(Array.isArray(v.image) && v.image.every(s => typeof s === 'string')))
         problems.push({ widget: context.widgetId, property: [...propertyPath, 'image'], message: 'contextMenuOptions image must be a string or array of strings' });
     if (v.widget !== undefined && v.widget !== null) {
-        for (const id of asArrayValidator(v.widget)) {
+        for (const id of asArray(v.widget)) {
             if (!context.widgets[id] && !String(id).includes('$'))
                 problems.push({ widget: context.widgetId, property: [...propertyPath, 'widget'], message: `widget '${id}' not found` });
         }
@@ -645,9 +645,6 @@ function validateContextMenuOptions(v, context, propertyPath = []) {
     return problems.length ? problems : true;
 }
 
-function asArrayValidator(v) {
-    return Array.isArray(v) ? v : [v];
-}
 
 function validateContextMenu(v, context, propertyPath = []) {
     const problems = [];
