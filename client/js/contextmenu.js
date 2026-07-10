@@ -1,8 +1,6 @@
 import { $, $a, removeFromDOM, escapeID, unescapeID, onLoad, asArray, mapAssetURLs } from './domhelpers.js';
 import { widgets, batchStart, batchEnd, setDeltaCause } from './serverstate.js';
-import { clientPointer } from './main.js';
 import { playerName } from './overlays/players.js';
-import { getEnabledLegacyModes } from './legacymodes.js';
 import { contrastAnyColor } from './color.js';
 import { generateSymbolsDiv } from './symbols.js';
 
@@ -10,19 +8,17 @@ const CONTEXT_PREVIEW_ID = 'contextMenuPreview';
 const CONTEXT_POPUP_ID = 'contextMenuPopup';
 const CONTEXT_DESCRIPTION_POPOVER_ID = 'contextMenuDescriptionPopover';
 const CONTEXT_TITLE_ROW_ID = 'contextMenuTitleRow';
-const BORDER_PX = 8;
 const DEFAULT_ENLARGE = 2;
 
 let currentWidget = null;
 let enlargePreviewIndex = 0;
-let enlargeOverrides = null;
+let optionOverrides = null;
 let touchActive = false;
-let rightClickActive = false;
+let longTouchHandled = false;
 let touchMoveBound = null;
 let mouseMoveBound = null;
 let mouseUpBound = null;
 let longTouchTimer = null;
-let previewRotation = 0;
 let currentMenu = null;
 let descriptionPopoverOwner = null;
 
@@ -32,12 +28,13 @@ function hasRotationSteps(widget) {
 }
 
 function hasButtons(widget) {
-  const menu = currentMenu ?? widget.get('contextMenu');
+  const menu = currentMenu !== null ? currentMenu : widget.get('contextMenu');
   return hasRotationSteps(widget) || (Array.isArray(menu) && menu.length > 0);
 }
 
-function hasEnlargeOrRotationOrContextMenu(widget) {
-  return widget.get('enlarge') ||
+function hasPopupTriggers(widget) {
+  const options = widget.get('contextMenuOptions');
+  return (options !== null && typeof options === 'object' && !Array.isArray(options)) ||
     hasRotationSteps(widget) ||
     (Array.isArray(widget.get('contextMenu')) && widget.get('contextMenu').length > 0);
 }
@@ -49,7 +46,7 @@ function widgetAtPoint(clientX, clientY) {
   for (const el of els) {
     if (el.id && el.id.slice(0, 2) === 'w_' && widgets.has(unescapeID(el.id.slice(2)))) {
       const w = widgets.get(unescapeID(el.id.slice(2)));
-      if (hasEnlargeOrRotationOrContextMenu(w))
+      if (hasPopupTriggers(w))
         return w;
     }
   }
@@ -73,34 +70,25 @@ function getRoomScale() {
   return scale;
 }
 
-function getEnlargeOpts(widget) {
-  const raw = widget.get('enlarge');
-  let opts = null;
-  if (raw !== undefined && raw !== null && raw !== false) {
-    if (typeof raw === 'number') opts = { factor: raw };
-    else if (typeof raw === 'object') {
-      opts = { factor: typeof raw.factor === 'number' ? raw.factor : DEFAULT_ENLARGE };
-      if (typeof raw.title === 'string') opts.title = raw.title;
-      if (typeof raw.color === 'string') opts.color = raw.color;
-      if (raw.image !== undefined && raw.image !== null) opts.image = asArray(raw.image);
-      if (raw.widget !== undefined && raw.widget !== null) opts.widget = asArray(raw.widget);
-    }
-  }
-  if (enlargeOverrides) {
-    opts = opts ? { ...opts } : { factor: DEFAULT_ENLARGE };
-    if (typeof enlargeOverrides.factor === 'number') opts.factor = enlargeOverrides.factor;
-    if (typeof enlargeOverrides.title === 'string') opts.title = enlargeOverrides.title;
-    if (typeof enlargeOverrides.color === 'string') opts.color = enlargeOverrides.color;
-    if (enlargeOverrides.image !== undefined && enlargeOverrides.image !== null) opts.image = asArray(enlargeOverrides.image);
-    if (enlargeOverrides.widget !== undefined && enlargeOverrides.widget !== null) opts.widget = asArray(enlargeOverrides.widget);
+function getPopupOptions(widget) {
+  // the preview defaults to the widget's numeric `enlarge` factor so both features stay consistent
+  const opts = { factor: typeof widget.get('enlarge') === 'number' ? widget.get('enlarge') : DEFAULT_ENLARGE };
+  for (const raw of [ widget.get('contextMenuOptions'), optionOverrides ]) {
+    if (raw === null || typeof raw !== 'object' || Array.isArray(raw))
+      continue;
+    if (typeof raw.factor === 'number') opts.factor = raw.factor;
+    if (typeof raw.title === 'string') opts.title = raw.title;
+    if (typeof raw.color === 'string') opts.color = raw.color;
+    if (raw.image !== undefined && raw.image !== null) opts.image = asArray(raw.image);
+    if (raw.widget !== undefined && raw.widget !== null) opts.widget = asArray(raw.widget);
   }
   return opts;
 }
 
 function copyWidgetToPreview(widget, previewEl) {
-  const opts = getEnlargeOpts(widget);
+  const opts = getPopupOptions(widget);
   const roomScale = getRoomScale();
-  const factor = opts ? opts.factor : (widget.get('enlarge') || DEFAULT_ENLARGE);
+  const factor = opts.factor;
   const boundBox = widget.domElement.getBoundingClientRect();
 
   let sourceWidget = widget;
@@ -110,26 +98,26 @@ function copyWidgetToPreview(widget, previewEl) {
   let imageList = null;
   let widgetList = null;
 
-  if (opts && opts.widget && opts.widget.length > 0) {
+  if (opts.widget && opts.widget.length > 0) {
     widgetList = opts.widget.map(id => widgets.has(id) ? widgets.get(id) : null).filter(Boolean);
     if (widgetList.length > 0) {
       sourceWidget = widgetList[enlargePreviewIndex % widgetList.length];
       previewW = sourceWidget.get('width');
       previewH = sourceWidget.get('height');
     }
-  } else if (opts && opts.image && opts.image.length > 0) {
+  } else if (opts.image && opts.image.length > 0) {
     useImage = true;
     imageList = opts.image;
   }
 
-  const scale = roomScale * factor;
-  const scaledW = previewW * scale;
-  const scaledH = previewH * scale;
-
-  const widgetRotation = useImage ? 0 : (sourceWidget.get('rotation') || 0) + previewRotation;
+  const widgetRotation = useImage ? 0 : (sourceWidget.get('rotation') || 0);
   const rad = (widgetRotation * Math.PI) / 180;
-  const aabbW = useImage ? scaledW : (Math.abs(previewW * scale * Math.cos(rad)) + Math.abs(previewH * scale * Math.sin(rad)));
-  const aabbH = useImage ? scaledH : (Math.abs(previewW * scale * Math.sin(rad)) + Math.abs(previewH * scale * Math.cos(rad)));
+  // rotated axis-aligned extents per unit of scale, used to clamp the preview to the viewport
+  const unitW = useImage ? previewW : (Math.abs(previewW * Math.cos(rad)) + Math.abs(previewH * Math.sin(rad)));
+  const unitH = useImage ? previewH : (Math.abs(previewW * Math.sin(rad)) + Math.abs(previewH * Math.cos(rad)));
+  const scale = Math.min(roomScale * factor, window.innerWidth * 0.7 / unitW, window.innerHeight * 0.6 / unitH);
+  const aabbW = unitW * scale;
+  const aabbH = unitH * scale;
 
   const wrap = previewEl.closest('.contextMenuPreviewWrap');
   const descPopover = $(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`);
@@ -149,7 +137,8 @@ function copyWidgetToPreview(widget, previewEl) {
     img.style.maxHeight = '100%';
     img.style.objectFit = 'contain';
     const idx = enlargePreviewIndex % imageList.length;
-    img.src = mapAssetURLs(typeof imageList[idx] === 'string' ? imageList[idx] : (imageList[idx]?.image ?? imageList[idx]));
+    const entry = imageList[idx];
+    img.src = mapAssetURLs(entry !== null && typeof entry === 'object' && entry.image ? entry.image : entry);
     previewEl.appendChild(img);
     wrap.appendChild(previewEl);
   } else {
@@ -260,74 +249,45 @@ function renderRotationButtons(widget, rowEl) {
   const steps = widget.get('rotationSteps');
   const stepNum = typeof steps === 'number' ? steps : (Array.isArray(steps) && steps.length > 0 ? steps[0] : null);
   rowEl.innerHTML = '';
-  const spacer = rowEl.closest('.contextMenuPopupBg')?.querySelector('.contextMenuMenuSpacer');
   if (stepNum == null) {
     rowEl.style.display = 'none';
-    if (spacer) spacer.style.minHeight = '0';
     return;
   }
   rowEl.style.display = 'flex';
-  if (spacer) spacer.style.minHeight = '';
-  const leftBtn = document.createElement('button');
-  leftBtn.setAttribute('icon', 'rotate_left');
-  leftBtn.title = 'Rotate left';
-  const rightBtn = document.createElement('button');
-  rightBtn.setAttribute('icon', 'rotate_right');
-  rightBtn.title = 'Rotate right';
-  const afterRotate = () => {
+  const rotate = async direction => {
+    const current = currentWidget.get('rotation') || 0;
+    let next;
+    if (typeof steps === 'number') {
+      next = current + direction * steps;
+    } else {
+      const i = rotationStepIndex(steps, current);
+      next = steps[(i + direction + steps.length) % steps.length];
+    }
+    setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
+    await currentWidget.set('rotation', next);
+    copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
     requestAnimationFrame(() => {
       if (currentWidget) positionPopupBackground(currentWidget, ensurePopup());
     });
   };
-  if (typeof steps === 'number') {
-    leftBtn.onclick = async () => {
-      const current = currentWidget.get('rotation') ?? 0;
-      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-      await currentWidget.set('rotation', current - stepNum);
-      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-      afterRotate();
-    };
-    rightBtn.onclick = async () => {
-      const current = currentWidget.get('rotation') ?? 0;
-      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-      await currentWidget.set('rotation', current + stepNum);
-      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-      afterRotate();
-    };
-  } else {
-    leftBtn.onclick = async () => {
-      const current = currentWidget.get('rotation') ?? 0;
-      const i = rotationStepIndex(steps, current);
-      const nextI = (i - 1 + steps.length) % steps.length;
-      const nextVal = steps[nextI];
-      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-      await currentWidget.set('rotation', nextVal);
-      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-      afterRotate();
-    };
-    rightBtn.onclick = async () => {
-      const current = currentWidget.get('rotation') ?? 0;
-      const i = rotationStepIndex(steps, current);
-      const nextI = (i + 1) % steps.length;
-      const nextVal = steps[nextI];
-      setDeltaCause(`${playerName} rotated ${currentWidget.id}`);
-      await currentWidget.set('rotation', nextVal);
-      copyWidgetToPreview(currentWidget, $(`#${CONTEXT_PREVIEW_ID}`));
-      afterRotate();
-    };
+  for (const [ icon, title, direction ] of [ [ 'rotate_left', 'Rotate left', -1 ], [ 'rotate_right', 'Rotate right', 1 ] ]) {
+    const btn = document.createElement('button');
+    btn.setAttribute('icon', icon);
+    btn.title = title;
+    btn.onclick = () => rotate(direction);
+    rowEl.appendChild(btn);
   }
-  rowEl.append(leftBtn, rightBtn);
 }
 
 function renderContextMenuButtons(widget, colEl, popupContrastColor) {
   hideDescriptionPopover();
-  const menu = currentMenu ?? widget.get('contextMenu');
+  const menu = currentMenu !== null ? currentMenu : widget.get('contextMenu');
   colEl.innerHTML = '';
   if (!Array.isArray(menu) || menu.length === 0) {
     colEl.style.display = 'none';
     return;
   }
-  const iconColor = popupContrastColor ?? 'white';
+  const iconColor = popupContrastColor || 'white';
   colEl.style.display = 'flex';
   colEl.style.flexDirection = 'column';
   colEl.style.gap = '4px';
@@ -358,7 +318,7 @@ function renderContextMenuButtons(widget, colEl, popupContrastColor) {
     iconWrapper.className = 'contextMenuActionIcon';
     iconWrapper.style.width = `${iconSize}px`;
     iconWrapper.style.height = `${iconSize}px`;
-    const symbol = typeof item.icon === 'object' && item.icon !== null ? item.icon : { name: item.icon ?? 'chevron_right' };
+    const symbol = typeof item.icon === 'object' && item.icon !== null ? item.icon : { name: item.icon || 'chevron_right' };
     generateSymbolsDiv(iconWrapper, iconSize, iconSize, [ symbol ], '', 1, textColor, textColor);
     btn.appendChild(iconWrapper);
     const label = document.createElement('span');
@@ -453,12 +413,11 @@ function positionPopupBackground(widget, popup) {
 
 function openContextMenu(widget, menuOverride) {
   currentWidget = widget;
-  previewRotation = 0;
   currentMenu = menuOverride !== undefined ? (Array.isArray(menuOverride) ? menuOverride : []) : (widget.get('contextMenu') || []);
   const popup = ensurePopup();
-  const opts = getEnlargeOpts(widget);
+  const opts = getPopupOptions(widget);
   const bg = $('.contextMenuPopupBg', popup);
-  if (bg) bg.style.backgroundColor = (opts && opts.color) ? opts.color : '';
+  if (bg) bg.style.backgroundColor = opts.color || '';
   const bgColor = bg ? getComputedStyle(bg).backgroundColor : '';
   const popupContrastColor = (bgColor && bgColor !== 'rgba(0, 0, 0, 0)') ? contrastAnyColor(bgColor, 1) : 'white';
   const previewEl = $(`#${CONTEXT_PREVIEW_ID}`);
@@ -494,16 +453,15 @@ function applyPopupContrastColors(popup) {
 
 export function openContextMenuWithMenu(widget, menu, overrides) {
   if (!widget || !Array.isArray(menu)) return;
-  enlargeOverrides = overrides && typeof overrides === 'object' ? overrides : null;
+  optionOverrides = overrides && typeof overrides === 'object' ? overrides : null;
   openContextMenu(widget, menu);
 }
 
 export function closeContextMenu() {
   currentWidget = null;
   currentMenu = null;
-  enlargeOverrides = null;
+  optionOverrides = null;
   touchActive = false;
-  rightClickActive = false;
   hideDescriptionPopover();
   const popup = $(`#${CONTEXT_POPUP_ID}`);
   if (popup) popup.classList.add('hidden');
@@ -523,15 +481,17 @@ export function closeContextMenu() {
   }
 }
 
-function closePopupAndStartHold(clientX, clientY) {
-  closeContextMenu();
-  const w = widgetAtPoint(clientX, clientY);
-  if (w && hasEnlargeOrRotationOrContextMenu(w))
-    return;
+function isOverPopup(clientX, clientY) {
+  const popup = $(`#${CONTEXT_POPUP_ID}`);
+  if (!popup || popup.classList.contains('hidden'))
+    return false;
+  return document.elementsFromPoint(clientX, clientY).some(el => el.closest && el.closest('.contextMenuPopupBg'));
+}
+
+function startRightClickHold() {
   mouseMoveBound = (e) => updateHoveredWidget(e.clientX, e.clientY);
   mouseUpBound = (e) => {
     if (e.button === 2) {
-      rightClickActive = false;
       document.removeEventListener('mousemove', mouseMoveBound);
       document.removeEventListener('mouseup', mouseUpBound);
       mouseMoveBound = null;
@@ -543,25 +503,31 @@ function closePopupAndStartHold(clientX, clientY) {
   document.addEventListener('mouseup', mouseUpBound);
 }
 
+function closePopupAndStartHold(clientX, clientY) {
+  if (isOverPopup(clientX, clientY))
+    return; // the popup has priority: right-clicking it does not close it or trigger widgets below
+  closeContextMenu();
+  if (widgetAtPoint(clientX, clientY))
+    return; // the contextmenu event on that widget reopens the popup and starts its own hold
+  startRightClickHold();
+}
+
 function shouldClosePopupOnRelease() {
   return !currentWidget || !hasButtons(currentWidget);
 }
 
 function updateHoveredWidget(clientX, clientY) {
   const w = widgetAtPoint(clientX, clientY);
-  if (w && w !== currentWidget && hasEnlargeOrRotationOrContextMenu(w))
+  if (w && w !== currentWidget)
     openContextMenu(w);
 }
 
 export function handleContextMenu(e, widget) {
+  e.preventDefault();
   const popup = $(`#${CONTEXT_POPUP_ID}`);
   if (popup && !popup.classList.contains('hidden')) {
-    e.preventDefault();
+    e.stopPropagation();
     closePopupAndStartHold(e.clientX, e.clientY);
-    return;
-  }
-  if (rightClickActive) {
-    e.preventDefault();
     return;
   }
   if (!widget) {
@@ -573,56 +539,49 @@ export function handleContextMenu(e, widget) {
     widget = widgets.get(unescapeID(el.id.slice(2)));
   }
 
-  e.preventDefault();
-
   if (Array.isArray(widget.get('rightClickRoutine'))) {
+    e.stopPropagation();
     batchStart();
     setDeltaCause(`${playerName} right-clicked ${widget.id}`);
     widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
     return;
   }
 
-  if (getEnabledLegacyModes().includes('hoverEnlarge') && widget.get('enlarge')) {
-    widget.showEnlarged(e);
-    return;
+  if (!hasPopupTriggers(widget)) {
+    if (widget.get('enlarge')) {
+      e.stopPropagation();
+      widget.showEnlarged(e);
+    }
+    return; // without stopPropagation an enclosing widget (holder, pile) gets its turn
   }
 
-  if (!hasEnlargeOrRotationOrContextMenu(widget))
-    return;
-
+  e.stopPropagation();
   openContextMenu(widget);
-  mouseMoveBound = (e) => updateHoveredWidget(e.clientX, e.clientY);
-  mouseUpBound = (e) => {
-    if (e.button === 2) {
-      rightClickActive = false;
-      document.removeEventListener('mousemove', mouseMoveBound);
-      document.removeEventListener('mouseup', mouseUpBound);
-      mouseMoveBound = null;
-      mouseUpBound = null;
-      if (shouldClosePopupOnRelease()) closeContextMenu();
-    }
-  };
-  document.addEventListener('mousemove', mouseMoveBound);
-  document.addEventListener('mouseup', mouseUpBound);
+  startRightClickHold();
 }
 
 export function onLongTouch(widget) {
+  if (longTouchHandled)
+    return; // a widget nested inside this one already reacted to the same long touch
+
   if (Array.isArray(widget.get('rightClickRoutine'))) {
+    longTouchHandled = true;
     batchStart();
     setDeltaCause(`${playerName} long-touched ${widget.id}`);
     widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
     return;
   }
 
-  if (getEnabledLegacyModes().includes('hoverEnlarge') && widget.get('enlarge')) {
-    widget.showEnlarged();
-    widget.domElement.classList.add('longtouch');
+  if (!hasPopupTriggers(widget)) {
+    if (widget.get('enlarge')) {
+      longTouchHandled = true;
+      widget.showEnlarged();
+      widget.domElement.classList.add('longtouch');
+    }
     return;
   }
 
-  if (!hasEnlargeOrRotationOrContextMenu(widget))
-    return;
-
+  longTouchHandled = true;
   touchActive = true;
   widget.domElement.classList.add('longtouch');
   openContextMenu(widget);
@@ -634,6 +593,7 @@ export function onLongTouch(widget) {
 }
 
 export function onTouchEndContextMenu() {
+  longTouchHandled = false;
   if (!touchActive) return;
   if (shouldClosePopupOnRelease()) closeContextMenu();
   touchActive = false;
@@ -655,15 +615,24 @@ onLoad(function() {
         e.stopPropagation();
       }
     });
-    popupEl.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+    popupEl.addEventListener('touchstart', e => {
+      e.stopPropagation();
+      // no click event gets synthesized for taps on the popup container, so close here
+      if (!touchActive && !e.target.closest('.contextMenuPopupBg') && !e.target.closest(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`))
+        closeContextMenu();
+    }, { passive: true });
+    popupEl.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
   }
   document.addEventListener('mousedown', (e) => {
-    if (e.button !== 2) return;
+    if (e.button !== 2 || document.body.classList.contains('edit')) return;
     e.preventDefault();
     closePopupAndStartHold(e.clientX, e.clientY);
   });
   document.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1) return;
+    if (e.touches.length !== 1 || document.body.classList.contains('edit')) return;
     const t = e.touches[0];
     if (widgetAtPoint(t.clientX, t.clientY)) return;
     if (longTouchTimer) clearTimeout(longTouchTimer);

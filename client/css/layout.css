@@ -963,6 +963,9 @@ body:not(.edit) .widget.limbo {
   background: var(--VTTblue);
   border-radius: 4px;
   box-sizing: border-box;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100vh - 16px);
+  overflow: auto;
 }
 .contextMenuMainRow {
   display: flex;
@@ -981,9 +984,6 @@ body:not(.edit) .widget.limbo {
   flex-direction: column;
   gap: 8px;
   align-items: stretch;
-}
-.contextMenuMenuSpacer {
-  min-height: 40px;
 }
 .contextMenuPreviewWrap {
   position: relative;
@@ -1039,11 +1039,11 @@ body:not(.edit) .widget.limbo {
 .contextMenuAction .symbolText {
   text-transform: uppercase;
 }
-.contextMenuAction:hover {
-  background: var(--VTTblueDark);
+.contextMenuAction:hover:not(:disabled) {
+  filter: brightness(1.2);
 }
 .contextMenuAction:disabled {
-  opacity: 0.5;
+  filter: grayscale(100%) contrast(0.5);
   cursor: not-allowed;
 }
 .contextMenuActionIcon {

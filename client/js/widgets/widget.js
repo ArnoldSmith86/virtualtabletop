@@ -89,6 +89,7 @@ export class Widget extends StateManaged {
       changeRoutine: null,
       rotationSteps: null,
       contextMenu: null,
+      contextMenuOptions: null,
       enterRoutine: null,
       leaveRoutine: null,
       globalUpdateRoutine: null,
@@ -2291,7 +2292,7 @@ export class Widget extends StateManaged {
   }
 
   hideEnlarged() {
-    if (!this.domElement.className.match(/selected/) && legacyMode('hoverEnlarge')) {
+    if (!this.domElement.className.match(/selected/)) {
       $('#enlarged').classList.add('hidden');
       if($('#enlargeStyle'))
         removeFromDOM($('#enlargeStyle'));
@@ -2693,7 +2694,7 @@ export class Widget extends StateManaged {
   }
 
   showEnlarged(event, delta) {
-    if(this.get('enlarge') && legacyMode('hoverEnlarge')) {
+    if(this.get('enlarge')) {
       const id = this.get('id');
       const e = $('#enlarged');
       // If there is no delta passed in, we must update the enlarged widget. Otherwise,
