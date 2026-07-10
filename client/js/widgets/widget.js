@@ -2098,26 +2098,17 @@ export class Widget extends StateManaged {
           }
 
           if (a.turnCycle != 'position' && a.turnCycle != 'seat' && a.turnCycle != 'random') {
-
-            // Get the highest index seat that has turn (in case there are multiple seats with the turn)
+            // find the last seat that currently has turn so that we advance past
+            // every seat sharing the current turn (e.g. multiple seats on the same index)
             let lastTurnedPos = -1;
-            for (let i = 0; i < c.length; i++) {
-              if (c[i].get('turn')) {
+            for (let i = 0; i < c.length; i++)
+              if (c[i].get('turn'))
                 lastTurnedPos = i;
-              }
-            }
 
-            if (lastTurnedPos === -1) {
-              // If no seat has turn, do nothing to the array order (keeps the original behavior to avoid breaking change)
-              for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
-                c.unshift(c.pop());
-              }
-            } else {
-              // Otherwise, rotate the set of seats so the current turn is first
+            // rotate the set of seats so the current turn is first (no-op if none has turn)
+            if (lastTurnedPos > 0)
               c = c.slice(lastTurnedPos).concat(c.slice(0, lastTurnedPos));
-            }
           }
-
 
           // filter out seats with skipTurn set to true
           let unskipped = c.filter(w=>!w.get('skipTurn'));
