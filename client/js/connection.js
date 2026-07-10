@@ -21,7 +21,7 @@ export function startWebSocket() {
     showOverlay(null, true);
     showOverlay(lastOverlay);
     if(!urlProperties.askID) {
-      toServer('room', { playerName, roomID });
+      toServer('room', { playerName, roomID, collection: getCollectionID(), password: getRoomPassword(roomID) });
       if(urlProperties.trace)
         toServer('enableTrace');
     }

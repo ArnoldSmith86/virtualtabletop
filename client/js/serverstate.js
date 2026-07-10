@@ -26,6 +26,17 @@ function normalizeRoomID(roomID) {
   return roomID;
 }
 
+// used when switching to another room without reloading the page
+function setRoomID(newRoomID) {
+  roomID = normalizeRoomID(newRoomID);
+  undoProtocol = [];
+  delta = { s: {} };
+  deltaChanged = false;
+  batchDepth = 0;
+  // the editor bundle resolves its bare roomID references through window
+  window.roomID = roomID;
+}
+
 function applyCustomCss(gameSettings) {
   let style = document.getElementById('globalCss');
   if (style)

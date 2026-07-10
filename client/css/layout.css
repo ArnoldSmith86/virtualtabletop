@@ -521,6 +521,11 @@ body.aspectTooGood.hiddenToolbar {
       content: '[hide_side_bar]';
     }
 
+    #roomsButton::before {
+      font-family: 'Material Symbols' !important;
+      content: 'meeting_room';
+    }
+
     #aboutButton::before {
       content: '[vtt_logo]';
     }
