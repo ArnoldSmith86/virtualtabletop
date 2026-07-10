@@ -838,12 +838,18 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  // Input sessions are tracked by the Player *connection*, not by name, so a
+  // rename mid-input doesn't lose a target. The name the initiator used to
+  // address each target is remembered and echoed back so the initiating
+  // client (which keys its own session by name) still recognizes the result.
   requestInput(player, args) {
-    const targets = (args.targets || []).map(name=>this.players.find(p=>p.name === name)).filter(Boolean);
+    const targets = (args.targets || [])
+      .map(name=>({ name, player: this.players.find(p=>p.name === name) }))
+      .filter(t=>t.player);
     this.inputRequests = this.inputRequests || {};
-    this.inputRequests[args.sessionID] = { from: player.name, remaining: new Set(targets.map(t=>t.name)) };
+    this.inputRequests[args.sessionID] = { from: player, remaining: targets };
     for(const target of targets)
-      target.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
+      target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
     // If no target is reachable, tell the initiator right away so it doesn't hang.
     if(!targets.length) {
       player.send('inputResult', { sessionID: args.sessionID, cancelled: true });
@@ -853,16 +859,19 @@ export default class Room {
 
   inputResult(player, args) {
     const request = this.inputRequests && this.inputRequests[args.sessionID];
-    const initiator = this.players.find(p=>p.name === (request ? request.from : null));
-    if(initiator)
-      initiator.send('inputResult', { sessionID: args.sessionID, player: player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
+    const target = request && request.remaining.find(t=>t.player === player);
+    if(request && request.from)
+      request.from.send('inputResult', { sessionID: args.sessionID, player: target ? target.name : player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
     if(request) {
-      if(args.cancelled)
+      request.remaining = request.remaining.filter(t=>t.player !== player);
+      // A single cancellation ends the whole session: close the other targets
+      // right here (the initiator's abortInput would arrive too late).
+      if(args.cancelled) {
+        for(const t of request.remaining)
+          t.player.send('hideInput', { sessionID: args.sessionID });
         delete this.inputRequests[args.sessionID];
-      else {
-        request.remaining.delete(player.name);
-        if(!request.remaining.size)
-          delete this.inputRequests[args.sessionID];
+      } else if(!request.remaining.length) {
+        delete this.inputRequests[args.sessionID];
       }
     }
   }
@@ -870,19 +879,16 @@ export default class Room {
   // The initiator aborted the input: tell every pending target to close it.
   abortInput(player, args) {
     const request = this.inputRequests && this.inputRequests[args.sessionID];
-    if(!request || request.from !== player.name)
+    if(!request || request.from !== player)
       return;
-    for(const name of request.remaining) {
-      const target = this.players.find(p=>p.name === name);
-      if(target)
-        target.send('hideInput', { sessionID: args.sessionID });
-    }
+    for(const t of request.remaining)
+      t.player.send('hideInput', { sessionID: args.sessionID });
     delete this.inputRequests[args.sessionID];
   }
 
   // A waiting player pressed cancel on the block overlay: tell the initiator.
   cancelInput(player, args) {
-    const initiator = this.players.find(p=>p.name === (this.inputBlocks || {})[args.blockID]);
+    const initiator = (this.inputBlocks || {})[args.blockID];
     if(initiator)
       initiator.send('inputCancelled', { sessionID: args.blockID });
   }
@@ -890,23 +896,23 @@ export default class Room {
   cleanupInputForPlayer(player) {
     for(const sessionID in (this.inputRequests || {})) {
       const request = this.inputRequests[sessionID];
-      if(request.from === player.name) {
+      if(request.from === player) {
         // Initiator left: close any overlays its targets are still showing.
-        for(const name of request.remaining) {
-          const target = this.players.find(p=>p.name === name);
-          if(target)
-            target.send('hideInput', { sessionID });
-        }
+        for(const t of request.remaining)
+          t.player.send('hideInput', { sessionID });
         delete this.inputRequests[sessionID];
-      } else if(request.remaining.has(player.name)) {
-        const initiator = this.players.find(p=>p.name === request.from);
-        if(initiator)
-          initiator.send('inputResult', { sessionID, player: player.name, cancelled: true });
+      } else if(request.remaining.some(t=>t.player === player)) {
+        // A target left: cancel the whole session and free the others.
+        if(request.from)
+          request.from.send('inputResult', { sessionID, player: player.name, cancelled: true });
+        for(const t of request.remaining)
+          if(t.player !== player)
+            t.player.send('hideInput', { sessionID });
         delete this.inputRequests[sessionID];
       }
     }
     for(const blockID in (this.inputBlocks || {})) {
-      if(this.inputBlocks[blockID] === player.name) {
+      if(this.inputBlocks[blockID] === player) {
         delete this.inputBlocks[blockID];
         for(const p of this.players)
           p.send('inputBlock', { blockID, show: false });
@@ -917,7 +923,7 @@ export default class Room {
   inputBlock(player, args) {
     this.inputBlocks = this.inputBlocks || {};
     if(args.show) {
-      this.inputBlocks[args.blockID] = player.name;
+      this.inputBlocks[args.blockID] = player;
       const waitingFor = args.waitingFor || [];
       for(const p of this.players)
         if(!waitingFor.includes(p.name))

@@ -892,8 +892,7 @@ export class Widget extends StateManaged {
 
     const routine = this.get(property) !== null ? this.get(property) : property;
 
-    for(let index = 0; index < routine.length; ++index) {
-      const original = routine[index];
+    for(const original of routine) {
       var problems = [];
       let a = JSON.parse(JSON.stringify(original));
       if(typeof a == 'object')
@@ -1419,11 +1418,16 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         setDefaults(a, { player: playerName, block: false });
-        // `player` may be a single name or a list. A list makes the overlay
-        // appear for every listed player at once and returns their results
-        // keyed by player name (e.g. choosing cards to pass in Hearts).
-        const isMulti = Array.isArray(a.player);
-        const players = asArray(a.player).filter(Boolean);
+        // `player` may be a single name or a list. A non-empty list makes the
+        // overlay appear for every listed player at once and returns their
+        // results keyed by player name (e.g. choosing cards to pass in Hearts).
+        // A null/empty `player` falls back to the acting player, so an INPUT
+        // created from the editor template (which sets `player: null`) still
+        // shows locally instead of silently doing nothing.
+        let players = asArray(a.player).filter(Boolean);
+        const isMulti = Array.isArray(a.player) && players.length > 0;
+        if(!players.length)
+          players = [ playerName ];
         // Only the initiator can show its own overlay locally (it has the live
         // variables/collections); everyone else is asked over the network.
         const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{
@@ -1454,6 +1458,12 @@ export class Widget extends StateManaged {
             }
           } else {
             const result = results[players[0]] || { variables: {}, collections: {} };
+            // Results collected from another player must not rename/recolor the
+            // player who is actually running the routine.
+            if(players[0] !== playerName) {
+              delete result.variables.playerName;
+              delete result.variables.playerColor;
+            }
             Object.assign(variables, result.variables);
             Object.assign(collections, result.collections);
           }

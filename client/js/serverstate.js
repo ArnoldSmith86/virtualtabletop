@@ -563,6 +563,20 @@ export function sendDelta() {
   }
 }
 
+// Force the currently accumulated delta out to the server even while a
+// routine's batch is still open (batchDepth >= 1, so sendDelta would be a
+// no-op). Used before a remote INPUT so the target sees the state produced by
+// earlier operations of the same routine.
+export function flushDelta() {
+  if(deltaChanged) {
+    receiveDelta(delta);
+    delta.id = deltaID;
+    toServer('delta', delta);
+    delta = { s: {} };
+    deltaChanged = false;
+  }
+}
+
 export function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
@@ -588,6 +602,10 @@ export function widgetFilter(callback) {
 // A `block` parameter shows every other player a "waiting for input" overlay
 // (with a cancel button) while the input is pending.
 
+// A per-page-load token keeps session IDs unique even between two clients that
+// happen to share a player name (it must not touch the seeded RNG used for
+// shuffles, so it is derived from the load time rather than rand()).
+const inputClientToken = Math.floor(performance.now()).toString(36) + Math.floor(performance.timeOrigin).toString(36);
 let inputSessionCounter = 0;
 const inputSessions = {};       // initiator side: sessionID -> session
 const remoteInputHandles = {};  // target side:    sessionID -> overlay handle
@@ -612,7 +630,7 @@ function resolveCollections(ids) {
 // playerName -> { variables, collections }, or rejects if the input is
 // cancelled (by a target, by the initiator or via the block overlay).
 export function runInput({ widgetID, overlay, players, variables, collections, showLocal }) {
-  const sessionID = `${playerName}-${++inputSessionCounter}`;
+  const sessionID = `${playerName}-${inputClientToken}-${++inputSessionCounter}`;
   const remoteTargets = players.filter(p=>p && p!==playerName);
   const includeSelf = players.includes(playerName);
   const collectionIDs = serializeCollections(collections);
@@ -670,7 +688,7 @@ export function runInput({ widgetID, overlay, players, variables, collections, s
     }
 
     if(remoteTargets.length) {
-      sendDelta();
+      flushDelta();
       toServer('requestInput', { sessionID, widgetID, overlay, variables, collections: collectionIDs, targets: remoteTargets });
     }
 
@@ -682,12 +700,27 @@ export function runInput({ widgetID, overlay, players, variables, collections, s
 // Target side: show the requested overlay and send the result back.
 async function receiveShowInput(args) {
   const widget = widgets.get(args.widgetID);
-  if(!widget) {
+  // Refuse if the widget is gone or the player is already busy with another
+  // input overlay (their own or an earlier session) — clobbering the open
+  // overlay would let one click resolve both with the wrong data.
+  const busy = Object.keys(remoteInputHandles).length || $('#activeGameButton').dataset.overlay === 'buttonInputOverlay';
+  if(!widget || busy) {
     toServer('inputResult', { sessionID: args.sessionID, cancelled: true });
     return;
   }
   const collections = resolveCollections(args.collections);
-  const getCollection = c=>Array.isArray(collections[c]) ? c : 'DEFAULT';
+  // Mirror evaluateRoutine's getCollection: an array source becomes a named
+  // collection built from those widget IDs, so `choose` fields with an array
+  // `source` work on remote clients too.
+  const getCollection = source=>{
+    if(Array.isArray(collections[source]))
+      return source;
+    if(Array.isArray(source)) {
+      collections['$remoteSource'] = widgetFilter(w=>source.indexOf(w.id) != -1);
+      return '$remoteSource';
+    }
+    return 'DEFAULT';
+  };
   const handle = { aborted: false };
   remoteInputHandles[args.sessionID] = handle;
   try {
@@ -754,8 +787,9 @@ function receiveInputBlock(args) {
 }
 
 function updateInputBlockOverlay() {
+  const shown = $('#inputBlockOverlay').style.display != 'none';
   if(!activeInputBlocks.size) {
-    if($('#inputBlockOverlay') && $('#inputBlockOverlay').style.display != 'none')
+    if(shown)
       showOverlay(null);
     return;
   }
@@ -765,7 +799,11 @@ function updateInputBlockOverlay() {
     lines.push((block.header ? block.header + ' — ' : '') + `Waiting for input from ${names}…`);
   }
   $('#inputBlockText').textContent = lines.join('\n');
-  showOverlay('inputBlockOverlay');
+  // Don't steal the screen from a player who is filling in their own input
+  // overlay, and only toggle showOverlay when actually transitioning to shown
+  // (showOverlay flips visibility if the overlay is already open).
+  if(!shown && $('#activeGameButton').dataset.overlay !== 'buttonInputOverlay')
+    showOverlay('inputBlockOverlay');
 }
 
 // Cancel every input the local player is currently waiting on.
