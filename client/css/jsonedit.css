@@ -54,6 +54,17 @@
 
 #jeWidgetSwitcher > button {
   flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  justify-content: center;
+}
+
+#jeWidgetSwitcher > button::before {
+  font-size: 20px;
+  width: auto;
+  margin: 0;
 }
 
 #jeWidgetSwitcher > button:disabled {
