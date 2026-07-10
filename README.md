@@ -86,7 +86,7 @@ There's also an official Docker image: https://hub.docker.com/r/arnoldsmith86/vi
 <details>
     <summary><b>🐧 Linux AppImage</b></summary>
 
-If you don't want to install Node.js, you can download a self-contained AppImage from the [releases page](https://github.com/ArnoldSmith86/virtualtabletop/releases). It bundles Node.js and a small launcher and is rebuilt monthly.
+If you don't want to install Node.js, you can download an AppImage from the [releases page](https://github.com/ArnoldSmith86/virtualtabletop/releases). It bundles Node.js and a small graphical launcher and is rebuilt monthly. The launcher needs Python 3 with Tk on the host (`python3-tk` on Debian/Ubuntu).
 
 Two variants are available:
 
