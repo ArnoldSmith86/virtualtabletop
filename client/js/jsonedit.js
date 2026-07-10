@@ -30,6 +30,7 @@ let jeIgnoreBlurOnce = false;
 let jeWidgetHistory = [];
 let jeWidgetHistoryIndex = -1;
 let jeWidgetHistoryNavigating = false;
+let jeMultiSelectedCountCache = null;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -2528,6 +2529,8 @@ function jeAddWidgetToHistory(id) {
     return;
   jeWidgetHistory = jeWidgetHistory.slice(0, jeWidgetHistoryIndex + 1);
   jeWidgetHistory.push(id);
+  if(jeWidgetHistory.length > 100)
+    jeWidgetHistory.shift();
   jeWidgetHistoryIndex = jeWidgetHistory.length - 1;
 }
 
@@ -2576,7 +2579,20 @@ function jeUpdateWidgetSwitcher() {
         breadcrumbsHTML += `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
     }
   } else if(jeMode == 'multi') {
-    breadcrumbsHTML = `<span class=jeCrumbInfo>${jeMultiSelectedWidgets().length} widgets selected</span>`;
+    // jeStateNow is null while the edited JSON is invalid; cache the count because this runs on every delta
+    let count = 'multiple';
+    if(jeStateNow && Array.isArray(jeStateNow.widgets)) {
+      const key = JSON.stringify(jeStateNow.widgets);
+      if(!jeMultiSelectedCountCache || jeMultiSelectedCountCache.key !== key) {
+        try {
+          jeMultiSelectedCountCache = { key, count: jeMultiSelectedWidgets().length };
+        } catch(e) {
+          jeMultiSelectedCountCache = { key, count: 'multiple' };
+        }
+      }
+      count = jeMultiSelectedCountCache.count;
+    }
+    breadcrumbsHTML = `<span class=jeCrumbInfo>${count} widgets selected</span>`;
   } else if(jeMode == 'macro') {
     breadcrumbsHTML = '<span class=jeCrumbInfo>macro</span>';
   } else {
@@ -2605,7 +2621,7 @@ function jeSetTreePinned(pinned) {
   $('#jePinTree').classList.toggle('active', pinned);
 }
 
-function jeToggleTreeDropdown(forceClose) {
+function jeToggleTreeDropdown(forceClose, focusSearch) {
   const open = !forceClose && !jeTreeIsVisible();
   $('#jeWidgetSwitcher').classList.toggle('treeVisible', open);
   $('#jeShowTree').classList.toggle('active', open);
@@ -2613,7 +2629,8 @@ function jeToggleTreeDropdown(forceClose) {
     jeSetTreePinned(jeTreeIsPinned());
     $('#jeTreeContainer').append($('#jeTree'));
     jeDisplayTree();
-    $('#jeWidgetSearchBox').focus();
+    if(focusSearch)
+      $('#jeWidgetSearchBox').focus();
   } else {
     $('#jeEditArea').append($('#jeTree'));
   }
@@ -2622,7 +2639,7 @@ function jeToggleTreeDropdown(forceClose) {
 function jeInitWidgetSwitcher() {
   on('#jeNavBack', 'click', _=>jeHistoryNavigate(-1));
   on('#jeNavForward', 'click', _=>jeHistoryNavigate(1));
-  on('#jeShowTree', 'click', _=>jeToggleTreeDropdown());
+  on('#jeShowTree', 'click', _=>jeToggleTreeDropdown(false, true));
   on('#jePinTree', 'click', _=>jeSetTreePinned(!jeTreeIsPinned()));
 
   // unless pinned, close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)

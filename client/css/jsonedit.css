@@ -42,14 +42,19 @@
   left: 0;
   right: calc(var(--commandPaneWidth) + 1px);
   height: 40px;
-  display: flex;
-  align-items: center;
+  display: none;
+  align-items: flex-start;
   gap: 2px;
-  padding: 0 5px;
+  padding: 6px 5px 0;
   box-sizing: border-box;
   border-bottom: 1px solid var(--backgroundHighlightColor1);
   background: var(--backgroundColor);
   z-index: 2;
+}
+
+/* only used inside the sidebar module; the legacy standalone editor has no room for it */
+.editorModule #jeWidgetSwitcher {
+  display: flex;
 }
 
 #jeWidgetSwitcher > button {
@@ -79,6 +84,7 @@
 
 #jeBreadcrumbs {
   flex-grow: 1;
+  height: 28px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -149,14 +155,21 @@
   display: flex;
 }
 
-/* pinned: reserve space for the tree so it stays visible above the JSON */
+/* pinned: reserve space for the tree so it stays visible above the JSON;
+   percentages resolve against the module pane so short panes keep a usable JSON area */
+#jeWidgetSwitcher.treeVisible.treePinned {
+  height: max(40%, 140px);
+}
+
 #jeWidgetSwitcher.treeVisible.treePinned #jeTreeContainer {
-  height: 35vh;
+  top: 40px;
+  bottom: 0;
+  max-height: none;
 }
 
 #jeWidgetSwitcher.treeVisible.treePinned ~ #jeText,
 #jeWidgetSwitcher.treeVisible.treePinned ~ #jeTextHighlight {
-  top: calc(40px + 35vh);
+  top: max(40%, 140px);
 }
 
 .editorModule #jeText, .editorModule #jeTextHighlight {
