@@ -39,12 +39,15 @@
 
 #playersTable .playerSessionCell {
   font-size: 0.8rem;
+}
+
+#playersTable .sessionCellContent {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-#playersTable .playerSessionCell button {
+#playersTable .sessionCellContent button {
   margin-left: auto;
 }
 
