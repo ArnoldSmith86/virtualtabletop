@@ -19,11 +19,18 @@
   opacity: var(--pulse-max);
   animation: statusPulse 2s ease-in-out infinite;
 }
-#statusOverlay.bad {
+#statusOverlay[data-state="message"],
+#statusOverlay[data-state="edit"],
+#statusOverlay[data-state="input"] {
+  --pulse-min: 0.6;
+  --pulse-max: 0.9;
+}
+#statusOverlay[data-state="bad"],
+#statusOverlay[data-state="reload"] {
   --pulse-min: 0.6;
   --pulse-max: 0.8;
 }
-#statusOverlay.reconnecting {
+#statusOverlay[data-state="reconnecting"] {
   --pulse-min: 0.8;
   --pulse-max: 1;
 }
@@ -36,9 +43,7 @@
   font-size: 20px;
   color: #fff;
 }
-#statusOverlay[data-state="warn"] .statusIcon,
-#statusOverlay[data-state="bad"] .statusIcon,
-#statusOverlay[data-state="reload"] .statusIcon {
+#statusOverlay .statusIcon:not([icon^="["]) {
   font-family: "Material Symbols";
 }
 #statusOverlay .statusIcon[icon]::before {

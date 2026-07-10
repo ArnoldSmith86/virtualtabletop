@@ -1,4 +1,4 @@
-import { getCurrentOverlayId, getEditMode, getCurrentStateView } from './overlaystate.js';
+import { getCurrentOverlayId, getEditMode } from './overlaystate.js';
 
 let usedTouch = false;
 let mouseTarget = null;
@@ -159,12 +159,7 @@ async function inputHandler(name, e) {
 
   let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
 
-  const view = getCurrentStateView();
-  const ctx = {
-    activeOverlay: getCurrentOverlayId(),
-    editMode: getEditMode(),
-    ...(view.stateName && { activeStateName: view.stateName })
-  };
+  const ctx = { activeOverlay: getCurrentOverlayId(), editMode: getEditMode() };
   if(hoveredWidgetsWithHiddenCursor.length) {
     toServer('mouse', { hidden: true, ...ctx });
   } else {

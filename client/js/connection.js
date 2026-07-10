@@ -3,7 +3,6 @@ let lastOverlay = null;
 let connection;
 let serverStart = null;
 let userNavigatedAway = false;
-let userInitiatedReconnect = false;
 let messageCallbacks = {};
 let onConnectionCloseCallbacks = [];
 export function onConnectionClose(cb) { onConnectionCloseCallbacks.push(cb); }
@@ -36,12 +35,6 @@ export function startWebSocket() {
 
   connection.onclose = () => {
     console.log(`WebSocket closed`);
-    if(userInitiatedReconnect) {
-      userInitiatedReconnect = false;
-      lastTimeout = 1000;
-      setTimeout(startWebSocket, 1000);
-      return;
-    }
     if(!userNavigatedAway) {
       lastOverlay = [...$a('.overlay')].filter(d=>d.style.display!='none').map(d=>d.id)[0] || null;
       for(const cb of onConnectionCloseCallbacks) cb();
@@ -77,13 +70,6 @@ export function onMessage(func, callback) {
 export function toServer(func, args) {
   if(connection.readyState === WebSocket.OPEN)
     connection.send(JSON.stringify({ func, args }));
-}
-
-export function forceReconnect() {
-  userInitiatedReconnect = true;
-  lastTimeout = 1000;
-  if(connection && connection.readyState === WebSocket.OPEN)
-    connection.close();
 }
 
 function preventReconnect() {

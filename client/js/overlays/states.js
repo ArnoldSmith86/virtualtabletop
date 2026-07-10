@@ -1,6 +1,3 @@
-import { setCurrentStateView, getCurrentOverlayId, getEditMode, getCurrentStateView } from '../overlaystate.js';
-import { toServer } from '../connection.js';
-
 let currentMetaData = null;
 
 let waitingForStateCreation = null;
@@ -10,6 +7,14 @@ let detailsInSidebar = false;
 let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
+
+function setLibraryTypeTab(type) {
+  $('#filterByType').value = type;
+  localStorage.setItem('libraryTypeTab', type);
+  for(const b of $a('.libraryTypeTabs button'))
+    toggleClass(b, 'active', b.dataset.type === type);
+  updateLibraryFilter();
+}
 
 const loadedLibraryImages = {};
 
@@ -247,7 +252,13 @@ async function saveState(e) {
 
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
+  const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
   $('#emptyLibrary').style.display = isEmpty ? 'block' : 'none';
+  if(isEmpty) {
+    $('#emptyLibrary').innerHTML = hasPublicLibrary
+      ? 'Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.'
+      : 'Your personal game library is currently empty.<br>Use the "Add game" button above or drag VTT files here.';
+  }
   $('#emptyLibraryByFilter').style.display = $('#statesList > div:nth-of-type(2) .visible.roomState') || isEmpty ? 'none' : 'block';
 }
 
@@ -279,8 +290,9 @@ function updateLibraryFilter() {
       if(dom.classList.contains('uploading')) {
         callback(dom, true);
       } else {
+        const isPublicLibrary = dom.classList.contains('inPublicLibraryCategory');
         const textMatch     = dataset.text.match(filters.text);
-        const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
+        const typeMatch     = !isPublicLibrary || (filters.type !== '' && dataset.type.split(/[,;] */).indexOf(filters.type) != -1);
         const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
@@ -452,6 +464,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
+    if(target == 'Public Library')
+      entry.className += ' inPublicLibraryCategory';
     if(state.showName === false || state.showName === 'only similar')
       entry.className += ' hideMainName';
     if(state.showName === false || state.showName === 'only main')
@@ -573,8 +587,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     for(const uploadingState of categoryUploadingStates)
       insertUploadingState(uploadingState, Object.values(categories)[categoryIndex]);
 
+  const libraryTypeKeys = Object.keys(config.libraries);
   for(const [ title, category ] of Object.entries(categories)) {
-    $('.title', category).textContent = title;
+    const displayTitle = (title === 'Public Library' && libraryTypeKeys.length === 1) ? libraryTypeKeys[0] : title;
+    $('.title', category).prepend(displayTitle);
     $('#statesList').appendChild(category);
   }
 
@@ -592,23 +608,51 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
-  const previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : 'Games';
+  const libraryTypes = Object.keys(config.libraries);
+
+  if(libraryTypes.length === 0) {
+    categories['Public Library'].classList.add('empty');
+  }
+
+  let previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : (localStorage.getItem('libraryTypeTab') || libraryTypes[0] || '');
+  if(previousType && libraryTypes.indexOf(previousType) === -1)
+    previousType = libraryTypes[0] || '';
+  if(libraryTypes.length === 1)
+    previousType = libraryTypes[0];
   $('#filterByType').dataset.initialized = 'true';
-  let typeHTML = '<option>Any</option>';
-  for(const typeOption of Object.keys(config.libraries))
-    typeHTML += `<option ${previousType && previousType == typeOption ? 'selected' : ''}>${typeOption}</option>`;
+  let typeHTML = `<option value="" ${previousType === '' ? 'selected' : ''}></option>`;
+  for(const typeOption of libraryTypes)
+    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${html(typeOption)}</option>`;
   $('#filterByType').innerHTML = typeHTML;
+
+  if(libraryTypes.length > 1) {
+    const typeTabs = $('.libraryTypeTabs', categories['Public Library']);
+    for(const typeOption of libraryTypes) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = typeOption;
+      btn.dataset.type = typeOption;
+      if(previousType === typeOption)
+        btn.classList.add('active');
+      btn.addEventListener('click', function() {
+        const current = $('#filterByType').value;
+        const next = current === typeOption ? '' : typeOption;
+        setLibraryTypeTab(next);
+      });
+      typeTabs.appendChild(btn);
+    }
+  }
 
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
   for(const languageOption of Object.keys(languageOptions).sort())
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${languageOption}">${languageOption.replace(/^$/, 'None')}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, 'None'))}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
-    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
+    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${html(modeOption)}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
@@ -634,15 +678,11 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
 }
 
 function fillStateDetails(states, state, dom) {
-  setCurrentStateView(state.id, state.name || null);
   toggleClass($('#statesOverlay'), 'withDetails', detailsInSidebar);
   if(!detailsInSidebar)
     showStatesOverlay(detailsOverlay);
-  else {
+  else
     updateFilterOverflow();
-    const view = getCurrentStateView();
-    toServer('mouse', { inactive: true, activeOverlay: getCurrentOverlayId(), editMode: getEditMode(), activeStateName: view.stateName || undefined });
-  }
 
   $('#stateDetailsOverlay').dataset.id = state.id;
   for(const dom of $a('#stateDetailsOverlay, #stateDetailsOverlay > *'))

@@ -766,8 +766,10 @@ export default class Room {
     }
     delta.id = ++this.deltaID;
 
-    if(delta.deltaSendId)
+    if(delta.deltaSendId) {
       player.send('deltaConfirm', { id: delta.deltaSendId });
+      delete delta.deltaSendId;
+    }
 
     if(this.waitingForDeltaFromPlayer == player) {
       delete this.waitingForDeltaFromPlayer;

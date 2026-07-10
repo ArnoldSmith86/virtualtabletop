@@ -1,5 +1,5 @@
 import { asArray, onLoad, rand } from '../domhelpers.js';
-import { setPlayerEvent, setMyName, setActivePlayersList } from './status.js';
+import { setStatusMessage, setMyName, setActivePlayersList } from './status.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -41,17 +41,41 @@ function addPlayerCursor(playerName, playerColor) {
 
 function countBy(arr) {
   const c = {};
-  for (const x of arr) c[x] = (c[x] || 0) + 1;
+  for(const x of arr)
+    c[x] = (c[x] || 0) + 1;
   return c;
 }
 
+// announces joins, leaves and renames by comparing the new active player list (one entry per client) to the previous one
+function announcePlayerChanges(active) {
+  if(!prevActivePlayers.length)
+    return;
+  const prevCount = countBy(prevActivePlayers);
+  const currCount = countBy(active);
+  const gone  = Object.keys(prevCount).filter(n=>!currCount[n]);
+  const fresh = Object.keys(currCount).filter(n=>!prevCount[n]);
+
+  const parts = [];
+  if(gone.length == 1 && fresh.length == 1 && prevCount[gone[0]] == currCount[fresh[0]] && fresh[0] != playerName) {
+    parts.push(`${gone[0]} renamed to ${fresh[0]}`);
+  } else {
+    for(const n of gone)
+      parts.push(`${n} left`);
+    for(const n of fresh)
+      parts.push(`${n} joined`);
+  }
+  if(parts.length)
+    setStatusMessage(parts.join('; '));
+}
+
 function fillPlayerList(players, active) {
-  activePlayers = active || [];
-  activeColors = activePlayers.map(n => players[n] || '#888');
+  active = active || [];
+  activePlayers = [...new Set(active)];
+  activeColors = activePlayers.map(playerName=>players[playerName]);
   setActivePlayersList(activePlayers);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');
 
-  for (const player in players) {
+  for(const player in players) {
     const entry = domByTemplate('template-playerlist-entry');
     $('.teamColor', entry).value = players[player];
     $('.playerName', entry).value = player;
@@ -61,60 +85,30 @@ function fillPlayerList(players, active) {
     $('.playerName', entry).addEventListener('change', function(e) {
       toServer('rename', { oldName: player, newName: e.target.value });
     });
-    if (player == playerName) {
+    if(player == playerName) {
       entry.className = 'myPlayerEntry';
       playerColor = players[player];
     } else {
       entry.className = 'activePlayerEntry';
     }
-    if (activePlayers.indexOf(player) === -1)
+    if(activePlayers.indexOf(player) == -1)
       entry.className = 'inactivePlayerEntry';
 
     $('#playerList').appendChild(entry);
 
-    if (player != playerName && activePlayers.indexOf(player) !== -1)
+    if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
   }
-  if (activePlayers.length < 2) {
+  if(activePlayers.length < 2){
     document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
   }
   setMyName(playerName);
+  announcePlayerChanges(active);
+  prevActivePlayers = [...active];
 
-  if (prevActivePlayers.length > 0) {
-    const prevCount = countBy(prevActivePlayers);
-    const currCount = countBy(activePlayers);
-    const parts = [];
-    const names = new Set([...Object.keys(prevCount), ...Object.keys(currCount)]);
-    const singleLeft = [];
-    const singleJoined = [];
-    const suffix = (n, count) => (count > 1 ? ` (${count} clients)` : '');
-    for (const n of names) {
-      const prev = prevCount[n] || 0;
-      const curr = currCount[n] || 0;
-      const delta = curr - prev;
-      if (delta === -1) singleLeft.push(n);
-      else if (delta === 1) singleJoined.push(n);
-      else if (delta > 1) parts.push(`${n} (${delta} more) joined${suffix(n, curr)}`);
-      else if (delta < -1) parts.push(`${n} (${-delta}) left${suffix(n, prev)}`);
-      else if (delta > 0) parts.push((delta === 1 ? `${n} joined` : `${n} (${delta}) joined`) + suffix(n, curr));
-      else if (delta < 0) parts.push((delta === -1 ? `${n} left` : `${n} (${-delta}) left`) + suffix(n, prev));
-    }
-    if (singleLeft.length === 1 && singleJoined.length === 1) {
-      const leftName = singleLeft[0];
-      const joinedName = singleJoined[0];
-      parts.unshift(`${leftName} renamed to ${joinedName}${suffix(joinedName, currCount[joinedName] || 0)}`);
-    } else {
-      singleLeft.forEach(n => parts.push(`${n} left${suffix(n, prevCount[n] || 0)}`));
-      singleJoined.forEach(n => parts.push(`${n} joined${suffix(n, currCount[n] || 0)}`));
-    }
-    if (parts.length)
-      setPlayerEvent(parts.join('; '));
-  }
-  prevActivePlayers = [...activePlayers];
-
-  const playersButton = $('#playersButton');
-  const tooltip = $('.tooltip', playersButton);
-  if (tooltip) tooltip.textContent = `Players: ${activePlayers.length}`;
+  const tooltip = $('.tooltip', $('#playersButton'));
+  if(tooltip)
+    tooltip.textContent = `Players: ${activePlayers.length}`;
 }
 
 onLoad(function() {
@@ -152,7 +146,7 @@ onLoad(function() {
   onMessage('rename', function(args) {
     const oldName = playerName;
     playerName = args;
-    setPlayerEvent(`You renamed to ${playerName}`);
+    setStatusMessage(`You renamed to ${playerName}`);
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
