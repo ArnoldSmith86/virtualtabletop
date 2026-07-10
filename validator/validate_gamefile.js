@@ -102,6 +102,7 @@ const COMMON_PROPERTIES = {
     changeRoutine: 'routine',
     rotationSteps: 'rotationSteps',
     contextMenu: validateContextMenu,
+    contextMenuOptions: validateContextMenuOptions,
     enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
@@ -251,7 +252,7 @@ const WIDGET_PROPERTIES = {
 };
 
 const SUPER_GLOBALS = {
-    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1, previewIndex: 1 },
+    variables: { activeColors: 1, mouseCoords: 1, seatIndex: 1, seatID: 1, activeSeats: 1, playerName: 1, playerColor: 1, activePlayers: 1, thisID: 1},
     collections: { playerSeats: 1, activeSeats: 1, thisButton: 1 }
 };
 
@@ -589,8 +590,16 @@ function validateContextMenuEntries(entries, context, propertyPath, widget) {
                 problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: validators.routineProperty(entry.routine) });
             } else if (widget && !Array.isArray(widget[entry.routine])) {
                 problems.push({ widget: context.widgetId, property: [...entryPath, 'routine'], message: `routine '${entry.routine}' does not exist on this widget` });
-            } else if (widget && context.calledCustomRoutines && !context.calledCustomRoutines.includes(entry.routine)) {
+            } else if (context.calledCustomRoutines && !context.calledCustomRoutines.includes(entry.routine)) {
                 context.calledCustomRoutines.push(entry.routine);
+                // context menu routines receive previewIndex as a variable when they get triggered
+                if (widget) {
+                    const routineContext = Object.assign({}, context, {
+                        validVariables: {...SUPER_GLOBALS.variables, ...(context.validVariables || {}), previewIndex: 1},
+                        validCollections: {...SUPER_GLOBALS.collections, ...(context.validCollections || {})}
+                    });
+                    problems.push(...validateRoutine(widget[entry.routine], routineContext, [entry.routine]));
+                }
             }
         } else if (!hasMenu) {
             problems.push({ widget: context.widgetId, property: entryPath, message: 'contextMenu entry must have routine or menu' });
@@ -607,6 +616,37 @@ function validateContextMenuEntries(entries, context, propertyPath, widget) {
         }
     }
     return problems;
+}
+
+const CONTEXT_MENU_OPTION_KEYS = ['factor', 'title', 'color', 'image', 'widget'];
+
+function validateContextMenuOptions(v, context, propertyPath = []) {
+    if (v === undefined || v === null) return true;
+    if (typeof v !== 'object' || Array.isArray(v)) return 'contextMenuOptions must be an object';
+    const problems = [];
+    for (const key of Object.keys(v)) {
+        if (!CONTEXT_MENU_OPTION_KEYS.includes(key))
+            problems.push({ widget: context.widgetId, property: [...propertyPath, key], message: `contextMenuOptions may only have ${CONTEXT_MENU_OPTION_KEYS.join(', ')}` });
+    }
+    if (v.factor !== undefined && v.factor !== null && typeof v.factor !== 'number')
+        problems.push({ widget: context.widgetId, property: [...propertyPath, 'factor'], message: 'contextMenuOptions factor must be a number' });
+    if (v.title !== undefined && v.title !== null && typeof v.title !== 'string')
+        problems.push({ widget: context.widgetId, property: [...propertyPath, 'title'], message: 'contextMenuOptions title must be a string' });
+    if (v.color !== undefined && v.color !== null && typeof v.color !== 'string')
+        problems.push({ widget: context.widgetId, property: [...propertyPath, 'color'], message: 'contextMenuOptions color must be a string' });
+    if (v.image !== undefined && v.image !== null && typeof v.image !== 'string' && !(Array.isArray(v.image) && v.image.every(s => typeof s === 'string')))
+        problems.push({ widget: context.widgetId, property: [...propertyPath, 'image'], message: 'contextMenuOptions image must be a string or array of strings' });
+    if (v.widget !== undefined && v.widget !== null) {
+        for (const id of asArrayValidator(v.widget)) {
+            if (!context.widgets[id] && !String(id).includes('$'))
+                problems.push({ widget: context.widgetId, property: [...propertyPath, 'widget'], message: `widget '${id}' not found` });
+        }
+    }
+    return problems.length ? problems : true;
+}
+
+function asArrayValidator(v) {
+    return Array.isArray(v) ? v : [v];
 }
 
 function validateContextMenu(v, context, propertyPath = []) {
@@ -905,7 +945,7 @@ function customRoutineChecks(operation, problems, context, operationPath) {
         });
     }
     if (operation.func === 'CONTEXTMENU') {
-        const hasMenu = Array.isArray(operation.contextMenu) && operation.contextMenu.length >= 0;
+        const hasMenu = Array.isArray(operation.contextMenu);
         const hasProperty = typeof operation.property === 'string' && operation.property.length > 0;
         if (!hasMenu && !hasProperty) {
             problems.push({
