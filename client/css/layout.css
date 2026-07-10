@@ -168,12 +168,6 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-height: 450px) {
-      body.wideToolbar #toolbar .divider:nth-child(2) {
-        margin: 10px 10%;
-      }
-    }
-
     @media (max-height: 430px) {
       body.wideToolbar #toolbar {
         padding: 0;
@@ -183,13 +177,13 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-height: 415px) {
+    @media (max-height: 480px) {
       body.wideToolbar #toolbar .divider:nth-child(2) {
         display: none;
       }
     }
 
-    @media (max-height: 420px) {
+    @media (max-height: 440px) {
       body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar {
         padding: 0;
       }
@@ -228,13 +222,13 @@ body.aspectTooGood.hiddenToolbar {
       margin: auto 10px;
     }
 
-    @media (max-height: 415px) {
+    @media (max-height: 480px) {
       body.wideToolbar #toolbar .divider {
         display: none;
       }
     }
 
-    @media (max-height: 420px) {
+    @media (max-height: 440px) {
       body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) #toolbar .divider {
         display: none;
       }
@@ -297,13 +291,13 @@ body.aspectTooGood.hiddenToolbar {
       justify-content: flex-end;
     }
 
-    @media (max-height: 520px) {
+    @media (max-height: 530px) {
       body.wideToolbar .toolbarButton:not(.toolbarTab) {
         padding: 0 10%;
       }
     }
 
-    @media (max-height: 420px) {
+    @media (max-height: 440px) {
       body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarButton:not(.toolbarTab) {
         padding: 2px;
       }
@@ -351,13 +345,13 @@ body.aspectTooGood.hiddenToolbar {
       width: unset;
     }
 
-    @media (max-height: 400px) {
+    @media (max-height: 405px) {
       body.wideToolbar .toolbarTab {
         height: 30px;
       }
     }
 
-    @media (max-height: 420px) {
+    @media (max-height: 440px) {
       body:not(.wideToolbar,.horizontalToolbar,.aspectTooGood) .toolbarTab {
         height: 30px;
       }
@@ -542,6 +536,13 @@ body.aspectTooGood.hiddenToolbar {
 
     @media (max-height: 340px) {
       body:not(.horizontalToolbar,.aspectTooGood) #feedbackButton {
+        display: none;
+      }
+    }
+
+    /* the wide toolbar's logo and text labels leave less vertical room for buttons */
+    @media (max-height: 370px) {
+      body.wideToolbar #feedbackButton {
         display: none;
       }
     }
