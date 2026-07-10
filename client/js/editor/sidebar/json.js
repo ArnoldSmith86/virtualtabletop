@@ -61,6 +61,8 @@ class JsonModule extends SidebarModule {
     target.append($('#jeWidgetLayers'));
     $('#jsonEditor').style.display = 'none';
     jeUpdateWidgetSwitcher();
+    if(jeTreeIsPinned())
+      jeToggleTreeDropdown();
   }
 }
 

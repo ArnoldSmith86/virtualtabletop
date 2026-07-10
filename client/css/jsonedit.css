@@ -141,6 +141,24 @@
   height: auto;
 }
 
+#jePinTree {
+  display: none;
+}
+
+#jeWidgetSwitcher.treeVisible #jePinTree {
+  display: flex;
+}
+
+/* pinned: reserve space for the tree so it stays visible above the JSON */
+#jeWidgetSwitcher.treeVisible.treePinned #jeTreeContainer {
+  height: 35vh;
+}
+
+#jeWidgetSwitcher.treeVisible.treePinned ~ #jeText,
+#jeWidgetSwitcher.treeVisible.treePinned ~ #jeTextHighlight {
+  top: calc(40px + 35vh);
+}
+
 .editorModule #jeText, .editorModule #jeTextHighlight {
   top: 40px;
 }

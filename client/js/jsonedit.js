@@ -2595,11 +2595,22 @@ function jeTreeIsVisible() {
   return !!$('#jeWidgetSwitcher.treeVisible');
 }
 
+function jeTreeIsPinned() {
+  return localStorage.getItem('jeTreePinned') == 'true';
+}
+
+function jeSetTreePinned(pinned) {
+  localStorage.setItem('jeTreePinned', pinned);
+  $('#jeWidgetSwitcher').classList.toggle('treePinned', pinned);
+  $('#jePinTree').classList.toggle('active', pinned);
+}
+
 function jeToggleTreeDropdown(forceClose) {
   const open = !forceClose && !jeTreeIsVisible();
   $('#jeWidgetSwitcher').classList.toggle('treeVisible', open);
   $('#jeShowTree').classList.toggle('active', open);
   if(open) {
+    jeSetTreePinned(jeTreeIsPinned());
     $('#jeTreeContainer').append($('#jeTree'));
     jeDisplayTree();
     $('#jeWidgetSearchBox').focus();
@@ -2612,10 +2623,11 @@ function jeInitWidgetSwitcher() {
   on('#jeNavBack', 'click', _=>jeHistoryNavigate(-1));
   on('#jeNavForward', 'click', _=>jeHistoryNavigate(1));
   on('#jeShowTree', 'click', _=>jeToggleTreeDropdown());
+  on('#jePinTree', 'click', _=>jeSetTreePinned(!jeTreeIsPinned()));
 
-  // close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)
+  // unless pinned, close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)
   $('#jeTreeContainer').addEventListener('click', function(e) {
-    if(!e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
+    if(!jeTreeIsPinned() && !e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
       jeToggleTreeDropdown(true);
   }, true);
 }
