@@ -1428,6 +1428,11 @@ export class Widget extends StateManaged {
         const isMulti = Array.isArray(a.player) && players.length > 0;
         if(!players.length)
           players = [ playerName ];
+        // Warn about names that aren't active players so a typo is not silently
+        // indistinguishable from that player cancelling the input.
+        for(const p of players)
+          if(p !== playerName && activePlayers.indexOf(p) == -1)
+            problems.push(`INPUT: '${p}' is not an active player; the overlay cannot be shown to them.`);
         // Only the initiator can show its own overlay locally (it has the live
         // variables/collections); everyone else is asked over the network.
         const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{

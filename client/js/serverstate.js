@@ -607,8 +607,10 @@ export function widgetFilter(callback) {
 // shuffles, so it is derived from the load time rather than rand()).
 const inputClientToken = Math.floor(performance.now()).toString(36) + Math.floor(performance.timeOrigin).toString(36);
 let inputSessionCounter = 0;
-const inputSessions = {};       // initiator side: sessionID -> session
-const remoteInputHandles = {};  // target side:    sessionID -> overlay handle
+// Keyed by session IDs that may originate from another client, so use
+// null-prototype objects to avoid __proto__/constructor key surprises.
+const inputSessions = Object.create(null);       // initiator side: sessionID -> session
+const remoteInputHandles = Object.create(null);  // target side:    sessionID -> overlay handle
 
 function serializeCollections(collections) {
   const ids = {};

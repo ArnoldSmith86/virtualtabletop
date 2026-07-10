@@ -846,7 +846,7 @@ export default class Room {
     const targets = (args.targets || [])
       .map(name=>({ name, player: this.players.find(p=>p.name === name) }))
       .filter(t=>t.player);
-    this.inputRequests = this.inputRequests || {};
+    this.inputRequests = this.inputRequests || Object.create(null);
     this.inputRequests[args.sessionID] = { from: player, remaining: targets };
     for(const target of targets)
       target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
@@ -921,7 +921,7 @@ export default class Room {
   }
 
   inputBlock(player, args) {
-    this.inputBlocks = this.inputBlocks || {};
+    this.inputBlocks = this.inputBlocks || Object.create(null);
     if(args.show) {
       this.inputBlocks[args.blockID] = player;
       const waitingFor = args.waitingFor || [];
