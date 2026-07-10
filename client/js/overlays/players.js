@@ -67,8 +67,9 @@ function fillPlayerList(players, active, sessions) {
           toServer('playerColor', { player, color: toHex(e.target.value) });
         });
         $('.playerName', row).addEventListener('change', function(e) {
-          if(e.target.value.trim() && e.target.value != player)
-            toServer('rename', { oldName: player, newName: e.target.value, updateWidgets: true });
+          const newName = e.target.value.trim();
+          if(newName && newName != player)
+            toServer('rename', { oldName: player, newName, updateWidgets: true });
         });
         $('.playerName', row).addEventListener('keydown', function(e) {
           if(e.key == 'Enter')
@@ -85,7 +86,8 @@ function fillPlayerList(players, active, sessions) {
             toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
           });
         }
-        if(session) {
+        const isReferencedByWidgets = [...widgets.values()].some(w=>w.state.player==player||w.state.owner==player||Array.isArray(w.state.owner)&&w.state.owner.indexOf(player)!=-1);
+        if(session || isReferencedByWidgets) {
           removeFromDOM($('.removePlayer', row));
         } else {
           $('.removePlayer', row).addEventListener('click', function() {
@@ -104,8 +106,8 @@ function fillPlayerList(players, active, sessions) {
       if(session) {
         $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `Session ${sessionIndex+1} (you)` : `Session ${sessionIndex+1}`;
         $('.splitSession', sessionCell).addEventListener('click', function() {
-          const newName = prompt(`Enter a new player name for this session of ${player}:`);
-          if(newName && newName.trim() && newName != player)
+          const newName = (prompt(`Enter a new player name for this session of ${player}:`) || '').trim();
+          if(newName && newName != player)
             toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
         });
       } else {

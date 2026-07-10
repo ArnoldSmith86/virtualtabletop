@@ -28,7 +28,8 @@ export default class Room {
   }
 
   addLocalPlayer(addingPlayer, playerName) {
-    if(typeof playerName != 'string' || !playerName.trim() || this.state._meta.players[playerName])
+    playerName = typeof playerName == 'string' ? playerName.trim() : '';
+    if(!playerName || this.state._meta.players[playerName])
       return;
     this.state._meta.players[playerName] = this.newPlayerColor();
     this.sendMetaUpdate();
@@ -852,6 +853,8 @@ export default class Room {
   removeLocalPlayer(removingPlayer, playerName) {
     if(this.players.filter(p=>p.name == playerName).length)
       return;
+    if(Object.values(this.state).filter(w=>w.player==playerName||w.owner==playerName||Array.isArray(w.owner)&&w.owner.indexOf(playerName)!=-1).length)
+      return;
     delete this.state._meta.players[playerName];
     this.sendMetaUpdate();
   }
@@ -899,16 +902,20 @@ export default class Room {
   }
 
   renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
-    if(oldName == newName || typeof newName != 'string' || !newName.trim())
+    newName = typeof newName == 'string' ? newName.trim() : '';
+    if(oldName == newName || !newName)
+      return;
+
+    const renamedSessions = this.players.filter(p=>p.name == oldName && (sessionID == null || p.sessionID == sessionID));
+    if(sessionID != null && !renamedSessions.length)
       return;
 
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
     if(this.state._meta.players[newName] === undefined)
       this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();
 
-    for(const player of this.players)
-      if(player.name == oldName && (sessionID == null || player.sessionID == sessionID))
-        player.rename(newName);
+    for(const player of renamedSessions)
+      player.rename(newName);
 
     // when only a single session is renamed (split/view), the old player stays available for the other sessions
     if(sessionID == null)
@@ -931,7 +938,7 @@ export default class Room {
         if(value === oldName)
           changes[property] = newName;
         else if(Array.isArray(value) && value.includes(oldName))
-          changes[property] = value.map(p=>p === oldName ? newName : p);
+          changes[property] = [...new Set(value.map(p=>p === oldName ? newName : p))];
       }
       if(Object.keys(changes).length) {
         Object.assign(this.state[widgetID], changes);
