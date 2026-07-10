@@ -98,7 +98,7 @@ const COMMON_PROPERTIES = {
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
-    enterRoutine: getRoutineValidator({}, {'child': 1}),
+    enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
@@ -821,7 +821,8 @@ function customRoutineChecks(operation, problems, context, operationPath) {
 function customWidgetChecks(widget, widgets, problems) {
     if(widget.type === 'deck') {
         for(const prop of ['width', 'height', 'movable', 'layer', 'clickable']) {
-            if(widget[prop] !== undefined) {
+            const matchingCardDefaultSet = ['width', 'height'].includes(prop) && widget.cardDefaults && widget.cardDefaults[prop] !== undefined;
+            if(widget[prop] !== undefined && !matchingCardDefaultSet) {
                 problems.push({
                     widget: widget.id,
                     property: [prop],

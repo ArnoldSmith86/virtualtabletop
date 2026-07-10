@@ -13,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1770833003113,
+      "lastUpdate": 1777642546180,
       "showName": false,
       "skill": "",
       "description": "",
@@ -453,8 +453,8 @@
   "deckHolder": {
     "type": "holder",
     "id": "deckHolder",
-    "x": 1470,
-    "y": 18,
+    "x": 187,
+    "y": 582,
     "dropTarget": {
       "type": "card"
     },
@@ -1046,7 +1046,7 @@
   "holder31": {
     "type": "holder",
     "id": "holder31",
-    "x": 581,
+    "x": 570,
     "y": 252,
     "z": 9733,
     "text": "Change text colors",
@@ -1062,7 +1062,7 @@
   },
   "text2": {
     "id": "text2",
-    "x": 285,
+    "x": 273,
     "y": 450,
     "width": 200,
     "layer": -3,
@@ -1076,7 +1076,7 @@
   },
   "text3": {
     "id": "text3",
-    "x": 540,
+    "x": 518,
     "y": 450,
     "width": 200,
     "layer": -3,
@@ -1091,7 +1091,7 @@
   "holder4": {
     "type": "holder",
     "id": "holder4",
-    "x": 836,
+    "x": 815,
     "y": 252,
     "z": 9733,
     "css": {
@@ -1106,7 +1106,7 @@
   },
   "text4": {
     "id": "text4",
-    "x": 796,
+    "x": 762,
     "y": 450,
     "width": 200,
     "layer": -3,
@@ -1121,7 +1121,7 @@
   "holder5": {
     "type": "holder",
     "id": "holder5",
-    "x": 1091,
+    "x": 1059,
     "y": 252,
     "z": 9733,
     "text": "Default font demo",
@@ -1132,7 +1132,7 @@
   },
   "text5": {
     "id": "text5",
-    "x": 1051,
+    "x": 1007,
     "y": 450,
     "width": 300,
     "layer": -3,
@@ -1146,15 +1146,15 @@
   },
   "basic1": {
     "id": "basic1",
-    "x": 1254,
-    "y": 255,
-    "z": 32,
+    "x": 1178,
+    "z": 38,
     "text": "This widget starts with the default font-size of 16px.",
     "width": 103,
     "height": 160,
     "css": {
       "background": "tan"
-    }
+    },
+    "y": 255
   },
   "holder4a": {
     "type": "holder",
@@ -1209,11 +1209,40 @@
   },
   "m421": {
     "type": "pile",
-    "parent": "deckHolder",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "m421"
+    "id": "m421",
+    "parent": "deckHolder"
+  },
+  "holder6": {
+    "type": "holder",
+    "id": "holder6",
+    "x": 1391,
+    "y": 252,
+    "z": 9733,
+    "text": " ",
+    "css": {
+      " .holderTextOnly::after": {
+        "font-size": "18px !important",
+        "content": "\"Line 1\\A Line 2\\A Line 3\"",
+        "white-space": "pre-line"
+      }
+    }
+  },
+  "text6": {
+    "id": "text6",
+    "x": 1351,
+    "y": 450,
+    "width": 240,
+    "layer": -3,
+    "z": 185,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "22px"
+    },
+    "html": "The holder above demonstrates how to use the <b>.holderTextOnly</b> class to force a line break in the text. The text that is displayed is in the <b>content</b> property in the class. The <b>text</b> property must be an empty space."
   }
 }
