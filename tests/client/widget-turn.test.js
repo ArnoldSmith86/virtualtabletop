@@ -66,6 +66,25 @@ describe("Scenarios: TURN function", () => {
     });
   });
 
+  describe("Given seats sharing the lowest backward-order index that both have turn", () => {
+    beforeAll(async () => {
+      await button.set('clickRoutine', [ { func: 'TURN', turn: 1, turnCycle: 'backward' } ]);
+    });
+    beforeEach(() => {
+      addSeat(`${testName}-ba`, 3, true);
+      addSeat(`${testName}-bb`, 3, true);
+      addSeat(`${testName}-bc`, 2, false);
+    });
+    describe("When TURN advances backward", () => {
+      test("Then the turn moves to the next index instead of getting stuck", async () => {
+        await button.click();
+        expect(seat(`${testName}-ba`).get('turn')).toBe(false);
+        expect(seat(`${testName}-bb`).get('turn')).toBe(false);
+        expect(seat(`${testName}-bc`).get('turn')).toBe(true);
+      });
+    });
+  });
+
   describe("Given seats where none has turn", () => {
     beforeAll(async () => {
       await button.set('clickRoutine', [ { func: 'TURN', turn: 1 } ]);
