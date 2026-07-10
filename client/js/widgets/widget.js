@@ -124,7 +124,7 @@ export class Widget extends StateManaged {
     }
 
     this.onlongtouch = function() {
-      if (document.body.classList.contains('edit')) {
+      if (document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) {
         this.showEnlarged();
         this.domElement.classList.add('longtouch');
       } else {

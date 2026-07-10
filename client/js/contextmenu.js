@@ -137,8 +137,7 @@ function copyWidgetToPreview(widget, previewEl) {
     img.style.maxHeight = '100%';
     img.style.objectFit = 'contain';
     const idx = enlargePreviewIndex % imageList.length;
-    const entry = imageList[idx];
-    img.src = mapAssetURLs(entry !== null && typeof entry === 'object' && entry.image ? entry.image : entry);
+    img.src = mapAssetURLs(imageList[idx]);
     previewEl.appendChild(img);
     wrap.appendChild(previewEl);
   } else {
@@ -258,7 +257,7 @@ function renderRotationButtons(widget, rowEl) {
     const current = currentWidget.get('rotation') || 0;
     let next;
     if (typeof steps === 'number') {
-      next = current + direction * steps;
+      next = (((current + direction * steps) % 360) + 360) % 360;
     } else {
       const i = rotationStepIndex(steps, current);
       next = steps[(i + direction + steps.length) % steps.length];
@@ -413,6 +412,7 @@ function positionPopupBackground(widget, popup) {
 
 function openContextMenu(widget, menuOverride) {
   currentWidget = widget;
+  enlargePreviewIndex = 0;
   currentMenu = menuOverride !== undefined ? (Array.isArray(menuOverride) ? menuOverride : []) : (widget.get('contextMenu') || []);
   const popup = ensurePopup();
   const opts = getPopupOptions(widget);
@@ -632,12 +632,12 @@ onLoad(function() {
     });
   }
   document.addEventListener('mousedown', (e) => {
-    if (e.button !== 2 || document.body.classList.contains('edit')) return;
+    if (e.button !== 2 || isLoading || overlayActive || document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) return;
     e.preventDefault();
     closePopupAndStartHold(e.clientX, e.clientY);
   });
   document.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1 || document.body.classList.contains('edit')) return;
+    if (e.touches.length !== 1 || isLoading || overlayActive || document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) return;
     const t = e.touches[0];
     if (widgetAtPoint(t.clientX, t.clientY)) return;
     if (longTouchTimer) clearTimeout(longTouchTimer);

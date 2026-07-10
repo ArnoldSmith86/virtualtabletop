@@ -1181,12 +1181,16 @@ function getCustomPropertyUsage(data) {
         if(widget.type === 'scoreboard')
             customProperties.add(widget.scoreProperty || 'score');
 
-        if (Array.isArray(widget.contextMenu)) {
-            for (const entry of widget.contextMenu) {
+        const addContextMenuRoutines = entries => {
+            for (const entry of entries) {
                 if (entry && typeof entry.routine === 'string')
                     customProperties.add(entry.routine);
+                if (entry && Array.isArray(entry.menu))
+                    addContextMenuRoutines(entry.menu);
             }
-        }
+        };
+        if (Array.isArray(widget.contextMenu))
+            addContextMenuRoutines(widget.contextMenu);
     }
     
     return [...customProperties];
