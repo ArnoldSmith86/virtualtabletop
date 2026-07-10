@@ -64,6 +64,8 @@ export default class Player {
         this.room.cancelInput(this, args);
       if(func == 'inputBlock')
         this.room.inputBlock(this, args);
+      if(func == 'inputBlockAnswered')
+        this.room.inputBlockAnswered(this, args);
     } catch(e) {
       if(e instanceof Logging.UserError) {
         this.send('error', `${e.code} - ${e.message}`);

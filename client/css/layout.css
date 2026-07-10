@@ -1187,6 +1187,24 @@ button:disabled:hover {
 #buttonInputOverlay h1{
   display: none;
 }
+#inputBlockOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+#inputBlockOverlay h1{
+  display: none;
+}
+#inputBlockOverlay .modal{
+  width: 200px;
+}
+#inputBlockText{
+  padding: 16px;
+  text-align: center;
+  white-space: pre-line;
+}
 .modal{
   color: var(--modalTextColor);
   background: var(--modalBackgroundColor);

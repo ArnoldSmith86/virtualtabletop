@@ -873,16 +873,12 @@ export default class Room {
         for(const t of request.remaining)
           t.player.send('hideInput', { sessionID: args.sessionID });
         delete this.inputRequests[args.sessionID];
-      } else if(!request.remaining.length) {
-        delete this.inputRequests[args.sessionID];
       } else {
-        // Others still pending: move the player who just answered into the
-        // "waiting for the rest" overlay by shrinking its waitingFor list.
-        const block = this.inputBlocks && this.inputBlocks[args.sessionID];
-        if(block) {
-          block.waitingFor = request.remaining.map(t=>t.name);
-          this.sendInputBlock(args.sessionID);
-        }
+        if(!request.remaining.length)
+          delete this.inputRequests[args.sessionID];
+        // Move the player who just answered into the "waiting for the rest"
+        // overlay by dropping them from the block's waitingFor list.
+        this.removeFromInputBlock(args.sessionID, target ? target.name : player.name);
       }
     }
   }
@@ -954,6 +950,23 @@ export default class Room {
     for(const p of this.players)
       if(!block.waitingFor.includes(p.name))
         p.send('inputBlock', { blockID, show: true, waitingFor: block.waitingFor, header: block.header });
+  }
+
+  // Drop a player who has answered from a block's waitingFor list and refresh
+  // the overlay so they (and anyone else no longer waited on) now see it.
+  removeFromInputBlock(blockID, name) {
+    const block = this.inputBlocks && this.inputBlocks[blockID];
+    if(!block)
+      return;
+    block.waitingFor = block.waitingFor.filter(n => n !== name);
+    if(block.waitingFor.length)
+      this.sendInputBlock(blockID);
+  }
+
+  // The initiator answered its own (local) overlay while others are still
+  // pending; move it into the waiting overlay too.
+  inputBlockAnswered(player, args) {
+    this.removeFromInputBlock(args.sessionID, player.name);
   }
 
   roomFilename() {

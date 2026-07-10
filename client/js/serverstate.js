@@ -677,6 +677,10 @@ export function runInput({ widgetID, overlay, players, variables, collections, s
             return;
           session.results[playerName] = result;
           session.remaining.delete(playerName);
+          // The initiator answered its own overlay; if others are still pending
+          // and we're blocking, join the "waiting for the rest" overlay.
+          if(session.block && session.remaining.size)
+            toServer('inputBlockAnswered', { sessionID });
           session.complete();
         })
         .catch(()=>session.cancel());

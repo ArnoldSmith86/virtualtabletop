@@ -90,6 +90,21 @@ describe('Room remote INPUT routing', () => {
     expect(sentTo(b, 'inputBlock').some(m => m.args.show)).toBe(false);
   });
 
+  test('block overlay: initiator who is also a player joins the wait overlay after answering locally', () => {
+    // Init is one of the listed players (clicks the button and also participates).
+    const init = mockPlayer('Init'), b = mockPlayer('B');
+    const room = makeRoom([ init, b ]);
+    room.inputBlock(init, { blockID: 's9', show: true, waitingFor: [ 'Init', 'B' ], header: 'Pass' });
+    room.requestInput(init, { sessionID: 's9', targets: [ 'B' ], widgetID: 'w', overlay: {}, variables: {}, collections: {} });
+    // Init has its own local overlay, so it is not shown the wait overlay yet.
+    expect(sentTo(init, 'inputBlock').some(m => m.args.show)).toBe(false);
+    // Init answers its own overlay locally -> it now sees "waiting for B".
+    room.inputBlockAnswered(init, { sessionID: 's9' });
+    const initShow = sentTo(init, 'inputBlock').filter(m => m.args.show);
+    expect(initShow.length).toBe(1);
+    expect(initShow[0].args.waitingFor).toEqual([ 'B' ]);
+  });
+
   test('block overlay: cancel from a waiting player routes to the initiator', () => {
     const init = mockPlayer('Init'), a = mockPlayer('A'), spectator = mockPlayer('S');
     const room = makeRoom([ init, a, spectator ]);
