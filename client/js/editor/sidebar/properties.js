@@ -116,13 +116,13 @@ const editorTypeSections = {
       { label: 'Color',         property: 'color',        kind: 'color' },
       { label: 'Image',         property: 'image',        kind: 'image' },
       { label: 'Icon',          property: 'icon',         kind: 'icon' },
-      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true },
+      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true, content: true },
       { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 200, slider: true, nullIfEmpty: true }
     ]
   },
   button: {
     appearance: [
-      { label: 'Text',             property: 'text',              kind: 'text', nullIfEmpty: true },
+      { label: 'Text',             property: 'text',              kind: 'text', nullIfEmpty: true, content: true },
       { label: 'Icon',             property: 'icon',              kind: 'icon' },
       { label: 'Image',            property: 'image',             kind: 'image' },
       { label: 'Text color',       property: 'textColor',         kind: 'color' },
@@ -175,7 +175,7 @@ const editorTypeSections = {
   },
   pile: {
     appearance: [
-      { label: 'Handle text',     property: 'text',           kind: 'text', nullIfEmpty: true },
+      { label: 'Handle text',     property: 'text',           kind: 'text', nullIfEmpty: true, content: true },
       { label: 'Handle position', property: 'handlePosition', kind: 'select', choices: [ 'top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left', 'static' ].map(v=>({ value: v, text: v })) },
       { label: 'Handle offset',   property: 'handleOffset',   kind: 'number', min: 0, max: 100, slider: true }
     ],
@@ -1584,7 +1584,9 @@ class PropertiesModule extends SidebarModule {
     const defs = options.defs !== undefined ? options.defs : ((editorTypeSections[type] || {}).appearance || []);
     if(!defs.length && !options.render)
       return;
-    const properties = options.properties || [...new Set(defs.map(d=>d.property || 'css'))];
+    // "content" entries (like a button's text) stay editable in the section
+    // but are not copied by the pipette or the apply-to-all button
+    const properties = options.properties || [...new Set(defs.filter(d=>!d.content).map(d=>d.property || 'css'))];
 
     const copyProperties = async (source, target)=>{
       for(const property of properties)

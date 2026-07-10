@@ -144,6 +144,7 @@ function loadIconSearchIndex() {
       iconSearchIndex = index;
       return index;
     })();
+    iconSearchIndexPromise.catch(_=>iconSearchIndexPromise = null); // allow retrying after a failed fetch
   }
   return iconSearchIndexPromise;
 }
@@ -415,7 +416,9 @@ class PickerInput extends PropertyInput {
   // summary and the chip selection marks instead of rebuilding everything so
   // the search input and the native color picker are not interrupted.
   refreshPicker(value) {
-    if(this.summaryDOM && !this.summaryDOM.contains(document.activeElement)) {
+    const active = document.activeElement;
+    const activeInSummaryInput = this.summaryDOM && this.summaryDOM.contains(active) && active.matches('input, textarea');
+    if(this.summaryDOM && !activeInSummaryInput) {
       this.summaryDOM.innerHTML = '';
       this.renderSummary(this.summaryDOM, value);
     }
@@ -531,10 +534,10 @@ class IconInput extends PickerInput {
     showResults(frequentlyUsed);
 
     search.oninput = async _=>{
-      await loadIconSearchIndex();
+      await loadIconSearchIndex().catch(_=>null);
       showResults(search.value.trim() ? searchIconIndex(search.value.trim()) : frequentlyUsed);
     };
-    loadIconSearchIndex();
+    loadIconSearchIndex().catch(_=>null);
   }
 }
 
