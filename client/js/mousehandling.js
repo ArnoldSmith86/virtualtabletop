@@ -72,7 +72,9 @@ async function inputHandler(name, e) {
         await widget.mouseRaw('move', coords);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
-      const isRightButton = name === 'mousedown' && e.button === 2;
+      // right-clicks are handled by the context menu popup, except in edit mode (selection)
+      // and with the JSON editor open (widget selection and debugging clicks)
+      const isRightButton = name === 'mousedown' && e.button === 2 && !edit && !jeEnabled;
       if (!isRightButton) {
         mouseStatus[target.id] = {
           status: 'initial',

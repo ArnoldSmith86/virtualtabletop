@@ -539,6 +539,11 @@ export function handleContextMenu(e, widget) {
     widget = widgets.get(unescapeID(el.id.slice(2)));
   }
 
+  if (document.body.classList.contains('jsonEdit')) {
+    widget.showEnlarged(e);
+    return; // the JSON editor uses right-click for widget selection and debugging clicks
+  }
+
   if (Array.isArray(widget.get('rightClickRoutine'))) {
     e.stopPropagation();
     batchStart();
