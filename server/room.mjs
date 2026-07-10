@@ -850,10 +850,12 @@ export default class Room {
     }
   }
 
+  playerIsReferencedInWidgets(playerName) {
+    return Object.values(this.state).some(w=>[ w.owner, w.player, w.artist ].some(v=>Array.isArray(v) ? v.indexOf(playerName) != -1 : v == playerName));
+  }
+
   removeLocalPlayer(removingPlayer, playerName) {
-    if(this.players.filter(p=>p.name == playerName).length)
-      return;
-    if(Object.values(this.state).filter(w=>w.player==playerName||w.owner==playerName||Array.isArray(w.owner)&&w.owner.indexOf(playerName)!=-1).length)
+    if(this.players.filter(p=>p.name == playerName).length || this.playerIsReferencedInWidgets(playerName))
       return;
     delete this.state._meta.players[playerName];
     this.sendMetaUpdate();
@@ -917,8 +919,11 @@ export default class Room {
     for(const player of renamedSessions)
       player.rename(newName);
 
-    // when only a single session is renamed (split/view), the old player stays available for the other sessions
+    // when only a single session is renamed (split/view), the old player stays available for the other sessions -
+    // except for abandoned guest entries which the disconnect cleanup would no longer catch under the new name
     if(sessionID == null)
+      delete this.state._meta.players[oldName];
+    else if(oldName.match(/^Guest/) && !this.players.filter(p=>p.name == oldName).length && !this.playerIsReferencedInWidgets(oldName))
       delete this.state._meta.players[oldName];
 
     if(updateWidgets)

@@ -39,17 +39,21 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
 }
 
-// resolves with the next meta update so the UI can show that a sent request is being worked on;
-// rejects after a timeout because the server silently ignores invalid requests
-function nextMetaUpdate(timeout=3000) {
+// resolves once a meta update arrives for which isApplied returns true so the UI can show that a
+// sent request is being worked on; rejects after a timeout because the server silently ignores
+// invalid requests and unrelated meta updates (joins, color changes) arrive at any time
+function nextMetaUpdate(isApplied, timeout=3000) {
   return new Promise(function(resolve, reject) {
     const timer = setTimeout(function() {
       metaUpdateResolves = metaUpdateResolves.filter(r=>r != entry);
       reject(new Error('The server did not apply the change.'));
     }, timeout);
-    const entry = function() {
+    const entry = function(args) {
+      if(isApplied && !isApplied(args))
+        return false;
       clearTimeout(timer);
       resolve();
+      return true;
     };
     metaUpdateResolves.push(entry);
   });
@@ -113,7 +117,7 @@ function fillPlayerList(players, active, sessions) {
             e.target.classList.add('working');
             toServer('rename', { oldName: player, newName, updateWidgets: true });
             try {
-              await nextMetaUpdate();
+              await nextMetaUpdate(args=>args.meta.players[newName] !== undefined);
             } catch(err) {
               e.target.value = player;
             }
@@ -134,16 +138,16 @@ function fillPlayerList(players, active, sessions) {
         } else {
           serverActionButton($('.viewPlayer', row), function() {
             toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
-            return nextMetaUpdate();
+            return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == player));
           });
         }
-        const isReferencedByWidgets = [...widgets.values()].some(w=>w.state.player==player||w.state.owner==player||Array.isArray(w.state.owner)&&w.state.owner.indexOf(player)!=-1);
+        const isReferencedByWidgets = [...widgets.values()].some(w=>[ w.state.owner, w.state.player, w.state.artist ].some(v=>Array.isArray(v) ? v.indexOf(player) != -1 : v == player));
         if(session || isReferencedByWidgets) {
           removeFromDOM($('.removePlayer', row));
         } else {
           serverActionButton($('.removePlayer', row), function() {
             toServer('removeLocalPlayer', { player });
-            return nextMetaUpdate();
+            return nextMetaUpdate(args=>args.meta.players[player] === undefined);
           });
         }
       } else {
@@ -165,7 +169,7 @@ function fillPlayerList(players, active, sessions) {
           if(!newName || newName == player)
             return;
           toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
-          return nextMetaUpdate();
+          return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == session.sessionID && s.player == newName));
         });
       } else {
         $('.sessionLabel', sessionCell).textContent = 'not connected';
@@ -201,8 +205,7 @@ onLoad(function() {
   onMessage('meta', function(args) {
     lastMetaArgs = args;
     fillPlayerList(args.meta.players, args.activePlayers, args.sessions);
-    for(const resolve of metaUpdateResolves.splice(0))
-      resolve();
+    metaUpdateResolves = metaUpdateResolves.filter(entry=>!entry(args));
   });
   onMessage('sessionID', function(args) {
     mySessionID = args;
@@ -254,7 +257,7 @@ onLoad(function() {
     if(lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)
       throw new Error('This player already exists.');
     toServer('addLocalPlayer', { player: localPlayerName });
-    await nextMetaUpdate();
+    await nextMetaUpdate(args=>args.meta.players[localPlayerName] !== undefined);
     $('#localPlayerName').value = '';
   });
   $('#localPlayerName').addEventListener('keydown', function(e) {
