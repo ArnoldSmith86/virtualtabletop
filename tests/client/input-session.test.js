@@ -71,6 +71,33 @@ describe('Room remote INPUT routing', () => {
     expect(room.inputRequests['s5']).toBeFalsy();
   });
 
+  test('block overlay: a player who answered joins the waiting overlay for the rest', () => {
+    const init = mockPlayer('Init'), a = mockPlayer('A'), b = mockPlayer('B'), spectator = mockPlayer('S');
+    const room = makeRoom([ init, a, b, spectator ]);
+    // Client starts the block (waiting on A and B) then requests input from them.
+    room.inputBlock(init, { blockID: 's7', show: true, waitingFor: [ 'A', 'B' ], header: 'Pass' });
+    room.requestInput(init, { sessionID: 's7', targets: [ 'A', 'B' ], widgetID: 'w', overlay: {}, variables: {}, collections: {} });
+    // Initially only non-participants (Init, spectator) see the wait overlay.
+    expect(sentTo(a, 'inputBlock').filter(m => m.args.show).length).toBe(0);
+    expect(sentTo(spectator, 'inputBlock').some(m => m.args.show)).toBe(true);
+
+    // A answers -> A now sees the wait overlay, listing only B.
+    room.inputResult(a, { sessionID: 's7', cancelled: false, variables: {}, collections: {} });
+    const aShow = sentTo(a, 'inputBlock').filter(m => m.args.show);
+    expect(aShow.length).toBe(1);
+    expect(aShow[0].args.waitingFor).toEqual([ 'B' ]);
+    // B is still answering, so B is never shown the wait overlay.
+    expect(sentTo(b, 'inputBlock').some(m => m.args.show)).toBe(false);
+  });
+
+  test('block overlay: cancel from a waiting player routes to the initiator', () => {
+    const init = mockPlayer('Init'), a = mockPlayer('A'), spectator = mockPlayer('S');
+    const room = makeRoom([ init, a, spectator ]);
+    room.inputBlock(init, { blockID: 's8', show: true, waitingFor: [ 'A' ], header: 'x' });
+    room.cancelInput(spectator, { blockID: 's8' });
+    expect(sentTo(init, 'inputCancelled')).toEqual([ { func: 'inputCancelled', args: { sessionID: 's8' } } ]);
+  });
+
   test('rename mid-session still delivers the result (connection-keyed tracking)', () => {
     const init = mockPlayer('Init'), a = mockPlayer('A');
     const room = makeRoom([ init, a ]);

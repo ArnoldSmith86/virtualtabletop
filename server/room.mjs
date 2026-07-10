@@ -875,6 +875,14 @@ export default class Room {
         delete this.inputRequests[args.sessionID];
       } else if(!request.remaining.length) {
         delete this.inputRequests[args.sessionID];
+      } else {
+        // Others still pending: move the player who just answered into the
+        // "waiting for the rest" overlay by shrinking its waitingFor list.
+        const block = this.inputBlocks && this.inputBlocks[args.sessionID];
+        if(block) {
+          block.waitingFor = request.remaining.map(t=>t.name);
+          this.sendInputBlock(args.sessionID);
+        }
       }
     }
   }
@@ -891,9 +899,9 @@ export default class Room {
 
   // A waiting player pressed cancel on the block overlay: tell the initiator.
   cancelInput(player, args) {
-    const initiator = (this.inputBlocks || {})[args.blockID];
-    if(initiator)
-      initiator.send('inputCancelled', { sessionID: args.blockID });
+    const block = (this.inputBlocks || {})[args.blockID];
+    if(block && block.from)
+      block.from.send('inputCancelled', { sessionID: args.blockID });
   }
 
   cleanupInputForPlayer(player) {
@@ -915,7 +923,7 @@ export default class Room {
       }
     }
     for(const blockID in (this.inputBlocks || {})) {
-      if(this.inputBlocks[blockID] === player) {
+      if(this.inputBlocks[blockID].from === player) {
         delete this.inputBlocks[blockID];
         for(const p of this.players)
           p.send('inputBlock', { blockID, show: false });
@@ -926,16 +934,26 @@ export default class Room {
   inputBlock(player, args) {
     this.inputBlocks = this.inputBlocks || Object.create(null);
     if(args.show) {
-      this.inputBlocks[args.blockID] = player;
-      const waitingFor = args.waitingFor || [];
-      for(const p of this.players)
-        if(!waitingFor.includes(p.name))
-          p.send('inputBlock', { blockID: args.blockID, show: true, waitingFor, header: args.header });
+      this.inputBlocks[args.blockID] = { from: player, header: args.header, waitingFor: args.waitingFor || [] };
+      this.sendInputBlock(args.blockID);
     } else {
       delete this.inputBlocks[args.blockID];
       for(const p of this.players)
         p.send('inputBlock', { blockID: args.blockID, show: false });
     }
+  }
+
+  // Show the "waiting for input" overlay to everyone who is not currently being
+  // waited on. As players answer they drop out of waitingFor, so a player who
+  // just confirmed their own overlay now sees the waiting overlay (with its
+  // cancel button) for the players who still have not answered.
+  sendInputBlock(blockID) {
+    const block = this.inputBlocks && this.inputBlocks[blockID];
+    if(!block)
+      return;
+    for(const p of this.players)
+      if(!block.waitingFor.includes(p.name))
+        p.send('inputBlock', { blockID, show: true, waitingFor: block.waitingFor, header: block.header });
   }
 
   roomFilename() {
