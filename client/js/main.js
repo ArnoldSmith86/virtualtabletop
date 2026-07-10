@@ -40,6 +40,9 @@ function compareDropTarget(widget, t, exclude){
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    if(!t.isVisible())
+      continue;
+
     // if the holder has a drop limit and it's reached, skip the holder
     if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
       // don't skip it if the dragged widget is already its child
@@ -133,7 +136,7 @@ function checkURLproperties(connected) {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
-          $('#filterByType').value = 'Tutorials';
+          setLibraryTypeTab('Tutorials');
         } else if(location.hash == '#About') {
           urlProperties.about = true;
           $('#aboutButton').click();

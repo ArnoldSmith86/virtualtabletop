@@ -14,6 +14,9 @@ class Config {
   }
 
   directory(index) {
+    const vttSave = process.env.VTT_SAVE_DIR;
+    if(vttSave && (index === 'save' || index === 'assets'))
+      return index === 'save' ? vttSave : vttSave + '/assets';
     if(this.config.directories[index][0] == '/')
       return this.config.directories[index];
     else
