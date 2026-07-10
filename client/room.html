@@ -126,11 +126,8 @@
           <input id="filterByText" name="filterByText" placeholder="Search" />
           <i class="material-symbols" id="clearSearch">close</i>
         </span>
-        <span id="filterByTypeWrapper" data-priority="6">
-          <i class="material-symbols">casino</i>
-          <select id="filterByType"><option>Any</option>
-            <option selected>Games</option><option>Tutorials</option>
-          </select>
+        <span id="filterByTypeWrapper" data-priority="6" class="hidden" aria-hidden="true">
+          <select id="filterByType"></select>
         </span>
         <span id="filterByPlayersWrapper" data-priority="2">
           <i class="material-symbols">person</i>
@@ -155,6 +152,14 @@
           <i class="material-symbols">groups</i>
           <select id="filterByMode"></select>
         </span>
+        <span id="filterByAiWrapper" data-priority="8">
+          <i class="material-symbols">auto_awesome</i>
+          <select id="filterByAi">
+            <option>Any</option>
+            <option value="no-ai">No AI imagery</option>
+            <option value="ai">Uses AI imagery</option>
+          </select>
+        </span>
         <span id="librarySortWrapper" data-priority="3">
           <i class="material-symbols">sort_by_alpha</i>
           <select id="librarySort"><option value="name">by Name</option><option value="similarName">by Similar Name</option><option value="stars">by Stars</option><option value="timePlayed">by Popularity</option><option value="lastUpdate">by Last Updated</option><option value="year">by Year</option></select>
@@ -163,7 +168,7 @@
       </div>
       <div id="statesList">
         <template id="template-stateslist-category" type="text/template">
-          <h2 class="title">Title</h2>
+          <h2 class="title"><div class="libraryTypeTabs"></div></h2>
           <div class="buttons"></div>
           <div class="list"></div>
         </template>
@@ -171,6 +176,7 @@
           <img>
           <button icon="star_rate" class="star"></button>
           <i class="material-symbols linked">link</i>
+          <span class="ai-badge" title="Uses AI generated imagery">AI</span>
           <div class="details">
             <h3>Name</h3>
             <h4>Similar Name</h4>
@@ -268,7 +274,7 @@
           <button icon="edit_off" disabled>Read-only</button>
           <button icon="edit">Edit</button>
           <button icon="delete" class="red">Delete</button>
-          <button icon="upload" class="hidden">Add to public library</button>
+          <div id="publicLibraryUploadButtons" class="hidden"></div>
         </div>
         <button icon="save" class="onlyForEdit green">Save</button>
         <button icon="upload" class="onlyForEdit" disabled>Uploading</button>
@@ -279,13 +285,14 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
+          <span class="ai-badge hideForEdit" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
           <div class="onlyForEdit">
             <button icon="image" data-field="image" data-target="value" data-forceshow="true">Change</button>
           </div>
         </div>
         <div class="details">
           <h1 data-field="name"></h1>
-          <div class="onlyForEdit"><input type="checkbox" id="showName" data-field="showName" data-target="checked"> <label for="showName">Overlay name</label></div>
+          <div class="onlyForEdit"><input type="checkbox" id="showName"> <label for="showName">Overlay name</label></div>
           <div data-showfor="time"><i class="material-symbols">schedule</i> Time: <span data-field="time"></span> minutes</div>
           <div data-showfor="mode"><i class="material-symbols">groups</i> Mode: <span data-field="mode"></span></div>
           <div data-showfor="skill"><i class="material-symbols">psychology</i> Skill: <span data-field="skill"></span></div>
@@ -324,6 +331,7 @@
         </div>
         <div class="details">
           <h1 data-showfor="similarName">Similar to: <span data-field="similarName"></span><span data-showfor="year"> (<span data-field="year"></span>)</span></h1>
+          <div class="onlyForEdit"><input type="checkbox" id="showNameSimilar"> <label for="showNameSimilar">Overlay &quotsimilar to&quot name</label></div>
           <div data-showfor="similarDesigner"><i class="material-symbols">person</i> Designer: <span data-field="similarDesigner"></span></div>
           <div data-showfor="similarAwards" class="hideForEdit"><i class="material-symbols">emoji_events</i> <span data-field="similarAwards"></span></div>
           <div class="onlyForEdit"><i class="material-symbols">emoji_events</i> Awards: <span data-field="similarAwards"></span></div>
@@ -349,13 +357,18 @@
         </div>
         <button class="prettyButton next"><i class="material-symbols">arrow_forward</i></button>
       </div>
-      <div id="helpTexts" data-showfor="ruleText|helpText|attribution">
+      <div id="helpTexts" data-showfor="ruleText|helpText|attribution|usesAIImagery">
         <h3 data-showfor="ruleText">How to play the game</h3>
         <div data-field="ruleText" data-html="true"></div>
         <h3 data-showfor="helpText">How to use this implementation</h3>
         <div data-field="helpText" data-html="true"></div>
         <h3 data-showfor="attribution">Attribution</h3>
         <div data-field="attribution" data-html="true"></div>
+        <div class="onlyForEdit" style="margin-top: 12px;"><input type="checkbox" id="usesAIImagery" data-field="usesAIImagery" data-target="checked"> <label for="usesAIImagery">Uses AI generated imagery</label></div>
+        <div class="hideForEdit ai-imagery-notice" data-showfor="usesAIImagery">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game uses AI generated imagery.</span>
+        </div>
       </div>
     </div>
 
@@ -424,6 +437,7 @@
           <button icon="star_rate" class="star"></button>
           <span data-field="stars" class="uneditable">0</span>
           <i class="material-symbols">link</i>
+          <span class="ai-badge" data-showfor="usesAIImagery" title="Uses AI generated imagery">AI</span>
         </div>
         <div class="details">
           <h1 data-field="name"></h1>
@@ -450,6 +464,10 @@
           <button id="welcomePlayButton" icon="play_arrow">Create room</button>
         </div>
         <p id="welcomeUserGenerated" icon="warning">This game is <b>user-generated content</b> for which VirtualTabletop.io holds no responsibility or liability.</p>
+        <div class="ai-imagery-notice" data-showfor="usesAIImagery">
+          <i class="material-symbols">auto_awesome</i>
+          <span>This game uses AI generated imagery.</span>
+        </div>
       </div>
     </div>
 

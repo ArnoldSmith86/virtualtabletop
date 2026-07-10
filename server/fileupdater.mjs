@@ -75,7 +75,7 @@ function hasPropertyCondition(properties, condition) {
 function updateMeta(meta, v, state) {
   v<18 && v18RoutineLegacyModes(meta, state);
   v<19 && v19useIframeForHtmlCards(meta, state);
-  v<21 && v21HoverEnlarge(meta, state);
+  v<21 && v21DisableHolderImageWidget(meta, state);
 }
 
 function updateProperties(properties, v, globalProperties) {
@@ -600,8 +600,14 @@ function v20WhiteSpacePreWrap(properties, globalProperties) {
     properties.css = addWhiteSpacePreWrapToCss(properties.css);
 }
 
-function v21HoverEnlarge(meta, state) {
-  for(const widget of Object.values(state))
-    if(widget.enlarge)
-      meta.gameSettings.legacyModes.hoverEnlarge = true;
+function v21DisableHolderImageWidget(meta, state) {
+  for(const id in state) {
+    const properties = state[id];
+    if(properties && properties.type == 'holder') {
+      if(properties.image || properties.icon || properties.text || properties.textColor || properties.color || properties.svgReplaces) {
+        meta.gameSettings.legacyModes.disableHolderImageWidget = true;
+        return;
+      }
+    }
+  }
 }

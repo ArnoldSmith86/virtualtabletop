@@ -1272,6 +1272,20 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
         sendPropertyUpdate(widget.id, key, widget[key]);
       }
     }
+
+    if(widget.type === 'deck') {
+      const prev = previousState.cardTypes;
+      const next = widget.cardTypes;
+      if(prev && next && !Array.isArray(prev) && !Array.isArray(next) && typeof prev === 'object' && typeof next === 'object') {
+        const prevKeys = Object.keys(prev);
+        const nextKeys = Object.keys(next);
+        const removed = prevKeys.filter(k => !next[k]);
+        const added = nextKeys.filter(k => !prev[k]);
+        if(removed.length === 1 && added.length === 1)
+          for(const card of widgetFilter(w => w.get('type') === 'card' && w.get('deck') === widget.id && w.get('cardType') === removed[0]))
+            await card.set('cardType', added[0]);
+      }
+    }
   }
 
   batchEnd();
@@ -1283,7 +1297,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
+async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems, inheritFromSourceId) { // incrementKind: '', 'Letters', 'Numbers'
 
   const incrementCaps = function(l) {
     const m = l.match(/Z+$/);
@@ -1301,12 +1315,19 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       const inheritAll = JSON.stringify(inheritProperties) == '[""]';
       const inheritWidget = {};
       inheritWidget['inheritFrom'] = {};
-      inheritWidget['inheritFrom'][widget.get('id')] = inheritAll ? "*" : inheritProperties;
+      const sourceId = inheritFromSourceId || widget.get('id');
+      inheritWidget['inheritFrom'][sourceId] = inheritAll ? "*" : inheritProperties;
 
       // Copy properties from source to new object unless inheritAll is set or the property is in the inherit list.
       for(const key of Object.keys(currentWidget))
         if(currentWidget[key] != undefined && (['id','type','deck','cardType'].includes(key) || !(inheritAll || inheritProperties.includes(key))))
           inheritWidget[key] = currentWidget[key];
+
+      // Ensure increment targets exist locally so they can be updated after inheritFrom.
+      for(const property of incrementIn) {
+        if(property != 'inheritFrom' && inheritWidget[property] === undefined && currentWidget[property] !== undefined)
+          inheritWidget[property] = currentWidget[property];
+      }
       currentWidget = inheritWidget;
     }
 

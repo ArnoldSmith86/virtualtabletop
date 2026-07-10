@@ -24,7 +24,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-5"
+      "players": "2-5",
+      "usesAIImagery": true
     }
   },
   "combos": {

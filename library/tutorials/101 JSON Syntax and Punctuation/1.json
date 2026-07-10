@@ -16,7 +16,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1763354323449,
+      "lastUpdate": 1763354323448,
       "showName": false,
       "skill": "",
       "description": "",
@@ -29,7 +29,8 @@
       "variantImage": "",
       "variant": "Parentheses, Brackets, Spaces",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "title": {

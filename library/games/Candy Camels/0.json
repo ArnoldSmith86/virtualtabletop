@@ -18,6 +18,12 @@
   },
   "_meta": {
     "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Candy Camels",
       "image": "/assets/-337751546_41314",

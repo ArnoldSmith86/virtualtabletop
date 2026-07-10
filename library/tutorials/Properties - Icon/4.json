@@ -10,7 +10,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1764515386369,
+      "lastUpdate": 1770833039981,
       "showName": false,
       "skill": "",
       "description": "",
@@ -23,7 +23,8 @@
       "variantImage": "",
       "variant": "CSS",
       "language": "en-US",
-      "players": "1"
+      "players": "1",
+      "usesAIImagery": false
     }
   },
   "header": {

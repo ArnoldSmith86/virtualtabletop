@@ -3,7 +3,7 @@
     "version": 14,
     "info": {
       "name": "Sunshine and Rainbows",
-      "image": "/assets/1428556496_54170",
+      "image": "/assets/862537492_42566",
       "showName": true,
       "time": "30",
       "mode": "vs",
@@ -22,8 +22,9 @@
       "rules": "",
       "ruleText": "Sunshine and Rainbows is a climbing card game in the style of Haggis, Scout, etc.\n\nFollow the player aid on the table for specific details.",
       "helpText": "Have all players take a seat and press the New Game button.\n\nTo Overwrite the current meld, use the button provided to discard the cards currently there, then add your replacement cards from your hand. To instead Add to the current meld, simply drag your cards into it.\n\nAt the conclusion of each round of play, press the End Round button. This will score the cards remaining in players' hands automatically, and will deal a new hand to all seated players.",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n\nThe card back and library image are different crops of the same image generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"land of sunshine and rainbows\".",
-      "lastUpdate": 1705839780000
+      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n\nThe library image is the painting <i>Rainbow</i> (1912), by Jalmari Ruokokoski, sourced from https://artvee.com/dl/rainbow-4 and which is in the public domain. The card back is a cropped part of the same painting.",
+      "lastUpdate": 1705839780000,
+      "usesAIImagery": false
     }
   },
   "seat-p1": {
@@ -385,9 +386,6 @@
     "type": "deck",
     "id": "deck",
     "parent": "holder-draw",
-    "width": 120,
-    "height": 180,
-    "movable": false,
     "movableInEdit": false,
     "fixedParent": true,
     "faceTemplates": [
@@ -400,7 +398,7 @@
             "color": "transparent",
             "width": 120,
             "height": 180,
-            "value": "/assets/-608334469_20336"
+            "value": "/assets/707315566_2812"
           }
         ],
         "radius": 8,

@@ -116,6 +116,7 @@ export default async function minifyHTML() {
     'client/js/editor/toolbar/wiki.js',
     'client/js/editor/dragButton.js',
     'client/js/editor/dragbuttons/drag.js',
+    'client/js/editor/dragbuttons/settings.js',
     'client/js/editor/dragbuttons/clone.js',
     'client/js/editor/dragbuttons/spacing.js',
     'client/js/editor/dragbuttons/rotate.js',
@@ -128,6 +129,7 @@ export default async function minifyHTML() {
     'client/js/editor/sidebar/assets.js',
     'client/js/editor/sidebar/toolbox.js',
     'client/js/editor/sidebar/gameSettings.js',
+    'client/js/editor/sidebar/widgets.js',
 
     'client/js/editmode.js',
     'client/js/jsonedit.js',
