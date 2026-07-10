@@ -27,6 +27,9 @@ let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
 let jeIgnoreBlurOnce = false;
+let jeWidgetHistory = [];
+let jeWidgetHistoryIndex = -1;
+let jeWidgetHistoryNavigating = false;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -2130,6 +2133,7 @@ function jeSelectWidget(widget, addToSelection) {
     jeStateBefore = jePreProcessText(jsonString);
     jeSet(jePreProcessText(jsonString, false));
     editPanel.style.setProperty('--treeHeight', "20%");
+    jeAddWidgetToHistory(widget.id);
   }
 
   if(newCursorState)
@@ -2138,6 +2142,7 @@ function jeSelectWidget(widget, addToSelection) {
   jeCenterSelection();
 
   jeGetContext();
+  jeUpdateWidgetSwitcher();
 }
 
 function jeSelectWidgetMulti(widget) {
@@ -2167,6 +2172,7 @@ function jeSelectSetMulti(widgets) {
   jeMode = 'multi';
   jeUpdateMulti();
   jeGetContext();
+  jeUpdateWidgetSwitcher();
 }
 
 function jeMultiSelectedWidgets() {
@@ -2514,6 +2520,107 @@ function jeDisplayFilteredWidgets(e) {
 }
 
 /* End of tree subpane control */
+
+/* Widget switcher (breadcrumbs, back/forward history, tree dropdown) */
+
+function jeAddWidgetToHistory(id) {
+  if(jeWidgetHistoryNavigating || jeWidgetHistory[jeWidgetHistoryIndex] === id)
+    return;
+  jeWidgetHistory = jeWidgetHistory.slice(0, jeWidgetHistoryIndex + 1);
+  jeWidgetHistory.push(id);
+  jeWidgetHistoryIndex = jeWidgetHistory.length - 1;
+}
+
+function jeHistoryCanNavigate(direction) {
+  for(let i = jeWidgetHistoryIndex + direction; i >= 0 && i < jeWidgetHistory.length; i += direction)
+    if(widgets.has(jeWidgetHistory[i]))
+      return true;
+  return false;
+}
+
+function jeHistoryNavigate(direction) {
+  let index = jeWidgetHistoryIndex + direction;
+  while(index >= 0 && index < jeWidgetHistory.length && !widgets.has(jeWidgetHistory[index]))
+    index += direction;
+  if(index < 0 || index >= jeWidgetHistory.length)
+    return;
+
+  jeWidgetHistoryIndex = index;
+  jeWidgetHistoryNavigating = true;
+  setSelection([ widgets.get(jeWidgetHistory[index]) ]);
+  jeWidgetHistoryNavigating = false;
+}
+
+function jeUpdateWidgetSwitcher() {
+  if(!$('#jeWidgetSwitcher'))
+    return;
+
+  $('#jeNavBack').disabled = !jeHistoryCanNavigate(-1);
+  $('#jeNavForward').disabled = !jeHistoryCanNavigate(1);
+
+  const separator = '<span class=jeCrumbSeparator>chevron_right</span>';
+  let breadcrumbsHTML = '';
+  if(jeMode == 'widget' && jeWidget && widgets.has(jeWidget.id)) {
+    const chain = [];
+    const seen = new Set();
+    for(let w = jeWidget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+      seen.add(w);
+      chain.unshift(w);
+    }
+    if(chain.length > 3)
+      breadcrumbsHTML += `<span class=jeCrumbEllipsis>…</span>${separator}`;
+    for(const w of chain.slice(-3)) {
+      if(w != jeWidget)
+        breadcrumbsHTML += `<span class=jeCrumb data-id="${html(w.id)}">${html(w.id)}</span>${separator}`;
+      else
+        breadcrumbsHTML += `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
+    }
+  } else if(jeMode == 'multi') {
+    breadcrumbsHTML = `<span class=jeCrumbInfo>${jeMultiSelectedWidgets().length} widgets selected</span>`;
+  } else if(jeMode == 'macro') {
+    breadcrumbsHTML = '<span class=jeCrumbInfo>macro</span>';
+  } else {
+    breadcrumbsHTML = '<span class=jeCrumbInfo>no widget selected</span>';
+  }
+  $('#jeBreadcrumbs').innerHTML = breadcrumbsHTML;
+
+  on('#jeBreadcrumbs .jeCrumb[data-id]', 'click', function(e) {
+    const widget = widgets.get(e.currentTarget.dataset.id);
+    if(widget)
+      setSelection([ widget ]);
+  });
+}
+
+function jeTreeIsVisible() {
+  return !!$('#jeWidgetSwitcher.treeVisible');
+}
+
+function jeToggleTreeDropdown(forceClose) {
+  const open = !forceClose && !jeTreeIsVisible();
+  $('#jeWidgetSwitcher').classList.toggle('treeVisible', open);
+  $('#jeShowTree').classList.toggle('active', open);
+  if(open) {
+    $('#jeTreeContainer').append($('#jeTree'));
+    jeDisplayTree();
+    $('#jeWidgetSearchBox').focus();
+  } else {
+    $('#jeEditArea').append($('#jeTree'));
+  }
+}
+
+function jeInitWidgetSwitcher() {
+  on('#jeNavBack', 'click', _=>jeHistoryNavigate(-1));
+  on('#jeNavForward', 'click', _=>jeHistoryNavigate(1));
+  on('#jeShowTree', 'click', _=>jeToggleTreeDropdown());
+
+  // close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)
+  $('#jeTreeContainer').addEventListener('click', function(e) {
+    if(!e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
+      jeToggleTreeDropdown(true);
+  }, true);
+}
+
+/* End of widget switcher */
 
 function jeGetContext() {
   const aO = getSelection().anchorOffset;
@@ -3732,6 +3839,7 @@ function jeInitTree() {
 export function jeToggle() {
   if(jeEnabled === null) {
     jeInitTree();
+    jeInitWidgetSwitcher();
     jeAddCommands();
     jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
@@ -3761,6 +3869,7 @@ function jeEmpty() {
 
   jeSet('');
   jeShowCommands();
+  jeUpdateWidgetSwitcher();
 }
 
 const clickButton = async function(event) {

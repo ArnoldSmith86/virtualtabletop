@@ -35,6 +35,107 @@
   box-sizing: border-box;
 }
 
+/*** Widget switcher (breadcrumbs, back/forward history, tree dropdown) ***/
+#jeWidgetSwitcher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: calc(var(--commandPaneWidth) + 1px);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+  background: var(--backgroundColor);
+  z-index: 2;
+}
+
+#jeWidgetSwitcher > button {
+  flex-shrink: 0;
+}
+
+#jeWidgetSwitcher > button:disabled {
+  background-color: gray;
+  opacity: 0.5;
+}
+
+#jeWidgetSwitcher > button.active {
+  background-color: var(--VTTblueDark);
+  color: yellow;
+}
+
+#jeBreadcrumbs {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#jeBreadcrumbs .jeCrumb {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 3ch;
+}
+
+#jeBreadcrumbs .jeCrumb[data-id] {
+  cursor: pointer;
+  color: var(--textHighlightColor1);
+}
+
+#jeBreadcrumbs .jeCrumb[data-id]:hover {
+  text-decoration: underline;
+}
+
+#jeBreadcrumbs .jeCrumbCurrent {
+  font-weight: bold;
+}
+
+#jeBreadcrumbs .jeCrumbSeparator {
+  font-family: 'Material Symbols';
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+#jeBreadcrumbs .jeCrumbEllipsis {
+  flex-shrink: 0;
+}
+
+#jeBreadcrumbs .jeCrumbInfo {
+  color: var(--textDimColor1);
+}
+
+#jeTreeContainer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 50vh;
+  overflow-y: auto;
+  background: var(--backgroundColor);
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-top: none;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+#jeWidgetSwitcher.treeVisible #jeTreeContainer {
+  display: block;
+}
+
+#jeTreeContainer #jeTree {
+  height: auto;
+}
+
+.editorModule #jeText, .editorModule #jeTextHighlight {
+  top: 40px;
+}
+
+/*** End of widget switcher ***/
+
 /*** Tree and widget display/edit area ***/
 /**** CSS to set up the grid ****/
 #jeEditArea {

@@ -5,6 +5,8 @@ class JsonModule extends SidebarModule {
 
   onClose() {
     jeToggle();
+    jeToggleTreeDropdown(true);
+    $('#jsonEditor').append($('#jeWidgetSwitcher'));
     $('#jsonEditor').append($('#jeTextHighlight'));
     $('#jsonEditor').append($('#jeText'));
     $('#jsonEditor').append($('#jeCommands'));
@@ -13,6 +15,9 @@ class JsonModule extends SidebarModule {
 
   onDeltaReceivedWhileActive(delta) {
     jeApplyDelta(delta);
+    if(jeTreeIsVisible())
+      jeUpdateTree(delta.s);
+    jeUpdateWidgetSwitcher();
   }
 
   onEditorClose() {
@@ -41,54 +46,21 @@ class JsonModule extends SidebarModule {
     $('#jeText').blur();
   }
 
+  onStateReceivedWhileActive() {
+    if(jeTreeIsVisible())
+      jeDisplayTree();
+    jeUpdateWidgetSwitcher();
+  }
+
   renderModule(target) {
     jeToggle();
+    target.append($('#jeWidgetSwitcher'));
     target.append($('#jeTextHighlight'));
     target.append($('#jeText'));
     target.append($('#jeCommands'));
     target.append($('#jeWidgetLayers'));
     $('#jsonEditor').style.display = 'none';
-  }
-}
-
-class TreeModule extends SidebarModule {
-  constructor() {
-    super('account_tree', 'Tree', 'View and select your widgets in a tree based on their parents.');
-  }
-
-  onClose() {
-    $('#jsonEditor').append($('#jeTree'));
-  }
-
-  onDeltaReceivedWhileActive(delta) {
-    jeUpdateTree(delta.s);
-  }
-
-  onSelectionChangedWhileActive(newSelection) {
-    if(jeDeltaIsOurs) {
-      jeCenterSelection();
-      return;
-    }
-
-    if(newSelection.length == 1) {
-      jeSelectWidget(newSelection[0]);
-    } else if(newSelection.length) {
-      jeSelectSetMulti(newSelection);
-    } else {
-      jeEmpty();
-      jeCenterSelection();
-    }
-    $('#jeText').blur();
-  }
-
-  onStateReceivedWhileActive() {
-    jeDisplayTree();
-  }
-
-  renderModule(target) {
-    target.append($('#jeTree'));
-    jeInitTree();
-    jeDisplayTree();
+    jeUpdateWidgetSwitcher();
   }
 }
 
