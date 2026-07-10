@@ -283,6 +283,15 @@ class PropertiesModule extends SidebarModule {
     $('body').classList.remove('editorWidgetPicking');
   }
 
+  onClose() {
+    this.stopWidgetPick();
+  }
+
+  onEditorClose() {
+    this.stopWidgetPick();
+    super.onEditorClose();
+  }
+
   addInput(labelText, value, onValueChanged, target, type='auto') {
     const id = 'genericInput' + rand().toString(36).substring(3, 12);
     let currentValue = null;
@@ -435,10 +444,11 @@ class PropertiesModule extends SidebarModule {
       const target = widgets.get(pick.targetID);
       this.stopWidgetPick();
       if(target) {
+        // defer reselecting the target so it does not happen from inside
+        // setSelection's module notification loop and the callback's property
+        // changes are applied before the module re-renders
         const picked = newSelection.filter(w=>w.id != pick.targetID)[0];
-        if(picked)
-          pick.callback(picked);
-        setSelection([ target ]);
+        Promise.resolve(picked ? pick.callback(picked) : null).then(_=>setSelection([ target ]));
         return;
       }
     }

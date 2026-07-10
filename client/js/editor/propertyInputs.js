@@ -61,9 +61,11 @@ function usedGameColors() {
 
 function usedGameIcons() {
   return usedValuesInGame((key, value)=>{
-    if([ 'icon', 'suit', 'name' ].indexOf(key) == -1)
+    if(key != 'icon' && key != 'suit')
       return null;
-    if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/) || value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/))
+    if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/))
+      return value;
+    if(key == 'icon' && (value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/)))
       return value;
     return null;
   });
@@ -91,7 +93,7 @@ function renderIconChip(value, target) {
   } else if(value.match(/^[a-z0-9]/)) {
     div(chip, 'material-symbols', html(value));
   } else {
-    div(chip, 'emoji-monochrome', html(value.replace(/^\((.*)\)$/, '$1')));
+    div(chip, 'emoji-monochrome', html(toNotoMonochrome(value.replace(/^\((.*)\)$/, '$1'))));
   }
   return chip;
 }
@@ -112,33 +114,38 @@ function renderColorChip(value, target) {
 
 // Flat searchable index over i/fonts/symbols.json, loaded on first use.
 let iconSearchIndex = null;
-async function loadIconSearchIndex() {
-  if(iconSearchIndex)
-    return iconSearchIndex;
-
-  const index = [];
-  const data = await (await fetch('i/fonts/symbols.json')).json();
-  for(const [ category, symbols ] of Object.entries(data)) {
-    if(category.match(/Emoji - Flags/))
-      continue;
-    for(let [ symbol, keywords ] of Object.entries(symbols)) {
-      if(symbol.includes('/')) {
-        keywords = keywords.slice(1); // first entry is the spritesheet index
-        index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase() });
-      } else {
-        const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
-        symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
-        let value = symbol;
-        if(!symbol.match(/^\[/) && !symbol.match(/^[a-z0-9_]+$/) && category.match(/Emoji/))
-          value = `(${symbol})`; // monochrome emoji notation
-        index.push({ value, keywords: `${symbol},${keywords.join()}`.toLowerCase() });
-        if(hasNoFillVariant)
-          index.push({ value: `${symbol}_NOFILL`, keywords: `${symbol},${keywords.join()}`.toLowerCase() });
+let iconSearchIndexPromise = null;
+function loadIconSearchIndex() {
+  if(!iconSearchIndexPromise) {
+    iconSearchIndexPromise = (async _=>{
+      const index = [];
+      const data = await (await fetch('i/fonts/symbols.json')).json();
+      for(const [ category, symbols ] of Object.entries(data)) {
+        if(category.match(/Emoji - Flags/))
+          continue;
+        for(let [ symbol, keywords ] of Object.entries(symbols)) {
+          if(symbol.includes('/')) {
+            keywords = keywords.slice(1); // first entry is the spritesheet index
+            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase() });
+          } else {
+            const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
+            symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
+            const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
+            if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
+              index.push({ value: symbol, keywords: allKeywords });
+              if(hasNoFillVariant)
+                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords });
+            } else if(!skipForNotoMonochrome(symbol)) {
+              index.push({ value: `(${symbol})`, keywords: allKeywords }); // monochrome emoji notation
+            }
+          }
+        }
       }
-    }
+      iconSearchIndex = index;
+      return index;
+    })();
   }
-  iconSearchIndex = index;
-  return index;
+  return iconSearchIndexPromise;
 }
 
 function searchIconIndex(query, limit=42) {
@@ -335,11 +342,18 @@ class SelectInput extends PropertyInput {
 
   update(value) {
     const jsonValue = JSON.stringify(value);
-    if(![...this.select.options].some(o=>o.value == jsonValue)) {
-      const option = document.createElement('option');
-      option.value = jsonValue;
-      option.textContent = `custom: ${jsonValue}`;
-      this.select.appendChild(option);
+    if(this.options.choices.some(choice=>JSON.stringify(choice.value) == jsonValue)) {
+      if(this.customOption) {
+        this.customOption.remove();
+        this.customOption = null;
+      }
+    } else {
+      if(!this.customOption) {
+        this.customOption = document.createElement('option');
+        this.select.appendChild(this.customOption);
+      }
+      this.customOption.value = jsonValue;
+      this.customOption.textContent = `custom: ${jsonValue}`;
     }
     this.select.value = jsonValue;
   }
@@ -384,7 +398,7 @@ class PickerInput extends PropertyInput {
   update(value) {
     this.updatePreview(value);
     if(this.pickerOpen())
-      this.updatePicker(value);
+      this.refreshPicker(value);
   }
 
   updatePreview(value) {
@@ -392,21 +406,38 @@ class PickerInput extends PropertyInput {
 
   updatePicker(value) {
     this.pickerDOM.innerHTML = '';
-    this.renderSummary(this.pickerDOM, value);
+    this.summaryDOM = div(this.pickerDOM, 'propertyPickerSummary');
+    this.renderSummary(this.summaryDOM, value);
     this.renderPickerContent(this.pickerDOM, value);
   }
 
+  // Called when the value changes while the picker is open. Only updates the
+  // summary and the chip selection marks instead of rebuilding everything so
+  // the search input and the native color picker are not interrupted.
+  refreshPicker(value) {
+    if(this.summaryDOM && !this.summaryDOM.contains(document.activeElement)) {
+      this.summaryDOM.innerHTML = '';
+      this.renderSummary(this.summaryDOM, value);
+    }
+    for(const chip of $a('.propertyValueChip', this.pickerDOM))
+      if(chip.dataset.value !== undefined)
+        chip.classList.toggle('selected', chip.dataset.value == String(value));
+  }
+
   renderSummary(target, value) {
-    const summary = div(target, 'propertyPickerSummary');
-    this.renderChip(summary, value);
-    div(summary, 'propertyPickerValueText', propertyInputValueSet(value) ? html(String(value)) : '<i>not set</i>');
+    this.renderChip(target, value);
+    this.renderSummaryControls(target, value);
+    div(target, 'propertyPickerValueText', propertyInputValueSet(value) ? html(String(value)) : '<i>not set</i>');
     if(this.options.clearable !== false) {
       const clear = document.createElement('button');
       clear.setAttribute('icon', 'delete');
       clear.title = 'Remove value';
       clear.onclick = _=>this.setValue(null);
-      summary.appendChild(clear);
+      target.appendChild(clear);
     }
+  }
+
+  renderSummaryControls(target, value) {
   }
 
   renderChip(target, value) {
@@ -423,6 +454,7 @@ class PickerInput extends PropertyInput {
     const list = div(section, 'propertyPickerChips');
     for(const value of values) {
       const chip = renderer(value, list);
+      chip.dataset.value = value;
       chip.classList.toggle('selected', value == currentValue);
       chip.onclick = _=>this.setValue(value);
     }
@@ -443,14 +475,12 @@ class ColorInput extends PickerInput {
     this.renderChip(this.previewButton, value);
   }
 
-  renderSummary(target, value) {
-    super.renderSummary(target, value);
-    const summary = $('.propertyPickerSummary', target);
+  renderSummaryControls(target, value) {
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
     colorPicker.value = toHex(propertyInputValueSet(value) ? value : (this.options.default || '#000000'));
     colorPicker.oninput = _=>this.setValue(colorPicker.value);
-    summary.insertBefore(colorPicker, $('.propertyPickerValueText', summary).nextSibling);
+    target.appendChild(colorPicker);
   }
 
   renderPickerContent(target, value) {
@@ -489,6 +519,7 @@ class IconInput extends PickerInput {
       results.innerHTML = '';
       for(const iconValue of values) {
         const chip = renderIconChip(iconValue, results);
+        chip.dataset.value = iconValue;
         chip.classList.toggle('selected', iconValue == this.getValue());
         chip.onclick = _=>this.setValue(iconValue);
       }
@@ -548,17 +579,28 @@ class ImageInput extends PickerInput {
 // Helpers to edit single CSS declarations inside the "css" property while
 // leaving everything else in it untouched. Supports both the string and the
 // object form of the property (nested class objects use the "default" entry).
+function cssObjectFromString(cssString) {
+  const result = {};
+  for(const declaration of cssString.split(';')) {
+    const colon = declaration.indexOf(':');
+    if(colon != -1)
+      result[declaration.slice(0, colon).trim()] = declaration.slice(colon+1).trim();
+  }
+  return result;
+}
+
+// Values that contain ":" or ";" themselves (like data URIs) do not survive
+// the simple declaration parsing above, so refuse to edit such strings.
+function cssStringIsEditable(cssString) {
+  const rebuilt = Object.entries(cssObjectFromString(cssString)).map(([ key, value ])=>`${key}:${value}`).join(';');
+  const normalized = cssString.replace(/\s/g, '').replace(/;+/g, ';').replace(/^;|;$/g, '');
+  return normalized == rebuilt.replace(/\s/g, '');
+}
+
 function widgetCssObject(widget, cssProperty='css') {
   const css = widget.get(cssProperty);
-  if(typeof css == 'string') {
-    const result = {};
-    for(const declaration of css.split(';')) {
-      const colon = declaration.indexOf(':');
-      if(colon != -1)
-        result[declaration.slice(0, colon).trim()] = declaration.slice(colon+1).trim();
-    }
-    return result;
-  }
+  if(typeof css == 'string')
+    return cssStringIsEditable(css) ? cssObjectFromString(css) : {};
   if(typeof css == 'object' && css !== null) {
     if(Object.values(css).some(v=>typeof v == 'object' && v !== null))
       return typeof css.default == 'object' && css.default !== null ? css.default : {};
@@ -574,6 +616,8 @@ function getWidgetCssValue(widget, key, cssProperty='css') {
 
 function setWidgetCssValue(module, widget, key, value, cssProperty='css') {
   const css = widget.get(cssProperty);
+  if(typeof css == 'string' && css.trim() && !cssStringIsEditable(css))
+    return; // do not touch css strings we cannot parse without losing data
   const isNested = typeof css == 'object' && css !== null && Object.values(css).some(v=>typeof v == 'object' && v !== null);
   const newCss = isNested ? Object.assign({}, css) : {};
   const target = Object.assign({}, widgetCssObject(widget, cssProperty));
