@@ -843,18 +843,21 @@ export default class Room {
   // address each target is remembered and echoed back so the initiating
   // client (which keys its own session by name) still recognizes the result.
   requestInput(player, args) {
-    const targets = (args.targets || [])
-      .map(name=>({ name, player: this.players.find(p=>p.name === name) }))
-      .filter(t=>t.player);
+    // Dedupe names (the same connection can only show one overlay) and resolve
+    // each to a connection.
+    const requested = [ ...new Set(args.targets || []) ];
+    const targets = requested.map(name=>({ name, player: this.players.find(p=>p.name === name) }));
+    // If any requested target is unreachable, cancel the whole session rather
+    // than silently dropping them — otherwise the initiator waits on a name
+    // that can never answer. This matches the one-cancel-cancels-all rule.
+    if(targets.some(t=>!t.player)) {
+      player.send('inputResult', { sessionID: args.sessionID, cancelled: true });
+      return;
+    }
     this.inputRequests = this.inputRequests || Object.create(null);
     this.inputRequests[args.sessionID] = { from: player, remaining: targets };
     for(const target of targets)
       target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
-    // If no target is reachable, tell the initiator right away so it doesn't hang.
-    if(!targets.length) {
-      player.send('inputResult', { sessionID: args.sessionID, cancelled: true });
-      delete this.inputRequests[args.sessionID];
-    }
   }
 
   inputResult(player, args) {

@@ -1424,7 +1424,7 @@ export class Widget extends StateManaged {
         // A null/empty `player` falls back to the acting player, so an INPUT
         // created from the editor template (which sets `player: null`) still
         // shows locally instead of silently doing nothing.
-        let players = asArray(a.player).filter(Boolean);
+        let players = [ ...new Set(asArray(a.player).filter(Boolean)) ];
         const isMulti = Array.isArray(a.player) && players.length > 0;
         if(!players.length)
           players = [ playerName ];

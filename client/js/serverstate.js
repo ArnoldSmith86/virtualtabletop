@@ -552,15 +552,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
 }
 
 export function sendDelta() {
-  if(!batchDepth) {
-    if(deltaChanged) {
-      receiveDelta(delta);
-      delta.id = deltaID;
-      toServer('delta', delta);
-    }
-    delta = { s: {} };
-    deltaChanged = false;
-  }
+  if(!batchDepth)
+    flushDelta();
 }
 
 // Force the currently accumulated delta out to the server even while a
@@ -572,9 +565,9 @@ export function flushDelta() {
     receiveDelta(delta);
     delta.id = deltaID;
     toServer('delta', delta);
-    delta = { s: {} };
-    deltaChanged = false;
   }
+  delta = { s: {} };
+  deltaChanged = false;
 }
 
 export function sendPropertyUpdate(widgetID, property, value) {
