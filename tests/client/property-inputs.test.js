@@ -1,8 +1,10 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // The editor files are plain scripts that get concatenated by server/minify.mjs,
 // so evaluate the source and grab the pure helpers from its scope.
-const source = fs.readFileSync(new URL('../../client/js/editor/propertyInputs.js', import.meta.url), 'utf8');
+const source = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '../../client/js/editor/propertyInputs.js'), 'utf8');
 const helpers = new Function(source + `;
   return {
     cssObjectFromString,
