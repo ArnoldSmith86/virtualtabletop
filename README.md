@@ -113,8 +113,6 @@ Using [Termux](https://termux.dev/), you can use an Android phone as the server 
 
 If you want to contribute to virtualtabletop.io development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
 
-Before opening a pull request, run the unit tests with `npm test`. Changes that affect games or client behavior should also pass the browser test suite: `npm run testcafe-headless-all` (requires Chrome; there are similar scripts for Chromium and Firefox in `package.json`).
-
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 
 Enjoy! And don't be shy about asking questions in [Discord](https://discord.gg/CEZz7wny9T); you will find a helpful and responsive audience.
