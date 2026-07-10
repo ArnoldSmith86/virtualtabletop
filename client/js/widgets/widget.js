@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, sendDelta, requestRemoteInput, startInputBlock, endInputBlock } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -1419,28 +1419,41 @@ export class Widget extends StateManaged {
 
       if(a.func == 'INPUT') {
         setDefaults(a, { player: playerName, block: false });
-        // Players that should see the input overlay (other than the initiator).
-        const targetPlayers = asArray(a.player).filter(p=>p && p !== playerName);
-        // While the input is pending, optionally block every other player with a
-        // "waiting for input" overlay. Works both for local and remote INPUT.
-        let blockID = null;
-        if(a.block)
-          blockID = startInputBlock(targetPlayers.length ? targetPlayers : [ playerName ], a.header);
+        // `player` may be a single name or a list. A list makes the overlay
+        // appear for every listed player at once and returns their results
+        // keyed by player name (e.g. choosing cards to pass in Hearts).
+        const isMulti = Array.isArray(a.player);
+        const players = asArray(a.player).filter(Boolean);
+        // Only the initiator can show its own overlay locally (it has the live
+        // variables/collections); everyone else is asked over the network.
+        const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{
+          const handle = {};
+          const promise = this.showInputOverlay(a, widgets, variables, collections, getCollection, problems, handle);
+          registerAbort(()=>{ if(handle.abort) handle.abort(); });
+          return promise;
+        } : null;
         try {
-          if(targetPlayers.length) {
-            // Ask the target client(s) to show the overlay and return the result.
-            const collectionIDs = {};
-            for(const c in collections)
-              collectionIDs[c] = collections[c].map(w=>w.get('id'));
-            sendDelta();
-            const results = await requestRemoteInput(this.get('id'), a, targetPlayers, variables, collectionIDs);
-            for(const result of results) {
-              Object.assign(variables, result.variables);
-              for(const c in (result.collections || {}))
-                collections[c] = (result.collections[c] || []).map(id=>widgets.get(id)).filter(Boolean);
+          const results = await runInput({ widgetID: this.get('id'), overlay: a, players, variables, collections, showLocal });
+          if(isMulti) {
+            // Return each field's value keyed by the player who entered it.
+            for(const field of a.fields || []) {
+              if(!field.variable)
+                continue;
+              const keyed = {};
+              for(const p of players)
+                if(results[p])
+                  keyed[p] = results[p].variables[field.variable];
+              variables[field.variable] = keyed;
+            }
+            // Collections (e.g. from 'choose' fields) are unioned across players.
+            for(const p of players) {
+              if(!results[p])
+                continue;
+              for(const c in results[p].collections)
+                collections[c] = [ ...(collections[c] || []), ...results[p].collections[c] ];
             }
           } else {
-            const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
+            const result = results[players[0]] || { variables: {}, collections: {} };
             Object.assign(variables, result.variables);
             Object.assign(collections, result.collections);
           }
@@ -1459,8 +1472,6 @@ export class Widget extends StateManaged {
           abortRoutine = true;
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary("INPUT cancelled");
-        } finally {
-          endInputBlock(blockID);
         }
       }
 
@@ -2680,7 +2691,7 @@ export class Widget extends StateManaged {
       event.preventDefault();
   }
 
-  async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
+  async showInputOverlay(o, widgets, variables, collections, getCollection, problems, handle) {
     this.showInputOverlayWorkingState(false);
 
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
@@ -2749,6 +2760,17 @@ export class Widget extends StateManaged {
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
+      // Allow the overlay to be closed remotely (e.g. the input was cancelled
+      // for everyone via the block overlay, or the initiator disconnected).
+      if(handle) {
+        handle.abort = ()=>{
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+          showOverlay(null);
+          reject({ variables: {}, collections: {} });
+        };
+      }
       showOverlay('buttonInputOverlay');
       const inputs = $a('#buttonInputFields input, #buttonInputFields select');
       if(inputs.length) {

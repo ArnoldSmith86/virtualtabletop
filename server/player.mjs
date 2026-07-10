@@ -58,6 +58,10 @@ export default class Player {
         this.room.requestInput(this, args);
       if(func == 'inputResult')
         this.room.inputResult(this, args);
+      if(func == 'abortInput')
+        this.room.abortInput(this, args);
+      if(func == 'cancelInput')
+        this.room.cancelInput(this, args);
       if(func == 'inputBlock')
         this.room.inputBlock(this, args);
     } catch(e) {

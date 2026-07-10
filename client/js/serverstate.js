@@ -580,76 +580,169 @@ export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
-// --- Remote INPUT ---------------------------------------------------------
-// INPUT with a 'player' parameter shows the overlay on the target client(s)
-// and sends the collected result back to the initiating client, which keeps
-// running the routine. A 'block' parameter shows every other player a
-// "waiting for input" overlay while the input is pending.
+// --- Remote & multi-player INPUT ------------------------------------------
+// INPUT with a `player` parameter shows the overlay on the listed player(s)
+// and sends each player's result back to the initiating client, which keeps
+// running the routine. When `player` is a list, the fields' variables come
+// back keyed by player name (e.g. choosing cards to pass in Hearts).
+// A `block` parameter shows every other player a "waiting for input" overlay
+// (with a cancel button) while the input is pending.
 
-let inputRequestCounter = 0;
-const pendingInputRequests = {};
+let inputSessionCounter = 0;
+const inputSessions = {};       // initiator side: sessionID -> session
+const remoteInputHandles = {};  // target side:    sessionID -> overlay handle
 
-export function requestRemoteInput(widgetID, overlay, targets, variables, collections) {
-  const requestID = `${playerName}-${++inputRequestCounter}`;
+function serializeCollections(collections) {
+  const ids = {};
+  for(const c in (collections || {}))
+    ids[c] = (collections[c] || []).map(w=>w && w.get('id')).filter(Boolean);
+  return ids;
+}
+
+function resolveCollections(ids) {
+  const collections = {};
+  for(const c in (ids || {}))
+    collections[c] = (ids[c] || []).map(id=>widgets.get(id)).filter(Boolean);
+  return collections;
+}
+
+// Run an INPUT for one or more players. `showLocal` (optional) is called when
+// the initiator itself is among the players; it shows the overlay locally and
+// resolves to { variables, collections }. Resolves to a map
+// playerName -> { variables, collections }, or rejects if the input is
+// cancelled (by a target, by the initiator or via the block overlay).
+export function runInput({ widgetID, overlay, players, variables, collections, showLocal }) {
+  const sessionID = `${playerName}-${++inputSessionCounter}`;
+  const remoteTargets = players.filter(p=>p && p!==playerName);
+  const includeSelf = players.includes(playerName);
+  const collectionIDs = serializeCollections(collections);
+
   return new Promise((resolve, reject) => {
-    pendingInputRequests[requestID] = { targets: new Set(targets), results: [], resolve, reject };
-    toServer('requestInput', { requestID, widgetID, overlay, variables, collections, targets });
+    const session = {
+      remaining: new Set([ ...remoteTargets, ...(includeSelf ? [ playerName ] : []) ]),
+      results: {},
+      block: !!overlay.block,
+      hasRemote: remoteTargets.length > 0,
+      localAbort: null,
+      done: false
+    };
+    inputSessions[sessionID] = session;
+
+    const cleanup = ()=>{
+      session.done = true;
+      delete inputSessions[sessionID];
+      if(session.block)
+        endInputBlock(sessionID);
+    };
+
+    session.complete = ()=>{
+      if(session.done || session.remaining.size)
+        return;
+      const results = session.results;
+      cleanup();
+      resolve(results);
+    };
+
+    session.cancel = ()=>{
+      if(session.done)
+        return;
+      cleanup();
+      if(session.hasRemote)
+        toServer('abortInput', { sessionID });
+      if(session.localAbort)
+        session.localAbort();
+      reject(new Error('INPUT cancelled'));
+    };
+
+    if(session.block)
+      startInputBlock(sessionID, players, overlay.header);
+
+    if(includeSelf && showLocal) {
+      showLocal(abort=>{ session.localAbort = abort; })
+        .then(result=>{
+          if(session.done)
+            return;
+          session.results[playerName] = result;
+          session.remaining.delete(playerName);
+          session.complete();
+        })
+        .catch(()=>session.cancel());
+    }
+
+    if(remoteTargets.length) {
+      sendDelta();
+      toServer('requestInput', { sessionID, widgetID, overlay, variables, collections: collectionIDs, targets: remoteTargets });
+    }
+
+    if(!session.remaining.size)
+      session.complete();
   });
 }
 
-// Show the input overlay on request from another client and return the result.
+// Target side: show the requested overlay and send the result back.
 async function receiveShowInput(args) {
   const widget = widgets.get(args.widgetID);
   if(!widget) {
-    toServer('inputResult', { requestID: args.requestID, cancelled: true });
+    toServer('inputResult', { sessionID: args.sessionID, cancelled: true });
     return;
   }
-  const collections = {};
-  for(const key in (args.collections || {}))
-    collections[key] = (args.collections[key] || []).map(id=>widgets.get(id)).filter(Boolean);
+  const collections = resolveCollections(args.collections);
   const getCollection = c=>Array.isArray(collections[c]) ? c : 'DEFAULT';
+  const handle = { aborted: false };
+  remoteInputHandles[args.sessionID] = handle;
   try {
-    const result = await widget.showInputOverlay(args.overlay, widgets, args.variables || {}, collections, getCollection, []);
-    const collectionIDs = {};
-    for(const c in result.collections)
-      collectionIDs[c] = (result.collections[c] || []).map(w=>w && w.get('id')).filter(Boolean);
-    toServer('inputResult', { requestID: args.requestID, cancelled: false, variables: result.variables, collections: collectionIDs });
+    const result = await widget.showInputOverlay(args.overlay, widgets, args.variables || {}, collections, getCollection, [], handle);
+    delete remoteInputHandles[args.sessionID];
+    if(!handle.aborted)
+      toServer('inputResult', { sessionID: args.sessionID, cancelled: false, variables: result.variables, collections: serializeCollections(result.collections) });
   } catch(e) {
-    toServer('inputResult', { requestID: args.requestID, cancelled: true });
+    delete remoteInputHandles[args.sessionID];
+    if(!handle.aborted)
+      toServer('inputResult', { sessionID: args.sessionID, cancelled: true });
   }
 }
 
-// Result coming back from a target client to the initiator.
+// Target side: the initiator (or a cancel) asked us to close the overlay.
+function receiveHideInput(args) {
+  const handle = remoteInputHandles[args.sessionID];
+  if(handle) {
+    handle.aborted = true;
+    delete remoteInputHandles[args.sessionID];
+    if(handle.abort)
+      handle.abort();
+  }
+}
+
+// Initiator side: a player's result (or cancellation) came back.
 function receiveInputResult(args) {
-  const request = pendingInputRequests[args.requestID];
-  if(!request)
+  const session = inputSessions[args.sessionID];
+  if(!session)
     return;
   if(args.cancelled) {
-    delete pendingInputRequests[args.requestID];
-    request.reject(new Error('INPUT cancelled'));
+    session.cancel();
     return;
   }
-  request.results.push({ variables: args.variables || {}, collections: args.collections || {} });
-  request.targets.delete(args.player);
-  if(!request.targets.size) {
-    delete pendingInputRequests[args.requestID];
-    request.resolve(request.results);
-  }
+  session.results[args.player] = { variables: args.variables || {}, collections: resolveCollections(args.collections) };
+  session.remaining.delete(args.player);
+  session.complete();
+}
+
+// Initiator side: someone pressed cancel on the block overlay.
+function receiveInputCancelled(args) {
+  const session = inputSessions[args.sessionID];
+  if(session)
+    session.cancel();
 }
 
 // --- INPUT block overlay --------------------------------------------------
-let inputBlockCounter = 0;
 const activeInputBlocks = new Map();
 
-export function startInputBlock(waitingFor, header) {
-  const blockID = `${playerName}-block-${++inputBlockCounter}`;
-  toServer('inputBlock', { blockID, show: true, waitingFor, header });
-  return blockID;
+function startInputBlock(sessionID, waitingFor, header) {
+  toServer('inputBlock', { blockID: sessionID, show: true, waitingFor, header });
 }
 
-export function endInputBlock(blockID) {
-  if(blockID)
-    toServer('inputBlock', { blockID, show: false });
+function endInputBlock(sessionID) {
+  toServer('inputBlock', { blockID: sessionID, show: false });
 }
 
 function receiveInputBlock(args) {
@@ -675,11 +768,21 @@ function updateInputBlockOverlay() {
   showOverlay('inputBlockOverlay');
 }
 
+// Cancel every input the local player is currently waiting on.
+function cancelInputBlocks() {
+  for(const blockID of activeInputBlocks.keys())
+    toServer('cancelInput', { blockID });
+}
+
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
   onMessage('showInput', receiveShowInput);
+  onMessage('hideInput', receiveHideInput);
   onMessage('inputResult', receiveInputResult);
+  onMessage('inputCancelled', receiveInputCancelled);
   onMessage('inputBlock', receiveInputBlock);
+  if($('#inputBlockCancel'))
+    $('#inputBlockCancel').addEventListener('click', cancelInputBlocks);
   setScale();
 });

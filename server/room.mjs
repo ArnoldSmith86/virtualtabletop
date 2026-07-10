@@ -841,42 +841,68 @@ export default class Room {
   requestInput(player, args) {
     const targets = (args.targets || []).map(name=>this.players.find(p=>p.name === name)).filter(Boolean);
     this.inputRequests = this.inputRequests || {};
-    this.inputRequests[args.requestID] = { from: player.name, remaining: new Set(targets.map(t=>t.name)) };
+    this.inputRequests[args.sessionID] = { from: player.name, remaining: new Set(targets.map(t=>t.name)) };
     for(const target of targets)
-      target.send('showInput', { requestID: args.requestID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
+      target.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
     // If no target is reachable, tell the initiator right away so it doesn't hang.
     if(!targets.length) {
-      player.send('inputResult', { requestID: args.requestID, cancelled: true });
-      delete this.inputRequests[args.requestID];
+      player.send('inputResult', { sessionID: args.sessionID, cancelled: true });
+      delete this.inputRequests[args.sessionID];
     }
   }
 
   inputResult(player, args) {
-    const request = this.inputRequests && this.inputRequests[args.requestID];
+    const request = this.inputRequests && this.inputRequests[args.sessionID];
     const initiator = this.players.find(p=>p.name === (request ? request.from : null));
     if(initiator)
-      initiator.send('inputResult', { requestID: args.requestID, player: player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
+      initiator.send('inputResult', { sessionID: args.sessionID, player: player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
     if(request) {
       if(args.cancelled)
-        delete this.inputRequests[args.requestID];
+        delete this.inputRequests[args.sessionID];
       else {
         request.remaining.delete(player.name);
         if(!request.remaining.size)
-          delete this.inputRequests[args.requestID];
+          delete this.inputRequests[args.sessionID];
       }
     }
   }
 
+  // The initiator aborted the input: tell every pending target to close it.
+  abortInput(player, args) {
+    const request = this.inputRequests && this.inputRequests[args.sessionID];
+    if(!request || request.from !== player.name)
+      return;
+    for(const name of request.remaining) {
+      const target = this.players.find(p=>p.name === name);
+      if(target)
+        target.send('hideInput', { sessionID: args.sessionID });
+    }
+    delete this.inputRequests[args.sessionID];
+  }
+
+  // A waiting player pressed cancel on the block overlay: tell the initiator.
+  cancelInput(player, args) {
+    const initiator = this.players.find(p=>p.name === (this.inputBlocks || {})[args.blockID]);
+    if(initiator)
+      initiator.send('inputCancelled', { sessionID: args.blockID });
+  }
+
   cleanupInputForPlayer(player) {
-    for(const requestID in (this.inputRequests || {})) {
-      const request = this.inputRequests[requestID];
+    for(const sessionID in (this.inputRequests || {})) {
+      const request = this.inputRequests[sessionID];
       if(request.from === player.name) {
-        delete this.inputRequests[requestID];
+        // Initiator left: close any overlays its targets are still showing.
+        for(const name of request.remaining) {
+          const target = this.players.find(p=>p.name === name);
+          if(target)
+            target.send('hideInput', { sessionID });
+        }
+        delete this.inputRequests[sessionID];
       } else if(request.remaining.has(player.name)) {
         const initiator = this.players.find(p=>p.name === request.from);
         if(initiator)
-          initiator.send('inputResult', { requestID, player: player.name, cancelled: true });
-        delete this.inputRequests[requestID];
+          initiator.send('inputResult', { sessionID, player: player.name, cancelled: true });
+        delete this.inputRequests[sessionID];
       }
     }
     for(const blockID in (this.inputBlocks || {})) {
