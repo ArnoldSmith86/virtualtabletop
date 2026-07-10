@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, sendDelta } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, sendDelta, requestRemoteInput, startInputBlock, endInputBlock } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -1418,21 +1418,32 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'INPUT') {
-        setDefaults(a, { player: playerName });
-        if(a.player && a.player !== playerName) {
-          const remainingRoutine = routine.slice(index);
-          const collectionIDs = {};
-          for(const c in collections)
-            collectionIDs[c] = collections[c].map(w=>w.get('id'));
-          sendDelta();
-          toServer('delegateRoutine', { player: a.player, widgetID: this.get('id'), routine: remainingRoutine, variables, collections: collectionIDs });
-          abortRoutine = true;
-          break;
-        }
+        setDefaults(a, { player: playerName, block: false });
+        // Players that should see the input overlay (other than the initiator).
+        const targetPlayers = asArray(a.player).filter(p=>p && p !== playerName);
+        // While the input is pending, optionally block every other player with a
+        // "waiting for input" overlay. Works both for local and remote INPUT.
+        let blockID = null;
+        if(a.block)
+          blockID = startInputBlock(targetPlayers.length ? targetPlayers : [ playerName ], a.header);
         try {
-          const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
-          Object.assign(variables, result.variables);
-          Object.assign(collections, result.collections);
+          if(targetPlayers.length) {
+            // Ask the target client(s) to show the overlay and return the result.
+            const collectionIDs = {};
+            for(const c in collections)
+              collectionIDs[c] = collections[c].map(w=>w.get('id'));
+            sendDelta();
+            const results = await requestRemoteInput(this.get('id'), a, targetPlayers, variables, collectionIDs);
+            for(const result of results) {
+              Object.assign(variables, result.variables);
+              for(const c in (result.collections || {}))
+                collections[c] = (result.collections[c] || []).map(id=>widgets.get(id)).filter(Boolean);
+            }
+          } else {
+            const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
+            Object.assign(variables, result.variables);
+            Object.assign(collections, result.collections);
+          }
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];
@@ -1448,6 +1459,8 @@ export class Widget extends StateManaged {
           abortRoutine = true;
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary("INPUT cancelled");
+        } finally {
+          endInputBlock(blockID);
         }
       }
 

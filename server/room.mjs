@@ -785,6 +785,7 @@ export default class Room {
     Logging.log(`removing player ${player.name} from room ${this.id}`);
 
     this.players = this.players.filter(e => e != player);
+    this.cleanupInputForPlayer(player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
         delete this.state._meta.players[player.name];
@@ -837,11 +838,69 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  delegateRoutine(player, args) {
-    const target = this.players.find(p=>p.name === args.player);
-    if(!target)
-      return;
-    target.send('delegateRoutine', { widgetID: args.widgetID, routine: args.routine, variables: args.variables, collections: args.collections });
+  requestInput(player, args) {
+    const targets = (args.targets || []).map(name=>this.players.find(p=>p.name === name)).filter(Boolean);
+    this.inputRequests = this.inputRequests || {};
+    this.inputRequests[args.requestID] = { from: player.name, remaining: new Set(targets.map(t=>t.name)) };
+    for(const target of targets)
+      target.send('showInput', { requestID: args.requestID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
+    // If no target is reachable, tell the initiator right away so it doesn't hang.
+    if(!targets.length) {
+      player.send('inputResult', { requestID: args.requestID, cancelled: true });
+      delete this.inputRequests[args.requestID];
+    }
+  }
+
+  inputResult(player, args) {
+    const request = this.inputRequests && this.inputRequests[args.requestID];
+    const initiator = this.players.find(p=>p.name === (request ? request.from : null));
+    if(initiator)
+      initiator.send('inputResult', { requestID: args.requestID, player: player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
+    if(request) {
+      if(args.cancelled)
+        delete this.inputRequests[args.requestID];
+      else {
+        request.remaining.delete(player.name);
+        if(!request.remaining.size)
+          delete this.inputRequests[args.requestID];
+      }
+    }
+  }
+
+  cleanupInputForPlayer(player) {
+    for(const requestID in (this.inputRequests || {})) {
+      const request = this.inputRequests[requestID];
+      if(request.from === player.name) {
+        delete this.inputRequests[requestID];
+      } else if(request.remaining.has(player.name)) {
+        const initiator = this.players.find(p=>p.name === request.from);
+        if(initiator)
+          initiator.send('inputResult', { requestID, player: player.name, cancelled: true });
+        delete this.inputRequests[requestID];
+      }
+    }
+    for(const blockID in (this.inputBlocks || {})) {
+      if(this.inputBlocks[blockID] === player.name) {
+        delete this.inputBlocks[blockID];
+        for(const p of this.players)
+          p.send('inputBlock', { blockID, show: false });
+      }
+    }
+  }
+
+  inputBlock(player, args) {
+    this.inputBlocks = this.inputBlocks || {};
+    if(args.show) {
+      this.inputBlocks[args.blockID] = player.name;
+      const waitingFor = args.waitingFor || [];
+      for(const p of this.players)
+        if(!waitingFor.includes(p.name))
+          p.send('inputBlock', { blockID: args.blockID, show: true, waitingFor, header: args.header });
+    } else {
+      delete this.inputBlocks[args.blockID];
+      for(const p of this.players)
+        p.send('inputBlock', { blockID: args.blockID, show: false });
+    }
   }
 
   roomFilename() {

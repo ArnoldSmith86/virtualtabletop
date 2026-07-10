@@ -1,6 +1,7 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
+import { playerName } from './overlays/players.js';
 
 let roomID = self.location.pathname.replace(/.*\//, '');
 let isLoading = true;
@@ -579,18 +580,106 @@ export function widgetFilter(callback) {
   return Array.from(widgets.values()).filter(w=>!w.isBeingRemoved).filter(callback);
 }
 
-async function receiveDelegateRoutine(args) {
+// --- Remote INPUT ---------------------------------------------------------
+// INPUT with a 'player' parameter shows the overlay on the target client(s)
+// and sends the collected result back to the initiating client, which keeps
+// running the routine. A 'block' parameter shows every other player a
+// "waiting for input" overlay while the input is pending.
+
+let inputRequestCounter = 0;
+const pendingInputRequests = {};
+
+export function requestRemoteInput(widgetID, overlay, targets, variables, collections) {
+  const requestID = `${playerName}-${++inputRequestCounter}`;
+  return new Promise((resolve, reject) => {
+    pendingInputRequests[requestID] = { targets: new Set(targets), results: [], resolve, reject };
+    toServer('requestInput', { requestID, widgetID, overlay, variables, collections, targets });
+  });
+}
+
+// Show the input overlay on request from another client and return the result.
+async function receiveShowInput(args) {
+  const widget = widgets.get(args.widgetID);
+  if(!widget) {
+    toServer('inputResult', { requestID: args.requestID, cancelled: true });
+    return;
+  }
   const collections = {};
   for(const key in (args.collections || {}))
     collections[key] = (args.collections[key] || []).map(id=>widgets.get(id)).filter(Boolean);
-  const widget = widgets.get(args.widgetID);
-  if(widget)
-    await widget.evaluateRoutine(args.routine, args.variables || {}, collections);
+  const getCollection = c=>Array.isArray(collections[c]) ? c : 'DEFAULT';
+  try {
+    const result = await widget.showInputOverlay(args.overlay, widgets, args.variables || {}, collections, getCollection, []);
+    const collectionIDs = {};
+    for(const c in result.collections)
+      collectionIDs[c] = (result.collections[c] || []).map(w=>w && w.get('id')).filter(Boolean);
+    toServer('inputResult', { requestID: args.requestID, cancelled: false, variables: result.variables, collections: collectionIDs });
+  } catch(e) {
+    toServer('inputResult', { requestID: args.requestID, cancelled: true });
+  }
+}
+
+// Result coming back from a target client to the initiator.
+function receiveInputResult(args) {
+  const request = pendingInputRequests[args.requestID];
+  if(!request)
+    return;
+  if(args.cancelled) {
+    delete pendingInputRequests[args.requestID];
+    request.reject(new Error('INPUT cancelled'));
+    return;
+  }
+  request.results.push({ variables: args.variables || {}, collections: args.collections || {} });
+  request.targets.delete(args.player);
+  if(!request.targets.size) {
+    delete pendingInputRequests[args.requestID];
+    request.resolve(request.results);
+  }
+}
+
+// --- INPUT block overlay --------------------------------------------------
+let inputBlockCounter = 0;
+const activeInputBlocks = new Map();
+
+export function startInputBlock(waitingFor, header) {
+  const blockID = `${playerName}-block-${++inputBlockCounter}`;
+  toServer('inputBlock', { blockID, show: true, waitingFor, header });
+  return blockID;
+}
+
+export function endInputBlock(blockID) {
+  if(blockID)
+    toServer('inputBlock', { blockID, show: false });
+}
+
+function receiveInputBlock(args) {
+  if(args.show)
+    activeInputBlocks.set(args.blockID, args);
+  else
+    activeInputBlocks.delete(args.blockID);
+  updateInputBlockOverlay();
+}
+
+function updateInputBlockOverlay() {
+  if(!activeInputBlocks.size) {
+    if($('#inputBlockOverlay') && $('#inputBlockOverlay').style.display != 'none')
+      showOverlay(null);
+    return;
+  }
+  const lines = [];
+  for(const block of activeInputBlocks.values()) {
+    const names = (block.waitingFor || []).join(', ');
+    lines.push((block.header ? block.header + ' — ' : '') + `Waiting for input from ${names}…`);
+  }
+  $('#inputBlockText').textContent = lines.join('\n');
+  showOverlay('inputBlockOverlay');
 }
 
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
-  onMessage('delegateRoutine', receiveDelegateRoutine);
+  onMessage('showInput', receiveShowInput);
+  onMessage('inputResult', receiveInputResult);
+  onMessage('inputBlock', receiveInputBlock);
   setScale();
 });
