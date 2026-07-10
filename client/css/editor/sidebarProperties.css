@@ -1,0 +1,248 @@
+.tune.editorModule .inheritFromTitle {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.tune.editorModule .inheritFromListContainer {
+  padding-left: 10px;
+  margin-bottom: 8px;
+}
+
+.tune.editorModule .inheritFromEmptyMessage {
+  color: #888;
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromRowWrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.tune.editorModule .inheritFromToggleArrow {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.tune.editorModule .inheritFromWidgetInfo {
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+}
+
+.tune.editorModule .inheritFromDropdownContainer {
+  min-width: 110px;
+}
+
+.tune.editorModule .inheritFromDropdown {
+  font-size: 12px;
+}
+
+.tune.editorModule .inheritFromPropsContainer {
+  padding-left: 30px;
+  margin-bottom: 6px;
+  border-left: 2px solid #ddd;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.tune.editorModule .inheritFromHidden {
+  display: none;
+}
+
+.tune.editorModule .inheritFromPropertiesTitle {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.tune.editorModule .inheritFromCheckboxWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.tune.editorModule .inheritFromPropertyLabel {
+  cursor: pointer;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox,
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox,
+.tune.editorModule input[type=checkbox].inheritReadOnlyCheckbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  border-radius: 2px;
+  background: #fff;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox::before,
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox::before,
+.tune.editorModule input[type=checkbox].inheritReadOnlyCheckbox::before {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  transform: scale(0);
+  transition: transform 0.08s ease-out;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox {
+  border: 1px solid #c43636;
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox {
+  border: 1px solid #2f8a3b;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox::before {
+  content: 'x';
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox::before {
+  content: '✓';
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox:checked {
+  background: #c43636;
+  border-color: #c43636;
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox:checked {
+  background: #2f8a3b;
+  border-color: #2f8a3b;
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox:checked::before,
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox:checked::before {
+  transform: scale(1);
+}
+
+.tune.editorModule input[type=checkbox].inheritExcludeCheckbox:focus-visible {
+  outline: 2px solid #c43636;
+  outline-offset: 1px;
+}
+
+.tune.editorModule input[type=checkbox].inheritIncludeCheckbox:focus-visible {
+  outline: 2px solid #2f8a3b;
+  outline-offset: 1px;
+}
+
+.tune.editorModule input[type=checkbox].inheritReadOnlyCheckbox {
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  appearance: auto;
+  accent-color: #8f8f8f;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.tune.editorModule input[type=checkbox].inheritReadOnlyCheckbox::before {
+  content: none;
+}
+
+.tune.editorModule .inheritFromBlockedHint {
+  margin: 0 0 6px 0;
+  color: #666;
+  font-size: 11px;
+}
+
+.tune.editorModule .inheritFromDeclaredPropertyLabel {
+  text-decoration: line-through;
+  color: #666;
+}
+
+.tune.editorModule .inheritFromIconActionButton {
+  border: 0;
+  background: transparent !important;
+  color: #5f5f5f;
+  cursor: pointer;
+  padding: 0;
+  min-width: 20px;
+}
+
+.tune.editorModule .inheritFromIconActionButton:hover {
+  background: transparent !important;
+  color: #c43636;
+}
+
+.tune.editorModule .inheritFromIconActionButton[icon] {
+  padding: 0;
+  padding-right: 0;
+  min-width: 20px;
+}
+
+.tune.editorModule .inheritFromIconActionButton[icon]::before {
+  margin-right: 0;
+  font-size: 18px;
+}
+
+.tune.editorModule .inheritFromClearPropertyButton {
+  margin-left: 6px;
+  line-height: 1;
+}
+
+.tune.editorModule .inheritFromMixedModeError {
+  border: 1px solid #c43636;
+  background: #fff6f6;
+  border-radius: 4px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #7c2020;
+}
+
+.tune.editorModule .inheritFromMixedModeInput {
+  width: 100%;
+  min-width: 0;
+  font-family: monospace;
+  font-size: 11px;
+  color: #5f1111;
+  border: 1px solid #d99393;
+  background: #fff;
+}
+
+.tune.editorModule .inheritFromRemoveWidgetButton {
+  padding: 0;
+  min-width: 20px;
+  border: 0;
+  background: transparent;
+  color: #7c7c7c;
+  cursor: pointer;
+}
+
+.tune.editorModule .inheritFromRemoveWidgetButton:hover {
+  color: #c43636;
+}
+
+.tune.editorModule .inheritFromAddWidgetButton {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.4;
+}

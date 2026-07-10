@@ -203,6 +203,127 @@ function parseFontSize(fontSize) {
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Properties', 'Edit widget properties.');
+    this.widgetPicker = null;
+  }
+
+  startWidgetPicker(targetWidgetID, onPick, options = {}) {
+    const pendingWidgetIDs = Array.isArray(options.pendingWidgetIDs) ?
+      [...new Set(options.pendingWidgetIDs.filter(v => typeof v === 'string' && v.trim() !== ''))] : [];
+
+    this.widgetPicker = {
+      targetWidgetID,
+      onPick,
+      pickerKey: options.pickerKey || null,
+      filter: typeof options.filter === 'function' ? options.filter : null,
+      allowMultiple: !!options.allowMultiple,
+      toggleSelection: options.toggleSelection !== false,
+      pendingWidgetIDs,
+      onPendingChanged: typeof options.onPendingChanged === 'function' ? options.onPendingChanged : null
+    };
+
+    if(this.widgetPicker.onPendingChanged)
+      this.widgetPicker.onPendingChanged([ ...this.widgetPicker.pendingWidgetIDs ]);
+  }
+
+  stopWidgetPicker() {
+    this.widgetPicker = null;
+  }
+
+  getWidgetPicker(targetWidgetID = null, pickerKey = null) {
+    if(!this.widgetPicker)
+      return null;
+
+    if(targetWidgetID !== null && this.widgetPicker.targetWidgetID != targetWidgetID)
+      return null;
+
+    if(pickerKey !== null && this.widgetPicker.pickerKey !== pickerKey)
+      return null;
+
+    return this.widgetPicker;
+  }
+
+  isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
+    return !!this.getWidgetPicker(targetWidgetID, pickerKey);
+  }
+
+  confirmWidgetPicker() {
+    const picker = this.getWidgetPicker();
+    if(!picker || !picker.allowMultiple)
+      return false;
+
+    const targetWidget = widgets.get(picker.targetWidgetID);
+    if(!targetWidget) {
+      this.stopWidgetPicker();
+      return false;
+    }
+
+    const pickedWidgets = picker.pendingWidgetIDs
+      .map(widgetID => widgets.get(widgetID))
+      .filter(pickedWidget => pickedWidget && pickedWidget.id != targetWidget.id);
+
+    this.stopWidgetPicker();
+    picker.onPick(targetWidget, pickedWidgets);
+    setSelection([ targetWidget ]);
+    return true;
+  }
+
+  handleWidgetPickerSelection(newSelection) {
+    const picker = this.getWidgetPicker();
+    if(!picker)
+      return false;
+
+    const targetWidget = widgets.get(picker.targetWidgetID);
+
+    if(!targetWidget) {
+      this.stopWidgetPicker();
+      return false;
+    }
+
+    const keepTargetSelection = () => {
+      if(newSelection.length != 1 || newSelection[0].id != targetWidget.id)
+        setSelection([ targetWidget ]);
+    };
+
+    const pickedWidgets = newSelection.filter(pickedWidget => {
+      if(!pickedWidget || pickedWidget.id == targetWidget.id)
+        return false;
+      return !picker.filter || picker.filter(pickedWidget);
+    });
+
+    if(picker.allowMultiple) {
+      if(pickedWidgets.length) {
+        if(pickedWidgets.length == 1) {
+          const pickedWidgetID = pickedWidgets[0].id;
+          const existingIndex = picker.pendingWidgetIDs.indexOf(pickedWidgetID);
+          if(existingIndex == -1)
+            picker.pendingWidgetIDs.push(pickedWidgetID);
+          else if(picker.toggleSelection)
+            picker.pendingWidgetIDs.splice(existingIndex, 1);
+        } else {
+          for(const pickedWidget of pickedWidgets)
+            if(picker.pendingWidgetIDs.indexOf(pickedWidget.id) == -1)
+              picker.pendingWidgetIDs.push(pickedWidget.id);
+        }
+
+        if(picker.onPendingChanged)
+          picker.onPendingChanged([ ...picker.pendingWidgetIDs ]);
+      }
+
+      keepTargetSelection();
+      return true;
+    }
+
+    const pickedWidget = pickedWidgets.length == 1 ? pickedWidgets[0] : null;
+
+    if(pickedWidget && pickedWidget.id != targetWidget.id) {
+      this.stopWidgetPicker();
+      picker.onPick(targetWidget, pickedWidget);
+      setSelection([ targetWidget ]);
+      return true;
+    }
+
+    keepTargetSelection();
+    return true;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -352,6 +473,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
+    if(this.handleWidgetPickerSelection(newSelection))
+      return;
+
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -369,7 +493,9 @@ class PropertiesModule extends SidebarModule {
 
         default:
           this.addHeader(widget.id);
-          this.renderGenericProperties(widget);
+          this.renderBasicSection(widget);
+          this.addSubHeader('Other properties');
+          this.renderGenericProperties(widget, this.basicPropertyExcludeList());
           break;
       }
     }
@@ -1401,10 +1527,1366 @@ class PropertiesModule extends SidebarModule {
       }
   }
 
+  basicPropertyExcludeList(extra = []) {
+    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+  }
+
+  isOnDemandPropertyValueSet(value) {
+    return value !== undefined && value !== null && !(typeof value === 'string' && value.trim() === '');
+  }
+
+  renderOnDemandSection(widget, title, properties, renderer, target = null, options = {}) {
+    const host = target || this.moduleDOM;
+    const buttonHost = options.buttonHost || host;
+    let expanded = false;
+
+    const isPropertySet = (property, value) => {
+      if(typeof options.isPropertySet === 'function')
+        return options.isPropertySet(property, value, widget);
+      return this.isOnDemandPropertyValueSet(value);
+    };
+
+    const hasAnySetValue = w => properties.some(property => isPropertySet(property, w.get(property)));
+    const expand = (replaceNode = null) => {
+      if(expanded)
+        return;
+      expanded = true;
+      const container = document.createElement('div');
+      container.className = 'obscurePropertyContainer';
+      container.style.paddingLeft = '10px';
+      
+      // If we have a separate buttonHost, remove the button and insert into host (contentWrapper)
+      if(replaceNode && replaceNode.parentNode) {
+        replaceNode.remove();
+      }
+      
+      // Insert content into the target (contentWrapper/block display)
+      if(buttonHost !== host && buttonHost.parentNode === host)
+        host.insertBefore(container, buttonHost);
+      else
+        host.appendChild(container);
+      renderer(container);
+    };
+
+    if(hasAnySetValue(widget)) {
+      expand();
+      return;
+    }
+
+    const button = document.createElement('button');
+    button.className = 'blue';
+    button.textContent = title;
+    button.style.marginTop = '2px';
+    button.style.marginBottom = '1px';
+    buttonHost.appendChild(button);
+
+    const tryExpand = w => {
+      if(hasAnySetValue(w)) {
+        expand(button);
+      }
+    };
+
+    for(const property of properties)
+      this.addPropertyListener(widget, property, tryExpand);
+
+    button.onclick = e => {
+      e.preventDefault();
+      expand(button);
+    };
+  }
+
+  createOnDemandButtonWrapper(target = null) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.flexWrap = 'wrap';
+    wrap.style.gap = '6px';
+    wrap.style.alignItems = 'center';
+    return wrap;
+  }
+
+  createOnDemandSectionStructure(target = null, title = '', options = {}) {
+    const section = div(target || this.moduleDOM);
+
+    if(title) {
+      const titleDOM = document.createElement(options.titleTag || 'div');
+      titleDOM.textContent = title;
+      titleDOM.style.fontWeight = options.titleWeight || 'bold';
+      if(options.titleMarginTop)
+        titleDOM.style.marginTop = options.titleMarginTop;
+      section.appendChild(titleDOM);
+    }
+
+    const contentWrapper = div(section);
+    contentWrapper.style.display = 'block';
+
+    const newPropertiesWrapper = this.createOnDemandButtonWrapper(section);
+
+    return {
+      section,
+      contentWrapper,
+      newPropertiesWrapper
+    };
+  }
+
+  normalizeSeatReference(value) {
+    if(value === undefined || value === null)
+      return null;
+
+    if(Array.isArray(value)) {
+      const normalized = [...new Set(value
+        .map(entry => String(entry || '').trim())
+        .filter(entry => entry.length))];
+      if(!normalized.length)
+        return null;
+      return normalized;
+    }
+
+    if(typeof value === 'string') {
+      const trimmed = value.trim();
+      if(!trimmed.length)
+        return null;
+
+      if(trimmed.startsWith('[') && trimmed.endsWith(']')) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          if(Array.isArray(parsed))
+            return this.normalizeSeatReference(parsed);
+        } catch(e) {
+        }
+      }
+
+      return trimmed;
+    }
+
+    return String(value);
+  }
+
+  parseSeatReferenceInput(value) {
+    const normalized = this.normalizeSeatReference(value);
+    if(normalized === null)
+      return null;
+    return normalized;
+  }
+
+  formatSeatReference(value) {
+    const normalized = this.normalizeSeatReference(value);
+    if(normalized === null)
+      return '';
+    if(Array.isArray(normalized))
+      return JSON.stringify(normalized);
+    return normalized;
+  }
+
+  seatReferenceToArray(value) {
+    const normalized = this.normalizeSeatReference(value);
+    if(normalized === null)
+      return [];
+    if(Array.isArray(normalized))
+      return [ ...normalized ];
+    return [ normalized ];
+  }
+
+  seatReferenceFromArray(values) {
+    const unique = [...new Set(values.map(v => String(v || '').trim()).filter(v => v.length))];
+    if(!unique.length)
+      return null;
+    if(unique.length == 1)
+      return unique[0];
+    return unique;
+  }
+
+  seatReferenceEquals(left, right) {
+    const leftValues = this.seatReferenceToArray(left).sort();
+    const rightValues = this.seatReferenceToArray(right).sort();
+    if(leftValues.length != rightValues.length)
+      return false;
+    return leftValues.every((value, index) => value == rightValues[index]);
+  }
+
+  getSeatWidgetIDs() {
+    return widgetFilter(widget => widget.get('type') == 'seat').map(seat => seat.id);
+  }
+
+  renderNumberWithSlider(widget, property, title, target, options = {}) {
+    const min = typeof options.min === 'number' ? options.min : -5000;
+    const max = typeof options.max === 'number' ? options.max : 5000;
+    const step = typeof options.step === 'number' ? options.step : 1;
+
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flex = '1 1 300px';
+
+    const label = document.createElement('label');
+    label.textContent = title + ':';
+    wrap.appendChild(label);
+
+    const numberInput = document.createElement('input');
+    numberInput.type = 'number';
+    numberInput.step = String(step);
+    numberInput.min = String(min);
+    numberInput.max = String(max);
+    numberInput.style.width = '72px';
+    numberInput.style.boxSizing = 'border-box';
+    wrap.appendChild(numberInput);
+
+    const rangeInput = document.createElement('input');
+    rangeInput.type = 'range';
+    rangeInput.min = String(min);
+    rangeInput.max = String(max);
+    rangeInput.step = String(step);
+    rangeInput.style.flex = '1 1 auto';
+    wrap.appendChild(rangeInput);
+
+    const clampForRange = value => Math.max(min, Math.min(max, value));
+    const normalizeValue = value => {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    };
+
+    const updateInputs = value => {
+      const normalized = normalizeValue(value);
+      if(document.activeElement !== numberInput)
+        numberInput.value = String(normalized);
+      if(document.activeElement !== rangeInput)
+        rangeInput.value = String(clampForRange(normalized));
+    };
+
+    const setValue = typeof options.setValue === 'function'
+      ? options.setValue
+      : value => this.inputValueUpdated(widget, property, value);
+
+    numberInput.oninput = () => {
+      const value = normalizeValue(numberInput.value);
+      setValue(value);
+      if(document.activeElement === numberInput)
+        rangeInput.value = String(clampForRange(value));
+    };
+
+    rangeInput.oninput = () => {
+      const value = normalizeValue(rangeInput.value);
+      setValue(value);
+      if(document.activeElement === rangeInput)
+        numberInput.value = String(value);
+    };
+
+    this.addPropertyListener(widget, property, w=>updateInputs(w.get(property)));
+  }
+
+  renderDualNumberWithSlider(widget, title, left, right, options = {}) {
+    const leftOptions = options.left || options;
+    const rightOptions = options.right || options;
+    const isSizePair = left.property == 'width' && right.property == 'height';
+    let syncingAspectRatio = false;
+
+    const isRatioLockEnabled = () => {
+      const lockValue = widget.get('lockSizeRatio');
+      return lockValue === undefined || lockValue === null ? true : !!lockValue;
+    };
+
+    const leftOptionsWithRatio = Object.assign({}, leftOptions, {
+      setValue: value => {
+        if(!isSizePair || syncingAspectRatio || !isRatioLockEnabled()) {
+          this.inputValueUpdated(widget, left.property, value);
+          return;
+        }
+
+        const width = Number(widget.get('width'));
+        const height = Number(widget.get('height'));
+        if(!Number.isFinite(width) || !Number.isFinite(height) || width <= 0) {
+          this.inputValueUpdated(widget, 'width', value);
+          return;
+        }
+
+        const ratio = height / width;
+        const newHeight = Math.max(1, Math.round(value * ratio));
+
+        syncingAspectRatio = true;
+        this.inputValueUpdated(widget, left.property, value);
+        this.inputValueUpdated(widget, right.property, newHeight);
+        syncingAspectRatio = false;
+      }
+    });
+
+    const rightOptionsWithRatio = Object.assign({}, rightOptions, {
+      setValue: value => {
+        if(!isSizePair || syncingAspectRatio || !isRatioLockEnabled()) {
+          this.inputValueUpdated(widget, right.property, value);
+          return;
+        }
+
+        const width = Number(widget.get('width'));
+        const height = Number(widget.get('height'));
+        if(!Number.isFinite(width) || !Number.isFinite(height) || height <= 0) {
+          this.inputValueUpdated(widget, 'height', value);
+          return;
+        }
+
+        const ratio = width / height;
+        const newWidth = Math.max(1, Math.round(value * ratio));
+
+        syncingAspectRatio = true;
+        this.inputValueUpdated(widget, right.property, value);
+        this.inputValueUpdated(widget, left.property, newWidth);
+        syncingAspectRatio = false;
+      }
+    });
+
+    const sectionTitle = document.createElement('div');
+    sectionTitle.textContent = title + ':';
+    sectionTitle.style.fontWeight = 'bold';
+    sectionTitle.style.marginTop = '8px';
+    this.moduleDOM.appendChild(sectionTitle);
+
+    const row = div(this.moduleDOM);
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '8px';
+    row.style.flexWrap = 'wrap';
+
+    this.renderNumberWithSlider(widget, left.property, left.title, row, leftOptionsWithRatio);
+
+    const separator = document.createElement('span');
+    separator.textContent = '|';
+    separator.style.color = '#777';
+    row.appendChild(separator);
+
+    this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptionsWithRatio);
+  }
+
+  renderSizeRatioLock(widget) {
+    const wrap = div(this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+    wrap.style.marginTop = '6px';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = `lockSizeRatio_${widget.id}_${rand().toString(36).substring(3, 7)}`;
+
+    const label = document.createElement('label');
+    label.htmlFor = input.id;
+    label.textContent = 'Lock size ratio';
+
+    wrap.appendChild(input);
+    wrap.appendChild(label);
+
+    const updateInput = w => {
+      const value = w.get('lockSizeRatio');
+      input.checked = value === undefined || value === null ? true : !!value;
+    };
+
+    input.onchange = () => this.inputValueUpdated(widget, 'lockSizeRatio', input.checked);
+
+    this.addPropertyListener(widget, 'lockSizeRatio', updateInput);
+  }
+
+  renderPositionLocks(widget) {
+    const row = div(this.moduleDOM);
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '8px';
+    row.style.flexWrap = 'wrap';
+    row.style.marginTop = '6px';
+
+    const lockPosition = document.createElement('input');
+    lockPosition.type = 'checkbox';
+    lockPosition.id = `lockPosition_${widget.id}_${rand().toString(36).substring(3, 7)}`;
+
+    const lockPositionLabel = document.createElement('label');
+    lockPositionLabel.htmlFor = lockPosition.id;
+    lockPositionLabel.textContent = 'Lock position';
+
+    row.appendChild(lockPosition);
+    row.appendChild(lockPositionLabel);
+
+    const separator = document.createElement('span');
+    separator.textContent = '|';
+    separator.style.color = '#777';
+    row.appendChild(separator);
+
+    const lockEditorWrap = document.createElement('span');
+    lockEditorWrap.style.display = 'inline-flex';
+    lockEditorWrap.style.alignItems = 'center';
+    lockEditorWrap.style.gap = '6px';
+
+    const lockInEditor = document.createElement('input');
+    lockInEditor.type = 'checkbox';
+    lockInEditor.id = `lockEditor_${widget.id}_${rand().toString(36).substring(3, 7)}`;
+
+    const lockInEditorLabel = document.createElement('label');
+    lockInEditorLabel.htmlFor = lockInEditor.id;
+    lockInEditorLabel.textContent = 'Also lock in editor';
+
+    lockEditorWrap.appendChild(lockInEditor);
+    lockEditorWrap.appendChild(lockInEditorLabel);
+    const lockInEditorInfo = this.renderInfoIcon('This only applies to mouse input. You can still edit position in this sidebar');
+    lockEditorWrap.appendChild(lockInEditorInfo);
+    row.appendChild(lockEditorWrap);
+
+    const updateLockInputs = w => {
+      const movable = !!w.get('movable');
+      const movableInEdit = !!w.get('movableInEdit');
+      const isLocked = !movable;
+      lockPosition.checked = isLocked;
+      separator.style.display = (isLocked || !movableInEdit) ? 'inline' : 'none';
+      lockEditorWrap.style.display = (isLocked || !movableInEdit) ? 'inline-flex' : 'none';
+      lockInEditor.checked = !movableInEdit;
+    };
+
+    lockPosition.onchange = () => {
+      const shouldLock = lockPosition.checked;
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
+      widget.set('movable', !shouldLock);
+      batchEnd();
+    };
+
+    lockInEditor.onchange = () => this.inputValueUpdated(widget, 'movableInEdit', !lockInEditor.checked);
+
+    this.addPropertyListener(widget, 'movable', updateLockInputs);
+    this.addPropertyListener(widget, 'movableInEdit', updateLockInputs);
+  }
+
+  renderLayerSelect(widget) {
+    const wrap = div(this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginTop = '8px';
+
+    const label = document.createElement('label');
+    label.textContent = 'Layer:';
+    wrap.appendChild(label);
+
+    const select = document.createElement('select');
+    const baseMin = -5;
+    const baseMax = 5;
+    const layerNotes = {
+      '-5': 'background',
+      '-3': 'holder',
+      '-2': 'labels',
+      '-1': 'buttons/timers/scoreboard/seats',
+      '0': 'widget base default',
+      '1': 'cards/dice/basic'
+    };
+
+    const addLayerOption = (layerValue, addAtStart = false) => {
+      const value = Number(layerValue);
+      if(!Number.isFinite(value))
+        return;
+
+      const valueString = String(value);
+      if(select.querySelector(`option[value="${valueString}"]`))
+        return;
+
+      const option = document.createElement('option');
+      option.value = valueString;
+      option.textContent = valueString;
+      if(addAtStart)
+        select.insertBefore(option, select.firstChild);
+      else
+        select.appendChild(option);
+    };
+
+    for(let i = baseMin; i <= baseMax; ++i) {
+      const option = document.createElement('option');
+      option.value = String(i);
+      option.textContent = typeof layerNotes[String(i)] === 'string' ? `${i} (${layerNotes[String(i)]})` : String(i);
+      select.appendChild(option);
+    }
+
+    const initialLayer = Number(widget.get('layer'));
+    if(initialLayer < baseMin)
+      addLayerOption(initialLayer, true);
+    else if(initialLayer > baseMax)
+      addLayerOption(initialLayer);
+
+    select.onchange = () => this.inputValueUpdated(widget, 'layer', +select.value);
+    this.addPropertyListener(widget, 'layer', w=>{
+      const layerValue = Number(w.get('layer'));
+      if(layerValue < baseMin)
+        addLayerOption(layerValue, true);
+      else if(layerValue > baseMax)
+        addLayerOption(layerValue);
+      select.value = String(w.get('layer'));
+    });
+    wrap.appendChild(select);
+  const lockParentInfo = this.renderInfoIcon('Widgets on higher layers will always be displayed on top of widgets on lower layers.');
+    wrap.appendChild(lockParentInfo);
+  }
+
+  renderRotationInput(widget) {
+    const wrap = div(this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.marginTop = '8px';
+
+    const label = document.createElement('label');
+    label.textContent = 'Rotation:';
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = 1;
+    input.style = 'width: 60px; border: 1px solid #ccc; border-radius: 4px; text-align: right;';
+    
+    input.value = widget.get('rotation') || 0;
+    wrap.appendChild(input);
+
+    const unit = document.createElement('span');
+    unit.textContent = 'degrees';
+    unit.style.paddingLeft = '3px';
+    wrap.appendChild(unit);
+
+    input.oninput = () => this.inputValueUpdated(widget, 'rotation', +input.value);
+    
+    this.addPropertyListener(widget, 'rotation', w => {
+      if (document.activeElement !== input)
+        input.value = w.get('rotation') || 0;
+    });
+  }
+
+  renderParentWidgetInput(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+
+    const label = document.createElement('label');
+    label.textContent = 'Parent widget:';
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.style.width = '140px';
+    input.value = widget.get('parent') || '';
+    wrap.appendChild(input);
+
+    const pickButton = document.createElement('button');
+    wrap.appendChild(pickButton);
+
+    const lockParentButton = document.createElement('button');
+    wrap.appendChild(lockParentButton);
+
+    const lockParentInfo = this.renderInfoIcon('When locked the parent of this widget will not change when it is being dragged by a player (or editor). Automation can still change it though.');
+    wrap.appendChild(lockParentInfo);
+
+    const updateParentButtons = () => {
+      const isSelectingParent = this.isWidgetPickerActive(widget.id, 'parent');
+      pickButton.textContent = isSelectingParent ? 'click a widget...' : 'click to select';
+      pickButton.classList.toggle('selected', isSelectingParent);
+
+      const isParentLocked = !!widget.get('fixedParent');
+      lockParentButton.textContent = isParentLocked ? 'Unlock parent' : 'Lock parent';
+      lockParentButton.classList.toggle('selected', isParentLocked);
+    };
+
+    input.onchange = () => {
+      const value = input.value.trim();
+      this.inputValueUpdated(widget, 'parent', value ? value : null);
+    };
+
+    pickButton.onclick = () => {
+      if(this.isWidgetPickerActive(widget.id, 'parent')) {
+        this.stopWidgetPicker();
+      } else {
+        this.startWidgetPicker(widget.id, (targetWidget, pickedWidget) => {
+          batchStart();
+          setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${targetWidget.id} in editor`);
+          targetWidget.set('parent', pickedWidget.id);
+          batchEnd();
+        }, {
+          pickerKey: 'parent'
+        });
+      }
+      updateParentButtons();
+    };
+
+    lockParentButton.onclick = () => {
+      const shouldLockParent = !widget.get('fixedParent');
+      this.inputValueUpdated(widget, 'fixedParent', shouldLockParent);
+      updateParentButtons();
+    };
+
+    this.addPropertyListener(widget, 'parent', w => {
+      if(document.activeElement !== input)
+        input.value = w.get('parent') || '';
+      updateParentButtons();
+    });
+
+    this.addPropertyListener(widget, 'fixedParent', () => updateParentButtons());
+    updateParentButtons();
+  }
+
+  renderSeatReferenceInput(widget, property, title, target = null, options = {}) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+
+    const label = document.createElement('label');
+    label.textContent = title;
+    wrap.appendChild(label);
+
+    const infoIcon = options.infoText ? this.renderInfoIcon(options.infoText, { size: '18px' }) : null;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.style.width = '180px';
+    input.value = this.formatSeatReference(widget.get(property));
+    wrap.appendChild(input);
+
+    let pickButton = null;
+    const pickerKey = options.pickerKey || property;
+
+    if(options.enablePicker) {
+      pickButton = document.createElement('button');
+      pickButton.style.marginTop = '2px';
+      pickButton.style.marginBottom = '1px';
+      wrap.appendChild(pickButton);
+
+      const updatePickButton = () => {
+        const picker = this.getWidgetPicker(widget.id, pickerKey);
+        const isSelecting = !!picker;
+        pickButton.classList.toggle('selected', isSelecting);
+        if(!isSelecting)
+          pickButton.textContent = 'click to select';
+        else
+          pickButton.textContent = picker.allowMultiple ? 'click to confirm' : 'click a widget...';
+      };
+
+      pickButton.onclick = () => {
+        const picker = this.getWidgetPicker(widget.id, pickerKey);
+
+        if(picker) {
+          if(picker.allowMultiple)
+            this.confirmWidgetPicker();
+          else
+            this.stopWidgetPicker();
+          updatePickButton();
+          return;
+        }
+
+        const currentValue = this.normalizeSeatReference(widget.get(property));
+        const allowMultiple = Array.isArray(currentValue);
+        const pendingWidgetIDs = Array.isArray(currentValue) ? currentValue : [];
+
+        this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+          if(Array.isArray(pickedWidgets)) {
+            const pickedWidgetIDs = pickedWidgets.map(pickedWidget => pickedWidget.id);
+            this.inputValueUpdated(targetWidget, property, this.seatReferenceFromArray(pickedWidgetIDs));
+          } else if(pickedWidgets) {
+            this.inputValueUpdated(targetWidget, property, pickedWidgets.id);
+          }
+        }, {
+          pickerKey,
+          allowMultiple,
+          pendingWidgetIDs,
+          filter: pickedWidget => pickedWidget.get('type') == 'seat',
+          onPendingChanged: () => updatePickButton()
+        });
+
+        updatePickButton();
+      };
+
+      this.addPropertyListener(widget, property, () => updatePickButton());
+      updatePickButton();
+    }
+
+    if(infoIcon)
+      wrap.appendChild(infoIcon);
+
+    input.onchange = () => {
+      const value = this.parseSeatReferenceInput(input.value);
+      this.inputValueUpdated(widget, property, value);
+    };
+
+    this.addPropertyListener(widget, property, w => {
+      if(document.activeElement !== input)
+        input.value = this.formatSeatReference(w.get(property));
+    });
+
+    return { wrap, input, pickButton };
+  }
+
+  getSeatVisibilityMode(widget) {
+    const onlyVisibleForSeat = widget.get('onlyVisibleForSeat');
+    const linkedToSeat = widget.get('linkedToSeat');
+
+    if(this.seatReferenceToArray(onlyVisibleForSeat).length == 0)
+      return 'all';
+
+    if(this.seatReferenceEquals(onlyVisibleForSeat, linkedToSeat))
+      return 'visible';
+
+    const allSeats = this.getSeatWidgetIDs();
+    const linkedSeats = this.seatReferenceToArray(linkedToSeat);
+    const hiddenFromSeats = allSeats.filter(seatID => linkedSeats.indexOf(seatID) == -1);
+
+    if(this.seatReferenceEquals(onlyVisibleForSeat, hiddenFromSeats))
+      return 'hidden';
+
+    return 'custom';
+  }
+
+  renderSeatVisibilityInput(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
+
+    const label = document.createElement('label');
+    label.textContent = 'Visible to seats:';
+    wrap.appendChild(label);
+
+    const visibilityInfoIcon = this.renderInfoIcon('Sets to which seats can see this widget. Use this to create private play areas and content for players or teams.', { size: '18px' });
+
+    const modeSelect = document.createElement('select');
+    modeSelect.innerHTML = `
+      <option value="all">visible to all</option>
+      <option value="visible">visible to seat</option>
+      <option value="hidden">hidden from seat</option>
+    `;
+    wrap.appendChild(modeSelect);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.style.width = '180px';
+    wrap.appendChild(input);
+
+    const pickButton = document.createElement('button');
+    pickButton.style.marginTop = '2px';
+    pickButton.style.marginBottom = '1px';
+    wrap.appendChild(pickButton);
+    wrap.appendChild(visibilityInfoIcon);
+
+    const pickerKey = 'onlyVisibleForSeat';
+    const updatePickButton = () => {
+      const picker = this.getWidgetPicker(widget.id, pickerKey);
+      const isSelecting = !!picker;
+      pickButton.classList.toggle('selected', isSelecting);
+      pickButton.textContent = isSelecting ? 'click to confirm' : 'click to select';
+    };
+
+    const updateInputValue = w => {
+      if(document.activeElement !== input)
+        input.value = this.formatSeatReference(w.get('onlyVisibleForSeat'));
+    };
+
+    const updateCustomModeOption = mode => {
+      let customOption = modeSelect.querySelector('option[value="custom"]');
+      if(mode == 'custom') {
+        if(!customOption) {
+          customOption = document.createElement('option');
+          customOption.value = 'custom';
+          customOption.textContent = 'custom';
+          modeSelect.appendChild(customOption);
+        }
+      } else if(customOption) {
+        customOption.remove();
+      }
+    };
+
+    const updateMode = w => {
+      const mode = this.getSeatVisibilityMode(w);
+      updateCustomModeOption(mode);
+      modeSelect.value = mode;
+      updatePickButton();
+      updateInputValue(w);
+    };
+
+    input.onchange = () => {
+      const value = this.parseSeatReferenceInput(input.value);
+      this.inputValueUpdated(widget, 'onlyVisibleForSeat', value);
+    };
+
+    pickButton.onclick = () => {
+      const picker = this.getWidgetPicker(widget.id, pickerKey);
+      if(picker) {
+        this.confirmWidgetPicker();
+        updatePickButton();
+        return;
+      }
+
+      this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+        const pickedWidgetIDs = Array.isArray(pickedWidgets) ? pickedWidgets.map(pickedWidget => pickedWidget.id) : [];
+        if(!pickedWidgetIDs.length)
+          return;
+        this.inputValueUpdated(targetWidget, 'onlyVisibleForSeat', this.seatReferenceFromArray(pickedWidgetIDs));
+      }, {
+        pickerKey,
+        allowMultiple: true,
+        toggleSelection: false,
+        pendingWidgetIDs: [],
+        filter: pickedWidget => pickedWidget.get('type') == 'seat',
+        onPendingChanged: () => updatePickButton()
+      });
+
+      updatePickButton();
+    };
+
+    modeSelect.onchange = () => {
+      if(modeSelect.value == 'all') {
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', null);
+      } else if(modeSelect.value == 'visible') {
+        const linkedToSeat = widget.get('linkedToSeat');
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', linkedToSeat === undefined ? null : linkedToSeat);
+      } else if(modeSelect.value == 'hidden') {
+        const allSeats = this.getSeatWidgetIDs();
+        const linkedSeats = this.seatReferenceToArray(widget.get('linkedToSeat'));
+        const hiddenFromSeats = allSeats.filter(seatID => linkedSeats.indexOf(seatID) == -1);
+        this.inputValueUpdated(widget, 'onlyVisibleForSeat', this.seatReferenceFromArray(hiddenFromSeats));
+      }
+
+      updateMode(widget);
+    };
+
+    this.addPropertyListener(widget, 'onlyVisibleForSeat', updateInputValue);
+    this.addPropertyListener(widget, 'onlyVisibleForSeat', updateMode);
+    this.addPropertyListener(widget, 'linkedToSeat', updateMode);
+    this.addPropertyListener(widget, 'onlyVisibleForSeat', () => updatePickButton());
+    updateMode(widget);
+  }
+
+  renderInfoIcon(infoText, options = {}) {
+    const icon = document.createElement('span');
+    icon.className = options.className || 'material-symbols';
+    icon.textContent = options.icon || 'info';
+    icon.setAttribute('aria-label', options.ariaLabel || 'Information');
+    icon.title = infoText || '';
+    icon.style.cursor = 'help';
+    icon.style.display = 'inline-block';
+    icon.style.color = options.color || 'var(--VTTblue)';
+    icon.style.fontVariationSettings = options.fontVariationSettings || "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20";
+    icon.style.fontSize = options.size || '20px';
+    icon.style.lineHeight = '1';
+    icon.style.userSelect = 'none';
+
+    return icon;
+  }
+
+  renderParentWidgetEditor(widget) {
+    this.renderObscureProperties(widget, [
+      {
+        property: 'parent',
+        title: 'add parent widget',
+        renderer: container => this.renderParentWidgetInput(widget, container)
+      }
+    ]);
+  }
+
+  renderBasicSection(widget) {
+    this.addSubHeader('Basic');
+    this.renderDualNumberWithSlider(widget, 'Position', { title: 'X', property: 'x' }, { title: 'Y', property: 'y' }, {
+      left: { min: 0, max: 1600, step: 1 },
+      right: { min: 0, max: 1000, step: 1 }
+    });
+    this.renderPositionLocks(widget);
+    this.renderLayerSelect(widget);
+    this.addLineBreak();
+    this.renderRotationInput(widget);
+    this.addLineBreak();
+    this.renderDualNumberWithSlider(widget, 'Size', { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
+      left: { min: 1, max: 1600, step: 1 },
+      right: { min: 1, max: 1000, step: 1 }
+    });
+    this.renderSizeRatioLock(widget);
+    this.addLineBreak();
+    this.renderAssociatedWidgetsSection(widget);
+  }
+
+  renderInheritFromButton(widget, target = null, options = {}) {
+    this.renderOnDemandSection(widget, 'add Inherit From', ['inheritFrom'], container => {
+      this.renderInheritFromEditor(container, widget);
+    }, target || this.moduleDOM, options);
+  }
+
+  renderInheritFromEditor(container, widget) {
+    const title = document.createElement('div');
+    title.textContent = 'Inherit properties from:';
+    title.classList.add('inheritFromTitle');
+    container.appendChild(title);
+
+    const listContainer = div(container);
+    listContainer.classList.add('inheritFromListContainer');
+    const listEntriesContainer = div(listContainer);
+    listEntriesContainer.classList.add('inheritFromListEntries');
+    const expandedStates = {};
+    const modeStates = {};
+
+    const updateList = () => {
+      listEntriesContainer.innerHTML = '';
+      const inheritFrom = widget.get('inheritFrom');
+      const inheritFromObj = typeof inheritFrom === 'string'
+        ? { [inheritFrom]: '*' }
+        : (inheritFrom || {});
+
+      if(Object.keys(inheritFromObj).length === 0) {
+        const emptyMsg = document.createElement('div');
+        emptyMsg.textContent = 'No widgets selected yet.';
+        emptyMsg.classList.add('inheritFromEmptyMessage');
+        listEntriesContainer.appendChild(emptyMsg);
+      } else {
+        for(const [widgetId, mode] of Object.entries(inheritFromObj)) {
+          this.renderInheritFromWidgetRow(
+            listEntriesContainer,
+            widget,
+            widgetId,
+            mode,
+            modeStates[widgetId] || null,
+            nextMode => modeStates[widgetId] = nextMode,
+            !!expandedStates[widgetId],
+            expanded => expandedStates[widgetId] = expanded
+          );
+        }
+      }
+    };
+
+    updateList();
+
+    this.renderInheritFromAddButton(listContainer, widget);
+
+    this.addPropertyListener(widget, 'inheritFrom', () => updateList());
+  }
+
+  normalizeInheritFromObject(inheritFrom) {
+    if(typeof inheritFrom === 'string') {
+      const sourceWidgetId = inheritFrom.trim();
+      return sourceWidgetId ? { [sourceWidgetId]: '*' } : {};
+    }
+
+    if(inheritFrom && typeof inheritFrom === 'object' && !Array.isArray(inheritFrom))
+      return Object.assign({}, inheritFrom);
+
+    return {};
+  }
+
+  getAllPropertiesForInherit(sourceWidget, targetWidget) {
+    const blacklist = ['id', 'type', 'deck', 'cardType', 'inheritFrom'];
+    const allProps = new Set();
+
+    // Add properties from source widget (state + defaults)
+    if(sourceWidget.state) {
+      Object.keys(sourceWidget.state)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+    if(sourceWidget.defaults) {
+      Object.keys(sourceWidget.defaults)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+
+    // Add properties from target widget (state + defaults)
+    if(targetWidget.state) {
+      Object.keys(targetWidget.state)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+    if(targetWidget.defaults) {
+      Object.keys(targetWidget.defaults)
+        .filter(k => !blacklist.includes(k))
+        .forEach(k => allProps.add(k));
+    }
+
+    return Array.from(allProps).sort();
+  }
+
+  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, preferredMode = null, onModeChanged = () => {}, initialExpanded = false, onExpandChanged = () => {}) {
+    const sourceWidget = widgets && widgets.get(sourceWidgetId);
+    if(!sourceWidget) return;
+
+    let expanded = !!initialExpanded;
+
+    const rowWrap = div(container);
+    rowWrap.classList.add('inheritFromRowWrap');
+
+    // Expand/collapse arrow
+    const toggleArrow = document.createElement('button');
+    toggleArrow.textContent = expanded ? '▼' : '▶';
+    toggleArrow.classList.add('inheritFromToggleArrow');
+    rowWrap.appendChild(toggleArrow);
+
+    // Widget info
+    const widgetInfo = document.createElement('div');
+    widgetInfo.classList.add('inheritFromWidgetInfo');
+    widgetInfo.textContent = `${sourceWidget.get('type')} #${sourceWidgetId}`;
+    rowWrap.appendChild(widgetInfo);
+
+    // Mode dropdown
+    const dropdownContainer = div(rowWrap);
+    dropdownContainer.classList.add('inheritFromDropdownContainer');
+    const dropdown = document.createElement('select');
+    dropdown.classList.add('inheritFromDropdown');
+
+    const modes = [
+      { value: 'all', label: 'copy all' },
+      { value: 'selected', label: 'copy selected' },
+      { value: 'excluded', label: 'exclude selected' }
+    ];
+
+    const modeArray = Array.isArray(mode) ? mode : null;
+    const hasExcluded = modeArray ? modeArray.some(p => typeof p === 'string' && p.startsWith('!')) : false;
+    const hasIncluded = modeArray ? modeArray.some(p => typeof p === 'string' && !p.startsWith('!')) : false;
+    const hasMixedMode = !!(modeArray && hasExcluded && hasIncluded);
+
+    // Determine current mode
+    let currentModeValue = 'all';
+    if(modeArray) {
+      if(hasMixedMode) {
+        currentModeValue = 'mixed';
+      } else if(modeArray.length === 0) {
+        // Empty arrays are ambiguous; preserve the user's most recently chosen
+        // mode for this row when available.
+        if(preferredMode === 'selected' || preferredMode === 'excluded') {
+          currentModeValue = preferredMode;
+        } else {
+          currentModeValue = 'selected';
+        }
+      } else if(modeArray.length > 0 && modeArray[0].startsWith('!')) {
+        currentModeValue = 'excluded';
+      } else {
+        currentModeValue = 'selected';
+      }
+    }
+
+    if(hasMixedMode) {
+      modes.unshift({ value: 'mixed', label: 'invalid mix (include + exclude)' });
+    }
+
+    modes.forEach(modeOption => {
+      const opt = document.createElement('option');
+      opt.value = modeOption.value;
+      opt.textContent = modeOption.label;
+      opt.selected = currentModeValue === modeOption.value;
+      dropdown.appendChild(opt);
+    });
+
+    dropdownContainer.appendChild(dropdown);
+
+    // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('inheritFromIconActionButton', 'inheritFromRemoveWidgetButton');
+    deleteBtn.setAttribute('icon', 'delete');
+    deleteBtn.title = 'Remove this inherit source';
+    deleteBtn.onclick = () => {
+      const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
+      delete inheritFrom[sourceWidgetId];
+      const finalValue = Object.keys(inheritFrom).length === 0 ? null : inheritFrom;
+      this.inputValueUpdated(widget, 'inheritFrom', finalValue);
+    };
+    rowWrap.appendChild(deleteBtn);
+
+    // Property checkboxes container (initially hidden)
+    const propsContainer = div(container);
+    propsContainer.classList.add('inheritFromPropsContainer', 'inheritFromHidden');
+
+    // Update mode change handler
+    dropdown.onchange = () => {
+      if(dropdown.value === 'mixed') {
+        return;
+      }
+
+      onModeChanged(dropdown.value);
+
+      const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
+      let newMode = '*';
+
+      if(dropdown.value === 'all') {
+        newMode = '*';
+      } else if(dropdown.value === 'selected') {
+        // Start with no properties selected by default.
+        newMode = [];
+      } else if(dropdown.value === 'excluded') {
+        // Start with no properties excluded by default.
+        newMode = [];
+      }
+
+      inheritFrom[sourceWidgetId] = newMode;
+      this.inputValueUpdated(widget, 'inheritFrom', inheritFrom);
+      renderCheckboxes();
+    };
+
+    const renderCheckboxes = () => {
+      propsContainer.innerHTML = '';
+      const currentInheritFrom = widget.get('inheritFrom') || {};
+      const currentMode = currentInheritFrom[sourceWidgetId] || '*';
+
+      if(dropdown.value === 'mixed') {
+        propsContainer.classList.remove('inheritFromHidden');
+        this.renderInheritFromMixedModeError(propsContainer, currentMode);
+        return;
+      }
+
+      propsContainer.classList.remove('inheritFromHidden');
+      this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, currentMode);
+    };
+
+    // Toggle expand/collapse
+    toggleArrow.onclick = () => {
+      expanded = !expanded;
+      toggleArrow.textContent = expanded ? '▼' : '▶';
+      onExpandChanged(expanded);
+      if(expanded) {
+        propsContainer.classList.remove('inheritFromHidden');
+        renderCheckboxes();
+      } else {
+        propsContainer.classList.add('inheritFromHidden');
+      }
+    };
+
+    if(expanded) {
+      toggleArrow.textContent = '▼';
+      propsContainer.classList.remove('inheritFromHidden');
+      renderCheckboxes();
+    }
+  }
+
+  renderInheritFromMixedModeError(container, modeList) {
+    const errorWrap = div(container);
+    errorWrap.classList.add('inheritFromMixedModeError');
+
+    const title = document.createElement('div');
+    title.textContent = 'Invalid inherit mode: include and exclude entries are mixed.';
+    errorWrap.appendChild(title);
+
+    const hint = document.createElement('div');
+    hint.textContent = 'Switch mode to copy all/copy selected/exclude selected to fix this row.';
+    errorWrap.appendChild(hint);
+
+    const modeInput = document.createElement('input');
+    modeInput.type = 'text';
+    modeInput.readOnly = true;
+    modeInput.value = Array.isArray(modeList) ? modeList.join(', ') : String(modeList || '');
+    modeInput.classList.add('inheritFromMixedModeInput');
+    errorWrap.appendChild(modeInput);
+  }
+
+  renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode) {
+    const title = document.createElement('div');
+    if(modeValue === 'excluded') {
+      title.textContent = 'Exclude properties:';
+    } else if(modeValue === 'all') {
+      title.textContent = 'All properties (read-only preview):';
+    } else {
+      title.textContent = 'Include properties:';
+    }
+    title.classList.add('inheritFromPropertiesTitle');
+    container.appendChild(title);
+
+    // Get all properties from both widgets
+    const allProps = this.getAllPropertiesForInherit(sourceWidget, targetWidget);
+
+    // Parse current selection
+    const currentProps = Array.isArray(currentMode)
+      ? currentMode.map(p => p.startsWith('!') ? p.substring(1) : p)
+      : [];
+
+    const isPropertyDeclaredOnTarget = prop => {
+      const state = targetWidget.state || {};
+      const defaults = targetWidget.defaults || {};
+
+      if(!Object.prototype.hasOwnProperty.call(state, prop))
+        return false;
+
+      if(!Object.prototype.hasOwnProperty.call(defaults, prop))
+        return true;
+
+      return JSON.stringify(state[prop]) !== JSON.stringify(defaults[prop]);
+    };
+
+    const hasBlockedProps = allProps.some(prop => isPropertyDeclaredOnTarget(prop));
+    if(hasBlockedProps) {
+      const tip = document.createElement('div');
+      tip.textContent = 'Some properties are not copied because they are declared in the current widget.';
+      tip.classList.add('inheritFromBlockedHint');
+      container.appendChild(tip);
+    }
+
+    allProps.forEach(prop => {
+      const checkboxWrap = div(container);
+      checkboxWrap.classList.add('inheritFromCheckboxWrap');
+
+      const isDeclaredOnTarget = isPropertyDeclaredOnTarget(prop);
+      if(isDeclaredOnTarget) {
+        checkboxWrap.classList.add('inheritFromDeclaredProperty');
+      }
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}_${rand().toString(36).substring(3, 7)}`;
+      checkbox.dataset.property = prop;
+
+      const isReadOnlyAllMode = modeValue === 'all';
+
+      if(isReadOnlyAllMode) {
+        checkbox.classList.add('inheritReadOnlyCheckbox');
+        checkbox.checked = true;
+      } else if(modeValue === 'excluded') {
+        checkbox.classList.add('inheritExcludeCheckbox');
+        // For exclude mode, check if property IS in the exclude list.
+        checkbox.checked = currentProps.includes(prop);
+      } else {
+        checkbox.classList.add('inheritIncludeCheckbox');
+        // For include mode, check if property IS in the selection
+        checkbox.checked = currentProps.includes(prop);
+      }
+
+      if(isReadOnlyAllMode || isDeclaredOnTarget) {
+        checkbox.disabled = true;
+      }
+
+      checkbox.onchange = () => {
+        const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
+        const selectedProps = [];
+
+        // Collect all checked boxes
+        const allCheckboxes = container.querySelectorAll('input[type="checkbox"][data-property]');
+
+        for(let i = 0; i < allCheckboxes.length; i++) {
+          if(allCheckboxes[i].checked && !allCheckboxes[i].disabled) {
+            selectedProps.push(allCheckboxes[i].dataset.property);
+          }
+        }
+
+        if(modeValue === 'excluded') {
+          // Convert checked items to excluded list.
+          const finalMode = selectedProps.map(p => '!' + p);
+          inheritFrom[sourceWidget.id] = finalMode;
+        } else {
+          // Include mode: just store selected properties
+          inheritFrom[sourceWidget.id] = selectedProps;
+        }
+
+        this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
+        // Do NOT close/re-render the parent - just update this checkbox group
+      };
+
+      checkboxWrap.appendChild(checkbox);
+
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.id;
+      label.textContent = prop;
+      label.classList.add('inheritFromPropertyLabel');
+      if(isDeclaredOnTarget) {
+        label.classList.add('inheritFromDeclaredPropertyLabel');
+        label.title = 'Not copied: this property is currently declared in this widget.';
+      }
+      checkboxWrap.appendChild(label);
+
+      if(isDeclaredOnTarget) {
+        const clearBtn = document.createElement('button');
+        clearBtn.type = 'button';
+        clearBtn.classList.add('inheritFromIconActionButton', 'inheritFromClearPropertyButton');
+        clearBtn.setAttribute('icon', 'ink_eraser');
+        clearBtn.title = 'Remove this property from the current widget so inheritance can apply.';
+        clearBtn.onclick = () => {
+          this.inputValueUpdated(targetWidget, prop, undefined);
+          const refreshedMode = (targetWidget.get('inheritFrom') || {})[sourceWidget.id] || '*';
+          container.innerHTML = '';
+          this.renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, refreshedMode);
+        };
+        checkboxWrap.appendChild(clearBtn);
+      }
+    });
+  }
+
+  renderInheritFromAddButton(container, widget) {
+    const addBtn = document.createElement('button');
+    addBtn.textContent = '+ Add widget';
+    addBtn.classList.add('blue', 'inheritFromAddWidgetButton');
+    const pickerKey = 'inheritFrom';
+
+    const updateAddButton = () => {
+      const picker = this.getWidgetPicker(widget.id, pickerKey);
+      const isSelecting = !!picker;
+      addBtn.classList.toggle('selected', isSelecting);
+      if(!isSelecting)
+        addBtn.textContent = '+ Add widget';
+      else
+        addBtn.textContent = 'click a widget...';
+    };
+
+    addBtn.onclick = () => {
+      const currentInheritFrom = widget.get('inheritFrom') || {};
+      const alreadySelected = Object.keys(typeof currentInheritFrom === 'string' ? { [currentInheritFrom]: '*' } : currentInheritFrom);
+
+      this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+        if(pickedWidgets) {
+          const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
+          inheritFrom[pickedWidgets.id] = '*'; // Default to copy all
+          this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
+        }
+        this.stopWidgetPicker();
+        updateAddButton();
+      }, {
+        pickerKey: pickerKey,
+        allowMultiple: false,
+        pendingWidgetIDs: [],
+        onPendingChanged: updateAddButton,
+        filter: pickedWidget => {
+          // Can't inherit from self or already selected
+          return pickedWidget.id !== widget.id && !alreadySelected.includes(pickedWidget.id);
+        }
+      });
+      updateAddButton();
+    };
+
+    container.appendChild(addBtn);
+  }
+
+  renderAssociatedWidgetsSection(widget) {
+    const linksSection = this.createOnDemandSectionStructure(this.moduleDOM, "Widget's links", {
+      titleMarginTop: '8px'
+    });
+
+    this.renderOnDemandSection(widget, 'add Parent', [ 'parent', 'fixedParent' ], container => {
+      this.renderParentWidgetInput(widget, container);
+    }, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper,
+      isPropertySet: (property, value) => {
+        if(property == 'fixedParent')
+          return value === true;
+        return this.isOnDemandPropertyValueSet(value);
+      }
+    });
+
+    this.renderOnDemandSection(widget, 'add Seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+      const seatSection = this.createOnDemandSectionStructure(container);
+
+      this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {
+        enablePicker: true,
+        pickerKey: 'linkedToSeat',
+        infoText: 'Widgets linked to a seats are only visible when a player ocupies that seat. Use this to decluster the board when fewer players are present.'
+      });
+
+      this.renderOnDemandSection(widget, 'change visibility', [ 'onlyVisibleForSeat' ], nestedContainer => {
+        this.renderSeatVisibilityInput(widget, nestedContainer);
+      }, seatSection.contentWrapper, {
+        buttonHost: seatSection.newPropertiesWrapper
+      });
+    }, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper
+    });
+
+    this.renderInheritFromButton(widget, linksSection.contentWrapper, {
+      buttonHost: linksSection.newPropertiesWrapper
+    });
+  }
+
   renderForCard(widget) {
     this.addHeader(`Card ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader(`Card properties`);
-    this.renderGenericProperties(widget, [ 'deck', 'x', 'y', 'z' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'deck', 'z' ]));
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
     div(this.moduleDOM, '', `
@@ -1418,6 +2900,7 @@ class PropertiesModule extends SidebarModule {
 
   renderForDeck(widget) {
     this.addHeader(`Deck ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader(`Card types`);
     div(this.moduleDOM, 'buttonBar', `
       <button icon=remove class=removeAll>All</button>
@@ -1463,11 +2946,12 @@ class PropertiesModule extends SidebarModule {
     div(this.moduleDOM, '', `
       <p>These are properties acting on the deck widget itself which has no influence on gameplay. These properties do not apply to the cards. Which is why this section is usually empty.</p>
     `);
-    this.renderGenericProperties(widget, [ 'cardTypes', 'faceTemplates', 'cardDefaults', 'x', 'y', 'z' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'cardTypes', 'faceTemplates', 'cardDefaults', 'z' ]));
   }
 
   renderForDice(widget) {
     this.addHeader(`Dice ${widget.id}`);
+    this.renderBasicSection(widget);
     const widgetFaces = widget.get('faces');
     const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
 
@@ -1561,11 +3045,12 @@ class PropertiesModule extends SidebarModule {
     }
 
     this.addSubHeader(`Dice properties`);
-    this.renderGenericProperties(widget, ['faces','pipSymbols','shape3d']);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['faces','pipSymbols','shape3d']));
   }
 
   renderForHolder(widget) {
     this.addHeader(`Holder ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
       if(!Object.keys(deck.get('cardTypes')).length)
@@ -1660,11 +3145,12 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader(`Holder properties`);
-    this.renderGenericProperties(widget, [ 'dropTarget' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'dropTarget' ]));
   }
 
   renderForSpinner(widget) {
     this.addHeader(`Spinner ${widget.id}`);
+    this.renderBasicSection(widget);
     
     this.addSubHeader('Spinner Options');
     const options = [
@@ -1701,7 +3187,7 @@ class PropertiesModule extends SidebarModule {
     }
 
     this.addSubHeader(`Spinner properties`);
-    this.renderGenericProperties(widget, ['options']);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['options']));
   }
 
   /**
@@ -1710,6 +3196,7 @@ class PropertiesModule extends SidebarModule {
    */
   renderForLabel(widget) {
     this.addHeader(`Label ${widget.id}`);
+    this.renderBasicSection(widget);
 
     // --- Label style presets (preview buttons like deck) ---
     this.addSubHeader('Label style');
@@ -1760,7 +3247,7 @@ class PropertiesModule extends SidebarModule {
     this.renderOnDemandPlaceholderInput(widget);
 
     this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, ['css','editable', 'placeholderText', 'text' ]);
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['css','editable', 'placeholderText', 'text' ]));
   }
 
   renderGenericProperties(widget, exclude) {
