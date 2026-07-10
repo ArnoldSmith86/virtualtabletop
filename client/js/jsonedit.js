@@ -546,6 +546,19 @@ const jeCommands = [
     show: _=>!Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon') == 'object' && jeGetValueAt('icon') !== null || Array.isArray(jeGetValueAt('icon')) && typeof jeGetValueAt('icon')[jeGetKeyAfter('icon')] == 'object'
   },
   {
+    id: 'je_anonymousCollection',
+    name: 'convert to anonymous collection',
+    context: '^.*\\((CANVAS|CLICK|COUNT|DELETE|FLIP|FOREACH|GET|LABEL|MOVE|ROTATE|SET|SHUFFLE|SORT|TIMER)\\) ↦ collection|^.*\\((CLONE|SELECT)\\) ↦ source',
+    show: function() {
+      const value = jeGetValue();
+      return value && typeof value[jeGetLastKey()] == 'string';
+    },
+    call: async function() {
+      jeGetValue()[jeGetLastKey()] = '###SELECT ME###';
+      jeSetAndSelect([]);
+    }
+  },
+  {
     id: 'je_uploadAudio',
     name: 'upload audio file',
     context: '^.*\\(AUDIO\\) ↦ source|^.* ↦ clickSound',
