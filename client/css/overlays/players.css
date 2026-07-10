@@ -23,7 +23,8 @@
   border-top: 1px solid #00000044;
 }
 
-#playersTable tr.mySessionEntry td {
+#playersTable tr.mySessionPlayer td:not(.playerSessionCell),
+#playersTable tr.mySessionEntry td.playerSessionCell {
   background: #1f5ca622;
 }
 

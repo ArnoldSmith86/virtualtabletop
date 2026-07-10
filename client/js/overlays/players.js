@@ -94,6 +94,7 @@ function fillPlayerList(players, active, sessions) {
 
   for(const player of sortedPlayers) {
     const playerSessions = sessionsByPlayer[player] || [ null ];
+    const hasMySession = playerSessions.some(s=>s && s.sessionID == mySessionID);
     playerSessions.forEach(function(session, sessionIndex) {
       let row = null;
       if(sessionIndex == 0) {
@@ -152,6 +153,9 @@ function fillPlayerList(players, active, sessions) {
       row.className = player == playerName ? 'myPlayerEntry' : session ? 'activePlayerEntry' : 'inactivePlayerEntry';
       if(session && session.sessionID == mySessionID)
         row.classList.add('mySessionEntry');
+      // the cells merged across the player's session rows live in the first row
+      if(sessionIndex == 0 && hasMySession)
+        row.classList.add('mySessionPlayer');
 
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
