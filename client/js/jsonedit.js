@@ -1305,12 +1305,14 @@ function jeAddRoutineCommentCommand() {
 }
 
 // Common params to prefill when inserting (from library game patterns). Omit to insert without params.
+// Param order follows a common grammar: input collection/widget/source, mode/relationship,
+// misc params specific to the operation, count/value, output collection/variable.
 const jeRoutineOperationCommonParams = {
   AUDIO: { source: '', maxVolume: 1.0 },
-  CALL: { routine: 'clickRoutine', widget: 'id' },
+  CALL: { routine: 'clickRoutine' },
   CANVAS: { collection: 'DEFAULT', mode: 'reset' },
   CLICK: { collection: 'DEFAULT', count: 1 },
-  CLONE: { source: 'DEFAULT', collection: 'DEFAULT', count: 1 },
+  CLONE: { source: 'DEFAULT', count: 1, collection: 'DEFAULT' },
   COUNT: { collection: 'DEFAULT', variable: 'COUNT' },
   DELAY: { milliseconds: 500 },
   DELETE: { collection: 'DEFAULT' },
@@ -1319,20 +1321,20 @@ const jeRoutineOperationCommonParams = {
   GET: { collection: 'DEFAULT', property: 'id', variable: 'result' },
   IF: { operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] },
   INPUT: { header: '', fields: [], confirmButtonText: 'Go', cancelButtonText: 'Cancel' },
-  LABEL: { collection: 'DEFAULT', value: 0, mode: 'set' },
+  LABEL: { collection: 'DEFAULT', mode: 'set', value: 0 },
   MOVE: { from: null, to: null, count: 1, collection: 'DEFAULT' },
   MOVEXY: { from: null, x: 0, y: 0, count: 1 },
   RECALL: { holder: null, inHolder: true },
   RESET: { property: 'resetProperties' },
-  ROTATE: { collection: 'DEFAULT', angle: 90, count: 1 },
+  ROTATE: { collection: 'DEFAULT', mode: 'add', angle: 90, count: 1 },
   SCORE: { mode: 'set', property: 'score' },
-  SELECT: { collection: 'DEFAULT', type: 'all', property: 'parent', value: null },
+  SELECT: { source: 'all', type: 'all', property: 'parent', value: null, collection: 'DEFAULT' },
   SET: { collection: 'DEFAULT', property: 'parent', value: null },
   SHUFFLE: { collection: 'DEFAULT' },
   SORT: { collection: 'DEFAULT', key: 'value', reverse: false },
   SWAPHANDS: { source: 'all', direction: 'forward' },
   TIMER: { collection: 'DEFAULT', mode: 'toggle' },
-  TURN: { turn: 1, source: 'all' },
+  TURN: { source: 'all', turnCycle: 'forward' },
   UPLOAD: { variable: 'uploadedFileName' },
   VAR: { variables: {} }
 };
