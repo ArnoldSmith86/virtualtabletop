@@ -12,10 +12,14 @@ export function validateParentAssignment(widgetId, proposedParentId) {
     return null;
   if(proposedParentId === widgetId)
     return 'self';
+  // Track visited ids so a pre-existing parent cycle (the corruption this bug
+  // can produce) doesn't turn the walk into an infinite loop.
+  const seen = new Set();
   let currentParentId = proposedParentId;
-  while(currentParentId !== null) {
+  while(currentParentId !== null && !seen.has(currentParentId)) {
     if(currentParentId === widgetId)
       return 'descendant';
+    seen.add(currentParentId);
     const currentParent = widgets.get(currentParentId);
     if(!currentParent || !currentParent.state || !currentParent.get('parent'))
       break;

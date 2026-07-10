@@ -1,6 +1,13 @@
-import { validateParentAssignment } from '../../client/js/serverstate.js';
+import { validateParentAssignment, widgets } from '../../client/js/serverstate.js';
 
 import { createWidget, removeWidget } from './client-util.js';
+
+// Removing a widget can cascade to descendants, so guard against ids that a
+// previous removal already took out (relevant for the corrupt-cycle fixtures).
+function removeWidgetIfPresent(id) {
+  if(widgets.has(id))
+    removeWidget(id);
+}
 
 describe("validateParentAssignment", () => {
   const testName = "parent-assignment";
@@ -15,7 +22,7 @@ describe("validateParentAssignment", () => {
 
   afterAll(() => {
     for(const id of ids.slice().reverse())
-      removeWidget(id);
+      removeWidgetIfPresent(id);
   });
 
   test("returns null when no parent is proposed", () => {
@@ -38,5 +45,28 @@ describe("validateParentAssignment", () => {
   test("allows setting the parent to a non-descendant ancestor", () => {
     expect(validateParentAssignment(ids[2], ids[0])).toBe(null);
     expect(validateParentAssignment(ids[1], ids[0])).toBe(null);
+  });
+});
+
+describe("validateParentAssignment with a pre-existing cycle", () => {
+  const testName = "parent-cycle";
+  const ids = [ `${testName}-X`, `${testName}-Y` ];
+
+  beforeAll(() => {
+    // Force a corrupt state: X and Y are each other's parent (a cycle that this
+    // very bug could have written to a save before the fix existed).
+    const x = createWidget({ id: ids[0], type: 'widget', parent: ids[1] });
+    const y = createWidget({ id: ids[1], type: 'widget', parent: ids[0] });
+  });
+
+  afterAll(() => {
+    for(const id of ids.slice().reverse())
+      removeWidgetIfPresent(id);
+  });
+
+  test("terminates instead of hanging when the ancestor chain already loops", () => {
+    // Neither id appears as its own ancestor, so the result is null, but the
+    // point is that the walk stops (the visited-set breaks the cycle).
+    expect(validateParentAssignment(`${testName}-unrelated`, ids[0])).toBe(null);
   });
 });

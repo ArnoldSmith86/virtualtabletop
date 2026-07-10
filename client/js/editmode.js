@@ -1251,16 +1251,22 @@ async function updateWidget(currentState, oldState, applyChangesFromUI) {
   }
 
   if(widget.parent !== undefined) {
-    const parentProblem = validateParentAssignment(widget.id, widget.parent);
-    if(parentProblem === 'self') {
-      alert(`Widget ${widget.id} cannot set its parent to itself.`);
-      batchEnd();
-      return;
-    }
-    if(parentProblem === 'descendant') {
-      alert(`Widget ${widget.id} cannot set its parent to its descendants.`);
-      batchEnd();
-      return;
+    // Check both the new and the previous id: renaming a widget while reparenting
+    // it to a former descendant in one save would otherwise slip past the check,
+    // since the ancestor chain still references the old id.
+    const idsToCheck = widget.id === previousState.id ? [ widget.id ] : [ widget.id, previousState.id ];
+    for(const id of idsToCheck) {
+      const parentProblem = validateParentAssignment(id, widget.parent);
+      if(parentProblem === 'self') {
+        alert(`Widget ${widget.id} cannot set its parent to itself.`);
+        batchEnd();
+        return;
+      }
+      if(parentProblem === 'descendant') {
+        alert(`Widget ${widget.id} cannot set its parent to its descendants.`);
+        batchEnd();
+        return;
+      }
     }
   }
 
