@@ -62,13 +62,17 @@ function getActionSummary(mapping, rel) {
 
 async function readDirectory(handle, basePath = '') {
   const files = [];
-  for await (const [name, entry] of handle.entries()) {
+  const iterator = handle.entries();
+  let next = await iterator.next();
+  while (!next.done) {
+    const [name, entry] = next.value;
     const rel = basePath ? basePath + '/' + name : name;
     if (entry.kind === 'file') {
       files.push({ name, relativePath: rel, handle: entry, isHandle: true });
     } else if (entry.kind === 'directory') {
       files.push(...await readDirectory(entry, rel));
     }
+    next = await iterator.next();
   }
   return files;
 }
@@ -182,6 +186,7 @@ class FilesModule extends SidebarModule {
     super('folder', 'Files', 'Monitor a folder or drop one; map files to assets, decks, or widgets.');
     this.files = [];
     this.rootHandle = null;
+    this.rootEntry = null;
     this.pollTimer = null;
     this.lastPollKeys = null;
     this.lastModifiedByPath = {};
@@ -242,6 +247,16 @@ class FilesModule extends SidebarModule {
       chooseDir.onclick = () => this.pickDirectory(target, mappings);
     }
     target.append(chooseDir);
+
+    if (this.rootHandle || this.rootEntry) {
+      const refresh = document.createElement('button');
+      refresh.className = 'sidebarButton';
+      refresh.setAttribute('icon', 'refresh');
+      refresh.innerHTML = 'Refresh';
+      refresh.style.marginBottom = '8px';
+      refresh.onclick = () => this.refreshFiles(target, mappings).catch(e => console.error('[Files panel] refresh failed:', e));
+      target.append(refresh);
+    }
 
     const dropZone = document.createElement('div');
     dropZone.className = 'filesPanel-dropZone';
@@ -314,6 +329,7 @@ class FilesModule extends SidebarModule {
     try {
       const handle = await showDirectoryPicker();
       this.rootHandle = handle;
+      this.rootEntry = null;
       this.files = await readDirectory(handle);
       this.startPolling(handle, mappings);
       await saveDirectoryHandle(handle);
@@ -323,9 +339,22 @@ class FilesModule extends SidebarModule {
     }
   }
 
+  async refreshFiles(target, mappings) {
+    if (this.rootHandle) {
+      this.files = await readDirectory(this.rootHandle);
+      this.startPolling(this.rootHandle, mappings);
+    } else if (this.rootEntry) {
+      this.files = await readDirectoryFromEntry(this.rootEntry);
+    } else {
+      return;
+    }
+    this.renderModule(target);
+  }
+
   async loadDroppedFolder(dirEntry, target, mappings) {
     this.files = await readDirectoryFromEntry(dirEntry);
     this.rootHandle = null;
+    this.rootEntry = dirEntry;
     if (this.pollTimer) clearInterval(this.pollTimer);
     this.pollTimer = null;
     const currentMappings = getGameSettingsFileMappings();
@@ -361,10 +390,8 @@ class FilesModule extends SidebarModule {
             const prevSize = this.lastSizeByPath[f.relativePath];
             const timeChanged = prevMod != null && prevMod !== mod;
             const sizeChanged = prevSize != null && prevSize !== size;
-            if (timeChanged || sizeChanged) {
+            if (timeChanged || sizeChanged)
               contentChanged = true;
-              console.log('[Files panel] change detected:', f.relativePath, { timeChanged, sizeChanged, mod, prevMod, size, prevSize });
-            }
             this.lastModifiedByPath[f.relativePath] = mod;
             this.lastSizeByPath[f.relativePath] = size;
             const m = currentMappings[f.relativePath];
@@ -550,7 +577,7 @@ class FilesModule extends SidebarModule {
     cancelBtn.className = 'sidebarButton';
     cancelBtn.setAttribute('icon', 'close');
     cancelBtn.textContent = 'Cancel';
-      saveBtn.onclick = () => {
+    saveBtn.onclick = () => {
       const handlerId = select.value || null;
       const mappings = getGameSettingsFileMappings();
       if (handlerId) {
@@ -601,8 +628,6 @@ class FilesModule extends SidebarModule {
       if (sch.type === 'asset') {
         const grouped = typeof getAllAssetsGrouped === 'function' ? getAllAssetsGrouped() : {};
         const urls = Object.keys(grouped);
-        if (typeof console !== 'undefined' && console.log)
-          console.log('[Files asset picker] mapping.options', mapping && mapping.options ? { ...mapping.options } : null, 'rel', rel);
         const norm = (u) => {
           if (!u) return '';
           const s = String(u).trim();
@@ -617,18 +642,6 @@ class FilesModule extends SidebarModule {
         hidden.dataset.optionKey = sch.key;
         hidden.value = matchedUrl !== undefined ? matchedUrl : (urls[0] || '');
         opts[sch.key] = hidden.value;
-        if (typeof console !== 'undefined' && console.log) {
-          console.log('[Files asset picker]', {
-            savedOpt: opts[sch.key],
-            current,
-            currentNorm,
-            matchedUrl: matchedUrl !== undefined ? matchedUrl : null,
-            hiddenValue: hidden.value,
-            urlCount: urls.length,
-            firstFewUrls: urls.slice(0, 5),
-            normsMatch: urls.map(u => ({ url: u, norm: norm(u), match: norm(u) === currentNorm })).slice(0, 8)
-          });
-        }
         const wrap = document.createElement('div');
         wrap.className = 'filesPanel-assetPicker';
         wrap.append(hidden);
@@ -644,8 +657,6 @@ class FilesModule extends SidebarModule {
         for (let i = 0; i < urls.length; i++) {
           const url = urls[i];
           const isSelected = norm(url) === hiddenNorm;
-          if (isSelected && typeof console !== 'undefined' && console.log)
-            console.log('[Files asset picker] selected index', i, 'url', url);
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'filesPanel-assetThumb' + (isSelected ? ' filesPanel-assetSelected' : '');
@@ -724,8 +735,6 @@ class FilesModule extends SidebarModule {
   }
 
   async runHandlerForFile(fileInfo, mapping) {
-    const DEBUG = false;
-    if (DEBUG) console.log('[Files runHandlerForFile] ENTRY', { filePath: fileInfo.relativePath, mapping, handlerId: mapping?.handlerId });
     if (!mapping || !mapping.handlerId) return;
     const mappings = getGameSettingsFileMappings();
     const m = mappings[fileInfo.relativePath];
@@ -747,7 +756,6 @@ class FilesModule extends SidebarModule {
     const options = (m || mapping).options || {};
     const cachedLastAsset = await getLastAssetUrlFromCache(fileInfo.relativePath);
     const context = { lastAssetUrl: mapping.lastAssetUrl || cachedLastAsset };
-    if (DEBUG) console.log('[Files runHandlerForFile] calling handler', { handlerId: mapping.handlerId, options, context, gameSettingsFileMappings: getGameSettingsFileMappings()[fileInfo.relativePath] });
 
     let content;
     const ext = getExtension(fileInfo.name);

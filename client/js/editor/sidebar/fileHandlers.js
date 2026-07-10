@@ -133,53 +133,30 @@ function registerBuiltInHandlers() {
     filePattern: /\.(png|jpe?g|gif|webp|svg)$/i,
     optionsSchema: [{ key: 'assetUrl', label: 'Asset to replace', type: 'asset' }],
     async apply(contentBlob, options, _filePath, context = {}) {
-      const DEBUG = false;
-      if (DEBUG) console.log('[Files imageReplaceAsset] ENTRY', { options, context, optionsKeys: options ? Object.keys(options) : [] });
       const lastAssetUrl = context.lastAssetUrl;
       const assetOpt = options.assetUrl || (options && Object.values(options).find(v => typeof v === 'string' && (/^\/assets\//.test(v) || /^-?[0-9]+_[0-9]+$/.test(v))));
       let oldAsset = lastAssetUrl || assetOpt;
-      if (DEBUG) console.log('[Files imageReplaceAsset] resolved target', { lastAssetUrl, assetOpt, oldAssetBeforeNorm: oldAsset });
       if (!oldAsset) throw new Error('No target asset set. Pick an asset in the "Asset to replace" dropdown and run again.');
       if (!oldAsset.startsWith('/assets/'))
         oldAsset = '/assets/' + oldAsset.replace(/^\/+/, '');
-      if (DEBUG) console.log('[Files imageReplaceAsset] oldAsset (normalized)', oldAsset);
       const newAsset = await _uploadAsset(contentBlob);
-      if (DEBUG) console.log('[Files imageReplaceAsset] newAsset after upload', newAsset);
       if (!newAsset) return;
       const editedWidgetIds = [];
-      const hasGetAllAssetsGrouped = typeof getAllAssetsGrouped === 'function';
-      const widgetsRef = typeof widgets !== 'undefined' ? widgets : null;
-      if (DEBUG) console.log('[Files imageReplaceAsset] getAllAssetsGrouped', { isFunction: hasGetAllAssetsGrouped, widgetsRef: !!widgetsRef, widgetsSize: widgetsRef ? widgetsRef.size : 0, widgetIds: widgetsRef ? [...widgetsRef.keys()].slice(0, 15) : [] });
-      const grouped = hasGetAllAssetsGrouped ? getAllAssetsGrouped() : {};
-      const groupedKeys = Object.keys(grouped);
-      if (DEBUG) {
-        console.log('[Files imageReplaceAsset] grouped keys (all known assets)', groupedKeys.length, groupedKeys.slice(0, 20));
-        if (widgetsRef && widgetsRef.size) {
-          for (const [id, w] of widgetsRef) {
-            if (w.get && w.get('type') === 'button') {
-              console.log('[Files imageReplaceAsset] sample button widget', { id, stateKeys: w.state ? Object.keys(w.state) : [], image: w.get ? w.get('image') : 'no get' });
-              break;
-            }
-          }
-        }
-      }
-      if (DEBUG) console.log('[Files imageReplaceAsset] lookup grouped[oldAsset]', { oldAsset, found: !!grouped[oldAsset], usesCount: grouped[oldAsset] ? (grouped[oldAsset].uses ? grouped[oldAsset].uses.length : 0) : 0 });
+      const grouped = typeof getAllAssetsGrouped === 'function' ? getAllAssetsGrouped() : {};
       let assetGroup = grouped[oldAsset];
       if (!assetGroup || !assetGroup.uses || !assetGroup.uses.length) {
+        // the last uploaded asset may no longer be in use; fall back to the asset picked in the dropdown
         const fallback = assetOpt ? (assetOpt.startsWith('/assets/') ? assetOpt : '/assets/' + assetOpt.replace(/^\/+/, '')) : null;
         if (fallback && fallback !== oldAsset && grouped[fallback] && grouped[fallback].uses && grouped[fallback].uses.length) {
-          if (DEBUG) console.log('[Files imageReplaceAsset] fallback to dropdown asset', { fallback });
           oldAsset = fallback;
           assetGroup = grouped[fallback];
         }
       }
       if (assetGroup && assetGroup.uses && assetGroup.uses.length) {
-        if (DEBUG) console.log('[Files imageReplaceAsset] assetGroup.uses', assetGroup.uses);
         batchStart();
         setDeltaCause(`${getPlayerDetails().playerName} replaced asset from Files panel`);
         for (const use of assetGroup.uses) {
           const w = widgets.get(use.widget);
-          if (DEBUG) console.log('[Files imageReplaceAsset] use', { use, widgetExists: !!w, widgetsMapSize: typeof widgets !== 'undefined' && widgets ? widgets.size : 'no widgets' });
           if (!w) continue;
           const topKey = use.keys[0];
           const property = w.get(topKey);
@@ -188,12 +165,7 @@ function registerBuiltInHandlers() {
           if (!editedWidgetIds.includes(use.widget)) editedWidgetIds.push(use.widget);
         }
         batchEnd();
-      } else if (DEBUG) {
-        console.log('[Files imageReplaceAsset] NO assetGroup or empty uses – checking alternate key');
-        const altKey = oldAsset.replace(/^\/assets\//, '');
-        console.log('[Files imageReplaceAsset] grouped by /assets/ prefix?', groupedKeys.filter(k => k.includes(altKey)));
       }
-      if (DEBUG) console.log('[Files imageReplaceAsset] EXIT', { editedWidgetIds, lastAssetUrl: newAsset });
       return { lastAssetUrl: newAsset, editedWidgetIds };
     }
   });
