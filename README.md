@@ -84,6 +84,20 @@ There's also an official Docker image: https://hub.docker.com/r/arnoldsmith86/vi
 </details>
 
 <details>
+    <summary><b>🐧 Linux AppImage</b></summary>
+
+If you don't want to install Node.js, you can download a self-contained AppImage from the [releases page](https://github.com/ArnoldSmith86/virtualtabletop/releases). It bundles Node.js and a small launcher and is rebuilt monthly.
+
+Two variants are available:
+
+- `VirtualTabletop-<hash>-x86_64.AppImage` includes the whole public game library.
+- `VirtualTabletop-<hash>-nolibrary-x86_64.AppImage` is much smaller and skips the library - useful if you only play your own games.
+
+Make the file executable (`chmod +x VirtualTabletop-*.AppImage`) and run it.
+
+</details>
+
+<details>
     <summary><b>📱 Android</b></summary>
 
 Using [Termux](https://termux.dev/), you can use an Android phone as the server and play with any devices offline by using its wifi hotspot:
@@ -98,6 +112,8 @@ Using [Termux](https://termux.dev/), you can use an Android phone as the server 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
 
 If you want to contribute to virtualtabletop.io development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
+
+Before opening a pull request, run the unit tests with `npm test`. Changes that affect games or client behavior should also pass the browser test suite: `npm run testcafe-headless-all` (requires Chrome; there are similar scripts for Chromium and Firefox in `package.json`).
 
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
 
