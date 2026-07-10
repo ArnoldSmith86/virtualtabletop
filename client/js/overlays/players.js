@@ -1,4 +1,4 @@
-import { asArray, onLoad, rand } from '../domhelpers.js';
+import { asArray, onLoad, progressButton, rand } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -8,6 +8,7 @@ let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
 let mySessionID = null;
+let metaUpdateResolves = [];
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -38,6 +39,44 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
 }
 
+// resolves with the next meta update so the UI can show that a sent request is being worked on;
+// rejects after a timeout because the server silently ignores invalid requests
+function nextMetaUpdate(timeout=3000) {
+  return new Promise(function(resolve, reject) {
+    const timer = setTimeout(function() {
+      metaUpdateResolves = metaUpdateResolves.filter(r=>r != entry);
+      reject(new Error('The server did not apply the change.'));
+    }, timeout);
+    const entry = function() {
+      clearTimeout(timer);
+      resolve();
+    };
+    metaUpdateResolves.push(entry);
+  });
+}
+
+// shows a spinner on the button while a returned promise is pending; the row usually
+// gets replaced by the meta update before the button is restored
+function serverActionButton(button, action) {
+  button.addEventListener('click', async function() {
+    if(button.disabled)
+      return;
+    const pending = action();
+    if(!pending)
+      return;
+    const initialIcon = button.getAttribute('icon');
+    button.disabled = true;
+    button.setAttribute('icon', 'hourglass_empty');
+    button.classList.add('working');
+    try {
+      await pending;
+    } catch(e) {}
+    button.disabled = false;
+    button.setAttribute('icon', initialIcon);
+    button.classList.remove('working');
+  });
+}
+
 function fillPlayerList(players, active, sessions) {
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
@@ -66,10 +105,20 @@ function fillPlayerList(players, active, sessions) {
         $('.teamColor', row).addEventListener('change', function(e) {
           toServer('playerColor', { player, color: toHex(e.target.value) });
         });
-        $('.playerName', row).addEventListener('change', function(e) {
+        $('.playerName', row).addEventListener('change', async function(e) {
           const newName = e.target.value.trim();
-          if(newName && newName != player)
+          if(newName && newName != player) {
+            e.target.disabled = true;
+            e.target.classList.add('working');
             toServer('rename', { oldName: player, newName, updateWidgets: true });
+            try {
+              await nextMetaUpdate();
+            } catch(err) {
+              e.target.value = player;
+            }
+            e.target.disabled = false;
+            e.target.classList.remove('working');
+          }
         });
         $('.playerName', row).addEventListener('keydown', function(e) {
           if(e.key == 'Enter')
@@ -82,16 +131,18 @@ function fillPlayerList(players, active, sessions) {
         if(player == playerName) {
           removeFromDOM($('.viewPlayer', row));
         } else {
-          $('.viewPlayer', row).addEventListener('click', function() {
+          serverActionButton($('.viewPlayer', row), function() {
             toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
+            return nextMetaUpdate();
           });
         }
         const isReferencedByWidgets = [...widgets.values()].some(w=>w.state.player==player||w.state.owner==player||Array.isArray(w.state.owner)&&w.state.owner.indexOf(player)!=-1);
         if(session || isReferencedByWidgets) {
           removeFromDOM($('.removePlayer', row));
         } else {
-          $('.removePlayer', row).addEventListener('click', function() {
+          serverActionButton($('.removePlayer', row), function() {
             toServer('removeLocalPlayer', { player });
+            return nextMetaUpdate();
           });
         }
       } else {
@@ -105,10 +156,12 @@ function fillPlayerList(players, active, sessions) {
       const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
       if(session) {
         $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `Session ${sessionIndex+1} (you)` : `Session ${sessionIndex+1}`;
-        $('.splitSession', sessionCell).addEventListener('click', function() {
+        serverActionButton($('.splitSession', sessionCell), function() {
           const newName = (prompt(`Enter a new player name for this session of ${player}:`) || '').trim();
-          if(newName && newName != player)
-            toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
+          if(!newName || newName == player)
+            return;
+          toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
+          return nextMetaUpdate();
         });
       } else {
         $('.sessionLabel', sessionCell).textContent = 'not connected';
@@ -144,6 +197,8 @@ onLoad(function() {
   onMessage('meta', function(args) {
     lastMetaArgs = args;
     fillPlayerList(args.meta.players, args.activePlayers, args.sessions);
+    for(const resolve of metaUpdateResolves.splice(0))
+      resolve();
   });
   onMessage('sessionID', function(args) {
     mySessionID = args;
@@ -188,17 +243,19 @@ onLoad(function() {
       widget.updateOwner();
   });
 
-  function addLocalPlayer() {
+  progressButton($('#addLocalPlayerButton'), async function() {
     const localPlayerName = $('#localPlayerName').value.trim();
-    if(localPlayerName) {
-      toServer('addLocalPlayer', { player: localPlayerName });
-      $('#localPlayerName').value = '';
-    }
-  }
-  $('#addLocalPlayerButton').addEventListener('click', addLocalPlayer);
+    if(!localPlayerName)
+      throw new Error('Please enter a player name.');
+    if(lastMetaArgs && lastMetaArgs.meta.players[localPlayerName] !== undefined)
+      throw new Error('This player already exists.');
+    toServer('addLocalPlayer', { player: localPlayerName });
+    await nextMetaUpdate();
+    $('#localPlayerName').value = '';
+  });
   $('#localPlayerName').addEventListener('keydown', function(e) {
     if(e.key == 'Enter')
-      addLocalPlayer();
+      $('#addLocalPlayerButton').click();
   });
 
   // share URL when clicking button

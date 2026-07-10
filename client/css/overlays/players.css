@@ -56,6 +56,19 @@
   margin: 0;
 }
 
+#playersTable button.working[icon]::before {
+  animation: playersWorking 1.5s linear infinite;
+}
+
+@keyframes playersWorking {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.playerName.working {
+  opacity: 0.5;
+}
+
 .playerName {
   border: none;
   padding: 0;
