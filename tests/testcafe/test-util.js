@@ -33,7 +33,7 @@ export async function setName(t, name, color) {
     .click('#playersButton')
     .click('.myPlayerEntry input[type=color]')
     .typeText('.myPlayerEntry input[type=color]', color || '#7F007F', { replace: true })
-    .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
+    .typeText('.myPlayerEntry .playerName', name || 'TestCafe', { replace: true })
     .click('#activeGameButton');
 }
 

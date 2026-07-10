@@ -27,10 +27,18 @@ export default class Room {
     }, 5000);
   }
 
+  addLocalPlayer(addingPlayer, playerName) {
+    if(typeof playerName != 'string' || !playerName.trim() || this.state._meta.players[playerName])
+      return;
+    this.state._meta.players[playerName] = this.newPlayerColor();
+    this.sendMetaUpdate();
+  }
+
   addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
+    player.send('sessionID', player.sessionID);
 
     if(!this.state._meta.players[player.name])
       this.state._meta.players[player.name] = this.newPlayerColor();
@@ -841,6 +849,13 @@ export default class Room {
     }
   }
 
+  removeLocalPlayer(removingPlayer, playerName) {
+    if(this.players.filter(p=>p.name == playerName).length)
+      return;
+    delete this.state._meta.players[playerName];
+    this.sendMetaUpdate();
+  }
+
   removePlayer(player) {
     this.trace('removePlayer', { player: player.name });
     Logging.log(`removing player ${player.name} from room ${this.id}`);
@@ -883,19 +898,50 @@ export default class Room {
     }
   }
 
-  renamePlayer(renamingPlayer, oldName, newName) {
-    if(oldName == newName)
+  renamePlayer(renamingPlayer, oldName, newName, updateWidgets, sessionID) {
+    if(oldName == newName || typeof newName != 'string' || !newName.trim())
       return;
 
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
-    this.state._meta.players[newName] = this.state._meta.players[newName] || this.state._meta.players[oldName];
-    delete this.state._meta.players[oldName];
+    if(this.state._meta.players[newName] === undefined)
+      this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();
 
     for(const player of this.players)
-      if(player.name == oldName)
+      if(player.name == oldName && (sessionID == null || player.sessionID == sessionID))
         player.rename(newName);
 
+    // when only a single session is renamed (split/view), the old player stays available for the other sessions
+    if(sessionID == null)
+      delete this.state._meta.players[oldName];
+
+    if(updateWidgets)
+      this.renamePlayerInWidgets(oldName, newName);
+
     this.sendMetaUpdate();
+  }
+
+  renamePlayerInWidgets(oldName, newName) {
+    const delta = { s: {} };
+    for(const widgetID in this.state) {
+      if(widgetID == '_meta')
+        continue;
+      const changes = {};
+      for(const property of [ 'owner', 'player', 'artist' ]) {
+        const value = this.state[widgetID][property];
+        if(value === oldName)
+          changes[property] = newName;
+        else if(Array.isArray(value) && value.includes(oldName))
+          changes[property] = value.map(p=>p === oldName ? newName : p);
+      }
+      if(Object.keys(changes).length) {
+        Object.assign(this.state[widgetID], changes);
+        delta.s[widgetID] = changes;
+      }
+    }
+    if(Object.keys(delta.s).length) {
+      delta.id = ++this.deltaID;
+      this.broadcast('delta', delta);
+    }
   }
 
   roomFilename() {
@@ -991,7 +1037,7 @@ export default class Room {
   }
 
   sendMetaUpdate() {
-    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name) });
+    this.broadcast('meta', { meta: this.state._meta, activePlayers: this.players.map(p=>p.name), sessions: this.players.map(p=>({ sessionID: p.sessionID, player: p.name })) });
   }
 
   setGameSettings(player, gameSettings) {

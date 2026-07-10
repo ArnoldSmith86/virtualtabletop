@@ -7,6 +7,7 @@ let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
 let mouseCoords = [];
+let mySessionID = null;
 localStorage.setItem('playerName', playerName);
 
 export {
@@ -37,37 +38,87 @@ function addPlayerCursor(playerName, playerColor) {
   playerCursorsTimeout[playerName] = setTimeout(()=>{}, 0);
 }
 
-function fillPlayerList(players, active) {
+function fillPlayerList(players, active, sessions) {
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
-  removeFromDOM('#playerList > div, #playerCursors > .cursor');
+  removeFromDOM('#playersTable tbody > tr, #playerCursors > .cursor');
 
-  for(const player in players) {
-    const entry = domByTemplate('template-playerlist-entry');
-    $('.teamColor', entry).value = players[player];
-    $('.playerName', entry).value = player;
-    $('.teamColor', entry).addEventListener('change', function(e) {
-      toServer('playerColor', { player, color: toHex(e.target.value) });
-    });
-    $('.playerName', entry).addEventListener('change', function(e) {
-      toServer('rename', { oldName: player, newName: e.target.value });
-    });
-    if(player == playerName) {
-      entry.className = 'myPlayerEntry';
-      playerColor = players[player];
-    } else {
-      entry.className = 'activePlayerEntry';
-    }
-    if(activePlayers.indexOf(player) == -1)
-      entry.className = 'inactivePlayerEntry';
+  if(players[playerName] !== undefined)
+    playerColor = players[playerName];
 
-    $('#playerList').appendChild(entry);
+  const sessionsByPlayer = {};
+  for(const session of sessions || [])
+    sessionsByPlayer[session.player] = (sessionsByPlayer[session.player] || []).concat(session);
+
+  const rank = player=>player == playerName ? 0 : sessionsByPlayer[player] ? 1 : 2;
+  const sortedPlayers = Object.keys(players).sort((a,b)=>rank(a)-rank(b) || a.localeCompare(b));
+
+  for(const player of sortedPlayers) {
+    const playerSessions = sessionsByPlayer[player] || [ null ];
+    playerSessions.forEach(function(session, sessionIndex) {
+      let row = null;
+      if(sessionIndex == 0) {
+        row = domByTemplate('template-playerlist-player', {}, 'tr');
+        for(const cell of $a('td', row))
+          cell.rowSpan = playerSessions.length;
+        $('.teamColor', row).value = players[player];
+        $('.playerName', row).value = player;
+        $('.teamColor', row).addEventListener('change', function(e) {
+          toServer('playerColor', { player, color: toHex(e.target.value) });
+        });
+        $('.playerName', row).addEventListener('change', function(e) {
+          if(e.target.value.trim() && e.target.value != player)
+            toServer('rename', { oldName: player, newName: e.target.value, updateWidgets: true });
+        });
+        $('.playerName', row).addEventListener('keydown', function(e) {
+          if(e.key == 'Enter')
+            e.target.blur();
+        });
+        $('.renamePlayer', row).addEventListener('click', function() {
+          $('.playerName', row).focus();
+          $('.playerName', row).select();
+        });
+        if(player == playerName) {
+          removeFromDOM($('.viewPlayer', row));
+        } else {
+          $('.viewPlayer', row).addEventListener('click', function() {
+            toServer('rename', { oldName: playerName, newName: player, sessionID: mySessionID });
+          });
+        }
+        if(session) {
+          removeFromDOM($('.removePlayer', row));
+        } else {
+          $('.removePlayer', row).addEventListener('click', function() {
+            toServer('removeLocalPlayer', { player });
+          });
+        }
+      } else {
+        row = document.createElement('tr');
+      }
+
+      row.className = player == playerName ? 'myPlayerEntry' : session ? 'activePlayerEntry' : 'inactivePlayerEntry';
+      if(session && session.sessionID == mySessionID)
+        row.classList.add('mySessionEntry');
+
+      const sessionCell = $('td', domByTemplate('template-playerlist-session', {}, 'tr'));
+      if(session) {
+        $('.sessionLabel', sessionCell).textContent = session.sessionID == mySessionID ? `Session ${sessionIndex+1} (you)` : `Session ${sessionIndex+1}`;
+        $('.splitSession', sessionCell).addEventListener('click', function() {
+          const newName = prompt(`Enter a new player name for this session of ${player}:`);
+          if(newName && newName.trim() && newName != player)
+            toServer('rename', { oldName: player, newName, sessionID: session.sessionID });
+        });
+      } else {
+        $('.sessionLabel', sessionCell).textContent = 'not connected';
+        removeFromDOM($('.splitSession', sessionCell));
+      }
+      row.appendChild(sessionCell);
+
+      $('#playersTable tbody').appendChild(row);
+    });
 
     if(player != playerName && activePlayers.indexOf(player) != -1)
       addPlayerCursor(player, players[player]);
-  }
-  if(activePlayers.length < 2){
-    document.getElementById("template-playerlist-entry").insertAdjacentHTML("afterend", "<div class='nothingtoshow'>There are no other players at this table.</div>");
   }
   updatePlayerCountDisplay();
 }
@@ -87,7 +138,16 @@ function updatePlayerCountDisplay() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
+  let lastMetaArgs = null;
+  onMessage('meta', function(args) {
+    lastMetaArgs = args;
+    fillPlayerList(args.meta.players, args.activePlayers, args.sessions);
+  });
+  onMessage('sessionID', function(args) {
+    mySessionID = args;
+    if(lastMetaArgs)
+      fillPlayerList(lastMetaArgs.meta.players, lastMetaArgs.activePlayers, lastMetaArgs.sessions);
+  });
   onMessage('mouse', function(args) {
     if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
@@ -124,6 +184,19 @@ onLoad(function() {
     localStorage.setItem('playerName', playerName);
     for(const [ id, widget ] of widgets)
       widget.updateOwner();
+  });
+
+  function addLocalPlayer() {
+    const localPlayerName = $('#localPlayerName').value.trim();
+    if(localPlayerName) {
+      toServer('addLocalPlayer', { player: localPlayerName });
+      $('#localPlayerName').value = '';
+    }
+  }
+  $('#addLocalPlayerButton').addEventListener('click', addLocalPlayer);
+  $('#localPlayerName').addEventListener('keydown', function(e) {
+    if(e.key == 'Enter')
+      addLocalPlayer();
   });
 
   // share URL when clicking button

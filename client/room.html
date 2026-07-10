@@ -73,23 +73,45 @@
     <div id="playerOverlay" class="overlay">
       <div class="heading">
         <h1>Players</h1>
-        <div class="instructionalText">From here you can edit the name and color of any player.</div>
+        <div class="instructionalText">Every connected browser tab is a session of a player. Edit the name and color of any player, view the game as another player or split a session off into its own player.</div>
       </div>
       <div id="playerList">
-        <template id="template-playerlist-entry" type="text/template">
-          <span class="teamColorWrap">
-            <input type="color" class="teamColor">
-            <i class="material-symbols teamColorIcon">person</i>
-          </span>
-          <input class="playerName" />
+        <template id="template-playerlist-player" type="text/template">
+          <td class="playerColorCell">
+            <span class="teamColorWrap">
+              <input type="color" class="teamColor" title="Change player color">
+              <i class="material-symbols teamColorIcon">person</i>
+            </span>
+          </td>
+          <td class="playerNameCell">
+            <input class="playerName" />
+          </td>
+          <td class="playerActionsCell">
+            <button icon="edit" class="renamePlayer" title="Rename this player and update all references to it in the game"></button>
+            <button icon="visibility" class="viewPlayer" title="View the game as this player: only your session gets renamed and the game stays unchanged"></button>
+            <button icon="delete" class="removePlayer" title="Remove this player"></button>
+          </td>
         </template>
-        <label class="me ui-line" data-label="Me »"> </label>
-        <label class="otherPlayers ui-line" data-label="Other Players »"> </label>
-        <label class="inactivePlayers ui-line"> </label>
+        <template id="template-playerlist-session" type="text/template">
+          <td class="playerSessionCell">
+            <span class="sessionLabel"></span>
+            <button icon="call_split" class="splitSession" title="Split this session off into its own player: only this session gets renamed and the game stays unchanged"></button>
+          </td>
+        </template>
+        <table id="playersTable">
+          <thead>
+            <tr><th></th><th>Player</th><th></th><th>Sessions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
-      <div id="playerInvite">
-        <h1>Invite</h1>
-        <p>More players can join this game by visiting <span id="playerInviteURL"></span>.</p>
+      <div id="playerAdd">
+        <h1>Add player</h1>
+        <p>More players can join this game by visiting <span id="playerInviteURL"></span>. You can also add a local player without its own device and use the <i class="material-symbols">visibility</i> buttons above to pass the turn around on this device.</p>
+        <div id="addLocalPlayer">
+          <input id="localPlayerName" placeholder="Player name" />
+          <button icon="person_add" id="addLocalPlayerButton">Add local player</button>
+        </div>
         <button icon="share" id="playersShareButton">Share room URL</button>
       </div>
     </div>
