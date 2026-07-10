@@ -38,11 +38,13 @@
 
 #playersTable .playerSessionCell {
   font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 #playersTable .playerSessionCell button {
-  vertical-align: middle;
-  margin-left: 0.5rem;
+  margin-left: auto;
 }
 
 #playersTable button[icon] {
