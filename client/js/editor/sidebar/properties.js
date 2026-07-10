@@ -106,9 +106,181 @@ async function setCardCount(deck, cardType, count) {
 /* end helper functions */
 
 
+// Which properties make up the "appearance" of each widget type and which
+// inputs edit its type specific behavior. Each entry becomes an input created
+// by renderInputs; "cssKey" entries edit one declaration inside the css
+// property instead of a whole widget property.
+const editorTypeSections = {
+  basic: {
+    appearance: [
+      { label: 'Color',         property: 'color',        kind: 'color' },
+      { label: 'Image',         property: 'image',        kind: 'image' },
+      { label: 'Icon',          property: 'icon',         kind: 'icon' },
+      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true },
+      { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 200, slider: true, nullIfEmpty: true }
+    ]
+  },
+  button: {
+    appearance: [
+      { label: 'Text',             property: 'text',              kind: 'text', nullIfEmpty: true },
+      { label: 'Icon',             property: 'icon',              kind: 'icon' },
+      { label: 'Image',            property: 'image',             kind: 'image' },
+      { label: 'Text color',       property: 'textColor',         kind: 'color' },
+      { label: 'Background',       property: 'backgroundColor',   kind: 'color' },
+      { label: 'Border',           property: 'borderColor',       kind: 'color' },
+      { label: 'Text (hover)',     property: 'textColorOH',       kind: 'color' },
+      { label: 'Background (hover)', property: 'backgroundColorOH', kind: 'color' },
+      { label: 'Border (hover)',   property: 'borderColorOH',     kind: 'color' },
+      { label: 'SVG color',        property: 'color',             kind: 'color' },
+      { label: 'Border radius',    property: 'borderRadius',      kind: 'number', min: 0, max: 800, slider: true }
+    ]
+  },
+  canvas: {
+    behavior: [
+      { label: 'Resolution',   property: 'resolution',  kind: 'number', min: 10, max: 1000 },
+      { label: 'Line width',   property: 'lineWidth',   kind: 'number', min: 1, max: 10, slider: true },
+      { label: 'Active color', property: 'activeColor', kind: 'number', min: 0, max: 9, slider: true }
+    ]
+  },
+  dice: {
+    appearance: [
+      { label: 'Face color',    property: 'color',        kind: 'color' },
+      { label: 'Pip color',     property: 'pipColor',     kind: 'color' },
+      { label: 'Border color',  property: 'borderColor',  kind: 'color' },
+      { label: 'Icon',          property: 'icon',         kind: 'icon' },
+      { label: 'Image',         property: 'image',        kind: 'image' },
+      { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 16%', nullIfEmpty: true }
+    ],
+    behavior: [
+      { label: 'Roll time (ms)', property: 'rollTime', kind: 'number', min: 0, max: 5000 },
+      { label: 'Swap time (ms)', property: 'swapTime', kind: 'number', min: 0, max: 5000 }
+    ]
+  },
+  holder: {
+    appearance: [
+      { label: 'Color',         property: 'color',        kind: 'color' },
+      { label: 'Text color',    property: 'textColor',    kind: 'color' },
+      { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 100, slider: true },
+      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
+    ],
+    behavior: [
+      { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox' },
+      { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox' },
+      { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' },
+      { label: 'Drop offset X',         property: 'dropOffsetX',      kind: 'number' },
+      { label: 'Drop offset Y',         property: 'dropOffsetY',      kind: 'number' },
+      { label: 'Stack offset X',        property: 'stackOffsetX',     kind: 'number' },
+      { label: 'Stack offset Y',        property: 'stackOffsetY',     kind: 'number' }
+    ]
+  },
+  pile: {
+    appearance: [
+      { label: 'Handle text',     property: 'text',           kind: 'text', nullIfEmpty: true },
+      { label: 'Handle position', property: 'handlePosition', kind: 'select', choices: [ 'top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left', 'static' ].map(v=>({ value: v, text: v })) },
+      { label: 'Handle offset',   property: 'handleOffset',   kind: 'number', min: 0, max: 100, slider: true }
+    ],
+    behavior: [
+      { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, max: 200, slider: true }
+    ]
+  },
+  scoreboard: {
+    appearance: [
+      { label: 'Border radius',      property: 'borderRadius',     kind: 'number', min: 0, max: 100, slider: true },
+      { label: 'Player colors',      property: 'showPlayerColors', kind: 'checkbox' },
+      { label: 'Vertical header',    property: 'verticalHeader',   kind: 'checkbox' },
+      { label: 'Autosize columns',   property: 'autosizeColumns',  kind: 'checkbox' }
+    ],
+    behavior: [
+      { label: 'Score property',     property: 'scoreProperty',    kind: 'text' },
+      { label: 'Players in columns', property: 'playersInColumns', kind: 'checkbox' },
+      { label: 'Show totals',        property: 'showTotals',       kind: 'checkbox' },
+      { label: 'Show all rounds',    property: 'showAllRounds',    kind: 'checkbox' },
+      { label: 'Show all seats',     property: 'showAllSeats',     kind: 'checkbox' },
+      { label: 'Round label',        property: 'roundLabel',       kind: 'text' },
+      { label: 'Totals label',       property: 'totalsLabel',      kind: 'text' },
+      { label: 'Current round',      property: 'currentRound',     kind: 'number', nullIfEmpty: true },
+      { label: 'Sort field',         property: 'sortField',        kind: 'text' },
+      { label: 'Sort ascending',     property: 'sortAscending',    kind: 'checkbox' },
+      { label: 'First column width', property: 'firstColWidth',    kind: 'number', min: 10, max: 500 },
+      { label: 'Edit pane title',    property: 'editPaneTitle',    kind: 'text' }
+    ]
+  },
+  seat: {
+    appearance: [
+      { label: 'Color',         property: 'color',        kind: 'color' },
+      { label: 'Color (empty)', property: 'colorEmpty',   kind: 'color' },
+      { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 100, slider: true }
+    ],
+    behavior: [
+      { label: 'Seat index',        property: 'index',          kind: 'number', min: 1, max: 16 },
+      { label: 'Display property',  property: 'display',        kind: 'text' },
+      { label: 'Text when empty',   property: 'displayEmpty',   kind: 'text' },
+      { label: 'Hand holder',       property: 'hand',           kind: 'text' },
+      { label: 'Has the turn',      property: 'turn',           kind: 'checkbox' },
+      { label: 'Skip turn',         property: 'skipTurn',       kind: 'checkbox' },
+      { label: 'Hide turn marker',  property: 'hideTurn',       kind: 'checkbox' },
+      { label: 'Hide when unused',  property: 'hideWhenUnused', kind: 'checkbox' }
+    ]
+  },
+  spinner: {
+    appearance: [
+      { label: 'Text color',    property: 'textColor',    kind: 'color' },
+      { label: 'Line color',    property: 'lineColor',    kind: 'color' },
+      { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 50%', nullIfEmpty: true }
+    ],
+    behavior: [
+      { label: 'Current value', property: 'value', kind: 'text' }
+    ]
+  },
+  timer: {
+    appearance: [
+      { label: 'Background', cssKey: 'background', kind: 'color' },
+      { label: 'Text color', cssKey: 'color',      kind: 'color' }
+    ],
+    behavior: [
+      { label: 'Countdown',         property: 'countdown',    kind: 'checkbox' },
+      { label: 'Paused',            property: 'paused',       kind: 'checkbox' },
+      { label: 'Alert when done',   property: 'alert',        kind: 'checkbox' },
+      { label: 'Precision',         property: 'precision',    kind: 'select', choices: [ { value: 1000, text: '1 second' }, { value: 100, text: '0.1 seconds' }, { value: 10, text: '0.01 seconds' }, { value: 1, text: '1 millisecond' } ] },
+      { label: 'Start (ms)',        property: 'start',        kind: 'number' },
+      { label: 'End (ms)',          property: 'end',          kind: 'number', nullIfEmpty: true },
+      { label: 'Current time (ms)', property: 'milliseconds', kind: 'number' }
+    ]
+  }
+};
+
+const editorTypeNames = {
+  basic: 'Widget',
+  button: 'Button',
+  canvas: 'Canvas',
+  card: 'Card',
+  deck: 'Deck',
+  dice: 'Dice',
+  holder: 'Holder',
+  label: 'Label',
+  pile: 'Pile',
+  scoreboard: 'Scoreboard',
+  seat: 'Seat',
+  spinner: 'Spinner',
+  timer: 'Timer'
+};
+
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Properties', 'Edit widget properties.');
+    this.widgetPick = null;
+  }
+
+  // --- widget picking (used by the appearance pipette) ---
+
+  startWidgetPick(targetWidget, callback) {
+    this.widgetPick = { targetID: targetWidget.id, callback };
+    $('body').classList.add('editorWidgetPicking');
+  }
+
+  stopWidgetPick() {
+    this.widgetPick = null;
+    $('body').classList.remove('editorWidgetPicking');
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -258,6 +430,19 @@ class PropertiesModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
+    if(this.widgetPick) {
+      const pick = this.widgetPick;
+      const target = widgets.get(pick.targetID);
+      this.stopWidgetPick();
+      if(target) {
+        const picked = newSelection.filter(w=>w.id != pick.targetID)[0];
+        if(picked)
+          pick.callback(picked);
+        setSelection([ target ]);
+        return;
+      }
+    }
+
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -266,15 +451,21 @@ class PropertiesModule extends SidebarModule {
       this.inputUpdaters[widget.id] = {};
 
       switch(widget.get('type')) {
-        case 'card':   this.renderForCard(widget);   break;
-        case 'deck':   this.renderForDeck(widget);   break;
-        case 'dice': this.renderForDice(widget); break;
-        case 'holder': this.renderForHolder(widget); break;
-        case 'spinner': this.renderForSpinner(widget); break;
+        case 'button':     this.renderForButton(widget);     break;
+        case 'canvas':     this.renderForCanvas(widget);     break;
+        case 'card':       this.renderForCard(widget);       break;
+        case 'deck':       this.renderForDeck(widget);       break;
+        case 'dice':       this.renderForDice(widget);       break;
+        case 'holder':     this.renderForHolder(widget);     break;
+        case 'label':      this.renderForLabel(widget);      break;
+        case 'pile':       this.renderForPile(widget);       break;
+        case 'scoreboard': this.renderForScoreboard(widget); break;
+        case 'seat':       this.renderForSeat(widget);       break;
+        case 'spinner':    this.renderForSpinner(widget);    break;
+        case 'timer':      this.renderForTimer(widget);      break;
 
         default:
-          this.addHeader(widget.id);
-          this.renderGenericProperties(widget);
+          this.renderForBasic(widget);
           break;
       }
     }
@@ -1306,10 +1497,251 @@ class PropertiesModule extends SidebarModule {
       }
   }
 
+  // --- shared sections for the per-type editors ---
+
+  renderInputs(widget, defs, target=null) {
+    const kinds = {
+      text: TextInput,
+      textarea: TextInput,
+      number: NumberInput,
+      checkbox: CheckboxInput,
+      select: SelectInput,
+      color: ColorInput,
+      icon: IconInput,
+      image: ImageInput
+    };
+    for(const def of defs) {
+      const options = Object.assign({}, def);
+      if(def.kind == 'textarea')
+        options.multiline = true;
+      if(def.cssKey)
+        Object.assign(options, cssValueOptions(this, widget, def.cssKey));
+      new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
+    }
+  }
+
+  renderTypeHeader(widget) {
+    const type = widget.get('type') || 'basic';
+    this.addHeader(`${editorTypeNames[type] || type} ${widget.id}`);
+  }
+
+  renderBasicSection(widget) {
+    this.addSubHeader('Position and size');
+    this.renderInputs(widget, [
+      { label: 'X',        property: 'x',        kind: 'number', min: 0, max: 1600, step: 1, slider: true },
+      { label: 'Y',        property: 'y',        kind: 'number', min: 0, max: 1000, step: 1, slider: true },
+      { label: 'Width',    property: 'width',    kind: 'number', min: 1, max: 1600, step: 1, slider: true },
+      { label: 'Height',   property: 'height',   kind: 'number', min: 1, max: 1000, step: 1, slider: true },
+      { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true },
+      { label: 'Layer',    property: 'layer',    kind: 'select', choices: [
+        { value: -5, text: '-5 (background)' },
+        { value: -4, text: '-4' },
+        { value: -3, text: '-3 (holders)' },
+        { value: -2, text: '-2 (labels)' },
+        { value: -1, text: '-1 (buttons, seats, timers)' },
+        { value:  0, text: '0' },
+        { value:  1, text: '1 (cards, dice, pieces)' },
+        { value:  2, text: '2' },
+        { value:  3, text: '3' },
+        { value:  4, text: '4' },
+        { value:  5, text: '5' }
+      ] },
+      { label: 'Movable by players',   property: 'movable',       kind: 'checkbox' },
+      { label: 'Movable in edit mode', property: 'movableInEdit', kind: 'checkbox' }
+    ]);
+  }
+
+  typeSectionProperties(type) {
+    const sections = editorTypeSections[type] || {};
+    const properties = [];
+    for(const defs of [ sections.appearance || [], sections.behavior || [] ])
+      for(const def of defs)
+        properties.push(def.property || 'css');
+    return properties;
+  }
+
+  basicExcludeList(widget, extra=[]) {
+    return [ 'x', 'y', 'z', 'width', 'height', 'rotation', 'layer', 'movable', 'movableInEdit' ]
+      .concat(this.typeSectionProperties(widget.get('type') || 'basic'))
+      .concat(extra);
+  }
+
+  // Appearance section with a pipette button (copy the appearance from a
+  // picked widget) and a button to apply the appearance to all widgets of
+  // the same type.
+  renderAppearanceSection(widget, options={}) {
+    const type = widget.get('type') || 'basic';
+    const defs = options.defs !== undefined ? options.defs : ((editorTypeSections[type] || {}).appearance || []);
+    if(!defs.length && !options.render)
+      return;
+    const properties = options.properties || [...new Set(defs.map(d=>d.property || 'css'))];
+
+    const copyProperties = async (source, target)=>{
+      for(const property of properties)
+        await target.set(property, source.state[property] !== undefined ? JSON.parse(JSON.stringify(source.state[property])) : null);
+    };
+
+    const header = div(this.moduleDOM, 'sectionHeaderWithTools', `
+      <h2>Appearance</h2>
+      <button icon=palette class=pickAppearance title="Pick appearance from another widget: click this button and then the widget to copy from."></button>
+      <button icon=content_copy class=applyAppearanceToAll title="Apply this appearance to all widgets of this type."></button>
+    `);
+
+    $('.pickAppearance', header).onclick = e=>{
+      if(this.widgetPick) {
+        this.stopWidgetPick();
+        $('.pickAppearance', header).classList.remove('selected');
+        return;
+      }
+      $('.pickAppearance', header).classList.add('selected');
+      this.startWidgetPick(widget, async source=>{
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} copied appearance from widget ${source.id} to ${widget.id} in editor`);
+        await copyProperties(source, widget);
+        batchEnd();
+      });
+    };
+
+    $('.applyAppearanceToAll', header).onclick = async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} applied appearance of widget ${widget.id} to all ${type} widgets in editor`);
+      for(const other of widgetFilter(w=>(w.get('type') || 'basic') == type && w.id != widget.id))
+        await copyProperties(widget, other);
+      batchEnd();
+    };
+
+    if(options.render)
+      options.render(this.moduleDOM);
+    else
+      this.renderInputs(widget, defs);
+  }
+
+  renderBehaviorSection(widget, title='Behavior') {
+    const defs = (editorTypeSections[widget.get('type') || 'basic'] || {}).behavior || [];
+    if(!defs.length)
+      return;
+    this.addSubHeader(title);
+    this.renderInputs(widget, defs);
+  }
+
+  renderOtherPropertiesSection(widget, extraExclude=[]) {
+    this.addSubHeader('Other properties');
+    this.renderGenericProperties(widget, this.basicExcludeList(widget, extraExclude));
+  }
+
+  // --- per-type editors ---
+
+  renderForBasic(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForButton(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.addSubHeader('Behavior');
+    div(this.moduleDOM, '', `
+      <p>What the button does when clicked is defined by its <b>clickRoutine</b> which you can edit in the JSON editor.</p>
+    `);
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForCanvas(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget, {
+      properties: [ 'colorMap' ],
+      render: target=>{
+        const colorMap = asArray(widget.get('colorMap') || []);
+        for(let i=0; i<colorMap.length; ++i) {
+          new ColorInput(this, widget, `Color ${i}`, {
+            clearable: false,
+            listenTo: [ 'colorMap' ],
+            getValue: _=>{
+              const map = asArray(widget.get('colorMap') || []);
+              return map[i] !== undefined ? map[i] : null;
+            },
+            setValue: v=>{
+              const map = asArray(widget.get('colorMap') || []).slice();
+              map[i] = v === null ? '#000000' : v;
+              this.inputValueUpdated(widget, 'colorMap', map);
+            }
+          }).render(target);
+        }
+      }
+    });
+    this.renderBehaviorSection(widget, 'Drawing');
+    this.renderOtherPropertiesSection(widget, [ 'colorMap' ]);
+  }
+
+  renderForLabel(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+
+    this.addSubHeader('Label');
+    this.renderInputs(widget, [
+      { label: 'Text',                     property: 'text',            kind: 'textarea' },
+      { label: 'Editable by players',      property: 'editable',        kind: 'checkbox' },
+      { label: 'Placeholder when empty',   property: 'placeholderText', kind: 'text', nullIfEmpty: true }
+    ]);
+
+    this.renderAppearanceSection(widget, {
+      properties: [ 'css' ],
+      render: target=>{
+        const row = div(target, 'propertyTypographyRow');
+        new CssToggleButton(this, widget, null, cssValueOptions(this, widget, 'font-weight', { icon: 'format_bold',         onValue: 'bold',   tooltip: 'Bold' })).render(row);
+        new CssToggleButton(this, widget, null, cssValueOptions(this, widget, 'font-style',  { icon: 'format_italic',       onValue: 'italic', tooltip: 'Italic' })).render(row);
+        new CssToggleButton(this, widget, null, cssValueOptions(this, widget, 'text-align',  { icon: 'format_align_left',   onValue: 'left',   tooltip: 'Align left' })).render(row);
+        new CssToggleButton(this, widget, null, cssValueOptions(this, widget, 'text-align',  { icon: 'format_align_center', onValue: 'center', tooltip: 'Align center' })).render(row);
+        new CssToggleButton(this, widget, null, cssValueOptions(this, widget, 'text-align',  { icon: 'format_align_right',  onValue: 'right',  tooltip: 'Align right' })).render(row);
+        new NumberInput(this, widget, 'Font size', cssNumberOptions(this, widget, 'font-size', { min: 6, max: 150, step: 1, slider: true, nullIfEmpty: true, unit: 'px' })).render(target);
+        new ColorInput(this, widget, 'Text color', cssValueOptions(this, widget, 'color')).render(target);
+      }
+    });
+
+    this.renderOtherPropertiesSection(widget, [ 'text', 'editable', 'placeholderText', 'css' ]);
+  }
+
+  renderForPile(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget);
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForScoreboard(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Scores');
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForSeat(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Seat');
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForTimer(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Timer');
+    this.renderOtherPropertiesSection(widget);
+  }
+
   renderForCard(widget) {
     this.addHeader(`Card ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader(`Card properties`);
-    this.renderGenericProperties(widget, [ 'deck', 'x', 'y', 'z' ]);
+    this.renderGenericProperties(widget, this.basicExcludeList(widget, [ 'deck' ]));
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
     div(this.moduleDOM, '', `
@@ -1323,6 +1755,7 @@ class PropertiesModule extends SidebarModule {
 
   renderForDeck(widget) {
     this.addHeader(`Deck ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader(`Card types`);
     div(this.moduleDOM, 'buttonBar', `
       <button icon=remove class=removeAll>All</button>
@@ -1368,11 +1801,12 @@ class PropertiesModule extends SidebarModule {
     div(this.moduleDOM, '', `
       <p>These are properties acting on the deck widget itself which has no influence on gameplay. These properties do not apply to the cards. Which is why this section is usually empty.</p>
     `);
-    this.renderGenericProperties(widget, [ 'cardTypes', 'faceTemplates', 'cardDefaults', 'x', 'y', 'z' ]);
+    this.renderGenericProperties(widget, this.basicExcludeList(widget, [ 'cardTypes', 'faceTemplates', 'cardDefaults' ]));
   }
 
   renderForDice(widget) {
     this.addHeader(`Dice ${widget.id}`);
+    this.renderBasicSection(widget);
     const widgetFaces = widget.get('faces');
     const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
 
@@ -1465,12 +1899,16 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Rolling');
+
     this.addSubHeader(`Dice properties`);
-    this.renderGenericProperties(widget, ['faces','pipSymbols','shape3d']);
+    this.renderGenericProperties(widget, this.basicExcludeList(widget, [ 'faces', 'pipSymbols', 'shape3d' ]));
   }
 
   renderForHolder(widget) {
     this.addHeader(`Holder ${widget.id}`);
+    this.renderBasicSection(widget);
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
       if(!Object.keys(deck.get('cardTypes')).length)
@@ -1500,7 +1938,10 @@ class PropertiesModule extends SidebarModule {
     }
 
 
-    this.addSubHeader('Appearance');
+    this.renderAppearanceSection(widget, {
+      properties: [ 'color', 'textColor', 'borderRadius', 'dropShadow', 'image', 'css', 'classes' ],
+      render: _=>{}
+    });
     const normal = this.renderWidgetButton(new Holder(), {
       type: 'holder',
       width: 50,
@@ -1563,14 +2004,18 @@ class PropertiesModule extends SidebarModule {
         widget.set('css', null);
       }
     };
+    this.renderInputs(widget, editorTypeSections.holder.appearance);
+
+    this.renderBehaviorSection(widget, 'Dropping and stacking');
 
     this.addSubHeader(`Holder properties`);
-    this.renderGenericProperties(widget, [ 'dropTarget' ]);
+    this.renderGenericProperties(widget, this.basicExcludeList(widget, [ 'dropTarget', 'css', 'classes' ]));
   }
 
   renderForSpinner(widget) {
     this.addHeader(`Spinner ${widget.id}`);
-    
+    this.renderBasicSection(widget);
+
     this.addSubHeader('Spinner Options');
     const options = [
       ["H", "T"],
@@ -1605,9 +2050,12 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Value');
+
     this.addSubHeader(`Spinner properties`);
-    this.renderGenericProperties(widget, ['options']);
-  }    
+    this.renderGenericProperties(widget, this.basicExcludeList(widget, [ 'options' ]));
+  }
 
   renderGenericProperties(widget, exclude) {
     for(const property in widget.state) {

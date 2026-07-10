@@ -1,0 +1,230 @@
+.editorModule .propertyInput {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.editorModule .propertyInput > label {
+  width: 110px;
+  min-width: 110px;
+  overflow-wrap: anywhere;
+}
+
+.editorModule .propertyInput input[type=text],
+.editorModule .propertyInput input:not([type]) {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
+.editorModule .propertyInput textarea {
+  flex: 1 1 200px;
+  min-height: 4em;
+}
+
+.editorModule .numberInput input[type=number] {
+  width: 70px;
+}
+
+.editorModule .numberInput input[type=range] {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+
+.editorModule .propertyInputUnit {
+  color: var(--textDimColor1, #777);
+}
+
+.editorModule .checkboxInput > label {
+  width: auto;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.editorModule .cssToggleInput {
+  display: inline-flex;
+  margin: 0;
+}
+
+.editorModule .cssToggleInput button, .editorModule .propertyTypographyRow button {
+  min-width: 34px;
+  justify-content: center;
+}
+
+.editorModule .cssToggleInput button.selected {
+  background: var(--VTTblueDark);
+  color: #fff;
+}
+
+.editorModule .propertyTypographyRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.editorModule .propertyTypographyRow .propertyInput {
+  margin: 0;
+}
+
+/* picker inputs (color, icon, image) */
+
+.editorModule .propertyPreviewButton {
+  padding: 2px;
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editorModule .propertyExpandButton {
+  padding: 2px;
+  min-width: 30px;
+  justify-content: center;
+}
+
+.editorModule .propertyExpandButton.open::before {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.editorModule .propertyValueChip {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(45deg, #0002 25%, transparent 25%, transparent 75%, #0002 75%, #0002 0), linear-gradient(45deg, #0002 25%, transparent 25%, transparent 75%, #0002 75%, #0002 0), white;
+  background-position: 0px 0, 4px 4px;
+  background-size: 8px 8px, 8px 8px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  font-size: 24px;
+  color: black;
+}
+
+.editorModule .propertyValueChip.selected, .editorModule .propertyValueChip:hover {
+  border-color: var(--VTTblue);
+}
+
+.editorModule .propertyValueChip img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.editorModule .propertyColorChip {
+  background: var(--chipColor, transparent);
+}
+
+.editorModule .propertyColorChip[style*="--chipColor: transparent"] {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, #eee 4px, #eee 8px);
+}
+
+.editorModule .propertyEmptyChip::after {
+  content: 'close';
+  font-family: 'Material Symbols';
+  color: #999;
+}
+
+.editorModule .propertyPicker {
+  flex-basis: 100%;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+  padding: 6px;
+  margin-bottom: 6px;
+}
+
+.editorModule .propertyPickerSummary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editorModule .propertyPickerSummary input[type=color] {
+  width: 40px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.editorModule .propertyPickerValueText {
+  flex: 1 1 100px;
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.editorModule .propertyPickerSection {
+  margin-top: 8px;
+}
+
+.editorModule .propertyPickerSection input {
+  width: calc(100% - 12px);
+  margin: 4px 0;
+}
+
+.editorModule .propertyPickerSectionTitle {
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--textDimColor1, #777);
+  margin-bottom: 2px;
+}
+
+.editorModule .propertyPickerChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.editorModule .propertyPickerChips .symbols,
+.editorModule .propertyPickerChips .material-symbols,
+.editorModule .propertyPickerChips .material-symbols-nofill,
+.editorModule .propertyPickerChips .emoji-monochrome {
+  font-size: 24px;
+  overflow: hidden;
+}
+
+.editorModule .propertyPickerEmpty {
+  color: var(--textDimColor1, #777);
+  font-style: italic;
+}
+
+/* appearance section header buttons */
+
+.editorModule .sectionHeaderWithTools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .sectionHeaderWithTools h2 {
+  flex-grow: 1;
+  margin-right: 0;
+}
+
+.editorModule .sectionHeaderWithTools button {
+  min-width: 36px;
+  justify-content: center;
+}
+
+.editorModule .sectionHeaderWithTools button.selected {
+  background: var(--VTTblueDark);
+  color: #ff0;
+}
+
+body.editorWidgetPicking, body.editorWidgetPicking .widget {
+  cursor: crosshair !important;
+}
