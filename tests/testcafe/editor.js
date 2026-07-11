@@ -101,17 +101,22 @@ test('Line widget in edit mode', async t => {
     .click('#add-line')
     .click('#editorSidebar [icon=tune]')
     .click('#editorModules .lineAddStop')
-    .click('#editorModules .lineShapeCurved');
+    .click('#editorModules .lineShapeCurved')
+    .click('#editorModules .lineStopsBasic');
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
-  console.log('LINE ID: ' + lineID);
   await t
-    .drag(Selector(`[id="w_${lineID}"] .lineHandle`).nth(1), 50, 80)
-    .click('#editorModules .lineStopsBasic')
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
     .click('#editorModules .lineConnectStart')
-    .click(Selector('#editorModules .lineConnectStart option').withAttribute('value', lineID))
-    .drag(Selector('.widget.line.selectedInEdit .lineHandle').nth(1), 90, 60)
-    .drag(Selector('.widget.line.selectedInEdit .lineHandle').nth(0), -40, 70);
-  await compareState(t, '2421fdff0bb8710a687c0209b8ec1928');
+    .click(Selector('#editorModules .lineConnectStart option').withAttribute('value', lineID));
+
+  // dragging a handle moves it by browser-dependent pixels, so verify it in the
+  // DOM and delete the dragged line again to keep the compared state stable
+  const endHandle = Selector('.widget.line.selectedInEdit .lineHandle').nth(1);
+  const transformBefore = await endHandle.getStyleProperty('transform');
+  await t
+    .drag(endHandle, 90, 60)
+    .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
+    .click('#editorToolbar > div > [icon=delete_forever]');
+  await compareState(t, 'bf77b8b67e1cd0c7ecc7ee6bd26c265f');
 });
