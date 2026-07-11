@@ -8,11 +8,7 @@ async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
     if(!child.get('editorSmartClone'))
       await smartCloneRemoveChildren(topCloneID, child, childSource, options);
 
-    if(!childSource || id != childSource.id && !widgets.has(id) || child.get('type') != childSource.get('type')) {
-      if(childSource)
-        console.log('Smart Clone - Removing', [child.id, childSource.id, id], id != childSource.id && !widgets.has(id), child.get('type') != childSource.get('type'));
-      else
-        console.log('Smart Clone - Removing', [child.id, id], "No Source");
+    if(!childSource || !widgets.has(childSource.id) || id != childSource.id && !widgets.has(id) || child.get('type') != childSource.get('type') || smartCloneExcludesWidget(topCloneID, childSource, options)) {
       await removeWidgetLocal(child.id);
       delete smartCloneSourceMap[topCloneID][child.id];
       delete smartCloneSourceMap[child.id];
@@ -20,14 +16,30 @@ async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
   }
 }
 
+function smartCloneExcludesWidget(topCloneID, source, options) {
+  if(!source || source.get('type') != 'card' || options && options.includeCards)
+    return false;
+
+  // exclude cards unless their deck is part of the cloned group
+  const topSource = smartCloneSourceMap[topCloneID] && smartCloneSourceMap[topCloneID][topCloneID];
+  let deck = widgets.get(source.get('deck'));
+  while(deck) {
+    if(deck == topSource)
+      return false;
+    deck = widgets.get(deck.get('parent'));
+  }
+  return true;
+}
+
 async function smartCloneAddChildren(topCloneID, clone, source, options) {
   for(const child of widgetFilter(w=>w.get('parent') == source.id)) {
+    if(smartCloneExcludesWidget(topCloneID, child, options))
+      continue;
     let clonedChildren = smartCloneGetClones(child, clone);
     let id = applyReplaces(child.id, options.replaces, topCloneID);
     if(widgets.has(id))
       id = generateUniqueWidgetID();
     if(!clonedChildren.length) {
-      console.log('Smart Clone - Adding', id);
       clonedChildren = [ widgets.get(await addWidgetLocal({ id, type: child.get('type'), parent: clone.id, inheritFrom: inheritDef(child) })) ];
       if(child.get('editorSmartClone')) {
         await clonedChildren[0].set('editorSmartClone', JSON.parse(JSON.stringify(child.get('editorSmartClone'))));
@@ -42,13 +54,17 @@ async function smartCloneAddChildren(topCloneID, clone, source, options) {
 
 async function smartCloneUpdateChildren(topCloneID, clone, source, options) {
   for(const [ cloneID, source ] of Object.entries(smartCloneSourceMap[topCloneID])) {
+    if(!widgets.has(cloneID) || !widgets.has(source.id)) {
+      delete smartCloneSourceMap[topCloneID][cloneID];
+      continue;
+    }
     const optionsCopy = JSON.parse(JSON.stringify(options));
     if(optionsCopy.flipX !== 'all' && widgets.get(cloneID).get('parent') != topCloneID)
       delete optionsCopy.flipX;
     if(optionsCopy.flipY !== 'all' && widgets.get(cloneID).get('parent') != topCloneID)
       delete optionsCopy.flipY;
     if(cloneID != topCloneID)
-      await smartCloneUpdateClone(topCloneID, widgets.get(cloneID), source, optionsCopy);
+      await smartCloneUpdateClone(topCloneID, widgets.get(cloneID), widgets.get(source.id), optionsCopy);
   }
 }
 
@@ -120,17 +136,13 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
 
         if(newCloneValue === sourceValue && canBeInherited) {
 
-          if(clone.state[property] !== undefined && property != 'editorSmartClone') {
-            console.log('Smart Clone - Removing Property', clone.id, property);
+          if(clone.state[property] !== undefined && property != 'editorSmartClone')
             await clone.set(property, null);
-          }
 
         } else {
 
-          if(currentCloneValue !== newCloneValue) {
-            console.log('Smart Clone - Setting Property', clone.id, property, currentCloneValue, newCloneValue);
+          if(currentCloneValue !== newCloneValue)
             await clone.set(property, JSON.parse(newCloneValue));
-          }
 
         }
       }
@@ -138,16 +150,12 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
   }
 
   for(const invalidProperty of Object.keys(clone.state).filter(property=>validProperties.indexOf(property) == -1)) {
-    if(clone.inheritFromIsValid(clone.inheritFrom()[source.id], invalidProperty) && invalidProperty != 'inheritFrom') {
-      console.log('Smart Clone - Removing Invalid Property', clone.id, invalidProperty);
+    if(clone.inheritFromIsValid(clone.inheritFrom()[source.id], invalidProperty) && invalidProperty != 'inheritFrom')
       await clone.set(invalidProperty, null);
-    }
   }
 
-  if(JSON.stringify(clone.get('inheritFrom')) != JSON.stringify(inheritDef(source))) {
-    console.log('Smart Clone - Setting Inherit', clone.id, inheritDef(source));
+  if(JSON.stringify(clone.get('inheritFrom')) != JSON.stringify(inheritDef(source)))
     await clone.set('inheritFrom', inheritDef(source));
-  }
 
   if(options.flipX) {
     const sourceParentDom = widgets.get(source.get('parent')).domElement;
@@ -159,7 +167,6 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
 
     // Calculate new X using the bounding rectangles
     const newX = sourceParentRect.width/getScale() - (source.get('x') + sourceRect.width/getScale());
-    console.log('Smart Clone - Flipping Property', clone.id, 'x', newX);
     await clone.set('x', newX);
   }
 
@@ -173,12 +180,18 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
 
     // Calculate new Y using the bounding rectangles
     const newY = sourceParentRect.height/getScale() - (source.get('y') + sourceRect.height/getScale());
-    console.log('Smart Clone - Flipping Property', clone.id, 'y', newY);
     await clone.set('y', newY);
   }
 
-  if(clone.get('type') == 'seat' && clone.get('index') == source.get('index'))
-    await clone.set('index', widgetFilter(w=>w.get('type')=='seat').map(w=>w.get('index')).reduce((a,b)=>Math.max(a,b), 0)+1);
+  if(clone.get('type') == 'seat') {
+    const usedIndices = widgetFilter(w=>w.get('type')=='seat' && w != clone).map(w=>w.get('index'));
+    if(usedIndices.includes(clone.get('index'))) {
+      let index = 1;
+      while(usedIndices.includes(index))
+        ++index;
+      await clone.set('index', index);
+    }
+  }
 }
 
 function smartCloneGetSource(clone, sourceParent) {
@@ -203,7 +216,6 @@ function smartCloneGetClones(source, cloneParent) {
 }
 
 function smartCloneProcessSelection(selection) {
-  return selection;
   const selectionWithOnlyTopMostClones = [];
   for(const widget of selection) {
     let parent = widget;
@@ -237,6 +249,8 @@ function smartCloneInitializeSourceMap(childrenOf=null, topID=null) {
 }
 
 function smartCloneInit() {
+  for(const topCloneID of Object.keys(smartCloneSourceMap))
+    delete smartCloneSourceMap[topCloneID];
   smartCloneInitializeSourceMap();
 }
 
@@ -245,6 +259,8 @@ async function smartCloneUpdate(topCloneID, remove=false) {
   if(clone && !remove) {
     const source = smartCloneGetSource(clone, null);
     const options = clone.get('editorSmartClone');
+    if(!source || typeof options != 'object' || options === null)
+      return;
     if(!smartCloneSourceMap[topCloneID])
       smartCloneSourceMap[topCloneID] = {};
     smartCloneSourceMap[topCloneID][topCloneID] = source;
@@ -256,7 +272,6 @@ async function smartCloneUpdate(topCloneID, remove=false) {
       await removeWidgetLocal(cloneID);
     delete smartCloneSourceMap[topCloneID];
   }
-  console.log('Smart Clone - Updated', topCloneID, smartCloneSourceMap[topCloneID]);
 }
 
 let noRecurse = false;
@@ -264,18 +279,17 @@ async function smartCloneDeltaReceived(delta) {
   if(noRecurse)
     return;
 
-  console.log('Smart Clone - Delta Received', delta);
   noRecurse = true;
   const needUpdate = {};
   const needRemove = {};
   for(const [ id, d ] of Object.entries(delta.s)) {
     if(d && typeof d.editorSmartClone == 'object' && d.editorSmartClone !== null)
       needUpdate[id] = true;
-    if(d === null && smartCloneSourceMap[id])
+    if((d === null || d && d.editorSmartClone === null) && smartCloneSourceMap[id])
       delete smartCloneSourceMap[id];
 
     for(const [ topCloneID, sourceMap ] of Object.entries(smartCloneSourceMap)) {
-      if(id === sourceMap[topCloneID].id && d === null) {
+      if(sourceMap[topCloneID] && id === sourceMap[topCloneID].id && d === null) {
         needUpdate[topCloneID] = true;
         needRemove[topCloneID] = true;
       }
@@ -297,6 +311,5 @@ async function smartCloneDeltaReceived(delta) {
   for(const topCloneID of Object.keys(needUpdate))
     await smartCloneUpdate(topCloneID, needRemove[topCloneID]);
   batchEnd();
-  console.log('Smart Clone - All Updated', smartCloneSourceMap);
   noRecurse = false;
 }

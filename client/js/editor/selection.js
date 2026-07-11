@@ -181,6 +181,7 @@ export function editorReceiveDelta(delta) {
 }
 
 function receiveStateFromServer(state) {
+  smartCloneInit();
   for(const module of sidebarModules) {
     module.onSelectionChanged(selectedWidgets, []);
     module.onStateReceived(state);

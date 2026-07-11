@@ -171,8 +171,10 @@ class CloneDragButton extends DragButton {
           for(const property in clone.state)
             if(!['x', 'y', 'rotation', 'parent', 'type', 'id'].includes(property))
               await clone.set(property, null);
+          const def = inheritDef(widget);
+          const exceptions = typeof def == 'object' ? def[widget.get('id')] : [];
+          await clone.set('inheritFrom', { [widget.get('id')]: [...new Set([ '!x', '!y', '!rotation', '!parent', ...exceptions ])] });
           await clone.set('editorSmartClone', {});
-          await clone.set('inheritFrom', { [widget.get('id')]: [ '!x', '!y', '!rotation', '!parent' ] });
         }
       }
       newSelection.push(...clonedWidgets);
