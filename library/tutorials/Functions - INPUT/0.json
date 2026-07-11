@@ -555,9 +555,6 @@
   },
   "_meta": {
     "version": 21,
-    "gameSettings": {
-      "legacyModes": {}
-    },
     "info": {
       "name": "Functions - INPUT",
       "image": "/assets/-1767092614_3482",
@@ -568,7 +565,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1773426013185,
+      "lastUpdate": 1783745538528,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -582,6 +579,9 @@
       "variant": "Basic",
       "language": "en-US",
       "players": "1"
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }
