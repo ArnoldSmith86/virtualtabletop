@@ -130,6 +130,16 @@ export class Widget extends StateManaged {
     return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})[coord]
   }
 
+  ancestors() {
+    // walks up the parent chain (starting with the widget itself) and stops on
+    // cycles which can appear in the room state (e.g. two widgets being each
+    // other's parent) and would otherwise cause infinite recursion
+    const chain = [];
+    for(let w = this; w && !chain.includes(w); w = widgets.get(w.get('parent')))
+      chain.push(w);
+    return chain;
+  }
+
   animateProperties() {
     return asArray(JSON.parse(JSON.stringify(this.get('animatePropertyChange'))));
   }
@@ -181,7 +191,11 @@ export class Widget extends StateManaged {
     let newParent = undefined;
     if(delta.parent !== undefined) {
       newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
-      this.setLimbo(delta.parent && !widgets.has(delta.parent));
+      // the DOM cannot represent cyclic parent chains so if the new parent is inside this widget, display it at the top level as a limbo widget
+      const cyclicParent = this.domElement.contains(newParent);
+      if(cyclicParent)
+        newParent = $('#topSurface');
+      this.setLimbo(delta.parent && (!widgets.has(delta.parent) || cyclicParent));
       // If the widget wasn't newly created, transition from its previous location.
       if (delta.id === undefined)
         fromTransform = getElementTransformRelativeTo(this.domElement, newParent);
@@ -527,7 +541,9 @@ export class Widget extends StateManaged {
   }
 
   coordGlobalFromCoordLocal(coord) {
-    return this.coordGlobalFromCoordParent(this.coordParentFromCoordLocal(coord));
+    for(const widget of this.ancestors())
+      coord = widget.coordParentFromCoordLocal(coord);
+    return coord;
   }
   coordGlobalFromCoordParent(coord) {
     const p = this.get('parent');
@@ -542,7 +558,9 @@ export class Widget extends StateManaged {
     return result || new DOMPoint();
   }
   coordLocalFromCoordGlobal(coord) {
-    return this.coordLocalFromCoordParent(this.coordParentFromCoordGlobal(coord));
+    for(const widget of this.ancestors().reverse())
+      coord = widget.coordLocalFromCoordParent(coord);
+    return coord;
   }
   coordLocalFromCoordParent(coord) {
     const result = getPointOnPlane(getElementTransform(this.domElement), coord.x, coord.y);
@@ -2193,18 +2211,24 @@ export class Widget extends StateManaged {
     if(!readOnlyProperties.has(property)) {
       return super.get(property);
     } else {
-      const p = this.get('parent');
       switch(property) {
         case '_absoluteRotation':
-          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+          return this.ancestors().reduce((sum, w)=>sum + w.get('rotation'), 0);
         case '_absoluteScale':
-          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+          return this.ancestors().reduce((product, w)=>product * w.get('scale'), 1);
         case '_absoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
         case '_absoluteY':
           return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
-        case '_ancestor':
-          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+        case '_ancestor': {
+          let w = this;
+          for(const a of this.ancestors().slice(1)) {
+            if(a.get('type') != 'pile')
+              break;
+            w = a;
+          }
+          return w.get('parent');
+        }
         case '_centerAbsoluteX':
           return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
         case '_centerAbsoluteY':
@@ -2265,32 +2289,25 @@ export class Widget extends StateManaged {
   }
 
   inheritSeatVisibility(seatVisibility) {
-    if (this.get('hoverInheritVisibleForSeat')) {
-      const widgetSeatVisibility = this.get('onlyVisibleForSeat');
-      if (widgetSeatVisibility) {
-        // Filter seatVisibility by current widgets seats.
-        if (!seatVisibility) {
-          seatVisibility = widgetSeatVisibility;
-        } else {
-          let filterTo = new Set(asArray(widgetSeatVisibility));
-          seatVisibility = asArray(seatVisibility).filter((seatId) => { return filterTo.has(seatId); });
+    for(const widget of this.ancestors()) {
+      if (widget.get('hoverInheritVisibleForSeat')) {
+        const widgetSeatVisibility = widget.get('onlyVisibleForSeat');
+        if (widgetSeatVisibility) {
+          // Filter seatVisibility by current widgets seats.
+          if (!seatVisibility) {
+            seatVisibility = widgetSeatVisibility;
+          } else {
+            let filterTo = new Set(asArray(widgetSeatVisibility));
+            seatVisibility = asArray(seatVisibility).filter((seatId) => { return filterTo.has(seatId); });
+          }
         }
       }
     }
-    const thisParent = this.get('parent');
-    if (thisParent && widgets.has(thisParent))
-      seatVisibility = widgets.get(thisParent).inheritSeatVisibility(seatVisibility);
     return seatVisibility;
   }
 
   isDescendantOf(widget) {
-    if (this.get('parent') == widget.get('id')) {
-      return true;
-    }
-    if (widgets.has(this.get('parent'))) {
-      return widgets.get(this.get('parent')).isDescendantOf(widget);
-    }
-    return false;
+    return this.ancestors().some(w=>w.get('parent') == widget.get('id'));
   }
 
   isValidID(id, problems) {
@@ -2597,12 +2614,12 @@ export class Widget extends StateManaged {
   }
 
   requiresHiddenCursor() {
-    if(this.get('hidePlayerCursors'))
-      return true;
-    if(this.get('parent') && widgets.has(this.get('parent')))
-      return widgets.get(this.get('parent')).requiresHiddenCursor();
-    if(this.get('hoverParent') && widgets.has(this.get('hoverParent')))
-      return widgets.get(this.get('hoverParent')).requiresHiddenCursor();
+    const seen = new Set();
+    for(let w = this; w && !seen.has(w); w = widgets.get(w.get('parent')) || widgets.get(w.get('hoverParent'))) {
+      if(w.get('hidePlayerCursors'))
+        return true;
+      seen.add(w);
+    }
     return false;
   }
 
