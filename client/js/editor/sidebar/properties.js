@@ -1312,17 +1312,24 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, [ 'deck', 'x', 'y', 'z' ]);
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
-    div(this.moduleDOM, '', `
+    const deckButtons = div(this.moduleDOM, '', `
       <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
       <div class=buttonBar>
         <button icon=style>Open deck</button>
+        <button icon=edit>Open deck editor</button>
       </div>
     `);
-    $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
+    $('[icon=style]', deckButtons).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
+    $('[icon=edit]', deckButtons).onclick = _=>deckEditor.open(widget.get('deck'));
   }
 
   renderForDeck(widget) {
     this.addHeader(`Deck ${widget.id}`);
+
+    const deckEditorButton = div(this.moduleDOM, 'buttonBar', `
+      <button icon=edit>Open deck editor</button>
+    `);
+    $('button', deckEditorButton).onclick = _=>deckEditor.open(widget.id);
     this.addSubHeader(`Card types`);
     div(this.moduleDOM, 'buttonBar', `
       <button icon=remove class=removeAll>All</button>

@@ -99,6 +99,8 @@ export function openEditor() {
 function closeEditor() {
   setJEroutineLogging(jeRoutineLogging = false);
 
+  deckEditor.close();
+
   for(const module of sidebarModules)
     module.onEditorClose();
   for(const button of toolbarButtons)
@@ -189,7 +191,7 @@ export function scaleHasChanged(scale) {
 }
 
 window.addEventListener('keydown', function(e) {
-  if(!getEdit())
+  if(!getEdit() || deckEditor.isOpen())
     return;
 
   if([ 'TEXTAREA', 'INPUT' ].indexOf(e.target.tagName) != -1 || e.target.isContentEditable)

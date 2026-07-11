@@ -1,0 +1,235 @@
+#deckEditor {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  flex-direction: column;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+body.deckEditorActive #deckEditor {
+  display: flex;
+}
+
+#deckEditorTopbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  min-height: var(--editToolbarHeight);
+  background: var(--VTTblue);
+  color: white;
+  flex-wrap: wrap;
+}
+
+#deckEditorTopbar label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#deckEditorTopbar select {
+  max-width: 200px;
+}
+
+#deckEditorTopbar .spacer {
+  flex-grow: 1;
+}
+
+#deckEditorTopbar button {
+  padding: 5px;
+}
+
+#deckEditorBody {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+#deckEditorMain {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+#deckEditorMain .deckEditorCard {
+  position: relative;
+  box-shadow: 0 0 10px #0006;
+}
+
+#deckEditorMain .deckEditorCard .widget {
+  cursor: default;
+}
+
+#deckEditorMain .deckEditorCard .cardFaceObject {
+  cursor: move;
+}
+
+#deckEditorMain .deckEditorCard .cardFaceObject:hover {
+  outline: calc(2px / var(--deckEditorCardScale)) dashed var(--textHighlightColor2);
+}
+
+#deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject {
+  outline: calc(3px / var(--deckEditorCardScale)) solid yellow;
+}
+
+.deckEditorEmpty, .deckEditorHint {
+  padding: 10px;
+  opacity: 0.7;
+}
+
+#deckEditorSidebar {
+  width: 320px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--backgroundHighlightColor1);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#deckEditorSidebar h2 {
+  margin: 10px 0 5px 0;
+  font-size: 18px;
+}
+
+#deckEditorSidebar .genericInput {
+  margin-bottom: 2px;
+}
+
+#deckEditorSidebar .buttonBar {
+  display: flex;
+  gap: 5px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.deckEditorAddProperty, .deckEditorCardTypeName, .deckEditorCardCount {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 0;
+}
+
+.deckEditorCardCount input {
+  width: 60px;
+}
+
+#deckEditorStrip {
+  display: flex;
+  gap: 5px;
+  padding: 5px 10px;
+  overflow-x: auto;
+  align-items: flex-end;
+  min-height: 135px;
+  box-sizing: border-box;
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+.deckEditorStripCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  cursor: pointer;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.deckEditorStripCard:hover {
+  border-color: var(--backgroundHighlightColor1);
+}
+
+.deckEditorStripCard.selected {
+  border-color: var(--textHighlightColor2);
+}
+
+.deckEditorStripCard .renderedCard {
+  position: relative;
+  pointer-events: none;
+}
+
+.deckEditorStripCard span {
+  font-size: 11px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deckEditorAddCardType button {
+  width: 60px;
+  height: 90px;
+}
+
+/* see common rules in toolbar.css and dragtoolbar.css */
+
+#deckEditorDragToolbar {
+  display: none;
+  position: fixed;
+  background: var(--VTTblue);
+  border-radius: 5px;
+  z-index: 12;
+}
+
+body.deckEditorActive #deckEditorDragToolbar.active {
+  display: flex;
+}
+
+#deckEditorDragToolbar button {
+  padding: 5px;
+}
+
+#deckEditorDragToolbar button::before {
+  margin: 0;
+}
+
+#deckEditorDragToolbar button span {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  background: var(--VTTblueDark);
+  color: white;
+  margin: 0;
+  padding: 10px;
+  border-radius: 5px;
+  text-transform: none;
+  width: 200px;
+}
+
+#deckEditorDragToolbar button:hover span {
+  display: block;
+}
+
+body.dragToolbarDragging #deckEditorDragToolbar button:hover span {
+  display: none;
+}
+
+#deckEditorDragToolbarFeedback {
+  display: none;
+  position: absolute;
+  top: calc(100% + 1px);
+  color: var(--textColor);
+  background: var(--backgroundHighlightColor1);
+  width: 100%;
+  border-radius: inherit;
+  padding: 10px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+#deckEditorDragToolbarFeedback i {
+  color: var(--textHighlightColor5);
+}
+
+body.dragToolbarDragging #deckEditorDragToolbarFeedback.active {
+  display: block;
+}
