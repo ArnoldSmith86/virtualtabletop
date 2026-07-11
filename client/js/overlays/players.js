@@ -203,6 +203,10 @@ function updatePlayerCountDisplay() {
 
 onLoad(function() {
   let lastMetaArgs = null;
+  function refillPlayerList() {
+    if(lastMetaArgs)
+      fillPlayerList(lastMetaArgs.meta.players, lastMetaArgs.activePlayers, lastMetaArgs.sessions);
+  }
   onMessage('meta', function(args) {
     lastMetaArgs = args;
     fillPlayerList(args.meta.players, args.activePlayers, args.sessions);
@@ -210,9 +214,17 @@ onLoad(function() {
   });
   onMessage('sessionID', function(args) {
     mySessionID = args;
-    if(lastMetaArgs)
-      fillPlayerList(lastMetaArgs.meta.players, lastMetaArgs.activePlayers, lastMetaArgs.sessions);
+    refillPlayerList();
   });
+  // the buttons in the player list depend on widget references (seats, owners) which
+  // change through state and delta messages without a meta update
+  onMessage('state', refillPlayerList);
+  onMessage('delta', function(delta) {
+    for(const widgetID in delta.s)
+      if(delta.s[widgetID] === null || [ 'owner', 'player', 'artist' ].some(p=>delta.s[widgetID][p] !== undefined))
+        return refillPlayerList();
+  });
+  $('#playersButton').addEventListener('click', refillPlayerList);
   onMessage('mouse', function(args) {
     if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
