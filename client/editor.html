@@ -151,9 +151,12 @@
   <div id="editorDragToolbar"><div id="editorDragToolbarFeedback"></div></div>
   <div id="deckEditor">
     <div id="deckEditorTopbar">
-      <label>Deck: <select id="deckEditorDeckSelect"></select></label>
-      <label>Face: <select id="deckEditorFaceSelect"></select></label>
-      <button icon="add" id="deckEditorAddFace">Add face</button>
+      <div class="deckEditorAddGroup">
+        <label>Deck: <select id="deckEditorDeckSelect"></select></label>
+        <label>Face: <select id="deckEditorFaceSelect"></select></label>
+        <button icon="add" id="deckEditorAddFace" title="Add a new, empty face to this deck.">Add face</button>
+        <button icon="remove" id="deckEditorDeleteFace" title="Delete the face currently shown from every card type of this deck.">Delete face</button>
+      </div>
       <div class="spacer"></div>
       <div class="deckEditorAddGroup" title="Adds an object that looks the same on every card of this deck.">
         <span class="deckEditorAddGroupLabel">Same on every card:</span>

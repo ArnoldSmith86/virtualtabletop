@@ -89,3 +89,36 @@ test('Create game using edit mode', async t => {
     .click('#w_bldn');
   await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
 });
+
+test('Deck editor: add card type, dynamic object, delete face, undo', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#editor [icon=edit]')
+    .click('.deckEditorAddCardType button')
+    .click('#deckEditorAddFace')
+    .click('#deckEditorAddTextDynamic')
+    .pressKey('delete') // deletes the selected face object; also exercises the Delete-key path once nothing is focused
+    .click('#deckEditorAddFace')
+    .setNativeDialogHandler(() => true)
+    .click('#deckEditorDeleteFace')
+    .pressKey('esc') // closes the deck editor, since no face object is selected at this point
+    .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
+  await compareState(t, '3e20074150f78219095df84abeeb74dc');
+});

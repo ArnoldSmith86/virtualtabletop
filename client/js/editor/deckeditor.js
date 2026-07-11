@@ -96,7 +96,7 @@ class DeckEditorMoveButton extends DeckEditorDragButton {
   }
 
   async dragEnd() {
-    await deckEditor.commit('faceTemplates');
+    await deckEditor.commit('faceTemplates', `${getPlayerDetails().playerName} moved a face object of deck ${deckEditor.deckID} in deck editor`);
     deckEditor.renderSidebar();
   }
 }
@@ -147,7 +147,7 @@ class DeckEditorResizeButton extends DeckEditorDragButton {
   }
 
   async dragEnd() {
-    await deckEditor.commit('faceTemplates');
+    await deckEditor.commit('faceTemplates', `${getPlayerDetails().playerName} resized a face object of deck ${deckEditor.deckID} in deck editor`);
     deckEditor.renderSidebar();
   }
 }
@@ -170,7 +170,7 @@ class DeckEditorRotateButton extends DeckEditorDragButton {
   }
 
   async dragEnd() {
-    await deckEditor.commit('faceTemplates');
+    await deckEditor.commit('faceTemplates', `${getPlayerDetails().playerName} rotated a face object of deck ${deckEditor.deckID} in deck editor`);
     deckEditor.renderSidebar();
   }
 }
@@ -219,6 +219,7 @@ class DeckEditor {
       this.render();
     };
     $('#deckEditorAddFace').onclick = _=>this.addFace();
+    $('#deckEditorDeleteFace').onclick = _=>this.deleteFace();
     $('#deckEditorAddText').onclick = _=>this.addObject({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center', value: 'Text' });
     $('#deckEditorAddImage').onclick = _=>{
       uploadAsset().then(asset=>{
@@ -306,6 +307,13 @@ class DeckEditor {
     this.cardTypes = cardTypes && typeof cardTypes == 'object' && !Array.isArray(cardTypes) ? JSON.parse(JSON.stringify(cardTypes)) : {};
   }
 
+  // Used to tell apart the local echo of our own commit() (deck's property already equals our working copy,
+  // since we built the committed value from that same working copy) from a genuine remote/undo change.
+  matchesWorkingCopy(property) {
+    const deck = this.deck();
+    return !!deck && JSON.stringify(deck.get(property)) == JSON.stringify(property == 'faceTemplates' ? this.faceTemplates : this.cardTypes);
+  }
+
   reload() {
     if(!this.deck())
       return this.close();
@@ -341,7 +349,12 @@ class DeckEditor {
     this.commitTimers[property] = setTimeout(_=>this.commit(property), 500);
   }
 
-  async commit(property) {
+  // cause distinguishes this commit in the undo protocol: consecutive commits with the identical cause string
+  // get merged into one undo step (see addDeltaEntryToUndoProtocol). Leaving it out keeps the default generic
+  // "updated <property>" cause, which is what we want for the debounced per-keystroke property edits (so a
+  // burst of typing is one undo step, not one per commit) - but structural actions (add/delete a face, object
+  // or card type) pass their own distinct cause so they never silently merge with each other or with typing.
+  async commit(property, cause) {
     clearTimeout(this.commitTimers[property]);
     delete this.commitTimers[property];
 
@@ -350,7 +363,7 @@ class DeckEditor {
       return;
 
     batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} updated ${property} of deck ${this.deckID} in deck editor`);
+    setDeltaCause(cause || `${getPlayerDetails().playerName} updated ${property} of deck ${this.deckID} in deck editor`);
     await deck.set(property, JSON.parse(JSON.stringify(property == 'faceTemplates' ? this.faceTemplates : this.cardTypes)));
     batchEnd();
 
@@ -385,11 +398,16 @@ class DeckEditor {
     for(let face=0; face<this.faceTemplates.length; ++face) {
       const option = document.createElement('option');
       option.value = face;
-      option.textContent = face == 0 ? 'Face 0 (back)' : face == 1 ? 'Face 1 (front)' : `Face ${face}`;
+      option.textContent = this.faceLabel(face);
       option.selected = face == this.face;
       faceSelect.append(option);
     }
     faceSelect.disabled = !this.faceTemplates.length;
+    $('#deckEditorDeleteFace').disabled = !this.faceTemplates.length;
+  }
+
+  faceLabel(face) {
+    return face == 0 ? 'Face 0 (back)' : face == 1 ? 'Face 1 (front)' : `Face ${face}`;
   }
 
   renderCard(cardType, face, target) {
@@ -492,7 +510,7 @@ class DeckEditor {
       for(const event of [ 'mouseup', 'touchend', 'touchcancel' ])
         document.removeEventListener(event, up);
       if(moved) {
-        await this.commit('faceTemplates');
+        await this.commit('faceTemplates', `${getPlayerDetails().playerName} moved a face object of deck ${this.deckID} in deck editor`);
         this.renderSidebar();
       }
     };
@@ -646,7 +664,7 @@ class DeckEditor {
           if(asset) {
             object.value = asset;
             this.refreshMainCardFaces();
-            await this.commit('faceTemplates');
+            await this.commit('faceTemplates', `${getPlayerDetails().playerName} uploaded an image for a face object of deck ${this.deckID} in deck editor`);
             this.renderSidebar();
           }
         });
@@ -750,17 +768,17 @@ class DeckEditor {
 
   // Only seeds the currently selected card type; other card types are left for the user to fill in,
   // same as any other dynamic property that isn't set for them yet.
-  async seedCardTypeProperty(typeProperty, defaultValue) {
+  async seedCardTypeProperty(typeProperty, defaultValue, cause) {
     if(this.cardType === null || this.cardTypes[this.cardType][typeProperty] !== undefined)
       return;
     this.cardTypes[this.cardType][typeProperty] = defaultValue;
-    await this.commit('cardTypes');
+    await this.commit('cardTypes', cause);
   }
 
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue) {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
-    await this.seedCardTypeProperty(typeProperty, defaultValue);
-    await this.addObject({ ...objectTemplate, dynamicProperties: { value: typeProperty } });
+    await this.seedCardTypeProperty(typeProperty, defaultValue, `${getPlayerDetails().playerName} added a "${propertyBaseName}" card type property to deck ${this.deckID} in deck editor`);
+    await this.addObject({ ...objectTemplate, dynamicProperties: { value: typeProperty } }, `${getPlayerDetails().playerName} added a ${objectTemplate.type} object bound to "${typeProperty}" to deck ${this.deckID} in deck editor`);
   }
 
   renderDynamicProperties(sidebar, object) {
@@ -777,7 +795,7 @@ class DeckEditor {
         if(!Object.keys(object.dynamicProperties).length)
           delete object.dynamicProperties;
         this.refreshMainCardFaces();
-        await this.commit('faceTemplates');
+        await this.commit('faceTemplates', `${getPlayerDetails().playerName} removed a dynamic property binding from deck ${this.deckID} in deck editor`);
         this.renderSidebar();
       };
     }
@@ -800,14 +818,14 @@ class DeckEditor {
       object.dynamicProperties[objectProperty] = typeProperty;
       const staticValue = object[objectProperty];
       delete object[objectProperty]; // a static value would override the dynamic one
-      await this.seedCardTypeProperty(typeProperty, staticValue !== undefined ? staticValue : '');
+      await this.seedCardTypeProperty(typeProperty, staticValue !== undefined ? staticValue : '', `${getPlayerDetails().playerName} added a "${typeProperty}" card type property to deck ${this.deckID} in deck editor`);
       this.refreshMainCardFaces();
-      await this.commit('faceTemplates');
+      await this.commit('faceTemplates', `${getPlayerDetails().playerName} added a dynamic property binding to deck ${this.deckID} in deck editor`);
       this.renderSidebar();
     };
   }
 
-  async addObject(objectTemplate) {
+  async addObject(objectTemplate, cause) {
     const face = this.faceTemplates[this.face];
     if(!face)
       return;
@@ -815,7 +833,7 @@ class DeckEditor {
       face.objects = [];
     face.objects.push(objectTemplate);
     this.refreshMainCardFaces();
-    await this.commit('faceTemplates');
+    await this.commit('faceTemplates', cause || `${getPlayerDetails().playerName} added a ${objectTemplate.type || 'basic'} object to deck ${this.deckID} in deck editor`);
     this.selectObject(face.objects.length-1);
   }
 
@@ -826,7 +844,7 @@ class DeckEditor {
     face.objects.splice(this.selectedObject, 1);
     this.selectedObject = null;
     this.refreshMainCardFaces();
-    await this.commit('faceTemplates');
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted a face object from deck ${this.deckID} in deck editor`);
     this.renderSidebar();
     this.updateDragToolbar();
   }
@@ -837,7 +855,19 @@ class DeckEditor {
     this.faceTemplates.push({ objects: [] });
     this.face = this.faceTemplates.length-1;
     this.selectedObject = null;
-    await this.commit('faceTemplates');
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} added a face to deck ${this.deckID} in deck editor`);
+    this.render();
+  }
+
+  async deleteFace() {
+    if(!this.deck() || !this.faceTemplates.length)
+      return;
+    if(!confirm(`Delete ${this.faceLabel(this.face)} from every card type of this deck?`))
+      return;
+    this.faceTemplates.splice(this.face, 1);
+    this.face = Math.min(this.face, Math.max(0, this.faceTemplates.length-1));
+    this.selectedObject = null;
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted a face from deck ${this.deckID} in deck editor`);
     this.render();
   }
 
@@ -850,7 +880,7 @@ class DeckEditor {
     this.cardTypes[`type ${index}`] = {};
     this.cardType = `type ${index}`;
     this.selectedObject = null;
-    await this.commit('cardTypes');
+    await this.commit('cardTypes', `${getPlayerDetails().playerName} added a card type to deck ${this.deckID} in deck editor`);
     this.render();
   }
 
@@ -900,6 +930,15 @@ function deckEditorReceiveDelta(delta) {
   if(delta.s && delta.s[deckEditor.deckID] === null || !widgets.has(deckEditor.deckID))
     return deckEditor.close();
   const deckDelta = delta.s && delta.s[deckEditor.deckID];
-  if(deckDelta && (deckDelta.cardTypes !== undefined || deckDelta.faceTemplates !== undefined || deckDelta.cardDefaults !== undefined))
-    deckEditor.reload();
+  if(!deckDelta)
+    return;
+  // deck.set() in commit() echoes back into here synchronously (before commit() even returns); reloading on
+  // that self-echo would wipe out the sidebar mid-edit and revert any other property still pending a commit.
+  // A delta that exactly matches the current working copy is that self-echo, not a genuine remote change.
+  if(deckDelta.cardDefaults !== undefined)
+    return deckEditor.reload();
+  if(deckDelta.faceTemplates !== undefined && !deckEditor.matchesWorkingCopy('faceTemplates'))
+    return deckEditor.reload();
+  if(deckDelta.cardTypes !== undefined && !deckEditor.matchesWorkingCopy('cardTypes'))
+    return deckEditor.reload();
 }

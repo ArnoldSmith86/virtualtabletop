@@ -15,12 +15,13 @@ body.deckEditorActive #deckEditor {
 #deckEditorTopbar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 10px;
+  gap: 6px 10px;
+  padding: 4px 10px;
   min-height: var(--editToolbarHeight);
   background: var(--VTTblue);
   color: white;
   flex-wrap: wrap;
+  flex-shrink: 0; /* never let the wrapped topbar get squeezed shorter than its content, which would push its overflow into deckEditorBody below */
 }
 
 #deckEditorTopbar label {
@@ -44,8 +45,9 @@ body.deckEditorActive #deckEditor {
 .deckEditorAddGroup {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
+  flex-wrap: nowrap;
+  gap: 3px;
+  padding: 3px 6px;
   border-radius: 5px;
   background: #0002;
 }
@@ -58,6 +60,12 @@ body.deckEditorActive #deckEditor {
   font-size: 11px;
   opacity: 0.85;
   margin-right: 2px;
+  white-space: nowrap;
+}
+
+.deckEditorAddGroup button {
+  padding: 4px 6px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
