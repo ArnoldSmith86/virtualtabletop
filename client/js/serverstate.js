@@ -609,13 +609,8 @@ export function sendPropertyUpdate(widgetID, property, value) {
   } else {
     if(delta.s[widgetID] === undefined)
       delta.s[widgetID] = {};
-    if(delta.s[widgetID] !== null) {
-      // if the widget is being created in this delta, unsetting a property can simply remove it from the creation entry
-      if(value === null && delta.s[widgetID].id !== undefined)
-        delete delta.s[widgetID][property];
-      else
-        delta.s[widgetID][property] = value;
-    }
+    if(delta.s[widgetID] !== null)
+      delta.s[widgetID][property] = value;
   }
   deltaChanged = true;
   sendDelta();
