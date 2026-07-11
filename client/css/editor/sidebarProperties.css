@@ -290,3 +290,79 @@
 .tune.editorModule .automationAddCustom input {
   width: 100px;
 }
+
+.tune.editorModule .automationToggleArrow {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 16px;
+  font-size: 12px;
+  color: #666;
+}
+
+.tune.editorModule .automationBlocks {
+  margin-top: 6px;
+  padding-left: 10px;
+  border-left: 2px solid #ddd;
+}
+
+.tune.editorModule .automationBlock {
+  margin-bottom: 6px;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.tune.editorModule .automationBlockHeader {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tune.editorModule .automationBlockHeader button {
+  padding: 0;
+  min-width: 22px;
+  border: 0;
+  background: transparent;
+  color: #7c7c7c;
+  cursor: pointer;
+}
+
+.tune.editorModule .automationBlockHeader button:hover:not([disabled]) {
+  color: #1f5ca9;
+}
+
+.tune.editorModule .automationBlockHeader button[disabled] {
+  color: #ddd;
+  cursor: default;
+}
+
+.tune.editorModule .automationBlockTitle {
+  flex: 1;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.tune.editorModule .automationBlockBody {
+  margin-top: 2px;
+}
+
+.tune.editorModule .automationAddParam,
+.tune.editorModule .automationAddStep {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.tune.editorModule .automationAddParam input {
+  width: 100px;
+}
+
+.tune.editorModule .automationExpressionInput {
+  width: 95%;
+  font-family: monospace;
+}

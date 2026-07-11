@@ -3040,6 +3040,12 @@ class PropertiesModule extends SidebarModule {
     const row = div(container, 'automationRow');
     const header = div(row, 'automationRowHeader');
 
+    const toggleButton = document.createElement('button');
+    toggleButton.className = 'automationToggleArrow';
+    toggleButton.textContent = '▶';
+    toggleButton.title = 'Edit the routine as blocks.';
+    header.appendChild(toggleButton);
+
     const name = document.createElement('span');
     name.className = 'automationName';
     name.textContent = property;
@@ -3064,6 +3070,24 @@ class PropertiesModule extends SidebarModule {
     if(description)
       div(row, 'automationDescription').textContent = description;
 
+    const blocksContainer = div(row, 'automationBlocks');
+    blocksContainer.style.display = 'none';
+    let blocksExpanded = false;
+    let blocksInitialized = false;
+
+    toggleButton.onclick = async e => {
+      e.preventDefault();
+      if(!blocksExpanded && (widget.state[property] === undefined || widget.state[property] === null))
+        await widget.set(property, []);
+      blocksExpanded = !blocksExpanded;
+      toggleButton.textContent = blocksExpanded ? '▼' : '▶';
+      blocksContainer.style.display = blocksExpanded ? 'block' : 'none';
+      if(blocksExpanded && !blocksInitialized) {
+        blocksInitialized = true;
+        this.renderRoutineBlocks(blocksContainer, widget, property);
+      }
+    };
+
     const valueSummary = value => {
       if(Array.isArray(value))
         return value.length == 1 ? '1 step' : `${value.length} steps`;
@@ -3079,16 +3103,21 @@ class PropertiesModule extends SidebarModule {
         summary.textContent = valueSummary(value);
         editButton.disabled = removeButton.disabled = false;
         editButton.title = 'Edit in the JSON editor.';
+        toggleButton.style.visibility = Array.isArray(value) ? 'visible' : 'hidden';
       } else if(inheritedValue !== undefined) {
         summary.textContent = `${valueSummary(inheritedValue)} (inherited)`;
         editButton.disabled = removeButton.disabled = true;
         editButton.title = 'This value is inherited from another widget (for example the deck or inheritFrom). Edit it on the widget that defines it.';
+        toggleButton.style.visibility = 'hidden';
       } else {
         summary.textContent = 'not set';
         editButton.disabled = false;
         removeButton.disabled = true;
         editButton.title = `Add an empty ${property} and edit it in the JSON editor.`;
+        toggleButton.style.visibility = 'visible';
       }
+      if(toggleButton.style.visibility == 'hidden' && blocksExpanded)
+        toggleButton.onclick(new Event('click'));
     });
 
     editButton.onclick = async e => {
@@ -3104,6 +3133,174 @@ class PropertiesModule extends SidebarModule {
       e.preventDefault();
       widget.set(property, null);
     };
+  }
+
+  routineOperationParameters(func) {
+    // parameter names per operation as maintained by the validator (included in the editor bundle)
+    if(typeof operationProps === 'undefined' || !operationProps[func])
+      return [];
+    return Object.keys(operationProps[func]);
+  }
+
+  routineParameterDefaultValue(func, param) {
+    const hint = typeof operationProps !== 'undefined' && operationProps[func] ? operationProps[func][param] : null;
+    if(hint == 'boolean')
+      return true;
+    if(hint == 'number' || hint == 'positiveNumber' || hint == 'countOrAll')
+      return 1;
+    if(hint == 'object')
+      return {};
+    if(hint == 'routineProperty' || String(hint).match(/Routine/))
+      return [];
+    return '';
+  }
+
+  renderRoutineBlocks(container, widget, property) {
+    const currentRoutine = () => Array.isArray(widget.state[property]) ? JSON.parse(JSON.stringify(widget.state[property])) : [];
+    let renderedJSON = null;
+
+    const commit = routine => {
+      renderedJSON = JSON.stringify(routine);
+      widget.set(property, routine);
+    };
+
+    const render = () => {
+      const routine = currentRoutine();
+      renderedJSON = JSON.stringify(routine);
+      container.innerHTML = '';
+
+      routine.forEach((step, index) => {
+        const block = div(container, 'automationBlock');
+        const blockHeader = div(block, 'automationBlockHeader');
+
+        const title = document.createElement('span');
+        title.className = 'automationBlockTitle';
+        title.textContent = isObjectLike(step) ? (step.func || 'step') : 'comment / expression';
+        blockHeader.appendChild(title);
+
+        for(const [ icon, tooltip, enabled, action ] of [
+          [ 'arrow_upward',   'Move step up',   index > 0,                  () => { const r = currentRoutine(); r.splice(index-1, 0, r.splice(index, 1)[0]); commit(r); render(); } ],
+          [ 'arrow_downward', 'Move step down', index < routine.length - 1, () => { const r = currentRoutine(); r.splice(index+1, 0, r.splice(index, 1)[0]); commit(r); render(); } ],
+          [ 'delete',         'Delete step',    true,                       () => { const r = currentRoutine(); r.splice(index, 1); commit(r); render(); } ]
+        ]) {
+          const button = document.createElement('button');
+          button.setAttribute('icon', icon);
+          button.title = tooltip;
+          button.disabled = !enabled;
+          button.onclick = e => { e.preventDefault(); action(); };
+          blockHeader.appendChild(button);
+        }
+
+        if(isObjectLike(step) && typeof step.func === 'string') {
+          const body = div(block, 'automationBlockBody');
+          for(const param of Object.keys(step).filter(k => k != 'func')) {
+            this.addInput(param, step[param], v => {
+              const r = currentRoutine();
+              if(!isObjectLike(r[index]))
+                return;
+              if(typeof v === 'undefined')
+                delete r[index][param];
+              else
+                r[index][param] = v;
+              commit(r);
+            }, body);
+          }
+
+          const knownParams = this.routineOperationParameters(step.func).filter(p => typeof step[p] === 'undefined');
+          const addParamWrapper = div(body, 'automationAddParam');
+          const paramInput = document.createElement('input');
+          paramInput.type = 'text';
+          paramInput.placeholder = 'parameter';
+          paramInput.setAttribute('list', `automationParams_${widget.id}_${property}_${index}`);
+          const paramList = document.createElement('datalist');
+          paramList.id = paramInput.getAttribute('list');
+          for(const p of knownParams) {
+            const option = document.createElement('option');
+            option.value = p;
+            paramList.appendChild(option);
+          }
+          addParamWrapper.appendChild(paramInput);
+          addParamWrapper.appendChild(paramList);
+          const addParamButton = document.createElement('button');
+          addParamButton.className = 'blue';
+          addParamButton.textContent = 'add parameter';
+          addParamWrapper.appendChild(addParamButton);
+          paramInput.onkeydown = e => {
+            if(e.key == 'Enter') {
+              e.preventDefault();
+              addParamButton.click();
+            }
+          };
+          addParamButton.onclick = e => {
+            e.preventDefault();
+            const param = paramInput.value.trim();
+            if(!param || param == 'func')
+              return;
+            const r = currentRoutine();
+            if(!isObjectLike(r[index]) || typeof r[index][param] !== 'undefined')
+              return;
+            r[index][param] = this.routineParameterDefaultValue(step.func, param);
+            commit(r);
+            render();
+          };
+        } else if(typeof step === 'string') {
+          const body = div(block, 'automationBlockBody');
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'automationExpressionInput';
+          input.value = step;
+          input.placeholder = '// comment or var x = ...';
+          input.oninput = () => {
+            const r = currentRoutine();
+            r[index] = input.value;
+            commit(r);
+          };
+          body.appendChild(input);
+        } else {
+          const body = div(block, 'automationBlockBody');
+          this.addInput(`step ${index+1}`, step, v => {
+            const r = currentRoutine();
+            r[index] = typeof v === 'undefined' ? null : v;
+            commit(r);
+          }, body);
+        }
+      });
+
+      const addWrapper = div(container, 'automationAddStep');
+      const funcSelect = document.createElement('select');
+      const operations = typeof operationProps !== 'undefined' ? Object.keys(operationProps).sort() : [];
+      for(const func of operations) {
+        const option = document.createElement('option');
+        option.value = option.textContent = func;
+        funcSelect.appendChild(option);
+      }
+      const commentOption = document.createElement('option');
+      commentOption.value = '//';
+      commentOption.textContent = 'comment / expression';
+      funcSelect.appendChild(commentOption);
+      addWrapper.appendChild(funcSelect);
+
+      const addStepButton = document.createElement('button');
+      addStepButton.className = 'blue';
+      addStepButton.textContent = 'add step';
+      addWrapper.appendChild(addStepButton);
+      addStepButton.onclick = e => {
+        e.preventDefault();
+        const r = currentRoutine();
+        r.push(funcSelect.value == '//' ? '' : { func: funcSelect.value });
+        commit(r);
+        render();
+      };
+    };
+
+    render();
+
+    this.addPropertyListener(widget, property, w => {
+      const json = JSON.stringify(Array.isArray(w.state[property]) ? w.state[property] : []);
+      if(json === renderedJSON || container.contains(document.activeElement))
+        return;
+      render();
+    });
   }
 
   openPropertyInJsonEditor(widget, property) {
