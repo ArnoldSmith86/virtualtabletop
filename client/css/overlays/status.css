@@ -10,7 +10,7 @@
   border-radius: 6px;
   pointer-events: none;
   opacity: 0;
-  z-index: 5;
+  z-index: 20; /* above .overlay (10) so connection warnings stay visible while an overlay is open */
   --pulse-min: 0.4;
   --pulse-max: 0.6;
   transition: opacity 0.2s;

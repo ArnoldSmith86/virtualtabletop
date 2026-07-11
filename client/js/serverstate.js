@@ -1,5 +1,5 @@
-import { toServer, onMessage } from './connection.js';
-import { setConnectionState, setStatusMessage, isDisconnected, updateStatus } from './overlays/status.js';
+import { toServer, onMessage, onConnectionClose } from './connection.js';
+import { setConnectionState, setStatusMessage, updateStatus } from './overlays/status.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
@@ -17,6 +17,7 @@ let deltaID = 0;
 let batchDepth = 0;
 let pendingDeltas = [];
 let nextDeltaSendId = 0;
+let disconnectedSinceLastState = false;
 const DELTA_CONFIRM_ICON_MS = 5000;
 const DELTA_CONFIRM_MESSAGE_MS = 10000;
 const DELTA_CONFIRM_RELOAD_WARN_MS = 20000;
@@ -518,10 +519,12 @@ function receiveStateFromServer(args) {
 
   resetZoomAndPan();
 
-  // a fresh state from the server makes any unconfirmed deltas moot; warn if some were probably lost
-  if(!isLoading && pendingDeltas.length && Date.now() - pendingDeltas[0].sentAt >= DELTA_CONFIRM_ICON_MS)
+  // a fresh state from the server makes any unconfirmed deltas moot; warn if some were reverted -
+  // always after a reconnect, and after 5s without confirmation for normal state broadcasts
+  if(!isLoading && pendingDeltas.length && (disconnectedSinceLastState || Date.now() - pendingDeltas[0].sentAt >= DELTA_CONFIRM_ICON_MS))
     setStatusMessage('Connection restored. Your last changes could not be saved.', 'link');
   pendingDeltas = [];
+  disconnectedSinceLastState = false;
   updateConnectionMonitor();
 
   if(isLoading) {
@@ -636,7 +639,7 @@ export function widgetFilter(callback) {
 function updateConnectionMonitor() {
   // while the websocket is known-closed, the reconnect loop with its "Reconnecting..." status
   // handles recovery - the escalation below only targets zombie connections that stay open
-  if(isDisconnected()) {
+  if(disconnectedSinceLastState) {
     setConnectionState(0, '', 0);
     updateStatus();
     return;
@@ -669,6 +672,10 @@ onLoad(function() {
     if(args.meta) {
       applyCustomCss(args.meta.gameSettings);
     }
+  });
+  onConnectionClose(function() {
+    disconnectedSinceLastState = true;
+    updateConnectionMonitor();
   });
   setInterval(updateConnectionMonitor, 500);
   setScale();

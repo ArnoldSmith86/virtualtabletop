@@ -15,10 +15,6 @@ export function setConnectionState(pendingCount, state, msUntilReload) {
   connectionState = { pendingCount, state, msUntilReload };
 }
 
-export function isDisconnected() {
-  return reconnecting;
-}
-
 export function setStatusMessage(message, icon = '[users_settings]') {
   statusMessages.push({ message, icon, expiresAt: Date.now() + STATUS_MESSAGE_DURATION_MS });
 }
@@ -32,6 +28,8 @@ export function setActivePlayersList(active) {
 
 export function setMyName(name) {
   myName = name;
+  // a self-entry can appear when a mouse broadcast under a new name races the meta update after a rename
+  delete playerActivity[name];
 }
 
 function joinNames(names) {

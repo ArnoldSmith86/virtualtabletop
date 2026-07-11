@@ -121,7 +121,7 @@ onLoad(function() {
       playerCursors[args.player].classList.toggle('hidden', !!args.mouseState.hidden);
       if(args.mouseState.inactive) {
         playerCursors[args.player].classList.remove('pressed','active','foreign');
-      } else {
+      } else if(args.mouseState.x !== undefined) {
         const x = args.mouseState.x*scale;
         const y = args.mouseState.y*scale;
         playerCursors[args.player].style.transform = `translate(${x}px, ${y}px)`;
