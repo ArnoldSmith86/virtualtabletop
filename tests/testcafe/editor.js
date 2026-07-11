@@ -89,3 +89,29 @@ test('Create game using edit mode', async t => {
     .click('#w_bldn');
   await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
 });
+
+test('Line widget in edit mode', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorSidebar [icon=tune]')
+    .click('#editorModules .lineAddStop')
+    .click('#editorModules .lineShapeCurved');
+  const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
+  console.log('LINE ID: ' + lineID);
+  await t
+    .drag(Selector(`[id="w_${lineID}"] .lineHandle`).nth(1), 50, 80)
+    .click('#editorModules .lineStopsBasic')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-line')
+    .click('#editorModules .lineConnectStart')
+    .click(Selector('#editorModules .lineConnectStart option').withAttribute('value', lineID))
+    .drag(Selector('.widget.line.selectedInEdit .lineHandle').nth(1), 90, 60)
+    .drag(Selector('.widget.line.selectedInEdit .lineHandle').nth(0), -40, 70);
+  await compareState(t, 'f156fe06bb7c602f76d652c519ca1734');
+});

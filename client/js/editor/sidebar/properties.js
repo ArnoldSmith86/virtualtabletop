@@ -1575,12 +1575,24 @@ class PropertiesModule extends SidebarModule {
     return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
   }
 
+  // move everything sitting on a stop back to the room so removing the stop doesn't delete it
+  async lineReleaseStopChildren(stop) {
+    for(const child of [ ...Widget.prototype.children.call(stop) ]) {
+      const x = Math.round(child.absoluteCoord('x'));
+      const y = Math.round(child.absoluteCoord('y'));
+      await child.set('parent', null);
+      await child.set('x', x);
+      await child.set('y', y);
+    }
+  }
+
   renderForLine(widget) {
     this.addHeader(`Line ${widget.id}`);
 
-    const addButton = (text, icon)=>{
+    const addButton = (text, className, icon)=>{
       const button = document.createElement('button');
       button.innerText = text;
+      button.className = className;
       if(icon)
         button.setAttribute('icon', icon);
       this.moduleDOM.appendChild(button);
@@ -1588,8 +1600,8 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader('Shape');
-    const straightButton = addButton('Straight');
-    const curvedButton = addButton('Curved');
+    const straightButton = addButton('Straight', 'lineShapeStraight');
+    const curvedButton = addButton('Curved', 'lineShapeCurved');
     const updateShapeButtons = widget=>{
       straightButton.classList.toggle('selected', !widget.isCurved());
       curvedButton.classList.toggle('selected', widget.isCurved());
@@ -1618,8 +1630,8 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader('Attached widgets');
-    const addStopButton = addButton('Add stop', 'add');
-    const removeStopButton = addButton('Remove stop', 'remove');
+    const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
+    const removeStopButton = addButton('Remove stop', 'lineRemoveStop', 'remove');
 
     addStopButton.onclick = async _=>{
       batchStart();
@@ -1647,6 +1659,7 @@ class PropertiesModule extends SidebarModule {
         return;
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} removed a stop from line ${widget.id} in editor`);
+      await this.lineReleaseStopChildren(stops[stops.length-2]);
       await removeWidgetLocal(stops[stops.length-2].get('id'));
       const remaining = widget.attachedWidgets();
       for(let i = 0; i < remaining.length; ++i)
@@ -1656,8 +1669,8 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader('Attached widget type');
-    const holderStopsButton = addButton('Card holders');
-    const basicStopsButton = addButton('Basic widgets');
+    const holderStopsButton = addButton('Card holders', 'lineStopsHolder');
+    const basicStopsButton = addButton('Basic widgets', 'lineStopsBasic');
     this.addPropertyListener(widget, 'attachedType', widget=>{
       holderStopsButton.classList.toggle('selected', widget.get('attachedType') != 'basic');
       basicStopsButton.classList.toggle('selected', widget.get('attachedType') == 'basic');
@@ -1670,6 +1683,7 @@ class PropertiesModule extends SidebarModule {
       await widget.set('attachedType', type);
       for(const stop of widget.attachedWidgets()) {
         const lineIndex = stop.get('lineIndex');
+        await this.lineReleaseStopChildren(stop);
         await removeWidgetLocal(stop.get('id'));
         await addWidgetLocal(Object.assign(this.lineStopDefaults(type), {
           parent: widget.id,
@@ -1688,6 +1702,7 @@ class PropertiesModule extends SidebarModule {
       this.addSubHeader(`Connect ${end.toLowerCase()} point`);
       const wrapper = div(this.moduleDOM, 'genericInput');
       const select = document.createElement('select');
+      select.className = `lineConnect${end}`;
       const noneOption = document.createElement('option');
       noneOption.value = '';
       noneOption.innerText = 'not connected';

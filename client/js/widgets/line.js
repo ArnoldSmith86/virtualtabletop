@@ -112,7 +112,6 @@ export class Line extends Widget {
   async applyConnections() {
     if(Line.connectionUpdateInProgress.has(this.id))
       return;
-    const outermostUpdate = !Line.connectionUpdateInProgress.size;
     Line.connectionUpdateInProgress.add(this.id);
     try {
       for(const end of [ 'Start', 'End' ]) {
@@ -130,9 +129,20 @@ export class Line extends Widget {
         });
       }
     } finally {
-      if(outermostUpdate)
-        Line.connectionUpdateInProgress.clear();
+      Line.connectionUpdateInProgress.delete(this.id);
     }
+  }
+
+  async onChildAdd(child, oldParentID) {
+    await super.onChildAdd(child, oldParentID);
+    if(child.get('lineIndex') !== null)
+      await this.updateAttachedWidgets();
+  }
+
+  async onChildRemove(child) {
+    await super.onChildRemove(child);
+    if(child.get('lineIndex') !== null)
+      await this.updateAttachedWidgets();
   }
 
   async onPropertyChange(property, oldValue, newValue) {
@@ -248,7 +258,8 @@ export class Line extends Widget {
         [ 'mousemove', moveHandler ],
         [ 'touchmove', moveHandler ],
         [ 'mouseup', upHandler ],
-        [ 'touchend', upHandler ]
+        [ 'touchend', upHandler ],
+        [ 'touchcancel', upHandler ]
       ];
       for(const [ event, handler ] of listeners)
         window.addEventListener(event, handler, true);
