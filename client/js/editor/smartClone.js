@@ -32,7 +32,9 @@ function smartCloneExcludesWidget(topCloneID, source, options) {
 }
 
 async function smartCloneAddChildren(topCloneID, clone, source, options) {
-  for(const child of widgetFilter(w=>w.get('parent') == source.id)) {
+  // clone decks before cards so cloned cards can reference the cloned deck
+  const children = widgetFilter(w=>w.get('parent') == source.id).sort((a,b)=>(b.get('type')=='deck')-(a.get('type')=='deck'));
+  for(const child of children) {
     if(smartCloneExcludesWidget(topCloneID, child, options))
       continue;
     let clonedChildren = smartCloneGetClones(child, clone);
@@ -42,7 +44,14 @@ async function smartCloneAddChildren(topCloneID, clone, source, options) {
     if(widgets.has(id))
       id = generateUniqueWidgetID();
     if(!clonedChildren.length) {
-      clonedChildren = [ widgets.get(await addWidgetLocal({ id, type: child.get('type'), parent: clone.id, inheritFrom: inheritDef(child) })) ];
+      const definition = { id, type: child.get('type'), parent: clone.id, inheritFrom: inheritDef(child) };
+      if(definition.type == 'card') { // cards cannot be created without a deck and cardType
+        definition.deck = JSON.parse(applyReplaces(JSON.stringify(child.get('deck')), options.replaces, topCloneID));
+        definition.cardType = child.get('cardType');
+      }
+      clonedChildren = [ widgets.get(await addWidgetLocal(definition)) ];
+      if(!clonedChildren[0])
+        continue;
       if(child.get('editorSmartClone')) {
         await clonedChildren[0].set('editorSmartClone', JSON.parse(JSON.stringify(child.get('editorSmartClone'))));
         await smartCloneUpdate(id);
