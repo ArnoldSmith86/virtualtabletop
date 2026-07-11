@@ -579,7 +579,13 @@
     "text": "addme"
   },
   "_meta": {
-    "version": 13,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Arrays",
       "image": "/assets/-2038908983_7396",
@@ -590,7 +596,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748991356666,
+      "lastUpdate": 1763605491580,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -734,8 +740,8 @@
     "width": 250,
     "height": 50,
     "z": 13,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "font-size: 30px; ",
     "text": "Word Array"
   },
@@ -746,8 +752,8 @@
     "width": 250,
     "height": 50,
     "z": 12,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "font-size: 30px; ",
     "text": "Numerical Array"
   },
@@ -758,8 +764,8 @@
     "width": 250,
     "height": 50,
     "z": 15,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "font-size: 30px; ",
     "text": "Mixed Array"
   },
@@ -851,11 +857,10 @@
     "id": "atString7a",
     "x": 100,
     "y": 596,
-    "width": null,
     "height": 40,
     "z": 26425,
-    "movable": null,
-    "movableInEdit": null,
+    "movable": false,
+    "movableInEdit": true,
     "css": "background-color:white; border-style: solid;",
     "editable": true,
     "text": 2

@@ -23,6 +23,10 @@
   --positiveInput: #009502;
   --negativeInput: #950000;
   --neutralInput: #1f5ca6;
+  --zoom: 1;
+  --roomZoom: 1;
+  --roomPanX: 0px;
+  --roomPanY: 0px;
 }
 
 body {
@@ -379,7 +383,7 @@ body.aspectTooGood.hiddenToolbar {
 
   /* button tooltips */
 
-    .toolbarButton .tooltip, #options {
+    .toolbarButton .tooltip, #options, #zoomControls {
       display: none;
       position: absolute;
       left: 46px;
@@ -473,6 +477,10 @@ body.aspectTooGood.hiddenToolbar {
       content: '[volume_up]';
     }
 
+    #zoom2xButton::before {
+      content: '[zoom_in]';
+    }
+
     html:not(:fullscreen) #fullscreenButton::before {
       content: '[enter_fullscreen]';
     }
@@ -539,56 +547,56 @@ body.aspectTooGood.hiddenToolbar {
       }
     }
 
-    @media (max-width: 460px) {
-      body.aspectTooGood #addButton {
-        display: none;
-      }
-    }
-
     @media (max-height: 230px) {
-      body:not(.horizontalToolbar) #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-height: 200px) {
       body:not(.horizontalToolbar) #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 410px) {
+    @media (max-width: 460px) {
       body.aspectTooGood #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 360px) {
+    @media (max-width: 410px) {
       body.aspectTooGood #editButton {
         display: none;
       }
     }
 
-    @media (max-height: 170px) {
+    @media (max-height: 190px) {
       body:not(.horizontalToolbar) #editButton {
         display: none;
       }
     }
 
-    @media (max-height: 140px) {
+    @media (max-height: 160px) {
       body:not(.horizontalToolbar) #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 300px) {
+    @media (max-height: 120px) {
+      body:not(.horizontalToolbar) #zoom2xButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 350px) {
       body.aspectTooGood #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 250px) {
+    @media (max-width: 295px) {
       body.aspectTooGood #hideToolbarButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 250px) {
+      body.aspectTooGood #zoom2xButton {
         display: none;
       }
     }
@@ -600,25 +608,25 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     @media (max-width: 320px) {
-      body.horizontalToolbar #addButton {
-        display: none;
-      }
-    }
-
-    @media (max-width: 300px) {
       body.horizontalToolbar #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 245px) {
+    @media (max-width: 260px) {
       body.horizontalToolbar #editButton {
         display: none;
       }
     }
 
-    @media (max-width: 190px) {
+    @media (max-width: 220px) {
       body.horizontalToolbar #playersButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 160px) {
+      body.horizontalToolbar #zoom2xButton {
         display: none;
       }
     }
@@ -654,6 +662,41 @@ body.aspectTooGood.hiddenToolbar {
     }
 
     body.horizontalToolbar #options {
+      top: -42px;
+      left: unset;
+      right: -32px;
+    }
+
+    #zoomAnchor {
+      position: relative;
+    }
+
+    #zoomControls {
+      display: flex;
+      left: calc(var(--toolbarSize) + 4px);
+      top: -2px;
+      padding: 2px;
+      pointer-events: unset;
+    }
+
+    #zoomControls.hidden {
+      display: none;
+    }
+
+    #lockZoomButton {
+      padding: 5px;
+    }
+
+    #lockZoomButton::before {
+      font-family: "Material Symbols" !important;
+      content: 'lock_open_right';
+    }
+
+    #lockZoomButton.locked::before {
+      content: 'lock';
+    }
+
+    body.horizontalToolbar #zoomControls {
       top: -42px;
       left: unset;
       right: -32px;
@@ -747,6 +790,31 @@ div[icon] .buttons {
 #room {
   transform: scale(var(--scale));
   transform-origin: left top;
+}
+
+body.zoom2x #roomArea {
+  overflow: hidden;
+}
+
+body.zoom2x #room {
+  transform: translate(var(--roomPanX), var(--roomPanY)) scale(calc(var(--scale) * var(--zoom))) ;
+  transform-origin: left top;
+}
+
+body.panning {
+  cursor: grabbing;
+}
+
+body.zoom2x #roomArea {
+  cursor: grab;
+}
+
+body.panning #roomArea {
+  cursor: grabbing;
+}
+
+body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomArea, body.zoom2x.overlayActive #roomArea {
+  cursor: default;
 }
 
 ::-webkit-scrollbar {
@@ -1429,7 +1497,8 @@ button:disabled:hover {
 .inputstring,
 .inputselect,
 .inputpalette,
-.inputchoose{
+.inputchoose,
+.inputslider{
   flex-direction: column;
 }
 .inputcheckbox{
@@ -1440,7 +1509,8 @@ button:disabled:hover {
 .inputstring label,
 .inputselect label,
 .inputpalette label,
-.inputchoose label{
+.inputchoose label,
+.inputslider label{
   padding: 4px 5px 0 5px;
     width: 100%;
     vertical-align: top;
@@ -1449,6 +1519,7 @@ button:disabled:hover {
     font-weight: 400;
     line-height: 15.6px;
     min-height: 15px;
+    box-sizing: border-box;
 }
 
 .inputcheckbox input{
@@ -1665,6 +1736,50 @@ input.switchbox[type="checkbox"]:checked + .switchbox{
   line-height: 42px;
   padding: 8px 8px 0;
 
+}
+.inputslider .countInput{
+  width: 100%;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 0;
+}
+.inputslider .inputSliderValue{
+  padding: 0;
+  font-size: 16px;
+  min-width: var(--input-slider-value-ch, 4ch);
+  text-align: right;
+  color: var(--modalTextColor);
+}
+.inputslider input[type=range] {
+  height: 24px;
+  margin: 4px;
+}
+@-moz-document url-prefix() {
+  .inputslider input[type=range] {
+    margin-right: 6px;
+  }
+}
+.inputslider input[type=range]::-moz-range-track {
+  background-color: var(--VTTblue);
+  height: 24px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-webkit-slider-runnable-track {
+  background-color: var(--VTTblue);
+  height: 28px;
+  padding: 2px;
+}
+.inputslider input[type=range]::-moz-range-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
+}
+.inputslider input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0 0 3px #000;
+  border: none;
+  height: 24px;
+  width: 24px;
 }
 .countInput input[type=number]{
   font-size: 1.5rem;

@@ -1,9 +1,9 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 import { playerName } from './overlays/players.js';
 
-let roomID = self.location.pathname.replace(/.*\//, '');
+let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
 
 export const widgets = new Map();
@@ -20,6 +20,27 @@ let overlayShownForEmptyRoom = false;
 let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
+
+function normalizeRoomID(roomID) {
+  if(!config.roomNamesCaseSensitive)
+    roomID = roomID.toLowerCase();
+  return roomID;
+}
+
+function applyCustomCss(gameSettings) {
+  let style = document.getElementById('globalCss');
+  if (style)
+    style.innerHTML = '';
+  if (gameSettings && (gameSettings.globalCss || gameSettings.cursorCss)) {
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'globalCss';
+      document.head.appendChild(style);
+    }
+    const cssText = (gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '');
+    style.appendChild(document.createTextNode(mapAssetURLs(cssText)));
+  }
+}
 
 function generateUniqueWidgetID() {
   let id;
@@ -289,6 +310,16 @@ export function batchEnd() {
   sendDelta();
 }
 
+export function flushDelta() {
+  const currentBatchDepth = batchDepth;
+  const currentDeltaCause = delta.c;
+  batchDepth = 0;
+  sendDelta();
+  if(currentDeltaCause)
+    delta.c = currentDeltaCause;
+  batchDepth = currentBatchDepth;
+}
+
 function setDeltaCause(cause) {
   if(!delta.c)
     delta.c = cause;
@@ -438,6 +469,9 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
+  // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
+  currentGameSettings = args._meta.gameSettings || {};
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
   const topSurface = $('#topSurface');
@@ -473,6 +507,8 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  resetZoomAndPan();
+
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
@@ -482,7 +518,11 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    $('#statesButton').click();
+    if(urlProperties.about) {
+      $('#aboutButton').click();
+    } else {
+      $('#statesButton').click();
+    }
     overlayShownForEmptyRoom = true;
   }
 
@@ -546,7 +586,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
+    if(!w.isLimbo)
+      await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
   }
 }
@@ -821,5 +862,10 @@ onLoad(function() {
   onMessage('inputBlock', receiveInputBlock);
   if($('#inputBlockCancel'))
     $('#inputBlockCancel').addEventListener('click', cancelInputBlocks);
+  onMessage('meta', (args) => {
+    if(args.meta) {
+      applyCustomCss(args.meta.gameSettings);
+    }
+  });
   setScale();
 });

@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, runInput } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -47,6 +47,7 @@ export class Widget extends StateManaged {
       borderRadius: null,
       rotation: 0,
       scale: 1,
+      ignoreZoom: false,
       dragLimit: {},
 
       typeClasses: 'widget',
@@ -83,6 +84,7 @@ export class Widget extends StateManaged {
       hoverInheritVisibleForSeat: true,
 
       clickRoutine: null,
+      doubleClickRoutine: null,
       changeRoutine: null,
       enterRoutine: null,
       leaveRoutine: null,
@@ -451,7 +453,7 @@ export class Widget extends StateManaged {
   }
 
   classesProperties() {
-    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
+    return [ 'classes', 'display', 'dragging', 'dropShadowOwner', 'hoverTarget', 'hoverParent', 'linkedToSeat', 'onlyVisibleForSeat', 'owner', 'typeClasses', 'movable', 'enlarge', 'clickable' ];
   }
 
   async click(mode='respect') {
@@ -460,7 +462,7 @@ export class Widget extends StateManaged {
 
     if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
       return true;
-    
+
     if(this.get('clickSound')) {
       toServer('audio', {
         audioSource: this.get('clickSound'),
@@ -662,18 +664,40 @@ export class Widget extends StateManaged {
   }
 
   cssTransform() {
-    let transform = `translate(${this.get('x')}px, ${this.get('y')}px)`;
+    let x = this.get('x');
+    let y = this.get('y');
+    let scaleValue = this.get('scale');
+
+    if(this.get('ignoreZoom')) {
+      const computedStyle = getComputedStyle(document.documentElement);
+      const zoom = parseFloat(computedStyle.getPropertyValue('--zoom')) || 1;
+
+      if(zoom > 1) {
+        const baseScale = parseFloat(computedStyle.getPropertyValue('--scale')) || 1;
+        const panX = parseFloat(computedStyle.getPropertyValue('--roomPanX')) || 0;
+        const panY = parseFloat(computedStyle.getPropertyValue('--roomPanY')) || 0;
+
+        const transformOrigin = getTransformOrigin(this.domElement);
+        const zoomCompensation = 1 - 1 / zoom;
+
+        x = x / zoom - panX / (baseScale * zoom) - transformOrigin.x * zoomCompensation;
+        y = y / zoom - panY / (baseScale * zoom) - transformOrigin.y * zoomCompensation;
+        scaleValue = scaleValue / zoom;
+      }
+    }
+
+    let transform = `translate(${x}px, ${y}px)`;
 
     if(this.get('rotation'))
       transform += ` rotate(${this.get('rotation')}deg)`;
-    if(this.get('scale') != 1)
-      transform += ` scale(${this.get('scale')})`;
+    if(scaleValue != 1)
+      transform += ` scale(${scaleValue})`;
 
     return transform;
   }
 
   cssTransformProperties() {
-    return [ 'rotation', 'scale', 'x', 'y' ];
+    return [ 'rotation', 'scale', 'x', 'y', 'ignoreZoom' ];
   }
 
   dragCorner(coordGlobal, localAnchor, parent = null) {
@@ -689,6 +713,21 @@ export class Widget extends StateManaged {
     corner.x = Math.round(corner.x);
     corner.y = Math.round(corner.y);
     return corner;
+  }
+
+  async doubleClick(mode='respect') {
+    if(tracingEnabled)
+      sendTraceEvent('doubleClick', { id: this.get('id'), mode });
+
+    if(!this.get('clickable') && !(mode == 'ignoreClickable' || mode =='ignoreAll'))
+      return true;
+
+    if(Array.isArray(this.get('doubleClickRoutine')) && !(mode == 'ignoreDoubleClickRoutine' || mode =='ignoreAll')) {
+      await this.evaluateRoutine('doubleClickRoutine', {}, {});
+      return true;
+    } else {
+      return false;
+    }
   }
 
   evaluateInputOverlay(o, resolve, reject, go) {
@@ -713,6 +752,12 @@ export class Widget extends StateManaged {
             variables[field.variable] = Object.values(variables[field.variable]).length ? Object.values(variables[field.variable])[0] : null;
         } else if(field.type == 'number') {
           variables[field.variable] = dom.value
+        } else if(field.type == 'slider') {
+          if (Array.isArray(field.values)) {
+            variables[field.variable] = field.values[dom.value];
+          } else {
+            variables[field.variable] = Number(dom.value);
+          }
         } else if(field.type != 'text' && field.type != 'subtitle' && field.type != 'title') {
           variables[field.variable] = dom.value;
         }
@@ -950,15 +995,17 @@ export class Widget extends StateManaged {
               const result = evaluateVariables(match[offset+2]);
               return result !== undefined ? result : defaultValue;
             } else {
-              return 1;
+              return defaultValue;
             }
           };
           const getValue = async function(input) {
-            const toNum = s=>typeof s == 'string' && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const op = match[13] ? variables[match[14]] : match[14];
+            const toNum = s=>typeof s == 'string' && (legacyMode('convertNumericVarParametersToNumbers') || op === '+') && s.match(/^[-+]?[0-9]+(\.[0-9]+)?$/) ? +s : s;
+            const dv = legacyMode('useOneAsDefaultForVarParameters') ? 1 : undefined;
             if(match[14] && match[9] !== undefined)
-              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(9, 1)), toNum(getParam(15, 1)), toNum(getParam(19, 1)));
+              return await compute(op, input, toNum(getParam(9, dv)), toNum(getParam(15, dv)), toNum(getParam(19, dv)));
             else if(match[14])
-              return await compute(match[13] ? variables[match[14]] : match[14], input, toNum(getParam(15, 1)), toNum(getParam(19, 1)), toNum(getParam(23, 1)));
+              return await compute(op, input, toNum(getParam(15, dv)), toNum(getParam(19, dv)), toNum(getParam(23, dv)));
             else
               return getParam(5, null);
           };
@@ -1072,8 +1119,8 @@ export class Widget extends StateManaged {
         }
 
         const execute = async function(widget) {
-          const cm = widget.getColorMap();
           if(widget.get('type') == 'canvas') {
+            const cm = widget.getColorMap();
             if(a.mode == 'setPixel') {
               const res = widget.getResolution();
               if(a.x >= 0 && a.y >= 0 && a.x < res && a.y < res) {
@@ -1088,9 +1135,10 @@ export class Widget extends StateManaged {
             else if(a.mode == 'dec')
               await widget.set('activeColor', (widget.get('activeColor')+cm.length - (a.value % cm.length)) % cm.length);
             else if(a.mode == 'change') {
-              const index = ((a.value || 1) % cm.length) || 0;
-              cm[index] = a.color || '#1f5ca6' ;
-              await widget.set('colorMap', cm);
+              const newMap = Array.isArray(cm) ? cm.slice() : [];
+              const index = ((a.value || 1) % newMap.length) || 0;
+              newMap[index] = a.color || '#1f5ca6';
+              await widget.set('colorMap', newMap);
             }
             else
               await widget.set('activeColor', (widget.get('activeColor')+ a.value) % cm.length);
@@ -1212,6 +1260,14 @@ export class Widget extends StateManaged {
         if(jeRoutineLogging)
           jeLoggingRoutineOperationSummary( `'${theItem}'`, `${JSON.stringify(variables[a.variable])}`)
 
+      }
+
+      if(a.func == 'DELAY') {
+        setDefaults(a, { milliseconds: 0 });
+        flushDelta();
+        await sleep(a.milliseconds);
+        if(jeRoutineLogging)
+          jeLoggingRoutineOperationSummary(` for ${a.milliseconds} milliseconds`);
       }
 
       if(a.func == 'DELETE') {
@@ -2051,6 +2107,20 @@ export class Widget extends StateManaged {
         }
       }
 
+      if(a.func == 'UPLOAD') {
+        setDefaults(a, { variable: 'uploadedFileName', fileTypes: null });
+        const uploadedAsset = await uploadAsset(null, a.fileTypes);
+        if(!String(uploadedAsset).match(/^\/assets\/[0-9_-]+$/)) {
+          variables[a.variable] = false;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary("UPLOAD cancelled");
+        } else {
+          variables[a.variable] = uploadedAsset;
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`'${a.variable}'`, `${JSON.stringify(variables[a.variable])}`);
+        }
+      }
+
       if(a.func == 'TURN') {
         setDefaults(a, { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
         if([ 'forward', 'backward', 'random', 'position', 'seat' ].indexOf(a.turnCycle) == -1) {
@@ -2078,7 +2148,7 @@ export class Widget extends StateManaged {
             }
           }
 
-          if (a.turnCycle != 'position' && a.turnCycle != 'seat') {
+          if (a.turnCycle != 'position' && a.turnCycle != 'seat' && a.turnCycle != 'random') {
             // rotate the set of seats so the current turn is first
             for (let i = 0; i < c.length && !c[0].get('turn'); i++) {
               c.unshift(c.pop());

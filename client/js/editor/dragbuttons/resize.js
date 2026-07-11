@@ -14,26 +14,29 @@ class ResizeDragButton extends DragButton {
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
     for(const [ widget, startX, startY, startWidth, startHeight ] of this.dragStartCoords) {
-      if(this.keepAspectRatio) {
-        if(dx>dy) {
-          dy = dx * startHeight / startWidth;
+      let resizeDx = dx;
+      let resizeDy = dy;
+      const keepAspectRatio = this.keepAspectRatio || isResizeLocked();
+      if(keepAspectRatio) {
+        if(resizeDx>resizeDy) {
+          resizeDy = resizeDx * startHeight / startWidth;
         } else {
-          dx = dy * startWidth / startHeight;
+          resizeDx = resizeDy * startWidth / startHeight;
         }
       }
-      if(Math.floor(startWidth + dx) < 0) {
-        await widget.set('x',      startX+Math.floor(startWidth  + dx));
-        await widget.set('width',        -Math.floor(startWidth  + dx));
+      if(Math.floor(startWidth + resizeDx) < 0) {
+        await widget.set('x',      startX+Math.floor(startWidth  + resizeDx));
+        await widget.set('width',        -Math.floor(startWidth  + resizeDx));
       } else {
         await widget.set('x',      startX                             );
-        await widget.set('width',         Math.floor(startWidth  + dx));
+        await widget.set('width',         Math.floor(startWidth  + resizeDx));
       }
-      if(Math.floor(startHeight + dy) < 0) {
-        await widget.set('y',      startY+Math.floor(startHeight + dy));
-        await widget.set('height',       -Math.floor(startHeight + dy));
+      if(Math.floor(startHeight + resizeDy) < 0) {
+        await widget.set('y',      startY+Math.floor(startHeight + resizeDy));
+        await widget.set('height',       -Math.floor(startHeight + resizeDy));
       } else {
         await widget.set('y',      startY                             );
-        await widget.set('height',        Math.floor(startHeight + dy));
+        await widget.set('height',        Math.floor(startHeight + resizeDy));
       }
     }
 
@@ -53,4 +56,9 @@ class ResizeDragButton extends DragButton {
       Max Height: <i>${maxHeight}</i>
     `;
   }
+}
+
+function isResizeLocked() {
+  const button = $('#editorDragToolbarSettings .dragToolbarResizeType');
+  return button && button.dataset.mode == 'locked';
 }

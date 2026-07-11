@@ -19,7 +19,7 @@
       "mode": "vs",
       "time": "30",
       "attribution": "<div>Game and board layouts, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net/ and http://www.freepik.com and are used under the CC BY 3.0 license:</div>* Card Joker https://game-icons.net/1x1/delapouite/card-joker.html\n* Poker Hand https://game-icons.net/1x1/lorc/poker-hand.html\n* Arrow Dunk https://game-icons.net/1x1/lorc/arrow-dunk.html\n* Peaks https://game-icons.net/1x1/lorc/peaks.html\n* Pine Tree https://game-icons.net/1x1/lorc/pine-tree.html\n* Big Wave https://game-icons.net/1x1/lorc/big-wave.html\n* Skull /i/game-icons.net/lorc/harry-potter-skull.svg\n* Desert https://game-icons.net/1x1/delapouite/desert.html\n<div>* Fox https://game-icons.net/1x1/caro-asercion/fox.html&nbsp;</div><div>* Start and Finish Line https://www.freepik.com/icon/finish-line_1628547</div><div><br></div><div>Animal graphics are from Google Noto Color Emoji and are under   the SIL\n Open Font License: \nhttps://fonts.google.com/noto/specimen/Noto+Color+Emoji</div>",
-      "lastUpdate": 1750518899605,
+      "lastUpdate": 1761061288000,
       "showName": true,
       "skill": "",
       "description": "Race through a map of hazardous terrain types, pushing rival rodents out of the way and terraforming different areas to your advantage!",
@@ -189,21 +189,6 @@
     "text": "Recall & Shuffle",
     "movableInEdit": false,
     "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ],
-    "RecallRoutine": [
       {
         "func": "RECALL",
         "holder": "${PROPERTY parent}"
@@ -870,8 +855,6 @@
             "y": 2,
             "fontSize": "35",
             "textAlign": "left",
-            "textFont": null,
-            "fontweight": "bold",
             "width": 100,
             "dynamicProperties": {
               "value": "text1",
@@ -884,7 +867,6 @@
             "y": 50,
             "fontSize": "35",
             "textAlign": "right",
-            "textFont": null,
             "width": 100,
             "dynamicProperties": {
               "value": "text2",
@@ -1047,45 +1029,31 @@
         "holder": "holder-deck"
       },
       {
-        "func": "CALL",
-        "return": true,
-        "routine": "RecallRoutine",
-        "widget": "button-recall"
-      },
-      {
-        "note": "Move the corresponding 2's card to its starting holder",
-        "func": "MOVE",
-        "from": "holder-deck-twos",
-        "to": "holder-desert",
-        "count": 1
-      },
-      {
-        "note": "Move the corresponding 2's card to its starting holder",
-        "func": "MOVE",
-        "from": "holder-deck-twos",
-        "to": "holder-water",
-        "count": 1
-      },
-      {
-        "note": "Move the corresponding 2's card to its starting holder",
-        "func": "MOVE",
-        "from": "holder-deck-twos",
-        "to": "holder-swamp",
-        "count": 1
-      },
-      {
-        "note": "Move the corresponding 2's card to its starting holder",
-        "func": "MOVE",
-        "from": "holder-deck-twos",
-        "to": "holder-mountain",
-        "count": 1
-      },
-      {
-        "note": "Move the corresponding 2's card to its starting holder",
-        "func": "MOVE",
-        "from": "holder-deck-twos",
-        "to": "holder-forest",
-        "count": 1
+        "note": "Place the starting 2 card for each suit",
+        "func": "FOREACH",
+        "in": [
+          "desert",
+          "water",
+          "swamp",
+          "mountain",
+          "forest"
+        ],
+        "loopRoutine": [
+          {
+            "note": "Select the matching 2s from the deck",
+            "func": "SELECT",
+            "type": "card",
+            "property": "cardType",
+            "value": "${value}-2"
+          },
+          {
+            "note": "Move one of them to the corresponding holder",
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "holder-${value}",
+            "count": 1
+          }
+        ]
       },
       {
         "note": "Select a random start player",
@@ -1156,13 +1124,6 @@
             ]
           }
         ]
-      },
-      {
-        "func": "SORT",
-        "holder": [
-          "holder-start"
-        ],
-        "key": "rank"
       },
       {
         "func": "IF",
@@ -2293,8 +2254,7 @@
           }
         ]
       }
-    ],
-    "hoverParent": "ukjm"
+    ]
   },
   "deck-water-tiles": {
     "type": "deck",
@@ -2357,8 +2317,7 @@
           }
         ]
       }
-    ],
-    "hoverParent": "ukjm"
+    ]
   },
   "deck-swamp-tiles": {
     "type": "deck",
@@ -2421,8 +2380,7 @@
           }
         ]
       }
-    ],
-    "hoverParent": "ukjm"
+    ]
   },
   "deck-mountain-tiles": {
     "type": "deck",
@@ -2485,8 +2443,7 @@
           }
         ]
       }
-    ],
-    "hoverParent": "ukjm"
+    ]
   },
   "deck-forest-tiles": {
     "type": "deck",
@@ -2549,8 +2506,7 @@
           }
         ]
       }
-    ],
-    "hoverParent": "ukjm"
+    ]
   },
   "holder-a-1": {
     "type": "holder",
@@ -9690,207 +9646,8 @@
     "parent": "bnza",
     "activeFace": "0"
   },
-  "ukjmB3": {
-    "id": "ukjmB3",
-    "parent": "holder-deck-twos",
-    "fixedParent": true,
-    "y": -90,
-    "width": 101,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ],
-    "RecallRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ]
-  },
-  "deck-cards-twos": {
-    "type": "deck",
-    "id": "deck-cards-twos",
-    "parent": "holder-deck-twos",
-    "x": 4,
-    "y": 4,
-    "z": 1,
-    "cardDefaults": {
-      "classes": "transition",
-      "class": "cards",
-      "width": 92,
-      "height": 92,
-      "cssImage": "border:5px solid black"
-    },
-    "cardTypes": {
-      "desert-2": {
-        "imageterrain": "/i/game-icons.net/delapouite/desert.svg",
-        "bgcolor": "orange",
-        "text1": "2",
-        "text2": "2",
-        "button-resetReset": {
-          "parent": "holder-desert"
-        }
-      },
-      "water-2": {
-        "imageterrain": "/i/game-icons.net/lorc/big-wave.svg",
-        "bgcolor": "#64b5f7",
-        "text1": "2",
-        "text2": "2",
-        "button-resetReset": {
-          "parent": "holder-water"
-        }
-      },
-      "swamp-2": {
-        "imageterrain": "/i/game-icons.net/lorc/harry-potter-skull.svg",
-        "bgcolor": "mediumpurple",
-        "text1": "2",
-        "text2": "2",
-        "button-resetReset": {
-          "parent": "holder-swamp"
-        }
-      },
-      "mountain-2": {
-        "imageterrain": "/i/game-icons.net/lorc/peaks.svg",
-        "bgcolor": "#bb5e5e",
-        "text1": "2",
-        "text2": "2",
-        "button-resetReset": {
-          "parent": "holder-mountain"
-        }
-      },
-      "forest-2": {
-        "imageterrain": "/i/game-icons.net/lorc/pine-tree.svg",
-        "bgcolor": "#4caf50",
-        "text1": "2",
-        "text2": "2",
-        "button-resetReset": {
-          "parent": "holder-forest"
-        }
-      }
-    },
-    "faceTemplates": [
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "color": "dimgray",
-            "value": "/i/game-icons.net/delapouite/card-joker.svg",
-            "dynamicProperties": {
-              "css": "cssImage"
-            },
-            "width": 92,
-            "height": 92
-          }
-        ],
-        "border": 1,
-        "radius": 8
-      },
-      {
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 92,
-            "height": 92,
-            "dynamicProperties": {
-              "color": "bgcolor",
-              "css": "cssImage"
-            }
-          },
-          {
-            "type": "image",
-            "x": 24,
-            "y": 26,
-            "width": 40,
-            "height": 40,
-            "css": {
-              "opacity": 0.2
-            },
-            "color": "transparent",
-            "dynamicProperties": {
-              "value": "imageterrain"
-            }
-          },
-          {
-            "type": "text",
-            "x": 7,
-            "y": 2,
-            "fontSize": "35",
-            "textAlign": "left",
-            "textFont": null,
-            "fontweight": "bold",
-            "width": 100,
-            "dynamicProperties": {
-              "value": "text1",
-              "css": "cssText1"
-            }
-          },
-          {
-            "type": "text",
-            "x": -15,
-            "y": 50,
-            "fontSize": "35",
-            "textAlign": "right",
-            "textFont": null,
-            "width": 100,
-            "dynamicProperties": {
-              "value": "text2",
-              "css": "cssText2"
-            }
-          }
-        ],
-        "border": 1,
-        "radius": 8
-      }
-    ]
-  },
-  "holder-deck-twos": {
-    "type": "holder",
-    "id": "holder-deck-twos",
-    "x": 1050,
-    "y": -135,
-    "width": 101,
-    "height": 101,
-    "z": 220,
-    "css": {
-      "font-weight": "bold"
-    },
-    "dropTarget": {
-      "class": "cards"
-    },
-    "onEnter": {
-      "activeFace": "0"
-    }
-  },
   "qep2": {
-    "deck": "deck-cards-twos",
+    "deck": "deck-cards",
     "type": "card",
     "cardType": "forest-2",
     "id": "qep2",
@@ -9901,7 +9658,7 @@
     "y": 4
   },
   "ysk2": {
-    "deck": "deck-cards-twos",
+    "deck": "deck-cards",
     "type": "card",
     "cardType": "mountain-2",
     "id": "ysk2",
@@ -9912,7 +9669,7 @@
     "y": 4
   },
   "9swb": {
-    "deck": "deck-cards-twos",
+    "deck": "deck-cards",
     "type": "card",
     "cardType": "swamp-2",
     "id": "9swb",
@@ -9923,7 +9680,7 @@
     "parent": "holder-swamp"
   },
   "sohq": {
-    "deck": "deck-cards-twos",
+    "deck": "deck-cards",
     "type": "card",
     "cardType": "water-2",
     "id": "sohq",
@@ -9934,7 +9691,7 @@
     "parent": "holder-water"
   },
   "y7le": {
-    "deck": "deck-cards-twos",
+    "deck": "deck-cards",
     "type": "card",
     "cardType": "desert-2",
     "id": "y7le",

@@ -1,6 +1,9 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - VAR",
       "image": "/assets/-1047355116_3370",
@@ -11,7 +14,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068790396,
+      "lastUpdate": 1768621612324,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -59,178 +62,6 @@
     "y": 700,
     "x": 410
   },
-  "fzoqB": {
-    "id": "fzoqB",
-    "fixedParent": true,
-    "y": 171.36,
-    "width": 111,
-    "height": 40,
-    "type": "button",
-    "text": "Recall & Shuffle",
-    "movableInEdit": false,
-    "clickRoutine": [
-      {
-        "func": "RECALL",
-        "holder": "${PROPERTY parent}"
-      },
-      {
-        "func": "FLIP",
-        "holder": "${PROPERTY parent}",
-        "face": 0
-      },
-      {
-        "func": "SHUFFLE",
-        "holder": "${PROPERTY parent}"
-      }
-    ],
-    "parent": "cardHolder"
-  },
-  "fzoqD": {
-    "type": "deck",
-    "id": "fzoqD",
-    "x": 12,
-    "y": 41,
-    "cardTypes": {
-      "S 10": {
-        "image": "/i/cards-default/TS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "10",
-        "rankA": "10",
-        "rankFixed": "10 S"
-      },
-      "S 2J": {
-        "image": "/i/cards-default/JS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "2J",
-        "rankA": "2J",
-        "rankFixed": "2J S"
-      },
-      "S 3Q": {
-        "image": "/i/cards-default/QS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "3Q",
-        "rankA": "3Q",
-        "rankFixed": "3Q S"
-      },
-      "S 4K": {
-        "image": "/i/cards-default/KS.svg",
-        "suit": "S",
-        "suitColor": "♠",
-        "suitAlt": "3♠",
-        "rank": "4K",
-        "rankA": "4K",
-        "rankFixed": "4K S"
-      }
-    },
-    "faceTemplates": [
-      {
-        "border": false,
-        "radius": false,
-        "objects": [
-          {
-            "type": "image",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "transparent",
-            "value": "/i/cards-default/2B.svg"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "1",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "2",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "3",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "4",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "5",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      },
-      {
-        "objects": [
-          {
-            "type": "text",
-            "x": 0,
-            "y": 0,
-            "width": 103,
-            "height": 160,
-            "color": "black",
-            "value": "6",
-            "css": "font-size:80px; border: 1px solid black; text-align:center;line-height:140px"
-          }
-        ]
-      }
-    ],
-    "parent": "cardHolder"
-  },
   "bm6j": {
     "id": "bm6j",
     "x": 808,
@@ -240,8 +71,17 @@
     "text": "'VAR' as a function can be used to do many of the things that 'var' cannot such as setting special characters, objects, and arrays. However, it also has limitations as demonstrated in the button above.",
     "movable": false
   },
-  "jkmt": {
+  "button1": {
     "type": "button",
+    "id": "button1",
+    "x": 501,
+    "y": 550,
+    "z": 10,
+    "text": "var",
+    "myObject": {
+      "someKey": "someValue",
+      "anotherKey": "anotherValue"
+    },
     "clickRoutine": [
       "var currentX = ${PROPERTY x}",
       "var blackJack = 21",
@@ -252,29 +92,15 @@
       "var myArray = [1,2,3,4]",
       "// Note that many special characters cannot be set using this method. For example, the following Unicode symbol does not work.",
       "var myUnicode = '⏳'"
-    ],
-    "x": 501,
-    "y": 550,
-    "z": 10,
-    "id": "jkmt",
-    "text": "var",
-    "myObject": {
-      "someKey": "someValue",
-      "anotherKey": "anotherValue"
-    }
+    ]
   },
-  "cardHolder": {
-    "type": "holder",
-    "id": "cardHolder",
-    "x": 104.5,
-    "y": 1087,
-    "z": 127,
-    "dropTarget": {
-      "type": "card"
-    }
-  },
-  "jkmt2": {
+  "button2": {
     "type": "button",
+    "id": "button2",
+    "x": 900,
+    "y": 550,
+    "z": 11,
+    "text": "VAR",
     "clickRoutine": [
       {
         "func": "VAR",
@@ -299,11 +125,6 @@
         }
       },
       "// Here the values of blackJack and currentX are now available from the output of the previous function, but the plus is just used as a text object and not a mathematical operand."
-    ],
-    "x": 900,
-    "y": 550,
-    "z": 11,
-    "id": "jkmt2",
-    "text": "VAR"
+    ]
   }
 }

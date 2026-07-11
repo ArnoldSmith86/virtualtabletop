@@ -3,7 +3,7 @@
     "version": 15,
     "info": {
       "name": "Rockets and Robots",
-      "image": "/assets/1997865668_35278",
+      "image": "/assets/-612118115_43124",
       "showName": true,
       "time": "30",
       "mode": "vs",
@@ -18,12 +18,13 @@
       "rules": "",
       "ruleText": "<div><b>Objective<br></b></div><div>Get all of your robots to the Golden Saucer and own no uncharged batteries.<br></div><div><br></div><div>The game will end at the end of a full round (so each player has had the same number of turns) where at least one player has achieved both objectives. If multiple players have done so, the one with the most charged batteries remaining wins.</div><div><br></div><div><b>Your Turn</b></div><div>Either:</div><div>• Play two cards, one after the other, resolving each as much as possible; <i>or</i></div><div>• Discard all three of your cards and move a rocket 1 space clockwise.</div><div><br></div><div>Before or after your action, or between your two cards if taking the first option, you may use one special program, from the menu on the right of the play area. You must spend the program's indicated number of charged batteries to do so.<br></div><div><br></div><div>At the end of your turn, draw back to 3 cards in hand.</div><div><br></div><div><b>Resolving a Card</b></div><div>If a card shows just 🤖, it must be used to move a robot if possible. If it shows just 🚀, it must be used to move a rocket if possible. If it shows both 🤖 and 🚀, you choose to either move a robot or move a rocket.</div><div><br></div><div><b>Moving a Robot</b></div><div>Move one of your visible robots clockwise the exact amount shown on the card.</div><div><br></div><div>There is a limit of six robots on board a single rocket. (But no limit for how many may be together on an unoccupied space.) You may not make a move that would exceed this.</div><div><br></div><div><b>Entering the Golden Saucer</b><br></div><div>If your robot enters the golden saucer (either through moving via a card play or through use of a special program), move the golden saucer clockwise to the next unoccupied space or rocket showing the&nbsp;🔻 symbol. If there are no such spaces, it instead stays where it is.</div><br><div>If your robot enters the golden saucer, after potentially moving the saucer as described above, your turn immediately ends. Draw to three cards as usual. This happens even if you were intending to play two cards and the robot entered the golden saucer during play of your first card.<div><br></div><div><b>Moving a Rocket</b></div><div>Move any one rocket clockwise the exact amount shown on the card. If any other rockets, and/or the golden saucer, are stacked atop that rocket, they move with it - move the entire stack<b>!</b></div><div><br>A rocket may never land on top of the golden saucer. You may not make a move that would do this.<b><br></b></div><div><b><br></b></div><div><b>Charging Batteries</b></div><div>Whenever a move you make (either through a card play or through use of a special program) causes any robot or robots (irrespective of whose robots they are) to become hidden under a rocket or stack of rockets, you charge one of your uncharged batteries.</div><div><br></div><div><b>Cards with Dice</b></div><div>Cards showing the&nbsp;<i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/perspective-dice-six-faces-one.svg\"></i> icon allow you to roll the die. The number of dice pictured on the card shows the maximum number of rolls; you may make fewer than this. Each roll is made one at a time, once you roll the die again you cannot return to the results of previous rolls. Once you stop rolling, the final roll determines how many spaces you will move the rocket or robot (as appropriate based on the icon the die/dice appear next to).<br></div><div><br></div><div>You may fully resolve rolling the die before declaring which robot or rocket you will move, or even whether you will move a rocket or robot if the card shows both.<br></div>",
       "helpText": "<div>Have players take seats and then click New Game to set up a game for that player count. In the new game dialog you can choose how many randomly-selected special programs to use (or choose to use two simple programs if this is somebody's first game).<br></div><div><br></div><div>To move a robot, drag and drop it to its new location.</div><div><br></div><div>To move a single rocket, drag and drop it to its new location. To move an entire stack of rockets, drag and drop the pile handle (red square showing height of the stack) to its new location. To move just part of a stack, click the pile handle and use the VTT interface to split the stack - the left number on the slider is the number of levels you will take off the top of the stack and move.</div><div><br></div><div>Click batteries to flip them uncharged to charged. Drag them to the small holder next to the special programs menu to spend them.</div><div><br></div><div>At the end of your turn, click the End Turn button to change the current-player indicator around the seats and automatically draw your hand back to three cards.<br></div><div><br></div><div>The&nbsp;1️⃣ icon next to one of the player seats indicates which player was the start player in the game and is to help ensure that you end the game at the right time when the end is triggered. (Each player should play the same number of turns.)<br></div>",
-      "attribution": "Game layout and scripting by Andy Pymont, released to the public domain by CC0.\n<div><br></div><div>The background image is in the public domain by CC0 from https://publicdomainpictures.net/en/view-image.php?image=125056</div><div>\n</div><div>The library image was generated using the Midjourney artificial intelligence image generator, https://www.midjourney.com/home/, using the following prompt: \"robots and rockets, cartoon\". The card back is a cropped version of the same image.<br></div><div><br></div><div>The following icon graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:</div><div><br></div><div>Delapouite</div><div><span class=\"box\">• Die: </span>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-one.html</div><div><br></div><div>priorblue</div><div><span class=\"box\">• </span>Empty Battery: https://game-icons.net/1x1/priorblue/battery-0.html</div><div><span class=\"box\">• </span>Full Battery: https://game-icons.net/1x1/priorblue/battery-100.html<br></div>",
+      "attribution": "Game layout, scripting, and library image layout by Andy Pymont, released to the public domain by CC0.\n<div><br></div><div>The background image is in the public domain by CC0 from https://publicdomainpictures.net/en/view-image.php?image=125056</div><div><br></div><div>The following icon graphics are from https://game-icons.net/ and are used under the CC BY 3.0 license:</div><div><br></div><div>Delapouite</div><div><span class=\"box\">• Die: </span>https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-one.html</div><div><br></div><div>priorblue</div><div><span class=\"box\">• </span>Empty Battery: https://game-icons.net/1x1/priorblue/battery-0.html</div><div><span class=\"box\">• </span>Full Battery: https://game-icons.net/1x1/priorblue/battery-100.html<br></div>",
       "lastUpdate": 1700844466611,
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-6"
+      "players": "2-6",
+      "usesAIImagery": false
     }
   },
   "hand": {
@@ -210,8 +211,6 @@
   "deck-planets": {
     "type": "deck",
     "id": "deck-planets",
-    "width": 140,
-    "height": 140,
     "cardDefaults": {
       "width": 140,
       "height": 140,
@@ -267,8 +266,6 @@
   "deck-rockets": {
     "type": "deck",
     "id": "deck-rockets",
-    "width": 100,
-    "height": 100,
     "parent": "holder-rockets",
     "cardDefaults": {
       "width": 100,
@@ -292,8 +289,7 @@
         "border-radius": "20px",
         "border-style": "solid",
         "border-width": "1px"
-      },
-      "borderColor": "#000000"
+      }
     },
     "cardTypes": {
       "rocket": {
@@ -464,15 +460,14 @@
     "type": "deck",
     "id": "deck-robots",
     "parent": "holder-robots",
-    "width": 40,
-    "height": 40,
-    "movable": false,
     "movableInEdit": false,
     "cardDefaults": {
       "width": 40,
       "height": 40,
       "layer": 0,
       "color": "#999999",
+      "borderColor": "#000000",
+      "borderWidth": 1,
       "onPileCreation": {
         "handleCSS": {
           "background": "black",
@@ -529,9 +524,7 @@
               "#primaryColor": "color",
               "#borderColor": "borderColor",
               "#borderWidth": "borderWidth"
-            },
-            "borderColor": "#000000",
-            "borderWidth": 1
+            }
           }
         ]
       }
@@ -791,8 +784,6 @@
     "type": "deck",
     "id": "deck-batteries",
     "parent": "holder-batteries",
-    "width": 25,
-    "height": 50,
     "cardDefaults": {
       "width": 25,
       "height": 50,
@@ -1581,8 +1572,6 @@
     "type": "deck",
     "id": "deck-cards",
     "parent": "holder-draw",
-    "width": 90,
-    "height": 150,
     "cardDefaults": {
       "width": 90,
       "height": 150,
@@ -1724,10 +1713,9 @@
             "type": "image",
             "x": 0,
             "y": 0,
-            "color": "#e5e4e2",
+            "color": "#366b83",
             "width": 90,
-            "height": 150,
-            "value": "/assets/-629936795_13915"
+            "height": 150
           }
         ]
       },
@@ -2725,8 +2713,6 @@
   "deck-programs": {
     "type": "deck",
     "id": "deck-programs",
-    "width": 160,
-    "height": 100,
     "parent": "holder-programs",
     "cardDefaults": {
       "width": 160,
@@ -3555,7 +3541,7 @@
           },
           {
             "func": "SHUFFLE",
-            "from": "holder-draw"
+            "holder": "holder-draw"
           }
         ]
       }

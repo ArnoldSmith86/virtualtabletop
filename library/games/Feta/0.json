@@ -1,0 +1,4504 @@
+{
+  "3292": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "castellan",
+    "id": "3292",
+    "z": 3194,
+    "activeFace": 1,
+    "parent": "acuy"
+  },
+  "_meta": {
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Feta",
+      "image": "/assets/-1999545836_30900",
+      "rules": "https://boardgamegeek.com/filepage/18702/kreta-rules-a4pdf",
+      "bgg": "https://boardgamegeek.com/boardgame/15600/sardegna",
+      "year": "",
+      "mode": "vs",
+      "time": "60",
+      "attribution": "<div>-&nbsp;Game layout, scripting, and pyramid and ship player pieces, by lesko, released to the Public Domain under CC0.</div><div>- Map by lesko, created in ArcGIS with GIS vector linework by Dylan Moriarty on Project Linework https://www.projectlinework.org/.&nbsp;Released under <span class=\"alt-titles\"><span class=\"tool-identifier\">CC BY-NC 4.0</span></span></div><div><span class=\"alt-titles\"><span class=\"tool-identifier\">- Player Aid text written and released as CC0 by GeoMan.</span></span></div>- Library image by Gundula Vogel available under the Pexels License at https://www.pexels.com/photo/cubes-of-feta-cheese-with-fresh-basil-and-tomatoes-32356157/\n<div>- Tile and card icon assets from https://game-icons.net available under CC BY 3.0 as described in the About overlay</div><div>- Tile background by Kiwihug available under the Unsplash License at https://unsplash.com/photos/white-textile-with-black-shadow-MS9Tnh3if1o</div>",
+      "showName": true,
+      "skill": "",
+      "description": "Fight over the control of the island of Feta.",
+      "similarImage": "",
+      "similarName": "Kreta",
+      "similarDesigner": "Stefan Dorra",
+      "similarAwards": "2005 Meeples Choice Award Nominee\n2005 Japan Boardgame Prize Best Advanced Game Nominee",
+      "ruleText": "",
+      "helpText": "",
+      "lastUpdate": 1779976835713,
+      "usesAIImagery": false,
+      "players": "2-4",
+      "language": "en-GB",
+      "variant": "Feta",
+      "variantImage": ""
+    }
+  },
+  "y3sd": {
+    "type": "deck",
+    "id": "y3sd",
+    "cardTypes": {
+      "1 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 1,
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "2 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 2,
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "3 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 3,
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "4 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 4,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "5 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 5,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "6 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 6,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "7 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 7,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "8 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 8,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P42": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "9 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 9,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "10 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 10,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "11 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 11,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "12 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 12,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "13 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 13,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "14 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 14,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "15 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 15,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "16 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 16,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "17 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 17,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "18 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 18,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S41": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S43": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "19 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 19,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S41": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S43": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "20 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 20,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S41": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S43": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "21 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 21,
+        "suit-P11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P51": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P53": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P52": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-P32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S21": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S23": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S31": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S33": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S12": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S42": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S22": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S32": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S11": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S13": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S41": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suit-S43": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "22 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 22,
+        "rankImage": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "23 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 23,
+        "rankImage": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "24 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 24,
+        "rankImage": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "25 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 25,
+        "rankImage": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      },
+      "26 of fluffy-trefoil": {
+        "suit": "/i/game-icons.net/lorc/fluffy-trefoil.svg",
+        "suitColor": "#5b5bff",
+        "rank": 26,
+        "rankImage": "/i/game-icons.net/lorc/fluffy-trefoil.svg"
+      }
+    },
+    "cardDefaults": {
+      "width": 50,
+      "height": 80,
+      "borderRadius": 10,
+      "classes": "transition"
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": -10,
+            "y": -45,
+            "width": 100,
+            "height": 200,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ],
+        "border": 1,
+        "radius": 10
+      },
+      {
+        "objects": [
+          {
+            "type": "image",
+            "width": 50,
+            "height": 80,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 45,
+            "width": 30,
+            "height": 30,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suit"
+            }
+          },
+          {
+            "type": "text",
+            "y": 10,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 50,
+            "dynamicProperties": {
+              "color": "suitColor",
+              "value": "rank"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 10
+      }
+    ],
+    "z": 3035,
+    "y": 1,
+    "parent": "draw_holder"
+  },
+  "y3sd 1 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 1 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "1 of fluffy-trefoil",
+    "z": 3201,
+    "parent": "qpck"
+  },
+  "y3sd 2 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 2 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "2 of fluffy-trefoil",
+    "z": 3203,
+    "parent": "qpck"
+  },
+  "y3sd 3 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 3 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "3 of fluffy-trefoil",
+    "z": 3205,
+    "parent": "qpck"
+  },
+  "y3sd 4 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 4 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "4 of fluffy-trefoil",
+    "z": 3207,
+    "parent": "qpck"
+  },
+  "y3sd 5 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 5 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "5 of fluffy-trefoil",
+    "z": 3208,
+    "parent": "qpck"
+  },
+  "y3sd 6 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 6 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "6 of fluffy-trefoil",
+    "z": 3210,
+    "parent": "qpck"
+  },
+  "y3sd 7 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 7 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "7 of fluffy-trefoil",
+    "z": 3211,
+    "parent": "qpck"
+  },
+  "y3sd 8 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 8 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "8 of fluffy-trefoil",
+    "z": 3212,
+    "parent": "qpck"
+  },
+  "y3sd 9 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 9 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "9 of fluffy-trefoil",
+    "z": 3213,
+    "parent": "qpck"
+  },
+  "y3sd 10 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 10 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "10 of fluffy-trefoil",
+    "z": 3215,
+    "parent": "qpck"
+  },
+  "y3sd 11 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 11 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "11 of fluffy-trefoil",
+    "z": 3216,
+    "parent": "qpck"
+  },
+  "y3sd 12 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 12 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "12 of fluffy-trefoil",
+    "z": 3217,
+    "parent": "qpck"
+  },
+  "y3sd 13 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 13 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "13 of fluffy-trefoil",
+    "z": 3218,
+    "parent": "qpck"
+  },
+  "y3sd 14 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 14 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "14 of fluffy-trefoil",
+    "parent": "qpck",
+    "z": 3220
+  },
+  "y3sd 15 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 15 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "15 of fluffy-trefoil",
+    "y": 0,
+    "parent": "qpck",
+    "z": 3221
+  },
+  "y3sd 16 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 16 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "16 of fluffy-trefoil",
+    "parent": "qpck",
+    "z": 3223
+  },
+  "y3sd 17 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 17 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "17 of fluffy-trefoil",
+    "parent": "qpck",
+    "z": 3225
+  },
+  "y3sd 18 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 18 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "18 of fluffy-trefoil",
+    "y": 0,
+    "parent": "qpck",
+    "z": 3226
+  },
+  "y3sd 19 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 19 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "19 of fluffy-trefoil",
+    "y": 0,
+    "parent": "qpck",
+    "z": 3227
+  },
+  "y3sd 20 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 20 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "20 of fluffy-trefoil",
+    "parent": "qpck",
+    "z": 3229
+  },
+  "y3sd 21 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 21 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "21 of fluffy-trefoil",
+    "y": 0,
+    "parent": "qpck",
+    "z": 3230
+  },
+  "y3sd 22 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 22 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "22 of fluffy-trefoil",
+    "y": 0,
+    "parent": "qpck",
+    "z": 3231
+  },
+  "y3sd 23 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 23 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "23 of fluffy-trefoil",
+    "y": 0,
+    "parent": "qpck",
+    "z": 3232
+  },
+  "y3sd 24 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 24 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "24 of fluffy-trefoil",
+    "parent": "qpck",
+    "z": 3234
+  },
+  "y3sd 25 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 25 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "25 of fluffy-trefoil",
+    "z": 3235,
+    "parent": "qpck",
+    "y": 0
+  },
+  "y3sd 26 of fluffy-trefoil": {
+    "type": "card",
+    "id": "y3sd 26 of fluffy-trefoil",
+    "deck": "y3sd",
+    "cardType": "26 of fluffy-trefoil",
+    "parent": "qpck",
+    "z": 3237
+  },
+  "qpck": {
+    "type": "pile",
+    "width": 50,
+    "id": "qpck",
+    "z": 3252,
+    "handleSize": "30",
+    "handlePosition": "bottom center",
+    "height": 75,
+    "y": 0,
+    "x": 0,
+    "parent": "draw_holder"
+  },
+  "66q6": {
+    "image": "/assets/-1027992600_59406",
+    "movable": false,
+    "width": 1400,
+    "height": 600,
+    "layer": -4,
+    "id": "66q6",
+    "z": 45,
+    "x": -38,
+    "y": -4
+  },
+  "cc1a": {
+    "type": "label",
+    "text": 0,
+    "id": "cc1a",
+    "x": 1036,
+    "y": 682,
+    "width": 57,
+    "height": 40,
+    "css": "font-size: 25px;",
+    "editable": true,
+    "z": 4,
+    "linkedToSeat": "seat2"
+  },
+  "cc1aD": {
+    "id": "cc1aD",
+    "parent": "cc1a",
+    "fixedParent": true,
+    "x": -12,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "cc1aU": {
+    "id": "cc1aU",
+    "parent": "cc1a",
+    "fixedParent": true,
+    "x": 44,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-end-turn": {
+    "type": "button",
+    "id": "button-end-turn",
+    "y": 799,
+    "width": 70,
+    "height": 70,
+    "text": "END TURN",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "z": 215,
+    "x": 540,
+    "borderRadius": 10
+  },
+  "cc2a": {
+    "type": "label",
+    "text": 0,
+    "id": "cc2a",
+    "x": 1284,
+    "y": 682,
+    "width": 57,
+    "height": 40,
+    "css": "font-size: 25px;",
+    "editable": true,
+    "z": 6,
+    "linkedToSeat": "seat3"
+  },
+  "cc2aD": {
+    "id": "cc2aD",
+    "parent": "cc2a",
+    "fixedParent": true,
+    "x": -12,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "cc2aU": {
+    "id": "cc2aU",
+    "parent": "cc2a",
+    "fixedParent": true,
+    "x": 44,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "cc3a": {
+    "type": "label",
+    "text": 0,
+    "id": "cc3a",
+    "x": 787,
+    "y": 682,
+    "width": 57,
+    "height": 40,
+    "css": "font-size: 25px;",
+    "editable": true,
+    "z": 8,
+    "linkedToSeat": "seat1"
+  },
+  "cc3aD": {
+    "id": "cc3aD",
+    "parent": "cc3a",
+    "fixedParent": true,
+    "x": -12,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "cc3aU": {
+    "id": "cc3aU",
+    "parent": "cc3a",
+    "fixedParent": true,
+    "x": 44,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "cc4a": {
+    "type": "label",
+    "text": 0,
+    "id": "cc4a",
+    "x": 1529,
+    "y": 682,
+    "width": 57,
+    "height": 40,
+    "css": "font-size: 25px;",
+    "editable": true,
+    "z": 7,
+    "linkedToSeat": "seat4"
+  },
+  "cc4aD": {
+    "id": "cc4aD",
+    "parent": "cc4a",
+    "fixedParent": true,
+    "x": -12,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "cc4aU": {
+    "id": "cc4aU",
+    "parent": "cc4a",
+    "fixedParent": true,
+    "x": 44,
+    "y": 1,
+    "width": 25,
+    "height": 25,
+    "type": "button",
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "1vg8": {
+    "x": 860,
+    "y": 592,
+    "width": 0,
+    "height": 400,
+    "borderRadius": "3px",
+    "css": {
+      "border": "3px solid white"
+    },
+    "z": 204,
+    "id": "1vg8",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -4
+  },
+  "1vg9": {
+    "x": 1109,
+    "y": 592,
+    "width": 0,
+    "height": 400,
+    "borderRadius": "3px",
+    "css": {
+      "border": "3px solid white"
+    },
+    "z": 202,
+    "id": "1vg9",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -4
+  },
+  "1vg10": {
+    "x": 1356,
+    "y": 592,
+    "width": 0,
+    "height": 400,
+    "borderRadius": "3px",
+    "css": {
+      "border": "3px solid white"
+    },
+    "z": 203,
+    "id": "1vg10",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -4
+  },
+  "hand": {
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 1
+    },
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "stackOffsetX": 84,
+    "childrenPerOwner": true,
+    "hidePlayerCursors": true,
+    "y": 873,
+    "width": 608,
+    "height": 125,
+    "id": "hand",
+    "z": 24,
+    "x": 2,
+    "movableInEdit": false,
+    "dropTarget": [
+      {
+        "deck": "deck1"
+      },
+      {
+        "deck": "deck2"
+      },
+      {
+        "deck": "deck3"
+      },
+      {
+        "deck": "deck4"
+      }
+    ]
+  },
+  "gk22": {
+    "image": "/assets/-1496081243_28658",
+    "movable": false,
+    "width": 500,
+    "height": 140,
+    "layer": -4,
+    "id": "gk22",
+    "z": 46,
+    "y": 458,
+    "x": 2
+  },
+  "lq4d": {
+    "image": "/assets/-1766487123_31168",
+    "movable": false,
+    "width": 500,
+    "height": 150,
+    "layer": -4,
+    "id": "lq4d",
+    "z": 56,
+    "y": 3,
+    "x": 863
+  },
+  "seat1": {
+    "type": "seat",
+    "id": "seat1",
+    "x": 618,
+    "y": 676,
+    "z": 71,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "22px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY textColor}"
+      },
+      ".seated.turn": {
+        "border": "5px dashed #000000"
+      }
+    },
+    "hideWhenUnused": true,
+    "turn": true,
+    "mainColor": "#ff6c6c",
+    "textColor": "black"
+  },
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "index": 2,
+    "x": 867,
+    "y": 676,
+    "z": 68,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "22px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY textColor}"
+      },
+      ".seated.turn": {
+        "border": "5px dashed #000000"
+      }
+    },
+    "hideWhenUnused": true,
+    "mainColor": "yellow",
+    "textColor": "black"
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "index": 3,
+    "x": 1115,
+    "y": 676,
+    "z": 69,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "22px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid white",
+        "color": "${PROPERTY textColor}"
+      },
+      ".seated.turn": {
+        "border": "5px dashed white"
+      }
+    },
+    "hideWhenUnused": true,
+    "mainColor": "#636B2F",
+    "textColor": "white"
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "index": 4,
+    "x": 1362,
+    "y": 676,
+    "z": 70,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "box-sizing": "border-box",
+        "color": "#000000",
+        "font-size": "22px"
+      },
+      ".seated": {
+        "background": "${PROPERTY mainColor}",
+        "border": "5px solid black",
+        "color": "${PROPERTY textColor}"
+      },
+      ".seated.turn": {
+        "border": "5px dashed black"
+      }
+    },
+    "hideWhenUnused": true,
+    "mainColor": "#8080ff",
+    "textColor": "white"
+  },
+  "holder1": {
+    "type": "holder",
+    "id": "holder1",
+    "x": 618,
+    "y": 723,
+    "width": 103,
+    "height": 275,
+    "z": 45,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 150,
+    "stackOffsetY": -25,
+    "dropTarget": {
+      "deck": "deck1"
+    }
+  },
+  "holder2": {
+    "type": "holder",
+    "id": "holder2",
+    "x": 867,
+    "y": 723,
+    "width": 103,
+    "height": 275,
+    "z": 45,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 150,
+    "stackOffsetY": -25,
+    "dropTarget": {
+      "deck": "deck2"
+    }
+  },
+  "holder3": {
+    "type": "holder",
+    "id": "holder3",
+    "x": 1116,
+    "y": 723,
+    "width": 103,
+    "height": 275,
+    "z": 45,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 150,
+    "stackOffsetY": -25,
+    "dropTarget": {
+      "deck": "deck3"
+    }
+  },
+  "holder4": {
+    "type": "holder",
+    "id": "holder4",
+    "x": 1363,
+    "y": 723,
+    "width": 103,
+    "height": 275,
+    "z": 45,
+    "movableInEdit": false,
+    "dropOffsetX": 0,
+    "dropOffsetY": 150,
+    "stackOffsetY": -25,
+    "dropTarget": {
+      "deck": "deck4"
+    }
+  },
+  "uwq5": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "king",
+    "id": "uwq5",
+    "z": 3167,
+    "activeFace": 1,
+    "parent": "kuyt"
+  },
+  "y6fe": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "commander",
+    "id": "y6fe",
+    "z": 3169,
+    "activeFace": 1,
+    "parent": "kuyt"
+  },
+  "hr9x": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "abbot",
+    "id": "hr9x",
+    "z": 3171,
+    "activeFace": 1,
+    "parent": "kuyt"
+  },
+  "bkfq": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "farmer",
+    "id": "bkfq",
+    "activeFace": 1,
+    "z": 3173,
+    "parent": "kuyt"
+  },
+  "naw5": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "admiral",
+    "id": "naw5",
+    "activeFace": 1,
+    "z": 3175,
+    "parent": "kuyt"
+  },
+  "2eu1": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "architect",
+    "id": "2eu1",
+    "z": 3177,
+    "activeFace": 1,
+    "parent": "kuyt"
+  },
+  "70qw": {
+    "deck": "deck1",
+    "type": "card",
+    "cardType": "castellan",
+    "id": "70qw",
+    "z": 3179,
+    "parent": "kuyt",
+    "activeFace": 1
+  },
+  "nofz": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "king",
+    "id": "nofz",
+    "activeFace": 1,
+    "z": 3195,
+    "parent": "acuy"
+  },
+  "7wmh": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "commander",
+    "id": "7wmh",
+    "z": 3196,
+    "activeFace": 1,
+    "parent": "acuy"
+  },
+  "2obd": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "abbot",
+    "id": "2obd",
+    "z": 3197,
+    "activeFace": 1,
+    "parent": "acuy"
+  },
+  "rq7e": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "farmer",
+    "id": "rq7e",
+    "z": 3198,
+    "activeFace": 1,
+    "parent": "acuy"
+  },
+  "jkhp": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "admiral",
+    "id": "jkhp",
+    "z": 3199,
+    "activeFace": 1,
+    "parent": "acuy"
+  },
+  "43j9": {
+    "deck": "deck4",
+    "type": "card",
+    "cardType": "architect",
+    "id": "43j9",
+    "z": 3200,
+    "parent": "acuy",
+    "activeFace": 1
+  },
+  "lf3e": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "king",
+    "id": "lf3e",
+    "activeFace": 1,
+    "z": 3180,
+    "parent": "ijmz"
+  },
+  "bl84": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "commander",
+    "id": "bl84",
+    "activeFace": 1,
+    "z": 3181,
+    "parent": "ijmz"
+  },
+  "uj9d": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "abbot",
+    "id": "uj9d",
+    "z": 3182,
+    "activeFace": 1,
+    "parent": "ijmz"
+  },
+  "h091": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "farmer",
+    "id": "h091",
+    "z": 3183,
+    "activeFace": 1,
+    "parent": "ijmz"
+  },
+  "lzjv": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "admiral",
+    "id": "lzjv",
+    "z": 3184,
+    "activeFace": 1,
+    "parent": "ijmz"
+  },
+  "amc3": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "architect",
+    "id": "amc3",
+    "z": 3185,
+    "activeFace": 1,
+    "parent": "ijmz"
+  },
+  "vx07": {
+    "deck": "deck2",
+    "type": "card",
+    "cardType": "castellan",
+    "id": "vx07",
+    "activeFace": 1,
+    "z": 3186,
+    "parent": "ijmz"
+  },
+  "np9z": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "king",
+    "id": "np9z",
+    "activeFace": 1,
+    "z": 3187,
+    "parent": "nar1"
+  },
+  "b36n": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "commander",
+    "id": "b36n",
+    "z": 3188,
+    "activeFace": 1,
+    "parent": "nar1"
+  },
+  "yeme": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "abbot",
+    "id": "yeme",
+    "z": 3189,
+    "activeFace": 1,
+    "parent": "nar1"
+  },
+  "uqr7": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "farmer",
+    "id": "uqr7",
+    "z": 3190,
+    "activeFace": 1,
+    "parent": "nar1"
+  },
+  "nllg": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "admiral",
+    "id": "nllg",
+    "z": 3191,
+    "activeFace": 1,
+    "parent": "nar1"
+  },
+  "jsq3": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "architect",
+    "id": "jsq3",
+    "z": 3192,
+    "activeFace": 1,
+    "parent": "nar1"
+  },
+  "pt4q": {
+    "deck": "deck3",
+    "type": "card",
+    "cardType": "castellan",
+    "id": "pt4q",
+    "z": 3193,
+    "parent": "nar1",
+    "activeFace": 1
+  },
+  "deck1": {
+    "type": "deck",
+    "id": "deck1",
+    "x": 4,
+    "y": 4,
+    "z": 3018,
+    "cardDefaults": {
+      "height": 125,
+      "width": 103,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/queen-crown.svg",
+        "text": "King",
+        "iconColour": "#ff6c6c"
+      },
+      "commander": {
+        "icon": "/i/game-icons.net/skoll/brodie-helmet.svg",
+        "text": "Commander",
+        "iconColour": "#ff6c6c"
+      },
+      "abbot": {
+        "icon": "/i/game-icons.net/delapouite/pope-crown.svg",
+        "text": "Abbot",
+        "iconColour": "#ff6c6c"
+      },
+      "farmer": {
+        "icon": "/i/game-icons.net/lorc/fedora.svg",
+        "text": "Farmer",
+        "iconColour": "#ff6c6c"
+      },
+      "admiral": {
+        "icon": "/i/game-icons.net/delapouite/captain-hat-profile.svg",
+        "text": "Admiral",
+        "iconColour": "#ff6c6c"
+      },
+      "architect": {
+        "icon": "/i/game-icons.net/delapouite/pencil-ruler.svg",
+        "text": "Architect",
+        "iconColour": "#ff6c6c"
+      },
+      "castellan": {
+        "icon": "/i/game-icons.net/delapouite/cork-hat.svg",
+        "text": "Castellan",
+        "iconColour": "#ff6c6c"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "width": 200,
+            "height": 300,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": -30,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 100,
+            "fontSize": 18,
+            "css": {},
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "setup_holder_cards1"
+  },
+  "deck2": {
+    "type": "deck",
+    "id": "deck2",
+    "x": 4,
+    "y": 4,
+    "z": 3020,
+    "cardDefaults": {
+      "height": 125,
+      "width": 103,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/queen-crown.svg",
+        "text": "King",
+        "iconColour": "#e8e800"
+      },
+      "commander": {
+        "icon": "/i/game-icons.net/skoll/brodie-helmet.svg",
+        "text": "Commander",
+        "iconColour": "#e8e800"
+      },
+      "abbot": {
+        "icon": "/i/game-icons.net/delapouite/pope-crown.svg",
+        "text": "Abbot",
+        "iconColour": "#e8e800"
+      },
+      "farmer": {
+        "icon": "/i/game-icons.net/lorc/fedora.svg",
+        "text": "Farmer",
+        "iconColour": "#e8e800"
+      },
+      "admiral": {
+        "icon": "/i/game-icons.net/delapouite/captain-hat-profile.svg",
+        "text": "Admiral",
+        "iconColour": "#e8e800"
+      },
+      "architect": {
+        "icon": "/i/game-icons.net/delapouite/pencil-ruler.svg",
+        "text": "Architect",
+        "iconColour": "#e8e800"
+      },
+      "castellan": {
+        "icon": "/i/game-icons.net/delapouite/cork-hat.svg",
+        "text": "Castellan",
+        "iconColour": "#e8e800"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "width": 200,
+            "height": 300,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": -30,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 100,
+            "fontSize": 18,
+            "css": {},
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "setup_holder_cards2"
+  },
+  "deck3": {
+    "type": "deck",
+    "id": "deck3",
+    "x": 4,
+    "y": 4,
+    "z": 3022,
+    "cardDefaults": {
+      "height": 125,
+      "width": 103,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/queen-crown.svg",
+        "text": "King",
+        "iconColour": "#636B2F"
+      },
+      "commander": {
+        "icon": "/i/game-icons.net/skoll/brodie-helmet.svg",
+        "text": "Commander",
+        "iconColour": "#636B2F"
+      },
+      "abbot": {
+        "icon": "/i/game-icons.net/delapouite/pope-crown.svg",
+        "text": "Abbot",
+        "iconColour": "#636B2F"
+      },
+      "farmer": {
+        "icon": "/i/game-icons.net/lorc/fedora.svg",
+        "text": "Farmer",
+        "iconColour": "#636B2F"
+      },
+      "admiral": {
+        "icon": "/i/game-icons.net/delapouite/captain-hat-profile.svg",
+        "text": "Admiral",
+        "iconColour": "#636B2F"
+      },
+      "architect": {
+        "icon": "/i/game-icons.net/delapouite/pencil-ruler.svg",
+        "text": "Architect",
+        "iconColour": "#636B2F"
+      },
+      "castellan": {
+        "icon": "/i/game-icons.net/delapouite/cork-hat.svg",
+        "text": "Castellan",
+        "iconColour": "#636B2F"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "width": 200,
+            "height": 300,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": -30,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 100,
+            "fontSize": 18,
+            "css": {},
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "setup_holder_cards3"
+  },
+  "deck4": {
+    "type": "deck",
+    "id": "deck4",
+    "x": 4,
+    "y": 4,
+    "z": 3024,
+    "cardDefaults": {
+      "height": 125,
+      "width": 103,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/queen-crown.svg",
+        "text": "King",
+        "iconColour": "#8080ff"
+      },
+      "commander": {
+        "icon": "/i/game-icons.net/skoll/brodie-helmet.svg",
+        "text": "Commander",
+        "iconColour": "#8080ff"
+      },
+      "abbot": {
+        "icon": "/i/game-icons.net/delapouite/pope-crown.svg",
+        "text": "Abbot",
+        "iconColour": "#8080ff"
+      },
+      "farmer": {
+        "icon": "/i/game-icons.net/lorc/fedora.svg",
+        "text": "Farmer",
+        "iconColour": "#8080ff"
+      },
+      "admiral": {
+        "icon": "/i/game-icons.net/delapouite/captain-hat-profile.svg",
+        "text": "Admiral",
+        "iconColour": "#8080ff"
+      },
+      "architect": {
+        "icon": "/i/game-icons.net/delapouite/pencil-ruler.svg",
+        "text": "Architect",
+        "iconColour": "#8080ff"
+      },
+      "castellan": {
+        "icon": "/i/game-icons.net/delapouite/cork-hat.svg",
+        "text": "Castellan",
+        "iconColour": "#8080ff"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -20,
+            "y": -20,
+            "width": 200,
+            "height": 300,
+            "color": "transparent",
+            "value": "/i/cards-plastic/1B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "white",
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": -30,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 100,
+            "fontSize": 18,
+            "css": {},
+            "textAlign": "center",
+            "width": 103,
+            "dynamicProperties": {
+              "value": "text"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "setup_holder_cards4"
+  },
+  "acuy": {
+    "type": "pile",
+    "width": 103,
+    "height": 125,
+    "id": "acuy",
+    "z": 3026,
+    "parent": "setup_holder_cards4"
+  },
+  "nar1": {
+    "type": "pile",
+    "width": 103,
+    "height": 125,
+    "id": "nar1",
+    "z": 3028,
+    "parent": "setup_holder_cards3"
+  },
+  "ijmz": {
+    "type": "pile",
+    "width": 103,
+    "height": 125,
+    "id": "ijmz",
+    "z": 3030,
+    "parent": "setup_holder_cards2"
+  },
+  "deck5": {
+    "type": "deck",
+    "id": "deck5",
+    "x": 4,
+    "y": 4,
+    "z": 3042,
+    "cardDefaults": {
+      "height": 60,
+      "width": 60,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/wheat.svg",
+        "iconColour": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -50,
+            "y": -50,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "value": "/assets/-1288237158_1732"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#c0c0c0",
+            "height": 60,
+            "width": 60,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "value": "/assets/-1288237158_1732"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "height": 60,
+            "width": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "jqry1"
+  },
+  "626o": {
+    "deck": "deck5",
+    "type": "card",
+    "cardType": "king",
+    "id": "626o",
+    "z": 3244,
+    "parent": "qodc",
+    "activeFace": 1
+  },
+  "627o": {
+    "deck": "deck5",
+    "type": "card",
+    "cardType": "king",
+    "id": "627o",
+    "z": 3239,
+    "activeFace": 1,
+    "parent": "qodc"
+  },
+  "deck6": {
+    "type": "deck",
+    "id": "deck6",
+    "x": 4,
+    "y": 4,
+    "z": 3049,
+    "cardDefaults": {
+      "height": 60,
+      "width": 60,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/grapes.svg",
+        "iconColour": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -50,
+            "y": -50,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "value": "/assets/-1288237158_1732"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#c0c0c0",
+            "height": 60,
+            "width": 60,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "value": "/assets/-1288237158_1732"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "height": 60,
+            "width": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "jqry2"
+  },
+  "x1zz": {
+    "deck": "deck6",
+    "type": "card",
+    "cardType": "king",
+    "id": "x1zz",
+    "z": 3141,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "x2zz": {
+    "deck": "deck6",
+    "type": "card",
+    "cardType": "king",
+    "id": "x2zz",
+    "z": 3143,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "x3zz": {
+    "deck": "deck6",
+    "type": "card",
+    "cardType": "king",
+    "id": "x3zz",
+    "z": 3145,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "x4zz": {
+    "deck": "deck6",
+    "type": "card",
+    "cardType": "king",
+    "id": "x4zz",
+    "z": 3147,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "deck7": {
+    "type": "deck",
+    "id": "deck7",
+    "x": 4,
+    "y": 4,
+    "z": 3056,
+    "cardDefaults": {
+      "height": 60,
+      "width": 60,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/lorc/cheese-wedge.svg",
+        "iconColour": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -50,
+            "y": -50,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "value": "/assets/-1288237158_1732"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#c0c0c0",
+            "height": 60,
+            "width": 60,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "value": "/assets/-1288237158_1732"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "height": 60,
+            "width": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "jqry3"
+  },
+  "5h4i": {
+    "deck": "deck7",
+    "type": "card",
+    "cardType": "king",
+    "id": "5h4i",
+    "activeFace": 1,
+    "z": 3156,
+    "parent": "yfq4"
+  },
+  "5h5i": {
+    "deck": "deck7",
+    "type": "card",
+    "cardType": "king",
+    "id": "5h5i",
+    "activeFace": 1,
+    "z": 3158,
+    "parent": "yfq4"
+  },
+  "5h6i": {
+    "deck": "deck7",
+    "type": "card",
+    "cardType": "king",
+    "id": "5h6i",
+    "activeFace": 1,
+    "z": 3160,
+    "parent": "yfq4"
+  },
+  "deck8": {
+    "type": "deck",
+    "id": "deck8",
+    "x": 4,
+    "y": 4,
+    "z": 3047,
+    "cardDefaults": {
+      "height": 60,
+      "width": 60,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/delapouite/olive.svg",
+        "iconColour": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -50,
+            "y": -50,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "value": "/assets/-1288237158_1732"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#c0c0c0",
+            "height": 60,
+            "width": 60,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "value": "/assets/-1288237158_1732"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "height": 60,
+            "width": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "jqry2"
+  },
+  "ndq9": {
+    "deck": "deck8",
+    "type": "card",
+    "cardType": "king",
+    "id": "ndq9",
+    "z": 3149,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "ndq10": {
+    "deck": "deck8",
+    "type": "card",
+    "cardType": "king",
+    "id": "ndq10",
+    "z": 3151,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "ndq11": {
+    "deck": "deck8",
+    "type": "card",
+    "cardType": "king",
+    "id": "ndq11",
+    "z": 3153,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "deck9": {
+    "type": "deck",
+    "id": "deck9",
+    "x": 4,
+    "y": 4,
+    "z": 3054,
+    "cardDefaults": {
+      "height": 60,
+      "width": 60,
+      "classes": "transition"
+    },
+    "cardTypes": {
+      "king": {
+        "icon": "/i/game-icons.net/delapouite/herbs-bundle.svg",
+        "iconColour": "black"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": -50,
+            "y": -50,
+            "width": 200,
+            "height": 200,
+            "color": "transparent",
+            "value": "/assets/-1288237158_1732"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 10,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "#c0c0c0",
+            "height": 60,
+            "width": 60,
+            "dynamicProperties": {
+              "value": "background"
+            }
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "color": "black",
+            "width": 100,
+            "height": 100,
+            "value": "/assets/-1288237158_1732"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "height": 60,
+            "width": 60,
+            "color": "transparent",
+            "svgReplaces": {
+              "#000": "iconColour"
+            },
+            "dynamicProperties": {
+              "value": "icon"
+            }
+          }
+        ]
+      }
+    ],
+    "parent": "jqry3"
+  },
+  "ndq12": {
+    "deck": "deck8",
+    "type": "card",
+    "cardType": "king",
+    "id": "ndq12",
+    "z": 3155,
+    "activeFace": 1,
+    "parent": "qqym"
+  },
+  "33dh": {
+    "deck": "deck9",
+    "type": "card",
+    "cardType": "king",
+    "id": "33dh",
+    "activeFace": 1,
+    "z": 3162,
+    "parent": "yfq4"
+  },
+  "34dh": {
+    "deck": "deck9",
+    "type": "card",
+    "cardType": "king",
+    "id": "34dh",
+    "activeFace": 1,
+    "z": 3164,
+    "parent": "yfq4"
+  },
+  "35dh": {
+    "deck": "deck9",
+    "type": "card",
+    "cardType": "king",
+    "id": "35dh",
+    "activeFace": 1,
+    "z": 3166,
+    "parent": "yfq4"
+  },
+  "1vg11": {
+    "x": 1557,
+    "y": 389,
+    "width": 0,
+    "height": 400,
+    "borderRadius": "3px",
+    "css": {
+      "border": "3px solid white"
+    },
+    "z": 202,
+    "id": "1vg11",
+    "movable": false,
+    "movableInEdit": false,
+    "layer": -4,
+    "rotation": -90
+  },
+  "temp_holder": {
+    "type": "holder",
+    "id": "temp_holder",
+    "x": -607,
+    "y": 496,
+    "z": 80
+  },
+  "draw_holder": {
+    "type": "holder",
+    "id": "draw_holder",
+    "x": 560,
+    "y": 600,
+    "width": 50,
+    "height": 80,
+    "z": 23,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "onEnter": {
+      "activeFace": 0
+    },
+    "dropTarget": {
+      "deck": "y3sd"
+    }
+  },
+  "card_display": {
+    "type": "holder",
+    "id": "card_display",
+    "x": 2,
+    "y": 600,
+    "width": 551,
+    "height": 81,
+    "z": 18,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropShadow": true,
+    "stackOffsetX": 50,
+    "dropTarget": {
+      "deck": "y3sd"
+    },
+    "borderRadius": 10
+  },
+  "recall-button": {
+    "type": "button",
+    "id": "recall-button",
+    "x": 1364,
+    "y": 1,
+    "z": 218,
+    "text": "Recall\n Cards",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Are you sure you want to recall all the cards?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "Make sure the cards to be recalled are in the holder beneath your seat."
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "MOVE",
+            "from": "holder${value}",
+            "to": "seat${value}",
+            "count": "all"
+          }
+        ]
+      }
+    ],
+    "height": 45,
+    "width": 70,
+    "borderRadius": 7
+  },
+  "7nvj": {
+    "type": "button",
+    "text": "Reset\nGame",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "You are about to reset the game, make sure everyone is seated.",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will set up a new game."
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "jqry${value}"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "RECALL",
+            "holder": "setup_holder_cards${value}"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": "draw_holder"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "setup1"
+      },
+      {
+        "func": "CLICK"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          60,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "wid${value}"
+          },
+          {
+            "func": "GET",
+            "property": "temp_x",
+            "variable": "temp_x"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${temp_x}"
+          },
+          {
+            "func": "GET",
+            "property": "temp_y",
+            "variable": "temp_y"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${temp_y}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "wid${value}"
+          },
+          {
+            "func": "SET",
+            "property": "z",
+            "value": "${value}"
+          }
+        ]
+      }
+    ],
+    "x": 1529,
+    "y": 1,
+    "z": 239,
+    "id": "7nvj",
+    "width": 70,
+    "height": 45,
+    "borderRadius": 7
+  },
+  "wid1": {
+    "id": "wid1",
+    "width": 25,
+    "height": 25,
+    "z": 1,
+    "color": "#ff6c6c",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "x": 1375,
+    "y": 58,
+    "temp_x": 1375,
+    "temp_y": 58
+  },
+  "wid2": {
+    "id": "wid2",
+    "width": 25,
+    "height": 25,
+    "z": 2,
+    "color": "#ff6c6c",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "x": 1375,
+    "y": 67,
+    "temp_x": 1375,
+    "temp_y": 67
+  },
+  "wid3": {
+    "id": "wid3",
+    "width": 25,
+    "height": 25,
+    "z": 3,
+    "color": "#ff6c6c",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "x": 1375,
+    "y": 77,
+    "temp_x": 1375,
+    "temp_y": 77
+  },
+  "wid4": {
+    "id": "wid4",
+    "width": 40,
+    "height": 40,
+    "z": 4,
+    "color": "#ff6c6c",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "x": 1432,
+    "y": 61,
+    "temp_x": 1432,
+    "temp_y": 61
+  },
+  "wid5": {
+    "id": "wid5",
+    "width": 40,
+    "height": 40,
+    "z": 5,
+    "color": "#ff6c6c",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "x": 1432,
+    "y": 78,
+    "temp_x": 1432,
+    "temp_y": 78
+  },
+  "wid6": {
+    "id": "wid6",
+    "width": 40,
+    "height": 40,
+    "z": 6,
+    "color": "#ff6c6c",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "x": 1432,
+    "y": 95,
+    "temp_x": 1432,
+    "temp_y": 95
+  },
+  "wid7": {
+    "id": "wid7",
+    "width": 40,
+    "height": 40,
+    "z": 7,
+    "color": "#ff6c6c",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "x": 1432,
+    "y": 112,
+    "temp_x": 1432,
+    "temp_y": 112
+  },
+  "wid8": {
+    "id": "wid8",
+    "width": 30,
+    "height": 60,
+    "z": 8,
+    "color": "#ff6c6c",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "x": 1490,
+    "y": 48,
+    "temp_x": 1490,
+    "temp_y": 48
+  },
+  "wid9": {
+    "id": "wid9",
+    "width": 30,
+    "height": 60,
+    "z": 9,
+    "color": "#ff6c6c",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "x": 1490,
+    "y": 64,
+    "temp_x": 1490,
+    "temp_y": 64
+  },
+  "wid10": {
+    "id": "wid10",
+    "width": 30,
+    "height": 60,
+    "z": 10,
+    "color": "#ff6c6c",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "x": 1490,
+    "y": 81,
+    "temp_x": 1490,
+    "temp_y": 81
+  },
+  "wid11": {
+    "id": "wid11",
+    "width": 30,
+    "height": 60,
+    "z": 11,
+    "color": "#ff6c6c",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "x": 1490,
+    "y": 99,
+    "temp_x": 1490,
+    "temp_y": 99
+  },
+  "wid12": {
+    "id": "wid12",
+    "width": 30,
+    "height": 60,
+    "z": 12,
+    "color": "#ff6c6c",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "x": 1490,
+    "y": 116,
+    "temp_x": 1490,
+    "temp_y": 116
+  },
+  "wid13": {
+    "id": "wid13",
+    "width": 60,
+    "height": 30,
+    "z": 13,
+    "image": "/assets/678190013_2392",
+    "x": 1531,
+    "y": 58,
+    "temp_x": 1531,
+    "temp_y": 58
+  },
+  "wid14": {
+    "id": "wid14",
+    "width": 60,
+    "height": 30,
+    "z": 14,
+    "image": "/assets/678190013_2392",
+    "x": 1530,
+    "y": 65,
+    "temp_x": 1530,
+    "temp_y": 65
+  },
+  "wid15": {
+    "id": "wid15",
+    "width": 30,
+    "height": 60,
+    "z": 15,
+    "image": "/assets/-2138816977_1976",
+    "x": 1546,
+    "y": 107,
+    "temp_x": 1546,
+    "temp_y": 107
+  },
+  "wid16": {
+    "id": "wid16",
+    "x": 1375,
+    "y": 203,
+    "width": 25,
+    "height": 25,
+    "z": 16,
+    "color": "#ffff00",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1375,
+    "temp_y": 203
+  },
+  "wid17": {
+    "id": "wid17",
+    "x": 1375,
+    "y": 212,
+    "width": 25,
+    "height": 25,
+    "z": 17,
+    "color": "#ffff00",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1375,
+    "temp_y": 212
+  },
+  "wid18": {
+    "id": "wid18",
+    "x": 1375,
+    "y": 222,
+    "width": 25,
+    "height": 25,
+    "z": 18,
+    "color": "#ffff00",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1375,
+    "temp_y": 222
+  },
+  "wid23": {
+    "id": "wid23",
+    "x": 1490,
+    "y": 187,
+    "width": 30,
+    "height": 60,
+    "z": 23,
+    "color": "#ffff00",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 187
+  },
+  "wid24": {
+    "id": "wid24",
+    "x": 1490,
+    "y": 203,
+    "width": 30,
+    "height": 60,
+    "z": 24,
+    "color": "#ffff00",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 203
+  },
+  "wid25": {
+    "id": "wid25",
+    "x": 1490,
+    "y": 220,
+    "width": 30,
+    "height": 60,
+    "z": 25,
+    "color": "#ffff00",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 220
+  },
+  "wid26": {
+    "id": "wid26",
+    "x": 1490,
+    "y": 238,
+    "width": 30,
+    "height": 60,
+    "z": 26,
+    "color": "#ffff00",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 238
+  },
+  "wid27": {
+    "id": "wid27",
+    "x": 1490,
+    "y": 255,
+    "width": 30,
+    "height": 60,
+    "z": 27,
+    "color": "#ffff00",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 255
+  },
+  "wid28": {
+    "id": "wid28",
+    "x": 1530,
+    "y": 200,
+    "width": 60,
+    "height": 30,
+    "z": 28,
+    "image": "/assets/-430739139_1564",
+    "temp_x": 1530,
+    "temp_y": 200
+  },
+  "wid29": {
+    "id": "wid29",
+    "x": 1530,
+    "y": 207,
+    "width": 60,
+    "height": 30,
+    "z": 29,
+    "image": "/assets/-430739139_1564",
+    "temp_x": 1530,
+    "temp_y": 207
+  },
+  "wid30": {
+    "id": "wid30",
+    "x": 1546,
+    "y": 246,
+    "width": 30,
+    "height": 60,
+    "z": 30,
+    "image": "/assets/-2125760846_1314",
+    "temp_x": 1546,
+    "temp_y": 246
+  },
+  "wid19": {
+    "id": "wid19",
+    "x": 1432,
+    "y": 189,
+    "width": 40,
+    "height": 40,
+    "z": 19,
+    "color": "#ffff00",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 189
+  },
+  "wid20": {
+    "id": "wid20",
+    "x": 1432,
+    "y": 206,
+    "width": 40,
+    "height": 40,
+    "z": 20,
+    "color": "#ffff00",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 206
+  },
+  "wid21": {
+    "id": "wid21",
+    "x": 1432,
+    "y": 223,
+    "width": 40,
+    "height": 40,
+    "z": 21,
+    "color": "#ffff00",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 223
+  },
+  "wid22": {
+    "id": "wid22",
+    "x": 1432,
+    "y": 240,
+    "width": 40,
+    "height": 40,
+    "z": 22,
+    "color": "#ffff00",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 240
+  },
+  "wid31": {
+    "id": "wid31",
+    "x": 1376,
+    "y": 341,
+    "width": 25,
+    "height": 25,
+    "z": 31,
+    "color": "#636B2F",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1376,
+    "temp_y": 341
+  },
+  "wid32": {
+    "id": "wid32",
+    "x": 1376,
+    "y": 350,
+    "width": 25,
+    "height": 25,
+    "z": 32,
+    "color": "#636B2F",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1376,
+    "temp_y": 350
+  },
+  "wid33": {
+    "id": "wid33",
+    "x": 1376,
+    "y": 360,
+    "width": 25,
+    "height": 25,
+    "z": 33,
+    "color": "#636B2F",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1376,
+    "temp_y": 360
+  },
+  "wid34": {
+    "id": "wid34",
+    "x": 1432,
+    "y": 329,
+    "width": 40,
+    "height": 40,
+    "z": 34,
+    "color": "#636B2F",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 329
+  },
+  "wid35": {
+    "id": "wid35",
+    "x": 1432,
+    "y": 347,
+    "width": 40,
+    "height": 40,
+    "z": 35,
+    "color": "#636B2F",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 347
+  },
+  "wid36": {
+    "id": "wid36",
+    "x": 1432,
+    "y": 364,
+    "width": 40,
+    "height": 40,
+    "z": 36,
+    "color": "#636B2F",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 364
+  },
+  "wid37": {
+    "id": "wid37",
+    "x": 1432,
+    "y": 381,
+    "width": 40,
+    "height": 40,
+    "z": 37,
+    "color": "#636B2F",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1432,
+    "temp_y": 381
+  },
+  "wid38": {
+    "id": "wid38",
+    "x": 1490,
+    "y": 325,
+    "width": 30,
+    "height": 60,
+    "z": 38,
+    "color": "#636B2F",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 325
+  },
+  "wid39": {
+    "id": "wid39",
+    "x": 1490,
+    "y": 341,
+    "width": 30,
+    "height": 60,
+    "z": 39,
+    "color": "#636B2F",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 341
+  },
+  "wid40": {
+    "id": "wid40",
+    "x": 1490,
+    "y": 358,
+    "width": 30,
+    "height": 60,
+    "z": 40,
+    "color": "#636B2F",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 358
+  },
+  "wid41": {
+    "id": "wid41",
+    "x": 1490,
+    "y": 376,
+    "width": 30,
+    "height": 60,
+    "z": 41,
+    "color": "#636B2F",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 376
+  },
+  "wid42": {
+    "id": "wid42",
+    "x": 1490,
+    "y": 393,
+    "width": 30,
+    "height": 60,
+    "z": 42,
+    "color": "#636B2F",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 393
+  },
+  "wid43": {
+    "id": "wid43",
+    "x": 1531,
+    "y": 337,
+    "width": 60,
+    "height": 30,
+    "z": 43,
+    "image": "/assets/-1864989857_1796",
+    "temp_x": 1531,
+    "temp_y": 337
+  },
+  "wid44": {
+    "id": "wid44",
+    "x": 1531,
+    "y": 344,
+    "width": 60,
+    "height": 30,
+    "z": 44,
+    "image": "/assets/-1864989857_1796",
+    "temp_x": 1531,
+    "temp_y": 344
+  },
+  "wid45": {
+    "id": "wid45",
+    "x": 1546,
+    "y": 385,
+    "width": 30,
+    "height": 60,
+    "z": 45,
+    "image": "/assets/42111172_1718",
+    "temp_x": 1546,
+    "temp_y": 385
+  },
+  "wid46": {
+    "id": "wid46",
+    "x": 1375,
+    "y": 477,
+    "width": 25,
+    "height": 25,
+    "z": 46,
+    "color": "#8080ff",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1375,
+    "temp_y": 477
+  },
+  "wid47": {
+    "id": "wid47",
+    "x": 1375,
+    "y": 486,
+    "width": 25,
+    "height": 25,
+    "z": 47,
+    "color": "#8080ff",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1375,
+    "temp_y": 486
+  },
+  "wid48": {
+    "id": "wid48",
+    "x": 1375,
+    "y": 496,
+    "width": 25,
+    "height": 25,
+    "z": 48,
+    "color": "#8080ff",
+    "css": "border-radius: 50%;",
+    "image": "/i/game-pieces/3D/Marble-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#ffffff",
+    "borderWidth": 1,
+    "secondaryColor": "#000000",
+    "temp_x": 1375,
+    "temp_y": 496
+  },
+  "wid49": {
+    "id": "wid49",
+    "x": 1431,
+    "y": 470,
+    "width": 40,
+    "height": 40,
+    "z": 49,
+    "color": "#8080ff",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1431,
+    "temp_y": 470
+  },
+  "wid50": {
+    "id": "wid50",
+    "x": 1431,
+    "y": 487,
+    "width": 40,
+    "height": 40,
+    "z": 50,
+    "color": "#8080ff",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1431,
+    "temp_y": 487
+  },
+  "wid51": {
+    "id": "wid51",
+    "x": 1431,
+    "y": 504,
+    "width": 40,
+    "height": 40,
+    "z": 51,
+    "color": "#8080ff",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1431,
+    "temp_y": 504
+  },
+  "wid52": {
+    "id": "wid52",
+    "x": 1431,
+    "y": 521,
+    "width": 40,
+    "height": 40,
+    "z": 52,
+    "color": "#8080ff",
+    "css": "border-radius: 26% 74% 46% 54%/ 50% 55% 45% 50%;",
+    "image": "/i/game-pieces/3D/House-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#secondaryColor": "secondaryColor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "#000000",
+    "borderWidth": 2,
+    "temp_x": 1431,
+    "temp_y": 521
+  },
+  "wid53": {
+    "id": "wid53",
+    "x": 1490,
+    "y": 462,
+    "width": 30,
+    "height": 60,
+    "z": 53,
+    "color": "#8080ff",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 462
+  },
+  "wid54": {
+    "id": "wid54",
+    "x": 1490,
+    "y": 478,
+    "width": 30,
+    "height": 60,
+    "z": 54,
+    "color": "#8080ff",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 478
+  },
+  "wid55": {
+    "id": "wid55",
+    "x": 1490,
+    "y": 495,
+    "width": 30,
+    "height": 60,
+    "z": 55,
+    "color": "#8080ff",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 495
+  },
+  "wid56": {
+    "id": "wid56",
+    "x": 1490,
+    "y": 513,
+    "width": 30,
+    "height": 60,
+    "z": 56,
+    "color": "#8080ff",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 513
+  },
+  "wid57": {
+    "id": "wid57",
+    "x": 1490,
+    "y": 530,
+    "width": 30,
+    "height": 60,
+    "z": 57,
+    "color": "#8080ff",
+    "css": "border-radius: 40% 40% 50% 50%/ 80% 80% 10% 10%; ",
+    "image": "i/game-pieces/3D/Pawn-3D.svg",
+    "svgReplaces": {
+      "#primaryColor": "color",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth"
+    },
+    "borderColor": "black",
+    "borderWidth": 1,
+    "temp_x": 1490,
+    "temp_y": 530
+  },
+  "wid58": {
+    "id": "wid58",
+    "x": 1531,
+    "y": 474,
+    "width": 60,
+    "height": 30,
+    "z": 58,
+    "image": "/assets/85376264_2150",
+    "temp_x": 1531,
+    "temp_y": 474
+  },
+  "wid59": {
+    "id": "wid59",
+    "x": 1531,
+    "y": 481,
+    "width": 60,
+    "height": 30,
+    "z": 59,
+    "image": "/assets/85376264_2150",
+    "temp_x": 1531,
+    "temp_y": 481
+  },
+  "wid60": {
+    "id": "wid60",
+    "x": 1546,
+    "y": 524,
+    "width": 30,
+    "height": 60,
+    "z": 60,
+    "image": "/assets/808114419_1778",
+    "temp_x": 1546,
+    "temp_y": 524
+  },
+  "setup": {
+    "type": "button",
+    "id": "setup",
+    "x": 218,
+    "y": 731,
+    "z": 223,
+    "text": "SETUP",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "You are about to start a new game, make sure everyone is seated.",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will set up the game."
+          }
+        ]
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "draw_holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "draw_holder",
+        "to": "card_display",
+        "count": 11
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "jqry2"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "jqry3"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry1",
+        "x": 690,
+        "y": 162,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry1",
+        "x": 434,
+        "y": 172,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 1245,
+        "y": 387,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 1078,
+        "y": 464,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 843,
+        "y": 476,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 1065,
+        "y": 241,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 923,
+        "y": 186,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 553,
+        "y": 143,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 142,
+        "y": 53,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 11,
+        "y": 112,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 1252,
+        "y": 233,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 719,
+        "y": 496,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 504,
+        "y": 438,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 332,
+        "y": 388,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 234,
+        "y": 378,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 824,
+        "y": 268,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "deck",
+            "value": "deck${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "seat${value}",
+            "count": "all"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "card_display",
+        "collection": "flipped"
+      },
+      {
+        "func": "SELECT",
+        "property": "z",
+        "relation": "<",
+        "value": 3,
+        "source": "flipped",
+        "collection": "flipped"
+      },
+      {
+        "func": "FLIP",
+        "collection": "flipped"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -163,
+        "collection": "thisButton"
+      }
+    ],
+    "width": 120,
+    "height": 120,
+    "css": {
+      "font-size": "30px"
+    },
+    "borderRadius": 6
+  },
+  "cckr": {
+    "type": "button",
+    "text": "Swap last face-up card",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Are you sure you want to swap cards?",
+        "confirmButtonText": "Yes",
+        "cancelButtonText": "No",
+        "fields": [
+          {
+            "type": "subtitle",
+            "text": "This will place the right-most face-up card at the bottom of the draw deck and then draw a new card in its place."
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "card_display",
+        "collection": "selected"
+      },
+      {
+        "func": "SELECT",
+        "source": "selected",
+        "collection": "selected",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "GET",
+        "collection": "selected",
+        "property": "z",
+        "aggregation": "max",
+        "variable": "highest"
+      },
+      {
+        "func": "SELECT",
+        "property": "z",
+        "value": "${highest}",
+        "source": "selected",
+        "collection": "selected"
+      },
+      {
+        "func": "MOVE",
+        "to": "temp_holder",
+        "collection": "selected"
+      },
+      {
+        "func": "MOVE",
+        "from": "draw_holder",
+        "to": "temp_holder",
+        "count": "all"
+      },
+      {
+        "func": "MOVE",
+        "from": "temp_holder",
+        "to": "draw_holder",
+        "count": "all"
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "card_display",
+        "collection": "selected"
+      },
+      {
+        "func": "SELECT",
+        "source": "selected",
+        "collection": "selected",
+        "property": "activeFace",
+        "value": 1
+      },
+      {
+        "func": "GET",
+        "collection": "selected",
+        "property": "z",
+        "aggregation": "max",
+        "variable": "temphighest"
+      },
+      {
+        "func": "SELECT",
+        "property": "z",
+        "value": "${temphighest}",
+        "source": "selected",
+        "collection": "selected"
+      },
+      {
+        "func": "SELECT",
+        "source": "display",
+        "collection": "display",
+        "property": "z",
+        "relation": ">",
+        "value": "${temphighest}"
+      },
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "type": "card",
+        "value": "draw_holder",
+        "sortBy": {
+          "key": "z",
+          "reverse": true
+        }
+      },
+      {
+        "func": "GET",
+        "aggregation": "first",
+        "property": "id",
+        "variable": "first"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "${first}"
+      },
+      {
+        "func": "MOVE",
+        "to": "card_display"
+      },
+      {
+        "func": "SET",
+        "property": "z",
+        "value": "${highest}"
+      },
+      {
+        "func": "FLIP"
+      },
+      {
+        "func": "SET",
+        "collection": "display",
+        "property": "z",
+        "value": 1,
+        "relation": "+"
+      },
+      {
+        "func": "SORT",
+        "holder": "card_display",
+        "key": "z"
+      }
+    ],
+    "x": 187,
+    "y": 685,
+    "z": 232,
+    "id": "cckr",
+    "height": 40,
+    "width": 180,
+    "borderRadius": 6
+  },
+  "setup_holder_cards1": {
+    "type": "holder",
+    "id": "setup_holder_cards1",
+    "x": 611,
+    "y": 1081,
+    "z": 73
+  },
+  "setup_holder_cards2": {
+    "type": "holder",
+    "id": "setup_holder_cards2",
+    "x": 862,
+    "y": 1081,
+    "z": 75
+  },
+  "setup_holder_cards3": {
+    "type": "holder",
+    "id": "setup_holder_cards3",
+    "x": 1114,
+    "y": 1081,
+    "z": 77
+  },
+  "setup_holder_cards4": {
+    "type": "holder",
+    "id": "setup_holder_cards4",
+    "x": 1365,
+    "y": 1081,
+    "z": 79
+  },
+  "qqym": {
+    "type": "pile",
+    "parent": "jqry2",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "qqym"
+  },
+  "yfq4": {
+    "type": "pile",
+    "parent": "jqry3",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "yfq4"
+  },
+  "kuyt": {
+    "type": "pile",
+    "parent": "setup_holder_cards1",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 125,
+    "id": "kuyt"
+  },
+  "qodc": {
+    "type": "pile",
+    "parent": "jqry1",
+    "x": 4,
+    "y": 4,
+    "width": 60,
+    "height": 60,
+    "id": "qodc"
+  },
+  "jqry3": {
+    "type": "holder",
+    "id": "jqry3",
+    "x": 1635,
+    "y": 411,
+    "width": 70,
+    "height": 70,
+    "z": 4
+  },
+  "jqry2": {
+    "type": "holder",
+    "id": "jqry2",
+    "x": 1635,
+    "y": 324,
+    "width": 70,
+    "height": 70,
+    "z": 3
+  },
+  "jqry1": {
+    "type": "holder",
+    "id": "jqry1",
+    "x": 1634,
+    "y": 238,
+    "width": 70,
+    "height": 70,
+    "z": 5
+  },
+  "lh9v": {
+    "text": "Drag cards between holders and click buttons to move cards etc. Notice how the cards transition nicely from their old location to new location but dragging is not impacted.\n\nThe CSS transitions, including timing, are defined on this widget but applied in the `cardDefaults` property of the deck.",
+    "id": "lh9v",
+    "z": 57,
+    "x": 45,
+    "y": 1072,
+    "width": 400,
+    "css": {
+      "": {
+        "font-size": "20px"
+      },
+      "_, .transition": {
+        "transition": "transform 600ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "movable": false,
+    "layer": -4
+  },
+  "setup1": {
+    "type": "button",
+    "id": "setup1",
+    "x": -163,
+    "y": 530,
+    "z": 244,
+    "text": "RESET\nSETUP",
+    "clickRoutine": [
+      {
+        "func": "SHUFFLE",
+        "holder": "draw_holder"
+      },
+      {
+        "func": "MOVE",
+        "from": "draw_holder",
+        "to": "card_display",
+        "count": 11
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "jqry2"
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "jqry3"
+      },
+      {
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry1",
+        "x": 690,
+        "y": 162,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry1",
+        "x": 434,
+        "y": 172,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 1245,
+        "y": 387,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 1078,
+        "y": 464,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 843,
+        "y": 476,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 1065,
+        "y": 241,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 923,
+        "y": 186,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 553,
+        "y": 143,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 142,
+        "y": 53,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry2",
+        "x": 11,
+        "y": 112,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 1252,
+        "y": 233,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 719,
+        "y": 496,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 504,
+        "y": 438,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 332,
+        "y": 388,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 234,
+        "y": 378,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "jqry3",
+        "x": 824,
+        "y": 268,
+        "face": 1,
+        "resetOwner": false
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          1,
+          4,
+          1
+        ],
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "deck",
+            "value": "deck${value}"
+          },
+          {
+            "func": "MOVE",
+            "collection": "DEFAULT",
+            "to": "seat${value}",
+            "count": "all"
+          }
+        ]
+      },
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "card_display",
+        "collection": "flipped"
+      },
+      {
+        "func": "SELECT",
+        "property": "z",
+        "relation": "<",
+        "value": 3,
+        "source": "flipped",
+        "collection": "flipped"
+      },
+      {
+        "func": "FLIP",
+        "collection": "flipped"
+      },
+      {
+        "func": "SET",
+        "property": "x",
+        "value": -163,
+        "collection": "thisButton"
+      }
+    ],
+    "width": 120,
+    "height": 120,
+    "css": {
+      "font-size": "30px"
+    },
+    "borderRadius": 6
+  }
+}
