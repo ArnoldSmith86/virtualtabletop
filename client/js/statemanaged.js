@@ -20,12 +20,13 @@ export class StateManaged {
       if(delta[i] === null) {
         delete this.unalteredState[i];
         delete this.state[i];
+        delete this.getCache[i];
         deltaForDOM[i] = this.get(i);
       } else {
         deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
-      delete this.getCache[i];
     }
+    this.invalidateGetCache();
 
     this.applyDeltaToDOM(deltaForDOM);
 
@@ -56,15 +57,19 @@ export class StateManaged {
   }
 
   get(property) {
+    const cached = this.getCache[property];
+    if(cached !== undefined)
+      return cached;
+
     const value = this.state[property];
     if(value !== undefined) {
       if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
-        return +value;
+        return this.getCache[property] = +value;
       else
-        return value;
+        return this.getCache[property] = value;
     } else {
       const defaultValue = this.getDefaultValue(property);
-      return defaultValue !== undefined ? defaultValue : null;
+      return this.getCache[property] = defaultValue !== undefined ? defaultValue : null;
     }
   }
 
@@ -101,6 +106,16 @@ export class StateManaged {
       return properties.indexOf(key) != -1;
   }
 
+  // clears the get cache of this widget and everything whose get values can depend on it (widgets inheriting from it)
+  invalidateGetCache(visited = new Set()) {
+    if(visited.has(this))
+      return;
+    visited.add(this);
+    this.getCache = {};
+    for(const inheriting of StateManaged.inheritFromMapping[this.id] || [])
+      inheriting.invalidateGetCache(visited);
+  }
+
   inheritFromUnregister() {
     for(const wID in StateManaged.inheritFromMapping)
       StateManaged.inheritFromMapping[wID] = StateManaged.inheritFromMapping[wID].filter(i=>i!=this);
@@ -127,7 +142,7 @@ export class StateManaged {
       delete this.state[property];
     else
       this.state[property] = JSON.parse(JSONvalue);
-    delete this.getCache[property];
+    this.invalidateGetCache();
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 

@@ -60,6 +60,15 @@ class Deck extends Widget {
     return this.get('cardDefaults')[property];
   }
 
+  // the get values of cards depend on their deck through cardPropertyGet
+  invalidateGetCache(visited = new Set()) {
+    if(visited.has(this))
+      return;
+    super.invalidateGetCache(visited);
+    for(const cardID in this.cards)
+      this.cards[cardID].invalidateGetCache(visited);
+  }
+
   getFaceProperties(face) {
     const template = this.get('faceTemplates')[face];
     return template ? {...template.properties || {}} : {};

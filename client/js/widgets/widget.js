@@ -257,7 +257,6 @@ export class Widget extends StateManaged {
     }
 
     if(delta.inheritFrom !== undefined) {
-      this.getCache = {};
       this.inheritFromUnregister();
 
       if(delta.inheritFrom)
@@ -267,7 +266,6 @@ export class Widget extends StateManaged {
     }
 
     for(const inheriting of StateManaged.inheritFromMapping[this.id]) {
-      inheriting.getCache = {};
       const inheritedDelta = {};
       this.applyInheritedValuesToObject(inheriting.inheritFrom()[this.id] || [], delta, inheritedDelta, inheriting);
       inheriting.applyInheritedDeltaToDOM(inheritedDelta);
@@ -296,6 +294,7 @@ export class Widget extends StateManaged {
       else
         this.inheritedProperties[property] = true;
     }
+    this.getCache = {};
     this.applyDeltaToDOM(delta);
   }
 
@@ -337,6 +336,7 @@ export class Widget extends StateManaged {
     if($(`#STYLES_${escapeID(this.id)}`))
       removeFromDOM($(`#STYLES_${escapeID(this.id)}`));
     removeFromDOM(this.domElement);
+    this.invalidateGetCache(); // widgets inheriting from this one now fall back to their defaults
     this.inheritFromUnregister();
     this.globalUpdateListenersUnregister();
   }
@@ -2192,34 +2192,32 @@ export class Widget extends StateManaged {
   }
 
   get(property) {
-    if(this.getCache[property] !== undefined)
-      return this.getCache[property];
-
+    // the results of computed read-only properties are not cached because they depend on other widgets (the parent chain)
     if(!readOnlyProperties.has(property)) {
-      return this.getCache[property] = super.get(property);
+      return super.get(property);
     } else {
       const p = this.get('parent');
       switch(property) {
         case '_absoluteRotation':
-          return this.getCache[property] = this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
+          return this.get('rotation') + (widgets.has(p)? widgets.get(p).get('_absoluteRotation') : 0);
         case '_absoluteScale':
-          return this.getCache[property] = this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
+          return this.get('scale') * (widgets.has(p)? widgets.get(p).get('_absoluteScale') : 1);
         case '_absoluteX':
-          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['x'];
         case '_absoluteY':
-          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
+          return this.coordGlobalFromCoordParent({x:this.get('x'),y:this.get('y')})['y'];
         case '_ancestor':
-          return this.getCache[property] = (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
+          return (widgets.has(p) && widgets.get(p).get('type')=='pile') ? widgets.get(p).get('_ancestor') : p;
         case '_centerAbsoluteX':
-          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['x'];
         case '_centerAbsoluteY':
-          return this.getCache[property] = this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
+          return this.coordGlobalFromCoordParent({x:this.get('x')+this.get('width')/2,y:this.get('y')+this.get('height')/2})['y'];
         case '_localOriginAbsoluteX':
-          return this.getCache[property] = this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['x'];
         case '_localOriginAbsoluteY':
-          return this.getCache[property] = this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
+          return this.coordGlobalFromCoordLocal({x:0,y:0})['y'];
         default:
-          return this.getCache[property] = super.get(property);
+          return super.get(property);
       }
     }
   }

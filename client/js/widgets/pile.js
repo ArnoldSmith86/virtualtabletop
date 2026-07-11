@@ -229,6 +229,12 @@ class Pile extends Widget {
     return p;
   }
 
+  get(property) {
+    if(property == 'onPileCreation')
+      delete this.getCache[property]; // never serve this from the cache because it depends on the pile's children
+    return super.get(property);
+  }
+
   getDefaultValue(property) {
     if(property == 'onPileCreation' && this.children().length)
       return this.children()[0].get('onPileCreation');

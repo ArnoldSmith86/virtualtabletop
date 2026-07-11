@@ -103,15 +103,12 @@ class BasicWidget extends ImageWidget {
   }
 
   get(property) {
-    if(this.getCache[property] !== undefined)
-      return this.getCache[property];
-
     if(property == 'faces' || property == 'activeFace' || !this.faces()[this.get('activeFace')])
-      return this.getCache[property] = super.get(property);
+      return super.get(property);
     const d = this.faces()[this.get('activeFace')][property];
     if(d !== undefined)
-      return this.getCache[property] = d;
-    return this.getCache[property] = super.get(property);
+      return d;
+    return super.get(property);
   }
 
   getDefaultIconColor() {

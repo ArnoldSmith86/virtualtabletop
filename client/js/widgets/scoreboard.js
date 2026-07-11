@@ -150,11 +150,8 @@ class Scoreboard extends Widget {
   }
 
   get(property) {
-    if(this.getCache[property] !== undefined)
-      return this.getCache[property];
-
     if(property != '_totals')
-      return this.getCache[property] = super.get(property)
+      return super.get(property)
     else {
       // First get total score for each relevant seat
       const totals = [];
@@ -165,7 +162,7 @@ class Scoreboard extends Widget {
           const index = seat.get('index');
           totals[index] = this.getTotal(score);
         }
-        return this.getCache[property] = totals
+        return totals
       } else if (typeof seats == 'object') { // Getting team totals
         const teamTotals = [null];
         for (const team in seats) {
@@ -174,9 +171,9 @@ class Scoreboard extends Widget {
           const seatsTotals = asArray(seatsScores).map( s => this.getTotal(s) );
           teamTotals.push(this.getTotal(seatsTotals));
         }
-        return this.getCache[property] = teamTotals;
+        return teamTotals;
       }
-      return this.getCache[property] = null; // Neither array nor object, return null.
+      return null; // Neither array nor object, return null.
     }
   }
 
