@@ -912,6 +912,11 @@ export default class Room {
     if(sessionID != null && !renamedSessions.length)
       return;
 
+    // refuse taking the name of a connected player who is part of the game (seat, owner, artist) -
+    // it would secretly reveal that player's hand
+    if(this.players.some(p=>p.name == newName) && this.playerIsReferencedInWidgets(newName))
+      return;
+
     Logging.log(`renaming player ${oldName} to ${newName} in room ${this.id}`);
     if(this.state._meta.players[newName] === undefined)
       this.state._meta.players[newName] = sessionID == null ? this.state._meta.players[oldName] : this.newPlayerColor();

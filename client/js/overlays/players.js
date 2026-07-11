@@ -133,7 +133,9 @@ function fillPlayerList(players, active, sessions) {
           $('.playerName', row).focus();
           $('.playerName', row).select();
         });
-        if(player == playerName) {
+        const isReferencedByWidgets = [...widgets.values()].some(w=>[ w.state.owner, w.state.player, w.state.artist ].some(v=>Array.isArray(v) ? v.indexOf(player) != -1 : v == player));
+        // viewing a connected player who is part of the game would secretly reveal their hand (the server refuses it too)
+        if(player == playerName || session && isReferencedByWidgets) {
           removeFromDOM($('.viewPlayer', row));
         } else {
           serverActionButton($('.viewPlayer', row), function() {
@@ -141,7 +143,6 @@ function fillPlayerList(players, active, sessions) {
             return nextMetaUpdate(args=>(args.sessions || []).some(s=>s.sessionID == mySessionID && s.player == player));
           });
         }
-        const isReferencedByWidgets = [...widgets.values()].some(w=>[ w.state.owner, w.state.player, w.state.artist ].some(v=>Array.isArray(v) ? v.indexOf(player) != -1 : v == player));
         if(session || isReferencedByWidgets) {
           removeFromDOM($('.removePlayer', row));
         } else {
