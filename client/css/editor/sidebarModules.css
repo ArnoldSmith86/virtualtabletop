@@ -571,6 +571,10 @@
   position: relative;
 }
 
+.sidebarButton[icon]:not(.filesPanel-button) {
+  padding-right: 0px;
+}
+
 .sidebarButton span {
   display: none;
   position: absolute;
@@ -982,73 +986,6 @@ div.widget-name {
   display: flex;
   gap: 8px;
 }
-.filesPanel-tree {
-  margin-top: 8px;
-}
-.filesPanel-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-.filesPanel-dir {
-  margin: 4px 0;
-}
-.filesPanel-dirName {
-  cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-.filesPanel-dirName:hover {
-  background: var(--backgroundHighlightColor1);
-}
-.filesPanel-dir .filesPanel-children {
-  margin-left: 12px;
-  display: none;
-}
-.filesPanel-dir.open .filesPanel-children {
-  display: block;
-}
-.filesPanel-file {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 6px;
-  margin: 6px 0;
-  padding: 6px;
-  border-radius: 4px;
-  background: var(--backgroundColor);
-  border: 1px solid var(--modalBorderColor);
-}
-.filesPanel-preview {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: var(--textColor);
-  background: var(--backgroundHighlightColor1);
-  border-radius: 4px;
-  overflow: hidden;
-}
-.filesPanel-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.filesPanel-fileName {
-  flex: 0 1 auto;
-  min-width: 0;
-  word-break: break-all;
-}
-.filesPanel-actions {
-  flex: 1 1 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
 .filesPanel-handlerSelect {
   min-width: 180px;
   padding: 4px 8px;
@@ -1063,9 +1000,6 @@ div.widget-name {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
-.filesPanel-run {
-  flex-shrink: 0;
 }
 
 .filesPanel-log {

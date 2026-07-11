@@ -74,8 +74,8 @@ async function applyCsvToDeck(deckId, csvContent, options = {}) {
   if (!deck || deck.get('type') !== 'deck')
     throw new Error(`Deck ${deckId} not found`);
 
+  const oldCardTypeIDs = Object.keys(deck.get('cardTypes') || {});
   const jeStateNow = { ...deck.state, cardTypes: mode === 'set' ? {} : { ...deck.get('cardTypes') } };
-  const oldCardTypeIDs = Object.keys(jeStateNow.cardTypes);
 
   for (let i = 1; i < lines.length; i++) {
     const currentline = lines[i];
@@ -91,39 +91,56 @@ async function applyCsvToDeck(deckId, csvContent, options = {}) {
   }
 
   batchStart();
-  setDeltaCause(`${getPlayerDetails().playerName} imported CSV to ${deckId} in editor (Files panel)`);
+  try {
+    setDeltaCause(`${getPlayerDetails().playerName} imported CSV to ${deckId} in editor (Files panel)`);
 
-  for (const oldID of oldCardTypeIDs) {
-    if (!jeStateNow.cardTypes[oldID]) {
-      for (const card of widgetFilter(w => w.get('deck') === deckId && w.get('cardType') === oldID))
-        await removeWidgetLocal(card.get('id'));
+    for (const oldID of oldCardTypeIDs) {
+      if (!jeStateNow.cardTypes[oldID]) {
+        for (const card of widgetFilter(w => w.get('deck') === deckId && w.get('cardType') === oldID))
+          await removeWidgetLocal(card.get('id'));
+      }
     }
+
+    await deck.set('cardTypes', jeStateNow.cardTypes);
+
+    for (const [id, targetCount] of Object.entries(targetCounts)) {
+      const currentCount = widgetFilter(w => w.get('deck') === deckId && w.get('cardType') === id).length;
+      for (let i = 0; i < targetCount - currentCount; ++i) {
+        const cardId = await addWidgetLocal({ deck: deckId, type: 'card', cardType: id });
+        if (deck.get('parent'))
+          await widgets.get(cardId).moveToHolder(widgets.get(deck.get('parent')));
+      }
+      for (let i = 0; i < currentCount - targetCount; ++i) {
+        const card = widgetFilter(w => w.get('deck') === deckId && w.get('cardType') === id)[0];
+        if (card) await removeWidgetLocal(card.get('id'));
+      }
+    }
+  } finally {
+    batchEnd();
   }
-
-  await deck.set('cardTypes', jeStateNow.cardTypes);
-
-  for (const [id, targetCount] of Object.entries(targetCounts)) {
-    const currentCount = widgetFilter(w => w.get('deck') === deckId && w.get('cardType') === id).length;
-    for (let i = 0; i < targetCount - currentCount; ++i) {
-      const cardId = await addWidgetLocal({ deck: deckId, type: 'card', cardType: id });
-      if (deck.get('parent'))
-        await widgets.get(cardId).moveToHolder(widgets.get(deck.get('parent')));
-    }
-    for (let i = 0; i < currentCount - targetCount; ++i) {
-      const card = widgetFilter(w => w.get('deck') === deckId && w.get('cardType') === id)[0];
-      if (card) await removeWidgetLocal(card.get('id'));
-    }
-  }
-
-  batchEnd();
 }
 
-function replaceAssetRecursive(obj, oldAsset, newAsset) {
-  if (obj === oldAsset) return newAsset;
-  if (typeof obj === 'object' && obj != null)
-    for (const [key, value] of Object.entries(obj))
-      obj[key] = replaceAssetRecursive(value, oldAsset, newAsset);
-  return obj;
+async function setWidgetPropertyByPath(widgetId, propertyPath, value, cause) {
+  const w = widgets.get(widgetId);
+  if (!w) throw new Error('Widget not found');
+  const path = (propertyPath || '').trim().split(/\./).filter(Boolean);
+  if (path.length === 0) throw new Error('Property path required');
+  const prop = path[0];
+  let newValue = value;
+  if (path.length > 1) {
+    newValue = JSON.parse(JSON.stringify(w.get(prop)));
+    let ptr = newValue;
+    for (let i = 1; i < path.length - 1; i++) ptr = ptr[path[i]];
+    ptr[path[path.length - 1]] = value;
+  }
+  batchStart();
+  try {
+    setDeltaCause(cause);
+    await w.set(prop, newValue);
+  } finally {
+    batchEnd();
+  }
+  return { editedWidgetIds: [widgetId] };
 }
 
 function registerBuiltInHandlers() {
@@ -154,17 +171,20 @@ function registerBuiltInHandlers() {
       }
       if (assetGroup && assetGroup.uses && assetGroup.uses.length) {
         batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} replaced asset from Files panel`);
-        for (const use of assetGroup.uses) {
-          const w = widgets.get(use.widget);
-          if (!w) continue;
-          const topKey = use.keys[0];
-          const property = w.get(topKey);
-          const newValue = JSON.parse(JSON.stringify(property).split(oldAsset).join(newAsset));
-          await w.set(topKey, newValue);
-          if (!editedWidgetIds.includes(use.widget)) editedWidgetIds.push(use.widget);
+        try {
+          setDeltaCause(`${getPlayerDetails().playerName} replaced asset from Files panel`);
+          for (const use of assetGroup.uses) {
+            const w = widgets.get(use.widget);
+            if (!w) continue;
+            const topKey = use.keys[0];
+            const property = w.get(topKey);
+            const newValue = JSON.parse(JSON.stringify(property).split(oldAsset).join(newAsset));
+            await w.set(topKey, newValue);
+            if (!editedWidgetIds.includes(use.widget)) editedWidgetIds.push(use.widget);
+          }
+        } finally {
+          batchEnd();
         }
-        batchEnd();
       }
       return { lastAssetUrl: newAsset, editedWidgetIds };
     }
@@ -201,16 +221,19 @@ function registerBuiltInHandlers() {
       if (typeof patches !== 'object' || patches === null || Array.isArray(patches))
         throw new Error('Expected a JSON object: { "widgetId1": { "prop": value }, "widgetId2": ... }');
       batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated widgets from Files panel`);
       const editedWidgetIds = [];
-      for (const [id, patch] of Object.entries(patches)) {
-        if (!widgets.has(id)) continue;
-        const w = widgets.get(id);
-        for (const [key, value] of Object.entries(patch))
-          await w.set(key, value);
-        editedWidgetIds.push(id);
+      try {
+        setDeltaCause(`${getPlayerDetails().playerName} updated widgets from Files panel`);
+        for (const [id, patch] of Object.entries(patches)) {
+          if (!widgets.has(id)) continue;
+          const w = widgets.get(id);
+          for (const [key, value] of Object.entries(patch))
+            await w.set(key, value);
+          editedWidgetIds.push(id);
+        }
+      } finally {
+        batchEnd();
       }
-      batchEnd();
       return { editedWidgetIds };
     }
   });
@@ -237,11 +260,14 @@ function registerBuiltInHandlers() {
         throw new Error(`Widget id "${id}" not found. Use an existing id (e.g. ${sample}).`);
       }
       batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated widget from Files panel`);
-      const w = widgets.get(id);
-      for (const [key, value] of Object.entries(state))
-        if (key !== 'id') await w.set(key, value);
-      batchEnd();
+      try {
+        setDeltaCause(`${getPlayerDetails().playerName} updated widget from Files panel`);
+        const w = widgets.get(id);
+        for (const [key, value] of Object.entries(state))
+          if (key !== 'id') await w.set(key, value);
+      } finally {
+        batchEnd();
+      }
       return { editedWidgetIds: [id] };
     }
   });
@@ -261,27 +287,7 @@ function registerBuiltInHandlers() {
       } catch (e) {
         throw new Error('Invalid JSON: ' + (e.message || e));
       }
-      const w = widgets.get(options.widgetId);
-      if (!w) throw new Error('Widget not found');
-      const path = (options.propertyPath || '').trim().split(/\./).filter(Boolean);
-      if (path.length === 0) throw new Error('Property path required');
-      const prop = path[0];
-      let target = JSON.parse(JSON.stringify(w.get(prop)));
-      if (path.length === 1) {
-        batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} updated widget property from Files panel`);
-        await w.set(prop, value);
-        batchEnd();
-        return { editedWidgetIds: [options.widgetId] };
-      }
-      let ptr = target;
-      for (let i = 1; i < path.length - 1; i++) ptr = ptr[path[i]];
-      ptr[path[path.length - 1]] = value;
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated widget property from Files panel`);
-      await w.set(prop, target);
-      batchEnd();
-      return { editedWidgetIds: [options.widgetId] };
+      return setWidgetPropertyByPath(options.widgetId, options.propertyPath, value, `${getPlayerDetails().playerName} updated widget property from Files panel`);
     }
   });
 
@@ -295,60 +301,20 @@ function registerBuiltInHandlers() {
     ],
     async apply(contentText, options) {
       const lines = contentText.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-      const w = widgets.get(options.widgetId);
-      if (!w) throw new Error('Widget not found');
-      const path = (options.propertyPath || '').trim().split(/\./).filter(Boolean);
-      if (path.length === 0) throw new Error('Property path required');
-      const prop = path[0];
-      let target = JSON.parse(JSON.stringify(w.get(prop)));
-      if (path.length === 1) {
-        batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} updated widget property from Files panel`);
-        await w.set(prop, lines);
-        batchEnd();
-        return { editedWidgetIds: [options.widgetId] };
-      }
-      let ptr = target;
-      for (let i = 1; i < path.length - 1; i++) ptr = ptr[path[i]];
-      ptr[path[path.length - 1]] = lines;
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated widget property from Files panel`);
-      await w.set(prop, target);
-      batchEnd();
-      return { editedWidgetIds: [options.widgetId] };
+      return setWidgetPropertyByPath(options.widgetId, options.propertyPath, lines, `${getPlayerDetails().playerName} updated widget property from Files panel`);
     }
   });
 
   registerFileHandler({
     id: 'htmlWidgetProperty',
     label: 'HTML → widget/card property',
-    filePattern: /\.(htm|l?html)$/i,
+    filePattern: /\.x?html?$/i,
     optionsSchema: [
       { key: 'widgetId', label: 'Widget ID', type: 'string' },
       { key: 'propertyPath', label: 'Property (e.g. text, or faceTemplates.0.objects.1.value)', type: 'string' }
     ],
     async apply(contentHtml, options) {
-      const w = widgets.get(options.widgetId);
-      if (!w) throw new Error('Widget not found');
-      const path = (options.propertyPath || '').trim().split(/\./).filter(Boolean);
-      if (path.length === 0) throw new Error('Property path required');
-      const prop = path[0];
-      let target = JSON.parse(JSON.stringify(w.get(prop)));
-      if (path.length === 1) {
-        batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} updated widget HTML from Files panel`);
-        await w.set(prop, contentHtml);
-        batchEnd();
-        return { editedWidgetIds: [options.widgetId] };
-      }
-      let ptr = target;
-      for (let i = 1; i < path.length - 1; i++) ptr = ptr[path[i]];
-      ptr[path[path.length - 1]] = contentHtml;
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated widget HTML from Files panel`);
-      await w.set(prop, target);
-      batchEnd();
-      return { editedWidgetIds: [options.widgetId] };
+      return setWidgetPropertyByPath(options.widgetId, options.propertyPath, contentHtml, `${getPlayerDetails().playerName} updated widget HTML from Files panel`);
     }
   });
 }
