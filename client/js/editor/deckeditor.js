@@ -228,6 +228,15 @@ class DeckEditor {
     };
     $('#deckEditorAddIcon').onclick = _=>this.addObject({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000', value: 'skoll/hearts' });
 
+    $('#deckEditorAddTextDynamic').onclick = _=>this.addDynamicObject({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
+    $('#deckEditorAddImageDynamic').onclick = _=>{
+      uploadAsset().then(asset=>{
+        if(asset)
+          this.addDynamicObject({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: 'transparent' }, 'image', asset);
+      });
+    };
+    $('#deckEditorAddIconDynamic').onclick = _=>this.addDynamicObject({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', 'skoll/hearts');
+
     $('#deckEditorMain').onmousedown = e=>{
       if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
         this.selectObject(null);
@@ -729,6 +738,31 @@ class DeckEditor {
     return [...properties];
   }
 
+  generateUniquePropertyName(base) {
+    const known = new Set(this.knownCardTypeProperties());
+    if(!known.has(base))
+      return base;
+    let suffix = 2;
+    while(known.has(base + suffix))
+      ++suffix;
+    return base + suffix;
+  }
+
+  // Only seeds the currently selected card type; other card types are left for the user to fill in,
+  // same as any other dynamic property that isn't set for them yet.
+  async seedCardTypeProperty(typeProperty, defaultValue) {
+    if(this.cardType === null || this.cardTypes[this.cardType][typeProperty] !== undefined)
+      return;
+    this.cardTypes[this.cardType][typeProperty] = defaultValue;
+    await this.commit('cardTypes');
+  }
+
+  async addDynamicObject(objectTemplate, propertyBaseName, defaultValue) {
+    const typeProperty = this.generateUniquePropertyName(propertyBaseName);
+    await this.seedCardTypeProperty(typeProperty, defaultValue);
+    await this.addObject({ ...objectTemplate, dynamicProperties: { value: typeProperty } });
+  }
+
   renderDynamicProperties(sidebar, object) {
     const h = document.createElement('h3');
     h.innerText = 'Dynamic properties';
@@ -761,16 +795,12 @@ class DeckEditor {
       const typeProperty = $('.typeProperty', addRow).value.trim();
       if(!objectProperty || !typeProperty)
         return;
-      const typePropertyIsNew = this.knownCardTypeProperties().indexOf(typeProperty) == -1;
       if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
         object.dynamicProperties = {};
       object.dynamicProperties[objectProperty] = typeProperty;
       const staticValue = object[objectProperty];
       delete object[objectProperty]; // a static value would override the dynamic one
-      if(typePropertyIsNew && this.cardType !== null && this.cardTypes[this.cardType][typeProperty] === undefined) {
-        this.cardTypes[this.cardType][typeProperty] = staticValue !== undefined ? staticValue : '';
-        await this.commit('cardTypes');
-      }
+      await this.seedCardTypeProperty(typeProperty, staticValue !== undefined ? staticValue : '');
       this.refreshMainCardFaces();
       await this.commit('faceTemplates');
       this.renderSidebar();

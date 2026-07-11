@@ -155,9 +155,18 @@
       <label>Face: <select id="deckEditorFaceSelect"></select></label>
       <button icon="add" id="deckEditorAddFace">Add face</button>
       <div class="spacer"></div>
-      <button icon="format_size" id="deckEditorAddText">Add text</button>
-      <button icon="image" id="deckEditorAddImage">Add image</button>
-      <button icon="add_reaction" id="deckEditorAddIcon">Add icon</button>
+      <div class="deckEditorAddGroup" title="Adds an object that looks the same on every card of this deck.">
+        <span class="deckEditorAddGroupLabel">Same on every card:</span>
+        <button icon="format_size" id="deckEditorAddText">Text</button>
+        <button icon="image" id="deckEditorAddImage">Image</button>
+        <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
+      </div>
+      <div class="deckEditorAddGroup deckEditorAddGroupDynamic" title="Adds an object that can be different for each card type, like a rank, name or picture.">
+        <span class="deckEditorAddGroupLabel">Different per card type:</span>
+        <button icon="format_size" id="deckEditorAddTextDynamic">Text</button>
+        <button icon="image" id="deckEditorAddImageDynamic">Image</button>
+        <button icon="add_reaction" id="deckEditorAddIconDynamic">Icon</button>
+      </div>
       <div class="spacer"></div>
       <button icon="close" id="deckEditorClose">Close</button>
     </div>

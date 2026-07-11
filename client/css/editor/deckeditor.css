@@ -41,6 +41,26 @@ body.deckEditorActive #deckEditor {
   padding: 5px;
 }
 
+.deckEditorAddGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: #0002;
+}
+
+.deckEditorAddGroupDynamic {
+  background: #fff2;
+}
+
+.deckEditorAddGroupLabel {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+
 #deckEditorBody {
   display: flex;
   flex-grow: 1;
