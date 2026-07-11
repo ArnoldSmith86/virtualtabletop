@@ -354,6 +354,9 @@ function addPieceToAddWidgetOverlay(w, wi) {
         ]
       });
       const toAdd = {...wi};
+      const pieceName = (String(w.id).match(/^[A-Z][a-z]+/) || [])[0];
+      if(pieceName)
+        toAdd.id = generateUniqueWidgetID(pieceName.toLowerCase());
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
@@ -397,13 +400,13 @@ function populateAddWidgetOverlay() {
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('deck');
     for(const w of generateCardDeckWidgets(id, x, 340, false))
       await addWidgetLocal(w);
     return id
   });
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('deck');
     for(const w of generateCardDeckWidgets(id, x, 570, true))
       await addWidgetLocal(w);
     return id
@@ -894,7 +897,7 @@ function populateAddWidgetOverlay() {
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('chips');
     for(const w of generateChipPileWidgets(id, 916, 300, 2))
       await addWidgetLocal(w);
     return id
@@ -952,7 +955,7 @@ function populateAddWidgetOverlay() {
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('chips');
     for(const w of generateChipPileWidgets(id, 1010, 309, 3))
       await addWidgetLocal(w);
     return id
@@ -1153,7 +1156,7 @@ function populateAddWidgetOverlay() {
 
   // Add the composite timer widget
   addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('timer');
     for(const w of generateTimerWidgets(id, 1005, 825))
       await addWidgetLocal(w);
     return id
@@ -1161,7 +1164,7 @@ function populateAddWidgetOverlay() {
 
   // Add the composite counter widget
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('counter');
     for(const w of generateCounterWidgets(id, 1058, 890))
       await addWidgetLocal(w);
     return id

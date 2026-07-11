@@ -41,10 +41,11 @@ function applyCustomCss(gameSettings) {
   }
 }
 
-function generateUniqueWidgetID() {
+function generateUniqueWidgetID(type) {
   let id;
+  let i = 1;
   do {
-    id = rand().toString(36).substring(3, 7);
+    id = type ? type + i++ : rand().toString(36).substring(3, 7);
   } while (widgets.has(id));
   return id;
 }
@@ -128,7 +129,7 @@ export function addWidget(widget, instance) {
 
 async function addWidgetLocal(widget) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID();
+    widget.id = generateUniqueWidgetID(widget.type);
   else
     widget.id = String(widget.id);
 

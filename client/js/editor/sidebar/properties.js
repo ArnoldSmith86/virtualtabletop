@@ -390,7 +390,7 @@ class PropertiesModule extends SidebarModule {
           templateButton.classList.toggle('selected');
           createButton.disabled = !$a('.selected.deckTemplateButton', target).length;
         };
-        deck.id = generateUniqueWidgetID();
+        deck.id = generateUniqueWidgetID('deck');
       }
       this.moduleDOM.scrollTop = oldScrollTop;
     };
@@ -465,7 +465,7 @@ class PropertiesModule extends SidebarModule {
     target.append(suitCustomizeDiv);
 
     function getDeckDefinition(standardDeck) {
-      const id = generateUniqueWidgetID();
+      const id = generateUniqueWidgetID('deck');
       const cardTypes = {};
       let suitIndex = 0;
 
@@ -620,7 +620,7 @@ class PropertiesModule extends SidebarModule {
     });
 
     $('.goButton [icon=add]', target).onclick = async _=>{
-      const id = generateUniqueWidgetID();
+      const id = generateUniqueWidgetID('deck');
       const cardTypes = {};
       const counts = {};
       const hasTiledImage = [...$a('.rows input, .cols input')].filter(d=>d.value>1).length > 0;
