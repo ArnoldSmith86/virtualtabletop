@@ -40,7 +40,48 @@ export class Line extends Widget {
 
   pointProperty(property) {
     const p = this.get(property);
+    if(Array.isArray(p))
+      return p.length >= 2 ? { x: +p[0] || 0, y: +p[1] || 0 } : null;
     return p && typeof p == 'object' ? { x: +p.x || 0, y: +p.y || 0 } : null;
+  }
+
+  // move x/y and resize width/height so the widget box always wraps the path,
+  // keeping the path in place by shifting all points; otherwise the selection
+  // and hit box drift away from the line when end points move far from the box
+  async normalizeGeometry() {
+    if(this.normalizingGeometry)
+      return;
+    this.normalizingGeometry = true;
+    batchStart();
+    try {
+      const capturedPoints = {};
+      for(const property of [ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd' ])
+        capturedPoints[property] = this.pointProperty(property);
+
+      const points = this.linePoints(20);
+      for(const property of [ 'controlStart', 'controlEnd' ])
+        if(capturedPoints[property])
+          points.push(capturedPoints[property]);
+
+      const pad = Math.ceil((+this.get('lineWidth') || 0)/2) + 10;
+      const minX = Math.round(Math.min(...points.map(p=>p.x)) - pad);
+      const minY = Math.round(Math.min(...points.map(p=>p.y)) - pad);
+      const maxX = Math.round(Math.max(...points.map(p=>p.x)) + pad);
+      const maxY = Math.round(Math.max(...points.map(p=>p.y)) + pad);
+
+      if(minX || minY) {
+        await this.set('x', this.get('x') + minX);
+        await this.set('y', this.get('y') + minY);
+        for(const property of [ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd' ])
+          if(capturedPoints[property])
+            await this.set(property, { x: Math.round(capturedPoints[property].x) - minX, y: Math.round(capturedPoints[property].y) - minY });
+      }
+      await this.set('width', maxX - minX);
+      await this.set('height', maxY - minY);
+    } finally {
+      batchEnd();
+      this.normalizingGeometry = false;
+    }
   }
 
   // sampled points along the line with cumulative arc length so widgets can be spaced evenly
@@ -128,6 +169,7 @@ export class Line extends Widget {
           y: Math.round(target.get('y') + p.y - this.get('y'))
         });
       }
+      await this.normalizeGeometry();
     } finally {
       Line.connectionUpdateInProgress.delete(this.id);
     }
@@ -153,7 +195,7 @@ export class Line extends Widget {
       await this.updateConnectedLines();
     }
 
-    if(property == 'x' || property == 'y') {
+    if((property == 'x' || property == 'y') && !this.normalizingGeometry) {
       await this.applyConnections();
       await this.updateConnectedLines();
     }
@@ -247,6 +289,7 @@ export class Line extends Widget {
         batchStart();
         setDeltaCause(`${playerName} moved ${property} of ${this.id} in editor`);
         await this.set(property, { x: Math.round(local.x), y: Math.round(local.y) });
+        await this.normalizeGeometry();
         batchEnd();
       };
       const upHandler = eUp => {

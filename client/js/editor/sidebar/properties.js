@@ -1612,6 +1612,7 @@ class PropertiesModule extends SidebarModule {
       batchStart();
       await widget.set('controlStart', null);
       await widget.set('controlEnd', null);
+      await widget.normalizeGeometry();
       batchEnd();
     };
     curvedButton.onclick = async _=>{
@@ -1626,6 +1627,7 @@ class PropertiesModule extends SidebarModule {
       batchStart();
       await widget.set('controlStart', { x: Math.round(s.x + (e.x-s.x)/3 + normal.x*offset), y: Math.round(s.y + (e.y-s.y)/3 + normal.y*offset) });
       await widget.set('controlEnd',   { x: Math.round(s.x + (e.x-s.x)*2/3 + normal.x*offset), y: Math.round(s.y + (e.y-s.y)*2/3 + normal.y*offset) });
+      await widget.normalizeGeometry();
       batchEnd();
     };
 

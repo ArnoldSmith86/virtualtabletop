@@ -113,5 +113,5 @@ test('Line widget in edit mode', async t => {
     .click(Selector('#editorModules .lineConnectStart option').withAttribute('value', lineID))
     .drag(Selector('.widget.line.selectedInEdit .lineHandle').nth(1), 90, 60)
     .drag(Selector('.widget.line.selectedInEdit .lineHandle').nth(0), -40, 70);
-  await compareState(t, 'f156fe06bb7c602f76d652c519ca1734');
+  await compareState(t, '2421fdff0bb8710a687c0209b8ec1928');
 });
