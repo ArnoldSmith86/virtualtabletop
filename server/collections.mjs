@@ -27,9 +27,12 @@ export default {
   addRoom(collectionID, roomID) {
     const collection = this.get(collectionID);
     if(collection.rooms.indexOf(roomID) == -1) {
+      if(collection.rooms.length >= 100)
+        return false;
       collection.rooms.push(roomID);
       fs.writeFileSync(filename(collectionID), JSON.stringify(collection));
     }
+    return true;
   },
 
   removeRoom(collectionID, roomID) {

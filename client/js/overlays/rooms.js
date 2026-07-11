@@ -8,7 +8,8 @@ function getCollectionID() {
   if(!roomsCollectionID) {
     let id = localStorage.getItem('roomCollectionID');
     if(!id || !String(id).match(/^[A-Za-z0-9_-]{6,64}$/)) {
-      id = Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+      // this is the admin credential for claimed rooms, so it needs a cryptographically secure source
+      id = crypto.randomUUID().replace(/-/g, '');
       localStorage.setItem('roomCollectionID', id);
     }
     roomsCollectionID = id;
@@ -65,7 +66,7 @@ async function copyRoom(sourceID, mode) {
   await refreshRoomsList();
 }
 
-function switchRoom(newRoomID) {
+function switchRoom(newRoomID, pushHistory=true) {
   if(newRoomID == roomID) {
     $('#activeGameButton').click();
     return;
@@ -73,7 +74,8 @@ function switchRoom(newRoomID) {
   pendingSwitchFrom = roomID;
   roomVisitRegistered = false;
   isRoomAdmin = false;
-  history.pushState('', '', location.pathname.replace(/[^\/]*$/, newRoomID));
+  if(pushHistory)
+    history.pushState('', '', location.pathname.replace(/[^\/]*$/, newRoomID));
   setRoomID(newRoomID);
   $('#activeGameButton').click();
   toServer('room', { playerName, roomID: newRoomID, collection: getCollectionID(), password: getRoomPassword(newRoomID) });
@@ -110,7 +112,7 @@ function createRoomTile(room) {
     menu.appendChild(button);
   };
 
-  if(!room.claimed)
+  if(!room.claimed && room.id == roomID) // the server only allows claiming rooms you are currently in
     addMenuButton('verified_user', 'Claim room', null, async function() {
       if(await confirmOverlay('Claim room', `This ties the room "${room.name}" to your collection ID and makes you its admin: you can lock it, protect it with a password, rename it and delete it. Anyone who knows your collection ID has the same powers.`, 'Claim', 'Cancel', 'verified_user', 'undo')) {
         showOverlay('roomsOverlay');
@@ -209,10 +211,14 @@ onLoad(function() {
     applyRoomLockState();
     if(!roomVisitRegistered)
       registerRoomVisit();
+    // keep the tiles up to date while the overlay is visible (e.g. the loaded game changed)
+    if($('#roomsOverlay').style.display != 'none')
+      refreshRoomsList();
   });
 
   onMessage('state', function() {
     pendingSwitchFrom = null;
+    document.body.classList.remove('passwordPrompt');
     if($('#passwordOverlay').style.display != 'none') {
       showOverlay(null, true);
       $('#activeGameButton').click();
@@ -222,6 +228,7 @@ onLoad(function() {
   onMessage('passwordRequired', function(wrongPassword) {
     $('#passwordOverlay .wrongPassword').style.display = wrongPassword ? 'block' : 'none';
     toggleClass($('#passwordOverlay button.cancel'), 'hidden', pendingSwitchFrom === null);
+    document.body.classList.add('passwordPrompt');
     showOverlay('passwordOverlay', true);
     $('#roomPasswordInput').focus();
   });
@@ -238,12 +245,20 @@ onLoad(function() {
   on('#passwordOverlay button.cancel', 'click', function() {
     const backTo = pendingSwitchFrom;
     pendingSwitchFrom = null;
+    document.body.classList.remove('passwordPrompt');
     if(backTo) {
       history.pushState('', '', location.pathname.replace(/[^\/]*$/, backTo));
       setRoomID(backTo);
       showOverlay(null, true);
       showOverlay('roomsOverlay');
     }
+  });
+
+  // keep the browser back/forward buttons working after in-place room switches
+  window.addEventListener('popstate', function() {
+    const target = location.pathname.replace(/.*\//, '');
+    if(target && target.match(/^[A-Za-z0-9_-]+$/) && target != roomID)
+      switchRoom(target, false);
   });
 
   on('#roomsButton', 'click', function() {
@@ -268,6 +283,9 @@ onLoad(function() {
     }
     localStorage.setItem('roomCollectionID', id);
     roomsCollectionID = id;
+    // rejoin so the server updates this player's collection for admin status and lock enforcement
+    isRoomAdmin = false;
+    toServer('room', { playerName, roomID, collection: getCollectionID(), password: getRoomPassword(roomID) });
     registerRoomVisit();
     refreshRoomsList();
   });

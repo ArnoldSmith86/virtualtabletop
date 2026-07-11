@@ -60,9 +60,13 @@ async function ensureRoomIsLoaded(id) {
 
 function getEmptyRoomID() {
   let id = null;
-  while(!id || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+  while(!id || activeRooms.has(id) || fs.existsSync(savedir + '/rooms/' + id + '.json'))
     id = Math.random().toString(36).substring(3, 7);
   return id;
+}
+
+function roomExists(roomID) {
+  return activeRooms.has(roomID) || fs.existsSync(savedir + '/rooms/' + roomID + '.json');
 }
 
 function roomIsLocked(roomID) {
@@ -260,6 +264,8 @@ MinifyHTML().then(function(result) {
   router.put('/setLegacyMode/:room/:name/:value', function(req, res, next) {
     ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         activeRooms.get(req.params.room).setLegacyMode(req.params.name, req.params.value);
         res.send('OK');
       }
@@ -275,6 +281,8 @@ MinifyHTML().then(function(result) {
 
     ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(isLoaded) {
+        if(roomIsLocked(req.params.room))
+          return res.status(403).send('Room is locked.');
         const newStateID = await activeRooms.get(req.params.room).addShare(req.params.share);
         res.send(newStateID);
       } else {
@@ -329,9 +337,13 @@ MinifyHTML().then(function(result) {
       if(!Collections.isValidID(req.params.collection))
         return res.status(400).send('Invalid collection ID.');
       const rooms = [];
-      for(const roomID of Collections.get(req.params.collection).rooms)
+      for(const roomID of Collections.get(req.params.collection).rooms) {
+        // don't let listing instantiate rooms that don't exist (anymore)
+        if(!roomExists(roomID))
+          continue;
         if(await ensureRoomIsLoaded(roomID))
           rooms.push(activeRooms.get(roomID).getRoomDetails(req.params.collection));
+      }
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({ rooms }));
     })().catch(next);
@@ -340,7 +352,10 @@ MinifyHTML().then(function(result) {
   router.put('/api/roomcollection/:collection/add/:room', function(req, res, next) {
     if(!Collections.isValidID(req.params.collection) || !req.params.room.match(/^[A-Za-z0-9_-]+$/))
       return res.status(400).send('Invalid collection or room ID.');
-    Collections.addRoom(req.params.collection, req.params.room);
+    if(!roomExists(req.params.room))
+      return res.status(404).send('Room does not exist.');
+    if(!Collections.addRoom(req.params.collection, req.params.room))
+      return res.status(400).send('Collection is full.');
     res.send('OK');
   });
 

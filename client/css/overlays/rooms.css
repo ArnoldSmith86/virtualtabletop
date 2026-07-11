@@ -184,3 +184,8 @@
 body.roomLocked #statesButton, body.roomLocked #editButton {
   display: none;
 }
+
+/* while the password prompt is up, the toolbar must not be usable to dismiss it */
+body.passwordPrompt #toolbar {
+  pointer-events: none;
+}

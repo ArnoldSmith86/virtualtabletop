@@ -530,6 +530,9 @@ function receiveStateFromServer(args) {
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
     if(urlProperties.about) {
       $('#aboutButton').click();
+    } else if(document.body.classList.contains('roomLocked')) {
+      // the game shelf is disabled in locked rooms
+      $('#activeGameButton').click();
     } else {
       $('#statesButton').click();
     }

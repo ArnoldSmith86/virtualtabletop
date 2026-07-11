@@ -276,7 +276,12 @@ export default class Room {
         throw new Logging.UserError(403, 'Invalid collection ID.');
       if(this.claimedBy() && !this.isAdmin(collection))
         throw new Logging.UserError(403, 'This room is already claimed by another collection.');
+      // prevent drive-by claiming of enumerated room IDs
+      if(!this.players.some(player=>player.collection === collection))
+        throw new Logging.UserError(403, 'You have to be a player in the room to claim it.');
+      this.ensureSalt();
       this.security().adminCollection = this.hashSecret(collection);
+      Logging.log(`room ${this.id} was claimed by collection ${this.claimedBy().substring(0, 8)}…`);
     } else if(action == 'unclaim') {
       requireAdmin();
       delete this.state._meta.security;
@@ -296,10 +301,12 @@ export default class Room {
         delete this.state._meta.locked;
     } else if(action == 'setPassword') {
       requireAdmin();
-      if(args.password)
+      if(args.password) {
+        this.ensureSalt();
         this.security().joinPassword = this.hashSecret(args.password);
-      else
+      } else {
         delete this.security().joinPassword;
+      }
     } else if(action == 'delete') {
       requireAdmin();
       return this.deleteRoom();
@@ -307,6 +314,7 @@ export default class Room {
       throw new Logging.UserError(404, 'Unknown room action.');
     }
 
+    this.writeToFilesystem();
     this.sendMetaUpdate();
     this.sendAdminStatus();
   }
@@ -320,6 +328,9 @@ export default class Room {
     delete copy._meta.locked;
     delete copy._meta.linkSourceRoom;
     delete copy._meta.tracingEnabled;
+    delete copy._meta.redirectTo;
+    delete copy._meta.returnServer;
+    delete copy._meta.returnState;
     if(copy._meta.roomName)
       copy._meta.roomName += ' (copy)';
     for(const id in copy._meta.states)
@@ -392,8 +403,14 @@ export default class Room {
     };
   }
 
+  ensureSalt() {
+    if(!this.security().salt)
+      this.security().salt = crypto.randomBytes(16).toString('hex');
+  }
+
   hashSecret(secret) {
-    return crypto.createHash('sha256').update(String(secret)).digest('hex');
+    const salt = this.state._meta.security && this.state._meta.security.salt || '';
+    return crypto.createHash('sha256').update(salt + String(secret)).digest('hex');
   }
 
   isAdmin(collection) {
@@ -454,6 +471,8 @@ export default class Room {
 
   async syncLinkSourceRoom() {
     const sourceID = this.state._meta.linkSourceRoom;
+    if(typeof sourceID != 'string' || !sourceID.match(/^[A-Za-z0-9_-]+$/))
+      return;
     if(Room.roomsBeingSynced && Room.roomsBeingSynced[this.id])
       return;
     const filename = Config.directory('save') + '/rooms/' + sourceID + '.json';
