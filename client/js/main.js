@@ -482,12 +482,24 @@ function getSVG(url, replaces, callback) {
 
   if(!svgCache[url]) {
     svgCache[url] = [];
-    fetch(mapAssetURLs(url)).then(r=>r.text()).then(t=>{
+    const load = attempt=>fetch(mapAssetURLs(url)).then(r=>{
+      if(!r.ok)
+        throw new Error(`HTTP status ${r.status}`);
+      return r.text();
+    }).then(t=>{
       const callbacks = svgCache[url];
       svgCache[url] = t;
       for(const [ c, r ] of callbacks)
         c(getSVG(url, r, _=>{}));
+    }).catch(e=>{
+      if(attempt < 3) {
+        setTimeout(_=>load(attempt+1), 1000 * 2**attempt);
+      } else {
+        delete svgCache[url]; // allow a later call to retry the download
+        console.error(`getSVG: failed to load ${url}`, e);
+      }
     });
+    load(0);
   }
 
   svgCache[url].push([ callback, replaces ]);
