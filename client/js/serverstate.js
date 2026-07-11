@@ -633,7 +633,9 @@ export function widgetFilter(callback) {
 // happen to share a player name. Uses crypto instead of the seeded game RNG:
 // session IDs are transport-level identifiers, not game state, so they must
 // not consume rand() (would break test determinism) nor be predictable.
-const inputClientToken = crypto.randomUUID();
+// (crypto.randomUUID is secure-context-only and unavailable e.g. behind the
+// TestCafe proxy, so build the token from getRandomValues instead.)
+const inputClientToken = Array.from(crypto.getRandomValues(new Uint8Array(16)), b=>b.toString(16).padStart(2, '0')).join('');
 let inputSessionCounter = 0;
 // Keyed by session IDs that may originate from another client, so use
 // null-prototype objects to avoid __proto__/constructor key surprises.
