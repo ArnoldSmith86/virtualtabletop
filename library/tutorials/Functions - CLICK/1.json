@@ -362,21 +362,33 @@
     "width": 1200
   },
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - CLICK",
-      "image": "/assets/-594063130_6827",
+      "image": "/assets/-1155107578_3739",
       "rules": "",
       "bgg": "",
       "year": "2020",
       "mode": "Tutorial",
       "time": "",
+      "attribution": "",
+      "showName": false,
+      "lastUpdate": 1768608837978,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
       "players": "1",
       "language": "en-US",
       "variant": "Modes",
-      "attribution": "",
-      "showName": false,
-      "lastUpdate": 1624554755000
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

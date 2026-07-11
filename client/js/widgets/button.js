@@ -1,6 +1,4 @@
-import { Widget } from './widget.js';
-
-export class Button extends Widget {
+export class Button extends ImageWidget {
   constructor(id) {
     super(id);
 
@@ -12,30 +10,24 @@ export class Button extends Widget {
       layer: -1,
       movable: false,
 
-      image: '',
       color: 'black',
-      svgReplaces: {},
 
       backgroundColor: null,
       borderColor: null,
-      textColor:null,
+      textColor: '#ffffff',
       backgroundColorOH: null,
       borderColorOH: null,
-      textColorOH:null,
+      textColorOH: null,
 
-      text: '',
       borderRadius: 800
     });
   }
 
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
-    if(delta.text !== undefined)
-      setText(this.domElement, delta.text);
 
-    for(const property of Object.values(this.get('svgReplaces') || {}))
-      if(delta[property] !== undefined)
-        this.domElement.style.cssText = mapAssetURLs(this.css());
+    if(delta.textColor !== undefined || delta.textColorOH !== undefined)
+      this.updateIcon();
   }
 
   css() {
@@ -47,7 +39,7 @@ export class Button extends Widget {
       css += '; --wcMain:' + this.get('backgroundColor');
     if(this.get('borderColor'))
       css += '; --wcBorder:' + this.get('borderColor');
-    if(this.get('textColor'))
+    if(this.get('textColor') && this.get('textColor') != '#ffffff')
       css += '; --wcFont:' + this.get('textColor');
     if(this.get('backgroundColorOH'))
       css += '; --wcMainOH:' + this.get('backgroundColorOH');
@@ -55,26 +47,26 @@ export class Button extends Widget {
       css += '; --wcBorderOH:' + this.get('borderColorOH');
     if(this.get('textColorOH'))
       css += '; --wcFontOH:' + this.get('textColorOH');
-    if(this.get('image'))
-      css += '; background-image: url("' + this.getImage() + '")';
 
     return css;
   }
 
   cssProperties() {
     const p = super.cssProperties();
-    p.push('image', 'color', 'svgReplaces',  'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
+    p.push('color', 'backgroundColor', 'borderColor', 'textColor',  'backgroundColorOH', 'borderColorOH', 'textColorOH');
     return p;
   }
 
-  getImage() {
-    if(!Object.keys(this.get('svgReplaces') || {}).length)
-      return this.get('image');
+  getDefaultIconColor() {
+    return this.get('textColor');
+  }
 
-    const replaces = {};
-    for(const key in this.get('svgReplaces'))
-      replaces[key] = this.get(this.get('svgReplaces')[key]);
-    return getSVG(this.get('image'), replaces, _=>this.domElement.style.cssText = this.css());
+  getDefaultIconHoverColor() {
+    return this.get('textColorOH') || this.get('textColor');
+  }
+
+  getDefaultIconScale() {
+    return 0.66;
   }
 }
 

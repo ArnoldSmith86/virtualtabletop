@@ -1,8 +1,8 @@
 import { toServer } from './connection.js';
-import { $, $a, onLoad, unescapeID } from './domhelpers.js';
+import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
-let roomID = self.location.pathname.replace(/.*\//, '');
+let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
 
 export const widgets = new Map();
@@ -19,6 +19,27 @@ let overlayShownForEmptyRoom = false;
 let triggerGameStartRoutineOnNextStateLoad = false;
 
 let undoProtocol = [];
+
+function normalizeRoomID(roomID) {
+  if(!config.roomNamesCaseSensitive)
+    roomID = roomID.toLowerCase();
+  return roomID;
+}
+
+function applyCustomCss(gameSettings) {
+  let style = document.getElementById('globalCss');
+  if (style)
+    style.innerHTML = '';
+  if (gameSettings && (gameSettings.globalCss || gameSettings.cursorCss)) {
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'globalCss';
+      document.head.appendChild(style);
+    }
+    const cssText = (gameSettings.globalCss || '') + (gameSettings.cursorCss ? '\n\n' + gameSettings.cursorCss : '');
+    style.appendChild(document.createTextNode(mapAssetURLs(cssText)));
+  }
+}
 
 function generateUniqueWidgetID() {
   let id;
@@ -94,8 +115,6 @@ export function addWidget(widget, instance) {
     removeWidget(widget.id);
     return;
   }
-  if(w.get('dropTarget'))
-    dropTargets.set(widget.id, w);
 
   if(widget.type == 'deck')
     for(const c of deferredCards[widget.id] || [])
@@ -110,6 +129,8 @@ export function addWidget(widget, instance) {
 async function addWidgetLocal(widget) {
   if (!widget.id)
     widget.id = generateUniqueWidgetID();
+  else
+    widget.id = String(widget.id);
 
   if(widget.parent && !widgets.has(widget.parent)) {
     console.error(`Refusing to add widget ${widget.id} with invalid parent ${widget.parent}.`);
@@ -139,6 +160,146 @@ async function addWidgetLocal(widget) {
   return widget.id;
 }
 
+async function updateWidgetId(widget, oldID) {
+  const children = Widget.prototype.children.call(widgets.get(oldID)); // use Widget.children even for holders so it doesn't filter
+  const cards = widgetFilter(w=>w.get('deck')==oldID);
+
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', null);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', null);
+  await removeWidgetLocal(oldID, true);
+  
+  const id = await addWidgetLocal(widget);
+
+  // Restore children
+  for(const child of children)
+    sendPropertyUpdate(child.get('id'), 'parent', id);
+  for(const card of cards)
+    sendPropertyUpdate(card.get('id'), 'deck', id);
+
+  // Change inheritFrom on widgets inheriting from altered widget
+  for (const inheritor of StateManaged.inheritFromMapping[oldID]) {
+    const oldInherits = inheritor.get('inheritFrom');
+    let newInherits;
+    if(typeof oldInherits == "string") {
+      newInherits = id;
+    } else {
+      newInherits = {...oldInherits};
+      newInherits[id] = newInherits[oldID];
+      delete newInherits[oldID]
+    }
+    await inheritor.set('inheritFrom', newInherits)
+  };
+
+  // Change dropTargets that specifially target the old ID
+  for(const [ _, t ] of dropTargets) {
+    const originalDropTarget = JSON.stringify(t.get('dropTarget'));
+    const dropTarget = JSON.parse(originalDropTarget);
+    if(dropTarget && dropTarget.id == oldID)
+      dropTarget.id = id;
+    if(Array.isArray(dropTarget))
+      for(const d of dropTarget)
+        if(d && d.id == oldID)
+          d.id = id;
+    if(originalDropTarget != JSON.stringify(dropTarget))
+      await t.set('dropTarget', dropTarget);
+  }
+
+  // Update references in routines
+  const updateParam = function(a, func, param) {
+    if(a.func == func && Array.isArray(a[param])) {
+      const index = a[param].indexOf(oldID);
+      if(index != -1)
+        a[param][index] = id;
+    } else if(a.func == func && a[param] == oldID) {
+      a[param] = id;
+    }
+  };
+  for(const [ _, w ] of widgets) {
+    for(const [ key, value ] of Object.entries(w.state)) {
+      if(key.endsWith('Routine') && Array.isArray(value)) {
+        const json = JSON.stringify(value);
+        const copy = JSON.parse(json);
+
+        for(const a of copy) {
+          updateParam(a, 'CALL', 'widget');
+          updateParam(a, 'CANVAS', 'canvas');
+          updateParam(a, 'COUNT', 'holder');
+          updateParam(a, 'FLIP', 'holder');
+          updateParam(a, 'LABEL', 'label');
+          updateParam(a, 'MOVE', 'from');
+          updateParam(a, 'MOVE', 'to');
+          updateParam(a, 'MOVEXY', 'from');
+          updateParam(a, 'RECALL', 'holder');
+          updateParam(a, 'ROTATE', 'holder');
+          updateParam(a, 'SCORE', 'seats');
+          updateParam(a, 'SHUFFLE', 'holder');
+          updateParam(a, 'SORT', 'holder');
+          updateParam(a, 'TIMER', 'timer');
+
+          if(a.func == 'SELECT' && !a.property || [ 'parent', 'id', 'deck' ].includes(a.property)) {
+            if(a.value == oldID)
+              a.value = id;
+            else if(Array.isArray(a.value) && a.value.indexOf(oldID) != -1)
+              a.value[a.value.indexOf(oldID)] = id;
+          }
+
+          for(const property of [ 'collection', 'source' ]) {
+            if(Array.isArray(a[property])) {
+              const index = a[property].indexOf(oldID);
+              if(index != -1)
+                a[property][index] = id;
+            }
+          }
+        }
+
+        let newJSON = JSON.stringify(copy).replace(/\$\{PROPERTY [^}]+ OF ([^}]+)\}/g, (match, p1) => {
+          if(p1 == oldID)
+            return match.replace(regexEscape(p1), id);
+          return match;
+        });
+
+        if(newJSON != json)
+          await w.set(key, JSON.parse(newJSON));
+      }
+    }
+  }
+
+  // If widget is a deck, update dropTarget properties on holder widgets.
+  if (widget.type === 'deck') {
+    for (const w of widgetFilter(w => w.get('dropTarget') && asArray(w.get('dropTarget')).some(d => d && d.deck === oldID))) {
+      if(Array.isArray(w.get('dropTarget'))) {
+        const dropTarget = w.get('dropTarget').map(d =>
+          d && d.deck === oldID ? { ...d, deck: id } : d
+        );
+        await w.set('dropTarget', dropTarget);
+      } else {
+        await w.set('dropTarget', { ...w.get('dropTarget'), deck: id });
+      }
+    }
+  }
+
+  // If widget is a seat, change widgets with onlyVisibleForSeat and linkedToSeat naming that seat.
+  if(widget.type == 'seat') {
+    for(const prop of ['onlyVisibleForSeat', 'linkedToSeat']) {
+      for(const w of widgetFilter(w => w.get(prop) && asArray(w.get(prop)).includes(oldID))) {
+        if(typeof w.get(prop) === 'string') {
+          await w.set(prop, id)
+        } else {
+          const vis = [...w.get(prop)];
+          vis[vis.indexOf(oldID)] = id;
+          await w.set(prop, vis)
+        }
+      }
+    }
+  }
+
+  // Finally, change any seats that use the old id as a hand.
+  for(const w of widgetFilter(w => w.get('type') == 'seat' && w.get('hand') == oldID))
+    await w.set('hand', id);
+}
+
 export function batchStart() {
   ++batchDepth;
 }
@@ -146,6 +307,16 @@ export function batchStart() {
 export function batchEnd() {
   --batchDepth;
   sendDelta();
+}
+
+export function flushDelta() {
+  const currentBatchDepth = batchDepth;
+  const currentDeltaCause = delta.c;
+  batchDepth = 0;
+  sendDelta();
+  if(currentDeltaCause)
+    delta.c = currentDeltaCause;
+  batchDepth = currentBatchDepth;
 }
 
 function setDeltaCause(cause) {
@@ -161,14 +332,9 @@ function receiveDelta(delta) {
   addDeltaEntryToUndoProtocol(delta);
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
-  for(const widgetID in delta.s) {
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined) {
-      const domElement = widgets.get(widgetID).domElement;
-      const topTransform = getElementTransformRelativeTo(domElement, $('#topSurface')) || 'none';
-      $('#topSurface').appendChild(domElement);
-      domElement.style.transform = topTransform;
-    }
-  }
+  for(const widgetID in delta.s)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+      widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
     if(delta.s[widgetID] !== null && !widgets.has(widgetID))
@@ -302,9 +468,13 @@ function receiveDeltaFromServer(delta) {
 function receiveStateFromServer(args) {
   addStateEntryToUndoProtocol(args);
 
+  // these might only be updated _after_ loading the state but some of the legacy modes need to be applied immediately
+  currentGameSettings = args._meta.gameSettings || {};
+
   mouseTarget = null;
   deltaID = args._meta.deltaID;
-  for(const widget of widgetFilter(w=>w.get('parent')===null))
+  const topSurface = $('#topSurface');
+  for(const widget of widgetFilter(w=>w.domElement.parentElement === topSurface))
     widget.applyRemoveRecursive();
   widgets.clear();
   dropTargets.clear();
@@ -336,6 +506,8 @@ function receiveStateFromServer(args) {
     deferredChildren = {};
   }
 
+  resetZoomAndPan();
+
   if(isLoading) {
     $('#loadingRoomIndicator').remove();
     $('body').classList.remove('loading');
@@ -345,7 +517,11 @@ function receiveStateFromServer(args) {
   }
 
   if(isEmpty && !edit && !overlayShownForEmptyRoom && !urlProperties.load && !urlProperties.askID) {
-    $('#statesButton').click();
+    if(urlProperties.about) {
+      $('#aboutButton').click();
+    } else {
+      $('#statesButton').click();
+    }
     overlayShownForEmptyRoom = true;
   }
 
@@ -409,7 +585,8 @@ async function removeWidgetLocal(widgetID, keepChildren) {
     w.isBeingRemoved = true;
     // don't actually set deck and parent to null (only pretend to) because when "receiving" the delta, the applyRemove has to find the parent
     await w.onPropertyChange('deck', w.get('deck'), null);
-    await w.onPropertyChange('parent', w.get('parent'), null);
+    if(!w.isLimbo)
+      await w.onPropertyChange('parent', w.get('parent'), null);
     sendPropertyUpdate(w.id, null);
   }
 }
@@ -446,5 +623,10 @@ export function widgetFilter(callback) {
 onLoad(function() {
   onMessage('delta', receiveDeltaFromServer);
   onMessage('state', receiveStateFromServer);
+  onMessage('meta', (args) => {
+    if(args.meta) {
+      applyCustomCss(args.meta.gameSettings);
+    }
+  });
   setScale();
 });

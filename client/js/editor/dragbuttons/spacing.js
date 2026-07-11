@@ -10,7 +10,7 @@ class SpacingDragButton extends DragButton {
     const maxX = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().left));
     const maxY = Math.max(...selectedWidgets.map(w=>w.domElement.getBoundingClientRect().top ));
     let i = 0;
-    if(minX == maxX && minY == minY)
+    if(minX == maxX && minY == maxY)
       this.dragStartOffsets = selectedWidgets.map(w=>[ w, w.get('x'), w.get('y'), i/(selectedWidgets.length-1), i++/(selectedWidgets.length-1) ]);
     else if(minX == maxX)
       this.dragStartOffsets = selectedWidgets.sort((a,b)=>a.domElement.getBoundingClientRect().top-b.domElement.getBoundingClientRect().top).map(w=>[ w, w.get('x'), w.get('y'), i++/(selectedWidgets.length-1), (w.domElement.getBoundingClientRect().top - minY)/(maxY - minY) ]);
@@ -21,6 +21,15 @@ class SpacingDragButton extends DragButton {
   }
 
   async dragMove(dx, dy, dxViewport, dyViewport) {
+    const keepAspectRatio = isResizeLockedForSpacing();
+    if(keepAspectRatio) {
+      if(dx>dy) {
+        dy = dx;
+      } else {
+        dx = dy;
+      }
+    }
+
     for(const [ widget, startX, startY, offsetX, offsetY ] of this.dragStartOffsets) {
       await widget.set('x', Math.floor(startX + offsetX*dx));
       await widget.set('y', Math.floor(startY + offsetY*dy));
@@ -56,4 +65,9 @@ class SpacingDragButton extends DragButton {
       Max gap height: <i>${Math.round(maxGapY)}</i>
     `;
   }
+}
+
+function isResizeLockedForSpacing() {
+  const button = $('#editorDragToolbarSettings .dragToolbarResizeType');
+  return button && button.dataset.mode == 'locked';
 }

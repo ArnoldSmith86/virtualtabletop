@@ -1,4 +1,6 @@
+let usedTouch = false;
 let mouseTarget = null;
+let doubleClickTimeout = null;
 const mouseStatus = {};
 
 function eventCoords(name, e) {
@@ -9,8 +11,8 @@ function eventCoords(name, e) {
     coords = e.targetTouches[0];
   else
     coords = e;
-  let x = (coords.clientX - roomRectangle.left) / scale;
-  let y = (coords.clientY - roomRectangle.top) / scale;
+  let x = (coords.clientX - roomRectangle.left) / scale / zoomScale;
+  let y = (coords.clientY - roomRectangle.top) / scale / zoomScale;
   if (!edit || zoom == 1) {
     x = Math.max(0, Math.min(1600, x));
     y = Math.max(0, Math.min(1000, y));
@@ -42,6 +44,11 @@ async function inputHandler(name, e) {
     if(target.id == 'editor')
       return;
     target = target.parentNode;
+  }
+
+  if(!usedTouch && name == 'touchstart') {
+    usedTouch = true;
+    $('body').classList.add('usedTouch');
   }
 
   e.preventDefault();
@@ -95,15 +102,35 @@ async function inputHandler(name, e) {
         await ms.moveTarget.moveEnd(coords, ms.localAnchor);
       }
       if(ms.status == 'initial' || timeSinceStart < 250 && pixelsMoved < 10) {
+        let editClickHandled = false;
         if(edit && !isMiddleMouseButton)
-          await editClick(widget, e.button);
+          editClickHandled = await editClick(widget, e.button);
         else if(jeEnabled && !isMiddleMouseButton)
-          await jeClick(widget, e);
-        else if(!target.classList.contains('longtouch')) {
-          setDeltaCause(`${playerName} clicked ${widget.id}`);
-          await widget.click();
-        } else
-          widget.domElement.classList.remove('longtouch');
+          editClickHandled = await jeClick(widget, e);
+
+        if(!editClickHandled) {
+          if(!target.classList.contains('longtouch')) {
+            if(!widget.get('doubleClickRoutine')) {
+              setDeltaCause(`${playerName} clicked ${widget.id}`);
+              await widget.click();
+            } else if(doubleClickTimeout) {
+              clearTimeout(doubleClickTimeout);
+              doubleClickTimeout = null;
+              setDeltaCause(`${playerName} double clicked ${widget.id}`);
+              await widget.doubleClick();
+            } else {
+              doubleClickTimeout = setTimeout(async () => {
+                doubleClickTimeout = null;
+                batchStart();
+                setDeltaCause(`${playerName} clicked ${widget.id}`);
+                await widget.click();
+                batchEnd();
+              }, 350);
+            }
+          } else {
+            widget.domElement.classList.remove('longtouch');
+          }
+        }
       }
       delete mouseStatus[target.id];
     } else if(name == 'mousemove' || name == 'touchmove' && mouseStatus[target.id]) {
@@ -128,7 +155,7 @@ async function inputHandler(name, e) {
   clientPointer.style.top = `${coords.clientY}px`;
   clientPointer.style.left = `${coords.clientX}px`;
 
-  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
+  let hoveredWidgetsWithHiddenCursor = document.elementsFromPoint(coords.clientX, coords.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null && w.requiresHiddenCursor());
 
   if(hoveredWidgetsWithHiddenCursor.length) {
     toServer('mouse', { hidden: true });
@@ -143,8 +170,19 @@ async function inputHandler(name, e) {
   }
 }
 
+async function keyHandler(e) {
+  if(isLoading || overlayActive || $('body').classList.contains('edit') || e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA')
+    return;
+
+  batchStart();
+  for(const widget of widgetFilter(w=>w.get('hotkey')===e.key&&w.isVisible()).sort((a,b)=>String(a.get('id')).localeCompare(b.get('id'))))
+    await widget.click();
+  batchEnd();
+}
+
 onLoad(function() {
   [ 'touchstart', 'touchend', 'touchmove', 'touchcancel', 'mousedown', 'mousemove', 'mouseup', 'contextmenu' ].forEach(function(event) {
     window.addEventListener(event, e => inputHandler(event, e));
   });
+  window.addEventListener('keydown', e => keyHandler(e));
 });

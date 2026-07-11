@@ -1,0 +1,4569 @@
+{
+  "4064": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "4064",
+    "z": 19950,
+    "parent": "tye2"
+  },
+  "hand": {
+    "id": "hand",
+    "x": 409,
+    "y": 799,
+    "z": 11581,
+    "type": "holder",
+    "onEnter": {
+      "activeFace": 1
+    },
+    "onLeave": {
+      "activeFace": 0
+    },
+    "stackOffsetX": 50,
+    "childrenPerOwner": true,
+    "width": 765,
+    "dropShadow": true,
+    "hidePlayerCursors": true
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "x": 70,
+    "y": 154,
+    "z": 12839,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p1"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "width": 200,
+    "text": 8,
+    "hideWhenUnused": true,
+    "turn": true
+  },
+  "handsize-p1": {
+    "id": "handsize-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 180,
+    "y": -18,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "y": 31,
+    "width": 100,
+    "height": 50,
+    "z": 12865,
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetScoresRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetCountsRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetStrengthRoutine"
+      }
+    ],
+    "css": "font-size:40px;font-weight:bold;border-radius:7px",
+    "classes": "symbols",
+    "gameStartRoutine": [
+      {
+        "func": "RESET",
+        "property": "button-resetReset"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-deck-2p",
+          "holder-deck-4p",
+          "holder-deck-switcheroo"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "holder-deck-2p",
+          "holder-deck-4p",
+          "holder-deck-switcheroo"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder-deck-2p",
+          "holder-deck-4p",
+          "holder-deck-switcheroo"
+        ]
+      },
+      {
+        "note": "Get player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "IF",
+        "operand1": "${COUNT}",
+        "operand2": 4,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "image-area-purple",
+              "image-purple-p1",
+              "image-purple-p2",
+              "image-purple-p3",
+              "image-purple-p4"
+            ],
+            "property": "display",
+            "value": 1
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "holder-deck-2p"
+            ],
+            "property": "y",
+            "value": -300
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "holder-deck-4p"
+            ],
+            "property": "y",
+            "value": 300
+          },
+          "var handsize = 10",
+          {
+            "func": "FOREACH",
+            "collection": "activeSeats",
+            "loopRoutine": [
+              {
+                "note": "Deal each player a hand of cards",
+                "func": "MOVE",
+                "from": "holder-deck-4p",
+                "to": "${widgetID}",
+                "count": "${handsize}"
+              }
+            ]
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "IF",
+            "operand1": "${COUNT}",
+            "operand2": 3,
+            "thenRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "image-area-purple",
+                  "image-purple-p1",
+                  "image-purple-p2",
+                  "image-purple-p3",
+                  "image-purple-p4"
+                ],
+                "property": "display",
+                "value": true
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-deck-2p"
+                ],
+                "property": "y",
+                "value": -300
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-deck-2p"
+                ],
+                "property": "y",
+                "value": -300
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-deck-4p"
+                ],
+                "property": "y",
+                "value": 300
+              },
+              "var handsize = 13",
+              {
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "note": "Deal each player a hand of cards",
+                    "func": "MOVE",
+                    "from": "holder-deck-4p",
+                    "to": "${widgetID}",
+                    "count": "${handsize}"
+                  }
+                ]
+              }
+            ],
+            "elseRoutine": [
+              {
+                "func": "SET",
+                "collection": [
+                  "image-area-purple",
+                  "image-purple-p1",
+                  "image-purple-p2",
+                  "image-purple-p3",
+                  "image-purple-p4"
+                ],
+                "property": "display",
+                "value": false
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-deck-4p"
+                ],
+                "property": "y",
+                "value": -400
+              },
+              {
+                "func": "SET",
+                "collection": [
+                  "holder-deck-2p"
+                ],
+                "property": "y",
+                "value": 300
+              },
+              "var handsize = 13",
+              {
+                "func": "FOREACH",
+                "collection": "activeSeats",
+                "loopRoutine": [
+                  {
+                    "note": "Deal each player a hand of cards",
+                    "func": "MOVE",
+                    "from": "holder-deck-2p",
+                    "to": "${widgetID}",
+                    "count": "${handsize}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "hand"
+        ],
+        "key": "sortingOrder"
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      }
+    ],
+    "x": 1467,
+    "resetScoresRoutine": [
+      {
+        "note": "Set each player's score to 0",
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-score-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "resetCountsRoutine": [
+      {
+        "func": "SELECT",
+        "type": "label",
+        "property": "labelCount",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "X"
+      }
+    ],
+    "resetStrengthRoutine": [
+      {
+        "func": "SELECT",
+        "type": "label",
+        "property": "labelStrength",
+        "value": true
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "?"
+      }
+    ]
+  },
+  "button-cycle": {
+    "type": "button",
+    "id": "button-cycle",
+    "x": 1235,
+    "y": 30,
+    "width": 100,
+    "height": 50,
+    "z": 12866,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Cycle\nLead",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ]
+  },
+  "button-score-inc-x-p1": {
+    "type": "button",
+    "id": "button-score-inc-x-p1",
+    "parent": "label-score-p1",
+    "x": 102,
+    "inheritFrom": "button-score-inc-p1",
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this many points to your score:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a three-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 1000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -1000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onlyVisibleForSeat": "seat-p1"
+  },
+  "button-score-inc-p1": {
+    "type": "button",
+    "id": "button-score-inc-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": 72,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "onlyVisibleForSeat": "seat-p1"
+  },
+  "button-code": {
+    "type": "button",
+    "id": "button-code",
+    "x": 1358,
+    "y": -67,
+    "width": 90,
+    "height": 50,
+    "z": 12881,
+    "css": {
+      "_, .transition": {
+        "transition": "transform 500ms"
+      },
+      "_, .transition.dragging": {
+        "transition": "none"
+      }
+    },
+    "text": "Code",
+    "clickRoutine": []
+  },
+  "label-score-p1": {
+    "type": "label",
+    "id": "label-score-p1",
+    "parent": "seat-p1",
+    "x": 67,
+    "width": 65,
+    "height": 36,
+    "z": 16445,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 50
+  },
+  "_meta": {
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Beverage Bully",
+      "image": "/assets/-1082157525_36084",
+      "rules": "https://boardgamegeek.com/filepage/307451/soda-jerk-allplay-2025",
+      "bgg": "https://boardgamegeek.com/boardgame/446953/soda-jerk",
+      "year": "2025",
+      "mode": "vs",
+      "time": "20",
+      "attribution": "<div>Game layout and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>All ingredient icons are from Google Noto Color Emoji and are used under the \nSIL Open Font License: \nhttps://fonts.google.com/noto/specimen/Noto+Color+Emoji</div><div><br></div><div>Library image and background from http://www.freepik.com and are used under the Freepik license: https://www.freepik.com/free-vector/pattern-with-beer-bottles-different-colors_927859.htm</div>",
+      "lastUpdate": 1768668490645,
+      "showName": true,
+      "skill": "",
+      "description": "Serve your own delicious beverages, and bully others by contaminating their ingredients.",
+      "similarImage": "",
+      "similarName": "Soda Jerk",
+      "similarDesigner": "Chris Yi",
+      "similarAwards": "",
+      "ruleText": "(see rules overview link)",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-4"
+    }
+  },
+  "image-area-purple": {
+    "id": "image-area-purple",
+    "width": 150,
+    "height": 150,
+    "z": 16479,
+    "movable": false,
+    "classes": "pokerChip",
+    "color": "mediumorchid",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "accentcolor",
+      "#accentColor2": "accentcolor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "color",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#333333",
+    "borderWidth": 3,
+    "accentcolor": "#333333",
+    "x": 1045,
+    "y": 11,
+    "layer": -5,
+    "display": false
+  },
+  "image-area-yellow": {
+    "id": "image-area-yellow",
+    "x": 718,
+    "width": 150,
+    "height": 150,
+    "z": 16470,
+    "movable": false,
+    "classes": "pokerChip",
+    "color": "#f0d137",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "accentcolor",
+      "#accentColor2": "accentcolor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "color",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#333333",
+    "borderWidth": 3,
+    "accentcolor": "#333333",
+    "css": {
+      "opacity": 1
+    },
+    "y": 11,
+    "layer": -5
+  },
+  "image-area-green": {
+    "id": "image-area-green",
+    "x": 881,
+    "width": 150,
+    "height": 150,
+    "z": 16471,
+    "movable": false,
+    "classes": "pokerChip",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "accentcolor",
+      "#accentColor2": "accentcolor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "color",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#333333",
+    "borderWidth": 3,
+    "accentcolor": "#333333",
+    "css": {
+      "opacity": 1
+    },
+    "color": "#a5cc70",
+    "y": 11,
+    "layer": -5
+  },
+  "holder-purple": {
+    "type": "holder",
+    "id": "holder-purple",
+    "parent": "image-area-purple",
+    "inheritFrom": "holder-red",
+    "x": 20,
+    "y": 200
+  },
+  "holder-yellow": {
+    "type": "holder",
+    "id": "holder-yellow",
+    "inheritFrom": "holder-red",
+    "parent": "image-area-yellow",
+    "x": 20,
+    "y": 200
+  },
+  "holder-green": {
+    "type": "holder",
+    "id": "holder-green",
+    "parent": "image-area-green",
+    "inheritFrom": "holder-red",
+    "x": 20,
+    "y": 200
+  },
+  "image-area-orange": {
+    "id": "image-area-orange",
+    "x": 554,
+    "width": 150,
+    "height": 150,
+    "z": 16473,
+    "movable": false,
+    "classes": "pokerChip",
+    "color": "sandybrown",
+    "css": {
+      "opacity": 1
+    },
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "accentcolor",
+      "#accentColor2": "accentcolor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "color",
+      "#primaryColor": "color"
+    },
+    "accentcolor": "#333333",
+    "borderColor": "#333333",
+    "borderWidth": 3,
+    "y": 11,
+    "layer": -5
+  },
+  "holder-orange": {
+    "type": "holder",
+    "id": "holder-orange",
+    "parent": "image-area-orange",
+    "inheritFrom": "holder-red",
+    "x": 20,
+    "y": 200
+  },
+  "x3lr": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "x3lr",
+    "z": 19881,
+    "parent": "1c3u"
+  },
+  "ywhn": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "ywhn",
+    "z": 19918,
+    "parent": "1c3u"
+  },
+  "riqb": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-2",
+    "id": "riqb",
+    "z": 19892,
+    "parent": "1c3u"
+  },
+  "lrv8": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-3",
+    "id": "lrv8",
+    "z": 19910,
+    "parent": "1c3u"
+  },
+  "g6dp": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "g6dp",
+    "z": 19882,
+    "parent": "1c3u"
+  },
+  "aayv": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-2",
+    "id": "aayv",
+    "z": 19905,
+    "parent": "1c3u"
+  },
+  "dwjv": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-3",
+    "id": "dwjv",
+    "z": 19902,
+    "parent": "1c3u"
+  },
+  "ele6": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "ele6",
+    "z": 19911,
+    "parent": "1c3u"
+  },
+  "hw95": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-2",
+    "id": "hw95",
+    "z": 19895,
+    "parent": "1c3u"
+  },
+  "vdw5": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-3",
+    "id": "vdw5",
+    "z": 19899,
+    "parent": "1c3u"
+  },
+  "5fjy": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-1",
+    "id": "5fjy",
+    "z": 19893,
+    "parent": "1c3u"
+  },
+  "i6eo": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-2",
+    "id": "i6eo",
+    "z": 19914,
+    "parent": "1c3u"
+  },
+  "7sto": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-3",
+    "id": "7sto",
+    "z": 19909,
+    "parent": "1c3u"
+  },
+  "hgsd": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "hgsd",
+    "z": 19898,
+    "parent": "1c3u"
+  },
+  "sjer": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "sjer",
+    "z": 19906,
+    "parent": "1c3u"
+  },
+  "9yum": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "9yum",
+    "z": 19896,
+    "parent": "1c3u"
+  },
+  "q9xb": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-2",
+    "id": "q9xb",
+    "z": 19885,
+    "parent": "1c3u"
+  },
+  "lhgn": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-2",
+    "id": "lhgn",
+    "z": 19920,
+    "parent": "1c3u"
+  },
+  "97c6": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "red-3",
+    "id": "97c6",
+    "z": 19919,
+    "parent": "1c3u"
+  },
+  "5fkb": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "5fkb",
+    "z": 19894,
+    "parent": "1c3u"
+  },
+  "xtlu": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "xtlu",
+    "z": 19916,
+    "parent": "1c3u"
+  },
+  "hz4k": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "hz4k",
+    "z": 19903,
+    "parent": "1c3u"
+  },
+  "8uta": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-2",
+    "id": "8uta",
+    "z": 19913,
+    "parent": "1c3u"
+  },
+  "lokv": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-2",
+    "id": "lokv",
+    "z": 19879,
+    "parent": "1c3u"
+  },
+  "l0hd": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-2",
+    "id": "l0hd",
+    "z": 19912,
+    "parent": "1c3u"
+  },
+  "fsc2": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-3",
+    "id": "fsc2",
+    "z": 19904,
+    "parent": "1c3u"
+  },
+  "coce": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "orange-3",
+    "id": "coce",
+    "z": 19877,
+    "parent": "1c3u"
+  },
+  "oqcp": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "oqcp",
+    "z": 19901,
+    "parent": "1c3u"
+  },
+  "gac0": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "gac0",
+    "z": 19884,
+    "parent": "1c3u"
+  },
+  "o1ke": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "o1ke",
+    "z": 19890,
+    "parent": "1c3u"
+  },
+  "asoi": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-2",
+    "id": "asoi",
+    "z": 19921,
+    "parent": "1c3u"
+  },
+  "99un": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-2",
+    "id": "99un",
+    "z": 19907,
+    "parent": "1c3u"
+  },
+  "737l": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "yellow-3",
+    "id": "737l",
+    "z": 19889,
+    "parent": "1c3u"
+  },
+  "0us3": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "0us3",
+    "z": 19880,
+    "parent": "1c3u"
+  },
+  "5tdu": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "5tdu",
+    "z": 19883,
+    "parent": "1c3u"
+  },
+  "tkeb": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "tkeb",
+    "z": 19886,
+    "parent": "1c3u"
+  },
+  "0w7b": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-2",
+    "id": "0w7b",
+    "z": 19917,
+    "parent": "1c3u"
+  },
+  "75q3": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-2",
+    "id": "75q3",
+    "z": 19888,
+    "parent": "1c3u"
+  },
+  "rald": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "green-3",
+    "id": "rald",
+    "z": 19887,
+    "parent": "1c3u"
+  },
+  "qq1i": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-1",
+    "id": "qq1i",
+    "z": 19891,
+    "parent": "1c3u"
+  },
+  "ghmi": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-1",
+    "id": "ghmi",
+    "z": 19900,
+    "parent": "1c3u"
+  },
+  "8znx": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-1",
+    "id": "8znx",
+    "z": 19915,
+    "parent": "1c3u"
+  },
+  "m9ok": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-2",
+    "id": "m9ok",
+    "z": 19897,
+    "parent": "1c3u"
+  },
+  "ydlm": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-2",
+    "id": "ydlm",
+    "z": 19878,
+    "parent": "1c3u"
+  },
+  "eou4": {
+    "deck": "deck-4p",
+    "type": "card",
+    "cardType": "purple-3",
+    "id": "eou4",
+    "z": 19908,
+    "parent": "1c3u"
+  },
+  "image-item-yellow": {
+    "id": "image-item-yellow",
+    "parent": "image-area-yellow",
+    "x": 40,
+    "y": 40,
+    "width": 72,
+    "height": 72,
+    "z": 16446,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b.svg"
+  },
+  "image-item-green": {
+    "id": "image-item-green",
+    "parent": "image-area-green",
+    "x": 40,
+    "y": 40,
+    "width": 72,
+    "height": 72,
+    "z": 16448,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg"
+  },
+  "image-item-orange": {
+    "id": "image-item-orange",
+    "parent": "image-area-orange",
+    "x": 40,
+    "y": 40,
+    "width": 72,
+    "height": 72,
+    "z": 16450,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34a.svg"
+  },
+  "image-item-purple": {
+    "id": "image-item-purple",
+    "parent": "image-area-purple",
+    "x": 40,
+    "y": 40,
+    "width": 72,
+    "height": 72,
+    "z": 16452,
+    "movable": false,
+    "css": {
+      "opacity": 0.5
+    },
+    "image": "/i/noto-emoji/emoji_u1f347.svg"
+  },
+  "holder-deck-4p": {
+    "type": "holder",
+    "id": "holder-deck-4p",
+    "x": 1345,
+    "height": 171,
+    "z": 11541,
+    "y": -400
+  },
+  "label-deck-4p": {
+    "id": "label-deck-4p",
+    "parent": "holder-deck-4p",
+    "x": -12,
+    "y": -28,
+    "width": 130,
+    "height": 30,
+    "z": 16397,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "text-align": "center",
+      "color": "dimgray",
+      "text-shadow": "1px 1px 2px white"
+    },
+    "text": "3-4p Deck"
+  },
+  "deck-4p": {
+    "type": "deck",
+    "id": "deck-4p",
+    "parent": "holder-deck-4p",
+    "x": 4,
+    "y": 4,
+    "z": 121,
+    "cardDefaults": {
+      "class": "deckofcards",
+      "classes": "transition",
+      "activeFace": "0"
+    },
+    "cardTypes": {
+      "red-1": {
+        "suit": "red",
+        "bgcolor": "#db6864",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f353.svg",
+        "sortingOrder": 11
+      },
+      "red-2": {
+        "suit": "red",
+        "bgcolor": "#db6864",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f353.svg",
+        "sortingOrder": 12
+      },
+      "red-3": {
+        "suit": "red",
+        "bgcolor": "#db6864",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f353.svg",
+        "sortingOrder": 13
+      },
+      "orange-1": {
+        "suit": "orange",
+        "bgcolor": "darkorange",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f34a.svg",
+        "sortingOrder": 14
+      },
+      "orange-2": {
+        "suit": "orange",
+        "bgcolor": "darkorange",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f34a.svg",
+        "sortingOrder": 15
+      },
+      "orange-3": {
+        "suit": "orange",
+        "bgcolor": "darkorange",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f34a.svg",
+        "sortingOrder": 16
+      },
+      "yellow-1": {
+        "suit": "yellow",
+        "bgcolor": "#f0d137",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f34b.svg",
+        "sortingOrder": 17
+      },
+      "yellow-2": {
+        "suit": "yellow",
+        "bgcolor": "#f0d137",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f34b.svg",
+        "sortingOrder": 18
+      },
+      "yellow-3": {
+        "suit": "yellow",
+        "bgcolor": "#f0d137",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f34b.svg",
+        "sortingOrder": 19
+      },
+      "green-1": {
+        "suit": "green",
+        "bgcolor": "#a5cc70",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg",
+        "sortingOrder": 20
+      },
+      "green-2": {
+        "suit": "green",
+        "bgcolor": "#a5cc70",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg",
+        "sortingOrder": 21
+      },
+      "green-3": {
+        "suit": "green",
+        "bgcolor": "#a5cc70",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg",
+        "sortingOrder": 22
+      },
+      "purple-1": {
+        "suit": "purple",
+        "bgcolor": "mediumorchid",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f347.svg",
+        "sortingOrder": 23
+      },
+      "purple-2": {
+        "suit": "purple",
+        "bgcolor": "mediumorchid",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f347.svg",
+        "sortingOrder": 24
+      },
+      "purple-3": {
+        "suit": "purple",
+        "bgcolor": "mediumorchid",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f347.svg",
+        "sortingOrder": 25
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -30,
+            "y": 0,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "width": 160,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "bgcolor",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "note": "main image",
+            "type": "image",
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "x": 16,
+            "y": 66,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "small image",
+            "type": "image",
+            "x": 70,
+            "y": 10,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 7,
+            "y": 2,
+            "fontSize": 42,
+            "textAlign": "left",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 90,
+            "fontSize": 28,
+            "textAlign": "left",
+            "color": "rgb(255,255,255)",
+            "width": 44,
+            "dynamicProperties": {
+              "value": "up/down"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "hoverParent": "holder-deck-2p"
+  },
+  "w60d": {
+    "image": "/assets/1878435260_100028",
+    "movable": false,
+    "width": 1600,
+    "height": 1100,
+    "layer": -5,
+    "id": "w60d",
+    "z": 6,
+    "css": {
+      "opacity": 0.15
+    },
+    "movableInEdit": false
+  },
+  "label-guide": {
+    "id": "label-guide",
+    "x": 1191,
+    "y": 510,
+    "width": 400,
+    "height": 450,
+    "z": 16505,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "text-align": "center",
+      "color": "dimgray",
+      "text-shadow": "1px 1px 2px white"
+    },
+    "text": "DECK COMPOSITION:\n* 2p:\t1 1 1 1 2 2 2 3 3 in four suits\n* 3p-4p:\t1 1 1 1 2 2 2 3 3 in five suits\n\nTURN STRUCTURE:\n* Play a card from hand face down\n-OR-\n* Flip a card on board face up\n\nENDGAME TRIGGERS:\n* A player starts turn with 3 cards in hand\n-OR-\n* All players flip cards consecutively\n-OR-\n* All cards on board are face up",
+    "movable": false,
+    "display": false
+  },
+  "label-deck-2p": {
+    "id": "label-deck-2p",
+    "parent": "holder-deck-2p",
+    "x": -12,
+    "y": -28,
+    "width": 130,
+    "height": 30,
+    "z": 16397,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "text-align": "center",
+      "color": "dimgray",
+      "text-shadow": "1px 1px 2px white"
+    },
+    "text": "2p Deck"
+  },
+  "holder-deck-2p": {
+    "type": "holder",
+    "id": "holder-deck-2p",
+    "x": 1345,
+    "y": 300,
+    "height": 171,
+    "z": 11565
+  },
+  "deck-2p": {
+    "type": "deck",
+    "id": "deck-2p",
+    "parent": "holder-deck-2p",
+    "x": 4,
+    "y": 4,
+    "z": 121,
+    "cardDefaults": {
+      "class": "deckofcards",
+      "classes": "transition",
+      "activeFace": "0"
+    },
+    "cardTypes": {
+      "red-1": {
+        "suit": "red",
+        "bgcolor": "#db6864",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f353.svg",
+        "sortingOrder": 11
+      },
+      "red-2": {
+        "suit": "red",
+        "bgcolor": "#db6864",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f353.svg",
+        "sortingOrder": 12
+      },
+      "red-3": {
+        "suit": "red",
+        "bgcolor": "#db6864",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f353.svg",
+        "sortingOrder": 13
+      },
+      "orange-1": {
+        "suit": "orange",
+        "bgcolor": "sandybrown",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f34a.svg",
+        "sortingOrder": 14
+      },
+      "orange-2": {
+        "suit": "orange",
+        "bgcolor": "sandybrown",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f34a.svg",
+        "sortingOrder": 15
+      },
+      "orange-3": {
+        "suit": "orange",
+        "bgcolor": "sandybrown",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f34a.svg",
+        "sortingOrder": 16
+      },
+      "yellow-1": {
+        "suit": "yellow",
+        "bgcolor": "#f0d137",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f34b.svg",
+        "sortingOrder": 17
+      },
+      "yellow-2": {
+        "suit": "yellow",
+        "bgcolor": "#f0d137",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f34b.svg",
+        "sortingOrder": 18
+      },
+      "yellow-3": {
+        "suit": "yellow",
+        "bgcolor": "#f0d137",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f34b.svg",
+        "sortingOrder": 19
+      },
+      "green-1": {
+        "suit": "green",
+        "bgcolor": "#a5cc70",
+        "number": "1",
+        "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg",
+        "sortingOrder": 20
+      },
+      "green-2": {
+        "suit": "green",
+        "bgcolor": "#a5cc70",
+        "number": "2",
+        "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg",
+        "sortingOrder": 21
+      },
+      "green-3": {
+        "suit": "green",
+        "bgcolor": "#a5cc70",
+        "number": "3",
+        "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg",
+        "sortingOrder": 22
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -30,
+            "y": 0,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "width": 160,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "bgcolor",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "note": "main image",
+            "type": "image",
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "x": 16,
+            "y": 66,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "small image",
+            "type": "image",
+            "x": 70,
+            "y": 10,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 7,
+            "y": 2,
+            "fontSize": 42,
+            "textAlign": "left",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 90,
+            "fontSize": 28,
+            "textAlign": "left",
+            "color": "rgb(255,255,255)",
+            "width": 44,
+            "dynamicProperties": {
+              "value": "up/down"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "hoverParent": "holder-deck-2p"
+  },
+  "label-red-p1": {
+    "type": "label",
+    "id": "label-red-p1",
+    "parent": "image-red-p1",
+    "y": 37,
+    "z": 16438,
+    "text": "X",
+    "width": 50,
+    "height": 30,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "x": -12,
+    "labelCount": true
+  },
+  "image-red-p1": {
+    "id": "image-red-p1",
+    "parent": "seat-p1",
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16503,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f353.svg",
+    "x": 14
+  },
+  "label-orange-p1": {
+    "type": "label",
+    "id": "label-orange-p1",
+    "parent": "image-orange-p1",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-orange-p1": {
+    "id": "image-orange-p1",
+    "parent": "seat-p1",
+    "x": 60,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34a.svg"
+  },
+  "image-yellow-p1": {
+    "id": "image-yellow-p1",
+    "parent": "seat-p1",
+    "x": 105,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b.svg"
+  },
+  "label-yellow-p1": {
+    "type": "label",
+    "id": "label-yellow-p1",
+    "parent": "image-yellow-p1",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-green-p1": {
+    "id": "image-green-p1",
+    "parent": "seat-p1",
+    "x": 151,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg"
+  },
+  "label-green-p1": {
+    "type": "label",
+    "id": "label-green-p1",
+    "parent": "image-green-p1",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-purple-p1": {
+    "id": "image-purple-p1",
+    "parent": "seat-p1",
+    "x": 197,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16504,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f347.svg",
+    "display": false
+  },
+  "label-purple-p1": {
+    "type": "label",
+    "id": "label-purple-p1",
+    "parent": "image-purple-p1",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "label-strength-orange": {
+    "type": "label",
+    "id": "label-strength-orange",
+    "parent": "image-area-orange",
+    "x": 46,
+    "y": 155,
+    "width": 55,
+    "height": 36,
+    "z": 16446,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "text": "?",
+    "editable": true,
+    "labelStrength": true
+  },
+  "label-strength-yellow": {
+    "type": "label",
+    "id": "label-strength-yellow",
+    "parent": "image-area-yellow",
+    "x": 46,
+    "y": 155,
+    "width": 55,
+    "height": 36,
+    "z": 16446,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "text": "?",
+    "editable": true,
+    "labelStrength": true
+  },
+  "label-strength-green": {
+    "type": "label",
+    "id": "label-strength-green",
+    "parent": "image-area-green",
+    "x": 46,
+    "y": 155,
+    "width": 55,
+    "height": 36,
+    "z": 16446,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "text": "?",
+    "editable": true,
+    "labelStrength": true
+  },
+  "label-strength-purple": {
+    "type": "label",
+    "id": "label-strength-purple",
+    "parent": "image-area-purple",
+    "x": 46,
+    "y": 155,
+    "width": 55,
+    "height": 36,
+    "z": 16446,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "32px",
+        "color": "black",
+        "line-height": "36px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "text": "?",
+    "editable": true,
+    "labelStrength": true
+  },
+  "o3qz": {
+    "type": "button",
+    "x": 17,
+    "y": -97,
+    "z": 12874,
+    "id": "o3qz",
+    "text": "Temp WIP",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "hand",
+        "collection": "handCards"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var pID = ${value}",
+          {
+            "func": "GET",
+            "collection": [
+              "seat-p${value}"
+            ],
+            "property": "player",
+            "variable": "seatPlayer"
+          },
+          {
+            "func": "SELECT",
+            "source": "handCards",
+            "property": "owner",
+            "value": "${seatPlayer}",
+            "collection": "playerCards"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "playerCards",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "suit",
+                "variable": "suit"
+              },
+              {
+                "func": "LABEL",
+                "label": "label-${suit}-p${pID}",
+                "mode": "inc",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "button-score-dec-p1": {
+    "type": "button",
+    "id": "button-score-dec-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "onlyVisibleForSeat": "seat-p1",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "x": 70,
+    "y": 339,
+    "z": 12850,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p2"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "width": 200,
+    "text": 8,
+    "hideWhenUnused": true,
+    "index": 2
+  },
+  "handsize-p2": {
+    "id": "handsize-p2",
+    "parent": "seat-p2",
+    "fixedParent": true,
+    "x": 180,
+    "y": -18,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "label-score-p2": {
+    "type": "label",
+    "id": "label-score-p2",
+    "parent": "seat-p2",
+    "x": 67,
+    "width": 65,
+    "height": 36,
+    "z": 16445,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 50
+  },
+  "button-score-inc-x-p2": {
+    "type": "button",
+    "id": "button-score-inc-x-p2",
+    "parent": "label-score-p2",
+    "x": 102,
+    "inheritFrom": "button-score-inc-p2",
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this many points to your score:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a three-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 1000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -1000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onlyVisibleForSeat": "seat-p2"
+  },
+  "button-score-inc-p2": {
+    "type": "button",
+    "id": "button-score-inc-p2",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": 72,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "onlyVisibleForSeat": "seat-p2"
+  },
+  "button-score-dec-p2": {
+    "type": "button",
+    "id": "button-score-dec-p2",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "onlyVisibleForSeat": "seat-p2",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "image-red-p2": {
+    "id": "image-red-p2",
+    "parent": "seat-p2",
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16503,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f353.svg",
+    "x": 14
+  },
+  "label-red-p2": {
+    "type": "label",
+    "id": "label-red-p2",
+    "parent": "image-red-p2",
+    "y": 37,
+    "z": 16438,
+    "text": "X",
+    "width": 50,
+    "height": 30,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "x": -12,
+    "labelCount": true
+  },
+  "image-orange-p2": {
+    "id": "image-orange-p2",
+    "parent": "seat-p2",
+    "x": 60,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34a.svg"
+  },
+  "label-orange-p2": {
+    "type": "label",
+    "id": "label-orange-p2",
+    "parent": "image-orange-p2",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-yellow-p2": {
+    "id": "image-yellow-p2",
+    "parent": "seat-p2",
+    "x": 105,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b.svg"
+  },
+  "label-yellow-p2": {
+    "type": "label",
+    "id": "label-yellow-p2",
+    "parent": "image-yellow-p2",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-green-p2": {
+    "id": "image-green-p2",
+    "parent": "seat-p2",
+    "x": 151,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg"
+  },
+  "label-green-p2": {
+    "type": "label",
+    "id": "label-green-p2",
+    "parent": "image-green-p2",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-purple-p2": {
+    "id": "image-purple-p2",
+    "parent": "seat-p2",
+    "x": 197,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16504,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f347.svg",
+    "display": false
+  },
+  "label-purple-p2": {
+    "type": "label",
+    "id": "label-purple-p2",
+    "parent": "image-purple-p2",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "x": 70,
+    "y": 524,
+    "z": 12851,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p3"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "width": 200,
+    "text": 8,
+    "hideWhenUnused": true,
+    "index": 3
+  },
+  "handsize-p3": {
+    "id": "handsize-p3",
+    "parent": "seat-p3",
+    "fixedParent": true,
+    "x": 180,
+    "y": -18,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "label-score-p3": {
+    "type": "label",
+    "id": "label-score-p3",
+    "parent": "seat-p3",
+    "x": 67,
+    "width": 65,
+    "height": 36,
+    "z": 16445,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 49
+  },
+  "button-score-inc-x-p3": {
+    "type": "button",
+    "id": "button-score-inc-x-p3",
+    "parent": "label-score-p3",
+    "x": 102,
+    "inheritFrom": "button-score-inc-p3",
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this many points to your score:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a three-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 1000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -1000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onlyVisibleForSeat": "seat-p3"
+  },
+  "button-score-inc-p3": {
+    "type": "button",
+    "id": "button-score-inc-p3",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": 72,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "onlyVisibleForSeat": "seat-p3"
+  },
+  "button-score-dec-p3": {
+    "type": "button",
+    "id": "button-score-dec-p3",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "onlyVisibleForSeat": "seat-p3",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "image-red-p3": {
+    "id": "image-red-p3",
+    "parent": "seat-p3",
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16503,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f353.svg",
+    "x": 14
+  },
+  "label-red-p3": {
+    "type": "label",
+    "id": "label-red-p3",
+    "parent": "image-red-p3",
+    "y": 37,
+    "z": 16438,
+    "text": "X",
+    "width": 50,
+    "height": 30,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "x": -12,
+    "labelCount": true
+  },
+  "image-orange-p3": {
+    "id": "image-orange-p3",
+    "parent": "seat-p3",
+    "x": 60,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34a.svg"
+  },
+  "label-orange-p3": {
+    "type": "label",
+    "id": "label-orange-p3",
+    "parent": "image-orange-p3",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-yellow-p3": {
+    "id": "image-yellow-p3",
+    "parent": "seat-p3",
+    "x": 105,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b.svg"
+  },
+  "label-yellow-p3": {
+    "type": "label",
+    "id": "label-yellow-p3",
+    "parent": "image-yellow-p3",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-green-p3": {
+    "id": "image-green-p3",
+    "parent": "seat-p3",
+    "x": 151,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg"
+  },
+  "label-green-p3": {
+    "type": "label",
+    "id": "label-green-p3",
+    "parent": "image-green-p3",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-purple-p3": {
+    "id": "image-purple-p3",
+    "parent": "seat-p3",
+    "x": 197,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16504,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f347.svg",
+    "display": false
+  },
+  "label-purple-p3": {
+    "type": "label",
+    "id": "label-purple-p3",
+    "parent": "image-purple-p3",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "x": 70,
+    "y": 709,
+    "z": 12854,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "30px"
+      },
+      ".seated": {
+        "background": "${PROPERTY color}",
+        "border": "5px solid #000000",
+        "color": "${PROPERTY foreground}"
+      },
+      ".seated.turn": {
+        "border": "5px dotted ${PROPERTY foreground}"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "${PROPERTY color}",
+        "border": "2px solid ${PROPERTY foreground}",
+        "background-size": "200% auto",
+        "color": "${PROPERTY mainColor}",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-15px",
+        "top": "-15px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "foreground": "#000000",
+    "clickRoutine": [
+      {
+        "func": "CLICK",
+        "collection": "thisButton",
+        "mode": "ignoreClickRoutine"
+      },
+      {
+        "func": "SELECT",
+        "property": "deck",
+        "value": "deck-discs"
+      },
+      {
+        "func": "SELECT",
+        "source": "DEFAULT",
+        "property": "playerIndex",
+        "value": "${PROPERTY index}"
+      },
+      {
+        "func": "SET",
+        "property": "background",
+        "value": "${PROPERTY color}"
+      },
+      "var foreground = colorContrast ${PROPERTY color}",
+      {
+        "func": "SET",
+        "property": "color",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "collection": [
+          "${PROPERTY id}"
+        ],
+        "property": "foreground",
+        "value": "${foreground}"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "button-endturn-p4"
+      },
+      {
+        "func": "SET",
+        "property": "css",
+        "value": "color:${PROPERTY foreground};font-size:18px;font-weight:900;border-radius:10px;background-color:${PROPERTY color}"
+      }
+    ],
+    "width": 200,
+    "text": 8,
+    "hideWhenUnused": true,
+    "index": 4
+  },
+  "handsize-p4": {
+    "id": "handsize-p4",
+    "parent": "seat-p4",
+    "fixedParent": true,
+    "x": 180,
+    "y": -18,
+    "width": 35,
+    "height": 35,
+    "borderRadius": 100,
+    "z": 124,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ]
+  },
+  "label-score-p4": {
+    "type": "label",
+    "id": "label-score-p4",
+    "parent": "seat-p4",
+    "x": 67,
+    "width": 65,
+    "height": 36,
+    "z": 16445,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "editable": true,
+    "text": 0,
+    "y": 50
+  },
+  "button-score-inc-x-p4": {
+    "type": "button",
+    "id": "button-score-inc-x-p4",
+    "parent": "label-score-p4",
+    "x": 102,
+    "inheritFrom": "button-score-inc-p4",
+    "text": "+X",
+    "clickRoutine": [
+      "var score = ${PROPERTY parent}",
+      "var area = ${PROPERTY parent OF $score}",
+      "var seat = ${PROPERTY linkedToSeat OF $area}",
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY player OF $seat}",
+        "operand2": "",
+        "thenRoutine": [
+          "var playerDesc = 'Player ' + ${PROPERTY index OF $seat}"
+        ],
+        "elseRoutine": [
+          "var playerDesc = ${PROPERTY player OF $seat}"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "header": "Add this many points to your score:",
+        "confirmButtonText": "Add",
+        "cancelButtonText": "Cancel",
+        "fields": [
+          {
+            "type": "number",
+            "variable": "addToScore",
+            "value": ""
+          }
+        ]
+      },
+      "var checkInt = ${addToScore} % 1",
+      {
+        "note": "Sanity check / typo avoidance 1 of 2: only add value if it is an integer",
+        "func": "IF",
+        "operand1": "${checkInt}",
+        "operand2": 0,
+        "thenRoutine": [
+          {
+            "note": "Sanity check / typo avoidance 2 of 2: only add value if it is a three-digit number",
+            "func": "IF",
+            "operand1": "${addToScore}",
+            "relation": "<",
+            "operand2": 1000,
+            "thenRoutine": [
+              {
+                "func": "IF",
+                "operand1": "${addToScore}",
+                "relation": ">",
+                "operand2": -1000,
+                "thenRoutine": [
+                  {
+                    "func": "LABEL",
+                    "label": "${score}",
+                    "mode": "inc",
+                    "value": "${addToScore}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onlyVisibleForSeat": "seat-p4"
+  },
+  "button-score-inc-p4": {
+    "type": "button",
+    "id": "button-score-inc-p4",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": 72,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "css": "font-size: 18px",
+    "text": "+1",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "y": 1,
+    "onlyVisibleForSeat": "seat-p4"
+  },
+  "button-score-dec-p4": {
+    "type": "button",
+    "id": "button-score-dec-p4",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "onlyVisibleForSeat": "seat-p4",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "image-red-p4": {
+    "id": "image-red-p4",
+    "parent": "seat-p4",
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16503,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f353.svg",
+    "x": 14
+  },
+  "label-red-p4": {
+    "type": "label",
+    "id": "label-red-p4",
+    "parent": "image-red-p4",
+    "y": 37,
+    "z": 16438,
+    "text": "X",
+    "width": 50,
+    "height": 30,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "x": -12,
+    "labelCount": true
+  },
+  "image-orange-p4": {
+    "id": "image-orange-p4",
+    "parent": "seat-p4",
+    "x": 60,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34a.svg"
+  },
+  "label-orange-p4": {
+    "type": "label",
+    "id": "label-orange-p4",
+    "parent": "image-orange-p4",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-yellow-p4": {
+    "id": "image-yellow-p4",
+    "parent": "seat-p4",
+    "x": 105,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b.svg"
+  },
+  "label-yellow-p4": {
+    "type": "label",
+    "id": "label-yellow-p4",
+    "parent": "image-yellow-p4",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-green-p4": {
+    "id": "image-green-p4",
+    "parent": "seat-p4",
+    "x": 151,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16499,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f34b_200d_1f7e9.svg"
+  },
+  "label-green-p4": {
+    "type": "label",
+    "id": "label-green-p4",
+    "parent": "image-green-p4",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "image-purple-p4": {
+    "id": "image-purple-p4",
+    "parent": "seat-p4",
+    "x": 197,
+    "y": 89,
+    "width": 32,
+    "height": 32,
+    "z": 16504,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f347.svg",
+    "display": false
+  },
+  "label-purple-p4": {
+    "type": "label",
+    "id": "label-purple-p4",
+    "parent": "image-purple-p4",
+    "x": -12,
+    "y": 37,
+    "width": 50,
+    "height": 30,
+    "z": 16438,
+    "css": {
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "24px",
+        "color": "dimgray",
+        "line-height": "24px",
+        "text-shadow": "1px 1px 1px white"
+      }
+    },
+    "text": "X",
+    "labelCount": true
+  },
+  "button-score-inc-orange": {
+    "type": "button",
+    "id": "button-score-inc-orange",
+    "parent": "label-strength-orange",
+    "x": 62,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12858,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-inc-yellow": {
+    "type": "button",
+    "id": "button-score-inc-yellow",
+    "parent": "label-strength-yellow",
+    "x": 62,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12858,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-inc-green": {
+    "type": "button",
+    "id": "button-score-inc-green",
+    "parent": "label-strength-green",
+    "x": 62,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12858,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-inc-purple": {
+    "type": "button",
+    "id": "button-score-inc-purple",
+    "parent": "label-strength-purple",
+    "x": 62,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12858,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-orange": {
+    "type": "button",
+    "id": "button-score-dec-orange",
+    "parent": "label-strength-orange",
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12859,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "button-score-dec-yellow": {
+    "type": "button",
+    "id": "button-score-dec-yellow",
+    "parent": "label-strength-yellow",
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12859,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "button-score-dec-green": {
+    "type": "button",
+    "id": "button-score-dec-green",
+    "parent": "label-strength-green",
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12859,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "button-score-dec-purple": {
+    "type": "button",
+    "id": "button-score-dec-purple",
+    "parent": "label-strength-purple",
+    "x": -38,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12859,
+    "classes": "symbols",
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "movableInEdit": false
+  },
+  "button-round": {
+    "type": "button",
+    "id": "button-round",
+    "x": 1467,
+    "y": 100,
+    "width": 100,
+    "height": 50,
+    "z": 12890,
+    "css": "font-size:18px;font-weight:bold;border-radius:7px",
+    "text": "New Round",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "New Round",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to start a new round. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "resetCountsRoutine",
+        "widget": "button-reset"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetStrengthRoutine",
+        "widget": "button-reset"
+      },
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine",
+        "widget": "button-reset"
+      }
+    ]
+  },
+  "button-reveal": {
+    "type": "button",
+    "id": "button-reveal",
+    "x": 1235,
+    "y": 100,
+    "width": 100,
+    "height": 50,
+    "z": 12889,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Reveal Cards",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reveal",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reveal cards. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "resetCountsRoutine",
+        "widget": "button-reset"
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "holder-red",
+          "holder-orange",
+          "holder-yellow",
+          "holder-green",
+          "holder-purple"
+        ],
+        "face": 1
+      },
+      {
+        "func": "SELECT",
+        "type": "card",
+        "property": "parent",
+        "value": "hand",
+        "collection": "handCards"
+      },
+      {
+        "func": "FOREACH",
+        "range": [
+          4
+        ],
+        "loopRoutine": [
+          "var pID = ${value}",
+          {
+            "func": "GET",
+            "collection": [
+              "seat-p${value}"
+            ],
+            "property": "player",
+            "variable": "seatPlayer"
+          },
+          {
+            "func": "SELECT",
+            "source": "handCards",
+            "property": "owner",
+            "value": "${seatPlayer}",
+            "collection": "playerCards"
+          },
+          {
+            "func": "FOREACH",
+            "collection": "playerCards",
+            "loopRoutine": [
+              {
+                "func": "GET",
+                "property": "suit",
+                "variable": "suit"
+              },
+              {
+                "func": "LABEL",
+                "label": "label-${suit}-p${pID}",
+                "mode": "inc",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "plpb": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "plpb",
+    "z": 19931,
+    "parent": "tye2"
+  },
+  "4unx": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "4unx",
+    "z": 19936,
+    "parent": "tye2"
+  },
+  "rev8": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-1",
+    "id": "rev8",
+    "z": 19925,
+    "parent": "tye2"
+  },
+  "99xe": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-2",
+    "id": "99xe",
+    "z": 19953,
+    "parent": "tye2"
+  },
+  "6mu8": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-2",
+    "id": "6mu8",
+    "z": 19957,
+    "parent": "tye2"
+  },
+  "ybe3": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-2",
+    "id": "ybe3",
+    "z": 19929,
+    "parent": "tye2"
+  },
+  "ra3a": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-3",
+    "id": "ra3a",
+    "z": 19922,
+    "parent": "tye2"
+  },
+  "v5i0": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "red-3",
+    "id": "v5i0",
+    "z": 19946,
+    "parent": "tye2"
+  },
+  "fpqs": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "fpqs",
+    "z": 19927,
+    "parent": "tye2"
+  },
+  "l24z": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "l24z",
+    "z": 19926,
+    "parent": "tye2"
+  },
+  "lrx8": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "lrx8",
+    "z": 19955,
+    "parent": "tye2"
+  },
+  "s1ya": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-1",
+    "id": "s1ya",
+    "z": 19941,
+    "parent": "tye2"
+  },
+  "cztl": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-2",
+    "id": "cztl",
+    "z": 19951,
+    "parent": "tye2"
+  },
+  "69fb": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-2",
+    "id": "69fb",
+    "z": 19940,
+    "parent": "tye2"
+  },
+  "k7qy": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-2",
+    "id": "k7qy",
+    "z": 19938,
+    "parent": "tye2"
+  },
+  "h7cc": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-3",
+    "id": "h7cc",
+    "z": 19943,
+    "parent": "tye2"
+  },
+  "sxhb": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "orange-3",
+    "id": "sxhb",
+    "z": 19954,
+    "parent": "tye2"
+  },
+  "0dgr": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "0dgr",
+    "z": 19932,
+    "parent": "tye2"
+  },
+  "o36g": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "o36g",
+    "z": 19935,
+    "parent": "tye2"
+  },
+  "io3l": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "io3l",
+    "z": 19939,
+    "parent": "tye2"
+  },
+  "h2pv": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-1",
+    "id": "h2pv",
+    "z": 19937,
+    "parent": "tye2"
+  },
+  "toa3": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-2",
+    "id": "toa3",
+    "z": 19949,
+    "parent": "tye2"
+  },
+  "y74y": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-2",
+    "id": "y74y",
+    "z": 19924,
+    "parent": "tye2"
+  },
+  "fh5c": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-3",
+    "id": "fh5c",
+    "z": 19948,
+    "parent": "tye2"
+  },
+  "w4r1": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-3",
+    "id": "w4r1",
+    "z": 19928,
+    "parent": "tye2"
+  },
+  "pzbb": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "pzbb",
+    "z": 19923,
+    "parent": "tye2"
+  },
+  "jo4d": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "jo4d",
+    "z": 19952,
+    "parent": "tye2"
+  },
+  "lam9": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "lam9",
+    "z": 19956,
+    "parent": "tye2"
+  },
+  "rflq": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-1",
+    "id": "rflq",
+    "z": 19930,
+    "parent": "tye2"
+  },
+  "flzr": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-2",
+    "id": "flzr",
+    "z": 19942,
+    "parent": "tye2"
+  },
+  "0fgk": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-2",
+    "id": "0fgk",
+    "z": 19947,
+    "parent": "tye2"
+  },
+  "f7ja": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-2",
+    "id": "f7ja",
+    "z": 19934,
+    "parent": "tye2"
+  },
+  "48sq": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-3",
+    "id": "48sq",
+    "z": 19944,
+    "parent": "tye2"
+  },
+  "s78d": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "green-3",
+    "id": "s78d",
+    "z": 19933,
+    "parent": "tye2"
+  },
+  "pat9": {
+    "deck": "deck-2p",
+    "type": "card",
+    "cardType": "yellow-2",
+    "id": "pat9",
+    "z": 19945,
+    "parent": "tye2"
+  },
+  "button-endturn-p1": {
+    "type": "button",
+    "id": "button-endturn-p1",
+    "x": 220,
+    "width": 70,
+    "height": 50,
+    "z": 12883,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p1",
+    "y": -5,
+    "text": "End\nTurn"
+  },
+  "button-endturn-p2": {
+    "type": "button",
+    "id": "button-endturn-p2",
+    "x": 220,
+    "width": 70,
+    "height": 50,
+    "z": 12877,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p2",
+    "y": -5,
+    "text": "End\nTurn"
+  },
+  "button-endturn-p3": {
+    "type": "button",
+    "id": "button-endturn-p3",
+    "x": 220,
+    "width": 70,
+    "height": 50,
+    "z": 12877,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p3",
+    "y": -5,
+    "text": "End\nTurn"
+  },
+  "button-endturn-p4": {
+    "type": "button",
+    "id": "button-endturn-p4",
+    "x": 220,
+    "width": 70,
+    "height": 50,
+    "z": 12877,
+    "css": "color:#000000;font-size:18px;font-weight:900;border-radius:10px;background-color:#999999",
+    "clickRoutine": [
+      {
+        "func": "TURN",
+        "turnCycle": "forward"
+      }
+    ],
+    "parent": "seat-p4",
+    "y": -5,
+    "text": "End\nTurn"
+  },
+  "button-calculate": {
+    "type": "button",
+    "id": "button-calculate",
+    "x": 162,
+    "y": -77,
+    "width": 90,
+    "height": 50,
+    "z": 12882,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Calculate",
+    "clickRoutine": [
+      "var handsize = 10",
+      {
+        "func": "FOREACH",
+        "range": 4,
+        "loopRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "label-score-p${value}"
+            ],
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "label-switcheroo": {
+    "id": "label-switcheroo",
+    "parent": "holder-deck-switcheroo",
+    "x": -12,
+    "y": -28,
+    "width": 130,
+    "height": 30,
+    "z": 16397,
+    "movable": false,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "text-align": "center",
+      "color": "dimgray",
+      "text-shadow": "1px 1px 2px white"
+    },
+    "text": "Switcheroo"
+  },
+  "holder-deck-switcheroo": {
+    "type": "holder",
+    "id": "holder-deck-switcheroo",
+    "x": 1630,
+    "y": 300,
+    "height": 171,
+    "z": 11574
+  },
+  "deck-switcheroo": {
+    "type": "deck",
+    "id": "deck-switcheroo",
+    "parent": "holder-deck-switcheroo",
+    "x": 4,
+    "y": 4,
+    "z": 121,
+    "cardDefaults": {
+      "class": "deckofcards",
+      "classes": "transition",
+      "activeFace": "0"
+    },
+    "cardTypes": {
+      "switcheroo": {
+        "suit": "red",
+        "bgcolor": "silver",
+        "number": "",
+        "image": "/i/game-icons.net/lorc/cycle.svg",
+        "sortingOrder": 99
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": -30,
+            "y": 0,
+            "color": "dimgray",
+            "value": "/i/game-icons.net/delapouite/card-joker.svg",
+            "width": 160,
+            "height": 160
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 100,
+            "height": 160,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "bgcolor",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "note": "main image",
+            "type": "image",
+            "color": "transparent",
+            "width": 70,
+            "height": 70,
+            "x": 16,
+            "y": 66,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "small image 1",
+            "type": "image",
+            "x": 70,
+            "y": 10,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "note": "small image 2",
+            "type": "image",
+            "x": 10,
+            "y": 10,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
+          },
+          {
+            "type": "text",
+            "x": 7,
+            "y": 2,
+            "fontSize": 42,
+            "textAlign": "left",
+            "width": 50,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 90,
+            "fontSize": 28,
+            "textAlign": "left",
+            "color": "rgb(255,255,255)",
+            "width": 44,
+            "dynamicProperties": {
+              "value": "up/down"
+            }
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      }
+    ],
+    "hoverParent": "holder-deck-2p"
+  },
+  "nrxf": {
+    "deck": "deck-switcheroo",
+    "type": "card",
+    "cardType": "switcheroo",
+    "id": "nrxf",
+    "z": 19960,
+    "parent": "iw1v"
+  },
+  "lud0": {
+    "deck": "deck-switcheroo",
+    "type": "card",
+    "cardType": "switcheroo",
+    "id": "lud0",
+    "z": 19961,
+    "parent": "iw1v"
+  },
+  "button-switcheroo": {
+    "type": "button",
+    "id": "button-switcheroo",
+    "x": 1351,
+    "y": 30,
+    "width": 100,
+    "height": 50,
+    "z": 12888,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Deal Switcheroo",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Deal Switcheroo",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to deal each player a switcheroo card. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "note": "Deal each player 1 switcheroo card",
+            "func": "MOVE",
+            "from": "holder-deck-switcheroo",
+            "to": "${widgetID}",
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "ahur": {
+    "deck": "deck-switcheroo",
+    "type": "card",
+    "cardType": "switcheroo",
+    "id": "ahur",
+    "z": 19958,
+    "parent": "iw1v"
+  },
+  "lq5s": {
+    "deck": "deck-switcheroo",
+    "type": "card",
+    "cardType": "switcheroo",
+    "id": "lq5s",
+    "z": 19959,
+    "parent": "iw1v",
+    "x": 0,
+    "y": 0
+  },
+  "iw1v": {
+    "type": "pile",
+    "parent": "holder-deck-switcheroo",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "iw1v"
+  },
+  "button-guide": {
+    "type": "button",
+    "id": "button-guide",
+    "x": 1351,
+    "y": 100,
+    "width": 100,
+    "height": 50,
+    "z": 12891,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "18px",
+      "border-radius": "7px"
+    },
+    "text": "Toggle Guide",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY display OF label-guide}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "label-guide"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "label-guide"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ]
+      }
+    ]
+  },
+  "holder-red": {
+    "type": "holder",
+    "id": "holder-red",
+    "x": 20,
+    "y": 200,
+    "width": 110,
+    "height": 550,
+    "z": 11553,
+    "dropOffsetX": 2,
+    "dropOffsetY": 2,
+    "parent": "image-area-red",
+    "stackOffsetY": 50
+  },
+  "image-item-red": {
+    "id": "image-item-red",
+    "parent": "image-area-red",
+    "x": 40,
+    "y": 40,
+    "width": 72,
+    "height": 72,
+    "z": 16454,
+    "movable": false,
+    "image": "/i/noto-emoji/emoji_u1f353.svg"
+  },
+  "button-score-dec-red": {
+    "type": "button",
+    "id": "button-score-dec-red",
+    "parent": "label-strength-red",
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12859,
+    "css": "font-size: 28px",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ],
+    "x": -38,
+    "classes": "symbols",
+    "movableInEdit": false
+  },
+  "button-score-inc-red": {
+    "type": "button",
+    "id": "button-score-inc-red",
+    "parent": "label-strength-red",
+    "x": 62,
+    "y": 1,
+    "width": 32,
+    "height": 32,
+    "z": 12858,
+    "movableInEdit": false,
+    "css": "font-size: 28px",
+    "text": "add",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ],
+    "classes": "symbols"
+  },
+  "label-strength-red": {
+    "type": "label",
+    "id": "label-strength-red",
+    "parent": "image-area-red",
+    "x": 46,
+    "width": 55,
+    "height": 36,
+    "z": 16446,
+    "css": {
+      "default": {
+        "background-color": "transparent",
+        "border": "0px solid black"
+      },
+      " textarea": {
+        "font-weight": "bold",
+        "font-size": "34px",
+        "color": "black",
+        "line-height": "34px",
+        "text-shadow": "2px 2px 2px white"
+      }
+    },
+    "y": 155,
+    "editable": true,
+    "labelStrength": true,
+    "text": "?"
+  },
+  "image-area-red": {
+    "id": "image-area-red",
+    "x": 390,
+    "width": 150,
+    "height": 150,
+    "z": 16480,
+    "movable": false,
+    "classes": "pokerChip",
+    "color": "#db6864",
+    "image": "i/game-pieces/2D/Poker-2D.svg",
+    "svgReplaces": {
+      "#accentColor1": "accentcolor",
+      "#accentColor2": "accentcolor",
+      "#borderColor": "borderColor",
+      "#borderWidth": "borderWidth",
+      "#labelColor": "color",
+      "#primaryColor": "color"
+    },
+    "borderColor": "#333333",
+    "borderWidth": 3,
+    "accentcolor": "#333333",
+    "y": 11,
+    "layer": -5
+  },
+  "tye2": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "tye2",
+    "z": 19450,
+    "hoverParent": "holder-deck-2p",
+    "parent": "holder-deck-2p"
+  },
+  "1c3u": {
+    "type": "pile",
+    "parent": "holder-deck-4p",
+    "x": 4,
+    "y": 4,
+    "width": 103,
+    "height": 160,
+    "id": "1c3u"
+  }
+}

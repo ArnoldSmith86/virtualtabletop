@@ -1,0 +1,1211 @@
+{
+  "_meta": {
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {}
+    },
+    "info": {
+      "name": "Appearance - Buttons",
+      "image": "/assets/1091245433_5809",
+      "rules": "",
+      "bgg": "",
+      "year": "2020",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "The images used in this tutorial were created by LawDawg and are released to the Public Domain under CC0.",
+      "showName": false,
+      "lastUpdate": 1763600323636,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Text Only",
+      "language": "en-US",
+      "players": "1"
+    }
+  },
+  "9ud8": {
+    "type": "button",
+    "text": "Deal to Position",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 1100,
+        "y": 700,
+        "resetOwner": false
+      }
+    ],
+    "x": 259,
+    "y": 438.5,
+    "z": 28,
+    "id": "9ud8",
+    "width": 150,
+    "height": 75,
+    "backgroundColor": "black",
+    "backgroundColorOH": "white",
+    "borderColor": "white",
+    "borderColorOH": "black",
+    "textColor": "white",
+    "textColorOH": "black",
+    "css": "--wcFont: white;--wcMain: black; --wcBorder:white; --wcFontOH:black;--wcMainOH:white;--wcBorderOH:black; font-size: 30px"
+  },
+  "b93e": {
+    "type": "button",
+    "text": "FLIP",
+    "clickRoutine": [
+      {
+        "func": "FLIP",
+        "holder": "jdwf"
+      }
+    ],
+    "x": 543.5,
+    "y": 409,
+    "z": 29,
+    "id": "b93e",
+    "height": 150,
+    "width": 75,
+    "borderColor": "black",
+    "borderColorOH": "#718e88",
+    "textColor": "white",
+    "textColorOH": "#9daaa2",
+    "css": "background: repeating-linear-gradient(45deg, #077d43, #077d43 10px, #215a3d 10px, #215a3d 20px);--wcBorder: black;--wcBorderOH:#718e88;border-width:10px;border-style:double;--wcFont:white;--wcFontOH:#9daaa2"
+  },
+  "b0a6": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "x": 781,
+    "y": 436,
+    "z": 31,
+    "id": "b0a6",
+    "textColor": "orange",
+    "textColorOH": "#e19e1e",
+    "css": "font-size:100px;--wcFont:orange; --wcFontOH: #e19e1e; border-style:none;background-color:transparent",
+    "icon": "coronavirus"
+  },
+  "rf6c": {
+    "text": "▲",
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "css": "font-size:200px;--wcFont:purple;border-style:none;background-color:transparent",
+    "x": 1059,
+    "y": 425,
+    "z": 52,
+    "id": "rf6c",
+    "layer": 1,
+    "enlarge": 1.5,
+    "textColor": "purple"
+  },
+  "8cko": {
+    "type": "label",
+    "text": "Heading",
+    "css": "font-size: 25px;color:darkgrey",
+    "height": 42,
+    "width": 200,
+    "x": 866,
+    "y": 492,
+    "z": 10,
+    "id": "8cko",
+    "layer": 2,
+    "editable": false,
+    "parent": "rf6c"
+  },
+  "8bos": {
+    "type": "label",
+    "text": "Enlarge",
+    "css": "font-size: 30px;color:darkgrey",
+    "height": 42,
+    "width": 200,
+    "x": 1001,
+    "y": 493,
+    "z": 35,
+    "id": "8bos",
+    "layer": 2
+  },
+  "tpj8": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "css": "font-size:40px;color:red;background-color:transparent",
+    "x": 1376,
+    "y": 421,
+    "z": 50,
+    "id": "tpj8",
+    "icon": {
+      "name": "east",
+      "color": "red"
+    }
+  },
+  "ah3k": {
+    "type": "label",
+    "id": "ah3k",
+    "x": 725,
+    "y": 682,
+    "width": 50,
+    "height": 50,
+    "css": "font-size: 30px;font-family:arial;color:magenta;background:white;",
+    "editable": false,
+    "z": 2,
+    "text": 0
+  },
+  "ah3kD": {
+    "id": "ah3kD",
+    "x": 523,
+    "y": 804,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "movableInEdit": true,
+    "text": "-",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "ah3k",
+        "mode": "dec",
+        "value": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "jdwf",
+        "to": "v91x"
+      },
+      {
+        "func": "FLIP",
+        "holder": "v91x",
+        "face": 0
+      }
+    ],
+    "z": 26,
+    "css": "background:magenta; color: white; font-family: Arial; font-size: 40px; border-color: magenta;justify-content:center;align-items:center;text-align:center"
+  },
+  "ah3kU": {
+    "id": "ah3kU",
+    "x": 929,
+    "y": 805,
+    "width": 36,
+    "height": 36,
+    "type": "button",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "ah3k",
+        "mode": "inc",
+        "value": 1
+      },
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "z": 25,
+    "css": "background:magenta; color: white; font-family: Arial; font-size: 40px; border-color: magenta;justify-content:center;align-items:center;text-align:center"
+  },
+  "v91x": {
+    "type": "holder",
+    "id": "v91x",
+    "x": 614.5,
+    "y": 748,
+    "dropTarget": {
+      "type": "card"
+    },
+    "z": 10
+  },
+  "v91xB": {
+    "id": "v91xB",
+    "parent": "v91x",
+    "y": 171.36,
+    "width": 111,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "v91x"
+      },
+      {
+        "func": "FLIP",
+        "holder": "v91x",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "v91x"
+      }
+    ],
+    "css": "--wcMain: red; --wcBorder: black; --wcMainOH: #f08080; --wcBorderOH: grey;font-family: Verdana; font-size:.95em; ",
+    "backgroundColor": "red",
+    "backgroundColorOH": "#f08080",
+    "borderColor": "black",
+    "borderColorOH": "grey"
+  },
+  "v91xD": {
+    "type": "deck",
+    "id": "v91xD",
+    "parent": "v91x",
+    "cardTypes": {
+      "AC": {
+        "image": "/i/cards-default/AC.svg"
+      },
+      "2C": {
+        "image": "/i/cards-default/2C.svg"
+      },
+      "3C": {
+        "image": "/i/cards-default/3C.svg"
+      },
+      "4C": {
+        "image": "/i/cards-default/4C.svg"
+      },
+      "5C": {
+        "image": "/i/cards-default/5C.svg"
+      },
+      "6C": {
+        "image": "/i/cards-default/6C.svg"
+      },
+      "7C": {
+        "image": "/i/cards-default/7C.svg"
+      },
+      "8C": {
+        "image": "/i/cards-default/8C.svg"
+      },
+      "9C": {
+        "image": "/i/cards-default/9C.svg"
+      },
+      "TC": {
+        "image": "/i/cards-default/TC.svg"
+      },
+      "JC": {
+        "image": "/i/cards-default/JC.svg"
+      },
+      "QC": {
+        "image": "/i/cards-default/QC.svg"
+      },
+      "KC": {
+        "image": "/i/cards-default/KC.svg"
+      },
+      "AD": {
+        "image": "/i/cards-default/AD.svg"
+      },
+      "2D": {
+        "image": "/i/cards-default/2D.svg"
+      },
+      "3D": {
+        "image": "/i/cards-default/3D.svg"
+      },
+      "4D": {
+        "image": "/i/cards-default/4D.svg"
+      },
+      "5D": {
+        "image": "/i/cards-default/5D.svg"
+      },
+      "6D": {
+        "image": "/i/cards-default/6D.svg"
+      },
+      "7D": {
+        "image": "/i/cards-default/7D.svg"
+      },
+      "8D": {
+        "image": "/i/cards-default/8D.svg"
+      },
+      "9D": {
+        "image": "/i/cards-default/9D.svg"
+      },
+      "TD": {
+        "image": "/i/cards-default/TD.svg"
+      },
+      "JD": {
+        "image": "/i/cards-default/JD.svg"
+      },
+      "QD": {
+        "image": "/i/cards-default/QD.svg"
+      },
+      "KD": {
+        "image": "/i/cards-default/KD.svg"
+      },
+      "AH": {
+        "image": "/i/cards-default/AH.svg"
+      },
+      "2H": {
+        "image": "/i/cards-default/2H.svg"
+      },
+      "3H": {
+        "image": "/i/cards-default/3H.svg"
+      },
+      "4H": {
+        "image": "/i/cards-default/4H.svg"
+      },
+      "5H": {
+        "image": "/i/cards-default/5H.svg"
+      },
+      "6H": {
+        "image": "/i/cards-default/6H.svg"
+      },
+      "7H": {
+        "image": "/i/cards-default/7H.svg"
+      },
+      "8H": {
+        "image": "/i/cards-default/8H.svg"
+      },
+      "9H": {
+        "image": "/i/cards-default/9H.svg"
+      },
+      "TH": {
+        "image": "/i/cards-default/TH.svg"
+      },
+      "JH": {
+        "image": "/i/cards-default/JH.svg"
+      },
+      "QH": {
+        "image": "/i/cards-default/QH.svg"
+      },
+      "KH": {
+        "image": "/i/cards-default/KH.svg"
+      },
+      "AS": {
+        "image": "/i/cards-default/AS.svg"
+      },
+      "2S": {
+        "image": "/i/cards-default/2S.svg"
+      },
+      "3S": {
+        "image": "/i/cards-default/3S.svg"
+      },
+      "4S": {
+        "image": "/i/cards-default/4S.svg"
+      },
+      "5S": {
+        "image": "/i/cards-default/5S.svg"
+      },
+      "6S": {
+        "image": "/i/cards-default/6S.svg"
+      },
+      "7S": {
+        "image": "/i/cards-default/7S.svg"
+      },
+      "8S": {
+        "image": "/i/cards-default/8S.svg"
+      },
+      "9S": {
+        "image": "/i/cards-default/9S.svg"
+      },
+      "TS": {
+        "image": "/i/cards-default/TS.svg"
+      },
+      "JS": {
+        "image": "/i/cards-default/JS.svg"
+      },
+      "QS": {
+        "image": "/i/cards-default/QS.svg"
+      },
+      "KS": {
+        "image": "/i/cards-default/KS.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": false,
+        "radius": 8,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "dynamicProperties": {
+              "value": "image"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "v91xAC": {
+    "id": "v91xAC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AC",
+    "z": 4915,
+    "parent": "lmaz"
+  },
+  "v91x2C": {
+    "id": "v91x2C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2C",
+    "z": 4899,
+    "parent": "lmaz"
+  },
+  "v91x3C": {
+    "id": "v91x3C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3C",
+    "z": 7695,
+    "parent": "lmaz"
+  },
+  "v91x4C": {
+    "id": "v91x4C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4C",
+    "z": 6380,
+    "parent": "lmaz"
+  },
+  "v91x5C": {
+    "id": "v91x5C",
+    "parent": "lmaz",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5C",
+    "z": 5564
+  },
+  "v91x6C": {
+    "id": "v91x6C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6C",
+    "z": 8062,
+    "parent": "lmaz"
+  },
+  "v91x7C": {
+    "id": "v91x7C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7C",
+    "z": 6792,
+    "parent": "lmaz"
+  },
+  "v91x8C": {
+    "id": "v91x8C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8C",
+    "z": 8140,
+    "parent": "lmaz"
+  },
+  "v91x9C": {
+    "id": "v91x9C",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9C",
+    "z": 4415,
+    "parent": "lmaz"
+  },
+  "v91xTC": {
+    "id": "v91xTC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TC",
+    "z": 8983,
+    "parent": "lmaz"
+  },
+  "v91xJC": {
+    "id": "v91xJC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JC",
+    "z": 8150,
+    "parent": "lmaz"
+  },
+  "v91xQC": {
+    "id": "v91xQC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QC",
+    "z": 4921,
+    "parent": "lmaz"
+  },
+  "v91xKC": {
+    "id": "v91xKC",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KC",
+    "z": 7737,
+    "parent": "lmaz"
+  },
+  "v91xAD": {
+    "id": "v91xAD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AD",
+    "z": 9027,
+    "parent": "lmaz"
+  },
+  "v91x2D": {
+    "id": "v91x2D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2D",
+    "z": 6682,
+    "parent": "lmaz"
+  },
+  "v91x3D": {
+    "id": "v91x3D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3D",
+    "z": 3762,
+    "parent": "lmaz"
+  },
+  "v91x4D": {
+    "id": "v91x4D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4D",
+    "z": 1198,
+    "parent": "lmaz"
+  },
+  "v91x5D": {
+    "id": "v91x5D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5D",
+    "z": 4010,
+    "parent": "lmaz"
+  },
+  "v91x6D": {
+    "id": "v91x6D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6D",
+    "z": 4152,
+    "parent": "lmaz"
+  },
+  "v91x7D": {
+    "id": "v91x7D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7D",
+    "z": 9433,
+    "parent": "lmaz"
+  },
+  "v91x8D": {
+    "id": "v91x8D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8D",
+    "z": 9755,
+    "parent": "lmaz"
+  },
+  "v91x9D": {
+    "id": "v91x9D",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9D",
+    "z": 6924,
+    "parent": "lmaz"
+  },
+  "v91xTD": {
+    "id": "v91xTD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TD",
+    "z": 4655,
+    "parent": "lmaz"
+  },
+  "v91xJD": {
+    "id": "v91xJD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JD",
+    "z": 7991,
+    "parent": "lmaz"
+  },
+  "v91xQD": {
+    "id": "v91xQD",
+    "parent": "lmaz",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QD",
+    "z": 4248
+  },
+  "v91xKD": {
+    "id": "v91xKD",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KD",
+    "z": 3430,
+    "parent": "lmaz"
+  },
+  "v91xAH": {
+    "id": "v91xAH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AH",
+    "z": 3266,
+    "parent": "lmaz"
+  },
+  "v91x2H": {
+    "id": "v91x2H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2H",
+    "z": 3719,
+    "parent": "lmaz"
+  },
+  "v91x3H": {
+    "id": "v91x3H",
+    "parent": "lmaz",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3H",
+    "z": 6265
+  },
+  "v91x4H": {
+    "id": "v91x4H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4H",
+    "z": 7637,
+    "parent": "lmaz"
+  },
+  "v91x5H": {
+    "id": "v91x5H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5H",
+    "z": 2175,
+    "parent": "lmaz"
+  },
+  "v91x6H": {
+    "id": "v91x6H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6H",
+    "z": 1716,
+    "parent": "lmaz"
+  },
+  "v91x7H": {
+    "id": "v91x7H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7H",
+    "z": 4954,
+    "parent": "lmaz"
+  },
+  "v91x8H": {
+    "id": "v91x8H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8H",
+    "z": 2692,
+    "parent": "lmaz"
+  },
+  "v91x9H": {
+    "id": "v91x9H",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9H",
+    "z": 4484,
+    "parent": "lmaz"
+  },
+  "v91xTH": {
+    "id": "v91xTH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TH",
+    "z": 6388,
+    "parent": "lmaz"
+  },
+  "v91xJH": {
+    "id": "v91xJH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JH",
+    "z": 6487,
+    "parent": "lmaz"
+  },
+  "v91xQH": {
+    "id": "v91xQH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QH",
+    "z": 5553,
+    "parent": "lmaz"
+  },
+  "v91xKH": {
+    "id": "v91xKH",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KH",
+    "z": 8547,
+    "parent": "lmaz"
+  },
+  "v91xAS": {
+    "id": "v91xAS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "AS",
+    "z": 6332,
+    "parent": "lmaz"
+  },
+  "v91x2S": {
+    "id": "v91x2S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "2S",
+    "z": 67,
+    "parent": "lmaz"
+  },
+  "v91x3S": {
+    "id": "v91x3S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "3S",
+    "z": 5316,
+    "parent": "lmaz"
+  },
+  "v91x4S": {
+    "id": "v91x4S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "4S",
+    "z": 646,
+    "parent": "lmaz"
+  },
+  "v91x5S": {
+    "id": "v91x5S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "5S",
+    "z": 8313,
+    "parent": "lmaz"
+  },
+  "v91x6S": {
+    "id": "v91x6S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "6S",
+    "z": 8493,
+    "parent": "lmaz"
+  },
+  "v91x7S": {
+    "id": "v91x7S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "7S",
+    "z": 179,
+    "parent": "lmaz"
+  },
+  "v91x8S": {
+    "id": "v91x8S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "8S",
+    "z": 79,
+    "parent": "lmaz"
+  },
+  "v91x9S": {
+    "id": "v91x9S",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "9S",
+    "z": 9557,
+    "parent": "lmaz"
+  },
+  "v91xTS": {
+    "id": "v91xTS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "TS",
+    "z": 432,
+    "parent": "lmaz"
+  },
+  "v91xJS": {
+    "id": "v91xJS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "JS",
+    "z": 5667,
+    "parent": "lmaz"
+  },
+  "v91xQS": {
+    "id": "v91xQS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "QS",
+    "z": 9130,
+    "parent": "lmaz"
+  },
+  "v91xKS": {
+    "id": "v91xKS",
+    "deck": "v91xD",
+    "type": "card",
+    "cardType": "KS",
+    "z": 6949,
+    "parent": "lmaz"
+  },
+  "8fr3": {
+    "type": "label",
+    "text": "Button Appearance\nText Only",
+    "css": "font-size: 60px",
+    "height": 200,
+    "width": 1000,
+    "x": 287,
+    "y": -4,
+    "z": 66,
+    "id": "8fr3"
+  },
+  "p0sg": {
+    "type": "label",
+    "text": "Default button",
+    "x": 60,
+    "y": 353,
+    "z": 44,
+    "id": "p0sg",
+    "width": 100,
+    "height": 50
+  },
+  "6tmy": {
+    "type": "label",
+    "text": "Standard button with CSS modifications and deal to position",
+    "x": 214,
+    "y": 381,
+    "z": 74,
+    "id": "6tmy",
+    "width": 250,
+    "height": 40
+  },
+  "qgc4": {
+    "type": "label",
+    "text": "Standard button with CSS modifications and flip",
+    "x": 458,
+    "y": 341,
+    "z": 76,
+    "id": "qgc4",
+    "width": 250,
+    "height": 250
+  },
+  "djsg": {
+    "type": "label",
+    "text": "CSS removes border and background and the icon is a widget property",
+    "x": 704,
+    "y": 385,
+    "z": 73,
+    "id": "djsg",
+    "width": 250,
+    "height": 70
+  },
+  "mh1x": {
+    "type": "label",
+    "text": "Another Unicode button that shows enlarged view; label does not enlarge",
+    "x": 965,
+    "y": 349,
+    "z": 56,
+    "id": "mh1x",
+    "width": 300,
+    "height": 300
+  },
+  "2rqf": {
+    "type": "label",
+    "text": "This is a counter with the buttons customized and moved and linked to label and dealing",
+    "x": 620,
+    "y": 622,
+    "z": 47,
+    "id": "2rqf",
+    "width": 250,
+    "height": 60
+  },
+  "snq7": {
+    "type": "label",
+    "text": "Another icon button showing default button border",
+    "x": 1293,
+    "y": 369,
+    "z": 81,
+    "id": "snq7",
+    "width": 250,
+    "height": 70
+  },
+  "lrms": {
+    "type": "label",
+    "text": "Standard button with CSS modifications",
+    "x": 363,
+    "y": 918,
+    "z": 67,
+    "id": "lrms",
+    "width": 250,
+    "height": 250
+  },
+  "0jx8": {
+    "image": "/assets/-546145580_2705",
+    "movable": false,
+    "layer": -2,
+    "id": "0jx8",
+    "z": 49,
+    "y": 824,
+    "x": 1067,
+    "movableInEdit": false
+  },
+  "4lvg": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 583,
+        "y": 161,
+        "count": 2,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 700,
+        "y": 161,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 817,
+        "y": 161,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 934,
+        "y": 161,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 583,
+        "y": 335,
+        "count": 2,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 700,
+        "y": 335,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 817,
+        "y": 335,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 934,
+        "y": 335,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 583,
+        "y": 509,
+        "count": 2,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 700,
+        "y": 509,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 817,
+        "y": 509,
+        "resetOwner": false
+      },
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 934,
+        "y": 509,
+        "resetOwner": false
+      }
+    ],
+    "x": 1067,
+    "y": 854,
+    "z": 60,
+    "id": "4lvg",
+    "css": "background:transparent; border-style:none"
+  },
+  "iouh": {
+    "type": "label",
+    "text": "Invisible button on top of background image",
+    "y": 771,
+    "z": 80,
+    "id": "iouh",
+    "width": 200,
+    "height": 50,
+    "x": 1018
+  },
+  "4z8b": {
+    "type": "label",
+    "text": "The same icon button changing height and width and CSS border radius",
+    "x": 1244,
+    "y": 536,
+    "z": 64,
+    "width": 340,
+    "height": 75,
+    "id": "4z8b"
+  },
+  "orrw": {
+    "type": "button",
+    "clickRoutine": [
+      {
+        "func": "MOVE",
+        "from": "v91x",
+        "to": "jdwf"
+      }
+    ],
+    "css": "font-size:40px;color:red;background-color:transparent; border-radius: 0px",
+    "x": 1403,
+    "y": 623,
+    "z": 51,
+    "id": "orrw",
+    "height": 40,
+    "width": 40,
+    "icon": {
+      "name": "east",
+      "color": "red"
+    }
+  },
+  "6n0r": {
+    "type": "button",
+    "text": "Deal to Position",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 1100,
+        "y": 700,
+        "resetOwner": false
+      }
+    ],
+    "x": 257,
+    "y": 605.5,
+    "z": 54,
+    "css": "--wcFont: white;--wcMain: black; --wcBorder:white; font-size: 30px",
+    "width": 150,
+    "height": 75,
+    "id": "6n0r",
+    "textColor": "white",
+    "backgroundColor": "black",
+    "borderColor": "white"
+  },
+  "n8gf": {
+    "type": "label",
+    "text": "If you use color variables, you should also change the on-hover variables to match your color scheme or the default on-hover colors will be used",
+    "x": 187,
+    "y": 525,
+    "z": 75,
+    "width": 300,
+    "height": 80,
+    "id": "n8gf"
+  },
+  "lmaz": {
+    "type": "pile",
+    "width": 103,
+    "height": 160,
+    "id": "lmaz",
+    "z": 9757,
+    "parent": "v91x"
+  },
+  "v7s4": {
+    "type": "label",
+    "text": "Alternatively, use standard css properties, but in that case, there will not be any on-hover funcationality.",
+    "x": 184,
+    "y": 690,
+    "z": 79,
+    "width": 300,
+    "height": 60,
+    "id": "v7s4"
+  },
+  "9pws": {
+    "type": "button",
+    "text": "Deal to Position",
+    "clickRoutine": [
+      {
+        "func": "MOVEXY",
+        "from": "v91x",
+        "x": 1100,
+        "y": 700,
+        "resetOwner": false
+      }
+    ],
+    "x": 259,
+    "y": 758.5,
+    "z": 61,
+    "css": "color: white; background: black; border-color:white; font-size: 30px",
+    "width": 150,
+    "height": 75,
+    "id": "9pws"
+  },
+  "ma9w": {
+    "text": "To change colors, you can use either the CSS property with predefined replacement words  or properties of the button itself. You do not need to and should not use both at the same time. The example buttons in the room do use both at the same time for purposes of demonstration only.",
+    "z": 63,
+    "x": 427,
+    "y": 147,
+    "width": 700,
+    "height": 150,
+    "css": "font-size:18px",
+    "id": "ma9w"
+  },
+  "jdwf": {
+    "type": "holder",
+    "id": "jdwf",
+    "x": 779.5,
+    "y": 745,
+    "width": 111,
+    "height": 168,
+    "z": 7,
+    "movable": false,
+    "onEnter": {
+      "activeFace": 1
+    }
+  }
+}

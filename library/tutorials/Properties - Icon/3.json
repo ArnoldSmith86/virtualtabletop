@@ -1,0 +1,240 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Properties - Icon",
+      "image": "/assets/1481362664_5448",
+      "rules": "",
+      "bgg": "",
+      "year": "",
+      "mode": "Tutorial",
+      "time": "0",
+      "attribution": "",
+      "lastUpdate": 1770833039980,
+      "showName": false,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
+      "variantImage": "",
+      "variant": "Advanced",
+      "language": "en-US",
+      "players": "1",
+      "usesAIImagery": false
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "notes1": {
+    "id": "notes1",
+    "y": 424,
+    "width": 250,
+    "z": 441,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is the same as the first example in the Colors variant of this tutorial except that the scale of the icon is set to 2.",
+    "x": 47
+  },
+  "notes2": {
+    "id": "notes2",
+    "y": 425,
+    "width": 250,
+    "z": 444,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "This is the same as the second example in the Colors variant of this tutorial except that the wrench is rotated 45 degrees, opacity is 0.5, and hoverOpacity is 1.",
+    "x": 343
+  },
+  "example1": {
+    "id": "example1",
+    "x": 120,
+    "y": 318,
+    "z": 448,
+    "icon": {
+      "name": "[trash]",
+      "scale": 2
+    },
+    "movable": false,
+    "color": "red",
+    "text": "Trash"
+  },
+  "example2": {
+    "id": "example2",
+    "x": 411,
+    "y": 319,
+    "z": 311,
+    "movable": false,
+    "icon": {
+      "name": "build",
+      "rotation": 45,
+      "color": "purple",
+      "opacity": 0.5,
+      "hoverOpacity": 1
+    },
+    "text": "Settings",
+    "color": "Red"
+  },
+  "header": {
+    "id": "header",
+    "x": 290,
+    "y": 1,
+    "width": 1000,
+    "height": 80,
+    "z": 26392,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "60px",
+      "color": "black"
+    },
+    "text": "Icons: Advanced",
+    "type": "label"
+  },
+  "overview": {
+    "id": "overview",
+    "x": 279,
+    "y": 84,
+    "width": 1000,
+    "z": 373,
+    "movable": false,
+    "movableInEdit": false,
+    "css": {
+      "font-size": "25px",
+      "color": "black"
+    },
+    "text": "In addition to color modifications, the advanced icon object properties allow for modifications to scale, offset location, rotation, flip, opacity, color, strokeColor, strokeWidth, hoverColor, hoverStrokeColor, hoverStrokeWidth, and hoverOpacity. Those settings apply individually to each icon."
+  },
+  "example4": {
+    "id": "example4",
+    "x": 992,
+    "y": 310,
+    "z": 449,
+    "movable": false,
+    "borderRadius": 8,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "[card_6]",
+        "scale": 1.5,
+        "offsetX": -0.6,
+        "offsetY": 1.5,
+        "rotation": -10,
+        "color": "blue"
+      },
+      {
+        "name": "[card_8]",
+        "scale": 1.5,
+        "offsetX": 0.6,
+        "offsetY": 0,
+        "rotation": 10,
+        "color": ""
+      },
+      {
+        "name": "[card_7]",
+        "scale": 1.5,
+        "offsetX": 0,
+        "offsetY": -1.6,
+        "color": "green",
+        "hoverColor": "black"
+      }
+    ]
+  },
+  "example3": {
+    "id": "example3",
+    "x": 702,
+    "y": 307,
+    "borderRadius": 8,
+    "z": 449,
+    "movable": false,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "delapouite/brick-wall",
+        "scale": 2,
+        "offsetX": 0,
+        "offsetY": 0.5,
+        "color": "red",
+        "strokeColor": "red",
+        "strokeWidth": 1,
+        "hoverColor": "brown"
+      },
+      {
+        "name": "[card_1]",
+        "offsetX": -0.1,
+        "offsetY": -1.5,
+        "strokeWidth": 0,
+        "hoverColor": "white"
+      },
+      {
+        "name": "[card_2]",
+        "offsetX": 0.1,
+        "offsetY": -1.5,
+        "strokeWidth": 0,
+        "hoverColor": "white"
+      }
+    ]
+  },
+  "notes4": {
+    "id": "notes4",
+    "x": 935,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "The widget above combines aspects of rotation, scale, offset, and hoverColor to create a custom look."
+  },
+  "notes3": {
+    "id": "notes3",
+    "x": 639,
+    "y": 425,
+    "width": 250,
+    "z": 445,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Use offsetX and offsetY to adjust where on the widget the icons appear. Depending on how many you have and the scale, you will have to adjust the numbers to find what works. This example changes hoverColor."
+  },
+  "example5": {
+    "id": "example5",
+    "x": 1283,
+    "y": 310,
+    "z": 449,
+    "movable": false,
+    "borderRadius": 8,
+    "activeFace": 1,
+    "icon": [
+      {
+        "name": "🐕‍🦺",
+        "flip": "horizontal"
+      },
+      {
+        "name": "🌲",
+        "flip": "vertical"
+      }
+    ]
+  },
+  "notes5": {
+    "id": "notes5",
+    "x": 1231,
+    "y": 425,
+    "width": 250,
+    "z": 446,
+    "movable": false,
+    "css": {
+      "font-size": "19px"
+    },
+    "text": "Flip will mirror an icon around its axis. It accepts 'horizontal', 'vertical', or 'both' as values. The dog above is flipped horizontally and the tree is flipped vertically."
+  }
+}

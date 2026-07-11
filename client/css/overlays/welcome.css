@@ -113,22 +113,41 @@
   margin-top: 0;
   margin-bottom: 8px;
 }
-.mainStateDetails .material-icons {
+.mainStateDetails .material-symbols {
   top: 5px;
   position: relative;
 }
-.mainStateDetails .hidden {
+.mainStateDetails .hidden,
+#linkDetailsOverlay .hidden {
   display: none;
 }
-.mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span {
+.mainStateDetails .star, .mainStateDetails .mainStateImage > i, .mainStateImage span:not(.ai-badge) {
   position: absolute;
-  font-size: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
   background: none;
   text-shadow: 2px 2px 4px #444;
 }
+.mainStateImage .ai-badge {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--VTTblue);
+  font-weight: bold;
+  font-size: 14px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 0 0 0 10px;
+  text-shadow: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.mainStateImage .ai-badge:not(.hidden) {
+  display: block;
+}
 .mainStateDetails .star::before {
-  font-size: 50px;
-  width: 50px;
+  font-size: calc(var(--mainDetailsHeight) * var(--starSize));
+  width: calc(var(--mainDetailsHeight) * var(--starSize));
 }
 .mainStateDetails .mainStateImage > i {
   top: unset;
@@ -138,11 +157,11 @@
 .mainStateImage .active.star, .mainStateImage .active.star + span {
   color: gold;
 }
-.mainStateImage span {
+.mainStateImage span:not(.ai-badge) {
   position: absolute;
-  font-size: 16px;
-  top: 51px;
-  width: 62px;
+  top: calc(var(--starOffset) + 100% * var(--starSize));
+  width: calc(var(--starSize) * 100%);
+  font-size: calc(var(--mainDetailsHeight) * 0.08);
   text-align: center;
   color: white;
   font-weight: bold;
@@ -153,7 +172,7 @@
 }
 
 
-@media (min-width: 1200px) and (min-height: 750px) {
+@media (min-width: 1400px) and (min-height: 875px) {
   #linkDetailsOverlay {
     justify-content: center;
   }
@@ -175,7 +194,7 @@
     font-size: 14px;
     margin-right: 10px;
   }
-  .mainStateDetails .material-icons {
+  .mainStateDetails .material-symbols {
     font-size: 18px;
     top: 3px;
   }
@@ -205,10 +224,19 @@
     float: left;
     margin-right: 10px;
   }
+  .mainStateImage {
+    border-radius: 10px;
+  }
+  .mainStateImage.has-ai-badge img {
+    border-top-right-radius: 12px;
+  }
   .mainStateImage img, .mainStateImage > div {
     height: var(--mainDetailsHeight);
     width: var(--mainDetailsHeight);
     border-radius: 10px;
+  }
+  .mainStateImage .ai-badge {
+    border-radius: 0 10px 0 10px;
   }
 
   #linkDetailsOverlay .addToRoomBox {
@@ -229,8 +257,11 @@
     padding: unset;
     margin: unset;
   }
-  .mainStateImage .star, .mainStateImage .star + span {
+  .mainStateImage .star, .mainStateImage .star + span, .mainStateImage .ai-badge:not(.hidden) {
     display: none;
+  }
+  .mainStateImage.has-ai-badge img {
+    border-top-right-radius: 10px;
   }
   #linkDetailsOverlay > .mainStateDetails i {
     font-size: 32px;

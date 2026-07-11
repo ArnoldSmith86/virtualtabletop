@@ -10,6 +10,9 @@ let draggingDragButton = null;
 let widgetRectangles = null;
 
 export function editInputHandler(name, e) {
+  if(e.touches && e.touches.length == 2)
+    hideSelectionRectangle();
+
   const isRightMouseButton = name.startsWith('mouse') && (e.button == 2 || e.buttons == 2);
   if(isRightMouseButton) {
     $('#editorToolbar [icon=highlight_alt]').classList.toggle('active', !selectionModeActive);
@@ -20,7 +23,7 @@ export function editInputHandler(name, e) {
       }, 0);
     }
   }
-  if((selectionModeActive == isRightMouseButton || isOverlayActive()) && e.target.parentNode.id != 'editorDragToolbar' && !draggingDragButton)
+  if((selectionModeActive == isRightMouseButton || isOverlayActive()) && (!e.target.parentNode || e.target.parentNode.id != 'editorDragToolbar') && !draggingDragButton)
     return;
 
   const coords = eventCoords(name, e);
@@ -167,9 +170,7 @@ function setSelection(newSelectedWidgets) {
 export async function editClick(widget) {
   if(selectedWidgets.indexOf(widget) == -1) {
     setSelection([ widget ]);
-  } else {
-    setDeltaCause(`${getPlayerDetails().playerName} clicked ${widget.id} in editor`);
-    await widget.click();
+    return true;
   }
 }
 

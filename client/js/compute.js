@@ -658,6 +658,13 @@ const compute_ops = [
     hash: '0f1f81e18571c2b22e227c988a37b189'
   },
   {
+    name: 'sum',
+    desc: 'calculates the sum of the elements of an array',
+    sample: 'var a = sum ${x}',
+    call: function(v, x) { return v = x.reduce((partialSum, a) => partialSum + a, 0) },
+    hash: '5d35252c8e9878db26ba1f5f0cc2093a'
+  },
+  {
     name: 'join',
     desc: 'returns the array x as a combined string with values separated by an optional separator y, defaulting to comma',
     sample: 'var a = ${x} join ${y}',
