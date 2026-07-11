@@ -3257,6 +3257,20 @@ class PropertiesModule extends SidebarModule {
     // number-looking text turns into a number so comparisons and counts behave as expected
     const parseLooseValue = text => text.match(/^-?[0-9]+(\.[0-9]+)?$/) ? +text : text;
 
+    // splits a routine expression string into its code and its trailing "// comment" (if any),
+    // ignoring "//" inside the single-quoted strings the routine language uses (see widget.js evaluateRoutine)
+    const splitLineComment = text => {
+      let inString = false;
+      for(let i = 0; i < text.length - 1; i++) {
+        const c = text[i];
+        if(c == '\'' && text[i-1] != '\\')
+          inString = !inString;
+        else if(!inString && c == '/' && text[i+1] == '/')
+          return { code: text.slice(0, i).replace(/\s+$/, ''), comment: text.slice(i+2) };
+      }
+      return { code: text, comment: null };
+    };
+
     const parseWidgetIDs = text => {
       const ids = text.split(',').map(id => id.trim()).filter(id => id.length);
       if(!ids.length)
@@ -3509,10 +3523,27 @@ class PropertiesModule extends SidebarModule {
       const wrap = div(body, 'automationComment');
       const renderStatic = () => {
         wrap.innerHTML = '';
-        const text = document.createElement('span');
-        text.className = 'automationCommentText';
-        text.textContent = step === '' ? '(empty comment)' : step;
-        wrap.appendChild(text);
+        const { code, comment } = splitLineComment(step);
+        const content = div(wrap, 'automationExpressionText');
+        if(code !== '') {
+          const codeSpan = document.createElement('span');
+          codeSpan.className = 'automationCodeText';
+          codeSpan.textContent = code;
+          content.appendChild(codeSpan);
+        }
+        if(comment !== null) {
+          if(code !== '')
+            content.appendChild(document.createTextNode(' '));
+          const commentSpan = document.createElement('span');
+          commentSpan.className = 'automationCommentText';
+          commentSpan.textContent = `//${comment}`;
+          content.appendChild(commentSpan);
+        } else if(code === '') {
+          const emptySpan = document.createElement('span');
+          emptySpan.className = 'automationCommentText';
+          emptySpan.textContent = '(empty comment)';
+          content.appendChild(emptySpan);
+        }
         const editButton = document.createElement('button');
         editButton.setAttribute('icon', 'edit');
         editButton.className = 'automationParamButton';
@@ -3549,7 +3580,7 @@ class PropertiesModule extends SidebarModule {
 
       const title = document.createElement('span');
       title.className = 'automationBlockTitle';
-      title.textContent = isObjectLike(step) ? (step.func || 'step') : 'comment';
+      title.textContent = isObjectLike(step) ? (step.func || 'step') : (typeof step === 'string' && splitLineComment(step).code !== '' ? 'expression' : 'comment');
       blockHeader.appendChild(title);
 
       const body = div(block, 'automationBlockBody');

@@ -301,10 +301,16 @@
   color: #666;
 }
 
+.tune.editorModule .automationBlocks,
+.tune.editorModule .automationBlocks * {
+  box-sizing: border-box;
+}
+
 .tune.editorModule .automationBlocks {
   margin-top: 6px;
   padding-left: 10px;
   border-left: 2px solid #ddd;
+  max-width: 100%;
 }
 
 .tune.editorModule .automationBlock {
@@ -313,12 +319,16 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #fff;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .tune.editorModule .automationBlockHeader {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .tune.editorModule .automationBlockHeader button {
@@ -348,6 +358,7 @@
 
 .tune.editorModule .automationBlockBody {
   margin-top: 2px;
+  min-width: 0;
 }
 
 .tune.editorModule .automationAddParam,
@@ -356,14 +367,18 @@
   align-items: center;
   gap: 4px;
   margin-top: 4px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .tune.editorModule .automationAddParam input {
   width: 100px;
+  max-width: 100%;
 }
 
 .tune.editorModule .automationExpressionInput {
   width: 95%;
+  max-width: 100%;
   font-family: monospace;
 }
 
@@ -372,10 +387,13 @@
   align-items: center;
   gap: 4px;
   margin-top: 2px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .tune.editorModule .automationParam > label {
   width: 90px;
+  max-width: 100%;
   flex-shrink: 0;
   font-size: 12px;
   overflow-wrap: anywhere;
@@ -386,18 +404,21 @@
 }
 
 .tune.editorModule .automationParamInput {
-  flex: 1;
+  flex: 1 1 120px;
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .tune.editorModule .automationParamInput input[type=text],
 .tune.editorModule .automationParamInput input[type=number],
 .tune.editorModule .automationParamInput select,
 .tune.editorModule .automationParamInput textarea {
-  flex: 1;
+  flex: 1 1 40px;
   min-width: 40px;
+  max-width: 100%;
   font-size: 12px;
 }
 
@@ -432,16 +453,19 @@
   gap: 4px;
   margin-top: 2px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .tune.editorModule .automationIfSentence input {
-  flex: 1;
+  flex: 1 1 60px;
   min-width: 60px;
+  max-width: 100%;
   font-size: 12px;
 }
 
 .tune.editorModule .automationNested {
   margin-top: 4px;
+  min-width: 0;
 }
 
 .tune.editorModule .automationNestedLabel {
@@ -453,19 +477,32 @@
 .tune.editorModule .automationNestedList {
   padding-left: 8px;
   border-left: 2px solid #e5e5e5;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .tune.editorModule .automationComment {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.tune.editorModule .automationExpressionText {
+  flex: 1 1 60px;
+  min-width: 0;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.tune.editorModule .automationCodeText {
+  font-family: monospace;
 }
 
 .tune.editorModule .automationCommentText {
-  flex: 1;
   color: #999;
   font-style: italic;
-  font-size: 12px;
   overflow-wrap: anywhere;
 }
 
