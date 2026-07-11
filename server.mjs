@@ -66,6 +66,8 @@ function getEmptyRoomID() {
 }
 
 function roomExists(roomID) {
+  if(!String(roomID).match(/^[A-Za-z0-9_-]+$/))
+    return false;
   return activeRooms.has(roomID) || fs.existsSync(savedir + '/rooms/' + roomID + '.json');
 }
 

@@ -31,7 +31,7 @@ export default class Player {
       this.trace('messageReceived', { func, args });
 
     const disabledWhileLocked = [ 'addStateToPublicLibrary', 'editState', 'loadState', 'moveStateWithinPublicLibrary', 'removeState', 'saveState', 'setGameSettings', 'setRedirect', 'toggleStateStar', 'unlinkState' ];
-    if(this.room.state._meta.locked && !this.room.isAdmin(this.collection) && disabledWhileLocked.indexOf(func) != -1)
+    if(disabledWhileLocked.indexOf(func) != -1 && this.room.state._meta.locked && !this.room.isAdmin(this.collection))
       return this.send('error', 'This room is locked. Only the room admin can do this.');
 
     try {

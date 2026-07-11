@@ -410,7 +410,7 @@ export default class Room {
 
   hashSecret(secret) {
     const salt = this.state._meta.security && this.state._meta.security.salt || '';
-    return crypto.createHash('sha256').update(salt + String(secret)).digest('hex');
+    return crypto.scryptSync(String(secret), salt, 32).toString('hex');
   }
 
   isAdmin(collection) {
