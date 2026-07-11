@@ -15,9 +15,7 @@ let enlargePreviewIndex = 0;
 let optionOverrides = null;
 let touchActive = false;
 let longTouchHandled = false;
-let touchMoveBound = null;
-let mouseMoveBound = null;
-let mouseUpBound = null;
+let rightClickActive = false;
 let longTouchTimer = null;
 let currentMenu = null;
 let descriptionPopoverOwner = null;
@@ -467,49 +465,11 @@ export function closeContextMenu() {
   if (popup) popup.classList.add('hidden');
   const styleEl = $('#contextMenuStyle');
   if (styleEl) removeFromDOM(styleEl);
-  if (touchMoveBound) {
-    document.removeEventListener('touchmove', touchMoveBound);
-    touchMoveBound = null;
-  }
-  if (mouseMoveBound) {
-    document.removeEventListener('mousemove', mouseMoveBound);
-    mouseMoveBound = null;
-  }
-  if (mouseUpBound) {
-    document.removeEventListener('mouseup', mouseUpBound);
-    mouseUpBound = null;
-  }
 }
 
-function isOverPopup(clientX, clientY) {
+function isPopupOpen() {
   const popup = $(`#${CONTEXT_POPUP_ID}`);
-  if (!popup || popup.classList.contains('hidden'))
-    return false;
-  return document.elementsFromPoint(clientX, clientY).some(el => el.closest && el.closest('.contextMenuPopupBg'));
-}
-
-function startRightClickHold() {
-  mouseMoveBound = (e) => updateHoveredWidget(e.clientX, e.clientY);
-  mouseUpBound = (e) => {
-    if (e.button === 2) {
-      document.removeEventListener('mousemove', mouseMoveBound);
-      document.removeEventListener('mouseup', mouseUpBound);
-      mouseMoveBound = null;
-      mouseUpBound = null;
-      if (shouldClosePopupOnRelease()) closeContextMenu();
-    }
-  };
-  document.addEventListener('mousemove', mouseMoveBound);
-  document.addEventListener('mouseup', mouseUpBound);
-}
-
-function closePopupAndStartHold(clientX, clientY) {
-  if (isOverPopup(clientX, clientY))
-    return; // the popup has priority: right-clicking it does not close it or trigger widgets below
-  closeContextMenu();
-  if (widgetAtPoint(clientX, clientY))
-    return; // the contextmenu event on that widget reopens the popup and starts its own hold
-  startRightClickHold();
+  return popup && !popup.classList.contains('hidden');
 }
 
 function shouldClosePopupOnRelease() {
@@ -522,47 +482,92 @@ function updateHoveredWidget(clientX, clientY) {
     openContextMenu(w);
 }
 
-export function handleContextMenu(e, widget) {
-  e.preventDefault();
-  const popup = $(`#${CONTEXT_POPUP_ID}`);
-  if (popup && !popup.classList.contains('hidden')) {
-    e.stopPropagation();
-    closePopupAndStartHold(e.clientX, e.clientY);
-    return;
-  }
-  if (!widget) {
-    const target = e.target;
-    let el = target;
-    while (el && (!el.id || el.id.slice(0, 2) !== 'w_' || !widgets.has(unescapeID(el.id.slice(2)))))
-      el = el.parentNode;
-    if (!el) return;
-    widget = widgets.get(unescapeID(el.id.slice(2)));
-  }
+// walks from the innermost widget outwards so cards fall through to their holder/pile
+function handleWidgetContextMenu(e) {
+  for (let el = e.target; el; el = el.parentNode) {
+    if (!el.id || el.id.slice(0, 2) !== 'w_' || !widgets.has(unescapeID(el.id.slice(2))))
+      continue;
+    const widget = widgets.get(unescapeID(el.id.slice(2)));
 
-  if (document.body.classList.contains('jsonEdit')) {
-    widget.showEnlarged(e);
-    return; // the JSON editor uses right-click for widget selection and debugging clicks
-  }
-
-  if (Array.isArray(widget.get('rightClickRoutine'))) {
-    e.stopPropagation();
-    batchStart();
-    setDeltaCause(`${playerName} right-clicked ${widget.id}`);
-    widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
-    return;
-  }
-
-  if (!hasPopupTriggers(widget)) {
-    if (widget.get('enlarge')) {
-      e.stopPropagation();
-      widget.showEnlarged(e);
+    if (Array.isArray(widget.get('rightClickRoutine'))) {
+      batchStart();
+      setDeltaCause(`${playerName} right-clicked ${widget.id}`);
+      widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
+      return true;
     }
-    return; // without stopPropagation an enclosing widget (holder, pile) gets its turn
+
+    if (hasPopupTriggers(widget)) {
+      openContextMenu(widget);
+      return true;
+    }
+
+    if (widget.get('enlarge')) {
+      widget.showEnlarged(e);
+      return true;
+    }
+  }
+  return false;
+}
+
+// called by inputHandler in mousehandling.js outside of edit mode and JSON editor sessions;
+// returning true consumes the event so the regular widget interaction is skipped
+export function handleContextMenuInput(name, e) {
+  if (name === 'contextmenu')
+    return handleWidgetContextMenu(e);
+
+  // interactions with the popup itself never get here: its own listeners stop propagation
+  if (name === 'mousedown' && e.button === 2) {
+    closeContextMenu();
+    rightClickActive = true;
+    return true;
   }
 
-  e.stopPropagation();
-  openContextMenu(widget);
-  startRightClickHold();
+  if (name === 'mouseup' && e.button === 2) {
+    rightClickActive = false;
+    if (shouldClosePopupOnRelease())
+      closeContextMenu();
+    return true;
+  }
+
+  if (name === 'mousemove' && rightClickActive) {
+    if (!(e.buttons & 2)) {
+      rightClickActive = false; // the release happened outside the window
+      return false;
+    }
+    updateHoveredWidget(e.clientX, e.clientY);
+    return true;
+  }
+
+  if (name === 'touchmove' && touchActive) {
+    if (e.touches.length)
+      updateHoveredWidget(e.touches[0].clientX, e.touches[0].clientY);
+    return true;
+  }
+
+  if (name === 'touchstart' && e.touches.length === 1 && !isPopupOpen()) {
+    // a long touch on empty space allows moving onto widgets to open their popup
+    const t = e.touches[0];
+    if (!widgetAtPoint(t.clientX, t.clientY)) {
+      if (longTouchTimer) clearTimeout(longTouchTimer);
+      longTouchTimer = setTimeout(() => {
+        longTouchTimer = null;
+        touchActive = true;
+        updateHoveredWidget(t.clientX, t.clientY);
+      }, 500);
+    }
+    return false;
+  }
+
+  if ((name === 'touchend' || name === 'touchcancel') && e.touches.length === 0) {
+    if (longTouchTimer) {
+      clearTimeout(longTouchTimer);
+      longTouchTimer = null;
+    }
+    onTouchEndContextMenu();
+    return false;
+  }
+
+  return false;
 }
 
 export function onLongTouch(widget) {
@@ -590,11 +595,6 @@ export function onLongTouch(widget) {
   touchActive = true;
   widget.domElement.classList.add('longtouch');
   openContextMenu(widget);
-
-  touchMoveBound = (e) => {
-    if (e.touches.length) updateHoveredWidget(e.touches[0].clientX, e.touches[0].clientY);
-  };
-  document.addEventListener('touchmove', touchMoveBound, { passive: true });
 }
 
 export function onTouchEndContextMenu() {
@@ -602,22 +602,18 @@ export function onTouchEndContextMenu() {
   if (!touchActive) return;
   if (shouldClosePopupOnRelease()) closeContextMenu();
   touchActive = false;
-  if (touchMoveBound) {
-    document.removeEventListener('touchmove', touchMoveBound);
-    touchMoveBound = null;
-  }
 }
 
 onLoad(function() {
   const popupEl = $(`#${CONTEXT_POPUP_ID}`);
   if (popupEl) {
+    // interactions with the popup itself are kept away from the room's input handler;
+    // events outside the popup background bubble to inputHandler in mousehandling.js
     popupEl.addEventListener('mousedown', e => {
-      if (e.button === 2) {
-        e.preventDefault();
+      if (e.target.closest('.contextMenuPopupBg') || e.target.closest(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`)) {
         e.stopPropagation();
-        closePopupAndStartHold(e.clientX, e.clientY);
-      } else {
-        e.stopPropagation();
+        if (e.button === 2)
+          e.preventDefault(); // the popup has priority: right-clicking it does nothing
       }
     });
     popupEl.addEventListener('touchstart', e => {
@@ -631,40 +627,6 @@ onLoad(function() {
       e.stopPropagation();
     });
   }
-  document.addEventListener('mousedown', (e) => {
-    if (e.button !== 2 || isLoading || overlayActive || document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) return;
-    e.preventDefault();
-    closePopupAndStartHold(e.clientX, e.clientY);
-  });
-  document.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1 || isLoading || overlayActive || document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit')) return;
-    const t = e.touches[0];
-    if (widgetAtPoint(t.clientX, t.clientY)) return;
-    if (longTouchTimer) clearTimeout(longTouchTimer);
-    longTouchTimer = setTimeout(() => {
-      longTouchTimer = null;
-      touchActive = true;
-      touchMoveBound = (ev) => {
-        if (ev.touches.length) updateHoveredWidget(ev.touches[0].clientX, ev.touches[0].clientY);
-      };
-      document.addEventListener('touchmove', touchMoveBound, { passive: true });
-      updateHoveredWidget(t.clientX, t.clientY);
-    }, 500);
-  }, { passive: true });
-  document.addEventListener('touchend', (e) => {
-    if (longTouchTimer && e.touches.length === 0) {
-      clearTimeout(longTouchTimer);
-      longTouchTimer = null;
-    }
-    if (e.touches.length === 0) onTouchEndContextMenu();
-  });
-  document.addEventListener('touchcancel', (e) => {
-    if (longTouchTimer) {
-      clearTimeout(longTouchTimer);
-      longTouchTimer = null;
-    }
-    if (e.touches.length === 0) onTouchEndContextMenu();
-  });
   document.addEventListener('click', (e) => {
     const popup = $(`#${CONTEXT_POPUP_ID}`);
     const descPopover = $(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`);

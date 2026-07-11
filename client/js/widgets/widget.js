@@ -102,8 +102,11 @@ export class Widget extends StateManaged {
     this.domElement.timer = false
 
     this.domElement.addEventListener('contextmenu', e => {
-      if (document.body.classList.contains('edit')) this.showEnlarged(e);
-      else handleContextMenu(e, this);
+      // in play mode, handleContextMenuInput in mousehandling.js takes over
+      if (document.body.classList.contains('edit') || document.body.classList.contains('jsonEdit'))
+        this.showEnlarged(e);
+      else
+        e.preventDefault();
     }, false);
     this.domElement.addEventListener('mouseenter',  e => this.showEnlarged(e), false);
     this.domElement.addEventListener('mouseleave',  e => this.hideEnlarged(e), false);

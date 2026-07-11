@@ -60,7 +60,11 @@ async function inputHandler(name, e) {
   else if(name == 'mousemove' || name == 'mouseup')
     target = mouseTarget;
 
-  if(target && target.id) {
+  let contextMenuHandled = false;
+  if(!edit && !jeEnabled)
+    contextMenuHandled = handleContextMenuInput(name, e);
+
+  if(!contextMenuHandled && target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
     batchStart();
     if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
@@ -72,33 +76,26 @@ async function inputHandler(name, e) {
         await widget.mouseRaw('move', coords);
       }
     } else if(name == 'mousedown' || name == 'touchstart') {
-      // right-clicks are handled by the context menu popup, except in edit mode (selection)
-      // and with the JSON editor open (widget selection and debugging clicks)
-      const isRightButton = name === 'mousedown' && e.button === 2 && !edit && !jeEnabled;
-      if (!isRightButton) {
-        mouseStatus[target.id] = {
-          status: 'initial',
-          start: new Date(),
-          downCoords: coords,
-          moveTarget: widget
-        };
-      }
+      mouseStatus[target.id] = {
+        status: 'initial',
+        start: new Date(),
+        downCoords: coords,
+        moveTarget: widget
+      };
       const ms = mouseStatus[target.id];
-      if (ms) {
-        let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-        while (ms.moveTarget && !movable) {
-          let parent = ms.moveTarget.get('parent');
-          if(parent && widgets.has(parent)) {
-            ms.moveTarget = widgets.get(parent);
-            movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-          } else {
-            ms.moveTarget = null;
-            movable = false;
-          }
+      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+      while (ms.moveTarget && !movable) {
+        let parent = ms.moveTarget.get('parent');
+        if(parent && widgets.has(parent)) {
+          ms.moveTarget = widgets.get(parent);
+          movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
+        } else {
+          ms.moveTarget = null;
+          movable = false;
         }
-        if (movable) {
-          ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
-        }
+      }
+      if (movable) {
+        ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
     } else if((name == 'mouseup' || name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {
       const ms = mouseStatus[target.id];
