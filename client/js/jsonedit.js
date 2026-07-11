@@ -26,6 +26,7 @@ let jeTabSearchFilter = '';
 let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
+let jeTabSearchShiftTyped = false;
 let jeIgnoreBlurOnce = false;
 let jeCommandClickEvent = null;
 const jeWidgetLayers = {};
@@ -1329,7 +1330,7 @@ const jeRoutineOperationCommonParams = {
   COUNT: { collection: 'DEFAULT', variable: 'COUNT' },
   DELAY: { milliseconds: 500 },
   DELETE: { collection: 'DEFAULT' },
-  FLIP: { collection: 'DEFAULT', face: 0 },
+  FLIP: { collection: 'DEFAULT', face: null },
   FOREACH: { collection: 'DEFAULT', loopRoutine: [] },
   GET: { collection: 'DEFAULT', property: 'id', variable: 'result' },
   IF: { operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] },
@@ -3632,6 +3633,7 @@ function jeShowCommands() {
             jeTabSearchFilter = '';
             jeTabSearchHighlightIndex = -1;
             jeTabArrowKeysUsed = false;
+            jeTabSearchShiftTyped = false;
             jeShowCommands();
           } else {
             // Release Tab: execute and close
@@ -3642,7 +3644,7 @@ function jeShowCommands() {
             }
             const highlighted = $('#jeContextButtons') && $('#jeContextButtons').querySelectorAll('button.jeHighlight');
             if (highlighted && highlighted.length > 0) {
-              jeCommandClickEvent = { shiftKey: jeState.shift };
+              jeCommandClickEvent = { shiftKey: e.shiftKey && !jeTabSearchShiftTyped };
               highlighted[0].click();
             }
             jeTabSearchActive = false;
@@ -3823,8 +3825,11 @@ function jeEmpty() {
 const clickButton = async function(event) {
   if (event.isTrusted)
     jeCommandClickEvent = event;
-  await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
-  jeCommandClickEvent = null;
+  try {
+    await jeCallCommand(jeCommands.find(o => o.id == event.currentTarget.id));
+  } finally {
+    jeCommandClickEvent = null;
+  }
   jeGetContext();
   if(jeMode != 'macro' && jeMode != 'empty') {
     if((jeWidget || jeMode == 'multi') && !jeJSONerror)
@@ -3981,6 +3986,7 @@ function jeInitEventListeners() {
           jeTabSearchFilter = '';
           jeTabSearchHighlightIndex = -1;
           jeTabArrowKeysUsed = false;
+          jeTabSearchShiftTyped = false;
           jeShowCommands();
         } else {
           // Set jeTabKeyHeld when Tab is pressed while tabSearch is already active
@@ -4015,6 +4021,8 @@ function jeInitEventListeners() {
         jeShowCommands();
       } else if (e.key.length == 1 && !e.ctrlKey && !e.altKey && !e.metaKey && e.key != 'Enter') {
         jeTabSearchFilter += e.key;
+        if(e.shiftKey)
+          jeTabSearchShiftTyped = true;
         jeTabSearchHighlightIndex = 0;
         jeTabArrowKeysUsed = false;
         jeShowCommands();
@@ -4067,7 +4075,7 @@ function jeInitEventListeners() {
       if (jeTabSearchActive) {
         const buttons = $('#jeContextButtons').querySelectorAll('button.jeHighlight');
         if (buttons.length > 0) {
-          jeCommandClickEvent = { shiftKey: e.shiftKey };
+          jeCommandClickEvent = { shiftKey: e.shiftKey && !jeTabSearchShiftTyped };
           buttons[0].click();
           jeTabSearchActive = false;
           jeTabSearchFilter = '';
