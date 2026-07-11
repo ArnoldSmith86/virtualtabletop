@@ -494,8 +494,9 @@ class PropertiesModule extends SidebarModule {
         default:
           this.addHeader(widget.id);
           this.renderBasicSection(widget);
+          this.renderAutomationsSection(widget);
           this.addSubHeader('Other properties');
-          this.renderGenericProperties(widget, this.basicPropertyExcludeList());
+          this.renderGenericProperties(widget, this.basicPropertyExcludeList(this.automationProperties(widget)));
           break;
       }
     }
@@ -1591,7 +1592,10 @@ class PropertiesModule extends SidebarModule {
 
     button.onclick = e => {
       e.preventDefault();
-      expand(button);
+      if(typeof options.onActivate === 'function')
+        options.onActivate(); // the property listeners expand the section once the property is set
+      else
+        expand(button);
     };
   }
 
@@ -2882,11 +2886,188 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
+  builtInRoutineDescriptions() {
+    return {
+      clickRoutine:        'runs when the widget is clicked',
+      doubleClickRoutine:  'runs when the widget is double-clicked',
+      changeRoutine:       'runs when one of the properties of the widget changes',
+      enterRoutine:        'runs when another widget becomes a child of this widget',
+      leaveRoutine:        'runs when a child widget is moved out of this widget',
+      globalUpdateRoutine: 'runs when any property of any widget in the room changes',
+      gameStartRoutine:    'runs when a new game is started'
+    };
+  }
+
+  onXxPropertyDescriptions(widget) {
+    const descriptions = {};
+    if(widget.get('type') == 'holder') {
+      descriptions.onEnter = 'properties that are applied to widgets when they enter this holder';
+      descriptions.onLeave = 'properties that are applied to widgets when they leave this holder';
+    }
+    if(widget.get('type') == 'card')
+      descriptions.onPileCreation = 'properties that are applied to piles this card becomes part of';
+    return descriptions;
+  }
+
+  automationProperties(widget) {
+    const properties = Object.keys(this.builtInRoutineDescriptions()).concat(Object.keys(this.onXxPropertyDescriptions(widget)));
+    for(const property in widget.state)
+      if(String(property).match(/Routine$/) && properties.indexOf(property) == -1)
+        properties.push(property);
+    return properties;
+  }
+
+  renderAutomationsSection(widget) {
+    this.addSubHeader('Automations');
+
+    const section = this.createOnDemandSectionStructure(this.moduleDOM);
+    const isDeclared = property => widget.state[property] !== undefined;
+
+    const routineDescriptions = this.builtInRoutineDescriptions();
+    for(const property in routineDescriptions) {
+      this.renderOnDemandSection(widget, `add ${property}`, [ property ], container => {
+        this.renderAutomationRow(container, widget, property, routineDescriptions[property]);
+      }, section.contentWrapper, {
+        buttonHost: section.newPropertiesWrapper,
+        isPropertySet: isDeclared,
+        onActivate: () => widget.set(property, [])
+      });
+    }
+
+    // the default value of the onXx properties is {} so setting them to an empty object would be
+    // a no-op and they are edited with the generic input instead of in the JSON editor
+    const onXxDescriptions = this.onXxPropertyDescriptions(widget);
+    for(const property in onXxDescriptions) {
+      this.renderOnDemandSection(widget, `add ${property}`, [ property ], container => {
+        const row = div(container, 'automationRow');
+        div(row, 'automationDescription').textContent = onXxDescriptions[property];
+        const input = this.addInput(property, widget.state[property], v => this.inputValueUpdated(widget, property, v), row);
+        if(!this.inputUpdaters[widget.id][property])
+          this.inputUpdaters[widget.id][property] = [];
+        this.inputUpdaters[widget.id][property].push(input.setValue);
+      }, section.contentWrapper, {
+        buttonHost: section.newPropertiesWrapper,
+        isPropertySet: isDeclared
+      });
+    }
+
+    // custom named routines (any property ending in "Routine") that can be called using CALL
+    const customContainer = div(section.contentWrapper);
+    const builtInRoutines = Object.keys(routineDescriptions);
+    const renderedCustomRoutines = [];
+    const renderCustomRoutines = () => {
+      for(const property in widget.state) {
+        if(!String(property).match(/Routine$/) || builtInRoutines.indexOf(property) != -1 || renderedCustomRoutines.indexOf(property) != -1)
+          continue;
+        renderedCustomRoutines.push(property);
+        this.renderAutomationRow(customContainer, widget, property, 'custom routine that can be called using CALL');
+      }
+    };
+    renderCustomRoutines();
+    this.addDeltaListener(s => {
+      if(s[widget.id])
+        renderCustomRoutines();
+    });
+
+    const addCustomWrapper = div(section.newPropertiesWrapper, 'automationAddCustom');
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'myRoutine';
+    nameInput.title = 'Name of the new routine ("Routine" is appended if missing).';
+    addCustomWrapper.appendChild(nameInput);
+    const addButton = document.createElement('button');
+    addButton.className = 'blue';
+    addButton.textContent = 'add custom routine';
+    addCustomWrapper.appendChild(addButton);
+
+    addButton.onclick = e => {
+      e.preventDefault();
+      let name = nameInput.value.trim();
+      if(name && !name.match(/Routine$/))
+        name += 'Routine';
+      if(!name.match(/^[a-zA-Z0-9_-]+Routine$/)) {
+        nameInput.classList.add('inputError');
+        return;
+      }
+      nameInput.classList.remove('inputError');
+      if(widget.state[name] === undefined)
+        widget.set(name, []);
+      nameInput.value = '';
+    };
+  }
+
+  renderAutomationRow(container, widget, property, description) {
+    const row = div(container, 'automationRow');
+    const header = div(row, 'automationRowHeader');
+
+    const name = document.createElement('span');
+    name.className = 'automationName';
+    name.textContent = property;
+    header.appendChild(name);
+
+    const summary = document.createElement('span');
+    summary.className = 'automationSummary';
+    header.appendChild(summary);
+
+    const editButton = document.createElement('button');
+    editButton.className = 'blue';
+    editButton.setAttribute('icon', 'data_object');
+    editButton.title = 'Edit in the JSON editor.';
+    editButton.textContent = 'edit';
+    header.appendChild(editButton);
+
+    const removeButton = document.createElement('button');
+    removeButton.setAttribute('icon', 'delete');
+    removeButton.title = `Remove ${property} from the widget.`;
+    header.appendChild(removeButton);
+
+    if(description)
+      div(row, 'automationDescription').textContent = description;
+
+    this.addPropertyListener(widget, property, w => {
+      const value = w.state[property];
+      if(Array.isArray(value))
+        summary.textContent = value.length == 1 ? '1 step' : `${value.length} steps`;
+      else if(isObjectLike(value))
+        summary.textContent = Object.keys(value).length == 1 ? '1 property' : `${Object.keys(value).length} properties`;
+      else if(value !== undefined && value !== null)
+        summary.textContent = String(value);
+      else
+        summary.textContent = 'not set';
+      editButton.disabled = removeButton.disabled = value === undefined || value === null;
+    });
+
+    editButton.onclick = e => {
+      e.preventDefault();
+      this.openPropertyInJsonEditor(widget, property);
+    };
+    removeButton.onclick = e => {
+      e.preventDefault();
+      widget.set(property, null);
+    };
+  }
+
+  openPropertyInJsonEditor(widget, property) {
+    const jsonModule = sidebarModules.find(m => m.title == 'JSON');
+    if(!jsonModule)
+      return;
+
+    if(!jsonModule.moduleDOM)
+      jsonModule.openInTarget(this.moduleDOM);
+
+    if(isObjectLike(jeStateNow) && jeStateNow.id == widget.id && typeof jeStateNow[property] !== 'undefined') {
+      const currentValue = jeStateNow[property];
+      jeStateNow[property] = '###SELECT ME###';
+      jeSetAndSelect(currentValue);
+    }
+  }
+
   renderForCard(widget) {
     this.addHeader(`Card ${widget.id}`);
     this.renderBasicSection(widget);
+    this.renderAutomationsSection(widget);
     this.addSubHeader(`Card properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'deck', 'z' ]));
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'deck', 'z' ].concat(this.automationProperties(widget))));
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
     div(this.moduleDOM, '', `
@@ -2942,11 +3123,13 @@ class PropertiesModule extends SidebarModule {
       });
     }
 
+    this.renderAutomationsSection(widget);
+
     this.addSubHeader(`Deck properties`);
     div(this.moduleDOM, '', `
       <p>These are properties acting on the deck widget itself which has no influence on gameplay. These properties do not apply to the cards. Which is why this section is usually empty.</p>
     `);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'cardTypes', 'faceTemplates', 'cardDefaults', 'z' ]));
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'cardTypes', 'faceTemplates', 'cardDefaults', 'z' ].concat(this.automationProperties(widget))));
   }
 
   renderForDice(widget) {
@@ -3044,8 +3227,10 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
+    this.renderAutomationsSection(widget);
+
     this.addSubHeader(`Dice properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['faces','pipSymbols','shape3d']));
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['faces','pipSymbols','shape3d'].concat(this.automationProperties(widget))));
   }
 
   renderForHolder(widget) {
@@ -3144,8 +3329,10 @@ class PropertiesModule extends SidebarModule {
       }
     };
 
+    this.renderAutomationsSection(widget);
+
     this.addSubHeader(`Holder properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'dropTarget' ]));
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'dropTarget' ].concat(this.automationProperties(widget))));
   }
 
   renderForSpinner(widget) {
@@ -3186,8 +3373,10 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
+    this.renderAutomationsSection(widget);
+
     this.addSubHeader(`Spinner properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['options']));
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['options'].concat(this.automationProperties(widget))));
   }
 
   /**
@@ -3246,8 +3435,10 @@ class PropertiesModule extends SidebarModule {
     // On-demand with styling via ' ::placeholder' pseudo-selector in nested CSS
     this.renderOnDemandPlaceholderInput(widget);
 
+    this.renderAutomationsSection(widget);
+
     this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['css','editable', 'placeholderText', 'text' ]));
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['css','editable', 'placeholderText', 'text' ].concat(this.automationProperties(widget))));
   }
 
   renderGenericProperties(widget, exclude) {

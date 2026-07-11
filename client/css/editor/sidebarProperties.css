@@ -246,3 +246,47 @@
   justify-content: center;
   line-height: 1.4;
 }
+
+.tune.editorModule .automationRow {
+  margin-bottom: 8px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.tune.editorModule .automationRowHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tune.editorModule .automationName {
+  flex: 1;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.tune.editorModule .automationSummary {
+  color: #888;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.tune.editorModule .automationDescription {
+  color: #888;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.tune.editorModule .automationAddCustom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tune.editorModule .automationAddCustom input {
+  width: 100px;
+}
