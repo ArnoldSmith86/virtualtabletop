@@ -2917,6 +2917,30 @@ class PropertiesModule extends SidebarModule {
     return properties;
   }
 
+  customRoutineDescription(property) {
+    // some routine names are triggered by the engine (see StateManaged.set and the
+    // globalUpdateRoutine handling in widget.js) even though they are not widget defaults
+    if(property == 'editorAddToRoomRoutine')
+      return 'runs when the widget is added to the room in the editor';
+    const changeMatch = property.match(/^(.+)ChangeRoutine$/);
+    if(changeMatch)
+      return `runs when the property "${changeMatch[1]}" of the widget changes`;
+    const globalMatch = property.match(/^(.+)GlobalUpdateRoutine$/);
+    if(globalMatch)
+      return `runs when the property "${globalMatch[1]}" of any widget in the room changes`;
+    return 'custom routine that can be called using CALL';
+  }
+
+  automationInheritedValue(widget, property) {
+    // value that reaches the widget without being declared on it (deck cardDefaults, inheritFrom, ...)
+    if(widget.state[property] !== undefined)
+      return undefined;
+    const value = widget.get(property);
+    if(Array.isArray(value) || isObjectLike(value) && Object.keys(value).length)
+      return value;
+    return undefined;
+  }
+
   renderAutomationsSection(widget) {
     this.addSubHeader('Automations');
 
@@ -2925,6 +2949,12 @@ class PropertiesModule extends SidebarModule {
 
     const routineDescriptions = this.builtInRoutineDescriptions();
     for(const property in routineDescriptions) {
+      // routines that reach the widget through inheritance get an informational row instead of
+      // an "add" button because declaring [] on the widget would silently disable them
+      if(this.automationInheritedValue(widget, property) !== undefined) {
+        this.renderAutomationRow(section.contentWrapper, widget, property, routineDescriptions[property]);
+        continue;
+      }
       this.renderOnDemandSection(widget, `add ${property}`, [ property ], container => {
         this.renderAutomationRow(container, widget, property, routineDescriptions[property]);
       }, section.contentWrapper, {
@@ -2938,6 +2968,10 @@ class PropertiesModule extends SidebarModule {
     // a no-op and they are edited with the generic input instead of in the JSON editor
     const onXxDescriptions = this.onXxPropertyDescriptions(widget);
     for(const property in onXxDescriptions) {
+      if(this.automationInheritedValue(widget, property) !== undefined) {
+        this.renderAutomationRow(section.contentWrapper, widget, property, onXxDescriptions[property]);
+        continue;
+      }
       this.renderOnDemandSection(widget, `add ${property}`, [ property ], container => {
         const row = div(container, 'automationRow');
         div(row, 'automationDescription').textContent = onXxDescriptions[property];
@@ -2960,7 +2994,7 @@ class PropertiesModule extends SidebarModule {
         if(!String(property).match(/Routine$/) || builtInRoutines.indexOf(property) != -1 || renderedCustomRoutines.indexOf(property) != -1)
           continue;
         renderedCustomRoutines.push(property);
-        this.renderAutomationRow(customContainer, widget, property, 'custom routine that can be called using CALL');
+        this.renderAutomationRow(customContainer, widget, property, this.customRoutineDescription(property));
       }
     };
     renderCustomRoutines();
@@ -2980,6 +3014,12 @@ class PropertiesModule extends SidebarModule {
     addButton.textContent = 'add custom routine';
     addCustomWrapper.appendChild(addButton);
 
+    nameInput.onkeydown = e => {
+      if(e.key == 'Enter') {
+        e.preventDefault();
+        addButton.click();
+      }
+    };
     addButton.onclick = e => {
       e.preventDefault();
       let name = nameInput.value.trim();
@@ -3024,21 +3064,40 @@ class PropertiesModule extends SidebarModule {
     if(description)
       div(row, 'automationDescription').textContent = description;
 
+    const valueSummary = value => {
+      if(Array.isArray(value))
+        return value.length == 1 ? '1 step' : `${value.length} steps`;
+      if(isObjectLike(value))
+        return Object.keys(value).length == 1 ? '1 property' : `${Object.keys(value).length} properties`;
+      return String(value);
+    };
+
     this.addPropertyListener(widget, property, w => {
       const value = w.state[property];
-      if(Array.isArray(value))
-        summary.textContent = value.length == 1 ? '1 step' : `${value.length} steps`;
-      else if(isObjectLike(value))
-        summary.textContent = Object.keys(value).length == 1 ? '1 property' : `${Object.keys(value).length} properties`;
-      else if(value !== undefined && value !== null)
-        summary.textContent = String(value);
-      else
+      const inheritedValue = this.automationInheritedValue(w, property);
+      if(value !== undefined && value !== null) {
+        summary.textContent = valueSummary(value);
+        editButton.disabled = removeButton.disabled = false;
+        editButton.title = 'Edit in the JSON editor.';
+      } else if(inheritedValue !== undefined) {
+        summary.textContent = `${valueSummary(inheritedValue)} (inherited)`;
+        editButton.disabled = removeButton.disabled = true;
+        editButton.title = 'This value is inherited from another widget (for example the deck or inheritFrom). Edit it on the widget that defines it.';
+      } else {
         summary.textContent = 'not set';
-      editButton.disabled = removeButton.disabled = value === undefined || value === null;
+        editButton.disabled = false;
+        removeButton.disabled = true;
+        editButton.title = `Add an empty ${property} and edit it in the JSON editor.`;
+      }
     });
 
-    editButton.onclick = e => {
+    editButton.onclick = async e => {
       e.preventDefault();
+      if(widget.state[property] === undefined || widget.state[property] === null) {
+        if(this.automationInheritedValue(widget, property) !== undefined)
+          return;
+        await widget.set(property, []);
+      }
       this.openPropertyInJsonEditor(widget, property);
     };
     removeButton.onclick = e => {
@@ -3051,6 +3110,9 @@ class PropertiesModule extends SidebarModule {
     const jsonModule = sidebarModules.find(m => m.title == 'JSON');
     if(!jsonModule)
       return;
+
+    if(selectedWidgets.length != 1 || selectedWidgets[0].id != widget.id)
+      setSelection([ widget ]);
 
     if(!jsonModule.moduleDOM)
       jsonModule.openInTarget(this.moduleDOM);
