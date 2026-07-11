@@ -761,10 +761,16 @@ class DeckEditor {
       const typeProperty = $('.typeProperty', addRow).value.trim();
       if(!objectProperty || !typeProperty)
         return;
+      const typePropertyIsNew = this.knownCardTypeProperties().indexOf(typeProperty) == -1;
       if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
         object.dynamicProperties = {};
       object.dynamicProperties[objectProperty] = typeProperty;
+      const staticValue = object[objectProperty];
       delete object[objectProperty]; // a static value would override the dynamic one
+      if(typePropertyIsNew && this.cardType !== null && this.cardTypes[this.cardType][typeProperty] === undefined) {
+        this.cardTypes[this.cardType][typeProperty] = staticValue !== undefined ? staticValue : '';
+        await this.commit('cardTypes');
+      }
       this.refreshMainCardFaces();
       await this.commit('faceTemplates');
       this.renderSidebar();
