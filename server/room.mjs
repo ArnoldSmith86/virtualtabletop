@@ -28,7 +28,7 @@ export default class Room {
     }, 5000);
   }
 
-  addPlayer(player) {
+  async addPlayer(player) {
     Logging.log(`adding player ${player.name} to room ${this.id}`);
     clearTimeout(this.unloadTimeout);
     this.players.push(player);
@@ -39,7 +39,7 @@ export default class Room {
     this.sendMetaUpdate();
     this.state._meta.deltaID = this.deltaID;
 
-    player.send('adminStatus', this.isAdmin(player.collection));
+    player.send('adminStatus', await this.isAdmin(player.collection));
 
     if(this.state._meta.redirectTo) {
       player.send('redirect', this.state._meta.redirectTo.url + '/' + this.id);
@@ -264,59 +264,59 @@ export default class Room {
     return this.state._meta.security && this.state._meta.security.adminCollection || null;
   }
 
-  collectionAction(action, args) {
+  async collectionAction(action, args) {
     const collection = typeof args.collection == 'string' ? args.collection : '';
-    const requireAdmin = _=>{
-      if(!this.isAdmin(collection))
+    const requireAdmin = async _=>{
+      if(!await this.isAdmin(collection))
         throw new Logging.UserError(403, 'You are not the admin of this room. Claim it first.');
     };
 
     if(action == 'claim') {
       if(!collection.match(/^[A-Za-z0-9_-]{6,64}$/))
         throw new Logging.UserError(403, 'Invalid collection ID.');
-      if(this.claimedBy() && !this.isAdmin(collection))
+      if(this.claimedBy() && !await this.isAdmin(collection))
         throw new Logging.UserError(403, 'This room is already claimed by another collection.');
       // prevent drive-by claiming of enumerated room IDs
       if(!this.players.some(player=>player.collection === collection))
         throw new Logging.UserError(403, 'You have to be a player in the room to claim it.');
       this.ensureSalt();
-      this.security().adminCollection = this.hashSecret(collection);
+      this.security().adminCollection = await this.hashSecret(collection);
       Logging.log(`room ${this.id} was claimed by collection ${this.claimedBy().substring(0, 8)}…`);
     } else if(action == 'unclaim') {
-      requireAdmin();
+      await requireAdmin();
       delete this.state._meta.security;
       delete this.state._meta.locked;
     } else if(action == 'setName') {
-      requireAdmin();
+      await requireAdmin();
       const name = String(args.name || '').trim().substring(0, 64);
       if(name)
         this.state._meta.roomName = name;
       else
         delete this.state._meta.roomName;
     } else if(action == 'setLocked') {
-      requireAdmin();
+      await requireAdmin();
       if(args.locked)
         this.state._meta.locked = true;
       else
         delete this.state._meta.locked;
     } else if(action == 'setPassword') {
-      requireAdmin();
+      await requireAdmin();
       if(args.password) {
         this.ensureSalt();
-        this.security().joinPassword = this.hashSecret(args.password);
+        this.security().joinPassword = await this.hashSecret(args.password);
       } else {
         delete this.security().joinPassword;
       }
     } else if(action == 'delete') {
-      requireAdmin();
-      return this.deleteRoom();
+      await requireAdmin();
+      return await this.deleteRoom();
     } else {
       throw new Logging.UserError(404, 'Unknown room action.');
     }
 
     this.writeToFilesystem();
     this.sendMetaUpdate();
-    this.sendAdminStatus();
+    await this.sendAdminStatus();
   }
 
   async copyFromRoom(sourceRoom) {
@@ -350,7 +350,7 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  deleteRoom() {
+  async deleteRoom() {
     Logging.log(`deleting room ${this.id}`);
     for(const [ stateID, state ] of Object.entries(this.state._meta.states)) {
       if(String(stateID).match(/^PL:/))
@@ -379,10 +379,10 @@ export default class Room {
     this.state._meta.deltaID = this.deltaID;
     this.broadcast('state', this.state);
     this.sendMetaUpdate();
-    this.sendAdminStatus();
+    await this.sendAdminStatus();
   }
 
-  getRoomDetails(collection) {
+  async getRoomDetails(collection) {
     const meta = this.state._meta;
     const active = meta.activeState || {};
     let game = null;
@@ -395,7 +395,7 @@ export default class Room {
       gameName: game && game.name || null,
       image: game && game.image || null,
       claimed: !!this.claimedBy(),
-      isAdmin: this.isAdmin(collection),
+      isAdmin: await this.isAdmin(collection),
       locked: !!meta.locked,
       hasPassword: !!(meta.security && meta.security.joinPassword),
       autoLink: !!meta.linkSourceRoom,
@@ -408,13 +408,27 @@ export default class Room {
       this.security().salt = crypto.randomBytes(16).toString('hex');
   }
 
+  // async so the key derivation runs in the thread pool instead of blocking the event loop;
+  // memoized per salt+secret because the collection listing checks many rooms with the same secret
   hashSecret(secret) {
     const salt = this.state._meta.security && this.state._meta.security.salt || '';
-    return crypto.scryptSync(String(secret), salt, 32).toString('hex');
+    const cacheKey = `${salt}:${secret}`;
+    if(!this.secretHashCache)
+      this.secretHashCache = {};
+    if(!this.secretHashCache[cacheKey]) {
+      if(Object.keys(this.secretHashCache).length >= 100)
+        this.secretHashCache = {};
+      this.secretHashCache[cacheKey] = new Promise((resolve, reject)=>{
+        crypto.scrypt(String(secret), salt, 32, (err, derivedKey)=>err ? reject(err) : resolve(derivedKey.toString('hex')));
+      });
+    }
+    return this.secretHashCache[cacheKey];
   }
 
-  isAdmin(collection) {
-    return !!(this.claimedBy() && collection && this.hashSecret(collection) == this.claimedBy());
+  async isAdmin(collection) {
+    if(!this.claimedBy() || !collection)
+      return false;
+    return await this.hashSecret(collection) == this.claimedBy();
   }
 
   async linkFromRoom(sourceRoom, autoLink) {
@@ -443,11 +457,11 @@ export default class Room {
     }
   }
 
-  mayJoin(collection, password) {
+  async mayJoin(collection, password) {
     const security = this.state._meta.security;
-    if(!security || !security.joinPassword || this.isAdmin(collection))
+    if(!security || !security.joinPassword || await this.isAdmin(collection))
       return true;
-    return typeof password == 'string' && this.hashSecret(password) == security.joinPassword;
+    return typeof password == 'string' && await this.hashSecret(password) == security.joinPassword;
   }
 
   publicMeta(meta) {
@@ -464,9 +478,9 @@ export default class Room {
     return this.state._meta.security;
   }
 
-  sendAdminStatus() {
+  async sendAdminStatus() {
     for(const player of this.players)
-      player.send('adminStatus', this.isAdmin(player.collection));
+      player.send('adminStatus', await this.isAdmin(player.collection));
   }
 
   async syncLinkSourceRoom() {

@@ -3,6 +3,7 @@ let isRoomAdmin = false;
 let currentRoomLocked = false;
 let roomVisitRegistered = false;
 let pendingSwitchFrom = null;
+let lastAutomaticRoomsRefresh = 0;
 
 function getCollectionID() {
   if(!roomsCollectionID) {
@@ -212,9 +213,12 @@ onLoad(function() {
     applyRoomLockState();
     if(!roomVisitRegistered)
       registerRoomVisit();
-    // keep the tiles up to date while the overlay is visible (e.g. the loaded game changed)
-    if($('#roomsOverlay').style.display != 'none')
+    // keep the tiles up to date while the overlay is visible (e.g. the loaded game changed),
+    // but throttled because meta broadcasts can be frequent and each refresh queries the server
+    if($('#roomsOverlay').style.display != 'none' && Date.now() - lastAutomaticRoomsRefresh > 5000) {
+      lastAutomaticRoomsRefresh = Date.now();
       refreshRoomsList();
+    }
   });
 
   onMessage('state', function() {

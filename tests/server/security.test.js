@@ -91,17 +91,17 @@ describe('Room security', () => {
       fs.unlinkSync(savedir + '/rooms/' + roomID + '.json');
   });
 
-  test('claiming requires a connected player with that collection', () => {
-    expect(() => room.collectionAction('claim', { collection: 'other-collection' })).toThrow(/player in the room/);
-    room.collectionAction('claim', { collection: 'admin-collection' });
-    expect(room.isAdmin('admin-collection')).toBe(true);
-    expect(room.isAdmin('other-collection')).toBe(false);
-    expect(room.isAdmin(undefined)).toBe(false);
+  test('claiming requires a connected player with that collection', async () => {
+    await expect(room.collectionAction('claim', { collection: 'other-collection' })).rejects.toThrow(/player in the room/);
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    expect(await room.isAdmin('admin-collection')).toBe(true);
+    expect(await room.isAdmin('other-collection')).toBe(false);
+    expect(await room.isAdmin(undefined)).toBe(false);
   });
 
-  test('secrets are stored as salted hashes and stripped from public meta', () => {
-    room.collectionAction('claim', { collection: 'admin-collection' });
-    room.collectionAction('setPassword', { collection: 'admin-collection', password: 'hunter2' });
+  test('secrets are stored as salted hashes and stripped from public meta', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setPassword', { collection: 'admin-collection', password: 'hunter2' });
     const security = room.state._meta.security;
     expect(security.salt).toMatch(/^[0-9a-f]{32}$/);
     expect(JSON.stringify(security)).not.toContain('admin-collection');
@@ -110,37 +110,37 @@ describe('Room security', () => {
     expect(room.publicMeta(room.state._meta).security).toBeUndefined();
   });
 
-  test('claimed rooms cannot be claimed or managed by another collection', () => {
-    room.collectionAction('claim', { collection: 'admin-collection' });
+  test('claimed rooms cannot be claimed or managed by another collection', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
     room.players.push({ name: 'evil', collection: 'evil-collection', send() {} });
-    expect(() => room.collectionAction('claim', { collection: 'evil-collection' })).toThrow(/already claimed/);
-    expect(() => room.collectionAction('setName', { collection: 'evil-collection', name: 'Hacked' })).toThrow(/not the admin/);
-    expect(() => room.collectionAction('setLocked', { collection: 'evil-collection', locked: true })).toThrow(/not the admin/);
-    expect(() => room.collectionAction('delete', { collection: 'evil-collection' })).toThrow(/not the admin/);
-    expect(() => room.collectionAction('delete', {})).toThrow(/not the admin/);
+    await expect(room.collectionAction('claim', { collection: 'evil-collection' })).rejects.toThrow(/already claimed/);
+    await expect(room.collectionAction('setName', { collection: 'evil-collection', name: 'Hacked' })).rejects.toThrow(/not the admin/);
+    await expect(room.collectionAction('setLocked', { collection: 'evil-collection', locked: true })).rejects.toThrow(/not the admin/);
+    await expect(room.collectionAction('delete', { collection: 'evil-collection' })).rejects.toThrow(/not the admin/);
+    await expect(room.collectionAction('delete', {})).rejects.toThrow(/not the admin/);
   });
 
-  test('admins can rename, lock and unclaim', () => {
-    room.collectionAction('claim', { collection: 'admin-collection' });
-    room.collectionAction('setName', { collection: 'admin-collection', name: 'My Room' });
+  test('admins can rename, lock and unclaim', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setName', { collection: 'admin-collection', name: 'My Room' });
     expect(room.state._meta.roomName).toBe('My Room');
-    room.collectionAction('setLocked', { collection: 'admin-collection', locked: true });
+    await room.collectionAction('setLocked', { collection: 'admin-collection', locked: true });
     expect(room.state._meta.locked).toBe(true);
-    room.collectionAction('unclaim', { collection: 'admin-collection' });
+    await room.collectionAction('unclaim', { collection: 'admin-collection' });
     expect(room.state._meta.security).toBeUndefined();
     expect(room.state._meta.locked).toBeUndefined();
   });
 
-  test('mayJoin enforces the join password', () => {
-    expect(room.mayJoin(undefined, undefined)).toBe(true); // no password set
-    room.collectionAction('claim', { collection: 'admin-collection' });
-    room.collectionAction('setPassword', { collection: 'admin-collection', password: 'hunter2' });
-    expect(room.mayJoin(undefined, undefined)).toBe(false);
-    expect(room.mayJoin(undefined, 'wrong')).toBe(false);
-    expect(room.mayJoin(undefined, 'hunter2')).toBe(true);
-    expect(room.mayJoin('admin-collection', undefined)).toBe(true); // admins bypass the password
-    room.collectionAction('setPassword', { collection: 'admin-collection', password: '' });
-    expect(room.mayJoin(undefined, undefined)).toBe(true);
+  test('mayJoin enforces the join password', async () => {
+    expect(await room.mayJoin(undefined, undefined)).toBe(true); // no password set
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setPassword', { collection: 'admin-collection', password: 'hunter2' });
+    expect(await room.mayJoin(undefined, undefined)).toBe(false);
+    expect(await room.mayJoin(undefined, 'wrong')).toBe(false);
+    expect(await room.mayJoin(undefined, 'hunter2')).toBe(true);
+    expect(await room.mayJoin('admin-collection', undefined)).toBe(true); // admins bypass the password
+    await room.collectionAction('setPassword', { collection: 'admin-collection', password: '' });
+    expect(await room.mayJoin(undefined, undefined)).toBe(true);
   });
 });
 
@@ -148,9 +148,10 @@ describe('Locked room enforcement', () => {
   const roomID = 'jest-test-locked-room';
   let room;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     room = testRoom(roomID);
-    room.state._meta.security = { salt: 'abc', adminCollection: room.hashSecret('admin-collection') };
+    room.state._meta.security = { salt: 'abc' };
+    room.state._meta.security.adminCollection = await room.hashSecret('admin-collection');
     room.state._meta.locked = true;
   });
 

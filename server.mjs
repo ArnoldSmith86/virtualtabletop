@@ -58,10 +58,17 @@ async function ensureRoomIsLoaded(id) {
   return true;
 }
 
+// remembering issued IDs closes the race where a second request draws the same ID
+// while the first room is still loading and neither active nor saved to disk
+const recentlyIssuedRoomIDs = new Map();
 function getEmptyRoomID() {
   let id = null;
-  while(!id || activeRooms.has(id) || fs.existsSync(savedir + '/rooms/' + id + '.json'))
+  while(!id || activeRooms.has(id) || recentlyIssuedRoomIDs.get(id) > Date.now() - 60000 || fs.existsSync(savedir + '/rooms/' + id + '.json'))
     id = Math.random().toString(36).substring(3, 7);
+  for(const [ issuedID, issuedAt ] of recentlyIssuedRoomIDs)
+    if(issuedAt < Date.now() - 60000)
+      recentlyIssuedRoomIDs.delete(issuedID);
+  recentlyIssuedRoomIDs.set(id, Date.now());
   return id;
 }
 
@@ -344,7 +351,7 @@ MinifyHTML().then(function(result) {
         if(!roomExists(roomID))
           continue;
         if(await ensureRoomIsLoaded(roomID))
-          rooms.push(activeRooms.get(roomID).getRoomDetails(req.params.collection));
+          rooms.push(await activeRooms.get(roomID).getRoomDetails(req.params.collection));
       }
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({ rooms }));
@@ -369,10 +376,10 @@ MinifyHTML().then(function(result) {
   });
 
   router.post('/api/room/:room/:action', bodyParser.json({ limit: '10kb' }), function(req, res, next) {
-    ensureRoomIsLoaded(req.params.room).then(function(isLoaded) {
+    ensureRoomIsLoaded(req.params.room).then(async function(isLoaded) {
       if(!isLoaded)
         return res.status(404).send('Invalid room.');
-      activeRooms.get(req.params.room).collectionAction(req.params.action, req.body || {});
+      await activeRooms.get(req.params.room).collectionAction(req.params.action, req.body || {});
       res.send('OK');
     }).catch(next);
   });
@@ -385,7 +392,7 @@ MinifyHTML().then(function(result) {
       if(!await ensureRoomIsLoaded(source))
         return res.status(404).send('Invalid room.');
       const sourceRoom = activeRooms.get(source);
-      if(!sourceRoom.mayJoin(req.body.collection, req.body.password))
+      if(!await sourceRoom.mayJoin(req.body.collection, req.body.password))
         return res.status(403).send('Room is password protected.');
       const targetID = getEmptyRoomID();
       await ensureRoomIsLoaded(targetID);
@@ -606,11 +613,11 @@ MinifyHTML().then(function(result) {
 
 const activeRooms = new Map();
 const ws = new WebSocket(server, serverStart, function(connection, { playerName, roomID, collection, password }) {
-  ensureRoomIsLoaded(roomID).then(function(isLoaded) {
+  ensureRoomIsLoaded(roomID).then(async function(isLoaded) {
     if(!isLoaded)
       return;
     const room = activeRooms.get(roomID);
-    if(!room.mayJoin(collection, password))
+    if(!await room.mayJoin(collection, password))
       return connection.toClient('passwordRequired', typeof password == 'string');
 
     // the connection might switch from another room without reconnecting
@@ -620,7 +627,7 @@ const ws = new WebSocket(server, serverStart, function(connection, { playerName,
     }
     const player = new Player(connection, playerName, room, collection);
     connection.currentPlayer = player;
-    room.addPlayer(player);
+    await room.addPlayer(player);
   }).catch(e=>Logging.handleGenericException(`player ${playerName} connected to room ${roomID}`, e));
 });
 
