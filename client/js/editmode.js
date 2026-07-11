@@ -261,6 +261,38 @@ function generateCounterWidgets(id, x, y) {
   ];
 }
 
+function generateLineWidgets(id, x, y) {
+  const line = {
+    type: 'line',
+    id,
+    x,
+    y,
+    width: 220,
+    height: 40,
+    lineStart: { x: 10, y: 20 },
+    lineEnd: { x: 210, y: 20 }
+  };
+
+  const stop = index=>({
+    type: 'holder',
+    id: id+'S'+index,
+    parent: id,
+    fixedParent: true,
+    movableInEdit: false,
+    lineIndex: index,
+    x: (index ? 210 : 10) - 20,
+    y: 0,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    dropTarget: { type: null },
+    dropOffsetX: 2,
+    dropOffsetY: 2
+  });
+
+  return [ line, stop(0), stop(1) ];
+}
+
 function generateTimerWidgets(id, x, y) {
   return [
     { type:'timer', id: id, x: x, y: y },
@@ -317,6 +349,7 @@ function addCompositeWidgetToAddWidgetOverlay(widgetsToAdd, onClick) {
     if(wi.type == 'deck')   w = new Deck(wi.id);
     if(wi.type == 'holder') w = new Holder(wi.id);
     if(wi.type == 'label')  w = new Label(wi.id);
+    if(wi.type == 'line')   w = new Line(wi.id);
     if(wi.type == 'pile')   w = new Pile(wi.id);
     if(wi.type == 'timer')  w = new Timer(wi.id);
     widgets.set(wi.id, w);
@@ -1184,6 +1217,14 @@ function populateAddWidgetOverlay() {
     x: 1335,
     y: 150
   });
+  // Add the composite line widget (a path with attached stops)
+  addCompositeWidgetToAddWidgetOverlay(generateLineWidgets('add-line', 1310, 420), async function() {
+    const id = generateUniqueWidgetID();
+    for(const w of generateLineWidgets(id, 1310, 420))
+      await addWidgetLocal(w);
+    return id
+  });
+
   addWidgetToAddWidgetOverlay(new BasicWidget('LineVertical'), {
     x: 1300,
     y: 325,

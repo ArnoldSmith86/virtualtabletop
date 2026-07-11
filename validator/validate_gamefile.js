@@ -104,6 +104,7 @@ const COMMON_PROPERTIES = {
     gameStartRoutine: 'routine',
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
+    lineIndex: 'number',
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',
@@ -134,6 +135,10 @@ const WIDGET_PROPERTIES = {
     Label: {
         ...COMMON_PROPERTIES,
         height: 'number', movable: 'boolean', layer: 'any', clickable: 'boolean', spellCheck: 'any', tabIndex: 'any', placeholderText: 'any', text: 'any', editable: 'any', twoRowBottomAlign: 'any'
+    },
+    Line: {
+        ...COMMON_PROPERTIES,
+        layer: 'any', movable: 'boolean', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', attachedType: 'string', connectStart: 'any', connectEnd: 'any'
     },
     Pile: {
         ...COMMON_PROPERTIES,

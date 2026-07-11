@@ -613,6 +613,7 @@ class WidgetsModule extends SidebarModule {
                 case 'dice': previewWidget = new Dice(tempId); break;
                 case 'holder': previewWidget = new Holder(tempId); break;
                 case 'label': previewWidget = new Label(tempId); break;
+                case 'line': previewWidget = new Line(tempId); break;
                 case 'pile': previewWidget = new Pile(tempId); break;
                 case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
                 case 'seat': previewWidget = new Seat(tempId); break;
@@ -861,6 +862,7 @@ class WidgetsModule extends SidebarModule {
               case 'dice': previewWidget = new Dice(tempId); break;
               case 'holder': previewWidget = new Holder(tempId); break;
               case 'label': previewWidget = new Label(tempId); break;
+              case 'line': previewWidget = new Line(tempId); break;
               case 'pile': previewWidget = new Pile(tempId); break;
               case 'scoreboard': previewWidget = new Scoreboard(tempId); break;
               case 'seat': previewWidget = new Seat(tempId); break;

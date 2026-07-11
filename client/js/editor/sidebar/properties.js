@@ -270,6 +270,7 @@ class PropertiesModule extends SidebarModule {
         case 'deck':   this.renderForDeck(widget);   break;
         case 'dice': this.renderForDice(widget); break;
         case 'holder': this.renderForHolder(widget); break;
+        case 'line': this.renderForLine(widget); break;
         case 'spinner': this.renderForSpinner(widget); break;
 
         default:
@@ -1566,6 +1567,159 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader(`Holder properties`);
     this.renderGenericProperties(widget, [ 'dropTarget' ]);
+  }
+
+  lineStopDefaults(type) {
+    if(type == 'basic')
+      return { width: 40, height: 40, movable: false, color: '#1f5ca6', borderRadius: 20 };
+    return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
+  }
+
+  renderForLine(widget) {
+    this.addHeader(`Line ${widget.id}`);
+
+    const addButton = (text, icon)=>{
+      const button = document.createElement('button');
+      button.innerText = text;
+      if(icon)
+        button.setAttribute('icon', icon);
+      this.moduleDOM.appendChild(button);
+      return button;
+    };
+
+    this.addSubHeader('Shape');
+    const straightButton = addButton('Straight');
+    const curvedButton = addButton('Curved');
+    const updateShapeButtons = widget=>{
+      straightButton.classList.toggle('selected', !widget.isCurved());
+      curvedButton.classList.toggle('selected', widget.isCurved());
+    };
+    this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
+    this.addPropertyListener(widget, 'controlEnd', updateShapeButtons);
+    straightButton.onclick = async _=>{
+      batchStart();
+      await widget.set('controlStart', null);
+      await widget.set('controlEnd', null);
+      batchEnd();
+    };
+    curvedButton.onclick = async _=>{
+      if(widget.isCurved())
+        return;
+      // start with control points a third along the line, offset perpendicularly, so the curve and its handles are visible
+      const s = widget.pointProperty('lineStart');
+      const e = widget.pointProperty('lineEnd');
+      const length = Math.hypot(e.x-s.x, e.y-s.y) || 1;
+      const normal = { x: (s.y-e.y)/length, y: (e.x-s.x)/length };
+      const offset = Math.min(length/2, 100);
+      batchStart();
+      await widget.set('controlStart', { x: Math.round(s.x + (e.x-s.x)/3 + normal.x*offset), y: Math.round(s.y + (e.y-s.y)/3 + normal.y*offset) });
+      await widget.set('controlEnd',   { x: Math.round(s.x + (e.x-s.x)*2/3 + normal.x*offset), y: Math.round(s.y + (e.y-s.y)*2/3 + normal.y*offset) });
+      batchEnd();
+    };
+
+    this.addSubHeader('Attached widgets');
+    const addStopButton = addButton('Add stop', 'add');
+    const removeStopButton = addButton('Remove stop', 'remove');
+
+    addStopButton.onclick = async _=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} added a stop to line ${widget.id} in editor`);
+      const stops = widget.attachedWidgets();
+      // copy the last stop so all attached widgets look the same
+      const template = stops.length ? JSON.parse(JSON.stringify(stops[stops.length-1].state)) : this.lineStopDefaults(widget.get('attachedType'));
+      for(const property of [ 'id', 'x', 'y', 'z' ])
+        delete template[property];
+      template.parent = widget.id;
+      template.fixedParent = true;
+      template.movableInEdit = false;
+      // insert the new stop right before the end point and renumber
+      for(let i = 0; i < stops.length; ++i)
+        await stops[i].set('lineIndex', i == stops.length-1 ? i+1 : i);
+      template.lineIndex = Math.max(stops.length-1, 0);
+      await addWidgetLocal(template);
+      await widget.updateAttachedWidgets();
+      batchEnd();
+    };
+
+    removeStopButton.onclick = async _=>{
+      const stops = widget.attachedWidgets();
+      if(stops.length <= 2)
+        return;
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} removed a stop from line ${widget.id} in editor`);
+      await removeWidgetLocal(stops[stops.length-2].get('id'));
+      const remaining = widget.attachedWidgets();
+      for(let i = 0; i < remaining.length; ++i)
+        await remaining[i].set('lineIndex', i);
+      await widget.updateAttachedWidgets();
+      batchEnd();
+    };
+
+    this.addSubHeader('Attached widget type');
+    const holderStopsButton = addButton('Card holders');
+    const basicStopsButton = addButton('Basic widgets');
+    this.addPropertyListener(widget, 'attachedType', widget=>{
+      holderStopsButton.classList.toggle('selected', widget.get('attachedType') != 'basic');
+      basicStopsButton.classList.toggle('selected', widget.get('attachedType') == 'basic');
+    });
+    const replaceStops = async type=>{
+      if(widget.get('attachedType') == type)
+        return;
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} changed attached widget type of line ${widget.id} in editor`);
+      await widget.set('attachedType', type);
+      for(const stop of widget.attachedWidgets()) {
+        const lineIndex = stop.get('lineIndex');
+        await removeWidgetLocal(stop.get('id'));
+        await addWidgetLocal(Object.assign(this.lineStopDefaults(type), {
+          parent: widget.id,
+          fixedParent: true,
+          movableInEdit: false,
+          lineIndex
+        }));
+      }
+      await widget.updateAttachedWidgets();
+      batchEnd();
+    };
+    holderStopsButton.onclick = _=>replaceStops('holder');
+    basicStopsButton.onclick = _=>replaceStops('basic');
+
+    for(const end of [ 'Start', 'End' ]) {
+      this.addSubHeader(`Connect ${end.toLowerCase()} point`);
+      const wrapper = div(this.moduleDOM, 'genericInput');
+      const select = document.createElement('select');
+      const noneOption = document.createElement('option');
+      noneOption.value = '';
+      noneOption.innerText = 'not connected';
+      select.appendChild(noneOption);
+      for(const line of widgetFilter(w=>w.get('type') == 'line' && w != widget)) {
+        const option = document.createElement('option');
+        option.value = line.get('id');
+        option.innerText = line.get('id');
+        select.appendChild(option);
+      }
+      const position = document.createElement('input');
+      position.type = 'number';
+      position.min = 0;
+      position.max = 100;
+      position.title = 'Position on the other line in percent';
+      wrapper.appendChild(select);
+      wrapper.appendChild(position);
+      wrapper.appendChild(document.createTextNode('%'));
+
+      this.addPropertyListener(widget, 'connect'+end, widget=>{
+        const connection = widget.get('connect'+end);
+        select.value = connection && connection.line ? connection.line : '';
+        position.value = connection ? Math.round((connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1))*100) : (end == 'Start' ? 0 : 100);
+        position.disabled = !connection;
+      });
+      select.onchange = position.onchange = _=>{
+        widget.set('connect'+end, select.value ? { line: select.value, position: Math.max(0, Math.min(100, +position.value || 0))/100 } : null);
+      };
+    }
+
+    this.addSubHeader('Line properties');
+    this.renderGenericProperties(widget, [ 'connectStart', 'connectEnd' ]);
   }
 
   renderForSpinner(widget) {
