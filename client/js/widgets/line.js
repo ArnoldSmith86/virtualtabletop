@@ -18,10 +18,16 @@ export class Line extends Widget {
       lineColor: '#666666',
       lineDash: null,
 
-      attachedType: 'holder',
       connectStart: null,
       connectEnd: null
     });
+  }
+
+  // the kind of widget currently attached to this line, inferred from the first stop instead
+  // of a separate property so it can never drift out of sync with what's actually attached
+  attachedWidgetType() {
+    const first = this.attachedWidgets()[0];
+    return first && first.get('type') != 'holder' ? 'basic' : 'holder';
   }
 
   applyDeltaToDOM(delta) {
@@ -210,9 +216,14 @@ export class Line extends Widget {
       this.svgElement.setAttribute('class', 'lineSVG');
       this.guideElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       this.guideElement.setAttribute('class', 'lineGuide');
+      // a wider, invisible copy of the path gives a comfortable click/select target
+      // without changing how thin the visible stroke looks
+      this.hitPathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      this.hitPathElement.setAttribute('class', 'lineHitPath');
       this.pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       this.pathElement.setAttribute('class', 'linePath');
       this.svgElement.appendChild(this.guideElement);
+      this.svgElement.appendChild(this.hitPathElement);
       this.svgElement.appendChild(this.pathElement);
       this.domElement.prepend(this.svgElement);
     }
@@ -222,15 +233,20 @@ export class Line extends Widget {
     const c1 = this.pointProperty('controlStart') || s;
     const c2 = this.pointProperty('controlEnd') || e;
 
-    this.pathElement.setAttribute('d', this.isCurved()
+    const d = this.isCurved()
       ? `M ${s.x} ${s.y} C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${e.x} ${e.y}`
-      : `M ${s.x} ${s.y} L ${e.x} ${e.y}`);
+      : `M ${s.x} ${s.y} L ${e.x} ${e.y}`;
+
+    this.pathElement.setAttribute('d', d);
     this.pathElement.setAttribute('stroke', this.get('lineColor'));
     this.pathElement.setAttribute('stroke-width', this.get('lineWidth'));
     if(this.get('lineDash'))
       this.pathElement.setAttribute('stroke-dasharray', this.get('lineDash'));
     else
       this.pathElement.removeAttribute('stroke-dasharray');
+
+    this.hitPathElement.setAttribute('d', d);
+    this.hitPathElement.setAttribute('stroke-width', Math.max(this.get('lineWidth'), 24));
 
     this.guideElement.setAttribute('d', this.isCurved()
       ? `M ${s.x} ${s.y} L ${c1.x} ${c1.y} M ${e.x} ${e.y} L ${c2.x} ${c2.y}`
@@ -289,13 +305,19 @@ export class Line extends Widget {
         batchStart();
         setDeltaCause(`${playerName} moved ${property} of ${this.id} in editor`);
         await this.set(property, { x: Math.round(local.x), y: Math.round(local.y) });
-        await this.normalizeGeometry();
         batchEnd();
       };
-      const upHandler = eUp => {
+      const upHandler = async eUp => {
         eUp.stopImmediatePropagation();
         for(const [ event, handler ] of listeners)
           window.removeEventListener(event, handler, true);
+
+        // only wrap the hit box tightly around the path once the drag ends, instead of on
+        // every move - resizing/repositioning it mid-drag caused a visible stretching effect
+        batchStart();
+        setDeltaCause(`${playerName} moved ${property} of ${this.id} in editor`);
+        await this.normalizeGeometry();
+        batchEnd();
       };
       const listeners = [
         [ 'mousemove', moveHandler ],

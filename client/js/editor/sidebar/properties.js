@@ -1640,7 +1640,7 @@ class PropertiesModule extends SidebarModule {
       setDeltaCause(`${getPlayerDetails().playerName} added a stop to line ${widget.id} in editor`);
       const stops = widget.attachedWidgets();
       // copy the last stop so all attached widgets look the same
-      const template = stops.length ? JSON.parse(JSON.stringify(stops[stops.length-1].state)) : this.lineStopDefaults(widget.get('attachedType'));
+      const template = stops.length ? JSON.parse(JSON.stringify(stops[stops.length-1].state)) : this.lineStopDefaults(widget.attachedWidgetType());
       for(const property of [ 'id', 'x', 'y', 'z' ])
         delete template[property];
       template.parent = widget.id;
@@ -1673,16 +1673,17 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Attached widget type');
     const holderStopsButton = addButton('Card holders', 'lineStopsHolder');
     const basicStopsButton = addButton('Basic widgets', 'lineStopsBasic');
-    this.addPropertyListener(widget, 'attachedType', widget=>{
-      holderStopsButton.classList.toggle('selected', widget.get('attachedType') != 'basic');
-      basicStopsButton.classList.toggle('selected', widget.get('attachedType') == 'basic');
-    });
+    const updateStopTypeButtons = _=>{
+      holderStopsButton.classList.toggle('selected', widget.attachedWidgetType() != 'basic');
+      basicStopsButton.classList.toggle('selected', widget.attachedWidgetType() == 'basic');
+    };
+    updateStopTypeButtons();
+    this.addDeltaListener(updateStopTypeButtons);
     const replaceStops = async type=>{
-      if(widget.get('attachedType') == type)
+      if(widget.attachedWidgetType() == type)
         return;
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} changed attached widget type of line ${widget.id} in editor`);
-      await widget.set('attachedType', type);
       for(const stop of widget.attachedWidgets()) {
         const lineIndex = stop.get('lineIndex');
         await this.lineReleaseStopChildren(stop);

@@ -1,6 +1,13 @@
 .widget.line {
   background: none;
   overflow: visible;
+  /* only the drawn path/handles should intercept clicks - the bounding box is
+     just for selection/layout and must not block widgets or lines beneath it */
+  pointer-events: none;
+}
+
+.widget.line > .widget {
+  pointer-events: auto;
 }
 
 .widget.line > svg.lineSVG {
@@ -18,6 +25,12 @@
   stroke-linecap: round;
 }
 
+.widget.line .lineHitPath {
+  fill: none;
+  stroke: transparent;
+  pointer-events: stroke;
+}
+
 .widget.line .lineGuide {
   fill: none;
   stroke: #1f5ca6;
@@ -26,7 +39,7 @@
   display: none;
 }
 
-.widget.line.selectedInEdit .lineGuide {
+body.edit .widget.line.selectedInEdit .lineGuide {
   display: initial;
 }
 
@@ -43,6 +56,16 @@
   box-sizing: border-box;
   cursor: move;
   z-index: 999999;
+  /* handles are an edit-mode-only affordance; hide and disable them the rest
+     of the time so a stale selection from a previous edit session can't leave
+     them visible/interactive in play mode */
+  display: none;
+  pointer-events: none;
+}
+
+body.edit .widget.line.selectedInEdit .lineHandle {
+  display: block;
+  pointer-events: auto;
 }
 
 .widget.line .lineHandle.control {
