@@ -618,6 +618,20 @@ function validateContextMenuEntries(entries, context, propertyPath, widget) {
     return problems;
 }
 
+// shared by the contextMenuOptions widget property and the CONTEXTMENU operation's equivalent props
+function isStringOrStringArray(v) {
+    return typeof v === 'string' || (Array.isArray(v) && v.every(s => typeof s === 'string'));
+}
+
+function validateWidgetIdList(v, context, propertyPath) {
+    const problems = [];
+    for (const id of asArray(v)) {
+        if (!context.widgets[id] && !String(id).includes('$'))
+            problems.push({ widget: context.widgetId, property: propertyPath, message: `widget '${id}' not found` });
+    }
+    return problems;
+}
+
 const CONTEXT_MENU_OPTION_KEYS = ['factor', 'title', 'color', 'image', 'widget'];
 
 function validateContextMenuOptions(v, context, propertyPath = []) {
@@ -634,26 +648,23 @@ function validateContextMenuOptions(v, context, propertyPath = []) {
         problems.push({ widget: context.widgetId, property: [...propertyPath, 'title'], message: 'contextMenuOptions title must be a string' });
     if (v.color !== undefined && v.color !== null && typeof v.color !== 'string')
         problems.push({ widget: context.widgetId, property: [...propertyPath, 'color'], message: 'contextMenuOptions color must be a string' });
-    if (v.image !== undefined && v.image !== null && typeof v.image !== 'string' && !(Array.isArray(v.image) && v.image.every(s => typeof s === 'string')))
+    if (v.image !== undefined && v.image !== null && !isStringOrStringArray(v.image))
         problems.push({ widget: context.widgetId, property: [...propertyPath, 'image'], message: 'contextMenuOptions image must be a string or array of strings' });
-    if (v.widget !== undefined && v.widget !== null) {
-        for (const id of asArray(v.widget)) {
-            if (!context.widgets[id] && !String(id).includes('$'))
-                problems.push({ widget: context.widgetId, property: [...propertyPath, 'widget'], message: `widget '${id}' not found` });
-        }
-    }
+    if (v.widget !== undefined && v.widget !== null)
+        problems.push(...validateWidgetIdList(v.widget, context, [...propertyPath, 'widget']));
     return problems.length ? problems : true;
 }
 
-
-function validateContextMenu(v, context, propertyPath = []) {
+// widgetOverride lets the CONTEXTMENU operation reuse this without a per-widget routine-existence
+// check: the operation's target widget is only known at runtime (it comes from a collection)
+function validateContextMenu(v, context, propertyPath = [], widgetOverride) {
     const problems = [];
     if (v === undefined || v === null) return true;
     if (!Array.isArray(v)) {
         problems.push({ widget: context.widgetId, property: propertyPath, message: 'contextMenu must be an array' });
         return problems.length ? problems : true;
     }
-    const widget = context.widgets[context.widgetId];
+    const widget = widgetOverride !== undefined ? widgetOverride : context.widgets[context.widgetId];
     problems.push(...validateContextMenuEntries(v, context, propertyPath, widget));
     return problems.length ? problems : true;
 }
@@ -736,24 +747,18 @@ const operationProps = {
     },
     'CONTEXTMENU': {
         'collection':  'inCollection',
-        'contextMenu': (v, context, propertyPath) => {
-            if (v === undefined || v === null) return true;
-            if (!Array.isArray(v)) return 'contextMenu must be an array';
-            const problems = validateContextMenuEntries(v, context, propertyPath, null);
-            return problems.length ? problems : true;
-        },
+        // the operation's target widget is only known at runtime, so this skips the
+        // per-widget routine-existence check that the contextMenu widget property does
+        'contextMenu': (v, context, propertyPath) => validateContextMenu(v, context, propertyPath, null),
         'property':    'string',
         'factor':      'number',
         'title':       'string',
         'color':       'string',
-        'image':       (v) => v === undefined || v === null || typeof v === 'string' || (Array.isArray(v) && v.every(s => typeof s === 'string')) || 'image must be string or array of strings',
-        'widget':      (v, p) => {
+        'image':       (v) => v === undefined || v === null || isStringOrStringArray(v) || 'image must be string or array of strings',
+        'widget':      (v, context, propertyPath) => {
             if (v === undefined || v === null) return true;
-            const arr = Array.isArray(v) ? v : [v];
-            for (const id of arr) {
-                if (!p.widgets[id] && !String(id).includes('$')) return `widget '${id}' not found`;
-            }
-            return true;
+            const problems = validateWidgetIdList(v, context, propertyPath);
+            return problems.length ? problems : true;
         }
     },
     'CLONE': { 

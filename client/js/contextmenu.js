@@ -37,18 +37,25 @@ function hasPopupTriggers(widget) {
     (Array.isArray(widget.get('contextMenu')) && widget.get('contextMenu').length > 0);
 }
 
-function widgetAtPoint(clientX, clientY) {
+// widgets that opt into some right-click/long-touch behavior at all (popup, rightClickRoutine or classic enlarge)
+function reactsToRightClick(widget) {
+  return hasPopupTriggers(widget) || Array.isArray(widget.get('rightClickRoutine')) || !!widget.get('enlarge');
+}
+
+function widgetsAtPoint(clientX, clientY) {
   document.body.classList.add('hitTest');
   const els = document.elementsFromPoint(clientX, clientY);
   document.body.classList.remove('hitTest');
+  const found = [];
   for (const el of els) {
-    if (el.id && el.id.slice(0, 2) === 'w_' && widgets.has(unescapeID(el.id.slice(2)))) {
-      const w = widgets.get(unescapeID(el.id.slice(2)));
-      if (hasPopupTriggers(w))
-        return w;
-    }
+    if (el.id && el.id.slice(0, 2) === 'w_' && widgets.has(unescapeID(el.id.slice(2))))
+      found.push(widgets.get(unescapeID(el.id.slice(2))));
   }
-  return null;
+  return found;
+}
+
+function widgetAtPoint(clientX, clientY) {
+  return widgetsAtPoint(clientX, clientY).find(hasPopupTriggers) || null;
 }
 
 function ensurePopup() {
@@ -517,12 +524,20 @@ export function handleContextMenuInput(name, e) {
 
   // interactions with the popup itself never get here: its own listeners stop propagation
   if (name === 'mousedown' && e.button === 2) {
+    const hitWidgets = widgetsAtPoint(e.clientX, e.clientY);
+    // a widget under the pointer that doesn't opt into any right-click behavior keeps its
+    // normal click/drag handling, exactly like before this feature existed; empty space (no
+    // widget at all) is always taken over so holding and moving onto a widget still works
+    if (hitWidgets.length > 0 && !hitWidgets.some(reactsToRightClick))
+      return false;
     closeContextMenu();
     rightClickActive = true;
     return true;
   }
 
   if (name === 'mouseup' && e.button === 2) {
+    if (!rightClickActive)
+      return false; // mousedown didn't take this over, so let the normal click go through too
     rightClickActive = false;
     if (shouldClosePopupOnRelease())
       closeContextMenu();
