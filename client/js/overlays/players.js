@@ -56,8 +56,10 @@ function announcePlayerChanges(active) {
   const fresh = Object.keys(currCount).filter(n=>!prevCount[n]);
 
   const parts = [];
-  if(gone.length == 1 && fresh.length == 1 && prevCount[gone[0]] == currCount[fresh[0]] && fresh[0] != playerName) {
-    parts.push(`${gone[0]} renamed to ${fresh[0]}`);
+  if(gone.length == 1 && fresh.length == 1 && prevCount[gone[0]] == currCount[fresh[0]]) {
+    // a self-rename is already announced by the 'rename' message handler
+    if(fresh[0] != playerName)
+      parts.push(`${gone[0]} renamed to ${fresh[0]}`);
   } else {
     for(const n of gone)
       parts.push(`${n} left`);

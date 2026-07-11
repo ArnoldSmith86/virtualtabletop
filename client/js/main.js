@@ -96,13 +96,13 @@ export function showOverlay(id, forced) {
       d.style.display = 'none';
 
   if(id) {
-    setCurrentOverlayId(id);
     const style = $(`#${id}`).style;
     const displayStyle = id == 'addOverlay' ? 'grid' : 'flex';
     style.display = !forced && style.display !== 'none' ? 'none' : displayStyle;
     overlayActive = style.display !== 'none';
     if(forced)
       overlayActive = 'forced';
+    setCurrentOverlayId(overlayActive ? id : null);
 
     //Hack to focus on the Go button for the input overlay
     if (id == 'buttonInputOverlay') {

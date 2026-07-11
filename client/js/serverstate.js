@@ -1,5 +1,5 @@
 import { toServer, onMessage } from './connection.js';
-import { setConnectionState, setStatusMessage, updateStatus } from './overlays/status.js';
+import { setConnectionState, setStatusMessage, isDisconnected, updateStatus } from './overlays/status.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
 
@@ -634,6 +634,13 @@ export function widgetFilter(callback) {
 }
 
 function updateConnectionMonitor() {
+  // while the websocket is known-closed, the reconnect loop with its "Reconnecting..." status
+  // handles recovery - the escalation below only targets zombie connections that stay open
+  if(isDisconnected()) {
+    setConnectionState(0, '', 0);
+    updateStatus();
+    return;
+  }
   const oldestAge = pendingDeltas.length ? Date.now() - pendingDeltas[0].sentAt : 0;
   if(oldestAge >= DELTA_CONFIRM_RELOAD_MS) {
     location.reload();

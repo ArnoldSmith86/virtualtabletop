@@ -2,10 +2,11 @@ import { $, onLoad } from '../domhelpers.js';
 import { onMessage, onConnectionClose } from '../connection.js';
 
 const STATUS_MESSAGE_DURATION_MS = 10000;
+const STATUS_MESSAGE_MAX = 5;
 
 let connectionState = { pendingCount: 0, state: '', msUntilReload: 0 };
 let reconnecting = false;
-let statusMessage = { message: '', icon: '', expiresAt: 0 };
+let statusMessages = []; // { message, icon, expiresAt } - each expires individually
 let playerActivity = {}; // player name -> { editMode, activeOverlay }
 let activePlayersList = [];
 let myName = null;
@@ -14,13 +15,12 @@ export function setConnectionState(pendingCount, state, msUntilReload) {
   connectionState = { pendingCount, state, msUntilReload };
 }
 
+export function isDisconnected() {
+  return reconnecting;
+}
+
 export function setStatusMessage(message, icon = '[users_settings]') {
-  const now = Date.now();
-  if(statusMessage.message && now < statusMessage.expiresAt && statusMessage.icon == icon)
-    statusMessage.message += '; ' + message;
-  else
-    statusMessage = { message, icon };
-  statusMessage.expiresAt = now + STATUS_MESSAGE_DURATION_MS;
+  statusMessages.push({ message, icon, expiresAt: Date.now() + STATUS_MESSAGE_DURATION_MS });
 }
 
 export function setActivePlayersList(active) {
@@ -63,8 +63,9 @@ function render() {
   if(connectionState.state == 'warn')
     return show(el, 'warn', 'link_off', '');
 
-  if(statusMessage.message && Date.now() < statusMessage.expiresAt)
-    return show(el, 'message', statusMessage.icon, statusMessage.message);
+  statusMessages = statusMessages.filter(m=>Date.now() < m.expiresAt).slice(-STATUS_MESSAGE_MAX);
+  if(statusMessages.length)
+    return show(el, 'message', statusMessages[statusMessages.length - 1].icon, statusMessages.map(m=>m.message).join('; '));
 
   const inEdit = Object.keys(playerActivity).filter(n=>playerActivity[n].editMode);
   if(inEdit.length)
