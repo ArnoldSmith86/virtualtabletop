@@ -700,6 +700,8 @@ const operationProps = {
         'header': v=>typeof v === 'string',
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
+        'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'block':     'boolean',
     },
     'LABEL': {
         'label': 'idArray',
