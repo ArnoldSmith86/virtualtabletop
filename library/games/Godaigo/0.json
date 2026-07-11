@@ -6697,7 +6697,7 @@
     "version": 15,
     "info": {
       "name": "Godaigo",
-      "image": "/assets/-1112185154_103110",
+      "image": "/assets/369651840_21746",
       "rules": "https://sites.google.com/view/godaigo/godaigo-rulebook",
       "bgg": "https://www.thegamecrafter.com/games/godaigo:-secret-of-the-five-elements",
       "year": "",
@@ -6717,7 +6717,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2-5"
+      "players": "2-5",
+      "usesAIImagery": true
     }
   },
   "rulesButton": {

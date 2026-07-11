@@ -1,20 +1,32 @@
 {
   "_meta": {
-    "version": 3,
+    "version": 20,
     "info": {
       "name": "Functions - SORT",
-      "image": "/assets/-1392495398_5970",
+      "image": "/assets/401978976_4042",
       "rules": "",
       "bgg": "",
       "year": "2021",
       "mode": "Tutorial",
       "time": "0",
+      "attribution": "In this tutorial, you will learn:\n- How to use a key to sort cards\n- How to set more keys for each desired sorting\n\n\n--\n\nIn this tutorial, you will learn:\n- Which keys are included in the default deck\n- How each key sorts the default deck\n\n--\n\nIn this tutorial, you will learn:\n- How to combine keys in sequential sorting to get many sorting configurations you may need.\n- This tutorial includes an exercise with anwser\n\n--\n\nIn this tutorial, you will learn:\n- How to reverse the sorting in a pile\n- How to use that to deal from and to the bottom of a pile\n\n--\n\nIn this tutorial, you will learn:\n- How to sort 5-card poker hands by rank",
+      "showName": false,
+      "lastUpdate": 1768674043000,
+      "skill": "",
+      "description": "",
+      "similarImage": "",
+      "similarName": "",
+      "similarDesigner": "",
+      "similarAwards": "",
+      "ruleText": "",
+      "helpText": "",
       "players": "1",
       "language": "en-US",
       "variant": "5) Poker hands",
-      "attribution": "In this tutorial, you will learn:\n- How to use a key to sort cards\n- How to set more keys for each desired sorting\n\n\n--\n\nIn this tutorial, you will learn:\n- Which keys are included in the default deck\n- How each key sorts the default deck\n\n--\n\nIn this tutorial, you will learn:\n- How to combine keys in sequential sorting to get many sorting configurations you may need.\n- This tutorial includes an exercise with anwser\n\n--\n\nIn this tutorial, you will learn:\n- How to reverse the sorting in a pile\n- How to use that to deal from and to the bottom of a pile\n\n--\n\nIn this tutorial, you will learn:\n- How to sort 5-card poker hands by rank",
-      "showName": false,
-      "lastUpdate": 1626879558000
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "0p23D": {
@@ -23,24 +35,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -573,7 +567,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -589,9 +582,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -1236,7 +1230,7 @@
           }
         ]
       },
-      "var handWorth = ${handArray} numericSort",
+      "var handWorth = ${handArray} numericStringSort",
       "var handHigh = ${handWorth.0}",
       "var handLow = ${handWorth.9}",
       {
@@ -1751,7 +1745,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "1P"
+    "text": "1P",
+    "height": 32
   },
   "labelhand2": {
     "type": "label",
@@ -1761,7 +1756,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "labelhand3": {
     "type": "label",
@@ -1771,7 +1767,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "labelhand4": {
     "type": "label",
@@ -1781,7 +1778,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "3K"
+    "text": "3K",
+    "height": 32
   },
   "labelhand5": {
     "type": "label",
@@ -1791,7 +1789,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "1P"
+    "text": "1P",
+    "height": 32
   },
   "labelhand6": {
     "type": "label",
@@ -1801,7 +1800,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "labelhand7": {
     "type": "label",
@@ -1811,7 +1811,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "labelhand8": {
     "type": "label",
@@ -1821,7 +1822,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "labelhand9": {
     "type": "label",
@@ -1831,7 +1833,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "labelhand10": {
     "type": "label",
@@ -1841,7 +1844,8 @@
     "y": 180,
     "z": 1,
     "css": "font-size: 30px; ",
-    "text": "HC"
+    "text": "HC",
+    "height": 32
   },
   "btn5": {
     "type": "button",

@@ -1,9 +1,15 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 20,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Logicards",
-      "lastUpdate": 1724361627512,
+      "lastUpdate": 1765595605053,
       "image": "/assets/563010823_28494",
       "showName": false,
       "time": "5",
@@ -20,10 +26,10 @@
       "ruleText": "",
       "helpText": "",
       "attribution": "<div>Room layout and original cards by D. Teuber with tweaks by ArnoldSmith86. Available as&nbsp;<span>CC BY</span><span>-NC</span><span>-ND</span> 4.0.</div><div><br></div><div><span>Icons are used under the Noun Project subscription account program license</span><span></span>.</div>",
-      "players": "1",
+      "variantImage": "",
+      "variant": "Seasons",
       "language": "en-US",
-      "variant": "",
-      "variantImage": ""
+      "players": "1"
     }
   },
   "54084aab-132f-4ea1-b3b2-e42b7b2624d6": {
@@ -57,7 +63,7 @@
   },
   "1a5007e4-c20f-40eb-88c2-226b062b06be": {
     "id": "1a5007e4-c20f-40eb-88c2-226b062b06be",
-    "z": 26756,
+    "z": 26844,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
@@ -108,7 +114,6 @@
             "fontSize": "22",
             "value": "Option 1",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 644
           },
@@ -141,7 +146,6 @@
             "fontSize": "22",
             "value": "Option 2",
             "textAlign": "center",
-            "textFont": null,
             "color": "rgb(0,0,0)",
             "width": 644
           },
@@ -292,7 +296,7 @@
   },
   "b0028429-0e48-49d6-b513-bbf809c88c36": {
     "id": "b0028429-0e48-49d6-b513-bbf809c88c36",
-    "z": 26765,
+    "z": 26853,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
@@ -305,14 +309,6 @@
     "z": 14284,
     "type": "deck",
     "cardTypes": {
-      "white": {
-        "label": "White",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#dae0df",
-        "sortingOrder": 1
-      },
       "red": {
         "label": "Red",
         "image": "/i/game-pieces/2D/Poker-2D.svg",
@@ -320,81 +316,6 @@
         "imageLabelColor": "#fff8",
         "imageColor": "#ed1b43",
         "sortingOrder": 2
-      },
-      "blue": {
-        "label": "Blue",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "10",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#5894f4",
-        "sortingOrder": 3
-      },
-      "green": {
-        "label": "Green",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "25",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#69d83a",
-        "sortingOrder": 4
-      },
-      "black": {
-        "label": "Black",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "100",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#666565",
-        "sortingOrder": 5
-      },
-      "purple": {
-        "label": "Purple",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "500",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#9458f4",
-        "sortingOrder": 6
-      },
-      "yellow": {
-        "label": "Yellow",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "1000",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ffce00",
-        "sortingOrder": 7
-      },
-      "orange": {
-        "label": "Orange",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ff7b23",
-        "sortingOrder": 8
-      },
-      "peach": {
-        "label": "Peach",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#f2948c",
-        "sortingOrder": 9
-      },
-      "teal": {
-        "label": "Teal",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#2fd1cd",
-        "sortingOrder": 10
-      },
-      "pink": {
-        "label": "Pink",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ff69b3",
-        "sortingOrder": 11
-      },
-      "brown": {
-        "label": "Brown",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#a8570e",
-        "sortingOrder": 12
       }
     },
     "faceTemplates": [
@@ -567,11 +488,11 @@
   },
   "4e7884fe-ae3c-474f-96c3-0b47f4e19287": {
     "id": "4e7884fe-ae3c-474f-96c3-0b47f4e19287",
-    "z": 26812,
+    "z": 26901,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
-    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
+    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b",
     "x": 4,
     "y": 4
   },
@@ -582,96 +503,12 @@
     "z": 14289,
     "type": "deck",
     "cardTypes": {
-      "white": {
-        "label": "White",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#dae0df",
-        "sortingOrder": 1
-      },
-      "red": {
-        "label": "Red",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "5",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ed1b43",
-        "sortingOrder": 2
-      },
-      "blue": {
-        "label": "Blue",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "10",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#5894f4",
-        "sortingOrder": 3
-      },
-      "green": {
-        "label": "Green",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "25",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#69d83a",
-        "sortingOrder": 4
-      },
-      "black": {
-        "label": "Black",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "100",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#666565",
-        "sortingOrder": 5
-      },
-      "purple": {
-        "label": "Purple",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "500",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#9458f4",
-        "sortingOrder": 6
-      },
-      "yellow": {
-        "label": "Yellow",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "1000",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ffce00",
-        "sortingOrder": 7
-      },
-      "orange": {
-        "label": "Orange",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ff7b23",
-        "sortingOrder": 8
-      },
-      "peach": {
-        "label": "Peach",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#f2948c",
-        "sortingOrder": 9
-      },
       "teal": {
         "label": "Teal",
         "image": "/i/game-pieces/2D/Poker-2D.svg",
         "imageLabelColor": "#fff8",
         "imageColor": "#2fd1cd",
         "sortingOrder": 10
-      },
-      "pink": {
-        "label": "Pink",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ff69b3",
-        "sortingOrder": 11
-      },
-      "brown": {
-        "label": "Brown",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#a8570e",
-        "sortingOrder": 12
       }
     },
     "faceTemplates": [
@@ -720,7 +557,7 @@
   },
   "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31": {
     "id": "bac9232a-5fd2-4bd7-a0b5-ac0e489d0e31",
-    "z": 26757,
+    "z": 26845,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
@@ -867,17 +704,17 @@
   },
   "35fd3cab-3b00-4c25-9849-6508fee1aa1c": {
     "id": "35fd3cab-3b00-4c25-9849-6508fee1aa1c",
-    "z": 26817,
+    "z": 26904,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
-    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b",
+    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924",
     "x": 4,
     "y": 4
   },
   "09b69230-521c-47a7-a44a-0378adf8da11": {
     "id": "09b69230-521c-47a7-a44a-0378adf8da11",
-    "z": 26766,
+    "z": 26854,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
@@ -885,7 +722,7 @@
   },
   "fcbeaff0-7d16-454f-993c-55689b925543": {
     "id": "fcbeaff0-7d16-454f-993c-55689b925543",
-    "z": 26730,
+    "z": 26818,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
@@ -893,7 +730,7 @@
   },
   "3247b0c8-c52b-4986-9ff8-c1b666816b20": {
     "id": "3247b0c8-c52b-4986-9ff8-c1b666816b20",
-    "z": 26731,
+    "z": 26819,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
@@ -910,7 +747,7 @@
   },
   "dafa88fd-f391-4f7a-8ad7-cb342865abf2": {
     "id": "dafa88fd-f391-4f7a-8ad7-cb342865abf2",
-    "z": 26758,
+    "z": 26846,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
@@ -918,7 +755,7 @@
   },
   "84719430-851b-4b45-bd3a-2bfd0d48a8ec": {
     "id": "84719430-851b-4b45-bd3a-2bfd0d48a8ec",
-    "z": 26759,
+    "z": 26847,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
@@ -947,7 +784,7 @@
   },
   "5adbb5b0-e21e-4642-ba96-5b1fc6318629": {
     "id": "5adbb5b0-e21e-4642-ba96-5b1fc6318629",
-    "z": 26760,
+    "z": 26848,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
@@ -985,7 +822,7 @@
   },
   "6185868c-7bc1-44de-b167-cb1df643a779": {
     "id": "6185868c-7bc1-44de-b167-cb1df643a779",
-    "z": 26767,
+    "z": 26855,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-f9a73779-d3a2-40f6-8aae-e9f3685fd99a",
@@ -993,7 +830,7 @@
   },
   "83d27406-83ce-424a-9b31-b23c75d115f5": {
     "id": "83d27406-83ce-424a-9b31-b23c75d115f5",
-    "z": 26732,
+    "z": 26820,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
@@ -1033,7 +870,7 @@
   },
   "e0478990-1556-4b63-887d-b1b363ad7ec3": {
     "id": "e0478990-1556-4b63-887d-b1b363ad7ec3",
-    "z": 26768,
+    "z": 26856,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
@@ -1041,7 +878,7 @@
   },
   "f2d78dcc-4841-4f3e-986b-b22f6bebfc18": {
     "id": "f2d78dcc-4841-4f3e-986b-b22f6bebfc18",
-    "z": 26769,
+    "z": 26857,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
@@ -1090,30 +927,6 @@
     "z": 14275,
     "type": "deck",
     "cardTypes": {
-      "white": {
-        "label": "White",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#dae0df",
-        "sortingOrder": 1
-      },
-      "red": {
-        "label": "Red",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "5",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ed1b43",
-        "sortingOrder": 2
-      },
-      "blue": {
-        "label": "Blue",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "10",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#5894f4",
-        "sortingOrder": 3
-      },
       "green": {
         "label": "Green",
         "image": "/i/game-pieces/2D/Poker-2D.svg",
@@ -1121,65 +934,6 @@
         "imageLabelColor": "#fff8",
         "imageColor": "#69d83a",
         "sortingOrder": 4
-      },
-      "black": {
-        "label": "Black",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "100",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#666565",
-        "sortingOrder": 5
-      },
-      "purple": {
-        "label": "Purple",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "500",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#9458f4",
-        "sortingOrder": 6
-      },
-      "yellow": {
-        "label": "Yellow",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "value": "1000",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ffce00",
-        "sortingOrder": 7
-      },
-      "orange": {
-        "label": "Orange",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ff7b23",
-        "sortingOrder": 8
-      },
-      "peach": {
-        "label": "Peach",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#f2948c",
-        "sortingOrder": 9
-      },
-      "teal": {
-        "label": "Teal",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#2fd1cd",
-        "sortingOrder": 10
-      },
-      "pink": {
-        "label": "Pink",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#ff69b3",
-        "sortingOrder": 11
-      },
-      "brown": {
-        "label": "Brown",
-        "image": "/i/game-pieces/2D/Poker-2D.svg",
-        "imageLabelColor": "#fff8",
-        "imageColor": "#a8570e",
-        "sortingOrder": 12
       }
     },
     "faceTemplates": [
@@ -1228,18 +982,18 @@
   },
   "8aca61d9-85cd-456b-8c14-e08d0d1c8f32": {
     "id": "8aca61d9-85cd-456b-8c14-e08d0d1c8f32",
-    "z": 26809,
+    "z": 26899,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
-    "parent": "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
+    "parent": "83176346-78d7-4160-98d4-51a4d896a175",
     "x": 4,
     "y": 4,
     "activeFace": 1
   },
   "8431c5ea-f9c5-409a-8297-0aa80f40ed3e": {
     "id": "8431c5ea-f9c5-409a-8297-0aa80f40ed3e",
-    "z": 26770,
+    "z": 26858,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-6aa76d70-4925-49ce-a875-9c1b721b562e",
@@ -1247,7 +1001,7 @@
   },
   "e9242097-8c9e-466f-b7d1-6002081d82fb": {
     "id": "e9242097-8c9e-466f-b7d1-6002081d82fb",
-    "z": 26761,
+    "z": 26849,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
@@ -1255,7 +1009,7 @@
   },
   "55cea4f1-52f5-4e31-856f-ae63f54e9d26": {
     "id": "55cea4f1-52f5-4e31-856f-ae63f54e9d26",
-    "z": 26733,
+    "z": 26821,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
@@ -1273,7 +1027,7 @@
   },
   "514ee438-b56d-49db-84ed-18902ccd1d20": {
     "id": "514ee438-b56d-49db-84ed-18902ccd1d20",
-    "z": 26734,
+    "z": 26822,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
@@ -1296,11 +1050,11 @@
   },
   "e6639efc-4174-4435-8957-442f2a781cba": {
     "id": "e6639efc-4174-4435-8957-442f2a781cba",
-    "z": 26813,
+    "z": 26898,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
-    "parent": "456428e4-51c1-4563-be7b-d71e2a3fb85b",
+    "parent": "dc111510-169a-461e-9ff0-102f1bd21333",
     "x": 4,
     "y": 4
   },
@@ -1447,7 +1201,7 @@
   },
   "72eb2da0-dc35-4869-b842-65eb48446869": {
     "id": "72eb2da0-dc35-4869-b842-65eb48446869",
-    "z": 26735,
+    "z": 26823,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
@@ -1476,17 +1230,17 @@
   },
   "27569c25-808f-42f2-9391-6ad2695326cf": {
     "id": "27569c25-808f-42f2-9391-6ad2695326cf",
-    "z": 26810,
+    "z": 26902,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-1871ecb0-bcf4-4f93-9150-b75d41d28ecc",
-    "parent": "dc111510-169a-461e-9ff0-102f1bd21333",
-    "x": 4,
-    "y": 4
+    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
+    "x": 6,
+    "y": 6
   },
   "c208db65-b065-4db6-8912-dd2e2edbe962": {
     "id": "c208db65-b065-4db6-8912-dd2e2edbe962",
-    "z": 26736,
+    "z": 26824,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-121703a0-7826-474f-9810-a12581a52f48",
@@ -1551,17 +1305,17 @@
   },
   "aaf17f0b-b960-47ed-9050-9ea0a6ebdc76": {
     "id": "aaf17f0b-b960-47ed-9050-9ea0a6ebdc76",
-    "z": 26815,
+    "z": 26905,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
-    "parent": "a03ac30f-f074-4529-804b-4c9021211c68",
+    "parent": "c928b918-e2dd-4c3a-89dc-6a692953049b",
     "x": 4,
     "y": 4
   },
   "2227a293-7b35-46ca-869e-aac4ac138384": {
     "id": "2227a293-7b35-46ca-869e-aac4ac138384",
-    "z": 26771,
+    "z": 26859,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
@@ -1670,7 +1424,7 @@
   },
   "268aa581-84e7-4842-89ae-47639058929d": {
     "id": "268aa581-84e7-4842-89ae-47639058929d",
-    "z": 26737,
+    "z": 26825,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
@@ -1693,11 +1447,11 @@
   },
   "e6237032-e70e-4893-b347-2aa1ec95f04d": {
     "id": "e6237032-e70e-4893-b347-2aa1ec95f04d",
-    "z": 26816,
+    "z": 26897,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-8ef24f54-6a3f-4bda-96f1-13c21d694998",
-    "parent": "7777a503-ca20-4e61-bdca-d864f60ff924",
+    "parent": "54084aab-132f-4ea1-b3b2-e42b7b2624d6",
     "x": 4,
     "y": 4
   },
@@ -1724,7 +1478,7 @@
   },
   "c3dbf505-b677-46d6-845d-908d4d57bed2": {
     "id": "c3dbf505-b677-46d6-845d-908d4d57bed2",
-    "z": 26738,
+    "z": 26826,
     "type": "card",
     "deck": "c81873d1-a878-4c86-b5f8-e5c30539224d",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
@@ -1732,7 +1486,7 @@
   },
   "b21e2b79-3b64-40bb-bcda-f654af7ea0e0": {
     "id": "b21e2b79-3b64-40bb-bcda-f654af7ea0e0",
-    "z": 26762,
+    "z": 26850,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
@@ -1740,7 +1494,7 @@
   },
   "596cd8a0-837b-4bb5-970f-6730f5fb88ce": {
     "id": "596cd8a0-837b-4bb5-970f-6730f5fb88ce",
-    "z": 26763,
+    "z": 26851,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
@@ -1748,23 +1502,23 @@
   },
   "0ab87873-160d-48d8-93c1-7201755b2176": {
     "id": "0ab87873-160d-48d8-93c1-7201755b2176",
-    "z": 26811,
+    "z": 26900,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-1af0fce6-5f73-45e3-a945-d2d59f8105b1",
-    "parent": "83176346-78d7-4160-98d4-51a4d896a175",
+    "parent": "6abafe60-792d-40e7-9a15-56ad98e4a5a7",
     "x": 4,
     "y": 4
   },
   "059cbd3b-aeb2-4d9a-a57d-bd44b291f37b": {
     "id": "059cbd3b-aeb2-4d9a-a57d-bd44b291f37b",
-    "z": 26814,
+    "z": 26903,
     "type": "card",
     "deck": "9bf0de13-e0d5-4f72-9032-4a5a5734e1c7",
     "cardType": "type-0fda5b80-ef47-4d11-88d4-ecf097a57022",
-    "parent": "9fe135e0-6a5e-4cca-8291-9e83e07625d9",
-    "x": 6,
-    "y": 6
+    "parent": "a03ac30f-f074-4529-804b-4c9021211c68",
+    "x": 4,
+    "y": 4
   },
   "386ce468-3c22-42a9-a68e-9fd11e12b271": {
     "id": "386ce468-3c22-42a9-a68e-9fd11e12b271",
@@ -1785,7 +1539,7 @@
   },
   "ad99817a-f358-4ab6-8229-a8b125f16d97": {
     "id": "ad99817a-f358-4ab6-8229-a8b125f16d97",
-    "z": 26772,
+    "z": 26860,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-0545fd01-3a49-4252-839f-0f68f8ca2bd9",
@@ -1807,7 +1561,7 @@
   },
   "5a31e10d-6686-49bd-8964-809ac15fabb0": {
     "id": "5a31e10d-6686-49bd-8964-809ac15fabb0",
-    "z": 26764,
+    "z": 26852,
     "type": "card",
     "deck": "f2bcdd00-2fc2-4f3a-b3be-e797b76704db",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",
@@ -1847,7 +1601,7 @@
   },
   "568d5fc3-75fc-41db-bbc4-b8d93f0ff5ce": {
     "id": "568d5fc3-75fc-41db-bbc4-b8d93f0ff5ce",
-    "z": 26773,
+    "z": 26861,
     "type": "card",
     "deck": "1933fabc-c12d-4214-a792-292401291d27",
     "cardType": "type-cb961120-e98f-433c-bdca-ff300a4e8e42",

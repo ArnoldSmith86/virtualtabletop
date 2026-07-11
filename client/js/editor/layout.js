@@ -52,6 +52,7 @@ function initializeEditor(currentMetaData) {
 
   renderDragToolbar(dragToolbarButtons = [
     new DragDragButton(),
+    new SettingsDragButton(),
 
     new ToolbarDivider(),
 
@@ -71,10 +72,12 @@ function initializeEditor(currentMetaData) {
     new PropertiesModule(),
     new UndoModule(),
     new JsonModule(),
+    new WidgetsModule(),
     new TreeModule(),
     new DebugModule(),
     new AssetsModule(),
-    new ToolboxModule()
+    new ToolboxModule(),
+    new GameSettingsModule()
   ]);
 
   onMessage('meta', metaReceived);
@@ -92,7 +95,6 @@ function metaReceived(data) {
 
 export function openEditor() {
   smartCloneInit();
-  setJEroutineLogging(jeRoutineLogging = true);
   for(const module of sidebarModules)
     module.onEditorOpen();
   for(const button of toolbarButtons)
