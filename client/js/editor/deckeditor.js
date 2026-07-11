@@ -606,6 +606,8 @@ class DeckEditor {
       addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`);
       const objectProps = div(sidebar, 'deckEditorProperties');
       for(const property of Object.keys(object)) {
+        if(property == 'dynamicProperties')
+          continue;
         this.addInput(property, object[property], v=>{
           if(typeof v === 'undefined')
             delete object[property];
@@ -617,12 +619,14 @@ class DeckEditor {
         }, objectProps);
       }
       addPropertyRow(sidebar, property=>{
-        if(object[property] !== undefined)
+        if(property == 'dynamicProperties' || object[property] !== undefined)
           return;
         object[property] = '';
         this.scheduleCommit('faceTemplates');
         this.renderSidebar();
       });
+
+      this.renderDynamicProperties(sidebar, object);
 
       const objectButtons = div(sidebar, 'buttonBar');
       if(object.type == 'image') {
@@ -711,6 +715,60 @@ class DeckEditor {
     deleteType.innerText = 'Delete card type';
     deleteType.onclick = _=>this.deleteCardType();
     typeButtons.append(deleteType);
+  }
+
+  knownCardTypeProperties() {
+    const properties = new Set();
+    for(const typeProperties of Object.values(this.cardTypes))
+      for(const property of Object.keys(typeProperties))
+        properties.add(property);
+    for(const face of this.faceTemplates)
+      for(const object of face.objects || [])
+        for(const property of Object.values(object.dynamicProperties || {}))
+          properties.add(property);
+    return [...properties];
+  }
+
+  renderDynamicProperties(sidebar, object) {
+    const h = document.createElement('h3');
+    h.innerText = 'Dynamic properties';
+    sidebar.append(h);
+
+    const container = div(sidebar, 'deckEditorDynamicProperties', '<p>Dynamic properties fill properties of this object from the card type, so every card type can show different text, images or colors.</p>');
+
+    for(const [ objectProperty, typeProperty ] of Object.entries(object.dynamicProperties || {})) {
+      const row = div(container, 'deckEditorDynamicProperty', `<span><b>${html(objectProperty)}</b> from card type property <b>${html(String(typeProperty))}</b></span><button icon=delete></button>`);
+      $('button', row).onclick = async _=>{
+        delete object.dynamicProperties[objectProperty];
+        if(!Object.keys(object.dynamicProperties).length)
+          delete object.dynamicProperties;
+        this.refreshMainCardFaces();
+        await this.commit('faceTemplates');
+        this.renderSidebar();
+      };
+    }
+
+    const objectPropertySuggestions = [ 'value', 'color', 'width', 'height', 'display' ].filter(p=>!(object.dynamicProperties || {})[p]);
+    const addRow = div(container, 'deckEditorAddProperty', `
+      <input class=objectProperty placeholder="object property" list=deckEditorObjectPropertySuggestions>
+      <input class=typeProperty placeholder="card type property" list=deckEditorTypePropertySuggestions>
+      <button icon=add>Add</button>
+      <datalist id=deckEditorObjectPropertySuggestions>${objectPropertySuggestions.map(p=>`<option value="${html(p)}">`).join('')}</datalist>
+      <datalist id=deckEditorTypePropertySuggestions>${this.knownCardTypeProperties().map(p=>`<option value="${html(p)}">`).join('')}</datalist>
+    `);
+    $('button', addRow).onclick = async _=>{
+      const objectProperty = $('.objectProperty', addRow).value.trim();
+      const typeProperty = $('.typeProperty', addRow).value.trim();
+      if(!objectProperty || !typeProperty)
+        return;
+      if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
+        object.dynamicProperties = {};
+      object.dynamicProperties[objectProperty] = typeProperty;
+      delete object[objectProperty]; // a static value would override the dynamic one
+      this.refreshMainCardFaces();
+      await this.commit('faceTemplates');
+      this.renderSidebar();
+    };
   }
 
   async addObject(objectTemplate) {

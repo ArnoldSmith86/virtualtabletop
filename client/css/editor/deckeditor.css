@@ -114,6 +114,34 @@ body.deckEditorActive #deckEditor {
   margin: 5px 0;
 }
 
+#deckEditorSidebar h3 {
+  margin: 10px 0 0 0;
+  font-size: 14px;
+}
+
+.deckEditorDynamicProperties p {
+  margin: 5px 0;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.deckEditorDynamicProperty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin: 2px 0;
+}
+
+.deckEditorDynamicProperty span {
+  font-size: 13px;
+}
+
+.deckEditorAddProperty input {
+  min-width: 0;
+  flex-grow: 1;
+}
+
 .deckEditorCardCount input {
   width: 60px;
 }
