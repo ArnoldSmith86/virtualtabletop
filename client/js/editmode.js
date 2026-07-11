@@ -1206,6 +1206,203 @@ function populateAddWidgetOverlay() {
 }
 // end of JSON generators
 
+// The public library deck browser: lazy-loads the deck catalog from the server
+// the first time it is opened and renders previews only when they scroll into view.
+let libraryDecksIndex = null;
+let libraryDecksObserver = null;
+let libraryDeckPreviewCounter = 0;
+const libraryDeckDetailsCache = {};
+
+function getLibraryDeckDetails(entry) {
+  const key = `${entry.library}/${entry.game}/${entry.file}/${entry.deck}`;
+  if(!libraryDeckDetailsCache[key]) {
+    const url = `${config.urlPrefix}/api/library/decks/` + [ entry.library, entry.game, entry.file, entry.deck ].map(encodeURIComponent).join('/');
+    libraryDeckDetailsCache[key] = fetch(url).then(function(response) {
+      if(!response.ok)
+        throw new Error(`Loading deck details failed with status ${response.status}.`);
+      return response.json();
+    }).catch(function(e) {
+      delete libraryDeckDetailsCache[key];
+      throw e;
+    });
+  }
+  return libraryDeckDetailsCache[key];
+}
+
+async function openLibraryDecksOverlay() {
+  showOverlay('libraryDecksOverlay');
+  if(libraryDecksIndex)
+    return;
+  libraryDecksIndex = 'loading';
+  $('#libraryDecksList').textContent = 'Loading deck list...';
+  try {
+    const response = await fetch(`${config.urlPrefix}/api/library/decks`);
+    if(!response.ok)
+      throw new Error(`Loading the deck list failed with status ${response.status}.`);
+    libraryDecksIndex = await response.json();
+  } catch(e) {
+    libraryDecksIndex = null;
+    $('#libraryDecksList').textContent = 'Loading the deck list failed. Please close the overlay and try again.';
+    return;
+  }
+  renderLibraryDecksList();
+}
+
+function renderLibraryDecksList() {
+  if(!Array.isArray(libraryDecksIndex))
+    return;
+
+  const filter = $('#libraryDecksFilter').value.trim().toLowerCase();
+  const list = $('#libraryDecksList');
+  list.innerHTML = '';
+
+  if(libraryDecksObserver)
+    libraryDecksObserver.disconnect();
+  libraryDecksObserver = new IntersectionObserver(function(observed) {
+    for(const o of observed) {
+      if(o.isIntersecting) {
+        libraryDecksObserver.unobserve(o.target);
+        const preview = $('.libraryDeckPreview', o.target);
+        renderLibraryDeckPreview(libraryDecksIndex[+o.target.dataset.index], preview).catch(function() {
+          preview.textContent = 'Preview failed to load.';
+        });
+      }
+    }
+  }, { root: list, rootMargin: '300px' });
+
+  let gameContainer = null;
+  let lastGame = null;
+  libraryDecksIndex.forEach(function(entry, index) {
+    if(filter && `${entry.gameName} ${entry.deck}`.toLowerCase().indexOf(filter) == -1)
+      return;
+    if(`${entry.library}/${entry.game}` != lastGame) {
+      lastGame = `${entry.library}/${entry.game}`;
+      gameContainer = div(list, 'libraryDeckGame', `<h2>${html(entry.gameName)}</h2>`);
+    }
+    const el = div(gameContainer, 'libraryDeckEntry', `
+      <div class="libraryDeckPreview"><span>Loading preview...</span></div>
+      <div class="libraryDeckCaption"><b>${html(entry.deck)}</b><span>${entry.cardCount} card${entry.cardCount == 1 ? '' : 's'} - ${entry.cardTypeCount} card type${entry.cardTypeCount == 1 ? '' : 's'}</span></div>
+    `);
+    el.dataset.index = index;
+    el.addEventListener('click', _=>addLibraryDeckToGame(entry));
+    libraryDecksObserver.observe(el);
+  });
+
+  if(!list.children.length)
+    list.textContent = 'No decks match your filter.';
+}
+
+// renders up to three sample cards of a deck using the real widget classes,
+// the same trick addCompositeWidgetToAddWidgetOverlay uses
+async function renderLibraryDeckPreview(entry, container) {
+  const details = await getLibraryDeckDetails(entry);
+
+  const sampleTypes = [];
+  for(const card of details.cards) {
+    if(sampleTypes.indexOf(card.cardType) == -1)
+      sampleTypes.push(card.cardType);
+    if(sampleTypes.length == 3)
+      break;
+  }
+
+  const deckID = `libraryDeckPreview${++libraryDeckPreviewCounter}`;
+  const deckWidget = new Deck(deckID);
+  widgets.set(deckID, deckWidget);
+  deckWidget.applyInitialDelta(Object.assign({}, details.deck, { id: deckID }));
+
+  const offset = Math.round(entry.cardWidth*0.4);
+  const wrapper = div(null, 'libraryDeckPreviewCards');
+  const scaled = div(wrapper, 'libraryDeckPreviewScale');
+  const cardIDs = [];
+  sampleTypes.forEach(function(cardType, i) {
+    const cardID = `${deckID}C${i}`;
+    const card = new Card(cardID);
+    widgets.set(cardID, card);
+    card.applyInitialDelta({ id: cardID, type: 'card', deck: deckID, cardType, activeFace: entry.faceCount > 1 ? 1 : 0, x: i*offset, y: 0 });
+    scaled.appendChild(card.domElement);
+    cardIDs.push(cardID);
+  });
+
+  widgets.delete(deckID);
+  for(const cardID of cardIDs)
+    widgets.delete(cardID);
+
+  const totalWidth = entry.cardWidth + offset*(sampleTypes.length-1);
+  const scale = Math.min(190/totalWidth, 150/entry.cardHeight, 1);
+  wrapper.style.width = `${Math.ceil(totalWidth*scale)}px`;
+  wrapper.style.height = `${Math.ceil(entry.cardHeight*scale)}px`;
+  scaled.style.transform = `scale(${scale})`;
+
+  container.innerHTML = '';
+  container.appendChild(wrapper);
+}
+
+// adds the deck like the "add deck" entry of the add widget overlay does:
+// a holder containing the deck, a pile with all its cards and a shuffle button
+async function addLibraryDeckToGame(entry) {
+  let details;
+  try {
+    details = await getLibraryDeckDetails(entry);
+  } catch(e) {
+    alert('Loading the deck failed. Please try again.');
+    return;
+  }
+
+  batchStart();
+  setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
+
+  let id = null;
+  const suffixes = [ 'B', 'D', 'P', ...details.cards.map((_, i)=>`C${i+1}`) ];
+  do {
+    id = generateUniqueWidgetID();
+  } while(suffixes.some(suffix=>widgets.has(id+suffix)));
+
+  const holderWidth  = entry.cardWidth  + 8;
+  const holderHeight = entry.cardHeight + 11;
+  await addWidgetLocal({
+    type: 'holder',
+    id,
+    x: Math.round(800 - holderWidth/2),
+    y: Math.round(500 - holderHeight/2),
+    width: holderWidth,
+    height: holderHeight,
+    dropTarget: { type: 'card' }
+  });
+  await addWidgetLocal({
+    id: id+'B',
+    parent: id,
+    fixedParent: true,
+    y: holderHeight,
+    width: holderWidth,
+    height: 40,
+    type: 'button',
+    text: 'Recall & Shuffle',
+    movableInEdit: false,
+
+    clickRoutine: [
+      { func: 'RECALL',  holder: '${PROPERTY parent}' },
+      { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+      { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+    ]
+  });
+
+  const deckWidth  = details.deck.width  || 86;
+  const deckHeight = details.deck.height || 86;
+  await addWidgetLocal(Object.assign({}, details.deck, {
+    id: id+'D',
+    parent: id,
+    x: Math.round((holderWidth -deckWidth )/2),
+    y: Math.round((holderHeight-deckHeight)/2)
+  }));
+  await addWidgetLocal({ type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight });
+
+  for(const [ i, card ] of details.cards.entries())
+    await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
+
+  overlayDone(id);
+  batchEnd();
+}
+
 function uploadWidget(preset) {
   uploadAsset().then(async function(asset) {
     let id;
@@ -1445,6 +1642,9 @@ export function initializeEditMode(currentMetaData) {
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
   });
+
+  on('#browseLibraryDecks', 'click', openLibraryDecksOverlay);
+  on('#libraryDecksFilter', 'input', renderLibraryDecksList);
 
   on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({

@@ -116,7 +116,10 @@
   <div id="addOverlay" class="overlay" style="display: none">
     <div class="category cards">
       <h2>Cards</h2>
-      <button class="ui-button" id="addHand">Add hand</button>
+      <div style="display: flex;justify-content: center;">
+        <button class="ui-button" id="addHand">Add hand</button>
+        <button class="ui-button" id="browseLibraryDecks">Library decks</button>
+      </div>
     </div>
     <div class="category pieces">
       <h2>Game Pieces</h2>
@@ -139,6 +142,14 @@
       <button class="ui-button" id="uploadToken">Upload Token</button>
       <button class="ui-button" id="addBasicWidget">Add Basic Widget</button>
     </div>
+  </div>
+  <div id="libraryDecksOverlay" class="overlay" style="display: none">
+    <div id="libraryDecksHeader">
+      <h1>Decks in the public library</h1>
+      <input type="text" id="libraryDecksFilter" placeholder="Filter by game or deck...">
+      <p>Click a deck to add a copy of it - including a holder, all its cards and a shuffle button - to your game.</p>
+    </div>
+    <div id="libraryDecksList"></div>
   </div>
   <div id="editorModuleOverlay" class="overlay" style="display: none">
     <div id="editorModuleInOverlay" class="editorModule"></div>
