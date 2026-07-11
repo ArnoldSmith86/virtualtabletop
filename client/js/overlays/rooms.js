@@ -9,7 +9,8 @@ function getCollectionID() {
     let id = localStorage.getItem('roomCollectionID');
     if(!id || !String(id).match(/^[A-Za-z0-9_-]{6,64}$/)) {
       // this is the admin credential for claimed rooms, so it needs a cryptographically secure source
-      id = crypto.randomUUID().replace(/-/g, '');
+      // (getRandomValues instead of randomUUID because the latter is unavailable in insecure contexts)
+      id = [...crypto.getRandomValues(new Uint8Array(16))].map(b=>b.toString(16).padStart(2, '0')).join('');
       localStorage.setItem('roomCollectionID', id);
     }
     roomsCollectionID = id;
