@@ -552,7 +552,9 @@ function validateRoutine(routine, context, propertyPath = []) {
 }
 
 function getEnumValidator(values) {
-    return v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
+    const validator = v=>values.includes(v) || `'${v}' is not in the allowed list of values: ${values.join(', ')}`;
+    validator.enumValues = values; // lets the editor offer the allowed values in a dropdown
+    return validator;
 }
 
 function getRoutineValidator(variables, collections, isolateContext = true) {
@@ -571,7 +573,7 @@ function getRoutineValidator(variables, collections, isolateContext = true) {
 }
 
 function getWidgetTypeValidator(types, canBeArray = false) {
-    return (v, context) => {
+    const validator = (v, context) => {
         if(!canBeArray && Array.isArray(v))
             return 'should not be an array';
         for(const id of asArray(v)) {
@@ -582,6 +584,8 @@ function getWidgetTypeValidator(types, canBeArray = false) {
         }
         return true;
     }
+    validator.widgetTypes = types; // lets the editor offer a widget picker filtered to these types
+    return validator;
 }
 
 function checkForDollarSign(value, context, propertyPath = []) {

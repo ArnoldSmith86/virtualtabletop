@@ -366,3 +366,113 @@
   width: 95%;
   font-family: monospace;
 }
+
+.tune.editorModule .automationParam {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.tune.editorModule .automationParam > label {
+  width: 90px;
+  flex-shrink: 0;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.tune.editorModule .automationParamUnset > label {
+  color: #999;
+}
+
+.tune.editorModule .automationParamInput {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tune.editorModule .automationParamInput input[type=text],
+.tune.editorModule .automationParamInput input[type=number],
+.tune.editorModule .automationParamInput select,
+.tune.editorModule .automationParamInput textarea {
+  flex: 1;
+  min-width: 40px;
+  font-size: 12px;
+}
+
+.tune.editorModule .automationParamButton {
+  padding: 0;
+  min-width: 20px;
+  border: 0;
+  background: transparent;
+  color: #7c7c7c;
+  cursor: pointer;
+  font-style: italic;
+  font-family: serif;
+}
+
+.tune.editorModule .automationParamButton:hover:not([disabled]) {
+  color: #1f5ca9;
+}
+
+.tune.editorModule .automationParamButton[disabled] {
+  color: #ddd;
+  cursor: default;
+}
+
+.tune.editorModule .automationParamButton.selected {
+  color: #1f5ca9;
+  font-weight: bold;
+}
+
+.tune.editorModule .automationIfSentence {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+.tune.editorModule .automationIfSentence input {
+  flex: 1;
+  min-width: 60px;
+  font-size: 12px;
+}
+
+.tune.editorModule .automationNested {
+  margin-top: 4px;
+}
+
+.tune.editorModule .automationNestedLabel {
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+}
+
+.tune.editorModule .automationNestedList {
+  padding-left: 8px;
+  border-left: 2px solid #e5e5e5;
+}
+
+.tune.editorModule .automationComment {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tune.editorModule .automationCommentText {
+  flex: 1;
+  color: #999;
+  font-style: italic;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.tune.editorModule .automationBlockJSON {
+  width: 95%;
+  min-height: 6em;
+  font-family: monospace;
+  font-size: 11px;
+  margin-top: 4px;
+}

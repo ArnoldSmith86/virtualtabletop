@@ -204,6 +204,7 @@ class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Properties', 'Edit widget properties.');
     this.widgetPicker = null;
+    this.automationExpandedRows = new Set();
   }
 
   startWidgetPicker(targetWidgetID, onPick, options = {}) {
@@ -3074,12 +3075,17 @@ class PropertiesModule extends SidebarModule {
     blocksContainer.style.display = 'none';
     let blocksExpanded = false;
     let blocksInitialized = false;
+    const expandKey = `${widget.id}::${property}`;
 
     toggleButton.onclick = async e => {
       e.preventDefault();
       if(!blocksExpanded && (widget.state[property] === undefined || widget.state[property] === null))
         await widget.set(property, []);
       blocksExpanded = !blocksExpanded;
+      if(blocksExpanded)
+        this.automationExpandedRows.add(expandKey);
+      else
+        this.automationExpandedRows.delete(expandKey);
       toggleButton.textContent = blocksExpanded ? '▼' : '▶';
       blocksContainer.style.display = blocksExpanded ? 'block' : 'none';
       if(blocksExpanded && !blocksInitialized) {
@@ -3087,6 +3093,10 @@ class PropertiesModule extends SidebarModule {
         this.renderRoutineBlocks(blocksContainer, widget, property);
       }
     };
+
+    // restore the expansion state after the module re-renders (widget picker, selection changes)
+    if(this.automationExpandedRows.has(expandKey) && Array.isArray(widget.state[property]))
+      toggleButton.onclick(new Event('click'));
 
     const valueSummary = value => {
       if(Array.isArray(value))
@@ -3155,6 +3165,27 @@ class PropertiesModule extends SidebarModule {
     return '';
   }
 
+  routineParameterSpec(func, param) {
+    const hint = typeof operationProps !== 'undefined' && operationProps[func] ? operationProps[func][param] : undefined;
+    if(String(param).match(/Routine$/) && hint != 'routineProperty')
+      return { type: 'routine' };
+    if(hint == 'boolean')
+      return { type: 'boolean' };
+    if(hint == 'number' || hint == 'positiveNumber')
+      return { type: 'number' };
+    if(hint == 'inCollection')
+      return { type: 'collection' };
+    if(hint == 'idArray')
+      return { type: 'widgets' };
+    if(hint == 'object')
+      return { type: 'json' };
+    if(typeof hint === 'function' && Array.isArray(hint.enumValues))
+      return { type: 'enum', values: hint.enumValues };
+    if(typeof hint === 'function' && Array.isArray(hint.widgetTypes))
+      return { type: 'widgets', widgetTypes: hint.widgetTypes };
+    return { type: 'text' };
+  }
+
   renderRoutineBlocks(container, widget, property) {
     const currentRoutine = () => Array.isArray(widget.state[property]) ? JSON.parse(JSON.stringify(widget.state[property])) : [];
     let renderedJSON = null;
@@ -3164,109 +3195,446 @@ class PropertiesModule extends SidebarModule {
       widget.set(property, routine);
     };
 
-    const render = () => {
+    // path elements are array indices (numbers) and parameter names of nested routines (strings)
+    const routineListAtPath = (routine, path) => {
+      let target = routine;
+      for(const key of path) {
+        if(typeof key === 'string' && (target[key] === undefined || target[key] === null))
+          target[key] = [];
+        target = target[key];
+      }
+      return target;
+    };
+
+    const changeList = (listPath, change) => {
       const routine = currentRoutine();
-      renderedJSON = JSON.stringify(routine);
-      container.innerHTML = '';
+      change(routineListAtPath(routine, listPath));
+      commit(routine);
+      render();
+    };
 
-      routine.forEach((step, index) => {
-        const block = div(container, 'automationBlock');
-        const blockHeader = div(block, 'automationBlockHeader');
+    const changeStep = (listPath, index, change, rerender = false) => {
+      const routine = currentRoutine();
+      const list = routineListAtPath(routine, listPath);
+      change(list, index);
+      commit(routine);
+      if(rerender)
+        render();
+    };
 
-        const title = document.createElement('span');
-        title.className = 'automationBlockTitle';
-        title.textContent = isObjectLike(step) ? (step.func || 'step') : 'comment / expression';
-        blockHeader.appendChild(title);
+    const setStepParam = (listPath, index, param, value, rerender = false) => {
+      changeStep(listPath, index, (list, i) => {
+        if(!isObjectLike(list[i]))
+          return;
+        if(typeof value === 'undefined')
+          delete list[i][param];
+        else
+          list[i][param] = value;
+      }, rerender);
+    };
 
-        for(const [ icon, tooltip, enabled, action ] of [
-          [ 'arrow_upward',   'Move step up',   index > 0,                  () => { const r = currentRoutine(); r.splice(index-1, 0, r.splice(index, 1)[0]); commit(r); render(); } ],
-          [ 'arrow_downward', 'Move step down', index < routine.length - 1, () => { const r = currentRoutine(); r.splice(index+1, 0, r.splice(index, 1)[0]); commit(r); render(); } ],
-          [ 'delete',         'Delete step',    true,                       () => { const r = currentRoutine(); r.splice(index, 1); commit(r); render(); } ]
-        ]) {
-          const button = document.createElement('button');
-          button.setAttribute('icon', icon);
-          button.title = tooltip;
-          button.disabled = !enabled;
-          button.onclick = e => { e.preventDefault(); action(); };
-          blockHeader.appendChild(button);
+    // collections defined anywhere in the routine (SELECT/CLONE/TURN outputs) plus the predefined ones
+    const collectCollections = (list, found) => {
+      for(const step of Array.isArray(list) ? list : []) {
+        if(!isObjectLike(step))
+          continue;
+        if([ 'SELECT', 'CLONE' ].indexOf(step.func) != -1)
+          found.add(step.collection || 'DEFAULT');
+        if(step.func == 'TURN')
+          found.add(step.collection || 'TURN');
+        for(const param in step)
+          if(String(param).match(/Routine$/) && Array.isArray(step[param]))
+            collectCollections(step[param], found);
+      }
+      return found;
+    };
+
+    const knownCollections = () => {
+      const found = collectCollections(currentRoutine(), new Set([ 'DEFAULT', 'playerSeats', 'activeSeats', 'thisButton' ]));
+      return [ ...found ];
+    };
+
+    // number-looking text turns into a number so comparisons and counts behave as expected
+    const parseLooseValue = text => text.match(/^-?[0-9]+(\.[0-9]+)?$/) ? +text : text;
+
+    const parseWidgetIDs = text => {
+      const ids = text.split(',').map(id => id.trim()).filter(id => id.length);
+      if(!ids.length)
+        return undefined;
+      return ids.length == 1 ? ids[0] : ids;
+    };
+
+    const formatWidgetIDs = value => asArray(value === undefined || value === null ? [] : value).join(', ');
+
+    const clearButtonFor = (listPath, index, param, isSet) => {
+      const button = document.createElement('button');
+      button.setAttribute('icon', 'backspace');
+      button.className = 'automationParamButton';
+      button.title = `Remove the ${param} parameter.`;
+      button.disabled = !isSet;
+      button.onclick = e => {
+        e.preventDefault();
+        setStepParam(listPath, index, param, undefined, true);
+      };
+      return button;
+    };
+
+    const variableButtonFor = (onToggle, active) => {
+      const button = document.createElement('button');
+      button.textContent = 'ƒ';
+      button.className = 'automationParamButton';
+      button.classList.toggle('selected', active);
+      button.title = 'Use a variable or expression instead of a fixed value.';
+      button.onclick = e => {
+        e.preventDefault();
+        onToggle();
+      };
+      return button;
+    };
+
+    const textInputFor = (value, placeholder, onWrite) => {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = value === undefined || value === null ? '' : String(value);
+      input.placeholder = placeholder || '';
+      input.onchange = () => onWrite(input.value);
+      return input;
+    };
+
+    const renderParamRow = (body, listPath, index, step, param, labelText = null) => {
+      const spec = this.routineParameterSpec(step.func, param);
+
+      if(spec.type == 'routine') {
+        const nestedLabels = { thenRoutine: 'then', elseRoutine: 'else', loopRoutine: 'do' };
+        const wrap = div(body, 'automationNested');
+        div(wrap, 'automationNestedLabel').textContent = labelText || nestedLabels[param] || param;
+        renderList(div(wrap, 'automationNestedList'), listPath.concat(index, param), step[param]);
+        return;
+      }
+
+      const row = div(body, 'automationParam');
+      const label = document.createElement('label');
+      label.textContent = labelText || param;
+      row.appendChild(label);
+      const inputHost = document.createElement('span');
+      inputHost.className = 'automationParamInput';
+      row.appendChild(inputHost);
+
+      const value = step[param];
+      const isSet = typeof value !== 'undefined';
+      row.classList.toggle('automationParamUnset', !isSet);
+
+      let variableMode = false;
+      if(isSet && typeof value === 'string') {
+        if(spec.type == 'number' || spec.type == 'boolean' || spec.type == 'json')
+          variableMode = true;
+        if(spec.type == 'enum' && spec.values.indexOf(value) == -1)
+          variableMode = true;
+      }
+
+      const write = (v, rerender = false) => setStepParam(listPath, index, param, v, rerender);
+
+      const renderInput = () => {
+        inputHost.innerHTML = '';
+
+        if(variableMode) {
+          inputHost.appendChild(textInputFor(typeof value === 'string' ? value : '', '${variableName}', text => write(text === '' ? undefined : text)));
+          return;
         }
 
-        if(isObjectLike(step) && typeof step.func === 'string') {
-          const body = div(block, 'automationBlockBody');
-          for(const param of Object.keys(step).filter(k => k != 'func')) {
-            this.addInput(param, step[param], v => {
-              const r = currentRoutine();
-              if(!isObjectLike(r[index]))
-                return;
-              if(typeof v === 'undefined')
-                delete r[index][param];
-              else
-                r[index][param] = v;
-              commit(r);
-            }, body);
-          }
-
-          const knownParams = this.routineOperationParameters(step.func).filter(p => typeof step[p] === 'undefined');
-          const addParamWrapper = div(body, 'automationAddParam');
-          const paramInput = document.createElement('input');
-          paramInput.type = 'text';
-          paramInput.placeholder = 'parameter';
-          paramInput.setAttribute('list', `automationParams_${widget.id}_${property}_${index}`);
-          const paramList = document.createElement('datalist');
-          paramList.id = paramInput.getAttribute('list');
-          for(const p of knownParams) {
+        if(spec.type == 'number') {
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.step = 'any';
+          if(typeof value === 'number')
+            input.value = value;
+          input.onchange = () => write(input.value === '' ? undefined : +input.value);
+          inputHost.appendChild(input);
+        } else if(spec.type == 'boolean') {
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.checked = value === true;
+          input.onchange = () => write(input.checked);
+          inputHost.appendChild(input);
+        } else if(spec.type == 'enum') {
+          const select = document.createElement('select');
+          const emptyOption = document.createElement('option');
+          emptyOption.value = '';
+          emptyOption.textContent = '(not set)';
+          select.appendChild(emptyOption);
+          for(const enumValue of spec.values) {
             const option = document.createElement('option');
-            option.value = p;
-            paramList.appendChild(option);
+            option.value = option.textContent = enumValue;
+            select.appendChild(option);
           }
+          if(isSet)
+            select.value = String(value);
+          select.onchange = () => write(select.value === '' ? undefined : select.value);
+          inputHost.appendChild(select);
+        } else if(spec.type == 'collection') {
+          const select = document.createElement('select');
+          const options = knownCollections();
+          if(isSet && options.indexOf(value) == -1)
+            options.unshift(value);
+          const emptyOption = document.createElement('option');
+          emptyOption.value = '';
+          emptyOption.textContent = '(not set)';
+          select.appendChild(emptyOption);
+          for(const collection of options) {
+            const option = document.createElement('option');
+            option.value = option.textContent = collection;
+            select.appendChild(option);
+          }
+          const newOption = document.createElement('option');
+          newOption.value = '##new##';
+          newOption.textContent = 'new collection...';
+          select.appendChild(newOption);
+          if(isSet)
+            select.value = String(value);
+          select.onchange = () => {
+            if(select.value == '##new##') {
+              inputHost.innerHTML = '';
+              const input = textInputFor('', 'collection name', text => write(text === '' ? undefined : text, true));
+              inputHost.appendChild(input);
+              input.focus();
+              return;
+            }
+            write(select.value === '' ? undefined : select.value);
+          };
+          inputHost.appendChild(select);
+        } else if(spec.type == 'widgets') {
+          const input = textInputFor(formatWidgetIDs(value), 'widget IDs', text => write(parseWidgetIDs(text)));
+          inputHost.appendChild(input);
+
+          const pickButton = document.createElement('button');
+          pickButton.className = 'automationParamButton';
+          pickButton.setAttribute('icon', 'arrow_selector_tool');
+          const pickerKey = `${property}:${listPath.join('.')}.${index}:${param}`;
+          const updatePickButton = () => {
+            const picker = this.getWidgetPicker(widget.id, pickerKey);
+            pickButton.classList.toggle('selected', !!picker);
+            pickButton.title = picker ? 'Click widgets on the board, then click here to confirm.' : 'Pick widgets on the board.';
+          };
+          pickButton.onclick = e => {
+            e.preventDefault();
+            if(this.getWidgetPicker(widget.id, pickerKey)) {
+              this.confirmWidgetPicker();
+              return;
+            }
+            this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+              const ids = pickedWidgets.map(pickedWidget => pickedWidget.id);
+              if(!ids.length) // confirming without a pick keeps the current value; the clear button removes it
+                return;
+              const routine = currentRoutine();
+              const list = routineListAtPath(routine, listPath);
+              if(!isObjectLike(list[index]))
+                return;
+              list[index][param] = ids.length == 1 ? ids[0] : ids;
+              this.inputValueUpdated(targetWidget, property, routine);
+            }, {
+              pickerKey,
+              allowMultiple: true,
+              pendingWidgetIDs: asArray(value === undefined || value === null ? [] : value),
+              filter: Array.isArray(spec.widgetTypes) ? pickedWidget => spec.widgetTypes.indexOf(pickedWidget.get('type')) != -1 : null,
+              onPendingChanged: updatePickButton
+            });
+            updatePickButton();
+          };
+          updatePickButton();
+          inputHost.appendChild(pickButton);
+        } else if(spec.type == 'json') {
+          const textarea = document.createElement('textarea');
+          textarea.value = isSet ? JSON.stringify(value, null, 2) : '';
+          textarea.oninput = () => {
+            if(textarea.value.trim() === '') {
+              textarea.classList.remove('inputError');
+              write(undefined);
+              return;
+            }
+            try {
+              write(JSON.parse(textarea.value));
+              textarea.classList.remove('inputError');
+            } catch(e) {
+              textarea.classList.add('inputError');
+            }
+          };
+          inputHost.appendChild(textarea);
+        } else {
+          inputHost.appendChild(textInputFor(value, '', text => write(text === '' ? undefined : parseLooseValue(text))));
+        }
+      };
+      renderInput();
+
+      if(spec.type != 'text' && spec.type != 'collection')
+        row.appendChild(variableButtonFor(() => {
+          variableMode = !variableMode;
+          renderInput();
+        }, variableMode));
+      row.appendChild(clearButtonFor(listPath, index, param, isSet));
+    };
+
+    const renderIfBlock = (body, listPath, index, step) => {
+      if(typeof step.condition !== 'undefined') {
+        renderParamRow(body, listPath, index, step, 'condition', 'if');
+      } else {
+        const sentence = div(body, 'automationIfSentence');
+        const ifLabel = document.createElement('span');
+        ifLabel.textContent = 'if';
+        sentence.appendChild(ifLabel);
+
+        sentence.appendChild(textInputFor(step.operand1, 'value or ${variable}', text => setStepParam(listPath, index, 'operand1', text === '' ? undefined : parseLooseValue(text))));
+
+        const relationSelect = document.createElement('select');
+        for(const relation of [ '<', '<=', '==', '!=', '>=', '>' ]) {
+          const option = document.createElement('option');
+          option.value = option.textContent = relation;
+          relationSelect.appendChild(option);
+        }
+        relationSelect.value = typeof step.relation === 'string' ? step.relation : '==';
+        relationSelect.onchange = () => setStepParam(listPath, index, 'relation', relationSelect.value);
+        sentence.appendChild(relationSelect);
+
+        sentence.appendChild(textInputFor(step.operand2, 'value or ${variable}', text => setStepParam(listPath, index, 'operand2', text === '' ? undefined : parseLooseValue(text))));
+      }
+
+      renderParamRow(body, listPath, index, step, 'thenRoutine');
+      renderParamRow(body, listPath, index, step, 'elseRoutine');
+
+      const handled = [ 'func', 'condition', 'relation', 'operand1', 'operand2', 'thenRoutine', 'elseRoutine' ];
+      for(const param of Object.keys(step).filter(k => handled.indexOf(k) == -1))
+        renderParamRow(body, listPath, index, step, param);
+    };
+
+    const renderCommentBlock = (body, listPath, index, step) => {
+      const wrap = div(body, 'automationComment');
+      const renderStatic = () => {
+        wrap.innerHTML = '';
+        const text = document.createElement('span');
+        text.className = 'automationCommentText';
+        text.textContent = step === '' ? '(empty comment)' : step;
+        wrap.appendChild(text);
+        const editButton = document.createElement('button');
+        editButton.setAttribute('icon', 'edit');
+        editButton.className = 'automationParamButton';
+        editButton.title = 'Edit this comment or expression.';
+        wrap.appendChild(editButton);
+        editButton.onclick = e => {
+          e.preventDefault();
+          wrap.innerHTML = '';
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'automationExpressionInput';
+          input.value = step;
+          input.placeholder = '// comment or var x = ...';
+          wrap.appendChild(input);
+          input.focus();
+          input.onkeydown = keyEvent => {
+            if(keyEvent.key == 'Enter')
+              input.blur();
+          };
+          input.onblur = () => {
+            if(input.value !== step)
+              changeStep(listPath, index, (list, i) => list[i] = input.value, true);
+            else
+              renderStatic();
+          };
+        };
+      };
+      renderStatic();
+    };
+
+    const renderBlock = (target, listPath, list, step, index) => {
+      const block = div(target, 'automationBlock');
+      const blockHeader = div(block, 'automationBlockHeader');
+
+      const title = document.createElement('span');
+      title.className = 'automationBlockTitle';
+      title.textContent = isObjectLike(step) ? (step.func || 'step') : 'comment';
+      blockHeader.appendChild(title);
+
+      const body = div(block, 'automationBlockBody');
+      let jsonArea = null;
+
+      const headerButtons = [];
+      if(isObjectLike(step))
+        headerButtons.push([ 'data_object', 'Show this step as JSON', true, button => {
+          if(jsonArea) {
+            jsonArea.remove();
+            jsonArea = null;
+            button.classList.remove('selected');
+            render();
+            return;
+          }
+          button.classList.add('selected');
+          jsonArea = document.createElement('textarea');
+          jsonArea.className = 'automationBlockJSON';
+          jsonArea.value = JSON.stringify(step, null, 2);
+          jsonArea.oninput = () => {
+            try {
+              const parsed = JSON.parse(jsonArea.value);
+              jsonArea.classList.remove('inputError');
+              changeStep(listPath, index, (list, i) => list[i] = parsed);
+            } catch(e) {
+              jsonArea.classList.add('inputError');
+            }
+          };
+          block.appendChild(jsonArea);
+        } ]);
+      headerButtons.push(
+        [ 'arrow_upward',   'Move step up',   index > 0,                  () => changeList(listPath, l => l.splice(index-1, 0, l.splice(index, 1)[0])) ],
+        [ 'arrow_downward', 'Move step down', index < list.length - 1,    () => changeList(listPath, l => l.splice(index+1, 0, l.splice(index, 1)[0])) ],
+        [ 'delete',         'Delete step',    true,                       () => changeList(listPath, l => l.splice(index, 1)) ]
+      );
+      for(const [ icon, tooltip, enabled, action ] of headerButtons) {
+        const button = document.createElement('button');
+        button.setAttribute('icon', icon);
+        button.title = tooltip;
+        button.disabled = !enabled;
+        button.onclick = e => { e.preventDefault(); action(button); };
+        blockHeader.appendChild(button);
+      }
+
+      if(typeof step === 'string') {
+        renderCommentBlock(body, listPath, index, step);
+      } else if(isObjectLike(step) && step.func == 'IF') {
+        renderIfBlock(body, listPath, index, step);
+      } else if(isObjectLike(step) && typeof step.func === 'string') {
+        const knownParams = this.routineOperationParameters(step.func);
+        const extraParams = Object.keys(step).filter(k => k != 'func' && knownParams.indexOf(k) == -1);
+        for(const param of knownParams.concat(extraParams))
+          renderParamRow(body, listPath, index, step, param);
+
+        if(!knownParams.length) {
+          const addParamWrapper = div(body, 'automationAddParam');
+          const paramInput = textInputFor('', 'parameter', () => {});
           addParamWrapper.appendChild(paramInput);
-          addParamWrapper.appendChild(paramList);
           const addParamButton = document.createElement('button');
           addParamButton.className = 'blue';
           addParamButton.textContent = 'add parameter';
           addParamWrapper.appendChild(addParamButton);
-          paramInput.onkeydown = e => {
-            if(e.key == 'Enter') {
-              e.preventDefault();
+          paramInput.onkeydown = keyEvent => {
+            if(keyEvent.key == 'Enter') {
+              keyEvent.preventDefault();
               addParamButton.click();
             }
           };
           addParamButton.onclick = e => {
             e.preventDefault();
             const param = paramInput.value.trim();
-            if(!param || param == 'func')
-              return;
-            const r = currentRoutine();
-            if(!isObjectLike(r[index]) || typeof r[index][param] !== 'undefined')
-              return;
-            r[index][param] = this.routineParameterDefaultValue(step.func, param);
-            commit(r);
-            render();
+            if(param && param != 'func' && typeof step[param] === 'undefined')
+              setStepParam(listPath, index, param, this.routineParameterDefaultValue(step.func, param), true);
           };
-        } else if(typeof step === 'string') {
-          const body = div(block, 'automationBlockBody');
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.className = 'automationExpressionInput';
-          input.value = step;
-          input.placeholder = '// comment or var x = ...';
-          input.oninput = () => {
-            const r = currentRoutine();
-            r[index] = input.value;
-            commit(r);
-          };
-          body.appendChild(input);
-        } else {
-          const body = div(block, 'automationBlockBody');
-          this.addInput(`step ${index+1}`, step, v => {
-            const r = currentRoutine();
-            r[index] = typeof v === 'undefined' ? null : v;
-            commit(r);
-          }, body);
         }
-      });
+      } else {
+        this.addInput(`step ${index+1}`, step, v => changeStep(listPath, index, (list, i) => list[i] = typeof v === 'undefined' ? null : v), body);
+      }
+    };
 
-      const addWrapper = div(container, 'automationAddStep');
+    const renderList = (target, listPath, list) => {
+      const steps = Array.isArray(list) ? list : [];
+      steps.forEach((step, index) => renderBlock(target, listPath, steps, step, index));
+
+      const addWrapper = div(target, 'automationAddStep');
       const funcSelect = document.createElement('select');
       const operations = typeof operationProps !== 'undefined' ? Object.keys(operationProps).sort() : [];
       for(const func of operations) {
@@ -3286,11 +3654,15 @@ class PropertiesModule extends SidebarModule {
       addWrapper.appendChild(addStepButton);
       addStepButton.onclick = e => {
         e.preventDefault();
-        const r = currentRoutine();
-        r.push(funcSelect.value == '//' ? '' : { func: funcSelect.value });
-        commit(r);
-        render();
+        changeList(listPath, l => l.push(funcSelect.value == '//' ? '' : { func: funcSelect.value }));
       };
+    };
+
+    const render = () => {
+      const routine = currentRoutine();
+      renderedJSON = JSON.stringify(routine);
+      container.innerHTML = '';
+      renderList(container, [], routine);
     };
 
     render();
