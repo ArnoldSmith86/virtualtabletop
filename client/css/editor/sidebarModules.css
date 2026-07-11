@@ -92,6 +92,21 @@
 }
 
 
+.tune.editorModule .traditionalDeckDetails {
+  margin: 5px 0;
+}
+
+.tune.editorModule .traditionalDeckDetails .name {
+  font-weight: bold;
+}
+
+.tune.editorModule .traditionalDeckDetails .attribution {
+  margin-top: 5px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+
 .tune.editorModule .cardFrontPreview {
   display: flex;
   margin-bottom: 10px;
