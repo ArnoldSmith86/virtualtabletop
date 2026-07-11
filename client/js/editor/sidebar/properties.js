@@ -321,6 +321,10 @@ class PropertiesModule extends SidebarModule {
       images: {
         header: 'Upload one image per card or tiled images with multiple cards',
         description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
+      },
+      tts: {
+        header: 'Import from Tabletop Simulator',
+        description: 'Enter the link of a TTS Steam Workshop item, preview the decks it contains and import the ones you want'
       }
     }, v=>{
       options.innerHTML = '';
@@ -328,6 +332,8 @@ class PropertiesModule extends SidebarModule {
         this.deckGenerator(options);
       if(v == 'images')
       this.deckImages(options);
+      if(v == 'tts')
+        this.deckImportTTS(options);
     });
 
     const options = div(this.moduleDOM);
@@ -705,6 +711,78 @@ class PropertiesModule extends SidebarModule {
       }
 
       await this.addDeckWithCards(deck, 'image', counts);
+    };
+  }
+
+  deckImportTTS(target) {
+    this.addSubHeader('Workshop link', target);
+    const linkDiv = div(target, 'ttsImportLink', `
+      <input type=url placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=...">
+      <button icon=search>Find decks</button>
+    `);
+    const linkInput = $('input', linkDiv);
+    const findButton = $('button', linkDiv);
+
+    this.addSubHeader('Decks', target);
+    const preview = div(target, '', '<p>Enter a link above to list the decks it contains.</p>');
+
+    div(target, 'goButton buttonBar', `
+      <button icon=add class=green disabled>Add to game</button>
+    `);
+    const addButton = $('.goButton [icon=add]', target);
+
+    const foundDecks = [];
+
+    findButton.onclick = async _=>{
+      if(!linkInput.value.match(/^https?:\/\//))
+        return alert('Please enter a link to a TTS Steam Workshop item.');
+
+      findButton.disabled = true;
+      addButton.disabled = true;
+      foundDecks.length = 0;
+      preview.innerHTML = '<p>Downloading and converting... this can take a while for big games.</p>';
+
+      try {
+        const response = await fetch('api/decksFromLink', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ link: linkInput.value })
+        });
+        if(!response.ok)
+          throw new Error(await response.text());
+        const decks = await response.json();
+
+        preview.innerHTML = decks.length ? '' : '<p>No decks were found behind that link.</p>';
+        for(const { deck, cardCounts } of decks) {
+          const cardCount = Object.values(cardCounts).reduce((sum, count)=>sum+count, 0);
+          const button = this.renderWidgetButton(new Deck(generateUniqueWidgetID()), JSON.parse(JSON.stringify(deck)), preview);
+          button.classList.add('ttsDeckButton');
+          div(button, 'deckCardCount', `${cardCount} card${cardCount == 1 ? '' : 's'}`);
+          button.onclick = _=>{
+            button.classList.toggle('selected');
+            addButton.disabled = !$a('.selected.ttsDeckButton', preview).length;
+          };
+          foundDecks.push({ button, deck, cardCounts });
+        }
+      } catch(e) {
+        preview.innerHTML = '';
+        alert(`Loading decks failed: ${e.message}`);
+      }
+      findButton.disabled = false;
+    };
+
+    addButton.onclick = async _=>{
+      for(const { button, deck, cardCounts } of foundDecks) {
+        if(!button.classList.contains('selected'))
+          continue;
+        const newDeck = JSON.parse(JSON.stringify(deck));
+        delete newDeck.parent;
+        delete newDeck.x;
+        delete newDeck.y;
+        delete newDeck.z;
+        newDeck.id = generateUniqueWidgetID();
+        await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
+      }
     };
   }
 

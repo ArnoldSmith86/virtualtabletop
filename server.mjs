@@ -9,6 +9,8 @@ import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
+import FileLoader from './server/fileloader.mjs';
+import FileUpdater from './server/fileupdater.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import MinifyHTML from './server/minify.mjs';
@@ -313,6 +315,39 @@ MinifyHTML().then(function(result) {
     }
     fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
+  });
+
+  router.post('/api/decksFromLink', bodyParser.json({ limit: '1mb' }), function(req, res, next) {
+    (async function() {
+      if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
+        throw new Logging.UserError(400, 'Please provide a link.');
+
+      const states = await FileLoader.readStatesFromLink(req.body.link);
+      const decks = [];
+      for(const variants of Object.values(states)) {
+        for(let variant of Object.values(variants || {})) {
+          if(!variant || typeof variant != 'object' || !variant._meta)
+            continue;
+          try {
+            variant = FileUpdater(variant);
+          } catch(e) {
+            continue;
+          }
+          const widgets = Object.entries(variant).filter(([ id, w ])=>id != '_meta' && w && typeof w == 'object');
+          for(const [ deckID, deck ] of widgets) {
+            if(deck.type != 'deck')
+              continue;
+            const cardCounts = {};
+            for(const [ cardID, card ] of widgets)
+              if(card.type == 'card' && card.deck == deckID)
+                cardCounts[card.cardType] = (cardCounts[card.cardType] || 0) + 1;
+            decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts });
+          }
+        }
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(decks));
+    })().catch(next);
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
