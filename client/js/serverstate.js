@@ -630,9 +630,10 @@ export function widgetFilter(callback) {
 // (with a cancel button) while the input is pending.
 
 // A per-page-load token keeps session IDs unique even between two clients that
-// happen to share a player name (it must not touch the seeded RNG used for
-// shuffles, so it is derived from the load time rather than rand()).
-const inputClientToken = Math.floor(performance.now()).toString(36) + Math.floor(performance.timeOrigin).toString(36);
+// happen to share a player name. Uses crypto instead of the seeded game RNG:
+// session IDs are transport-level identifiers, not game state, so they must
+// not consume rand() (would break test determinism) nor be predictable.
+const inputClientToken = crypto.randomUUID();
 let inputSessionCounter = 0;
 // Keyed by session IDs that may originate from another client, so use
 // null-prototype objects to avoid __proto__/constructor key surprises.
@@ -659,7 +660,7 @@ function resolveCollections(ids) {
 // playerName -> { variables, collections }, or rejects if the input is
 // cancelled (by a target, by the initiator or via the block overlay).
 export function runInput({ widgetID, overlay, players, variables, collections, showLocal }) {
-  const sessionID = `${playerName}-${inputClientToken}-${++inputSessionCounter}`;
+  const sessionID = `${inputClientToken}-${++inputSessionCounter}`;
   const remoteTargets = players.filter(p=>p && p!==playerName);
   const includeSelf = players.includes(playerName);
   const collectionIDs = serializeCollections(collections);
