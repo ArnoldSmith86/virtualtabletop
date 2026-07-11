@@ -592,23 +592,16 @@ async function removeWidgetLocal(widgetID, keepChildren) {
   }
 }
 
-export function sendDelta() {
-  if(!batchDepth)
-    flushDelta();
-}
-
-// Force the currently accumulated delta out to the server even while a
-// routine's batch is still open (batchDepth >= 1, so sendDelta would be a
-// no-op). Used before a remote INPUT so the target sees the state produced by
-// earlier operations of the same routine.
-export function flushDelta() {
-  if(deltaChanged) {
-    receiveDelta(delta);
-    delta.id = deltaID;
-    toServer('delta', delta);
+function sendDelta() {
+  if(!batchDepth) {
+    if(deltaChanged) {
+      receiveDelta(delta);
+      delta.id = deltaID;
+      toServer('delta', delta);
+    }
+    delta = { s: {} };
+    deltaChanged = false;
   }
-  delta = { s: {} };
-  deltaChanged = false;
 }
 
 export function sendPropertyUpdate(widgetID, property, value) {
