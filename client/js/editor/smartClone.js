@@ -38,6 +38,8 @@ async function smartCloneAddChildren(topCloneID, clone, source, options) {
     let clonedChildren = smartCloneGetClones(child, clone);
     let id = applyReplaces(child.id, options.replaces, topCloneID);
     if(widgets.has(id))
+      id = `${clone.id}-${child.id}`; // deterministic so concurrent clients converge on the same widget
+    if(widgets.has(id))
       id = generateUniqueWidgetID();
     if(!clonedChildren.length) {
       clonedChildren = [ widgets.get(await addWidgetLocal({ id, type: child.get('type'), parent: clone.id, inheritFrom: inheritDef(child) })) ];
@@ -167,7 +169,8 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
 
     // Calculate new X using the bounding rectangles
     const newX = sourceParentRect.width/getScale() - (source.get('x') + sourceRect.width/getScale());
-    await clone.set('x', newX);
+    if(clone.get('x') !== newX)
+      await clone.set('x', newX);
   }
 
   if(options.flipY) {
@@ -180,7 +183,8 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
 
     // Calculate new Y using the bounding rectangles
     const newY = sourceParentRect.height/getScale() - (source.get('y') + sourceRect.height/getScale());
-    await clone.set('y', newY);
+    if(clone.get('y') !== newY)
+      await clone.set('y', newY);
   }
 
   if(clone.get('type') == 'seat') {
@@ -274,12 +278,22 @@ async function smartCloneUpdate(topCloneID, remove=false) {
   }
 }
 
-let noRecurse = false;
+// deltas received while an update is running are queued so changes to one smart clone cascade to smart clones of that clone
+let processingDeltas = false;
+const queuedDeltas = [];
 async function smartCloneDeltaReceived(delta) {
-  if(noRecurse)
+  queuedDeltas.push(delta);
+  if(processingDeltas)
     return;
 
-  noRecurse = true;
+  processingDeltas = true;
+  for(let i=0; queuedDeltas.length && i<100; ++i)
+    await smartCloneProcessDelta(queuedDeltas.shift());
+  queuedDeltas.length = 0;
+  processingDeltas = false;
+}
+
+async function smartCloneProcessDelta(delta) {
   const needUpdate = {};
   const needRemove = {};
   for(const [ id, d ] of Object.entries(delta.s)) {
@@ -311,5 +325,4 @@ async function smartCloneDeltaReceived(delta) {
   for(const topCloneID of Object.keys(needUpdate))
     await smartCloneUpdate(topCloneID, needRemove[topCloneID]);
   batchEnd();
-  noRecurse = false;
 }
