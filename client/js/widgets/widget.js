@@ -1927,6 +1927,11 @@ export class Widget extends StateManaged {
         if(valid && a.widgets != 'all' && a.widgets != 'top')
           valid = !!(widgetCollection = getCollection(a.widgets));
 
+        if(valid && !Number.isFinite(a.steps)) {
+          problems.push(`SHIFT 'steps' must be a finite number.`);
+          valid = false;
+        }
+
         if(valid) {
           const length = order.length;
           const shift = (a.reverse ? -1 : 1) * Math.trunc(a.steps);
@@ -1952,23 +1957,26 @@ export class Widget extends StateManaged {
               moves.push({ widgets: selected, target: order[targetIndex] });
           }
 
-          for(const move of moves) {
-            if(move.target.seat && !move.target.seat.get('player')) {
-              problems.push(`Seat ${move.target.seat.get('id')} is empty, so its hand cannot receive shifted widgets.`);
-              continue;
+          // An empty target seat can't receive a hand; abort the whole shift before
+          // moving anything so a rotation is never left partially applied.
+          const emptySeatTarget = moves.map(m=>m.target).find(t=>t.seat && !t.seat.get('player'));
+          if(emptySeatTarget) {
+            problems.push(`Seat ${emptySeatTarget.seat.get('id')} is empty, so its hand cannot receive shifted widgets; SHIFT aborted.`);
+          } else {
+            for(const move of moves) {
+              // children() is top-first (z descending); moveToHolder brings each widget
+              // to front, so move bottom-first to preserve the source stacking order.
+              for(const c of move.widgets.slice().reverse()) {
+                c.movedByButton = true;
+                if(move.target.seat)
+                  c.targetPlayer = move.target.seat.get('player');
+                await c.moveToHolder(move.target.holder);
+                delete c.targetPlayer;
+                delete c.movedByButton;
+              }
+              if(typeof move.target.holder.updateAfterShuffle == 'function')
+                await move.target.holder.updateAfterShuffle();
             }
-            // children() is top-first (z descending); moveToHolder brings each widget
-            // to front, so move bottom-first to preserve the source stacking order.
-            for(const c of move.widgets.slice().reverse()) {
-              c.movedByButton = true;
-              if(move.target.seat)
-                c.targetPlayer = move.target.seat.get('player');
-              await c.moveToHolder(move.target.holder);
-              delete c.targetPlayer;
-              delete c.movedByButton;
-            }
-            if(typeof move.target.holder.updateAfterShuffle == 'function')
-              await move.target.holder.updateAfterShuffle();
           }
 
           if(jeRoutineLogging) {

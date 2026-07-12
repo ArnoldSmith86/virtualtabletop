@@ -191,3 +191,131 @@ describe("Scenarios: Shifting widgets between containers", () => {
     });
   });
 });
+
+describe("Scenarios: Shifting widgets through seats", () => {
+  const testName = "widget-shift-seat";
+  let button;
+  let created;
+
+  // A seat resolves (in SHIFT) to its `hand` holder. Model that with a base
+  // widget for the seat plus a holder for the hand; the holder emulates a real
+  // Holder's `childrenPerOwner` behavior (owner = the arriving child's
+  // targetPlayer) so the ownership-assignment path can be asserted.
+  function createHand(id) {
+    const hand = createWidget({ id, type: 'widget', childrenPerOwner: true });
+    hand.onChildAddAlign = async () => {};
+    hand.onChildAdd = async function(child, oldParentID) {
+      await Widget.prototype.onChildAdd.call(this, child, oldParentID);
+      if(this.get('childrenPerOwner'))
+        await child.set('owner', child.targetPlayer || null);
+    };
+    created.push(hand);
+    return hand;
+  }
+
+  function createSeat(id, handId, player) {
+    const seat = createWidget({ id, type: 'seat', hand: handId, player });
+    created.push(seat);
+    return seat;
+  }
+
+  beforeEach(() => {
+    created = [];
+    button = createWidget({ id: `${testName}-button`, type: 'widget' });
+    window.jeRoutineLogging = false;
+  });
+
+  afterEach(() => {
+    created.forEach(w => w.children().forEach(c => removeWidget(c.get('id'))));
+    created.forEach(w => removeWidget(w.get('id')));
+    removeWidget(button.get('id'));
+  });
+
+  describe("Given two occupied seats and a token in the first seat's hand", () => {
+    let handA, token;
+    beforeEach(async () => {
+      handA = createHand(`${testName}-handA`);
+      createHand(`${testName}-handB`);
+      const seatA = createSeat(`${testName}-seatA`, handA.get('id'), 'Alice');
+      const seatB = createSeat(`${testName}-seatB`, `${testName}-handB`, 'Bob');
+      [ token ] = await createTokens(testName, handA.get('id'), 1);
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": [ seatA.get('id'), seatB.get('id') ],
+          "widgets": "all",
+          "steps": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the token moves into the other seat's hand and is owned by that seat's player", async () => {
+        expect(token.get('parent')).toBe(`${testName}-handA`);
+        await button.click();
+
+        expect(token.get('parent')).toBe(`${testName}-handB`);
+        expect(token.get('owner')).toBe('Bob');
+      });
+    });
+  });
+
+  describe("Given a three-entry shift whose middle target seat is empty", () => {
+    let holderX, holderZ, tokenX, tokenZ;
+    beforeEach(async () => {
+      // order = [ holderX, emptySeat, holderZ ] with a token in each holder.
+      // The empty seat is the target of holderX's move; holderZ wraps around to
+      // holderX. A non-atomic implementation would commit holderZ's move before
+      // discovering the empty seat, leaving the table half-rotated.
+      holderX = createHand(`${testName}-holderX`);
+      createHand(`${testName}-handEmpty`);
+      holderZ = createHand(`${testName}-holderZ`);
+      const seatEmpty = createSeat(`${testName}-seatEmpty`, `${testName}-handEmpty`, null);
+      [ tokenX ] = await createTokens(testName, holderX.get('id'), 1);
+      [ tokenZ ] = await createTokens(testName, holderZ.get('id'), 1);
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": [ holderX.get('id'), seatEmpty.get('id'), holderZ.get('id') ],
+          "widgets": "all",
+          "steps": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then nothing moves (the shift aborts atomically)", async () => {
+        await button.click();
+        expect(tokenX.get('parent')).toBe(`${testName}-holderX`);
+        expect(tokenZ.get('parent')).toBe(`${testName}-holderZ`);
+      });
+    });
+  });
+
+  describe("Given a seat in the order without a valid hand", () => {
+    let holder, token;
+    beforeEach(async () => {
+      holder = createHand(`${testName}-holder`);
+      const seatNoHand = createSeat(`${testName}-seatNoHand`, null, 'Alice');
+      [ token ] = await createTokens(testName, holder.get('id'), 1);
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": [ holder.get('id'), seatNoHand.get('id') ],
+          "widgets": "all",
+          "steps": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then nothing moves", async () => {
+        await button.click();
+        expect(token.get('parent')).toBe(`${testName}-holder`);
+      });
+    });
+  });
+});
