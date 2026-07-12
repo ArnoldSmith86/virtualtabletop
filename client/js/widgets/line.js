@@ -232,8 +232,13 @@ export class Line extends Widget {
       await this.updateConnectedLines();
     }
 
-    if((property == 'x' || property == 'y') && !this.normalizingGeometry && !this.isBeingMoved) {
-      await this.applyConnections();
+    if((property == 'x' || property == 'y') && !this.normalizingGeometry) {
+      // lines attached to this one follow live even during an interactive drag —
+      // they don't affect this line's own drag frame. Only this line's own
+      // connection re-glue + box re-fit (which do mutate its geometry) are
+      // deferred to moveEnd while it is being dragged, to avoid drag jitter.
+      if(!this.isBeingMoved)
+        await this.applyConnections();
       await this.updateConnectedLines();
     }
 

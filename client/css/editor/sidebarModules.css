@@ -379,6 +379,15 @@
   margin-left: 8px;
   vertical-align: middle;
 }
+.editorModule .lineInheritWrap select.lineInheritFrom {
+  width: 200px;
+  min-width: 200px;
+}
+.editorModule .lineInheritWrap input.lineInheritCustom {
+  width: 120px;
+  min-width: 120px;
+  margin-left: 8px;
+}
 
 .widgets.editorModule .buttonBar input[type=text]{
   line-height: 33px;

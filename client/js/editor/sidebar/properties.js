@@ -1636,35 +1636,52 @@ class PropertiesModule extends SidebarModule {
     this.moduleDOM.appendChild(stopsHint);
     const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
 
-    // new stops inheritFrom this widget so restyling one restyles them all; the
-    // combobox picks which (defaults to the start stop). It lists this line's
-    // stops but also accepts a typed-in widget id.
+    // new stops inheritFrom the chosen widget so restyling one restyles them all.
+    // A real <select> reliably lists every stop on this line (a datalist filters
+    // its options by the current input text, which hid all but one); a trailing
+    // "Other widget id…" entry reveals a text field for an arbitrary id.
     const inheritWrap = div(this.moduleDOM, 'genericInput lineInheritWrap');
     const inheritLabel = document.createElement('label');
     inheritLabel.innerText = 'New stops inherit from';
     inheritLabel.style = 'display:inline-block;width:170px';
-    const inheritInput = document.createElement('input');
-    inheritInput.className = 'lineInheritFrom';
-    inheritInput.setAttribute('list', `lineInheritList_${widget.id}`);
-    inheritInput.title = 'Widget id that new stops inherit their appearance from (pick a stop or type any widget id)';
-    const inheritList = document.createElement('datalist');
-    inheritList.id = `lineInheritList_${widget.id}`;
+    const inheritSelect = document.createElement('select');
+    inheritSelect.className = 'lineInheritFrom';
+    inheritSelect.title = 'Widget the new stops inherit their appearance from';
+    const inheritCustom = document.createElement('input');
+    inheritCustom.className = 'lineInheritCustom';
+    inheritCustom.placeholder = 'widget id';
+    inheritCustom.title = 'Type any widget id for the new stops to inherit from';
+    inheritCustom.style = 'display:none';
+    const inheritTarget = ()=> inheritSelect.value === '' ? String(inheritCustom.value || '').trim() : inheritSelect.value;
+    // '' is the "Other widget id…" sentinel — a stop's id is never empty, so it can't collide
     const refreshInheritOptions = ()=>{
+      const prev = inheritSelect.value;
       const stops = widget.attachedWidgets();
-      inheritList.innerHTML = '';
-      for(const stop of stops) {
+      inheritSelect.innerHTML = '';
+      stops.forEach((stop, i)=>{
         const option = document.createElement('option');
         option.value = stop.get('id');
-        inheritList.appendChild(option);
-      }
-      // default to the first (start) stop when nothing valid is chosen yet
-      if(!inheritInput.value && stops.length)
-        inheritInput.value = stops[0].get('id');
+        option.innerText = `Stop ${i+1} (${stop.get('id')})`;
+        inheritSelect.appendChild(option);
+      });
+      const other = document.createElement('option');
+      other.value = '';
+      other.innerText = 'Other widget id…';
+      inheritSelect.appendChild(other);
+      // keep a real previous stop choice if it still exists, else default to the start
+      // stop (a non-empty prev only; the initial empty value must not select "Other")
+      inheritSelect.value = (prev && [ ...inheritSelect.options ].some(o=>o.value === prev)) ? prev : (stops.length ? stops[0].get('id') : '');
+      inheritCustom.style.display = inheritSelect.value === '' ? '' : 'none';
+    };
+    inheritSelect.onchange = ()=>{
+      inheritCustom.style.display = inheritSelect.value === '' ? '' : 'none';
+      if(inheritSelect.value === '')
+        inheritCustom.focus();
     };
     refreshInheritOptions();
     inheritWrap.appendChild(inheritLabel);
-    inheritWrap.appendChild(inheritInput);
-    inheritWrap.appendChild(inheritList);
+    inheritWrap.appendChild(inheritSelect);
+    inheritWrap.appendChild(inheritCustom);
 
     const distributeButton = addButton('Distribute evenly', 'lineDistributeStops');
 
@@ -1728,13 +1745,13 @@ class PropertiesModule extends SidebarModule {
     addStopButton.onclick = async _=>{
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} added a stop to line ${widget.id} in editor`);
-      const inheritID = String(inheritInput.value || '').trim();
-      const inheritTarget = widgets.has(inheritID) ? widgets.get(inheritID) : null;
+      const inheritID = inheritTarget();
+      const target = widgets.has(inheritID) ? widgets.get(inheritID) : null;
       let template;
-      if(inheritTarget) {
+      if(target) {
         // inheritFrom keeps the new stop's appearance in sync with the chosen widget;
         // it only carries its own type, parent and position (the rest is inherited)
-        template = { type: inheritTarget.get('type'), inheritFrom: inheritID };
+        template = { type: target.get('type'), inheritFrom: inheritID };
       } else {
         template = this.lineStopDefaults();
       }
