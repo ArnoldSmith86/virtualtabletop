@@ -43,6 +43,10 @@ class Holder extends ImageWidget {
   get(property) {
     const layout = super.get('layout');
     if(layout) {
+      if(property == 'dropShadow' && layout == 'multipleSpread')
+        // multipleSpread always shows a drop shadow so players can see where a
+        // dragged card/group will be inserted
+        return true;
       if(property == 'alignChildren')
         // multipleSpread and freeform leave children where the player drops them
         // (multipleSpread then merges overlapping cards into spread-out pile groups)
@@ -174,9 +178,19 @@ class Holder extends ImageWidget {
       return await super.onChildAddAlign(child, oldParentID);
 
     if(this.get('layout') == 'grid') {
-      await super.onChildAddAlign(child, oldParentID);
+      if(child.get('type') == 'pile')
+        // a pile dropped into a grid must break up into individual cards (grid
+        // has preventPiles, so the cards won't re-merge) rather than staying a pile
+        await this.breakUpPile(child);
+      else
+        await super.onChildAddAlign(child, oldParentID);
       return await this.updateAfterShuffle();
     }
+
+    if(this.get('layout') == 'multipleSpread' && child.get('dropShadowOwner'))
+      // the drop shadow snaps into an aligned single-card slot between the groups,
+      // shifting the groups apart to show where the dragged card/group will land
+      return await this.rearrangeGroups();
 
     // multipleSpread relies on the normal free-drop + pile-creation flow: a card
     // dropped onto another card merges into a (spread-out) pile group, a card
@@ -322,6 +336,19 @@ class Holder extends ImageWidget {
       await group.setPosition(x, y, z++);
       x += group.get('width') + gap;
     }
+  }
+
+  // Move all of a dropped pile's cards into this holder as loose cards so the
+  // pile dissolves (its handle disappears). The caller arranges them afterwards.
+  async breakUpPile(pile) {
+    this.preventRearrangeDuringPileDrop = true;
+    for(const w of pile.children().reverse()) {
+      await w.set('x', this.get('dropOffsetX'));
+      await w.set('y', this.get('dropOffsetY'));
+      await w.set('parent', this.get('id'));
+      await w.bringToFront();
+    }
+    delete this.preventRearrangeDuringPileDrop;
   }
 
   supportsPiles() {
