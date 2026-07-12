@@ -99,6 +99,19 @@ describe('Room security', () => {
     expect(await room.isAdmin(undefined)).toBe(false);
   });
 
+  test('concurrent claims from two different collections cannot both succeed', async () => {
+    room.players.push({ name: 'rival', collection: 'rival-collection', send() {} });
+    const [ first, second ] = await Promise.allSettled([
+      room.collectionAction('claim', { collection: 'admin-collection' }),
+      room.collectionAction('claim', { collection: 'rival-collection' })
+    ]);
+    const outcomes = [ first.status, second.status ];
+    expect(outcomes.filter(s => s == 'fulfilled').length).toBe(1); // exactly one claim wins
+    expect(outcomes.filter(s => s == 'rejected').length).toBe(1);
+    const winner = first.status == 'fulfilled' ? 'admin-collection' : 'rival-collection';
+    expect(await room.isAdmin(winner)).toBe(true);
+  });
+
   test('secrets are stored as salted hashes and stripped from public meta', async () => {
     await room.collectionAction('claim', { collection: 'admin-collection' });
     await room.collectionAction('setPassword', { collection: 'admin-collection', password: 'hunter2' });

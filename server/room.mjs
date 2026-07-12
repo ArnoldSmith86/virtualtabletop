@@ -279,8 +279,17 @@ export default class Room {
       // prevent drive-by claiming of enumerated room IDs
       if(!this.players.some(player=>player.collection === collection))
         throw new Logging.UserError(403, 'You have to be a player in the room to claim it.');
-      this.ensureSalt();
-      this.security().adminCollection = await this.hashSecret(collection);
+      // reserve the claim synchronously so two concurrent claims can't both pass the checks above
+      // while hashSecret (async) is still deriving the key, and the second requester loses cleanly
+      if(this.claimReservedBy && this.claimReservedBy != collection)
+        throw new Logging.UserError(403, 'This room is already claimed by another collection.');
+      this.claimReservedBy = collection;
+      try {
+        this.ensureSalt();
+        this.security().adminCollection = await this.hashSecret(collection);
+      } finally {
+        delete this.claimReservedBy;
+      }
       Logging.log(`room ${this.id} was claimed by collection ${this.claimedBy().substring(0, 8)}…`);
     } else if(action == 'unclaim') {
       await requireAdmin();
