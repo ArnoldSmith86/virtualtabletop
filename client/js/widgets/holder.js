@@ -418,6 +418,14 @@ class Holder extends ImageWidget {
   // becomes a new group at that position. A final rearrangeGroups (from moveEnd)
   // then tidies the whole row. multipleSpread does its own grouping here so that
   // wide groups can be inserted between others without accidentally merging.
+  // The fan index (position within a group's spread) that a drop at holder-relative
+  // x maps to, so a card can be inserted at a specific spot inside the fan.
+  spreadFanIndex(group, relX) {
+    const stepX = this.get('stackOffsetX') || group.get('width');
+    const count = group.get('type') == 'pile' ? group.children().length : 1;
+    return Math.max(0, Math.min(count, Math.round((relX - group.get('x')) / (stepX || 1))));
+  }
+
   async placeInSpreadGroups(child, oldParentID) {
     await super.onChildAddAlign(child, oldParentID);
 
@@ -427,9 +435,11 @@ class Holder extends ImageWidget {
     const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner')).sort((a, b)=>a.get('x') - b.get('x'));
     const center = child.get('x') + child.get('width') / 2;
 
-    const joinGroup = others.find(g=>Math.abs(center - (g.get('x') + g.get('width') / 2)) <= g.get('width') * 0.25);
+    // dropped over an existing group -> insert into that group's fan at the
+    // position under the cursor; dropped in a gap -> new group between groups
+    const joinGroup = others.find(g=>center >= g.get('x') && center <= g.get('x') + g.get('width'));
     if(joinGroup)
-      return await this.mergeGroups(child, joinGroup);
+      return await this.mergeGroups(child, joinGroup, this.spreadFanIndex(joinGroup, child.get('x')));
 
     let index = 0;
     for(const g of others)
@@ -441,10 +451,12 @@ class Holder extends ImageWidget {
     await child.setPosition(x, this.get('dropOffsetY'), child.get('z'));
   }
 
-  // Merge a dropped card or group (child) into an existing group. If the target
-  // group is still a single loose card, a pile is created for it first. Cards from
-  // a dropped pile are moved individually so the result is one spread-out group.
-  async mergeGroups(child, group) {
+  // Merge a dropped card or group (child) into an existing group, inserting it at
+  // fan position `index` (default: the end). If the target group is still a single
+  // loose card, a pile is created for it first. Cards from a dropped pile are moved
+  // individually so the result is one spread-out group, and z is reassigned so the
+  // fan order (and layering) matches the requested position.
+  async mergeGroups(child, group, index) {
     let pile = group;
     if(group.get('type') != 'pile') {
       const pileDef = Object.assign({
@@ -461,15 +473,17 @@ class Holder extends ImageWidget {
       await group.set('parent', pile.get('id'));
     }
 
-    if(child.get('type') == 'pile') {
-      for(const c of child.children().reverse()) {
-        await c.bringToFront();
-        await c.set('parent', pile.get('id'));
-      }
-    } else {
-      await child.bringToFront();
-      await child.set('parent', pile.get('id'));
-    }
+    const incoming = child.get('type') == 'pile' ? child.children().slice().sort((a, b)=>a.get('z') - b.get('z')) : [ child ];
+    for(const c of incoming)
+      await c.set('parent', pile.get('id'));
+
+    const existing = pile.children().slice().filter(c=>!incoming.includes(c)).sort((a, b)=>a.get('z') - b.get('z'));
+    const at = index === undefined ? existing.length : Math.max(0, Math.min(existing.length, index));
+    const ordered = existing.slice(0, at).concat(incoming, existing.slice(at));
+    let z = 1;
+    for(const c of ordered)
+      await c.set('z', z++);
+    await pile.reSpreadForHolder();
   }
 
   // SORT on a multipleSpread holder sorts the cards within each spread group
