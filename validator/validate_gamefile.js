@@ -770,7 +770,7 @@ const operationProps = {
     'SHIFT': {
         'order': getWidgetTypeValidator(['holder', 'seat'], true),
         'widgets': v=>v === 'all' || v === 'top' || typeof v === 'string' || 'string, "all" or "top" expected',
-        'steps': 'number',
+        'steps': v=>typeof v === 'number' && Number.isInteger(v) || 'integer expected',
         'reverse': 'boolean',
         'wrap': 'boolean'
     },

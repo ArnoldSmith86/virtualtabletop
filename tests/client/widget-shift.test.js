@@ -1,9 +1,13 @@
 import { Widget } from '../../client/js/widgets/widget.js';
 import { createWidget, removeWidget } from './client-util.js';
 
-// jsdom doesn't provide a layout engine, so z-ordering (which depends on
-// rendered geometry via getMaxZ) can't run here; SHIFT doesn't depend on it.
-Widget.prototype.bringToFront = async function() {};
+// getMaxZ/updateMaxZ are attached to window only during browser startup, which
+// doesn't run under jsdom. Provide minimal per-layer implementations so the real
+// bringToFront (z = max + 1) works and stacking-order assertions hold.
+const maxZ = {};
+global.getMaxZ = layer => maxZ[layer] || 0;
+global.updateMaxZ = (layer, z) => { maxZ[layer] = Math.max(maxZ[layer] || 0, z); };
+global.resetMaxZ = layer => { maxZ[layer] = 0; };
 
 function createContainers(testName, count) {
   const containers = [];
@@ -22,6 +26,7 @@ async function createTokens(testName, containerId, count) {
   for(let i = 0; i < count; i++) {
     const token = createWidget({ id: `${testName}-token-${containerId}-${i}`, type: 'widget' });
     await token.set('parent', containerId);
+    await token.set('z', i);
     tokens.push(token);
   }
   return tokens;
@@ -102,6 +107,59 @@ describe("Scenarios: Shifting widgets between containers", () => {
         expect(after[0].sort()).toEqual(before[0].sort());
         expect(after[1]).toEqual([]);
         expect(after[2]).toEqual([]);
+      });
+    });
+  });
+
+  describe("Given a container with a three-widget stack and a wrap-around SHIFT", () => {
+    let stack;
+    beforeEach(async () => {
+      stack = await createTokens(testName, containers[0].get('id'), 3);
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": containers.map(c => c.get('id')),
+          "widgets": "all",
+          "steps": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the whole stack moves and keeps its stacking order", async () => {
+        const before = containers[0].children().map(w => w.get('id'));
+        await button.click();
+        const after = containers[1].children().map(w => w.get('id'));
+
+        expect(containers[0].children()).toEqual([]);
+        expect(after).toEqual(before);
+      });
+    });
+  });
+
+  describe("Given three containers each with one token and a two-step SHIFT", () => {
+    beforeEach(async () => {
+      await createTokens(testName, containers[0].get('id'), 1);
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": containers.map(c => c.get('id')),
+          "widgets": "all",
+          "steps": 2
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the token moves two positions along the order", async () => {
+        const before = idsOf(containers);
+        await button.click();
+        const after = idsOf(containers);
+
+        expect(after[2]).toEqual(before[0]);
+        expect(after[0]).toEqual([]);
       });
     });
   });

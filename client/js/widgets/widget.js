@@ -1929,7 +1929,7 @@ export class Widget extends StateManaged {
 
         if(valid) {
           const length = order.length;
-          const shift = (a.reverse ? -1 : 1) * a.steps;
+          const shift = (a.reverse ? -1 : 1) * Math.trunc(a.steps);
           const collectionSet = widgetCollection ? new Set(collections[widgetCollection]) : null;
           const moves = [];
 
@@ -1953,11 +1953,19 @@ export class Widget extends StateManaged {
           }
 
           for(const move of moves) {
-            for(const c of move.widgets) {
-              if(move.target.seat && move.target.seat.get('player'))
+            if(move.target.seat && !move.target.seat.get('player')) {
+              problems.push(`Seat ${move.target.seat.get('id')} is empty, so its hand cannot receive shifted widgets.`);
+              continue;
+            }
+            // children() is top-first (z descending); moveToHolder brings each widget
+            // to front, so move bottom-first to preserve the source stacking order.
+            for(const c of move.widgets.slice().reverse()) {
+              c.movedByButton = true;
+              if(move.target.seat)
                 c.targetPlayer = move.target.seat.get('player');
               await c.moveToHolder(move.target.holder);
               delete c.targetPlayer;
+              delete c.movedByButton;
             }
             if(typeof move.target.holder.updateAfterShuffle == 'function')
               await move.target.holder.updateAfterShuffle();
