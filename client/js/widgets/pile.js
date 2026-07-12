@@ -67,6 +67,13 @@ class Pile extends Widget {
     return await super.onChildAddAlign(child, oldParentID);
   }
 
+  // Called by SORT/SHUFFLE via the card's parent (which is this pile). When the
+  // pile is a spread group re-fan it so the cards' positions and layering (z)
+  // follow the new order and stay readable.
+  async updateAfterShuffle() {
+    await this.reSpreadForHolder();
+  }
+
   applyChildAdd(child) {
     super.applyChildAdd(child);
     ++this.childCount;

@@ -320,19 +320,27 @@ class Holder extends ImageWidget {
     }
   }
 
-  // Snap an interactively-dropped card to the grid cell nearest where it was
-  // dropped, leaving the other cards where they are. This lets a designer/player
-  // place a card in a specific grid position instead of it always flowing to the
-  // next sequential slot (which is what happens for MOVE and re-layouts).
+  // Insert an interactively-dropped card into the grid at the cell nearest where
+  // it was dropped and reflow the rest so the whole grid stays in order with the
+  // new card at that position (rather than the card always landing in the next
+  // sequential slot, which is what MOVE does). The other cards flow around it.
   async snapToGridCell(child, oldParentID) {
     let coord = { x: child.get('x'), y: child.get('y') };
     if(!oldParentID)
       coord = this.coordLocalFromCoordGlobal(coord);
 
-    const m = this.gridMetrics(this.children().length);
+    const others = this.children().filter(w=>w != child).sort((a, b)=>a.get('z') - b.get('z'));
+    const m = this.gridMetrics(others.length + 1);
     const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
     const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
-    await child.setPosition(m.marginX + column * m.stepX, m.marginY + row * m.stepY, child.get('z'));
+    const index = Math.max(0, Math.min(others.length, row * m.cols + column));
+
+    const ordered = others.slice();
+    ordered.splice(index, 0, child);
+    let z = 1;
+    for(const w of ordered)
+      await w.set('z', z++);
+    await this.updateAfterShuffle();
   }
 
   // Lay out the holder's direct children (piles act as spread groups, loose cards
@@ -384,28 +392,32 @@ class Holder extends ImageWidget {
     }
 
     const shadowW = shadow ? shadow.get('width') : 0;
+    // keep the shadow inside the holder so it only ever snaps to a valid position
+    const maxShadowX = Math.max(this.get('dropOffsetX'), this.get('width') - this.get('dropOffsetX') - shadowW);
+    const placeShadow = async (sx, sz)=>await shadow.setPosition(Math.min(sx, maxShadowX), this.get('dropOffsetY'), sz);
+
     let x = this.get('dropOffsetX');
     const y = this.get('dropOffsetY');
     let z = 1;
     for(let i=0; i<groups.length; ++i) {
       if(i === insertIndex) {
-        await shadow.setPosition(x, y, z++);
+        await placeShadow(x, z++);
         x += shadowW + gap;
       }
       await groups[i].setPosition(x, y, z++);
       x += groups[i].get('width') + gap;
     }
     if(insertIndex >= groups.length)
-      await shadow.setPosition(x, y, z++);
+      await placeShadow(x, z++);
   }
 
-  // Decide what happens to a card dropped into a multipleSpread holder based on
-  // where it landed, mirroring what the drop shadow showed. If it is over the
-  // central part of an existing group it is left there so it merges into that
-  // group (updatePiles turns them into one spread-out pile). Otherwise it is
-  // snapped to the clean slot between groups so it does not overlap a neighbour
-  // and therefore becomes a new group at that position. A final rearrangeGroups
-  // (from moveEnd) then tidies the whole row.
+  // Decide what happens to a card or group (pile) dropped into a multipleSpread
+  // holder based on where it landed, mirroring what the drop shadow showed. If it
+  // is over the central part of an existing group it is merged into that group (a
+  // spread-out pile); otherwise it is snapped to the clean slot between groups and
+  // becomes a new group at that position. A final rearrangeGroups (from moveEnd)
+  // then tidies the whole row. multipleSpread does its own grouping here so that
+  // wide groups can be inserted between others without accidentally merging.
   async placeInSpreadGroups(child, oldParentID) {
     await super.onChildAddAlign(child, oldParentID);
 
@@ -415,8 +427,9 @@ class Holder extends ImageWidget {
     const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner')).sort((a, b)=>a.get('x') - b.get('x'));
     const center = child.get('x') + child.get('width') / 2;
 
-    if(others.some(g=>Math.abs(center - (g.get('x') + g.get('width') / 2)) <= g.get('width') * 0.25))
-      return; // over a group: let updatePiles merge the card into it
+    const joinGroup = others.find(g=>Math.abs(center - (g.get('x') + g.get('width') / 2)) <= g.get('width') * 0.25);
+    if(joinGroup)
+      return await this.mergeGroups(child, joinGroup);
 
     let index = 0;
     for(const g of others)
@@ -426,6 +439,37 @@ class Holder extends ImageWidget {
     for(let i=0; i<index; ++i)
       x += others[i].get('width') + gap;
     await child.setPosition(x, this.get('dropOffsetY'), child.get('z'));
+  }
+
+  // Merge a dropped card or group (child) into an existing group. If the target
+  // group is still a single loose card, a pile is created for it first. Cards from
+  // a dropped pile are moved individually so the result is one spread-out group.
+  async mergeGroups(child, group) {
+    let pile = group;
+    if(group.get('type') != 'pile') {
+      const pileDef = Object.assign({
+        type: 'pile',
+        parent: this.get('id'),
+        x: group.get('x'),
+        y: group.get('y'),
+        width: group.get('width'),
+        height: group.get('height')
+      }, group.get('onPileCreation'));
+      if(group.get('owner') !== null && group.get('owner') !== undefined)
+        pileDef.owner = group.get('owner');
+      pile = widgets.get(await addWidgetLocal(pileDef));
+      await group.set('parent', pile.get('id'));
+    }
+
+    if(child.get('type') == 'pile') {
+      for(const c of child.children().reverse()) {
+        await c.bringToFront();
+        await c.set('parent', pile.get('id'));
+      }
+    } else {
+      await child.bringToFront();
+      await child.set('parent', pile.get('id'));
+    }
   }
 
   // SORT on a multipleSpread holder sorts the cards within each spread group

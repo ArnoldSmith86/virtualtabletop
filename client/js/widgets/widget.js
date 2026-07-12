@@ -2912,15 +2912,19 @@ export class Widget extends StateManaged {
     if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
       return;
 
+    // A multipleSpread holder manages its own grouping (join vs. insert) in
+    // Holder.placeInSpreadGroups, so the generic proximity-based pile merging must
+    // not fire for widgets inside such a holder — otherwise a wide group dropped
+    // between others would be merged into a neighbour instead of inserted.
+    const ancestor = widgets.has(this.get('_ancestor')) ? widgets.get(this.get('_ancestor')) : null;
+    if(ancestor && ancestor.get('layout') == 'multipleSpread')
+      return;
+
     const thisX = this.get('x');
     const thisY = this.get('y');
     const thisOwner = this.get('owner');
     const thisOnPileCreation = this.get('onPileCreation');
     const thisOnPileCreationJSON = JSON.stringify(thisOnPileCreation);
-    // In a multipleSpread holder each group is a spread-out (wide) pile, so
-    // proximity to the group's top-left corner is not enough: a card should join
-    // the group if it is dropped anywhere over the group's area.
-    const spreadHolder = thisParent && widgets.has(thisParent) && widgets.get(thisParent).get('layout') == 'multipleSpread';
     for(const [ widgetID, widget ] of widgets) {
       if(widget == this)
         continue;
@@ -2933,12 +2937,7 @@ export class Widget extends StateManaged {
       if(thisType == 'card')
         pileSnapRange = thisOnPileCreation && thisOnPileCreation.pileSnapRange !== undefined ? thisOnPileCreation.pileSnapRange : defaultPileSnapRange;
 
-      const inRange = Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange;
-      const overlapsGroup = spreadHolder
-        && thisX < widget.get('x') + widget.get('width')  && thisX + this.get('width')  > widget.get('x')
-        && thisY < widget.get('y') + widget.get('height') && thisY + this.get('height') > widget.get('y');
-
-      if(widget.get('parent') == thisParent && (inRange || overlapsGroup)) {
+      if(widget.get('parent') == thisParent && Math.abs(widget.get('x')-thisX) < pileSnapRange && Math.abs(widget.get('y')-thisY) < pileSnapRange) {
         if(widget.isBeingRemoved || widget.get('owner') !== thisOwner || widget.get('dropShadowOwner') || JSON.stringify(widget.get('onPileCreation')) !== thisOnPileCreationJSON)
           continue;
 
