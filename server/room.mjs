@@ -917,8 +917,11 @@ export default class Room {
     }
     this.inputRequests = this.inputRequests || Object.create(null);
     this.inputRequests[args.sessionID] = { from: player, remaining: targets };
-    for(const target of targets)
-      target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay: args.overlay, variables: args.variables, collections: args.collections });
+    for(const target of targets) {
+      const overlay = args.overlaysByTarget && args.overlaysByTarget[target.name] || args.overlay;
+      const collections = args.collectionsByTarget && args.collectionsByTarget[target.name] || args.collections;
+      target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay, variables: args.variables, collections });
+    }
   }
 
   inputResult(player, args) {

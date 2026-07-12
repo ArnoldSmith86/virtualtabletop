@@ -656,16 +656,29 @@ function resolveCollections(ids) {
   return collections;
 }
 
+function referencedChooseCollections(overlay, collections) {
+  const referenced = {};
+  for(const field of overlay.fields || []) {
+    if(field.type != 'choose' || field.holder)
+      continue;
+    const source = field.source || 'DEFAULT';
+    if(typeof source == 'string' && Array.isArray(collections[source]))
+      referenced[source] = collections[source];
+  }
+  return referenced;
+}
+
 // Run an INPUT for one or more players. `showLocal` (optional) is called when
 // the initiator itself is among the players; it shows the overlay locally and
 // resolves to { variables, collections }. Resolves to a map
 // playerName -> { variables, collections }, or rejects if the input is
 // cancelled (by a target, by the initiator or via the block overlay).
-export function runInput({ widgetID, overlay, players, variables, collections, showLocal }) {
+export function runInput({ widgetID, overlay, overlaysByPlayer, players, variables, collections, showLocal }) {
   const sessionID = `${inputClientToken}-${++inputSessionCounter}`;
   const remoteTargets = players.filter(p=>p && p!==playerName);
   const includeSelf = players.includes(playerName);
   const collectionIDs = serializeCollections(collections);
+  const collectionIDsByPlayer = overlaysByPlayer ? Object.fromEntries(remoteTargets.map(p=>[ p, serializeCollections(referencedChooseCollections(overlaysByPlayer[p] || overlay, collections)) ])) : null;
 
   return new Promise((resolve, reject) => {
     const session = {
@@ -725,7 +738,7 @@ export function runInput({ widgetID, overlay, players, variables, collections, s
 
     if(remoteTargets.length) {
       flushDelta();
-      toServer('requestInput', { sessionID, widgetID, overlay, variables, collections: collectionIDs, targets: remoteTargets });
+      toServer('requestInput', { sessionID, widgetID, overlay, overlaysByTarget: overlaysByPlayer, variables, collections: collectionIDs, collectionsByTarget: collectionIDsByPlayer, targets: remoteTargets });
     }
 
     if(!session.remaining.size)

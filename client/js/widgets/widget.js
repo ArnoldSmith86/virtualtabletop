@@ -19,6 +19,35 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteY'
 ]);
 
+function inputFieldValueForPlayer(value, player, playerIndex) {
+  if(!value || typeof value != 'object' || Array.isArray(value))
+    return value;
+  for(const key of [ player, String(playerIndex), 'default', 'DEFAULT' ])
+    if(Object.prototype.hasOwnProperty.call(value, key))
+      return value[key];
+  return null;
+}
+
+function cloneInputOverlayForPlayer(overlay, player, playerIndex) {
+  const clone = JSON.parse(JSON.stringify(overlay));
+  for(const field of clone.fields || []) {
+    if(field.type != 'choose')
+      continue;
+    for(const property of [ 'source', 'holder', 'collection', 'value' ])
+      field[property] = inputFieldValueForPlayer(field[property], player, playerIndex);
+  }
+  return clone;
+}
+
+function hasPlayerSpecificChooseField(overlay) {
+  return (overlay.fields || []).some(field=>
+    field.type == 'choose' &&
+    [ 'source', 'holder', 'collection', 'value' ].some(property=>
+      field[property] && typeof field[property] == 'object' && !Array.isArray(field[property])
+    )
+  );
+}
+
 let lastExecutedOperation = null;
 
 export class Widget extends StateManaged {
@@ -1493,12 +1522,14 @@ export class Widget extends StateManaged {
         // variables/collections); everyone else is asked over the network.
         const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{
           const handle = {};
-          const promise = this.showInputOverlay(a, widgets, variables, collections, getCollection, problems, handle);
+          const promise = this.showInputOverlay(cloneInputOverlayForPlayer(a, playerName, players.indexOf(playerName)), widgets, variables, collections, getCollection, problems, handle);
           registerAbort(()=>{ if(handle.abort) handle.abort(); });
           return promise;
         } : null;
         try {
-          const results = await runInput({ widgetID: this.get('id'), overlay: a, players, variables, collections, showLocal });
+          const usePlayerSpecificOverlay = hasPlayerSpecificChooseField(a);
+          const overlaysByPlayer = usePlayerSpecificOverlay ? Object.fromEntries(players.map((p, i)=>[ p, cloneInputOverlayForPlayer(a, p, i) ])) : null;
+          const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
           if(isMulti) {
             // Return each field's value keyed by the player who entered it.
             for(const field of a.fields || []) {
