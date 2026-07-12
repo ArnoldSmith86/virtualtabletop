@@ -4062,6 +4062,26 @@ function jeInitEventListeners() {
       jeNewline();
       e.preventDefault();
     }
+    // Tab+Left / Tab+Right navigate the widget history (back / forward)
+    if (jeEnabled && jeTabKeyHeld && (e.key == 'ArrowLeft' || e.key == 'ArrowRight')) {
+      e.preventDefault();
+      e.stopPropagation();
+      const direction = e.key == 'ArrowLeft' ? -1 : 1;
+      if (jeHistoryCanNavigate(direction)) {
+        // close the search overlay that Tab opened; we're navigating instead
+        if (jeTabSearchActive) {
+          jeTabSearchActive = false;
+          jeTabSearchFilter = '';
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+        }
+        jeIgnoreBlurOnce = true;
+        jeHistoryNavigate(direction);
+        jeShowCommands();
+        $('#jeText').focus();
+      }
+      return;
+    }
     if (e.key == 'Tab' && jeEnabled) {
       const jeTextElement = $('#jeText');
       if (jeTextElement && document.activeElement === jeTextElement) {
