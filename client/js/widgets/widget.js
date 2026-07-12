@@ -1533,10 +1533,28 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT', position: null });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
+
+        // Place a just-moved card within its target holder according to the
+        // `position` parameter. z-order determines both the visual position in a
+        // stack and, after the holder re-sorts, the order in a spread/grid holder:
+        // 'pileBottom'/'groupStart' send it to the start, 'pileTop'/'groupEnd' to
+        // the end. Group-aware holders (layout 'multipleSpread') use the same
+        // ordering to place cards at the first vs. last group.
+        async function applyPosition(target, c) {
+          if(!a.position || target.get('type') != 'holder')
+            return;
+          if(a.position == 'pileBottom' || a.position == 'groupStart') {
+            const siblings = target.children().filter(w=>w!=c);
+            const minZ = siblings.length ? Math.min(...siblings.map(w=>w.get('z'))) : 1;
+            await c.set('z', minZ - 1);
+          } else if(a.position == 'pileTop' || a.position == 'groupEnd') {
+            await c.bringToFront();
+          }
+        }
 
         async function applyMove(source, target, c) {
           let moved = 0;
@@ -1568,6 +1586,7 @@ export class Widget extends StateManaged {
                     delete c.targetPlayer;
                   }
                   await c.bringToFront();
+                  await applyPosition(targetHand, c);
                   if(targetHand.get('type') == 'holder')
                     await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
@@ -1580,6 +1599,7 @@ export class Widget extends StateManaged {
             } else {
               await applyFlip();
               await c.moveToHolder(target);
+              await applyPosition(target, c);
               ++moved;
             }
             delete c.movedByButton;
@@ -1595,6 +1615,8 @@ export class Widget extends StateManaged {
                 for(const c of source.children().slice(0, count).reverse()) {
                   await applyMove(source, target, c);
                 }
+                if(a.position && target.get('type') == 'holder')
+                  await target.updateAfterShuffle();
               }));
             } else {
               problems.push(`Source ${a.from} is invalid.`);

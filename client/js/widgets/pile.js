@@ -29,6 +29,23 @@ class Pile extends Widget {
     this.updateText();
   }
 
+  // Spread this pile's children out (rather than stacking them) using the given
+  // per-card offsets and resize the pile to their bounding box. Used by holders
+  // with layout 'multipleSpread', where each pile is a spread-out group.
+  async arrangeAsSpread(offsetX, offsetY) {
+    const children = this.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    let x = 0, y = 0, width = 1, height = 1, z = 1;
+    for(const child of children) {
+      await child.setPosition(x, y, z++);
+      width  = Math.max(width,  x + child.get('width'));
+      height = Math.max(height, y + child.get('height'));
+      x += !child.get('overlap') && offsetX ? child.get('width' ) + 4 : offsetX;
+      y += !child.get('overlap') && offsetY ? child.get('height') + 4 : offsetY;
+    }
+    await this.set('width', width);
+    await this.set('height', height);
+  }
+
   applyChildAdd(child) {
     super.applyChildAdd(child);
     ++this.childCount;

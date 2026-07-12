@@ -27,8 +27,34 @@ class Holder extends ImageWidget {
 
       stackOffsetX: 0,
       stackOffsetY: 0,
-      borderRadius: 8
+      borderRadius: 8,
+
+      layout: null,
+      spreadOffset: null
     });
+  }
+
+  // The `layout` property is a high-level way to describe how a holder arranges
+  // its children. When set (non-null) it overrides the lower-level properties
+  // (alignChildren, preventPiles, stackOffsetX/Y) that would otherwise have to be
+  // combined by hand to reach the same effect. Reading those properties through
+  // get() therefore returns the value implied by the layout, so both this class
+  // and the base Widget logic behave consistently.
+  get(property) {
+    const layout = super.get('layout');
+    if(layout) {
+      if(property == 'alignChildren')
+        return layout != 'freeform';
+      if(property == 'preventPiles') {
+        if(layout == 'grid')
+          return true;
+        if(layout == 'pile' || layout == 'multipleSpread')
+          return false;
+      }
+      if((property == 'stackOffsetX' || property == 'stackOffsetY') && layout == 'pile')
+        return 0;
+    }
+    return super.get(property);
   }
 
   applyDeltaToDOM(delta) {
@@ -103,7 +129,9 @@ class Holder extends ImageWidget {
         }
       }
     }
-    if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
+    if(this.get('layout') == 'grid' || this.get('layout') == 'multipleSpread')
+      await this.updateAfterShuffle();
+    else if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
     if(Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
@@ -143,6 +171,16 @@ class Holder extends ImageWidget {
     if(child.get('type') == 'deck')
       return await super.onChildAddAlign(child, oldParentID);
 
+    if(this.get('layout') == 'grid') {
+      await super.onChildAddAlign(child, oldParentID);
+      return await this.updateAfterShuffle();
+    }
+
+    if(this.get('layout') == 'multipleSpread') {
+      await super.onChildAddAlign(child, oldParentID);
+      return await this.rearrangeGroups();
+    }
+
     if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
       this.preventRearrangeDuringPileDrop = true;
@@ -175,7 +213,7 @@ class Holder extends ImageWidget {
 
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
-    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY' || property == 'layout' || property == 'spreadOffset') {
       await this.updateAfterShuffle();
     }
   }
@@ -195,6 +233,9 @@ class Holder extends ImageWidget {
     if(this.preventRearrangeDuringPileDrop)
       return;
 
+    if(this.get('layout') == 'grid')
+      return await this.rearrangeChildrenGrid(children);
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
@@ -211,12 +252,69 @@ class Holder extends ImageWidget {
     }
   }
 
+  // Arrange all children in a grid that fits the holder's width, laying out as
+  // many columns of cards as fit and wrapping to new rows. dropOffset acts as the
+  // margin from the top-left corner, stackOffset as the gap between cells, so a
+  // designer can influence the spacing without having to place cards manually.
+  async rearrangeChildrenGrid(children) {
+    if(this.preventRearrangeDuringPileDrop || !children.length)
+      return;
+
+    const marginX = this.get('dropOffsetX');
+    const marginY = this.get('dropOffsetY');
+    const gapX = Math.abs(this.get('stackOffsetX')) || 4;
+    const gapY = Math.abs(this.get('stackOffsetY')) || 4;
+    const cardW = children[0].get('width');
+    const cardH = children[0].get('height');
+    const columns = Math.max(1, Math.floor((this.get('width') - marginX + gapX) / (cardW + gapX)));
+
+    let z = 1;
+    for(let i=0; i<children.length; ++i) {
+      const column = i % columns;
+      const row = Math.floor(i / columns);
+      await children[i].setPosition(marginX + column * (cardW + gapX), marginY + row * (cardH + gapY), z++);
+    }
+  }
+
+  // Lay out the holder's direct children (piles act as spread groups, loose cards
+  // as groups of one) side by side, separated by spreadOffset. Each pile spreads
+  // its own cards using the holder's stackOffset values.
+  async rearrangeGroups() {
+    if(this.preventRearrangeDuringPileDrop)
+      return;
+
+    const stepX = this.get('stackOffsetX') || 0;
+    const stepY = this.get('stackOffsetY') || 0;
+    const spread = this.get('spreadOffset');
+    const gap = spread === null || spread === undefined ? 8 : spread;
+
+    const groups = this.childrenFilter(super.children(), true).slice().sort((a, b)=>a.get('z') - b.get('z'));
+
+    let x = this.get('dropOffsetX');
+    const y = this.get('dropOffsetY');
+    let z = 1;
+    for(const group of groups) {
+      await group.setPosition(x, y, z++);
+      if(group.get('type') == 'pile' && group.arrangeAsSpread)
+        await group.arrangeAsSpread(stepX, stepY);
+      x += group.get('width') + gap;
+    }
+  }
+
   supportsPiles() {
+    const layout = this.get('layout');
+    if(layout == 'multipleSpread')
+      return true;
+    if(layout == 'grid')
+      return false;
     return !this.get('preventPiles') && (!this.get('alignChildren') || !this.get('stackOffsetX') && !this.get('stackOffsetY'));
   }
 
   async updateAfterShuffle() {
-    if(!this.get('stackOffsetX') && !this.get('stackOffsetY'))
+    if(this.get('layout') == 'multipleSpread')
+      return await this.rearrangeGroups();
+
+    if(this.get('layout') != 'grid' && !this.get('stackOffsetX') && !this.get('stackOffsetY'))
       return;
 
     const children = this.children();
