@@ -753,11 +753,13 @@ class PropertiesModule extends SidebarModule {
         const decks = await response.json();
 
         preview.innerHTML = decks.length ? '' : '<p>No decks were found behind that link.</p>';
-        for(const { deck, cardCounts } of decks) {
+        const showSource = new Set(decks.map(d=>d.source)).size > 1;
+        for(const { deck, cardCounts, source } of decks) {
           const cardCount = Object.values(cardCounts).reduce((sum, count)=>sum+count, 0);
           const button = this.renderWidgetButton(new Deck(generateUniqueWidgetID()), JSON.parse(JSON.stringify(deck)), preview);
           button.classList.add('ttsDeckButton');
-          div(button, 'deckCardCount', `${cardCount} card${cardCount == 1 ? '' : 's'}`);
+          const label = `${cardCount} card${cardCount == 1 ? '' : 's'}${showSource && source ? ` (${source})` : ''}`;
+          div(button, 'deckCardCount', html(label));
           button.onclick = _=>{
             button.classList.toggle('selected');
             addButton.disabled = !$a('.selected.ttsDeckButton', preview).length;
@@ -772,6 +774,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     addButton.onclick = async _=>{
+      addButton.disabled = true;
       for(const { button, deck, cardCounts } of foundDecks) {
         if(!button.classList.contains('selected'))
           continue;
@@ -782,6 +785,7 @@ class PropertiesModule extends SidebarModule {
         delete newDeck.z;
         newDeck.id = generateUniqueWidgetID();
         await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
+        button.classList.remove('selected');
       }
     };
   }

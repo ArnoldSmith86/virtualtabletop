@@ -322,17 +322,31 @@ MinifyHTML().then(function(result) {
       if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
         throw new Logging.UserError(400, 'Please provide a link.');
 
-      const states = await FileLoader.readStatesFromLink(req.body.link);
+      let states;
+      try {
+        states = await FileLoader.readStatesFromLink(req.body.link);
+      } catch(e) {
+        if(e instanceof Logging.UserError)
+          throw e;
+        Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+      }
+      if(!states || typeof states != 'object')
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+
       const decks = [];
-      for(const variants of Object.values(states)) {
-        for(let variant of Object.values(variants || {})) {
-          if(!variant || typeof variant != 'object' || !variant._meta)
+      for(const [ stateID, variants ] of Object.entries(states)) {
+        const variantList = Object.values(variants || {});
+        for(const [ variantIndex, rawVariant ] of variantList.entries()) {
+          if(!rawVariant || typeof rawVariant != 'object' || !rawVariant._meta)
             continue;
+          let variant;
           try {
-            variant = FileUpdater(variant);
+            variant = FileUpdater(rawVariant);
           } catch(e) {
             continue;
           }
+          const source = variantList.length > 1 ? `${stateID} #${variantIndex + 1}` : stateID;
           const widgets = Object.entries(variant).filter(([ id, w ])=>id != '_meta' && w && typeof w == 'object');
           for(const [ deckID, deck ] of widgets) {
             if(deck.type != 'deck')
@@ -341,7 +355,7 @@ MinifyHTML().then(function(result) {
             for(const [ cardID, card ] of widgets)
               if(card.type == 'card' && card.deck == deckID)
                 cardCounts[card.cardType] = (cardCounts[card.cardType] || 0) + 1;
-            decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts });
+            decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts, source });
           }
         }
       }
