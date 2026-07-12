@@ -179,16 +179,20 @@ class Holder extends ImageWidget {
 
     if(this.get('layout') == 'grid') {
       if(child.get('type') == 'pile') {
-        // a pile dropped into a grid must break up into individual cards (grid
-        // has preventPiles, so the cards won't re-merge) rather than staying a pile
-        await this.breakUpPile(child);
-        return await this.updateAfterShuffle();
+        // a pile dropped into a grid breaks up into individual cards (grid has
+        // preventPiles, so they won't re-merge). MOVE appends them; an interactive
+        // drop inserts them at the cell under the cursor.
+        if(child.movedByButton) {
+          await this.breakUpPile(child);
+          return await this.updateAfterShuffle();
+        }
+        return await this.snapPileToGrid(child, oldParentID);
       }
       if(child.movedByButton)
         // MOVE fills the grid sequentially
         return await this.updateAfterShuffle();
-      // an interactive drop lands in the grid cell nearest the cursor, leaving
-      // the other cards untouched
+      // an interactive drop is inserted at the grid cell under the cursor and the
+      // other cards reflow around it
       return await this.snapToGridCell(child, oldParentID);
     }
 
@@ -343,6 +347,29 @@ class Holder extends ImageWidget {
     await this.updateAfterShuffle();
   }
 
+  // Break a pile dropped interactively into a grid and insert its cards at the
+  // cell under the cursor (reflowing the rest), instead of appending them.
+  async snapPileToGrid(pile, oldParentID) {
+    let coord = { x: pile.get('x'), y: pile.get('y') };
+    if(!oldParentID)
+      coord = this.coordLocalFromCoordGlobal(coord);
+
+    const incoming = pile.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    await this.breakUpPile(pile);
+
+    const others = this.children().filter(w=>!incoming.includes(w)).sort((a, b)=>a.get('z') - b.get('z'));
+    const m = this.gridMetrics(others.length + incoming.length);
+    const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
+    const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
+    const index = Math.max(0, Math.min(others.length, row * m.cols + column));
+
+    const ordered = others.slice(0, index).concat(incoming, others.slice(index));
+    let z = 1;
+    for(const w of ordered)
+      await w.set('z', z++);
+    await this.updateAfterShuffle();
+  }
+
   // Lay out the holder's direct children (piles act as spread groups, loose cards
   // as groups of one) side by side, snapped into an aligned row and separated by
   // spreadOffset. Groups keep their stable left-to-right order (so they don't jump
@@ -426,8 +453,38 @@ class Holder extends ImageWidget {
     return Math.max(0, Math.min(count, Math.round((relX - group.get('x')) / (stepX || 1))));
   }
 
+  // Start of a MOVE batch into this holder: all the moved cards should end up in
+  // one group. Pick the target group implied by the MOVE `position` (an existing
+  // group for pileBottom/pileTop, or a fresh group at the start/end otherwise).
+  beginSpreadMove(position) {
+    const groups = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner')).sort((a, b)=>a.get('x') - b.get('x'));
+    let target = null;
+    if(position == 'pileBottom' && groups.length)
+      target = groups[0];
+    else if(position == 'pileTop' && groups.length)
+      target = groups[groups.length - 1];
+    this._spreadMove = { target, atStart: position == 'pileBottom' || position == 'groupStart' };
+  }
+
+  async endSpreadMove() {
+    delete this._spreadMove;
+    await this.rearrangeGroups();
+  }
+
   async placeInSpreadGroups(child, oldParentID) {
     await super.onChildAddAlign(child, oldParentID);
+
+    // during a MOVE batch, funnel every moved card into the one target group
+    if(this._spreadMove) {
+      if(this._spreadMove.target) {
+        this._spreadMove.target = await this.mergeGroups(child, this._spreadMove.target);
+      } else {
+        // first card of a brand new group for this batch
+        await child.setPosition(this._spreadMove.atStart ? -1 : this.get('width') * 1000, this.get('dropOffsetY'), child.get('z'));
+        this._spreadMove.target = child;
+      }
+      return;
+    }
 
     const spread = this.get('spreadOffset');
     const gap = spread === null || spread === undefined ? 8 : spread;
@@ -484,6 +541,7 @@ class Holder extends ImageWidget {
     for(const c of ordered)
       await c.set('z', z++);
     await pile.reSpreadForHolder();
+    return pile;
   }
 
   // SORT on a multipleSpread holder sorts the cards within each spread group

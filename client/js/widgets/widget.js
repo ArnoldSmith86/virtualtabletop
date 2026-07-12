@@ -1612,10 +1612,15 @@ export class Widget extends StateManaged {
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
               await w(a.from, async source=>await w(a.to, async target=>{
+                const spreadBatch = target.get('type') == 'holder' && target.get('layout') == 'multipleSpread' && target.beginSpreadMove;
+                if(spreadBatch)
+                  target.beginSpreadMove(a.position);
                 for(const c of source.children().slice(0, count).reverse()) {
                   await applyMove(source, target, c);
                 }
-                if(target.get('type') == 'holder' && (a.position || target.get('layout') == 'grid' || target.get('layout') == 'multipleSpread'))
+                if(spreadBatch)
+                  await target.endSpreadMove();
+                else if(target.get('type') == 'holder' && (a.position || target.get('layout') == 'grid'))
                   await target.updateAfterShuffle();
               }));
             } else {
@@ -1624,9 +1629,14 @@ export class Widget extends StateManaged {
           } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
+              const spreadBatch = target.get('type') == 'holder' && target.get('layout') == 'multipleSpread' && target.beginSpreadMove;
+              if(spreadBatch)
+                target.beginSpreadMove(a.position);
               for(const c of collections[collection].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              if(target.get('type') == 'holder')
+              if(spreadBatch)
+                await target.endSpreadMove();
+              else if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
           }
