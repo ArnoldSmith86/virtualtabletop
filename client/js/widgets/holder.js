@@ -395,22 +395,18 @@ class Holder extends ImageWidget {
     const shadow = all.find(w=>w.get('dropShadowOwner'));
     const groups = all.filter(w=>!w.get('dropShadowOwner')).sort((a, b)=>(a.get('x') - b.get('x')) || (a.get('z') - b.get('z')));
 
-    // fan the piles first so their widths are up to date before we place them
-    for(const group of groups)
-      if(group.get('type') == 'pile' && group.arrangeAsSpread)
-        await group.arrangeAsSpread(stepX, stepY);
-
-    // decide where the shadow goes: over a group (join, no slot) or between two
-    // groups / at an end (insert, open a one-card slot)
-    let insertIndex = -1;
+    // decide where the shadow goes: over a group (insert within that group's fan)
+    // or between two groups / at an end (insert a new group). The shadow is
+    // positioned in global coordinates while the groups store holder-relative x,
+    // so convert to the same frame before comparing.
+    let insertIndex = -1, overGroup = null, fanIndex = -1;
     if(shadow) {
-      // the shadow is positioned in global coordinates while the groups store
-      // holder-relative x, so convert to the same frame before comparing
-      const shadowCenter = shadow.get('x') - this.absoluteCoord('x') + shadow.get('width') / 2;
-      // join (no slot) when the cursor is over the central part of a group;
-      // otherwise open an insertion slot at the matching index
-      const overGroup = groups.some(g=>Math.abs(shadowCenter - (g.get('x') + g.get('width') / 2)) <= g.get('width') * 0.25);
-      if(!overGroup) {
+      const shadowLeft = shadow.get('x') - this.absoluteCoord('x');
+      const shadowCenter = shadowLeft + shadow.get('width') / 2;
+      overGroup = groups.find(g=>shadowCenter >= g.get('x') && shadowCenter <= g.get('x') + g.get('width'));
+      if(overGroup) {
+        fanIndex = this.spreadFanIndex(overGroup, shadowLeft);
+      } else {
         insertIndex = 0;
         for(const g of groups)
           if(g.get('x') + g.get('width') / 2 < shadowCenter)
@@ -418,24 +414,34 @@ class Holder extends ImageWidget {
       }
     }
 
+    // fan the piles; open a single-card gap in the group the shadow is over
+    for(const group of groups)
+      if(group.get('type') == 'pile' && group.arrangeAsSpread)
+        await group.arrangeAsSpread(stepX, stepY, group === overGroup ? fanIndex : -1);
+
     const shadowW = shadow ? shadow.get('width') : 0;
     // keep the shadow inside the holder so it only ever snaps to a valid position
     const maxShadowX = Math.max(this.get('dropOffsetX'), this.get('width') - this.get('dropOffsetX') - shadowW);
-    const placeShadow = async (sx, sz)=>await shadow.setPosition(Math.min(sx, maxShadowX), this.get('dropOffsetY'), sz);
+    const placeShadow = async (sx, sy, sz)=>await shadow.setPosition(Math.max(this.get('dropOffsetX'), Math.min(sx, maxShadowX)), sy, sz);
 
     let x = this.get('dropOffsetX');
     const y = this.get('dropOffsetY');
-    let z = 1;
+    let z = 1, overGroupShadowX = 0;
     for(let i=0; i<groups.length; ++i) {
       if(i === insertIndex) {
-        await placeShadow(x, z++);
+        await placeShadow(x, y, z++);
         x += shadowW + gap;
       }
+      // remember where the group the shadow is over ends up, to place the shadow in its fan
+      if(groups[i] === overGroup)
+        overGroupShadowX = x + fanIndex * (stepX || shadowW);
       await groups[i].setPosition(x, y, z++);
       x += groups[i].get('width') + gap;
     }
     if(insertIndex >= groups.length)
-      await placeShadow(x, z++);
+      await placeShadow(x, y, z++);
+    else if(overGroup)
+      await placeShadow(overGroupShadowX, y, z++);
   }
 
   // Decide what happens to a card or group (pile) dropped into a multipleSpread

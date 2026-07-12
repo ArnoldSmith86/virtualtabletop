@@ -41,15 +41,24 @@ class Pile extends Widget {
   // on top of each other) by the given per-card offsets, and resize the pile to
   // their bounding box. Used by holders with layout 'multipleSpread', where each
   // pile is a spread-out group whose fan is driven by the holder's stackOffset.
-  async arrangeAsSpread(offsetX, offsetY) {
+  async arrangeAsSpread(offsetX, offsetY, gapIndex = -1) {
     const children = this.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
-    let x = 0, y = 0, width = 1, height = 1, z = 1;
+    let x = 0, y = 0, width = 1, height = 1, z = 1, i = 0;
     for(const child of children) {
+      if(i === gapIndex) { // leave an empty single-card slot (for a drop shadow)
+        x += offsetX;
+        y += offsetY;
+      }
       await child.setPosition(x, y, z++);
       width  = Math.max(width,  x + child.get('width'));
       height = Math.max(height, y + child.get('height'));
       x += offsetX;
       y += offsetY;
+      ++i;
+    }
+    if(gapIndex >= children.length) { // gap at the very end
+      width  += Math.abs(offsetX);
+      height += Math.abs(offsetY);
     }
     await this.set('width', width);
     await this.set('height', height);
