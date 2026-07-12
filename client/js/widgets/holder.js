@@ -44,7 +44,9 @@ class Holder extends ImageWidget {
     const layout = super.get('layout');
     if(layout) {
       if(property == 'alignChildren')
-        return layout != 'freeform';
+        // multipleSpread and freeform leave children where the player drops them
+        // (multipleSpread then merges overlapping cards into spread-out pile groups)
+        return layout != 'freeform' && layout != 'multipleSpread';
       if(property == 'preventPiles') {
         if(layout == 'grid')
           return true;
@@ -129,7 +131,7 @@ class Holder extends ImageWidget {
         }
       }
     }
-    if(this.get('layout') == 'grid' || this.get('layout') == 'multipleSpread')
+    if(this.get('layout') == 'grid')
       await this.updateAfterShuffle();
     else if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
@@ -176,10 +178,10 @@ class Holder extends ImageWidget {
       return await this.updateAfterShuffle();
     }
 
-    if(this.get('layout') == 'multipleSpread') {
-      await super.onChildAddAlign(child, oldParentID);
-      return await this.rearrangeGroups();
-    }
+    // multipleSpread relies on the normal free-drop + pile-creation flow: a card
+    // dropped onto another card merges into a (spread-out) pile group, a card
+    // dropped on empty holder space starts a new group. So it deliberately falls
+    // through to the default placement below rather than snapping/re-tidying here.
 
     if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;

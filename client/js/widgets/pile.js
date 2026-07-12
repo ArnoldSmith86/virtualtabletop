@@ -29,9 +29,18 @@ class Pile extends Widget {
     this.updateText();
   }
 
-  // Spread this pile's children out (rather than stacking them) using the given
-  // per-card offsets and resize the pile to their bounding box. Used by holders
-  // with layout 'multipleSpread', where each pile is a spread-out group.
+  // The holder this pile lives in, if that holder uses layout 'multipleSpread'.
+  spreadHolder() {
+    const parent = this.get('parent');
+    if(widgets.has(parent) && widgets.get(parent).get('layout') == 'multipleSpread')
+      return widgets.get(parent);
+    return null;
+  }
+
+  // Spread this pile's children out into a fanned pile (rather than stacking them
+  // on top of each other) by the given per-card offsets, and resize the pile to
+  // their bounding box. Used by holders with layout 'multipleSpread', where each
+  // pile is a spread-out group whose fan is driven by the holder's stackOffset.
   async arrangeAsSpread(offsetX, offsetY) {
     const children = this.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
     let x = 0, y = 0, width = 1, height = 1, z = 1;
@@ -39,11 +48,23 @@ class Pile extends Widget {
       await child.setPosition(x, y, z++);
       width  = Math.max(width,  x + child.get('width'));
       height = Math.max(height, y + child.get('height'));
-      x += !child.get('overlap') && offsetX ? child.get('width' ) + 4 : offsetX;
-      y += !child.get('overlap') && offsetY ? child.get('height') + 4 : offsetY;
+      x += offsetX;
+      y += offsetY;
     }
     await this.set('width', width);
     await this.set('height', height);
+  }
+
+  async reSpreadForHolder() {
+    const holder = this.spreadHolder();
+    if(holder && !this.isBeingRemoved && this.children().length)
+      await this.arrangeAsSpread(holder.get('stackOffsetX') || 0, holder.get('stackOffsetY') || 0);
+  }
+
+  async onChildAddAlign(child, oldParentID) {
+    if(this.spreadHolder())
+      return await this.reSpreadForHolder();
+    return await super.onChildAddAlign(child, oldParentID);
   }
 
   applyChildAdd(child) {
@@ -268,6 +289,8 @@ class Pile extends Widget {
       await c.set('parent', p);
 
       await removeWidgetLocal(this.get('id'));
+    } else {
+      await this.reSpreadForHolder();
     }
 
     if(this.parent && this.parent.get('type') == 'holder')
