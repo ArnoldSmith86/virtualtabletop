@@ -2524,6 +2524,8 @@ function jeDisplayFilteredWidgets(e) {
 
 /* Widget switcher (breadcrumbs, back/forward history, tree dropdown) */
 
+let jeBreadcrumbWidget = null; // widget whose ancestry chain is currently shown in breadcrumbs
+
 function jeAddWidgetToHistory(id) {
   if(jeWidgetHistoryNavigating || jeWidgetHistory[jeWidgetHistoryIndex] === id)
     return;
@@ -2554,6 +2556,17 @@ function jeHistoryNavigate(direction) {
   jeWidgetHistoryNavigating = false;
 }
 
+// Check if ancestor is an ancestor of descendant in the widget tree
+function jeIsAncestorOf(ancestor, descendant) {
+  const seen = new Set();
+  for(let w = descendant; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+    seen.add(w);
+    if(w === ancestor)
+      return true;
+  }
+  return false;
+}
+
 function jeUpdateWidgetSwitcher() {
   if(!$('#jeWidgetSwitcher'))
     return;
@@ -2561,12 +2574,24 @@ function jeUpdateWidgetSwitcher() {
   $('#jeNavBack').disabled = !jeHistoryCanNavigate(-1);
   $('#jeNavForward').disabled = !jeHistoryCanNavigate(1);
 
+  // Determine which widget's ancestry chain to show in breadcrumbs
+  // Keep showing the same chain until selecting a widget outside it
+  let displayWidget = jeBreadcrumbWidget;
+  if(jeMode == 'widget' && jeWidget && widgets.has(jeWidget.id)) {
+    if(!displayWidget || !widgets.has(displayWidget.id) || !jeIsAncestorOf(jeWidget, displayWidget)) {
+      // jeWidget is not in the ancestry of the breadcrumb widget, update to its chain
+      displayWidget = jeBreadcrumbWidget = jeWidget;
+    }
+  } else {
+    displayWidget = jeBreadcrumbWidget = null;
+  }
+
   const separator = '<span class=jeCrumbSeparator>chevron_right</span>';
   let breadcrumbsHTML = '';
-  if(jeMode == 'widget' && jeWidget && widgets.has(jeWidget.id)) {
+  if(jeMode == 'widget' && displayWidget && widgets.has(displayWidget.id)) {
     const chain = [];
     const seen = new Set();
-    for(let w = jeWidget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+    for(let w = displayWidget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
       seen.add(w);
       chain.unshift(w);
     }
