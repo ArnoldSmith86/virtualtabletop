@@ -2,6 +2,12 @@
   padding: 2% 5%;
 }
 
+/* flex items shrink to fit the overlay by default, which squeezes/hides
+   these sections instead of letting the overlay scroll to show them */
+#roomsOverlay > .heading, #roomsOverlay > #roomsList, #roomsOverlay > #roomsCollectionBox {
+  flex-shrink: 0;
+}
+
 #roomsList {
   display: flex;
   flex-wrap: wrap;
