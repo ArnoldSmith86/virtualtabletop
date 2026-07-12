@@ -1323,6 +1323,11 @@ async function renderLibraryDeckPreview(entry, container) {
     cardIDs.push(cardID);
   });
 
+  // applyInitialDelta appends every widget to #topSurface via its (null) parent
+  // default; the cards were moved into the preview above, but the deck - which is
+  // only needed as a data source for the cards' faces - must be removed so it
+  // doesn't linger as a phantom deck in the room.
+  deckWidget.domElement.remove();
   widgets.delete(deckID);
   for(const cardID of cardIDs)
     widgets.delete(cardID);
