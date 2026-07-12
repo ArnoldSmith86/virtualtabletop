@@ -1569,9 +1569,7 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, [ 'dropTarget' ]);
   }
 
-  lineStopDefaults(type) {
-    if(type == 'basic')
-      return { width: 40, height: 40, movable: false, color: '#1f5ca6', borderRadius: 20 };
+  lineStopDefaults() {
     return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
   }
 
@@ -1632,27 +1630,68 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addSubHeader('Attached widgets');
+    const stopsHint = document.createElement('p');
+    stopsHint.className = 'lineStopsHint';
+    stopsHint.innerText = 'Each stop sits at a percentage position along the line and keeps that spot as the line is reshaped. Set a stop’s position below. Any widget type can be a stop — give a child a linePosition of 0–1.';
+    this.moduleDOM.appendChild(stopsHint);
     const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
     const removeStopButton = addButton('Remove stop', 'lineRemoveStop', 'remove');
+    const distributeButton = addButton('Distribute evenly', 'lineDistributeStops');
+
+    // one percentage field per stop, so a designer can place stops manually the
+    // same way connections are positioned; the position sticks through reshaping
+    const stopList = div(this.moduleDOM, 'lineStopList');
+    const renderStops = ()=>{
+      stopList.innerHTML = '';
+      const stops = widget.attachedWidgets();
+      stops.forEach((stop, i)=>{
+        const row = div(stopList, 'genericInput');
+        const label = document.createElement('label');
+        label.innerText = `Stop ${i+1}`;
+        label.style = 'display:inline-block;width:100px';
+        const position = document.createElement('input');
+        position.type = 'number';
+        position.min = 0;
+        position.max = 100;
+        position.className = 'lineStopPosition';
+        position.value = Math.round((+stop.get('linePosition') || 0)*100);
+        position.title = 'Position along the line in percent';
+        position.onchange = async _=>{
+          batchStart();
+          setDeltaCause(`${getPlayerDetails().playerName} moved a stop on line ${widget.id} in editor`);
+          await stop.set('linePosition', Math.max(0, Math.min(100, +position.value || 0))/100);
+          await widget.updateAttachedWidgets();
+          batchEnd();
+        };
+        row.appendChild(label);
+        row.appendChild(position);
+        row.appendChild(document.createTextNode(' %'));
+      });
+    };
+    renderStops();
+    // rebuild the list when the number of stops changes (add/remove/reparent)
+    this.addDeltaListener(_=>{
+      if(stopList.childElementCount != widget.attachedWidgets().length)
+        renderStops();
+    });
 
     addStopButton.onclick = async _=>{
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} added a stop to line ${widget.id} in editor`);
       const stops = widget.attachedWidgets();
-      // copy the last stop so all attached widgets look the same
-      const template = stops.length ? JSON.parse(JSON.stringify(stops[stops.length-1].state)) : this.lineStopDefaults(widget.attachedWidgetType());
+      // copy the last stop so a new stop matches the existing ones by default
+      const template = stops.length ? JSON.parse(JSON.stringify(stops[stops.length-1].state)) : this.lineStopDefaults();
       for(const property of [ 'id', 'x', 'y', 'z' ])
         delete template[property];
       template.parent = widget.id;
       template.fixedParent = true;
       template.movableInEdit = false;
-      // insert the new stop right before the end point and renumber
-      for(let i = 0; i < stops.length; ++i)
-        await stops[i].set('lineIndex', i == stops.length-1 ? i+1 : i);
-      template.lineIndex = Math.max(stops.length-1, 0);
+      // drop it into the largest gap without moving the other stops
+      template.linePosition = widget.nextStopPosition();
       await addWidgetLocal(template);
       await widget.updateAttachedWidgets();
       batchEnd();
+      renderStops();
     };
 
     removeStopButton.onclick = async _=>{
@@ -1661,45 +1700,24 @@ class PropertiesModule extends SidebarModule {
         return;
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} removed a stop from line ${widget.id} in editor`);
+      // remove an interior stop (keep the two outer ones), releasing its contents first
       await this.lineReleaseStopChildren(stops[stops.length-2]);
       await removeWidgetLocal(stops[stops.length-2].get('id'));
-      const remaining = widget.attachedWidgets();
-      for(let i = 0; i < remaining.length; ++i)
-        await remaining[i].set('lineIndex', i);
       await widget.updateAttachedWidgets();
       batchEnd();
+      renderStops();
     };
 
-    this.addSubHeader('Attached widget type');
-    const holderStopsButton = addButton('Card holders', 'lineStopsHolder');
-    const basicStopsButton = addButton('Basic widgets', 'lineStopsBasic');
-    const updateStopTypeButtons = _=>{
-      holderStopsButton.classList.toggle('selected', widget.attachedWidgetType() != 'basic');
-      basicStopsButton.classList.toggle('selected', widget.attachedWidgetType() == 'basic');
-    };
-    updateStopTypeButtons();
-    this.addDeltaListener(updateStopTypeButtons);
-    const replaceStops = async type=>{
-      if(widget.attachedWidgetType() == type)
-        return;
+    distributeButton.onclick = async _=>{
       batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} changed attached widget type of line ${widget.id} in editor`);
-      for(const stop of widget.attachedWidgets()) {
-        const lineIndex = stop.get('lineIndex');
-        await this.lineReleaseStopChildren(stop);
-        await removeWidgetLocal(stop.get('id'));
-        await addWidgetLocal(Object.assign(this.lineStopDefaults(type), {
-          parent: widget.id,
-          fixedParent: true,
-          movableInEdit: false,
-          lineIndex
-        }));
-      }
+      setDeltaCause(`${getPlayerDetails().playerName} distributed the stops on line ${widget.id} in editor`);
+      const stops = widget.attachedWidgets();
+      for(let i = 0; i < stops.length; ++i)
+        await stops[i].set('linePosition', stops.length > 1 ? Math.round(i/(stops.length-1)*1000)/1000 : 0);
       await widget.updateAttachedWidgets();
       batchEnd();
+      renderStops();
     };
-    holderStopsButton.onclick = _=>replaceStops('holder');
-    basicStopsButton.onclick = _=>replaceStops('basic');
 
     for(const end of [ 'Start', 'End' ]) {
       this.addSubHeader(`Connect ${end.toLowerCase()} point`);

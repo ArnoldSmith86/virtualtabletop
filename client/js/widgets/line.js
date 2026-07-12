@@ -23,13 +23,6 @@ export class Line extends Widget {
     });
   }
 
-  // the kind of widget currently attached to this line, inferred from the first stop instead
-  // of a separate property so it can never drift out of sync with what's actually attached
-  attachedWidgetType() {
-    const first = this.attachedWidgets()[0];
-    return first && first.get('type') != 'holder' ? 'basic' : 'holder';
-  }
-
   applyDeltaToDOM(delta) {
     super.applyDeltaToDOM(delta);
     for(const property of [ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd', 'lineWidth', 'lineColor', 'lineDash' ]) {
@@ -133,17 +126,39 @@ export class Line extends Widget {
     return points[points.length-1];
   }
 
+  // any child with a numeric linePosition (0..1 fraction along the path) is a stop,
+  // regardless of its widget type; ordered by that fraction
   attachedWidgets() {
-    return this.childArray.filter(w=>w.get('lineIndex') !== null).sort((a,b)=>a.get('lineIndex')-b.get('lineIndex'));
+    return this.childArray.filter(w=>w.get('linePosition') !== null).sort((a,b)=>a.get('linePosition')-b.get('linePosition'));
   }
 
+  // place each stop at its own stored linePosition so manual positions survive
+  // curve/move/length changes instead of being re-centered on every geometry change
   async updateAttachedWidgets() {
-    const attached = this.attachedWidgets();
-    for(let i = 0; i < attached.length; ++i) {
-      const p = this.pointAtPosition(attached.length > 1 ? i/(attached.length-1) : 0);
-      await attached[i].set('x', Math.round(p.x - attached[i].get('width')/2));
-      await attached[i].set('y', Math.round(p.y - attached[i].get('height')/2));
+    for(const stop of this.attachedWidgets()) {
+      const p = this.pointAtPosition(+stop.get('linePosition') || 0);
+      await stop.set('x', Math.round(p.x - stop.get('width')/2));
+      await stop.set('y', Math.round(p.y - stop.get('height')/2));
     }
+  }
+
+  // the fraction along the largest gap between existing stops, so "Add stop" drops
+  // the new one into empty space without disturbing the positions of the others
+  nextStopPosition() {
+    const positions = this.attachedWidgets().map(w=>+w.get('linePosition') || 0);
+    if(positions.length == 0)
+      return 0;
+    if(positions.length == 1)
+      return positions[0] < 1 ? 1 : 0;
+    let bestGap = -1, bestPos = 0.5;
+    for(let i = 1; i < positions.length; ++i) {
+      const gap = positions[i] - positions[i-1];
+      if(gap > bestGap) {
+        bestGap = gap;
+        bestPos = (positions[i] + positions[i-1])/2;
+      }
+    }
+    return Math.round(bestPos*1000)/1000;
   }
 
   connectedLines() {
@@ -183,13 +198,13 @@ export class Line extends Widget {
 
   async onChildAdd(child, oldParentID) {
     await super.onChildAdd(child, oldParentID);
-    if(child.get('lineIndex') !== null)
+    if(child.get('linePosition') !== null)
       await this.updateAttachedWidgets();
   }
 
   async onChildRemove(child) {
     await super.onChildRemove(child);
-    if(child.get('lineIndex') !== null)
+    if(child.get('linePosition') !== null)
       await this.updateAttachedWidgets();
   }
 

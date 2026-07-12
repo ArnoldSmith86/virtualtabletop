@@ -104,7 +104,7 @@ const COMMON_PROPERTIES = {
     gameStartRoutine: 'routine',
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
-    lineIndex: 'number',
+    linePosition: 'number',
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',

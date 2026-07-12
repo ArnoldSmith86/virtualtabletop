@@ -102,7 +102,7 @@ test('Line widget in edit mode', async t => {
     .click('#editorSidebar [icon=tune]')
     .click('#editorModules .lineAddStop')
     .click('#editorModules .lineShapeCurved')
-    .click('#editorModules .lineStopsBasic');
+    .click('#editorModules .lineDistributeStops');
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
   await t
     .click('#editorToolbar > div > [icon=add]')
@@ -118,5 +118,5 @@ test('Line widget in edit mode', async t => {
     .drag(endHandle, 90, 60)
     .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
     .click('#editorToolbar > div > [icon=delete_forever]');
-  await compareState(t, '4f5ba0967f71991fb5ca991193e39607');
+  await compareState(t, '276d4b9e7a40458fb6644f60146c4c4c');
 });

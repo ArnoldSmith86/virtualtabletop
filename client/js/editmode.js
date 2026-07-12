@@ -279,7 +279,7 @@ function generateLineWidgets(id, x, y) {
     parent: id,
     fixedParent: true,
     movableInEdit: false,
-    lineIndex: index,
+    linePosition: index,
     x: (index ? 210 : 10) - 20,
     y: 0,
     width: 40,
