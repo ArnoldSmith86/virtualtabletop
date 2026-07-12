@@ -1891,6 +1891,85 @@ export class Widget extends StateManaged {
           jeLoggingRoutineOperationSummary(`'${a.property}' ${a.relation} ${JSON.stringify(a.value)} for widgets in '${a.collection}'`);
       }
 
+      if(a.func == 'SHIFT') {
+        setDefaults(a, { widgets: 'all', steps: 1, reverse: false, wrap: true });
+
+        function shiftContainer(id) {
+          const entry = widgets.get(id);
+          if(entry.get('type') != 'seat')
+            return { seat: null, holder: entry };
+          if(!entry.get('hand') || !widgets.has(entry.get('hand'))) {
+            problems.push(`Seat ${id} does not define a valid hand.`);
+            return null;
+          }
+          return { seat: entry, holder: widgets.get(entry.get('hand')) };
+        }
+
+        let valid = Array.isArray(a.order) && a.order.length > 1;
+        if(!valid)
+          problems.push(`SHIFT requires an 'order' array of at least two holders or seats.`);
+
+        let order = [];
+        if(valid && this.isValidID(a.order, problems)) {
+          for(const id of a.order) {
+            const container = shiftContainer(id);
+            if(!container) {
+              valid = false;
+              break;
+            }
+            order.push(container);
+          }
+        } else {
+          valid = false;
+        }
+
+        let widgetCollection = null;
+        if(valid && a.widgets != 'all' && a.widgets != 'top')
+          valid = !!(widgetCollection = getCollection(a.widgets));
+
+        if(valid) {
+          const length = order.length;
+          const shift = (a.reverse ? -1 : 1) * a.steps;
+          const collectionSet = widgetCollection ? new Set(collections[widgetCollection]) : null;
+          const moves = [];
+
+          for(let i = 0; i < length; i++) {
+            let selected = order[i].holder.children();
+            if(a.widgets == 'top')
+              selected = selected.slice(0, 1);
+            else if(collectionSet)
+              selected = selected.filter(c=>collectionSet.has(c));
+            if(!selected.length)
+              continue;
+
+            let targetIndex = i + shift;
+            if(a.wrap)
+              targetIndex = ((targetIndex % length) + length) % length;
+            else
+              targetIndex = Math.max(0, Math.min(length - 1, targetIndex));
+
+            if(targetIndex != i)
+              moves.push({ widgets: selected, target: order[targetIndex] });
+          }
+
+          for(const move of moves) {
+            for(const c of move.widgets) {
+              if(move.target.seat && move.target.seat.get('player'))
+                c.targetPlayer = move.target.seat.get('player');
+              await c.moveToHolder(move.target.holder);
+              delete c.targetPlayer;
+            }
+            if(typeof move.target.holder.updateAfterShuffle == 'function')
+              await move.target.holder.updateAfterShuffle();
+          }
+
+          if(jeRoutineLogging) {
+            const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
+            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.wrap ? '(wrapped)' : '(clamped)'} along [${a.order.join(', ')}]`);
+          }
+        }
+      }
+
       if(a.func == 'SHUFFLE') {
         setDefaults(a, { collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
         let collection;

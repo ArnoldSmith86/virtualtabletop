@@ -401,6 +401,7 @@ function validateRoutine(routine, context, propertyPath = []) {
             MOVEXY: [ 'from' ],
             ROTATE: [ 'holder' ],
             SET: [],
+            SHIFT: [ 'order' ],
             SHUFFLE: [ 'holder' ],
             SORT: [ 'holder' ],
             TIMER: [ 'timer' ]
@@ -765,6 +766,13 @@ const operationProps = {
         'property': 'string',
         'relation': 'string',
         'value': 'any'
+    },
+    'SHIFT': {
+        'order': getWidgetTypeValidator(['holder', 'seat'], true),
+        'widgets': v=>v === 'all' || v === 'top' || typeof v === 'string' || 'string, "all" or "top" expected',
+        'steps': 'number',
+        'reverse': 'boolean',
+        'wrap': 'boolean'
     },
     'SHUFFLE': {
         'holder': 'idArray',
