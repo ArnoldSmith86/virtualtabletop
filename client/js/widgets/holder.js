@@ -586,7 +586,11 @@ class Holder extends ImageWidget {
     if(this.get('layout') == 'multipleSpread')
       return await this.rearrangeGroups();
 
-    if(this.get('layout') != 'grid' && !this.get('stackOffsetX') && !this.get('stackOffsetY'))
+    // grid arranges every card in one grid, ordered by z, regardless of owner
+    if(this.get('layout') == 'grid')
+      return await this.rearrangeChildrenGrid(this.children().slice().sort((a, b)=>a.get('z') - b.get('z')));
+
+    if(!this.get('stackOffsetX') && !this.get('stackOffsetY'))
       return;
 
     const children = this.children();

@@ -1556,6 +1556,13 @@ export class Widget extends StateManaged {
           }
         }
 
+        // The multipleSpread holder that will receive the moved cards (the target
+        // itself, or a seat's hand), so a whole MOVE batch ends up in one group.
+        function spreadMoveDest(target) {
+          const holder = target.get('type') == 'seat' && widgets.has(target.get('hand')) ? widgets.get(target.get('hand')) : target;
+          return holder && holder.get('type') == 'holder' && holder.get('layout') == 'multipleSpread' && holder.beginSpreadMove ? holder : null;
+        }
+
         async function applyMove(source, target, c) {
           let moved = 0;
           const applyFlip = async function() {
@@ -1612,14 +1619,14 @@ export class Widget extends StateManaged {
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
               await w(a.from, async source=>await w(a.to, async target=>{
-                const spreadBatch = target.get('type') == 'holder' && target.get('layout') == 'multipleSpread' && target.beginSpreadMove;
-                if(spreadBatch)
-                  target.beginSpreadMove(a.position);
+                const dest = spreadMoveDest(target);
+                if(dest)
+                  dest.beginSpreadMove(a.position);
                 for(const c of source.children().slice(0, count).reverse()) {
                   await applyMove(source, target, c);
                 }
-                if(spreadBatch)
-                  await target.endSpreadMove();
+                if(dest)
+                  await dest.endSpreadMove();
                 else if(target.get('type') == 'holder' && (a.position || target.get('layout') == 'grid'))
                   await target.updateAfterShuffle();
               }));
@@ -1629,13 +1636,13 @@ export class Widget extends StateManaged {
           } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
-              const spreadBatch = target.get('type') == 'holder' && target.get('layout') == 'multipleSpread' && target.beginSpreadMove;
-              if(spreadBatch)
-                target.beginSpreadMove(a.position);
+              const dest = spreadMoveDest(target);
+              if(dest)
+                dest.beginSpreadMove(a.position);
               for(const c of collections[collection].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              if(spreadBatch)
-                await target.endSpreadMove();
+              if(dest)
+                await dest.endSpreadMove();
               else if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
