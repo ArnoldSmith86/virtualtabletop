@@ -2595,14 +2595,15 @@ function jeUpdateWidgetSwitcher() {
       seen.add(w);
       chain.unshift(w);
     }
-    if(chain.length > 3)
-      breadcrumbsHTML += `<span class=jeCrumbEllipsis>…</span>${separator}`;
-    for(const w of chain.slice(-3)) {
+    const crumbs = chain.slice(-3).map(w => {
       if(w != jeWidget)
-        breadcrumbsHTML += `<span class=jeCrumb data-id="${html(w.id)}">${html(w.id)}</span>${separator}`;
+        return `<span class=jeCrumb data-id="${html(w.id)}">${html(w.id)}</span>`;
       else
-        breadcrumbsHTML += `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
-    }
+        return `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
+    });
+    if(chain.length > 3)
+      crumbs.unshift('<span class=jeCrumbEllipsis>…</span>');
+    breadcrumbsHTML = crumbs.join(separator);
   } else if(jeMode == 'multi') {
     // jeStateNow is null while the edited JSON is invalid; cache the count because this runs on every delta
     let count = 'multiple';
