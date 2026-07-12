@@ -200,7 +200,7 @@ class Holder extends ImageWidget {
       if(child.get('dropShadowOwner'))
         // the drop shadow snaps into an aligned single-card slot between the groups,
         // shifting the groups apart to show where the dragged card/group will land
-        return await this.rearrangeGroups();
+        return await this.rearrangeGroups(this.childOwner(child));
       return await this.placeInSpreadGroups(child, oldParentID);
     }
 
@@ -333,7 +333,8 @@ class Holder extends ImageWidget {
     if(!oldParentID)
       coord = this.coordLocalFromCoordGlobal(coord);
 
-    const others = this.children().filter(w=>w != child).sort((a, b)=>a.get('z') - b.get('z'));
+    const owner = this.childOwner(child);
+    const others = this.children().filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
     const m = this.gridMetrics(others.length + 1);
     const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
     const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
@@ -355,9 +356,10 @@ class Holder extends ImageWidget {
       coord = this.coordLocalFromCoordGlobal(coord);
 
     const incoming = pile.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    const owner = this.childOwner(pile);
     await this.breakUpPile(pile);
 
-    const others = this.children().filter(w=>!incoming.includes(w)).sort((a, b)=>a.get('z') - b.get('z'));
+    const others = this.children().filter(w=>!incoming.includes(w) && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('z') - b.get('z'));
     const m = this.gridMetrics(others.length + incoming.length);
     const column = Math.max(0, Math.min(m.cols - 1, Math.round((coord.x - m.marginX) / m.stepX)));
     const row = Math.max(0, Math.round((coord.y - m.marginY) / m.stepY));
@@ -382,7 +384,7 @@ class Holder extends ImageWidget {
   // no slot opens and the card will join that group instead. The insertion index
   // is derived from the group order (not from re-sorting the shadow into it), so
   // the opened slot is stable and a card can reliably be dropped between groups.
-  async rearrangeGroups() {
+  async rearrangeGroups(owner) {
     if(this.preventRearrangeDuringPileDrop)
       return;
 
@@ -391,9 +393,12 @@ class Holder extends ImageWidget {
     const spread = this.get('spreadOffset');
     const gap = spread === null || spread === undefined ? 8 : spread;
 
+    // arrange only the groups belonging to one owner's "lane" (a null owner is
+    // shared and part of every lane) so each player's groups are laid out
+    // independently in the same space
     const all = this.childrenFilter(super.children(), true).slice();
-    const shadow = all.find(w=>w.get('dropShadowOwner'));
-    const groups = all.filter(w=>!w.get('dropShadowOwner')).sort((a, b)=>(a.get('x') - b.get('x')) || (a.get('z') - b.get('z')));
+    const shadow = all.find(w=>w.get('dropShadowOwner') && (owner === undefined || this.childOwner(w) === owner));
+    const groups = all.filter(w=>!w.get('dropShadowOwner') && (owner === undefined || !w.get('owner') || w.get('owner') === owner)).sort((a, b)=>(a.get('x') - b.get('x')) || (a.get('z') - b.get('z')));
 
     // decide where the shadow goes: over a group (insert within that group's fan)
     // or between two groups / at an end (insert a new group). The shadow is
@@ -459,22 +464,29 @@ class Holder extends ImageWidget {
     return Math.max(0, Math.min(count, Math.round((relX - group.get('x')) / (stepX || 1))));
   }
 
+  // The owner a dragged/dropped child ends up with in this holder, used to arrange
+  // each player's cards independently. childrenPerOwner assigns the dragging or
+  // target player; otherwise the child keeps its own owner (e.g. a seat hand).
+  childOwner(child) {
+    if(child.get('dropShadowOwner'))
+      return this.get('childrenPerOwner') ? child.get('dropShadowOwner') : (child.get('owner') || null);
+    if(this.get('childrenPerOwner'))
+      return child.targetPlayer || child.get('owner') || playerName;
+    return child.get('owner') || null;
+  }
+
   // Start of a MOVE batch into this holder: all the moved cards should end up in
   // one group. Pick the target group implied by the MOVE `position` (an existing
   // group for pileBottom/pileTop, or a fresh group at the start/end otherwise).
   beginSpreadMove(position) {
-    const groups = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner')).sort((a, b)=>a.get('x') - b.get('x'));
-    let target = null;
-    if(position == 'pileBottom' && groups.length)
-      target = groups[0];
-    else if(position == 'pileTop' && groups.length)
-      target = groups[groups.length - 1];
-    this._spreadMove = { target, atStart: position == 'pileBottom' || position == 'groupStart' };
+    // the target group is resolved lazily on the first card, once its owner is
+    // known, so the batch joins the correct player's group
+    this._spreadMove = { position, resolved: false, target: null, atStart: position == 'pileBottom' || position == 'groupStart' };
   }
 
   async endSpreadMove() {
     delete this._spreadMove;
-    await this.rearrangeGroups();
+    await this.updateAfterShuffle();
   }
 
   async placeInSpreadGroups(child, oldParentID) {
@@ -482,12 +494,23 @@ class Holder extends ImageWidget {
 
     // during a MOVE batch, funnel every moved card into the one target group
     if(this._spreadMove) {
-      if(this._spreadMove.target) {
-        this._spreadMove.target = await this.mergeGroups(child, this._spreadMove.target);
+      const sm = this._spreadMove;
+      if(!sm.resolved) {
+        // resolve the batch target group now that we know the moved cards' owner
+        sm.resolved = true;
+        const owner = this.childOwner(child);
+        const groups = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('x') - b.get('x'));
+        if(sm.position == 'pileBottom' && groups.length)
+          sm.target = groups[0];
+        else if(sm.position == 'pileTop' && groups.length)
+          sm.target = groups[groups.length - 1];
+      }
+      if(sm.target) {
+        sm.target = await this.mergeGroups(child, sm.target);
       } else {
         // first card of a brand new group for this batch
-        await child.setPosition(this._spreadMove.atStart ? -1 : this.get('width') * 1000, this.get('dropOffsetY'), child.get('z'));
-        this._spreadMove.target = child;
+        await child.setPosition(sm.atStart ? -1 : this.get('width') * 1000, this.get('dropOffsetY'), child.get('z'));
+        sm.target = child;
       }
       return;
     }
@@ -495,7 +518,10 @@ class Holder extends ImageWidget {
     const spread = this.get('spreadOffset');
     const gap = spread === null || spread === undefined ? 8 : spread;
 
-    const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner')).sort((a, b)=>a.get('x') - b.get('x'));
+    // only consider this player's own groups (a null owner is shared), so a card
+    // never joins or is positioned relative to another player's groups
+    const owner = this.childOwner(child);
+    const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('x') - b.get('x'));
     const center = child.get('x') + child.get('width') / 2;
 
     // dropped over an existing group -> insert into that group's fan at the
@@ -583,12 +609,22 @@ class Holder extends ImageWidget {
   }
 
   async updateAfterShuffle() {
-    if(this.get('layout') == 'multipleSpread')
-      return await this.rearrangeGroups();
+    const layout = this.get('layout');
 
-    // grid arranges every card in one grid, ordered by z, regardless of owner
-    if(this.get('layout') == 'grid')
-      return await this.rearrangeChildrenGrid(this.children().slice().sort((a, b)=>a.get('z') - b.get('z')));
+    // grid and multipleSpread arrange each owner's cards independently (a null
+    // owner is shared and included in every lane), so different players' cards in
+    // the same holder don't get laid out as if they were one player's
+    if(layout == 'multipleSpread' || layout == 'grid') {
+      const groups = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
+      const owners = new Set(groups.map(c=>c.get('owner') || null));
+      for(const owner of (owners.size ? owners : [ null ])) {
+        if(layout == 'multipleSpread')
+          await this.rearrangeGroups(owner);
+        else
+          await this.rearrangeChildrenGrid(groups.filter(c=>!c.get('owner') || c.get('owner')===owner).sort((a, b)=>a.get('z') - b.get('z')));
+      }
+      return;
+    }
 
     if(!this.get('stackOffsetX') && !this.get('stackOffsetY'))
       return;

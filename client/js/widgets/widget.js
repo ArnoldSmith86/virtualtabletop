@@ -2541,10 +2541,10 @@ export class Widget extends StateManaged {
     await this.updatePiles();
 
     // Once the drop (and any pile creation/merge) has settled, snap the groups of
-    // a multipleSpread holder back into their aligned row.
+    // a multipleSpread holder back into their aligned rows (per owner).
     const ancestor = widgets.has(this.get('_ancestor')) ? widgets.get(this.get('_ancestor')) : null;
-    if(ancestor && ancestor.get('layout') == 'multipleSpread' && ancestor.rearrangeGroups)
-      await ancestor.rearrangeGroups();
+    if(ancestor && ancestor.get('layout') == 'multipleSpread' && ancestor.updateAfterShuffle)
+      await ancestor.updateAfterShuffle();
   }
 
   async hideShadowWidget() {
