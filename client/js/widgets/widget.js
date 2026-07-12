@@ -1949,9 +1949,13 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              if(typeof holder.updateAfterShuffle == 'function')
-                await holder.updateAfterShuffle();
+              if(holder.get('layout') == 'multipleSpread' && typeof holder.sortGroupContents == 'function') {
+                await holder.sortGroupContents(a.key, a.reverse, a.locales, a.options);
+              } else {
+                await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+                if(typeof holder.updateAfterShuffle == 'function')
+                  await holder.updateAfterShuffle();
+              }
             });
           }
           if(jeRoutineLogging)
