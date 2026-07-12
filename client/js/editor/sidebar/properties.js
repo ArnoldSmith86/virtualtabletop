@@ -1635,11 +1635,22 @@ class PropertiesModule extends SidebarModule {
     stopsHint.innerText = 'Each stop sits at a percentage position along the line and keeps that spot as the line is reshaped. Set a stop’s position below. Any widget type can be a stop — give a child a linePosition of 0–1.';
     this.moduleDOM.appendChild(stopsHint);
     const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
-    const removeStopButton = addButton('Remove stop', 'lineRemoveStop', 'remove');
     const distributeButton = addButton('Distribute evenly', 'lineDistributeStops');
 
-    // one percentage field per stop, so a designer can place stops manually the
-    // same way connections are positioned; the position sticks through reshaping
+    const removeStop = async stop=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} removed a stop from line ${widget.id} in editor`);
+      // release its contents to the room first so cards/tokens on the stop aren't deleted
+      await this.lineReleaseStopChildren(stop);
+      await removeWidgetLocal(stop.get('id'));
+      await widget.updateAttachedWidgets();
+      batchEnd();
+      renderStops();
+    };
+
+    // one row per stop, each with its own percentage position field and remove
+    // button, so a designer can place and remove a *specific* stop the same way
+    // connections are positioned; the position sticks through reshaping
     const stopList = div(this.moduleDOM, 'lineStopList');
     const renderStops = ()=>{
       stopList.innerHTML = '';
@@ -1663,9 +1674,15 @@ class PropertiesModule extends SidebarModule {
           await widget.updateAttachedWidgets();
           batchEnd();
         };
+        const remove = document.createElement('button');
+        remove.className = 'lineRemoveStop';
+        remove.setAttribute('icon', 'remove');
+        remove.title = 'Remove this stop';
+        remove.onclick = _=>removeStop(stop);
         row.appendChild(label);
         row.appendChild(position);
         row.appendChild(document.createTextNode(' %'));
+        row.appendChild(remove);
       });
     };
     renderStops();
@@ -1689,20 +1706,6 @@ class PropertiesModule extends SidebarModule {
       // drop it into the largest gap without moving the other stops
       template.linePosition = widget.nextStopPosition();
       await addWidgetLocal(template);
-      await widget.updateAttachedWidgets();
-      batchEnd();
-      renderStops();
-    };
-
-    removeStopButton.onclick = async _=>{
-      const stops = widget.attachedWidgets();
-      if(stops.length <= 2)
-        return;
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} removed a stop from line ${widget.id} in editor`);
-      // remove an interior stop (keep the two outer ones), releasing its contents first
-      await this.lineReleaseStopChildren(stops[stops.length-2]);
-      await removeWidgetLocal(stops[stops.length-2].get('id'));
       await widget.updateAttachedWidgets();
       batchEnd();
       renderStops();

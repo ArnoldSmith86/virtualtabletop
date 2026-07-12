@@ -362,11 +362,22 @@
 }
 
 .editorModule button.lineShapeStraight.selected,
-.editorModule button.lineShapeCurved.selected,
-.editorModule button.lineStopsHolder.selected,
-.editorModule button.lineStopsBasic.selected {
+.editorModule button.lineShapeCurved.selected {
   background: var(--VTTblueDark);
   box-shadow: inset 0 0 0 2px #fff;
+}
+
+.editorModule .lineStopList .genericInput {
+  margin-bottom: 4px;
+}
+.editorModule .lineStopList .genericInput input.lineStopPosition {
+  width: 70px;
+  min-width: 70px;
+}
+.editorModule .lineStopList .genericInput button.lineRemoveStop {
+  display: inline-flex;
+  margin-left: 8px;
+  vertical-align: middle;
 }
 
 .widgets.editorModule .buttonBar input[type=text]{
