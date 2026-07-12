@@ -273,14 +273,16 @@ function generateLineWidgets(id, x, y) {
     lineEnd: { x: 210, y: 20 }
   };
 
-  const stop = index=>({
+  // the start stop carries the shared appearance; further stops inherit it so
+  // restyling the start stop restyles the whole line at once
+  const startStop = {
     type: 'holder',
-    id: id+'S'+index,
+    id: id+'S0',
     parent: id,
     fixedParent: true,
     movableInEdit: false,
-    linePosition: index,
-    x: (index ? 210 : 10) - 20,
+    linePosition: 0,
+    x: -10,
     y: 0,
     width: 40,
     height: 40,
@@ -288,9 +290,20 @@ function generateLineWidgets(id, x, y) {
     dropTarget: { type: null },
     dropOffsetX: 2,
     dropOffsetY: 2
-  });
+  };
+  const endStop = {
+    type: 'holder',
+    id: id+'S1',
+    parent: id,
+    fixedParent: true,
+    movableInEdit: false,
+    inheritFrom: id+'S0',
+    linePosition: 1,
+    x: 190,
+    y: 0
+  };
 
-  return [ line, stop(0), stop(1) ];
+  return [ line, startStop, endStop ];
 }
 
 function generateTimerWidgets(id, x, y) {

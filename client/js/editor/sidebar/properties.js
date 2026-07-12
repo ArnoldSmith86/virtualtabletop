@@ -1635,6 +1635,37 @@ class PropertiesModule extends SidebarModule {
     stopsHint.innerText = 'Each stop sits at a percentage position along the line and keeps that spot as the line is reshaped. Set a stop’s position below. Any widget type can be a stop — give a child a linePosition of 0–1.';
     this.moduleDOM.appendChild(stopsHint);
     const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
+
+    // new stops inheritFrom this widget so restyling one restyles them all; the
+    // combobox picks which (defaults to the start stop). It lists this line's
+    // stops but also accepts a typed-in widget id.
+    const inheritWrap = div(this.moduleDOM, 'genericInput lineInheritWrap');
+    const inheritLabel = document.createElement('label');
+    inheritLabel.innerText = 'New stops inherit from';
+    inheritLabel.style = 'display:inline-block;width:170px';
+    const inheritInput = document.createElement('input');
+    inheritInput.className = 'lineInheritFrom';
+    inheritInput.setAttribute('list', `lineInheritList_${widget.id}`);
+    inheritInput.title = 'Widget id that new stops inherit their appearance from (pick a stop or type any widget id)';
+    const inheritList = document.createElement('datalist');
+    inheritList.id = `lineInheritList_${widget.id}`;
+    const refreshInheritOptions = ()=>{
+      const stops = widget.attachedWidgets();
+      inheritList.innerHTML = '';
+      for(const stop of stops) {
+        const option = document.createElement('option');
+        option.value = stop.get('id');
+        inheritList.appendChild(option);
+      }
+      // default to the first (start) stop when nothing valid is chosen yet
+      if(!inheritInput.value && stops.length)
+        inheritInput.value = stops[0].get('id');
+    };
+    refreshInheritOptions();
+    inheritWrap.appendChild(inheritLabel);
+    inheritWrap.appendChild(inheritInput);
+    inheritWrap.appendChild(inheritList);
+
     const distributeButton = addButton('Distribute evenly', 'lineDistributeStops');
 
     const removeStop = async stop=>{
@@ -1688,18 +1719,25 @@ class PropertiesModule extends SidebarModule {
     renderStops();
     // rebuild the list when the number of stops changes (add/remove/reparent)
     this.addDeltaListener(_=>{
-      if(stopList.childElementCount != widget.attachedWidgets().length)
+      if(stopList.childElementCount != widget.attachedWidgets().length) {
         renderStops();
+        refreshInheritOptions();
+      }
     });
 
     addStopButton.onclick = async _=>{
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} added a stop to line ${widget.id} in editor`);
-      const stops = widget.attachedWidgets();
-      // copy the last stop so a new stop matches the existing ones by default
-      const template = stops.length ? JSON.parse(JSON.stringify(stops[stops.length-1].state)) : this.lineStopDefaults();
-      for(const property of [ 'id', 'x', 'y', 'z' ])
-        delete template[property];
+      const inheritID = String(inheritInput.value || '').trim();
+      const inheritTarget = widgets.has(inheritID) ? widgets.get(inheritID) : null;
+      let template;
+      if(inheritTarget) {
+        // inheritFrom keeps the new stop's appearance in sync with the chosen widget;
+        // it only carries its own type, parent and position (the rest is inherited)
+        template = { type: inheritTarget.get('type'), inheritFrom: inheritID };
+      } else {
+        template = this.lineStopDefaults();
+      }
       template.parent = widget.id;
       template.fixedParent = true;
       template.movableInEdit = false;
@@ -1709,6 +1747,7 @@ class PropertiesModule extends SidebarModule {
       await widget.updateAttachedWidgets();
       batchEnd();
       renderStops();
+      refreshInheritOptions();
     };
 
     distributeButton.onclick = async _=>{

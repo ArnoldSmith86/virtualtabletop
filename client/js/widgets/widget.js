@@ -92,6 +92,10 @@ export class Widget extends StateManaged {
       gameStartRoutine: null,
       hotkey: null,
 
+      // a numeric value here (0..1) turns any widget into a stop on its parent line;
+      // declared as a global default so the editor treats it as a known property
+      linePosition: null,
+
       animatePropertyChange: [],
       resetProperties: {},
     });

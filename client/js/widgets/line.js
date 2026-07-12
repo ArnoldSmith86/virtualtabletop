@@ -196,6 +196,22 @@ export class Line extends Widget {
     }
   }
 
+  // while the whole line is being dragged, translate it rigidly and defer the
+  // connection re-glue + box re-fit to the end of the drag; doing them on every
+  // mousemove mutated x/y/width/height mid-drag, which corrupted the drag's
+  // reference frame and made a connected line's move wildly over-sensitive
+  async moveStart() {
+    this.isBeingMoved = true;
+    await super.moveStart();
+  }
+
+  async moveEnd(coordGlobal, localAnchor) {
+    await super.moveEnd(coordGlobal, localAnchor);
+    this.isBeingMoved = false;
+    await this.applyConnections();
+    await this.updateConnectedLines();
+  }
+
   async onChildAdd(child, oldParentID) {
     await super.onChildAdd(child, oldParentID);
     if(child.get('linePosition') !== null)
@@ -216,7 +232,7 @@ export class Line extends Widget {
       await this.updateConnectedLines();
     }
 
-    if((property == 'x' || property == 'y') && !this.normalizingGeometry) {
+    if((property == 'x' || property == 'y') && !this.normalizingGeometry && !this.isBeingMoved) {
       await this.applyConnections();
       await this.updateConnectedLines();
     }

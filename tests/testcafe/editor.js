@@ -118,5 +118,5 @@ test('Line widget in edit mode', async t => {
     .drag(endHandle, 90, 60)
     .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
     .click('#editorToolbar > div > [icon=delete_forever]');
-  await compareState(t, '276d4b9e7a40458fb6644f60146c4c4c');
+  await compareState(t, '559a7c11450393b143fe260526108b1f');
 });
