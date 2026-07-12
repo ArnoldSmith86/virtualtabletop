@@ -131,7 +131,7 @@ class Holder extends ImageWidget {
         }
       }
     }
-    if(this.get('layout') == 'grid')
+    if(this.get('layout') == 'grid' || this.get('layout') == 'multipleSpread')
       await this.updateAfterShuffle();
     else if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
@@ -254,33 +254,54 @@ class Holder extends ImageWidget {
     }
   }
 
-  // Arrange all children in a grid that fits the holder's width, laying out as
-  // many columns of cards as fit and wrapping to new rows. dropOffset acts as the
-  // margin from the top-left corner, stackOffset as the gap between cells, so a
-  // designer can influence the spacing without having to place cards manually.
+  // Arrange all children in a grid, keeping every card fully inside the holder.
+  // dropOffset is the margin from the edges and stackOffset the desired gap
+  // between cells; when the cards do not all fit at that spacing they overlap
+  // instead of spilling outside. The column/row count is chosen to minimise
+  // overlap, so a short holder stacks horizontally, a narrow one vertically, and
+  // one about a card tall/wide keeps a single row/column with no stacking.
   async rearrangeChildrenGrid(children) {
     if(this.preventRearrangeDuringPileDrop || !children.length)
       return;
 
+    const n = children.length;
     const marginX = this.get('dropOffsetX');
     const marginY = this.get('dropOffsetY');
     const gapX = Math.abs(this.get('stackOffsetX')) || 4;
     const gapY = Math.abs(this.get('stackOffsetY')) || 4;
     const cardW = children[0].get('width');
     const cardH = children[0].get('height');
-    const columns = Math.max(1, Math.floor((this.get('width') - marginX + gapX) / (cardW + gapX)));
+
+    const availX = Math.max(0, this.get('width')  - 2 * marginX - cardW);  // room for column offsets
+    const availY = Math.max(0, this.get('height') - 2 * marginY - cardH);  // room for row offsets
+    const fullStepX = cardW + gapX;
+    const fullStepY = cardH + gapY;
+
+    let best = null;
+    for(let cols=1; cols<=n; ++cols) {
+      const rows = Math.ceil(n / cols);
+      const stepX = cols > 1 ? Math.min(fullStepX, availX / (cols - 1)) : 0;
+      const stepY = rows > 1 ? Math.min(fullStepY, availY / (rows - 1)) : 0;
+      const overlapX = cols > 1 ? Math.max(0, (cardW - stepX) / cardW) : 0;
+      const overlapY = rows > 1 ? Math.max(0, (cardH - stepY) / cardH) : 0;
+      const score = Math.max(overlapX, overlapY) + (overlapX + overlapY) / 10;
+      if(!best || score < best.score - 1e-9)
+        best = { cols, stepX, stepY, score };
+    }
 
     let z = 1;
-    for(let i=0; i<children.length; ++i) {
-      const column = i % columns;
-      const row = Math.floor(i / columns);
-      await children[i].setPosition(marginX + column * (cardW + gapX), marginY + row * (cardH + gapY), z++);
+    for(let i=0; i<n; ++i) {
+      const column = i % best.cols;
+      const row = Math.floor(i / best.cols);
+      await children[i].setPosition(marginX + column * best.stepX, marginY + row * best.stepY, z++);
     }
   }
 
   // Lay out the holder's direct children (piles act as spread groups, loose cards
-  // as groups of one) side by side, separated by spreadOffset. Each pile spreads
-  // its own cards using the holder's stackOffset values.
+  // as groups of one) side by side, snapped into an aligned row and separated by
+  // spreadOffset. Groups keep their left-to-right order so a group stays roughly
+  // where the player dropped it, but is aligned rather than left freeform. Each
+  // pile spreads its own cards using the holder's stackOffset values.
   async rearrangeGroups() {
     if(this.preventRearrangeDuringPileDrop)
       return;
@@ -290,15 +311,15 @@ class Holder extends ImageWidget {
     const spread = this.get('spreadOffset');
     const gap = spread === null || spread === undefined ? 8 : spread;
 
-    const groups = this.childrenFilter(super.children(), true).slice().sort((a, b)=>a.get('z') - b.get('z'));
+    const groups = this.childrenFilter(super.children(), true).slice().sort((a, b)=>(a.get('x') - b.get('x')) || (a.get('z') - b.get('z')));
 
     let x = this.get('dropOffsetX');
     const y = this.get('dropOffsetY');
     let z = 1;
     for(const group of groups) {
-      await group.setPosition(x, y, z++);
       if(group.get('type') == 'pile' && group.arrangeAsSpread)
         await group.arrangeAsSpread(stepX, stepY);
+      await group.setPosition(x, y, z++);
       x += group.get('width') + gap;
     }
   }
