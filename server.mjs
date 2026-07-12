@@ -11,6 +11,7 @@ import fetch from 'node-fetch';
 import WebSocket  from './server/websocket.mjs';
 import FileLoader from './server/fileloader.mjs';
 import FileUpdater from './server/fileupdater.mjs';
+import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import MinifyHTML from './server/minify.mjs';
@@ -321,6 +322,10 @@ MinifyHTML().then(function(result) {
     (async function() {
       if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
         throw new Logging.UserError(400, 'Please provide a link.');
+      // Keep this endpoint TTS-specific: only ever fetch resolved Steam Workshop
+      // items, not arbitrary URLs (defense-in-depth against SSRF).
+      if(!TTS.isTTSlink(req.body.link))
+        throw new Logging.UserError(400, 'Please enter a Tabletop Simulator Steam Workshop link (…/filedetails/?id=…).');
 
       let states;
       try {
@@ -353,7 +358,8 @@ MinifyHTML().then(function(result) {
               continue;
             const cardCounts = {};
             for(const [ cardID, card ] of widgets)
-              if(card.type == 'card' && card.deck == deckID)
+              // cards without a cardType can't be recreated from deck.cardTypes, so skip them
+              if(card.type == 'card' && card.deck == deckID && card.cardType != null)
                 cardCounts[card.cardType] = (cardCounts[card.cardType] || 0) + 1;
             decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts, source });
           }

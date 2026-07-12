@@ -775,18 +775,24 @@ class PropertiesModule extends SidebarModule {
 
     addButton.onclick = async _=>{
       addButton.disabled = true;
-      for(const { button, deck, cardCounts } of foundDecks) {
-        if(!button.classList.contains('selected'))
-          continue;
-        const newDeck = JSON.parse(JSON.stringify(deck));
-        delete newDeck.parent;
-        delete newDeck.x;
-        delete newDeck.y;
-        delete newDeck.z;
-        newDeck.id = generateUniqueWidgetID();
-        await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
-        button.classList.remove('selected');
+      try {
+        for(const { button, deck, cardCounts } of foundDecks) {
+          if(!button.classList.contains('selected'))
+            continue;
+          const newDeck = JSON.parse(JSON.stringify(deck));
+          delete newDeck.parent;
+          delete newDeck.x;
+          delete newDeck.y;
+          delete newDeck.z;
+          newDeck.id = generateUniqueWidgetID();
+          await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
+          button.classList.remove('selected');
+        }
+      } catch(e) {
+        alert(`Importing decks failed: ${e.message}`);
       }
+      // re-enable if any decks are still selected (e.g. an import failed partway)
+      addButton.disabled = !$a('.selected.ttsDeckButton', preview).length;
     };
   }
 
