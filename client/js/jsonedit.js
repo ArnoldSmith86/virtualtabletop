@@ -217,18 +217,6 @@ const jeCommands = [
     }
   },
   {
-    id: 'je_openParent',
-    name: 'Open parent',
-    icon: '[up_one_level]',
-    forceKey: 'ArrowUp',
-    show: _=>jeStateNow && widgets.has(jeStateNow.parent),
-    call: async function() {
-      const p = widgets.get(jeStateNow.parent);
-      setSelection([ p ]);
-      jeSelectWidget(p);
-    }
-  },
-  {
     id: 'je_toggleHighlight',
     name: 'Toggle widget highlighting',
     icon: 'flashlight_on',
