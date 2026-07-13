@@ -186,10 +186,18 @@ export class Line extends Widget {
           continue;
         // connections assume both lines share their coordinate system (no rotated/scaled ancestors)
         const p = target.pointAtPosition(connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1));
-        await this.set('line' + end, {
+        const oldPoint = this.pointProperty('line' + end) || { x: 0, y: 0 };
+        const newPoint = {
           x: Math.round(target.get('x') + p.x - this.get('x')),
           y: Math.round(target.get('y') + p.y - this.get('y'))
-        });
+        };
+        // move this end's Bezier control point by the same delta, so a curved
+        // connected line keeps its shape (its middle doesn't stay behind) as the
+        // end point follows the target instead of just stretching from a fixed control
+        const control = this.pointProperty('control' + end);
+        if(control)
+          await this.set('control' + end, { x: control.x + newPoint.x - oldPoint.x, y: control.y + newPoint.y - oldPoint.y });
+        await this.set('line' + end, newPoint);
       }
       await this.normalizeGeometry();
     } finally {

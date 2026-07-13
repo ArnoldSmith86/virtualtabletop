@@ -152,6 +152,50 @@ describe('Line widget connections', () => {
     expect(depEndGlobal).toEqual(targetStartGlobal);
   });
 
+  test('a curved connected line keeps its shape (control points follow the ends) when the target moves', async () => {
+    const target = createLine({ id: 'tgt', x: 300, y: 300, width: 400, height: 40,
+      lineStart: { x: 20, y: 20 }, lineEnd: { x: 380, y: 20 } });
+    // a curved dependent glued at both ends to the target
+    const dep = createLine({ id: 'dep', x: 300, y: 300, width: 400, height: 200,
+      lineStart: { x: 20, y: 20 }, lineEnd: { x: 380, y: 20 },
+      controlStart: { x: 120, y: 160 }, controlEnd: { x: 280, y: 160 },
+      connectStart: { line: 'tgt', position: 0 }, connectEnd: { line: 'tgt', position: 1 } });
+    await dep.applyConnections();
+
+    const globals = () => {
+      const g = p => { const pt = dep.pointProperty(p); return { x: dep.get('x') + pt.x, y: dep.get('y') + pt.y }; };
+      const m = dep.pointAtPosition(0.5);
+      return { start: g('lineStart'), end: g('lineEnd'), cStart: g('controlStart'), cEnd: g('controlEnd'), mid: { x: dep.get('x') + m.x, y: dep.get('y') + m.y } };
+    };
+    const before = globals();
+
+    // translate the target rigidly by (100, 60)
+    await target.set('x', target.get('x') + 100);
+    await target.set('y', target.get('y') + 60);
+
+    const after = globals();
+    const delta = (a, b) => ({ x: Math.round(b.x - a.x), y: Math.round(b.y - a.y) });
+    // every point of the dependent curve — including the control points and the arc
+    // midpoint — shifts by the same (100, 60): the curve translated rigidly, not stretched
+    expect(delta(before.start, after.start)).toEqual({ x: 100, y: 60 });
+    expect(delta(before.end, after.end)).toEqual({ x: 100, y: 60 });
+    expect(delta(before.cStart, after.cStart)).toEqual({ x: 100, y: 60 });
+    expect(delta(before.cEnd, after.cEnd)).toEqual({ x: 100, y: 60 });
+    expect(delta(before.mid, after.mid)).toEqual({ x: 100, y: 60 });
+  });
+
+  test('a straight connected line has no control points to shift and still glues', async () => {
+    const target = createLine({ id: 'tgt', x: 800, y: 300, lineStart: { x: 20, y: 20 }, lineEnd: { x: 380, y: 180 } });
+    const dep = createLine({ id: 'dep', x: 100, y: 100, lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 200 },
+      connectEnd: { line: 'tgt', position: 0 } });
+    await dep.applyConnections();
+
+    expect(dep.pointProperty('controlEnd')).toBeNull();
+    const depEndGlobal = { x: dep.get('x') + dep.pointProperty('lineEnd').x, y: dep.get('y') + dep.pointProperty('lineEnd').y };
+    const targetStartGlobal = { x: target.get('x') + target.pointProperty('lineStart').x, y: target.get('y') + target.pointProperty('lineStart').y };
+    expect(depEndGlobal).toEqual(targetStartGlobal);
+  });
+
   test('mutually connected lines terminate (no infinite recursion)', async () => {
     const a = createLine({ id: 'la', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 },
       connectStart: { line: 'lb', position: 1 } });
