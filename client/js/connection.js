@@ -4,6 +4,8 @@ let connection;
 let serverStart = null;
 let userNavigatedAway = false;
 let messageCallbacks = {};
+let onConnectionCloseCallbacks = [];
+export function onConnectionClose(cb) { onConnectionCloseCallbacks.push(cb); }
 
 //used by unit tests until jest supports mocking ESM static imports
 export function mockConnection() {
@@ -35,7 +37,7 @@ export function startWebSocket() {
     console.log(`WebSocket closed`);
     if(!userNavigatedAway) {
       lastOverlay = [...$a('.overlay')].filter(d=>d.style.display!='none').map(d=>d.id)[0] || null;
-      showOverlay('connectionLostOverlay', true);
+      for(const cb of onConnectionCloseCallbacks) cb();
     }
     if(lastTimeout)
       setTimeout(startWebSocket, lastTimeout *= 2);
@@ -47,8 +49,7 @@ export function startWebSocket() {
     if(func == 'serverStart') {
       if(serverStart != null && serverStart != args) {
         console.log('Server restart detected. Reloading...')
-        setTimeout(location.reload, rand()*10000);
-        showOverlay('connectionLostOverlay', true);
+        setTimeout(() => location.reload(), rand()*10000);
         preventReconnect();
         connection.close();
       }
@@ -60,7 +61,7 @@ export function startWebSocket() {
   };
 }
 
-function onMessage(func, callback) {
+export function onMessage(func, callback) {
   if(!messageCallbacks[func])
     messageCallbacks[func] = [];
   messageCallbacks[func].push(callback);
