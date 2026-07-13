@@ -153,3 +153,37 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     .pressKey('esc');
   await compareState(t, '0fe0eb8554cd82ec74d0c2c99513dffa');
 });
+
+// Regression test for the crash reported on switching games while a deck was being edited (the previously
+// selected deck/card no longer exists when the new state arrives). TestCafe fails the test on any uncaught
+// client error, so simply performing the switch guards against the crash coming back.
+test('Deck editor: switching games while editing does not crash', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#editor [icon=edit]')
+    .click('.deckEditorAddCardType button'); // make a change, leaving the deck editor open
+
+  // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
+  await setRoomState({ switchedLabel: { id: 'switchedLabel', type: 'label', x: 100, y: 100, text: 'Another game' } });
+
+  // The deck editor must have closed and the client must still be alive and interactive.
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await compareState(t, 'fa933ba639405309b6cf6aef448bfeb4');
+});

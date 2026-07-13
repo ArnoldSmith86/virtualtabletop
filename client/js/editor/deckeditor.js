@@ -326,6 +326,26 @@ class DeckEditor {
     $('#deckEditorDragToolbar').classList.remove('active');
   }
 
+  cancelPendingCommits() {
+    for(const property of Object.keys(this.commitTimers))
+      clearTimeout(this.commitTimers[property]);
+    this.commitTimers = {};
+  }
+
+  // The room state was replaced (game switch), so this.deckID likely no longer exists. Drop pending commits
+  // without flushing (they'd target the missing deck) and hide the editor. Don't call close(), which flushes.
+  handleStateReplaced() {
+    this.cancelPendingCommits();
+    if(!this.isOpen())
+      return;
+    this.deckID = null;
+    this.selectedObject = null;
+    this.history = [];
+    this.historyIndex = -1;
+    $('body').classList.remove('deckEditorActive');
+    $('#deckEditorDragToolbar').classList.remove('active');
+  }
+
   loadWorkingCopies() {
     const deck = this.deck();
     const faceTemplates = deck.get('faceTemplates');
@@ -1121,4 +1141,10 @@ function deckEditorReceiveDelta(delta) {
     return deckEditor.reload();
   if(deckDelta.cardTypes !== undefined && !deckEditor.matchesWorkingCopy('cardTypes'))
     return deckEditor.reload();
+}
+
+// Called when a full room state replaces the current one (e.g. switching games). The deck being edited is
+// likely gone, so drop any pending debounced commits (they'd target a missing deck) and close the editor.
+function deckEditorStateReplaced() {
+  deckEditor.handleStateReplaced();
 }

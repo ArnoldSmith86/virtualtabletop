@@ -181,8 +181,14 @@ export function editorReceiveDelta(delta) {
 }
 
 function receiveStateFromServer(state) {
+  // The incoming full state has already replaced the widgets map, so the previously selected widgets may no
+  // longer exist. Reset the deck editor and pass an EMPTY new selection to the modules (previous selection as
+  // the old one) so none of them try to render a now-removed widget - rendering e.g. a removed deck's card
+  // types would dereference the missing deck and throw (crash on switching games while a deck was selected).
+  deckEditorStateReplaced();
+  const previousSelection = selectedWidgets;
   for(const module of sidebarModules) {
-    module.onSelectionChanged(selectedWidgets, []);
+    module.onSelectionChanged([], previousSelection);
     module.onStateReceived(state);
   }
   setSelection([]);
