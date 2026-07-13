@@ -142,20 +142,21 @@ export class Line extends Widget {
     }
   }
 
-  // the fraction along the largest gap between existing stops, so "Add stop" drops
-  // the new one into empty space without disturbing the positions of the others
+  // the midpoint of the largest empty span along the line, so "Add stop" drops the
+  // new one into open space without disturbing the others. The start (0) and end (1)
+  // of the line count as boundaries so the gaps before the first / after the last
+  // stop are considered too, not just the gaps between stops.
   nextStopPosition() {
     const positions = this.attachedWidgets().map(w=>+w.get('linePosition') || 0);
     if(positions.length == 0)
       return 0;
-    if(positions.length == 1)
-      return positions[0] < 1 ? 1 : 0;
+    const bounds = [ 0, ...positions, 1 ];
     let bestGap = -1, bestPos = 0.5;
-    for(let i = 1; i < positions.length; ++i) {
-      const gap = positions[i] - positions[i-1];
+    for(let i = 1; i < bounds.length; ++i) {
+      const gap = bounds[i] - bounds[i-1];
       if(gap > bestGap) {
         bestGap = gap;
-        bestPos = (positions[i] + positions[i-1])/2;
+        bestPos = (bounds[i] + bounds[i-1])/2;
       }
     }
     return Math.round(bestPos*1000)/1000;
