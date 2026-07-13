@@ -11,6 +11,7 @@ import fetch from 'node-fetch';
 import WebSocket  from './server/websocket.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
+import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
@@ -47,6 +48,7 @@ async function ensureRoomIsLoaded(id) {
       activeRooms.delete(id);
     }, function() {
       Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      LibraryDecks.invalidateCache();
       for(const [ _, room ] of activeRooms)
         room.reloadPublicLibraryGames();
     });
@@ -297,6 +299,22 @@ MinifyHTML().then(function(result) {
     } catch(e) {
       return res.status(404).send('Invalid share.');
     }
+  });
+
+  router.get('/api/library/decks', function(req, res, next) {
+    LibraryDecks.getIndex().then(function(index) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(index));
+    }).catch(next);
+  });
+
+  router.get('/api/library/decks/:library/:game/:file/:deck', function(req, res, next) {
+    LibraryDecks.getDeck(req.params.library, req.params.game, req.params.file, req.params.deck).then(function(deck) {
+      if(!deck)
+        return res.sendStatus(404);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(deck));
+    }).catch(next);
   });
 
   router.get('/api/widgets', function(req, res, next) {
