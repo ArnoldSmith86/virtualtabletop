@@ -21,6 +21,16 @@ const topUsedLibraryIcons = [
   'skoll/chess-king', 'delapouite/present', 'lorc/gold-scarab', 'lorc/wheat'
 ];
 
+// Built-in game piece images shipped in assets/game-pieces, suggested in the
+// image picker the same way top icons are suggested in the icon picker.
+const builtinGamePieceImages = [
+  '2D/Checkers-2D', '2D/Crowned-Checkers-2D', '2D/Hex-Flat', '2D/Hex-Point',
+  '2D/Meeple-2D', '2D/Pig-2D', '2D/Poker-2D', '2D/Puck-2D',
+  '3D/Building-3D', '3D/Checkers-3D', '3D/Crowned-Checkers-3D', '3D/Cube-3D',
+  '3D/House-3D', '3D/Marble-3D', '3D/Meeple-3D', '3D/Pawn-3D',
+  '3D/Pig-3D', '3D/Pin-3D', '3D/Poker-3D', '3D/Puck-3D', '3D/Road-3D'
+].map(name=>`/i/game-pieces/${name}.svg`);
+
 const propertyInputPalette = [
   '#000000', '#444444', '#888888', '#cccccc', '#ffffff',
   '#e6194b', '#f58231', '#ffe119', '#bfef45', '#3cb44b',
@@ -92,8 +102,10 @@ function renderIconChip(value, target) {
     div(chip, 'material-symbols-nofill', html(value.replace(/_NOFILL$/, '')));
   } else if(value.match(/^[a-z0-9]/)) {
     div(chip, 'material-symbols', html(value));
-  } else {
+  } else if(value.match(/^\(.*\)$/)) {
     div(chip, 'emoji-monochrome', html(toNotoMonochrome(value.replace(/^\((.*)\)$/, '$1'))));
+  } else {
+    div(chip, 'emojiColorChip', html(value)); // raw emoji: native color rendering
   }
   return chip;
 }
@@ -126,17 +138,20 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase() });
+            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
             const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
             if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
-              index.push({ value: symbol, keywords: allKeywords });
+              index.push({ value: symbol, keywords: allKeywords, image: false }); // VTT/material symbol font
               if(hasNoFillVariant)
-                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords });
-            } else if(!skipForNotoMonochrome(symbol)) {
-              index.push({ value: `(${symbol})`, keywords: allKeywords }); // monochrome emoji notation
+                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false });
+            } else {
+              // emoji: offer both the color image and the monochrome font variant
+              index.push({ value: symbol, keywords: allKeywords, image: true });
+              if(!skipForNotoMonochrome(symbol))
+                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false });
             }
           }
         }
@@ -149,17 +164,22 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
+// Interleave font-style and image-style matches so both are represented in the
+// top results even when one kind (usually game-icons) dominates the matches.
 function searchIconIndex(query, limit=42) {
   const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  const results = [];
+  const fonts = [];
+  const images = [];
   for(const entry of iconSearchIndex || []) {
-    if(terms.every(term=>entry.keywords.includes(term))) {
-      results.push(entry.value);
-      if(results.length >= limit)
-        break;
-    }
+    if(terms.every(term=>entry.keywords.includes(term)))
+      (entry.image ? images : fonts).push(entry.value);
   }
-  return results;
+  const results = [];
+  for(let i=0; results.length < limit && (i < fonts.length || i < images.length); i++) {
+    if(i < fonts.length)  results.push(fonts[i]);
+    if(i < images.length) results.push(images[i]);
+  }
+  return results.slice(0, limit);
 }
 
 class PropertyInput {
@@ -396,13 +416,40 @@ class PickerInput extends PropertyInput {
     return this.pickerDOM && this.pickerDOM.style.display != 'none';
   }
 
-  update(value) {
-    this.updatePreview(value);
-    if(this.pickerOpen())
-      this.refreshPicker(value);
+  // Pickers distinguish the raw (explicitly set) value from the effective one
+  // (which falls back to the widget's applying default) so an unset picker can
+  // preview the default that is actually in effect.
+  getValue() {
+    if(this.options.getValue)
+      return this.options.getValue();
+    const raw = this.widget.state[this.options.property];
+    return raw === undefined ? null : raw;
   }
 
-  updatePreview(value) {
+  getEffectiveValue() {
+    if(this.options.getEffective)
+      return this.options.getEffective();
+    if(this.options.getValue)
+      return this.options.getValue();
+    const value = this.widget.get(this.options.property);
+    return value === undefined ? null : value;
+  }
+
+  previewValue() {
+    const raw = this.getValue();
+    return propertyInputValueSet(raw) ? raw : this.getEffectiveValue();
+  }
+
+  update(value) {
+    this.updatePreview();
+    if(this.pickerOpen())
+      this.refreshPicker(this.getValue());
+  }
+
+  updatePreview() {
+    this.previewButton.innerHTML = '';
+    this.renderChip(this.previewButton, this.previewValue());
+    this.previewButton.classList.toggle('usingDefault', !propertyInputValueSet(this.getValue()));
   }
 
   updatePicker(value) {
@@ -428,10 +475,16 @@ class PickerInput extends PropertyInput {
   }
 
   renderSummary(target, value) {
-    this.renderChip(target, value);
+    const isSet = propertyInputValueSet(value);
+    this.renderChip(target, this.previewValue());
     this.renderSummaryControls(target, value);
-    div(target, 'propertyPickerValueText', propertyInputValueSet(value) ? html(String(value)) : '<i>not set</i>');
-    if(this.options.clearable !== false) {
+    if(isSet)
+      div(target, 'propertyPickerValueText', html(String(value)));
+    else if(propertyInputValueSet(this.getEffectiveValue()))
+      div(target, 'propertyPickerValueText usingDefault', `default: ${html(String(this.getEffectiveValue()))}`);
+    else
+      div(target, 'propertyPickerValueText', '<i>not set</i>');
+    if(this.options.clearable !== false && isSet) {
       const clear = document.createElement('button');
       clear.setAttribute('icon', 'delete');
       clear.title = 'Remove value';
@@ -473,15 +526,11 @@ class ColorInput extends PickerInput {
     return renderColorChip(propertyInputValueSet(value) ? value : 'transparent', target);
   }
 
-  updatePreview(value) {
-    this.previewButton.innerHTML = '';
-    this.renderChip(this.previewButton, value);
-  }
-
   renderSummaryControls(target, value) {
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
-    colorPicker.value = toHex(propertyInputValueSet(value) ? value : (this.options.default || '#000000'));
+    const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
+    colorPicker.value = toHex(propertyInputValueSet(shown) ? shown : (this.options.default || '#000000'));
     colorPicker.oninput = _=>this.setValue(colorPicker.value);
     target.appendChild(colorPicker);
   }
@@ -501,11 +550,6 @@ class IconInput extends PickerInput {
     if(propertyInputValueSet(value))
       return renderIconChip(value, target);
     return div(target, 'propertyValueChip propertyEmptyChip');
-  }
-
-  updatePreview(value) {
-    this.previewButton.innerHTML = '';
-    this.renderChip(this.previewButton, value);
   }
 
   renderPickerContent(target, value) {
@@ -552,13 +596,9 @@ class ImageInput extends PickerInput {
     return div(target, 'propertyValueChip propertyEmptyChip');
   }
 
-  updatePreview(value) {
-    this.previewButton.innerHTML = '';
-    this.renderChip(this.previewButton, value);
-  }
-
   renderPickerContent(target, value) {
     this.addChipList(target, 'Used in this game', usedGameImages(), value, renderImageChip);
+    this.addChipList(target, 'Game pieces', builtinGamePieceImages, value, renderImageChip);
 
     const section = div(target, 'propertyPickerSection');
     const upload = document.createElement('button');

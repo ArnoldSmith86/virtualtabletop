@@ -192,14 +192,82 @@
 .editorModule .propertyPickerChips .symbols,
 .editorModule .propertyPickerChips .material-symbols,
 .editorModule .propertyPickerChips .material-symbols-nofill,
-.editorModule .propertyPickerChips .emoji-monochrome {
+.editorModule .propertyPickerChips .emoji-monochrome,
+.editorModule .propertyPickerChips .emojiColorChip {
   font-size: 24px;
   overflow: hidden;
+}
+
+/* icon search previews are shown ~50% bigger than other chips */
+.editorModule .iconInput .propertyPickerChips .propertyValueChip {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  font-size: 36px;
+}
+
+.editorModule .iconInput .propertyPickerChips .symbols,
+.editorModule .iconInput .propertyPickerChips .material-symbols,
+.editorModule .iconInput .propertyPickerChips .material-symbols-nofill,
+.editorModule .iconInput .propertyPickerChips .emoji-monochrome,
+.editorModule .iconInput .propertyPickerChips .emojiColorChip {
+  font-size: 36px;
 }
 
 .editorModule .propertyPickerEmpty {
   color: var(--textDimColor1, #777);
   font-style: italic;
+}
+
+/* a picker showing the applying default (no explicit value) is dimmed */
+.editorModule .propertyPreviewButton.usingDefault .propertyValueChip,
+.editorModule .propertyPickerValueText.usingDefault {
+  opacity: 0.55;
+}
+
+.editorModule .propertyPickerValueText.usingDefault {
+  font-style: italic;
+}
+
+/* collapsible section (position/size/rotation) */
+.editorModule .collapsibleSection {
+  margin: 4px 0;
+}
+
+.editorModule .collapsibleHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor1, #eee);
+  border-radius: 5px;
+}
+
+.editorModule .collapseArrow::before {
+  content: 'expand_more';
+  font-family: 'Material Symbols';
+  display: inline-block;
+}
+
+.editorModule .collapsibleSection.collapsed .collapseArrow::before {
+  content: 'chevron_right';
+}
+
+.editorModule .collapsibleSection.collapsed .collapsibleBody {
+  display: none;
+}
+
+.editorModule .collapsibleBody {
+  padding: 4px 0 4px 6px;
+}
+
+/* subsection titles inside the appearance section */
+.editorModule .appearanceSubTitle {
+  font-weight: bold;
+  color: var(--VTTblue);
+  margin: 8px 0 2px;
 }
 
 /* appearance section header buttons */

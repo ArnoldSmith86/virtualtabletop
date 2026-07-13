@@ -110,28 +110,41 @@ async function setCardCount(deck, cardType, count) {
 // inputs edit its type specific behavior. Each entry becomes an input created
 // by renderInputs; "cssKey" entries edit one declaration inside the css
 // property instead of a whole widget property.
+// Per type: content = things shown in the "Content" section (what the widget
+// shows), colors/hover = "Appearance" subsections, appearance = misc styling.
+// content is never copied by the pipette / apply-to-all.
 const editorTypeSections = {
   basic: {
-    appearance: [
-      { label: 'Color',         property: 'color',        kind: 'color' },
+    content: [
       { label: 'Image',         property: 'image',        kind: 'image' },
       { label: 'Icon',          property: 'icon',         kind: 'icon' },
-      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true, content: true },
+      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true }
+    ],
+    colors: [
+      { label: 'Color',         property: 'color',        kind: 'color' }
+    ],
+    appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 200, slider: true, nullIfEmpty: true }
     ]
   },
   button: {
-    appearance: [
-      { label: 'Text',             property: 'text',              kind: 'text', nullIfEmpty: true, content: true },
+    content: [
+      { label: 'Text',             property: 'text',              kind: 'text', nullIfEmpty: true },
       { label: 'Icon',             property: 'icon',              kind: 'icon' },
-      { label: 'Image',            property: 'image',             kind: 'image' },
-      { label: 'Text color',       property: 'textColor',         kind: 'color' },
+      { label: 'Image',            property: 'image',             kind: 'image' }
+    ],
+    colors: [
+      { label: 'Text',             property: 'textColor',         kind: 'color' },
       { label: 'Background',       property: 'backgroundColor',   kind: 'color' },
       { label: 'Border',           property: 'borderColor',       kind: 'color' },
-      { label: 'Text (hover)',     property: 'textColorOH',       kind: 'color' },
-      { label: 'Background (hover)', property: 'backgroundColorOH', kind: 'color' },
-      { label: 'Border (hover)',   property: 'borderColorOH',     kind: 'color' },
-      { label: 'SVG color',        property: 'color',             kind: 'color' },
+      { label: 'SVG',              property: 'color',             kind: 'color' }
+    ],
+    hover: [
+      { label: 'Text',             property: 'textColorOH',       kind: 'color' },
+      { label: 'Background',       property: 'backgroundColorOH', kind: 'color' },
+      { label: 'Border',           property: 'borderColorOH',     kind: 'color' }
+    ],
+    appearance: [
       { label: 'Border radius',    property: 'borderRadius',      kind: 'number', min: 0, max: 800, slider: true }
     ]
   },
@@ -143,12 +156,16 @@ const editorTypeSections = {
     ]
   },
   dice: {
-    appearance: [
-      { label: 'Face color',    property: 'color',        kind: 'color' },
-      { label: 'Pip color',     property: 'pipColor',     kind: 'color' },
-      { label: 'Border color',  property: 'borderColor',  kind: 'color' },
+    content: [
       { label: 'Icon',          property: 'icon',         kind: 'icon' },
-      { label: 'Image',         property: 'image',        kind: 'image' },
+      { label: 'Image',         property: 'image',        kind: 'image' }
+    ],
+    colors: [
+      { label: 'Face',          property: 'color',        kind: 'color' },
+      { label: 'Pip',           property: 'pipColor',     kind: 'color' },
+      { label: 'Border',        property: 'borderColor',  kind: 'color' }
+    ],
+    appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 16%', nullIfEmpty: true }
     ],
     behavior: [
@@ -157,9 +174,11 @@ const editorTypeSections = {
     ]
   },
   holder: {
-    appearance: [
+    colors: [
       { label: 'Color',         property: 'color',        kind: 'color' },
-      { label: 'Text color',    property: 'textColor',    kind: 'color' },
+      { label: 'Text',          property: 'textColor',    kind: 'color' }
+    ],
+    appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 100, slider: true },
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
     ],
@@ -174,8 +193,10 @@ const editorTypeSections = {
     ]
   },
   pile: {
+    content: [
+      { label: 'Handle text',     property: 'text',           kind: 'text', nullIfEmpty: true }
+    ],
     appearance: [
-      { label: 'Handle text',     property: 'text',           kind: 'text', nullIfEmpty: true, content: true },
       { label: 'Handle position', property: 'handlePosition', kind: 'select', choices: [ 'top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left', 'static' ].map(v=>({ value: v, text: v })) },
       { label: 'Handle offset',   property: 'handleOffset',   kind: 'number', min: 0, max: 100, slider: true }
     ],
@@ -206,9 +227,11 @@ const editorTypeSections = {
     ]
   },
   seat: {
-    appearance: [
+    colors: [
       { label: 'Color',         property: 'color',        kind: 'color' },
-      { label: 'Color (empty)', property: 'colorEmpty',   kind: 'color' },
+      { label: 'Empty',         property: 'colorEmpty',   kind: 'color' }
+    ],
+    appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 100, slider: true }
     ],
     behavior: [
@@ -223,9 +246,11 @@ const editorTypeSections = {
     ]
   },
   spinner: {
+    colors: [
+      { label: 'Text',          property: 'textColor',    kind: 'color' },
+      { label: 'Line',          property: 'lineColor',    kind: 'color' }
+    ],
     appearance: [
-      { label: 'Text color',    property: 'textColor',    kind: 'color' },
-      { label: 'Line color',    property: 'lineColor',    kind: 'color' },
       { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 50%', nullIfEmpty: true }
     ],
     behavior: [
@@ -233,9 +258,9 @@ const editorTypeSections = {
     ]
   },
   timer: {
-    appearance: [
+    colors: [
       { label: 'Background', cssKey: 'background', kind: 'color' },
-      { label: 'Text color', cssKey: 'color',      kind: 'color' }
+      { label: 'Text',       cssKey: 'color',      kind: 'color' }
     ],
     behavior: [
       { label: 'Countdown',         property: 'countdown',    kind: 'checkbox' },
@@ -1535,14 +1560,30 @@ class PropertiesModule extends SidebarModule {
     this.addHeader(`${editorTypeNames[type] || type} ${widget.id}`);
   }
 
+  // A section whose body can be folded away by clicking the header. Position,
+  // size and rotation are usually changed with the drag toolbar, so they start
+  // collapsed.
+  renderCollapsibleSection(title, collapsed, renderBody, target=null) {
+    const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
+    const header = div(wrap, 'collapsibleHeader', `<span class=collapseArrow></span><span>${html(title)}</span>`);
+    const body = div(wrap, 'collapsibleBody');
+    header.onclick = _=>wrap.classList.toggle('collapsed');
+    renderBody(body);
+    return wrap;
+  }
+
   renderBasicSection(widget) {
-    this.addSubHeader('Position and size');
+    this.renderCollapsibleSection('Tweak position, size and rotation', true, body=>{
+      this.renderInputs(widget, [
+        { label: 'X',        property: 'x',        kind: 'number', min: 0, max: 1600, step: 1, slider: true },
+        { label: 'Y',        property: 'y',        kind: 'number', min: 0, max: 1000, step: 1, slider: true },
+        { label: 'Width',    property: 'width',    kind: 'number', min: 1, max: 1600, step: 1, slider: true },
+        { label: 'Height',   property: 'height',   kind: 'number', min: 1, max: 1000, step: 1, slider: true },
+        { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true },
+        { label: 'Scale',    property: 'scale',    kind: 'number', min: 0.1, max: 5, step: 0.1, slider: true }
+      ], body);
+    });
     this.renderInputs(widget, [
-      { label: 'X',        property: 'x',        kind: 'number', min: 0, max: 1600, step: 1, slider: true },
-      { label: 'Y',        property: 'y',        kind: 'number', min: 0, max: 1000, step: 1, slider: true },
-      { label: 'Width',    property: 'width',    kind: 'number', min: 1, max: 1600, step: 1, slider: true },
-      { label: 'Height',   property: 'height',   kind: 'number', min: 1, max: 1000, step: 1, slider: true },
-      { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true },
       { label: 'Layer',    property: 'layer',    kind: 'select', choices: [
         { value: -5, text: '-5 (background)' },
         { value: -4, text: '-4' },
@@ -1561,32 +1602,47 @@ class PropertiesModule extends SidebarModule {
     ]);
   }
 
+  renderContentSection(widget) {
+    const defs = (editorTypeSections[widget.get('type') || 'basic'] || {}).content || [];
+    if(!defs.length)
+      return;
+    this.addSubHeader('Content');
+    this.renderInputs(widget, defs);
+  }
+
   typeSectionProperties(type) {
     const sections = editorTypeSections[type] || {};
     const properties = [];
-    for(const defs of [ sections.appearance || [], sections.behavior || [] ])
-      for(const def of defs)
+    for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
+      for(const def of sections[group] || [])
         properties.push(def.property || 'css');
     return properties;
   }
 
   basicExcludeList(widget, extra=[]) {
-    return [ 'x', 'y', 'z', 'width', 'height', 'rotation', 'layer', 'movable', 'movableInEdit' ]
+    return [ 'x', 'y', 'z', 'width', 'height', 'rotation', 'scale', 'layer', 'movable', 'movableInEdit' ]
       .concat(this.typeSectionProperties(widget.get('type') || 'basic'))
       .concat(extra);
   }
 
+  addAppearanceSubTitle(text) {
+    div(this.moduleDOM, 'appearanceSubTitle', html(text));
+  }
+
   // Appearance section with a pipette button (copy the appearance from a
   // picked widget) and a button to apply the appearance to all widgets of
-  // the same type.
+  // the same type. Colors and hover colors are shown as their own subsections.
   renderAppearanceSection(widget, options={}) {
     const type = widget.get('type') || 'basic';
-    const defs = options.defs !== undefined ? options.defs : ((editorTypeSections[type] || {}).appearance || []);
-    if(!defs.length && !options.render)
+    const sections = editorTypeSections[type] || {};
+    const colors = options.colors || sections.colors || [];
+    const hover = options.hover || sections.hover || [];
+    const misc = options.defs !== undefined ? options.defs : (sections.appearance || []);
+    if(!colors.length && !hover.length && !misc.length && !options.render)
       return;
-    // "content" entries (like a button's text) stay editable in the section
-    // but are not copied by the pipette or the apply-to-all button
-    const properties = options.properties || [...new Set(defs.filter(d=>!d.content).map(d=>d.property || 'css'))];
+    // the pipette / apply-to-all copy every appearance property but never the
+    // Content section (text/icon/image), which is the widget's actual content
+    const properties = options.properties || [...new Set([ ...colors, ...hover, ...misc ].map(d=>d.property || 'css'))];
 
     const copyProperties = async (source, target)=>{
       for(const property of properties)
@@ -1622,10 +1678,25 @@ class PropertiesModule extends SidebarModule {
       batchEnd();
     };
 
-    if(options.render)
+    if(options.render) {
       options.render(this.moduleDOM);
-    else
-      this.renderInputs(widget, defs);
+      return;
+    }
+
+    if(colors.length) {
+      if(hover.length || misc.length)
+        this.addAppearanceSubTitle('Colors');
+      this.renderInputs(widget, colors);
+    }
+    if(hover.length) {
+      this.addAppearanceSubTitle('Hover');
+      this.renderInputs(widget, hover);
+    }
+    if(misc.length) {
+      if(colors.length || hover.length)
+        this.addAppearanceSubTitle('Style');
+      this.renderInputs(widget, misc);
+    }
   }
 
   renderBehaviorSection(widget, title='Behavior') {
@@ -1646,6 +1717,7 @@ class PropertiesModule extends SidebarModule {
   renderForBasic(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
+    this.renderContentSection(widget);
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget);
   }
@@ -1653,6 +1725,7 @@ class PropertiesModule extends SidebarModule {
   renderForButton(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
+    this.renderContentSection(widget);
     this.renderAppearanceSection(widget);
     this.addSubHeader('Behavior');
     div(this.moduleDOM, '', `
@@ -1693,7 +1766,7 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
 
-    this.addSubHeader('Label');
+    this.addSubHeader('Content');
     this.renderInputs(widget, [
       { label: 'Text',                     property: 'text',            kind: 'textarea' },
       { label: 'Editable by players',      property: 'editable',        kind: 'checkbox' },
@@ -1720,6 +1793,7 @@ class PropertiesModule extends SidebarModule {
   renderForPile(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
+    this.renderContentSection(widget);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
     this.renderOtherPropertiesSection(widget);
@@ -1819,6 +1893,7 @@ class PropertiesModule extends SidebarModule {
   renderForDice(widget) {
     this.addHeader(`Dice ${widget.id}`);
     this.renderBasicSection(widget);
+    this.renderContentSection(widget);
     const widgetFaces = widget.get('faces');
     const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
 
@@ -2016,6 +2091,9 @@ class PropertiesModule extends SidebarModule {
         widget.set('css', null);
       }
     };
+    this.addAppearanceSubTitle('Colors');
+    this.renderInputs(widget, editorTypeSections.holder.colors);
+    this.addAppearanceSubTitle('Style');
     this.renderInputs(widget, editorTypeSections.holder.appearance);
 
     this.renderBehaviorSection(widget, 'Dropping and stacking');
