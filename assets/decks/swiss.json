@@ -1,0 +1,365 @@
+{
+  "name": "Swiss playing cards",
+  "description": "Swiss-suited 36-card Jass deck with roses, shields, acorns and bells.",
+  "attribution": "Based on the German deck by Mfrasca after Gunter Gerhardt (CC BY-SA 3.0), arrangements by LawDawg96 (CC BY-SA 3.0), rose and shield symbols by Kilom691.",
+  "deck": {
+    "type": "deck",
+    "cardTypes": {
+      "Acorn 01": {
+        "rank": "A",
+        "rankImage": "i/cards-german/1Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 1
+      },
+      "Acorn 06": {
+        "rank": "6",
+        "rankImage": "i/cards-german/6Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 6
+      },
+      "Acorn 07": {
+        "rank": "7",
+        "rankImage": "i/cards-german/7Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 7
+      },
+      "Acorn 08": {
+        "rank": "8",
+        "rankImage": "i/cards-german/8Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 8
+      },
+      "Acorn 09": {
+        "rank": "9",
+        "rankImage": "i/cards-german/9Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 9
+      },
+      "Acorn 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 10
+      },
+      "Acorn 11": {
+        "rank": "U",
+        "rankImage": "i/cards-german/11Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 11
+      },
+      "Acorn 12": {
+        "rank": "O",
+        "rankImage": "i/cards-german/12Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 12
+      },
+      "Acorn 13": {
+        "rank": "K",
+        "rankImage": "i/cards-german/13Acorn.svg",
+        "suitImage": "i/cards-german/acorn.svg",
+        "suit": 1,
+        "order": 13
+      },
+      "Bell 01": {
+        "rank": "A",
+        "rankImage": "i/cards-german/1Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 1
+      },
+      "Bell 06": {
+        "rank": "6",
+        "rankImage": "i/cards-german/6Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 6
+      },
+      "Bell 07": {
+        "rank": "7",
+        "rankImage": "i/cards-german/7Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 7
+      },
+      "Bell 08": {
+        "rank": "8",
+        "rankImage": "i/cards-german/8Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 8
+      },
+      "Bell 09": {
+        "rank": "9",
+        "rankImage": "i/cards-german/9Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 9
+      },
+      "Bell 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 10
+      },
+      "Bell 11": {
+        "rank": "U",
+        "rankImage": "i/cards-german/11Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 11
+      },
+      "Bell 12": {
+        "rank": "O",
+        "rankImage": "i/cards-german/12Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 12
+      },
+      "Bell 13": {
+        "rank": "K",
+        "rankImage": "i/cards-german/13Bell.svg",
+        "suitImage": "i/cards-german/bell.svg",
+        "suit": 2,
+        "order": 13
+      },
+      "Rose 01": {
+        "rank": "A",
+        "rankImage": "i/cards-swiss/1Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 1
+      },
+      "Rose 06": {
+        "rank": "6",
+        "rankImage": "i/cards-swiss/6Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 6
+      },
+      "Rose 07": {
+        "rank": "7",
+        "rankImage": "i/cards-swiss/7Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 7
+      },
+      "Rose 08": {
+        "rank": "8",
+        "rankImage": "i/cards-swiss/8Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 8
+      },
+      "Rose 09": {
+        "rank": "9",
+        "rankImage": "i/cards-swiss/9Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 9
+      },
+      "Rose 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 10
+      },
+      "Rose 11": {
+        "rank": "U",
+        "rankImage": "i/cards-swiss/11Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 11
+      },
+      "Rose 12": {
+        "rank": "O",
+        "rankImage": "i/cards-swiss/12Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 12
+      },
+      "Rose 13": {
+        "rank": "K",
+        "rankImage": "i/cards-swiss/13Rose.svg",
+        "suitImage": "i/cards-swiss/rose.svg",
+        "suit": 3,
+        "order": 13
+      },
+      "Shield 01": {
+        "rank": "A",
+        "rankImage": "i/cards-swiss/1Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 1
+      },
+      "Shield 06": {
+        "rank": "6",
+        "rankImage": "i/cards-swiss/6Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 6
+      },
+      "Shield 07": {
+        "rank": "7",
+        "rankImage": "i/cards-swiss/7Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 7
+      },
+      "Shield 08": {
+        "rank": "8",
+        "rankImage": "i/cards-swiss/8Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 8
+      },
+      "Shield 09": {
+        "rank": "9",
+        "rankImage": "i/cards-swiss/9Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 9
+      },
+      "Shield 10": {
+        "rank": "B",
+        "rankImage": "i/cards-swiss/10Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 10
+      },
+      "Shield 11": {
+        "rank": "U",
+        "rankImage": "i/cards-swiss/11Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 11
+      },
+      "Shield 12": {
+        "rank": "O",
+        "rankImage": "i/cards-swiss/12Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 12
+      },
+      "Shield 13": {
+        "rank": "K",
+        "rankImage": "i/cards-swiss/13Shield.svg",
+        "suitImage": "i/cards-swiss/shield.svg",
+        "suit": 4,
+        "order": 13
+      }
+    },
+    "faceTemplates": [
+      {
+        "border": false,
+        "radius": false,
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 103,
+            "height": 160,
+            "color": "transparent",
+            "value": "/i/cards-default/2B.svg"
+          }
+        ]
+      },
+      {
+        "border": 1,
+        "radius": 6,
+        "objects": [
+          {
+            "type": "image",
+            "width": 103,
+            "height": 160,
+            "color": "white"
+          },
+          {
+            "type": "image",
+            "x": 15,
+            "y": 10,
+            "width": 73,
+            "height": 140,
+            "color": "white",
+            "dynamicProperties": {
+              "value": "rankImage"
+            },
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            }
+          },
+          {
+            "type": "text",
+            "x": -3,
+            "y": -2,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "text",
+            "x": 81,
+            "y": 127,
+            "fontSize": 30,
+            "textAlign": "center",
+            "width": 25,
+            "dynamicProperties": {
+              "value": "rank",
+              "color": "suitColor"
+            },
+            "rotation": 180,
+            "css": {
+              "letter-spacing": "-6px"
+            }
+          },
+          {
+            "type": "image",
+            "x": 1,
+            "y": 28,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            }
+          },
+          {
+            "type": "image",
+            "x": 79,
+            "y": 110,
+            "width": 23,
+            "height": 23,
+            "color": "transparent",
+            "svgReplaces": {
+              "currentColor": "suitColor"
+            },
+            "dynamicProperties": {
+              "value": "suitImage"
+            },
+            "rotation": 180
+          }
+        ]
+      }
+    ]
+  }
+}
