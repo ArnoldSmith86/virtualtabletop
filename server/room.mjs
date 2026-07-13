@@ -1278,4 +1278,40 @@ export default class Room {
     else
       return Config.directory('save') + '/states/' + this.id + '-' + stateID.replace(/[^a-z0-9]/g, '_') + '-' + String(variantID).replace(/[^a-z0-9]/g, '_') + '.json';
   }
+
+  zoom(args) {
+    const unsafeKeys = [ '__proto__', 'constructor', 'prototype' ];
+    const players = Array.isArray(args.players) ? args.players.slice(0, 100).map(p=>`${p}`.substr(0, 128)).filter(p=>!unsafeKeys.includes(p)) : [];
+
+    const level = Number(args.level);
+    const panX = Number(args.panX);
+    const panY = Number(args.panY);
+    if(!Number.isFinite(level) || !Number.isFinite(panX) || !Number.isFinite(panY))
+      return;
+
+    // Persist zoom settings into gameSettings (per-player or for all)
+    if(!this.state._meta.gameSettings)
+      this.state._meta.gameSettings = {};
+    if(!this.state._meta.gameSettings.zoom)
+      this.state._meta.gameSettings.zoom = { perPlayer: {}, all: null };
+    const zoomSettings = this.state._meta.gameSettings.zoom;
+
+    // seq distinguishes a re-issued (possibly identical) ZOOM from an unrelated
+    // meta update, so clients can re-apply it even when nothing else changed
+    zoomSettings.seq = (zoomSettings.seq || 0) + 1;
+
+    const payload = { level: Math.max(1, Math.min(10, level)), panX, panY, seq: zoomSettings.seq };
+    if(args.disableUserControls !== undefined)
+      payload.disableUserControls = args.disableUserControls !== false;
+    if(players.length === 0) {
+      this.state._meta.gameSettings.zoom.all = payload;
+      // Clearing all individual overrides when applying to all players
+      this.state._meta.gameSettings.zoom.perPlayer = {};
+    } else {
+      for(const p of players)
+        this.state._meta.gameSettings.zoom.perPlayer[p] = payload;
+    }
+
+    this.sendMetaUpdate();
+  }
 }

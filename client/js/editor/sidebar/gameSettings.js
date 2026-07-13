@@ -293,8 +293,18 @@ class GameSettingsModule extends SidebarModule {
     }
   }
 
+  removeZoomOverrides() {
+    const gameSettings = getCurrentGameSettings();
+    if (gameSettings && gameSettings.zoom) {
+      delete gameSettings.zoom;
+      toServer('setGameSettings', gameSettings);
+      this.renderModule(this.moduleDOM);
+    }
+  }
+
   onMetaReceived(meta) {
     this.updateBadge();
+    super.onMetaReceived(meta);
   }
 
   onStateReceived(state) {
@@ -322,6 +332,54 @@ class GameSettingsModule extends SidebarModule {
     this.addHeader('Game Settings');
 
     const gameSettings = getCurrentGameSettings();
+    const zoomSettings = gameSettings.zoom || {};
+    const hasZoomOverrides = (zoomSettings.all !== null && zoomSettings.all !== undefined) || 
+                             (zoomSettings.perPlayer && Object.keys(zoomSettings.perPlayer).length > 0);
+
+    if (hasZoomOverrides) {
+      this.addSubHeader('Zoom/Pan Overrides');
+      const summaryDiv = document.createElement('div');
+      summaryDiv.style.cssText = `
+        border: 1px solid var(--modalBorderColor);
+        border-radius: 4px;
+        padding: 12px;
+        margin: 20px;
+        background: var(--backgroundHighlightColor1);
+        color: var(--textColor);
+      `;
+
+      const summaryText = document.createElement('div');
+      summaryText.style.cssText = `
+        font-size: 0.9em;
+        margin-bottom: 12px;
+      `;
+
+      let overrideInfo = [];
+      if (zoomSettings.all !== null && zoomSettings.all !== undefined) {
+        overrideInfo.push('all players');
+      }
+      if (zoomSettings.perPlayer && Object.keys(zoomSettings.perPlayer).length > 0) {
+        const playerCount = Object.keys(zoomSettings.perPlayer).length;
+        overrideInfo.push(`${playerCount} player${playerCount > 1 ? 's' : ''}`);
+      }
+      summaryText.textContent = `This room has zoom/pan overrides for ${overrideInfo.join(' and ')}.`;
+
+      const removeButton = document.createElement('button');
+      removeButton.setAttribute('icon', 'delete');
+      removeButton.className = 'red';
+      removeButton.textContent = 'Remove All Overrides';
+
+      removeButton.onclick = (e) => {
+        e.stopPropagation();
+        if (confirm('Remove all zoom/pan overrides? This cannot be undone.')) {
+          this.removeZoomOverrides();
+        }
+      };
+
+      summaryDiv.append(summaryText, removeButton);
+      target.append(summaryDiv);
+    }
+
     if (Object.keys(gameSettings ? gameSettings.legacyModes : {}).length > 0) {
       this.addSubHeader('Legacy Modes');
       const p1 = document.createElement('p');

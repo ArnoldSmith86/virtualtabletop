@@ -1,3 +1,5 @@
+import { onLoad } from './domhelpers.js';
+
 let currentGameSettings = {};
 
 export function legacyMode(name, value) {

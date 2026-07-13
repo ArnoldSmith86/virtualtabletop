@@ -1,7 +1,74 @@
-let zoomScale = 1;
-let zoomLocked = localStorage.getItem('zoomLocked') === 'true';
+import { onMessage } from './connection.js';
+import { $, onLoad } from './domhelpers.js';
+import { getCurrentGameSettings } from './legacymodes.js';
+import { playerName } from './overlays/players.js';
 
-function setZoomLevel(zoomLevel) {
+let zoomScale = 1;
+let enableUserZoom = localStorage.getItem('enableUserZoom') !== 'false';
+let allowGameZoomControl = localStorage.getItem('allowGameZoomControl') !== 'false';
+let lastAppliedZoomKey = null;
+
+// clean up the key used by the old lock-zoom button that this feature replaced
+localStorage.removeItem('zoomLocked');
+
+function getZoomTarget(gs) {
+  const zoomSettings = (gs && gs.zoom) || {};
+  const perPlayer = zoomSettings.perPlayer || {};
+  // own-property check so a player named e.g. "constructor" doesn't inherit from Object.prototype
+  const perPlayerTarget = Object.prototype.hasOwnProperty.call(perPlayer, playerName) ? perPlayer[playerName] : null;
+  return perPlayerTarget || zoomSettings.all || null;
+}
+
+function applyServerZoomSetting(gs) {
+  if(edit || !allowGameZoomControl)
+    return;
+  const target = getZoomTarget(gs);
+  const targetKey = target ? JSON.stringify(target) : null;
+  if(target && Number.isFinite(Number(target.level)) && Number.isFinite(Number(target.panX)) && Number.isFinite(Number(target.panY))) {
+    // Only re-snap the viewport when the game re-locked it or the target actually
+    // changed - otherwise every unrelated meta update (player join/leave, star
+    // toggle, ...) would undo a player's manual pan/zoom while disableUserControls is false.
+    if(target.disableUserControls !== false || targetKey !== lastAppliedZoomKey) {
+      const zl = Math.max(1, Math.min(10, Number(target.level)));
+      setZoomLevel(zl);
+      setPan(Number(target.panX)*scale, Number(target.panY)*scale);
+    }
+  }
+  lastAppliedZoomKey = targetKey;
+  updateZoomUIState(gs);
+}
+
+// full state loads are handled by receiveStateFromServer -> resetZoomAndPan(gameSettings)
+onMessage('meta', args=>applyServerZoomSetting(args.meta && args.meta.gameSettings));
+
+function isGameOverrideActive() {
+  if(edit || !allowGameZoomControl)
+    return false;
+  const target = getZoomTarget(getCurrentGameSettings());
+  if(!target)
+    return false;
+  return target.disableUserControls !== false;
+}
+
+function updateZoomUIState(gs) {
+  const target = getZoomTarget(gs);
+  let override = false;
+  if(target) {
+    const disableUserControls = target.disableUserControls !== false;
+    if(!disableUserControls) {
+      $('#zoomOverrideMsg').style.display = 'none';
+      $('#zoomSlider').disabled = false;
+      $('body').classList.remove('noPanning');
+      return;
+    }
+    override = allowGameZoomControl;
+  }
+  $('#zoomOverrideMsg').style.display = override ? '' : 'none';
+  $('#zoomSlider').disabled = override;
+  $('body').classList.toggle('noPanning', override);
+}
+
+export function setZoomLevel(zoomLevel) {
   zoomScale = zoomLevel;
   
   $('#zoom2xButton .tooltip').textContent = `${zoomScale.toFixed(1)}x Zoom`;
@@ -21,13 +88,30 @@ export function getZoomLevel() {
   return zoomScale;
 }
 
-function resetZoomAndPan() {
-  setZoomLevel(1);
-  setPan(0, 0);
+function resetZoomAndPan(gameSettings) {
+  if(edit) {
+    setZoomLevel(1);
+    setPan(0, 0);
+  } else {
+    const gs = gameSettings || getCurrentGameSettings();
+    if(getZoomTarget(gs)) {
+      // The view was just reset (new game loaded, or returning from edit mode which
+      // always forces 1x) - always re-apply in full, regardless of the dedup in
+      // applyServerZoomSetting that skips unchanged targets on routine meta updates.
+      lastAppliedZoomKey = null;
+      applyServerZoomSetting(gs);
+    } else {
+      // No zoom saved with this game - start from the default view instead of
+      // carrying over whatever zoom/pan the previous game (or the player) left behind.
+      setZoomLevel(1);
+      setPan(0, 0);
+      lastAppliedZoomKey = null;
+    }
+  }
   $('body').classList.remove('panning');
 }
 
-function setPan(x, y) {
+export function setPan(x, y) {
   // Clamp pan to valid range
   const maxPanX = 1600 * scale * zoomScale - 1600 * scale;
   const maxPanY = 1000 * scale * zoomScale - 1000 * scale;
@@ -36,8 +120,26 @@ function setPan(x, y) {
 
   document.documentElement.style.setProperty('--roomPanX', clampedPanX + 'px');
   document.documentElement.style.setProperty('--roomPanY', clampedPanY + 'px');
+
   roomRectangle = $('#room').getBoundingClientRect();
   refreshIgnoreZoomWidgets();
+}
+
+export function recalculatePanForScaleChange(oldScale, newScale) {
+  if (oldScale === newScale || oldScale === 0) return;
+  
+  const currentPanX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
+  const currentPanY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
+  
+  const scaleRatio = newScale / oldScale;
+  const newPanX = currentPanX * scaleRatio;
+  const newPanY = currentPanY * scaleRatio;
+  
+  setPan(newPanX, newPanY);
+}
+
+export function getZoomScale() {
+  return zoomScale;
 }
 
 function elementIsMovableWidget(el) {
@@ -107,21 +209,32 @@ onLoad(function() {
     setZoomAroundCenter(parseInt(e.target.value) / 10);
   });
 
-  // Lock button prevents zoom changes
-  on('#lockZoomButton', 'click', function(e) {
-    zoomLocked = !zoomLocked;
-    localStorage.setItem('zoomLocked', zoomLocked);
-    $('#lockZoomButton').classList.toggle('locked', zoomLocked);
+  // Enable/disable user zoom control checkbox
+  $('#enableUserZoom').checked = enableUserZoom;
+  on('#enableUserZoom', 'change', function(e) {
+    enableUserZoom = e.target.checked;
+    localStorage.setItem('enableUserZoom', enableUserZoom);
   });
 
-  // Restore locked state from localStorage
-  if(zoomLocked)
-    $('#lockZoomButton').classList.add('locked');
+  // Allow game zoom/pan control checkbox
+  $('#allowGameZoomControl').checked = allowGameZoomControl;
+  on('#allowGameZoomControl', 'change', function(e) {
+    allowGameZoomControl = e.target.checked;
+    localStorage.setItem('allowGameZoomControl', allowGameZoomControl);
+    if(allowGameZoomControl) {
+      lastAppliedZoomKey = null; // force re-applying the game's target now that control is regained
+      applyServerZoomSetting(getCurrentGameSettings());
+    }
+    updateZoomUIState(getCurrentGameSettings());
+  });
+
+  // Initial UI state
+  updateZoomUIState(getCurrentGameSettings());
 
   // Scroll wheel zoom with zoom-to-cursor (relative to #room)
   on('#roomArea', 'wheel', function(e){
-    if(overlayActive || zoomLocked)
-      return; // allow normal wheel behavior when an overlay is active or zoom is locked
+    if(overlayActive || !enableUserZoom || isGameOverrideActive())
+      return; // allow normal wheel behavior when an overlay is active or zoom is disabled
     e.preventDefault();
 
     const now = Date.now();
@@ -136,7 +249,7 @@ onLoad(function() {
 
   // Page up/down zoom
   on('body', 'keydown', function(e){
-    if(!overlayActive && !edit && !zoomLocked && (e.key === 'PageUp' || e.key === 'PageDown')) {
+    if(!overlayActive && !edit && enableUserZoom && !isGameOverrideActive() && (e.key === 'PageUp' || e.key === 'PageDown')) {
       e.preventDefault();
       const currentIndex = zoomLevels.indexOf(zoomScale);
       const newIndex = e.key === 'PageUp' ? Math.min(zoomLevels.length - 1, currentIndex + 1) : Math.max(0, currentIndex - 1);
@@ -146,7 +259,7 @@ onLoad(function() {
 
   // Drag to pan functionality (left mouse only)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan && !elementIsMovableWidget(e.target)) {
+    if(e.button === 0 && !edit && !overlayActive && zoomScale > 1 && !isDraggingPan && !isGameOverrideActive() && !elementIsMovableWidget(e.target)) {
       isDraggingPan = true;
       dragStartX = e.clientX;
       dragStartY = e.clientY;
@@ -158,7 +271,7 @@ onLoad(function() {
 
   // Middle-click toggle zoom (anchor under cursor)
   on('#roomArea', 'mousedown', function(e){
-    if(e.button !== 1 || edit || overlayActive || zoomLocked)
+    if(e.button !== 1 || edit || overlayActive || !enableUserZoom || isGameOverrideActive())
       return;
 
     e.preventDefault();
@@ -170,7 +283,7 @@ onLoad(function() {
 
   // Swallow middle-button mouseup to avoid widget interactions
   on('#roomArea', 'mouseup', function(e){
-    if(e.button === 1 && !edit && !overlayActive && !zoomLocked) {
+    if(e.button === 1 && !edit && !overlayActive && enableUserZoom && !isGameOverrideActive()) {
       e.preventDefault();
       e.stopPropagation();
       if(e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -212,14 +325,14 @@ onLoad(function() {
   on('#roomArea', 'touchstart', function(e){
     // Start panning only when zoomed and not on draggable widget
     // Block if finger is on a movable widget
-    if(!edit && !overlayActive && zoomScale > 1 && e.touches.length == 1 && !touchOnMovable(e.touches[0])) {
+    if(!edit && !overlayActive && zoomScale > 1 && e.touches.length == 1 && !isGameOverrideActive() && !touchOnMovable(e.touches[0])) {
       touchState.isPanning = true;
       touchState.startX = e.touches[0].clientX;
       touchState.startY = e.touches[0].clientY;
       touchState.panStartX = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX')) || 0;
       touchState.panStartY = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanY')) || 0;
       $('body').classList.add('panning');
-    } else if(!overlayActive && !zoomLocked && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
+    } else if(!overlayActive && enableUserZoom && !isGameOverrideActive() && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
       touchState.isPanning = false;
       touchState.isPinching = true;
       touchState.startZoom = zoomScale;
@@ -239,7 +352,7 @@ onLoad(function() {
     if(touchState.isPanning && e.touches.length == 1 && !touchOnMovable(e.touches[0])) {
       e.preventDefault();
       setPan(touchState.panStartX + (e.touches[0].clientX - touchState.startX), touchState.panStartY + (e.touches[0].clientY - touchState.startY));
-    } else if(touchState.isPinching && !zoomLocked && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
+    } else if(touchState.isPinching && enableUserZoom && !isGameOverrideActive() && e.touches.length == 2 && !touchOnMovable(e.touches[0]) && !touchOnMovable(e.touches[1])) {
       e.preventDefault();
       const dist = Math.hypot((e.touches[0].clientX - e.touches[1].clientX), (e.touches[0].clientY - e.touches[1].clientY));
       if(touchState.startDist <= 0)
