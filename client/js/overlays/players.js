@@ -6,6 +6,7 @@ let playerName = localStorage.getItem('playerName') || 'Guest' + Math.floor(rand
 let playerColor = 'red';
 let activePlayers = [];
 let activeColors = [];
+let allPlayers = {};
 let mouseCoords = [];
 localStorage.setItem('playerName', playerName);
 
@@ -15,6 +16,11 @@ export {
   activePlayers,
   activeColors,
   mouseCoords
+}
+
+// player name -> color for everyone known at the table (used by the editor)
+function getAllPlayers() {
+  return allPlayers;
 }
 
 function getPlayerDetails() {
@@ -38,6 +44,7 @@ function addPlayerCursor(playerName, playerColor) {
 }
 
 function fillPlayerList(players, active) {
+  allPlayers = players || {};
   activePlayers = [...new Set(active)];
   activeColors = activePlayers.map(playerName=>players[playerName]);
   removeFromDOM('#playerList > div, #playerCursors > .cursor');

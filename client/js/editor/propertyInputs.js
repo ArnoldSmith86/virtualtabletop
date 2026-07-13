@@ -182,6 +182,30 @@ function searchIconIndex(query, limit=42) {
   return results.slice(0, limit);
 }
 
+// Adds a small (?) button after the label that toggles an on-demand
+// description line (touch friendly - no hover needed). The text usually comes
+// from the wiki summary of the property.
+function attachPropertyHint(propertyInputDOM, hintText) {
+  const button = document.createElement('button');
+  button.className = 'propertyHintButton';
+  button.setAttribute('icon', 'help');
+  button.title = hintText;
+  button.type = 'button';
+  const description = div(propertyInputDOM, 'propertyHintText');
+  description.textContent = hintText;
+  description.style.display = 'none';
+  button.onclick = e=>{
+    e.preventDefault();
+    description.style.display = description.style.display == 'none' ? '' : 'none';
+  };
+  // place the button right after the label (or first) so it sits by the title
+  const label = $('label', propertyInputDOM);
+  if(label && label.nextSibling)
+    propertyInputDOM.insertBefore(button, label.nextSibling);
+  else
+    propertyInputDOM.insertBefore(button, propertyInputDOM.firstChild);
+}
+
 class PropertyInput {
   // options: property OR getValue/setValue+listenTo, plus subclass specific options
   constructor(module, widget, labelText, options={}) {
@@ -216,6 +240,8 @@ class PropertyInput {
       label.textContent = this.labelText;
       this.dom.appendChild(label);
     }
+    if(this.options.hint)
+      attachPropertyHint(this.dom, this.options.hint);
     this.renderControl(this.dom);
     for(const property of this.listenProperties())
       this.module.addPropertyListener(this.widget, property, _=>this.update(this.getValue()));
@@ -266,6 +292,7 @@ class NumberInput extends PropertyInput {
     this.input.step = this.options.step !== undefined ? this.options.step : 'any';
     if(this.options.min !== undefined) this.input.min = this.options.min;
     if(this.options.max !== undefined) this.input.max = this.options.max;
+    if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
     this.input.oninput = _=>this.applyInput(this.input.value);
     target.appendChild(this.input);
 
@@ -311,35 +338,61 @@ class NumberInput extends PropertyInput {
   }
 }
 
+// Rendered as an on/off switch, reusing the global .switchbox styling.
 class CheckboxInput extends PropertyInput {
   cssClass() {
-    return 'checkboxInput';
-  }
-
-  render(target) {
-    const dom = super.render(target);
-    // move the checkbox in front of the label
-    if(this.labelText)
-      dom.insertBefore(this.input, dom.firstChild);
-    const label = $('label', dom);
-    if(label) {
-      label.htmlFor = this.input.id;
-      label.onclick = null;
-    }
-    return dom;
+    return 'checkboxInput switchInput';
   }
 
   renderControl(target) {
     this.input = document.createElement('input');
     this.input.type = 'checkbox';
+    this.input.className = 'switchbox';
     this.input.id = `propertyCheckbox_${rand().toString(36).substring(3, 12)}`;
     this.input.onchange = _=>this.setValue(this.options.invert ? !this.input.checked : this.input.checked);
     target.appendChild(this.input);
+
+    const box = document.createElement('label');
+    box.className = 'switchbox';
+    box.htmlFor = this.input.id;
+    target.appendChild(box);
   }
 
   update(value) {
     const boolValue = value === null ? !!this.options.default : !!value;
     this.input.checked = this.options.invert ? !boolValue : boolValue;
+  }
+}
+
+// A row of buttons where exactly one is active. Unlike SelectInput it can map
+// to more than one property (used for the movable states).
+class MultiButtonInput extends PropertyInput {
+  // options.segments: [{ label, tooltip }], options.getIndex(widget), options.onSelect(index)
+  cssClass() {
+    return 'multiButtonInput';
+  }
+
+  listenProperties() {
+    return this.options.listenTo || [ this.options.property ];
+  }
+
+  renderControl(target) {
+    this.buttons = [];
+    const bar = div(target, 'segmented-control');
+    this.options.segments.forEach((segment, index)=>{
+      const button = document.createElement('button');
+      button.textContent = segment.label;
+      if(segment.tooltip)
+        button.title = segment.tooltip;
+      button.onclick = _=>this.options.onSelect(index);
+      bar.appendChild(button);
+      this.buttons.push(button);
+    });
+  }
+
+  update() {
+    const index = this.options.getIndex(this.widget);
+    this.buttons.forEach((button, i)=>button.classList.toggle('active', i == index));
   }
 }
 
@@ -446,10 +499,16 @@ class PickerInput extends PropertyInput {
       this.refreshPicker(this.getValue());
   }
 
+  // whether an unset value should be previewed dimmed. Colors override this to
+  // false so a default color looks identical to a manually set one.
+  dimDefault() {
+    return true;
+  }
+
   updatePreview() {
     this.previewButton.innerHTML = '';
     this.renderChip(this.previewButton, this.previewValue());
-    this.previewButton.classList.toggle('usingDefault', !propertyInputValueSet(this.getValue()));
+    this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(this.getValue()));
   }
 
   updatePicker(value) {
@@ -481,7 +540,7 @@ class PickerInput extends PropertyInput {
     if(isSet)
       div(target, 'propertyPickerValueText', html(String(value)));
     else if(propertyInputValueSet(this.getEffectiveValue()))
-      div(target, 'propertyPickerValueText usingDefault', `default: ${html(String(this.getEffectiveValue()))}`);
+      div(target, `propertyPickerValueText${this.dimDefault() ? ' usingDefault' : ''}`, this.dimDefault() ? `default: ${html(String(this.getEffectiveValue()))}` : html(String(this.getEffectiveValue())));
     else
       div(target, 'propertyPickerValueText', '<i>not set</i>');
     if(this.options.clearable !== false && isSet) {
@@ -522,17 +581,48 @@ class ColorInput extends PickerInput {
     return 'pickerInput colorInput';
   }
 
+  dimDefault() {
+    return false;
+  }
+
   renderChip(target, value) {
     return renderColorChip(propertyInputValueSet(value) ? value : 'transparent', target);
   }
 
   renderSummaryControls(target, value) {
+    const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
+    const hexValue = toHex(propertyInputValueSet(shown) ? shown : (this.options.default || '#000000'));
+
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
-    const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
-    colorPicker.value = toHex(propertyInputValueSet(shown) ? shown : (this.options.default || '#000000'));
-    colorPicker.oninput = _=>this.setValue(colorPicker.value);
+    colorPicker.value = hexValue;
+    colorPicker.oninput = _=>{
+      this.setValue(colorPicker.value);
+      if(hexInput && document.activeElement !== hexInput)
+        hexInput.value = colorPicker.value;
+    };
     target.appendChild(colorPicker);
+
+    // let the value be typed in as a hex string too
+    const hexInput = document.createElement('input');
+    hexInput.type = 'text';
+    hexInput.className = 'colorHexInput';
+    hexInput.placeholder = '#rrggbb';
+    hexInput.value = propertyInputValueSet(value) ? value : '';
+    hexInput.oninput = _=>{
+      const v = hexInput.value.trim();
+      if(v.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/)) {
+        hexInput.classList.remove('inputError');
+        this.setValue(v);
+        colorPicker.value = toHex(v);
+      } else if(v === '') {
+        hexInput.classList.remove('inputError');
+        this.setValue(null);
+      } else {
+        hexInput.classList.add('inputError');
+      }
+    };
+    target.appendChild(hexInput);
   }
 
   renderPickerContent(target, value) {
@@ -717,6 +807,10 @@ class CssToggleButton extends PropertyInput {
   }
 
   update(value) {
-    this.button.classList.toggle('selected', value == this.options.onValue);
+    const active = value == this.options.onValue;
+    this.button.classList.toggle('selected', active);
+    // show the applying default (e.g. left-aligned text) as a dimmed-active
+    // state when nothing is explicitly set
+    this.button.classList.toggle('defaultActive', !active && value == null && this.options.defaultActive);
   }
 }
