@@ -286,6 +286,15 @@ class PropertiesModule extends SidebarModule {
   addDeck() {
     this.addHeader('Add deck');
 
+    const browseButton = document.createElement('button');
+    browseButton.innerText = 'Browse public library decks';
+    browseButton.setAttribute('icon', 'style');
+    browseButton.className = 'libraryDecksBrowseButton';
+    browseButton.onclick = _=>openLibraryDecksOverlay();
+    this.moduleDOM.append(browseButton);
+
+    this.addSubHeader('Or create a new deck');
+
     function createRadioButtons(target, name, options, callback) {
       let html = '';
       Object.keys(options).forEach((key, index) => {

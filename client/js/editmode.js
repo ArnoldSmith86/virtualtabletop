@@ -1270,23 +1270,43 @@ function renderLibraryDecksList() {
     }
   }, { root: list, rootMargin: '300px' });
 
-  let gameContainer = null;
-  let lastGame = null;
+  // group the decks by game so game groups can be reordered as a whole, like the
+  // public library game shelf sorts games (decks keep their in-game order)
+  const groups = [];
+  const groupByGame = {};
   libraryDecksIndex.forEach(function(entry, index) {
     if(filter && `${entry.gameName} ${entry.deck}`.toLowerCase().indexOf(filter) == -1)
       return;
-    if(`${entry.library}/${entry.game}` != lastGame) {
-      lastGame = `${entry.library}/${entry.game}`;
-      gameContainer = div(list, 'libraryDeckGame', `<h2>${html(entry.gameName)}</h2>`);
+    const key = `${entry.library}/${entry.game}`;
+    if(!groupByGame[key]) {
+      groupByGame[key] = { gameName: entry.gameName, stars: entry.stars || 0, timePlayed: entry.timePlayed || 0, entries: [] };
+      groups.push(groupByGame[key]);
     }
-    const el = div(gameContainer, 'libraryDeckEntry', `
-      <div class="libraryDeckPreview"><span>Loading preview...</span></div>
-      <div class="libraryDeckCaption"><b>${html(entry.deck)}</b><span>${entry.cardCount} card${entry.cardCount == 1 ? '' : 's'} - ${entry.cardTypeCount} card type${entry.cardTypeCount == 1 ? '' : 's'}</span></div>
-    `);
-    el.dataset.index = index;
-    el.addEventListener('click', _=>addLibraryDeckToGame(entry));
-    libraryDecksObserver.observe(el);
+    groupByGame[key].entries.push({ entry, index });
   });
+
+  const sortMode = $('#libraryDecksSort').value;
+  groups.sort(function(a, b) {
+    if(sortMode == 'stars' && b.stars != a.stars)
+      return b.stars - a.stars;
+    if(sortMode == 'popularity' && b.timePlayed != a.timePlayed)
+      return b.timePlayed - a.timePlayed;
+    return a.gameName.localeCompare(b.gameName);
+  });
+
+  for(const group of groups) {
+    const badge = group.stars ? `<span class="libraryDeckGameStat">★ ${group.stars}</span>` : '';
+    const gameContainer = div(list, 'libraryDeckGame', `<h2>${html(group.gameName)}${badge}</h2>`);
+    for(const { entry, index } of group.entries) {
+      const el = div(gameContainer, 'libraryDeckEntry', `
+        <div class="libraryDeckPreview"><span>Loading preview...</span></div>
+        <div class="libraryDeckCaption"><b>${html(entry.deck)}</b><span>${entry.cardCount} card${entry.cardCount == 1 ? '' : 's'} - ${entry.cardTypeCount} card type${entry.cardTypeCount == 1 ? '' : 's'}</span></div>
+      `);
+      el.dataset.index = index;
+      el.addEventListener('click', _=>addLibraryDeckToGame(entry));
+      libraryDecksObserver.observe(el);
+    }
+  }
 
   if(!list.children.length)
     list.textContent = 'No decks match your filter.';
@@ -1650,6 +1670,7 @@ export function initializeEditMode(currentMetaData) {
 
   on('#browseLibraryDecks', 'click', openLibraryDecksOverlay);
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
+  on('#libraryDecksSort', 'change', renderLibraryDecksList);
 
   on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({

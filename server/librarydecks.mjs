@@ -3,6 +3,7 @@ import path from 'path';
 
 import Config from './config.mjs';
 import Logging from './logging.mjs';
+import Statistics from './statistics.mjs';
 
 // Lazily built catalog of all decks in the public library. Nothing here runs at
 // server startup; the cache is generated on the first request to /api/library/decks
@@ -67,6 +68,8 @@ async function buildCache() {
             library,
             game,
             gameName: info.name || game,
+            // matches the id stars/timePlayed are keyed by (see Statistics)
+            publicLibrary: `${library}/${game}`,
             file,
             deck: widgetID,
             cardCount,
@@ -91,7 +94,19 @@ export default {
         cachePromise = null;
         throw e;
       });
-    return (await cachePromise).index;
+    const index = (await cachePromise).index;
+
+    // stars and play time change while the cached catalog stays valid, so enrich
+    // fresh copies on every request instead of baking them into the cache
+    const byPublicLibrary = {};
+    for(const entry of index)
+      byPublicLibrary[entry.publicLibrary] = { publicLibrary: entry.publicLibrary };
+    Statistics.updateDataInsideStates(byPublicLibrary);
+
+    return index.map(entry => Object.assign({}, entry, {
+      stars: byPublicLibrary[entry.publicLibrary].stars || 0,
+      timePlayed: byPublicLibrary[entry.publicLibrary].timePlayed || 0
+    }));
   },
 
   async getDeck(library, game, file, deck) {
