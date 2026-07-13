@@ -455,16 +455,29 @@ class PropertiesModule extends SidebarModule {
   addPropertyListener(widget, property, updater) {
     updater(widget);
 
-    if(!this.inputUpdaters[widget.id])
-      this.inputUpdaters[widget.id] = {};
-    if(!this.inputUpdaters[widget.id][property])
-      this.inputUpdaters[widget.id][property] = [];
-
-    this.inputUpdaters[widget.id][property].push(v=>updater(widget));
+    // for a multi-selection, re-run the updater when any of the selected
+    // widgets changes this property
+    const ids = widget.isMulti ? widget.widgets.map(w=>w.id) : [ widget.id ];
+    for(const id of ids) {
+      if(!this.inputUpdaters[id])
+        this.inputUpdaters[id] = {};
+      if(!this.inputUpdaters[id][property])
+        this.inputUpdaters[id][property] = [];
+      this.inputUpdaters[id][property].push(v=>updater(widget));
+    }
   }
 
   inputValueUpdated(widget, property, value) {
-    widget.set(property, typeof value === 'undefined' ? null : value);
+    const newValue = typeof value === 'undefined' ? null : value;
+    if(widget.isMulti) {
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${widget.widgets.length} widgets in editor`);
+      for(const w of widget.widgets)
+        w.set(property, newValue);
+      batchEnd();
+      return;
+    }
+    widget.set(property, newValue);
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -497,9 +510,13 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
-    for(const widget of newSelection) {
+    for(const widget of newSelection)
       this.inputUpdaters[widget.id] = {};
 
+    if(newSelection.length > 1) {
+      this.renderForMulti(newSelection);
+    } else if(newSelection.length == 1) {
+      const widget = newSelection[0];
       switch(widget.get('type')) {
         case 'button':     this.renderForButton(widget);     break;
         case 'canvas':     this.renderForCanvas(widget);     break;
@@ -518,10 +535,76 @@ class PropertiesModule extends SidebarModule {
           this.renderForBasic(widget);
           break;
       }
-    }
-
-    if(!newSelection.length)
+    } else {
       this.addDeck();
+    }
+  }
+
+  // Merged editor for a multi-widget selection.
+  renderForMulti(selection) {
+    const facade = new MultiWidget(selection);
+    const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
+
+    this.addHeader(`${selection.length} widgets selected`);
+    this.renderBasicSection(facade);
+    this.renderArrangeButtons();
+
+    if(types.length == 1) {
+      this.renderContentSection(facade);
+      this.renderMultiAppearanceSection(facade, types[0]);
+      this.renderBehaviorSection(facade);
+    } else {
+      div(this.moduleDOM, '', `
+        <p>The selected widgets have different types. Only the common properties above can be edited together; select a single widget to edit its type-specific properties.</p>
+      `);
+    }
+  }
+
+  // Appearance for a multi-selection: same colors/hover/style inputs, but no
+  // pipette / apply-to-all (those act on a single source widget).
+  renderMultiAppearanceSection(facade, type) {
+    const sections = editorTypeSections[type] || {};
+    const colors = sections.colors || [];
+    const hover = sections.hover || [];
+    const misc = sections.appearance || [];
+    if(!colors.length && !hover.length && !misc.length)
+      return;
+    this.addSubHeader('Appearance');
+    if(colors.length) {
+      if(hover.length || misc.length) this.addAppearanceSubTitle('Colors');
+      this.renderInputs(facade, colors);
+    }
+    if(hover.length) {
+      this.addAppearanceSubTitle('Hover');
+      this.renderInputs(facade, hover);
+    }
+    if(misc.length) {
+      if(colors.length || hover.length) this.addAppearanceSubTitle('Style');
+      this.renderInputs(facade, misc);
+    }
+  }
+
+  // Align / distribute / layer-order buttons, forwarding to the existing
+  // toolbar button instances so the arranging logic is not duplicated.
+  renderArrangeButtons() {
+    const icons = [
+      'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
+      'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom',
+      'horizontal_distribute', 'vertical_distribute', 'auto_awesome_motion'
+    ];
+    const available = (typeof toolbarButtons !== 'undefined' && Array.isArray(toolbarButtons)) ? toolbarButtons : [];
+    const bar = div(this.moduleDOM, 'arrangeButtons');
+    for(const icon of icons) {
+      const toolbarButton = available.find(b=>b.icon == icon);
+      if(!toolbarButton)
+        continue;
+      const button = document.createElement('button');
+      button.setAttribute('icon', icon);
+      button.title = toolbarButton.tooltip || '';
+      button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+      button.onclick = _=>toolbarButton.onClick();
+      bar.appendChild(button);
+    }
   }
 
   addDeck() {
@@ -1628,9 +1711,13 @@ class PropertiesModule extends SidebarModule {
         { label: 'not movable', tooltip: 'Neither players nor the editor can drag this widget (you can still change its position above).' }
       ],
       getIndex: w=>{
-        if(w.get('movable') !== false)
+        const movable = w.get('movable');
+        const movableInEdit = w.get('movableInEdit');
+        if(movable === MULTI_DIFFERENT || (movable === false && movableInEdit === MULTI_DIFFERENT))
+          return -1;
+        if(movable !== false)
           return 0;
-        return w.get('movableInEdit') !== false ? 1 : 2;
+        return movableInEdit !== false ? 1 : 2;
       },
       onSelect: index=>{
         batchStart();

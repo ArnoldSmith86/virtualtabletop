@@ -489,3 +489,38 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   left: auto !important;
   top: auto !important;
 }
+
+/* multi-selection: controls whose value differs across the selection */
+.editorModule .propertyInput.multiDiffers > label {
+  color: var(--textDimColor1, #999);
+}
+.editorModule .propertyInput.multiDiffers input,
+.editorModule .propertyInput.multiDiffers select,
+.editorModule .propertyInput.multiDiffers .segmented-control,
+.editorModule .propertyInput.multiDiffers .propertyPreviewButton {
+  opacity: 0.6;
+}
+.editorModule .propertyInput.multiDiffers input:focus {
+  opacity: 1;
+}
+.editorModule .propertyMultiChip::after {
+  content: '?';
+  font-weight: bold;
+  color: #999;
+}
+
+/* arrange buttons duplicated from the main toolbar */
+.editorModule .arrangeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 6px 0;
+}
+.editorModule .arrangeButtons button {
+  min-width: 36px;
+  justify-content: center;
+  padding: 0 6px;
+}
+.editorModule .arrangeButtons button::before {
+  margin: 0;
+}

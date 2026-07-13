@@ -206,6 +206,49 @@ function attachPropertyHint(propertyInputDOM, hintText) {
     propertyInputDOM.insertBefore(button, propertyInputDOM.firstChild);
 }
 
+// Sentinel returned by a MultiWidget's get()/state when the selected widgets
+// disagree on a property. Inputs show a muted "multiple values" state but can
+// still set every widget to one common value.
+const MULTI_DIFFERENT = { multiDiffers: true };
+
+function propertyInputIsMulti(value) {
+  return value === MULTI_DIFFERENT;
+}
+
+// Facade over several widgets so the same PropertyInput classes can edit a
+// whole selection at once.
+class MultiWidget {
+  constructor(widgets) {
+    this.widgets = widgets;
+    this.isMulti = true;
+    this.id = widgets.map(w=>w.id).join(',');
+  }
+
+  get(property) {
+    const values = this.widgets.map(w=>w.get(property));
+    return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+  }
+
+  set(property, value) {
+    for(const widget of this.widgets)
+      widget.set(property, value);
+  }
+
+  get state() {
+    // only properties present on every selected widget, with the common value
+    // or the MULTI_DIFFERENT sentinel
+    let keys = Object.keys(this.widgets[0].state);
+    for(const widget of this.widgets.slice(1))
+      keys = keys.filter(key=>key in widget.state);
+    const merged = {};
+    for(const key of keys) {
+      const values = this.widgets.map(w=>w.state[key]);
+      merged[key] = values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+    }
+    return merged;
+  }
+}
+
 class PropertyInput {
   // options: property OR getValue/setValue+listenTo, plus subclass specific options
   constructor(module, widget, labelText, options={}) {
@@ -276,8 +319,11 @@ class TextInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '');
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : value;
+      this.input.value = (value === null || multi) ? '' : value;
   }
 }
 
@@ -330,11 +376,14 @@ class NumberInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '—' : (this.options.placeholder !== undefined ? this.options.placeholder : '');
     const numeric = typeof value == 'number' ? value : +value || 0;
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : numeric;
+      this.input.value = (value === null || multi) ? '' : numeric;
     if(this.slider && document.activeElement !== this.slider)
-      this.slider.value = numeric;
+      this.slider.value = multi ? this.slider.min : numeric;
   }
 }
 
@@ -359,8 +408,13 @@ class CheckboxInput extends PropertyInput {
   }
 
   update(value) {
-    const boolValue = value === null ? !!this.options.default : !!value;
-    this.input.checked = this.options.invert ? !boolValue : boolValue;
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.indeterminate = multi;
+    if(!multi) {
+      const boolValue = value === null ? !!this.options.default : !!value;
+      this.input.checked = this.options.invert ? !boolValue : boolValue;
+    }
   }
 }
 
@@ -392,6 +446,7 @@ class MultiButtonInput extends PropertyInput {
 
   update() {
     const index = this.options.getIndex(this.widget);
+    this.dom.classList.toggle('multiDiffers', index < 0);
     this.buttons.forEach((button, i)=>button.classList.toggle('active', i == index));
   }
 }
@@ -410,11 +465,27 @@ class SelectInput extends PropertyInput {
       option.textContent = choice.text;
       this.select.appendChild(option);
     }
-    this.select.onchange = _=>this.setValue(JSON.parse(this.select.value));
+    this.select.onchange = _=>{
+      if(this.select.value === ' multi')
+        return;
+      this.setValue(JSON.parse(this.select.value));
+    };
     target.appendChild(this.select);
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    if(multi) {
+      if(!this.customOption) {
+        this.customOption = document.createElement('option');
+        this.select.appendChild(this.customOption);
+      }
+      this.customOption.value = ' multi';
+      this.customOption.textContent = '— multiple —';
+      this.select.value = ' multi';
+      return;
+    }
     const jsonValue = JSON.stringify(value);
     if(this.options.choices.some(choice=>JSON.stringify(choice.value) == jsonValue)) {
       if(this.customOption) {
@@ -490,7 +561,13 @@ class PickerInput extends PropertyInput {
 
   previewValue() {
     const raw = this.getValue();
+    if(propertyInputIsMulti(raw))
+      return null;
     return propertyInputValueSet(raw) ? raw : this.getEffectiveValue();
+  }
+
+  isMultiValue() {
+    return propertyInputIsMulti(this.getValue());
   }
 
   update(value) {
@@ -507,8 +584,13 @@ class PickerInput extends PropertyInput {
 
   updatePreview() {
     this.previewButton.innerHTML = '';
-    this.renderChip(this.previewButton, this.previewValue());
-    this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(this.getValue()));
+    const multi = this.isMultiValue();
+    this.dom.classList.toggle('multiDiffers', multi);
+    if(multi)
+      div(this.previewButton, 'propertyValueChip propertyMultiChip');
+    else
+      this.renderChip(this.previewButton, this.previewValue());
+    this.previewButton.classList.toggle('usingDefault', !multi && this.dimDefault() && !propertyInputValueSet(this.getValue()));
   }
 
   updatePicker(value) {
@@ -534,6 +616,12 @@ class PickerInput extends PropertyInput {
   }
 
   renderSummary(target, value) {
+    if(propertyInputIsMulti(value)) {
+      div(target, 'propertyValueChip propertyMultiChip');
+      this.renderSummaryControls(target, null);
+      div(target, 'propertyPickerValueText', '<i>multiple values — pick one to apply to all</i>');
+      return;
+    }
     const isSet = propertyInputValueSet(value);
     this.renderChip(target, this.previewValue());
     this.renderSummaryControls(target, value);
