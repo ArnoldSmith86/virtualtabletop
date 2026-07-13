@@ -9,6 +9,9 @@ import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
+import FileLoader from './server/fileloader.mjs';
+import FileUpdater from './server/fileupdater.mjs';
+import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
@@ -331,6 +334,71 @@ MinifyHTML().then(function(result) {
     }
     fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
+  });
+
+  router.post('/api/decksFromLink', bodyParser.json({ limit: '1mb' }), function(req, res, next) {
+    (async function() {
+      if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
+        throw new Logging.UserError(400, 'Please provide a link.');
+      // Keep this endpoint TTS-specific: only ever fetch resolved Steam Workshop
+      // items, not arbitrary URLs (defense-in-depth against SSRF).
+      if(!TTS.isTTSlink(req.body.link))
+        throw new Logging.UserError(400, 'Please enter a Tabletop Simulator Steam Workshop link (…/filedetails/?id=…).');
+
+      let states;
+      try {
+        states = await FileLoader.readStatesFromLink(req.body.link);
+      } catch(e) {
+        if(e instanceof Logging.UserError)
+          throw e;
+        Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+      }
+      if(!states || typeof states != 'object')
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+
+      const decks = [];
+      for(const [ stateID, variants ] of Object.entries(states)) {
+        const variantList = Object.values(variants || {});
+        for(const [ variantIndex, rawVariant ] of variantList.entries()) {
+          if(!rawVariant || typeof rawVariant != 'object' || !rawVariant._meta)
+            continue;
+          let variant;
+          try {
+            variant = FileUpdater(rawVariant);
+          } catch(e) {
+            continue;
+          }
+          const source = variantList.length > 1 ? `${stateID} #${variantIndex + 1}` : stateID;
+          const widgets = Object.entries(variant).filter(([ id, w ])=>id != '_meta' && w && typeof w == 'object');
+
+          // single pass over widgets: collect decks and group card counts by deck
+          const deckEntries = [];
+          const cardCountsByDeck = {};
+          for(const [ id, w ] of widgets) {
+            if(w.type == 'deck') {
+              deckEntries.push([ id, w ]);
+            } else if(w.type == 'card' && w.deck != null && w.cardType != null) {
+              (cardCountsByDeck[w.deck] || (cardCountsByDeck[w.deck] = {}));
+              cardCountsByDeck[w.deck][w.cardType] = (cardCountsByDeck[w.deck][w.cardType] || 0) + 1;
+            }
+          }
+          for(const [ deckID, deck ] of deckEntries) {
+            const rawCounts = cardCountsByDeck[deckID] || {};
+            // only count cardTypes registered on the deck: addDeckWithCards recreates
+            // cards from deck.cardTypes, so the badge stays equal to what gets imported
+            const cardTypes = (deck.cardTypes && typeof deck.cardTypes == 'object') ? deck.cardTypes : {};
+            const cardCounts = {};
+            for(const cardType in rawCounts)
+              if(Object.prototype.hasOwnProperty.call(cardTypes, cardType))
+                cardCounts[cardType] = rawCounts[cardType];
+            decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts, source });
+          }
+        }
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(decks));
+    })().catch(next);
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
