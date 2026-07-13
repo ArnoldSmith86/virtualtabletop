@@ -342,10 +342,9 @@ class Holder extends ImageWidget {
 
     const ordered = others.slice();
     ordered.splice(index, 0, child);
-    let z = 1;
-    for(const w of ordered)
-      await w.set('z', z++);
-    await this.updateAfterShuffle();
+    // position this lane's cards (including the drop shadow, if child is one)
+    // directly, since updateAfterShuffle deliberately skips shadows
+    await this.layoutGridCells(ordered);
   }
 
   // Break a pile dropped interactively into a grid and insert its cards at the
@@ -366,10 +365,20 @@ class Holder extends ImageWidget {
     const index = Math.max(0, Math.min(others.length, row * m.cols + column));
 
     const ordered = others.slice(0, index).concat(incoming, others.slice(index));
+    await this.layoutGridCells(ordered);
+  }
+
+  // Position an ordered list of cards into grid cells and assign matching z.
+  async layoutGridCells(cards) {
+    if(!cards.length)
+      return;
+    const m = this.gridMetrics(cards.length);
     let z = 1;
-    for(const w of ordered)
-      await w.set('z', z++);
-    await this.updateAfterShuffle();
+    for(let i=0; i<cards.length; ++i) {
+      const column = i % m.cols;
+      const row = Math.floor(i / m.cols);
+      await cards[i].setPosition(m.marginX + column * m.stepX, m.marginY + row * m.stepY, z++);
+    }
   }
 
   // Lay out the holder's direct children (piles act as spread groups, loose cards
@@ -491,6 +500,12 @@ class Holder extends ImageWidget {
 
   async placeInSpreadGroups(child, oldParentID) {
     await super.onChildAddAlign(child, oldParentID);
+
+    // a card returning to the holder because its own group dissolved (down to its
+    // last card) must stay a single group of its own, not be re-merged into a
+    // neighbouring group; just re-lay this player's groups
+    if(oldParentID && widgets.has(oldParentID) && widgets.get(oldParentID).isBeingRemoved)
+      return await this.rearrangeGroups(this.childOwner(child));
 
     // during a MOVE batch, funnel every moved card into the one target group
     if(this._spreadMove) {
