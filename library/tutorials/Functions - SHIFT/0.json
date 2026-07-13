@@ -1,6 +1,9 @@
 {
   "_meta": {
     "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Functions - SHIFT",
       "image": "/assets/-563421985_5175",
@@ -10,7 +13,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1783919062404,
+      "lastUpdate": 1783919296236,
       "skill": "",
       "description": "",
       "variantImage": "",
@@ -25,9 +28,6 @@
       "helpText": "",
       "usesAIImagery": false,
       "showName": "only similar"
-    },
-    "gameSettings": {
-      "legacyModes": {}
     }
   },
   "title": {
@@ -319,10 +319,10 @@
       {
         "func": "SHIFT",
         "order": [
-          "token1",
-          "token2",
-          "token3",
-          "token4"
+          "seat1",
+          "seat2",
+          "seat3",
+          "seat4"
         ],
         "reverse": "${PROPERTY text OF button3}",
         "steps": "${PROPERTY text OF button2}",
@@ -541,16 +541,16 @@
     "type": "card",
     "cardType": "C 01",
     "id": "fdtm",
-    "z": 1717,
+    "z": 2452,
     "activeFace": 1,
-    "parent": "kd14"
+    "parent": "qfv7"
   },
   "ik8p": {
     "deck": "deck",
     "type": "card",
     "cardType": "C 02",
     "id": "ik8p",
-    "z": 1706,
+    "z": 2441,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -561,7 +561,7 @@
     "type": "card",
     "cardType": "C 03",
     "id": "ffzh",
-    "z": 1708,
+    "z": 2443,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -572,7 +572,7 @@
     "type": "card",
     "cardType": "C 04",
     "id": "0m81",
-    "z": 1710,
+    "z": 2445,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -583,7 +583,7 @@
     "type": "card",
     "cardType": "C 05",
     "id": "pyww",
-    "z": 1712,
+    "z": 2447,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -594,7 +594,7 @@
     "type": "card",
     "cardType": "C 06",
     "id": "rg39",
-    "z": 1714,
+    "z": 2449,
     "activeFace": 1,
     "x": 4,
     "y": 4,
@@ -605,7 +605,7 @@
     "type": "card",
     "cardType": "C 07",
     "id": "7bfl",
-    "z": 1716,
+    "z": 2451,
     "activeFace": 1,
     "parent": "holder7",
     "x": 4,
@@ -1331,56 +1331,27 @@
     "borderColor": "#ffffff",
     "borderWidth": 1,
     "secondaryColor": "#000000",
-    "z": 133,
+    "z": 1,
     "id": "a7d3",
     "marble": true,
     "layer": 2,
-    "parent": "move7"
+    "parent": "move0"
   },
   "seat1": {
     "type": "seat",
     "id": "seat1",
     "x": 68,
-    "y": 804
-  },
-  "seat2": {
-    "inheritFrom": {
-      "seat1": "*"
-    },
-    "type": "seat",
-    "id": "seat2",
-    "index": 2,
-    "x": 362,
-    "y": 804
-  },
-  "seat3": {
-    "inheritFrom": {
-      "seat1": "*"
-    },
-    "type": "seat",
-    "id": "seat3",
-    "index": 3,
-    "x": 657,
-    "y": 804
-  },
-  "seat4": {
-    "inheritFrom": {
-      "seat1": "*"
-    },
-    "type": "seat",
-    "id": "seat4",
-    "index": 4,
-    "x": 952,
-    "y": 804
+    "y": 804,
+    "hand": "token1"
   },
   "fdtm1": {
     "deck": "deck",
     "type": "card",
     "cardType": "C 01",
     "id": "fdtm1",
-    "z": 1719,
+    "z": 2454,
     "activeFace": 1,
-    "parent": "kd14"
+    "parent": "qfv7"
   },
   "token1": {
     "type": "holder",
@@ -1409,7 +1380,7 @@
     },
     "borderColor": "black",
     "borderWidth": 1,
-    "z": 80390,
+    "z": 80415,
     "id": "sy6j",
     "token": true,
     "parent": "token1"
@@ -1450,13 +1421,37 @@
     "x": 1020,
     "y": 877
   },
-  "kd14": {
+  "seat2": {
+    "type": "seat",
+    "id": "seat2",
+    "x": 366,
+    "y": 804,
+    "hand": "token2",
+    "index": 2
+  },
+  "seat3": {
+    "type": "seat",
+    "id": "seat3",
+    "x": 665,
+    "y": 804,
+    "hand": "token3",
+    "index": 3
+  },
+  "seat4": {
+    "type": "seat",
+    "id": "seat4",
+    "x": 963,
+    "y": 804,
+    "hand": "token4",
+    "index": 4
+  },
+  "qfv7": {
     "type": "pile",
     "parent": "holder1",
     "x": 4,
     "y": 4,
     "width": 103,
     "height": 160,
-    "id": "kd14"
+    "id": "qfv7"
   }
 }
