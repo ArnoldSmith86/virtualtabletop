@@ -353,14 +353,27 @@ MinifyHTML().then(function(result) {
           }
           const source = variantList.length > 1 ? `${stateID} #${variantIndex + 1}` : stateID;
           const widgets = Object.entries(variant).filter(([ id, w ])=>id != '_meta' && w && typeof w == 'object');
-          for(const [ deckID, deck ] of widgets) {
-            if(deck.type != 'deck')
-              continue;
+
+          // single pass over widgets: collect decks and group card counts by deck
+          const deckEntries = [];
+          const cardCountsByDeck = {};
+          for(const [ id, w ] of widgets) {
+            if(w.type == 'deck') {
+              deckEntries.push([ id, w ]);
+            } else if(w.type == 'card' && w.deck != null && w.cardType != null) {
+              (cardCountsByDeck[w.deck] || (cardCountsByDeck[w.deck] = {}));
+              cardCountsByDeck[w.deck][w.cardType] = (cardCountsByDeck[w.deck][w.cardType] || 0) + 1;
+            }
+          }
+          for(const [ deckID, deck ] of deckEntries) {
+            const rawCounts = cardCountsByDeck[deckID] || {};
+            // only count cardTypes registered on the deck: addDeckWithCards recreates
+            // cards from deck.cardTypes, so the badge stays equal to what gets imported
+            const cardTypes = (deck.cardTypes && typeof deck.cardTypes == 'object') ? deck.cardTypes : {};
             const cardCounts = {};
-            for(const [ cardID, card ] of widgets)
-              // cards without a cardType can't be recreated from deck.cardTypes, so skip them
-              if(card.type == 'card' && card.deck == deckID && card.cardType != null)
-                cardCounts[card.cardType] = (cardCounts[card.cardType] || 0) + 1;
+            for(const cardType in rawCounts)
+              if(Object.prototype.hasOwnProperty.call(cardTypes, cardType))
+                cardCounts[cardType] = rawCounts[cardType];
             decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts, source });
           }
         }
