@@ -29,13 +29,13 @@ test('Create game using edit mode', async t => {
     .click('#w_deck1B')
     .click('#w_deck1P > .handle')
     .click('#pileOverlay .modal > div:nth-of-type(6) > button')
-    .click('#w_pile1 > .handle')
+    .click('#w_xxcf > .handle')
     .click('#pileOverlay .modal > div:nth-of-type(3) > button')
-    .click('#w_pile1 > .handle')
+    .click('#w_xxcf > .handle')
     .click('#pileOverlay .modal > div:nth-of-type(6) > button')
-    .click('#w_pile2 > .handle')
+    .click('#w_4yaq > .handle')
     .click('#pileOverlay .modal > div:nth-of-type(4) > button')
-    .dragToElement('#w_pile2 > .handle', '#w_hand')
+    .dragToElement('#w_4yaq > .handle', '#w_hand')
     .pressKey('esc')
     .pressKey('esc')
     .click('#editButton')
@@ -87,5 +87,5 @@ test('Create game using edit mode', async t => {
     .click('#buttonInputGo')
     .rightClick('#w_dice2')
     .click('#w_dice2');
-  await compareState(t, 'b05cbe689360695d7d46b928be12b675');
+  await compareState(t, '1bba2e79e3a978aca41ec9c5ee8fb335');
 });

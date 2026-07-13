@@ -127,9 +127,13 @@ export function addWidget(widget, instance) {
   delete deferredChildren[widget.id];
 }
 
-async function addWidgetLocal(widget) {
+// useTypeBasedID is false on runtime engine paths (CLONE, automatic pile
+// creation) so live gameplay keeps random IDs - type-based IDs are an
+// authoring/edit-mode convenience and give no benefit during play, while
+// sequential IDs would raise the collision risk between concurrent clients.
+async function addWidgetLocal(widget, useTypeBasedID = true) {
   if (!widget.id)
-    widget.id = generateUniqueWidgetID(widget.type);
+    widget.id = generateUniqueWidgetID(useTypeBasedID ? widget.type : undefined);
   else
     widget.id = String(widget.id);
 
