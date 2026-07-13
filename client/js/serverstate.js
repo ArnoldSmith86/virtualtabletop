@@ -1,6 +1,7 @@
 import { toServer } from './connection.js';
 import { $, $a, onLoad, unescapeID, mapAssetURLs } from './domhelpers.js';
 import { getElementTransformRelativeTo } from './geometry.js';
+import { dropTargets } from './main.js';
 
 let roomID = normalizeRoomID(self.location.pathname.replace(/.*\//, ''));
 let isLoading = true;
@@ -328,16 +329,16 @@ function getDeltaID() {
   return deltaID;
 }
 
-function receiveDelta(delta) {
+export function receiveDelta(delta) {
   addDeltaEntryToUndoProtocol(delta);
 
   // the order of widget changes is not necessarily correct and in order to avoid cyclic children, this first moves affected widgets to the top level
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined)
+    if(delta.s[widgetID] && delta.s[widgetID].parent !== undefined && delta.s[widgetID].id === undefined && widgets.has(widgetID))
       widgets.get(widgetID).setLimbo(true);
 
   for(const widgetID in delta.s)
-    if(delta.s[widgetID] !== null && !widgets.has(widgetID))
+    if(delta.s[widgetID] !== null && !widgets.has(widgetID) && delta.s[widgetID].id) // entries without id are property updates, not creations (same distinction as in addDeltaEntryToUndoProtocol) - ignore them for widgets that no longer exist
       addWidget(delta.s[widgetID]);
 
   for(const widgetID in delta.s) {
@@ -388,7 +389,7 @@ function addDeltaEntryToUndoProtocol(delta) {
         undoDelta[widgetID] = JSON.parse(JSON.stringify(widgets.get(widgetID).unalteredState));
     } else if(delta.s[widgetID].id) {
       undoDelta[widgetID] = null;
-    } else {
+    } else if(widgets.has(widgetID)) {
       undoDelta[widgetID] = {};
       for(const property in delta.s[widgetID]) {
         undoDelta[widgetID][property] = widgets.get(widgetID).unalteredState[property];
@@ -607,8 +608,12 @@ export function sendPropertyUpdate(widgetID, property, value) {
   if(property === null || typeof property === 'object') {
     delta.s[widgetID] = property;
   } else {
-    if(delta.s[widgetID] === undefined)
+    if(delta.s[widgetID] === undefined) {
+      // widget was removed (e.g. by a routine flushing a DELETE via DELAY) before this stray property update was queued; drop it
+      if(!widgets.has(widgetID))
+        return;
       delta.s[widgetID] = {};
+    }
     if(delta.s[widgetID] !== null)
       delta.s[widgetID][property] = value;
   }
