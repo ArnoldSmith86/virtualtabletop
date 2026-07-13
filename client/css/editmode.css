@@ -87,6 +87,12 @@
   gap: 10px;
 }
 
+#libraryDecksClose {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
 #libraryDecksHeader {
   text-align: center;
 }

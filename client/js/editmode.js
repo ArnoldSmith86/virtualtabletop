@@ -1319,49 +1319,56 @@ function renderLibraryDecksList() {
 async function renderLibraryDeckPreview(entry, container) {
   const details = await getLibraryDeckDetails(entry);
 
-  const sampleTypes = [];
-  for(const card of details.cards) {
-    if(sampleTypes.indexOf(card.cardType) == -1)
-      sampleTypes.push(card.cardType);
-    if(sampleTypes.length == 3)
-      break;
-  }
+  // sample from the deck's own card types so every type is guaranteed to exist
+  // in the deck (Card.applyInitialDelta throws for a cardType the deck lacks -
+  // some games have cards referencing types that are not in cardTypes)
+  const cardTypes = details.deck.cardTypes || {};
+  const sampleTypes = Object.keys(cardTypes).filter(t=>cardTypes[t]).slice(0, 3);
 
   const deckID = `libraryDeckPreview${++libraryDeckPreviewCounter}`;
   const deckWidget = new Deck(deckID);
+  const createdIDs = [ deckID ];
   widgets.set(deckID, deckWidget);
-  deckWidget.applyInitialDelta(Object.assign({}, details.deck, { id: deckID }));
 
-  const offset = Math.round(entry.cardWidth*0.4);
-  const wrapper = div(null, 'libraryDeckPreviewCards');
-  const scaled = div(wrapper, 'libraryDeckPreviewScale');
-  const cardIDs = [];
-  sampleTypes.forEach(function(cardType, i) {
-    const cardID = `${deckID}C${i}`;
-    const card = new Card(cardID);
-    widgets.set(cardID, card);
-    card.applyInitialDelta({ id: cardID, type: 'card', deck: deckID, cardType, activeFace: entry.faceCount > 1 ? 1 : 0, x: i*offset, y: 0 });
-    scaled.appendChild(card.domElement);
-    cardIDs.push(cardID);
-  });
+  // Every widget created via applyInitialDelta is appended to #topSurface (its
+  // parent defaults to null). The cards get moved into the preview below; the
+  // throwaway deck and anything left behind by a failed render must be cleaned
+  // up in the finally block so no artifacts linger in the room.
+  try {
+    deckWidget.applyInitialDelta(Object.assign({}, details.deck, { id: deckID }));
 
-  // applyInitialDelta appends every widget to #topSurface via its (null) parent
-  // default; the cards were moved into the preview above, but the deck - which is
-  // only needed as a data source for the cards' faces - must be removed so it
-  // doesn't linger as a phantom deck in the room.
-  deckWidget.domElement.remove();
-  widgets.delete(deckID);
-  for(const cardID of cardIDs)
-    widgets.delete(cardID);
+    const offset = Math.round(entry.cardWidth*0.4);
+    const wrapper = div(null, 'libraryDeckPreviewCards');
+    const scaled = div(wrapper, 'libraryDeckPreviewScale');
+    sampleTypes.forEach(function(cardType, i) {
+      const cardID = `${deckID}C${i}`;
+      const card = new Card(cardID);
+      widgets.set(cardID, card);
+      createdIDs.push(cardID);
+      card.applyInitialDelta({ id: cardID, type: 'card', deck: deckID, cardType, activeFace: entry.faceCount > 1 ? 1 : 0, x: i*offset, y: 0 });
+      scaled.appendChild(card.domElement);
+    });
 
-  const totalWidth = entry.cardWidth + offset*(sampleTypes.length-1);
-  const scale = Math.min(190/totalWidth, 150/entry.cardHeight, 1);
-  wrapper.style.width = `${Math.ceil(totalWidth*scale)}px`;
-  wrapper.style.height = `${Math.ceil(entry.cardHeight*scale)}px`;
-  scaled.style.transform = `scale(${scale})`;
+    const totalWidth = entry.cardWidth + offset*(sampleTypes.length-1);
+    const scale = Math.min(190/totalWidth, 150/entry.cardHeight, 1);
+    wrapper.style.width = `${Math.ceil(totalWidth*scale)}px`;
+    wrapper.style.height = `${Math.ceil(entry.cardHeight*scale)}px`;
+    scaled.style.transform = `scale(${scale})`;
 
-  container.innerHTML = '';
-  container.appendChild(wrapper);
+    container.innerHTML = '';
+    container.appendChild(wrapper);
+  } finally {
+    // remove throwaway widgets from the map and drop any of their elements that
+    // are still sitting in #topSurface (cards that rendered were moved into the
+    // preview and so are no longer there, and are kept)
+    const topSurface = $('#topSurface');
+    for(const id of createdIDs) {
+      const widget = widgets.get(id);
+      if(widget && (id == deckID || (topSurface && topSurface.contains(widget.domElement))))
+        widget.domElement.remove();
+      widgets.delete(id);
+    }
+  }
 }
 
 // adds the deck like the "add deck" entry of the add widget overlay does:
@@ -1673,6 +1680,7 @@ export function initializeEditMode(currentMetaData) {
   on('#browseLibraryDecks', 'click', openLibraryDecksOverlay);
   on('#libraryDecksFilter', 'input', renderLibraryDecksList);
   on('#libraryDecksSort', 'change', renderLibraryDecksList);
+  on('#libraryDecksClose', 'click', _=>showOverlay());
 
   on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({
