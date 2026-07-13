@@ -122,3 +122,34 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
   await compareState(t, '3e20074150f78219095df84abeeb74dc');
 });
+
+test('Deck editor: breadcrumb undo and redo', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#editor [icon=edit]')
+    .click('.deckEditorAddCardType button')  // step 1
+    .click('#deckEditorAddFace')             // step 2
+    .click('#deckEditorAddText')             // step 3
+    .click('#deckEditorUndo')                // undo step 3 (the added object) via the deck editor's own button
+    .click('#deckEditorUndo')                // undo step 2 (the added face)
+    .click('#deckEditorRedo')                // redo step 2, leaving the deck at "one added card type + one added face"
+    .pressKey('esc');
+  await compareState(t, '0fe0eb8554cd82ec74d0c2c99513dffa');
+});

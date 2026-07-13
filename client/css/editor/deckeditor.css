@@ -47,26 +47,111 @@ body.deckEditorActive #deckEditor {
   align-items: center;
   flex-wrap: nowrap;
   gap: 3px;
-  padding: 3px 6px;
-  border-radius: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
   background: #0002;
 }
 
+/* The two "add object" groups get distinct accent colors and a gap so it's obvious that one adds the same
+   object to every card and the other adds an object that varies per card type. */
+.deckEditorAddGroupStatic {
+  background: rgba(120, 190, 255, 0.22);
+  box-shadow: inset 3px 0 0 #4aa3ff;
+  margin-left: 8px;
+}
+
 .deckEditorAddGroupDynamic {
-  background: #fff2;
+  background: rgba(255, 193, 7, 0.28);
+  box-shadow: inset 3px 0 0 #ffb300;
+  margin-left: 16px;
 }
 
 .deckEditorAddGroupLabel {
   font-size: 11px;
-  opacity: 0.85;
-  margin-right: 2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-right: 4px;
   white-space: nowrap;
+}
+
+.deckEditorAddGroupStatic .deckEditorAddGroupLabel {
+  color: #cfe8ff;
+}
+
+.deckEditorAddGroupDynamic .deckEditorAddGroupLabel {
+  color: #ffe0a3;
 }
 
 .deckEditorAddGroup button {
   padding: 4px 6px;
   font-size: 12px;
   white-space: nowrap;
+}
+
+#deckEditorHistory {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  min-height: 30px;
+  box-sizing: border-box;
+  background: var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+#deckEditorHistory > button {
+  padding: 3px 8px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+#deckEditorBreadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-grow: 1;
+  scrollbar-width: thin;
+}
+
+.deckEditorCrumb {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--textColor);
+  flex-shrink: 0;
+}
+
+.deckEditorCrumb:not(:last-child)::after {
+  content: '›';
+  font-size: 14px;
+  opacity: 0.5;
+  margin-left: 6px;
+}
+
+.deckEditorCrumb:hover {
+  background: var(--backgroundColor);
+}
+
+.deckEditorCrumb.current {
+  background: var(--VTTblue);
+  color: #fff;
+  font-weight: bold;
+}
+
+.deckEditorCrumb.future {
+  opacity: 0.5;
+}
+
+.deckEditorCrumbEllipsis {
+  opacity: 0.6;
+  padding: 0 2px;
+  flex-shrink: 0;
 }
 
 #deckEditorBody {

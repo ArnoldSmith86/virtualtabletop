@@ -183,6 +183,16 @@ class DeckEditor {
     this.selectedObject = null;
     this.cardScale = 1;
     this.commitTimers = {};
+
+    // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
+    // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
+    // delta path, so they sync and are themselves room-undoable. applyingHistory suppresses recording while
+    // a snapshot is being re-applied. See recordHistory()/jumpToHistory().
+    this.history = [];
+    this.historyIndex = -1;
+    this.applyingHistory = false;
+    this.maxHistory = 60;
+    this.actionSeq = 0;
   }
 
   addInput(labelText, value, onValueChanged, target) {
@@ -212,6 +222,8 @@ class DeckEditor {
       button.render($('#deckEditorDragToolbar'));
 
     $('#deckEditorClose').onclick = _=>this.close();
+    $('#deckEditorUndo').onclick = _=>this.undo();
+    $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorDeckSelect').onchange = e=>this.open(e.target.value);
     $('#deckEditorFaceSelect').onchange = e=>{
       this.face = +e.target.value;
@@ -255,6 +267,20 @@ class DeckEditor {
   onKeyDown(e) {
     if(!this.isOpen())
       return;
+
+    // Ctrl/Cmd+Z and Ctrl/Cmd+Y (or Ctrl/Cmd+Shift+Z) work even from inside an input, matching common editors.
+    if((e.ctrlKey || e.metaKey) && !e.altKey) {
+      const key = e.key.toLowerCase();
+      if(key == 'z' && !e.shiftKey) {
+        e.preventDefault();
+        return this.undo();
+      }
+      if(key == 'y' || (key == 'z' && e.shiftKey)) {
+        e.preventDefault();
+        return this.redo();
+      }
+    }
+
     if([ 'TEXTAREA', 'INPUT', 'SELECT' ].indexOf(e.target.tagName) != -1 || e.target.isContentEditable)
       return;
 
@@ -287,6 +313,7 @@ class DeckEditor {
     const dynamicFaces = this.dynamicFaces();
     this.face = dynamicFaces.length ? dynamicFaces[dynamicFaces.length-1] : Math.max(0, this.faceTemplates.length-1);
     this.selectedObject = null;
+    this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
     this.render();
@@ -325,6 +352,9 @@ class DeckEditor {
     const face = this.faceTemplates[this.face];
     if(this.selectedObject !== null && (!face || !Array.isArray(face.objects) || this.selectedObject >= face.objects.length))
       this.selectedObject = null;
+    // A reload only happens for genuine external changes (see matchesWorkingCopy guard), so record it as its
+    // own breadcrumb step (no actionId => never merges) rather than swapping the working copy out silently.
+    this.recordHistory('__external__', null);
     this.render();
   }
 
@@ -349,12 +379,17 @@ class DeckEditor {
     this.commitTimers[property] = setTimeout(_=>this.commit(property), 500);
   }
 
-  // cause distinguishes this commit in the undo protocol: consecutive commits with the identical cause string
-  // get merged into one undo step (see addDeltaEntryToUndoProtocol). Leaving it out keeps the default generic
-  // "updated <property>" cause, which is what we want for the debounced per-keystroke property edits (so a
-  // burst of typing is one undo step, not one per commit) - but structural actions (add/delete a face, object
-  // or card type) pass their own distinct cause so they never silently merge with each other or with typing.
-  async commit(property, cause) {
+  // Returns a fresh action id used to group the (possibly several) commits of one user action into a single
+  // breadcrumb / undo step. Call once at the start of a multi-commit action and pass the id to each commit.
+  newAction() {
+    return `action:${++this.actionSeq}`;
+  }
+
+  // cause distinguishes this commit in the room undo protocol (consecutive same-cause deltas merge). actionId
+  // groups history: commits sharing an actionId collapse into one breadcrumb step. A structural action with no
+  // explicit actionId gets a unique one (its own step); the debounced per-keystroke edits pass no cause and
+  // share a per-property id so a typing burst on one property stays a single step.
+  async commit(property, cause, actionId) {
     clearTimeout(this.commitTimers[property]);
     delete this.commitTimers[property];
 
@@ -362,11 +397,16 @@ class DeckEditor {
     if(!deck)
       return;
 
+    const structural = !!cause;
+    const resolvedCause = cause || `${getPlayerDetails().playerName} updated ${property} of deck ${this.deckID} in deck editor`;
+    const resolvedActionId = actionId || (structural ? this.newAction() : `type:${property}`);
+
     batchStart();
-    setDeltaCause(cause || `${getPlayerDetails().playerName} updated ${property} of deck ${this.deckID} in deck editor`);
+    setDeltaCause(resolvedCause);
     await deck.set(property, JSON.parse(JSON.stringify(property == 'faceTemplates' ? this.faceTemplates : this.cardTypes)));
     batchEnd();
 
+    this.recordHistory(resolvedCause, resolvedActionId);
     this.renderStrip();
   }
 
@@ -375,8 +415,135 @@ class DeckEditor {
       await this.commit(property);
   }
 
+  snapshot(cause, actionId, label) {
+    return {
+      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates)),
+      cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
+      cause,
+      actionId,
+      label: label || this.historyLabel(cause)
+    };
+  }
+
+  resetHistory() {
+    this.history = [ this.snapshot('__open__', null, 'Opened') ];
+    this.historyIndex = 0;
+  }
+
+  recordHistory(cause, actionId) {
+    if(this.applyingHistory)
+      return;
+
+    const entry = this.snapshot(cause, actionId);
+
+    // Drop the redo tail: editing after an undo forks a new future.
+    if(this.historyIndex < this.history.length-1)
+      this.history = this.history.slice(0, this.historyIndex+1);
+
+    // Merge only commits that belong to the same action (same actionId): a typing burst on one property, or the
+    // several commits of one multi-step action. Distinct clicks get distinct ids, so each is its own crumb.
+    const current = this.history[this.historyIndex];
+    if(current && actionId && current.actionId === actionId) {
+      this.history[this.historyIndex] = entry;
+    } else {
+      this.history.push(entry);
+      if(this.history.length > this.maxHistory)
+        this.history.shift();
+      this.historyIndex = this.history.length-1;
+    }
+
+    this.renderHistory();
+  }
+
+  // Turn a delta cause into a short human breadcrumb label. Causes all read "<player> <action> ... in deck editor".
+  historyLabel(cause) {
+    if(cause == '__open__')
+      return 'Opened';
+    if(cause == '__external__')
+      return 'External change';
+    if(/ updated faceTemplates /.test(cause))
+      return 'Edited face object';
+    if(/ updated cardTypes /.test(cause))
+      return 'Edited card type';
+
+    const player = getPlayerDetails().playerName;
+    let label = cause;
+    if(label.startsWith(player + ' '))
+      label = label.slice(player.length+1);
+    label = label.replace(/ (to|of|from|for) deck \S+/, '');
+    label = label.replace(/ in deck editor$/, '');
+    return label ? label.charAt(0).toUpperCase() + label.slice(1) : 'Change';
+  }
+
+  async jumpToHistory(index, cause) {
+    if(index < 0 || index >= this.history.length || index === this.historyIndex)
+      return;
+
+    await this.flushPendingCommits();
+
+    this.historyIndex = index;
+    const snapshot = this.history[index];
+
+    const faceChanged = JSON.stringify(this.faceTemplates) !== JSON.stringify(snapshot.faceTemplates);
+    const typesChanged = JSON.stringify(this.cardTypes) !== JSON.stringify(snapshot.cardTypes);
+
+    this.faceTemplates = JSON.parse(JSON.stringify(snapshot.faceTemplates));
+    this.cardTypes = JSON.parse(JSON.stringify(snapshot.cardTypes));
+
+    if(this.cardType === null || !this.cardTypes[this.cardType])
+      this.cardType = Object.keys(this.cardTypes)[0] || null;
+    if(this.face >= this.faceTemplates.length)
+      this.face = Math.max(0, this.faceTemplates.length-1);
+    this.selectedObject = null;
+
+    // applyingHistory keeps these re-commits from being recorded as new history entries.
+    this.applyingHistory = true;
+    if(faceChanged)
+      await this.commit('faceTemplates', cause);
+    if(typesChanged)
+      await this.commit('cardTypes', cause);
+    this.applyingHistory = false;
+
+    this.render();
+  }
+
+  async undo() {
+    if(this.historyIndex > 0)
+      await this.jumpToHistory(this.historyIndex-1, `${getPlayerDetails().playerName} undid a change of deck ${this.deckID} in deck editor`);
+  }
+
+  async redo() {
+    if(this.historyIndex < this.history.length-1)
+      await this.jumpToHistory(this.historyIndex+1, `${getPlayerDetails().playerName} redid a change of deck ${this.deckID} in deck editor`);
+  }
+
+  renderHistory() {
+    $('#deckEditorUndo').disabled = this.historyIndex <= 0;
+    $('#deckEditorRedo').disabled = this.historyIndex >= this.history.length-1;
+
+    const breadcrumb = $('#deckEditorBreadcrumb');
+    breadcrumb.innerHTML = '';
+
+    // Show a trailing window of steps so a long session doesn't overflow the bar; ellipsis marks hidden history.
+    const maxCrumbs = 7;
+    const start = Math.max(0, this.history.length - maxCrumbs);
+    if(start > 0)
+      div(breadcrumb, 'deckEditorCrumbEllipsis', '…');
+
+    for(let i=start; i<this.history.length; ++i) {
+      const crumb = div(breadcrumb, 'deckEditorCrumb', `<span>${html(this.history[i].label)}</span>`);
+      crumb.classList.toggle('current', i == this.historyIndex);
+      crumb.classList.toggle('future', i > this.historyIndex);
+      crumb.title = this.history[i].label;
+      crumb.onclick = _=>this.jumpToHistory(i, `${getPlayerDetails().playerName} jumped in history of deck ${this.deckID} in deck editor`);
+    }
+
+    breadcrumb.scrollLeft = breadcrumb.scrollWidth;
+  }
+
   render() {
     this.renderTopbar();
+    this.renderHistory();
     this.renderMain();
     this.renderStrip();
     this.renderSidebar();
@@ -768,17 +935,20 @@ class DeckEditor {
 
   // Only seeds the currently selected card type; other card types are left for the user to fill in,
   // same as any other dynamic property that isn't set for them yet.
-  async seedCardTypeProperty(typeProperty, defaultValue, cause) {
+  async seedCardTypeProperty(typeProperty, defaultValue, cause, actionId) {
     if(this.cardType === null || this.cardTypes[this.cardType][typeProperty] !== undefined)
       return;
     this.cardTypes[this.cardType][typeProperty] = defaultValue;
-    await this.commit('cardTypes', cause);
+    await this.commit('cardTypes', cause, actionId);
   }
 
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue) {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
-    await this.seedCardTypeProperty(typeProperty, defaultValue, `${getPlayerDetails().playerName} added a "${propertyBaseName}" card type property to deck ${this.deckID} in deck editor`);
-    await this.addObject({ ...objectTemplate, dynamicProperties: { value: typeProperty } }, `${getPlayerDetails().playerName} added a ${objectTemplate.type} object bound to "${typeProperty}" to deck ${this.deckID} in deck editor`);
+    // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
+    const cause = `${getPlayerDetails().playerName} added a per-card-type ${objectTemplate.type} object to deck ${this.deckID} in deck editor`;
+    const actionId = this.newAction();
+    await this.seedCardTypeProperty(typeProperty, defaultValue, cause, actionId);
+    await this.addObject({ ...objectTemplate, dynamicProperties: { value: typeProperty } }, cause, actionId);
   }
 
   renderDynamicProperties(sidebar, object) {
@@ -818,14 +988,17 @@ class DeckEditor {
       object.dynamicProperties[objectProperty] = typeProperty;
       const staticValue = object[objectProperty];
       delete object[objectProperty]; // a static value would override the dynamic one
-      await this.seedCardTypeProperty(typeProperty, staticValue !== undefined ? staticValue : '', `${getPlayerDetails().playerName} added a "${typeProperty}" card type property to deck ${this.deckID} in deck editor`);
+      // One cause + one actionId for both commits so binding a property is a single undo step / breadcrumb.
+      const cause = `${getPlayerDetails().playerName} bound a dynamic property of a face object in deck ${this.deckID} in deck editor`;
+      const actionId = this.newAction();
+      await this.seedCardTypeProperty(typeProperty, staticValue !== undefined ? staticValue : '', cause, actionId);
       this.refreshMainCardFaces();
-      await this.commit('faceTemplates', `${getPlayerDetails().playerName} added a dynamic property binding to deck ${this.deckID} in deck editor`);
+      await this.commit('faceTemplates', cause, actionId);
       this.renderSidebar();
     };
   }
 
-  async addObject(objectTemplate, cause) {
+  async addObject(objectTemplate, cause, actionId) {
     const face = this.faceTemplates[this.face];
     if(!face)
       return;
@@ -833,7 +1006,7 @@ class DeckEditor {
       face.objects = [];
     face.objects.push(objectTemplate);
     this.refreshMainCardFaces();
-    await this.commit('faceTemplates', cause || `${getPlayerDetails().playerName} added a ${objectTemplate.type || 'basic'} object to deck ${this.deckID} in deck editor`);
+    await this.commit('faceTemplates', cause || `${getPlayerDetails().playerName} added a ${objectTemplate.type || 'basic'} object to deck ${this.deckID} in deck editor`, actionId);
     this.selectObject(face.objects.length-1);
   }
 
@@ -899,6 +1072,10 @@ class DeckEditor {
       await card.set('cardType', newName);
     batchEnd();
 
+    // This also renamed card widgets, which the working-copy snapshots don't capture, so restart the deck-editor
+    // history here rather than let an in-editor undo revert cardTypes and orphan those cards (the toolbar undo
+    // still reverts the whole rename).
+    this.resetHistory();
     this.render();
   }
 
@@ -918,6 +1095,9 @@ class DeckEditor {
 
     this.cardType = Object.keys(this.cardTypes)[0] || null;
     this.selectedObject = null;
+    // Removed card widgets aren't in the snapshots, so restart deck-editor history to avoid an in-editor undo
+    // resurrecting a cardType with no cards (the toolbar undo still restores the cards).
+    this.resetHistory();
     this.render();
   }
 }

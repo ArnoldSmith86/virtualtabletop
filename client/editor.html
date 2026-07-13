@@ -158,20 +158,25 @@
         <button icon="remove" id="deckEditorDeleteFace" title="Delete the face currently shown from every card type of this deck.">Delete face</button>
       </div>
       <div class="spacer"></div>
-      <div class="deckEditorAddGroup" title="Adds an object that looks the same on every card of this deck.">
-        <span class="deckEditorAddGroupLabel">Same on every card:</span>
+      <div class="deckEditorAddGroup deckEditorAddGroupStatic" title="Adds an object that looks the same on every card of this deck.">
+        <span class="deckEditorAddGroupLabel">Same on every card</span>
         <button icon="format_size" id="deckEditorAddText">Text</button>
         <button icon="image" id="deckEditorAddImage">Image</button>
         <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
       </div>
       <div class="deckEditorAddGroup deckEditorAddGroupDynamic" title="Adds an object that can be different for each card type, like a rank, name or picture.">
-        <span class="deckEditorAddGroupLabel">Different per card type:</span>
+        <span class="deckEditorAddGroupLabel">Different per card type</span>
         <button icon="format_size" id="deckEditorAddTextDynamic">Text</button>
         <button icon="image" id="deckEditorAddImageDynamic">Image</button>
         <button icon="add_reaction" id="deckEditorAddIconDynamic">Icon</button>
       </div>
       <div class="spacer"></div>
       <button icon="close" id="deckEditorClose">Close</button>
+    </div>
+    <div id="deckEditorHistory">
+      <button icon="undo" id="deckEditorUndo" title="Undo the last change (Ctrl+Z).">Undo</button>
+      <button icon="redo" id="deckEditorRedo" title="Redo the last undone change (Ctrl+Y).">Redo</button>
+      <div id="deckEditorBreadcrumb"></div>
     </div>
     <div id="deckEditorBody">
       <div id="deckEditorMain"></div>
