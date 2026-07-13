@@ -1231,8 +1231,10 @@ function getLibraryDeckDetails(entry) {
 
 async function openLibraryDecksOverlay() {
   showOverlay('libraryDecksOverlay');
-  if(libraryDecksIndex)
+  if(libraryDecksIndex == 'loading')
     return;
+  // refetch every time the overlay opens so the star/popularity counts (which
+  // change while the deck catalog stays cached) are always up to date
   libraryDecksIndex = 'loading';
   $('#libraryDecksList').textContent = 'Loading deck list...';
   try {
