@@ -261,13 +261,42 @@ describe("Scenarios: Shifting widgets through seats", () => {
     });
   });
 
-  describe("Given a three-entry shift whose middle target seat is empty", () => {
+  describe("Given three seats where the middle seat is unoccupied", () => {
+    let handA, token;
+    beforeEach(async () => {
+      handA = createHand(`${testName}-handA`);
+      createHand(`${testName}-handEmpty`);
+      createHand(`${testName}-handC`);
+      const seatA = createSeat(`${testName}-seatA`, handA.get('id'), 'Alice');
+      const seatEmpty = createSeat(`${testName}-seatEmpty`, `${testName}-handEmpty`, null);
+      const seatC = createSeat(`${testName}-seatC`, `${testName}-handC`, 'Carol');
+      [ token ] = await createTokens(testName, handA.get('id'), 1);
+
+      await button.set('clickRoutine', [
+        {
+          "func": "SHIFT",
+          "order": [ seatA.get('id'), seatEmpty.get('id'), seatC.get('id') ],
+          "widgets": "all",
+          "steps": 1
+        }
+      ]);
+    });
+
+    describe("When clicked", () => {
+      test("Then the hand passes to the next occupied seat, skipping the empty one", async () => {
+        await button.click();
+        expect(token.get('parent')).toBe(`${testName}-handC`);
+        expect(token.get('owner')).toBe('Carol');
+      });
+    });
+  });
+
+  describe("Given a three-entry shift whose middle seat is empty", () => {
     let holderX, holderZ, tokenX, tokenZ;
     beforeEach(async () => {
       // order = [ holderX, emptySeat, holderZ ] with a token in each holder.
-      // The empty seat is the target of holderX's move; holderZ wraps around to
-      // holderX. A non-atomic implementation would commit holderZ's move before
-      // discovering the empty seat, leaving the table half-rotated.
+      // The empty seat is ignored, so the shift cycles through [holderX, holderZ]:
+      // holderX's token goes to holderZ and holderZ's token wraps to holderX.
       holderX = createHand(`${testName}-holderX`);
       createHand(`${testName}-handEmpty`);
       holderZ = createHand(`${testName}-holderZ`);
@@ -286,10 +315,10 @@ describe("Scenarios: Shifting widgets through seats", () => {
     });
 
     describe("When clicked", () => {
-      test("Then nothing moves (the shift aborts atomically)", async () => {
+      test("Then the empty seat is skipped and the other entries still shift", async () => {
         await button.click();
-        expect(tokenX.get('parent')).toBe(`${testName}-holderX`);
-        expect(tokenZ.get('parent')).toBe(`${testName}-holderZ`);
+        expect(tokenX.get('parent')).toBe(`${testName}-holderZ`);
+        expect(tokenZ.get('parent')).toBe(`${testName}-holderX`);
       });
     });
   });

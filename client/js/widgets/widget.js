@@ -1898,6 +1898,10 @@ export class Widget extends StateManaged {
           const entry = widgets.get(id);
           if(entry.get('type') != 'seat')
             return { seat: null, holder: entry };
+          // An unoccupied seat is skipped entirely: it neither contributes nor
+          // receives widgets, so the shift cycles through the remaining entries.
+          if(!entry.get('player'))
+            return { empty: true };
           if(!entry.get('hand') || !widgets.has(entry.get('hand'))) {
             problems.push(`Seat ${id} does not define a valid hand.`);
             return null;
@@ -1917,7 +1921,8 @@ export class Widget extends StateManaged {
               valid = false;
               break;
             }
-            order.push(container);
+            if(!container.empty)
+              order.push(container);
           }
         } else {
           valid = false;
@@ -1957,31 +1962,24 @@ export class Widget extends StateManaged {
               moves.push({ widgets: selected, target: order[targetIndex] });
           }
 
-          // An empty target seat can't receive a hand; abort the whole shift before
-          // moving anything so a rotation is never left partially applied.
-          const emptySeatTarget = moves.map(m=>m.target).find(t=>t.seat && !t.seat.get('player'));
-          if(emptySeatTarget) {
-            problems.push(`Seat ${emptySeatTarget.seat.get('id')} is empty, so its hand cannot receive shifted widgets; SHIFT aborted.`);
-          } else {
-            for(const move of moves) {
-              // children() is top-first (z descending); moveToHolder brings each widget
-              // to front, so move bottom-first to preserve the source stacking order.
-              for(const c of move.widgets.slice().reverse()) {
-                c.movedByButton = true;
-                if(move.target.seat)
-                  c.targetPlayer = move.target.seat.get('player');
-                await c.moveToHolder(move.target.holder);
-                delete c.targetPlayer;
-                delete c.movedByButton;
-              }
-              if(typeof move.target.holder.updateAfterShuffle == 'function')
-                await move.target.holder.updateAfterShuffle();
+          for(const move of moves) {
+            // children() is top-first (z descending); moveToHolder brings each widget
+            // to front, so move bottom-first to preserve the source stacking order.
+            for(const c of move.widgets.slice().reverse()) {
+              c.movedByButton = true;
+              if(move.target.seat)
+                c.targetPlayer = move.target.seat.get('player');
+              await c.moveToHolder(move.target.holder);
+              delete c.targetPlayer;
+              delete c.movedByButton;
             }
+            if(typeof move.target.holder.updateAfterShuffle == 'function')
+              await move.target.holder.updateAfterShuffle();
           }
 
           if(jeRoutineLogging) {
             const widgetDesc = a.widgets == 'all' || a.widgets == 'top' ? a.widgets : `collection '${a.widgets}'`;
-            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.wrap ? '(wrapped)' : '(clamped)'} along [${a.order.join(', ')}]`);
+            jeLoggingRoutineOperationSummary(`shifted ${widgetDesc} widgets ${shift} step(s) ${a.wrap ? '(wrapped)' : '(clamped)'} along ${JSON.stringify(order.map(o=>(o.seat||o.holder).get('id')))}`);
           }
         }
       }
