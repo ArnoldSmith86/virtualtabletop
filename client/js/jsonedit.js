@@ -2467,7 +2467,7 @@ function jeTreeGetWidgetHTML(widget) {
 
   let result = `${colored(widget.get('id'), 'key')} (${colored(type || 'basic','string')} - `;
   const id = String(widget.get('id'));
-  if(id.match(/^[0-9a-z]{4}$/) || type && id.startsWith(type) && id.substr(type.length).match(/^[0-9]+$/) || !type && id.match(/^[a-z]+[0-9]+$/)) {
+  if(id.match(/^[0-9a-z]{4}$/) || type && id.startsWith(type) && id.substr(type.length).match(/^[0-9]+$/)) {
     if(type == 'card' && !String(widget.get('cardType')).match(/^type-[0-9a-f-]{36}$/))
       result += `${colored(widget.get('cardType'),'extern')} - `;
     if(type == 'button' && widget.get('text'))
