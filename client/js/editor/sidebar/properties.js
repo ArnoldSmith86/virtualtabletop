@@ -1778,6 +1778,10 @@ class PropertiesModule extends SidebarModule {
       renderStops();
     };
 
+    // Connecting an end point glues it onto another line at a chosen percentage.
+    // The glue math assumes both lines share the room's coordinate frame, so a
+    // connection behaves as expected only when neither line sits under a rotated
+    // or scaled parent (see applyConnections in widgets/line.js).
     for(const end of [ 'Start', 'End' ]) {
       this.addSubHeader(`Connect ${end.toLowerCase()} point`);
       const wrapper = div(this.moduleDOM, 'genericInput');
