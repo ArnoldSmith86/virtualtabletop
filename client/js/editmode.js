@@ -370,10 +370,12 @@ function addPieceToAddWidgetOverlay(w, wi) {
   $('#addOverlay').appendChild(w.domElement);
 }
 
-function addWidgetToAddWidgetOverlay(w, wi) {
+function addWidgetToAddWidgetOverlay(w, wi, idType) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
+    if(idType)
+      toAdd.id = generateUniqueWidgetID(idType);
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
@@ -867,7 +869,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
@@ -894,7 +896,7 @@ function populateAddWidgetOverlay() {
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
 
-  });
+  }, 'dealer');
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
     const id = generateUniqueWidgetID('chips');
@@ -925,7 +927,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
@@ -952,7 +954,7 @@ function populateAddWidgetOverlay() {
     borderWidth: 2,
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
-  });
+  }, 'dealer');
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
     const id = generateUniqueWidgetID('chips');
@@ -1195,7 +1197,7 @@ function populateAddWidgetOverlay() {
     borderRadius: "3px",
 
     css: { "border": "3px solid #666" }
-  });
+  }, 'separator');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
     x: 1535,
@@ -1205,7 +1207,7 @@ function populateAddWidgetOverlay() {
     borderRadius: "3px",
 
     css: { "border": "3px solid #666" }
-  });
+  }, 'separator');
 }
 // end of JSON generators
 
@@ -1214,6 +1216,7 @@ function uploadWidget(preset) {
     let id;
     if(asset && preset == 'board') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('board'),
         image: asset,
         movable: false,
         width: 1600,
@@ -1223,6 +1226,7 @@ function uploadWidget(preset) {
     }
     if(asset && preset == 'token') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('token'),
         image: asset
       });
     }
@@ -1423,6 +1427,7 @@ export function initializeEditMode(currentMetaData) {
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
+      id: generateUniqueWidgetID('basic'),
       text: "Basic widget"
     });
     overlayDone(id);
