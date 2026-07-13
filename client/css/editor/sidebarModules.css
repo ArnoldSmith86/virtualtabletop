@@ -127,6 +127,31 @@
 }
 
 
+.tune.editorModule .ttsImportLink {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .ttsImportLink input {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.tune.editorModule .ttsDeckButton .deckCardCount {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2px 0;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fffb;
+  color: black;
+  z-index: 1;
+}
+
+
 .tune.editorModule .cardTypeEdit {
   display: inline-flex;
   flex-direction: column;
