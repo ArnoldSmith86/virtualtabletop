@@ -1,6 +1,7 @@
 export class Line extends Widget {
   constructor(id) {
     super(id);
+    this.autoRotatedStopRotations = new Map();
 
     this.addDefaults({
       typeClasses: 'widget line',
@@ -17,6 +18,10 @@ export class Line extends Widget {
       lineWidth: 10,
       lineColor: '#666666',
       lineDash: null,
+
+      // when enabled, landscape stops follow the direction of the line at
+      // their position; portrait and square stops keep their own rotation
+      rotateAttachedWidgets: false,
 
       connectStart: null,
       connectEnd: null
@@ -139,7 +144,28 @@ export class Line extends Widget {
       const p = this.pointAtPosition(+stop.get('linePosition') || 0);
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
+
+      const landscape = +stop.get('width') > +stop.get('height');
+      if(this.get('rotateAttachedWidgets') && landscape) {
+        if(!this.autoRotatedStopRotations.has(stop.id))
+          this.autoRotatedStopRotations.set(stop.id, stop.get('rotation'));
+        await stop.set('rotation', this.tangentAngleAtPosition(+stop.get('linePosition') || 0));
+      } else if(this.autoRotatedStopRotations.has(stop.id)) {
+        await stop.set('rotation', this.autoRotatedStopRotations.get(stop.id));
+        this.autoRotatedStopRotations.delete(stop.id);
+      }
     }
+  }
+
+  // The angle of the path's tangent in degrees at an arc-length position.
+  // Sampling either side also works for both straight and cubic paths without
+  // needing to convert an arc-length position back to a Bezier parameter.
+  tangentAngleAtPosition(position) {
+    const p = Math.max(0, Math.min(1, +position || 0));
+    const delta = 0.001;
+    const before = this.pointAtPosition(Math.max(0, p-delta));
+    const after = this.pointAtPosition(Math.min(1, p+delta));
+    return Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI;
   }
 
   // the midpoint of the largest empty span along the line, so "Add stop" drops the
@@ -228,6 +254,10 @@ export class Line extends Widget {
   }
 
   async onChildRemove(child) {
+    if(this.autoRotatedStopRotations.has(child.id)) {
+      await child.set('rotation', this.autoRotatedStopRotations.get(child.id));
+      this.autoRotatedStopRotations.delete(child.id);
+    }
     await super.onChildRemove(child);
     if(child.get('linePosition') !== null)
       await this.updateAttachedWidgets();
@@ -236,7 +266,7 @@ export class Line extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if([ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd' ].indexOf(property) != -1) {
+    if([ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd', 'rotateAttachedWidgets' ].indexOf(property) != -1) {
       await this.updateAttachedWidgets();
       await this.updateConnectedLines();
     }
