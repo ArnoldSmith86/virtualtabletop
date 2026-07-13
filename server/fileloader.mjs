@@ -110,7 +110,10 @@ function checkForLinkToOwnServer(link) {
         states['VTT'].push({ _meta: { version: 8, info } });
       } else {
         states['VTT'].push(JSON.parse(fs.readFileSync(Config.directory('save') + `/states/${m[2]}-${m[3]}-${i}.json`)));
+        const gameSettings = states['VTT'][i]._meta.gameSettings;
         states['VTT'][i]._meta = { version: states['VTT'][i]._meta.version, info };
+        if(gameSettings)
+          states['VTT'][i]._meta.gameSettings = gameSettings;
       }
       delete states['VTT'][i]._meta.info.variants;
     }

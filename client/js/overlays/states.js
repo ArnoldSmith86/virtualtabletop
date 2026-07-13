@@ -8,6 +8,14 @@ let detailsOverlay = 'stateDetailsOverlay';
 
 const stateFilterSpans = $a('#stateFilters > span');
 
+function setLibraryTypeTab(type) {
+  $('#filterByType').value = type;
+  localStorage.setItem('libraryTypeTab', type);
+  for(const b of $a('.libraryTypeTabs button'))
+    toggleClass(b, 'active', b.dataset.type === type);
+  updateLibraryFilter();
+}
+
 const loadedLibraryImages = {};
 
 function loadJSZip() {
@@ -244,7 +252,13 @@ async function saveState(e) {
 
 function updateEmptyLibraryHint() {
   const isEmpty = !$('#statesList > div:nth-of-type(2) .roomState');
+  const hasPublicLibrary = Object.keys(config.libraries || {}).length > 0;
   $('#emptyLibrary').style.display = isEmpty ? 'block' : 'none';
+  if(isEmpty) {
+    $('#emptyLibrary').innerHTML = hasPublicLibrary
+      ? 'Your personal game library is currently empty.<br>Use the stars below to pin public library games, use the "Add game" button above or drag VTT files here.'
+      : 'Your personal game library is currently empty.<br>Use the "Add game" button above or drag VTT files here.';
+  }
   $('#emptyLibraryByFilter').style.display = $('#statesList > div:nth-of-type(2) .visible.roomState') || isEmpty ? 'none' : 'block';
 }
 
@@ -276,8 +290,9 @@ function updateLibraryFilter() {
       if(dom.classList.contains('uploading')) {
         callback(dom, true);
       } else {
+        const isPublicLibrary = dom.classList.contains('inPublicLibraryCategory');
         const textMatch     = dataset.text.match(filters.text);
-        const typeMatch     = filters.type     == 'Any' || dataset.type.split(/[,;] */).indexOf(filters.type) != -1;
+        const typeMatch     = !isPublicLibrary || (filters.type !== '' && dataset.type.split(/[,;] */).indexOf(filters.type) != -1);
         const playersMatch  = filters.players  == 'Any' || dataset.players.split(/[,;] */).indexOf(filters.players) != -1;
         const durationMatch = filters.duration == 'Any' || dataset.duration >= filters.duration.split('-')[0] && dataset.duration <= filters.duration.split('-')[1];
         const languageMatch = filters.language == 'Any' || dataset.languages.split(/[,;] */).indexOf(filters.language.replace(/ \+ None/, '')) != -1 || filters.language.match(/None$/) && dataset.languages.split(/[,;] */).indexOf('') != -1;
@@ -449,6 +464,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.className = state.image ? 'roomState' : 'roomState noImage';
     if(state.publicLibrary)
       entry.className += ' publicLibraryGame';
+    if(target == 'Public Library')
+      entry.className += ' inPublicLibraryCategory';
     if(state.showName === false || state.showName === 'only similar')
       entry.className += ' hideMainName';
     if(state.showName === false || state.showName === 'only main')
@@ -457,6 +474,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
       entry.className += ' linkedGame';
     if(state.savePlayers)
       entry.className += ' savedGame';
+    if(state.usesAIImagery)
+      entry.className += ' has-ai-badge';
     if(activeState && (activeState.stateID == state.id || activeState.saveStateID == state.id || activeState.linkStateID == state.id)) {
       entry.className += ' activeGame';
       saveButton.style.display = 'inline-flex';
@@ -546,8 +565,8 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     entry.dataset.modes = state.mode;
     entry.dataset.usesaiimagery = state.usesAIImagery ? '1' : '0';
 
-    if(state.publicLibrary && state.publicLibrary.match(/tutorials/))
-      entry.dataset.type = 'Tutorials';
+    if(state.publicLibraryCategory)
+      entry.dataset.type = state.publicLibraryCategory;
     else
       entry.dataset.type = 'Games';
 
@@ -568,8 +587,10 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
     for(const uploadingState of categoryUploadingStates)
       insertUploadingState(uploadingState, Object.values(categories)[categoryIndex]);
 
+  const libraryTypeKeys = Object.keys(config.libraries);
   for(const [ title, category ] of Object.entries(categories)) {
-    $('.title', category).textContent = title;
+    const displayTitle = (title === 'Public Library' && libraryTypeKeys.length === 1) ? libraryTypeKeys[0] : title;
+    $('.title', category).prepend(displayTitle);
     $('#statesList').appendChild(category);
   }
 
@@ -587,16 +608,51 @@ function fillStatesList(states, starred, activeState, returnServer, activePlayer
   $('.buttons', categories['Game Shelf']).appendChild(addButton);
   updateEmptyLibraryHint();
 
+  const libraryTypes = Object.keys(config.libraries);
+
+  if(libraryTypes.length === 0) {
+    categories['Public Library'].classList.add('empty');
+  }
+
+  let previousType = $('#filterByType').dataset.initialized ? $('#filterByType').value : (localStorage.getItem('libraryTypeTab') || libraryTypes[0] || '');
+  if(previousType && libraryTypes.indexOf(previousType) === -1)
+    previousType = libraryTypes[0] || '';
+  if(libraryTypes.length === 1)
+    previousType = libraryTypes[0];
+  $('#filterByType').dataset.initialized = 'true';
+  let typeHTML = `<option value="" ${previousType === '' ? 'selected' : ''}></option>`;
+  for(const typeOption of libraryTypes)
+    typeHTML += `<option value="${typeOption}" ${previousType === typeOption ? 'selected' : ''}>${html(typeOption)}</option>`;
+  $('#filterByType').innerHTML = typeHTML;
+
+  if(libraryTypes.length > 1) {
+    const typeTabs = $('.libraryTypeTabs', categories['Public Library']);
+    for(const typeOption of libraryTypes) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = typeOption;
+      btn.dataset.type = typeOption;
+      if(previousType === typeOption)
+        btn.classList.add('active');
+      btn.addEventListener('click', function() {
+        const current = $('#filterByType').value;
+        const next = current === typeOption ? '' : typeOption;
+        setLibraryTypeTab(next);
+      });
+      typeTabs.appendChild(btn);
+    }
+  }
+
   const previousLanguage = $('#filterByLanguage').value;
   let languageHTML = '<option>Any</option>';
   for(const languageOption of Object.keys(languageOptions).sort())
-    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${languageOption}">${languageOption.replace(/^$/, 'None')}</option>`;
+    languageHTML += `<option ${previousLanguage && previousLanguage == languageOption ? 'selected' : ''} value="${html(languageOption)}">${html(languageOption.replace(/^$/, 'None'))}</option>`;
   $('#filterByLanguage').innerHTML = languageHTML;
 
   const previousMode = $('#filterByMode').value;
   let modeHTML = '<option>Any</option>';
   for(const modeOption of Object.keys(modeOptions).sort((a, b) => a.localeCompare(b)))
-    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${modeOption}</option>`;
+    modeHTML += `<option ${previousMode && previousMode == modeOption ? 'selected' : ''}>${html(modeOption)}</option>`;
   $('#filterByMode').innerHTML = modeHTML;
 
   updateLibraryFilter();
@@ -633,16 +689,19 @@ function fillStateDetails(states, state, dom) {
     dom.scrollTop = 0;
 
   applyValuesToDOM($('#stateDetailsOverlay'), Object.assign({ showName: true }, state));
-  const sn = state.showName;
+  const sn = typeof state.showName === 'undefined' ? true : state.showName;
   $('#showName').checked = sn === true || sn === 'only main';
   $('#showNameSimilar').checked = sn === true || sn === 'only similar';
   toggleClass($('#mainDetails'), 'noImage', !state.image);
   toggleClass($('#similarDetails'), 'noImage', !state.similarImage);
+  toggleClass($('#mainDetails'), 'has-ai-badge', !!state.usesAIImagery);
 
   toggleClass($('#stateDetailsOverlay .star'),         'active', !!state.starred);
   toggleClass($('#stateDetailsOverlay .star'),         'hidden', !state.publicLibrary);
-  toggleClass($('#mainImage > i'),                     'hidden', !state.link);
-  toggleClass($('#stateDetailsOverlay [icon=upload]'), 'hidden', state.publicLibrary || !config.allowPublicLibraryEdits);
+  toggleClass($('#mainImage > i'),                     'hidden', !state.link && !state.savePlayers);
+  toggleClass($('#publicLibraryUploadButtons'),        'hidden', !config.allowPublicLibraryEdits || (!!state.publicLibrary && Object.keys(config.libraries).length <= 1));
+
+  $('#mainImage > i').textContent = state.savePlayers ? 'save' : 'link';
 
   function fillArrowButton(arrowDom, targetDom) {
     arrowDom.style.display = targetDom ? 'block' : 'none';
@@ -907,9 +966,27 @@ function fillStateDetails(states, state, dom) {
       variantOperationQueue: []
     });
   };
-  $('#stateDetailsOverlay .buttons [icon=upload]').onclick = function() {
-    toServer('addStateToPublicLibrary', state.id);
-  };
+  const uploadButtonsContainer = $('#publicLibraryUploadButtons');
+  uploadButtonsContainer.innerHTML = '';
+  for (const [category, folder] of Object.entries(config.libraries)) {
+    if (state.publicLibrary && state.publicLibraryCategory === category) {
+      continue;
+    }
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'upload');
+    if (state.publicLibrary) {
+      button.textContent = `Move to ${category}`;
+      button.onclick = function() {
+        toServer('moveStateWithinPublicLibrary', { id: state.id, newLibrary: folder, newCategory: category });
+      };
+    } else {
+      button.textContent = `Add to public library: ${category}`;
+      button.onclick = function() {
+        toServer('addStateToPublicLibrary', { id: state.id, library: folder, category: category });
+      };
+    }
+    uploadButtonsContainer.appendChild(button);
+  }
 
   $('#stateDetailsOverlay .star').onclick = function(e) {
     e.currentTarget.classList.toggle('active');
@@ -998,7 +1075,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'stateDetailsOverlay') {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.add('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
       $('#statesOverlay').append($('#stateDetailsOverlay'));
@@ -1007,7 +1084,7 @@ function setSidebar() {
       if($('#statesButton').dataset.overlay == 'statesOverlay' && $('#statesOverlay.withDetails')) {
         $('#statesButton').dataset.overlay = detailsOverlay;
         $('#statesOverlay').classList.remove('withDetails');
-        if($('#statesButton.active'))
+        if($('#statesButton.active') && !edit)
           showStatesOverlay(detailsOverlay);
       }
     }
@@ -1085,7 +1162,8 @@ async function shareLink(state) {
   $('#shareLinkOverlay').classList.toggle('customGame', !state.publicLibrary);
 
   if(state.publicLibrary) {
-    const type = state.publicLibrary.match(/tutorials/) ? 'tutorial' : 'game';
+    const isStandard = state.publicLibraryCategory.toLowerCase() === 'games' || state.publicLibraryCategory.toLowerCase() === 'tutorials';
+    const type = isStandard ? (state.publicLibraryCategory.toLowerCase() === 'tutorials' ? 'tutorial' : 'game') : `library/${state.publicLibrary.split('/')[0]}`;
     url = `${getBaseURL()}/${type}/${name}`;
   } else {
     url = state.link;
@@ -1094,9 +1172,11 @@ async function shareLink(state) {
       url = `${location.origin}${await url.text()}/${name}`;
     } else {
       const baseURL = getBaseURL();
-      if(url.startsWith(`${baseURL}/s/`)) {
+      if(url.startsWith(`${baseURL}/s/`))
         url = `${baseURL}/game/${url.substr(baseURL.length + 3, 8)}/${name}`;
-      }
+      const gameWithHash = url.match(/^(.*\/game\/[0-9a-z]{8}\/.*)(#VTT.*)$/);
+      if(gameWithHash)
+        url = gameWithHash[1];
     }
   }
 

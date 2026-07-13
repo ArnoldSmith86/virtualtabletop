@@ -22,7 +22,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "This variant of the tutorial covers the remaining widget types not previously discussed. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/types-canvas'>Canvas</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#canvas'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-dice'>Dice</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#dice'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-scoreboard'>Scoreboards (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#scoreboard'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-spinners'>Spinners</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/types-timer'>Timers</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#timer'>wiki</a>). Each of these types of widgets, except for dice, are available under the Interactive section of the add widget overlay."
+    "html": "This variant of the tutorial covers the remaining widget types not previously discussed. You can learn more in other tutorials (and the wiki): <a href='https://virtualtabletop.io/tutorial/types-canvas'>Canvas</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#canvas'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-dice'>Dice</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#dice'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-scoreboard'>Scoreboards (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#scoreboard'>wiki</a>), <a href='https://virtualtabletop.io/tutorial/types-spinner'>Spinners</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#label'>wiki</a>), and <a href='https://virtualtabletop.io/tutorial/types-timer'>Timers</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Widgets#timer'>wiki</a>). Each of these types of widgets, except for dice, are available under the Interactive section of the add widget overlay."
   },
   "text1": {
     "id": "text1",
@@ -35,7 +35,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The default canvas is above (except that it is smaller to fit this tutorial). It is a limited drawing tool. Users can choose a color or erase the drawing using the buttons to the left. Changing the <b>resolution</b> property changes the thickness of the lines but there is not a default button for doing that."
+    "html": "The default canvas is above (except that it is smaller to fit this tutorial). It is a limited drawing tool. Users can choose a color, erase the drawing, or change the thickness of the line using the buttons to the left."
   },
   "text2": {
     "id": "text2",
@@ -90,12 +90,9 @@
     "html": "The default timer is above. Timers can count up or down. They can also be used in some sophisticated automation routines. However, timers are known to have some bugs and quirks and frequently glitch. So be careful in relying on them in building games."
   },
   "_meta": {
-    "version": 19,
+    "version": 21,
     "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
+      "legacyModes": {}
     },
     "info": {
       "name": "110 Widget Types",
@@ -106,7 +103,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1763354511341,
+      "lastUpdate": 1763354511339,
       "showName": false,
       "skill": "",
       "description": "",
@@ -116,6 +113,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "Other",
       "language": "en-US",

@@ -2375,12 +2375,12 @@
     "z": 4,
     "movable": false,
     "movableInEdit": false,
-    "text": "This holder uses css 'display':'flex' and a simple enterRoutine and leaveRoutine to create multiple rows of centered cubes. In a regular holder, the cubes would continue adding on to the right edge, but the 'flex' solves that issue. The routines are needed to add and remove two css properties on the widgets and in this example, also sorts the widgets by color. This example works for the simple object form of css.\n\nThe hand at the bottom is similar, but has more complicated css, so it works with cards. In this small area, you can display all 52 cards in a standard deck. If you change the size of the holder, you will need to manually adjust the dropOffset, margin, and padding properties to get the desired look.",
     "css": {
       "color": "black",
       "font-size": "18px"
     },
-    "layer": -5
+    "layer": -5,
+    "html": "This holder uses CSS <i>&quotdisplay&quot:&quotflex&quot</i> and a simple <b>enterRoutine</b> and <b>leaveRoutine</b> to create multiple rows of centered cubes. In a regular holder, the cubes would continue adding on to the right edge, but the flex solves that issue. The routines are needed to add and remove two CSS properties on the widgets and in this example, also sorts the widgets by color. This example works for the simple object form of CSS.<br><br>The hand at the bottom is similar, but has more complicated CSS, so it works with cards. In this small area, you can display all 52 cards in a standard deck. If you change the size of the holder, you will need to manually adjust the <b>dropOffset</b>, as well as the custom margin and padding properties to get the desired look."
   },
   "exampleText2": {
     "id": "exampleText2",
@@ -2390,12 +2390,12 @@
     "z": 4,
     "movable": false,
     "movableInEdit": false,
-    "text": "This holder is identical to the one to the left except that it is designed to work with css on the widgets in the complex object form. Use houses in this holder because they are the only widgets in the room that use that css form. If you use the cubes in this holder it will 'break' how they work in the other holders in the room.",
     "css": {
       "color": "black",
       "font-size": "18px"
     },
-    "layer": -5
+    "layer": -5,
+    "html": "This holder is identical to the one to the left except that it is designed to work with CSS on the widgets in the complex object form. Use houses in this holder because they are the only widgets in the room that use that CSS form. If you use the cubes in this holder it will break how they work in the other holders in the room."
   },
   "house1": {
     "id": "house1",
@@ -2607,13 +2607,13 @@
     "z": 4,
     "movable": false,
     "movableInEdit": false,
-    "text": "This holder uses the most simple of the css flex structures. Once the holder is full, it reduces the size of the cubes to make them fit within the available width.\n\nThe holder below does something similar for cards, but it does not reduce the size of the card. It only adjusts how closely the cards are spaced to make them fit within the available width",
     "css": {
       "color": "black",
       "font-size": "18px"
     },
     "layer": -5,
-    "x": 775
+    "x": 775,
+    "html": "This holder uses the most simple of the CSS flex structures. Once the holder is full, it reduces the size of the cubes to make them fit within the available width.<br><br>The holder below does something similar for cards, but it does not reduce the size of the card. It only adjusts how closely the cards are spaced to make them fit within the available width"
   },
   "exampleText4": {
     "id": "exampleText4",
@@ -2622,13 +2622,13 @@
     "z": 4,
     "movable": false,
     "movableInEdit": false,
-    "text": "This holder does not use css but instead relies on routines. The routine dynamically changes the offset so that the cubes are stacked closer and closer together to get them to fit within the width, but does not reduce their size like the holder to the left. To modify this holder for different widgets, adjust the cardWidth and normalOffset variables in the routine.",
     "css": {
       "color": "black",
       "font-size": "18px"
     },
     "layer": -5,
-    "x": 1125
+    "x": 1125,
+    "html": "This holder does not use CSS but instead relies on routines. The routine dynamically changes the offset so that the cubes are stacked closer and closer together to get them to fit within the width, but does not reduce their size like the holder to the left. To modify this holder for different widgets, adjust the cardWidth and normalOffset variables in the routine."
   },
   "cube19": {
     "id": "cube19",
@@ -3110,7 +3110,10 @@
     "id": "o2md"
   },
   "_meta": {
-    "version": 20,
+    "version": 21,
+    "gameSettings": {
+      "legacyModes": {}
+    },
     "info": {
       "name": "Types - Holder",
       "image": "/assets/-1144102332_4316",
@@ -3121,7 +3124,7 @@
       "time": "0",
       "attribution": "The coin in the Stackable Tokens variant is a modification of an icon by Delapoitue, available under CC BY 3.0 from&nbsp;https://game-icons.net/1x1/delapouite/token.html.",
       "showName": false,
-      "lastUpdate": 1768669162603,
+      "lastUpdate": 1770832868974,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -3130,13 +3133,11 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "players": "1",
-      "language": "en-US",
+      "usesAIImagery": false,
+      "variantImage": "",
       "variant": "CSS Flex",
-      "variantImage": ""
-    },
-    "gameSettings": {
-      "legacyModes": {}
+      "language": "en-US",
+      "players": "1"
     }
   }
 }

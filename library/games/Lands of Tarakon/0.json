@@ -26,7 +26,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-4"
+      "players": "2-4",
+      "usesAIImagery": true
     }
   },
   "mvr0": {

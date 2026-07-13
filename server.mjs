@@ -9,8 +9,12 @@ import CRC32 from 'crc-32';
 import fetch from 'node-fetch';
 
 import WebSocket  from './server/websocket.mjs';
+import FileLoader from './server/fileloader.mjs';
+import FileUpdater from './server/fileupdater.mjs';
+import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
+import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
 import Config     from './server/config.mjs';
@@ -47,6 +51,7 @@ async function ensureRoomIsLoaded(id) {
       activeRooms.delete(id);
     }, function() {
       Logging.log(`The public library was edited in room ${id}. Reloading in every room...`);
+      LibraryDecks.invalidateCache();
       for(const [ _, room ] of activeRooms)
         room.reloadPublicLibraryGames();
     });
@@ -260,7 +265,7 @@ MinifyHTML().then(function(result) {
   router.options('/api/addShareToRoom/:room/:share', allowCORS);
   router.get('/api/addShareToRoom/:room/:share', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const isPublicLibraryGame = req.params.share.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    const isPublicLibraryGame = req.params.share.match(/^PL:([a-z-]+):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${req.params.share}`])
       return res.sendStatus(404);
 
@@ -275,7 +280,7 @@ MinifyHTML().then(function(result) {
   });
 
   async function shareDetails(shareID) {
-    const isPublicLibraryGame = shareID.match(/^PL:(game|tutorial):([a-z-]+)$/);
+    const isPublicLibraryGame = shareID.match(/^PL:([a-z-]+):([a-z-]+)$/);
     if(!isPublicLibraryGame && !sharedLinks[`/s/${shareID}`])
       return null;
 
@@ -299,6 +304,22 @@ MinifyHTML().then(function(result) {
     }
   });
 
+  router.get('/api/library/decks', function(req, res, next) {
+    LibraryDecks.getIndex().then(function(index) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(index));
+    }).catch(next);
+  });
+
+  router.get('/api/library/decks/:library/:game/:file/:deck', function(req, res, next) {
+    LibraryDecks.getDeck(req.params.library, req.params.game, req.params.file, req.params.deck).then(function(deck) {
+      if(!deck)
+        return res.sendStatus(404);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(deck));
+    }).catch(next);
+  });
+
   router.get('/api/widgets', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(customWidgets));
@@ -313,6 +334,71 @@ MinifyHTML().then(function(result) {
     }
     fs.writeFileSync(path.resolve() + '/assets/widgets.json', JSON.stringify(customWidgets, null, 2));
     res.send('OK');
+  });
+
+  router.post('/api/decksFromLink', bodyParser.json({ limit: '1mb' }), function(req, res, next) {
+    (async function() {
+      if(typeof req.body != 'object' || req.body === null || typeof req.body.link != 'string' || !req.body.link.match(/^https?:\/\//))
+        throw new Logging.UserError(400, 'Please provide a link.');
+      // Keep this endpoint TTS-specific: only ever fetch resolved Steam Workshop
+      // items, not arbitrary URLs (defense-in-depth against SSRF).
+      if(!TTS.isTTSlink(req.body.link))
+        throw new Logging.UserError(400, 'Please enter a Tabletop Simulator Steam Workshop link (…/filedetails/?id=…).');
+
+      let states;
+      try {
+        states = await FileLoader.readStatesFromLink(req.body.link);
+      } catch(e) {
+        if(e instanceof Logging.UserError)
+          throw e;
+        Logging.log(`ERROR LOADING FILE: ${e.toString()}`);
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+      }
+      if(!states || typeof states != 'object')
+        throw new Logging.UserError(404, 'Unable to load and convert the game behind that link.');
+
+      const decks = [];
+      for(const [ stateID, variants ] of Object.entries(states)) {
+        const variantList = Object.values(variants || {});
+        for(const [ variantIndex, rawVariant ] of variantList.entries()) {
+          if(!rawVariant || typeof rawVariant != 'object' || !rawVariant._meta)
+            continue;
+          let variant;
+          try {
+            variant = FileUpdater(rawVariant);
+          } catch(e) {
+            continue;
+          }
+          const source = variantList.length > 1 ? `${stateID} #${variantIndex + 1}` : stateID;
+          const widgets = Object.entries(variant).filter(([ id, w ])=>id != '_meta' && w && typeof w == 'object');
+
+          // single pass over widgets: collect decks and group card counts by deck
+          const deckEntries = [];
+          const cardCountsByDeck = {};
+          for(const [ id, w ] of widgets) {
+            if(w.type == 'deck') {
+              deckEntries.push([ id, w ]);
+            } else if(w.type == 'card' && w.deck != null && w.cardType != null) {
+              (cardCountsByDeck[w.deck] || (cardCountsByDeck[w.deck] = {}));
+              cardCountsByDeck[w.deck][w.cardType] = (cardCountsByDeck[w.deck][w.cardType] || 0) + 1;
+            }
+          }
+          for(const [ deckID, deck ] of deckEntries) {
+            const rawCounts = cardCountsByDeck[deckID] || {};
+            // only count cardTypes registered on the deck: addDeckWithCards recreates
+            // cards from deck.cardTypes, so the badge stays equal to what gets imported
+            const cardTypes = (deck.cardTypes && typeof deck.cardTypes == 'object') ? deck.cardTypes : {};
+            const cardCounts = {};
+            for(const cardType in rawCounts)
+              if(Object.prototype.hasOwnProperty.call(cardTypes, cardType))
+                cardCounts[cardType] = rawCounts[cardType];
+            decks.push({ deck: Object.assign({}, deck, { id: deckID }), cardCounts, source });
+          }
+        }
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(decks));
+    })().catch(next);
   });
 
   router.get('/s/:link/:junk', function(req, res, next) {
@@ -366,9 +452,14 @@ MinifyHTML().then(function(result) {
   router.get('/game/:plName', gameRoomHandler);
   router.get('/game/:shareID/:name', gameRoomHandler);
   router.get('/tutorial/:plName', gameRoomHandler);
+  router.get('/library/:folder/:plName', gameRoomHandler);
   async function gameRoomHandler(req, res, next) {
     try {
-      if(!String(req.params.room).match(/^[A-Za-z0-9_-]+$/)) {
+      let roomID = String(req.params.room);
+      if(!Config.get('roomNamesCaseSensitive'))
+        roomID = roomID.toLowerCase();
+
+      if(!roomID.match(/^[A-Za-z0-9_-]+$/)) {
         res.send('Invalid characters in room ID.');
         return;
       }
@@ -377,9 +468,9 @@ MinifyHTML().then(function(result) {
         let ogOutput = `<meta property="og:title" content="${Config.get('serverName')}" />`;
         res.setHeader('Content-Type', 'text/html');
 
-        if(req.params.room) {
-          if(await ensureRoomIsLoaded(req.params.room)) {
-            const room = activeRooms.get(req.params.room);
+        if(roomID) {
+          if(await ensureRoomIsLoaded(roomID)) {
+            const room = activeRooms.get(roomID);
             let game = null;
             if(room.state && room.state._meta && room.state._meta.activeState && room.state._meta.states && room.state._meta.states[room.state._meta.activeState.stateID])
               game = room.state._meta.states[room.state._meta.activeState.stateID];
@@ -393,7 +484,9 @@ MinifyHTML().then(function(result) {
             }
           }
         } else {
-          const share = await shareDetails(req.params.shareID || `PL:${req.url.split('/')[1]}:${req.params.plName}`);
+          const routeFolderMap = { game: 'games', tutorial: 'tutorials' };
+          const routeFolder = req.params.folder || routeFolderMap[req.url.split('/')[1]] || req.url.split('/')[1];
+          const share = await shareDetails(req.params.shareID || `PL:${routeFolder}:${req.params.plName}`);
           if(share && req.url.split('/')[1] == 'tutorial') {
             ogOutput += `<meta property="og:description" content="Come look at the tutorial ${share.name}!" />`;
             ogOutput += `<meta property="og:image" content="${Config.get('externalURL')}/${share.image ? share.image.substr(1) : 'i/branding/android-512.png'}" />`;

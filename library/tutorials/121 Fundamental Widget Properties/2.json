@@ -1,11 +1,8 @@
 {
   "_meta": {
-    "version": 19,
+    "version": 21,
     "gameSettings": {
-      "legacyModes": {
-        "convertNumericVarParametersToNumbers": true,
-        "useOneAsDefaultForVarParameters": true
-      }
+      "legacyModes": {}
     },
     "info": {
       "name": "121 Fundamental Widget Properties",
@@ -16,7 +13,7 @@
       "mode": "Tutorial",
       "time": "",
       "attribution": "",
-      "lastUpdate": 1764462779925,
+      "lastUpdate": 1764462779921,
       "showName": false,
       "skill": "",
       "description": "",
@@ -26,6 +23,7 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
+      "usesAIImagery": false,
       "variantImage": "",
       "variant": "Rotation",
       "language": "en-US",
@@ -55,7 +53,7 @@
     "movable": false,
     "movableInEdit": false,
     "css": "font-size: 25px; ",
-    "html": "The <b>rotation</b> property is a number (in degrees) of the rotation of the widget. Positive numbers are rotation clockwise and negative numbers are rotation counter-clockwise. There is a function, <a href='https://virtualtabletop.io/tutorial/functions-rotate'>ROTATE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#rotate'>wiki</a>), which can be used in automation or your routine can directly <a href='https://virtualtabletop.io/tutorial/functions-set'>SET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#set'>wiki</a>) the <b>rotation</b> property. Similar to <b>scale</b>, any parent that is rotated also automatically rotates child widgets the same amount. Child widgets could also have their own <b>rotation</b> property would would add or subtract from the parent's value."
+    "html": "The <b>rotation</b> property is a number (in degrees) of the rotation of the widget. Positive numbers are rotation clockwise and negative numbers are rotation counter-clockwise. There is a function, <a href='https://virtualtabletop.io/tutorial/functions-rotate'>ROTATE</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#rotate'>wiki</a>), which can be used in automation or your routine can directly <a href='https://virtualtabletop.io/tutorial/functions-set'>SET</a> (<a href='https://github.com/ArnoldSmith86/virtualtabletop/wiki/Functions#set'>wiki</a>) the <b>rotation</b> property. Similar to <b>scale</b>, any parent that is rotated also automatically rotates child widgets the same amount. Child widgets could also have their own <b>rotation</b> property which would add or subtract from the parent's value."
   },
   "button3": {
     "type": "button",
@@ -130,7 +128,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The button above uses the ROTATE function to rotate the card holder 90 degrees per click using the <b>holder</b> parameter. This does not rotate the holder but rotates the specified (all in this case) number of objects inside the holder. When you take the cards out of the holder they keep their rotation. Note how this does not look good with the pile handle. This works best on individual widgets. Also, the Recall & Shuffle button does change rotation.",
+    "html": "The button above uses the ROTATE function to rotate the card holder 90 degrees per click using the <b>holder</b> parameter. This does not rotate the holder but rotates the specified (all in this case) number of objects inside the holder. When you take the cards out of the holder they keep their rotation. Note how this does not look good with the pile handle. This works best on individual widgets. Also, the Recall & Shuffle button does not rotate.",
     "layer": -2
   },
   "meeple": {
@@ -1229,7 +1227,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "You can use a read only property to find the total <b>rotation</b> of a widget, including its parentse. See the button above. It first SETs random rotation values for the blue square and the blue meeple to the left. Then using <b>_absoluteRotation</b> it sums the <b></b> rotation of the meeple and its parent square."
+    "html": "You can use a read only property to find the total <b>rotation</b> of a widget, including its parents. See the button above. It first SETs random rotation values for the blue square and the blue meeple to the left. Then using <b>_absoluteRotation</b> it sums the <b></b> rotation of the meeple and its parent square."
   },
   "basic": {
     "id": "basic",
