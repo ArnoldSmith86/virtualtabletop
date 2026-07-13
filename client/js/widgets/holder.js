@@ -41,24 +41,29 @@ class Holder extends ImageWidget {
   // get() therefore returns the value implied by the layout, so both this class
   // and the base Widget logic behave consistently.
   get(property) {
-    const layout = super.get('layout');
-    if(layout) {
-      if(property == 'dropShadow' && layout == 'multipleSpread')
-        // multipleSpread always shows a drop shadow so players can see where a
-        // dragged card/group will be inserted
-        return true;
-      if(property == 'alignChildren')
-        // multipleSpread and freeform leave children where the player drops them
-        // (multipleSpread then merges overlapping cards into spread-out pile groups)
-        return layout != 'freeform' && layout != 'multipleSpread';
-      if(property == 'preventPiles') {
-        if(layout == 'grid')
+    // Only these properties are ever derived from a non-null layout. For every
+    // other property read (the common case) skip the layout lookup entirely so
+    // get() stays cheap on this hot path.
+    if(property == 'dropShadow' || property == 'alignChildren' || property == 'preventPiles' || property == 'stackOffsetX' || property == 'stackOffsetY') {
+      const layout = super.get('layout');
+      if(layout) {
+        if(property == 'dropShadow' && layout == 'multipleSpread')
+          // multipleSpread always shows a drop shadow so players can see where a
+          // dragged card/group will be inserted
           return true;
-        if(layout == 'pile' || layout == 'multipleSpread')
-          return false;
+        if(property == 'alignChildren')
+          // multipleSpread and freeform leave children where the player drops them
+          // (multipleSpread then merges overlapping cards into spread-out pile groups)
+          return layout != 'freeform' && layout != 'multipleSpread';
+        if(property == 'preventPiles') {
+          if(layout == 'grid')
+            return true;
+          if(layout == 'pile' || layout == 'multipleSpread')
+            return false;
+        }
+        if((property == 'stackOffsetX' || property == 'stackOffsetY') && layout == 'pile')
+          return 0;
       }
-      if((property == 'stackOffsetX' || property == 'stackOffsetY') && layout == 'pile')
-        return 0;
     }
     return super.get(property);
   }
@@ -283,6 +288,9 @@ class Holder extends ImageWidget {
   // one about a card tall/wide keeps a single row/column with no stacking.
   // Compute the grid geometry for n cards: the column count and per-cell step
   // that keep every card inside the holder with the least overlap (see above).
+  // Note: the cell size is taken from the first child, so the grid assumes all
+  // children share one size (as a card deck does); mixed-size children may
+  // overlap or overflow. This limitation is documented on the wiki.
   gridMetrics(n) {
     const marginX = this.get('dropOffsetX');
     const marginY = this.get('dropOffsetY');
@@ -412,10 +420,12 @@ class Holder extends ImageWidget {
     // decide where the shadow goes: over a group (insert within that group's fan)
     // or between two groups / at an end (insert a new group). The shadow is
     // positioned in global coordinates while the groups store holder-relative x,
-    // so convert to the same frame before comparing.
+    // so convert to the holder's frame (via coordLocalFromCoordGlobal, which
+    // accounts for any scaling/nesting between the holder and the root) before
+    // comparing.
     let insertIndex = -1, overGroup = null, fanIndex = -1;
     if(shadow) {
-      const shadowLeft = shadow.get('x') - this.absoluteCoord('x');
+      const shadowLeft = this.coordLocalFromCoordGlobal({ x: shadow.get('x'), y: shadow.get('y') }).x;
       const shadowCenter = shadowLeft + shadow.get('width') / 2;
       overGroup = groups.find(g=>shadowCenter >= g.get('x') && shadowCenter <= g.get('x') + g.get('width'));
       if(overGroup) {

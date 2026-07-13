@@ -1548,9 +1548,14 @@ export class Widget extends StateManaged {
           if(!a.position || target.get('type') != 'holder')
             return;
           if(a.position == 'pileBottom' || a.position == 'groupStart') {
-            const siblings = target.children().filter(w=>w!=c);
-            const minZ = siblings.length ? Math.min(...siblings.map(w=>w.get('z'))) : 1;
-            await c.set('z', minZ - 1);
+            // put c below all siblings, but renumber the whole holder to a compact
+            // 1..n z range (order preserved) so repeated moves into the same holder
+            // don't drift z steadily negative
+            const siblings = target.children().filter(w=>w!=c).sort((x, y)=>x.get('z') - y.get('z'));
+            await c.set('z', 1);
+            let z = 2;
+            for(const w of siblings)
+              await w.set('z', z++);
           } else if(a.position == 'pileTop' || a.position == 'groupEnd') {
             await c.bringToFront();
           }

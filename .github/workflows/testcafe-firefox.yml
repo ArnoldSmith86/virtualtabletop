@@ -19,6 +19,7 @@ jobs:
       matrix:
         testfile:
           - editor.js
+          - holder-layout.js
           - compute-1.js
           - compute-2.js
           - compute-3.js
