@@ -546,6 +546,7 @@ export class Widget extends StateManaged {
     return coord;
   }
   coordGlobalFromCoordParent(coord) {
+    // recurses one hop into the cycle-safe coordGlobalFromCoordLocal, so a cyclic parent chain terminates there rather than here
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordGlobalFromCoordLocal(coord) : coord;
   }
@@ -567,6 +568,7 @@ export class Widget extends StateManaged {
     return result || new DOMPoint();
   }
   coordParentFromCoordGlobal(coord) {
+    // recurses one hop into the cycle-safe coordLocalFromCoordGlobal, so a cyclic parent chain terminates there rather than here
     const p = this.get('parent');
     return (widgets.has(p)) ? widgets.get(p).coordLocalFromCoordGlobal(coord) : coord;
   }
