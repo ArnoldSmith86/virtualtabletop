@@ -1868,7 +1868,8 @@ class PropertiesModule extends SidebarModule {
       inheritID.value = inheritSelect.value;
     };
     inheritID.oninput = refreshInheritOptions;
-    inheritID.value = widget.attachedWidgets()[0]?.id || '';
+    const firstAttachedWidget = widget.attachedWidgets()[0];
+    inheritID.value = firstAttachedWidget ? firstAttachedWidget.id : '';
     refreshInheritOptions();
     inheritWrap.appendChild(inheritLabel);
     inheritWrap.appendChild(document.createTextNode('Widget id '));
