@@ -17,6 +17,7 @@ test('Pan in edit mode while holding Space', async t => {
   await ClientFunction(prepareClient)();
   await setName(t);
   await t.click('#editButton');
+  await t.expect(Selector('#editorSelection').exists).ok();
 
   const result = await ClientFunction(() => {
     const zoomSlider = document.querySelector('#zoomSlider');
