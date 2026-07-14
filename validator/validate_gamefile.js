@@ -879,8 +879,9 @@ function customWidgetChecks(widget, widgets, problems) {
     }
 }
 
-function getCustomPropertyUsage(data) {
+function getCustomPropertyUsage(data, definitionsOnly = false) {
     const customProperties = new Set();
+    const definedCustomProperties = new Set();
     const declaredCustomProperties = new Set();
     const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
     const canvasPropertyRegex = /^c[0-9]+$/;
@@ -898,8 +899,10 @@ function getCustomPropertyUsage(data) {
 
     for (const [, widget] of widgetEntries) {
         for (const prop of Object.keys(widget)) {
-            if (isCustomWidgetProperty(widget, prop))
+            if (isCustomWidgetProperty(widget, prop)) {
                 declaredCustomProperties.add(prop);
+                definedCustomProperties.add(prop);
+            }
         }
     }
 
@@ -923,12 +926,14 @@ function getCustomPropertyUsage(data) {
         }
     }
 
-    function addPropertyUsage(value) {
+    function addPropertyUsage(value, isDefinition = false) {
         const property = typeof value === 'string' ? value : Array.isArray(value) ? value[0] : null;
         if (typeof property !== 'string')
             return;
 
         customProperties.add(property);
+        if(isDefinition)
+            definedCustomProperties.add(property);
         addPropertyPatternMatches(property);
     }
 
@@ -1032,7 +1037,7 @@ function getCustomPropertyUsage(data) {
                 } else if (func === 'SORT' && key === 'key' && typeof value === 'string') {
                     addPropertyUsage(value);
                 } else if (func === 'SET' && key === 'property' && typeof value === 'string') {
-                    addPropertyUsage(value);
+                    addPropertyUsage(value, true);
                 }
             }
 
@@ -1046,11 +1051,13 @@ function getCustomPropertyUsage(data) {
         // Scan widget properties
         scanForProperties(widget);
 
-        if(widget.type === 'scoreboard')
+        if(widget.type === 'scoreboard') {
             customProperties.add(widget.scoreProperty || 'score');
+            definedCustomProperties.add(widget.scoreProperty || 'score');
+        }
     }
     
-    return [...customProperties];
+    return [...(definitionsOnly ? definedCustomProperties : customProperties)];
 }
 
 function validateGameFile(data, checkMeta) {
@@ -1058,6 +1065,8 @@ function validateGameFile(data, checkMeta) {
     
     // Get all custom properties used in the game file
     const customProperties = getCustomPropertyUsage(data);
+    // Reads are valid only for properties declared on a widget or written by SET.
+    const definedCustomProperties = getCustomPropertyUsage(data, true);
     const calledCustomRoutines = [];
     
     // Basic structure validation
@@ -1206,7 +1215,7 @@ function validateGameFile(data, checkMeta) {
                     validator = getRoutineValidator({widgetID: 1, property: 1, oldValue: 1, value: 1}, {widget: 1}, false);
 
                 if (typeof validator === 'function') {
-                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties, calledCustomRoutines}, [prop]);
+                    const result = validator(widget[prop], {widgetId: key, widgets: data, customProperties: definedCustomProperties, calledCustomRoutines}, [prop]);
                     if (Array.isArray(result)) {
                         // Validator returned an array of problems
                         problems.push(...result);
@@ -1234,7 +1243,7 @@ function validateGameFile(data, checkMeta) {
         // Routine validation for properties ending with 'Routine'
         for (const [propName, propValue] of Object.entries(widget)) {
             if (propName.endsWith('Routine') && !known[propName] && Array.isArray(propValue) && !calledCustomRoutines.includes(propName) && !propName.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
-                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties, calledCustomRoutines };
+                const context = { widgetId: key, widgets: data, validVariables: {...SUPER_GLOBALS.variables}, validCollections: {...SUPER_GLOBALS.collections}, customProperties: definedCustomProperties, calledCustomRoutines };
                 const routineProblems = validateRoutine(propValue, context, [propName]);
                 problems.push({
                     widget: key,
