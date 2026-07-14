@@ -93,43 +93,48 @@ onLoad(function() {
   let panStartX = 0;
   let panStartY = 0;
   let isSpacePanModifierActive = false;
+  let isSpacePanPointerActive = false;
   let lastWheelZoomTime = 0;
   const minWheelZoomInterval = 40; // milliseconds between zoom events
   let zoomControlsHidden = true;
 
   function isEditableElement(target) {
-    if (!target) return false;
-
-    const editableTags = ['INPUT', 'TEXTAREA', 'SELECT'];
+    const editableTags = ['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
     return editableTags.includes(target.tagName) || target.isContentEditable;
   }
 
+  function updateSpacePanClass() {
+    document.body.classList.toggle('spacePanActive', isSpacePanModifierActive || isSpacePanPointerActive);
+  }
+
+  function stopDraggingPan() {
+    isDraggingPan = false;
+    document.body.classList.remove('panning');
+  }
+
   function handleSpaceKeyDown(e) {
-    if ((e.code === 'Space' || e.key === ' ') && !e.repeat && !isEditableElement(e.target)) {
+    if(edit && !overlayActive && (e.code === 'Space' || e.key === ' ') && !isEditableElement(e.target)) {
       isSpacePanModifierActive = true;
-      document.body.classList.add('spacePanActive');
-      if (e.target === document.body) e.preventDefault();
+      updateSpacePanClass();
+      e.preventDefault();
     }
   }
 
   function handleSpaceKeyUp(e) {
     if (e.code === 'Space' || e.key === ' ') {
       isSpacePanModifierActive = false;
-      document.body.classList.remove('spacePanActive');
-      if (edit && isDraggingPan) {
-        isDraggingPan = false;
-        document.body.classList.remove('panning');
-      }
+      updateSpacePanClass();
+      if(edit && isDraggingPan)
+        stopDraggingPan();
     }
   }
 
   function handleWindowBlur() {
     isSpacePanModifierActive = false;
-    document.body.classList.remove('spacePanActive');
-    if (isDraggingPan) {
-      isDraggingPan = false;
-      document.body.classList.remove('panning');
-    }
+    isSpacePanPointerActive = false;
+    updateSpacePanClass();
+    if(isDraggingPan)
+      stopDraggingPan();
   }
 
   // Button click toggles zoom controls panel
@@ -190,7 +195,9 @@ onLoad(function() {
     if(spacePan) {
       e.preventDefault();
       e.stopPropagation();
-      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      e.stopImmediatePropagation();
+      isSpacePanPointerActive = true;
+      updateSpacePanClass();
 
       // If zoomed in, start panning regardless of widget under cursor
       if(zoomScale > 1 && !isDraggingPan) {
@@ -239,8 +246,7 @@ onLoad(function() {
   on('body', 'mousemove', function(e){
     if(isDraggingPan) {
       if(edit && !isSpacePanModifierActive) {
-        isDraggingPan = false;
-        $('body').classList.remove('panning');
+        stopDraggingPan();
         return;
       }
       setPan(panStartX + (e.clientX - dragStartX), panStartY + (e.clientY - dragStartY));
@@ -248,9 +254,11 @@ onLoad(function() {
   });
 
   on('body', 'mouseup', function(e){
-    if(isDraggingPan) {
-      isDraggingPan = false;
-      $('body').classList.remove('panning');
+    if(isDraggingPan)
+      stopDraggingPan();
+    if(isSpacePanPointerActive) {
+      isSpacePanPointerActive = false;
+      setTimeout(updateSpacePanClass);
     }
   });
 
