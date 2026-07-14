@@ -157,6 +157,65 @@ export class Line extends Widget {
     }
   }
 
+  // Move stops so the gaps between their edges are equal. The stops array is
+  // captured once in line order and is used for every update, so distributing
+  // never changes which widget occupies which stop.
+  async distributeAttachedWidgetsEvenly() {
+    const stops = this.attachedWidgets();
+    if(stops.length < 2) {
+      await this.updateAttachedWidgets();
+      return;
+    }
+
+    const length = this.lineLength();
+    if(!length) {
+      for(const stop of stops)
+        await stop.set('linePosition', 0);
+      await this.updateAttachedWidgets();
+      return;
+    }
+    let positions = stops.map(stop=>+stop.get('linePosition') || 0);
+    for(let iteration = 0; iteration < 3; ++iteration) {
+      const sizes = stops.map((stop, i)=>this.widgetLengthOnLine(stop, positions[i]));
+      const requestedGap = (length - sizes.reduce((sum, size)=>sum+size, 0) + sizes[0]/2 + sizes[sizes.length-1]/2)/(stops.length-1);
+      // If the widgets do not fit, allow overlap but never enough to reverse
+      // two neighboring centers. This preserves the original stop order.
+      const minimumGap = -Math.min(...sizes.slice(0, -1).map((size, i)=>(size+sizes[i+1])/2));
+      const gap = Math.max(requestedGap, minimumGap);
+      let distance = 0;
+      const targetDistances = stops.map((stop, i)=>{
+        if(i == 0)
+          return 0;
+        distance += sizes[i-1]/2 + gap + sizes[i]/2;
+        return distance;
+      });
+      const totalDistance = targetDistances[targetDistances.length-1] || length;
+      positions = targetDistances.map((distance, i)=>i == 0 ? 0 : i == stops.length-1 ? 1 : distance/totalDistance);
+      for(let i = 0; i < stops.length; ++i)
+        await stops[i].set('linePosition', positions[i]);
+      await this.updateAttachedWidgets();
+    }
+
+    let previousPosition = 0;
+    for(let i = 0; i < stops.length; ++i) {
+      const position = i == 0 ? 0 : i == stops.length-1 ? 1 : Math.max(previousPosition, Math.min(1, Math.round(positions[i]*1000)/1000));
+      await stops[i].set('linePosition', position);
+      previousPosition = position;
+    }
+    await this.updateAttachedWidgets();
+  }
+
+  widgetLengthOnLine(widget, position) {
+    const scale = Math.max(0, +widget.get('scale') || 0);
+    const width = Math.max(0, +widget.get('width') || 0) * scale;
+    const height = Math.max(0, +widget.get('height') || 0) * scale;
+    let rotation = +widget.get('rotation') || 0;
+    if(this.get('rotateAttachedWidgets') && width > height)
+      rotation = this.tangentAngleAtPosition(position);
+    const relativeRotation = (rotation - this.tangentAngleAtPosition(position))*Math.PI/180;
+    return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
+  }
+
   // The angle of the path's tangent in degrees at an arc-length position.
   // Sampling either side also works for both straight and cubic paths without
   // needing to convert an arc-length position back to a Bezier parameter.

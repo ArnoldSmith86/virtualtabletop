@@ -1914,10 +1914,7 @@ class PropertiesModule extends SidebarModule {
     distributeButton.onclick = async _=>{
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} distributed the stops on line ${widget.id} in editor`);
-      const stops = widget.attachedWidgets();
-      for(let i = 0; i < stops.length; ++i)
-        await stops[i].set('linePosition', stops.length > 1 ? Math.round(i/(stops.length-1)*1000)/1000 : 0);
-      await widget.updateAttachedWidgets();
+      await widget.distributeAttachedWidgetsEvenly();
       batchEnd();
       renderStops();
     };
