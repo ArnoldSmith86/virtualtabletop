@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, flushDelta } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -18,6 +18,35 @@ const readOnlyProperties = new Set([
   '_localOriginAbsoluteX',
   '_localOriginAbsoluteY'
 ]);
+
+function inputFieldValueForPlayer(value, player, playerIndex) {
+  if(!value || typeof value != 'object' || Array.isArray(value))
+    return value;
+  for(const key of [ player, String(playerIndex), 'default', 'DEFAULT' ])
+    if(Object.prototype.hasOwnProperty.call(value, key))
+      return value[key];
+  return null;
+}
+
+function cloneInputOverlayForPlayer(overlay, player, playerIndex) {
+  const clone = JSON.parse(JSON.stringify(overlay));
+  for(const field of clone.fields || []) {
+    if(field.type != 'choose')
+      continue;
+    for(const property of [ 'source', 'holder', 'collection', 'value' ])
+      field[property] = inputFieldValueForPlayer(field[property], player, playerIndex);
+  }
+  return clone;
+}
+
+function hasPlayerSpecificChooseField(overlay) {
+  return (overlay.fields || []).some(field=>
+    field.type == 'choose' &&
+    [ 'source', 'holder', 'collection', 'value' ].some(property=>
+      field[property] && typeof field[property] == 'object' && !Array.isArray(field[property])
+    )
+  );
+}
 
 let lastExecutedOperation = null;
 
@@ -1477,10 +1506,63 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'INPUT') {
+        setDefaults(a, { player: playerName, block: false });
+        // `player` may be a single name or a list. A non-empty list makes the
+        // overlay appear for every listed player at once and returns their
+        // results keyed by player name (e.g. choosing cards to pass in Hearts).
+        // A null/empty `player` falls back to the acting player, so an INPUT
+        // created from the editor template (which sets `player: null`) still
+        // shows locally instead of silently doing nothing.
+        let players = [ ...new Set(asArray(a.player).filter(Boolean)) ];
+        const isMulti = Array.isArray(a.player) && players.length > 0;
+        if(!players.length)
+          players = [ playerName ];
+        // Warn about names that aren't active players so a typo is not silently
+        // indistinguishable from that player cancelling the input.
+        for(const p of players)
+          if(p !== playerName && activePlayers.indexOf(p) == -1)
+            problems.push(`INPUT: '${p}' is not an active player; the overlay cannot be shown to them.`);
+        // Only the initiator can show its own overlay locally (it has the live
+        // variables/collections); everyone else is asked over the network.
+        const showLocal = players.indexOf(playerName) != -1 ? registerAbort=>{
+          const handle = {};
+          const promise = this.showInputOverlay(cloneInputOverlayForPlayer(a, playerName, players.indexOf(playerName)), widgets, variables, collections, getCollection, problems, handle);
+          registerAbort(()=>{ if(handle.abort) handle.abort(); });
+          return promise;
+        } : null;
         try {
-          const result = await this.showInputOverlay(a, widgets, variables, collections, getCollection, problems);
-          Object.assign(variables, result.variables);
-          Object.assign(collections, result.collections);
+          const usePlayerSpecificOverlay = hasPlayerSpecificChooseField(a);
+          const overlaysByPlayer = usePlayerSpecificOverlay ? Object.fromEntries(players.map((p, i)=>[ p, cloneInputOverlayForPlayer(a, p, i) ])) : null;
+          const results = await runInput({ widgetID: this.get('id'), overlay: a, overlaysByPlayer, players, variables, collections, showLocal });
+          if(isMulti) {
+            // Return each field's value keyed by the player who entered it.
+            for(const field of a.fields || []) {
+              if(!field.variable)
+                continue;
+              const keyed = {};
+              for(const p of players)
+                if(results[p])
+                  keyed[p] = results[p].variables[field.variable];
+              variables[field.variable] = keyed;
+            }
+            // Collections (e.g. from 'choose' fields) are unioned across players.
+            for(const p of players) {
+              if(!results[p])
+                continue;
+              for(const c in results[p].collections)
+                collections[c] = [ ...(collections[c] || []), ...results[p].collections[c] ];
+            }
+          } else {
+            const result = results[players[0]] || { variables: {}, collections: {} };
+            // Results collected from another player must not rename/recolor the
+            // player who is actually running the routine.
+            if(players[0] !== playerName) {
+              delete result.variables.playerName;
+              delete result.variables.playerColor;
+            }
+            Object.assign(variables, result.variables);
+            Object.assign(collections, result.collections);
+          }
           if(jeRoutineLogging) {
             let varList = [];
             let valueList = [];
@@ -2735,7 +2817,7 @@ export class Widget extends StateManaged {
       event.preventDefault();
   }
 
-  async showInputOverlay(o, widgets, variables, collections, getCollection, problems) {
+  async showInputOverlay(o, widgets, variables, collections, getCollection, problems, handle) {
     this.showInputOverlayWorkingState(false);
 
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';
@@ -2804,6 +2886,17 @@ export class Widget extends StateManaged {
       };
       on('#buttonInputGo', 'click', goHandler);
       on('#buttonInputCancel', 'click', cancelHandler);
+      // Allow the overlay to be closed remotely (e.g. the input was cancelled
+      // for everyone via the block overlay, or the initiator disconnected).
+      if(handle) {
+        handle.abort = ()=>{
+          $('#buttonInputGo').removeEventListener('click', goHandler);
+          $('#buttonInputCancel').removeEventListener('click', cancelHandler);
+          delete $('#activeGameButton').dataset.overlay;
+          showOverlay(null);
+          reject({ variables: {}, collections: {} });
+        };
+      }
       showOverlay('buttonInputOverlay');
       const inputs = $a('#buttonInputFields input, #buttonInputFields select');
       if(inputs.length) {
