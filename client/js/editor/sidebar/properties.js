@@ -1944,15 +1944,15 @@ class PropertiesModule extends SidebarModule {
       renderStops();
     };
 
-    // Connecting an end point glues it onto another line at a chosen percentage.
-    // The glue math assumes both lines share the room's coordinate frame, so a
-    // connection behaves as expected only when neither line sits under a rotated
-    // or scaled parent (see applyConnections in widgets/line.js).
+    // Connecting an end point glues it onto another widget at a chosen percentage.
+    // The glue math assumes the line and its target share the room's coordinate
+    // frame, so nested rotated/scaled parents are not supported here.
     for(const end of [ 'Start', 'End' ]) {
       this.addSubHeader(`Connect ${end.toLowerCase()} point`);
       const wrapper = div(this.moduleDOM, 'genericInput');
       const select = document.createElement('select');
       select.className = `lineConnect${end}`;
+      select.title = 'Line widgets available for connection';
       const noneOption = document.createElement('option');
       noneOption.value = '';
       noneOption.innerText = 'not connected';
@@ -1963,6 +1963,11 @@ class PropertiesModule extends SidebarModule {
         option.innerText = line.get('id');
         select.appendChild(option);
       }
+      const target = document.createElement('input');
+      target.type = 'text';
+      target.className = `lineConnect${end}ID`;
+      target.placeholder = 'widget id';
+      target.title = 'Type any widget id to connect to it';
       const position = document.createElement('input');
       position.type = 'number';
       position.min = 0;
@@ -1974,29 +1979,52 @@ class PropertiesModule extends SidebarModule {
       offset.step = 'any';
       offset.className = `lineConnect${end}Offset`;
       offset.title = 'Perpendicular offset from the other line in pixels; positive is to its left from start to end';
+      wrapper.appendChild(document.createTextNode('Widget id '));
+      wrapper.appendChild(target);
+      wrapper.appendChild(document.createTextNode(' (or choose line: '));
       wrapper.appendChild(select);
+      wrapper.appendChild(document.createTextNode(') '));
+      wrapper.appendChild(document.createElement('br'));
+      wrapper.appendChild(document.createTextNode('Connect at '));
       wrapper.appendChild(position);
       wrapper.appendChild(document.createTextNode('%'));
-      wrapper.appendChild(document.createElement('br'));
-      wrapper.appendChild(document.createTextNode('Offset '));
+      wrapper.appendChild(document.createTextNode('. Offset '));
       wrapper.appendChild(offset);
       wrapper.appendChild(document.createTextNode(' px'));
 
       this.addPropertyListener(widget, 'connect'+end, widget=>{
         const connection = widget.get('connect'+end);
-        select.value = connection && connection.line ? connection.line : '';
+        target.value = connection && connection.line ? connection.line : '';
+        select.value = connection && [ ...select.options ].some(option=>option.value == connection.line) ? connection.line : '';
         position.value = connection ? Math.round((connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1))*100) : (end == 'Start' ? 0 : 100);
         offset.value = connection ? (+connection.offset || 0) : 0;
         position.disabled = !connection;
         offset.disabled = !connection;
       });
-      select.onchange = position.onchange = offset.onchange = _=>{
-        widget.set('connect'+end, select.value ? {
-          line: select.value,
+      const saveConnection = ()=>{
+        widget.set('connect'+end, target.value ? {
+          line: target.value,
           position: Math.max(0, Math.min(100, +position.value || 0))/100,
           offset: +offset.value || 0
         } : null);
       };
+      const setDefaultPositionForTarget = _=>{
+        const targetWidget = widgets.get(target.value);
+        // A newly chosen non-line widget starts at its midpoint. Line targets
+        // retain the familiar start/end default.
+        position.value = targetWidget && targetWidget.get('type') != 'line' ? 50 : (end == 'Start' ? 0 : 100);
+        saveConnection();
+      };
+      select.onchange = _=>{
+        target.value = select.value;
+        setDefaultPositionForTarget();
+      };
+      target.onchange = _=>{
+        select.value = [ ...select.options ].some(option=>option.value == target.value) ? target.value : '';
+        setDefaultPositionForTarget();
+      };
+      position.onchange = offset.onchange = saveConnection;
+
     }
 
     this.addSubHeader('Line properties');

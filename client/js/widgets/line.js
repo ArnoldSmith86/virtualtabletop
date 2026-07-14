@@ -21,7 +21,7 @@ export class Line extends Widget {
 
       // when enabled, landscape stops follow the direction of the line at
       // their position; portrait and square stops keep their own rotation
-      rotateStops: false,
+      rotateStops: true,
 
       connectStart: null,
       connectEnd: null
@@ -267,32 +267,67 @@ export class Line extends Widget {
       return;
     Line.connectionUpdateInProgress.add(this.id);
     try {
-      for(const end of [ 'Start', 'End' ]) {
+      const connectionPoint = end=>{
         const connection = this.get('connect' + end);
         if(!connection || typeof connection != 'object' || !widgets.has(connection.line))
-          continue;
+          return null;
         const target = widgets.get(connection.line);
-        if(target.get('type') != 'line' || target == this)
-          continue;
-        // connections assume both lines share their coordinate system (no rotated/scaled ancestors)
+        if(target == this)
+          return null;
         const position = connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1);
-        const p = target.pointAtPosition(position);
-        // Offset is measured perpendicular to the target line at the connection
-        // point. A positive value is to the left when travelling start to end.
-        const tangent = target.tangentAngleAtPosition(position) * Math.PI/180;
-        const offset = +connection.offset || 0;
-        const oldPoint = this.pointProperty('line' + end) || { x: 0, y: 0 };
-        const newPoint = {
-          x: Math.round(target.get('x') + p.x - Math.sin(tangent)*offset - this.get('x')),
-          y: Math.round(target.get('y') + p.y + Math.cos(tangent)*offset - this.get('y'))
+        const targetIsLine = target.get('type') == 'line';
+        // Line targets use their path. Other widgets use a horizontal path
+        // through their midpoint: 0% is the left edge, 50% the center, and
+        // 100% the right edge.
+        const p = targetIsLine ? target.pointAtPosition(position) : {
+          x: target.get('width') * position,
+          y: target.get('height') / 2
         };
+        return { end, connection, target, targetIsLine, position, p, global: target.coordGlobalFromCoordLocal(p) };
+      };
+
+      const points = [ connectionPoint('Start'), connectionPoint('End') ];
+      const route = points[0] && points[1] ? {
+        x: points[1].global.x - points[0].global.x,
+        y: points[1].global.y - points[0].global.y
+      } : null;
+      const routeTangent = route && Math.hypot(route.x, route.y) ? Math.atan2(route.y, route.x) : null;
+
+      for(const point of points) {
+        if(!point)
+          continue;
+        let tangent;
+        if(routeTangent !== null) {
+          // A two-ended connection is a route. Use its overall direction for
+          // every target type so matching offsets make parallel routes.
+          tangent = routeTangent;
+        } else if(point.targetIsLine) {
+          const delta = 0.001;
+          const before = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.max(0, point.position-delta)));
+          const after = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.min(1, point.position+delta)));
+          tangent = Math.atan2(after.y-before.y, after.x-before.x);
+        } else {
+          tangent = 0;
+        }
+        const offset = +point.connection.offset || 0;
+        const oldPoint = this.pointProperty('line' + point.end) || { x: 0, y: 0 };
+        const targetPoint = {
+          x: point.global.x - Math.sin(tangent)*offset,
+          y: point.global.y + Math.cos(tangent)*offset
+        };
+        // Convert through global coordinates. Target widgets may be nested in
+        // a board/holder, so their local x/y cannot be combined directly with
+        // this line's local coordinates.
+        const newPoint = this.coordLocalFromCoordGlobal(targetPoint);
+        newPoint.x = Math.round(newPoint.x);
+        newPoint.y = Math.round(newPoint.y);
         // move this end's Bezier control point by the same delta, so a curved
         // connected line keeps its shape (its middle doesn't stay behind) as the
         // end point follows the target instead of just stretching from a fixed control
-        const control = this.pointProperty('control' + end);
+        const control = this.pointProperty('control' + point.end);
         if(control)
-          await this.set('control' + end, { x: control.x + newPoint.x - oldPoint.x, y: control.y + newPoint.y - oldPoint.y });
-        await this.set('line' + end, newPoint);
+          await this.set('control' + point.end, { x: control.x + newPoint.x - oldPoint.x, y: control.y + newPoint.y - oldPoint.y });
+        await this.set('line' + point.end, newPoint);
       }
       await this.normalizeGeometry();
     } finally {

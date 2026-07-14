@@ -2563,6 +2563,12 @@ export class Widget extends StateManaged {
       if(!this.disablePileUpdateAfterParentChange)
         await this.updatePiles();
     }
+
+    // A line can connect to any widget. When a non-line target moves or is
+    // resized, re-apply all dependent line endpoints.
+    if(this.get('type') != 'line' && [ 'x', 'y', 'width', 'height' ].includes(property))
+      for(const line of widgetFilter(w=>w.get('type') == 'line' && [ w.get('connectStart'), w.get('connectEnd') ].some(connection=>connection && connection.line == this.id)))
+        await line.applyConnections();
   }
 
   readOnlyProperties() {

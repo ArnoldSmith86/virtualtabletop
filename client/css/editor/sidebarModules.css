@@ -417,8 +417,15 @@
 .editorModule input.lineConnectPosition,
 .editorModule input.lineConnectStartOffset,
 .editorModule input.lineConnectEndOffset {
-  width: 70px;
-  min-width: 70px;
+  width: 52px;
+  min-width: 52px;
+}
+.editorModule input.lineConnectStartID,
+.editorModule input.lineConnectEndID,
+.editorModule select.lineConnectStart,
+.editorModule select.lineConnectEnd {
+  width: 105px;
+  min-width: 105px;
 }
 .editorModule input.lineRotateStopsCheckbox {
   width: 20px;
