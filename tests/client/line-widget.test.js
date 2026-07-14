@@ -20,6 +20,11 @@ beforeAll(async () => {
 function createLine(def) {
   const line = new Line(def.id);
   addWidget({ ...def, type: 'line' }, line);
+  // jsdom does not implement DOMMatrix. These fixtures deliberately exercise
+  // lines in the room's untransformed coordinate frame, so model that frame
+  // directly while leaving browser transform coverage to TestCafe.
+  line.coordGlobalFromCoordLocal = coord => ({ x: line.get('x') + coord.x, y: line.get('y') + coord.y });
+  line.coordLocalFromCoordGlobal = coord => ({ x: coord.x - line.get('x'), y: coord.y - line.get('y') });
   return line;
 }
 

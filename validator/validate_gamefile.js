@@ -138,7 +138,7 @@ const WIDGET_PROPERTIES = {
     },
     Line: {
         ...COMMON_PROPERTIES,
-        layer: 'any', movable: 'boolean', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', connectStart: 'any', connectEnd: 'any'
+        layer: 'any', movable: 'boolean', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', connectStart: 'any', connectEnd: 'any'
     },
     Pile: {
         ...COMMON_PROPERTIES,

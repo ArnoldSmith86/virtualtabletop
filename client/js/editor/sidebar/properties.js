@@ -1777,6 +1777,7 @@ class PropertiesModule extends SidebarModule {
         batchStart();
         await widget.set('controlStart', controls ? controls.start : null);
         await widget.set('controlEnd', controls ? controls.end : null);
+        await widget.normalizeGeometry();
         batchEnd();
       };
       return button;
@@ -1867,6 +1868,7 @@ class PropertiesModule extends SidebarModule {
       inheritID.value = inheritSelect.value;
     };
     inheritID.oninput = refreshInheritOptions;
+    inheritID.value = widget.attachedWidgets()[0]?.id || '';
     refreshInheritOptions();
     inheritWrap.appendChild(inheritLabel);
     inheritWrap.appendChild(document.createTextNode('Widget id '));
@@ -2047,8 +2049,8 @@ class PropertiesModule extends SidebarModule {
     };
 
     // Connecting an end point glues it onto another widget at a chosen percentage.
-    // The glue math assumes the line and its target share the room's coordinate
-    // frame, so nested rotated/scaled parents are not supported here.
+    // Line.applyConnections converts through global coordinates so targets under
+    // transformed parents stay in the correct frame.
     for(const end of [ 'Start', 'End' ]) {
       this.addSubHeader(`Connect ${end.toLowerCase()} point`);
       const wrapper = div(this.moduleDOM, 'genericInput');
