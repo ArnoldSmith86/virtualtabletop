@@ -22,6 +22,7 @@ export class Line extends Widget {
       // when enabled, landscape stops follow the direction of the line at
       // their position; portrait and square stops keep their own rotation
       rotateStops: true,
+      autoSpaceStops: true,
 
       connectStart: null,
       connectEnd: null
@@ -352,8 +353,12 @@ export class Line extends Widget {
 
   async onChildAdd(child, oldParentID) {
     await super.onChildAdd(child, oldParentID);
-    if(child.get('linePosition') !== null)
-      await this.updateAttachedWidgets();
+    if(child.get('linePosition') !== null) {
+      if(this.get('autoSpaceStops'))
+        await this.distributeAttachedWidgetsEvenly();
+      else
+        await this.updateAttachedWidgets();
+    }
   }
 
   async onChildRemove(child) {
@@ -362,17 +367,34 @@ export class Line extends Widget {
       this.autoRotatedStopRotations.delete(child.id);
     }
     await super.onChildRemove(child);
-    if(child.get('linePosition') !== null)
-      await this.updateAttachedWidgets();
+    if(child.get('linePosition') !== null) {
+      if(this.get('autoSpaceStops'))
+        await this.distributeAttachedWidgetsEvenly();
+      else
+        await this.updateAttachedWidgets();
+    }
   }
 
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if([ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd', 'rotateStops', 'rotateAttachedWidgets' ].indexOf(property) != -1) {
-      await this.updateAttachedWidgets();
+    if([ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd' ].indexOf(property) != -1) {
+      if(this.get('autoSpaceStops'))
+        await this.distributeAttachedWidgetsEvenly();
+      else
+        await this.updateAttachedWidgets();
       await this.updateConnectedLines();
     }
+
+    if(property == 'autoSpaceStops') {
+      if(this.get('autoSpaceStops'))
+        await this.distributeAttachedWidgetsEvenly();
+      else
+        await this.updateAttachedWidgets();
+    }
+
+    if(property == 'rotateStops' || property == 'rotateAttachedWidgets')
+      await this.updateAttachedWidgets();
 
     if((property == 'x' || property == 'y') && !this.normalizingGeometry) {
       // lines attached to this one follow live even during an interactive drag —
