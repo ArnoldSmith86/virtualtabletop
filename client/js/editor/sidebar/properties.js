@@ -1765,9 +1765,9 @@ class PropertiesModule extends SidebarModule {
         end: { x: Math.round(s.x+dx*f2+normal.x*length*n2), y: Math.round(s.y+dy*f2+normal.y*length*n2) }
       };
     };
-    const shapeButtons = shapePresets.map(preset=>{
+    const shapeButtons = shapePresets.map((preset, index)=>{
       const button = document.createElement('button');
-      button.className = 'lineShapePreset';
+      button.className = `lineShapePreset${index == 0 ? ' lineShapeStraight' : index == 1 ? ' lineShapeCurved' : ''}`;
       button.title = preset.name;
       button.setAttribute('aria-label', preset.name);
       button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;
@@ -1777,6 +1777,7 @@ class PropertiesModule extends SidebarModule {
         batchStart();
         await widget.set('controlStart', controls ? controls.start : null);
         await widget.set('controlEnd', controls ? controls.end : null);
+        await widget.normalizeGeometry();
         batchEnd();
       };
       return button;
@@ -2047,8 +2048,6 @@ class PropertiesModule extends SidebarModule {
     };
 
     // Connecting an end point glues it onto another widget at a chosen percentage.
-    // The glue math assumes the line and its target share the room's coordinate
-    // frame, so nested rotated/scaled parents are not supported here.
     for(const end of [ 'Start', 'End' ]) {
       this.addSubHeader(`Connect ${end.toLowerCase()} point`);
       const wrapper = div(this.moduleDOM, 'genericInput');
