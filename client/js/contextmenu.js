@@ -37,9 +37,9 @@ function hasPopupTriggers(widget) {
     (Array.isArray(widget.get('contextMenu')) && widget.get('contextMenu').length > 0);
 }
 
-// widgets that opt into some right-click/long-touch behavior at all (popup, rightClickRoutine or classic enlarge)
+// widgets that opt into new right-click behavior; classic enlarge keeps the original click/drag path
 function reactsToRightClick(widget) {
-  return hasPopupTriggers(widget) || Array.isArray(widget.get('rightClickRoutine')) || !!widget.get('enlarge');
+  return hasPopupTriggers(widget) || Array.isArray(widget.get('rightClickRoutine'));
 }
 
 function widgetsAtPoint(clientX, clientY) {
@@ -562,7 +562,7 @@ export function handleContextMenuInput(name, e) {
   if (name === 'touchstart' && e.touches.length === 1 && !isPopupOpen()) {
     // a long touch on empty space allows moving onto widgets to open their popup
     const t = e.touches[0];
-    if (!widgetAtPoint(t.clientX, t.clientY)) {
+    if (widgetsAtPoint(t.clientX, t.clientY).length === 0) {
       if (longTouchTimer) clearTimeout(longTouchTimer);
       longTouchTimer = setTimeout(() => {
         longTouchTimer = null;
@@ -591,6 +591,7 @@ export function onLongTouch(widget) {
 
   if (Array.isArray(widget.get('rightClickRoutine'))) {
     longTouchHandled = true;
+    widget.domElement.classList.add('longtouch');
     batchStart();
     setDeltaCause(`${playerName} long-touched ${widget.id}`);
     widget.evaluateRoutine('rightClickRoutine', {}, {}).then(() => batchEnd());
@@ -619,6 +620,11 @@ export function onTouchEndContextMenu() {
   touchActive = false;
 }
 
+export function handleContextMenuTouchEnd(e) {
+  if (e.target.closest('.contextMenuPopupBg') || e.target.closest(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`))
+    e.stopPropagation();
+}
+
 onLoad(function() {
   const popupEl = $(`#${CONTEXT_POPUP_ID}`);
   if (popupEl) {
@@ -637,6 +643,7 @@ onLoad(function() {
       if (!touchActive && !e.target.closest('.contextMenuPopupBg') && !e.target.closest(`#${CONTEXT_DESCRIPTION_POPOVER_ID}`))
         closeContextMenu();
     }, { passive: true });
+    popupEl.addEventListener('touchend', handleContextMenuTouchEnd);
     popupEl.addEventListener('contextmenu', e => {
       e.preventDefault();
       e.stopPropagation();
