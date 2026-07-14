@@ -38,6 +38,8 @@ export default class Player {
         await this.room.loadState(this, args.stateID, args.variantID, args.linkSourceStateID, args.delayForGameStartRoutine);
       if(func == 'mouse')
         this.room.mouseMove(this, args);
+      if(func == 'moveStateWithinPublicLibrary')
+        this.room.moveStateWithinPublicLibrary(this, args);
       if(func == 'playerColor')
         this.room.recolorPlayer(this, args.player, args.color);
       if(func == 'removeState')
@@ -56,6 +58,18 @@ export default class Player {
         this.trace('client', args);
       if(func == 'unlinkState')
         await this.room.unlinkState(this, args);
+      if(func == 'requestInput')
+        this.room.requestInput(this, args);
+      if(func == 'inputResult')
+        this.room.inputResult(this, args);
+      if(func == 'abortInput')
+        this.room.abortInput(this, args);
+      if(func == 'cancelInput')
+        this.room.cancelInput(this, args);
+      if(func == 'inputBlock')
+        this.room.inputBlock(this, args);
+      if(func == 'inputBlockAnswered')
+        this.room.inputBlockAnswered(this, args);
     } catch(e) {
       if(e instanceof Logging.UserError) {
         this.send('error', `${e.code} - ${e.message}`);

@@ -113,8 +113,7 @@
     "y": 250,
     "z": 287,
     "id": "l1ak",
-    "text": "endsWith",
-    "var": "string. "
+    "text": "endsWith"
   },
   "c9ee": {
     "type": "button",
@@ -137,7 +136,6 @@
     "z": 286,
     "id": "c9ee",
     "text": "includes",
-    "var": "default",
     "x": 1374
   },
   "pc6t": {
@@ -161,8 +159,7 @@
     "y": 487,
     "z": 279,
     "id": "pc6t",
-    "text": "indexOf",
-    "var": "the"
+    "text": "indexOf"
   },
   "0y6s": {
     "type": "button",
@@ -186,7 +183,6 @@
     "z": 280,
     "id": "0y6s",
     "text": "lastIndexOf",
-    "var": "e",
     "css": "font-size: 14px; "
   },
   "3e62": {
@@ -307,7 +303,13 @@
     "y": 1
   },
   "_meta": {
-    "version": 3,
+    "version": 19,
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
+    },
     "info": {
       "name": "Operations - Strings",
       "image": "/assets/-528541954_8494",
@@ -318,7 +320,7 @@
       "time": "",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1748991434054,
+      "lastUpdate": 1763605575302,
       "skill": "",
       "description": "",
       "similarImage": "",

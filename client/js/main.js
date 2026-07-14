@@ -39,6 +39,9 @@ function compareDropTarget(widget, t, exclude){
 function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
+    if(!t.isVisible())
+      continue;
+
     // if the holder has a drop limit and it's reached, skip the holder
     if(t.get('dropLimit') > -1 && t.get('dropLimit') <= t.children().length)
       // don't skip it if the dragged widget is already its child
@@ -130,7 +133,10 @@ function checkURLproperties(connected) {
       if(location.hash) {
         const playerParams = location.hash.match(/^#player:([^:]+):%23([0-9a-f]{6})$/);
         if(location.hash == '#tutorials') {
-          $('#filterByType').value = 'Tutorials';
+          setLibraryTypeTab('Tutorials');
+        } else if(location.hash == '#About') {
+          urlProperties.about = true;
+          $('#aboutButton').click();
         } else if(playerParams) {
           urlProperties = { player: decodeURIComponent(playerParams[1]), color: '#'+playerParams[2] };
         } else {
@@ -153,7 +159,7 @@ function checkURLproperties(connected) {
     }
     if(urlProperties.askID) {
       on('#askIDoverlay button', 'click', function() {
-        roomID = urlProperties.askID + $('#enteredID').value;
+        roomID = normalizeRoomID(urlProperties.askID + $('#enteredID').value);
         toServer('room', { playerName, roomID });
         showOverlay();
       });
@@ -394,15 +400,25 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   }
 }
 
-async function uploadAsset(multipleCallback) {
+async function uploadAsset(multipleCallback, fileTypes) {
   if(typeof(multipleCallback) === "function") {
     return selectFile('BINARY', async function (f) {
-      let uploadPath = await _uploadAsset(f).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+      let uploadPath = await _uploadAsset(f).catch(e=>{
+        alert(`Uploading failed: ${e.toString()}`);
+        return null;
+      });
       multipleCallback(uploadPath, f.name)
+    }).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Error: ${e.toString()}`);
     });
   }
   else {
-    return selectFile('BINARY').then(_uploadAsset).catch(e=>alert(`Uploading failed: ${e.toString()}`));
+    return selectFile('BINARY', null, fileTypes).then(_uploadAsset).catch(e=>{
+      if(e.message !== 'File selection cancelled.')
+        alert(`Uploading failed: ${e.toString()}`);
+      return null;
+    });
   }
 }
 
@@ -487,7 +503,7 @@ async function loadEditMode() {
       toServer, batchStart, batchEnd, setDeltaCause, sendPropertyUpdate, getUndoProtocol, setUndoProtocol, sendRawDelta, getDelta,
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
-      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ,
+      generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
       uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,
@@ -645,7 +661,7 @@ onLoad(function() {
 
   checkURLproperties(false);
   setScale();
-  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/'))
+  if(!location.href.includes('/game/') && !location.href.includes('/tutorial/') && !location.href.includes('/library/'))
     startWebSocket();
 
   onMessage('warning', alert);

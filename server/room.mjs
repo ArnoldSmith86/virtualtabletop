@@ -112,10 +112,12 @@ export default class Room {
           delete Room.publicLibrary;
           this.publicLibraryUpdatedCallback();
           return;
+        } else {
+          delete meta.publicLibrary;
         }
 
         if(type != 'link' || meta.importerTemp)
-          fs.writeFileSync(this.variantFilename(stateID, newVariantID), JSON.stringify(variant));
+          this.writeStateToFilesystem(stateID, newVariantID, variant);
 
         let variantMeta = {
           players: meta.players,
@@ -184,9 +186,20 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
-  addStateToPublicLibrary(player, id) {
+  addStateToPublicLibrary(player, args) {
     if(!Config.get('allowPublicLibraryEdits'))
       return;
+
+    let id, folder, category;
+    if (typeof args === 'string') {
+      id = args;
+      folder = 'games';
+      category = 'Games';
+    } else {
+      id = args.id;
+      folder = args.library;
+      category = args.category;
+    }
 
     for(const usedAsset in this.getAssetListForState(id))
       if(!Config.resolveAsset(usedAsset))
@@ -196,9 +209,10 @@ export default class Room {
     for(const variantID in this.state._meta.states[id].variants)
       variantData[variantID] = JSON.parse(fs.readFileSync(this.variantFilename(id, variantID)));
 
-    this.state._meta.states[id].publicLibrary = `games/${this.state._meta.states[id].name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
-    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary);
-    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary + '/assets');
+    this.state._meta.states[id].publicLibrary = `${folder}/${this.state._meta.states[id].name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
+    this.state._meta.states[id].publicLibraryCategory = category;
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary, { recursive: true });
+    fs.mkdirSync(Config.directory('library') + '/' + this.state._meta.states[id].publicLibrary + '/assets', { recursive: true });
 
     Room.publicLibrary['PL:NEW'] = this.state._meta.states['PL:NEW'] = this.state._meta.states[id];
     for(const variantID in this.state._meta.states[id].variants) {
@@ -211,6 +225,36 @@ export default class Room {
     this.publicLibraryUpdatedCallback();
 
     this.removeState(player, id);
+  }
+
+  moveStateWithinPublicLibrary(player, args) {
+    if(!Config.get('allowPublicLibraryEdits'))
+      return;
+
+    const id = args.id;
+    const folder = args.newLibrary;
+    const category = args.newCategory;
+
+    const state = this.state._meta.states[id];
+    if(!state || !state.publicLibrary || state.publicLibraryCategory === category)
+      return;
+
+    const oldPublicLibrary = state.publicLibrary;
+    const newPublicLibraryPath = `${folder}/${state.name.replace(/[^a-zA-Z0-9 _-]/g, '_')}`;
+    
+    // Check if new path exists, ignore move if it maps entirely to the exact same folder string.
+    if(oldPublicLibrary === newPublicLibraryPath) {
+      // Just update metadata if only the category text somehow changed but path remains the same
+      state.publicLibraryCategory = category;
+    } else {
+      fs.mkdirSync(Config.directory('library') + '/' + folder, { recursive: true });
+      fs.renameSync(Config.directory('library') + '/' + oldPublicLibrary, Config.directory('library') + '/' + newPublicLibraryPath);
+      state.publicLibrary = newPublicLibraryPath;
+      state.publicLibraryCategory = category;
+    }
+
+    // Refresh memory cache
+    this.reloadPublicLibraryGames();
   }
 
   broadcast(func, args, exceptPlayer) {
@@ -396,35 +440,48 @@ export default class Room {
   getPublicLibraryGames() {
     if(!Room.publicLibrary) {
       Room.publicLibrary = {};
-      for(const subLibrary of [ 'Games', 'Tutorials' ]) {
-        for(const dir of fs.readdirSync(Config.directory('library') + '/' + subLibrary.toLowerCase())) {
-          const gameDir = Config.directory('library') + '/' + subLibrary.toLowerCase() + '/' + dir;
-          if(fs.lstatSync(gameDir).isDirectory()) {
-            for(const file of fs.readdirSync(gameDir)) {
+
+      const scanFolder = (subLibrary, folder, currentPath, relativePath) => {
+        if(!fs.existsSync(currentPath)) return;
+        for(const entry of fs.readdirSync(currentPath)) {
+          const entryPath = currentPath + '/' + entry;
+          const entryRelativePath = relativePath ? relativePath + '/' + entry : entry;
+          if(fs.lstatSync(entryPath).isDirectory()) {
+            let hasJson = false;
+            for(const file of fs.readdirSync(entryPath)) {
               if(file.match(/json$/)) {
-                const gameFile = JSON.parse(fs.readFileSync(gameDir + '/' + file));
-                const id = 'PL:' + subLibrary.toLowerCase() + ':' + gameFile._meta.info.name;
-                if(!Room.publicLibrary[id]) {
-                  Room.publicLibrary[id] = gameFile._meta.info;
-                  Room.publicLibrary[id].publicLibrary = subLibrary.toLowerCase() + '/' + dir;
-                  Room.publicLibrary[id].publicLibraryCategory = subLibrary;
-                  Room.publicLibrary[id].variants = [];
+                try {
+                  const gameFile = JSON.parse(fs.readFileSync(entryPath + '/' + file));
+                  const metaInfo = (gameFile._meta && gameFile._meta.info) || {};
+                  const name = metaInfo.name || entry;
+                  const id = 'PL:' + folder + ':' + name;
+                  if(!Room.publicLibrary[id]) {
+                    Room.publicLibrary[id] = Object.assign({ name }, metaInfo);
+                    Room.publicLibrary[id].publicLibrary = folder + '/' + entryRelativePath;
+                    Room.publicLibrary[id].publicLibraryCategory = subLibrary;
+                    Room.publicLibrary[id].variants = [];
+                  }
+                  Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
+                    players: metaInfo.players,
+                    language: metaInfo.language,
+                    variant: metaInfo.variant,
+                    variantImage: metaInfo.variantImage,
+                    publicLibrary: folder + '/' + entryRelativePath + '/' + file
+                  };
+                  hasJson = true;
+                } catch(e) {
+                  Logging.log(`WARNING: Could not load public library game ${entryPath}/${file}: ${e}`);
                 }
-                Room.publicLibrary[id].variants[file.replace(/\.json$/, '')] = {
-                  players: gameFile._meta.info.players,
-                  language: gameFile._meta.info.language,
-                  variant: gameFile._meta.info.variant,
-                  variantImage: gameFile._meta.info.variantImage,
-                  publicLibrary: subLibrary.toLowerCase() + '/' + dir + '/' + file
-                };
-                delete gameFile._meta.info.players;
-                delete gameFile._meta.info.language;
-                delete gameFile._meta.info.variant;
-                delete gameFile._meta.info.variantImage;
               }
             }
+            if(!hasJson)
+              scanFolder(subLibrary, folder, entryPath, entryRelativePath);
           }
         }
+      };
+
+      for(const [ subLibrary, folder ] of Object.entries(Config.get('libraries'))) {
+        scanFolder(subLibrary, folder, Config.directory('library') + '/' + folder, '');
       }
     }
     Statistics.updateDataInsideStates(Room.publicLibrary);
@@ -434,9 +491,13 @@ export default class Room {
   getStateDetails(stateID) {
     if(stateID.match(/^PL:/)) {
       const [ , category, name ] = stateID.split(':');
-      for(const [ id, state ] of Object.entries(this.state._meta.states))
-        if(state.publicLibrary && state.publicLibraryCategory.toLowerCase() == `${category}s` && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name)
-          return Object.assign({}, state, { id });
+      for(const [ id, state ] of Object.entries(this.state._meta.states)) {
+        if(state.publicLibrary) {
+          if(state.publicLibrary.startsWith(category + '/') && state.name.replace(/[^A-Za-z]+/g, '-').toLowerCase().replace(/^-+/, '').replace(/-+$/, '') == name) {
+            return Object.assign({}, state, { id });
+          }
+        }
+      }
     } else {
       return this.state._meta.states[stateID];
     }
@@ -547,7 +608,7 @@ export default class Room {
             else
               content._meta = { version: 8 };
             Logging.log(`setting missing file version to ${content._meta.version} for ${id} in room ${this.id}`);
-            fs.writeFileSync(this.variantFilename(id, 0), JSON.stringify(content));
+            this.writeStateToFilesystem(id, 0, content);
           }
         }
       }
@@ -785,6 +846,7 @@ export default class Room {
     Logging.log(`removing player ${player.name} from room ${this.id}`);
 
     this.players = this.players.filter(e => e != player);
+    this.cleanupInputForPlayer(player);
     if(player.name.match(/^Guest/) && !this.players.filter(e => e.name == player.name).length)
       if(!Object.values(this.state).filter(w=>w.player==player.name||w.owner==player.name||Array.isArray(w.owner)&&w.owner.indexOf(player.name)!=-1).length)
         delete this.state._meta.players[player.name];
@@ -837,6 +899,140 @@ export default class Room {
     this.sendMetaUpdate();
   }
 
+  // Input sessions are tracked by the Player *connection*, not by name, so a
+  // rename mid-input doesn't lose a target. The name the initiator used to
+  // address each target is remembered and echoed back so the initiating
+  // client (which keys its own session by name) still recognizes the result.
+  requestInput(player, args) {
+    // Dedupe names (the same connection can only show one overlay) and resolve
+    // each to a connection.
+    const requested = [ ...new Set(args.targets || []) ];
+    const targets = requested.map(name=>({ name, player: this.players.find(p=>p.name === name) }));
+    // If any requested target is unreachable, cancel the whole session rather
+    // than silently dropping them — otherwise the initiator waits on a name
+    // that can never answer. This matches the one-cancel-cancels-all rule.
+    if(targets.some(t=>!t.player)) {
+      player.send('inputResult', { sessionID: args.sessionID, cancelled: true });
+      return;
+    }
+    this.inputRequests = this.inputRequests || Object.create(null);
+    this.inputRequests[args.sessionID] = { from: player, remaining: targets };
+    for(const target of targets) {
+      const overlay = args.overlaysByTarget && args.overlaysByTarget[target.name] || args.overlay;
+      const collections = args.collectionsByTarget && args.collectionsByTarget[target.name] || args.collections;
+      target.player.send('showInput', { sessionID: args.sessionID, widgetID: args.widgetID, overlay, variables: args.variables, collections });
+    }
+  }
+
+  inputResult(player, args) {
+    const request = this.inputRequests && this.inputRequests[args.sessionID];
+    const target = request && request.remaining.find(t=>t.player === player);
+    if(request && request.from)
+      request.from.send('inputResult', { sessionID: args.sessionID, player: target ? target.name : player.name, cancelled: args.cancelled, variables: args.variables, collections: args.collections });
+    if(request) {
+      request.remaining = request.remaining.filter(t=>t.player !== player);
+      // A single cancellation ends the whole session: close the other targets
+      // right here (the initiator's abortInput would arrive too late).
+      if(args.cancelled) {
+        for(const t of request.remaining)
+          t.player.send('hideInput', { sessionID: args.sessionID });
+        delete this.inputRequests[args.sessionID];
+      } else {
+        if(!request.remaining.length)
+          delete this.inputRequests[args.sessionID];
+        // Move the player who just answered into the "waiting for the rest"
+        // overlay by dropping them from the block's waitingFor list.
+        this.removeFromInputBlock(args.sessionID, target ? target.name : player.name);
+      }
+    }
+  }
+
+  // The initiator aborted the input: tell every pending target to close it.
+  abortInput(player, args) {
+    const request = this.inputRequests && this.inputRequests[args.sessionID];
+    if(!request || request.from !== player)
+      return;
+    for(const t of request.remaining)
+      t.player.send('hideInput', { sessionID: args.sessionID });
+    delete this.inputRequests[args.sessionID];
+  }
+
+  // A waiting player pressed cancel on the block overlay: tell the initiator.
+  cancelInput(player, args) {
+    const block = (this.inputBlocks || {})[args.blockID];
+    if(block && block.from)
+      block.from.send('inputCancelled', { sessionID: args.blockID });
+  }
+
+  cleanupInputForPlayer(player) {
+    for(const sessionID in (this.inputRequests || {})) {
+      const request = this.inputRequests[sessionID];
+      if(request.from === player) {
+        // Initiator left: close any overlays its targets are still showing.
+        for(const t of request.remaining)
+          t.player.send('hideInput', { sessionID });
+        delete this.inputRequests[sessionID];
+      } else if(request.remaining.some(t=>t.player === player)) {
+        // A target left: cancel the whole session and free the others.
+        if(request.from)
+          request.from.send('inputResult', { sessionID, player: player.name, cancelled: true });
+        for(const t of request.remaining)
+          if(t.player !== player)
+            t.player.send('hideInput', { sessionID });
+        delete this.inputRequests[sessionID];
+      }
+    }
+    for(const blockID in (this.inputBlocks || {})) {
+      if(this.inputBlocks[blockID].from === player) {
+        delete this.inputBlocks[blockID];
+        for(const p of this.players)
+          p.send('inputBlock', { blockID, show: false });
+      }
+    }
+  }
+
+  inputBlock(player, args) {
+    this.inputBlocks = this.inputBlocks || Object.create(null);
+    if(args.show) {
+      this.inputBlocks[args.blockID] = { from: player, header: args.header, waitingFor: args.waitingFor || [] };
+      this.sendInputBlock(args.blockID);
+    } else {
+      delete this.inputBlocks[args.blockID];
+      for(const p of this.players)
+        p.send('inputBlock', { blockID: args.blockID, show: false });
+    }
+  }
+
+  // Show the "waiting for input" overlay to everyone who is not currently being
+  // waited on. As players answer they drop out of waitingFor, so a player who
+  // just confirmed their own overlay now sees the waiting overlay (with its
+  // cancel button) for the players who still have not answered.
+  sendInputBlock(blockID) {
+    const block = this.inputBlocks && this.inputBlocks[blockID];
+    if(!block)
+      return;
+    for(const p of this.players)
+      if(!block.waitingFor.includes(p.name))
+        p.send('inputBlock', { blockID, show: true, waitingFor: block.waitingFor, header: block.header });
+  }
+
+  // Drop a player who has answered from a block's waitingFor list and refresh
+  // the overlay so they (and anyone else no longer waited on) now see it.
+  removeFromInputBlock(blockID, name) {
+    const block = this.inputBlocks && this.inputBlocks[blockID];
+    if(!block)
+      return;
+    block.waitingFor = block.waitingFor.filter(n => n !== name);
+    if(block.waitingFor.length)
+      this.sendInputBlock(blockID);
+  }
+
+  // The initiator answered its own (local) overlay while others are still
+  // pending; move it into the waiting overlay too.
+  inputBlockAnswered(player, args) {
+    this.removeFromInputBlock(args.sessionID, player.name);
+  }
+
   roomFilename() {
     return Config.directory('save') + '/rooms/' + this.id + '.json';
   }
@@ -884,7 +1080,7 @@ export default class Room {
       language: metadata.language,
       variant:  metadata.variant
     };
-    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(newState, null, '  '));
+    this.writeStateToFilesystem(stateID, variantID, newState);
     if(setToActiveState)
       this.state._meta.activeState = { stateID, variantID };
     this.sendMetaUpdate();
@@ -893,10 +1089,8 @@ export default class Room {
   saveState(player, players, updateCurrentSave) {
     if(updateCurrentSave) {
       const stateID = this.state._meta.activeState.saveStateID;
-      const newContent = {...this.state};
-      newContent._meta = { version: this.state._meta.version, gameSettings: this.state._meta.gameSettings };
       this.state._meta.states[stateID].saveDate = +new Date();
-      fs.writeFileSync(this.variantFilename(stateID, 0), JSON.stringify(newContent));
+      this.writeStateToFilesystem(stateID, 0, this.state);
       return this.sendMetaUpdate();
     }
 
@@ -936,8 +1130,15 @@ export default class Room {
   }
 
   setGameSettings(player, gameSettings) {
+    const oldLegacyModes = this.state._meta.gameSettings?.legacyModes || {};
+    const newLegacyModes = gameSettings.legacyModes || {};
+  
     this.state._meta.gameSettings = gameSettings;
     this.sendMetaUpdate();
+
+    const legacyModesChanged = JSON.stringify(oldLegacyModes) !== JSON.stringify(newLegacyModes);
+    if(legacyModesChanged)
+      this.broadcast('state', this.state);
   }
 
   setLegacyMode(name, value) {
@@ -947,6 +1148,7 @@ export default class Room {
       this.state._meta.gameSettings.legacyModes = {};
     this.state._meta.gameSettings.legacyModes[name] = value === 'true';
     this.sendMetaUpdate();
+    this.broadcast('state', this.state);
   }
 
   async setRedirect(player, target) {
@@ -1070,7 +1272,7 @@ export default class Room {
   async unlinkState(player, stateID) {
     for(const [ variantID, variant ] of Object.entries(this.state._meta.states[stateID].variants)) {
       const variantState = await FileLoader.readVariantFromLink(variant.link);
-      fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(variantState, null, '  '));
+      this.writeStateToFilesystem(stateID, variantID, variantState);
       delete variant.link;
     }
     delete this.state._meta.states[stateID].link;
@@ -1187,6 +1389,12 @@ export default class Room {
 
     copy._meta.info.lastUpdate = +new Date();
 
+    fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
+  }
+
+  writeStateToFilesystem(stateID, variantID, state) {
+    const copy = {...state};
+    copy._meta = { version: copy._meta.version, gameSettings: copy._meta.gameSettings };
     fs.writeFileSync(this.variantFilename(stateID, variantID), JSON.stringify(copy, null, '  '));
   }
 

@@ -57,7 +57,8 @@
       "variantImage": "",
       "variant": "",
       "language": "",
-      "players": "2-4"
+      "players": "2-4",
+      "usesAIImagery": true
     }
   },
   "e2z2": {

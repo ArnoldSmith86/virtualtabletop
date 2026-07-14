@@ -183,24 +183,6 @@
     "x": 12,
     "y": 41,
     "cardTypes": {
-      "T 1J": {
-        "image": "/i/cards-default/1J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J1",
-        "rankA": "J1",
-        "rankFixed": "J1 T"
-      },
-      "T 2J": {
-        "image": "/i/cards-default/2J.svg",
-        "suit": "T",
-        "suitColor": "🃏",
-        "suitAlt": "5J",
-        "rank": "J2",
-        "rankA": "J2",
-        "rankFixed": "J2 T"
-      },
       "C 01": {
         "image": "/i/cards-default/AC.svg",
         "suit": "C",
@@ -1220,7 +1202,7 @@
     "parent": "7ykk"
   },
   "_meta": {
-    "version": 17,
+    "version": 20,
     "info": {
       "name": "Functions - SELECT",
       "image": "/assets/-1435875928_3945",
@@ -1231,7 +1213,7 @@
       "time": "0",
       "attribution": "",
       "showName": false,
-      "lastUpdate": 1749068720947,
+      "lastUpdate": 1768620890304,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -1240,10 +1222,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "Relation",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "Relation",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

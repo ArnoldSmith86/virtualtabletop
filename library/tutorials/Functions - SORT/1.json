@@ -1,30 +1,4 @@
 {
-  "fuzd": {
-    "type": "pile",
-    "parent": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy003-copy001",
-    "x": 4,
-    "y": 4,
-    "width": 60,
-    "height": 60,
-    "id": "fuzd"
-  },
-  "saj4": {
-    "type": "pile",
-    "parent": "af9e3624-aa5c-4f83-810d-d90402400c89",
-    "x": 4,
-    "y": 4,
-    "width": 100,
-    "height": 100,
-    "id": "saj4"
-  },
-  "71et": {
-    "type": "pile",
-    "parent": "dfac9d5e-b294-40fd-9fab-1d00f9f242fe-copy001-copy002-copy001",
-    "width": 60,
-    "height": 60,
-    "id": "71et",
-    "z": 10621
-  },
   "melu": {
     "type": "holder",
     "id": "melu",
@@ -60,7 +34,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -645,7 +619,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -744,7 +718,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -843,7 +817,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -942,7 +916,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1041,7 +1015,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1151,7 +1125,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1251,7 +1225,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1351,7 +1325,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1451,7 +1425,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1551,7 +1525,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -1651,7 +1625,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -2241,7 +2215,6 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "static",
             "value": "/i/cards-default/2B.svg",
             "color": "transparent"
           }
@@ -2257,9 +2230,10 @@
             "y": 0,
             "width": 103,
             "height": 160,
-            "valueType": "dynamic",
-            "value": "image",
-            "color": "transparent"
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            }
           }
         ]
       }
@@ -2733,7 +2707,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -2832,7 +2806,7 @@
       },
       {
         "func": "FLIP",
-        "count": 0,
+        "count": "all",
         "holder": [
           "melu"
         ]
@@ -2930,7 +2904,7 @@
     "css": "font-size: 17px; text-align:left"
   },
   "_meta": {
-    "version": 2,
+    "version": 20,
     "info": {
       "name": "Functions - SORT",
       "image": "/assets/401978976_4042",
@@ -2941,7 +2915,7 @@
       "time": "0",
       "attribution": "In this tutorial, you will learn:\n- How to use a key to sort cards\n- How to set more keys for each desired sorting\n\n\n--\n\nIn this tutorial, you will learn:\n- Which keys are included in the default deck\n- How each key sorts the default deck\n\n--\n\nIn this tutorial, you will learn:\n- How to combine keys in sequential sorting to get many sorting configurations you may need.\n- This tutorial includes an exercise with anwser\n\n--\n\nIn this tutorial, you will learn:\n- How to reverse the sorting in a pile\n- How to use that to deal from and to the bottom of a pile\n\n--\n\nIn this tutorial, you will learn:\n- How to sort 5-card poker hands by rank",
       "showName": false,
-      "lastUpdate": 1749068754114,
+      "lastUpdate": 1768674020662,
       "skill": "",
       "description": "",
       "similarImage": "",
@@ -2950,10 +2924,13 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "variantImage": "",
-      "variant": "2) Default deck's inbuilt keys",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": "2) Default deck's inbuilt keys",
+      "variantImage": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "bwe0": {

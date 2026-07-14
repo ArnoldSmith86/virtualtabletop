@@ -3,7 +3,6 @@
     "type": "button",
     "id": "6toz",
     "clickRoutine": [
-      "var test = 2",
       "var newArray = []",
       {
         "note": "loops through each number in array",
@@ -17,10 +16,10 @@
       {
         "func": "SET",
         "collection": [
-          "range"
+          "result3"
         ],
         "property": "text",
-        "value": "${myResult}"
+        "value": "${newArray}"
       }
     ],
     "z": 189,
@@ -471,8 +470,7 @@
     "z": 187,
     "y": 552.5,
     "width": 185,
-    "height": 103,
-    "CSP": 1
+    "height": 103
   },
   "n2jc": {
     "type": "label",
@@ -773,7 +771,6 @@
     "width": 200,
     "z": 212,
     "height": 80,
-    "debug": true,
     "editable": true,
     "textxChangeRoutine": [
       "var aa = ${PROPERTY arrayarray}",
@@ -864,7 +861,7 @@
     "width": 400
   },
   "_meta": {
-    "version": 8,
+    "version": 20,
     "info": {
       "name": "Functions - FOREACH",
       "image": "/assets/1609984672_4134",
@@ -874,7 +871,7 @@
       "mode": "Tutorial",
       "time": "0",
       "attribution": "",
-      "lastUpdate": 1749068073070,
+      "lastUpdate": 1768609715564,
       "showName": false,
       "skill": "",
       "description": "",
@@ -884,10 +881,12 @@
       "ruleText": "",
       "helpText": "",
       "similarDesigner": "",
-      "variantImage": "",
-      "variant": "",
+      "players": "1",
       "language": "en-US",
-      "players": "1"
+      "variant": ""
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "936y": {

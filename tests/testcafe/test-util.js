@@ -8,6 +8,13 @@ const referenceDir = path.resolve() + '/save/testcafe-references';
 fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
 
+// hashes that changed because of Chrome updates that altered how some edge-case values get stringified -
+// can hopefully be removed if Chrome changes this back. Keyed by the actual hash, valued by the expected hash.
+const knownHashDrifts = {
+  'aa8d738dfc1eb7886540315e78e42aae': '1a6e301d6510998fa27abeb75bcf0371', // https://github.com/ArnoldSmith86/virtualtabletop/pull/2668
+  '7dbb198bba63663b41191432d8648492': 'bc511e7edd7e40b433f5620534775646'  // Chrome 150
+};
+
 export function setupTestEnvironment() {
   server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
   fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
@@ -24,8 +31,8 @@ export function prepareClient() {
 export async function setName(t, name, color) {
   await t
     .click('#playersButton')
-    .click('.myPlayerEntry > input[type=color]')
-    .typeText('.myPlayerEntry > input[type=color]', color || '#7F007F', { replace: true })
+    .click('.myPlayerEntry input[type=color]')
+    .typeText('.myPlayerEntry input[type=color]', color || '#7F007F', { replace: true })
     .typeText('.myPlayerEntry > .playerName', name || 'TestCafe', { replace: true })
     .click('#activeGameButton');
 }
@@ -59,12 +66,11 @@ export async function compareState(t, md5) {
     state = await getState();
     hash = crypto.createHash('md5').update(state).digest('hex');
 
-    // hardcoded hash difference because of https://github.com/ArnoldSmith86/virtualtabletop/pull/2668 - can hopefully be removed if Chrome changes this back
-    if(hash == md5 || hash == 'aa8d738dfc1eb7886540315e78e42aae' && md5 == '1a6e301d6510998fa27abeb75bcf0371') {
+    if(hash == md5 || knownHashDrifts[hash] == md5) {
       if(!fs.existsSync(refFile))
         fs.writeFileSync(refFile, state);
 
-      if(hash == 'aa8d738dfc1eb7886540315e78e42aae' && md5 == '1a6e301d6510998fa27abeb75bcf0371')
+      if(knownHashDrifts[hash] == md5)
         await t.expect(md5).eql(md5);
       else
         await t.expect(hash).eql(md5);

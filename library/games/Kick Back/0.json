@@ -25,7 +25,8 @@
       "variantImage": "",
       "variant": "",
       "language": "en-US",
-      "players": "2"
+      "players": "2",
+      "usesAIImagery": true
     }
   },
   "44397b8b-eed2-48bb-8a13-6e77ac77d92b": {

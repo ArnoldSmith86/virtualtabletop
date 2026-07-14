@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 15,
+    "version": 20,
     "info": {
       "name": "Types - Scoreboard",
       "image": "/assets/-269793996_5981",
@@ -18,12 +18,15 @@
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "lastUpdate": 1748992108990,
+      "lastUpdate": 1768190453827,
       "similarDesigner": "",
       "variantImage": "",
       "variant": "Appearance",
       "language": "en-US",
       "players": "1"
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "seat1": {
@@ -115,7 +118,17 @@
     "css": "font-size: 25px; ",
     "text": "The appearance of scoreboards can be highly customized using css. Unlike with many other capabilities in the JSON Editor, customizing css requires a lot of manual entry as there are not buttons to automate the placement of the properties. You also need to understand a little bit about the VTT code for the scoreboard widget and html table structure in order to maximize the customization potential. This room contains some samples that demonstrate some of the features most likely to be implemented.  Look at the JSON (ctrl-J) of each scoreboard to see the css.",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "clickRoutine": [
+      "// This is only here to remove validation errors",
+      {
+        "func": "VAR",
+        "variables": {
+          "dummy1": "${PROPERTY score}",
+          "dummy2": "${PROPERTY score2}"
+        }
+      }
+    ]
   },
   "header": {
     "id": "header",
