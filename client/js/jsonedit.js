@@ -3808,7 +3808,7 @@ function jeInitEventListeners() {
 
     hoveredWidgets.sort(function(w1,w2) {
       const hiddenParent =  function(widget) {
-        return widget ? widget.domElement.classList.contains('foreign') || hiddenParent(widgets.get(widget.get('parent'))) : false;
+        return widget ? widget.ancestors().some(w=>w.domElement.classList.contains('foreign')) : false;
       };
       const w1card = w1.get('type') == 'card';
       const w2card = w2.get('type') == 'card';

@@ -1,4 +1,5 @@
 import { createWidget, removeWidget } from './client-util.js';
+import { dropTargets, getValidDropTargets } from '../../client/js/main.js';
 
 // Regression test for the "Maximum call stack size exceeded" crash that happened
 // when the room state contained a cycle in the parent chain (e.g. two widgets
@@ -50,5 +51,14 @@ describe("Cyclic parent chains", () => {
     }
     expect(w1.isDescendantOf(w2)).toBe(true);
     expect(w3.isDescendantOf(w3)).toBe(true);
+  });
+
+  test("drop-target checks terminate on cyclic target ancestry", () => {
+    w1.state.dropTarget = {};
+    w1.isVisible = () => true;
+    dropTargets.set(w1.get('id'), w1);
+
+    expect(getValidDropTargets(w3)).toContain(w1);
+    expect(getValidDropTargets(w2)).not.toContain(w1);
   });
 });
