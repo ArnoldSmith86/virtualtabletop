@@ -419,21 +419,22 @@ class Holder extends ImageWidget {
 
     // decide where the shadow goes: over a group (insert within that group's fan)
     // or between two groups / at an end (insert a new group). The shadow is
-    // positioned in global coordinates while the groups store holder-relative x,
+    // positioned in global coordinates while the groups store holder-relative
+    // coordinates,
     // so convert to the holder's frame (via coordLocalFromCoordGlobal, which
     // accounts for any scaling/nesting between the holder and the root) before
     // comparing.
     let insertIndex = -1, overGroup = null, fanIndex = -1;
     if(shadow) {
-      const shadowLeft = this.coordLocalFromCoordGlobal({ x: shadow.get('x'), y: shadow.get('y') }).x;
-      const shadowCenter = shadowLeft + shadow.get('width') / 2;
-      overGroup = groups.find(g=>shadowCenter >= g.get('x') && shadowCenter <= g.get('x') + g.get('width'));
+      const shadowPosition = this.coordLocalFromCoordGlobal({ x: shadow.get('x'), y: shadow.get('y') });
+      const shadowCenter = { x: shadowPosition.x + shadow.get('width') / 2, y: shadowPosition.y + shadow.get('height') / 2 };
+      overGroup = groups.find(g=>shadowCenter.x >= g.get('x') && shadowCenter.x <= g.get('x') + g.get('width') && shadowCenter.y >= g.get('y') && shadowCenter.y <= g.get('y') + g.get('height'));
       if(overGroup) {
-        fanIndex = this.spreadFanIndex(overGroup, shadowLeft);
+        fanIndex = this.spreadFanIndex(overGroup, shadowPosition);
       } else {
         insertIndex = 0;
         for(const g of groups)
-          if(g.get('x') + g.get('width') / 2 < shadowCenter)
+          if(g.get('x') + g.get('width') / 2 < shadowCenter.x)
             ++insertIndex;
       }
     }
@@ -444,28 +445,32 @@ class Holder extends ImageWidget {
         await group.arrangeAsSpread(stepX, stepY, group === overGroup ? fanIndex : -1);
 
     const shadowW = shadow ? shadow.get('width') : 0;
+    const shadowH = shadow ? shadow.get('height') : 0;
     // keep the shadow inside the holder so it only ever snaps to a valid position
     const maxShadowX = Math.max(this.get('dropOffsetX'), this.get('width') - this.get('dropOffsetX') - shadowW);
-    const placeShadow = async (sx, sy, sz)=>await shadow.setPosition(Math.max(this.get('dropOffsetX'), Math.min(sx, maxShadowX)), sy, sz);
+    const maxShadowY = Math.max(this.get('dropOffsetY'), this.get('height') - this.get('dropOffsetY') - shadowH);
+    const placeShadow = async (sx, sy, sz)=>await shadow.setPosition(Math.max(this.get('dropOffsetX'), Math.min(sx, maxShadowX)), Math.max(this.get('dropOffsetY'), Math.min(sy, maxShadowY)), sz);
 
     let x = this.get('dropOffsetX');
     const y = this.get('dropOffsetY');
-    let z = 1, overGroupShadowX = 0;
+    let z = 1, overGroupShadowX = 0, overGroupShadowY = 0;
     for(let i=0; i<groups.length; ++i) {
       if(i === insertIndex) {
         await placeShadow(x, y, z++);
         x += shadowW + gap;
       }
       // remember where the group the shadow is over ends up, to place the shadow in its fan
-      if(groups[i] === overGroup)
-        overGroupShadowX = x + fanIndex * (stepX || shadowW);
+      if(groups[i] === overGroup) {
+        overGroupShadowX = x + fanIndex * (stepX || (!stepY ? shadowW : 0));
+        overGroupShadowY = y + fanIndex * stepY;
+      }
       await groups[i].setPosition(x, y, z++);
       x += groups[i].get('width') + gap;
     }
     if(insertIndex >= groups.length)
       await placeShadow(x, y, z++);
     else if(overGroup)
-      await placeShadow(overGroupShadowX, y, z++);
+      await placeShadow(overGroupShadowX, overGroupShadowY, z++);
   }
 
   // Decide what happens to a card or group (pile) dropped into a multipleSpread
@@ -475,12 +480,18 @@ class Holder extends ImageWidget {
   // becomes a new group at that position. A final rearrangeGroups (from moveEnd)
   // then tidies the whole row. multipleSpread does its own grouping here so that
   // wide groups can be inserted between others without accidentally merging.
-  // The fan index (position within a group's spread) that a drop at holder-relative
-  // x maps to, so a card can be inserted at a specific spot inside the fan.
-  spreadFanIndex(group, relX) {
-    const stepX = this.get('stackOffsetX') || group.get('width');
+  // The fan index (position within a group's spread) that a drop at a
+  // holder-relative coordinate maps to. Use the dominant spread axis so both
+  // horizontal and vertical fans can insert at a specific spot.
+  spreadFanIndex(group, position) {
+    const stepX = this.get('stackOffsetX') || 0;
+    const stepY = this.get('stackOffsetY') || 0;
+    const vertical = Math.abs(stepY) > Math.abs(stepX);
+    const step = (vertical ? stepY : stepX) || (vertical ? group.get('height') : group.get('width'));
+    const coordinate = vertical ? position.y : position.x;
+    const origin = group.get(vertical ? 'y' : 'x');
     const count = group.get('type') == 'pile' ? group.children().length : 1;
-    return Math.max(0, Math.min(count, Math.round((relX - group.get('x')) / (stepX || 1))));
+    return Math.max(0, Math.min(count, Math.round((coordinate - origin) / step)));
   }
 
   // The owner a dragged/dropped child ends up with in this holder, used to arrange
@@ -547,17 +558,17 @@ class Holder extends ImageWidget {
     // never joins or is positioned relative to another player's groups
     const owner = this.childOwner(child);
     const others = this.childrenFilter(super.children(), true).filter(w=>w != child && !w.get('dropShadowOwner') && (!w.get('owner') || w.get('owner') === owner)).sort((a, b)=>a.get('x') - b.get('x'));
-    const center = child.get('x') + child.get('width') / 2;
+    const center = { x: child.get('x') + child.get('width') / 2, y: child.get('y') + child.get('height') / 2 };
 
     // dropped over an existing group -> insert into that group's fan at the
     // position under the cursor; dropped in a gap -> new group between groups
-    const joinGroup = others.find(g=>center >= g.get('x') && center <= g.get('x') + g.get('width'));
+    const joinGroup = others.find(g=>center.x >= g.get('x') && center.x <= g.get('x') + g.get('width') && center.y >= g.get('y') && center.y <= g.get('y') + g.get('height'));
     if(joinGroup)
-      return await this.mergeGroups(child, joinGroup, this.spreadFanIndex(joinGroup, child.get('x')));
+      return await this.mergeGroups(child, joinGroup, this.spreadFanIndex(joinGroup, { x: child.get('x'), y: child.get('y') }));
 
     let index = 0;
     for(const g of others)
-      if(g.get('x') + g.get('width') / 2 < center)
+      if(g.get('x') + g.get('width') / 2 < center.x)
         ++index;
     let x = this.get('dropOffsetX');
     for(let i=0; i<index; ++i)

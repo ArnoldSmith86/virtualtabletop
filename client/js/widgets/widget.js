@@ -1576,7 +1576,10 @@ export class Widget extends StateManaged {
           };
           if(source == target) {
             await applyFlip();
-            await c.bringToFront();
+            if(a.position)
+              await applyPosition(target, c);
+            else
+              await c.bringToFront();
             ++moved;
           } else if(c == target) {
             problems.push(`Skipping move of ${c.id} to itself.`);
