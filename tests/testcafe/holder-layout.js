@@ -101,8 +101,8 @@ test('layout multipleSpread inserts within a vertical fan', async t => {
       layout: 'multipleSpread', stackOffsetX: 0, stackOffsetY: 30 },
     group: { id: 'group', type: 'pile', parent: 'target', x: 4, y: 4, width: 100, height: 210 },
     c1: card('c1', 'group', 1),
-    c2: card('c2', 'group', 2),
-    c3: card('c3', 'group', 3),
+    c2: { ...card('c2', 'group', 2), y: 30 },
+    c3: { ...card('c3', 'group', 3), y: 60 },
     incoming: card('incoming', 'src', 1)
   };
   await setRoomState(state);
