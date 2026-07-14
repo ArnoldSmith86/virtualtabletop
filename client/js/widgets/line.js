@@ -318,9 +318,8 @@ export class Line extends Widget {
         // Convert through global coordinates. Target widgets may be nested in
         // a board/holder, so their local x/y cannot be combined directly with
         // this line's local coordinates.
-        const newPoint = this.coordLocalFromCoordGlobal(targetPoint);
-        newPoint.x = Math.round(newPoint.x);
-        newPoint.y = Math.round(newPoint.y);
+        const localPoint = this.coordLocalFromCoordGlobal(targetPoint);
+        const newPoint = { x: Math.round(localPoint.x), y: Math.round(localPoint.y) };
         // move this end's Bezier control point by the same delta, so a curved
         // connected line keeps its shape (its middle doesn't stay behind) as the
         // end point follows the target instead of just stretching from a fixed control
