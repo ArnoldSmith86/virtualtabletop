@@ -100,6 +100,12 @@ describe('Line widget geometry', () => {
     });
   });
 
+  test('the legacy rotation setting overrides the new default when present', () => {
+    const line = createLine({ id: 'legacy-rotation', rotateAttachedWidgets: false });
+    expect(line.shouldRotateStops()).toBe(false);
+    removeWidget('legacy-rotation');
+  });
+
   describe('normalizeGeometry re-fits the box while keeping the path in place', () => {
     let line;
     beforeAll(async () => {
@@ -142,6 +148,22 @@ describe('Line widget connections', () => {
     const depEndGlobal = { x: dep.get('x') + dep.pointProperty('lineEnd').x, y: dep.get('y') + dep.pointProperty('lineEnd').y };
     const targetStartGlobal = { x: target.get('x') + target.pointProperty('lineStart').x, y: target.get('y') + target.pointProperty('lineStart').y };
     expect(depEndGlobal).toEqual(targetStartGlobal); // 820, 320
+  });
+
+  test('an offset from a rotated non-line target follows its global direction', async () => {
+    const target = new Widget('target');
+    addWidget({ id: 'target', type: 'basic', x: 300, y: 200, width: 100, height: 40, rotation: 90 }, target);
+    target.coordGlobalFromCoordLocal = p => ({ x: target.get('x')+70-p.y, y: target.get('y')-30+p.x });
+    const dep = createLine({ id: 'dep', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 },
+      connectStart: { line: 'target', position: 0.5, offset: 20 } });
+
+    await dep.applyConnections();
+
+    const connected = dep.coordGlobalFromCoordLocal(dep.pointProperty('lineStart'));
+    const center = target.coordGlobalFromCoordLocal({ x: 50, y: 20 });
+    expect(Math.round(connected.x-center.x)).toBe(-20);
+    expect(Math.round(connected.y-center.y)).toBe(0);
+    removeWidget('target');
   });
 
   test('moving the target and re-applying keeps the dependent glued', async () => {

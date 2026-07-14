@@ -1765,9 +1765,9 @@ class PropertiesModule extends SidebarModule {
         end: { x: Math.round(s.x+dx*f2+normal.x*length*n2), y: Math.round(s.y+dy*f2+normal.y*length*n2) }
       };
     };
-    const shapeButtons = shapePresets.map(preset=>{
+    const shapeButtons = shapePresets.map((preset, index)=>{
       const button = document.createElement('button');
-      button.className = 'lineShapePreset';
+      button.className = `lineShapePreset${index == 0 ? ' lineShapeStraight' : index == 1 ? ' lineShapeCurved' : ''}`;
       button.title = preset.name;
       button.setAttribute('aria-label', preset.name);
       button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;

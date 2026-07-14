@@ -230,7 +230,8 @@ export class Line extends Widget {
 
   // Keep existing line definitions working while the property name changes.
   shouldRotateStops() {
-    return !!(this.get('rotateStops') || this.get('rotateAttachedWidgets'));
+    const legacyValue = this.get('rotateAttachedWidgets');
+    return legacyValue === null ? !!this.get('rotateStops') : !!legacyValue;
   }
 
   // the midpoint of the largest empty span along the line, so "Add stop" drops the
@@ -308,7 +309,9 @@ export class Line extends Widget {
           const after = point.target.coordGlobalFromCoordLocal(point.target.pointAtPosition(Math.min(1, point.position+delta)));
           tangent = Math.atan2(after.y-before.y, after.x-before.x);
         } else {
-          tangent = 0;
+          const before = point.target.coordGlobalFromCoordLocal({ x: 0, y: point.target.get('height')/2 });
+          const after = point.target.coordGlobalFromCoordLocal({ x: point.target.get('width'), y: point.target.get('height')/2 });
+          tangent = Math.atan2(after.y-before.y, after.x-before.x);
         }
         const offset = +point.connection.offset || 0;
         const oldPoint = this.pointProperty('line' + point.end) || { x: 0, y: 0 };
