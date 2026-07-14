@@ -21,7 +21,7 @@ export class Line extends Widget {
 
       // when enabled, landscape stops follow the direction of the line at
       // their position; portrait and square stops keep their own rotation
-      rotateAttachedWidgets: false,
+      rotateStops: false,
 
       connectStart: null,
       connectEnd: null
@@ -146,7 +146,7 @@ export class Line extends Widget {
       await stop.set('y', Math.round(p.y - stop.get('height')/2));
 
       const landscape = +stop.get('width') > +stop.get('height');
-      if(this.get('rotateAttachedWidgets') && landscape) {
+      if(this.shouldRotateStops() && landscape) {
         if(!this.autoRotatedStopRotations.has(stop.id))
           this.autoRotatedStopRotations.set(stop.id, stop.get('rotation'));
         await stop.set('rotation', this.tangentAngleAtPosition(+stop.get('linePosition') || 0));
@@ -210,7 +210,7 @@ export class Line extends Widget {
     const width = Math.max(0, +widget.get('width') || 0) * scale;
     const height = Math.max(0, +widget.get('height') || 0) * scale;
     let rotation = +widget.get('rotation') || 0;
-    if(this.get('rotateAttachedWidgets') && width > height)
+    if(this.shouldRotateStops() && width > height)
       rotation = this.tangentAngleAtPosition(position);
     const relativeRotation = (rotation - this.tangentAngleAtPosition(position))*Math.PI/180;
     return Math.abs(width*Math.cos(relativeRotation)) + Math.abs(height*Math.sin(relativeRotation));
@@ -225,6 +225,11 @@ export class Line extends Widget {
     const before = this.pointAtPosition(Math.max(0, p-delta));
     const after = this.pointAtPosition(Math.min(1, p+delta));
     return Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI;
+  }
+
+  // Keep existing line definitions working while the property name changes.
+  shouldRotateStops() {
+    return !!(this.get('rotateStops') || this.get('rotateAttachedWidgets'));
   }
 
   // the midpoint of the largest empty span along the line, so "Add stop" drops the
@@ -270,11 +275,16 @@ export class Line extends Widget {
         if(target.get('type') != 'line' || target == this)
           continue;
         // connections assume both lines share their coordinate system (no rotated/scaled ancestors)
-        const p = target.pointAtPosition(connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1));
+        const position = connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1);
+        const p = target.pointAtPosition(position);
+        // Offset is measured perpendicular to the target line at the connection
+        // point. A positive value is to the left when travelling start to end.
+        const tangent = target.tangentAngleAtPosition(position) * Math.PI/180;
+        const offset = +connection.offset || 0;
         const oldPoint = this.pointProperty('line' + end) || { x: 0, y: 0 };
         const newPoint = {
-          x: Math.round(target.get('x') + p.x - this.get('x')),
-          y: Math.round(target.get('y') + p.y - this.get('y'))
+          x: Math.round(target.get('x') + p.x - Math.sin(tangent)*offset - this.get('x')),
+          y: Math.round(target.get('y') + p.y + Math.cos(tangent)*offset - this.get('y'))
         };
         // move this end's Bezier control point by the same delta, so a curved
         // connected line keeps its shape (its middle doesn't stay behind) as the
@@ -325,7 +335,7 @@ export class Line extends Widget {
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
 
-    if([ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd', 'rotateAttachedWidgets' ].indexOf(property) != -1) {
+    if([ 'lineStart', 'lineEnd', 'controlStart', 'controlEnd', 'rotateStops', 'rotateAttachedWidgets' ].indexOf(property) != -1) {
       await this.updateAttachedWidgets();
       await this.updateConnectedLines();
     }

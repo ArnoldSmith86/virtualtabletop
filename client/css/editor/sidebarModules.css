@@ -414,6 +414,20 @@
   width: 70px;
   min-width: 70px;
 }
+.editorModule input.lineConnectPosition,
+.editorModule input.lineConnectStartOffset,
+.editorModule input.lineConnectEndOffset {
+  width: 70px;
+  min-width: 70px;
+}
+.editorModule input.lineRotateStopsCheckbox {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+.editorModule .lineRotateStops {
+  white-space: nowrap;
+}
 .editorModule .lineStopList .genericInput button.lineRemoveStop {
   display: inline-flex;
   margin-left: 8px;

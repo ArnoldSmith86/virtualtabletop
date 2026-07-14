@@ -1778,6 +1778,27 @@ class PropertiesModule extends SidebarModule {
     stopsHint.className = 'lineStopsHint';
     stopsHint.innerText = 'Each stop sits at a percentage position along the line and keeps that spot as the line is reshaped. Set a stop’s position below. Any widget type can be a stop — give a child a linePosition of 0–1.';
     this.moduleDOM.appendChild(stopsHint);
+
+    const rotateStopsWrap = div(this.moduleDOM, 'genericInput lineRotateStops');
+    const rotateStopsLabel = document.createElement('label');
+    rotateStopsLabel.innerText = 'Automatically rotate stops';
+    rotateStopsLabel.style = 'display:inline-block;width:240px';
+    const rotateStops = document.createElement('input');
+    rotateStops.type = 'checkbox';
+    rotateStops.className = 'lineRotateStopsCheckbox';
+    rotateStops.title = 'Automatically rotate landscape stops to follow the line';
+    const updateRotateStops = ()=>rotateStops.checked = widget.shouldRotateStops();
+    this.addPropertyListener(widget, 'rotateStops', updateRotateStops);
+    this.addPropertyListener(widget, 'rotateAttachedWidgets', updateRotateStops);
+    rotateStops.onchange = async _=>{
+      // Remove the previous property when changing the setting in the tuner,
+      // so old line JSON cannot override the new rotateStops value.
+      await widget.set('rotateAttachedWidgets', null);
+      await widget.set('rotateStops', rotateStops.checked);
+    };
+    rotateStopsWrap.appendChild(rotateStopsLabel);
+    rotateStopsWrap.appendChild(rotateStops);
+
     const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
 
     // new stops inheritFrom the chosen widget so restyling one restyles them all.
@@ -1844,14 +1865,18 @@ class PropertiesModule extends SidebarModule {
     // button, so a designer can place and remove a *specific* stop the same way
     // connections are positioned; the position sticks through reshaping
     const stopList = div(this.moduleDOM, 'lineStopList');
+    // Keep creation controls with the list they affect, after the existing
+    // stops rather than above them.
+    this.moduleDOM.appendChild(addStopButton);
+    this.moduleDOM.appendChild(inheritWrap);
     const renderStops = ()=>{
       stopList.innerHTML = '';
       const stops = widget.attachedWidgets();
       stops.forEach((stop, i)=>{
         const row = div(stopList, 'genericInput');
         const label = document.createElement('label');
-        label.innerText = `Stop ${i+1}`;
-        label.style = 'display:inline-block;width:100px';
+        label.innerText = `Stop ${i+1} (${stop.get('id')})`;
+        label.style = 'display:inline-block;width:160px';
         const position = document.createElement('input');
         position.type = 'number';
         position.min = 0;
@@ -1942,24 +1967,40 @@ class PropertiesModule extends SidebarModule {
       position.type = 'number';
       position.min = 0;
       position.max = 100;
+      position.className = 'lineConnectPosition';
       position.title = 'Position on the other line in percent';
+      const offset = document.createElement('input');
+      offset.type = 'number';
+      offset.step = 'any';
+      offset.className = `lineConnect${end}Offset`;
+      offset.title = 'Perpendicular offset from the other line in pixels; positive is to its left from start to end';
       wrapper.appendChild(select);
       wrapper.appendChild(position);
       wrapper.appendChild(document.createTextNode('%'));
+      wrapper.appendChild(document.createElement('br'));
+      wrapper.appendChild(document.createTextNode('Offset '));
+      wrapper.appendChild(offset);
+      wrapper.appendChild(document.createTextNode(' px'));
 
       this.addPropertyListener(widget, 'connect'+end, widget=>{
         const connection = widget.get('connect'+end);
         select.value = connection && connection.line ? connection.line : '';
         position.value = connection ? Math.round((connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1))*100) : (end == 'Start' ? 0 : 100);
+        offset.value = connection ? (+connection.offset || 0) : 0;
         position.disabled = !connection;
+        offset.disabled = !connection;
       });
-      select.onchange = position.onchange = _=>{
-        widget.set('connect'+end, select.value ? { line: select.value, position: Math.max(0, Math.min(100, +position.value || 0))/100 } : null);
+      select.onchange = position.onchange = offset.onchange = _=>{
+        widget.set('connect'+end, select.value ? {
+          line: select.value,
+          position: Math.max(0, Math.min(100, +position.value || 0))/100,
+          offset: +offset.value || 0
+        } : null);
       };
     }
 
     this.addSubHeader('Line properties');
-    this.renderGenericProperties(widget, [ 'connectStart', 'connectEnd' ]);
+    this.renderGenericProperties(widget, [ 'connectStart', 'connectEnd', 'rotateStops', 'rotateAttachedWidgets' ]);
   }
 
   renderForSpinner(widget) {
