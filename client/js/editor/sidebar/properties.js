@@ -323,6 +323,10 @@ class PropertiesModule extends SidebarModule {
     }
 
     createRadioButtons(this.moduleDOM, 'deckType', {
+      traditional: {
+        header: 'Traditional deck',
+        description: 'Add a ready-made deck: standard playing cards, Spanish, German or Swiss suited cards, tarot, hanafuda, mahjong tiles or dominoes'
+      },
       custom: {
         header: 'Custom deck of cards',
         description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
@@ -330,16 +334,65 @@ class PropertiesModule extends SidebarModule {
       images: {
         header: 'Upload one image per card or tiled images with multiple cards',
         description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
+      },
+      tts: {
+        header: 'Import from Tabletop Simulator',
+        description: 'Enter the link of a TTS Steam Workshop item, preview the decks it contains and import the ones you want'
       }
     }, v=>{
       options.innerHTML = '';
+      if(v == 'traditional')
+        this.deckTraditional(options);
       if(v == 'custom')
         this.deckGenerator(options);
       if(v == 'images')
       this.deckImages(options);
+      if(v == 'tts')
+        this.deckImportTTS(options);
     });
 
     const options = div(this.moduleDOM);
+  }
+
+  async deckTraditional(target) {
+    const deckFiles = [ 'standard', 'spanish', 'german', 'swiss', 'tarot', 'hanafuda', 'mahjong', 'dominoes' ];
+
+    const selectionDiv = div(target, 'traditionalDecks');
+    const detailsDiv = div(target, 'traditionalDeckDetails');
+
+    const createButton = document.createElement('button');
+    createButton.innerText = 'Add to game';
+    createButton.className = 'green';
+    createButton.disabled = true;
+    createButton.setAttribute('icon', 'add');
+
+    let selectedDeck = null;
+    for(const file of deckFiles) {
+      const definition = await (await fetch(`i/decks/${file}.json`)).json();
+      const previewState = Object.assign({ id: generateUniqueWidgetID() }, definition.deck);
+      const button = this.renderWidgetButton(new Deck(previewState.id), previewState, selectionDiv);
+      button.title = definition.name;
+      button.onclick = e=>{
+        for(const other of $a('.widgetSelectionButton', selectionDiv))
+          if(other != button)
+            other.classList.remove('selected');
+        button.classList.toggle('selected');
+        selectedDeck = button.classList.contains('selected') ? definition : null;
+        createButton.disabled = !selectedDeck;
+        detailsDiv.innerHTML = '';
+        if(selectedDeck) {
+          div(detailsDiv, 'name').innerText = definition.name;
+          div(detailsDiv, 'description').innerText = definition.description;
+          div(detailsDiv, 'attribution').innerText = definition.attribution;
+        }
+      };
+    }
+
+    createButton.onclick = async e=>{
+      const deck = Object.assign({ id: generateUniqueWidgetID() }, selectedDeck.deck);
+      await this.addDeckWithCards(deck, 'traditional', selectedDeck.counts);
+    };
+    target.append(createButton);
   }
 
   deckGenerator(target) {
@@ -714,6 +767,88 @@ class PropertiesModule extends SidebarModule {
       }
 
       await this.addDeckWithCards(deck, 'image', counts);
+    };
+  }
+
+  deckImportTTS(target) {
+    this.addSubHeader('Workshop link', target);
+    const linkDiv = div(target, 'ttsImportLink', `
+      <input type=url placeholder="https://steamcommunity.com/sharedfiles/filedetails/?id=...">
+      <button icon=search>Find decks</button>
+    `);
+    const linkInput = $('input', linkDiv);
+    const findButton = $('button', linkDiv);
+
+    this.addSubHeader('Decks', target);
+    const preview = div(target, '', '<p>Enter a link above to list the decks it contains.</p>');
+
+    div(target, 'goButton buttonBar', `
+      <button icon=add class=green disabled>Add to game</button>
+    `);
+    const addButton = $('.goButton [icon=add]', target);
+
+    const foundDecks = [];
+
+    findButton.onclick = async _=>{
+      if(!linkInput.value.match(/^https?:\/\//))
+        return alert('Please enter a link to a TTS Steam Workshop item.');
+
+      findButton.disabled = true;
+      addButton.disabled = true;
+      foundDecks.length = 0;
+      preview.innerHTML = '<p>Downloading and converting... this can take a while for big games.</p>';
+
+      try {
+        const response = await fetch('api/decksFromLink', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ link: linkInput.value })
+        });
+        if(!response.ok)
+          throw new Error(await response.text());
+        const decks = await response.json();
+
+        preview.innerHTML = decks.length ? '' : '<p>No decks were found behind that link.</p>';
+        const showSource = new Set(decks.map(d=>d.source)).size > 1;
+        for(const { deck, cardCounts, source } of decks) {
+          const cardCount = Object.values(cardCounts).reduce((sum, count)=>sum+count, 0);
+          const button = this.renderWidgetButton(new Deck(generateUniqueWidgetID()), JSON.parse(JSON.stringify(deck)), preview);
+          button.classList.add('ttsDeckButton');
+          const label = `${cardCount} card${cardCount == 1 ? '' : 's'}${showSource && source ? ` (${source})` : ''}`;
+          div(button, 'deckCardCount', html(label));
+          button.onclick = _=>{
+            button.classList.toggle('selected');
+            addButton.disabled = !$a('.selected.ttsDeckButton', preview).length;
+          };
+          foundDecks.push({ button, deck, cardCounts });
+        }
+      } catch(e) {
+        preview.innerHTML = '';
+        alert(`Loading decks failed: ${e.message}`);
+      }
+      findButton.disabled = false;
+    };
+
+    addButton.onclick = async _=>{
+      addButton.disabled = true;
+      try {
+        for(const { button, deck, cardCounts } of foundDecks) {
+          if(!button.classList.contains('selected'))
+            continue;
+          const newDeck = JSON.parse(JSON.stringify(deck));
+          delete newDeck.parent;
+          delete newDeck.x;
+          delete newDeck.y;
+          delete newDeck.z;
+          newDeck.id = generateUniqueWidgetID();
+          await this.addDeckWithCards(newDeck, 'TTS', cardCounts);
+          button.classList.remove('selected');
+        }
+      } catch(e) {
+        alert(`Importing decks failed: ${e.message}`);
+      }
+      // re-enable if any decks are still selected (e.g. an import failed partway)
+      addButton.disabled = !$a('.selected.ttsDeckButton', preview).length;
     };
   }
 
