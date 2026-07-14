@@ -8,10 +8,12 @@ export class StateManaged {
     this.state = {};
     this.unalteredState = {};
     this.getCache = {};
+    this.getCacheVersion = StateManaged.getCacheVersion;
   }
 
   addDefaults(defaults) {
     Object.assign(this.defaults, defaults);
+    this.invalidateGetCache();
   }
 
   applyDelta(delta) {
@@ -57,6 +59,10 @@ export class StateManaged {
   }
 
   get(property) {
+    if(this.getCacheVersion != StateManaged.getCacheVersion) {
+      this.getCache = {};
+      this.getCacheVersion = StateManaged.getCacheVersion;
+    }
     const cached = this.getCache[property];
     if(cached !== undefined)
       return cached;
@@ -106,14 +112,11 @@ export class StateManaged {
       return properties.indexOf(key) != -1;
   }
 
-  // clears the get cache of this widget and everything whose get values can depend on it (widgets inheriting from it)
-  invalidateGetCache(visited = new Set()) {
-    if(visited.has(this))
-      return;
-    visited.add(this);
+  // Any widget can indirectly affect another widget's defaults, so every state change starts a new cache generation.
+  invalidateGetCache() {
+    ++StateManaged.getCacheVersion;
     this.getCache = {};
-    for(const inheriting of StateManaged.inheritFromMapping[this.id] || [])
-      inheriting.invalidateGetCache(visited);
+    this.getCacheVersion = StateManaged.getCacheVersion;
   }
 
   inheritFromUnregister() {
@@ -170,3 +173,4 @@ export class StateManaged {
 
 StateManaged.globalUpdateListeners = {};
 StateManaged.inheritFromMapping = {};
+StateManaged.getCacheVersion = 0;

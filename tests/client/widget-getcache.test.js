@@ -10,9 +10,8 @@ globalThis.widgets = widgets;
 globalThis.asArray = asArray;
 
 // Regression tests for the get() cache (PR #2183). The cache must never outlive
-// the value it holds: because get() can resolve a property from another widget
-// (via inheritFrom), changing that other widget has to invalidate the cache of
-// everything that inherits from it - directly or through a chain.
+// the value it holds: because get() can resolve a property from another widget,
+// any state change has to invalidate cached values globally.
 describe('get() caching invalidation', () => {
   const created = [];
   function make(def) {
@@ -56,5 +55,15 @@ describe('get() caching invalidation', () => {
     expect(w.get('foo')).toBe('A');
     await w.set('foo', 'B');
     expect(w.get('foo')).toBe('B');
+  });
+
+  test('a state change invalidates unregistered cross-widget dependencies', async () => {
+    const src = make({ id: 'gc-custom-src', type: 'widget', foo: 'A' });
+    const dependent = make({ id: 'gc-custom-dependent', type: 'widget' });
+    const originalGetDefaultValue = dependent.getDefaultValue.bind(dependent);
+    dependent.getDefaultValue = property => property == 'foo' ? src.get('foo') : originalGetDefaultValue(property);
+    expect(dependent.get('foo')).toBe('A');
+    await src.set('foo', 'B');
+    expect(dependent.get('foo')).toBe('B');
   });
 });
