@@ -347,6 +347,7 @@ class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Properties', 'Edit widget properties.');
     this.widgetPick = null;
+    this.collapsibleStates = {};
   }
 
   // --- widget picking (used by the appearance pipette) ---
@@ -1850,11 +1851,17 @@ class PropertiesModule extends SidebarModule {
   // A section whose body can be folded away by clicking the header. Position,
   // size and rotation are usually changed with the drag toolbar, so they start
   // collapsed.
-  renderCollapsibleSection(title, collapsed, renderBody, target=null) {
+  renderCollapsibleSection(title, collapsed, renderBody, target=null, stateKey=null) {
+    if(stateKey !== null && this.collapsibleStates[stateKey] !== undefined)
+      collapsed = this.collapsibleStates[stateKey];
     const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
     const header = div(wrap, 'collapsibleHeader', `<span class=collapseArrow></span><span>${html(title)}</span>`);
     const body = div(wrap, 'collapsibleBody');
-    header.onclick = _=>wrap.classList.toggle('collapsed');
+    header.onclick = _=>{
+      wrap.classList.toggle('collapsed');
+      if(stateKey !== null)
+        this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
+    };
     renderBody(body);
     return wrap;
   }
@@ -1870,7 +1877,7 @@ class PropertiesModule extends SidebarModule {
       this.renderInputs(widget, [
         { label: 'Width', property: 'width', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.width,
           setValue: value=>this.setWidgetDimension(widget, 'width', value, sizeLocked) },
-        { label: 'Height', property: 'height', kind: 'number', min: 1, max: 1000, step: 1, slider: true, hint: editorPropertyHints.height,
+        { label: 'Height', property: 'height', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.height,
           setValue: value=>this.setWidgetDimension(widget, 'height', value, sizeLocked) }
       ], body);
       new CheckboxInput(this, widget, 'Lock width / height', {
@@ -1899,7 +1906,7 @@ class PropertiesModule extends SidebarModule {
         { label: 'Z (within layer)', property: 'z', kind: 'number', step: 1, nullIfEmpty: true, hint: editorPropertyHints.z }
       ], body);
       this.renderParentControl(widget, body);
-    });
+    }, null, `${widget.id}:position`);
     this.renderMovableControl(widget);
   }
 
