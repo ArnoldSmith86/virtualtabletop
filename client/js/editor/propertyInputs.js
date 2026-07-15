@@ -32,6 +32,7 @@ const builtinGamePieceImages = [
 ].map(name=>`/i/game-pieces/${name}.svg`);
 
 const propertyInputPalette = [
+  'transparent',
   '#000000', '#444444', '#888888', '#cccccc', '#ffffff',
   '#e6194b', '#f58231', '#ffe119', '#bfef45', '#3cb44b',
   '#42d4f4', '#4363d8', '#911eb4', '#f032e6', '#9a6324', '#800000'
@@ -311,10 +312,21 @@ class TextInput extends PropertyInput {
     this.input = document.createElement(this.options.multiline ? 'textarea' : 'input');
     if(this.options.placeholder)
       this.input.placeholder = this.options.placeholder;
-    this.input.oninput = _=>{
+    const apply = _=>{
       const value = this.input.value;
       this.setValue(value === '' && this.options.nullIfEmpty ? null : value);
     };
+    if(this.options.commit) {
+      this.input.onchange = apply;
+      this.input.onkeydown = e=>{
+        if(e.key == 'Enter') {
+          apply();
+          this.input.blur();
+        }
+      };
+    } else {
+      this.input.oninput = apply;
+    }
     target.appendChild(this.input);
   }
 
@@ -415,39 +427,6 @@ class CheckboxInput extends PropertyInput {
       const boolValue = value === null ? !!this.options.default : !!value;
       this.input.checked = this.options.invert ? !boolValue : boolValue;
     }
-  }
-}
-
-// A row of buttons where exactly one is active. Unlike SelectInput it can map
-// to more than one property (used for the movable states).
-class MultiButtonInput extends PropertyInput {
-  // options.segments: [{ label, tooltip }], options.getIndex(widget), options.onSelect(index)
-  cssClass() {
-    return 'multiButtonInput';
-  }
-
-  listenProperties() {
-    return this.options.listenTo || [ this.options.property ];
-  }
-
-  renderControl(target) {
-    this.buttons = [];
-    const bar = div(target, 'segmented-control');
-    this.options.segments.forEach((segment, index)=>{
-      const button = document.createElement('button');
-      button.textContent = segment.label;
-      if(segment.tooltip)
-        button.title = segment.tooltip;
-      button.onclick = _=>this.options.onSelect(index);
-      bar.appendChild(button);
-      this.buttons.push(button);
-    });
-  }
-
-  update() {
-    const index = this.options.getIndex(this.widget);
-    this.dom.classList.toggle('multiDiffers', index < 0);
-    this.buttons.forEach((button, i)=>button.classList.toggle('active', i == index));
   }
 }
 

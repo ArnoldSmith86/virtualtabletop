@@ -64,18 +64,40 @@
   flex: 1 1 auto;
 }
 
-.editorModule .multiButtonInput .segmented-control {
+.editorModule .movableToggleInput .segmented-control {
   flex-wrap: wrap;
 }
-.editorModule .multiButtonInput .segmented-control button {
+.editorModule .movableToggleInput .segmented-control button {
   flex: 1 1 auto;
   min-width: 90px;
   font-size: 12px;
   padding: 0 6px;
 }
-.editorModule .multiButtonInput .segmented-control button.active {
+.editorModule .movableToggleInput .segmented-control button.active {
   background: var(--VTTblueDark);
   color: #fff;
+}
+
+.editorModule .propertySizeLock,
+.editorModule .propertyParentControl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0;
+}
+.editorModule .propertySizeLock button,
+.editorModule .propertyParentControl > button {
+  min-width: 34px;
+  justify-content: center;
+}
+.editorModule .propertySizeLock button.selected,
+.editorModule .propertyParentControl > button.selected {
+  background: var(--VTTblueDark);
+  color: #fff;
+}
+.editorModule .propertyParentControl .propertyInput {
+  flex: 1 1 auto;
+  margin: 0;
 }
 
 .editorModule .colorHexInput {
@@ -388,6 +410,30 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   border-radius: 6px;
   padding: 6px;
 }
+.editorModule .diceFaceReorder,
+.editorModule .faceOrderButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.editorModule .diceFaceReorder button,
+.editorModule .faceOrderButtons button,
+.editorModule .basicFaceHeader > button {
+  min-width: 30px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  justify-content: center;
+}
+.editorModule .diceFaceRow.dragging,
+.editorModule .basicFaceRow.dragging {
+  opacity: 0.45;
+}
+.editorModule .diceFaceRow.dragOver,
+.editorModule .basicFaceRow.dragOver {
+  border-color: var(--VTTblue);
+  box-shadow: 0 0 0 2px var(--VTTblue);
+}
 .editorModule .diceFacePreview {
   width: 56px;
   height: 56px;
@@ -420,6 +466,34 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   flex-direction: column;
   gap: 4px;
   margin-bottom: 6px;
+}
+
+/* basic widget face editor */
+.editorModule .basicFacesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+.editorModule .basicFaceRow {
+  border: 1px solid var(--textDimColor1, #ccc);
+  border-radius: 6px;
+  padding: 6px;
+}
+.editorModule .basicFaceHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.editorModule .basicFaceHeader strong {
+  flex: 1 1 auto;
+}
+.editorModule .basicFaceHeader .faceOrderButtons {
+  flex-direction: row;
+}
+.editorModule .basicFaceActions {
+  justify-content: flex-end;
 }
 
 .dicePresetOverlay {
