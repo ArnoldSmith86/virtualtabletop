@@ -13,6 +13,7 @@ const helpers = new Function(source + `;
     getWidgetCssValue,
     setWidgetCssValue,
     searchIconIndex,
+    propertyInputPalette,
     setIconSearchIndex: index => { iconSearchIndex = index; }
   };
 `)();
@@ -93,5 +94,11 @@ describe("icon search", () => {
     expect(helpers.searchIconIndex('dragon wing')).toEqual([ 'lorc/dragon-wing' ]);
     expect(helpers.searchIconIndex('dragon', 1)).toEqual([ 'lorc/dragon-head' ]);
     expect(helpers.searchIconIndex('missing')).toEqual([]);
+  });
+});
+
+describe("color picker", () => {
+  test("offers transparent as an explicit palette choice", () => {
+    expect(helpers.propertyInputPalette).toContain('transparent');
   });
 });

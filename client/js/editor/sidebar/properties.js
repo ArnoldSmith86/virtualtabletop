@@ -111,10 +111,16 @@ async function setCardCount(deck, cardType, count) {
 const editorPropertyHints = {
   x: 'Horizontal position in game units (0-1600). Relative to the parent widget if it has one.',
   y: 'Vertical position in game units (0-1000). Relative to the parent widget if it has one.',
+  width: 'The widget width in game units. Enable the size lock to preserve the current width-to-height ratio while resizing.',
+  height: 'The widget height in game units. Enable the size lock to preserve the current width-to-height ratio while resizing.',
+  rotation: 'Clockwise rotation in degrees around the widget\'s transform origin.',
   scale: 'Scales the widget without changing its width/height. Children scale with it.',
   layer: 'Widgets on a higher layer are always drawn on top of lower layers, regardless of z.',
   z: 'Stacking order within the same layer. Usually managed automatically; leave empty to let the engine set it.',
-  movable: 'Whether players and/or the editor can drag this widget. Automation (routines) can still move it either way.',
+  parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
+  movable: 'Allow players to drag this widget. Automation can still move it when this is off.',
+  movableInEdit: 'Allow dragging with the editor tools. Turn both movement options off to make the widget immovable by hand.',
+  sizeLock: 'Keep the current width-to-height ratio when either dimension is changed in this panel.',
   color: 'Main color of the widget.',
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
@@ -125,7 +131,51 @@ const editorPropertyHints = {
   faces: 'The list of faces this dice can show. Edit them below.',
   shape3d: 'Render the dice as a rolling 3D shape instead of a flat swapping face.',
   player: 'The player currently seated here. Setting it also stores their color.',
-  onlyVisibleForSeat: 'Restrict which seats can see this widget (private hands / areas).'
+  onlyVisibleForSeat: 'Restrict which seats can see this widget (private hands / areas).',
+  activeFace: 'The zero-based index of the face currently shown.',
+  faceCycle: 'How clicking advances through faces: forward, backward or random.',
+  clickable: 'Whether normal player clicks can activate the widget.',
+  editable: 'Allow players to type directly into this label outside edit mode.',
+  placeholderText: 'Text shown only while an editable label is empty.',
+  resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
+  lineWidth: 'The brush width used for new canvas strokes.',
+  activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
+  rollTime: 'How long the rolling animation lasts, in milliseconds.',
+  swapTime: 'How long the face-swap animation lasts, in milliseconds.',
+  dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
+  alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
+  preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
+  childrenPerOwner: 'Keep a separate set of held widgets for each player.',
+  dropOffsetX: 'Horizontal starting position for widgets aligned inside the holder.',
+  dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
+  stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
+  stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
+  showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
+  verticalHeader: 'Rotate the scoreboard header text vertically.',
+  autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
+  scoreProperty: 'The seat property recorded as the score for each round.',
+  playersInColumns: 'Put players in columns instead of rows.',
+  showTotals: 'Add a total across all recorded rounds.',
+  showAllRounds: 'Keep completed rounds visible rather than showing only the current round.',
+  showAllSeats: 'Include seats that currently have no player.',
+  currentRound: 'The zero-based round currently being entered.',
+  sortField: 'The scoreboard field used to order players.',
+  sortAscending: 'Sort the chosen field from low to high instead of high to low.',
+  firstColWidth: 'Fixed width of the first scoreboard column when autosizing is off.',
+  index: 'Seat order used by turn and scoreboard logic.',
+  display: 'The seat property whose value is displayed as the seat text.',
+  hand: 'ID of the holder used as this seat\'s private hand.',
+  turn: 'Marks this seat as currently taking its turn.',
+  skipTurn: 'Skip this seat when routines advance turns.',
+  hideTurn: 'Do not render the turn indicator on this seat.',
+  hideWhenUnused: 'Hide the seat while no player occupies it.',
+  countdown: 'Count toward zero instead of counting upward.',
+  paused: 'Stop changing the displayed timer value.',
+  alert: 'Play the timer alert when the end value is reached.',
+  precision: 'How often the displayed timer value refreshes.',
+  start: 'Timer start value in milliseconds.',
+  end: 'Optional timer end value in milliseconds.',
+  milliseconds: 'The timer\'s current value in milliseconds.'
 };
 
 // Which properties make up the "appearance" of each widget type and which
@@ -205,18 +255,6 @@ const editorTypeSections = {
       { label: 'Drop offset Y',         property: 'dropOffsetY',      kind: 'number' },
       { label: 'Stack offset X',        property: 'stackOffsetX',     kind: 'number' },
       { label: 'Stack offset Y',        property: 'stackOffsetY',     kind: 'number' }
-    ]
-  },
-  pile: {
-    content: [
-      { label: 'Handle text',     property: 'text',           kind: 'text', nullIfEmpty: true }
-    ],
-    appearance: [
-      { label: 'Handle position', property: 'handlePosition', kind: 'select', choices: [ 'top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left', 'static' ].map(v=>({ value: v, text: v })) },
-      { label: 'Handle offset',   property: 'handleOffset',   kind: 'number', min: 0, max: 100, slider: true }
-    ],
-    behavior: [
-      { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, max: 200, slider: true }
     ]
   },
   scoreboard: {
@@ -314,7 +352,8 @@ class PropertiesModule extends SidebarModule {
   // --- widget picking (used by the appearance pipette) ---
 
   startWidgetPick(targetWidget, callback) {
-    this.widgetPick = { targetID: targetWidget.id, callback };
+    const targetIDs = targetWidget.isMulti ? targetWidget.widgets.map(w=>w.id) : [ targetWidget.id ];
+    this.widgetPick = { targetIDs, callback };
     $('body').classList.add('editorWidgetPicking');
   }
 
@@ -494,14 +533,14 @@ class PropertiesModule extends SidebarModule {
   onSelectionChangedWhileActive(newSelection) {
     if(this.widgetPick) {
       const pick = this.widgetPick;
-      const target = widgets.get(pick.targetID);
+      const targets = pick.targetIDs.map(id=>widgets.get(id)).filter(w=>w);
       this.stopWidgetPick();
-      if(target) {
+      if(targets.length) {
         // defer reselecting the target so it does not happen from inside
         // setSelection's module notification loop and the callback's property
         // changes are applied before the module re-renders
-        const picked = newSelection.filter(w=>w.id != pick.targetID)[0];
-        Promise.resolve(picked ? pick.callback(picked) : null).then(_=>setSelection([ target ]));
+        const picked = newSelection.find(w=>!pick.targetIDs.includes(w.id));
+        Promise.resolve(picked ? pick.callback(picked) : null).then(_=>setSelection(targets));
         return;
       }
     }
@@ -546,6 +585,10 @@ class PropertiesModule extends SidebarModule {
     const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
 
     this.addHeader(`${selection.length} widgets selected`);
+    if(types.includes('pile')) {
+      this.renderPileExplanation();
+      return;
+    }
     this.renderBasicSection(facade);
     this.renderArrangeButtons();
 
@@ -1821,9 +1864,24 @@ class PropertiesModule extends SidebarModule {
       this.renderInputs(widget, [
         { label: 'X',        property: 'x',        kind: 'number', min: 0, max: 1600, step: 1, slider: true, hint: editorPropertyHints.x },
         { label: 'Y',        property: 'y',        kind: 'number', min: 0, max: 1000, step: 1, slider: true, hint: editorPropertyHints.y },
-        { label: 'Width',    property: 'width',    kind: 'number', min: 1, max: 1600, step: 1, slider: true },
-        { label: 'Height',   property: 'height',   kind: 'number', min: 1, max: 1000, step: 1, slider: true },
-        { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true },
+      ], body);
+
+      let sizeLocked = false;
+      this.renderInputs(widget, [
+        { label: 'Width', property: 'width', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.width,
+          setValue: value=>this.setWidgetDimension(widget, 'width', value, sizeLocked) },
+        { label: 'Height', property: 'height', kind: 'number', min: 1, max: 1000, step: 1, slider: true, hint: editorPropertyHints.height,
+          setValue: value=>this.setWidgetDimension(widget, 'height', value, sizeLocked) }
+      ], body);
+      new CheckboxInput(this, widget, 'Lock width / height', {
+        getValue: _=>sizeLocked,
+        setValue: value=>sizeLocked = value,
+        listenTo: [ 'width', 'height' ],
+        hint: editorPropertyHints.sizeLock
+      }).render(body);
+
+      this.renderInputs(widget, [
+        { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true, hint: editorPropertyHints.rotation },
         { label: 'Scale',    property: 'scale',    kind: 'number', min: 0.1, max: 5, step: 0.1, slider: true, hint: editorPropertyHints.scale },
         { label: 'Layer',    property: 'layer',    kind: 'select', hint: editorPropertyHints.layer, choices: [
           { value: -5, text: '-5 (background)' },
@@ -1840,37 +1898,160 @@ class PropertiesModule extends SidebarModule {
         ] },
         { label: 'Z (within layer)', property: 'z', kind: 'number', step: 1, nullIfEmpty: true, hint: editorPropertyHints.z }
       ], body);
+      this.renderParentControl(widget, body);
     });
     this.renderMovableControl(widget);
   }
 
-  // Three-state movable control instead of two checkboxes.
-  renderMovableControl(widget) {
-    new MultiButtonInput(this, widget, 'Movable', {
-      listenTo: [ 'movable', 'movableInEdit' ],
-      hint: editorPropertyHints.movable,
-      segments: [
-        { label: 'by players',  tooltip: 'Players and the editor can move this widget.' },
-        { label: 'in editor',   tooltip: 'Only the editor can move this widget, not players.' },
-        { label: 'not movable', tooltip: 'Neither players nor the editor can drag this widget (you can still change its position above).' }
-      ],
-      getIndex: w=>{
-        const movable = w.get('movable');
-        const movableInEdit = w.get('movableInEdit');
-        if(movable === MULTI_DIFFERENT || (movable === false && movableInEdit === MULTI_DIFFERENT))
-          return -1;
-        if(movable !== false)
-          return 0;
-        return movableInEdit !== false ? 1 : 2;
-      },
-      onSelect: index=>{
-        batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} changed movable state of widget ${widget.id} in editor`);
-        widget.set('movable', index == 0);
-        widget.set('movableInEdit', index != 2);
-        batchEnd();
+  async setWidgetDimension(widget, property, value, locked) {
+    const changedWidgets = widget.isMulti ? widget.widgets : [ widget ];
+    batchStart();
+    try {
+      setDeltaCause(`${getPlayerDetails().playerName} resized ${changedWidgets.length == 1 ? `widget ${changedWidgets[0].id}` : `${changedWidgets.length} widgets`} in editor`);
+      const updates = [];
+      for(const changedWidget of changedWidgets) {
+        const oldWidth = changedWidget.get('width');
+        const oldHeight = changedWidget.get('height');
+        updates.push(changedWidget.set(property, value));
+        if(locked && oldWidth > 0 && oldHeight > 0) {
+          const otherProperty = property == 'width' ? 'height' : 'width';
+          const otherValue = property == 'width' ? oldHeight * value / oldWidth : oldWidth * value / oldHeight;
+          updates.push(changedWidget.set(otherProperty, otherValue));
+        }
       }
-    }).render(this.moduleDOM);
+      await Promise.all(updates);
+    } finally {
+      batchEnd();
+    }
+  }
+
+  renderParentControl(widget, target) {
+    const wrap = div(target, 'propertyInput parentInput');
+    const label = document.createElement('label');
+    label.textContent = 'Parent';
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'none';
+    wrap.appendChild(input);
+
+    const pick = document.createElement('button');
+    pick.setAttribute('icon', 'colorize');
+    pick.title = 'Pick a parent widget from the table';
+    wrap.appendChild(pick);
+
+    const clear = document.createElement('button');
+    clear.setAttribute('icon', 'link_off');
+    clear.title = 'Remove the parent';
+    wrap.appendChild(clear);
+
+    const error = div(wrap, 'propertyParentError');
+    error.style.display = 'none';
+    attachPropertyHint(wrap, editorPropertyHints.parent);
+
+    const showError = message=>{
+      error.textContent = message || '';
+      error.style.display = message ? '' : 'none';
+      input.classList.toggle('inputError', !!message);
+    };
+    const update = _=>{
+      const value = widget.get('parent');
+      input.placeholder = value === MULTI_DIFFERENT ? '— multiple —' : 'none';
+      if(document.activeElement !== input)
+        input.value = value === MULTI_DIFFERENT || value == null ? '' : value;
+    };
+    const apply = async parentID=>{
+      const message = await this.setWidgetParent(widget, parentID || null);
+      showError(message);
+      if(!message)
+        update();
+      return message;
+    };
+
+    input.onchange = _=>apply(input.value.trim());
+    input.onkeydown = e=>{
+      if(e.key == 'Enter') {
+        e.preventDefault();
+        input.blur();
+      }
+    };
+    clear.onclick = _=>apply(null);
+    pick.onclick = _=>{
+      if(this.widgetPick) {
+        this.stopWidgetPick();
+        pick.classList.remove('selected');
+        return;
+      }
+      pick.classList.add('selected');
+      this.startWidgetPick(widget, async parent=>{
+        const message = await this.setWidgetParent(widget, parent.id);
+        if(message)
+          alert(message);
+      });
+    };
+    this.addPropertyListener(widget, 'parent', update);
+  }
+
+  async setWidgetParent(widget, parentID) {
+    const changedWidgets = widget.isMulti ? widget.widgets : [ widget ];
+    const newParent = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
+    if(parentID && !newParent)
+      return `There is no widget with ID "${parentID}".`;
+    for(const changedWidget of changedWidgets) {
+      if(newParent == changedWidget)
+        return 'A widget cannot be its own parent.';
+      if(newParent && newParent.isDescendantOf(changedWidget))
+        return `Widget ${newParent.id} is inside ${changedWidget.id}, so using it as the parent would create a loop.`;
+    }
+
+    const changes = changedWidgets.map(changedWidget=>{
+      const global = changedWidget.coordGlobalFromCoordParent({ x: changedWidget.get('x'), y: changedWidget.get('y') });
+      const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
+      return { widget: changedWidget, x: Math.round(local.x * 1024) / 1024, y: Math.round(local.y * 1024) / 1024 };
+    });
+
+    batchStart();
+    try {
+      setDeltaCause(`${getPlayerDetails().playerName} changed the parent of ${changedWidgets.length == 1 ? `widget ${changedWidgets[0].id}` : `${changedWidgets.length} widgets`} in editor`);
+      for(const change of changes) {
+        await change.widget.set('parent', newParent ? newParent.id : null);
+        await change.widget.setPosition(change.x, change.y, change.widget.get('z'));
+      }
+    } finally {
+      batchEnd();
+    }
+    return null;
+  }
+
+  // Player and editor dragging are independent toggles. Both can be off.
+  renderMovableControl(widget) {
+    const wrap = div(this.moduleDOM, 'propertyInput movableToggleInput');
+    const label = document.createElement('label');
+    label.textContent = 'Movable';
+    wrap.appendChild(label);
+    const bar = div(wrap, 'segmented-control');
+    const defs = [
+      { property: 'movable', label: 'by players', hint: editorPropertyHints.movable },
+      { property: 'movableInEdit', label: 'in editor', hint: editorPropertyHints.movableInEdit }
+    ];
+    for(const def of defs) {
+      const button = document.createElement('button');
+      button.textContent = def.label;
+      button.title = def.hint;
+      button.onclick = _=>{
+        const current = widget.get(def.property);
+        this.inputValueUpdated(widget, def.property, current === MULTI_DIFFERENT ? true : current === false);
+      };
+      bar.appendChild(button);
+      this.addPropertyListener(widget, def.property, _=>{
+        const current = widget.get(def.property);
+        button.classList.toggle('active', current !== MULTI_DIFFERENT && current !== false);
+        button.classList.toggle('multiDiffers', current === MULTI_DIFFERENT);
+        button.setAttribute('aria-pressed', current === MULTI_DIFFERENT ? 'mixed' : String(current !== false));
+      });
+    }
+    attachPropertyHint(wrap, `${editorPropertyHints.movable} ${editorPropertyHints.movableInEdit}`);
   }
 
   renderContentSection(widget) {
@@ -1988,9 +2169,10 @@ class PropertiesModule extends SidebarModule {
   renderForBasic(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
+    this.renderBasicFaceEditor(widget);
     this.renderContentSection(widget);
     this.renderAppearanceSection(widget);
-    this.renderOtherPropertiesSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'faces', 'activeFace' ]);
   }
 
   renderForButton(widget) {
@@ -2063,11 +2245,13 @@ class PropertiesModule extends SidebarModule {
 
   renderForPile(widget) {
     this.renderTypeHeader(widget);
-    this.renderBasicSection(widget);
-    this.renderContentSection(widget);
-    this.renderAppearanceSection(widget);
-    this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget);
+    this.renderPileExplanation();
+  }
+
+  renderPileExplanation() {
+    div(this.moduleDOM, '', `
+      <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
+    `);
   }
 
   renderForScoreboard(widget) {
@@ -2257,11 +2441,13 @@ class PropertiesModule extends SidebarModule {
     return Object.assign(face, colors);
   }
 
-  setDiceFaces(widget, faces) {
+  setDiceFaces(widget, faces, activeFace=null) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} edited faces of dice ${widget.id} in editor`);
     widget.set('faces', faces);
-    if(widget.get('activeFace') >= faces.length)
+    if(activeFace !== null)
+      widget.set('activeFace', activeFace);
+    else if(widget.get('activeFace') >= faces.length)
       widget.set('activeFace', Math.max(0, faces.length - 1));
     batchEnd();
   }
@@ -2316,7 +2502,8 @@ class PropertiesModule extends SidebarModule {
           }
           rebuild();
         },
-        listenTo: [ def.key ]
+        listenTo: [ def.key ],
+        hint: `When on, ${def.label.toLowerCase()} is stored once on the dice. Turn it off to choose a different value on every face.`
       }).render(wrap);
       if(locks[def.key])
         new ColorInput(this, widget, def.label, { property: def.key }).render(wrap);
@@ -2363,13 +2550,18 @@ class PropertiesModule extends SidebarModule {
 
   renderDiceFaceRow(widget, index, locks, container) {
     const row = div(container, 'diceFaceRow');
+    row.dataset.face = index;
     this.renderDiceFacePreview(widget, index, row);
+    this.renderFaceOrderControls(row, index, this.diceFaces(widget).length, (from, to)=>{
+      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setDiceFaces(widget, faces, activeFace));
+    });
 
     const controls = div(row, 'diceFaceControls');
     const type = this.diceFaceType(widget, this.diceFaces(widget)[index]);
 
     new SelectInput(this, widget, 'Type', {
       listenTo: [ 'faces' ],
+      hint: 'Choose how this face is rendered. Changing the type keeps a compatible value and its per-face colors.',
       getValue: _=>this.diceFaceType(widget, this.diceFaces(widget)[index]),
       setValue: newType=>{
         const faces = this.diceFaces(widget);
@@ -2439,6 +2631,218 @@ class PropertiesModule extends SidebarModule {
       const faces = this.diceFaces(widget);
       faces.splice(index, 1);
       this.setDiceFaces(widget, faces);
+    };
+    controls.appendChild(remove);
+  }
+
+  reorderFaces(widget, faces, from, to, setFaces) {
+    if(!Number.isInteger(from) || !Number.isInteger(to) || from == to || from < 0 || to < 0 || from >= faces.length || to >= faces.length)
+      return;
+    const [ movedFace ] = faces.splice(from, 1);
+    faces.splice(to, 0, movedFace);
+    const oldActiveFace = widget.get('activeFace');
+    let activeFace = oldActiveFace;
+    if(oldActiveFace == from)
+      activeFace = to;
+    else if(from < oldActiveFace && oldActiveFace <= to)
+      activeFace--;
+    else if(to <= oldActiveFace && oldActiveFace < from)
+      activeFace++;
+    setFaces(faces, activeFace);
+  }
+
+  renderFaceOrderControls(row, index, count, moveFace) {
+    const controls = div(row, 'faceOrderControls');
+    const handle = document.createElement('button');
+    handle.setAttribute('icon', 'drag_indicator');
+    handle.title = 'Drag to reorder this face';
+    handle.draggable = true;
+    controls.appendChild(handle);
+
+    const up = document.createElement('button');
+    up.setAttribute('icon', 'arrow_upward');
+    up.title = 'Move this face up';
+    up.disabled = index == 0;
+    up.onclick = _=>moveFace(index, index - 1);
+    controls.appendChild(up);
+
+    const down = document.createElement('button');
+    down.setAttribute('icon', 'arrow_downward');
+    down.title = 'Move this face down';
+    down.disabled = index == count - 1;
+    down.onclick = _=>moveFace(index, index + 1);
+    controls.appendChild(down);
+
+    handle.ondragstart = e=>{
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', String(index));
+      row.classList.add('dragging');
+    };
+    handle.ondragend = _=>row.classList.remove('dragging');
+    row.ondragover = e=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      row.classList.add('dragOver');
+    };
+    row.ondragleave = _=>row.classList.remove('dragOver');
+    row.ondrop = e=>{
+      e.preventDefault();
+      row.classList.remove('dragOver');
+      moveFace(+e.dataTransfer.getData('text/plain'), index);
+    };
+  }
+
+  // --- basic-widget face editor ---
+
+  basicFaces(widget) {
+    const faces = widget.get('faces');
+    return Array.isArray(faces) ? JSON.parse(JSON.stringify(faces)) : [];
+  }
+
+  setBasicFaces(widget, faces, activeFace=null) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited faces of widget ${widget.id} in editor`);
+    widget.set('faces', faces);
+    if(activeFace !== null)
+      widget.set('activeFace', activeFace);
+    else if(widget.get('activeFace') >= faces.length)
+      widget.set('activeFace', Math.max(0, faces.length - 1));
+    batchEnd();
+  }
+
+  basicFaceObject(widget, index) {
+    const face = this.basicFaces(widget)[index];
+    if(typeof face == 'object' && face !== null)
+      return face;
+    return face === undefined ? {} : { text: String(face) };
+  }
+
+  renderBasicFaceEditor(widget) {
+    this.addSubHeader('Faces');
+    div(this.moduleDOM, '', `<p>Each face can override the widget's content and appearance. Drag faces or use the arrows to change their order.</p>`);
+    const add = document.createElement('button');
+    add.setAttribute('icon', 'add');
+    add.className = 'green basicAddFace';
+    add.textContent = 'Add face';
+    add.onclick = _=>{
+      const faces = this.basicFaces(widget);
+      faces.push({});
+      this.setBasicFaces(widget, faces);
+    };
+    this.moduleDOM.appendChild(add);
+
+    const facesContainer = div(this.moduleDOM, 'basicFacesEditor');
+    const rebuild = _=>{
+      facesContainer.innerHTML = '';
+      this.basicFaces(widget).forEach((face, index)=>this.renderBasicFaceRow(widget, index, facesContainer));
+    };
+    rebuild();
+
+    const structureSignature = faces=>JSON.stringify(faces.map(face=>typeof face == 'object' && face !== null ? Object.keys(face).filter(property=>![ 'text', 'icon', 'image', 'color' ].includes(property)).sort() : []));
+    let lastSignature = structureSignature(this.basicFaces(widget));
+    this.addPropertyListener(widget, 'faces', _=>{
+      const faces = this.basicFaces(widget);
+      const signature = structureSignature(faces);
+      if(signature != lastSignature) {
+        lastSignature = signature;
+        rebuild();
+      } else {
+        this.refreshBasicFacePreviews(widget, facesContainer);
+      }
+    });
+    this.addPropertyListener(widget, 'activeFace', _=>this.refreshBasicFacePreviews(widget, facesContainer));
+  }
+
+  renderBasicFacePreview(widget, index, target) {
+    const preview = div(target, 'basicFacePreview');
+    preview.dataset.face = index;
+    const basic = new BasicWidget();
+    basic.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
+      id: generateUniqueWidgetID(),
+      faces: this.basicFaces(widget),
+      activeFace: index,
+      width: 56,
+      height: 56,
+      scale: 1,
+      rotation: 0,
+      parent: null
+    }), preview);
+    return preview;
+  }
+
+  refreshBasicFacePreviews(widget, facesContainer) {
+    for(const preview of $a('.basicFacePreview', facesContainer)) {
+      preview.innerHTML = '';
+      const index = +preview.dataset.face;
+      const basic = new BasicWidget();
+      basic.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
+        id: generateUniqueWidgetID(),
+        faces: this.basicFaces(widget),
+        activeFace: index,
+        width: 56,
+        height: 56,
+        scale: 1,
+        rotation: 0,
+        parent: null
+      }), preview);
+    }
+  }
+
+  renderBasicFaceRow(widget, index, container) {
+    const row = div(container, 'basicFaceRow');
+    row.dataset.face = index;
+    this.renderBasicFacePreview(widget, index, row);
+    this.renderFaceOrderControls(row, index, this.basicFaces(widget).length, (from, to)=>{
+      this.reorderFaces(widget, this.basicFaces(widget), from, to, (faces, activeFace)=>this.setBasicFaces(widget, faces, activeFace));
+    });
+
+    const controls = div(row, 'basicFaceControls');
+    const setFaceProperty = (property, value)=>{
+      const faces = this.basicFaces(widget);
+      faces[index] = this.basicFaceObject(widget, index);
+      if(value === null || value === undefined || value === '')
+        delete faces[index][property];
+      else
+        faces[index][property] = value;
+      this.setBasicFaces(widget, faces);
+    };
+    const facePropertyOptions = property=>({
+      listenTo: [ 'faces' ],
+      getValue: _=>{
+        const face = this.basicFaceObject(widget, index);
+        return face[property] === undefined ? null : face[property];
+      },
+      setValue: value=>setFaceProperty(property, value),
+      hint: editorPropertyHints[property]
+    });
+
+    new TextInput(this, widget, 'Text', Object.assign(facePropertyOptions('text'), { nullIfEmpty: true })).render(controls);
+    new IconInput(this, widget, 'Icon', facePropertyOptions('icon')).render(controls);
+    new ImageInput(this, widget, 'Image', facePropertyOptions('image')).render(controls);
+    new ColorInput(this, widget, 'Color', facePropertyOptions('color')).render(controls);
+
+    const commonProperties = [ 'text', 'icon', 'image', 'color' ];
+    for(const [ property, value ] of Object.entries(this.basicFaceObject(widget, index))) {
+      if(commonProperties.includes(property))
+        continue;
+      const input = this.addInput(property, value, newValue=>setFaceProperty(property, newValue), controls);
+      if(editorPropertyHints[property])
+        attachPropertyHint(input.dom, editorPropertyHints[property]);
+      this.addPropertyListener(widget, 'faces', _=>{
+        const face = this.basicFaceObject(widget, index);
+        input.setValue(face[property]);
+      });
+    }
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.className = 'red basicRemoveFace';
+    remove.title = 'Remove this face';
+    remove.disabled = this.basicFaces(widget).length <= 1;
+    remove.onclick = _=>{
+      const faces = this.basicFaces(widget);
+      faces.splice(index, 1);
+      this.setBasicFaces(widget, faces);
     };
     controls.appendChild(remove);
   }
@@ -2657,7 +3061,9 @@ class PropertiesModule extends SidebarModule {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
 
-      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
+      const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v));
+      if(editorPropertyHints[property])
+        attachPropertyHint(input.dom, editorPropertyHints[property]);
       if(!this.inputUpdaters[widget.id][property])
         this.inputUpdaters[widget.id][property] = [];
 

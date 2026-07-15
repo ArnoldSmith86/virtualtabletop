@@ -32,6 +32,7 @@ const builtinGamePieceImages = [
 ].map(name=>`/i/game-pieces/${name}.svg`);
 
 const propertyInputPalette = [
+  'transparent',
   '#000000', '#444444', '#888888', '#cccccc', '#ffffff',
   '#e6194b', '#f58231', '#ffe119', '#bfef45', '#3cb44b',
   '#42d4f4', '#4363d8', '#911eb4', '#f032e6', '#9a6324', '#800000'
@@ -66,7 +67,7 @@ function usedValuesInGame(callback) {
 }
 
 function usedGameColors() {
-  return usedValuesInGame((key, value)=>value.match(/^#[0-9a-fA-F]{3,8}$|^(?:rgb|hsl)a?\(.*\)$/) ? value : null);
+  return usedValuesInGame((key, value)=>value == 'transparent' || value.match(/^#[0-9a-fA-F]{3,8}$|^(?:rgb|hsl)a?\(.*\)$/) ? value : null);
 }
 
 function usedGameIcons() {
@@ -418,39 +419,6 @@ class CheckboxInput extends PropertyInput {
   }
 }
 
-// A row of buttons where exactly one is active. Unlike SelectInput it can map
-// to more than one property (used for the movable states).
-class MultiButtonInput extends PropertyInput {
-  // options.segments: [{ label, tooltip }], options.getIndex(widget), options.onSelect(index)
-  cssClass() {
-    return 'multiButtonInput';
-  }
-
-  listenProperties() {
-    return this.options.listenTo || [ this.options.property ];
-  }
-
-  renderControl(target) {
-    this.buttons = [];
-    const bar = div(target, 'segmented-control');
-    this.options.segments.forEach((segment, index)=>{
-      const button = document.createElement('button');
-      button.textContent = segment.label;
-      if(segment.tooltip)
-        button.title = segment.tooltip;
-      button.onclick = _=>this.options.onSelect(index);
-      bar.appendChild(button);
-      this.buttons.push(button);
-    });
-  }
-
-  update() {
-    const index = this.options.getIndex(this.widget);
-    this.dom.classList.toggle('multiDiffers', index < 0);
-    this.buttons.forEach((button, i)=>button.classList.toggle('active', i == index));
-  }
-}
-
 class SelectInput extends PropertyInput {
   // options.choices: [ { value, text } ]
   cssClass() {
@@ -695,11 +663,11 @@ class ColorInput extends PickerInput {
     const hexInput = document.createElement('input');
     hexInput.type = 'text';
     hexInput.className = 'colorHexInput';
-    hexInput.placeholder = '#rrggbb';
+    hexInput.placeholder = '#rrggbb or transparent';
     hexInput.value = propertyInputValueSet(value) ? value : '';
     hexInput.oninput = _=>{
       const v = hexInput.value.trim();
-      if(v.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/)) {
+      if(v == 'transparent' || v.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/)) {
         hexInput.classList.remove('inputError');
         this.setValue(v);
         colorPicker.value = toHex(v);
@@ -715,7 +683,7 @@ class ColorInput extends PickerInput {
 
   renderPickerContent(target, value) {
     this.addChipList(target, 'Used in this game', usedGameColors(), value, renderColorChip);
-    this.addChipList(target, 'Palette', propertyInputPalette, value, renderColorChip);
+    this.addChipList(target, 'Palette (checkerboard = transparent)', propertyInputPalette, value, renderColorChip);
   }
 }
 
