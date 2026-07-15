@@ -92,6 +92,7 @@ onLoad(function() {
   let dragStartY = 0;
   let panStartX = 0;
   let panStartY = 0;
+  const pressedMouseButtons = new Set();
   let isSpacePanModifierActive = false;
   let isSpacePanPointerActive = false;
   let lastWheelZoomTime = 0;
@@ -113,7 +114,7 @@ onLoad(function() {
   }
 
   function handleSpaceKeyDown(e) {
-    if(edit && !overlayActive && (e.code === 'Space' || e.key === ' ') && !isEditableElement(e.target)) {
+    if(edit && !overlayActive && !pressedMouseButtons.size && !Object.keys(mouseStatus).length && (e.code === 'Space' || e.key === ' ') && !isEditableElement(e.target)) {
       isSpacePanModifierActive = true;
       updateSpacePanClass();
       e.preventDefault();
@@ -130,6 +131,7 @@ onLoad(function() {
   }
 
   function handleWindowBlur() {
+    pressedMouseButtons.clear();
     isSpacePanModifierActive = false;
     isSpacePanPointerActive = false;
     updateSpacePanClass();
@@ -338,5 +340,7 @@ onLoad(function() {
 
   window.addEventListener('keydown', handleSpaceKeyDown);
   window.addEventListener('keyup', handleSpaceKeyUp);
+  window.addEventListener('mousedown', e => pressedMouseButtons.add(e.button), true);
+  window.addEventListener('mouseup', e => pressedMouseButtons.delete(e.button), true);
   window.addEventListener('blur', handleWindowBlur);
 });
