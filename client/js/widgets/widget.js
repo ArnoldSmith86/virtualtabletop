@@ -189,10 +189,11 @@ export class Widget extends StateManaged {
 
     let fromTransform = null;
     let newParent = undefined;
+    let cyclicParent = false;
     if(delta.parent !== undefined) {
       newParent = delta.parent && widgets.has(delta.parent) ? widgets.get(delta.parent).domElement : $('#topSurface');
       // the DOM cannot represent cyclic parent chains so if the new parent is inside this widget, display it at the top level as a limbo widget
-      const cyclicParent = this.domElement.contains(newParent);
+      cyclicParent = this.domElement.contains(newParent);
       if(cyclicParent)
         newParent = $('#topSurface');
       this.setLimbo(delta.parent && (!widgets.has(delta.parent) || cyclicParent));
@@ -224,7 +225,7 @@ export class Widget extends StateManaged {
         this.domElement.style.transform = this.targetTransform;
       }
 
-      if(delta.parent !== null && widgets.has(delta.parent)) {
+      if(!cyclicParent && delta.parent !== null && widgets.has(delta.parent)) {
         this.parent = widgets.get(delta.parent);
         this.parent.applyChildAdd(this);
       } else {

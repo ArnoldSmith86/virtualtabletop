@@ -1,21 +1,24 @@
 import { createWidget, removeWidget } from './client-util.js';
 import { dropTargets, getValidDropTargets } from '../../client/js/main.js';
+import { removeWidgetLocal, widgets } from '../../client/js/serverstate.js';
 
 // Regression test for the "Maximum call stack size exceeded" crash that happened
 // when the room state contained a cycle in the parent chain (e.g. two widgets
 // being each other's parent). Every method that walks the parent chain by
 // following the 'parent' property must terminate instead of recursing forever.
 //
-// The cycle is manufactured directly in each widget's state: going through
-// set('parent') would trigger geometry helpers that rely on DOMMatrix, which
-// jsdom does not implement. The recursion guard being tested here is independent
-// of that geometry, so a state-level cycle is enough to exercise it.
+// Most tests manufacture the cycle directly in each widget's state because the
+// parent-walk guards are independent of geometry. The runtime graph regression
+// applies the same parent changes through applyDelta().
 
 describe("Cyclic parent chains", () => {
   const testName = "cyclic-parent";
   let w1, w2, w3;
 
   beforeEach(() => {
+    window.jeRoutineLogging = false;
+    window.removeWidgetLocal = removeWidgetLocal;
+    window.dropTargets = dropTargets;
     w1 = createWidget({ id: `${testName}-1`, type: "widget" });
     w2 = createWidget({ id: `${testName}-2`, type: "widget" });
     w3 = createWidget({ id: `${testName}-3`, type: "widget" });
@@ -26,7 +29,8 @@ describe("Cyclic parent chains", () => {
   });
   afterEach(() => {
     for(const w of [ w1, w2, w3 ])
-      removeWidget(w.get('id'));
+      if(widgets.has(w.get('id')))
+        removeWidget(w.get('id'));
   });
 
   test("ancestors() stops on the cycle and lists each widget once", () => {
@@ -60,5 +64,34 @@ describe("Cyclic parent chains", () => {
 
     expect(getValidDropTargets(w3)).toContain(w1);
     expect(getValidDropTargets(w2)).not.toContain(w1);
+  });
+
+  test("cyclic parent deltas keep the runtime child graph acyclic", () => {
+    delete w1.state.parent;
+    delete w2.state.parent;
+
+    w2.applyDelta({ parent: w1.get('id') });
+    w1.applyDelta({ parent: w2.get('id') });
+
+    expect(w1.get('parent')).toBe(w2.get('id'));
+    expect(w2.get('parent')).toBe(w1.get('id'));
+    expect(w1.parent).toBeUndefined();
+    expect(w2.parent).toBe(w1);
+    expect(w1.childArray).toEqual([ w2 ]);
+    expect(w2.childArray).toEqual([]);
+    expect(() => w1.applyRemoveRecursive()).not.toThrow();
+    widgets.delete(w1.get('id'));
+    widgets.delete(w2.get('id'));
+  });
+
+  test("DELETE terminates on cyclic parent state", async () => {
+    await expect(w1.evaluateRoutine(
+      [{ func: 'DELETE', collection: 'cyclicWidgets' }],
+      {},
+      { cyclicWidgets: [ w1 ] }
+    )).resolves.toEqual(expect.any(Object));
+
+    expect(widgets.has(w1.get('id'))).toBe(false);
+    expect(widgets.has(w2.get('id'))).toBe(false);
   });
 });
