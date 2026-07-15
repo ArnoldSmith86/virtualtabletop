@@ -105,6 +105,7 @@ const COMMON_PROPERTIES = {
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
     linePosition: 'number',
+    lineOriginalRotation: 'object',
     animatePropertyChange: 'any',
     resetProperties: 'object',
     clonedFrom: 'string',

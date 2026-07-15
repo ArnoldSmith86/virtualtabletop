@@ -106,6 +106,56 @@ describe('Line widget geometry', () => {
     removeWidget('legacy-rotation');
   });
 
+  test('auto-rotation restores an explicit stop rotation after reload', async () => {
+    let line = createLine({ id: 'rotation-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, autoSpaceStops: false });
+    let stop = new Widget('rotation-stop');
+    addWidget({ id: 'rotation-stop', type: 'basic', parent: line.id, linePosition: 0.5, width: 80, height: 20, rotation: 25 }, stop);
+    let follower = new Widget('rotation-follower');
+    addWidget({ id: 'rotation-follower', type: 'basic', parent: line.id, inheritFrom: stop.id, linePosition: 0.75 }, follower);
+
+    await line.updateAttachedWidgets();
+    expect(Math.round(stop.get('rotation'))).toBe(45);
+    expect(stop.get('lineOriginalRotation')).toEqual({ value: 25, explicit: true });
+    expect(follower.get('lineOriginalRotation')).toEqual({ value: 45, explicit: false });
+
+    const savedStop = JSON.parse(JSON.stringify(stop.state));
+    const savedFollower = JSON.parse(JSON.stringify(follower.state));
+    removeWidget(follower.id);
+    removeWidget(stop.id);
+    removeWidget(line.id);
+    line = createLine({ id: 'rotation-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, autoSpaceStops: false });
+    stop = new Widget('rotation-stop');
+    addWidget(savedStop, stop);
+    follower = new Widget('rotation-follower');
+    addWidget(savedFollower, follower);
+
+    await line.set('rotateStops', false);
+    expect(stop.get('rotation')).toBe(25);
+    expect(stop.get('lineOriginalRotation')).toBeNull();
+    expect(follower.get('rotation')).toBe(25);
+    expect(follower.get('lineOriginalRotation')).toBeNull();
+    removeWidget(follower.id);
+    removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
+  test('direct and inherited stop geometry changes reposition the stop', async () => {
+    const line = createLine({ id: 'stop-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false });
+    const source = new Widget('stop-source');
+    addWidget({ id: 'stop-source', type: 'basic', width: 20, height: 20 }, source);
+    const stop = new Widget('reactive-stop');
+    addWidget({ id: 'reactive-stop', type: 'basic', parent: line.id, inheritFrom: source.id, linePosition: 0.25 }, stop);
+
+    await stop.set('linePosition', 0.75);
+    expect(stop.get('x')).toBe(65);
+    await source.set('width', 40);
+    expect(stop.get('x')).toBe(55);
+
+    removeWidget(stop.id);
+    removeWidget(source.id);
+    removeWidget(line.id);
+  });
+
   describe('normalizeGeometry re-fits the box while keeping the path in place', () => {
     let line;
     beforeAll(async () => {
@@ -164,6 +214,22 @@ describe('Line widget connections', () => {
     expect(Math.round(connected.x-center.x)).toBe(-20);
     expect(Math.round(connected.y-center.y)).toBe(0);
     removeWidget('target');
+  });
+
+  test('transforming an ancestor re-applies connections to its descendants', async () => {
+    const ancestor = new Widget('ancestor');
+    addWidget({ id: 'ancestor', type: 'basic' }, ancestor);
+    const target = new Widget('nested-target');
+    addWidget({ id: 'nested-target', type: 'basic', parent: ancestor.id }, target);
+    const dep = createLine({ id: 'dep', connectStart: { line: target.id, position: 0.5 } });
+    let applyCount = 0;
+    dep.applyConnections = async () => ++applyCount;
+
+    await ancestor.set('rotation', 30);
+    expect(applyCount).toBe(1);
+
+    removeWidget(target.id);
+    removeWidget(ancestor.id);
   });
 
   test('moving the target and re-applying keeps the dependent glued', async () => {

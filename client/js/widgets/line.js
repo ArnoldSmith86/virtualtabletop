@@ -1,7 +1,6 @@
 export class Line extends Widget {
   constructor(id) {
     super(id);
-    this.autoRotatedStopRotations = new Map();
 
     this.addDefaults({
       typeClasses: 'widget line',
@@ -141,6 +140,17 @@ export class Line extends Widget {
   // place each stop at its own stored linePosition so manual positions survive
   // curve/move/length changes instead of being re-centered on every geometry change
   async updateAttachedWidgets() {
+    if(this.updatingAttachedWidgets)
+      return;
+    this.updatingAttachedWidgets = true;
+    try {
+      await this.positionAttachedWidgets();
+    } finally {
+      this.updatingAttachedWidgets = false;
+    }
+  }
+
+  async positionAttachedWidgets() {
     for(const stop of this.attachedWidgets()) {
       const p = this.pointAtPosition(+stop.get('linePosition') || 0);
       await stop.set('x', Math.round(p.x - stop.get('width')/2));
@@ -148,23 +158,43 @@ export class Line extends Widget {
 
       const landscape = +stop.get('width') > +stop.get('height');
       if(this.shouldRotateStops() && landscape) {
-        if(!this.autoRotatedStopRotations.has(stop.id))
-          this.autoRotatedStopRotations.set(stop.id, stop.get('rotation'));
+        if(stop.get('lineOriginalRotation') === null)
+          await stop.set('lineOriginalRotation', { value: stop.get('rotation'), explicit: stop.state.rotation !== undefined });
         await stop.set('rotation', this.tangentAngleAtPosition(+stop.get('linePosition') || 0));
-      } else if(this.autoRotatedStopRotations.has(stop.id)) {
-        await stop.set('rotation', this.autoRotatedStopRotations.get(stop.id));
-        this.autoRotatedStopRotations.delete(stop.id);
-      }
+      } else
+        await this.restoreStopRotation(stop);
     }
+  }
+
+  async restoreStopRotation(stop) {
+    const original = stop.get('lineOriginalRotation');
+    if(original === null)
+      return;
+    if(original && typeof original == 'object')
+      await stop.set('rotation', original.explicit ? original.value : null);
+    else
+      await stop.set('rotation', original);
+    await stop.set('lineOriginalRotation', null);
   }
 
   // Move stops so the gaps between their edges are equal. The stops array is
   // captured once in line order and is used for every update, so distributing
   // never changes which widget occupies which stop.
   async distributeAttachedWidgetsEvenly() {
+    if(this.updatingAttachedWidgets)
+      return;
+    this.updatingAttachedWidgets = true;
+    try {
+      await this.distributeAttachedWidgetsEvenlyInternal();
+    } finally {
+      this.updatingAttachedWidgets = false;
+    }
+  }
+
+  async distributeAttachedWidgetsEvenlyInternal() {
     const stops = this.attachedWidgets();
     if(stops.length < 2) {
-      await this.updateAttachedWidgets();
+      await this.positionAttachedWidgets();
       return;
     }
 
@@ -172,7 +202,7 @@ export class Line extends Widget {
     if(!length) {
       for(const stop of stops)
         await stop.set('linePosition', 0);
-      await this.updateAttachedWidgets();
+      await this.positionAttachedWidgets();
       return;
     }
     let positions = stops.map(stop=>+stop.get('linePosition') || 0);
@@ -194,7 +224,7 @@ export class Line extends Widget {
       positions = targetDistances.map((distance, i)=>i == 0 ? 0 : i == stops.length-1 ? 1 : distance/totalDistance);
       for(let i = 0; i < stops.length; ++i)
         await stops[i].set('linePosition', positions[i]);
-      await this.updateAttachedWidgets();
+      await this.positionAttachedWidgets();
     }
 
     let previousPosition = 0;
@@ -203,7 +233,7 @@ export class Line extends Widget {
       await stops[i].set('linePosition', position);
       previousPosition = position;
     }
-    await this.updateAttachedWidgets();
+    await this.positionAttachedWidgets();
   }
 
   widgetLengthOnLine(widget, position) {
@@ -365,10 +395,7 @@ export class Line extends Widget {
   }
 
   async onChildRemove(child) {
-    if(this.autoRotatedStopRotations.has(child.id)) {
-      await child.set('rotation', this.autoRotatedStopRotations.get(child.id));
-      this.autoRotatedStopRotations.delete(child.id);
-    }
+    await this.restoreStopRotation(child);
     await super.onChildRemove(child);
     if(child.get('linePosition') !== null) {
       if(this.get('autoSpaceStops'))
@@ -376,6 +403,15 @@ export class Line extends Widget {
       else
         await this.updateAttachedWidgets();
     }
+  }
+
+  async onStopPropertyChange() {
+    if(this.updatingAttachedWidgets)
+      return;
+    if(this.get('autoSpaceStops'))
+      await this.distributeAttachedWidgetsEvenly();
+    else
+      await this.updateAttachedWidgets();
   }
 
   async onPropertyChange(property, oldValue, newValue) {
@@ -406,7 +442,8 @@ export class Line extends Widget {
       // deferred to moveEnd while it is being dragged, to avoid drag jitter.
       if(!this.isBeingMoved)
         await this.applyConnections();
-      await this.updateConnectedLines();
+      // Widget.onPropertyChange already updates endpoints connected to this
+      // line and its descendants for transform changes.
     }
 
     if(property == 'connectStart' || property == 'connectEnd')

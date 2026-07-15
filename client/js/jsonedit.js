@@ -1792,9 +1792,9 @@ function jeAddResetPropertiesCommand(key) {
 
 function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
-    // linePosition is a valid global property but only meaningful on a line's stops,
-    // so it gets no per-widget-type insert button (it would be noise on every type)
-    if(property != 'typeClasses' && property != 'linePosition' && !property.match(/^c[0-9]{2}$/))
+    // These are valid global properties but only meaningful on a line's stops,
+    // so they get no per-widget-type insert button (they would be noise on every type).
+    if(property != 'typeClasses' && property != 'linePosition' && property != 'lineOriginalRotation' && !property.match(/^c[0-9]{2}$/))
       jeAddWidgetPropertyCommand(object, widgetBase, property);
   const type = object.defaults.typeClasses.replace(/widget /, '');
   if(type != 'card' && type != 'pile') {

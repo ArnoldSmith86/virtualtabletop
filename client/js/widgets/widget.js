@@ -124,6 +124,8 @@ export class Widget extends StateManaged {
       // a numeric value here (0..1) turns any widget into a stop on its parent line;
       // declared as a global default so the editor treats it as a known property
       linePosition: null,
+      // durable snapshot used while a line is automatically rotating this stop
+      lineOriginalRotation: null,
 
       animatePropertyChange: [],
       resetProperties: {},
@@ -2646,11 +2648,46 @@ export class Widget extends StateManaged {
         await this.updatePiles();
     }
 
-    // A line can connect to any widget. When a non-line target moves or is
-    // resized, re-apply all dependent line endpoints.
-    if(this.get('type') != 'line' && [ 'x', 'y', 'width', 'height' ].includes(property))
-      for(const line of widgetFilter(w=>w.get('type') == 'line' && [ w.get('connectStart'), w.get('connectEnd') ].some(connection=>connection && connection.line == this.id)))
-        await line.applyConnections();
+    const affectedWidgets = this.widgetsInheritingProperty(property);
+    for(const widget of affectedWidgets) {
+      if([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ].includes(property))
+        await widget.updateConnectedLineEndpoints();
+
+      if([ 'linePosition', 'width', 'height', 'rotation', 'scale' ].includes(property) && widget.get('linePosition') !== null && widget.get('parent') && widgets.has(widget.get('parent')) && widgets.get(widget.get('parent')).get('type') == 'line')
+        await widgets.get(widget.get('parent')).onStopPropertyChange(widget);
+    }
+  }
+
+  // A source property can affect widgets that inherit it through more than one
+  // level. Return each effective inheritor once, plus the source widget itself.
+  widgetsInheritingProperty(property, result = new Set) {
+    if(result.has(this))
+      return result;
+    result.add(this);
+    for(const inheriting of StateManaged.inheritFromMapping[this.id] || []) {
+      const definition = inheriting.inheritFrom()[this.id] || [];
+      if(inheriting.state[property] === undefined && inheriting.inheritFromIsValid(definition, property))
+        inheriting.widgetsInheritingProperty(property, result);
+    }
+    return result;
+  }
+
+  // Connections are expressed against a target's global transform. A change
+  // to this widget can therefore move endpoints connected to it or any child.
+  async updateConnectedLineEndpoints() {
+    const targetIDs = new Set([ this.id ]);
+    let added = true;
+    while(added) {
+      added = false;
+      for(const widget of widgets.values()) {
+        if(!targetIDs.has(widget.id) && targetIDs.has(widget.get('parent'))) {
+          targetIDs.add(widget.id);
+          added = true;
+        }
+      }
+    }
+    for(const line of widgetFilter(w=>w.get('type') == 'line' && [ w.get('connectStart'), w.get('connectEnd') ].some(connection=>connection && targetIDs.has(connection.line))))
+      await line.applyConnections();
   }
 
   readOnlyProperties() {
