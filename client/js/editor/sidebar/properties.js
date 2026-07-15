@@ -196,7 +196,7 @@ const editorTypeSections = {
       { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 200, slider: true, nullIfEmpty: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 200, slider: true, nullIfEmpty: true }
     ]
   },
   button: {
@@ -217,7 +217,7 @@ const editorTypeSections = {
       { label: 'Border',           property: 'borderColorOH',     kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius',    property: 'borderRadius',      kind: 'number', min: 0, max: 800, slider: true }
+      { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, slider: true, nullIfEmpty: true }
     ]
   },
   canvas: {
@@ -244,7 +244,7 @@ const editorTypeSections = {
       { label: 'Text',          property: 'textColor',    kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 100, slider: true },
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
     ],
     behavior: [
@@ -259,7 +259,7 @@ const editorTypeSections = {
   },
   scoreboard: {
     appearance: [
-      { label: 'Border radius',      property: 'borderRadius',     kind: 'number', min: 0, max: 100, slider: true },
+      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
       { label: 'Player colors',      property: 'showPlayerColors', kind: 'checkbox' },
       { label: 'Vertical header',    property: 'verticalHeader',   kind: 'checkbox' },
       { label: 'Autosize columns',   property: 'autosizeColumns',  kind: 'checkbox' }
@@ -285,7 +285,7 @@ const editorTypeSections = {
       { label: 'Empty',         property: 'colorEmpty',   kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'number', min: 0, max: 100, slider: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
     ],
     behavior: [
       { label: 'Seat index',        property: 'index',          kind: 'number', min: 1, max: 16 },
@@ -1825,6 +1825,7 @@ class PropertiesModule extends SidebarModule {
       text: TextInput,
       textarea: TextInput,
       number: NumberInput,
+      numberOrText: NumberOrTextInput,
       checkbox: CheckboxInput,
       select: SelectInput,
       color: ColorInput,
@@ -2409,6 +2410,8 @@ class PropertiesModule extends SidebarModule {
 
   diceFaces(widget) {
     const faces = widget.get('faces');
+    if(typeof faces == 'string')
+      return faces.split('');
     return Array.isArray(faces) ? JSON.parse(JSON.stringify(faces)) : [];
   }
 
@@ -2438,23 +2441,12 @@ class PropertiesModule extends SidebarModule {
     return o.text !== undefined ? o.text : (o.value !== undefined ? o.value : (typeof face == 'object' ? '' : face));
   }
 
-  // per-face color overrides that survive type changes
-  diceFaceColors(face) {
-    const colors = {};
-    if(typeof face == 'object' && face !== null)
-      for(const key of [ 'color', 'pipColor', 'borderColor' ])
-        if(face[key] !== undefined)
-          colors[key] = face[key];
-    return colors;
-  }
-
-  buildDiceFace(type, value, colors) {
-    const face = {};
-    if(type == 'pips')  face.pips = (value === '' || value == null) ? 0 : +value;
-    if(type == 'text')  face.text = String(value == null ? '' : value);
-    if(type == 'icon'  && value) face.icon  = value;
-    if(type == 'image' && value) face.image = value;
-    return Object.assign(face, colors);
+  buildDiceFace(type, value, existingFace) {
+    const property = type == 'pips' ? 'pips' : type;
+    if(type == 'pips') value = (value === '' || value == null) ? 0 : +value;
+    if(type == 'text') value = String(value == null ? '' : value);
+    if((type == 'icon' || type == 'image') && !value) value = null;
+    return replaceExclusiveProperties(existingFace, [ 'value', 'pips', 'text', 'icon', 'image' ], property, value);
   }
 
   setDiceFaces(widget, faces, activeFace=null) {
@@ -2581,13 +2573,12 @@ class PropertiesModule extends SidebarModule {
       getValue: _=>this.diceFaceType(widget, this.diceFaces(widget)[index]),
       setValue: newType=>{
         const faces = this.diceFaces(widget);
-        const colors = this.diceFaceColors(faces[index]);
         const oldType = this.diceFaceType(widget, faces[index]);
         const oldValue = this.diceFaceValue(widget, faces[index], oldType);
         let value = null;
         if(newType == 'pips') value = String(+oldValue).match(/^\d+$/) ? +oldValue : index + 1;
         else if(newType == 'text') value = oldValue == null ? '' : String(oldValue);
-        faces[index] = this.buildDiceFace(newType, value, colors);
+        faces[index] = this.buildDiceFace(newType, value, faces[index]);
         this.setDiceFaces(widget, faces);
       },
       choices: [
@@ -2601,7 +2592,7 @@ class PropertiesModule extends SidebarModule {
     const setFaceValue = value=>{
       const faces = this.diceFaces(widget);
       const t = this.diceFaceType(widget, faces[index]);
-      faces[index] = this.buildDiceFace(t, value, this.diceFaceColors(faces[index]));
+      faces[index] = this.buildDiceFace(t, value, faces[index]);
       this.setDiceFaces(widget, faces);
     };
     const getFaceValue = _=>{
@@ -2632,7 +2623,7 @@ class PropertiesModule extends SidebarModule {
         setValue: v=>{
           const faces = this.diceFaces(widget);
           if(typeof faces[index] != 'object' || faces[index] === null)
-            faces[index] = this.buildDiceFace(this.diceFaceType(widget, faces[index]), this.diceFaceValue(widget, faces[index], this.diceFaceType(widget, faces[index])), {});
+            faces[index] = this.buildDiceFace(this.diceFaceType(widget, faces[index]), this.diceFaceValue(widget, faces[index], this.diceFaceType(widget, faces[index])), faces[index]);
           if(v == null) delete faces[index][def.key];
           else faces[index][def.key] = v;
           this.setDiceFaces(widget, faces);

@@ -216,6 +216,21 @@ function propertyInputIsMulti(value) {
   return value === MULTI_DIFFERENT;
 }
 
+function propertyInputNumberOrText(rawValue, nullIfEmpty=false) {
+  const value = String(rawValue).trim();
+  if(value === '' && nullIfEmpty)
+    return null;
+  return value.match(/^-?(?:\d+(?:\.\d+)?|\.\d+)$/) ? +value : value;
+}
+
+function replaceExclusiveProperties(source, properties, property, value) {
+  const result = typeof source == 'object' && source !== null ? JSON.parse(JSON.stringify(source)) : {};
+  for(const key of properties)
+    delete result[key];
+  result[property] = value;
+  return result;
+}
+
 // Facade over several widgets so the same PropertyInput classes can edit a
 // whole selection at once.
 class MultiWidget {
@@ -385,6 +400,42 @@ class NumberInput extends PropertyInput {
       this.input.value = (value === null || multi) ? '' : numeric;
     if(this.slider && document.activeElement !== this.slider)
       this.slider.value = multi ? this.slider.min : numeric;
+  }
+}
+
+// Accepts either a number (editable by text or slider) or a CSS-like string.
+// The slider is disabled while a string value such as "50%" is in use.
+class NumberOrTextInput extends PropertyInput {
+  cssClass() {
+    return 'numberInput numberOrTextInput';
+  }
+
+  renderControl(target) {
+    this.input = document.createElement('input');
+    this.input.type = 'text';
+    if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
+    this.input.oninput = _=>this.setValue(propertyInputNumberOrText(this.input.value, this.options.nullIfEmpty));
+    target.appendChild(this.input);
+
+    this.slider = document.createElement('input');
+    this.slider.type = 'range';
+    this.slider.min = this.options.min !== undefined ? this.options.min : 0;
+    this.slider.max = this.options.max !== undefined ? this.options.max : 100;
+    this.slider.step = this.options.step !== undefined ? this.options.step : 1;
+    this.slider.oninput = _=>this.setValue(+this.slider.value);
+    target.appendChild(this.slider);
+  }
+
+  update(value) {
+    const multi = propertyInputIsMulti(value);
+    const numeric = typeof value == 'number' && Number.isFinite(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || 'e.g. 8, 8px, 50%');
+    if(document.activeElement !== this.input)
+      this.input.value = value === null || multi ? '' : value;
+    this.slider.disabled = multi || !numeric;
+    if(numeric && document.activeElement !== this.slider)
+      this.slider.value = value;
   }
 }
 
@@ -788,6 +839,8 @@ function cssStringIsEditable(cssString) {
 
 function widgetCssObject(widget, cssProperty='css') {
   const css = widget.get(cssProperty);
+  if(propertyInputIsMulti(css))
+    return {};
   if(typeof css == 'string')
     return cssStringIsEditable(css) ? cssObjectFromString(css) : {};
   if(typeof css == 'object' && css !== null) {
@@ -799,11 +852,25 @@ function widgetCssObject(widget, cssProperty='css') {
 }
 
 function getWidgetCssValue(widget, key, cssProperty='css') {
+  if(widget.isMulti) {
+    const values = widget.widgets.map(w=>getWidgetCssValue(w, key, cssProperty));
+    return values.every(value=>JSON.stringify(value) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+  }
   const value = widgetCssObject(widget, cssProperty)[key];
   return value === undefined ? null : value;
 }
 
 function setWidgetCssValue(module, widget, key, value, cssProperty='css') {
+  if(widget.isMulti) {
+    batchStart();
+    try {
+      for(const selectedWidget of widget.widgets)
+        setWidgetCssValue(module, selectedWidget, key, value, cssProperty);
+    } finally {
+      batchEnd();
+    }
+    return;
+  }
   const css = widget.get(cssProperty);
   if(typeof css == 'string' && css.trim() && !cssStringIsEditable(css))
     return; // do not touch css strings we cannot parse without losing data

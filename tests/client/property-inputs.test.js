@@ -12,6 +12,9 @@ const helpers = new Function(source + `;
     widgetCssObject,
     getWidgetCssValue,
     setWidgetCssValue,
+    propertyInputIsMulti,
+    propertyInputNumberOrText,
+    replaceExclusiveProperties,
     searchIconIndex,
     propertyInputPalette,
     setIconSearchIndex: index => { iconSearchIndex = index; }
@@ -80,6 +83,50 @@ describe("css property helpers", () => {
     expect(helpers.getWidgetCssValue(fakeWidget({ css: 'color: red' }), 'color')).toBe('red');
     expect(helpers.getWidgetCssValue(fakeWidget({ css: 'color: red' }), 'font-weight')).toBe(null);
     expect(helpers.getWidgetCssValue(fakeWidget({}), 'color')).toBe(null);
+  });
+
+  test("multi-widget CSS edits preserve each widget's other declarations", () => {
+    const first = fakeWidget({ css: { color: 'red', border: '1px solid' } });
+    const second = fakeWidget({ css: { color: 'blue', padding: '2px' } });
+    const multi = { isMulti: true, widgets: [ first, second ] };
+    const calls = [];
+    const module = { inputValueUpdated: (widget, property, value) => calls.push([ widget, property, value ]) };
+    let batchStarts = 0;
+    let batchEnds = 0;
+    global.batchStart = _=>batchStarts++;
+    global.batchEnd = _=>batchEnds++;
+
+    expect(helpers.propertyInputIsMulti(helpers.getWidgetCssValue(multi, 'color'))).toBe(true);
+    helpers.setWidgetCssValue(module, multi, 'background', 'black');
+
+    expect(calls).toEqual([
+      [ first, 'css', { color: 'red', border: '1px solid', background: 'black' } ],
+      [ second, 'css', { color: 'blue', padding: '2px', background: 'black' } ]
+    ]);
+    expect(batchStarts).toBe(1);
+    expect(batchEnds).toBe(1);
+    delete global.batchStart;
+    delete global.batchEnd;
+  });
+});
+
+describe("lossless editor values", () => {
+  test("keeps CSS border-radius strings distinct from numeric values", () => {
+    expect(helpers.propertyInputNumberOrText('50%', true)).toBe('50%');
+    expect(helpers.propertyInputNumberOrText('8px', true)).toBe('8px');
+    expect(helpers.propertyInputNumberOrText('8', true)).toBe(8);
+    expect(helpers.propertyInputNumberOrText('', true)).toBe(null);
+  });
+
+  test("replacing dice content preserves unrelated face overrides", () => {
+    const face = { pips: 1, faceCSS: { color: 'red' }, imageScale: 0.5, svgReplaces: { a: 'b' } };
+    expect(helpers.replaceExclusiveProperties(face, [ 'value', 'pips', 'text', 'icon', 'image' ], 'icon', null)).toEqual({
+      icon: null,
+      faceCSS: { color: 'red' },
+      imageScale: 0.5,
+      svgReplaces: { a: 'b' }
+    });
+    expect(face).toEqual({ pips: 1, faceCSS: { color: 'red' }, imageScale: 0.5, svgReplaces: { a: 'b' } });
   });
 });
 
