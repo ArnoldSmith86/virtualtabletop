@@ -346,12 +346,16 @@ class DeckEditor {
     $('#deckEditorDragToolbar').classList.remove('active');
   }
 
-  loadWorkingCopies() {
+  loadWorkingCopies(properties = [ 'faceTemplates', 'cardTypes' ]) {
     const deck = this.deck();
-    const faceTemplates = deck.get('faceTemplates');
-    const cardTypes = deck.get('cardTypes');
-    this.faceTemplates = Array.isArray(faceTemplates) ? JSON.parse(JSON.stringify(faceTemplates)) : [];
-    this.cardTypes = cardTypes && typeof cardTypes == 'object' && !Array.isArray(cardTypes) ? JSON.parse(JSON.stringify(cardTypes)) : {};
+    if(properties.includes('faceTemplates')) {
+      const faceTemplates = deck.get('faceTemplates');
+      this.faceTemplates = Array.isArray(faceTemplates) ? JSON.parse(JSON.stringify(faceTemplates)) : [];
+    }
+    if(properties.includes('cardTypes')) {
+      const cardTypes = deck.get('cardTypes');
+      this.cardTypes = cardTypes && typeof cardTypes == 'object' && !Array.isArray(cardTypes) ? JSON.parse(JSON.stringify(cardTypes)) : {};
+    }
   }
 
   // Used to tell apart the local echo of our own commit() (deck's property already equals our working copy,
@@ -361,10 +365,14 @@ class DeckEditor {
     return !!deck && JSON.stringify(deck.get(property)) == JSON.stringify(property == 'faceTemplates' ? this.faceTemplates : this.cardTypes);
   }
 
-  reload() {
+  reload(properties = [ 'faceTemplates', 'cardTypes' ]) {
     if(!this.deck())
       return this.close();
-    this.loadWorkingCopies();
+    for(const property of properties) {
+      clearTimeout(this.commitTimers[property]);
+      delete this.commitTimers[property];
+    }
+    this.loadWorkingCopies(properties);
     if(this.cardType === null || !this.cardTypes[this.cardType])
       this.cardType = Object.keys(this.cardTypes)[0] || null;
     if(this.face >= this.faceTemplates.length)
@@ -528,11 +536,13 @@ class DeckEditor {
   }
 
   async undo() {
+    await this.flushPendingCommits();
     if(this.historyIndex > 0)
       await this.jumpToHistory(this.historyIndex-1, `${getPlayerDetails().playerName} undid a change of deck ${this.deckID} in deck editor`);
   }
 
   async redo() {
+    await this.flushPendingCommits();
     if(this.historyIndex < this.history.length-1)
       await this.jumpToHistory(this.historyIndex+1, `${getPlayerDetails().playerName} redid a change of deck ${this.deckID} in deck editor`);
   }
@@ -1124,7 +1134,7 @@ class DeckEditor {
 
 const deckEditor = new DeckEditor();
 
-function deckEditorReceiveDelta(delta) {
+async function deckEditorReceiveDelta(delta) {
   if(!deckEditor.isOpen())
     return;
   if(delta.s && delta.s[deckEditor.deckID] === null || !widgets.has(deckEditor.deckID))
@@ -1135,12 +1145,23 @@ function deckEditorReceiveDelta(delta) {
   // deck.set() in commit() echoes back into here synchronously (before commit() even returns); reloading on
   // that self-echo would wipe out the sidebar mid-edit and revert any other property still pending a commit.
   // A delta that exactly matches the current working copy is that self-echo, not a genuine remote change.
-  if(deckDelta.cardDefaults !== undefined)
-    return deckEditor.reload();
-  if(deckDelta.faceTemplates !== undefined && !deckEditor.matchesWorkingCopy('faceTemplates'))
-    return deckEditor.reload();
-  if(deckDelta.cardTypes !== undefined && !deckEditor.matchesWorkingCopy('cardTypes'))
-    return deckEditor.reload();
+  const changedProperties = [ 'faceTemplates', 'cardTypes' ].filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
+  if(!changedProperties.length && deckDelta.cardDefaults === undefined)
+    return;
+
+  // Commit edits to properties the remote delta did not touch before reloading. A same-property conflict is
+  // resolved in favor of the received value: reload() cancels its pending timer so stale local data cannot be
+  // sent afterward. cardDefaults only affects previews, so it never replaces either editable working copy.
+  for(const property of Object.keys(deckEditor.commitTimers))
+    if(!changedProperties.includes(property))
+      await deckEditor.commit(property);
+
+  if(changedProperties.length)
+    return deckEditor.reload(changedProperties);
+
+  deckEditor.renderMain();
+  deckEditor.renderStrip();
+  deckEditor.updateDragToolbar();
 }
 
 // Called when a full room state replaces the current one (e.g. switching games). The deck being edited is

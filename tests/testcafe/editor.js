@@ -141,17 +141,93 @@ test('Deck editor: breadcrumb undo and redo', async t => {
   });
   const deckID = await getDeckID();
 
+  const editTextAndUndoImmediately = ClientFunction(() => {
+    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    let input = null;
+    for(let i=0; i<rows.length; ++i)
+      if(rows[i].querySelector('label').textContent == 'value')
+        input = rows[i].querySelector('input');
+    input.value = 'Changed before debounce';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('#deckEditorUndo').click();
+  });
+  const getHistoryLength = ClientFunction(() => document.querySelectorAll('#deckEditorBreadcrumb .deckEditorCrumb').length);
+  const getFirstObjectValue = ClientFunction(deckID => {
+    for(const face of widgets.get(deckID).get('faceTemplates'))
+      for(const object of face.objects || [])
+        if(object.type == 'text')
+          return object.value;
+    return null;
+  });
+
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
     .click('.deckEditorAddCardType button')  // step 1
     .click('#deckEditorAddFace')             // step 2
-    .click('#deckEditorAddText')             // step 3
-    .click('#deckEditorUndo')                // undo step 3 (the added object) via the deck editor's own button
-    .click('#deckEditorUndo')                // undo step 2 (the added face)
-    .click('#deckEditorRedo')                // redo step 2, leaving the deck at "one added card type + one added face"
+    .click('#deckEditorAddText');             // step 3
+  await t.expect(getHistoryLength()).eql(4);
+  await editTextAndUndoImmediately();         // flushes and undoes pending step 4, before its 500ms timer fires
+  await t
+    .expect(getFirstObjectValue(deckID)).eql('Text')
+    .click('#deckEditorUndo')                 // undo step 3 (the added object)
+    .click('#deckEditorRedo')                 // restore and then remove it again to exercise redo without changing the old final state
+    .click('#deckEditorUndo')
     .pressKey('esc');
   await compareState(t, '0fe0eb8554cd82ec74d0c2c99513dffa');
+});
+
+test('Deck editor: remote update preserves an unrelated pending edit', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+  const editAndReceiveRemoteChange = ClientFunction(deckID => {
+    const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+    let input = null;
+    for(let i=0; i<rows.length; ++i)
+      if(rows[i].querySelector('label').textContent == 'value')
+        input = rows[i].querySelector('input');
+    input.value = 'Pending local edit';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+
+    const cardTypes = JSON.parse(JSON.stringify(widgets.get(deckID).get('cardTypes')));
+    cardTypes['type 1'].receivedProperty = 'Remote value';
+    sendRawDelta({ s: { [deckID]: { cardTypes }}, c: 'Another player updated card types' });
+  });
+  const getEditedValues = ClientFunction(deckID => {
+    const deck = widgets.get(deckID);
+    let text = null;
+    for(const face of deck.get('faceTemplates'))
+      for(const object of face.objects || [])
+        if(object.type == 'text')
+          text = object.value;
+    return { text, receivedProperty: deck.get('cardTypes')['type 1'].receivedProperty };
+  });
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#editor [icon=edit]')
+    .click('.deckEditorAddCardType button')
+    .click('#deckEditorAddFace')
+    .click('#deckEditorAddText');
+  await editAndReceiveRemoteChange(deckID);
+  await t
+    .expect(getEditedValues(deckID)).eql({ text: 'Pending local edit', receivedProperty: 'Remote value' })
+    .pressKey('esc');
+  await compareState(t, 'a2c9165768e325ccd6c8452f2194d314');
 });
 
 // Regression test for the crash reported on switching games while a deck was being edited (the previously
