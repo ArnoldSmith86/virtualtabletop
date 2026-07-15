@@ -6,7 +6,7 @@ setupTestEnvironment();
 
 test('Smart clone lifecycle', async t => {
   await setRoomState({
-    base: { id: 'base', type: 'basic', owner: 'A' },
+    base: { id: 'base', type: 'basic', classes: 'baseA' },
     scoreboard: { id: 'scoreboard', type: 'scoreboard', scoreProperty: 'points' },
     source: { id: 'source', type: 'basic', width: 140 },
     sourceDice: { id: 'sourceDice', type: 'dice', parent: 'source', activeFace: 1, rollCount: 2 },
@@ -19,7 +19,7 @@ test('Smart clone lifecycle', async t => {
       editorSmartClone: { replaces: { 'literal[': 'value$&' } },
       inheritFrom: {
         source: [ '!x', '!y', '!rotation', '!parent', '!dragging', '!hoverParent', '!owner', '!hoverTarget' ],
-        base: [ 'owner' ]
+        base: [ 'classes' ]
       }
     },
     cloneDice: {
@@ -43,12 +43,13 @@ test('Smart clone lifecycle', async t => {
   await ClientFunction(prepareClient)();
   await setName(t);
   await t.click('#editButton');
-  await ClientFunction(async () => {
+  await t.expect(Selector('#editorSelection').exists).ok();
+  await ClientFunction(() => {
     batchStart();
-    await widgets.get('sourceDice').set('activeFace', 3);
-    await widgets.get('sourceDice').set('rollCount', 4);
-    await widgets.get('sourceSeat').set('points', 12);
-    batchEnd();
+    return widgets.get('sourceDice').set('activeFace', 3)
+      .then(() => widgets.get('sourceDice').set('rollCount', 4))
+      .then(() => widgets.get('sourceSeat').set('points', 12))
+      .then(() => batchEnd());
   })();
   await t.wait(100);
 
@@ -60,34 +61,34 @@ test('Smart clone lifecycle', async t => {
   }))();
   await t.expect(independentState).eql({ activeFace: 5, rollCount: 7, points: 4, replacedText: 'value$&' });
 
-  await ClientFunction(async () => widgets.get('sourceChild').set('parent', null))();
+  await ClientFunction(() => widgets.get('sourceChild').set('parent', null))();
   await t.wait(100);
   await t.expect(ClientFunction(() => widgets.has('cloneChild'))()).notOk();
 
   await t
     .click('#editorSidebar [icon=tune]')
     .rightClick('#w_clone')
-    .click('[icon=link_off]')
+    .click('#editorModules .active.tune [icon=link_off]')
     .wait(100);
 
-  await ClientFunction(async () => {
+  await ClientFunction(() => {
     batchStart();
-    await widgets.get('source').set('width', 180);
-    await widgets.get('base').set('owner', 'B');
-    batchEnd();
+    return widgets.get('source').set('width', 180)
+      .then(() => widgets.get('base').set('classes', 'baseB'))
+      .then(() => batchEnd());
   })();
   await t.wait(100);
 
   const unlinkedState = await ClientFunction(() => ({
     width: widgets.get('clone').get('width'),
-    owner: widgets.get('clone').get('owner'),
+    classes: widgets.get('clone').get('classes'),
     inheritFrom: widgets.get('clone').get('inheritFrom'),
     hasEditorSmartClone: Object.prototype.hasOwnProperty.call(widgets.get('clone').state, 'editorSmartClone')
   }))();
   await t.expect(unlinkedState).eql({
     width: 140,
-    owner: 'B',
-    inheritFrom: { base: [ 'owner' ] },
+    classes: 'baseB',
+    inheritFrom: { base: [ 'classes' ] },
     hasEditorSmartClone: false
   });
 });
