@@ -2245,13 +2245,22 @@ class PropertiesModule extends SidebarModule {
 
   renderForPile(widget) {
     this.renderTypeHeader(widget);
-    this.renderPileExplanation();
+    this.renderPileExplanation(widget);
   }
 
-  renderPileExplanation() {
+  renderPileExplanation(widget=null) {
     div(this.moduleDOM, '', `
       <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
     `);
+    const card = widget && widget.children().find(child=>child.get('type') == 'card');
+    const deck = card && widgets.get(card.get('deck'));
+    if(deck) {
+      const open = document.createElement('button');
+      open.setAttribute('icon', 'style');
+      open.textContent = 'Open deck properties';
+      open.onclick = _=>setSelection([ deck ]);
+      this.moduleDOM.appendChild(open);
+    }
   }
 
   renderForScoreboard(widget) {
@@ -2590,7 +2599,8 @@ class PropertiesModule extends SidebarModule {
     };
     const getFaceValue = _=>{
       const faces = this.diceFaces(widget);
-      return this.diceFaceValue(widget, faces[index], this.diceFaceType(widget, faces[index]));
+      const currentType = this.diceFaceType(widget, faces[index]);
+      return currentType == type ? this.diceFaceValue(widget, faces[index], currentType) : null;
     };
 
     if(type == 'pips')
@@ -2833,6 +2843,21 @@ class PropertiesModule extends SidebarModule {
         input.setValue(face[property]);
       });
     }
+
+    const addProperty = document.createElement('button');
+    addProperty.setAttribute('icon', 'add');
+    addProperty.textContent = 'Property';
+    addProperty.onclick = _=>{
+      const property = prompt('Property name to add to this face:');
+      if(!property)
+        return;
+      const faces = this.basicFaces(widget);
+      faces[index] = this.basicFaceObject(widget, index);
+      if(faces[index][property] === undefined)
+        faces[index][property] = '';
+      this.setBasicFaces(widget, faces);
+    };
+    controls.appendChild(addProperty);
 
     const remove = document.createElement('button');
     remove.setAttribute('icon', 'delete');
