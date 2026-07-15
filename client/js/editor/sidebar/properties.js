@@ -647,6 +647,10 @@ class PropertiesModule extends SidebarModule {
     }
 
     createRadioButtons(this.moduleDOM, 'deckType', {
+      traditional: {
+        header: 'Traditional deck',
+        description: 'Add a ready-made deck: standard playing cards, Spanish, German or Swiss suited cards, tarot, hanafuda, mahjong tiles or dominoes'
+      },
       custom: {
         header: 'Custom deck of cards',
         description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
@@ -661,6 +665,8 @@ class PropertiesModule extends SidebarModule {
       }
     }, v=>{
       options.innerHTML = '';
+      if(v == 'traditional')
+        this.deckTraditional(options);
       if(v == 'custom')
         this.deckGenerator(options);
       if(v == 'images')
@@ -670,6 +676,47 @@ class PropertiesModule extends SidebarModule {
     });
 
     const options = div(this.moduleDOM);
+  }
+
+  async deckTraditional(target) {
+    const deckFiles = [ 'standard', 'spanish', 'german', 'swiss', 'tarot', 'hanafuda', 'mahjong', 'dominoes' ];
+
+    const selectionDiv = div(target, 'traditionalDecks');
+    const detailsDiv = div(target, 'traditionalDeckDetails');
+
+    const createButton = document.createElement('button');
+    createButton.innerText = 'Add to game';
+    createButton.className = 'green';
+    createButton.disabled = true;
+    createButton.setAttribute('icon', 'add');
+
+    let selectedDeck = null;
+    for(const file of deckFiles) {
+      const definition = await (await fetch(`i/decks/${file}.json`)).json();
+      const previewState = Object.assign({ id: generateUniqueWidgetID() }, definition.deck);
+      const button = this.renderWidgetButton(new Deck(previewState.id), previewState, selectionDiv);
+      button.title = definition.name;
+      button.onclick = e=>{
+        for(const other of $a('.widgetSelectionButton', selectionDiv))
+          if(other != button)
+            other.classList.remove('selected');
+        button.classList.toggle('selected');
+        selectedDeck = button.classList.contains('selected') ? definition : null;
+        createButton.disabled = !selectedDeck;
+        detailsDiv.innerHTML = '';
+        if(selectedDeck) {
+          div(detailsDiv, 'name').innerText = definition.name;
+          div(detailsDiv, 'description').innerText = definition.description;
+          div(detailsDiv, 'attribution').innerText = definition.attribution;
+        }
+      };
+    }
+
+    createButton.onclick = async e=>{
+      const deck = Object.assign({ id: generateUniqueWidgetID() }, selectedDeck.deck);
+      await this.addDeckWithCards(deck, 'traditional', selectedDeck.counts);
+    };
+    target.append(createButton);
   }
 
   deckGenerator(target) {
