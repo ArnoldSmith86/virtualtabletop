@@ -43,6 +43,12 @@ const validators = {
 
 const FACE_OBJECT_COMMON_PROPS = ['type', 'x', 'y', 'width', 'height', 'rotation', 'display', 'classes', 'css', 'dynamicProperties', 'value', 'note'];
 
+const READ_ONLY_PROPERTIES = [
+    '_absoluteRotation', '_absoluteScale', '_absoluteX', '_absoluteY', '_ancestor',
+    '_centerAbsoluteX', '_centerAbsoluteY', '_localOriginAbsoluteX', '_localOriginAbsoluteY',
+    '_totals'
+];
+
 const FACE_OBJECT_VALID_PROPS = {
     _common: FACE_OBJECT_COMMON_PROPS,
     image: [...FACE_OBJECT_COMMON_PROPS, 'color', 'svgReplaces'],
@@ -881,7 +887,7 @@ function customWidgetChecks(widget, widgets, problems) {
 
 function getCustomPropertyUsage(data, definitionsOnly = false) {
     const customProperties = new Set();
-    const definedCustomProperties = new Set();
+    const definedCustomProperties = new Set(READ_ONLY_PROPERTIES);
     const declaredCustomProperties = new Set();
     const widgetEntries = Object.entries(data).filter(([key, widget])=>key !== "_meta" && typeof widget === 'object' && widget !== null);
     const canvasPropertyRegex = /^c[0-9]+$/;
@@ -903,6 +909,17 @@ function getCustomPropertyUsage(data, definitionsOnly = false) {
                 declaredCustomProperties.add(prop);
                 definedCustomProperties.add(prop);
             }
+        }
+
+        if(getWidgetType(widget) === 'Deck') {
+            for(const properties of [
+                widget.cardDefaults,
+                ...Object.values(widget.cardTypes || {}),
+                ...(Array.isArray(widget.faceTemplates) ? widget.faceTemplates.map(template=>template && template.properties) : [])
+            ])
+                if(typeof properties === 'object' && properties !== null)
+                    for(const prop of Object.keys(properties))
+                        definedCustomProperties.add(prop);
         }
     }
 
