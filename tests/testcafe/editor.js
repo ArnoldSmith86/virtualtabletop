@@ -4,6 +4,90 @@ import { compareState, prepareClient, setName, setRoomState, setupTestEnvironmen
 
 setupTestEnvironment();
 
+test('Pan in edit mode while holding Space', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: {
+      id: 'widget',
+      type: 'basic',
+      x: 200,
+      y: 200
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+  await t.expect(Selector('#editorSelection').exists).ok();
+
+  const result = await ClientFunction(() => {
+    const zoomSlider = document.querySelector('#zoomSlider');
+    zoomSlider.value = 20;
+    zoomSlider.dispatchEvent(new Event('input', { bubbles: true }));
+    const widget = document.querySelector('#w_widget');
+    const widgetLeft = widget.style.left;
+    const panBeforeDrag = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX'));
+    window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, code: 'Space', key: ' ' }));
+    widget.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 300, clientY: 300 }));
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 1, clientX: 250, clientY: 260 }));
+    const panAfterDrag = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX'));
+    window.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, code: 'Space', key: ' ' }));
+    widget.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 0, clientX: 250, clientY: 260 }));
+    return {
+      panDelta: panAfterDrag - panBeforeDrag,
+      selectionActive: document.querySelector('#editorSelection').classList.contains('active'),
+      widgetMoved: widget.style.left !== widgetLeft
+    };
+  })();
+
+  await t.expect(result).eql({ panDelta: -50, selectionActive: false, widgetMoved: false });
+});
+
+test('Space does not interrupt an active edit-mode widget drag', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState({
+    widget: {
+      id: 'widget',
+      type: 'basic',
+      x: 200,
+      y: 200
+    }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t.click('#editButton');
+  await t.expect(Selector('#editorSelection').exists).ok();
+
+  const result = await ClientFunction(() => {
+    const zoomSlider = document.querySelector('#zoomSlider');
+    zoomSlider.value = 20;
+    zoomSlider.dispatchEvent(new Event('input', { bubbles: true }));
+    const widget = document.querySelector('#w_widget');
+    const panBeforeDrag = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX'));
+    widget.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 2, buttons: 2, clientX: 300, clientY: 300 }));
+    document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, buttons: 2, clientX: 250, clientY: 260 }));
+    return new Promise(resolve => setTimeout(() => {
+      const wasDraggingBeforeSpace = widgets.get('widget').get('dragging') !== null;
+      window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, code: 'Space', key: ' ' }));
+      const spacePanArmed = document.body.classList.contains('spacePanActive');
+      document.body.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 2, clientX: 250, clientY: 260 }));
+      window.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, code: 'Space', key: ' ' }));
+      setTimeout(() => {
+        const panAfterDrag = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--roomPanX'));
+        resolve({
+          panDelta: panAfterDrag - panBeforeDrag,
+          spacePanArmed,
+          spacePanActive: document.body.classList.contains('spacePanActive'),
+          wasDraggingBeforeSpace,
+          widgetDragging: widgets.get('widget').get('dragging'),
+          widgetMoved: widgets.get('widget').get('x') !== 200 || widgets.get('widget').get('y') !== 200
+        });
+      }, 100);
+    }, 100));
+  })();
+
+  await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);
