@@ -5,13 +5,12 @@ async function smartCloneRemoveChildren(topCloneID, clone, source, options) {
     const childSource = smartCloneSourceMap[topCloneID][child.id];
     const id = childSource && applyReplaces(childSource.id, options.replaces, topCloneID);
 
-    if(!child.get('editorSmartClone'))
-      await smartCloneRemoveChildren(topCloneID, child, childSource, options);
-
-    if(!childSource || !widgets.has(childSource.id) || id != childSource.id && !widgets.has(id) || child.get('type') != childSource.get('type') || smartCloneExcludesWidget(topCloneID, childSource, options)) {
+    if(!childSource || !widgets.has(childSource.id) || childSource.get('parent') != source.id || id != childSource.id && !widgets.has(id) || child.get('type') != childSource.get('type') || smartCloneExcludesWidget(topCloneID, childSource, options)) {
       await removeWidgetLocal(child.id);
       delete smartCloneSourceMap[topCloneID][child.id];
       delete smartCloneSourceMap[child.id];
+    } else if(!child.get('editorSmartClone')) {
+      await smartCloneRemoveChildren(topCloneID, child, childSource, options);
     }
   }
 }
@@ -129,17 +128,23 @@ function applyReplaces(value, replaces, topCloneID) {
     }
   }
   for(const [ from, to ] of Object.entries(modifiedReplaces)) {
-    const regex = new RegExp(from, 'g');
-    replacedValue = replacedValue.replace(regex, to);
+    if(from)
+      replacedValue = replacedValue.split(from).join(to);
   }
   return replacedValue;
 }
 
+function smartCloneKeepsPropertyIndependent(source, property, definition) {
+  const filter = typeof definition == 'object' ? definition[source.id] : definition;
+  return source.inheritFromIsValid('*', property) && !source.inheritFromIsValid(filter, property);
+}
+
 async function smartCloneUpdateClone(topCloneID, clone, source, options) {
+  const sourceInheritDef = inheritDef(source);
   const validProperties = validPropertiesOfWidget(source);
   for(const property of validProperties) {
     if([ 'id', 'parent', 'type', 'inheritFrom' ].indexOf(property) == -1) {
-      if(clone.get('type') != 'seat' || [ 'player', 'color', 'turn', 'index', 'score' ].indexOf(property) == -1) {
+      if(!smartCloneKeepsPropertyIndependent(source, property, sourceInheritDef)) {
         const sourceValue = JSON.stringify(source.get(property));
         const currentCloneValue = JSON.stringify(clone.get(property));
         const newCloneValue = applyReplaces(sourceValue, options.replaces, topCloneID);
@@ -165,8 +170,8 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
       await clone.set(invalidProperty, null);
   }
 
-  if(JSON.stringify(clone.get('inheritFrom')) != JSON.stringify(inheritDef(source)))
-    await clone.set('inheritFrom', inheritDef(source));
+  if(JSON.stringify(clone.get('inheritFrom')) != JSON.stringify(sourceInheritDef))
+    await clone.set('inheritFrom', sourceInheritDef);
 
   if(options.flipX) {
     const sourceParentDom = widgets.get(source.get('parent')).domElement;
@@ -204,6 +209,42 @@ async function smartCloneUpdateClone(topCloneID, clone, source, options) {
         ++index;
       await clone.set('index', index);
     }
+  }
+}
+
+async function smartCloneUnlink(topCloneID) {
+  const sourceMap = smartCloneSourceMap[topCloneID];
+  if(!sourceMap)
+    return;
+
+  batchStart();
+  try {
+    for(const [ cloneID, source ] of Object.entries(sourceMap)) {
+      const clone = widgets.get(cloneID);
+      if(!clone || !source)
+        continue;
+
+      const inheritFrom = clone.inheritFrom();
+      const sourceFilter = inheritFrom[source.id];
+      if(sourceFilter !== undefined) {
+        for(const property of validPropertiesOfWidget(source)) {
+          if([ 'id', 'parent', 'type', 'inheritFrom', 'editorSmartClone' ].includes(property))
+            continue;
+          if(clone.state[property] === undefined && clone.inheritFromIsValid(sourceFilter, property))
+            await clone.set(property, clone.get(property));
+        }
+
+        delete inheritFrom[source.id];
+        await clone.set('inheritFrom', Object.keys(inheritFrom).length ? inheritFrom : null);
+      }
+
+      if(clone.get('editorSmartClone'))
+        await clone.set('editorSmartClone', null);
+      delete smartCloneSourceMap[cloneID];
+    }
+    delete smartCloneSourceMap[topCloneID];
+  } finally {
+    batchEnd();
   }
 }
 
@@ -291,15 +332,23 @@ async function smartCloneUpdate(topCloneID, remove=false) {
 let processingDeltas = false;
 const queuedDeltas = [];
 async function smartCloneDeltaReceived(delta) {
-  queuedDeltas.push(delta);
+  if(delta)
+    queuedDeltas.push(delta);
   if(processingDeltas)
     return;
 
   processingDeltas = true;
-  for(let i=0; queuedDeltas.length && i<100; ++i)
-    await smartCloneProcessDelta(queuedDeltas.shift());
-  queuedDeltas.length = 0;
-  processingDeltas = false;
+  try {
+    for(let i=0; queuedDeltas.length && i<100; ++i)
+      await smartCloneProcessDelta(queuedDeltas.shift());
+  } finally {
+    processingDeltas = false;
+  }
+
+  if(queuedDeltas.length) {
+    console.warn(`Smart clone update yielded with ${queuedDeltas.length} deltas still queued.`);
+    setTimeout(smartCloneDeltaReceived);
+  }
 }
 
 async function smartCloneProcessDelta(delta) {

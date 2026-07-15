@@ -1629,7 +1629,7 @@ class PropertiesModule extends SidebarModule {
     $('.flipX', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipX;
     $('.flipY', cloneDiv).checked = (widget.get('editorSmartClone') || {}).flipY;
     $('.includeCards', cloneDiv).checked = (widget.get('editorSmartClone') || {}).includeCards;
-    $('[icon=link_off]', cloneDiv).onclick = e=>widget.set('editorSmartClone', null);
+    $('[icon=link_off]', cloneDiv).onclick = e=>smartCloneUnlink(widget.id);
   }
 
   renderGenericProperties(widget, exclude) {
