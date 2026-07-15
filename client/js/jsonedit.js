@@ -27,6 +27,10 @@ let jeTabSearchHighlightIndex = -1;
 let jeTabKeyHeld = false;
 let jeTabArrowKeysUsed = false;
 let jeIgnoreBlurOnce = false;
+let jeWidgetHistory = [];
+let jeWidgetHistoryIndex = -1;
+let jeWidgetHistoryNavigating = false;
+let jeMultiSelectedCountCache = null;
 const jeWidgetLayers = {};
 const jeState = {
   ctrl: false,
@@ -210,18 +214,6 @@ const jeCommands = [
           jeStateNow.id = clonedWidget.id;
         }
       }
-    }
-  },
-  {
-    id: 'je_openParent',
-    name: 'Open parent',
-    icon: '[up_one_level]',
-    forceKey: 'ArrowUp',
-    show: _=>jeStateNow && widgets.has(jeStateNow.parent),
-    call: async function() {
-      const p = widgets.get(jeStateNow.parent);
-      setSelection([ p ]);
-      jeSelectWidget(p);
     }
   },
   {
@@ -1426,7 +1418,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('FOREACH', { loopRoutine: [], in: [], range: [], collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('GET', { variable: 'id', collection: 'DEFAULT', property: 'id', aggregation: 'first', skipMissing: false });
   jeAddRoutineOperationCommands('IF', { condition: null, operand1: null, relation: '==', operand2: null, thenRoutine: [], elseRoutine: [] });
-  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "" } );
+  jeAddRoutineOperationCommands('INPUT', { cancelButtonIcon: null, cancelButtonText: "Cancel", confirmButtonIcon: null, confirmButtonText: "Go", fields: [], header: "", player: null, block: false } );
   jeAddRoutineOperationCommands('LABEL', { value: 0, mode: 'set', label: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVE', { count: 1, face: null, from: null, to: null, fillTo: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('MOVEXY', { count: 1, face: null, from: null, x: 0, y: 0, snapToGrid: true, resetOwner: true });
@@ -2171,6 +2163,7 @@ function jeSelectWidget(widget, addToSelection) {
     jeStateBefore = jePreProcessText(jsonString);
     jeSet(jePreProcessText(jsonString, false));
     editPanel.style.setProperty('--treeHeight', "20%");
+    jeAddWidgetToHistory(widget.id);
   }
 
   if(newCursorState)
@@ -2179,6 +2172,7 @@ function jeSelectWidget(widget, addToSelection) {
   jeCenterSelection();
 
   jeGetContext();
+  jeUpdateWidgetSwitcher();
 }
 
 function jeSelectWidgetMulti(widget) {
@@ -2208,6 +2202,7 @@ function jeSelectSetMulti(widgets) {
   jeMode = 'multi';
   jeUpdateMulti();
   jeGetContext();
+  jeUpdateWidgetSwitcher();
 }
 
 function jeMultiSelectedWidgets() {
@@ -2555,6 +2550,161 @@ function jeDisplayFilteredWidgets(e) {
 }
 
 /* End of tree subpane control */
+
+/* Widget switcher (breadcrumbs, back/forward history, tree dropdown) */
+
+let jeBreadcrumbWidget = null; // widget whose ancestry chain is currently shown in breadcrumbs
+
+function jeAddWidgetToHistory(id) {
+  if(jeWidgetHistoryNavigating || jeWidgetHistory[jeWidgetHistoryIndex] === id)
+    return;
+  jeWidgetHistory = jeWidgetHistory.slice(0, jeWidgetHistoryIndex + 1);
+  jeWidgetHistory.push(id);
+  if(jeWidgetHistory.length > 100)
+    jeWidgetHistory.shift();
+  jeWidgetHistoryIndex = jeWidgetHistory.length - 1;
+}
+
+function jeHistoryCanNavigate(direction) {
+  for(let i = jeWidgetHistoryIndex + direction; i >= 0 && i < jeWidgetHistory.length; i += direction)
+    if(widgets.has(jeWidgetHistory[i]))
+      return true;
+  return false;
+}
+
+function jeHistoryNavigate(direction) {
+  let index = jeWidgetHistoryIndex + direction;
+  while(index >= 0 && index < jeWidgetHistory.length && !widgets.has(jeWidgetHistory[index]))
+    index += direction;
+  if(index < 0 || index >= jeWidgetHistory.length)
+    return;
+
+  jeWidgetHistoryIndex = index;
+  jeWidgetHistoryNavigating = true;
+  setSelection([ widgets.get(jeWidgetHistory[index]) ]);
+  jeWidgetHistoryNavigating = false;
+}
+
+// Check if ancestor is an ancestor of descendant in the widget tree
+function jeIsAncestorOf(ancestor, descendant) {
+  const seen = new Set();
+  for(let w = descendant; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+    seen.add(w);
+    if(w === ancestor)
+      return true;
+  }
+  return false;
+}
+
+function jeUpdateWidgetSwitcher() {
+  if(!$('#jeWidgetSwitcher'))
+    return;
+
+  $('#jeNavBack').disabled = !jeHistoryCanNavigate(-1);
+  $('#jeNavForward').disabled = !jeHistoryCanNavigate(1);
+
+  // Determine which widget's ancestry chain to show in breadcrumbs
+  // Keep showing the same chain until selecting a widget outside it
+  let displayWidget = jeBreadcrumbWidget;
+  if(jeMode == 'widget' && jeWidget && widgets.has(jeWidget.id)) {
+    if(!displayWidget || !widgets.has(displayWidget.id) || !jeIsAncestorOf(jeWidget, displayWidget)) {
+      // jeWidget is not in the ancestry of the breadcrumb widget, update to its chain
+      displayWidget = jeBreadcrumbWidget = jeWidget;
+    }
+  } else {
+    displayWidget = jeBreadcrumbWidget = null;
+  }
+
+  const separator = '<span class=jeCrumbSeparator>chevron_right</span>';
+  let breadcrumbsHTML = '';
+  if(jeMode == 'widget' && displayWidget && widgets.has(displayWidget.id)) {
+    const chain = [];
+    const seen = new Set();
+    for(let w = displayWidget; w && !seen.has(w); w = widgets.get(w.get('parent'))) {
+      seen.add(w);
+      chain.unshift(w);
+    }
+    const crumbs = chain.slice(-3).map(w => {
+      if(w != jeWidget)
+        return `<span class=jeCrumb data-id="${html(w.id)}">${html(w.id)}</span>`;
+      else
+        return `<span class="jeCrumb jeCrumbCurrent">${html(w.id)}</span>`;
+    });
+    if(chain.length > 3)
+      crumbs.unshift('<span class=jeCrumbEllipsis>…</span>');
+    breadcrumbsHTML = crumbs.join(separator);
+  } else if(jeMode == 'multi') {
+    // jeStateNow is null while the edited JSON is invalid; cache the count because this runs on every delta
+    let count = 'multiple';
+    if(jeStateNow && Array.isArray(jeStateNow.widgets)) {
+      const key = JSON.stringify(jeStateNow.widgets);
+      if(!jeMultiSelectedCountCache || jeMultiSelectedCountCache.key !== key) {
+        try {
+          jeMultiSelectedCountCache = { key, count: jeMultiSelectedWidgets().length };
+        } catch(e) {
+          jeMultiSelectedCountCache = { key, count: 'multiple' };
+        }
+      }
+      count = jeMultiSelectedCountCache.count;
+    }
+    breadcrumbsHTML = `<span class=jeCrumbInfo>${count} widgets selected</span>`;
+  } else if(jeMode == 'macro') {
+    breadcrumbsHTML = '<span class=jeCrumbInfo>macro</span>';
+  } else {
+    breadcrumbsHTML = '<span class=jeCrumbInfo>no widget selected</span>';
+  }
+  $('#jeBreadcrumbs').innerHTML = breadcrumbsHTML;
+
+  on('#jeBreadcrumbs .jeCrumb[data-id]', 'click', function(e) {
+    const widget = widgets.get(e.currentTarget.dataset.id);
+    if(widget)
+      setSelection([ widget ]);
+  });
+}
+
+function jeTreeIsVisible() {
+  return !!$('#jeWidgetSwitcher.treeVisible');
+}
+
+function jeTreeIsPinned() {
+  return localStorage.getItem('jeTreePinned') == 'true';
+}
+
+function jeSetTreePinned(pinned) {
+  localStorage.setItem('jeTreePinned', pinned);
+  $('#jeWidgetSwitcher').classList.toggle('treePinned', pinned);
+  $('#jePinTree').classList.toggle('active', pinned);
+}
+
+function jeToggleTreeDropdown(forceClose, focusSearch) {
+  const open = !forceClose && !jeTreeIsVisible();
+  $('#jeWidgetSwitcher').classList.toggle('treeVisible', open);
+  $('#jeShowTree').classList.toggle('active', open);
+  if(open) {
+    jeSetTreePinned(jeTreeIsPinned());
+    $('#jeTreeContainer').append($('#jeTree'));
+    jeDisplayTree();
+    if(focusSearch)
+      $('#jeWidgetSearchBox').focus();
+  } else {
+    $('#jeEditArea').append($('#jeTree'));
+  }
+}
+
+function jeInitWidgetSwitcher() {
+  on('#jeNavBack', 'click', _=>jeHistoryNavigate(-1));
+  on('#jeNavForward', 'click', _=>jeHistoryNavigate(1));
+  on('#jeShowTree', 'click', _=>jeToggleTreeDropdown(false, true));
+  on('#jePinTree', 'click', _=>jeSetTreePinned(!jeTreeIsPinned()));
+
+  // unless pinned, close the dropdown when a widget is picked in the tree (capture so it runs despite stopPropagation)
+  $('#jeTreeContainer').addEventListener('click', function(e) {
+    if(!jeTreeIsPinned() && !e.shiftKey && !e.target.classList.contains('jeTreeExpander') && e.target.closest('.jeTreeWidget'))
+      jeToggleTreeDropdown(true);
+  }, true);
+}
+
+/* End of widget switcher */
 
 function jeGetContext() {
   const aO = getSelection().anchorOffset;
@@ -3773,6 +3923,7 @@ function jeInitTree() {
 export function jeToggle() {
   if(jeEnabled === null) {
     jeInitTree();
+    jeInitWidgetSwitcher();
     jeAddCommands();
     jeEmpty();
     $('#jeText').addEventListener('input', jeColorize);
@@ -3802,6 +3953,7 @@ function jeEmpty() {
 
   jeSet('');
   jeShowCommands();
+  jeUpdateWidgetSwitcher();
 }
 
 const clickButton = async function(event) {
@@ -3950,6 +4102,26 @@ function jeInitEventListeners() {
     if(e.key == 'Enter') {
       jeNewline();
       e.preventDefault();
+    }
+    // Tab+Left / Tab+Right navigate the widget history (back / forward)
+    if (jeEnabled && jeTabKeyHeld && (e.key == 'ArrowLeft' || e.key == 'ArrowRight')) {
+      e.preventDefault();
+      e.stopPropagation();
+      const direction = e.key == 'ArrowLeft' ? -1 : 1;
+      if (jeHistoryCanNavigate(direction)) {
+        // close the search overlay that Tab opened; we're navigating instead
+        if (jeTabSearchActive) {
+          jeTabSearchActive = false;
+          jeTabSearchFilter = '';
+          jeTabSearchHighlightIndex = -1;
+          jeTabArrowKeysUsed = false;
+        }
+        jeIgnoreBlurOnce = true;
+        jeHistoryNavigate(direction);
+        jeShowCommands();
+        $('#jeText').focus();
+      }
+      return;
     }
     if (e.key == 'Tab' && jeEnabled) {
       const jeTextElement = $('#jeText');

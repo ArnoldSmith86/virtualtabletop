@@ -817,6 +817,14 @@ body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomA
   cursor: default;
 }
 
+body.zoom2x.edit.spacePanActive #roomArea {
+  cursor: grab;
+}
+
+body.zoom2x.edit.spacePanActive.panning #roomArea {
+  cursor: grabbing;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -1254,6 +1262,30 @@ button:disabled:hover {
 }
 #buttonInputOverlay h1{
   display: none;
+}
+#inputBlockOverlay{
+  color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0008;
+}
+#inputBlockOverlay h1{
+  display: flex;
+  background: var(--VTTblue);
+}
+#inputBlockOverlay .modal{
+  width: 200px;
+}
+#inputBlockText{
+  padding: 16px 16px 8px;
+  text-align: center;
+  white-space: pre-line;
+}
+#inputBlockGuidance{
+  color: #666;
+  padding: 8px 16px 16px;
+  text-align: center;
 }
 .modal{
   color: var(--modalTextColor);
