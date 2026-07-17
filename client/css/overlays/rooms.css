@@ -4,11 +4,11 @@
 
 /* flex items shrink to fit the overlay by default, which squeezes/hides
    these sections instead of letting the overlay scroll to show them */
-#roomsOverlay > .heading, #roomsOverlay > #roomsList, #roomsOverlay > #roomsCollectionBox {
+#roomsOverlay > .heading, #roomsOverlay > #roomsList, #roomsOverlay > #publicRoomsSection, #roomsOverlay > #roomsCollectionBox {
   flex-shrink: 0;
 }
 
-#roomsList {
+#roomsList, #publicRoomsList {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -16,10 +16,14 @@
   padding: 16px 0;
 }
 
-#emptyRoomsList {
+#emptyRoomsList, #emptyPublicRoomsList {
   display: none;
   font-style: italic;
   color: black;
+}
+
+#publicRoomsSection h2 {
+  margin: 10px 0 5px 0;
 }
 
 .roomTile {
@@ -76,6 +80,20 @@
   padding: 3px 8px 4px 8px;
   margin: 0;
   background: #00000061;
+}
+
+.roomTile .details .description {
+  font-size: .75rem;
+  max-height: 3.4em;
+  overflow: hidden;
+  padding: 3px 8px 4px 8px;
+  margin: 0;
+  background: #00000061;
+  overflow-wrap: anywhere;
+}
+
+.roomTile .details .description.hidden {
+  display: none;
 }
 
 .roomTile .roomIcons {

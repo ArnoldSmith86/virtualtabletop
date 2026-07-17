@@ -3,6 +3,7 @@ import crypto from 'crypto';
 
 import Collections from '../../server/collections.mjs';
 import Config from '../../server/config.mjs';
+import PublicRooms from '../../server/publicrooms.mjs';
 import Room from '../../server/room.mjs';
 import Player from '../../server/player.mjs';
 
@@ -154,6 +155,75 @@ describe('Room security', () => {
     expect(await room.mayJoin('admin-collection', undefined)).toBe(true); // admins bypass the password
     await room.collectionAction('setPassword', { collection: 'admin-collection', password: '' });
     expect(await room.mayJoin(undefined, undefined)).toBe(true);
+  });
+});
+
+describe('Public rooms', () => {
+  const roomID = 'jest-test-public-room';
+  let room;
+
+  beforeEach(() => {
+    room = testRoom(roomID);
+    room.players.push({ name: 'admin', collection: 'admin-collection', send() {} });
+  });
+
+  afterEach(() => {
+    PublicRooms.remove(roomID);
+  });
+
+  afterAll(() => {
+    if(fs.existsSync(savedir + '/rooms/' + roomID + '.json'))
+      fs.unlinkSync(savedir + '/rooms/' + roomID + '.json');
+  });
+
+  test('registry adds and removes rooms', () => {
+    expect(PublicRooms.get()).not.toContain(roomID);
+    expect(PublicRooms.add(roomID)).toBe(true);
+    expect(PublicRooms.add(roomID)).toBe(true); // idempotent
+    expect(PublicRooms.get()).toContain(roomID);
+    PublicRooms.remove(roomID);
+    expect(PublicRooms.get()).not.toContain(roomID);
+  });
+
+  test('only admins can publish a room', async () => {
+    await expect(room.collectionAction('setPublic', { collection: 'other-collection', public: true, description: 'x' })).rejects.toThrow(/not the admin/);
+    expect(room.isPublic()).toBe(false);
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: '  Come play with us!  ' });
+    expect(room.isPublic()).toBe(true);
+    expect(room.state._meta.public.description).toBe('Come play with us!');
+    expect(PublicRooms.get()).toContain(roomID);
+    expect((await room.getRoomDetails('admin-collection')).isPublic).toBe(true);
+    expect((await room.getRoomDetails('admin-collection')).description).toBe('Come play with us!');
+  });
+
+  test('descriptions are capped at 500 characters', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: 'x'.repeat(600) });
+    expect(room.state._meta.public.description.length).toBe(500);
+  });
+
+  test('unpublishing and unclaiming remove the room from the public list', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: 'x' });
+    await room.collectionAction('setPublic', { collection: 'admin-collection', public: false });
+    expect(room.isPublic()).toBe(false);
+    expect(room.state._meta.public).toBeUndefined();
+    expect(PublicRooms.get()).not.toContain(roomID);
+
+    await room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: 'x' });
+    await room.collectionAction('unclaim', { collection: 'admin-collection' });
+    expect(room.isPublic()).toBe(false);
+    expect(room.state._meta.public).toBeUndefined();
+    expect(PublicRooms.get()).not.toContain(roomID);
+  });
+
+  test('deleting a room removes it from the public list', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: 'x' });
+    await room.collectionAction('delete', { collection: 'admin-collection' });
+    expect(room.isPublic()).toBe(false);
+    expect(PublicRooms.get()).not.toContain(roomID);
   });
 });
 

@@ -15,6 +15,7 @@ import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import Collections from './server/collections.mjs';
+import PublicRooms from './server/publicrooms.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
@@ -373,6 +374,28 @@ MinifyHTML().then(function(result) {
           continue;
         if(await ensureRoomIsLoaded(roomID))
           rooms.push(await activeRooms.get(roomID).getRoomDetails(req.params.collection));
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({ rooms }));
+    })().catch(next);
+  });
+
+  router.get('/api/publicrooms', function(req, res, next) {
+    (async function() {
+      const collection = typeof req.query.collection == 'string' ? req.query.collection : null;
+      const rooms = [];
+      for(const roomID of PublicRooms.get()) {
+        // heal the list when a published room was deleted or its file was removed
+        if(!roomExists(roomID)) {
+          PublicRooms.remove(roomID);
+          continue;
+        }
+        if(await ensureRoomIsLoaded(roomID)) {
+          if(activeRooms.get(roomID).isPublic())
+            rooms.push(await activeRooms.get(roomID).getRoomDetails(collection));
+          else
+            PublicRooms.remove(roomID);
+        }
       }
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify({ rooms }));

@@ -8,6 +8,7 @@ import FileUpdater from './fileupdater.mjs';
 import Logging from './logging.mjs';
 import Config from './config.mjs';
 import { randomHue } from '../client/js/color.js';
+import PublicRooms from './publicrooms.mjs';
 import Statistics from './statistics.mjs';
 
 export default class Room {
@@ -293,8 +294,21 @@ export default class Room {
       Logging.log(`room ${this.id} was claimed by collection ${this.claimedBy().substring(0, 8)}…`);
     } else if(action == 'unclaim') {
       await requireAdmin();
+      PublicRooms.remove(this.id);
       delete this.state._meta.security;
       delete this.state._meta.locked;
+      delete this.state._meta.public;
+    } else if(action == 'setPublic') {
+      await requireAdmin();
+      if(args.public) {
+        const description = String(args.description || '').trim().substring(0, 500);
+        if(!PublicRooms.add(this.id))
+          throw new Logging.UserError(400, 'The public rooms list is full.');
+        this.state._meta.public = { description };
+      } else {
+        PublicRooms.remove(this.id);
+        delete this.state._meta.public;
+      }
     } else if(action == 'setName') {
       await requireAdmin();
       const name = String(args.name || '').trim().substring(0, 64);
@@ -335,6 +349,7 @@ export default class Room {
     copy._meta.players = {};
     delete copy._meta.security;
     delete copy._meta.locked;
+    delete copy._meta.public;
     delete copy._meta.linkSourceRoom;
     delete copy._meta.tracingEnabled;
     delete copy._meta.redirectTo;
@@ -361,6 +376,7 @@ export default class Room {
 
   async deleteRoom() {
     Logging.log(`deleting room ${this.id}`);
+    PublicRooms.remove(this.id);
     for(const [ stateID, state ] of Object.entries(this.state._meta.states)) {
       if(String(stateID).match(/^PL:/))
         continue;
@@ -408,6 +424,8 @@ export default class Room {
       locked: !!meta.locked,
       hasPassword: !!(meta.security && meta.security.joinPassword),
       autoLink: !!meta.linkSourceRoom,
+      isPublic: this.isPublic(),
+      description: this.isPublic() && meta.public.description || null,
       players: this.players.length
     };
   }
@@ -438,6 +456,10 @@ export default class Room {
     if(!this.claimedBy() || !collection)
       return false;
     return await this.hashSecret(collection) == this.claimedBy();
+  }
+
+  isPublic() {
+    return !!(this.claimedBy() && this.state._meta.public);
   }
 
   async linkFromRoom(sourceRoom, autoLink) {
@@ -1404,7 +1426,7 @@ export default class Room {
   unload() {
     if(this.state && this.state._meta && this.state._meta.states && typeof this.state._meta.states == 'object' && this.state._meta.starred && typeof this.state._meta.starred == 'object') {
       const nonPLgames = Object.keys(this.state._meta.states).filter(i=>!i.match(/^PL:/));
-      const hasCollectionData = this.state._meta.security && Object.keys(this.state._meta.security).length || this.state._meta.roomName || this.state._meta.linkSourceRoom || this.state._meta.locked;
+      const hasCollectionData = this.state._meta.security && Object.keys(this.state._meta.security).length || this.state._meta.roomName || this.state._meta.linkSourceRoom || this.state._meta.locked || this.state._meta.public;
       if(Object.keys(this.state).length > 1 || nonPLgames.length || Object.keys(this.state._meta.starred).length || this.state._meta.redirectTo || this.state._meta.returnServer || hasCollectionData) {
         Logging.log(`unloading room ${this.id}`);
         this.writeToFilesystem();
