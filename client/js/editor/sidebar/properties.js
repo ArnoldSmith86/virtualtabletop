@@ -3189,10 +3189,20 @@ class PropertiesModule extends SidebarModule {
   renderRoutineBlocks(container, widget, property) {
     const currentRoutine = () => Array.isArray(widget.state[property]) ? JSON.parse(JSON.stringify(widget.state[property])) : [];
     let renderedJSON = null;
+    const openJSONViews = new Set();      // block keys whose JSON view is open (survives render())
+    const openJSONTextareas = new Map();  // block key -> { textarea, listPath, index } of the current DOM
 
     const commit = routine => {
       renderedJSON = JSON.stringify(routine);
       widget.set(property, routine);
+      // keep open JSON views in sync with edits made through the other inputs of the step
+      for(const { textarea, listPath, index } of openJSONTextareas.values()) {
+        if(textarea === document.activeElement)
+          continue;
+        const step = routineListAtPath(routine, listPath)[index];
+        textarea.value = step === undefined ? '' : JSON.stringify(step, null, 2);
+        textarea.classList.remove('inputError');
+      }
     };
 
     // path elements are array indices (numbers) and parameter names of nested routines (strings)
@@ -3346,13 +3356,25 @@ class PropertiesModule extends SidebarModule {
           variableMode = true;
       }
 
-      const write = (v, rerender = false) => setStepParam(listPath, index, param, v, rerender);
+      const clearButton = clearButtonFor(listPath, index, param, isSet);
+
+      const write = (v, rerender = false) => {
+        setStepParam(listPath, index, param, v, rerender);
+        clearButton.disabled = typeof v === 'undefined';
+        row.classList.toggle('automationParamUnset', typeof v === 'undefined');
+      };
 
       const renderInput = () => {
         inputHost.innerHTML = '';
 
         if(variableMode) {
-          inputHost.appendChild(textInputFor(typeof value === 'string' ? value : '', '${variableName}', text => write(text === '' ? undefined : text)));
+          const input = textInputFor(typeof value === 'string' ? value : '', 'variableName or ${expression}', text => {
+            // a bare variable name is what users mean most of the time - wrap it for them
+            if(text.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/))
+              text = input.value = `\${${text}}`;
+            write(text === '' ? undefined : text);
+          });
+          inputHost.appendChild(input);
           return;
         }
 
@@ -3484,7 +3506,7 @@ class PropertiesModule extends SidebarModule {
           variableMode = !variableMode;
           renderInput();
         }, variableMode));
-      row.appendChild(clearButtonFor(listPath, index, param, isSet));
+      row.appendChild(clearButton);
     };
 
     const renderIfBlock = (body, listPath, index, step) => {
@@ -3584,7 +3606,29 @@ class PropertiesModule extends SidebarModule {
       blockHeader.appendChild(title);
 
       const body = div(block, 'automationBlockBody');
+      const jsonKey = `${listPath.join('.')}#${index}`;
       let jsonArea = null;
+
+      // the JSON view reads the current state so it never shows a stale snapshot, stays in
+      // sync through commit() while other inputs of the step are edited, and survives render()
+      const openJSONView = button => {
+        button.classList.add('selected');
+        jsonArea = document.createElement('textarea');
+        jsonArea.className = 'automationBlockJSON';
+        jsonArea.value = JSON.stringify(routineListAtPath(currentRoutine(), listPath)[index], null, 2);
+        jsonArea.oninput = () => {
+          try {
+            const parsed = JSON.parse(jsonArea.value);
+            jsonArea.classList.remove('inputError');
+            changeStep(listPath, index, (l, i) => l[i] = parsed);
+          } catch(e) {
+            jsonArea.classList.add('inputError');
+          }
+        };
+        block.appendChild(jsonArea);
+        openJSONViews.add(jsonKey);
+        openJSONTextareas.set(jsonKey, { textarea: jsonArea, listPath, index });
+      };
 
       const headerButtons = [];
       if(isObjectLike(step))
@@ -3593,23 +3637,12 @@ class PropertiesModule extends SidebarModule {
             jsonArea.remove();
             jsonArea = null;
             button.classList.remove('selected');
-            render();
+            openJSONViews.delete(jsonKey);
+            openJSONTextareas.delete(jsonKey);
+            render(); // the other inputs of the step could be stale after JSON edits
             return;
           }
-          button.classList.add('selected');
-          jsonArea = document.createElement('textarea');
-          jsonArea.className = 'automationBlockJSON';
-          jsonArea.value = JSON.stringify(step, null, 2);
-          jsonArea.oninput = () => {
-            try {
-              const parsed = JSON.parse(jsonArea.value);
-              jsonArea.classList.remove('inputError');
-              changeStep(listPath, index, (list, i) => list[i] = parsed);
-            } catch(e) {
-              jsonArea.classList.add('inputError');
-            }
-          };
-          block.appendChild(jsonArea);
+          openJSONView(button);
         } ]);
       headerButtons.push(
         [ 'arrow_upward',   'Move step up',   index > 0,                  () => changeList(listPath, l => l.splice(index-1, 0, l.splice(index, 1)[0])) ],
@@ -3623,6 +3656,8 @@ class PropertiesModule extends SidebarModule {
         button.disabled = !enabled;
         button.onclick = e => { e.preventDefault(); action(button); };
         blockHeader.appendChild(button);
+        if(icon == 'data_object' && openJSONViews.has(jsonKey))
+          openJSONView(button);
       }
 
       if(typeof step === 'string') {
@@ -3693,6 +3728,7 @@ class PropertiesModule extends SidebarModule {
       const routine = currentRoutine();
       renderedJSON = JSON.stringify(routine);
       container.innerHTML = '';
+      openJSONTextareas.clear();
       renderList(container, [], routine);
     };
 

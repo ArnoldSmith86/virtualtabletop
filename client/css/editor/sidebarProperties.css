@@ -353,7 +353,8 @@
   flex: 1;
   font-family: monospace;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
+  color: var(--VTTblue);
 }
 
 .tune.editorModule .automationBlockBody {
@@ -512,4 +513,61 @@
   font-family: monospace;
   font-size: 11px;
   margin-top: 4px;
+}
+
+/* dark mode for the Automations section */
+
+body.darkMode .tune.editorModule .automationRow {
+  background-color: #26282b;
+  border-color: #4a4d52;
+}
+
+body.darkMode .tune.editorModule .automationBlock {
+  background-color: #2e3136;
+  border-color: #4a4d52;
+}
+
+body.darkMode .tune.editorModule .automationBlockTitle {
+  color: #7ab8ff;
+}
+
+body.darkMode .tune.editorModule .automationBlocks,
+body.darkMode .tune.editorModule .automationNestedList {
+  border-left-color: #4a4d52;
+}
+
+body.darkMode .tune.editorModule .automationSummary,
+body.darkMode .tune.editorModule .automationDescription,
+body.darkMode .tune.editorModule .automationParamUnset > label,
+body.darkMode .tune.editorModule .automationCommentText {
+  color: #9aa0a6;
+}
+
+body.darkMode .tune.editorModule .automationNestedLabel {
+  color: #c5cad1;
+}
+
+body.darkMode .tune.editorModule .automationToggleArrow,
+body.darkMode .tune.editorModule .automationBlockHeader button,
+body.darkMode .tune.editorModule .automationParamButton {
+  color: #b0b5bb;
+}
+
+body.darkMode .tune.editorModule .automationBlockHeader button:hover:not([disabled]),
+body.darkMode .tune.editorModule .automationParamButton:hover:not([disabled]) {
+  color: #7ab8ff;
+}
+
+body.darkMode .tune.editorModule .automationBlockHeader button[disabled],
+body.darkMode .tune.editorModule .automationParamButton[disabled] {
+  color: #55585c;
+}
+
+body.darkMode .tune.editorModule .automationParamButton.selected {
+  color: #7ab8ff;
+}
+
+body.darkMode .tune.editorModule .inheritFromRowWrap {
+  background-color: #26282b;
+  border-color: #4a4d52;
 }
