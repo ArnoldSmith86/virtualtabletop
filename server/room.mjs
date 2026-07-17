@@ -426,7 +426,7 @@ export default class Room {
       autoLink: !!meta.linkSourceRoom,
       isPublic: this.isPublic(),
       description: this.isPublic() && meta.public.description || null,
-      players: this.players.length
+      players: [...new Set(this.players.map(player=>player.name))].map(name=>({ name, color: meta.players[name] || null }))
     };
   }
 

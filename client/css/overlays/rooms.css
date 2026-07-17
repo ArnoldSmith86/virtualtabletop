@@ -96,6 +96,31 @@
   display: none;
 }
 
+.roomTile .roomPlayers {
+  position: absolute;
+  top: 32px;
+  left: 6px;
+  right: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.roomTile .roomPlayers span {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .75rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 3px #000;
+  background: #555;
+  border-radius: 8px;
+  padding: 0 6px;
+}
+
 .roomTile .roomIcons {
   position: absolute;
   top: 4px;
