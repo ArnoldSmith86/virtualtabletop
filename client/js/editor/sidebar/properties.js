@@ -4869,9 +4869,12 @@ class PropertiesModule extends SidebarModule {
   renderEvents(widget) {
     this.addSubHeader('Events');
     const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
-    for(const property in widget.state)
-      if(property.match(/Routine$/))
-        this.addPropertyListener(widget, property, _=>eventsEditor.onPropertyChange());
+    // a delta listener instead of per-property listeners so event handlers added
+    // by other players (properties that did not exist on selection) show up too
+    this.addDeltaListener(deltaS=>{
+      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/)))
+        eventsEditor.onPropertyChange();
+    });
     this.moduleDOM.append(eventsEditor.domElement);
   }
 

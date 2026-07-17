@@ -52,7 +52,8 @@ class Popup {
       e.stopPropagation();
       this.hide();
     });
-    this.domElement.append(close);
+    // first child so the sticky float stays in the top right corner while scrolling
+    this.domElement.prepend(close);
   }
 
   hide() {
@@ -129,8 +130,14 @@ class Popup {
   }
 
   setTitle(title) {
-    if(!$('h1', this.domElement))
-      this.domElement.prepend(document.createElement('h1'));
+    if(!$('h1', this.domElement)) {
+      const h1 = document.createElement('h1');
+      const close = $('.popup-close', this.domElement);
+      if(close) // keep the close button first so it stays sticky in the corner
+        close.after(h1);
+      else
+        this.domElement.prepend(h1);
+    }
     $('h1', this.domElement).textContent = title;
   }
 
@@ -267,7 +274,7 @@ class RoutinePopup extends Popup {
         <pre>
         A collection is, as its name implies, a collection of widgets. Collections can be created in two different ways.
 
-        A [SELECT statement](SELECT) will create a collection and name it according to the collection parameter. If no collection parameter is provided, it will be named DEFAULT.
+        A [SELECT](SELECT statement) will create a collection and name it according to the collection parameter. If no collection parameter is provided, it will be named DEFAULT.
 
         You can also list widget ids directly, like [ "widget1", "widget2" ] - such in-place collections used elsewhere in the routine are offered here as well.
         </pre>
@@ -408,8 +415,12 @@ class RoutineWidgetIDPopup extends RoutinePopup {
   show(showCollections=false) {
     super.show(false, showCollections);
     const [ title, content ] = this.addAccordionSection('Holders')
-    this.holderSelection = new WidgetSelection([], widgets=>{
-      this.setNewValue(widgets.map(w=>w.id));
+    // seed the picker with the widgets the parameter already holds so using it
+    // without changes keeps the current value instead of clearing it
+    const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    const currentIDs = Array.isArray(currentValue) ? currentValue : (typeof currentValue == 'string' ? [ currentValue ] : []);
+    this.holderSelection = new WidgetSelection(currentIDs.filter(id=>widgets.has(id)).map(id=>widgets.get(id)), pickedWidgets=>{
+      this.setNewValue(pickedWidgets.map(w=>w.id));
     });
     this.holderSelection.render();
     content.appendChild(this.holderSelection.domElement);
@@ -574,7 +585,8 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
     dom.innerHTML += `<span class=material-symbols>school</span>`;
   if(videoFilename)
     dom.innerHTML += `<span class=material-symbols>movie</span>`;
-  infoHTML = infoHTML.replace(/\[([^\]]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic=${topicName}>${topicInfo != null ? topicInfo : topicName}</span>`);
+  // topic names are restricted so literal brackets like [ "widget1", "widget2" ] stay untouched
+  infoHTML = infoHTML.replace(/\[([A-Za-z.]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic="${topicName}">${topicInfo != null ? topicInfo : topicName}</span>`);
   dom.addEventListener('click', e=>{
     e.stopPropagation();
     const popup = new InfoPopup(dom, infoHTML, tutorialName, videoFilename);

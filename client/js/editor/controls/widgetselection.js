@@ -42,7 +42,7 @@ class WidgetSelection {
           <button>Use These Widgets</button>
         </div>
         <div class=end style=display:none>
-          <p>Select widgets in the room. Then click Select to apply the selection.</p>
+          <p>Select widgets in the room. A plain click replaces the selection; shift-click adds to it. Then click Select to apply the selection.</p>
           <button>Select</button>
         </div>
     `);
