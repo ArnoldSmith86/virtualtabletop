@@ -2593,7 +2593,7 @@
       "mode": "vs, coop",
       "time": "45",
       "attribution": "<div>Library image, coding, layout, and room setup by LawDawg. Released to the Public Domain under CC0.</div><div><br></div><div>Icons have attribution as listed in the About overlay.</div><div><br></div>Base geographic data on the map by OpenStreetMap contributors and licensed under the Open Database License (ODbL), available at https://opendatacommons.org/licenses/odbl/index.html. Data obtained from Geofabrik at https://download.geofabrik.de/europe/united-kingdom/england/greater-london.html. Cartographic styling and coloring by LawDawg.",
-      "lastUpdate": 1784258393419,
+      "lastUpdate": 1784258794982,
       "skill": "",
       "description": "X is on the loose in London and the detectives must work together to find this elusive character.",
       "variantImage": "",
@@ -4872,8 +4872,7 @@
     ],
     "staticColor": "#000000",
     "color": "#000000",
-    "ignoreZoom": true,
-    "player": "Guest292"
+    "ignoreZoom": true
   },
   "busDeck": {
     "type": "deck",
