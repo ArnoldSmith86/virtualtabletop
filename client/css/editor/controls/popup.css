@@ -18,7 +18,21 @@
   font-size: 15px;
   margin: 0 0 8px 0;
   padding-bottom: 6px;
+  padding-right: 24px;
   border-bottom: 2px solid var(--VTTblue);
+}
+
+.inline-popup .popup-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  color: gray;
+  font-size: 18px;
+}
+
+.inline-popup .popup-close:hover {
+  color: var(--textHighlightColor3);
 }
 
 .inline-popup .accordion-section h3 {
@@ -82,6 +96,10 @@ body.edit.darkMode .inline-popup button:hover {
 .inline-popup pre {
   white-space: pre-wrap;
   margin: 4px 0;
+}
+
+.inline-popup .content {
+  padding-right: 20px;
 }
 
 .inline-popup .info-button {

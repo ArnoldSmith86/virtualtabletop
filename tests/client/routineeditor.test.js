@@ -35,7 +35,7 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor'
+    'EventsEditor', 'InfoPopup'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -83,13 +83,28 @@ describe('operation rendering', () => {
     expect(dom.textContent).toContain('<img src=x onerror=alert(1)>');
   });
 
-  test('hides segments whose parameters use defaults and reveals them via the more chip', () => {
+  test('shows default-valued segments by default and collapses them via the arrow toggle', () => {
     const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
     expect(dom.querySelector('.routine-editor-operation-optional')).not.toBeNull();
-    const more = dom.querySelector('.routine-editor-operation-more');
-    expect(more).not.toBeNull();
-    more.dispatchEvent(new Event('click'));
-    expect(dom.classList.contains('show-details')).toBe(true);
+    expect(dom.classList.contains('collapsed')).toBe(false);
+    const toggle = dom.querySelector('.routine-editor-collapse-toggle');
+    expect(toggle).not.toBeNull();
+    expect(dom.firstChild).toBe(toggle); // the arrow sits at the start of the operation
+    toggle.dispatchEvent(new Event('click'));
+    expect(dom.classList.contains('collapsed')).toBe(true);
+  });
+
+  test('operations without default-valued segments or nested routines get no collapse toggle', () => {
+    const { dom } = renderOperation({ func: 'DELETE' });
+    expect(dom.querySelector('.routine-editor-collapse-toggle')).toBeNull();
+  });
+
+  test('IF is collapsible even without default-valued segments', () => {
+    const { dom } = renderOperation({ func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] });
+    const toggle = dom.querySelector('.routine-editor-collapse-toggle');
+    expect(toggle).not.toBeNull();
+    toggle.dispatchEvent(new Event('click'));
+    expect(dom.classList.contains('collapsed')).toBe(true);
   });
 
   test('shows optional segments when their parameter is explicitly set', () => {
@@ -203,6 +218,41 @@ describe('events editor', () => {
     expect(received).toEqual(routineEditor.routine);
     expect(received).not.toBe(routineEditor.routine);
     expect(received[0]).not.toBe(routineEditor.routine[0]);
+  });
+});
+
+describe('popup closing', () => {
+  function showInfoPopup(html) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new InfoPopup(source, html);
+    popup.show();
+    return popup;
+  }
+
+  test('popups get a close button that closes them', () => {
+    const popup = showInfoPopup('hello');
+    const close = popup.domElement.querySelector('.popup-close');
+    expect(close).not.toBeNull();
+    close.dispatchEvent(new Event('click'));
+    expect(document.body.contains(popup.domElement)).toBe(false);
+  });
+
+  test('clicking inside an info popup does not close it', () => {
+    const popup = showInfoPopup('hello');
+    popup.domElement.dispatchEvent(new Event('click'));
+    expect(document.body.contains(popup.domElement)).toBe(true);
+    popup.hide();
+  });
+
+  test('Escape closes only the top-most popup', () => {
+    const outer = showInfoPopup('outer');
+    const inner = showInfoPopup('inner');
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(document.body.contains(inner.domElement)).toBe(false);
+    expect(document.body.contains(outer.domElement)).toBe(true);
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(document.body.contains(outer.domElement)).toBe(false);
   });
 });
 

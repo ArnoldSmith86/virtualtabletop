@@ -61,38 +61,25 @@ body.edit.darkMode .routine-editor-operation-parameter {
   color: var(--textHighlightColor7);
 }
 
-/* parameters that just use their defaults are hidden until requested */
-.routine-editor-operation:not(.show-details) .routine-editor-operation-optional {
+/* collapsing an operation hides parameters that just use their defaults */
+.routine-editor-operation.collapsed .routine-editor-operation-optional {
   display: none;
 }
 
-.routine-editor-operation-more {
+.routine-editor-collapse-toggle {
   cursor: pointer;
   color: gray;
   font-size: 16px;
   vertical-align: middle;
-  margin-left: 2px;
+  margin-right: 2px;
 }
 
-.routine-editor-operation.show-details .routine-editor-operation-more,
-.routine-editor-operation-more:hover {
+.routine-editor-collapse-toggle:hover {
   color: var(--VTTblue);
 }
 
-.routine-editor-fold-toggle {
-  cursor: pointer;
-  color: gray;
-  font-size: 16px;
-  vertical-align: middle;
-  margin-left: 2px;
-}
-
-.routine-editor-fold-toggle:hover {
-  color: var(--VTTblue);
-}
-
-.routine-editor-operation.folded .routine-editor,
-.routine-editor-operation.folded .routine-editor-else {
+.routine-editor-operation.collapsed .routine-editor,
+.routine-editor-operation.collapsed .routine-editor-else {
   display: none;
 }
 
@@ -102,7 +89,7 @@ body.edit.darkMode .routine-editor-operation-parameter {
   margin: 2px 0 0 12px;
 }
 
-.routine-editor-operation.folded .routine-editor-add-else {
+.routine-editor-operation.collapsed .routine-editor-add-else {
   display: none;
 }
 

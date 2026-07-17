@@ -1,3 +1,16 @@
+const openPopups = []; // stack of open popups so close controls only affect the top-most one
+
+// the editor reacts to Escape on keyup (closing the active sidebar module with a
+// synthetic click that would also dismiss every open popup), so when a popup
+// handled the Escape keydown, swallow the matching keyup before it gets there
+let popupHandledEscape = false;
+document.addEventListener('keyup', e=>{
+  if(e.key == 'Escape' && popupHandledEscape) {
+    popupHandledEscape = false;
+    e.stopPropagation();
+  }
+}, true);
+
 class Popup {
   constructor(source) {
     this.source = source;
@@ -28,7 +41,23 @@ class Popup {
     return [ $('h3', section), $('.accordion-content', section) ];
   }
 
+  addCloseButton() {
+    if($('.popup-close', this.domElement))
+      return;
+    const close = document.createElement('span');
+    close.className = 'material-symbols popup-close';
+    close.textContent = 'close';
+    close.title = 'Close';
+    close.addEventListener('click', e=>{
+      e.stopPropagation();
+      this.hide();
+    });
+    this.domElement.append(close);
+  }
+
   hide() {
+    if(openPopups.indexOf(this) != -1)
+      openPopups.splice(openPopups.indexOf(this), 1);
     document.removeEventListener('click', this.boundOnOutsideClick);
     document.removeEventListener('keydown', this.boundOnKeyDown, true);
     this.domElement.remove();
@@ -52,13 +81,16 @@ class Popup {
   }
 
   onClick(e) {
+    // clicks inside the popup never close it; that is what the close button,
+    // the Escape key and clicks outside all popups are for
     e.stopPropagation();
-    this.hide();
   }
 
   onKeyDown(e) {
-    if(e.key == 'Escape') {
+    // only the top-most popup reacts so nested info popups close one at a time
+    if(e.key == 'Escape' && openPopups[openPopups.length-1] === this) {
       e.stopPropagation();
+      popupHandledEscape = true;
       this.hide();
     }
   }
@@ -108,6 +140,9 @@ class Popup {
     this.domElement.style.left = `${sourceRect.left}px`;
     this.domElement.style.top = `${sourceRect.bottom}px`;
     this.moveIntoView();
+    this.addCloseButton();
+    if(openPopups.indexOf(this) == -1)
+      openPopups.push(this);
     this.domElement.addEventListener('click', this.boundOnClick);
     // capture phase so Escape only closes the popup instead of also deselecting in the editor
     document.addEventListener('keydown', this.boundOnKeyDown, true);

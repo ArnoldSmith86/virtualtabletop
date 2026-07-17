@@ -568,10 +568,8 @@ class RoutineOperationEditor {
     this.domElement = dom;
     dom.classList.add('routine-editor-operation');
     const uiState = operationUIState(this.operation);
-    if(uiState.showDetails)
-      dom.classList.add('show-details');
-    if(uiState.folded)
-      dom.classList.add('folded');
+    if(uiState.collapsed)
+      dom.classList.add('collapsed');
 
     // escapeHTML because parameter values come from untrusted room state
     const parameterSpan = spec=>{
@@ -583,8 +581,9 @@ class RoutineOperationEditor {
       return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
     };
 
-    // segments in square brackets only show details when one of their parameters is explicitly set
-    let hasHiddenSegment = false;
+    // segments in square brackets are marked optional while all their parameters
+    // use defaults, so collapsing the operation hides them
+    let hasOptionalSegment = false;
     let html = '';
     for(const segment of this.getTemplate().split(/(\[[^\]]*\])/)) {
       const optional = segment.charAt(0) == '[';
@@ -594,24 +593,16 @@ class RoutineOperationEditor {
       const rendered = text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>parameterSpan(spec));
       if(optional && !explicitlySet) {
         html += `<span class="routine-editor-operation-optional">${rendered}</span>`;
-        hasHiddenSegment = true;
+        hasOptionalSegment = true;
       } else {
         html += rendered;
       }
     }
     dom.innerHTML = html;
 
-    if(hasHiddenSegment) {
-      const more = document.createElement('span');
-      more.className = 'material-symbols routine-editor-operation-more';
-      more.textContent = 'more_horiz';
-      more.title = 'Show parameters that use their default values';
-      more.addEventListener('click', e=>{
-        e.stopPropagation();
-        uiState.showDetails = dom.classList.toggle('show-details');
-      });
-      dom.append(more);
-    }
+    this.hasOptionalSegment = hasOptionalSegment;
+    if(this.isCollapsible())
+      this.renderCollapseToggle();
 
     for(const span of $a('span[data-parameter]', dom)) {
       span.addEventListener('click', async e=>{
@@ -628,18 +619,23 @@ class RoutineOperationEditor {
     return dom;
   }
 
-  renderFoldToggle() {
+  // operations with default-valued parameters or nested routines can be collapsed
+  isCollapsible() {
+    return this.hasOptionalSegment;
+  }
+
+  renderCollapseToggle() {
     const uiState = operationUIState(this.operation);
     const toggle = document.createElement('span');
-    toggle.className = 'material-symbols routine-editor-fold-toggle';
-    toggle.textContent = uiState.folded ? 'unfold_more' : 'unfold_less';
-    toggle.title = 'Fold or unfold the nested routines';
+    toggle.className = 'material-symbols routine-editor-collapse-toggle';
+    toggle.textContent = uiState.collapsed ? 'chevron_right' : 'expand_more';
+    toggle.title = 'Collapse or expand this operation';
     toggle.addEventListener('click', e=>{
       e.stopPropagation();
-      uiState.folded = this.domElement.classList.toggle('folded');
-      toggle.textContent = uiState.folded ? 'unfold_more' : 'unfold_less';
+      uiState.collapsed = this.domElement.classList.toggle('collapsed');
+      toggle.textContent = uiState.collapsed ? 'chevron_right' : 'expand_more';
     });
-    this.domElement.append(toggle);
+    this.domElement.prepend(toggle);
   }
 
   renderSubroutine(dom, property) {
@@ -684,9 +680,12 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
     return '{func} {operand1} {relation} {operand2}:';
   }
 
+  isCollapsible() {
+    return true;
+  }
+
   render() {
     super.render();
-    this.renderFoldToggle();
     this.renderSubroutine(this.domElement, 'thenRoutine');
     if(Array.isArray(this.operation.elseRoutine)) {
       const elseLabel = document.createElement('div');
@@ -716,9 +715,12 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
     return super.createPopup(parameterNames);
   }
 
+  isCollapsible() {
+    return true;
+  }
+
   render() {
     super.render();
-    this.renderFoldToggle();
     this.renderSubroutine(this.domElement, 'loopRoutine');
     return this.domElement;
   }
