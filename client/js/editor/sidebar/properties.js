@@ -3126,7 +3126,8 @@ class PropertiesModule extends SidebarModule {
         editButton.title = `Add an empty ${property} and edit it in the JSON editor.`;
         toggleButton.style.visibility = 'visible';
       }
-      if(toggleButton.style.visibility == 'hidden' && blocksExpanded)
+      // collapse the block view when the routine becomes inherited or is removed with the trash button
+      if(blocksExpanded && (toggleButton.style.visibility == 'hidden' || value === undefined || value === null))
         toggleButton.onclick(new Event('click'));
     });
 
@@ -3264,6 +3265,57 @@ class PropertiesModule extends SidebarModule {
       return [ ...found ];
     };
 
+    // variables defined anywhere in the routine (var statements and variable outputs) plus the predefined ones
+    const collectVariables = (list, found) => {
+      for(const step of Array.isArray(list) ? list : []) {
+        if(typeof step === 'string') {
+          const match = splitLineComment(step).code.match(/^var (\$)?([a-zA-Z0-9_-]+)/);
+          if(match && !match[1])
+            found.add(match[2]);
+          continue;
+        }
+        if(!isObjectLike(step))
+          continue;
+        if(typeof step.variable === 'string')
+          found.add(step.variable);
+        if(step.func == 'VAR' && isObjectLike(step.variables))
+          Object.keys(step.variables).forEach(name => found.add(name));
+        if(step.func == 'UPLOAD')
+          found.add(step.variable || 'uploadedFileName');
+        for(const param in step)
+          if(String(param).match(/Routine$/) && Array.isArray(step[param]))
+            collectVariables(step[param], found);
+      }
+      return found;
+    };
+
+    const knownVariables = () => {
+      const globals = [ 'activeColors', 'activePlayers', 'activeSeats', 'mouseCoords', 'playerColor', 'playerName', 'seatID', 'seatIndex', 'thisID' ];
+      return [ ...collectVariables(currentRoutine(), new Set()) ].sort().concat(globals);
+    };
+
+    let datalistCounter = 0;
+    const appendVariableInput = (inputHost, value, onWrite) => {
+      const input = textInputFor(typeof value === 'string' ? value : '', 'variableName or ${expression}', text => {
+        // a bare variable name is what users mean most of the time - wrap it for them
+        if(text.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/))
+          text = input.value = `\${${text}}`;
+        onWrite(text === '' ? undefined : text);
+      });
+      const listID = `automationVariables_${widget.id}_${property}_${++datalistCounter}`;
+      input.setAttribute('list', listID);
+      const datalist = document.createElement('datalist');
+      datalist.id = listID;
+      for(const name of knownVariables()) {
+        const option = document.createElement('option');
+        option.value = name;
+        datalist.appendChild(option);
+      }
+      inputHost.appendChild(input);
+      inputHost.appendChild(datalist);
+      return input;
+    };
+
     // number-looking text turns into a number so comparisons and counts behave as expected
     const parseLooseValue = text => text.match(/^-?[0-9]+(\.[0-9]+)?$/) ? +text : text;
 
@@ -3279,13 +3331,6 @@ class PropertiesModule extends SidebarModule {
           return { code: text.slice(0, i).replace(/\s+$/, ''), comment: text.slice(i+2) };
       }
       return { code: text, comment: null };
-    };
-
-    const parseWidgetIDs = text => {
-      const ids = text.split(',').map(id => id.trim()).filter(id => id.length);
-      if(!ids.length)
-        return undefined;
-      return ids.length == 1 ? ids[0] : ids;
     };
 
     const formatWidgetIDs = value => asArray(value === undefined || value === null ? [] : value).join(', ');
@@ -3354,6 +3399,8 @@ class PropertiesModule extends SidebarModule {
           variableMode = true;
         if(spec.type == 'enum' && spec.values.indexOf(value) == -1)
           variableMode = true;
+        if(spec.type == 'collection' && value.includes('${'))
+          variableMode = true;
       }
 
       const clearButton = clearButtonFor(listPath, index, param, isSet);
@@ -3364,17 +3411,60 @@ class PropertiesModule extends SidebarModule {
         row.classList.toggle('automationParamUnset', typeof v === 'undefined');
       };
 
+      // used for widget parameters and for anonymous collections (arrays of widget IDs)
+      const appendWidgetIDsInput = (currentValue, alwaysArray) => {
+        const input = textInputFor(formatWidgetIDs(currentValue), 'widget IDs', text => {
+          const ids = text.split(',').map(id => id.trim()).filter(id => id.length);
+          if(!ids.length)
+            write(undefined);
+          else
+            write(alwaysArray || ids.length > 1 ? ids : ids[0]);
+        });
+        inputHost.appendChild(input);
+
+        const pickButton = document.createElement('button');
+        pickButton.className = 'automationParamButton';
+        pickButton.setAttribute('icon', 'arrow_selector_tool');
+        const pickerKey = `${property}:${listPath.join('.')}.${index}:${param}`;
+        const updatePickButton = pendingWidgetIDs => {
+          const picker = this.getWidgetPicker(widget.id, pickerKey);
+          pickButton.classList.toggle('selected', !!picker);
+          pickButton.title = picker ? 'Click widgets on the board, then click here to confirm.' : 'Pick widgets on the board.';
+          if(picker && Array.isArray(pendingWidgetIDs))
+            input.value = pendingWidgetIDs.join(', '); // show picks immediately
+        };
+        pickButton.onclick = e => {
+          e.preventDefault();
+          if(this.getWidgetPicker(widget.id, pickerKey)) {
+            this.confirmWidgetPicker();
+            return;
+          }
+          this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
+            const ids = pickedWidgets.map(pickedWidget => pickedWidget.id);
+            if(!ids.length) { // confirming without a pick keeps the current value; the clear button removes it
+              input.value = formatWidgetIDs(currentValue);
+              return;
+            }
+            write(alwaysArray || ids.length > 1 ? ids : ids[0]);
+          }, {
+            pickerKey,
+            allowMultiple: true,
+            pendingWidgetIDs: asArray(currentValue === undefined || currentValue === null ? [] : currentValue),
+            filter: Array.isArray(spec.widgetTypes) ? pickedWidget => spec.widgetTypes.indexOf(pickedWidget.get('type')) != -1 : null,
+            onPendingChanged: updatePickButton
+          });
+          updatePickButton();
+        };
+        updatePickButton();
+        inputHost.appendChild(pickButton);
+        return input;
+      };
+
       const renderInput = () => {
         inputHost.innerHTML = '';
 
         if(variableMode) {
-          const input = textInputFor(typeof value === 'string' ? value : '', 'variableName or ${expression}', text => {
-            // a bare variable name is what users mean most of the time - wrap it for them
-            if(text.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/))
-              text = input.value = `\${${text}}`;
-            write(text === '' ? undefined : text);
-          });
-          inputHost.appendChild(input);
+          appendVariableInput(inputHost, value, v => write(v));
           return;
         }
 
@@ -3408,6 +3498,11 @@ class PropertiesModule extends SidebarModule {
           select.onchange = () => write(select.value === '' ? undefined : select.value);
           inputHost.appendChild(select);
         } else if(spec.type == 'collection') {
+          // an array value is an "anonymous collection": a list of widget IDs used directly
+          if(Array.isArray(value)) {
+            appendWidgetIDsInput(value, true);
+            return;
+          }
           const select = document.createElement('select');
           const options = knownCollections();
           if(isSet && options.indexOf(value) == -1)
@@ -3425,6 +3520,10 @@ class PropertiesModule extends SidebarModule {
           newOption.value = '##new##';
           newOption.textContent = 'new collection...';
           select.appendChild(newOption);
+          const widgetsOption = document.createElement('option');
+          widgetsOption.value = '##widgets##';
+          widgetsOption.textContent = 'widget IDs...';
+          select.appendChild(widgetsOption);
           if(isSet)
             select.value = String(value);
           select.onchange = () => {
@@ -3435,49 +3534,16 @@ class PropertiesModule extends SidebarModule {
               input.focus();
               return;
             }
+            if(select.value == '##widgets##') {
+              inputHost.innerHTML = '';
+              appendWidgetIDsInput([], true).focus();
+              return;
+            }
             write(select.value === '' ? undefined : select.value);
           };
           inputHost.appendChild(select);
         } else if(spec.type == 'widgets') {
-          const input = textInputFor(formatWidgetIDs(value), 'widget IDs', text => write(parseWidgetIDs(text)));
-          inputHost.appendChild(input);
-
-          const pickButton = document.createElement('button');
-          pickButton.className = 'automationParamButton';
-          pickButton.setAttribute('icon', 'arrow_selector_tool');
-          const pickerKey = `${property}:${listPath.join('.')}.${index}:${param}`;
-          const updatePickButton = () => {
-            const picker = this.getWidgetPicker(widget.id, pickerKey);
-            pickButton.classList.toggle('selected', !!picker);
-            pickButton.title = picker ? 'Click widgets on the board, then click here to confirm.' : 'Pick widgets on the board.';
-          };
-          pickButton.onclick = e => {
-            e.preventDefault();
-            if(this.getWidgetPicker(widget.id, pickerKey)) {
-              this.confirmWidgetPicker();
-              return;
-            }
-            this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
-              const ids = pickedWidgets.map(pickedWidget => pickedWidget.id);
-              if(!ids.length) // confirming without a pick keeps the current value; the clear button removes it
-                return;
-              const routine = currentRoutine();
-              const list = routineListAtPath(routine, listPath);
-              if(!isObjectLike(list[index]))
-                return;
-              list[index][param] = ids.length == 1 ? ids[0] : ids;
-              this.inputValueUpdated(targetWidget, property, routine);
-            }, {
-              pickerKey,
-              allowMultiple: true,
-              pendingWidgetIDs: asArray(value === undefined || value === null ? [] : value),
-              filter: Array.isArray(spec.widgetTypes) ? pickedWidget => spec.widgetTypes.indexOf(pickedWidget.get('type')) != -1 : null,
-              onPendingChanged: updatePickButton
-            });
-            updatePickButton();
-          };
-          updatePickButton();
-          inputHost.appendChild(pickButton);
+          appendWidgetIDsInput(value, false);
         } else if(spec.type == 'json') {
           const textarea = document.createElement('textarea');
           textarea.value = isSet ? JSON.stringify(value, null, 2) : '';
@@ -3501,11 +3567,10 @@ class PropertiesModule extends SidebarModule {
       };
       renderInput();
 
-      if(spec.type != 'text' && spec.type != 'collection')
-        row.appendChild(variableButtonFor(() => {
-          variableMode = !variableMode;
-          renderInput();
-        }, variableMode));
+      row.appendChild(variableButtonFor(() => {
+        variableMode = !variableMode;
+        renderInput();
+      }, variableMode));
       row.appendChild(clearButton);
     };
 
