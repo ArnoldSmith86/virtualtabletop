@@ -1,0 +1,153 @@
+.routine-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 8px;
+}
+
+.routine-editor .routine-editor {
+  margin: 4px 0 4px 12px;
+  padding-left: 8px;
+  border-left: 2px solid var(--backgroundHighlightColor1);
+}
+
+.routine-editor-operation {
+  background: var(--backgroundHighlightColor1);
+  border-left: 3px solid var(--VTTblue);
+  border-radius: 0 4px 4px 0;
+  padding: 5px 8px;
+  line-height: 1.8;
+  font-size: 13px;
+}
+
+.routine-editor-operation-parameter {
+  display: inline-block;
+  background: var(--backgroundColor);
+  color: var(--VTTblue);
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0 5px;
+  line-height: 1.4;
+  cursor: pointer;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+body.edit.darkMode .routine-editor-operation-parameter {
+  color: var(--textHighlightColor7);
+}
+
+.routine-editor-operation-parameter:hover {
+  outline: 1px solid var(--VTTblue);
+}
+
+/* color coding by what kind of value the parameter holds */
+.routine-editor-parameter-variable {
+  color: var(--textHighlightColor2);
+}
+
+.routine-editor-parameter-collection {
+  color: var(--textHighlightColor4);
+}
+
+.routine-editor-parameter-widget {
+  color: var(--textHighlightColor5);
+}
+
+.routine-editor-parameter-number {
+  color: var(--textHighlightColor7);
+}
+
+/* parameters that just use their defaults are hidden until requested */
+.routine-editor-operation:not(.show-details) .routine-editor-operation-optional {
+  display: none;
+}
+
+.routine-editor-operation-more {
+  cursor: pointer;
+  color: gray;
+  font-size: 16px;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.routine-editor-operation.show-details .routine-editor-operation-more,
+.routine-editor-operation-more:hover {
+  color: var(--VTTblue);
+}
+
+.routine-editor-fold-toggle {
+  cursor: pointer;
+  color: gray;
+  font-size: 16px;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.routine-editor-fold-toggle:hover {
+  color: var(--VTTblue);
+}
+
+.routine-editor-operation.folded .routine-editor,
+.routine-editor-operation.folded .routine-editor-else {
+  display: none;
+}
+
+.routine-editor-else {
+  font-weight: bold;
+  font-size: 12px;
+  margin: 2px 0 0 12px;
+}
+
+.routine-editor-operation.folded .routine-editor-add-else {
+  display: none;
+}
+
+.inline-popup label {
+  display: block;
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.inline-popup label input {
+  width: 80px;
+  margin-left: 6px;
+}
+
+.routine-editor-parameter-missing {
+  outline: 1px dashed var(--textHighlightColor3);
+  color: var(--textHighlightColor3);
+}
+
+.routine-editor-operation-buttons {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  display: flex;
+  gap: 3px;
+}
+
+.routine-editor-operation-buttons .material-symbols {
+  font-size: 15px;
+  color: gray;
+  cursor: pointer;
+}
+
+.routine-editor-operation-buttons .material-symbols:hover {
+  color: var(--VTTblue);
+}
+
+.routine-editor-operation {
+  padding-right: 60px;
+}
+
+.routine-editor-empty,
+.events-editor-empty {
+  color: gray;
+  font-size: 12px;
+  font-style: italic;
+  margin: 2px 0;
+}

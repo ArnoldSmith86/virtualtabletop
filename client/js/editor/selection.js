@@ -9,6 +9,9 @@ let selectionRectangleEnd = null;
 let draggingDragButton = null;
 let widgetRectangles = null;
 
+let customSelection = null;
+let customSelectionCallback = null;
+
 export function editInputHandler(name, e) {
   if(e.touches && e.touches.length == 2)
     hideSelectionRectangle();
@@ -134,16 +137,22 @@ function applySelectionRectangle(addToSelection) {
   }
 
   if(!addToSelection) {
-    setSelection(newlySelected);
+    if(customSelection)
+      setCustomSelection(newlySelected);
+    else
+      setSelection(newlySelected);
   } else {
-    let selectionToApply = [...selectedWidgets];
+    let selectionToApply = customSelection ? [...customSelection] : [...selectedWidgets];
     for(const widget of newlySelected) {
-      if(selectedWidgets.indexOf(widget) == -1)
+      if(customSelection ? customSelection.indexOf(widget) == -1 : selectedWidgets.indexOf(widget) == -1)
         selectionToApply.push(widget);
       else
         selectionToApply = selectionToApply.filter(w=>w!=widget);
     }
-    setSelection(selectionToApply);
+    if(customSelection)
+      setCustomSelection(selectionToApply);
+    else
+      setSelection(selectionToApply);
   }
 }
 
@@ -165,6 +174,33 @@ function setSelection(newSelectedWidgets) {
     module.onSelectionChanged(selectedWidgets, previousSelectedWidgets);
 
   updateDragToolbar();
+}
+
+function startCustomSelection(selectedWidgets, callback) {
+  customSelection = selectedWidgets;
+  for(const widget of selectedWidgets) {
+    widget.setHighlighted(null, true);
+  }
+  customSelectionCallback = callback;
+}
+
+function setCustomSelection(selectedWidgets) {
+  const previousCustomSelection = [...customSelection];
+  customSelection = selectedWidgets;
+  for(const widget of previousCustomSelection)
+    widget.setHighlighted(null, false);
+  for(const widget of customSelection)
+    widget.setHighlighted(null, true);
+  if(customSelectionCallback)
+    customSelectionCallback(customSelection);
+}
+
+function endCustomSelection() {
+  if(customSelection)
+    for(const widget of customSelection)
+      widget.setHighlighted(null, false);
+  customSelection = null;
+  customSelectionCallback = null;
 }
 
 export async function editClick(widget) {
