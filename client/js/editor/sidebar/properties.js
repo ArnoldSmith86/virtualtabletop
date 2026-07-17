@@ -158,9 +158,33 @@ function cssStringToObject(str) {
   return out;
 }
 
+// text form of a css value (string, flat object or one class of the nested
+// form) as shown in the CSS editor's declaration inputs
+function cssTextFromValue(value) {
+  if(value === null || value === undefined)
+    return '';
+  if(typeof value === 'string')
+    return value;
+  if(isObjectLike(value))
+    return Object.entries(value).map(([ k, v ]) => `${k}: ${v};`).join('\n');
+  return String(value);
+}
+
+// Values that contain ":" or ";" themselves (like data URIs) do not survive
+// the simple declaration parsing, so refuse to edit such strings.
+function cssStringRoundTrips(str) {
+  const rebuilt = Object.entries(cssStringToObject(str)).map(([ k, v ])=>`${k}:${v}`).join(';');
+  const normalized = str.replace(/\s/g, '').replace(/;+/g, ';').replace(/^;|;$/g, '');
+  return normalized == rebuilt.replace(/\s/g, '');
+}
+
 function mergePropertyFromCSS(css, prop, value, cssClass='default') {
   const isDelete = value === null || typeof value === 'undefined' || value === '';
   let source = css;
+
+  // do not touch css strings we cannot parse without losing data
+  if (typeof source === 'string' && source.trim() && !cssStringRoundTrips(source))
+    return css;
 
   // Editor writes css as an object; convert strings before merging.
   if (typeof source === 'string')
@@ -199,11 +223,232 @@ function parseFontSize(fontSize) {
 
 /* end helper functions */
 
+const editorTypeNames = {
+  basic: 'Widget',
+  button: 'Button',
+  canvas: 'Canvas',
+  card: 'Card',
+  deck: 'Deck',
+  dice: 'Dice',
+  holder: 'Holder',
+  label: 'Label',
+  pile: 'Pile',
+  scoreboard: 'Scoreboard',
+  seat: 'Seat',
+  spinner: 'Spinner',
+  timer: 'Timer'
+};
+
+// Explanations shown by the info buttons next to the curated inputs. The text
+// usually comes from the wiki summary of the property.
+const editorPropertyHints = {
+  color: 'Main color of the widget.',
+  borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
+  icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
+  image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
+  text: 'Text shown on the widget.',
+  css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
+  parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
+  resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
+  lineWidth: 'The brush width used for new canvas strokes.',
+  activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
+  rollTime: 'How long the rolling animation lasts, in milliseconds.',
+  swapTime: 'How long the face-swap animation lasts, in milliseconds.',
+  pipColor: 'The color used for the pips or the face symbol of the dice.',
+  dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
+  alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
+  preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
+  childrenPerOwner: 'Keep a separate set of held widgets for each player.',
+  dropOffsetX: 'Horizontal starting position for widgets aligned inside the holder.',
+  dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
+  stackOffsetX: 'Horizontal distance added between consecutively stacked widgets.',
+  stackOffsetY: 'Vertical distance added between consecutively stacked widgets.',
+  showPlayerColors: 'Use each player\'s color in their scoreboard heading.',
+  verticalHeader: 'Rotate the scoreboard header text vertically.',
+  autosizeColumns: 'Size score columns from their contents instead of using fixed widths.',
+  scoreProperty: 'The seat property recorded as the score for each round.',
+  playersInColumns: 'Put players in columns instead of rows.',
+  showTotals: 'Add a total across all recorded rounds.',
+  showAllRounds: 'Keep completed rounds visible rather than showing only the current round.',
+  showAllSeats: 'Include seats that currently have no player.',
+  currentRound: 'The zero-based round currently being entered.',
+  sortField: 'The scoreboard field used to order players.',
+  sortAscending: 'Sort the chosen field from low to high instead of high to low.',
+  firstColWidth: 'Fixed width of the first scoreboard column when autosizing is off.',
+  player: 'The player currently seated here. Setting it also stores their color.',
+  index: 'Seat order used by turn and scoreboard logic.',
+  display: 'The seat property whose value is displayed as the seat text.',
+  hand: 'ID of the holder used as this seat\'s private hand.',
+  turn: 'Marks this seat as currently taking its turn.',
+  skipTurn: 'Skip this seat when routines advance turns.',
+  hideTurn: 'Do not render the turn indicator on this seat.',
+  hideWhenUnused: 'Hide the seat while no player occupies it.',
+  countdown: 'Count toward zero instead of counting upward.',
+  paused: 'Stop changing the displayed timer value.',
+  alert: 'Play the timer alert when the end value is reached.',
+  precision: 'How often the displayed timer value refreshes.',
+  start: 'Timer start value in milliseconds.',
+  end: 'Optional timer end value in milliseconds.',
+  milliseconds: 'The timer\'s current value in milliseconds.'
+};
+
+// Curated per-type inputs, rendered by renderInputs. Per type:
+// content = what the widget shows, colors/hover/appearance = subsections of
+// the Appearance section, behavior = type specific behavior,
+// cssProperties = css-like properties edited by the CSS editor in Appearance.
+const editorTypeSections = {
+  basic: {
+    content: [
+      { label: 'Image',         property: 'image',        kind: 'image' },
+      { label: 'Icon',          property: 'icon',         kind: 'icon' },
+      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true }
+    ],
+    colors: [
+      { label: 'Color',         property: 'color',        kind: 'color' }
+    ],
+    appearance: [
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 200, slider: true, nullIfEmpty: true }
+    ]
+  },
+  button: {
+    content: [
+      { label: 'Text',             property: 'text',              kind: 'text', nullIfEmpty: true },
+      { label: 'Icon',             property: 'icon',              kind: 'icon' },
+      { label: 'Image',            property: 'image',             kind: 'image' }
+    ],
+    colors: [
+      { label: 'Text',             property: 'textColor',         kind: 'color' },
+      { label: 'Background',       property: 'backgroundColor',   kind: 'color' },
+      { label: 'Border',           property: 'borderColor',       kind: 'color' },
+      { label: 'SVG',              property: 'color',             kind: 'color' }
+    ],
+    hover: [
+      { label: 'Text',             property: 'textColorOH',       kind: 'color' },
+      { label: 'Background',       property: 'backgroundColorOH', kind: 'color' },
+      { label: 'Border',           property: 'borderColorOH',     kind: 'color' }
+    ],
+    appearance: [
+      { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, slider: true, nullIfEmpty: true }
+    ]
+  },
+  canvas: {
+    behavior: [
+      { label: 'Resolution',   property: 'resolution',  kind: 'number', min: 10, max: 1000 },
+      { label: 'Line width',   property: 'lineWidth',   kind: 'number', min: 1, max: 10, slider: true },
+      { label: 'Active color', property: 'activeColor', kind: 'number', min: 0, max: 9, slider: true }
+    ]
+  },
+  card: {},
+  deck: {},
+  dice: {
+    colors: [
+      { label: 'Color',         property: 'color',        kind: 'color' },
+      { label: 'Pips',          property: 'pipColor',     kind: 'color' }
+    ],
+    appearance: [
+      { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 16%', nullIfEmpty: true }
+    ],
+    behavior: [
+      { label: 'Roll time (ms)', property: 'rollTime', kind: 'number', min: 0, max: 5000 },
+      { label: 'Swap time (ms)', property: 'swapTime', kind: 'number', min: 0, max: 5000 }
+    ],
+    cssProperties: [ 'css', 'faceCSS' ]
+  },
+  holder: {
+    colors: [
+      { label: 'Color',         property: 'color',        kind: 'color' },
+      { label: 'Text',          property: 'textColor',    kind: 'color' }
+    ],
+    appearance: [
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
+      { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
+    ],
+    behavior: [
+      { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox' },
+      { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox' },
+      { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' },
+      { label: 'Drop offset X',         property: 'dropOffsetX',      kind: 'number' },
+      { label: 'Drop offset Y',         property: 'dropOffsetY',      kind: 'number' },
+      { label: 'Stack offset X',        property: 'stackOffsetX',     kind: 'number' },
+      { label: 'Stack offset Y',        property: 'stackOffsetY',     kind: 'number' }
+    ]
+  },
+  label: {},
+  scoreboard: {
+    appearance: [
+      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
+      { label: 'Player colors',      property: 'showPlayerColors', kind: 'checkbox' },
+      { label: 'Vertical header',    property: 'verticalHeader',   kind: 'checkbox' },
+      { label: 'Autosize columns',   property: 'autosizeColumns',  kind: 'checkbox' }
+    ],
+    behavior: [
+      { label: 'Score property',     property: 'scoreProperty',    kind: 'text' },
+      { label: 'Players in columns', property: 'playersInColumns', kind: 'checkbox' },
+      { label: 'Show totals',        property: 'showTotals',       kind: 'checkbox' },
+      { label: 'Show all rounds',    property: 'showAllRounds',    kind: 'checkbox' },
+      { label: 'Show all seats',     property: 'showAllSeats',     kind: 'checkbox' },
+      { label: 'Round label',        property: 'roundLabel',       kind: 'text' },
+      { label: 'Totals label',       property: 'totalsLabel',      kind: 'text' },
+      { label: 'Current round',      property: 'currentRound',     kind: 'number', nullIfEmpty: true },
+      { label: 'Sort field',         property: 'sortField',        kind: 'text' },
+      { label: 'Sort ascending',     property: 'sortAscending',    kind: 'checkbox' },
+      { label: 'First column width', property: 'firstColWidth',    kind: 'number', min: 10, max: 500 },
+      { label: 'Edit pane title',    property: 'editPaneTitle',    kind: 'text' }
+    ]
+  },
+  seat: {
+    colors: [
+      { label: 'Color',         property: 'color',        kind: 'color' },
+      { label: 'Empty',         property: 'colorEmpty',   kind: 'color' }
+    ],
+    appearance: [
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
+    ],
+    behavior: [
+      { label: 'Seat index',        property: 'index',          kind: 'number', min: 1, max: 16 },
+      { label: 'Display property',  property: 'display',        kind: 'text' },
+      { label: 'Text when empty',   property: 'displayEmpty',   kind: 'text' },
+      { label: 'Has the turn',      property: 'turn',           kind: 'checkbox' },
+      { label: 'Skip turn',         property: 'skipTurn',       kind: 'checkbox' },
+      { label: 'Hide turn marker',  property: 'hideTurn',       kind: 'checkbox' },
+      { label: 'Hide when unused',  property: 'hideWhenUnused', kind: 'checkbox' }
+    ]
+  },
+  spinner: {
+    colors: [
+      { label: 'Text',          property: 'textColor',    kind: 'color' },
+      { label: 'Line',          property: 'lineColor',    kind: 'color' }
+    ],
+    appearance: [
+      { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 50%', nullIfEmpty: true }
+    ],
+    behavior: [
+      { label: 'Current value', property: 'value', kind: 'text' }
+    ],
+    cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
+  },
+  timer: {
+    colors: [
+      { label: 'Background', cssKey: 'background', kind: 'color' },
+      { label: 'Text',       cssKey: 'color',      kind: 'color' }
+    ],
+    behavior: [
+      { label: 'Countdown',         property: 'countdown',    kind: 'checkbox' },
+      { label: 'Paused',            property: 'paused',       kind: 'checkbox' },
+      { label: 'Alert when done',   property: 'alert',        kind: 'checkbox' },
+      { label: 'Precision',         property: 'precision',    kind: 'select', choices: [ { value: 1000, text: '1 second' }, { value: 100, text: '0.1 seconds' }, { value: 10, text: '0.01 seconds' }, { value: 1, text: '1 millisecond' } ] },
+      { label: 'Start (ms)',        property: 'start',        kind: 'number' },
+      { label: 'End (ms)',          property: 'end',          kind: 'number', nullIfEmpty: true },
+      { label: 'Current time (ms)', property: 'milliseconds', kind: 'number' }
+    ]
+  }
+};
 
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Properties', 'Edit widget properties.');
     this.widgetPicker = null;
+    this.collapsibleStates = {};
   }
 
   startWidgetPicker(targetWidgetID, onPick, options = {}) {
@@ -223,10 +468,13 @@ class PropertiesModule extends SidebarModule {
 
     if(this.widgetPicker.onPendingChanged)
       this.widgetPicker.onPendingChanged([ ...this.widgetPicker.pendingWidgetIDs ]);
+
+    $('body').classList.add('editorWidgetPicking');
   }
 
   stopWidgetPicker() {
     this.widgetPicker = null;
+    $('body').classList.remove('editorWidgetPicking');
   }
 
   getWidgetPicker(targetWidgetID = null, pickerKey = null) {
@@ -484,18 +732,21 @@ class PropertiesModule extends SidebarModule {
       this.inputUpdaters[widget.id] = {};
 
       switch(widget.get('type')) {
-        case 'card':   this.renderForCard(widget);   break;
-        case 'deck':   this.renderForDeck(widget);   break;
-        case 'dice': this.renderForDice(widget); break;
-        case 'holder': this.renderForHolder(widget); break;
-        case 'label':  this.renderForLabel(widget);  break;
-        case 'spinner': this.renderForSpinner(widget); break;
+        case 'button':     this.renderForButton(widget);     break;
+        case 'canvas':     this.renderForCanvas(widget);     break;
+        case 'card':       this.renderForCard(widget);       break;
+        case 'deck':       this.renderForDeck(widget);       break;
+        case 'dice':       this.renderForDice(widget);       break;
+        case 'holder':     this.renderForHolder(widget);     break;
+        case 'label':      this.renderForLabel(widget);      break;
+        case 'pile':       this.renderForPile(widget);       break;
+        case 'scoreboard': this.renderForScoreboard(widget); break;
+        case 'seat':       this.renderForSeat(widget);       break;
+        case 'spinner':    this.renderForSpinner(widget);    break;
+        case 'timer':      this.renderForTimer(widget);      break;
 
         default:
-          this.addHeader(widget.id);
-          this.renderBasicSection(widget);
-          this.addSubHeader('Other properties');
-          this.renderGenericProperties(widget, this.basicPropertyExcludeList());
+          this.renderForBasic(widget);
           break;
       }
     }
@@ -1528,7 +1779,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'layer', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
   }
 
   isOnDemandPropertyValueSet(value) {
@@ -1833,13 +2084,17 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    const sectionTitle = document.createElement('div');
-    sectionTitle.textContent = title + ':';
-    sectionTitle.style.fontWeight = 'bold';
-    sectionTitle.style.marginTop = '8px';
-    this.moduleDOM.appendChild(sectionTitle);
+    const target = options.target || this.moduleDOM;
 
-    const row = div(this.moduleDOM);
+    if(title) {
+      const sectionTitle = document.createElement('div');
+      sectionTitle.textContent = title + ':';
+      sectionTitle.style.fontWeight = 'bold';
+      sectionTitle.style.marginTop = '8px';
+      target.appendChild(sectionTitle);
+    }
+
+    const row = div(target);
     row.style.display = 'flex';
     row.style.alignItems = 'center';
     row.style.gap = '8px';
@@ -1855,8 +2110,8 @@ class PropertiesModule extends SidebarModule {
     this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptionsWithRatio);
   }
 
-  renderSizeRatioLock(widget) {
-    const wrap = div(this.moduleDOM);
+  renderSizeRatioLock(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'flex';
     wrap.style.alignItems = 'center';
     wrap.style.gap = '6px';
@@ -1884,8 +2139,8 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'lockSizeRatio', updateInput);
   }
 
-  renderPositionLocks(widget) {
-    const row = div(this.moduleDOM);
+  renderPositionLocks(widget, target = null) {
+    const row = div(target || this.moduleDOM);
     row.style.display = 'flex';
     row.style.alignItems = 'center';
     row.style.gap = '8px';
@@ -1951,8 +2206,8 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'movableInEdit', updateLockInputs);
   }
 
-  renderLayerSelect(widget) {
-    const wrap = div(this.moduleDOM);
+  renderLayerSelect(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'flex';
     wrap.style.alignItems = 'center';
     wrap.style.gap = '6px';
@@ -2019,8 +2274,8 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(lockParentInfo);
   }
 
-  renderRotationInput(widget) {
-    const wrap = div(this.moduleDOM);
+  renderRotationInput(widget, target = null) {
+    const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'flex';
     wrap.style.alignItems = 'center';
     wrap.style.gap = '6px';
@@ -2051,6 +2306,168 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
+  // Inline popout (styled like the icon/image pickers) to select widgets by
+  // searching their ID, filtered by type, or by clicking them in the room.
+  // options:
+  //   pickerKey      - key for the in-room widget picker
+  //   typeFilter     - presets the type filter (e.g. 'seat' for seat inputs)
+  //   multiple       - toggle entries in a list of IDs instead of picking one
+  //   getSelectedIDs - returns the currently selected widget IDs
+  //   apply          - called with the picked ID (single) or array of IDs (multiple)
+  //   onClear        - when given, adds a button that removes the value
+  //   clearLabel     - label of that button
+  //   excludeIDs     - returns additional widget IDs to hide from the list
+  renderWidgetSelectPopout(wrap, widget, options = {}) {
+    const expandButton = document.createElement('button');
+    expandButton.className = 'propertyExpandButton';
+    expandButton.setAttribute('icon', 'expand_more');
+    expandButton.title = 'Select a widget';
+    wrap.appendChild(expandButton);
+
+    const popout = div(wrap, 'propertyPicker widgetSelectPopout');
+    popout.style.display = 'none';
+
+    const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
+    const excludedIDs = _=>[ widget.id ].concat(options.excludeIDs ? options.excludeIDs() : []);
+
+    let typeFilter = options.typeFilter || '';
+    let searchTerm = '';
+
+    const renderPopout = _=>{
+      popout.innerHTML = '';
+
+      const buttonBar = div(popout, 'propertyPickerSection');
+      const pickButton = document.createElement('button');
+      pickButton.setAttribute('icon', 'colorize');
+      pickButton.title = 'Click this button and then the widget on the table';
+      buttonBar.appendChild(pickButton);
+
+      const updatePickButton = _=>{
+        const isSelecting = this.isWidgetPickerActive(widget.id, options.pickerKey);
+        pickButton.textContent = isSelecting ? 'click a widget...' : 'Pick in the room';
+        pickButton.classList.toggle('selected', isSelecting);
+      };
+      updatePickButton();
+
+      pickButton.onclick = _=>{
+        if(this.isWidgetPickerActive(widget.id, options.pickerKey)) {
+          this.stopWidgetPicker();
+        } else {
+          this.startWidgetPicker(widget.id, (targetWidget, pickedWidget)=>{
+            if(options.multiple)
+              options.apply([...new Set(selectedIDs().concat(pickedWidget.id))]);
+            else
+              options.apply(pickedWidget.id);
+          }, {
+            pickerKey: options.pickerKey,
+            filter: pickedWidget=>excludedIDs().indexOf(pickedWidget.id) == -1 && (!typeFilter || (pickedWidget.get('type') || 'basic') == typeFilter)
+          });
+        }
+        updatePickButton();
+      };
+
+      if(options.onClear) {
+        const clearButton = document.createElement('button');
+        clearButton.setAttribute('icon', 'link_off');
+        clearButton.textContent = options.clearLabel || 'Clear';
+        clearButton.onclick = _=>options.onClear();
+        buttonBar.appendChild(clearButton);
+      }
+
+      const searchSection = div(popout, 'propertyPickerSection');
+      div(searchSection, 'propertyPickerSectionTitle', 'Search widgets');
+
+      const typeSelect = document.createElement('select');
+      typeSelect.innerHTML = '<option value="">any type</option>' + Object.keys(editorTypeNames).map(type=>`<option value="${type}">${editorTypeNames[type]}</option>`).join('');
+      typeSelect.value = typeFilter;
+      searchSection.appendChild(typeSelect);
+
+      const search = document.createElement('input');
+      search.placeholder = 'Search by ID...';
+      search.value = searchTerm;
+      searchSection.appendChild(search);
+
+      const list = div(searchSection, 'widgetPickerList');
+
+      const showEntries = _=>{
+        list.innerHTML = '';
+        const term = searchTerm.trim().toLowerCase();
+        const current = selectedIDs();
+        const matches = [...widgets.values()]
+          .filter(w=>excludedIDs().indexOf(w.id) == -1)
+          .filter(w=>!typeFilter || (w.get('type') || 'basic') == typeFilter)
+          .filter(w=>!term || w.id.toLowerCase().includes(term))
+          .sort((a, b)=>a.id.localeCompare(b.id));
+        for(const match of matches.slice(0, 50)) {
+          const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span><span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
+          entry.classList.toggle('selected', current.indexOf(match.id) != -1);
+          entry.onclick = _=>{
+            if(options.multiple) {
+              const now = selectedIDs();
+              options.apply(now.indexOf(match.id) == -1 ? now.concat(match.id) : now.filter(id=>id != match.id));
+              entry.classList.toggle('selected');
+            } else {
+              options.apply(match.id);
+              toggle(false);
+            }
+          };
+        }
+        if(!matches.length)
+          div(list, 'propertyPickerEmpty', 'No matching widgets.');
+        else if(matches.length > 50)
+          div(list, 'propertyPickerEmpty', `${matches.length - 50} more - refine the search.`);
+      };
+
+      typeSelect.onchange = _=>{ typeFilter = typeSelect.value; showEntries(); };
+      search.oninput = _=>{ searchTerm = search.value; showEntries(); };
+      showEntries();
+    };
+
+    const toggle = open=>{
+      popout.style.display = open ? '' : 'none';
+      expandButton.classList.toggle('open', open);
+      if(open)
+        renderPopout();
+      else if(this.isWidgetPickerActive(widget.id, options.pickerKey))
+        this.stopWidgetPicker();
+    };
+    expandButton.onclick = _=>toggle(popout.style.display == 'none');
+
+    return {
+      expandButton,
+      popout,
+      refresh: _=>{
+        if(popout.style.display != 'none' && !popout.contains(document.activeElement))
+          renderPopout();
+      }
+    };
+  }
+
+  // Sets the parent while preserving the widget's position on the table.
+  // Returns an error message or null on success.
+  async setWidgetParent(widget, parentID) {
+    const newParent = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
+    if(parentID && !newParent)
+      return `There is no widget with ID "${parentID}".`;
+    if(newParent == widget)
+      return 'A widget cannot be its own parent.';
+    if(newParent && newParent.isDescendantOf(widget))
+      return `Widget ${newParent.id} is inside ${widget.id}, so using it as the parent would create a loop.`;
+
+    const global = widget.coordGlobalFromCoordParent({ x: widget.get('x'), y: widget.get('y') });
+    const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
+
+    batchStart();
+    try {
+      setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${widget.id} in editor`);
+      await widget.set('parent', newParent ? newParent.id : null);
+      await widget.setPosition(Math.round(local.x * 1024) / 1024, Math.round(local.y * 1024) / 1024, widget.get('z'));
+    } finally {
+      batchEnd();
+    }
+    return null;
+  }
+
   renderParentWidgetInput(widget, target = null) {
     const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'flex';
@@ -2068,60 +2485,61 @@ class PropertiesModule extends SidebarModule {
     input.value = widget.get('parent') || '';
     wrap.appendChild(input);
 
-    const pickButton = document.createElement('button');
-    wrap.appendChild(pickButton);
+    const error = document.createElement('div');
+    error.className = 'propertyInputError';
+    error.style.display = 'none';
+    error.style.flexBasis = '100%';
+    error.style.color = 'red';
+    error.style.fontSize = '12px';
+
+    const showError = message => {
+      error.textContent = message || '';
+      error.style.display = message ? '' : 'none';
+      input.classList.toggle('inputError', !!message);
+    };
+
+    const apply = async parentID => showError(await this.setWidgetParent(widget, parentID || null));
 
     const lockParentButton = document.createElement('button');
-    wrap.appendChild(lockParentButton);
 
-    const lockParentInfo = this.renderInfoIcon('When locked the parent of this widget will not change when it is being dragged by a player (or editor). Automation can still change it though.');
-    wrap.appendChild(lockParentInfo);
-
-    const updateParentButtons = () => {
-      const isSelectingParent = this.isWidgetPickerActive(widget.id, 'parent');
-      pickButton.textContent = isSelectingParent ? 'click a widget...' : 'click to select';
-      pickButton.classList.toggle('selected', isSelectingParent);
-
+    const updateLockParentButton = () => {
       const isParentLocked = !!widget.get('fixedParent');
       lockParentButton.textContent = isParentLocked ? 'Unlock parent' : 'Lock parent';
       lockParentButton.classList.toggle('selected', isParentLocked);
     };
 
-    input.onchange = () => {
-      const value = input.value.trim();
-      this.inputValueUpdated(widget, 'parent', value ? value : null);
-    };
+    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      pickerKey: 'parent',
+      getSelectedIDs: () => widget.get('parent') ? [ widget.get('parent') ] : [],
+      apply: parentID => apply(parentID),
+      onClear: () => apply(null),
+      clearLabel: 'No parent',
+      // cards belong to their deck and piles are transient
+      excludeIDs: () => widgetFilter(w => [ 'card', 'pile' ].indexOf(w.get('type')) != -1).map(w => w.id)
+    });
 
-    pickButton.onclick = () => {
-      if(this.isWidgetPickerActive(widget.id, 'parent')) {
-        this.stopWidgetPicker();
-      } else {
-        this.startWidgetPicker(widget.id, (targetWidget, pickedWidget) => {
-          batchStart();
-          setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${targetWidget.id} in editor`);
-          targetWidget.set('parent', pickedWidget.id);
-          batchEnd();
-        }, {
-          pickerKey: 'parent'
-        });
-      }
-      updateParentButtons();
-    };
+    wrap.appendChild(lockParentButton);
+
+    const lockParentInfo = this.renderInfoIcon('When locked the parent of this widget will not change when it is being dragged by a player (or editor). Automation can still change it though.');
+    wrap.appendChild(lockParentInfo);
+    wrap.appendChild(error);
+    wrap.appendChild(popoutControls.popout); // the popout expands below everything else in the row
+
+    input.onchange = () => apply(input.value.trim());
 
     lockParentButton.onclick = () => {
-      const shouldLockParent = !widget.get('fixedParent');
-      this.inputValueUpdated(widget, 'fixedParent', shouldLockParent);
-      updateParentButtons();
+      this.inputValueUpdated(widget, 'fixedParent', !widget.get('fixedParent'));
+      updateLockParentButton();
     };
 
     this.addPropertyListener(widget, 'parent', w => {
       if(document.activeElement !== input)
         input.value = w.get('parent') || '';
-      updateParentButtons();
+      popoutControls.refresh();
     });
 
-    this.addPropertyListener(widget, 'fixedParent', () => updateParentButtons());
-    updateParentButtons();
+    this.addPropertyListener(widget, 'fixedParent', () => updateLockParentButton());
+    updateLockParentButton();
   }
 
   renderSeatReferenceInput(widget, property, title, target = null, options = {}) {
@@ -2143,65 +2561,25 @@ class PropertiesModule extends SidebarModule {
     input.value = this.formatSeatReference(widget.get(property));
     wrap.appendChild(input);
 
-    let pickButton = null;
+    let popoutControls = null;
     const pickerKey = options.pickerKey || property;
 
     if(options.enablePicker) {
-      pickButton = document.createElement('button');
-      pickButton.style.marginTop = '2px';
-      pickButton.style.marginBottom = '1px';
-      wrap.appendChild(pickButton);
-
-      const updatePickButton = () => {
-        const picker = this.getWidgetPicker(widget.id, pickerKey);
-        const isSelecting = !!picker;
-        pickButton.classList.toggle('selected', isSelecting);
-        if(!isSelecting)
-          pickButton.textContent = 'click to select';
-        else
-          pickButton.textContent = picker.allowMultiple ? 'click to confirm' : 'click a widget...';
-      };
-
-      pickButton.onclick = () => {
-        const picker = this.getWidgetPicker(widget.id, pickerKey);
-
-        if(picker) {
-          if(picker.allowMultiple)
-            this.confirmWidgetPicker();
-          else
-            this.stopWidgetPicker();
-          updatePickButton();
-          return;
-        }
-
-        const currentValue = this.normalizeSeatReference(widget.get(property));
-        const allowMultiple = Array.isArray(currentValue);
-        const pendingWidgetIDs = Array.isArray(currentValue) ? currentValue : [];
-
-        this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
-          if(Array.isArray(pickedWidgets)) {
-            const pickedWidgetIDs = pickedWidgets.map(pickedWidget => pickedWidget.id);
-            this.inputValueUpdated(targetWidget, property, this.seatReferenceFromArray(pickedWidgetIDs));
-          } else if(pickedWidgets) {
-            this.inputValueUpdated(targetWidget, property, pickedWidgets.id);
-          }
-        }, {
-          pickerKey,
-          allowMultiple,
-          pendingWidgetIDs,
-          filter: pickedWidget => pickedWidget.get('type') == 'seat',
-          onPendingChanged: () => updatePickButton()
-        });
-
-        updatePickButton();
-      };
-
-      this.addPropertyListener(widget, property, () => updatePickButton());
-      updatePickButton();
+      // widget selection popout with the type filter preset to seats
+      popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+        pickerKey,
+        typeFilter: 'seat',
+        multiple: true,
+        getSelectedIDs: () => this.seatReferenceToArray(widget.get(property)),
+        apply: seatIDs => this.inputValueUpdated(widget, property, this.seatReferenceFromArray(seatIDs)),
+        onClear: () => this.inputValueUpdated(widget, property, null)
+      });
     }
 
     if(infoIcon)
       wrap.appendChild(infoIcon);
+    if(popoutControls)
+      wrap.appendChild(popoutControls.popout); // the popout expands below everything else in the row
 
     input.onchange = () => {
       const value = this.parseSeatReferenceInput(input.value);
@@ -2211,9 +2589,11 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, property, w => {
       if(document.activeElement !== input)
         input.value = this.formatSeatReference(w.get(property));
+      if(popoutControls)
+        popoutControls.refresh();
     });
 
-    return { wrap, input, pickButton };
+    return { wrap, input };
   }
 
   getSeatVisibilityMode(widget) {
@@ -2262,19 +2642,18 @@ class PropertiesModule extends SidebarModule {
     input.style.width = '180px';
     wrap.appendChild(input);
 
-    const pickButton = document.createElement('button');
-    pickButton.style.marginTop = '2px';
-    pickButton.style.marginBottom = '1px';
-    wrap.appendChild(pickButton);
-    wrap.appendChild(visibilityInfoIcon);
-
     const pickerKey = 'onlyVisibleForSeat';
-    const updatePickButton = () => {
-      const picker = this.getWidgetPicker(widget.id, pickerKey);
-      const isSelecting = !!picker;
-      pickButton.classList.toggle('selected', isSelecting);
-      pickButton.textContent = isSelecting ? 'click to confirm' : 'click to select';
-    };
+    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      pickerKey,
+      typeFilter: 'seat',
+      multiple: true,
+      getSelectedIDs: () => this.seatReferenceToArray(widget.get('onlyVisibleForSeat')),
+      apply: seatIDs => this.inputValueUpdated(widget, 'onlyVisibleForSeat', this.seatReferenceFromArray(seatIDs)),
+      onClear: () => this.inputValueUpdated(widget, 'onlyVisibleForSeat', null),
+      clearLabel: 'Visible to all'
+    });
+    wrap.appendChild(visibilityInfoIcon);
+    wrap.appendChild(popoutControls.popout); // the popout expands below everything else in the row
 
     const updateInputValue = w => {
       if(document.activeElement !== input)
@@ -2299,38 +2678,13 @@ class PropertiesModule extends SidebarModule {
       const mode = this.getSeatVisibilityMode(w);
       updateCustomModeOption(mode);
       modeSelect.value = mode;
-      updatePickButton();
       updateInputValue(w);
+      popoutControls.refresh();
     };
 
     input.onchange = () => {
       const value = this.parseSeatReferenceInput(input.value);
       this.inputValueUpdated(widget, 'onlyVisibleForSeat', value);
-    };
-
-    pickButton.onclick = () => {
-      const picker = this.getWidgetPicker(widget.id, pickerKey);
-      if(picker) {
-        this.confirmWidgetPicker();
-        updatePickButton();
-        return;
-      }
-
-      this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
-        const pickedWidgetIDs = Array.isArray(pickedWidgets) ? pickedWidgets.map(pickedWidget => pickedWidget.id) : [];
-        if(!pickedWidgetIDs.length)
-          return;
-        this.inputValueUpdated(targetWidget, 'onlyVisibleForSeat', this.seatReferenceFromArray(pickedWidgetIDs));
-      }, {
-        pickerKey,
-        allowMultiple: true,
-        toggleSelection: false,
-        pendingWidgetIDs: [],
-        filter: pickedWidget => pickedWidget.get('type') == 'seat',
-        onPendingChanged: () => updatePickButton()
-      });
-
-      updatePickButton();
     };
 
     modeSelect.onchange = () => {
@@ -2352,25 +2706,16 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'onlyVisibleForSeat', updateInputValue);
     this.addPropertyListener(widget, 'onlyVisibleForSeat', updateMode);
     this.addPropertyListener(widget, 'linkedToSeat', updateMode);
-    this.addPropertyListener(widget, 'onlyVisibleForSeat', () => updatePickButton());
     updateMode(widget);
   }
 
+  // Info buttons open a dismissable popup with the explanation (design from
+  // the routine editor in PR #2439) instead of relying on hover tooltips.
   renderInfoIcon(infoText, options = {}) {
-    const icon = document.createElement('span');
-    icon.className = options.className || 'material-symbols';
-    icon.textContent = options.icon || 'info';
-    icon.setAttribute('aria-label', options.ariaLabel || 'Information');
-    icon.title = infoText || '';
-    icon.style.cursor = 'help';
-    icon.style.display = 'inline-block';
-    icon.style.color = options.color || 'var(--VTTblue)';
-    icon.style.fontVariationSettings = options.fontVariationSettings || "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20";
-    icon.style.fontSize = options.size || '20px';
-    icon.style.lineHeight = '1';
-    icon.style.userSelect = 'none';
-
-    return icon;
+    const holder = document.createElement('span');
+    holder.setAttribute('aria-label', options.ariaLabel || 'Information');
+    infoButton(holder, html(infoText || ''));
+    return holder;
   }
 
   renderParentWidgetEditor(widget) {
@@ -2383,23 +2728,52 @@ class PropertiesModule extends SidebarModule {
     ]);
   }
 
+  renderTypeHeader(widget) {
+    const type = widget.get('type') || 'basic';
+    this.addHeader(`${editorTypeNames[type] || type} ${widget.id}`);
+  }
+
+  // A block whose body can be folded away by clicking the header.
+  renderCollapsibleSection(title, collapsed, renderBody, target = null, stateKey = null) {
+    if(stateKey !== null && this.collapsibleStates[stateKey] !== undefined)
+      collapsed = this.collapsibleStates[stateKey];
+    const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
+    const header = div(wrap, 'collapsibleHeader', `<span class=collapseArrow></span><span>${html(title)}</span>`);
+    const body = div(wrap, 'collapsibleBody');
+    header.onclick = _=>{
+      wrap.classList.toggle('collapsed');
+      if(stateKey !== null)
+        this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
+    };
+    renderBody(body);
+    return wrap;
+  }
+
   renderBasicSection(widget) {
     this.addSubHeader('Basic');
-    this.renderDualNumberWithSlider(widget, 'Position', { title: 'X', property: 'x' }, { title: 'Y', property: 'y' }, {
-      left: { min: 0, max: 1600, step: 1 },
-      right: { min: 0, max: 1000, step: 1 }
-    });
-    this.renderPositionLocks(widget);
-    this.renderLayerSelect(widget);
-    this.addLineBreak();
-    this.renderRotationInput(widget);
-    this.addLineBreak();
-    this.renderDualNumberWithSlider(widget, 'Size', { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
-      left: { min: 1, max: 1600, step: 1 },
-      right: { min: 1, max: 1000, step: 1 }
-    });
-    this.renderSizeRatioLock(widget);
-    this.addLineBreak();
+
+    // position and size are usually changed with the drag toolbar, so they
+    // start collapsed and only get expanded for active tweaking
+    this.renderCollapsibleSection('Position', true, body=>{
+      this.renderDualNumberWithSlider(widget, null, { title: 'X', property: 'x' }, { title: 'Y', property: 'y' }, {
+        left: { min: 0, max: 1600, step: 1 },
+        right: { min: 0, max: 1000, step: 1 },
+        target: body
+      });
+      this.renderPositionLocks(widget, body);
+      this.renderLayerSelect(widget, body);
+      this.renderRotationInput(widget, body);
+    }, null, `${widget.id}:position`);
+
+    this.renderCollapsibleSection('Size', true, body=>{
+      this.renderDualNumberWithSlider(widget, null, { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
+        left: { min: 1, max: 1600, step: 1 },
+        right: { min: 1, max: 1000, step: 1 },
+        target: body
+      });
+      this.renderSizeRatioLock(widget, body);
+    }, null, `${widget.id}:size`);
+
     this.renderAssociatedWidgetsSection(widget);
   }
 
@@ -2800,53 +3174,42 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderInheritFromAddButton(container, widget) {
-    const addBtn = document.createElement('button');
-    addBtn.textContent = '+ Add widget';
-    addBtn.classList.add('blue', 'inheritFromAddWidgetButton');
-    const pickerKey = 'inheritFrom';
+    const wrap = div(container, 'inheritFromAddWidgetWrap');
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '6px';
+    wrap.style.flexWrap = 'wrap';
 
-    const updateAddButton = () => {
-      const picker = this.getWidgetPicker(widget.id, pickerKey);
-      const isSelecting = !!picker;
-      addBtn.classList.toggle('selected', isSelecting);
-      if(!isSelecting)
-        addBtn.textContent = '+ Add widget';
-      else
-        addBtn.textContent = 'click a widget...';
-    };
+    const label = document.createElement('label');
+    label.textContent = '+ Add widget';
+    wrap.appendChild(label);
 
-    addBtn.onclick = () => {
-      const currentInheritFrom = widget.get('inheritFrom') || {};
-      const alreadySelected = Object.keys(typeof currentInheritFrom === 'string' ? { [currentInheritFrom]: '*' } : currentInheritFrom);
+    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      pickerKey: 'inheritFrom',
+      apply: pickedWidgetID => {
+        const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
+        inheritFrom[pickedWidgetID] = '*'; // Default to copy all
+        this.inputValueUpdated(widget, 'inheritFrom', inheritFrom);
+      },
+      // can't inherit from widgets that are already selected
+      excludeIDs: () => Object.keys(this.normalizeInheritFromObject(widget.get('inheritFrom')))
+    });
+    wrap.appendChild(popoutControls.popout);
 
-      this.startWidgetPicker(widget.id, (targetWidget, pickedWidgets) => {
-        if(pickedWidgets) {
-          const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
-          inheritFrom[pickedWidgets.id] = '*'; // Default to copy all
-          this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
-        }
-        this.stopWidgetPicker();
-        updateAddButton();
-      }, {
-        pickerKey: pickerKey,
-        allowMultiple: false,
-        pendingWidgetIDs: [],
-        onPendingChanged: updateAddButton,
-        filter: pickedWidget => {
-          // Can't inherit from self or already selected
-          return pickedWidget.id !== widget.id && !alreadySelected.includes(pickedWidget.id);
-        }
-      });
-      updateAddButton();
-    };
-
-    container.appendChild(addBtn);
+    this.addPropertyListener(widget, 'inheritFrom', () => popoutControls.refresh());
   }
 
   renderAssociatedWidgetsSection(widget) {
-    const linksSection = this.createOnDemandSectionStructure(this.moduleDOM, "Widget's links", {
-      titleMarginTop: '8px'
-    });
+    const hasLinks = [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ]
+      .some(property => this.isOnDemandPropertyValueSet(widget.get(property))) || widget.get('fixedParent') === true;
+
+    this.renderCollapsibleSection("Widget's links", !hasLinks, body => {
+      this.renderAssociatedWidgetsSectionBody(widget, body);
+    }, null, `${widget.id}:links`);
+  }
+
+  renderAssociatedWidgetsSectionBody(widget, target) {
+    const linksSection = this.createOnDemandSectionStructure(target);
 
     this.renderOnDemandSection(widget, 'add Parent', [ 'parent', 'fixedParent' ], container => {
       this.renderParentWidgetInput(widget, container);
@@ -2882,11 +3245,378 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
+  // --- curated per-type sections ---
+
+  renderInputs(widget, defs, target = null) {
+    const kinds = {
+      text: TextInput,
+      textarea: TextInput,
+      number: NumberInput,
+      numberOrText: NumberOrTextInput,
+      checkbox: CheckboxInput,
+      select: SelectInput,
+      color: ColorInput,
+      icon: IconInput,
+      image: ImageInput
+    };
+    for(const def of defs) {
+      const options = Object.assign({}, def);
+      if(def.kind == 'textarea')
+        options.multiline = true;
+      if(options.hint === undefined && def.property && editorPropertyHints[def.property])
+        options.hint = editorPropertyHints[def.property];
+      if(def.cssKey)
+        Object.assign(options, cssValueOptions(this, widget, def.cssKey));
+      new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
+    }
+  }
+
+  typeSections(widget) {
+    return editorTypeSections[widget.get('type') || 'basic'] || {};
+  }
+
+  // all properties covered by the curated sections of this type, used to keep
+  // them out of the generic "Other properties" list
+  typeSectionProperties(widget) {
+    const sections = this.typeSections(widget);
+    const properties = [ ...(sections.cssProperties || [ 'css' ]) ];
+    for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
+      for(const def of sections[group] || [])
+        if(def.property)
+          properties.push(def.property);
+    return properties;
+  }
+
+  renderContentSection(widget) {
+    const defs = this.typeSections(widget).content || [];
+    if(!defs.length)
+      return;
+    this.addSubHeader('Content');
+    this.renderInputs(widget, defs);
+  }
+
+  addAppearanceSubTitle(text) {
+    div(this.moduleDOM, 'appearanceSubTitle', html(text));
+  }
+
+  // Appearance section: the default appearance properties of the widget type
+  // (colors, hover colors, misc style) followed by the CSS editor.
+  // options.before renders extra content right below the section header.
+  renderAppearanceSection(widget, options = {}) {
+    this.addSubHeader('Appearance');
+    if(options.before)
+      options.before(this.moduleDOM);
+    this.renderAppearanceBody(widget);
+  }
+
+  renderAppearanceBody(widget) {
+    const sections = this.typeSections(widget);
+    const colors = sections.colors || [];
+    const hover = sections.hover || [];
+    const misc = sections.appearance || [];
+    const cssProperties = sections.cssProperties || [ 'css' ];
+
+    if(colors.length) {
+      this.addAppearanceSubTitle('Colors');
+      this.renderInputs(widget, colors);
+    }
+    if(hover.length) {
+      this.addAppearanceSubTitle('Hover');
+      this.renderInputs(widget, hover);
+    }
+    if(misc.length) {
+      if(colors.length || hover.length)
+        this.addAppearanceSubTitle('Style');
+      this.renderInputs(widget, misc);
+    }
+
+    const hasCSS = cssProperties.some(property => this.isOnDemandPropertyValueSet(widget.state[property]));
+    this.renderCollapsibleSection('CSS', !hasCSS, body => {
+      for(const property of cssProperties)
+        this.renderCssPropertyEditor(widget, property, body);
+    }, null, `${widget.id}:css`);
+  }
+
+  // Chrome-devtools-like editor for a css-like property: one collapsible
+  // section per class/selector with a plain declaration text input.
+  renderCssPropertyEditor(widget, property, target) {
+    const wrap = div(target, 'cssEditor');
+    const title = div(wrap, 'propertyPickerSectionTitle');
+    title.textContent = property;
+    if(editorPropertyHints[property] || property == 'css')
+      infoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
+    const container = div(wrap);
+
+    const renderClassSection = (className, classValue, wholeProperty) => {
+      const section = div(container, 'cssClassSection');
+      const stateKey = `${widget.id}:${property}:${className}`;
+      this.renderCollapsibleSection(className, false, body => {
+        const textarea = document.createElement('textarea');
+        textarea.value = cssTextFromValue(classValue);
+        textarea.placeholder = 'property: value;';
+        textarea.oninput = () => {
+          const text = textarea.value;
+          if(wholeProperty) {
+            this.inputValueUpdated(widget, property, text.trim() === '' ? null : text);
+          } else {
+            // class values have to be objects so the engine (and this editor)
+            // recognizes the nested form; refuse text the declaration parser
+            // would destroy (e.g. data URIs)
+            if(text.trim() && !cssStringRoundTrips(text)) {
+              textarea.classList.add('inputError');
+              return;
+            }
+            textarea.classList.remove('inputError');
+            const css = widget.get(property);
+            const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
+            newCss[className] = cssStringToObject(text);
+            this.inputValueUpdated(widget, property, newCss);
+          }
+          if(widget.applyDeltaToDOM)
+            widget.applyDeltaToDOM({ [property]: widget.get(property) });
+        };
+        body.appendChild(textarea);
+      }, section, stateKey);
+
+      if(!wholeProperty) {
+        const header = $('.collapsibleHeader', section);
+        const deleteButton = document.createElement('button');
+        deleteButton.setAttribute('icon', 'delete');
+        deleteButton.title = `Remove ${className}`;
+        deleteButton.style.marginLeft = 'auto';
+        deleteButton.style.minWidth = '26px';
+        deleteButton.style.padding = '0';
+        deleteButton.onclick = e => {
+          e.stopPropagation();
+          const css = widget.get(property);
+          const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
+          delete newCss[className];
+          const keys = Object.keys(newCss);
+          // unwrap the nested form when only the default class remains
+          const newValue = keys.length == 0 ? null : (keys.length == 1 && keys[0] == 'default' ? newCss.default : newCss);
+          this.inputValueUpdated(widget, property, typeof newValue === 'string' && newValue.trim() === '' ? null : newValue);
+          if(widget.applyDeltaToDOM)
+            widget.applyDeltaToDOM({ [property]: widget.get(property) });
+          rebuild();
+        };
+        header.appendChild(deleteButton);
+      }
+    };
+
+    const rebuild = () => {
+      container.innerHTML = '';
+      const value = widget.get(property);
+      if(hasNestedCSSClasses(value)) {
+        for(const [ className, classValue ] of Object.entries(value))
+          renderClassSection(className, classValue, false);
+      } else {
+        renderClassSection('default', value, true);
+      }
+
+      const addRow = div(container, 'cssAddClassRow');
+      const nameInput = document.createElement('input');
+      nameInput.placeholder = 'new class/selector, e.g. ":hover"';
+      addRow.appendChild(nameInput);
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.title = 'Add a class/selector section';
+      addButton.onclick = () => {
+        const className = nameInput.value.trim();
+        if(!className)
+          return;
+        const value = widget.get(property);
+        let newCss;
+        if(hasNestedCSSClasses(value)) {
+          if(value[className] !== undefined)
+            return;
+          newCss = Object.assign({}, value, { [className]: {} });
+        } else {
+          newCss = { [className]: {} };
+          if(this.isOnDemandPropertyValueSet(value) && className != 'default') {
+            // convert the previous value into the default class of the nested form
+            if(isObjectLike(value))
+              newCss.default = value;
+            else
+              newCss.default = cssStringRoundTrips(String(value)) ? cssStringToObject(String(value)) : value;
+          }
+        }
+        this.inputValueUpdated(widget, property, newCss);
+        rebuild();
+      };
+      addRow.appendChild(addButton);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, property, () => {
+      if(!container.contains(document.activeElement))
+        rebuild();
+    });
+  }
+
+  renderBehaviorSection(widget, title = 'Behavior') {
+    const defs = this.typeSections(widget).behavior || [];
+    if(!defs.length)
+      return;
+    this.addSubHeader(title);
+    this.renderInputs(widget, defs);
+  }
+
+  renderOtherPropertiesSection(widget, extraExclude = []) {
+    this.addSubHeader('Other properties');
+    this.renderGenericProperties(widget, this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(extraExclude)));
+  }
+
+  // --- per-type editors ---
+
+  renderForBasic(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderContentSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget);
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForButton(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderContentSection(widget);
+    this.renderAppearanceSection(widget);
+    this.addSubHeader('Behavior');
+    div(this.moduleDOM, '', `
+      <p>What the button does when clicked is defined by its <b>clickRoutine</b> which you can edit in the JSON editor.</p>
+    `);
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForCanvas(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget, {
+      before: target => {
+        this.addAppearanceSubTitle('Drawing colors');
+        const colorMap = asArray(widget.get('colorMap') || []);
+        for(let i = 0; i < colorMap.length; ++i) {
+          new ColorInput(this, widget, `Color ${i}`, {
+            clearable: false,
+            listenTo: [ 'colorMap' ],
+            getValue: _=>{
+              const map = asArray(widget.get('colorMap') || []);
+              return map[i] !== undefined ? map[i] : null;
+            },
+            setValue: v=>{
+              const map = asArray(widget.get('colorMap') || []).slice();
+              map[i] = v === null ? '#000000' : v;
+              this.inputValueUpdated(widget, 'colorMap', map);
+            }
+          }).render(target);
+        }
+      }
+    });
+    this.renderBehaviorSection(widget, 'Drawing');
+    this.renderOtherPropertiesSection(widget, [ 'colorMap' ]);
+  }
+
+  renderForPile(widget) {
+    this.renderTypeHeader(widget);
+    div(this.moduleDOM, '', `
+      <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
+    `);
+    const card = widget.children().find(child => child.get('type') == 'card');
+    const deck = card && widgets.get(card.get('deck'));
+    if(deck) {
+      const open = document.createElement('button');
+      open.setAttribute('icon', 'style');
+      open.textContent = 'Open deck properties';
+      open.onclick = _=>setSelection([ deck ]);
+      this.moduleDOM.appendChild(open);
+    }
+  }
+
+  renderForScoreboard(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Scores');
+    this.renderOtherPropertiesSection(widget);
+  }
+
+  renderForSeat(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.addSubHeader('Player');
+    this.renderSeatPlayerSelect(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Seat');
+    this.renderSeatHandInput(widget);
+    this.renderOtherPropertiesSection(widget, [ 'player', 'hand' ]);
+  }
+
+  // Dropdown to seat one of the table's players; also copies their color onto
+  // the seat so it matches, like clicking the seat does in play.
+  renderSeatPlayerSelect(widget) {
+    const players = (typeof getAllPlayers == 'function' ? getAllPlayers() : {}) || {};
+    const choices = [ { value: '', text: '(empty)' } ]
+      .concat(Object.keys(players).map(name=>({ value: name, text: name })));
+
+    new SelectInput(this, widget, 'Seated player', {
+      property: 'player',
+      hint: editorPropertyHints.player,
+      choices,
+      setValue: value=>{
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} seated player "${value || ''}" in seat ${widget.id} in editor`);
+        widget.set('player', value || '');
+        if(value && players[value])
+          widget.set('color', players[value]);
+        batchEnd();
+      }
+    }).render(this.moduleDOM);
+  }
+
+  // The hand property references a holder, so the widget popout preselects the
+  // holder type filter.
+  renderSeatHandInput(widget) {
+    const wrap = div(this.moduleDOM, 'propertyInput');
+    const label = document.createElement('label');
+    label.textContent = 'Hand holder';
+    infoButton(label, html(editorPropertyHints.hand));
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = widget.get('hand') || '';
+    input.onchange = () => this.inputValueUpdated(widget, 'hand', input.value.trim() || null);
+    wrap.appendChild(input);
+
+    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      pickerKey: 'hand',
+      typeFilter: 'holder',
+      getSelectedIDs: () => widget.get('hand') ? [ widget.get('hand') ] : [],
+      apply: holderID => this.inputValueUpdated(widget, 'hand', holderID),
+      onClear: () => this.inputValueUpdated(widget, 'hand', null),
+      clearLabel: 'No hand'
+    });
+    wrap.appendChild(popoutControls.popout);
+
+    this.addPropertyListener(widget, 'hand', w => {
+      if(document.activeElement !== input)
+        input.value = w.get('hand') || '';
+      popoutControls.refresh();
+    });
+  }
+
+  renderForTimer(widget) {
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget, 'Timer');
+    this.renderOtherPropertiesSection(widget);
+  }
+
   renderForCard(widget) {
     this.addHeader(`Card ${widget.id}`);
     this.renderBasicSection(widget);
-    this.addSubHeader(`Card properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'deck', 'z' ]));
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
     div(this.moduleDOM, '', `
@@ -2896,6 +3626,8 @@ class PropertiesModule extends SidebarModule {
       </div>
     `);
     $('[icon=style]', this.moduleDOM).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
+    this.renderAppearanceSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'deck', 'cardType', 'z' ]);
   }
 
   renderForDeck(widget) {
@@ -3044,8 +3776,9 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
-    this.addSubHeader(`Dice properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['faces','pipSymbols','shape3d']));
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'faces', 'pipSymbols', 'shape3d' ]);
   }
 
   renderForHolder(widget) {
@@ -3144,8 +3877,9 @@ class PropertiesModule extends SidebarModule {
       }
     };
 
-    this.addSubHeader(`Holder properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'dropTarget' ]));
+    this.renderAppearanceBody(widget);
+    this.renderBehaviorSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget' ]);
   }
 
   renderForSpinner(widget) {
@@ -3186,8 +3920,9 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
-    this.addSubHeader(`Spinner properties`);
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['options']));
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'options' ]);
   }
 
   /**
@@ -3246,8 +3981,8 @@ class PropertiesModule extends SidebarModule {
     // On-demand with styling via ' ::placeholder' pseudo-selector in nested CSS
     this.renderOnDemandPlaceholderInput(widget);
 
-    this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(['css','editable', 'placeholderText', 'text' ]));
+    this.renderAppearanceSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'editable', 'placeholderText', 'text' ]);
   }
 
   renderGenericProperties(widget, exclude) {
@@ -3604,36 +4339,13 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderColorInput(widget, title, property, defaultColor = '#6d6d6d', css='css', cssClass) {
+    // color picker input (with used-in-game colors, palette and transparent)
+    // that edits a single declaration inside the css property
     const colorWrap = div(this.moduleDOM);
-    if (title) {
-      const colorLabel = document.createElement('label');
-      colorLabel.textContent = title;
-      colorLabel.style.display = 'inline-block';
-      colorWrap.appendChild(colorLabel);
-    }
-    const colorInput = document.createElement('input');
-    colorInput.type = 'color';
-    colorInput.style = "-webkit-appearance: none; -moz-appearance: none; border-radius: 4px; display: inline-block; margin: 3px 3px 0 8px; padding: 0; width: 30px; height: 30px; border: 2px solid rgba(255,255,255,0); order: 1; flex-grow: 0; flex-shrink: 0; "
-
-    colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
-    colorWrap.appendChild(colorInput);
-    colorInput.oninput = () => {
-      this.inputValueUpdated(widget, css, mergePropertyFromCSS(widget.get(css), property, colorInput.value, cssClass));
-      if (widget.applyDeltaToDOM) widget.applyDeltaToDOM({ [css]: widget.get(css) });
-    };
-    this.addPropertyListener(widget, css, w => {
-      if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(w.get(css), property, defaultColor, cssClass);
-    });
-    if (!this.inputUpdaters[widget.id])
-      this.inputUpdaters[widget.id] = {};
-    if (!this.inputUpdaters[widget.id][css])
-      this.inputUpdaters[widget.id][css] = [];
-    this.inputUpdaters[widget.id][css].push(() => {
-      if (document.activeElement !== colorInput)
-        colorInput.value = parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass);
-    });
-
+    new ColorInput(this, widget, title, cssValueOptions(this, widget, property, css, cssClass || 'default', {
+      default: defaultColor,
+      getEffective: _=>parsePropertyFromCSS(widget.get(css), property, defaultColor, cssClass)
+    })).render(colorWrap);
     return colorWrap;
   }
 
