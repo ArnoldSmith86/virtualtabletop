@@ -88,7 +88,7 @@ function inheritDef(widget) {
   if(type == 'canvas')
     for(let x=0; x<10; ++x)
       for(let y=0; y<10; ++y)
-        exceptions.push("!`c${x}${y}`");
+        exceptions.push(`!c${x}${y}`);
   if(type == 'card')
     exceptions.push("!activeFace");
   if(type == 'dice')
@@ -112,7 +112,8 @@ function inheritDef(widget) {
 function validPropertiesOfWidget(widget, filter='*') {
   const properties = Object.keys(widget.state).filter(property=>widget.inheritFromIsValid(filter, property));
   for(const [ id, filter ] of Object.entries(widget.inheritFrom()))
-    properties.push(...validPropertiesOfWidget(widgets.get(id), filter));
+    if(widgets.has(id))
+      properties.push(...validPropertiesOfWidget(widgets.get(id), filter));
   return properties;
 }
 
@@ -120,12 +121,11 @@ function applyReplaces(value, replaces, topCloneID) {
   const modifiedReplaces = JSON.parse(JSON.stringify(replaces||{}));
   let replacedValue = JSON.parse(JSON.stringify(value));
   for(const [ cloneID, source ] of Object.entries(smartCloneSourceMap[topCloneID])) {
-    if(cloneID == topCloneID) {
-      modifiedReplaces[source.id] = cloneID;
-    } else {
-      modifiedReplaces[`"${source.id}"`] = `"${cloneID}"`;
-      modifiedReplaces[` OF ${source.id}\}`] = ` OF ${cloneID}\}`;
-    }
+    // Only replace IDs where they appear as an actual widget reference (a quoted
+    // JSON string or the `... OF id}` compute syntax) so we never corrupt an
+    // unrelated value that merely contains the source ID as a substring.
+    modifiedReplaces[`"${source.id}"`] = `"${cloneID}"`;
+    modifiedReplaces[` OF ${source.id}\}`] = ` OF ${cloneID}\}`;
   }
   for(const [ from, to ] of Object.entries(modifiedReplaces)) {
     if(from)
