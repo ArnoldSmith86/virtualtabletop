@@ -106,9 +106,12 @@ function initLanguageSelection() {
   });
 }
 
-onLoad(function() {
-  dictionaryLoaded.then(function() {
-    translateDOM();
-    initLanguageSelection();
+// this module is also imported from Node (tests share domhelpers.js), so only
+// register the DOM translation in an actual browser
+if(typeof window != 'undefined')
+  onLoad(function() {
+    dictionaryLoaded.then(function() {
+      translateDOM();
+      initLanguageSelection();
+    });
   });
-});
