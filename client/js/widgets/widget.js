@@ -1,4 +1,5 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
+import { translate } from '../i18n.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -2827,12 +2828,12 @@ export class Widget extends StateManaged {
         $('#buttonInputFields').appendChild(dom);
       }
       if(!o.confirmButtonText && !o.confirmButtonIcon){
-        confirmButtonText = "Go";
+        confirmButtonText = translate("Go");
       }
       if (o.cancelButtonText === null && o.cancelButtonIcon === null) {
         $('#buttonInputCancel').style.visibility = "hidden";
       } else if (!o.cancelButtonText && !o.cancelButtonIcon)
-        cancelButtonText = "Cancel";
+        cancelButtonText = translate("Cancel");
 
       $('#buttonInputGo label').textContent = o.confirmButtonText || confirmButtonText;
       $('#buttonInputCancel label').textContent = o.cancelButtonText || cancelButtonText;
@@ -2911,7 +2912,7 @@ export class Widget extends StateManaged {
       b.style.disabled = isWorking;
 
     if(isWorking) {
-      $('#buttonInputGo label').textContent = 'Working...';
+      $('#buttonInputGo label').textContent = translate('Working...');
       $('#buttonInputCancel').style.visibility = 'hidden';
     }
   }
