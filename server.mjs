@@ -15,6 +15,7 @@ import TTS        from './server/ttsimport.mjs';
 import Player     from './server/player.mjs';
 import Room       from './server/room.mjs';
 import Collections from './server/collections.mjs';
+import PublicRooms from './server/publicrooms.mjs';
 import LibraryDecks from './server/librarydecks.mjs';
 import MinifyHTML from './server/minify.mjs';
 import Logging    from './server/logging.mjs';
@@ -379,6 +380,40 @@ MinifyHTML().then(function(result) {
     })().catch(next);
   });
 
+  // the response is the same for everyone, so cache it briefly: it makes the anonymous
+  // endpoint cheap to poll and keeps idle public rooms from being loaded from disk on every request
+  let publicRoomsCache = null;
+  router.get('/api/publicrooms', function(req, res, next) {
+    (async function() {
+      if(!publicRoomsCache || publicRoomsCache.time < Date.now() - 10000) {
+        const rooms = [];
+        for(const roomID of PublicRooms.get()) {
+          try {
+            // heal the list when a published room was deleted or its file was removed
+            if(!roomExists(roomID)) {
+              PublicRooms.remove(roomID);
+              continue;
+            }
+            if(await ensureRoomIsLoaded(roomID)) {
+              if(activeRooms.get(roomID).isPublic()) {
+                const details = await activeRooms.get(roomID).getRoomDetails(null);
+                delete details.players; // the anonymous listing only gets the count, not who is playing
+                rooms.push(details);
+              } else {
+                PublicRooms.remove(roomID);
+              }
+            }
+          } catch(e) {
+            Logging.log(`ERROR: skipping room ${roomID} in the public rooms listing: ${e}`);
+          }
+        }
+        publicRoomsCache = { time: Date.now(), body: JSON.stringify({ rooms }) };
+      }
+      res.setHeader('Content-Type', 'application/json');
+      res.send(publicRoomsCache.body);
+    })().catch(next);
+  });
+
   router.put('/api/roomcollection/:collection/add/:room', function(req, res, next) {
     if(!Collections.isValidID(req.params.collection) || !req.params.room.match(/^[A-Za-z0-9_-]+$/))
       return res.status(400).send('Invalid collection or room ID.');
@@ -401,6 +436,7 @@ MinifyHTML().then(function(result) {
       if(!isLoaded)
         return res.status(404).send('Invalid room.');
       await activeRooms.get(req.params.room).collectionAction(req.params.action, req.body || {});
+      publicRoomsCache = null; // publish/unpublish/rename/delete should show up immediately
       res.send('OK');
     }).catch(next);
   });

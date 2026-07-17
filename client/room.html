@@ -106,6 +106,7 @@
           <div class="roomIcons">
             <i class="material-symbols lockedIcon" title="This room is locked.">lock</i>
             <i class="material-symbols passwordIcon" title="This room is password protected.">key</i>
+            <i class="material-symbols publicIcon" title="This room is listed in the public rooms.">public</i>
             <i class="material-symbols adminIcon" title="This room is claimed by your collection.">verified_user</i>
           </div>
           <button icon="more_vert" class="menuButton"></button>
@@ -113,11 +114,19 @@
           <div class="details">
             <h3>Name</h3>
             <h4>Game</h4>
+            <p class="description hidden"></p>
           </div>
           <div class="roomPlayers"></div>
           <button icon="login" class="switchButton">Switch to this room</button>
         </template>
         <p id="emptyRoomsList"></p>
+      </div>
+      <div id="publicRoomsSection">
+        <h2>Public rooms</h2>
+        <div class="instructionalText">These rooms were made public by their admins &mdash; anybody can join them and play. Claim a room and use "Make room public" in its tile menu to list your own room here.</div>
+        <div id="publicRoomsList">
+          <p id="emptyPublicRoomsList"></p>
+        </div>
       </div>
       <div id="roomsCollectionBox" icon="key">
         <h2>Collection ID</h2>
