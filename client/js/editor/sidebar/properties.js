@@ -555,6 +555,7 @@ class PropertiesModule extends SidebarModule {
 
     if(newSelection.length > 1) {
       this.renderForMulti(newSelection);
+      this.makeSectionsCollapsible(newSelection.map(w=>w.id).join(','));
     } else if(newSelection.length == 1) {
       const widget = newSelection[0];
       switch(widget.get('type')) {
@@ -575,8 +576,69 @@ class PropertiesModule extends SidebarModule {
           this.renderForBasic(widget);
           break;
       }
+      this.makeSectionsCollapsible(widget.id);
     } else {
       this.addDeck();
+    }
+  }
+
+  // Sections that are used less often start collapsed; everything else open.
+  sectionDefaultCollapsed(title) {
+    if(title.match(/properties$/i))
+      return true;
+    return [ 'Position, size and rotation', 'Behavior', 'Rolling', 'Drawing', 'Dropping and stacking', 'Value', 'Scores', 'Timer', 'Seat', 'Card layers', 'Card default properties' ].indexOf(title) != -1;
+  }
+
+  // Turns every blue section header (h2 / the appearance header) into a
+  // collapsible section containing everything up to the next header. Headers
+  // without any content are removed entirely. The open/closed state is
+  // remembered per widget and section title.
+  makeSectionsCollapsible(stateKeyPrefix) {
+    const isHeader = el=>el.tagName == 'H2' || el.classList.contains('sectionHeaderWithTools');
+    const stopsSection = el=>isHeader(el) || el.tagName == 'H1' || el.classList.contains('widgetHeader');
+
+    const children = [...this.moduleDOM.children];
+    let i = 0;
+    while(i < children.length) {
+      const headerElement = children[i];
+      if(!isHeader(headerElement) || headerElement.parentElement !== this.moduleDOM) {
+        i++;
+        continue;
+      }
+
+      const bodyElements = [];
+      let j = i + 1;
+      while(j < children.length && !stopsSection(children[j]))
+        bodyElements.push(children[j++]);
+      i = j;
+
+      // don't render a section header with an empty body
+      if(!bodyElements.length) {
+        headerElement.remove();
+        continue;
+      }
+
+      const title = (headerElement.tagName == 'H2' ? headerElement : $('h2', headerElement)).textContent.trim();
+      const stateKey = `${stateKeyPrefix}:${title}`;
+      const collapsed = this.collapsibleStates[stateKey] !== undefined ? this.collapsibleStates[stateKey] : this.sectionDefaultCollapsed(title);
+
+      const wrap = document.createElement('div');
+      wrap.className = 'collapsibleSection sectionBand' + (collapsed ? ' collapsed' : '');
+      this.moduleDOM.insertBefore(wrap, headerElement);
+      wrap.appendChild(headerElement);
+      const body = div(wrap, 'collapsibleBody');
+      for(const bodyElement of bodyElements)
+        body.appendChild(bodyElement);
+
+      const titleH2 = headerElement.tagName == 'H2' ? headerElement : $('h2', headerElement);
+      const arrow = document.createElement('span');
+      arrow.className = 'collapseArrow';
+      titleH2.insertBefore(arrow, titleH2.firstChild);
+      titleH2.classList.add('collapsibleHeader');
+      titleH2.onclick = _=>{
+        wrap.classList.toggle('collapsed');
+        this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
+      };
     }
   }
 
@@ -590,8 +652,8 @@ class PropertiesModule extends SidebarModule {
       this.renderPileExplanation();
       return;
     }
-    this.renderBasicSection(facade);
     this.renderArrangeButtons();
+    this.renderBasicSection(facade);
 
     if(types.length == 1) {
       this.renderContentSection(facade);
@@ -1846,69 +1908,104 @@ class PropertiesModule extends SidebarModule {
 
   renderTypeHeader(widget) {
     const type = widget.get('type') || 'basic';
-    this.addHeader(`${editorTypeNames[type] || type} ${widget.id}`);
+    const header = div(this.moduleDOM, 'widgetHeader', `
+      <h1><span class=widgetHeaderType>${html(editorTypeNames[type] || type)}</span>: <span class=widgetHeaderID>${html(widget.id)}</span></h1>
+      <button icon=edit class=renameWidgetButton title="Rename this widget (change its ID)"></button>
+    `);
+    $('.renameWidgetButton', header).onclick = _=>{
+      const idSpan = $('.widgetHeaderID', header);
+      const input = document.createElement('input');
+      input.className = 'widgetHeaderInput';
+      input.value = widget.id;
+      idSpan.replaceWith(input);
+      input.focus();
+      input.select();
+      $('.renameWidgetButton', header).style.visibility = 'hidden';
+
+      const restore = _=>{
+        input.replaceWith(idSpan);
+        $('.renameWidgetButton', header).style.visibility = '';
+      };
+      input.onkeydown = e=>{
+        if(e.key == 'Enter') {
+          e.preventDefault();
+          input.blur();
+        } else if(e.key == 'Escape') {
+          input.onblur = null;
+          restore();
+        }
+      };
+      input.onblur = async _=>{
+        const message = await this.renameWidget(widget, input.value);
+        if(message) {
+          alert(message);
+          restore();
+        }
+      };
+    };
   }
 
-  // A section whose body can be folded away by clicking the header. Position,
-  // size and rotation are usually changed with the drag toolbar, so they start
-  // collapsed.
-  renderCollapsibleSection(title, collapsed, renderBody, target=null, stateKey=null) {
-    if(stateKey !== null && this.collapsibleStates[stateKey] !== undefined)
-      collapsed = this.collapsibleStates[stateKey];
-    const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
-    const header = div(wrap, 'collapsibleHeader', `<span class=collapseArrow></span><span>${html(title)}</span>`);
-    const body = div(wrap, 'collapsibleBody');
-    header.onclick = _=>{
-      wrap.classList.toggle('collapsed');
-      if(stateKey !== null)
-        this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
-    };
-    renderBody(body);
-    return wrap;
+  async renameWidget(widget, newID) {
+    newID = String(newID == null ? '' : newID).trim();
+    if(!newID || newID == widget.id)
+      return null; // nothing to do; the panel is re-rendered on reselect anyway
+    if(widgets.has(newID))
+      return `A widget with ID "${newID}" already exists.`;
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} renamed widget ${widget.id} to ${newID} in editor`);
+    const newState = JSON.parse(JSON.stringify(widget.state));
+    newState.id = newID;
+    await updateWidgetId(newState, widget.id);
+    batchEnd();
+
+    if(widgets.has(newID))
+      setSelection([ widgets.get(newID) ]);
+    return null;
   }
 
   renderBasicSection(widget) {
-    this.renderCollapsibleSection('Tweak position, size and rotation', true, body=>{
-      this.renderInputs(widget, [
-        { label: 'X',        property: 'x',        kind: 'number', min: 0, max: 1600, step: 1, slider: true, hint: editorPropertyHints.x },
-        { label: 'Y',        property: 'y',        kind: 'number', min: 0, max: 1000, step: 1, slider: true, hint: editorPropertyHints.y },
-      ], body);
-
-      let sizeLocked = false;
-      this.renderInputs(widget, [
-        { label: 'Width', property: 'width', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.width,
-          setValue: value=>this.setWidgetDimension(widget, 'width', value, sizeLocked) },
-        { label: 'Height', property: 'height', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.height,
-          setValue: value=>this.setWidgetDimension(widget, 'height', value, sizeLocked) }
-      ], body);
-      new CheckboxInput(this, widget, 'Lock width / height', {
-        getValue: _=>sizeLocked,
-        setValue: value=>sizeLocked = value,
-        listenTo: [ 'width', 'height' ],
-        hint: editorPropertyHints.sizeLock
-      }).render(body);
-
-      this.renderInputs(widget, [
-        { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true, hint: editorPropertyHints.rotation },
-        { label: 'Scale',    property: 'scale',    kind: 'number', min: 0.1, max: 5, step: 0.1, slider: true, hint: editorPropertyHints.scale },
-        { label: 'Layer',    property: 'layer',    kind: 'select', hint: editorPropertyHints.layer, choices: [
-          { value: -5, text: '-5 (background)' },
-          { value: -4, text: '-4' },
-          { value: -3, text: '-3 (holders)' },
-          { value: -2, text: '-2 (labels)' },
-          { value: -1, text: '-1 (buttons, seats, timers)' },
-          { value:  0, text: '0' },
-          { value:  1, text: '1 (cards, dice, pieces)' },
-          { value:  2, text: '2' },
-          { value:  3, text: '3' },
-          { value:  4, text: '4' },
-          { value:  5, text: '5' }
-        ] },
-        { label: 'Z (within layer)', property: 'z', kind: 'number', step: 1, nullIfEmpty: true, hint: editorPropertyHints.z }
-      ], body);
-      this.renderParentControl(widget, body);
-    }, null, `${widget.id}:position`);
     this.renderMovableControl(widget);
+
+    this.addSubHeader('Position, size and rotation');
+    this.renderInputs(widget, [
+      { label: 'X',        property: 'x',        kind: 'number', min: 0, max: 1600, step: 1, slider: true, hint: editorPropertyHints.x },
+      { label: 'Y',        property: 'y',        kind: 'number', min: 0, max: 1000, step: 1, slider: true, hint: editorPropertyHints.y },
+    ]);
+
+    let sizeLocked = false;
+    this.renderInputs(widget, [
+      { label: 'Width', property: 'width', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.width,
+        setValue: value=>this.setWidgetDimension(widget, 'width', value, sizeLocked) },
+      { label: 'Height', property: 'height', kind: 'number', min: 1, max: 1600, step: 1, slider: true, hint: editorPropertyHints.height,
+        setValue: value=>this.setWidgetDimension(widget, 'height', value, sizeLocked) }
+    ]);
+    new CheckboxInput(this, widget, 'Lock width / height', {
+      getValue: _=>sizeLocked,
+      setValue: value=>sizeLocked = value,
+      listenTo: [ 'width', 'height' ],
+      hint: editorPropertyHints.sizeLock
+    }).render(this.moduleDOM);
+
+    this.renderInputs(widget, [
+      { label: 'Rotation', property: 'rotation', kind: 'number', min: 0, max: 360, step: 1, slider: true, hint: editorPropertyHints.rotation },
+      { label: 'Scale',    property: 'scale',    kind: 'number', min: 0.1, max: 5, step: 0.1, slider: true, hint: editorPropertyHints.scale },
+      { label: 'Layer',    property: 'layer',    kind: 'select', hint: editorPropertyHints.layer, choices: [
+        { value: -5, text: '-5 (background)' },
+        { value: -4, text: '-4' },
+        { value: -3, text: '-3 (holders)' },
+        { value: -2, text: '-2 (labels)' },
+        { value: -1, text: '-1 (buttons, seats, timers)' },
+        { value:  0, text: '0' },
+        { value:  1, text: '1 (cards, dice, pieces)' },
+        { value:  2, text: '2' },
+        { value:  3, text: '3' },
+        { value:  4, text: '4' },
+        { value:  5, text: '5' }
+      ] },
+      { label: 'Z (within layer)', property: 'z', kind: 'number', step: 1, nullIfEmpty: true, hint: editorPropertyHints.z }
+    ]);
+    this.renderParentControl(widget, this.moduleDOM);
   }
 
   async setWidgetDimension(widget, property, value, locked) {
@@ -2380,7 +2477,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForCard(widget) {
-    this.addHeader(`Card ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader(`Card type`);
     const deck = widgets.get(widget.get('deck'));
@@ -2422,7 +2519,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForDeck(widget) {
-    this.addHeader(`Deck ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader(`Card types`);
     div(this.moduleDOM, 'buttonBar', `
@@ -2473,7 +2570,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForDice(widget) {
-    this.addHeader(`Dice ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.renderDiceFaceEditor(widget);
     this.renderAppearanceSection(widget);
@@ -3018,7 +3115,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForHolder(widget) {
-    this.addHeader(`Holder ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
@@ -3127,7 +3224,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForSpinner(widget) {
-    this.addHeader(`Spinner ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
 
     this.addSubHeader('Spinner Options');

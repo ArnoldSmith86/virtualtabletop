@@ -68,11 +68,15 @@
 }
 
 /* checkbox rendered as a switch (reuses global .switchbox visuals) */
+/* the 24px knob travels from x=2 to x=24, so a 50px-wide border-box track
+   leaves a symmetrical 2px gap on both ends (and 2px above/below at 28px) */
 .editorModule .switchInput label.switchbox {
-  height: 24px;
-  width: 42px;
-  flex-grow: 0;
-  flex-shrink: 0;
+  box-sizing: border-box;
+  height: 28px;
+  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  flex: 0 0 50px;
   margin: 2px;
   padding: 0;
   position: relative;
@@ -98,10 +102,20 @@
   min-width: 90px;
   font-size: 12px;
   padding: 0 6px;
+  background: var(--backgroundHighlightColor1, #ddd);
+  color: var(--textDimColor1, #666);
 }
 .editorModule .movableToggleInput .segmented-control button.active {
-  background: var(--VTTblueDark);
+  background: var(--VTTblue);
   color: #fff;
+  font-weight: bold;
+}
+.editorModule .movableToggleInput .segmented-control button.active::before {
+  content: 'check';
+  font-family: 'Material Symbols';
+  font-weight: normal;
+  font-size: 16px;
+  margin-right: 4px;
 }
 .editorModule .movableToggleInput .segmented-control button.multiDiffers {
   opacity: 0.55;
@@ -376,15 +390,13 @@
   margin: 4px 0;
 }
 
-.editorModule .collapsibleHeader {
+/* blue section headers double as collapse toggles */
+.editorModule h2.collapsibleHeader {
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  font-weight: bold;
-  padding: 4px 6px;
-  background: var(--backgroundHighlightColor1, #eee);
-  border-radius: 5px;
+  user-select: none;
 }
 
 .editorModule .collapseArrow::before {
@@ -407,9 +419,29 @@
 
 /* subsection titles inside the appearance section */
 .editorModule .appearanceSubTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
   color: var(--VTTblue);
-  margin: 8px 0 2px;
+  margin: 12px 0 4px;
+}
+.editorModule .appearanceSubTitle::before {
+  content: '';
+  flex: 0 0 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--VTTblue);
+}
+.editorModule .appearanceSubTitle::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--VTTblue);
+  opacity: 0.35;
 }
 
 /* appearance section header buttons */
@@ -658,4 +690,37 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+/* widget header: "Type: id" with a rename control */
+.editorModule .widgetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.editorModule .widgetHeader h1 {
+  margin: 10px 0;
+}
+.editorModule .widgetHeader .widgetHeaderID {
+  color: var(--textColor, #000);
+}
+.editorModule .widgetHeader .renameWidgetButton {
+  min-width: 30px;
+  justify-content: center;
+}
+.editorModule .widgetHeaderInput {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: var(--textColor, #000);
+  max-width: 280px;
+  text-align: center;
+}
+
+/* generic collapsible sections around the blue headers */
+.editorModule .sectionBand {
+  margin: 4px 0;
+}
+.editorModule .sectionBand > .collapsibleBody {
+  padding: 0 0 4px;
 }

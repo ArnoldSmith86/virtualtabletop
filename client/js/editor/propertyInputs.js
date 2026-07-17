@@ -219,9 +219,16 @@ function attachPropertyHint(propertyInputDOM, hintText) {
   button.setAttribute('icon', 'help');
   button.title = hintText;
   button.type = 'button';
-  const description = div(propertyInputDOM, 'propertyHintText');
+  const description = document.createElement('div');
+  description.className = 'propertyHintText';
   description.textContent = hintText;
   description.style.display = 'none';
+  // keep the hint text outside the row so expanding it shows the text below
+  // the row without changing the row's layout at all
+  if(propertyInputDOM.parentElement)
+    propertyInputDOM.insertAdjacentElement('afterend', description);
+  else
+    propertyInputDOM.appendChild(description);
   button.onclick = e=>{
     e.preventDefault();
     description.style.display = description.style.display == 'none' ? '' : 'none';
