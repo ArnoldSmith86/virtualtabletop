@@ -70,6 +70,21 @@ class Pile extends Widget {
       await this.arrangeAsSpread(holder.get('stackOffsetX') || 0, holder.get('stackOffsetY') || 0);
   }
 
+  // Undo a spread fan: stack the children back on top of each other (preserving
+  // their order) and shrink the pile back to card size. Used when a spread group
+  // is dropped into a holder that does not use layout multipleSpread. A pile
+  // whose children are already stacked is left completely untouched.
+  async collapse() {
+    const children = this.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    if(!children.length || !children.some(c=>c.get('x') || c.get('y')))
+      return;
+    let z = 1;
+    for(const child of children)
+      await child.setPosition(0, 0, z++);
+    await this.set('width',  children[0].get('width'));
+    await this.set('height', children[0].get('height'));
+  }
+
   async onChildAddAlign(child, oldParentID) {
     if(this.spreadHolder())
       return await this.reSpreadForHolder();

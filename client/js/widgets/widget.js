@@ -1963,7 +1963,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true, groupBy: null });
         let collection;
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
@@ -1974,7 +1974,9 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              if(holder.get('layout') == 'multipleSpread' && typeof holder.sortGroupContents == 'function') {
+              if(holder.get('layout') == 'multipleSpread' && a.groupBy && typeof holder.regroupBy == 'function') {
+                await holder.regroupBy(a.groupBy, a.key, a.reverse, a.locales, a.options);
+              } else if(holder.get('layout') == 'multipleSpread' && typeof holder.sortGroupContents == 'function') {
                 await holder.sortGroupContents(a.key, a.reverse, a.locales, a.options);
               } else {
                 await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);

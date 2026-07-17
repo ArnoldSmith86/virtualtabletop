@@ -129,7 +129,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset', layout: v=>v===null||['pile','singleSpread','multipleSpread','grid','freeform'].includes(v)||'layout must be null, pile, singleSpread, multipleSpread, grid or freeform', spreadOffset: v=>v===null||typeof v==='number'||'spreadOffset must be null or a number'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset', layout: v=>v===null||['pile','singleSpread','multipleSpread','grid','freeform'].includes(v)||'layout must be null, pile, singleSpread, multipleSpread, grid or freeform', spreadOffset: v=>v===null||typeof v==='number'||'spreadOffset must be null or a number', autoFit: 'boolean'
     },
     Label: {
         ...COMMON_PROPERTIES,
@@ -780,7 +780,8 @@ const operationProps = {
         'reverse': 'boolean',
         'locales': 'any',
         'options': 'any',
-        'rearrange': 'boolean'
+        'rearrange': 'boolean',
+        'groupBy': v=>v===null||typeof v==='string'||'groupBy must be null or a property name'
     },
     'SWAPHANDS': {
         'interval': v=>typeof v === 'number' && Number.isInteger(v),

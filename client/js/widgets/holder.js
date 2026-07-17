@@ -30,7 +30,8 @@ class Holder extends ImageWidget {
       borderRadius: 8,
 
       layout: null,
-      spreadOffset: null
+      spreadOffset: null,
+      autoFit: false
     });
   }
 
@@ -209,6 +210,11 @@ class Holder extends ImageWidget {
       return await this.placeInSpreadGroups(child, oldParentID);
     }
 
+    // a spread-out group dropped into a holder that is not multipleSpread
+    // collapses back into a normal stacked pile
+    if(child.get('type') == 'pile' && child.collapse)
+      await child.collapse();
+
     if((this.get('preventPiles') || this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY'))) && child.get('type') == 'pile') {
       let i=1;
       this.preventRearrangeDuringPileDrop = true;
@@ -241,7 +247,7 @@ class Holder extends ImageWidget {
 
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
-    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY' || property == 'layout' || property == 'spreadOffset') {
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY' || property == 'layout' || property == 'spreadOffset' || property == 'autoFit') {
       await this.updateAfterShuffle();
     }
   }
@@ -264,6 +270,18 @@ class Holder extends ImageWidget {
     if(this.get('layout') == 'grid')
       return await this.rearrangeChildrenGrid(children);
 
+    // with autoFit the per-card offset shrinks so the whole spread stays inside
+    // the holder (cards overlap more instead of spilling out)
+    let stepX = this.get('stackOffsetX');
+    let stepY = this.get('stackOffsetY');
+    if(this.get('autoFit') && children.length > 1) {
+      const first = children[0];
+      if(stepX > 0)
+        stepX = Math.min(stepX, Math.max(0, (this.get('width')  - 2 * this.get('dropOffsetX') - first.get('width'))  / (children.length - 1)));
+      if(stepY > 0)
+        stepY = Math.min(stepY, Math.max(0, (this.get('height') - 2 * this.get('dropOffsetY') - first.get('height')) / (children.length - 1)));
+    }
+
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
@@ -275,8 +293,8 @@ class Holder extends ImageWidget {
 
       await child.setPosition(newX, newY, newZ);
 
-      xOffset += !child.get('overlap') && this.get('stackOffsetX') ? child.get('width' ) + 4 : this.get('stackOffsetX');
-      yOffset += !child.get('overlap') && this.get('stackOffsetY') ? child.get('height') + 4 : this.get('stackOffsetY');
+      xOffset += !child.get('overlap') && this.get('stackOffsetX') ? child.get('width' ) + 4 : stepX;
+      yOffset += !child.get('overlap') && this.get('stackOffsetY') ? child.get('height') + 4 : stepY;
     }
   }
 
@@ -405,10 +423,10 @@ class Holder extends ImageWidget {
     if(this.preventRearrangeDuringPileDrop)
       return;
 
-    const stepX = this.get('stackOffsetX') || 0;
-    const stepY = this.get('stackOffsetY') || 0;
+    let stepX = this.get('stackOffsetX') || 0;
+    let stepY = this.get('stackOffsetY') || 0;
     const spread = this.get('spreadOffset');
-    const gap = spread === null || spread === undefined ? 8 : spread;
+    let gap = spread === null || spread === undefined ? 8 : spread;
 
     // arrange only the groups belonging to one owner's "lane" (a null owner is
     // shared and part of every lane) so each player's groups are laid out
@@ -416,6 +434,32 @@ class Holder extends ImageWidget {
     const all = this.childrenFilter(super.children(), true).slice();
     const shadow = all.find(w=>w.get('dropShadowOwner') && (owner === undefined || this.childOwner(w) === owner));
     const groups = all.filter(w=>!w.get('dropShadowOwner') && (owner === undefined || !w.get('owner') || w.get('owner') === owner)).sort((a, b)=>(a.get('x') - b.get('x')) || (a.get('z') - b.get('z')));
+
+    // with autoFit the fan step and the gap between groups shrink so the lane's
+    // whole row fits inside the holder; if even fully stacked groups are wider
+    // than the holder, the groups themselves overlap (negative gap)
+    if(this.get('autoFit') && groups.length) {
+      const sampleCard = groups.map(g=>g.get('type') == 'pile' ? g.children()[0] : g).find(c=>c);
+      if(sampleCard) {
+        const cardW = sampleCard.get('width');
+        const counts = groups.map(g=>g.get('type') == 'pile' ? g.children().length : 1);
+        const N = counts.reduce((a, b)=>a + b, 0);
+        const G = groups.length;
+        const available = this.get('width') - 2 * this.get('dropOffsetX');
+        const flex = (N - G) * stepX + (G - 1) * gap;
+        const room = available - G * cardW;
+        if(flex > room) {
+          if(room >= 0 && flex > 0) {
+            const f = room / flex;
+            stepX *= f;
+            gap *= f;
+          } else {
+            stepX = 0;
+            gap = G > 1 ? room / (G - 1) : 0;
+          }
+        }
+      }
+    }
 
     // decide where the shadow goes: over a group (insert within that group's fan)
     // or between two groups / at an end (insert a new group). The shadow is
@@ -487,10 +531,16 @@ class Holder extends ImageWidget {
     const stepX = this.get('stackOffsetX') || 0;
     const stepY = this.get('stackOffsetY') || 0;
     const vertical = Math.abs(stepY) > Math.abs(stepX);
-    const step = (vertical ? stepY : stepX) || (vertical ? group.get('height') : group.get('width'));
     const coordinate = vertical ? position.y : position.x;
     const origin = group.get(vertical ? 'y' : 'x');
     const count = group.get('type') == 'pile' ? group.children().length : 1;
+    // derive the actual per-card step from the group's rendered size so the index
+    // stays correct when autoFit has compressed the fan
+    const card = group.get('type') == 'pile' ? group.children()[0] : group;
+    const cardSize = card ? card.get(vertical ? 'height' : 'width') : 0;
+    let step = count > 1 ? (group.get(vertical ? 'height' : 'width') - cardSize) / (count - 1) : 0;
+    if(!step)
+      step = (vertical ? stepY : stepX) || cardSize || 1;
     return Math.max(0, Math.min(count, Math.round((coordinate - origin) / step)));
   }
 
@@ -520,6 +570,10 @@ class Holder extends ImageWidget {
   }
 
   async placeInSpreadGroups(child, oldParentID) {
+    // while regroupBy rebuilds the groups it assigns parents/positions itself
+    if(this._regrouping)
+      return;
+
     await super.onChildAddAlign(child, oldParentID);
 
     // a card returning to the holder because its own group dissolved (down to its
@@ -622,6 +676,64 @@ class Holder extends ImageWidget {
     await this.updateAfterShuffle();
   }
 
+  // SORT with groupBy on a multipleSpread holder: sort all of a lane's cards by
+  // `key` and re-partition them into one spread group per distinct value of the
+  // groupBy property (e.g. one group per suit), per owner lane.
+  async regroupBy(property, key, reverse, locales, options) {
+    const all = this.childrenFilter(super.children(), true).filter(w=>!w.get('dropShadowOwner'));
+    const owners = new Set(all.map(c=>c.get('owner') || null));
+    this._regrouping = true;
+    for(const owner of (owners.size ? owners : [ null ])) {
+      const lane = all.filter(c=>!c.get('owner') || c.get('owner') === owner);
+      const cards = [];
+      for(const g of lane)
+        cards.push(...(g.get('type') == 'pile' ? g.children() : [ g ]));
+      if(!cards.length)
+        continue;
+
+      await sortWidgets(cards, key || property, reverse, locales, options, true);
+
+      // consecutive cards with the same groupBy value form one group
+      const runs = [];
+      for(const c of cards) {
+        const value = c.get(property);
+        if(!runs.length || runs[runs.length - 1].value !== value)
+          runs.push({ value, cards: [] });
+        runs[runs.length - 1].cards.push(c);
+      }
+
+      let z = 1;
+      for(const run of runs) {
+        if(run.cards.length == 1) {
+          const c = run.cards[0];
+          await c.set('parent', this.get('id'));
+          await c.setPosition(this.get('dropOffsetX'), this.get('dropOffsetY'), z++);
+        } else {
+          const first = run.cards[0];
+          const pileDef = Object.assign({
+            type: 'pile',
+            parent: this.get('id'),
+            x: this.get('dropOffsetX'),
+            y: this.get('dropOffsetY'),
+            width: first.get('width'),
+            height: first.get('height')
+          }, first.get('onPileCreation'));
+          if(owner)
+            pileDef.owner = owner;
+          const pile = widgets.get(await addWidgetLocal(pileDef));
+          let pz = 1;
+          for(const c of run.cards) {
+            await c.set('parent', pile.get('id'));
+            await c.set('z', pz++);
+          }
+          await pile.set('z', z++);
+        }
+      }
+    }
+    delete this._regrouping;
+    await this.updateAfterShuffle();
+  }
+
   // Move all of a dropped pile's cards into this holder as loose cards so the
   // pile dissolves (its handle disappears). The caller arranges them afterwards.
   async breakUpPile(pile) {
@@ -645,6 +757,9 @@ class Holder extends ImageWidget {
   }
 
   async updateAfterShuffle() {
+    if(this._regrouping)
+      return;
+
     const layout = this.get('layout');
 
     // grid and multipleSpread arrange each owner's cards independently (a null
