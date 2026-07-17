@@ -302,6 +302,8 @@ export default class Room {
       await requireAdmin();
       if(args.public) {
         const description = String(args.description || '').trim().substring(0, 500);
+        if(!description)
+          throw new Logging.UserError(400, 'Please enter a description for the public rooms list.');
         if(!PublicRooms.add(this.id))
           throw new Logging.UserError(400, 'The public rooms list is full.');
         this.state._meta.public = { description };
@@ -414,6 +416,7 @@ export default class Room {
     for(const id of [ active.saveStateID, active.stateID, active.linkStateID ])
       if(!game && id !== undefined && meta.states[id])
         game = meta.states[id];
+    const playerNames = [...new Set(this.players.map(player=>player.name))];
     return {
       id: this.id,
       name: meta.roomName || this.id,
@@ -426,7 +429,8 @@ export default class Room {
       autoLink: !!meta.linkSourceRoom,
       isPublic: this.isPublic(),
       description: this.isPublic() && meta.public.description || null,
-      players: [...new Set(this.players.map(player=>player.name))].map(name=>({ name, color: meta.players[name] || null }))
+      playerCount: playerNames.length,
+      players: playerNames.map(name=>({ name, color: meta.players[name] || null }))
     };
   }
 

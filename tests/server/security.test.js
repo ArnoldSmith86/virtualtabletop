@@ -203,6 +203,13 @@ describe('Public rooms', () => {
     expect(room.state._meta.public.description.length).toBe(500);
   });
 
+  test('publishing requires a description', async () => {
+    await room.collectionAction('claim', { collection: 'admin-collection' });
+    await expect(room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: '   ' })).rejects.toThrow(/description/);
+    expect(room.isPublic()).toBe(false);
+    expect(PublicRooms.get()).not.toContain(roomID);
+  });
+
   test('unpublishing and unclaiming remove the room from the public list', async () => {
     await room.collectionAction('claim', { collection: 'admin-collection' });
     await room.collectionAction('setPublic', { collection: 'admin-collection', public: true, description: 'x' });

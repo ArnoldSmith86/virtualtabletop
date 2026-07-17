@@ -380,25 +380,37 @@ MinifyHTML().then(function(result) {
     })().catch(next);
   });
 
+  // the response is the same for everyone, so cache it briefly: it makes the anonymous
+  // endpoint cheap to poll and keeps idle public rooms from being loaded from disk on every request
+  let publicRoomsCache = null;
   router.get('/api/publicrooms', function(req, res, next) {
     (async function() {
-      const collection = typeof req.query.collection == 'string' ? req.query.collection : null;
-      const rooms = [];
-      for(const roomID of PublicRooms.get()) {
-        // heal the list when a published room was deleted or its file was removed
-        if(!roomExists(roomID)) {
-          PublicRooms.remove(roomID);
-          continue;
+      if(!publicRoomsCache || publicRoomsCache.time < Date.now() - 10000) {
+        const rooms = [];
+        for(const roomID of PublicRooms.get()) {
+          try {
+            // heal the list when a published room was deleted or its file was removed
+            if(!roomExists(roomID)) {
+              PublicRooms.remove(roomID);
+              continue;
+            }
+            if(await ensureRoomIsLoaded(roomID)) {
+              if(activeRooms.get(roomID).isPublic()) {
+                const details = await activeRooms.get(roomID).getRoomDetails(null);
+                delete details.players; // the anonymous listing only gets the count, not who is playing
+                rooms.push(details);
+              } else {
+                PublicRooms.remove(roomID);
+              }
+            }
+          } catch(e) {
+            Logging.log(`ERROR: skipping room ${roomID} in the public rooms listing: ${e}`);
+          }
         }
-        if(await ensureRoomIsLoaded(roomID)) {
-          if(activeRooms.get(roomID).isPublic())
-            rooms.push(await activeRooms.get(roomID).getRoomDetails(collection));
-          else
-            PublicRooms.remove(roomID);
-        }
+        publicRoomsCache = { time: Date.now(), body: JSON.stringify({ rooms }) };
       }
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify({ rooms }));
+      res.send(publicRoomsCache.body);
     })().catch(next);
   });
 
@@ -424,6 +436,7 @@ MinifyHTML().then(function(result) {
       if(!isLoaded)
         return res.status(404).send('Invalid room.');
       await activeRooms.get(req.params.room).collectionAction(req.params.action, req.body || {});
+      publicRoomsCache = null; // publish/unpublish/rename/delete should show up immediately
       res.send('OK');
     }).catch(next);
   });

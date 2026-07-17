@@ -94,7 +94,7 @@ function createRoomTile(room, isPublicTile) {
   $('h3', tile).textContent = room.name;
   $('h4', tile).textContent = room.gameName || 'No game loaded';
   if(isPublicTile) {
-    $('h4', tile).textContent += ` — ${room.players} ${room.players == 1 ? 'player' : 'players'} online`;
+    $('h4', tile).textContent += ` — ${room.playerCount} ${room.playerCount == 1 ? 'player' : 'players'} online`;
     if(room.description) {
       $('.description', tile).textContent = room.description;
       $('.description', tile).classList.remove('hidden');
@@ -217,7 +217,7 @@ async function refreshRoomsList() {
       rooms = (await result.json()).rooms;
   } catch(e) {}
   try {
-    const result = await fetch(`api/publicrooms?collection=${getCollectionID()}`);
+    const result = await fetch('api/publicrooms');
     if(result.ok)
       publicRooms = (await result.json()).rooms;
   } catch(e) {}
@@ -238,7 +238,11 @@ async function refreshRoomsList() {
     $('#emptyPublicRoomsList').textContent = 'Could not load the public rooms. Please try again.';
     $('#emptyPublicRoomsList').style.display = 'block';
   } else {
-    publicRooms.sort((a, b)=>b.players - a.players);
+    // the public listing is anonymous, so admin status comes from the user's own collection
+    const adminRoomIDs = new Set((rooms || []).filter(r=>r.isAdmin).map(r=>r.id));
+    for(const room of publicRooms)
+      room.isAdmin = adminRoomIDs.has(room.id);
+    publicRooms.sort((a, b)=>b.playerCount - a.playerCount);
     for(const room of publicRooms)
       $('#publicRoomsList').appendChild(createRoomTile(room, true));
     $('#emptyPublicRoomsList').style.display = publicRooms.length ? 'none' : 'block';
