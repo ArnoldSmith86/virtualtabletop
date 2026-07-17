@@ -30,8 +30,7 @@ class Holder extends ImageWidget {
       borderRadius: 8,
 
       layout: null,
-      spreadOffset: null,
-      autoFit: false
+      spreadOffset: null
     });
   }
 
@@ -129,15 +128,27 @@ class Holder extends ImageWidget {
   }
 
   async dispenseCard(card) {
+    // in a multipleSpread holder a card often just moves between groups (drag
+    // between fans, regroupBy, merges) - its new parent is still this holder or a
+    // pile inside it. It is not leaving the holder, so onLeave and leaveRoutine
+    // must not fire (they would e.g. flip the card face down).
+    let stillInside = false;
+    if(this.get('layout') == 'multipleSpread') {
+      const newParent = card.get('parent');
+      stillInside = newParent == this.get('id') || widgets.has(newParent) && widgets.get(newParent).get('parent') == this.get('id');
+    }
+
     let toProcess = [ card ];
     if(card.get('type') == 'pile')
       toProcess = card.children();
-    for(const w of toProcess) {
-      if(!w.get('ignoreOnLeave')) {
-        for(const property in this.get('onLeave')) {
-          if(tracingEnabled)
-            sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
-          await w.set(property, this.get('onLeave')[property]);
+    if(!stillInside) {
+      for(const w of toProcess) {
+        if(!w.get('ignoreOnLeave')) {
+          for(const property in this.get('onLeave')) {
+            if(tracingEnabled)
+              sendTraceEvent('onLeave', { w: w.get('id'), child: card.get('id'), property, value: this.get('onLeave')[property], toProcess: toProcess.map(w=>w.get('id')) });
+            await w.set(property, this.get('onLeave')[property]);
+          }
         }
       }
     }
@@ -145,7 +156,7 @@ class Holder extends ImageWidget {
       await this.updateAfterShuffle();
     else if(this.get('alignChildren') && (this.get('stackOffsetX') || this.get('stackOffsetY')))
       await this.receiveCard(null);
-    if(Array.isArray(this.get('leaveRoutine')))
+    if(!stillInside && Array.isArray(this.get('leaveRoutine')))
       await this.evaluateRoutine('leaveRoutine', {}, { child: [ card ] });
   }
 
@@ -247,7 +258,7 @@ class Holder extends ImageWidget {
 
   async onPropertyChange(property, oldValue, newValue) {
     await super.onPropertyChange(property, oldValue, newValue);
-    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY' || property == 'layout' || property == 'spreadOffset' || property == 'autoFit') {
+    if(property == 'dropOffsetX' || property == 'dropOffsetY' || property == 'stackOffsetX' || property == 'stackOffsetY' || property == 'layout' || property == 'spreadOffset') {
       await this.updateAfterShuffle();
     }
   }
@@ -270,18 +281,6 @@ class Holder extends ImageWidget {
     if(this.get('layout') == 'grid')
       return await this.rearrangeChildrenGrid(children);
 
-    // with autoFit the per-card offset shrinks so the whole spread stays inside
-    // the holder (cards overlap more instead of spilling out)
-    let stepX = this.get('stackOffsetX');
-    let stepY = this.get('stackOffsetY');
-    if(this.get('autoFit') && children.length > 1) {
-      const first = children[0];
-      if(stepX > 0)
-        stepX = Math.min(stepX, Math.max(0, (this.get('width')  - 2 * this.get('dropOffsetX') - first.get('width'))  / (children.length - 1)));
-      if(stepY > 0)
-        stepY = Math.min(stepY, Math.max(0, (this.get('height') - 2 * this.get('dropOffsetY') - first.get('height')) / (children.length - 1)));
-    }
-
     let xOffset = 0;
     let yOffset = 0;
     let z = 1;
@@ -293,8 +292,8 @@ class Holder extends ImageWidget {
 
       await child.setPosition(newX, newY, newZ);
 
-      xOffset += !child.get('overlap') && this.get('stackOffsetX') ? child.get('width' ) + 4 : stepX;
-      yOffset += !child.get('overlap') && this.get('stackOffsetY') ? child.get('height') + 4 : stepY;
+      xOffset += !child.get('overlap') && this.get('stackOffsetX') ? child.get('width' ) + 4 : this.get('stackOffsetX');
+      yOffset += !child.get('overlap') && this.get('stackOffsetY') ? child.get('height') + 4 : this.get('stackOffsetY');
     }
   }
 
@@ -435,32 +434,6 @@ class Holder extends ImageWidget {
     const shadow = all.find(w=>w.get('dropShadowOwner') && (owner === undefined || this.childOwner(w) === owner));
     const groups = all.filter(w=>!w.get('dropShadowOwner') && (owner === undefined || !w.get('owner') || w.get('owner') === owner)).sort((a, b)=>(a.get('x') - b.get('x')) || (a.get('z') - b.get('z')));
 
-    // with autoFit the fan step and the gap between groups shrink so the lane's
-    // whole row fits inside the holder; if even fully stacked groups are wider
-    // than the holder, the groups themselves overlap (negative gap)
-    if(this.get('autoFit') && groups.length) {
-      const sampleCard = groups.map(g=>g.get('type') == 'pile' ? g.children()[0] : g).find(c=>c);
-      if(sampleCard) {
-        const cardW = sampleCard.get('width');
-        const counts = groups.map(g=>g.get('type') == 'pile' ? g.children().length : 1);
-        const N = counts.reduce((a, b)=>a + b, 0);
-        const G = groups.length;
-        const available = this.get('width') - 2 * this.get('dropOffsetX');
-        const flex = (N - G) * stepX + (G - 1) * gap;
-        const room = available - G * cardW;
-        if(flex > room) {
-          if(room >= 0 && flex > 0) {
-            const f = room / flex;
-            stepX *= f;
-            gap *= f;
-          } else {
-            stepX = 0;
-            gap = G > 1 ? room / (G - 1) : 0;
-          }
-        }
-      }
-    }
-
     // decide where the shadow goes: over a group (insert within that group's fan)
     // or between two groups / at an end (insert a new group). The shadow is
     // positioned in global coordinates while the groups store holder-relative
@@ -534,8 +507,7 @@ class Holder extends ImageWidget {
     const coordinate = vertical ? position.y : position.x;
     const origin = group.get(vertical ? 'y' : 'x');
     const count = group.get('type') == 'pile' ? group.children().length : 1;
-    // derive the actual per-card step from the group's rendered size so the index
-    // stays correct when autoFit has compressed the fan
+    // derive the actual per-card step from the group's rendered size
     const card = group.get('type') == 'pile' ? group.children()[0] : group;
     const cardSize = card ? card.get(vertical ? 'height' : 'width') : 0;
     let step = count > 1 ? (group.get(vertical ? 'height' : 'width') - cardSize) / (count - 1) : 0;

@@ -1793,8 +1793,13 @@ function jeAddResetPropertiesCommand(key) {
 
 function jeAddWidgetPropertyCommands(object, widgetBase) {
   for(const property in object.defaults)
-    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/))
+    if(property != 'typeClasses' && !property.match(/^c[0-9]{2}$/)) {
+      // holders use the layout property instead of alignChildren (FileUpdater v22
+      // migrates it away), so don't offer alignChildren for them anymore
+      if(property == 'alignChildren' && object.defaults.typeClasses == 'widget holder')
+        continue;
       jeAddWidgetPropertyCommand(object, widgetBase, property);
+    }
   const type = object.defaults.typeClasses.replace(/widget /, '');
   if(type != 'card' && type != 'pile') {
     jeCommands.push({

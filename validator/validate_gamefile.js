@@ -129,7 +129,7 @@ const WIDGET_PROPERTIES = {
     },
     Holder: {
         ...COMMON_PROPERTIES,
-        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset', layout: v=>v===null||['pile','singleSpread','multipleSpread','grid','freeform'].includes(v)||'layout must be null, pile, singleSpread, multipleSpread, grid or freeform', spreadOffset: v=>v===null||typeof v==='number'||'spreadOffset must be null or a number', autoFit: 'boolean'
+        movable: 'boolean', layer: 'number', dropTarget: 'any', dropOffsetX: 'number', dropOffsetY: 'number', dropShadow: 'any', alignChildren: 'any', preventPiles: 'any', childrenPerOwner: 'any', showInactiveFaceToSeat: 'any', onEnter: 'object', onLeave: 'object', stackOffsetX: 'number', stackOffsetY: 'number', borderRadius: 'any', color: 'string', svgReplaces: 'any', text: 'any', textColor: 'any', icon: 'any', image: 'asset', layout: v=>v===null||['pile','singleSpread','multipleSpread','grid','freeform'].includes(v)||'layout must be null, pile, singleSpread, multipleSpread, grid or freeform', spreadOffset: v=>v===null||typeof v==='number'||'spreadOffset must be null or a number'
     },
     Label: {
         ...COMMON_PROPERTIES,
