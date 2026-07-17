@@ -99,6 +99,14 @@ function createRoomTile(room) {
   toggleClass($('.passwordIcon', tile), 'hidden', !room.hasPassword);
   toggleClass($('.adminIcon', tile), 'hidden', !room.isAdmin);
 
+  for(const player of Array.isArray(room.players) ? room.players : []) {
+    const chip = document.createElement('span');
+    chip.textContent = player.name;
+    if(player.color)
+      chip.style.backgroundColor = player.color;
+    $('.roomPlayers', tile).appendChild(chip);
+  }
+
   const menu = $('.roomMenu', tile);
   const addMenuButton = function(icon, text, className, callback) {
     const button = document.createElement('button');

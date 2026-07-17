@@ -408,7 +408,7 @@ export default class Room {
       locked: !!meta.locked,
       hasPassword: !!(meta.security && meta.security.joinPassword),
       autoLink: !!meta.linkSourceRoom,
-      players: this.players.length
+      players: [...new Set(this.players.map(player=>player.name))].map(name=>({ name, color: meta.players[name] || null }))
     };
   }
 
