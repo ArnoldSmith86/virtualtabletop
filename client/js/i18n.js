@@ -35,7 +35,7 @@ let dictionary = {};
 // dictionary is fetched as a static file and applied client-side.
 const dictionaryLoaded = language == 'en' || typeof fetch == 'undefined'
   ? Promise.resolve()
-  : fetch(`i18n/${language}.json`).then(r=>r.json()).then(d=>dictionary=d).catch(_=>{});
+  : fetch(`${config.urlPrefix || ''}/i18n/${language}.json`).then(r=>r.json()).then(d=>dictionary=d).catch(_=>{});
 
 export function getLanguage() {
   return language;
@@ -45,7 +45,7 @@ export function translate(text) {
   return dictionary[text] || text;
 }
 
-const translatedAttributes = [ 'placeholder', 'title', 'data-label', 'data-placeholder' ];
+const translatedAttributes = [ 'placeholder', 'title', 'aria-label', 'data-label', 'data-placeholder' ];
 
 function skipTranslation(element) {
   // never touch game content: widgets in the room, game tiles and variants in the
@@ -65,7 +65,7 @@ function translateNode(node) {
       const parent = node.parentElement;
       if(parent && parent.tagName == 'OPTION' && !parent.hasAttribute('value'))
         parent.setAttribute('value', parent.value);
-      node.nodeValue = node.nodeValue.replace(trimmed, dictionary[trimmed]);
+      node.nodeValue = node.nodeValue.replace(trimmed, _=>dictionary[trimmed]);
     }
     return;
   }
@@ -108,6 +108,7 @@ export function translateOnChange(root) {
 }
 
 function translateDOM() {
+  document.documentElement.lang = language;
   if(language != 'en')
     translateNode(document.body);
 }

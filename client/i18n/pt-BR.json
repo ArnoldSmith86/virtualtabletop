@@ -30,7 +30,6 @@
   "More players can join this game by visiting": "Mais jogadores podem entrar neste jogo visitando",
   "Share room URL": "Compartilhar URL da sala",
   "Language": "Idioma",
-  "Select the display language for menus and dialogs. Game content is not translated.": "Selecione o idioma de exibição para menus e caixas de diálogo. O conteúdo dos jogos não é traduzido.",
   "In order to switch games, please return to the main server:": "Para trocar de jogo, retorne ao servidor principal:",
   "Return": "Retornar",
   "Search": "Pesquisar",
@@ -590,5 +589,6 @@
   "Are you sure you want to delete the widget \"{name}\"?": "Tem certeza de que deseja excluir o widget \"{name}\"?",
   "Error importing widgets: {error}": "Erro ao importar widgets: {error}",
   "Parent widget {id} does not exist.": "O widget pai {id} não existe.",
-  "This can't be undone.\n\nOnly do this if you've confirmed your game works correctly without this setting.": "Isto não pode ser desfeito.\n\nFaça isso apenas se tiver confirmado que seu jogo funciona corretamente sem esta configuração."
+  "This can't be undone.\n\nOnly do this if you've confirmed your game works correctly without this setting.": "Isto não pode ser desfeito.\n\nFaça isso apenas se tiver confirmado que seu jogo funciona corretamente sem esta configuração.",
+  "Select the display language for menus and dialogs. Game content is not translated. The page reloads to apply the change.": "Selecione o idioma de exibição para menus e caixas de diálogo. O conteúdo dos jogos não é traduzido. A página será recarregada para aplicar a alteração."
 }
