@@ -18,17 +18,21 @@ export class StateManaged {
 
   applyDelta(delta) {
     const deltaForDOM = {};
+    // First apply every state change, then invalidate, so that defaults resolved for
+    // removed (null) keys below see the fully-updated state instead of a stale value
+    // that another key in the same delta just replaced (e.g. a card's cardType).
     for(const i in delta) {
       if(delta[i] === null) {
         delete this.unalteredState[i];
         delete this.state[i];
-        delete this.getCache[i];
-        deltaForDOM[i] = this.get(i);
       } else {
-        deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
+        this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
     this.invalidateGetCache();
+
+    for(const i in delta)
+      deltaForDOM[i] = delta[i] === null ? this.get(i) : delta[i];
 
     this.applyDeltaToDOM(deltaForDOM);
 

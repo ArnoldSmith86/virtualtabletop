@@ -57,6 +57,38 @@ describe('get() caching invalidation', () => {
     expect(w.get('foo')).toBe('B');
   });
 
+  test('a multi-key delta renders removed-property defaults against the fully-updated state', () => {
+    const w = make({ id: 'gc-twophase', type: 'widget', kind: 'old', color: 'oldColor' });
+    // the default for 'color' depends on the widget's own 'kind' (mirrors how a card's
+    // default properties depend on its cardType)
+    const orig = w.getDefaultValue.bind(w);
+    w.getDefaultValue = property => property == 'color'
+      ? (w.get('kind') == 'new' ? 'newColor' : 'oldColor')
+      : orig(property);
+    expect(w.get('color')).toBe('oldColor'); // prime the cache while kind is still 'old'
+    expect(w.get('kind')).toBe('old');       // and cache 'kind', the dependency the default reads
+
+    // capture what gets pushed to the DOM: the removed 'color' key must resolve to the
+    // default for the *new* kind, not the value cached while kind was still 'old'
+    let renderedDelta;
+    const origApplyToDOM = w.applyDeltaToDOM.bind(w);
+    w.applyDeltaToDOM = delta => { renderedDelta = delta; return origApplyToDOM(delta); };
+
+    // a single delta both changes 'kind' and removes the explicit 'color' override
+    w.applyDelta({ kind: 'new', color: null });
+    expect(renderedDelta.color).toBe('newColor');
+  });
+
+  test('invalidateGetCache() picks up a direct state write that bypasses set()', () => {
+    // mirrors the choose-overlay / card-type-preview paths that poke widget.state
+    // directly and then re-read immediately (domhelpers.js, editor properties.js)
+    const w = make({ id: 'gc-direct', type: 'widget', scale: 1 });
+    expect(w.get('scale')).toBe(1); // prime the cache
+    w.state.scale = 3;
+    w.invalidateGetCache();
+    expect(w.get('scale')).toBe(3);
+  });
+
   test('a state change invalidates unregistered cross-widget dependencies', async () => {
     const src = make({ id: 'gc-custom-src', type: 'widget', foo: 'A' });
     const dependent = make({ id: 'gc-custom-dependent', type: 'widget' });
