@@ -188,7 +188,29 @@ function searchIconIndex(query, limit=42) {
   return results.slice(0, limit);
 }
 
-// Adds a small (?) button after the label that toggles an on-demand
+// Every labeled row gets a fixed-width slot at the end of the label column so
+// the (?) buttons line up and rows without a hint keep the same layout.
+function ensurePropertyHintSlot(propertyInputDOM) {
+  let slot = $('.propertyHintSlot', propertyInputDOM);
+  if(slot)
+    return slot;
+  const label = $('label', propertyInputDOM);
+  if(!label)
+    return null;
+  if(!$('.propertyLabelText', label)) {
+    const text = document.createElement('span');
+    text.className = 'propertyLabelText';
+    while(label.firstChild)
+      text.appendChild(label.firstChild);
+    label.appendChild(text);
+  }
+  slot = document.createElement('span');
+  slot.className = 'propertyHintSlot';
+  label.appendChild(slot);
+  return slot;
+}
+
+// Adds a small (?) button in the label's hint slot that toggles an on-demand
 // description line (touch friendly - no hover needed). The text usually comes
 // from the wiki summary of the property.
 function attachPropertyHint(propertyInputDOM, hintText) {
@@ -204,11 +226,9 @@ function attachPropertyHint(propertyInputDOM, hintText) {
     e.preventDefault();
     description.style.display = description.style.display == 'none' ? '' : 'none';
   };
-  // place the button inside the label so it does not become an extra flex item
-  // that pushes the value control into the next row
-  const label = $('label', propertyInputDOM);
-  if(label)
-    label.appendChild(button);
+  const slot = ensurePropertyHintSlot(propertyInputDOM);
+  if(slot)
+    slot.appendChild(button);
   else
     propertyInputDOM.insertBefore(button, propertyInputDOM.firstChild);
 }
@@ -304,6 +324,7 @@ class PropertyInput {
       const label = document.createElement('label');
       label.textContent = this.labelText;
       this.dom.appendChild(label);
+      ensurePropertyHintSlot(this.dom); // reserve the (?) column even without a hint
     }
     if(this.options.hint)
       attachPropertyHint(this.dom, this.options.hint);

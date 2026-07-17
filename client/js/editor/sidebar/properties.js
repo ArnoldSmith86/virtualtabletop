@@ -1938,21 +1938,29 @@ class PropertiesModule extends SidebarModule {
     const label = document.createElement('label');
     label.textContent = 'Parent';
     wrap.appendChild(label);
+    ensurePropertyHintSlot(wrap);
 
     const input = document.createElement('input');
     input.type = 'text';
     input.placeholder = 'none';
     wrap.appendChild(input);
 
-    const pick = document.createElement('button');
-    pick.setAttribute('icon', 'colorize');
-    pick.title = 'Pick a parent widget from the table';
-    wrap.appendChild(pick);
+    const expand = document.createElement('button');
+    expand.className = 'propertyExpandButton';
+    expand.setAttribute('icon', 'expand_more');
+    expand.title = 'Pick a parent widget';
+    wrap.appendChild(expand);
 
-    const clear = document.createElement('button');
-    clear.setAttribute('icon', 'link_off');
-    clear.title = 'Remove the parent';
-    wrap.appendChild(clear);
+    // inline popout like the icon/image pickers: pick in the room or search IDs
+    const popout = div(wrap, 'propertyPicker');
+    popout.style.display = 'none';
+    expand.onclick = _=>{
+      const open = popout.style.display == 'none';
+      popout.style.display = open ? '' : 'none';
+      expand.classList.toggle('open', open);
+      if(open)
+        renderPopout();
+    };
 
     const error = div(wrap, 'propertyParentError');
     error.style.display = 'none';
@@ -1977,6 +1985,68 @@ class PropertiesModule extends SidebarModule {
       return message;
     };
 
+    const selfIDs = widget.isMulti ? widget.widgets.map(w=>w.id) : [ widget.id ];
+    const parentCandidates = _=>[...widgets.values()]
+      .filter(w=>selfIDs.indexOf(w.id) == -1 && w.get('type') != 'card' && w.get('type') != 'pile')
+      .map(w=>({ id: w.id, type: w.get('type') || 'basic' }))
+      .sort((a, b)=>a.id.localeCompare(b.id));
+
+    const renderPopout = _=>{
+      popout.innerHTML = '';
+
+      const buttonBar = div(popout, 'propertyPickerSection');
+      const pick = document.createElement('button');
+      pick.setAttribute('icon', 'colorize');
+      pick.textContent = 'Pick in the room';
+      pick.title = 'Click this button and then the widget on the table';
+      buttonBar.appendChild(pick);
+      const clear = document.createElement('button');
+      clear.setAttribute('icon', 'link_off');
+      clear.textContent = 'No parent';
+      clear.title = 'Remove the parent';
+      buttonBar.appendChild(clear);
+
+      pick.onclick = _=>{
+        if(this.widgetPick) {
+          this.stopWidgetPick();
+          pick.classList.remove('selected');
+          return;
+        }
+        pick.classList.add('selected');
+        this.startWidgetPick(widget, async parent=>{
+          const message = await this.setWidgetParent(widget, parent.id);
+          if(message)
+            alert(message);
+        });
+      };
+      clear.onclick = _=>apply(null);
+
+      const searchSection = div(popout, 'propertyPickerSection');
+      div(searchSection, 'propertyPickerSectionTitle', 'Search widget IDs');
+      const search = document.createElement('input');
+      search.placeholder = 'Search by ID...';
+      searchSection.appendChild(search);
+      const list = div(searchSection, 'parentPickerList');
+
+      const showEntries = _=>{
+        list.innerHTML = '';
+        const term = search.value.trim().toLowerCase();
+        const current = widget.get('parent');
+        const matches = parentCandidates().filter(c=>!term || c.id.toLowerCase().includes(term));
+        for(const candidate of matches.slice(0, 50)) {
+          const entry = div(list, 'parentPickerEntry', `<span>${html(candidate.id)}</span><span class=parentPickerType>${html(candidate.type)}</span>`);
+          entry.classList.toggle('selected', candidate.id === current);
+          entry.onclick = _=>apply(candidate.id);
+        }
+        if(!matches.length)
+          div(list, 'propertyPickerEmpty', 'No matching widgets.');
+        else if(matches.length > 50)
+          div(list, 'propertyPickerEmpty', `${matches.length - 50} more — refine the search.`);
+      };
+      search.oninput = showEntries;
+      showEntries();
+    };
+
     input.onchange = _=>apply(input.value.trim());
     input.onkeydown = e=>{
       if(e.key == 'Enter') {
@@ -1984,21 +2054,11 @@ class PropertiesModule extends SidebarModule {
         input.blur();
       }
     };
-    clear.onclick = _=>apply(null);
-    pick.onclick = _=>{
-      if(this.widgetPick) {
-        this.stopWidgetPick();
-        pick.classList.remove('selected');
-        return;
-      }
-      pick.classList.add('selected');
-      this.startWidgetPick(widget, async parent=>{
-        const message = await this.setWidgetParent(widget, parent.id);
-        if(message)
-          alert(message);
-      });
-    };
-    this.addPropertyListener(widget, 'parent', update);
+    this.addPropertyListener(widget, 'parent', _=>{
+      update();
+      if(popout.style.display != 'none' && !popout.contains(document.activeElement))
+        renderPopout();
+    });
   }
 
   async setWidgetParent(widget, parentID) {
@@ -2331,7 +2391,24 @@ class PropertiesModule extends SidebarModule {
         choices: Object.keys(deck.get('cardTypes')).map(cardType=>({ value: cardType, text: cardType }))
       }).render(this.moduleDOM);
     }
-    this.renderCardTypes(deck, widget.get('cardType'));
+
+    // re-render the card type preview when the dropdown changes the cardType
+    const cardTypeArea = div(this.moduleDOM);
+    let renderedCardType = null;
+    this.addPropertyListener(widget, 'cardType', _=>{
+      const cardType = widget.get('cardType');
+      if(cardType === renderedCardType)
+        return;
+      renderedCardType = cardType;
+      cardTypeArea.innerHTML = '';
+      const realModuleDOM = this.moduleDOM;
+      this.moduleDOM = cardTypeArea; // renderCardTypes renders into moduleDOM
+      try {
+        this.renderCardTypes(deck, cardType);
+      } finally {
+        this.moduleDOM = realModuleDOM;
+      }
+    });
     div(this.moduleDOM, '', `
       <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
       <div class=buttonBar>

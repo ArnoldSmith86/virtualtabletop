@@ -1,3 +1,8 @@
+/* horizontal scrolling is never wanted in the properties module */
+.tune.editorModule {
+  overflow-x: hidden;
+}
+
 .editorModule .propertyInput {
   display: flex;
   align-items: center;
@@ -6,13 +11,32 @@
   margin: 4px 0;
 }
 
+.editorModule .propertyInput *,
+.editorModule .propertyPicker * {
+  box-sizing: border-box;
+}
+
+/* fixed label column: text plus a 22px slot for the (?) so hint buttons line
+   up across all rows and rows without a hint keep the same layout */
 .editorModule .propertyInput > label {
-  width: 110px;
-  min-width: 110px;
+  width: 132px;
+  min-width: 132px;
   overflow-wrap: anywhere;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+}
+
+.editorModule .propertyLabelText {
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.editorModule .propertyHintSlot {
+  flex: 0 0 22px;
+  width: 22px;
+  display: inline-flex;
+  justify-content: center;
 }
 
 .editorModule .propertyInput input[type=text],
@@ -40,8 +64,6 @@
 }
 
 .editorModule .checkboxInput > label {
-  width: auto;
-  min-width: 0;
   cursor: pointer;
 }
 
@@ -67,11 +89,6 @@
   margin: 0;
   pointer-events: none;
 }
-.editorModule .switchInput > label:first-child {
-  width: auto;
-  min-width: 0;
-  flex: 1 1 auto;
-}
 
 .editorModule .movableToggleInput .segmented-control {
   flex-wrap: wrap;
@@ -94,13 +111,33 @@
   flex: 1 1 100px;
   min-width: 70px;
 }
-.editorModule .parentInput button {
+.editorModule .parentInput button:not(.propertyHintButton) {
   min-width: 34px;
   justify-content: center;
 }
 .editorModule .parentInput button.selected {
   background: var(--VTTblueDark);
   color: #ff0;
+}
+.editorModule .parentPickerList {
+  max-height: 220px;
+  overflow-y: auto;
+}
+.editorModule .parentPickerEntry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.editorModule .parentPickerEntry:hover, .editorModule .parentPickerEntry.selected {
+  background: var(--backgroundHighlightColor1, #eee);
+}
+.editorModule .parentPickerEntry .parentPickerType {
+  color: var(--textDimColor1, #777);
+  font-size: 11px;
+  margin-left: auto;
 }
 .editorModule .propertyParentError {
   flex-basis: 100%;
@@ -117,11 +154,14 @@
 .editorModule .propertyHintButton {
   min-width: 22px;
   width: 22px;
+  max-width: 22px;
   height: 22px;
   padding: 0;
   justify-content: center;
+  align-items: center;
+  display: inline-flex;
   border-radius: 50%;
-  flex: 0 0 auto;
+  flex: 0 0 22px;
 }
 .editorModule .propertyHintButton::before {
   margin: 0;
@@ -362,7 +402,7 @@
 }
 
 .editorModule .collapsibleBody {
-  padding: 4px 0 4px 6px;
+  padding: 4px 0;
 }
 
 /* subsection titles inside the appearance section */
