@@ -10,6 +10,9 @@
   width: 110px;
   min-width: 110px;
   overflow-wrap: anywhere;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .editorModule .propertyInput input[type=text],
@@ -55,8 +58,14 @@
   line-height: 0;
 }
 .editorModule .switchInput input.switchbox {
+  /* keep the hidden checkbox at its DOM position: moving it far off-screen
+     makes the browser scroll it into view when the label click focuses it */
   position: absolute;
-  left: -50000px;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
 }
 .editorModule .switchInput > label:first-child {
   width: auto;
@@ -121,8 +130,9 @@
 .editorModule .propertyHintText {
   flex-basis: 100%;
   font-size: 12px;
-  color: var(--textDimColor1, #777);
+  color: var(--textColor, #222);
   background: var(--backgroundHighlightColor1, #eee);
+  border-left: 3px solid var(--VTTblue);
   border-radius: 5px;
   padding: 4px 8px;
   margin: 2px 0;
@@ -509,44 +519,27 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   justify-content: center;
 }
 
-.dicePresetOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100000;
-  background: #0008;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-.dicePresetModal {
-  background: var(--overlayBackgroundColor, #fff);
-  color: var(--textColor, #000);
-  border-radius: 8px;
-  padding: 20px;
-  max-width: 900px;
-  max-height: 90vh;
-  overflow: auto;
-  position: relative;
-}
-.dicePresetModal .dicePresetClose {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+/* inline preset popout, styled like the icon/image pickers */
+.editorModule .dicePresetPopout {
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+  padding: 6px;
+  margin: 4px 0 8px;
+  max-height: 340px;
+  overflow-y: auto;
 }
 .dicePresetList {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  gap: 8px;
 }
 .dicePresetCard {
   border: 2px solid #ccc;
   border-radius: 8px;
-  padding: 8px;
+  padding: 6px;
   cursor: pointer;
-  width: 200px;
+  flex: 1 1 150px;
+  max-width: 200px;
 }
 .dicePresetCard:hover {
   border-color: var(--VTTblue);
@@ -610,4 +603,19 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 .editorModule .arrangeButtons button::before {
   margin: 0;
+}
+
+/* right-side actions column (reorder + delete) in face rows */
+.editorModule .faceRowActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+.editorModule .faceRowActions .faceOrderControls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

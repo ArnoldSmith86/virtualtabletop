@@ -2467,7 +2467,17 @@ class PropertiesModule extends SidebarModule {
       <button icon=casino class=diceLoadPreset>Load preset</button>
       <button icon=add class="green diceAddFace">Add face</button>
     `);
-    $('.diceLoadPreset', this.moduleDOM).onclick = _=>this.openDicePresetPopup(widget);
+    // inline popout below the buttons, like the icon/image pickers
+    const presetButton = $('.diceLoadPreset', this.moduleDOM);
+    const presetDOM = div(this.moduleDOM, 'dicePresetPopout');
+    presetDOM.style.display = 'none';
+    presetButton.onclick = _=>{
+      const open = presetDOM.style.display == 'none';
+      presetDOM.style.display = open ? '' : 'none';
+      presetButton.classList.toggle('selected', open);
+      if(open && !presetDOM.childElementCount)
+        this.renderDicePresetPopout(widget, presetDOM);
+    };
     $('.diceAddFace', this.moduleDOM).onclick = _=>{
       const faces = this.diceFaces(widget);
       faces.push({ pips: Math.min(faces.length + 1, 6) });
@@ -2486,13 +2496,12 @@ class PropertiesModule extends SidebarModule {
       { key: 'borderColor', label: 'Border' }
     ];
     const locks = {};
-    for(const def of colorDefs) {
-      // default locked unless a face already defines a per-face value
-      locks[def.key] = !this.diceFaces(widget).some(f=>typeof f == 'object' && f !== null && f[def.key] !== undefined);
-      const wrap = div(lockRow, 'diceColorLock');
+    const renderLockRow = def=>{
+      def.wrap.innerHTML = '';
       new CheckboxInput(this, widget, `${def.label} same for all faces`, {
         getValue: _=>locks[def.key],
         setValue: v=>{
+          const scrollTop = this.moduleDOM.scrollTop;
           locks[def.key] = v;
           if(v) {
             // move any per-face value onto the widget and clear from faces
@@ -2508,19 +2517,29 @@ class PropertiesModule extends SidebarModule {
             widget.set('faces', faces);
             batchEnd();
           }
+          renderLockRow(def);
           rebuild();
+          this.moduleDOM.scrollTop = scrollTop;
         },
         listenTo: [ def.key ],
         hint: `When on, ${def.label.toLowerCase()} is stored once on the dice. Turn it off to choose a different value on every face.`
-      }).render(wrap);
+      }).render(def.wrap);
       if(locks[def.key])
-        new ColorInput(this, widget, def.label, { property: def.key }).render(wrap);
+        new ColorInput(this, widget, def.label, { property: def.key }).render(def.wrap);
+    };
+    for(const def of colorDefs) {
+      // default locked unless a face already defines a per-face value
+      locks[def.key] = !this.diceFaces(widget).some(f=>typeof f == 'object' && f !== null && f[def.key] !== undefined);
+      def.wrap = div(lockRow, 'diceColorLock');
+      renderLockRow(def);
     }
 
     const rebuild = ()=>{
+      const scrollTop = this.moduleDOM.scrollTop;
       facesContainer.innerHTML = '';
       const faces = this.diceFaces(widget);
       faces.forEach((face, index)=>this.renderDiceFaceRow(widget, index, locks, facesContainer));
+      this.moduleDOM.scrollTop = scrollTop;
     };
     rebuild();
 
@@ -2560,11 +2579,14 @@ class PropertiesModule extends SidebarModule {
     const row = div(container, 'diceFaceRow');
     row.dataset.face = index;
     this.renderDiceFacePreview(widget, index, row);
-    this.renderFaceOrderControls(row, index, this.diceFaces(widget).length, (from, to)=>{
-      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setDiceFaces(widget, faces, activeFace));
-    });
 
     const controls = div(row, 'diceFaceControls');
+
+    // reorder and delete live in a column on the right side of the row
+    const actions = div(row, 'faceRowActions');
+    this.renderFaceOrderControls(actions, index, this.diceFaces(widget).length, (from, to)=>{
+      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setDiceFaces(widget, faces, activeFace));
+    }, row);
     const type = this.diceFaceType(widget, this.diceFaces(widget)[index]);
 
     new SelectInput(this, widget, 'Type', {
@@ -2640,7 +2662,7 @@ class PropertiesModule extends SidebarModule {
       faces.splice(index, 1);
       this.setDiceFaces(widget, faces);
     };
-    controls.appendChild(remove);
+    actions.appendChild(remove);
   }
 
   reorderFaces(widget, faces, from, to, setFaces) {
@@ -2659,8 +2681,11 @@ class PropertiesModule extends SidebarModule {
     setFaces(faces, activeFace);
   }
 
-  renderFaceOrderControls(row, index, count, moveFace) {
-    const controls = div(row, 'faceOrderControls');
+  // target: where the buttons are rendered; row: the face row (drag target),
+  // defaults to target for callers that render the controls into the row itself
+  renderFaceOrderControls(target, index, count, moveFace, row=null) {
+    row = row || target;
+    const controls = div(target, 'faceOrderControls');
     const handle = document.createElement('button');
     handle.setAttribute('icon', 'drag_indicator');
     handle.title = 'Drag to reorder this face';
@@ -2800,11 +2825,14 @@ class PropertiesModule extends SidebarModule {
     const row = div(container, 'basicFaceRow');
     row.dataset.face = index;
     this.renderBasicFacePreview(widget, index, row);
-    this.renderFaceOrderControls(row, index, this.basicFaces(widget).length, (from, to)=>{
-      this.reorderFaces(widget, this.basicFaces(widget), from, to, (faces, activeFace)=>this.setBasicFaces(widget, faces, activeFace));
-    });
 
     const controls = div(row, 'basicFaceControls');
+
+    // reorder and delete live in a column on the right side of the row
+    const actions = div(row, 'faceRowActions');
+    this.renderFaceOrderControls(actions, index, this.basicFaces(widget).length, (from, to)=>{
+      this.reorderFaces(widget, this.basicFaces(widget), from, to, (faces, activeFace)=>this.setBasicFaces(widget, faces, activeFace));
+    }, row);
     const setFaceProperty = (property, value)=>{
       const faces = this.basicFaces(widget);
       faces[index] = this.basicFaceObject(widget, index);
@@ -2867,7 +2895,7 @@ class PropertiesModule extends SidebarModule {
       faces.splice(index, 1);
       this.setBasicFaces(widget, faces);
     };
-    controls.appendChild(remove);
+    actions.appendChild(remove);
   }
 
   dicePresets() {
@@ -2885,21 +2913,9 @@ class PropertiesModule extends SidebarModule {
     ];
   }
 
-  openDicePresetPopup(widget) {
-    // self-contained fixed modal so it sits above the editor's own stacking
-    const overlay = div(document.body, 'dicePresetOverlay', `
-      <div class="modal dicePresetModal">
-        <button icon=close class=dicePresetClose></button>
-        <h1>Load a dice preset</h1>
-        <p>Replaces this dice's faces. Each preview shows all faces of the preset.</p>
-        <div class=dicePresetList></div>
-      </div>
-    `);
-    const close = _=>overlay.remove();
-    $('.dicePresetClose', overlay).onclick = close;
-    overlay.onclick = e=>{ if(e.target == overlay) close(); };
-
-    const list = $('.dicePresetList', overlay);
+  renderDicePresetPopout(widget, target) {
+    div(target, 'propertyPickerSectionTitle', 'Replaces this dice\'s faces. Each preview shows all faces of the preset.');
+    const list = div(target, 'dicePresetList');
     for(const preset of this.dicePresets()) {
       const card = div(list, 'dicePresetCard');
       div(card, 'dicePresetName', html(preset.name));
@@ -2920,7 +2936,6 @@ class PropertiesModule extends SidebarModule {
           widget.set('pipSymbols', preset.pipSymbols);
         widget.set('activeFace', 0);
         batchEnd();
-        close();
       };
     }
   }

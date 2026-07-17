@@ -72,11 +72,16 @@ function usedGameColors() {
 
 function usedGameIcons() {
   return usedValuesInGame((key, value)=>{
-    if(key != 'icon' && key != 'suit')
-      return null;
-    if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/))
+    // game-icons paths are unambiguous enough under any icon-ish key
+    // (icon properties, deck suits, symbol lists, face template values)
+    if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/) && [ 'icon', 'suit', 'name', 'value' ].indexOf(key) != -1)
       return value;
-    if(key == 'icon' && (value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/)))
+    if(key != 'icon')
+      return null;
+    // all other formats getIconDetails accepts for the icon property
+    if(value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/) || value.match(/^\/assets\/|^https?:\/\//))
+      return value;
+    if(value && !value.match(/^[\x00-\x7F]*$/)) // non-ASCII: emoji icons
       return value;
     return null;
   });
@@ -199,10 +204,11 @@ function attachPropertyHint(propertyInputDOM, hintText) {
     e.preventDefault();
     description.style.display = description.style.display == 'none' ? '' : 'none';
   };
-  // place the button right after the label (or first) so it sits by the title
+  // place the button inside the label so it does not become an extra flex item
+  // that pushes the value control into the next row
   const label = $('label', propertyInputDOM);
-  if(label && label.nextSibling)
-    propertyInputDOM.insertBefore(button, label.nextSibling);
+  if(label)
+    label.appendChild(button);
   else
     propertyInputDOM.insertBefore(button, propertyInputDOM.firstChild);
 }
