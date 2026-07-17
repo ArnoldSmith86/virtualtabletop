@@ -791,7 +791,7 @@ class PropertiesModule extends SidebarModule {
 
     findButton.onclick = async _=>{
       if(!linkInput.value.match(/^https?:\/\//))
-        return alert('Please enter a link to a TTS Steam Workshop item.');
+        return alert(translate('Please enter a link to a TTS Steam Workshop item.'));
 
       findButton.disabled = true;
       addButton.disabled = true;
@@ -824,7 +824,7 @@ class PropertiesModule extends SidebarModule {
         }
       } catch(e) {
         preview.innerHTML = '';
-        alert(`Loading decks failed: ${e.message}`);
+        alert(translate('Loading decks failed: {error}').replace('{error}', e.message));
       }
       findButton.disabled = false;
     };
@@ -845,7 +845,7 @@ class PropertiesModule extends SidebarModule {
           button.classList.remove('selected');
         }
       } catch(e) {
-        alert(`Importing decks failed: ${e.message}`);
+        alert(translate('Importing decks failed: {error}').replace('{error}', e.message));
       }
       // re-enable if any decks are still selected (e.g. an import failed partway)
       addButton.disabled = !$a('.selected.ttsDeckButton', preview).length;

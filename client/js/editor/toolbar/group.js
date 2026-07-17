@@ -8,7 +8,7 @@ class GroupButton extends ToolbarToggleButton {
     const parent = [...new Set(selectedWidgets.map(w=>w.get('parent')))];
 
     if(parent.length != 1) {
-      alert('This only works if all widgets have the same parent.');
+      alert(translate('This only works if all widgets have the same parent.'));
       return;
     }
 

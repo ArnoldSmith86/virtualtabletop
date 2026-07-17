@@ -48,9 +48,11 @@ export function translate(text) {
 const translatedAttributes = [ 'placeholder', 'title', 'data-label', 'data-placeholder' ];
 
 function skipTranslation(element) {
-  // never touch game content: widgets in the room, game tiles and variants in the library
+  // never touch game content: widgets in the room, game tiles and variants in the
+  // library and elements that display game metadata (data-field)
   return element.id == 'room' || element.id == 'playerCursors'
       || element.classList.contains('roomState') || element.classList.contains('variant')
+      || element.hasAttribute('data-field')
       || element.tagName == 'SCRIPT' || element.tagName == 'STYLE';
 }
 
@@ -82,6 +84,27 @@ function translateNode(node) {
   if(node.tagName == 'TEMPLATE')
     for(const child of [ ...node.content.childNodes ])
       translateNode(child);
+}
+
+// also translates DOM that is created after the page loaded, like the editor
+export function translateSubtree(root) {
+  if(language != 'en')
+    dictionaryLoaded.then(_=>translateNode(root));
+}
+
+// translates a container whose contents get (re)created at runtime, like the
+// editor sidebar modules
+export function translateOnChange(root) {
+  if(language == 'en')
+    return;
+  dictionaryLoaded.then(function() {
+    translateNode(root);
+    new MutationObserver(function(mutations) {
+      for(const mutation of mutations)
+        for(const node of mutation.addedNodes)
+          translateNode(node);
+    }).observe(root, { childList: true, subtree: true });
+  });
 }
 
 function translateDOM() {
