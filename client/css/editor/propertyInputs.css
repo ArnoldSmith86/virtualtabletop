@@ -509,6 +509,7 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* long text content must not spill over the panel */
 }
 .editorModule .diceFacePreview .widget {
   position: relative !important;
@@ -571,12 +572,18 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* long text/html content must not spill over the panel */
+  border-radius: 4px;
 }
 .editorModule .basicFacePreview .widget {
   position: relative !important;
   transform: none !important;
   left: auto !important;
   top: auto !important;
+  overflow: hidden !important;
+  max-width: 56px !important;
+  max-height: 56px !important;
+  font-size: 6px;
 }
 .editorModule .basicFaceControls {
   flex: 1 1 auto;
