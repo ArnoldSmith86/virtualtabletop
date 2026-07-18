@@ -3614,24 +3614,26 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'classes', update);
 
     const mediaRow = div(this.moduleDOM, 'contentMediaRow');
+    // pickers open below the row so the two blocks never move around
+    const pickerArea = div(this.moduleDOM, 'contentMediaPickers');
 
     const iconBlock = div(mediaRow, 'contentMediaBlock');
     const iconTitle = div(iconBlock, 'contentMediaTitle');
     iconTitle.textContent = 'Icon';
     infoButton(iconTitle, html(editorPropertyHints.icon));
-    new IconInput(this, widget, null, { property: 'icon' }).render(iconBlock);
+    new IconInput(this, widget, null, { property: 'icon', pickerTarget: pickerArea }).render(iconBlock);
 
-    const imageBlock = div(mediaRow, 'contentMediaBlock imageBlock');
+    const imageBlock = div(mediaRow, 'contentMediaBlock');
     const imageTitle = div(imageBlock, 'contentMediaTitle');
     imageTitle.textContent = 'Image';
     infoButton(imageTitle, html(editorPropertyHints.image));
-    new ImageInput(this, widget, null, { property: 'image' }).render(imageBlock);
+    new ImageInput(this, widget, null, { property: 'image', pickerTarget: pickerArea }).render(imageBlock);
   }
 
   renderForButton(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
-    this.renderContentSection(widget);
+    this.renderBasicContentSection(widget);
     this.renderAppearanceSection(widget);
     this.addSubHeader('Behavior');
     div(this.moduleDOM, '', `

@@ -507,7 +507,9 @@ class PickerInput extends PropertyInput {
       target.appendChild(this.expandButton);
     }
 
-    this.pickerDOM = div(target, 'propertyPicker');
+    // the picker can render somewhere else (e.g. below a row of side by side
+    // inputs) so opening it does not push the neighboring inputs around
+    this.pickerDOM = div(this.options.pickerTarget || target, 'propertyPicker');
     this.pickerDOM.style.display = 'none';
   }
 
@@ -695,6 +697,10 @@ class ColorInput extends PickerInput {
 class IconInput extends PickerInput {
   cssClass() {
     return 'pickerInput iconInput';
+  }
+
+  expandArrow() {
+    return false;
   }
 
   renderChip(target, value) {

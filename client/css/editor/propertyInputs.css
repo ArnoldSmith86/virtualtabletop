@@ -602,15 +602,26 @@
   padding-right: 0;
 }
 
-.editorModule .contentMediaBlock.imageBlock .propertyPreviewButton {
+/* icon and image blocks look identical: 200x200 square previews */
+.editorModule .contentMediaBlock .propertyPreviewButton {
   min-width: 204px;
   min-height: 204px;
 }
 
-.editorModule .contentMediaBlock.imageBlock .propertyPreviewButton .propertyValueChip {
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip {
   width: 200px;
   height: 200px;
   min-width: 200px;
+  border-radius: 0;
+  font-size: 120px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .symbols,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols-nofill,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emoji-monochrome,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emojiColorChip {
+  font-size: 120px;
 }
 
 /* lock/unlock toggles for movable/editable style properties */
