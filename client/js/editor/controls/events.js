@@ -340,19 +340,19 @@ class EventsEditor {
 
         if(property == 'resetProperties') {
           const buttonsDOM = div(contentDOM, 'events-editor-property-buttons');
-          const playButton = button(buttonsDOM, 'Play', _=>{
+          const applyButton = button(buttonsDOM, 'Apply values now', _=>{
             const value = this.widget.state[property];
             for(const key in value)
               this.onChange(key, value[key]);
           });
-          playButton.title = 'Apply these properties to the widget now';
-          playButton.insertAdjacentHTML('afterbegin', '<span class=material-symbols>play_arrow</span>');
-          const recordButton = button(buttonsDOM, 'Record', _=>{
+          applyButton.title = 'Apply these properties to the widget now';
+          applyButton.insertAdjacentHTML('afterbegin', '<span class=material-symbols>play_arrow</span>');
+          const recordButton = button(buttonsDOM, 'Record current state', _=>{
             this.onChange(property, this.recordResetProperties());
             this.render();
           });
           recordButton.title = 'Copy the widget\'s current properties into resetProperties';
-          recordButton.insertAdjacentHTML('afterbegin', '<span class=material-symbols>radio_button_checked</span>');
+          recordButton.insertAdjacentHTML('afterbegin', '<span class=material-symbols>save</span>');
         }
       }
     }

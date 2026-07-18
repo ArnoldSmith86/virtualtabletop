@@ -295,7 +295,7 @@ describe('property automations', () => {
     const { editor } = makeEditor({ type: 'button', resetProperties: { x: 5, parent: null } }, (property, value) => calls.push([ property, value ]));
     editor.expandedEvents.resetProperties = true;
     editor.render();
-    const play = [...editor.domElement.querySelectorAll('.events-editor-property-buttons button')].find(b => b.textContent.includes('Play'));
+    const play = [...editor.domElement.querySelectorAll('.events-editor-property-buttons button')].find(b => b.textContent.includes('Apply values now'));
     play.dispatchEvent(new Event('click'));
     expect(calls).toContainEqual([ 'x', 5 ]);
     expect(calls).toContainEqual([ 'parent', null ]);
