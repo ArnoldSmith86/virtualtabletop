@@ -439,9 +439,9 @@ const editorTypeSections = {
   spinner: {
     colors: [
       { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--textColor' },
-      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', elementCss: { key: 'background', property: 'backgroundCSS', selector: ' > .background' } },
+      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background', cssProperty: 'backgroundCSS' },
       { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color', propertyOrCss: '--lineColor' },
-      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', elementCss: { key: 'color', property: 'valueCSS', selector: ' > .value' } }
+      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', cssKey: 'color', cssProperty: 'valueCSS' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
@@ -3280,8 +3280,6 @@ class PropertiesModule extends SidebarModule {
         Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css'));
       if(def.propertyOrCss)
         Object.assign(options, propertyOrCssOptions(this, widget, def.property, def.propertyOrCss));
-      if(def.elementCss)
-        Object.assign(options, elementCssOrSelectorOptions(this, widget, def.elementCss.key, def.elementCss.property, def.elementCss.selector));
       new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
     }
   }

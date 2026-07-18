@@ -900,26 +900,3 @@ function propertyOrCssOptions(module, widget, property, cssKey, extraOptions={})
     listenTo: [ property, 'css' ]
   }, extraOptions);
 }
-
-// Dual-mode options for element css properties (like the spinner's valueCSS
-// which styles its .value element): edit the declaration inside that property
-// when it has content, otherwise read/write the element's selector inside
-// the css property.
-function elementCssOrSelectorOptions(module, widget, cssKey, elementCssProperty, selector, extraOptions={}) {
-  const elementSet = _=>{
-    const value = widget.state[elementCssProperty];
-    return value !== undefined && value !== null && value !== '';
-  };
-  const elementOptions = cssValueOptions(module, widget, cssKey, elementCssProperty);
-  const selectorOptions = cssValueOptions(module, widget, cssKey, 'css', selector);
-  return Object.assign({
-    getValue: _=>elementSet() ? elementOptions.getValue() : selectorOptions.getValue(),
-    setValue: v=>{
-      if(elementSet())
-        elementOptions.setValue(v);
-      else
-        selectorOptions.setValue(v);
-    },
-    listenTo: [ elementCssProperty, 'css' ]
-  }, extraOptions);
-}
