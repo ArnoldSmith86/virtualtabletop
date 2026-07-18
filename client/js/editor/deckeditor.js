@@ -861,16 +861,22 @@ class DeckEditor {
     if(!this.deck())
       return;
 
+    // One entry per card type. It shows the currently selected face; when that face has nothing dynamic (it
+    // looks the same on every card type, e.g. a static back), fall back to a dynamic face so the entries
+    // still tell the card types apart. Faces are switched with the dropdown, not by multiplying the strip.
     const dynamicFaces = this.dynamicFaces();
-    const stripFaces = dynamicFaces.length ? dynamicFaces : this.faceTemplates.length ? [ this.face ] : [];
+    const stripFace = !this.faceTemplates.length ? null
+                    : dynamicFaces.length && !dynamicFaces.includes(this.face) ? dynamicFaces[dynamicFaces.length-1]
+                    : this.face;
 
     for(const cardType of Object.keys(this.cardTypes)) {
-      for(const face of stripFaces) {
-        const label = stripFaces.length > 1 ? `${cardType} (face ${face})` : cardType;
-        const button = div(strip, 'deckEditorStripCard', `<div class=renderedCard></div><span>${html(label)}</span>`);
-        button.classList.toggle('selected', cardType == this.cardType && face == this.face);
+      const button = div(strip, 'deckEditorStripCard', `<div class=renderedCard></div><span>${html(cardType)}</span>`);
+      button.classList.toggle('selected', cardType == this.cardType);
+      if(stripFace !== null && stripFace != this.face)
+        button.title = `${cardType} — showing face ${stripFace} because the selected face looks the same on every card type`;
+      if(stripFace !== null) {
         try {
-          const card = this.renderCard(cardType, face, $('.renderedCard', button));
+          const card = this.renderCard(cardType, stripFace, $('.renderedCard', button));
           const scale = Math.min(120 / card.get('width'), 90 / card.get('height'));
           $('.renderedCard', button).style.width  = card.get('width')  * scale + 'px';
           $('.renderedCard', button).style.height = card.get('height') * scale + 'px';
@@ -879,13 +885,12 @@ class DeckEditor {
         } catch(e) {
           $('.renderedCard', button).textContent = '?';
         }
-        button.onclick = _=>{
-          this.cardType = cardType;
-          this.face = face;
-          this.selectedObject = null;
-          this.render();
-        };
       }
+      button.onclick = _=>{
+        this.cardType = cardType;
+        this.selectedObject = null;
+        this.render();
+      };
     }
 
     const addButton = div(strip, 'deckEditorStripCard deckEditorAddCardType', '<button icon=add></button><span>Add card type</span>');
