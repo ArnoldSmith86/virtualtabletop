@@ -351,15 +351,15 @@ const editorTypeSections = {
       { label: 'Image',            property: 'image',             kind: 'image' }
     ],
     colors: [
-      { label: 'Text',             property: 'textColor',         kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--wcFont' },
-      { label: 'Background',       property: 'backgroundColor',   kind: 'color', labelIcon: 'format_color_fill', propertyOrCss: '--wcMain' },
-      { label: 'Border',           property: 'borderColor',       kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorder' },
+      { label: 'Text',             property: 'textColor',         kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',       property: 'backgroundColor',   kind: 'color', labelIcon: 'format_color_fill' },
+      { label: 'Border',           property: 'borderColor',       kind: 'color', labelIcon: 'border_color' },
       { label: 'SVG',              property: 'color',             kind: 'color' }
     ],
     hover: [
-      { label: 'Text',             property: 'textColorOH',       kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--wcFontOH' },
-      { label: 'Background',       property: 'backgroundColorOH', kind: 'color', labelIcon: 'format_color_fill', propertyOrCss: '--wcMainOH' },
-      { label: 'Border',           property: 'borderColorOH',     kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorderOH' }
+      { label: 'Text',             property: 'textColorOH',       kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',       property: 'backgroundColorOH', kind: 'color', labelIcon: 'format_color_fill' },
+      { label: 'Border',           property: 'borderColorOH',     kind: 'color', labelIcon: 'border_color' }
     ],
     appearance: [
       { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, slider: true, nullIfEmpty: true }
@@ -386,8 +386,8 @@ const editorTypeSections = {
   holder: {
     stateClasses: { '.showCardBack': 'showInactiveFaceToSeat' },
     colors: [
-      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--holderTextColor' },
-      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill', propertyOrCss: '--bgColor' }
+      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
@@ -430,7 +430,7 @@ const editorTypeSections = {
   seat: {
     stateClasses: { '.seated': 'player', '.turn': 'turn', '.foreign': 'hideWhenUnused' },
     colors: [
-      { label: 'Color',         property: 'color',        kind: 'color', propertyOrCss: '--color' }
+      { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
@@ -438,10 +438,11 @@ const editorTypeSections = {
   },
   spinner: {
     colors: [
-      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--textColor' },
-      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', elementCss: { key: 'background', property: 'backgroundCSS', selector: ' > .background' } },
-      { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color', propertyOrCss: '--lineColor' },
-      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', elementCss: { key: 'color', property: 'valueCSS', selector: ' > .value' } }
+      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
+      // redundant shortcuts for declarations inside the spinner's element css properties
+      { label: 'Background',    cssKey: 'background', cssProperty: 'backgroundCSS', kind: 'color', labelIcon: 'format_color_fill' },
+      { label: 'Value text',    cssKey: 'color',      cssProperty: 'valueCSS',      kind: 'color' },
+      { label: 'Line',          property: 'lineColor',    kind: 'color' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
@@ -3278,10 +3279,6 @@ class PropertiesModule extends SidebarModule {
         options.hint = editorPropertyHints[def.property];
       if(def.cssKey)
         Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css'));
-      if(def.propertyOrCss)
-        Object.assign(options, propertyOrCssOptions(this, widget, def.property, def.propertyOrCss));
-      if(def.elementCss)
-        Object.assign(options, elementCssOrSelectorOptions(this, widget, def.elementCss.key, def.elementCss.property, def.elementCss.selector));
       new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
     }
   }
@@ -3356,9 +3353,6 @@ class PropertiesModule extends SidebarModule {
       for(const property of cssProperties)
         this.renderCssPropertyEditor(widget, property, body, {
           classSuggestions: property == 'css' ? Object.keys(sections.stateClasses || {}) : [],
-          // the engine only supports nested class objects in the css property
-          // itself, not in element properties like faceCSS or valueCSS
-          allowClasses: property == 'css',
           // with just the css property, its name in the body would only repeat the header
           showTitle: cssProperties.length > 1
         });
@@ -3504,9 +3498,6 @@ class PropertiesModule extends SidebarModule {
       } else {
         renderClassSection('default', value, true);
       }
-
-      if(options.allowClasses === false)
-        return;
 
       const addRow = div(container, 'cssAddClassRow');
       const nameInput = document.createElement('input');
