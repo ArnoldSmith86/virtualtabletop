@@ -120,7 +120,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#deckEditorDeleteFace')
     .pressKey('esc') // closes the deck editor, since no face object is selected at this point
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
-  await compareState(t, '3e20074150f78219095df84abeeb74dc');
+  await compareState(t, '8924f45d4e6a80729054e7a7c23f7599');
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {
@@ -375,6 +375,16 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     button.click();
     return true;
   }, { dependencies: { findRow } });
+  const clickStripButton = ClientFunction(labelPart => {
+    const tiles = document.querySelectorAll('#deckEditorStrip .deckEditorAddCardType');
+    for(let i = 0; i < tiles.length; ++i) {
+      if(tiles[i].textContent.indexOf(labelPart) != -1) {
+        tiles[i].querySelector('button').click();
+        return true;
+      }
+    }
+    return false;
+  });
 
   await t
     .click('#editButton')
@@ -393,10 +403,10 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.expect(setField('Face 0', 'radius', 8)).ok();
   await t.wait(700); // let the debounced faceTemplates commit fire
   await t.expect(clickRowButton('Card defaults', 'width', '.deckEditorDeleteProperty')).ok();
-  await t
-    .click('#deckEditorUndo') // restores the deleted width
-    .pressKey('esc');         // closes the deck editor - and only the deck editor
+  await t.click('#deckEditorUndo'); // restores the deleted width
+  await t.expect(clickStripButton('Copy card type')).ok(); // copies "type 1" including its color property
+  await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, 'd4fa89bc3662165d407ec7f4f27093ed');
+  await compareState(t, '4fd7ce515016591869c345b5b0d52e78');
 });

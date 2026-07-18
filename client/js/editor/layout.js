@@ -137,11 +137,12 @@ function editorModulesResizer() {
   let mouseReference;
   let resizerReference;
   let percentage = editorState.modulesWidth || 50;
-  $('#editorModules').style.setProperty('--modulesWidth', percentage + '%');
+  // On the root element (not #editorModules) so the deck editor can mirror the module panel's width.
+  document.documentElement.style.setProperty('--modulesWidth', percentage + '%');
 
   function resize(e) {
     percentage = (1 - e.x / window.innerWidth) * 100;
-    $('#editorModules').style.setProperty('--modulesWidth', percentage + '%');
+    document.documentElement.style.setProperty('--modulesWidth', percentage + '%');
     setScale();
   }
 
@@ -183,6 +184,12 @@ export function getAvailableRoomRectangle() {
 export function scaleHasChanged(scale) {
   if(selectedWidgets.length && selectionModeActive)
     updateDragToolbar();
+
+  // The deck editor spans the play area, so module panel open/close and the modules resizer change its size.
+  if(deckEditor.isOpen()) {
+    deckEditor.renderMain();
+    deckEditor.updateDragToolbar();
+  }
 
   if(!fullToolbarWidth)
     fullToolbarWidth = $('#editorToolbar > :last-child').getBoundingClientRect().right + 1;

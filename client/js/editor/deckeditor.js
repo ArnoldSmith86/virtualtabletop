@@ -905,8 +905,15 @@ class DeckEditor {
       };
     }
 
-    const addButton = div(strip, 'deckEditorStripCard deckEditorAddCardType', '<button icon=add></button><span>Add card type</span>');
+    const addButton = div(strip, 'deckEditorStripCard deckEditorAddCardType', '<button icon=add></button><span>Add blank card type</span>');
+    addButton.title = 'Adds a new card type without any properties.';
     $('button', addButton).onclick = _=>this.addCardType();
+
+    if(this.cardType !== null) {
+      const copyButton = div(strip, 'deckEditorStripCard deckEditorAddCardType', '<button icon=content_copy></button><span>Copy card type</span>');
+      copyButton.title = `Adds a new card type with the same properties as "${this.cardType}".`;
+      $('button', copyButton).onclick = _=>this.addCardType(this.cardType);
+    }
   }
 
   renderSidebar() {
@@ -1261,7 +1268,11 @@ class DeckEditor {
         if(currentValue !== undefined && object[objectProperty] === undefined)
           object[objectProperty] = currentValue;
         this.refreshMainCardFaces();
-        await this.commit('faceTemplates', `${getPlayerDetails().playerName} removed a dynamic property binding from deck ${this.deckID} in deck editor`);
+        const cause = `${getPlayerDetails().playerName} removed a dynamic property binding from deck ${this.deckID} in deck editor`;
+        const actionId = this.newAction();
+        await this.commit('faceTemplates', cause, actionId);
+        if(this.removeOrphanedTypeProperties([ { dynamicProperties: { [objectProperty]: typeProperty } } ]))
+          await this.commit('cardTypes', cause, actionId);
         this.renderSidebar();
       };
     }
@@ -1327,15 +1338,42 @@ class DeckEditor {
     this.selectObject(face.objects.length-1);
   }
 
+  // Removes card type properties that are no longer referenced by any object's dynamicProperties after the
+  // given objects were removed, so deleting an object doesn't leave orphaned per-card-type data behind (and
+  // the next added object can reuse the property name). Returns whether cardTypes changed.
+  removeOrphanedTypeProperties(removedObjects) {
+    const stillReferenced = new Set();
+    for(const face of this.faceTemplates)
+      for(const object of face.objects || [])
+        for(const property of Object.values(object.dynamicProperties || {}))
+          stillReferenced.add(property);
+
+    let changed = false;
+    for(const object of removedObjects)
+      for(const property of Object.values(object.dynamicProperties || {}))
+        if(!stillReferenced.has(property))
+          for(const typeProperties of Object.values(this.cardTypes))
+            if(typeProperties[property] !== undefined) {
+              delete typeProperties[property];
+              changed = true;
+            }
+    return changed;
+  }
+
   async deleteSelectedObject() {
     const face = this.faceTemplates[this.face];
     if(!face || this.selectedObject === null)
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    face.objects.splice(this.selectedObject, 1);
+    const removed = face.objects.splice(this.selectedObject, 1);
     this.selectedObject = null;
     this.refreshMainCardFaces();
-    await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted a face object from deck ${this.deckID} in deck editor`);
+    // One cause + one actionId so the object removal and the orphaned-property cleanup are one undo step.
+    const cause = `${getPlayerDetails().playerName} deleted a face object from deck ${this.deckID} in deck editor`;
+    const actionId = this.newAction();
+    await this.commit('faceTemplates', cause, actionId);
+    if(this.removeOrphanedTypeProperties(removed))
+      await this.commit('cardTypes', cause, actionId);
     this.renderSidebar();
     this.updateDragToolbar();
   }
@@ -1357,24 +1395,41 @@ class DeckEditor {
     if(!confirm(`Delete ${this.faceLabel(this.face)} from every card type of this deck?`))
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    this.faceTemplates.splice(this.face, 1);
+    const removed = this.faceTemplates.splice(this.face, 1);
     this.face = Math.min(this.face, Math.max(0, this.faceTemplates.length-1));
     this.selectedObject = null;
-    await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted a face from deck ${this.deckID} in deck editor`);
+    const cause = `${getPlayerDetails().playerName} deleted a face from deck ${this.deckID} in deck editor`;
+    const actionId = this.newAction();
+    await this.commit('faceTemplates', cause, actionId);
+    if(this.removeOrphanedTypeProperties(removed[0] && removed[0].objects || []))
+      await this.commit('cardTypes', cause, actionId);
     this.render();
   }
 
-  async addCardType() {
-    if(!this.deck())
+  // copyOf: name of an existing card type whose properties the new type starts with (null for a blank one).
+  async addCardType(copyOf = null) {
+    if(!this.deck() || copyOf !== null && this.cardTypes[copyOf] === undefined)
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    let index = Object.keys(this.cardTypes).length + 1;
-    while(this.cardTypes[`type ${index}`] !== undefined)
-      ++index;
-    this.cardTypes[`type ${index}`] = {};
-    this.cardType = `type ${index}`;
+    let name;
+    if(copyOf !== null) {
+      name = `${copyOf} copy`;
+      let index = 2;
+      while(this.cardTypes[name] !== undefined)
+        name = `${copyOf} copy ${index++}`;
+      this.cardTypes[name] = JSON.parse(JSON.stringify(this.cardTypes[copyOf]));
+    } else {
+      let index = Object.keys(this.cardTypes).length + 1;
+      while(this.cardTypes[`type ${index}`] !== undefined)
+        ++index;
+      name = `type ${index}`;
+      this.cardTypes[name] = {};
+    }
+    this.cardType = name;
     this.selectedObject = null;
-    await this.commit('cardTypes', `${getPlayerDetails().playerName} added a card type to deck ${this.deckID} in deck editor`);
+    await this.commit('cardTypes', copyOf !== null
+      ? `${getPlayerDetails().playerName} copied card type ${copyOf} of deck ${this.deckID} in deck editor`
+      : `${getPlayerDetails().playerName} added a card type to deck ${this.deckID} in deck editor`);
     this.render();
   }
 
