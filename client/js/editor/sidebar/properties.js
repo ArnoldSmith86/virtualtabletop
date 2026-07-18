@@ -321,6 +321,10 @@ class PropertiesModule extends SidebarModule {
       images: {
         header: 'Upload one image per card or tiled images with multiple cards',
         description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
+      },
+      deckeditor: {
+        header: 'Design a deck in the deck editor',
+        description: 'Create a new deck and design its faces and card types visually in the fullscreen deck editor'
       }
     }, v=>{
       options.innerHTML = '';
@@ -328,9 +332,37 @@ class PropertiesModule extends SidebarModule {
         this.deckGenerator(options);
       if(v == 'images')
       this.deckImages(options);
+      if(v == 'deckeditor')
+        this.deckEditorStart(options);
     });
 
     const options = div(this.moduleDOM);
+  }
+
+  deckEditorStart(target) {
+    const bar = div(target, 'buttonBar', '<button icon=style class=green>Open Deck Editor</button>');
+    $('button', bar).onclick = async _=>{
+      batchStart();
+      const id = generateUniqueWidgetID();
+      setDeltaCause(`${getPlayerDetails().playerName} created deck ${id}D for the deck editor`);
+      await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
+      await addWidgetLocal({
+        type: 'deck',
+        id: id+'D',
+        parent: id,
+        x: 12,
+        y: 41,
+        cardDefaults: { width: 103, height: 160 },
+        cardTypes: { 'type 1': {} },
+        faceTemplates: [
+          { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: VTTblue } ] },
+          { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: '#ffffff' } ] }
+        ]
+      });
+      await addWidgetLocal({ type: 'card', deck: id+'D', cardType: 'type 1', parent: id, activeFace: 1 });
+      batchEnd();
+      deckEditor.open(id+'D');
+    };
   }
 
   deckGenerator(target) {

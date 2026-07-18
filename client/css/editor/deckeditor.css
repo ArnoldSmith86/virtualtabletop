@@ -205,6 +205,11 @@ body.deckEditorActive #deckEditor {
   cursor: move;
 }
 
+/* before :hover and .deckEditorSelectedObject so those still win on the hovered/selected object */
+#deckEditorMain.deckEditorShowAllAreas .deckEditorCard .cardFaceObject {
+  outline: calc(2px / var(--deckEditorCardScale)) dotted var(--textHighlightColor2);
+}
+
 #deckEditorMain .deckEditorCard .cardFaceObject:hover {
   outline: calc(2px / var(--deckEditorCardScale)) dashed var(--textHighlightColor2);
 }
@@ -304,6 +309,41 @@ body.deckEditorActive #deckEditor {
 .deckEditorAddProperty input {
   min-width: 0;
   flex-grow: 1;
+}
+
+.deckEditorAddBinding div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin: 3px 0;
+}
+
+.deckEditorAddBinding label {
+  font-size: 12px;
+}
+
+.deckEditorAddBinding select, .deckEditorAddBinding input {
+  min-width: 0;
+  width: 150px;
+}
+
+#deckEditorSidebar .deckEditorProperties .genericInput {
+  position: relative;
+  padding-right: 24px;
+}
+
+.deckEditorDeleteProperty {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 1px 3px;
+  font-size: 11px;
+}
+
+#deckEditorShowAll.active {
+  background: var(--VTTblueDark);
+  color: #fff;
 }
 
 .deckEditorCardCount input {

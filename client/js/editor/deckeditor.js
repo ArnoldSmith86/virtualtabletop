@@ -184,6 +184,10 @@ class DeckEditor {
     this.selectedObject = null;
     this.cardScale = 1;
     this.commitTimers = {};
+    this.faceTemplates = [];
+    this.cardTypes = {};
+    this.cardDefaults = {};
+    this.showAllAreas = false;
 
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
@@ -233,6 +237,11 @@ class DeckEditor {
     };
     $('#deckEditorAddFace').onclick = _=>this.addFace();
     $('#deckEditorDeleteFace').onclick = _=>this.deleteFace();
+    $('#deckEditorShowAll').onclick = _=>{
+      this.showAllAreas = !this.showAllAreas;
+      $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
+      $('#deckEditorMain').classList.toggle('deckEditorShowAllAreas', this.showAllAreas);
+    };
     $('#deckEditorAddText').onclick = _=>this.addObject({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center', value: 'Text' });
     $('#deckEditorAddImage').onclick = _=>{
       uploadAsset().then(asset=>{
@@ -241,6 +250,7 @@ class DeckEditor {
       });
     };
     $('#deckEditorAddIcon').onclick = _=>this.addObject({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000', value: 'skoll/hearts' });
+    $('#deckEditorAddColor').onclick = _=>this.addObject(this.colorBoxTemplate());
 
     $('#deckEditorAddTextDynamic').onclick = _=>this.addDynamicObject({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
     $('#deckEditorAddImageDynamic').onclick = _=>{
@@ -250,6 +260,7 @@ class DeckEditor {
       });
     };
     $('#deckEditorAddIconDynamic').onclick = _=>this.addDynamicObject({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', 'skoll/hearts');
+    $('#deckEditorAddColorDynamic').onclick = _=>this.addDynamicObject(this.colorBoxTemplate(), 'color', '#cccccc', 'color');
 
     $('#deckEditorMain').onmousedown = e=>{
       if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
@@ -347,15 +358,21 @@ class DeckEditor {
     $('#deckEditorDragToolbar').classList.remove('active');
   }
 
-  loadWorkingCopies(properties = [ 'faceTemplates', 'cardTypes' ]) {
+  workingCopy(property) {
+    return this[property];
+  }
+
+  loadWorkingCopies(properties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ]) {
     const deck = this.deck();
     if(properties.includes('faceTemplates')) {
       const faceTemplates = deck.get('faceTemplates');
       this.faceTemplates = Array.isArray(faceTemplates) ? JSON.parse(JSON.stringify(faceTemplates)) : [];
     }
-    if(properties.includes('cardTypes')) {
-      const cardTypes = deck.get('cardTypes');
-      this.cardTypes = cardTypes && typeof cardTypes == 'object' && !Array.isArray(cardTypes) ? JSON.parse(JSON.stringify(cardTypes)) : {};
+    for(const property of [ 'cardTypes', 'cardDefaults' ]) {
+      if(properties.includes(property)) {
+        const value = deck.get(property);
+        this[property] = value && typeof value == 'object' && !Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : {};
+      }
     }
   }
 
@@ -363,10 +380,10 @@ class DeckEditor {
   // since we built the committed value from that same working copy) from a genuine remote/undo change.
   matchesWorkingCopy(property) {
     const deck = this.deck();
-    return !!deck && JSON.stringify(deck.get(property)) == JSON.stringify(property == 'faceTemplates' ? this.faceTemplates : this.cardTypes);
+    return !!deck && JSON.stringify(deck.get(property)) == JSON.stringify(this.workingCopy(property));
   }
 
-  reload(properties = [ 'faceTemplates', 'cardTypes' ]) {
+  reload(properties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ]) {
     if(!this.deck())
       return this.close();
     for(const property of properties) {
@@ -452,13 +469,17 @@ class DeckEditor {
 
     batchStart();
     setDeltaCause(resolvedCause);
-    await deck.set(property, JSON.parse(JSON.stringify(property == 'faceTemplates' ? this.faceTemplates : this.cardTypes)));
+    await deck.set(property, JSON.parse(JSON.stringify(this.workingCopy(property))));
     batchEnd();
 
     this.recordHistory(resolvedCause, resolvedActionId);
     // Rebuilds every strip preview; fine for typical decks. If this ever gets janky on huge decks while
     // typing, give the strip its own longer debounce instead of skipping it (typed edits do affect previews).
     this.renderStrip();
+    if(property == 'cardDefaults' && !this.applyingHistory) { // defaults like width/height resize the main card
+      this.renderMain();
+      this.updateDragToolbar();
+    }
   }
 
   async flushPendingCommits() {
@@ -490,6 +511,7 @@ class DeckEditor {
     return {
       faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates)),
       cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
+      cardDefaults: JSON.parse(JSON.stringify(this.cardDefaults)),
       cause,
       actionId,
       label: label || this.historyLabel(cause)
@@ -541,6 +563,15 @@ class DeckEditor {
     match = cause.match(/ updated "(.+?)" of card type "(.+?)" /);
     if(match)
       return `Edited ${match[1]} of ${match[2]}`;
+    match = cause.match(/ updated "(.+?)" of face (\d+) /);
+    if(match)
+      return `Edited ${match[1]} of face ${match[2]}`;
+    match = cause.match(/ updated "(.+?)" of card defaults /);
+    if(match)
+      return `Edited default ${match[1]}`;
+    match = cause.match(/ deleted property "(.+?)" /);
+    if(match)
+      return `Deleted ${match[1]}`;
     if(/ updated faceTemplates /.test(cause))
       return 'Edited face object';
     if(/ updated cardTypes /.test(cause))
@@ -550,7 +581,7 @@ class DeckEditor {
     let label = cause;
     if(label.startsWith(player + ' '))
       label = label.slice(player.length+1);
-    label = label.replace(/ (to|of|from|for) deck \S+/, '');
+    label = label.replace(/ (to|of|from|for|in) deck \S+/, '');
     label = label.replace(/ in deck editor$/, '');
     return label ? label.charAt(0).toUpperCase() + label.slice(1) : 'Change';
   }
@@ -564,11 +595,9 @@ class DeckEditor {
     this.historyIndex = index;
     const snapshot = this.history[index];
 
-    const faceChanged = JSON.stringify(this.faceTemplates) !== JSON.stringify(snapshot.faceTemplates);
-    const typesChanged = JSON.stringify(this.cardTypes) !== JSON.stringify(snapshot.cardTypes);
-
-    this.faceTemplates = JSON.parse(JSON.stringify(snapshot.faceTemplates));
-    this.cardTypes = JSON.parse(JSON.stringify(snapshot.cardTypes));
+    const changed = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ].filter(property=>JSON.stringify(this.workingCopy(property)) !== JSON.stringify(snapshot[property]));
+    for(const property of changed)
+      this[property] = JSON.parse(JSON.stringify(snapshot[property]));
 
     if(this.cardType === null || !this.cardTypes[this.cardType])
       this.cardType = Object.keys(this.cardTypes)[0] || null;
@@ -577,13 +606,11 @@ class DeckEditor {
     this.selectedObject = null;
 
     // applyingHistory keeps these re-commits from being recorded as new history entries. One shared actionId
-    // keeps the (up to) two commits of this jump a single room-undo entry, while separate jumps stay separate.
+    // keeps the commits of this jump a single room-undo entry, while separate jumps stay separate.
     const actionId = this.newAction();
     this.applyingHistory = true;
-    if(faceChanged)
-      await this.commit('faceTemplates', cause, actionId);
-    if(typesChanged)
-      await this.commit('cardTypes', cause, actionId);
+    for(const property of changed)
+      await this.commit(property, cause, actionId);
     this.applyingHistory = false;
 
     this.render();
@@ -903,7 +930,7 @@ class DeckEditor {
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
           continue;
-        this.addInput(property, object[property], v=>this.queueFieldEdit(async _=>{
+        const row = this.addInput(property, object[property], v=>this.queueFieldEdit(async _=>{
           await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
           if(typeof v === 'undefined')
             delete object[property];
@@ -913,6 +940,13 @@ class DeckEditor {
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         }), objectProps);
+        this.addPropertyDeleteButton(row, property, async _=>{
+          await this.flushPendingCommits();
+          delete object[property];
+          this.refreshMainCardFaces();
+          await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted property "${property}" of a face object of deck ${this.deckID} in deck editor`);
+          this.renderSidebar();
+        });
       }
       addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
         if(property == 'dynamicProperties' || object[property] !== undefined)
@@ -951,8 +985,31 @@ class DeckEditor {
       div(sidebar, 'deckEditorHint', '<p>Click a face object in the big card view to select and edit it. Drag it to move it around.</p>');
     }
 
-    if(this.cardType === null)
+    if(this.faceTemplates[this.face]) {
+      const face = this.faceTemplates[this.face];
+      addHeader(this.faceLabel(this.face), 'deckEditorScopeEveryCard', 'Settings of the whole face — on every card');
+      const faceFieldArgs = property=>[
+        `${getPlayerDetails().playerName} updated "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`,
+        `field:faceTemplates:face:${this.face}:${property}`
+      ];
+      const faceProps = div(sidebar, 'deckEditorProperties');
+      for(const property of [ 'border', 'radius' ]) {
+        this.addInput(property, face[property], v=>this.queueFieldEdit(async _=>{
+          await this.flushPendingCommitForOtherField('faceTemplates', faceFieldArgs(property)[1]);
+          if(typeof v === 'undefined')
+            delete face[property];
+          else
+            face[property] = v;
+          this.refreshMainCardFaces();
+          this.scheduleCommit('faceTemplates', ...faceFieldArgs(property));
+        }), faceProps);
+      }
+    }
+
+    if(this.cardType === null) {
+      this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
       return;
+    }
 
     addHeader('Card type', 'deckEditorScopeThisType', 'Only this card type');
 
@@ -983,7 +1040,7 @@ class DeckEditor {
     ];
     const typeProps = div(sidebar, 'deckEditorProperties');
     const addTypeInput = property=>{
-      this.addInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
+      const row = this.addInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
         if(typeof v === 'undefined') {
           delete typeProperties[property];
@@ -995,6 +1052,17 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       }), typeProps);
+      if(typeProperties[property] !== undefined) {
+        this.addPropertyDeleteButton(row, property, async _=>{
+          await this.flushPendingCommits();
+          delete typeProperties[property];
+          if(this.mainCard)
+            delete this.mainCard.state[property];
+          this.refreshMainCardFaces();
+          await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+          this.renderSidebar();
+        });
+      }
     };
     for(const property of Object.keys(typeProperties))
       addTypeInput(property);
@@ -1019,6 +1087,59 @@ class DeckEditor {
     deleteType.innerText = 'Delete card type';
     deleteType.onclick = _=>this.deleteCardType();
     typeButtons.append(deleteType);
+
+    this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
+  }
+
+  renderCardDefaults(sidebar, addHeader, addPropertyRow) {
+    addHeader('Card defaults', 'deckEditorScopeEveryCard', 'Default properties of every card of this deck');
+
+    const defaultsFieldArgs = property=>[
+      `${getPlayerDetails().playerName} updated "${property}" of card defaults of deck ${this.deckID} in deck editor`,
+      `field:cardDefaults:${property}`
+    ];
+    const defaultsProps = div(sidebar, 'deckEditorProperties');
+    const addDefaultsInput = property=>{
+      const row = this.addInput(property, this.cardDefaults[property], v=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
+        if(typeof v === 'undefined')
+          delete this.cardDefaults[property];
+        else
+          this.cardDefaults[property] = v;
+        this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
+      }), defaultsProps);
+      if(this.cardDefaults[property] !== undefined) {
+        this.addPropertyDeleteButton(row, property, async _=>{
+          await this.flushPendingCommits();
+          delete this.cardDefaults[property];
+          await this.commit('cardDefaults', `${getPlayerDetails().playerName} deleted property "${property}" of card defaults of deck ${this.deckID} in deck editor`);
+          this.renderSidebar();
+        });
+      }
+    };
+    for(const property of Object.keys(this.cardDefaults))
+      addDefaultsInput(property);
+    for(const property of [ 'width', 'height' ]) // the most common defaults are always offered
+      if(this.cardDefaults[property] === undefined)
+        addDefaultsInput(property);
+    addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
+      if(this.cardDefaults[property] !== undefined)
+        return;
+      await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
+      this.cardDefaults[property] = '';
+      this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
+      this.renderSidebar();
+    }));
+  }
+
+  // The type dropdown's "not set" only unsets the value until the next re-render; this removes the row too.
+  addPropertyDeleteButton(row, property, onDelete) {
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'delete');
+    button.className = 'deckEditorDeleteProperty';
+    button.title = `Delete property "${property}"`;
+    button.onclick = onDelete;
+    row.dom.append(button);
   }
 
   knownCardTypeProperties() {
@@ -1053,13 +1174,21 @@ class DeckEditor {
     await this.commit('cardTypes', cause, actionId);
   }
 
-  async addDynamicObject(objectTemplate, propertyBaseName, defaultValue) {
+  async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
     // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
     const cause = `${getPlayerDetails().playerName} added a per-card-type ${objectTemplate.type} object to deck ${this.deckID} in deck editor`;
     const actionId = this.newAction();
     await this.seedCardTypeProperty(typeProperty, defaultValue, cause, actionId);
-    await this.addObject({ ...objectTemplate, dynamicProperties: { value: typeProperty } }, cause, actionId);
+    const template = { ...objectTemplate, dynamicProperties: { [boundProperty]: typeProperty } };
+    delete template[boundProperty]; // a static value would override the dynamic one
+    await this.addObject(template, cause, actionId);
+  }
+
+  colorBoxTemplate() {
+    const width = this.mainCard ? this.mainCard.get('width') : 103;
+    const height = this.mainCard ? this.mainCard.get('height') : 160;
+    return { type: 'image', x: 0, y: 0, width, height, color: '#cccccc' };
   }
 
   renderDynamicProperties(sidebar, object) {
@@ -1082,17 +1211,25 @@ class DeckEditor {
       };
     }
 
-    const objectPropertySuggestions = [ 'value', 'color', 'width', 'height', 'display' ].filter(p=>!(object.dynamicProperties || {})[p]);
-    const addRow = div(container, 'deckEditorAddProperty', `
-      <input class=objectProperty placeholder="object prop." list=deckEditorObjectPropertySuggestions>
-      <input class=typeProperty placeholder="card type prop." list=deckEditorTypePropertySuggestions>
-      <button icon=add>Add</button>
-      <datalist id=deckEditorObjectPropertySuggestions>${objectPropertySuggestions.map(p=>`<option value="${html(p)}">`).join('')}</datalist>
-      <datalist id=deckEditorTypePropertySuggestions>${this.knownCardTypeProperties().map(p=>`<option value="${html(p)}">`).join('')}</datalist>
+    // Both sides are dropdowns: the object side offers common displayable properties plus the object's own
+    // ones, the card type side offers every property any card type already has plus a "new property" choice.
+    const bound = object.dynamicProperties || {};
+    const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...Object.keys(object) ])]
+      .filter(p=>p != 'type' && p != 'dynamicProperties' && bound[p] === undefined);
+    const typePropertyOptions = this.knownCardTypeProperties();
+    const addRow = div(container, 'deckEditorAddBinding', `
+      <div><label>Object property to fill</label><select class=objectProperty>${objectPropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}</select></div>
+      <div><label>From card type property</label><select class=typeProperty>${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select></div>
+      <div class=newTypeProperty style="display:none"><label>Name of the new property</label><input placeholder="e.g. rank"></div>
+      <div class=buttonBar><button icon=add>Add dynamic property</button></div>
     `);
+    const typeSelect = $('.typeProperty', addRow);
+    const updateNewNameVisibility = _=>$('.newTypeProperty', addRow).style.display = typeSelect.value == '__new__' ? '' : 'none';
+    typeSelect.onchange = updateNewNameVisibility;
+    updateNewNameVisibility();
     $('button', addRow).onclick = async _=>{
-      const objectProperty = $('.objectProperty', addRow).value.trim();
-      const typeProperty = $('.typeProperty', addRow).value.trim();
+      const objectProperty = $('.objectProperty', addRow).value;
+      const typeProperty = typeSelect.value == '__new__' ? $('.newTypeProperty input', addRow).value.trim() : typeSelect.value;
       if(!objectProperty || !typeProperty)
         return;
       await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
@@ -1235,23 +1372,18 @@ async function deckEditorReceiveDelta(delta) {
   // deck.set() in commit() echoes back into here synchronously (before commit() even returns); reloading on
   // that self-echo would wipe out the sidebar mid-edit and revert any other property still pending a commit.
   // A delta that exactly matches the current working copy is that self-echo, not a genuine remote change.
-  const changedProperties = [ 'faceTemplates', 'cardTypes' ].filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
-  if(!changedProperties.length && deckDelta.cardDefaults === undefined)
+  const changedProperties = [ 'faceTemplates', 'cardTypes', 'cardDefaults' ].filter(property=>deckDelta[property] !== undefined && !deckEditor.matchesWorkingCopy(property));
+  if(!changedProperties.length)
     return;
 
   // Commit edits to properties the remote delta did not touch before reloading. A same-property conflict is
   // resolved in favor of the received value: reload() cancels its pending timer so stale local data cannot be
-  // sent afterward. cardDefaults only affects previews, so it never replaces either editable working copy.
+  // sent afterward.
   for(const property of Object.keys(deckEditor.commitTimers))
     if(!changedProperties.includes(property))
       await deckEditor.commit(property);
 
-  if(changedProperties.length)
-    return deckEditor.reload(changedProperties);
-
-  deckEditor.renderMain();
-  deckEditor.renderStrip();
-  deckEditor.updateDragToolbar();
+  return deckEditor.reload(changedProperties);
 }
 
 // Called when a full room state replaces the current one (e.g. switching games). The deck being edited is
