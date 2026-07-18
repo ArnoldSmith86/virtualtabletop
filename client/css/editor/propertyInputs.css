@@ -425,6 +425,95 @@
   font-size: 12px;
 }
 
+.editorModule .cssEditor .cssSuggestionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.editorModule .cssEditor .cssSuggestionRow button {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* several labeled inputs sharing one line (timer rows, seat index/turn, ...) */
+.editorModule .propertyInlineRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 4px 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput {
+  flex: 0 1 auto;
+  margin: 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput > label:not(.switchbox) {
+  width: auto;
+  min-width: 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput input[type=text],
+.editorModule .propertyInlineRow .propertyInput input:not([type]) {
+  flex: 0 1 80px;
+  min-width: 60px;
+}
+
+/* temporary game state (spinner angle/value): editable but visually muted */
+.editorModule .temporaryValues input {
+  opacity: 0.65;
+}
+
+.editorModule .temporaryValues input:focus {
+  opacity: 1;
+}
+
+.editorModule .canvasColorMapRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .canvasColorMapRow .propertyInput {
+  margin: 0;
+}
+
+.editorModule .canvasColorMapRow > button {
+  min-width: 34px;
+  justify-content: center;
+}
+
+.editorModule .propertyNote {
+  font-size: 12px;
+  color: var(--textDimColor1, #777);
+  margin: 2px 0;
+}
+
+.editorModule .timerAlertEditor {
+  padding-left: 10px;
+  border-left: 2px solid var(--backgroundHighlightColor1, #ddd);
+}
+
+.editorModule .seatPlayerRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 4px 0;
+}
+
+.editorModule .playerColorDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #0006;
+  display: inline-block;
+}
+
 body.editorWidgetPicking, body.editorWidgetPicking .widget {
   cursor: crosshair !important;
 }

@@ -67,7 +67,7 @@ function usedValuesInGame(callback) {
 }
 
 function usedGameColors() {
-  return usedValuesInGame((key, value)=>value == 'transparent' || value.match(/^#[0-9a-fA-F]{3,8}$|^(?:rgb|hsl)a?\(.*\)$/) ? value : null);
+  return usedValuesInGame((key, value)=>value == 'transparent' || value.match(/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$|^(?:rgb|hsl)a?\(.*\)$/) ? value : null);
 }
 
 function usedGameIcons() {
@@ -750,26 +750,24 @@ class ImageInput extends PickerInput {
 // property (through the parse/merge helpers in properties.js) so ColorInput
 // and NumberInput can edit e.g. the "color" declaration of the css property
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
+  let warned = false;
   return Object.assign({
     getValue: _=>parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass),
     setValue: v=>{
-      module.inputValueUpdated(widget, cssProperty, mergePropertyFromCSS(widget.get(cssProperty), key, v, cssClass));
+      const css = widget.get(cssProperty);
+      // mergePropertyFromCSS refuses strings it cannot parse without losing
+      // data - tell the user instead of silently doing nothing
+      if(typeof css == 'string' && css.trim() && !cssStringRoundTrips(css)) {
+        if(!warned) {
+          warned = true;
+          alert(`The ${cssProperty} property of this widget contains text this input cannot safely modify. Please edit it in the CSS section instead.`);
+        }
+        return;
+      }
+      module.inputValueUpdated(widget, cssProperty, mergePropertyFromCSS(css, key, v, cssClass));
       if(widget.applyDeltaToDOM)
         widget.applyDeltaToDOM({ [cssProperty]: widget.get(cssProperty) });
     },
     listenTo: [ cssProperty ]
-  }, extraOptions);
-}
-
-// like cssValueOptions but for numeric declarations with a px unit
-function cssNumberOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
-  const base = cssValueOptions(module, widget, key, cssProperty, cssClass);
-  return Object.assign(base, {
-    getValue: _=>{
-      const value = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
-      const match = String(value === null ? '' : value).match(/-?[0-9.]+/);
-      return match ? +match[0] : null;
-    },
-    setValue: v=>base.setValue(v === null || v === '' ? null : `${v}px`)
   }, extraOptions);
 }

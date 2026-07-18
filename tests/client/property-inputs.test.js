@@ -23,7 +23,9 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     cssStringRoundTrips,
     cssStringToObject,
     parsePropertyFromCSS,
-    mergePropertyFromCSS
+    mergePropertyFromCSS,
+    formatTimerMs,
+    parseTimerInput
   };
 `)(class {});
 
@@ -57,6 +59,30 @@ describe('css helpers', () => {
     expect(cssHelpers.parsePropertyFromCSS({ color: 'red' }, 'color', null)).toBe('red');
     expect(cssHelpers.parsePropertyFromCSS({ default: { color: 'red' } }, 'color', null)).toBe('red');
     expect(cssHelpers.parsePropertyFromCSS({}, 'color', null)).toBe(null);
+  });
+});
+
+describe('timer time helpers', () => {
+  test('formatTimerMs renders milliseconds as mm:ss', () => {
+    expect(cssHelpers.formatTimerMs(0)).toBe('0:00');
+    expect(cssHelpers.formatTimerMs(61000)).toBe('1:01');
+    expect(cssHelpers.formatTimerMs(-90000)).toBe('-1:30');
+    expect(cssHelpers.formatTimerMs(5500)).toBe('0:05.5');
+    expect(cssHelpers.formatTimerMs(null)).toBe('');
+  });
+
+  test('parseTimerInput accepts mm:ss and plain seconds', () => {
+    expect(cssHelpers.parseTimerInput('1:01')).toBe(61000);
+    expect(cssHelpers.parseTimerInput('90')).toBe(90000);
+    expect(cssHelpers.parseTimerInput('-1:30')).toBe(-90000);
+    expect(cssHelpers.parseTimerInput('0:05.5')).toBe(5500);
+    expect(cssHelpers.parseTimerInput('')).toBe(null);
+    expect(cssHelpers.parseTimerInput('abc')).toBe(undefined);
+  });
+
+  test('formatTimerMs and parseTimerInput round-trip', () => {
+    for(const ms of [ 0, 1000, 61000, 5500, 3600000, -90000 ])
+      expect(cssHelpers.parseTimerInput(cssHelpers.formatTimerMs(ms))).toBe(ms);
   });
 });
 

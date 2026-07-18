@@ -216,6 +216,29 @@ function mergePropertyFromCSS(css, prop, value, cssClass='default') {
   return sourceIsNested ? out : out.default;
 }
 
+function formatTimerMs(ms) {
+  if(typeof ms != 'number' || !Number.isFinite(ms))
+    return '';
+  const negative = ms < 0;
+  const totalSeconds = Math.abs(ms) / 1000;
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds - minutes * 60;
+  const secondsString = (seconds < 10 ? '0' : '') + (Number.isInteger(seconds) ? seconds : +seconds.toFixed(3));
+  return `${negative ? '-' : ''}${minutes}:${secondsString}`;
+}
+
+// accepts "mm:ss", "m:ss.s" or plain seconds; returns milliseconds,
+// null for empty input and undefined for unparseable input
+function parseTimerInput(text) {
+  const trimmed = String(text).trim();
+  if(trimmed === '')
+    return null;
+  const match = trimmed.match(/^(-)?(?:(\d+):)?(\d+(?:\.\d+)?)$/);
+  if(!match)
+    return undefined;
+  return Math.round(((+match[2] || 0) * 60 + +match[3]) * 1000) * (match[1] ? -1 : 1);
+}
+
 function parseFontSize(fontSize) {
   const [, value, unit] = String(fontSize).trim().match(/^(-?\d*\.?\d+)([a-z%]*)$/i) || [];
   return value ? { value: +value, unit: unit || null } : null;
@@ -331,13 +354,7 @@ const editorTypeSections = {
       { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, slider: true, nullIfEmpty: true }
     ]
   },
-  canvas: {
-    behavior: [
-      { label: 'Resolution',   property: 'resolution',  kind: 'number', min: 10, max: 1000 },
-      { label: 'Line width',   property: 'lineWidth',   kind: 'number', min: 1, max: 10, slider: true },
-      { label: 'Active color', property: 'activeColor', kind: 'number', min: 0, max: 9, slider: true }
-    ]
-  },
+  canvas: {},
   card: {},
   deck: {},
   dice: {
@@ -355,6 +372,7 @@ const editorTypeSections = {
     cssProperties: [ 'css', 'faceCSS' ]
   },
   holder: {
+    cssClassSuggestions: [ '.showCardBack' ],
     colors: [
       { label: 'Color',         property: 'color',        kind: 'color' },
       { label: 'Text',          property: 'textColor',    kind: 'color' }
@@ -375,6 +393,7 @@ const editorTypeSections = {
   },
   label: {},
   scoreboard: {
+    cssClassSuggestions: [ '.equalWidth', '.verticalHeader' ],
     appearance: [
       { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
       { label: 'Player colors',      property: 'showPlayerColors', kind: 'checkbox' },
@@ -397,49 +416,29 @@ const editorTypeSections = {
     ]
   },
   seat: {
+    cssClassSuggestions: [ '.seated', '.turn', '.foreign' ],
     colors: [
-      { label: 'Color',         property: 'color',        kind: 'color' },
-      { label: 'Empty',         property: 'colorEmpty',   kind: 'color' }
+      { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
-    ],
-    behavior: [
-      { label: 'Seat index',        property: 'index',          kind: 'number', min: 1, max: 16 },
-      { label: 'Display property',  property: 'display',        kind: 'text' },
-      { label: 'Text when empty',   property: 'displayEmpty',   kind: 'text' },
-      { label: 'Has the turn',      property: 'turn',           kind: 'checkbox' },
-      { label: 'Skip turn',         property: 'skipTurn',       kind: 'checkbox' },
-      { label: 'Hide turn marker',  property: 'hideTurn',       kind: 'checkbox' },
-      { label: 'Hide when unused',  property: 'hideWhenUnused', kind: 'checkbox' }
     ]
   },
   spinner: {
     colors: [
       { label: 'Text',          property: 'textColor',    kind: 'color' },
-      { label: 'Line',          property: 'lineColor',    kind: 'color' }
-    ],
-    appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 50%', nullIfEmpty: true }
-    ],
-    behavior: [
-      { label: 'Current value', property: 'value', kind: 'text' }
+      { label: 'Line',          property: 'lineColor',    kind: 'color' },
+      // redundant shortcuts for declarations inside the spinner's element css properties
+      { label: 'Value text',    cssKey: 'color',      cssProperty: 'valueCSS',      kind: 'color' },
+      { label: 'Background',    cssKey: 'background', cssProperty: 'backgroundCSS', kind: 'color' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
   timer: {
+    cssClassSuggestions: [ '.alert', '.paused' ],
     colors: [
       { label: 'Background', cssKey: 'background', kind: 'color' },
       { label: 'Text',       cssKey: 'color',      kind: 'color' }
-    ],
-    behavior: [
-      { label: 'Countdown',         property: 'countdown',    kind: 'checkbox' },
-      { label: 'Paused',            property: 'paused',       kind: 'checkbox' },
-      { label: 'Alert when done',   property: 'alert',        kind: 'checkbox' },
-      { label: 'Precision',         property: 'precision',    kind: 'select', choices: [ { value: 1000, text: '1 second' }, { value: 100, text: '0.1 seconds' }, { value: 10, text: '0.01 seconds' }, { value: 1, text: '1 millisecond' } ] },
-      { label: 'Start (ms)',        property: 'start',        kind: 'number' },
-      { label: 'End (ms)',          property: 'end',          kind: 'number', nullIfEmpty: true },
-      { label: 'Current time (ms)', property: 'milliseconds', kind: 'number' }
     ]
   }
 };
@@ -3266,7 +3265,7 @@ class PropertiesModule extends SidebarModule {
       if(options.hint === undefined && def.property && editorPropertyHints[def.property])
         options.hint = editorPropertyHints[def.property];
       if(def.cssKey)
-        Object.assign(options, cssValueOptions(this, widget, def.cssKey));
+        Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css'));
       new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);
     }
   }
@@ -3279,7 +3278,7 @@ class PropertiesModule extends SidebarModule {
   // them out of the generic "Other properties" list
   typeSectionProperties(widget) {
     const sections = this.typeSections(widget);
-    const properties = [ ...(sections.cssProperties || [ 'css' ]) ];
+    const properties = [ 'classes', ...(sections.cssProperties || [ 'css' ]) ];
     for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
       for(const def of sections[group] || [])
         if(def.property)
@@ -3324,22 +3323,26 @@ class PropertiesModule extends SidebarModule {
       this.addAppearanceSubTitle('Hover');
       this.renderInputs(widget, hover);
     }
-    if(misc.length) {
-      if(colors.length || hover.length)
-        this.addAppearanceSubTitle('Style');
+    if(colors.length || hover.length)
+      this.addAppearanceSubTitle('Style');
+    if(misc.length)
       this.renderInputs(widget, misc);
-    }
 
-    const hasCSS = cssProperties.some(property => this.isOnDemandPropertyValueSet(widget.state[property]));
-    this.renderCollapsibleSection('CSS', !hasCSS, body => {
+    new TextInput(this, widget, 'CSS classes', {
+      property: 'classes',
+      nullIfEmpty: true,
+      hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders or classes defined in the room\'s custom css.'
+    }).render(this.moduleDOM);
+
+    this.renderCollapsibleSection('CSS', true, body => {
       for(const property of cssProperties)
-        this.renderCssPropertyEditor(widget, property, body);
+        this.renderCssPropertyEditor(widget, property, body, property == 'css' ? sections.cssClassSuggestions || [] : []);
     }, null, `${widget.id}:css`);
   }
 
   // Chrome-devtools-like editor for a css-like property: one collapsible
   // section per class/selector with a plain declaration text input.
-  renderCssPropertyEditor(widget, property, target) {
+  renderCssPropertyEditor(widget, property, target, classSuggestions = []) {
     const wrap = div(target, 'cssEditor');
     const title = div(wrap, 'propertyPickerSectionTitle');
     title.textContent = property;
@@ -3403,6 +3406,27 @@ class PropertiesModule extends SidebarModule {
       }
     };
 
+    const addClass = className => {
+      const value = widget.get(property);
+      let newCss;
+      if(hasNestedCSSClasses(value)) {
+        if(value[className] !== undefined)
+          return;
+        newCss = Object.assign({}, value, { [className]: {} });
+      } else {
+        newCss = { [className]: {} };
+        if(this.isOnDemandPropertyValueSet(value) && className != 'default') {
+          // convert the previous value into the default class of the nested form
+          if(isObjectLike(value))
+            newCss.default = value;
+          else
+            newCss.default = cssStringRoundTrips(String(value)) ? cssStringToObject(String(value)) : value;
+        }
+      }
+      this.inputValueUpdated(widget, property, newCss);
+      rebuild();
+    };
+
     const rebuild = () => {
       container.innerHTML = '';
       const value = widget.get(property);
@@ -3421,29 +3445,24 @@ class PropertiesModule extends SidebarModule {
       addButton.setAttribute('icon', 'add');
       addButton.title = 'Add a class/selector section';
       addButton.onclick = () => {
-        const className = nameInput.value.trim();
-        if(!className)
-          return;
-        const value = widget.get(property);
-        let newCss;
-        if(hasNestedCSSClasses(value)) {
-          if(value[className] !== undefined)
-            return;
-          newCss = Object.assign({}, value, { [className]: {} });
-        } else {
-          newCss = { [className]: {} };
-          if(this.isOnDemandPropertyValueSet(value) && className != 'default') {
-            // convert the previous value into the default class of the nested form
-            if(isObjectLike(value))
-              newCss.default = value;
-            else
-              newCss.default = cssStringRoundTrips(String(value)) ? cssStringToObject(String(value)) : value;
-          }
-        }
-        this.inputValueUpdated(widget, property, newCss);
-        rebuild();
+        if(nameInput.value.trim())
+          addClass(nameInput.value.trim());
       };
       addRow.appendChild(addButton);
+
+      // one-click buttons for the classes this widget type applies on its own
+      const missingSuggestions = classSuggestions.filter(className => !hasNestedCSSClasses(value) || value[className] === undefined);
+      if(missingSuggestions.length) {
+        const suggestionRow = div(container, 'cssSuggestionRow');
+        for(const className of missingSuggestions) {
+          const suggestionButton = document.createElement('button');
+          suggestionButton.setAttribute('icon', 'add');
+          suggestionButton.textContent = className;
+          suggestionButton.title = `Add a section styling the widget's ${className} state`;
+          suggestionButton.onclick = () => addClass(className);
+          suggestionRow.appendChild(suggestionButton);
+        }
+      }
     };
 
     rebuild();
@@ -3492,29 +3511,149 @@ class PropertiesModule extends SidebarModule {
   renderForCanvas(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
-    this.renderAppearanceSection(widget, {
-      before: target => {
-        this.addAppearanceSubTitle('Drawing colors');
-        const colorMap = asArray(widget.get('colorMap') || []);
-        for(let i = 0; i < colorMap.length; ++i) {
-          new ColorInput(this, widget, `Color ${i}`, {
-            clearable: false,
-            listenTo: [ 'colorMap' ],
-            getValue: _=>{
-              const map = asArray(widget.get('colorMap') || []);
-              return map[i] !== undefined ? map[i] : null;
-            },
-            setValue: v=>{
-              const map = asArray(widget.get('colorMap') || []).slice();
-              map[i] = v === null ? '#000000' : v;
-              this.inputValueUpdated(widget, 'colorMap', map);
-            }
-          }).render(target);
-        }
+    this.renderAppearanceSection(widget);
+    this.addSubHeader('Canvas');
+    this.renderCanvasColorMap(widget);
+    this.renderCanvasActiveColor(widget);
+    this.renderInputs(widget, [
+      { label: 'Resolution', property: 'resolution', kind: 'number', min: 10, max: 1000 },
+      { label: 'Line width', property: 'lineWidth',  kind: 'number', min: 1, max: 10, slider: true }
+    ]);
+    // cXX properties hold the drawing data chunks and are not hand-editable
+    const chunkProperties = Object.keys(widget.state).filter(key => key.match(/^c[0-9][0-9]$/));
+    this.renderOtherPropertiesSection(widget, [ 'colorMap', 'activeColor', 'resolution', 'lineWidth' ].concat(chunkProperties));
+  }
+
+  canvasColorMap(widget) {
+    return asArray(widget.get('colorMap') || []).slice();
+  }
+
+  renderCanvasColorMap(widget) {
+    const wrap = div(this.moduleDOM, 'propertyInput');
+    const label = document.createElement('label');
+    label.textContent = 'Available colors';
+    wrap.appendChild(label);
+    const row = div(wrap, 'canvasColorMapRow');
+
+    const rebuild = () => {
+      row.innerHTML = '';
+      const colorMap = this.canvasColorMap(widget);
+      for(let i = 0; i < colorMap.length; ++i) {
+        new ColorInput(this, widget, null, {
+          clearable: false,
+          listenTo: [ 'colorMap' ],
+          getValue: _=>{
+            const map = this.canvasColorMap(widget);
+            return map[i] !== undefined ? map[i] : null;
+          },
+          setValue: v=>{
+            const map = this.canvasColorMap(widget);
+            map[i] = v === null ? '#000000' : v;
+            this.inputValueUpdated(widget, 'colorMap', map);
+          }
+        }).render(row);
       }
+
+      const removeButton = document.createElement('button');
+      removeButton.setAttribute('icon', 'remove');
+      removeButton.title = 'Remove the last color';
+      removeButton.disabled = colorMap.length <= 1;
+      removeButton.onclick = () => {
+        const map = this.canvasColorMap(widget);
+        map.pop();
+        this.inputValueUpdated(widget, 'colorMap', map);
+        rebuild();
+      };
+      row.appendChild(removeButton);
+
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.title = 'Add a color';
+      addButton.onclick = () => {
+        const map = this.canvasColorMap(widget);
+        map.push('#000000');
+        this.inputValueUpdated(widget, 'colorMap', map);
+        rebuild();
+      };
+      row.appendChild(addButton);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, 'colorMap', () => {
+      if(!wrap.contains(document.activeElement))
+        rebuild();
     });
-    this.renderBehaviorSection(widget, 'Drawing');
-    this.renderOtherPropertiesSection(widget, [ 'colorMap' ]);
+  }
+
+  // number input for activeColor plus a color swatch that opens the colorMap
+  // colors and writes the picked index
+  renderCanvasActiveColor(widget) {
+    const wrap = div(this.moduleDOM, 'propertyInput');
+    const label = document.createElement('label');
+    label.textContent = 'Active color';
+    infoButton(label, html(editorPropertyHints.activeColor));
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = '1';
+    input.min = '0';
+    input.style.width = '70px';
+    input.style.flex = '0 0 auto';
+    input.oninput = () => {
+      const value = +input.value;
+      if(Number.isFinite(value))
+        this.inputValueUpdated(widget, 'activeColor', value);
+    };
+    wrap.appendChild(input);
+
+    const swatch = document.createElement('button');
+    swatch.className = 'propertyPreviewButton';
+    swatch.title = 'Pick from the available colors';
+    wrap.appendChild(swatch);
+
+    const popout = div(wrap, 'propertyPicker');
+    popout.style.display = 'none';
+
+    const currentColor = () => {
+      const map = this.canvasColorMap(widget);
+      return map[Number(widget.get('activeColor')) || 0] || 'transparent';
+    };
+
+    const update = () => {
+      if(document.activeElement !== input)
+        input.value = Number(widget.get('activeColor')) || 0;
+      swatch.innerHTML = '';
+      renderColorChip(currentColor(), swatch);
+      if(popout.style.display != 'none')
+        renderPopout();
+    };
+
+    const renderPopout = () => {
+      popout.innerHTML = '';
+      const chips = div(popout, 'propertyPickerChips');
+      const map = this.canvasColorMap(widget);
+      const active = Number(widget.get('activeColor')) || 0;
+      map.forEach((color, index) => {
+        const chip = renderColorChip(color, chips);
+        chip.title = `${index}: ${color}`;
+        chip.classList.toggle('selected', index == active);
+        chip.onclick = () => {
+          this.inputValueUpdated(widget, 'activeColor', index);
+          popout.style.display = 'none';
+        };
+      });
+    };
+
+    swatch.onclick = () => {
+      const open = popout.style.display == 'none';
+      popout.style.display = open ? '' : 'none';
+      if(open)
+        renderPopout();
+    };
+
+    this.addPropertyListener(widget, 'activeColor', update);
+    this.addPropertyListener(widget, 'colorMap', update);
   }
 
   renderForPile(widget) {
@@ -3545,33 +3684,81 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader('Player');
-    this.renderSeatPlayerSelect(widget);
+    this.renderSeatPlayerStatus(widget);
     this.renderAppearanceSection(widget);
-    this.renderBehaviorSection(widget, 'Seat');
+    this.addSubHeader('Seat');
+
+    const indexRow = div(this.moduleDOM, 'propertyInlineRow');
+    new NumberInput(this, widget, 'Seat index', { property: 'index', min: 1, max: 16, step: 1, hint: editorPropertyHints.index }).render(indexRow);
+    new CheckboxInput(this, widget, 'Has the turn', { property: 'turn', hint: 'This is a temporary value that can be changed by automations in the game.' }).render(indexRow);
+
     this.renderSeatHandInput(widget);
-    this.renderOtherPropertiesSection(widget, [ 'player', 'hand' ]);
+    new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
+    new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
+
+    this.addAppearanceSubTitle('When seated');
+    div(this.moduleDOM, 'propertyNote', 'Use <b>playerName</b> and <b>seatIndex</b> as placeholders for the seated player\'s name and the seat index.');
+    this.renderStyledTextInput(widget, 'Text', 'display', 'css', '.seated', true);
+
+    this.addAppearanceSubTitle('When empty');
+    this.renderStyledTextInput(widget, 'Text', 'displayEmpty', 'css', 'default', true);
+    new ColorInput(this, widget, 'Border color', { property: 'colorEmpty', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
+    new CheckboxInput(this, widget, 'Hide when unused', { property: 'hideWhenUnused', hint: editorPropertyHints.hideWhenUnused }).render(this.moduleDOM);
+
+    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'colorEmpty' ]);
   }
 
-  // Dropdown to seat one of the table's players; also copies their color onto
-  // the seat so it matches, like clicking the seat does in play.
-  renderSeatPlayerSelect(widget) {
-    const players = (typeof getAllPlayers == 'function' ? getAllPlayers() : {}) || {};
-    const choices = [ { value: '', text: '(empty)' } ]
-      .concat(Object.keys(players).map(name=>({ value: name, text: name })));
+  // Shows who occupies the seat; taking and vacating mirrors what clicking
+  // the seat does in play (Seat.setPlayer).
+  renderSeatPlayerStatus(widget) {
+    const container = div(this.moduleDOM, 'seatPlayerStatus');
 
-    new SelectInput(this, widget, 'Seated player', {
-      property: 'player',
-      hint: editorPropertyHints.player,
-      choices,
-      setValue: value=>{
-        batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} seated player "${value || ''}" in seat ${widget.id} in editor`);
-        widget.set('player', value || '');
-        if(value && players[value])
-          widget.set('color', players[value]);
-        batchEnd();
+    const rebuild = () => {
+      container.innerHTML = '';
+      const player = widget.get('player');
+      if(player) {
+        const row = div(container, 'seatPlayerRow');
+        const text = document.createElement('span');
+        text.textContent = 'Currently being used by';
+        row.appendChild(text);
+        const dot = document.createElement('span');
+        dot.className = 'playerColorDot';
+        dot.style.background = widget.get('color') || '#999999';
+        row.appendChild(dot);
+        const name = document.createElement('b');
+        name.textContent = player;
+        row.appendChild(name);
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'person_remove');
+        remove.title = 'Remove the player from this seat';
+        remove.onclick = async () => {
+          if(!confirm(`Remove player "${player}" from seat ${widget.id}?`))
+            return;
+          batchStart();
+          setDeltaCause(`${getPlayerDetails().playerName} removed player ${player} from seat ${widget.id} in editor`);
+          await widget.set('player', null);
+          await widget.set('color', widget.get('colorEmpty'));
+          batchEnd();
+        };
+        row.appendChild(remove);
+      } else {
+        const take = document.createElement('button');
+        take.setAttribute('icon', 'person_add');
+        take.textContent = 'Take this seat';
+        take.onclick = async () => {
+          batchStart();
+          setDeltaCause(`${getPlayerDetails().playerName} took seat ${widget.id} in editor`);
+          await widget.set('player', getPlayerDetails().playerName);
+          await widget.set('color', getPlayerDetails().playerColor);
+          batchEnd();
+        };
+        container.appendChild(take);
       }
-    }).render(this.moduleDOM);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, 'player', rebuild);
+    this.addPropertyListener(widget, 'color', rebuild);
   }
 
   // The hand property references a holder, so the widget popout preselects the
@@ -3606,12 +3793,88 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
+  // a text input showing a milliseconds property as mm:ss
+  renderTimerTimeInput(widget, labelText, property, target, options = {}) {
+    const wrap = div(target, 'propertyInput timeInput');
+    const label = document.createElement('label');
+    label.textContent = labelText;
+    if(options.hint)
+      infoButton(label, html(options.hint));
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'mm:ss';
+    input.onchange = () => {
+      const ms = parseTimerInput(input.value);
+      if(ms === undefined || (ms === null && !options.nullable)) {
+        input.classList.add('inputError');
+        return;
+      }
+      input.classList.remove('inputError');
+      this.inputValueUpdated(widget, property, ms);
+    };
+    wrap.appendChild(input);
+
+    this.addPropertyListener(widget, property, w => {
+      if(document.activeElement !== input) {
+        const value = w.get(property);
+        input.value = typeof value == 'number' ? formatTimerMs(value) : '';
+        input.classList.remove('inputError');
+      }
+    });
+  }
+
   renderForTimer(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.renderAppearanceSection(widget);
-    this.renderBehaviorSection(widget, 'Timer');
-    this.renderOtherPropertiesSection(widget);
+    this.addSubHeader('Timer');
+
+    const startEndRow = div(this.moduleDOM, 'propertyInlineRow');
+    this.renderTimerTimeInput(widget, 'Start', 'start', startEndRow, { hint: 'The value the timer resets to.' });
+    this.renderTimerTimeInput(widget, 'End', 'end', startEndRow, { nullable: true, hint: 'When the timer reaches this value, its alert turns on. Leave empty for no end.' });
+    new SelectInput(this, widget, 'Count', {
+      property: 'countdown',
+      choices: [ { value: false, text: 'up' }, { value: true, text: 'down' } ]
+    }).render(startEndRow);
+
+    const currentRow = div(this.moduleDOM, 'propertyInlineRow');
+    this.renderTimerTimeInput(widget, 'Current time', 'milliseconds', currentRow);
+    new CheckboxInput(this, widget, 'Paused', { property: 'paused' }).render(currentRow);
+
+    new SelectInput(this, widget, 'Show updates every', {
+      property: 'precision',
+      choices: [
+        { value: 60000, text: '1 minute' },
+        { value: 10000, text: '10 seconds' },
+        { value: 1000,  text: '1 second' },
+        { value: 100,   text: '0.1 seconds' }
+      ]
+    }).render(this.moduleDOM);
+
+    new CheckboxInput(this, widget, 'Show alert when done', {
+      property: 'alert',
+      hint: 'The timer turns this on by itself when the end value is reached (and off when it is not). The inputs below style the alert state.'
+    }).render(this.moduleDOM);
+
+    // styles the alert state through the css custom properties the timer uses
+    const alertEditor = div(this.moduleDOM, 'timerAlertEditor');
+    new ColorInput(this, widget, 'Text color', cssValueOptions(this, widget, '--wcFontAlert')).render(alertEditor);
+    new ColorInput(this, widget, 'Border color', cssValueOptions(this, widget, '--wcBorderAlert')).render(alertEditor);
+    const blinkOptions = cssValueOptions(this, widget, '--wcAnimationAlert');
+    new NumberInput(this, widget, 'Blinking speed (s)', Object.assign({}, blinkOptions, {
+      step: 0.1, min: 0.1, max: 5, slider: true, nullIfEmpty: true,
+      getValue: _=>{
+        const match = String(blinkOptions.getValue() || '').match(/([0-9.]+)s/);
+        return match ? +match[1] : null;
+      },
+      setValue: value=>blinkOptions.setValue(value === null || value === '' ? null : `blinker ${value}s linear infinite`)
+    })).render(alertEditor);
+
+    this.addPropertyListener(widget, 'alert', w => alertEditor.style.display = w.get('alert') ? '' : 'none');
+
+    this.renderOtherPropertiesSection(widget, [ 'milliseconds', 'precision', 'paused', 'alert', 'countdown', 'start', 'end' ]);
   }
 
   renderForCard(widget) {
@@ -3886,7 +4149,7 @@ class PropertiesModule extends SidebarModule {
     this.addHeader(`Spinner ${widget.id}`);
     this.renderBasicSection(widget);
     
-    this.addSubHeader('Spinner Options');
+    this.addSubHeader('Spinner');
     const options = [
       ["H", "T"],
       [1, 2, 3],
@@ -3920,9 +4183,32 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
+    // current angle and value: temporary state that changes on every spin
+    const temporaryRow = div(this.moduleDOM, 'propertyInlineRow temporaryValues');
+
+    new NumberInput(this, widget, 'Angle', {
+      step: 1,
+      getValue: _=>{
+        const angle = Number(widget.get('angle')) || 0;
+        return ((angle % 360) + 360) % 360;
+      },
+      setValue: value=>this.inputValueUpdated(widget, 'angle', value),
+      listenTo: [ 'angle' ]
+    }).render(temporaryRow);
+
+    new TextInput(this, widget, 'Current value', {
+      getValue: _=>{
+        const value = widget.get('value');
+        return value === undefined || value === null ? '' : String(value);
+      },
+      setValue: value=>this.inputValueUpdated(widget, 'value', propertyInputNumberOrText(value)),
+      listenTo: [ 'value' ]
+    }).render(temporaryRow);
+
+    temporaryRow.appendChild(this.renderInfoIcon('These are temporary values and will change as soon as a player clicks the spinner.'));
+
     this.renderAppearanceSection(widget);
-    this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'options' ]);
+    this.renderOtherPropertiesSection(widget, [ 'options', 'angle', 'value' ]);
   }
 
   /**
