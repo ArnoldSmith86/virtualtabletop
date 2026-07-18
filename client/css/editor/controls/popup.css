@@ -7,7 +7,7 @@
   border-radius: 8px;
   min-width: 220px;
   max-width: 50vw;
-  max-height: 80vh;
+  max-height: calc(100vh - 20px);
   overflow: auto;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
   border: 1px solid var(--backgroundHighlightColor1);

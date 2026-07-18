@@ -59,6 +59,10 @@ class Popup {
   hide() {
     if(openPopups.indexOf(this) != -1)
       openPopups.splice(openPopups.indexOf(this), 1);
+    if(this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = null;
+    }
     document.removeEventListener('click', this.boundOnOutsideClick);
     document.removeEventListener('keydown', this.boundOnKeyDown, true);
     this.domElement.remove();
@@ -75,7 +79,7 @@ class Popup {
     if(rect.right > rightLimit)
       this.domElement.style.left = `${Math.max(0, rightLimit - rect.width)}px`;
     if(rect.bottom > window.innerHeight - 10)
-      this.domElement.style.top = `${window.innerHeight - rect.height - 10}px`;
+      this.domElement.style.top = `${Math.max(10, window.innerHeight - rect.height - 10)}px`;
   }
 
   notifyChangeListeners(value) {
@@ -158,6 +162,13 @@ class Popup {
     document.addEventListener('keydown', this.boundOnKeyDown, true);
     // defer so the click that opened the popup doesn't immediately close it
     setTimeout(_=>document.addEventListener('click', this.boundOnOutsideClick), 0);
+    // move back into view when the content grows after opening, e.g. when
+    // picking widgets in the room adds rows to the popup near the bottom edge
+    // (moveIntoView is idempotent, so its own style writes cannot loop this)
+    if(typeof MutationObserver != 'undefined' && !this.mutationObserver) {
+      this.mutationObserver = new MutationObserver(_=>this.moveIntoView());
+      this.mutationObserver.observe(this.domElement, { childList: true, subtree: true, attributes: true, attributeFilter: [ 'style', 'class' ] });
+    }
   }
 }
 
