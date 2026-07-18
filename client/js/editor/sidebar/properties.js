@@ -3259,7 +3259,7 @@ class PropertiesModule extends SidebarModule {
 
   // --- curated per-type sections ---
 
-  renderInputs(widget, defs, target = null) {
+  renderInputs(widget, defs, target = null, inputOptions = {}) {
     const kinds = {
       text: TextInput,
       textarea: TextInput,
@@ -3272,7 +3272,7 @@ class PropertiesModule extends SidebarModule {
       image: ImageInput
     };
     for(const def of defs) {
-      const options = Object.assign({}, def);
+      const options = Object.assign({}, def, inputOptions);
       if(def.kind == 'textarea')
         options.multiline = true;
       if(options.hint === undefined && def.property && editorPropertyHints[def.property])
@@ -3330,11 +3330,11 @@ class PropertiesModule extends SidebarModule {
 
     if(colors.length) {
       this.addAppearanceSubTitle('Colors');
-      this.renderInputs(widget, colors);
+      this.renderColorRow(widget, colors);
     }
     if(hover.length) {
       this.addAppearanceSubTitle('Hover');
-      this.renderInputs(widget, hover);
+      this.renderColorRow(widget, hover);
     }
     if((colors.length || hover.length) && misc.length)
       this.addAppearanceSubTitle('Style');
@@ -3534,6 +3534,15 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
+  // color inputs of one subsection side by side; their pickers open below
+  // the row and only one of them is open at a time
+  renderColorRow(widget, defs, target = null) {
+    const host = target || this.moduleDOM;
+    const row = div(host, 'colorFlexRow');
+    const pickerArea = div(host, 'contentMediaPickers');
+    this.renderInputs(widget, defs, row, { pickerGroup: { target: pickerArea, current: null } });
+  }
+
   renderBehaviorSection(widget, title = 'Behavior') {
     const defs = this.typeSections(widget).behavior || [];
     if(!defs.length)
@@ -3614,20 +3623,21 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'classes', update);
 
     const mediaRow = div(this.moduleDOM, 'contentMediaRow');
-    // pickers open below the row so the two blocks never move around
-    const pickerArea = div(this.moduleDOM, 'contentMediaPickers');
+    // pickers open below the row so the two blocks never move around, and
+    // only one of them is open at a time
+    const pickerGroup = { target: div(this.moduleDOM, 'contentMediaPickers'), current: null };
 
     const iconBlock = div(mediaRow, 'contentMediaBlock');
     const iconTitle = div(iconBlock, 'contentMediaTitle');
     iconTitle.textContent = 'Icon';
     infoButton(iconTitle, html(editorPropertyHints.icon));
-    new IconInput(this, widget, null, { property: 'icon', pickerTarget: pickerArea }).render(iconBlock);
+    new IconInput(this, widget, null, { property: 'icon', pickerGroup }).render(iconBlock);
 
     const imageBlock = div(mediaRow, 'contentMediaBlock');
     const imageTitle = div(imageBlock, 'contentMediaTitle');
     imageTitle.textContent = 'Image';
     infoButton(imageTitle, html(editorPropertyHints.image));
-    new ImageInput(this, widget, null, { property: 'image', pickerTarget: pickerArea }).render(imageBlock);
+    new ImageInput(this, widget, null, { property: 'image', pickerGroup }).render(imageBlock);
   }
 
   renderForButton(widget) {
@@ -3676,14 +3686,19 @@ class PropertiesModule extends SidebarModule {
     label.textContent = 'Available colors';
     wrap.appendChild(label);
     const row = div(wrap, 'canvasColorMapRow');
+    const pickerArea = div(wrap, 'contentMediaPickers');
+    pickerArea.style.flexBasis = '100%';
 
     const rebuild = () => {
       row.innerHTML = '';
+      pickerArea.innerHTML = '';
+      const pickerGroup = { target: pickerArea, current: null };
       const colorMap = this.canvasColorMap(widget);
       for(let i = 0; i < colorMap.length; ++i) {
         new ColorInput(this, widget, null, {
           clearable: false,
           listenTo: [ 'colorMap' ],
+          pickerGroup,
           getValue: _=>{
             const map = this.canvasColorMap(widget);
             return map[i] !== undefined ? map[i] : null;
@@ -3849,7 +3864,7 @@ class PropertiesModule extends SidebarModule {
 
     this.addAppearanceSubTitle('When empty');
     this.renderCompactStyledTextInput(widget, 'Text', 'displayEmpty', 'default');
-    new ColorInput(this, widget, 'Border color', { property: 'colorEmpty', labelIcon: 'border_color', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
+    new ColorInput(this, widget, 'Inactive color', { property: 'colorEmpty', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide when unused', { property: 'hideWhenUnused', hint: editorPropertyHints.hideWhenUnused }).render(this.moduleDOM);
 
     this.addAppearanceSubTitle('When seated');
@@ -3861,8 +3876,8 @@ class PropertiesModule extends SidebarModule {
   }
 
   // compact one-line styled text input: text, color and font size side by
-  // side, followed by the typography toggles; optional placeholder chips
-  // insert values like playerName at the cursor
+  // side; optional placeholder chips insert values like playerName at the
+  // cursor
   renderCompactStyledTextInput(widget, title, textProperty, cssClass, options = {}) {
     const wrap = div(this.moduleDOM, 'propertyInput compactStyledText');
     const label = document.createElement('label');
@@ -3876,11 +3891,6 @@ class PropertiesModule extends SidebarModule {
 
     wrap.appendChild(this.renderColorInput(widget, null, 'color', '#222222', 'css', cssClass));
     wrap.appendChild(this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '25px', 'css', cssClass));
-    wrap.appendChild(this.renderSelectionButton(widget, '', 'font-weight', 'bold', 'css', cssClass, 'format_bold', 'Bold'));
-    wrap.appendChild(this.renderSelectionButton(widget, '', 'font-style', 'italic', 'css', cssClass, 'format_italic', 'Italic'));
-    wrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'left', 'css', cssClass, 'format_align_left', 'Align left'));
-    wrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'center', 'css', cssClass, 'format_align_center', 'Align center'));
-    wrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'right', 'css', cssClass, 'format_align_right', 'Align right'));
 
     for(const placeholder of options.placeholders || []) {
       const chip = document.createElement('button');

@@ -272,6 +272,32 @@
   flex-wrap: wrap;
 }
 
+.editorModule .propertyPickerFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+/* color inputs of a subsection sit side by side; their pickers open below */
+.editorModule .colorFlexRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 4px 0;
+}
+
+.editorModule .colorFlexRow .propertyInput {
+  margin: 0;
+  padding-right: 0;
+  flex: 0 0 auto;
+}
+
+.editorModule .colorFlexRow .propertyInput > label {
+  width: auto;
+  min-width: 0;
+}
+
 /* mark the native color input as "opens a dialog" instead of looking like a
    plain swatch of its current value */
 .editorModule .propertyPickerSummary input[type=color] {

@@ -508,19 +508,42 @@ class PickerInput extends PropertyInput {
     }
 
     // the picker can render somewhere else (e.g. below a row of side by side
-    // inputs) so opening it does not push the neighboring inputs around
-    this.pickerDOM = div(this.options.pickerTarget || target, 'propertyPicker');
+    // inputs) so opening it does not push the neighboring inputs around;
+    // pickers sharing a pickerGroup close each other when one opens
+    const group = this.options.pickerGroup;
+    this.pickerDOM = div((group && group.target) || this.options.pickerTarget || target, 'propertyPicker');
     this.pickerDOM.style.display = 'none';
   }
 
   togglePicker() {
-    const open = this.pickerDOM.style.display == 'none';
-    this.pickerDOM.style.display = open ? '' : 'none';
+    if(this.pickerOpen())
+      this.closePicker();
+    else
+      this.openPicker();
+  }
+
+  openPicker() {
+    const group = this.options.pickerGroup;
+    if(group) {
+      if(group.current && group.current !== this)
+        group.current.closePicker();
+      group.current = this;
+    }
+    this.pickerDOM.style.display = '';
     if(this.expandButton)
-      this.expandButton.classList.toggle('open', open);
-    this.previewButton.classList.toggle('open', open);
-    if(open)
-      this.updatePicker(this.getValue());
+      this.expandButton.classList.add('open');
+    this.previewButton.classList.add('open');
+    this.updatePicker(this.getValue());
+  }
+
+  closePicker() {
+    const group = this.options.pickerGroup;
+    if(group && group.current === this)
+      group.current = null;
+    this.pickerDOM.style.display = 'none';
+    if(this.expandButton)
+      this.expandButton.classList.remove('open');
+    this.previewButton.classList.remove('open');
   }
 
   pickerOpen() {
@@ -574,6 +597,20 @@ class PickerInput extends PropertyInput {
     this.summaryDOM = div(this.pickerDOM, 'propertyPickerSummary');
     this.renderSummary(this.summaryDOM, value);
     this.renderPickerContent(this.pickerDOM, value);
+    this.footerDOM = div(this.pickerDOM, 'propertyPickerFooter');
+    this.renderFooter(value);
+  }
+
+  // the remove-value button sits at the bottom right of the picker
+  renderFooter(value) {
+    this.footerDOM.innerHTML = '';
+    if(this.options.clearable !== false && propertyInputValueSet(value)) {
+      const clear = document.createElement('button');
+      clear.setAttribute('icon', 'delete');
+      clear.textContent = 'Remove value';
+      clear.onclick = _=>this.setValue(null);
+      this.footerDOM.appendChild(clear);
+    }
   }
 
   // Called when the value changes while the picker is open. Only updates the
@@ -589,6 +626,8 @@ class PickerInput extends PropertyInput {
     for(const chip of $a('.propertyValueChip', this.pickerDOM))
       if(chip.dataset.value !== undefined)
         chip.classList.toggle('selected', chip.dataset.value == String(value));
+    if(this.footerDOM)
+      this.renderFooter(value);
   }
 
   renderSummary(target, value) {
@@ -601,13 +640,11 @@ class PickerInput extends PropertyInput {
       div(target, `propertyPickerValueText${this.dimDefault() ? ' usingDefault' : ''}`, this.dimDefault() ? `default: ${html(String(this.getEffectiveValue()))}` : html(String(this.getEffectiveValue())));
     else
       div(target, 'propertyPickerValueText', '<i>not set</i>');
-    if(this.options.clearable !== false && isSet) {
-      const clear = document.createElement('button');
-      clear.setAttribute('icon', 'delete');
-      clear.title = 'Remove value';
-      clear.onclick = _=>this.setValue(null);
-      target.appendChild(clear);
-    }
+    const close = document.createElement('button');
+    close.setAttribute('icon', 'close');
+    close.title = 'Close';
+    close.onclick = _=>this.closePicker();
+    target.appendChild(close);
   }
 
   renderSummaryControls(target, value) {
