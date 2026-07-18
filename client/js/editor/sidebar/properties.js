@@ -385,9 +385,11 @@ const editorTypeSections = {
   },
   holder: {
     stateClasses: { '.showCardBack': 'showInactiveFaceToSeat' },
+    // no css fallback here: the holder always emits --bgColor and
+    // --holderTextColor from its properties, overriding the css property
     colors: [
-      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--holderTextColor' },
-      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill', propertyOrCss: '--bgColor' }
+      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
@@ -430,17 +432,19 @@ const editorTypeSections = {
   seat: {
     stateClasses: { '.seated': 'player', '.turn': 'turn', '.foreign': 'hideWhenUnused' },
     colors: [
-      { label: 'Color',         property: 'color',        kind: 'color', propertyOrCss: '--color' }
+      { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
     ]
   },
   spinner: {
+    // no css fallback here: the spinner always emits --textColor and
+    // --lineColor from its properties, overriding the css property
     colors: [
-      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--textColor' },
+      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
       { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background', cssProperty: 'backgroundCSS' },
-      { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color', propertyOrCss: '--lineColor' },
+      { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color' },
       { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', cssKey: 'color', cssProperty: 'valueCSS' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
