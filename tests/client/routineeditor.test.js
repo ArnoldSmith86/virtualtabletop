@@ -35,7 +35,7 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup'
+    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup', 'RoutineNumberPopup'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -369,6 +369,38 @@ describe('resetting parameters to their default', () => {
     const setEditor = editorForOperation({ func: 'SET', value: null });
     setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
     expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
+  });
+});
+
+describe('number popups with text values', () => {
+  test('offer the suggested values and accept free text', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineNumberPopup({ specialValues: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' });
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'TIMER' }, [ 'value' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+    const buttons = [...popup.domElement.querySelectorAll('button')].map(b => b.textContent);
+    expect(buttons).toEqual(expect.arrayContaining([ 'start', 'end' ]));
+    const text = popup.domElement.querySelector('input[type=text]');
+    expect(text).not.toBeNull();
+    text.value = 'myTime';
+    text.dispatchEvent(new Event('change'));
+    expect(value).toEqual({ value: 'myTime' });
+    popup.hide();
+  });
+
+  test('no text input without a text hint', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineNumberPopup({});
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'CLICK' }, [ 'count' ], { state: {} }, [], []);
+    popup.show();
+    expect(popup.domElement.querySelector('input[type=text]')).toBeNull();
+    popup.hide();
   });
 });
 

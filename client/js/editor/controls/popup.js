@@ -407,10 +407,25 @@ class RoutineNumberPopup extends RoutinePopup {
     for(let i=1; i<=10; i++)
       button(valueContent, i, _=>this.setNewValue(i));
 
+    const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[this.parameterNames.length-1]] : null;
+
     const count = document.createElement('input');
     count.type = 'number';
+    if(typeof currentValue == 'number')
+      count.value = currentValue;
     count.addEventListener('change', _=>this.setNewValue(+count.value));
     valueContent.append(count);
+
+    // some number parameters also take strings, e.g. a property name or a seat id
+    if(this.options.textHint) {
+      const text = document.createElement('input');
+      text.type = 'text';
+      text.placeholder = this.options.textHint;
+      if(typeof currentValue == 'string')
+        text.value = currentValue;
+      text.addEventListener('change', _=>this.setNewValue(text.value));
+      valueContent.append(text);
+    }
 
     super.show(true, false);
   }

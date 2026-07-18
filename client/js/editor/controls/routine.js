@@ -284,7 +284,7 @@ const routineOperationMetadata = {
       timer: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT' },
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
-      value: { type: 'number', default: 0 },
+      value: { type: 'number', default: 0, special: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' },
       seconds: { type: 'number', default: 0 }
     }
   },
@@ -299,7 +299,7 @@ const routineOperationMetadata = {
       return '{func} {turnCycle} by {turn}'; // forward / backward
     },
     parameters: {
-      turn: { type: 'string', default: 1 },
+      turn: { type: 'number', default: 1, special: [ 'first', 'last' ], textHint: 'id of a seat (used with turnCycle seat)' },
       turnCycle: { type: 'enum', values: [ 'forward', 'backward', 'random', 'position', 'seat' ], default: 'forward' },
       source: { type: 'collection', default: 'all', display: { 'all': 'all seats' } },
       collection: { type: 'collection', default: 'TURN' }
@@ -502,7 +502,7 @@ class RoutineOperationEditor {
     if(parameterNames.length > 1 && spec && spec.type == 'collection')
       return new RoutineHoldersOrCollectionSourcePopup();
     switch(spec && spec.type) {
-      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special });
+      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values });
       case 'widgets':    return new RoutineWidgetIDPopup();
       case 'collection': return new RoutineHoldersOrCollectionSourcePopup();
