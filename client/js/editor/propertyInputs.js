@@ -632,6 +632,7 @@ class ColorInput extends PickerInput {
 
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
+    colorPicker.title = 'Open the color dialog';
     colorPicker.value = hexValue;
     colorPicker.oninput = _=>{
       this.setValue(colorPicker.value);
@@ -683,7 +684,6 @@ class IconInput extends PickerInput {
     this.addChipList(target, 'Used in this game', usedGameIcons(), value, renderIconChip);
 
     const searchSection = div(target, 'propertyPickerSection');
-    div(searchSection, 'propertyPickerSectionTitle', 'Find an icon');
     const search = document.createElement('input');
     search.placeholder = 'Search icons...';
     searchSection.appendChild(search);

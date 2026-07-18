@@ -266,6 +266,16 @@ const editorTypeNames = {
 // usually comes from the wiki summary of the property.
 const editorPropertyHints = {
   color: 'Main color of the widget.',
+  textColor: 'Color of the text shown on the widget.',
+  backgroundColor: 'Background color of the button.',
+  borderColor: 'Border color of the button.',
+  textColorOH: 'Text color while the mouse hovers over the button.',
+  backgroundColorOH: 'Background color while the mouse hovers over the button.',
+  borderColorOH: 'Border color while the mouse hovers over the button.',
+  lineColor: 'Color of the separator lines between the spinner options.',
+  roundLabel: 'Heading shown for the rounds.',
+  totalsLabel: 'Heading shown for the totals.',
+  editPaneTitle: 'Title of the pane that opens when entering a score.',
   borderRadius: 'Rounds the corners. Accepts a number (pixels) or a CSS value like 50%.',
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
@@ -322,9 +332,9 @@ const editorPropertyHints = {
 const editorTypeSections = {
   basic: {
     content: [
-      { label: 'Image',         property: 'image',        kind: 'image' },
+      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true },
       { label: 'Icon',          property: 'icon',         kind: 'icon' },
-      { label: 'Text',          property: 'text',         kind: 'text', nullIfEmpty: true }
+      { label: 'Image',         property: 'image',        kind: 'image' }
     ],
     colors: [
       { label: 'Color',         property: 'color',        kind: 'color' }
@@ -2335,6 +2345,9 @@ class PropertiesModule extends SidebarModule {
     const renderPopout = _=>{
       popout.innerHTML = '';
 
+      if(options.title)
+        div(popout, 'propertyPickerSectionTitle', html(options.title));
+
       const buttonBar = div(popout, 'propertyPickerSection');
       const pickButton = document.createElement('button');
       pickButton.setAttribute('icon', 'colorize');
@@ -2508,6 +2521,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      title: 'Choose a parent widget',
       pickerKey: 'parent',
       getSelectedIDs: () => widget.get('parent') ? [ widget.get('parent') ] : [],
       apply: parentID => apply(parentID),
@@ -2566,6 +2580,7 @@ class PropertiesModule extends SidebarModule {
     if(options.enablePicker) {
       // widget selection popout with the type filter preset to seats
       popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+        title: 'Choose seats',
         pickerKey,
         typeFilter: 'seat',
         multiple: true,
@@ -2643,6 +2658,7 @@ class PropertiesModule extends SidebarModule {
 
     const pickerKey = 'onlyVisibleForSeat';
     const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      title: 'Choose which seats can see this widget',
       pickerKey,
       typeFilter: 'seat',
       multiple: true,
@@ -3184,6 +3200,7 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(label);
 
     const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      title: 'Choose a widget to inherit properties from',
       pickerKey: 'inheritFrom',
       apply: pickedWidgetID => {
         const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
@@ -3334,20 +3351,28 @@ class PropertiesModule extends SidebarModule {
       hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders or classes defined in the room\'s custom css.'
     }).render(this.moduleDOM);
 
-    this.renderCollapsibleSection('CSS', true, body => {
+    const cssSection = this.renderCollapsibleSection('CSS', true, body => {
       for(const property of cssProperties)
-        this.renderCssPropertyEditor(widget, property, body, property == 'css' ? sections.cssClassSuggestions || [] : []);
+        this.renderCssPropertyEditor(widget, property, body, {
+          classSuggestions: property == 'css' ? sections.cssClassSuggestions || [] : [],
+          // with just the css property, its name in the body would only repeat the header
+          showTitle: cssProperties.length > 1
+        });
     }, null, `${widget.id}:css`);
+    infoButton($('.collapsibleHeader', cssSection), html(editorPropertyHints.css));
   }
 
   // Chrome-devtools-like editor for a css-like property: one collapsible
   // section per class/selector with a plain declaration text input.
-  renderCssPropertyEditor(widget, property, target, classSuggestions = []) {
+  renderCssPropertyEditor(widget, property, target, options = {}) {
+    const classSuggestions = options.classSuggestions || [];
     const wrap = div(target, 'cssEditor');
-    const title = div(wrap, 'propertyPickerSectionTitle');
-    title.textContent = property;
-    if(editorPropertyHints[property] || property == 'css')
-      infoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
+    if(options.showTitle !== false) {
+      const title = div(wrap, 'propertyPickerSectionTitle');
+      title.textContent = property;
+      if(editorPropertyHints[property] || property == 'css')
+        infoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
+    }
     const container = div(wrap);
 
     const renderClassSection = (className, classValue, wholeProperty) => {
@@ -3380,6 +3405,9 @@ class PropertiesModule extends SidebarModule {
         };
         body.appendChild(textarea);
       }, section, stateKey);
+
+      if(className == 'default')
+        infoButton($('.collapsibleHeader', section), 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".');
 
       if(!wholeProperty) {
         const header = $('.collapsibleHeader', section);
@@ -3481,8 +3509,12 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
+    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(extraExclude));
+    const remaining = Object.keys(widget.state).filter(property => [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1);
+    if(!remaining.length)
+      return;
     this.addSubHeader('Other properties');
-    this.renderGenericProperties(widget, this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(extraExclude)));
+    this.renderGenericProperties(widget, exclude);
   }
 
   // --- per-type editors ---
@@ -3504,7 +3536,15 @@ class PropertiesModule extends SidebarModule {
     this.addSubHeader('Behavior');
     div(this.moduleDOM, '', `
       <p>What the button does when clicked is defined by its <b>clickRoutine</b> which you can edit in the JSON editor.</p>
+      <div class=buttonBar>
+        <button icon=data_object>Open in JSON editor</button>
+      </div>
     `);
+    $('[icon=data_object]', this.moduleDOM).onclick = _=>{
+      const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
+      if(jsonModuleButton)
+        jsonModuleButton.click();
+    };
     this.renderOtherPropertiesSection(widget);
   }
 
@@ -3777,12 +3817,13 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(input);
 
     const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      title: 'Choose the holder used as this seat\'s hand',
       pickerKey: 'hand',
       typeFilter: 'holder',
       getSelectedIDs: () => widget.get('hand') ? [ widget.get('hand') ] : [],
       apply: holderID => this.inputValueUpdated(widget, 'hand', holderID),
       onClear: () => this.inputValueUpdated(widget, 'hand', null),
-      clearLabel: 'No hand'
+      clearLabel: 'No hand holder'
     });
     wrap.appendChild(popoutControls.popout);
 
@@ -3950,7 +3991,8 @@ class PropertiesModule extends SidebarModule {
     const widgetFaces = widget.get('faces');
     const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
 
-    this.addSubHeader('Dice types');
+    this.addSubHeader('Content');
+    this.addAppearanceSubTitle('Dice type');
     const faces = [
       ["H", "T"],
       [1, 2, 3, 4],
@@ -3985,7 +4027,7 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
-    this.addSubHeader('Dice shape');
+    this.addAppearanceSubTitle('Shape');
     const shape = [true, false];
 
     for (const s of shape) {
@@ -3996,6 +4038,8 @@ class PropertiesModule extends SidebarModule {
         shape3d: s,
         pipSymbols: widget.get('pipSymbols')
       }, this.moduleDOM);
+      // the static previews look the same - the difference only shows while rolling
+      diceShape.title = s ? '3D shape that rolls over the table' : 'Flat face that swaps on each roll';
 
       this.addPropertyListener(widget, 'shape3d', widget => {
         if (JSON.stringify(widget.get('shape3d')) === JSON.stringify(s)) {
@@ -4012,7 +4056,7 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
-    this.addSubHeader('Face type');
+    this.addAppearanceSubTitle('Face type');
     const pipType = [true, false];
 
     for (const p of pipType) {
@@ -4023,6 +4067,7 @@ class PropertiesModule extends SidebarModule {
         shape3d: widget.get('shape3d'),
         pipSymbols: p
       }, this.moduleDOM);
+      dicePip.title = p ? 'Pip symbols' : 'Numbers';
 
       this.addPropertyListener(widget, 'pipSymbols', widget => {
         if (JSON.stringify(widget.get('pipSymbols')) === JSON.stringify(p)) {
@@ -4219,8 +4264,28 @@ class PropertiesModule extends SidebarModule {
     this.addHeader(`Label ${widget.id}`);
     this.renderBasicSection(widget);
 
-    // --- Label style presets (preview buttons like deck) ---
-    this.addSubHeader('Label style');
+    this.addSubHeader('Content');
+
+    // Editable checkbox: when checked, label is editable in play mode
+    this.renderCheckbox(widget, 'Editable (in play mode)', 'editable');
+
+    this.renderLargeTextInput(widget, 'Text Content', 'text');
+
+    this.addLineBreak();
+
+    // Placeholder text (shown when label text is empty in play mode)
+    // On-demand with styling via ' ::placeholder' pseudo-selector in nested CSS
+    this.renderOnDemandPlaceholderInput(widget);
+
+    this.renderAppearanceSection(widget, {
+      before: _=>this.renderLabelStylePresets(widget)
+    });
+    this.renderOtherPropertiesSection(widget, [ 'editable', 'placeholderText', 'text' ]);
+  }
+
+  // style presets shown as preview buttons like the deck templates
+  renderLabelStylePresets(widget) {
+    this.addAppearanceSubTitle('Style presets');
     const labelStyles = [
       { name: 'Title', css: { 'font-size': '50px', 'font-weight': 'bold' }, labelAppearanceHeight: 85 },
       { name: 'Header', css: { 'font-size': '30px', 'font-weight': 'bold' }, labelAppearanceHeight: 50 },
@@ -4252,23 +4317,6 @@ class PropertiesModule extends SidebarModule {
         }
       };
     }
-
-    // --- Label content and specific properties ---
-    this.addSubHeader('Label content');
-
-    // Editable checkbox: when checked, label is editable in play mode
-    this.renderCheckbox(widget, 'Editable (in play mode)', 'editable');
-
-    this.renderLargeTextInput(widget, 'Text Content', 'text');
-
-    this.addLineBreak();
-
-    // Placeholder text (shown when label text is empty in play mode)
-    // On-demand with styling via ' ::placeholder' pseudo-selector in nested CSS
-    this.renderOnDemandPlaceholderInput(widget);
-
-    this.renderAppearanceSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'editable', 'placeholderText', 'text' ]);
   }
 
   renderGenericProperties(widget, exclude) {

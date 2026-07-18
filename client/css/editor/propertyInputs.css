@@ -16,14 +16,17 @@
   box-sizing: border-box;
 }
 
-/* fixed label column so the inputs line up across rows */
+/* fixed label column so the inputs line up across rows; block flow so the
+   (i) hint stays glued to the last word even when the label wraps */
 .editorModule .propertyInput > label {
   width: 132px;
   min-width: 132px;
   overflow-wrap: anywhere;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  display: inline-block;
+}
+
+.editorModule .propertyInput > label .info-button {
+  margin-left: 4px;
 }
 
 .editorModule .propertyInput input[type=text],
@@ -125,6 +128,7 @@
   justify-content: center;
   border: none;
   background: transparent;
+  color: var(--textColor);
   cursor: pointer;
 }
 
@@ -213,13 +217,17 @@
   flex-wrap: wrap;
 }
 
+/* mark the native color input as "opens a dialog" instead of looking like a
+   plain swatch of its current value */
 .editorModule .propertyPickerSummary input[type=color] {
-  width: 40px;
+  width: 34px;
   height: 34px;
-  padding: 0;
-  border: none;
+  padding: 1px;
+  border: 2px dashed var(--textDimColor1, #999);
+  border-radius: 4px;
   background: none;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .editorModule .propertyPickerValueText {
@@ -241,7 +249,8 @@
 .editorModule .propertyPickerSectionTitle {
   font-weight: bold;
   font-size: 12px;
-  color: var(--textDimColor1, #777);
+  color: var(--textColor, #333);
+  opacity: 0.8;
   margin-bottom: 2px;
 }
 
@@ -489,7 +498,7 @@
 
 .editorModule .propertyNote {
   font-size: 12px;
-  color: var(--textDimColor1, #777);
+  color: var(--textColor, #333);
   margin: 2px 0;
 }
 
