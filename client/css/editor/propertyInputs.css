@@ -68,12 +68,15 @@
   cursor: pointer;
 }
 
-/* checkbox rendered as a compact switch: 40x24 track with a 20px knob */
+/* checkbox rendered as a compact switch: 40x24 track with a 20px knob.
+   min/max-width guard against the 132px label column rule which also
+   matches this label. */
 .editorModule .switchInput label.switchbox {
   height: 24px;
   width: 40px;
-  flex-grow: 0;
-  flex-shrink: 0;
+  min-width: 40px;
+  max-width: 40px;
+  flex: 0 0 40px;
   margin: 2px;
   padding: 0;
   position: relative;
