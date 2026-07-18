@@ -590,8 +590,8 @@ class PropertiesModule extends SidebarModule {
     let inputDOM = null;
 
     const wrapperDOM = div(target || this.moduleDOM, 'genericInput', `
-      <label for=${id} style="display:inline-block;width:100px">${html(labelText)}</label>
-      <select>
+      <label for=${id}_type style="display:inline-block;width:100px">${html(labelText)}</label>
+      <select id=${id}_type>
         <option>not set</option>
         <option>text</option>
         <option>number</option>
