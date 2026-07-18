@@ -63,6 +63,28 @@ function describeEventProperty(property) {
   };
 }
 
+// object properties that automate widgets without a routine, edited as JSON
+const propertyAutomations = [
+  {
+    property: 'onEnter',
+    label: 'set properties on enter',
+    types: [ 'holder' ],
+    description: 'Every property in this object is applied to a widget when it enters this holder. For example activeFace: 1 flips cards face up and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.'
+  },
+  {
+    property: 'onLeave',
+    label: 'set properties on leave',
+    types: [ 'holder' ],
+    description: 'Every property in this object is applied to a widget when it leaves this holder. For example activeFace: 0 flips cards face down and rotation: 0 straightens them. You can also set custom properties here and react to them in your routines.'
+  },
+  {
+    property: 'resetProperties',
+    label: 'reset properties',
+    types: null,
+    description: 'Every property in this object is applied to this widget by the RESET function - typically used by a reset button to restore the initial game state. Play applies them right now. Record copies the widget\'s current values (including defaults like x, y and rotation) into the object so RESET will restore this exact state.'
+  }
+];
+
 class AddEventPopup extends Popup {
   constructor(source, existingProperties, callback) {
     super(source);
@@ -233,5 +255,106 @@ class EventsEditor {
       popup.show();
     });
     addButton.className = 'events-editor-add';
+
+    this.renderPropertyAutomations();
+  }
+
+  renderPropertyAutomations() {
+    const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
+    for(const automation of propertyAutomations) {
+      if(automation.types && automation.types.indexOf(widgetType) == -1)
+        continue;
+      const property = automation.property;
+      const expanded = !!this.expandedEvents[property];
+      const isSet = typeof this.widget.state[property] != 'undefined';
+
+      const eventDOM = div(this.domElement, 'events-editor-event');
+      const headerDOM = div(eventDOM, 'events-editor-event-header');
+
+      const toggle = document.createElement('span');
+      toggle.className = 'material-symbols events-editor-toggle';
+      toggle.textContent = expanded ? 'expand_more' : 'chevron_right';
+      headerDOM.append(toggle);
+
+      const label = document.createElement('span');
+      label.className = 'events-editor-label';
+      label.textContent = automation.label;
+      headerDOM.append(label);
+
+      const name = document.createElement('span');
+      name.className = 'events-editor-property';
+      name.textContent = property;
+      headerDOM.append(name);
+
+      infoButton(headerDOM, `<pre>${escapeHTML(automation.description)}</pre>`);
+
+      if(isSet) {
+        const removeButton = document.createElement('span');
+        removeButton.className = 'material-symbols events-editor-remove';
+        removeButton.textContent = 'delete';
+        removeButton.title = `Remove ${property}`;
+        removeButton.addEventListener('click', e=>{
+          e.stopPropagation();
+          if(confirm(`Remove ${property}?`)) {
+            delete this.expandedEvents[property];
+            this.onChange(property, undefined);
+            this.render();
+          }
+        });
+        headerDOM.append(removeButton);
+      }
+
+      headerDOM.addEventListener('click', _=>{
+        this.expandedEvents[property] = !expanded;
+        this.render();
+      });
+
+      if(expanded) {
+        const contentDOM = div(eventDOM, 'events-editor-event-content');
+        contentDOM.addEventListener('click', e=>e.stopPropagation());
+
+        const textarea = document.createElement('textarea');
+        textarea.className = 'events-editor-property-json';
+        textarea.value = JSON.stringify(isSet ? this.widget.state[property] : {}, null, 2);
+        textarea.addEventListener('change', _=>{
+          try {
+            const value = JSON.parse(textarea.value);
+            textarea.classList.remove('inputError');
+            this.onChange(property, value);
+            this.render();
+          } catch(e) {
+            textarea.classList.add('inputError');
+          }
+        });
+        contentDOM.append(textarea);
+
+        if(property == 'resetProperties') {
+          const buttonsDOM = div(contentDOM, 'events-editor-property-buttons');
+          button(buttonsDOM, 'Play', _=>{
+            const value = this.widget.state[property];
+            for(const key in value)
+              this.onChange(key, value[key]);
+          }).title = 'Apply these properties to the widget now';
+          button(buttonsDOM, 'Record', _=>{
+            this.onChange(property, this.recordResetProperties());
+            this.render();
+          }).title = 'Copy the widget\'s current properties into resetProperties';
+        }
+      }
+    }
+  }
+
+  // snapshot the widget so RESET can restore its current state: the explicitly
+  // set properties plus the position-related ones even at their default values
+  recordResetProperties() {
+    const snapshot = {};
+    if(typeof this.widget.get == 'function')
+      for(const property of [ 'x', 'y', 'z', 'rotation', 'parent', 'owner', 'activeFace' ])
+        if(typeof this.widget.get(property) != 'undefined')
+          snapshot[property] = this.widget.get(property);
+    for(const property in this.widget.state)
+      if([ 'id', 'type', 'onEnter', 'onLeave', 'resetProperties' ].indexOf(property) == -1 && !property.match(/Routine$/))
+        snapshot[property] = this.widget.state[property];
+    return JSON.parse(JSON.stringify(snapshot));
   }
 }

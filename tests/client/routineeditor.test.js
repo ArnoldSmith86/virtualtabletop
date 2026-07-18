@@ -221,6 +221,74 @@ describe('events editor', () => {
   });
 });
 
+describe('property automations', () => {
+  function makeEditor(state, onChange = () => {}) {
+    const widget = { state, get(p) { return this.state[p]; } };
+    return { widget, editor: new EventsEditor(widget, onChange) };
+  }
+
+  test('holders get onEnter/onLeave cards, other widgets only resetProperties', () => {
+    const { editor } = makeEditor({ type: 'holder' });
+    const props = [...editor.domElement.querySelectorAll('.events-editor-property')].map(e => e.textContent);
+    expect(props).toEqual(expect.arrayContaining([ 'onEnter', 'onLeave', 'resetProperties' ]));
+    const { editor: buttonEditor } = makeEditor({ type: 'button' });
+    const buttonProps = [...buttonEditor.domElement.querySelectorAll('.events-editor-property')].map(e => e.textContent);
+    expect(buttonProps).toContain('resetProperties');
+    expect(buttonProps).not.toContain('onEnter');
+  });
+
+  test('automation cards are collapsed by default and expand to a JSON textarea', () => {
+    const { editor } = makeEditor({ type: 'holder', onEnter: { activeFace: 1 } });
+    expect(editor.domElement.querySelector('.events-editor-property-json')).toBeNull();
+    editor.expandedEvents.onEnter = true;
+    editor.render();
+    const textarea = editor.domElement.querySelector('.events-editor-property-json');
+    expect(textarea).not.toBeNull();
+    expect(JSON.parse(textarea.value)).toEqual({ activeFace: 1 });
+  });
+
+  test('editing the JSON reports the parsed value', () => {
+    let received = null;
+    const { editor } = makeEditor({ type: 'holder' }, (property, value) => received = { property, value });
+    editor.expandedEvents.onLeave = true;
+    editor.render();
+    const textarea = editor.domElement.querySelector('.events-editor-property-json');
+    textarea.value = '{ "activeFace": 0 }';
+    textarea.dispatchEvent(new Event('change'));
+    expect(received).toEqual({ property: 'onLeave', value: { activeFace: 0 } });
+  });
+
+  test('invalid JSON is flagged and not reported', () => {
+    let received = null;
+    const { editor } = makeEditor({ type: 'button' }, (property, value) => received = { property, value });
+    editor.expandedEvents.resetProperties = true;
+    editor.render();
+    const textarea = editor.domElement.querySelector('.events-editor-property-json');
+    textarea.value = '{ broken';
+    textarea.dispatchEvent(new Event('change'));
+    expect(received).toBeNull();
+    expect(textarea.classList.contains('inputError')).toBe(true);
+  });
+
+  test('Record snapshots current state including positional defaults', () => {
+    const defaults = { x: 100, y: 50, z: 2, rotation: 0, parent: null, owner: null, activeFace: 1 };
+    const widget = { state: { type: 'card', clickRoutine: [ { func: 'FLIP' } ], customProp: 'v' }, get(p) { return p in defaults ? defaults[p] : this.state[p]; } };
+    const editor = new EventsEditor(widget, () => {});
+    expect(editor.recordResetProperties()).toEqual({ x: 100, y: 50, z: 2, rotation: 0, parent: null, owner: null, activeFace: 1, customProp: 'v' });
+  });
+
+  test('Play applies each resetProperties entry to the widget', () => {
+    const calls = [];
+    const { editor } = makeEditor({ type: 'button', resetProperties: { x: 5, parent: null } }, (property, value) => calls.push([ property, value ]));
+    editor.expandedEvents.resetProperties = true;
+    editor.render();
+    const play = [...editor.domElement.querySelectorAll('.events-editor-property-buttons button')].find(b => b.textContent == 'Play');
+    play.dispatchEvent(new Event('click'));
+    expect(calls).toContainEqual([ 'x', 5 ]);
+    expect(calls).toContainEqual([ 'parent', null ]);
+  });
+});
+
 describe('popup closing', () => {
   function showInfoPopup(html) {
     const source = document.createElement('span');

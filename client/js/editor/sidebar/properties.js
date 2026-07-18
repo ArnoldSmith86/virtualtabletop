@@ -4867,12 +4867,12 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderEvents(widget) {
-    this.addSubHeader('Events');
+    this.addSubHeader('Automations');
     const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
     // a delta listener instead of per-property listeners so event handlers added
     // by other players (properties that did not exist on selection) show up too
     this.addDeltaListener(deltaS=>{
-      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/)))
+      if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties' ].indexOf(p) != -1))
         eventsEditor.onPropertyChange();
     });
     this.moduleDOM.append(eventsEditor.domElement);
@@ -4883,7 +4883,9 @@ class PropertiesModule extends SidebarModule {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
       if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
-        continue; // edited in the Events section below
+        continue; // edited in the Automations section below
+      if(property == 'resetProperties' || (widget.get('type') == 'holder' && [ 'onEnter', 'onLeave' ].indexOf(property) != -1))
+        continue; // edited in the Automations section below
 
       const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
       if(!this.inputUpdaters[widget.id][property])

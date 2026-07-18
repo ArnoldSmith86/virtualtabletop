@@ -71,6 +71,41 @@ body.edit.darkMode .events-editor-property {
   margin: 0 6px;
 }
 
+.events-editor-property-json {
+  box-sizing: border-box;
+  width: calc(100% - 12px);
+  min-height: 80px;
+  margin: 0 6px;
+  padding: 4px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.events-editor-property-buttons {
+  display: flex;
+  gap: 4px;
+  margin: 4px 6px 0 6px;
+}
+
+.events-editor-property-buttons button {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: none;
+  color: gray;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.events-editor-property-buttons button:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
 .events-editor-add,
 .routine-editor-add-operation {
   align-self: flex-start;
