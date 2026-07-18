@@ -12,10 +12,11 @@
 }
 
 .routine-editor-operation {
+  position: relative;
   background: var(--backgroundHighlightColor1);
   border-left: 3px solid var(--VTTblue);
   border-radius: 0 4px 4px 0;
-  padding: 5px 8px;
+  padding: 5px 60px 5px 8px; /* room on the right for the move/delete icons */
   line-height: 1.8;
   font-size: 13px;
 }
@@ -44,9 +45,11 @@ body.edit.darkMode .routine-editor-operation-parameter {
   outline: 1px solid var(--VTTblue);
 }
 
-/* color coding by what kind of value the parameter holds */
+/* color coding by what kind of value the parameter holds; the darkMode rules
+   repeat the categories because the darkMode base rule above outweighs a
+   single class, and the theme orange is too light on the white chips */
 .routine-editor-parameter-variable {
-  color: var(--textHighlightColor2);
+  color: #b25b00;
 }
 
 .routine-editor-parameter-collection {
@@ -59,6 +62,18 @@ body.edit.darkMode .routine-editor-operation-parameter {
 
 .routine-editor-parameter-number {
   color: var(--textHighlightColor7);
+}
+
+body.edit.darkMode .routine-editor-parameter-variable {
+  color: var(--textHighlightColor2);
+}
+
+body.edit.darkMode .routine-editor-parameter-collection {
+  color: var(--textHighlightColor4);
+}
+
+body.edit.darkMode .routine-editor-parameter-widget {
+  color: var(--textHighlightColor5);
 }
 
 /* collapsing an operation hides parameters that just use their defaults */
@@ -104,9 +119,19 @@ body.edit.darkMode .routine-editor-operation-parameter {
   margin-left: 6px;
 }
 
-.routine-editor-parameter-missing {
+.routine-editor-parameter-missing,
+body.edit.darkMode .routine-editor-parameter-missing {
   outline: 1px dashed var(--textHighlightColor3);
   color: var(--textHighlightColor3);
+}
+
+/* comments and var statements are all text, so never truncate them */
+.routine-editor-operation-parameter[data-parameter="comment"],
+.routine-editor-operation-parameter[data-parameter="expression"],
+.routine-editor-operation-parameter[data-parameter="statement"],
+.routine-editor-operation-parameter[data-parameter="json"] {
+  max-width: none;
+  white-space: normal;
 }
 
 .routine-editor-operation-buttons {
@@ -125,10 +150,6 @@ body.edit.darkMode .routine-editor-operation-parameter {
 
 .routine-editor-operation-buttons .material-symbols:hover {
   color: var(--VTTblue);
-}
-
-.routine-editor-operation {
-  padding-right: 60px;
 }
 
 .routine-editor-empty,

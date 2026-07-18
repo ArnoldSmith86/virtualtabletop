@@ -1,9 +1,20 @@
 class WidgetSelection {
-  constructor(widgets, callback) {
+  constructor(widgets, callback, resolveWidget=null) {
     this.widgets = widgets;
     this.callback = callback;
+    this.resolveWidget = resolveWidget; // maps a picked widget to the one that was meant (e.g. card to its holder)
     this.domElement = document.createElement('div');
     this.widgetRows = {};
+  }
+
+  resolveAll(widgets) {
+    if(!this.resolveWidget)
+      return widgets;
+    const resolved = [];
+    for(const widget of widgets.map(this.resolveWidget))
+      if(widget && resolved.indexOf(widget) == -1)
+        resolved.push(widget);
+    return resolved;
   }
 
   addWidgetEntry(widget) {
@@ -50,12 +61,12 @@ class WidgetSelection {
       this.addWidgetEntry(widget);
     }
     $('.start button:nth-child(1)', selectionDiv).addEventListener('click', _=>{
-      startCustomSelection(this.widgets, customSelection=>this.updateWidgets(customSelection));
+      startCustomSelection(this.widgets, customSelection=>this.updateWidgets(this.resolveAll(customSelection)));
       $('.start', selectionDiv).style.display = 'none';
       $('.end', selectionDiv).style.display = 'block';
     });
     $('.start button:nth-child(2)', selectionDiv).addEventListener('click', _=>{
-      startCustomSelection([], customSelection=>this.updateWidgets(customSelection));
+      startCustomSelection([], customSelection=>this.updateWidgets(this.resolveAll(customSelection)));
       $('.start', selectionDiv).style.display = 'none';
       $('.end', selectionDiv).style.display = 'block';
     });

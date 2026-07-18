@@ -86,10 +86,11 @@ const propertyAutomations = [
 ];
 
 class AddEventPopup extends Popup {
-  constructor(source, existingProperties, callback) {
+  constructor(source, existingProperties, callback, widgetType=null) {
     super(source);
     this.existingProperties = existingProperties;
     this.callback = callback;
+    this.widgetType = widgetType;
   }
 
   onClick(e) {
@@ -99,7 +100,12 @@ class AddEventPopup extends Popup {
     super.show();
     this.setTitle('Add Event');
 
-    const available = predefinedEvents.filter(e=>this.existingProperties.indexOf(e.property) == -1);
+    let available = predefinedEvents.filter(e=>this.existingProperties.indexOf(e.property) == -1);
+    // enter/leave events mostly matter for holders, so list them last elsewhere
+    if(this.widgetType != 'holder') {
+      const holderish = e=>[ 'enterRoutine', 'leaveRoutine' ].indexOf(e.property) != -1;
+      available = [ ...available.filter(e=>!holderish(e)), ...available.filter(holderish) ];
+    }
     if(available.length) {
       const [ , predefinedContent ] = this.addAccordionSection('Predefined Events');
       for(const event of available) {
@@ -181,6 +187,8 @@ class EventsEditor {
   render() {
     this.domElement.innerHTML = '';
 
+    div(this.domElement, 'events-editor-group').textContent = 'Events';
+
     for(const property of this.eventProperties()) {
       const event = describeEventProperty(property);
       const expanded = !!this.expandedEvents[property];
@@ -247,11 +255,12 @@ class EventsEditor {
     }
 
     const addButton = button(this.domElement, 'Add Event', _=>{
+      const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
       const popup = new AddEventPopup(addButton, this.eventProperties(), property=>{
         this.expandedEvents[property] = true;
         this.onChange(property, []);
         this.render();
-      });
+      }, widgetType);
       popup.show();
     });
     addButton.className = 'events-editor-add';
@@ -261,9 +270,10 @@ class EventsEditor {
 
   renderPropertyAutomations() {
     const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
-    for(const automation of propertyAutomations) {
-      if(automation.types && automation.types.indexOf(widgetType) == -1)
-        continue;
+    const applicable = propertyAutomations.filter(automation=>!automation.types || automation.types.indexOf(widgetType) != -1);
+    if(applicable.length)
+      div(this.domElement, 'events-editor-group').textContent = 'Properties';
+    for(const automation of applicable) {
       const property = automation.property;
       const expanded = !!this.expandedEvents[property];
       const isSet = typeof this.widget.state[property] != 'undefined';
@@ -330,15 +340,19 @@ class EventsEditor {
 
         if(property == 'resetProperties') {
           const buttonsDOM = div(contentDOM, 'events-editor-property-buttons');
-          button(buttonsDOM, 'Play', _=>{
+          const playButton = button(buttonsDOM, 'Play', _=>{
             const value = this.widget.state[property];
             for(const key in value)
               this.onChange(key, value[key]);
-          }).title = 'Apply these properties to the widget now';
-          button(buttonsDOM, 'Record', _=>{
+          });
+          playButton.title = 'Apply these properties to the widget now';
+          playButton.insertAdjacentHTML('afterbegin', '<span class=material-symbols>play_arrow</span>');
+          const recordButton = button(buttonsDOM, 'Record', _=>{
             this.onChange(property, this.recordResetProperties());
             this.render();
-          }).title = 'Copy the widget\'s current properties into resetProperties';
+          });
+          recordButton.title = 'Copy the widget\'s current properties into resetProperties';
+          recordButton.insertAdjacentHTML('afterbegin', '<span class=material-symbols>radio_button_checked</span>');
         }
       }
     }

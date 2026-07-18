@@ -5,6 +5,19 @@
   margin: 4px 8px;
 }
 
+.events-editor-group {
+  color: gray;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.events-editor-group:first-child {
+  margin-top: 0;
+}
+
 .events-editor-event {
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 4px;
@@ -92,6 +105,9 @@ body.edit.darkMode .events-editor-property {
 }
 
 .events-editor-property-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 3px;
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 4px;
   background: none;
@@ -99,6 +115,10 @@ body.edit.darkMode .events-editor-property {
   cursor: pointer;
   padding: 2px 8px;
   font-size: 12px;
+}
+
+.events-editor-property-buttons button .material-symbols {
+  font-size: 14px;
 }
 
 .events-editor-property-buttons button:hover {
@@ -122,24 +142,6 @@ body.edit.darkMode .events-editor-property {
 .routine-editor-add-operation:hover {
   border-color: var(--VTTblue);
   color: var(--VTTblue);
-}
-
-.routine-editor-operation {
-  position: relative;
-  padding-right: 24px;
-}
-
-.routine-editor-operation-remove {
-  position: absolute;
-  top: 5px;
-  right: 4px;
-  font-size: 15px;
-  color: gray;
-  cursor: pointer;
-}
-
-.routine-editor-operation-remove:hover {
-  color: var(--textHighlightColor3);
 }
 
 .add-event-entry {

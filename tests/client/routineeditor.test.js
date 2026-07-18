@@ -35,7 +35,7 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup'
+    'EventsEditor', 'InfoPopup', 'WidgetSelection'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -282,10 +282,26 @@ describe('property automations', () => {
     const { editor } = makeEditor({ type: 'button', resetProperties: { x: 5, parent: null } }, (property, value) => calls.push([ property, value ]));
     editor.expandedEvents.resetProperties = true;
     editor.render();
-    const play = [...editor.domElement.querySelectorAll('.events-editor-property-buttons button')].find(b => b.textContent == 'Play');
+    const play = [...editor.domElement.querySelectorAll('.events-editor-property-buttons button')].find(b => b.textContent.includes('Play'));
     play.dispatchEvent(new Event('click'));
     expect(calls).toContainEqual([ 'x', 5 ]);
     expect(calls).toContainEqual([ 'parent', null ]);
+  });
+});
+
+describe('widget picker resolution', () => {
+  test('picked widgets run through the resolver and are deduplicated', () => {
+    const holder = { id: 'h1', get: p => ({ type: 'holder', parent: null })[p] };
+    const cardA = { id: 'c1', get: p => ({ type: 'card', parent: 'h1' })[p] };
+    const cardB = { id: 'c2', get: p => ({ type: 'card', parent: 'h1' })[p] };
+    const selection = new WidgetSelection([], () => {}, w => w.get('type') == 'card' ? holder : w);
+    expect(selection.resolveAll([ cardA, cardB, holder ])).toEqual([ holder ]);
+  });
+
+  test('without a resolver the picked widgets pass through unchanged', () => {
+    const widgetsPicked = [ { id: 'a' }, { id: 'b' } ];
+    const selection = new WidgetSelection([], () => {});
+    expect(selection.resolveAll(widgetsPicked)).toBe(widgetsPicked);
   });
 });
 

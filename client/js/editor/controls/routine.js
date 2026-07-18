@@ -100,7 +100,7 @@ const routineOperationMetadata = {
     }
   },
   FOREACH: {
-    template: '{func} {in,range,collection}:',
+    template: '{func} {in,range,collection}',
     parameters: {
       'in': { type: 'json', default: null },
       range: { type: 'json', default: null },
@@ -119,7 +119,7 @@ const routineOperationMetadata = {
     definesVariable: 'variable'
   },
   IF: {
-    template: '{func} {operand1} {relation} {operand2}:', // overridden by IfRoutineOperationEditor
+    template: '{func} {operand1} {relation} {operand2}', // overridden by IfRoutineOperationEditor
     parameters: {
       condition: { type: 'string', default: null },
       operand1: { type: 'string', default: null, display: { 'null': '?' } },
@@ -578,7 +578,8 @@ class RoutineOperationEditor {
       const category = this.classifyParameter(resolved, rawValue);
       const displayed = this.getDisplayedValue(spec);
       const missing = displayed === '?' ? ' routine-editor-parameter-missing' : '';
-      return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
+      const categoryNames = { func: 'operation', variable: 'variable', collection: 'collection', widget: 'widget', number: 'number', value: 'value' };
+      return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
     };
 
     // segments in square brackets are marked optional while all their parameters
@@ -676,8 +677,8 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
   getTemplate() {
     // a custom condition replaces the operand comparison
     if(this.operation && typeof this.operation.condition != 'undefined')
-      return '{func} {condition}:';
-    return '{func} {operand1} {relation} {operand2}:';
+      return '{func} {condition}';
+    return '{func} {operand1} {relation} {operand2}';
   }
 
   isCollapsible() {

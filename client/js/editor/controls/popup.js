@@ -69,8 +69,11 @@ class Popup {
 
   moveIntoView() {
     const rect = this.domElement.getBoundingClientRect();
-    if(rect.right > window.innerWidth - 10)
-      this.domElement.style.left = `${window.innerWidth - rect.width - 10}px`;
+    // keep clear of the module button strip on the right edge of the editor
+    const sidebar = $('#editorSidebar');
+    const rightLimit = window.innerWidth - (sidebar ? sidebar.offsetWidth : 0) - 10;
+    if(rect.right > rightLimit)
+      this.domElement.style.left = `${Math.max(0, rightLimit - rect.width)}px`;
     if(rect.bottom > window.innerHeight - 10)
       this.domElement.style.top = `${window.innerHeight - rect.height - 10}px`;
   }
@@ -237,9 +240,7 @@ class RoutinePopup extends Popup {
     super.show();
     this.setTitle(this.operation && this.operation.func ? this.operation.func : 'var');
     commonInfoButton($('h1', this.domElement), this.operation && this.operation.func);
-    $('h1', this.domElement).append(' - ' + this.parameterNames.join(', '));
-    //commonInfoButton($('h1', this.domElement), parameterName);
-    //infoButton($('h1', this.domElement), 'Parameters are the values that are passed to the operation.', 'parameters', 'tutorial-parameters');
+    $('h1', this.domElement).append(` - ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} ${this.parameterNames.join(' / ')}`);
 
     if(showVariables) {
       const [ variablesTitle, variablesContent ] = this.addAccordionSection('Variables');
@@ -318,6 +319,11 @@ class RoutineOperationPopup extends RoutinePopup {
 
   show() {
     super.show(false, false);
+    // the generic "<func> - parameter func" title is jargon in the first popup a new user sees
+    const h1 = $('h1', this.domElement);
+    h1.textContent = this.operation && this.operation.func ? `${this.operation.func} - change operation` : 'Add operation';
+    if(this.operation && this.operation.func)
+      commonInfoButton(h1, this.operation.func);
     const [ , commonContent ] = this.addAccordionSection('Common Actions');
     for(const { example, newOperation } of simpleRoutineOperationExamples) {
       button(commonContent, example, _=>this.setNewValue(newOperation));
@@ -338,15 +344,22 @@ class RoutineStringPopup extends RoutinePopup {
   }
 
   show() {
-    super.show(true, false);
+    // the current value is the most likely thing to edit, so it comes first and open
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
     infoButton(valueTitle, 'Use fixed values that will always behave the same way.');
     const input = document.createElement('input');
     input.type = 'text';
-    const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    let currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+    if(typeof this.operation == 'string') { // var statements and comments are strings
+      const match = this.operation.match(/^var (\S+) = (.*)$/);
+      const stringParts = { variable: match && match[1], expression: match && match[2], statement: this.operation, comment: this.operation.replace(/^\/\/\s?/, '') };
+      currentValue = stringParts[this.parameterNames[0]];
+    }
     input.value = currentValue != null ? currentValue : '';
     input.addEventListener('change', _=>this.setNewValue(input.value));
     valueContent.append(input);
+    super.show(true, false);
+    input.focus();
   }
 }
 
@@ -413,7 +426,7 @@ class RoutineWidgetIDPopup extends RoutinePopup {
   }
 
   show(showCollections=false) {
-    super.show(false, showCollections);
+    // the picker is the primary input here, so it comes first and open
     const [ title, content ] = this.addAccordionSection('Holders')
     // seed the picker with the widgets the parameter already holds so using it
     // without changes keeps the current value instead of clearing it
@@ -421,9 +434,17 @@ class RoutineWidgetIDPopup extends RoutinePopup {
     const currentIDs = Array.isArray(currentValue) ? currentValue : (typeof currentValue == 'string' ? [ currentValue ] : []);
     this.holderSelection = new WidgetSelection(currentIDs.filter(id=>widgets.has(id)).map(id=>widgets.get(id)), pickedWidgets=>{
       this.setNewValue(pickedWidgets.map(w=>w.id));
+    }, pickedWidget=>{
+      // holders are usually covered by their cards or piles, so a click on one
+      // of those almost always means the holder underneath
+      let resolved = pickedWidget;
+      while(resolved && [ 'card', 'pile' ].indexOf(resolved.get('type')) != -1 && widgets.has(resolved.get('parent')))
+        resolved = widgets.get(resolved.get('parent'));
+      return resolved;
     });
     this.holderSelection.render();
     content.appendChild(this.holderSelection.domElement);
+    super.show(false, showCollections);
   }
 }
 
@@ -468,7 +489,7 @@ class RoutineJSONPopup extends RoutinePopup {
   }
 
   show() {
-    super.show(true, false);
+    // the current value is the most likely thing to edit, so it comes first and open
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
     infoButton(valueTitle, 'Enter a JSON value (object, array, string, number, boolean or null).');
     const textarea = document.createElement('textarea');
@@ -484,6 +505,8 @@ class RoutineJSONPopup extends RoutinePopup {
       }
     });
     valueContent.append(textarea);
+    super.show(true, false);
+    textarea.focus();
   }
 }
 
@@ -579,12 +602,21 @@ async function newRoutineValues(popup) {
   });
 }
 
+// strip the code indentation the template literals carry so <pre> blocks align left
+function dedentInfoText(text) {
+  const lines = text.split('\n');
+  const indents = lines.filter(l=>l.trim()).map(l=>l.match(/^ */)[0].length);
+  const strip = indents.length ? Math.min(...indents) : 0;
+  return lines.map(l=>l.slice(strip)).join('\n');
+}
+
 function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
   if(tutorialName)
     dom.innerHTML += `<span class=material-symbols>school</span>`;
   if(videoFilename)
     dom.innerHTML += `<span class=material-symbols>movie</span>`;
+  infoHTML = dedentInfoText(infoHTML);
   // topic names are restricted so literal brackets like [ "widget1", "widget2" ] stay untouched
   infoHTML = infoHTML.replace(/\[([A-Za-z.]+)\](?:\(([^)]+)\))?/g, (_, topicName, topicInfo)=>`<span class=highlight data-topic="${topicName}">${topicInfo != null ? topicInfo : topicName}</span>`);
   dom.addEventListener('click', e=>{
