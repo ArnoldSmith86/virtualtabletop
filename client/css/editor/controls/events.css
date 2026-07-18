@@ -80,7 +80,8 @@ body.edit.darkMode .events-editor-property {
   padding: 4px 0;
 }
 
-.events-editor-event-content .routine-editor {
+/* only the top-level editor: nested ones get the cutout style from routine.css */
+.events-editor-event-content > .routine-editor {
   margin: 0 6px;
 }
 

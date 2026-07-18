@@ -93,28 +93,31 @@ describe('operation rendering', () => {
     expect(dom.textContent).toContain('<img src=x onerror=alert(1)>');
   });
 
-  test('shows default-valued segments by default and collapses them via the arrow toggle', () => {
-    const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
-    expect(dom.querySelector('.routine-editor-operation-optional')).not.toBeNull();
-    expect(dom.classList.contains('collapsed')).toBe(false);
-    const toggle = dom.querySelector('.routine-editor-collapse-toggle');
+  test('the sentence shows default-valued segments and the arrow expands to a list view', () => {
+    const { editor, dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
+    expect(dom.querySelector('.routine-editor-operation-optional')).not.toBeNull(); // defaults visible in the sentence
+    const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
     expect(dom.firstChild).toBe(toggle); // the arrow sits at the start of the operation
     toggle.dispatchEvent(new Event('click'));
-    expect(dom.classList.contains('collapsed')).toBe(true);
+    expect(editor.domElement.classList.contains('list-view')).toBe(true);
+    const rows = editor.domElement.querySelectorAll('.routine-editor-parameter-row');
+    expect(rows.length).toBe(1 + Object.keys(routineOperationMetadata.MOVE.parameters).length);
   });
 
-  test('operations without default-valued segments or nested routines get no collapse toggle', () => {
-    const { dom } = renderOperation({ func: 'DELETE' });
-    expect(dom.querySelector('.routine-editor-collapse-toggle')).toBeNull();
+  test('operations without parameters get no view toggle', () => {
+    const { dom } = renderOperation('// hello');
+    expect(dom.querySelector('.routine-editor-view-toggle')).toBeNull();
   });
 
-  test('IF is collapsible even without default-valued segments', () => {
-    const { dom } = renderOperation({ func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] });
-    const toggle = dom.querySelector('.routine-editor-collapse-toggle');
+  test('the IF list view includes the condition parameter and keeps nested routines', () => {
+    const { editor, dom } = renderOperation({ func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] });
+    const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
     toggle.dispatchEvent(new Event('click'));
-    expect(dom.classList.contains('collapsed')).toBe(true);
+    const names = [...editor.domElement.querySelectorAll(':scope > .routine-editor-parameter-row .routine-editor-parameter-name')].map(e => e.textContent);
+    expect(names).toEqual([ 'condition', 'operand1', 'relation', 'operand2' ]);
+    expect(editor.domElement.querySelector('.routine-editor')).not.toBeNull(); // nested routines stay visible
   });
 
   test('shows optional segments when their parameter is explicitly set', () => {
@@ -165,7 +168,7 @@ describe('operation rendering', () => {
 
   test('complex var statements fall back to raw editing', () => {
     const { editor } = renderOperation('var $dynamic.${key} = 1 + 2');
-    expect(editor.getTemplate()).toBe('var {variable} = {expression}');
+    expect(editor.getTemplate()).toBe('variable {variable} gets value {expression}');
     const { editor: raw } = renderOperation('var x'); // no " = ", unrepresentable
     expect(raw.getTemplate()).toBe('{statement}');
   });

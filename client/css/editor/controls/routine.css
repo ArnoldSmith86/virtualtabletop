@@ -5,10 +5,14 @@
   margin: 4px 8px;
 }
 
+/* nested routines look like a hole carved into the parent operation: the page
+   background shows as a rounded cutout that reaches the parent's right border
+   while the operation cards inside keep their normal size */
 .routine-editor .routine-editor {
-  margin: 4px 0 4px 12px;
-  padding-left: 8px;
-  border-left: 2px solid var(--backgroundHighlightColor1);
+  margin: 4px -60px 4px 12px;
+  padding: 3px 57px 3px 3px;
+  background: var(--backgroundColor);
+  border-radius: 15px 0 0 15px;
 }
 
 .routine-editor-operation {
@@ -76,12 +80,7 @@ body.edit.darkMode .routine-editor-parameter-widget {
   color: var(--textHighlightColor5);
 }
 
-/* collapsing an operation hides parameters that just use their defaults */
-.routine-editor-operation.collapsed .routine-editor-operation-optional {
-  display: none;
-}
-
-.routine-editor-collapse-toggle {
+.routine-editor-view-toggle {
   cursor: pointer;
   color: gray;
   font-size: 16px;
@@ -89,23 +88,28 @@ body.edit.darkMode .routine-editor-parameter-widget {
   margin-right: 2px;
 }
 
-.routine-editor-collapse-toggle:hover {
+.routine-editor-view-toggle:hover {
   color: var(--VTTblue);
 }
 
-.routine-editor-operation.collapsed .routine-editor,
-.routine-editor-operation.collapsed .routine-editor-else {
-  display: none;
+/* the expanded list view: one line per parameter, even undefined ones */
+.routine-editor-operation.list-view .routine-editor-parameter-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.routine-editor-parameter-name {
+  color: gray;
+  font-size: 12px;
+  min-width: 110px;
+  text-align: right;
 }
 
 .routine-editor-else {
   font-weight: bold;
   font-size: 12px;
   margin: 2px 0 0 12px;
-}
-
-.routine-editor-operation.collapsed .routine-editor-add-else {
-  display: none;
 }
 
 .inline-popup label {

@@ -13,7 +13,7 @@
 // or a collection name).
 const routineOperationMetadata = {
   AUDIO: {
-    template: '{func} {source} at volume {maxVolume}[ to {player}][, {count} time(s)]',
+    template: '{func}: play {source} at volume {maxVolume}[ to {player}][, {count} time(s)]',
     parameters: {
       source: { type: 'string', default: '' },
       maxVolume: { type: 'number', default: 1.0 },
@@ -36,7 +36,7 @@ const routineOperationMetadata = {
     definesCollection: _=>[ 'result' ]
   },
   CANVAS: {
-    template: '{func} {mode} on {collection}[ using value {value}][ and color {color}]',
+    template: '{func}: {mode} on {collection}[ using value {value}][ and color {color}]',
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -128,7 +128,7 @@ const routineOperationMetadata = {
     }
   },
   INPUT: {
-    template: '{func} fields {fields}[, confirm {confirmButtonText}][, cancel {cancelButtonText}]',
+    template: '{func}: show fields {fields}[, confirm {confirmButtonText}][, cancel {cancelButtonText}]',
     parameters: {
       fields: { type: 'json', default: [] },
       confirmButtonText: { type: 'string', default: 'Go' },
@@ -223,7 +223,7 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   SET: {
-    template: '{func} {property} of {collection} {relation} {value}',
+    template: '{func} property {property} {relation} {value} of widgets in {collection}',
     parameters: {
       property: { type: 'string', default: 'parent' },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -261,7 +261,7 @@ const routineOperationMetadata = {
     }
   },
   TIMER: {
-    template: '{func} {timer,collection}, mode {mode}[, value {value}][, seconds {seconds}]',
+    template: '{func}: {mode} {timer,collection}[, value {value}][, seconds {seconds}]',
     parameters: {
       timer: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -289,7 +289,7 @@ const routineOperationMetadata = {
     definesVariable: 'variable'
   },
   VAR: {
-    template: '{func} {variables}',
+    template: '{func}: set variables {variables}',
     parameters: {
       variables: { type: 'json', default: {} }
     },
@@ -582,42 +582,16 @@ class RoutineOperationEditor {
     this.domElement = dom;
     dom.classList.add('routine-editor-operation');
     const uiState = operationUIState(this.operation);
-    if(uiState.collapsed)
-      dom.classList.add('collapsed');
+    if(uiState.listView)
+      dom.classList.add('list-view');
 
-    // escapeHTML because parameter values come from untrusted room state
-    const parameterSpan = spec=>{
-      const resolved = this.resolveParameter(spec);
-      const rawValue = resolved !== null && this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : (resolved !== null ? this.getDefaults()[resolved] : undefined);
-      const category = this.classifyParameter(resolved, rawValue);
-      const displayed = this.getDisplayedValue(spec);
-      const missing = displayed === '?' ? ' routine-editor-parameter-missing' : '';
-      const categoryNames = { func: 'operation', variable: 'variable', collection: 'collection', widget: 'widget', number: 'number', value: 'value' };
-      return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
-    };
+    if(uiState.listView)
+      this.renderListView(dom);
+    else
+      this.renderSentenceView(dom);
 
-    // segments in square brackets are marked optional while all their parameters
-    // use defaults, so collapsing the operation hides them
-    let hasOptionalSegment = false;
-    let html = '';
-    for(const segment of this.getTemplate().split(/(\[[^\]]*\])/)) {
-      const optional = segment.charAt(0) == '[';
-      const text = optional ? segment.slice(1, -1) : segment;
-      const explicitlySet = (text.match(/\{([a-zA-Z0-9,]+)\}/g) || []).some(spec=>
-        spec.slice(1, -1).split(',').some(p=>this.operation && typeof this.operation == 'object' && typeof this.operation[p] != 'undefined'));
-      const rendered = text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>parameterSpan(spec));
-      if(optional && !explicitlySet) {
-        html += `<span class="routine-editor-operation-optional">${rendered}</span>`;
-        hasOptionalSegment = true;
-      } else {
-        html += rendered;
-      }
-    }
-    dom.innerHTML = html;
-
-    this.hasOptionalSegment = hasOptionalSegment;
-    if(this.isCollapsible())
-      this.renderCollapseToggle();
+    if(this.isExpandable())
+      ($('.routine-editor-parameter-row', dom) || dom).prepend(this.renderViewToggle());
 
     for(const span of $a('span[data-parameter]', dom)) {
       span.addEventListener('click', async e=>{
@@ -634,23 +608,67 @@ class RoutineOperationEditor {
     return dom;
   }
 
-  // operations with default-valued parameters or nested routines can be collapsed
-  isCollapsible() {
-    return this.hasOptionalSegment;
+  // escapeHTML because parameter values come from untrusted room state
+  renderParameterChip(spec) {
+    const resolved = this.resolveParameter(spec);
+    const rawValue = resolved !== null && this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : (resolved !== null ? this.getDefaults()[resolved] : undefined);
+    const category = this.classifyParameter(resolved, rawValue);
+    const displayed = this.getDisplayedValue(spec);
+    const missing = displayed === '?' ? ' routine-editor-parameter-missing' : '';
+    const categoryNames = { func: 'operation', variable: 'variable', collection: 'collection', widget: 'widget', number: 'number', value: 'value' };
+    return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
   }
 
-  renderCollapseToggle() {
+  // the compact summary; segments in square brackets are styled as optional
+  // while all their parameters use defaults
+  renderSentenceView(dom) {
+    let html = '';
+    for(const segment of this.getTemplate().split(/(\[[^\]]*\])/)) {
+      const optional = segment.charAt(0) == '[';
+      const text = optional ? segment.slice(1, -1) : segment;
+      const explicitlySet = (text.match(/\{([a-zA-Z0-9,]+)\}/g) || []).some(spec=>
+        spec.slice(1, -1).split(',').some(p=>this.operation && typeof this.operation == 'object' && typeof this.operation[p] != 'undefined'));
+      const rendered = text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>this.renderParameterChip(spec));
+      if(optional && !explicitlySet)
+        html += `<span class="routine-editor-operation-optional">${rendered}</span>`;
+      else
+        html += rendered;
+    }
+    dom.innerHTML = html;
+  }
+
+  // one line per declared parameter, including the ones the operation does not define
+  renderListView(dom) {
+    let html = `<div class="routine-editor-parameter-row">${this.renderParameterChip('func')}</div>`;
+    for(const name in this.metadata.parameters)
+      html += `<div class="routine-editor-parameter-row"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
+    dom.innerHTML = html;
+  }
+
+  // operations with parameters can expand from the sentence to the list view
+  isExpandable() {
+    return Object.keys(this.metadata.parameters).length > 0;
+  }
+
+  renderViewToggle() {
     const uiState = operationUIState(this.operation);
     const toggle = document.createElement('span');
-    toggle.className = 'material-symbols routine-editor-collapse-toggle';
-    toggle.textContent = uiState.collapsed ? 'chevron_right' : 'expand_more';
-    toggle.title = 'Collapse or expand this operation';
+    toggle.className = 'material-symbols routine-editor-view-toggle';
+    toggle.textContent = uiState.listView ? 'expand_more' : 'chevron_right';
+    toggle.title = 'Toggle between the sentence and the parameter list view';
     toggle.addEventListener('click', e=>{
       e.stopPropagation();
-      uiState.collapsed = this.domElement.classList.toggle('collapsed');
-      toggle.textContent = uiState.collapsed ? 'chevron_right' : 'expand_more';
+      uiState.listView = !uiState.listView;
+      const oldDom = this.domElement;
+      const newDom = this.render();
+      // keep the move/delete buttons the routine editor appended to the old node
+      // (direct children only - nested operations have their own button clusters)
+      const buttons = [ ...oldDom.children ].find(c=>c.classList.contains('routine-editor-operation-buttons'));
+      if(buttons)
+        newDom.append(buttons);
+      oldDom.replaceWith(newDom);
     });
-    this.domElement.prepend(toggle);
+    return toggle;
   }
 
   renderSubroutine(dom, property) {
@@ -696,10 +714,6 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
     return this.withExtraParameters('{func} {operand1} {relation} {operand2}');
   }
 
-  isCollapsible() {
-    return true;
-  }
-
   render() {
     super.render();
     this.renderSubroutine(this.domElement, 'thenRoutine');
@@ -731,10 +745,6 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
     return super.createPopup(parameterNames);
   }
 
-  isCollapsible() {
-    return true;
-  }
-
   render() {
     super.render();
     this.renderSubroutine(this.domElement, 'loopRoutine');
@@ -749,7 +759,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
 
   getTemplate() {
     // fall back to raw editing for statements the simple form cannot represent
-    return this.isSimple() ? 'var {variable} = {expression}' : '{statement}';
+    return this.isSimple() ? 'variable {variable} gets value {expression}' : '{statement}';
   }
 
   createPopup(parameterNames) {
@@ -771,7 +781,7 @@ class VarStringRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   getExampleWithDefaults() {
-    return 'var variable = expression';
+    return 'variable x gets value 1';
   }
 
   isSimple() {
@@ -873,7 +883,7 @@ function routineOperationExamples() {
     editor.setOperationDetails(null, { func }, [], []);
     examples.push({ example: editor.getExampleWithDefaults(), newOperation: { func } });
   }
-  examples.push({ example: 'var variable = expression', newOperation: 'var variable = 1' });
+  examples.push({ example: 'variable x gets value 1', newOperation: 'var x = 1' });
   examples.push({ example: '// comment', newOperation: '// comment' });
   return examples;
 }
