@@ -3368,10 +3368,11 @@ class PropertiesModule extends SidebarModule {
 
     const update = () => {
       note.innerHTML = '';
-      const typeClasses = String(widget.get('typeClasses') || '').split(/\s+/);
-      const userClasses = String(widget.get('classes') || '').split(/\s+/);
-      const triggered = String(typeof widget.classes == 'function' ? widget.classes(true) : '').split(/\s+/)
-        .filter(name => name && typeClasses.indexOf(name) == -1 && userClasses.indexOf(name) == -1);
+      // only the classes of the curated map - classes(true) also contains
+      // editor-internal ones like selectedInEdit that are just noise here
+      const active = String(typeof widget.classes == 'function' ? widget.classes(true) : '').split(/\s+/);
+      const triggered = Object.keys(stateClasses).map(name => name.substring(1))
+        .filter(name => active.indexOf(name) != -1);
       if(!triggered.length) {
         note.style.display = 'none';
         return;
