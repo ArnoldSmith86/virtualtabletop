@@ -7,7 +7,7 @@
   left: 0;
   right: var(--editSidebarWidth);
   bottom: 0;
-  z-index: 2;
+  z-index: 1; /* below the sidebar (2) and toolbar (3); the module panel (1) is later in the DOM, so it wins where they overlap */
   flex-direction: column;
   background: var(--backgroundColor);
   color: var(--textColor);
@@ -19,8 +19,22 @@
   right: calc(var(--editSidebarWidth) + clamp(250px, var(--modulesWidth) - var(--editSidebarWidth), 90vw));
 }
 
+/* On layouts where the module panel sits above the room or covers it entirely (see sidebar.css), it
+   simply overlays the deck editor, so don't reserve width for it. */
+@media (orientation: portrait) and (min-width: 1000px), (max-aspect-ratio: 16/20), (max-width: 1000px) and (min-aspect-ratio: 16/20) {
+  #editor.moduleActive #deckEditor {
+    right: var(--editSidebarWidth);
+  }
+}
+
 body.deckEditorActive #deckEditor {
   display: flex;
+}
+
+/* The room's selection rectangle and drag toolbar belong to the hidden playing surface. */
+body.deckEditorActive #editorSelection,
+body.deckEditorActive #editorDragToolbar {
+  display: none;
 }
 
 #deckEditorTopbar {
@@ -215,22 +229,27 @@ body.deckEditorActive #deckEditor {
   cursor: move;
 }
 
-/* before :hover and .deckEditorSelectedObject so those still win on the hovered/selected object.
-   The negative outline-offset draws each outline just INSIDE the object: an object covering the whole
-   card would otherwise have its outline clipped away entirely by the face's overflow: hidden. */
+/* The room clips cards to their bounds, but the editor's big card does not: the object outlines below
+   sit outside the objects, so on an object covering the whole card they would otherwise be clipped away
+   entirely (overflow clips at the padding box, so even an inset outline vanishes once the face has a
+   border). This also shows objects dragged past the card's edge instead of silently hiding them. The
+   strip previews below keep the real clipping. */
+#deckEditorMain .deckEditorCard .card,
+#deckEditorMain .deckEditorCard .cardFace {
+  overflow: visible;
+}
+
+/* before :hover and .deckEditorSelectedObject so those still win on the hovered/selected object */
 #deckEditorMain.deckEditorShowAllAreas .deckEditorCard .cardFaceObject {
   outline: calc(2px / var(--deckEditorCardScale)) dotted var(--textHighlightColor2);
-  outline-offset: calc(-2px / var(--deckEditorCardScale));
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject:hover {
   outline: calc(2px / var(--deckEditorCardScale)) dashed var(--textHighlightColor2);
-  outline-offset: calc(-2px / var(--deckEditorCardScale));
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject {
   outline: calc(3px / var(--deckEditorCardScale)) solid var(--textHighlightColor2);
-  outline-offset: calc(-3px / var(--deckEditorCardScale));
 }
 
 .deckEditorEmpty, .deckEditorHint {

@@ -1338,25 +1338,35 @@ class DeckEditor {
     this.selectObject(face.objects.length-1);
   }
 
-  // Removes card type properties that are no longer referenced by any object's dynamicProperties after the
-  // given objects were removed, so deleting an object doesn't leave orphaned per-card-type data behind (and
-  // the next added object can reuse the property name). Returns whether cardTypes changed.
+  // Card type properties the given objects pull values from (dynamicProperties, svgReplaces, ${PROPERTY ...}).
+  referencedTypeProperties(objects) {
+    const properties = new Set();
+    for(const object of objects) {
+      for(const property of Object.values(object.dynamicProperties || {}))
+        properties.add(property);
+      for(const property of Object.values(object.svgReplaces || {}))
+        properties.add(property);
+      if(object.type == 'html')
+        for(const match of String(object.value).matchAll(/\$\{PROPERTY ([^}]+)\}/g))
+          properties.add(match[1]);
+    }
+    return properties;
+  }
+
+  // Removes card type properties that are no longer referenced by any face object after the given objects
+  // were removed, so deleting an object doesn't leave orphaned per-card-type data behind (and the next
+  // added object can reuse the property name). Returns whether cardTypes changed.
   removeOrphanedTypeProperties(removedObjects) {
-    const stillReferenced = new Set();
-    for(const face of this.faceTemplates)
-      for(const object of face.objects || [])
-        for(const property of Object.values(object.dynamicProperties || {}))
-          stillReferenced.add(property);
+    const stillReferenced = this.referencedTypeProperties(this.faceTemplates.flatMap(face=>face.objects || []));
 
     let changed = false;
-    for(const object of removedObjects)
-      for(const property of Object.values(object.dynamicProperties || {}))
-        if(!stillReferenced.has(property))
-          for(const typeProperties of Object.values(this.cardTypes))
-            if(typeProperties[property] !== undefined) {
-              delete typeProperties[property];
-              changed = true;
-            }
+    for(const property of this.referencedTypeProperties(removedObjects))
+      if(!stillReferenced.has(property))
+        for(const typeProperties of Object.values(this.cardTypes))
+          if(typeProperties[property] !== undefined) {
+            delete typeProperties[property];
+            changed = true;
+          }
     return changed;
   }
 
