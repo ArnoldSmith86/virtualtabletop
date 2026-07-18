@@ -35,7 +35,7 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'WidgetSelection'
+    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -296,6 +296,57 @@ describe('property automations', () => {
     play.dispatchEvent(new Event('click'));
     expect(calls).toContainEqual([ 'x', 5 ]);
     expect(calls).toContainEqual([ 'parent', null ]);
+  });
+});
+
+describe('resetting parameters to their default', () => {
+  function showPopup(operation, parameterNames) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineStringPopup();
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, { state: {} }, [], []);
+    popup.show();
+    return popup;
+  }
+
+  test('explicitly set parameters offer a use-default button that unsets them', () => {
+    const popup = showPopup({ func: 'AUDIO', player: 'p1' }, [ 'player' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const clear = popup.domElement.querySelector('.popup-use-default');
+    expect(clear).not.toBeNull();
+    clear.dispatchEvent(new Event('click'));
+    expect('player' in value && value.player === undefined).toBe(true);
+    popup.hide();
+  });
+
+  test('no use-default button when the parameter is not explicitly set', () => {
+    const popup = showPopup({ func: 'AUDIO' }, [ 'player' ]);
+    expect(popup.domElement.querySelector('.popup-use-default')).toBeNull();
+    popup.hide();
+  });
+
+  test('unsetting condition on IF restores the operand template', () => {
+    const editor = editorForOperation({ func: 'IF', condition: '${x}', thenRoutine: [ { func: 'FLIP' } ] });
+    const operation = { func: 'IF', condition: '${x}', thenRoutine: [ { func: 'FLIP' } ] };
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    expect(editor.getTemplate()).toContain('{condition}');
+    let result = null;
+    editor.registerChangeListener(v => result = v);
+    editor.onNewValue({ condition: undefined });
+    expect(result.condition).toBeUndefined();
+    expect(result.thenRoutine).toEqual([ { func: 'FLIP' } ]);
+    expect(editor.getTemplate()).toContain('{operand1} {relation} {operand2}');
+  });
+
+  test('default-null parameters display as unset, explicit null keeps its display', () => {
+    const editor = editorForOperation({ func: 'SELECT' });
+    editor.setOperationDetails({ state: {} }, { func: 'SELECT' }, [], []);
+    expect(editor.getDisplayedValue('sortBy')).toBe('unset');
+    const setEditor = editorForOperation({ func: 'SET', value: null });
+    setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
+    expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
   });
 });
 

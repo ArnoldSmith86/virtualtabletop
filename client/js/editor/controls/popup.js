@@ -214,6 +214,10 @@ class RoutinePopup extends Popup {
     super.hide();
   }
 
+  offersUseDefault() {
+    return true;
+  }
+
   onClick(e) {
   }
 
@@ -241,6 +245,20 @@ class RoutinePopup extends Popup {
     this.setTitle(this.operation && this.operation.func ? this.operation.func : 'var');
     commonInfoButton($('h1', this.domElement), this.operation && this.operation.func);
     $('h1', this.domElement).append(` - ${this.parameterNames.length > 1 ? 'parameters' : 'parameter'} ${this.parameterNames.join(' / ')}`);
+
+    // an explicitly set parameter (other than the operation type itself) can be
+    // reset to its default, which for IF.condition also restores the operand chips
+    if(this.offersUseDefault() && this.parameterNames[0] != 'func' && this.operation && typeof this.operation == 'object' && this.parameterNames.some(p=>typeof this.operation[p] != 'undefined')) {
+      const clear = button(this.domElement, 'use default', _=>{
+        const values = {};
+        for(const parameter of this.parameterNames)
+          values[parameter] = undefined;
+        this.notifyChangeListeners(values);
+      });
+      clear.className = 'popup-use-default';
+      clear.title = 'Remove the explicit value and go back to the default';
+      $('h1', this.domElement).after(clear);
+    }
 
     if(showVariables) {
       const [ variablesTitle, variablesContent ] = this.addAccordionSection('Variables');
@@ -513,6 +531,10 @@ class RoutineJSONPopup extends RoutinePopup {
 class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
   constructor() {
     super();
+  }
+
+  offersUseDefault() {
+    return false; // this popup edits the entire operation, there is no default
   }
 
   getCurrentValue() {

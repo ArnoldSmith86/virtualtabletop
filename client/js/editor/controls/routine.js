@@ -519,12 +519,15 @@ class RoutineOperationEditor {
     if(resolved === null)
       return '?';
 
-    const value = this.operation && typeof this.operation[resolved] != 'undefined' ? this.operation[resolved] : this.getDefaults()[resolved];
+    const explicitlySet = this.operation && typeof this.operation == 'object' && typeof this.operation[resolved] != 'undefined';
+    const value = explicitlySet ? this.operation[resolved] : this.getDefaults()[resolved];
     const spec = this.parameterSpec(resolved);
     if(spec && spec.display && spec.display[value] != null)
       return spec.display[value];
     if(typeof value == 'string' && predefinedVariableLabels[value])
       return predefinedVariableLabels[value];
+    if(value === null && !explicitlySet)
+      return 'unset'; // a null default just means the parameter is not used
     if(typeof value == 'object' && value !== null)
       return JSON.stringify(value);
     return value;
