@@ -351,15 +351,15 @@ const editorTypeSections = {
       { label: 'Image',            property: 'image',             kind: 'image' }
     ],
     colors: [
-      { label: 'Text',             property: 'textColor',         kind: 'color' },
-      { label: 'Background',       property: 'backgroundColor',   kind: 'color' },
-      { label: 'Border',           property: 'borderColor',       kind: 'color' },
+      { label: 'Text',             property: 'textColor',         kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',       property: 'backgroundColor',   kind: 'color', labelIcon: 'format_color_fill' },
+      { label: 'Border',           property: 'borderColor',       kind: 'color', labelIcon: 'border_color' },
       { label: 'SVG',              property: 'color',             kind: 'color' }
     ],
     hover: [
-      { label: 'Text',             property: 'textColorOH',       kind: 'color' },
-      { label: 'Background',       property: 'backgroundColorOH', kind: 'color' },
-      { label: 'Border',           property: 'borderColorOH',     kind: 'color' }
+      { label: 'Text',             property: 'textColorOH',       kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',       property: 'backgroundColorOH', kind: 'color', labelIcon: 'format_color_fill' },
+      { label: 'Border',           property: 'borderColorOH',     kind: 'color', labelIcon: 'border_color' }
     ],
     appearance: [
       { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, slider: true, nullIfEmpty: true }
@@ -369,6 +369,7 @@ const editorTypeSections = {
   card: {},
   deck: {},
   dice: {
+    stateClasses: { '.shape3D': 'shape3d' },
     colors: [
       { label: 'Color',         property: 'color',        kind: 'color' },
       { label: 'Pips',          property: 'pipColor',     kind: 'color' }
@@ -383,10 +384,10 @@ const editorTypeSections = {
     cssProperties: [ 'css', 'faceCSS' ]
   },
   holder: {
-    cssClassSuggestions: [ '.showCardBack' ],
+    stateClasses: { '.showCardBack': 'showInactiveFaceToSeat' },
     colors: [
-      { label: 'Color',         property: 'color',        kind: 'color' },
-      { label: 'Text',          property: 'textColor',    kind: 'color' }
+      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
@@ -404,7 +405,7 @@ const editorTypeSections = {
   },
   label: {},
   scoreboard: {
-    cssClassSuggestions: [ '.equalWidth', '.verticalHeader' ],
+    stateClasses: { '.equalWidth': 'autosizeColumns', '.verticalHeader': 'verticalHeader' },
     appearance: [
       { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
       { label: 'Player colors',      property: 'showPlayerColors', kind: 'checkbox' },
@@ -427,7 +428,7 @@ const editorTypeSections = {
     ]
   },
   seat: {
-    cssClassSuggestions: [ '.seated', '.turn', '.foreign' ],
+    stateClasses: { '.seated': 'player', '.turn': 'turn', '.foreign': 'hideWhenUnused' },
     colors: [
       { label: 'Color',         property: 'color',        kind: 'color' }
     ],
@@ -437,19 +438,19 @@ const editorTypeSections = {
   },
   spinner: {
     colors: [
-      { label: 'Text',          property: 'textColor',    kind: 'color' },
-      { label: 'Line',          property: 'lineColor',    kind: 'color' },
+      { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
       // redundant shortcuts for declarations inside the spinner's element css properties
+      { label: 'Background',    cssKey: 'background', cssProperty: 'backgroundCSS', kind: 'color', labelIcon: 'format_color_fill' },
       { label: 'Value text',    cssKey: 'color',      cssProperty: 'valueCSS',      kind: 'color' },
-      { label: 'Background',    cssKey: 'background', cssProperty: 'backgroundCSS', kind: 'color' }
+      { label: 'Line',          property: 'lineColor',    kind: 'color' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
   timer: {
-    cssClassSuggestions: [ '.alert', '.paused' ],
+    stateClasses: { '.alert': 'alert', '.paused': 'paused' },
     colors: [
-      { label: 'Background', cssKey: 'background', kind: 'color' },
-      { label: 'Text',       cssKey: 'color',      kind: 'color' }
+      { label: 'Text',       cssKey: 'color',      kind: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background', cssKey: 'background', kind: 'color', labelIcon: 'format_color_fill' }
     ]
   }
 };
@@ -1789,7 +1790,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
   }
 
   isOnDemandPropertyValueSet(value) {
@@ -2120,6 +2121,40 @@ class PropertiesModule extends SidebarModule {
     this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptionsWithRatio);
   }
 
+  // lock/unlock icon button (red locked, green unlocked) with a text label
+  renderLockToggle(target, labelText, isLocked, onToggle) {
+    const wrap = document.createElement('span');
+    wrap.style.display = 'inline-flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '2px';
+
+    const button = document.createElement('button');
+    button.className = 'lockToggle';
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols';
+    button.appendChild(icon);
+    wrap.appendChild(button);
+
+    const label = document.createElement('span');
+    label.textContent = labelText;
+    label.style.cursor = 'pointer';
+    wrap.appendChild(label);
+
+    const update = () => {
+      const locked = isLocked();
+      icon.textContent = locked ? 'lock' : 'lock_open';
+      button.classList.toggle('locked', locked);
+      button.classList.toggle('unlocked', !locked);
+      button.title = label.title = locked ? `${labelText}: locked - click to unlock` : `${labelText}: unlocked - click to lock`;
+    };
+
+    button.onclick = label.onclick = () => onToggle(!isLocked());
+    update();
+
+    target.appendChild(wrap);
+    return { wrap, update };
+  }
+
   renderSizeRatioLock(widget, target = null) {
     const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'flex';
@@ -2128,25 +2163,13 @@ class PropertiesModule extends SidebarModule {
     wrap.style.flexWrap = 'wrap';
     wrap.style.marginTop = '6px';
 
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.id = `lockSizeRatio_${widget.id}_${rand().toString(36).substring(3, 7)}`;
-
-    const label = document.createElement('label');
-    label.htmlFor = input.id;
-    label.textContent = 'Lock size ratio';
-
-    wrap.appendChild(input);
-    wrap.appendChild(label);
-
-    const updateInput = w => {
-      const value = w.get('lockSizeRatio');
-      input.checked = value === undefined || value === null ? true : !!value;
+    const isLocked = () => {
+      const value = widget.get('lockSizeRatio');
+      return value === undefined || value === null ? true : !!value;
     };
+    const toggle = this.renderLockToggle(wrap, 'Size ratio', isLocked, locked => this.inputValueUpdated(widget, 'lockSizeRatio', locked));
 
-    input.onchange = () => this.inputValueUpdated(widget, 'lockSizeRatio', input.checked);
-
-    this.addPropertyListener(widget, 'lockSizeRatio', updateInput);
+    this.addPropertyListener(widget, 'lockSizeRatio', () => toggle.update());
   }
 
   renderPositionLocks(widget, target = null) {
@@ -2157,60 +2180,32 @@ class PropertiesModule extends SidebarModule {
     row.style.flexWrap = 'wrap';
     row.style.marginTop = '6px';
 
-    const lockPosition = document.createElement('input');
-    lockPosition.type = 'checkbox';
-    lockPosition.id = `lockPosition_${widget.id}_${rand().toString(36).substring(3, 7)}`;
-
-    const lockPositionLabel = document.createElement('label');
-    lockPositionLabel.htmlFor = lockPosition.id;
-    lockPositionLabel.textContent = 'Lock position';
-
-    row.appendChild(lockPosition);
-    row.appendChild(lockPositionLabel);
+    const positionToggle = this.renderLockToggle(row, 'Position', () => !widget.get('movable'), locked => {
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
+      widget.set('movable', !locked);
+      batchEnd();
+    });
 
     const separator = document.createElement('span');
     separator.textContent = '|';
     separator.style.color = '#777';
     row.appendChild(separator);
 
-    const lockEditorWrap = document.createElement('span');
-    lockEditorWrap.style.display = 'inline-flex';
-    lockEditorWrap.style.alignItems = 'center';
-    lockEditorWrap.style.gap = '6px';
-
-    const lockInEditor = document.createElement('input');
-    lockInEditor.type = 'checkbox';
-    lockInEditor.id = `lockEditor_${widget.id}_${rand().toString(36).substring(3, 7)}`;
-
-    const lockInEditorLabel = document.createElement('label');
-    lockInEditorLabel.htmlFor = lockInEditor.id;
-    lockInEditorLabel.textContent = 'Also lock in editor';
-
-    lockEditorWrap.appendChild(lockInEditor);
-    lockEditorWrap.appendChild(lockInEditorLabel);
+    const editorToggle = this.renderLockToggle(row, 'Also in editor', () => !widget.get('movableInEdit'),
+      locked => this.inputValueUpdated(widget, 'movableInEdit', !locked));
     const lockInEditorInfo = this.renderInfoIcon('This only applies to mouse input. You can still edit position in this sidebar');
-    lockEditorWrap.appendChild(lockInEditorInfo);
-    row.appendChild(lockEditorWrap);
+    editorToggle.wrap.appendChild(lockInEditorInfo);
 
     const updateLockInputs = w => {
       const movable = !!w.get('movable');
       const movableInEdit = !!w.get('movableInEdit');
-      const isLocked = !movable;
-      lockPosition.checked = isLocked;
-      separator.style.display = (isLocked || !movableInEdit) ? 'inline' : 'none';
-      lockEditorWrap.style.display = (isLocked || !movableInEdit) ? 'inline-flex' : 'none';
-      lockInEditor.checked = !movableInEdit;
+      const showEditorLock = !movable || !movableInEdit;
+      positionToggle.update();
+      editorToggle.update();
+      separator.style.display = showEditorLock ? 'inline' : 'none';
+      editorToggle.wrap.style.display = showEditorLock ? 'inline-flex' : 'none';
     };
-
-    lockPosition.onchange = () => {
-      const shouldLock = lockPosition.checked;
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
-      widget.set('movable', !shouldLock);
-      batchEnd();
-    };
-
-    lockInEditor.onchange = () => this.inputValueUpdated(widget, 'movableInEdit', !lockInEditor.checked);
 
     this.addPropertyListener(widget, 'movable', updateLockInputs);
     this.addPropertyListener(widget, 'movableInEdit', updateLockInputs);
@@ -3341,26 +3336,63 @@ class PropertiesModule extends SidebarModule {
       this.addAppearanceSubTitle('Hover');
       this.renderInputs(widget, hover);
     }
-    if(colors.length || hover.length)
+    if((colors.length || hover.length) && misc.length)
       this.addAppearanceSubTitle('Style');
     if(misc.length)
       this.renderInputs(widget, misc);
 
-    new TextInput(this, widget, 'CSS classes', {
-      property: 'classes',
-      nullIfEmpty: true,
-      hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders or classes defined in the room\'s custom css.'
-    }).render(this.moduleDOM);
-
     const cssSection = this.renderCollapsibleSection('CSS', true, body => {
+      new TextInput(this, widget, 'User defined active classes', {
+        property: 'classes',
+        nullIfEmpty: true,
+        hint: 'Space separated list of CSS classes applied to the widget, like "transparent" for holders or classes defined in the room\'s custom css. Classes can also be triggered by some properties of the widget and be inherited from parent widgets.'
+      }).render(body);
+
+      this.renderTriggeredClassesNote(widget, body);
+
       for(const property of cssProperties)
         this.renderCssPropertyEditor(widget, property, body, {
-          classSuggestions: property == 'css' ? sections.cssClassSuggestions || [] : [],
+          classSuggestions: property == 'css' ? Object.keys(sections.stateClasses || {}) : [],
           // with just the css property, its name in the body would only repeat the header
           showTitle: cssProperties.length > 1
         });
     }, null, `${widget.id}:css`);
     infoButton($('.collapsibleHeader', cssSection), html(editorPropertyHints.css));
+  }
+
+  // comment-style line listing the classes the widget currently applies on
+  // its own because of its properties
+  renderTriggeredClassesNote(widget, target) {
+    const note = div(target, 'cssTriggeredClasses');
+    const stateClasses = this.typeSections(widget).stateClasses || {};
+
+    const update = () => {
+      note.innerHTML = '';
+      const typeClasses = String(widget.get('typeClasses') || '').split(/\s+/);
+      const userClasses = String(widget.get('classes') || '').split(/\s+/);
+      const triggered = String(typeof widget.classes == 'function' ? widget.classes(true) : '').split(/\s+/)
+        .filter(name => name && typeClasses.indexOf(name) == -1 && userClasses.indexOf(name) == -1);
+      if(!triggered.length) {
+        note.style.display = 'none';
+        return;
+      }
+      note.style.display = '';
+      triggered.forEach((name, index) => {
+        if(index)
+          note.append(', ');
+        const code = document.createElement('code');
+        code.textContent = name;
+        const setBy = stateClasses['.' + name];
+        code.title = setBy ? `set by ${setBy}` : 'set by a property of this widget';
+        note.appendChild(code);
+      });
+      note.append(` ${triggered.length == 1 ? 'is' : 'are'} being triggered by properties in this widget`);
+    };
+
+    const listenProperties = [ 'classes', 'typeClasses' ]
+      .concat(typeof widget.classesProperties == 'function' ? widget.classesProperties() : []);
+    for(const property of [...new Set(listenProperties)])
+      this.addPropertyListener(widget, property, update);
   }
 
   // Chrome-devtools-like editor for a css-like property: one collapsible
@@ -3523,10 +3555,76 @@ class PropertiesModule extends SidebarModule {
   renderForBasic(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
-    this.renderContentSection(widget);
+    this.renderBasicContentSection(widget);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
     this.renderOtherPropertiesSection(widget);
+  }
+
+  // Content section of basic widgets: text with a text/symbol mode dropdown,
+  // then icon and image as side by side blocks.
+  renderBasicContentSection(widget) {
+    this.addSubHeader('Content');
+
+    const hasSymbolsClass = () => String(widget.get('classes') || '').split(/\s+/).indexOf('symbols') != -1;
+
+    const textRow = div(this.moduleDOM, 'propertyInput');
+    const textLabel = document.createElement('label');
+    textLabel.textContent = 'Text';
+    infoButton(textLabel, html(editorPropertyHints.text));
+    textRow.appendChild(textLabel);
+
+    const textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.oninput = () => this.inputValueUpdated(widget, 'text', textInput.value === '' ? null : textInput.value);
+    textRow.appendChild(textInput);
+
+    // switches the "symbols" class which renders the text with the symbol font
+    const modeSelect = document.createElement('select');
+    modeSelect.innerHTML = '<option value="text">text</option><option value="symbol">symbol</option>';
+    modeSelect.onchange = () => {
+      const classes = String(widget.get('classes') || '').split(/\s+/).filter(name => name && name != 'symbols');
+      if(modeSelect.value == 'symbol')
+        classes.push('symbols');
+      this.inputValueUpdated(widget, 'classes', classes.length ? classes.join(' ') : null);
+    };
+    textRow.appendChild(modeSelect);
+
+    const symbolButton = document.createElement('button');
+    symbolButton.setAttribute('icon', 'emoji_symbols');
+    symbolButton.title = 'Pick a symbol';
+    symbolButton.onclick = async () => {
+      const symbol = await pickSymbol('fonts');
+      if(symbol && symbol.symbol)
+        this.inputValueUpdated(widget, 'text', symbol.symbol);
+    };
+    textRow.appendChild(symbolButton);
+
+    const update = () => {
+      if(document.activeElement !== textInput) {
+        const value = widget.get('text');
+        textInput.value = value === null || value === undefined ? '' : value;
+      }
+      modeSelect.value = hasSymbolsClass() ? 'symbol' : 'text';
+      symbolButton.style.display = hasSymbolsClass() ? '' : 'none';
+    };
+
+    this.addPropertyListener(widget, 'text', update);
+    this.addPropertyListener(widget, 'classes', update);
+
+    const mediaRow = div(this.moduleDOM, 'contentMediaRow');
+
+    const iconBlock = div(mediaRow, 'contentMediaBlock');
+    const iconTitle = div(iconBlock, 'contentMediaTitle');
+    iconTitle.textContent = 'Icon';
+    infoButton(iconTitle, html(editorPropertyHints.icon));
+    new IconInput(this, widget, null, { property: 'icon' }).render(iconBlock);
+
+    const imageBlock = div(mediaRow, 'contentMediaBlock imageBlock');
+    const imageTitle = div(imageBlock, 'contentMediaTitle');
+    imageTitle.textContent = 'Image';
+    infoButton(imageTitle, html(editorPropertyHints.image));
+    new ImageInput(this, widget, null, { property: 'image' }).render(imageBlock);
   }
 
   renderForButton(widget) {
@@ -3746,16 +3844,62 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Ignore this seat in turns', { property: 'skipTurn', hint: editorPropertyHints.skipTurn }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide turn marker', { property: 'hideTurn', hint: editorPropertyHints.hideTurn }).render(this.moduleDOM);
 
-    this.addAppearanceSubTitle('When seated');
-    div(this.moduleDOM, 'propertyNote', 'Use <b>playerName</b> and <b>seatIndex</b> as placeholders for the seated player\'s name and the seat index.');
-    this.renderStyledTextInput(widget, 'Text', 'display', 'css', '.seated', true);
-
     this.addAppearanceSubTitle('When empty');
-    this.renderStyledTextInput(widget, 'Text', 'displayEmpty', 'css', 'default', true);
-    new ColorInput(this, widget, 'Border color', { property: 'colorEmpty', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
+    this.renderCompactStyledTextInput(widget, 'Text', 'displayEmpty', 'default');
+    new ColorInput(this, widget, 'Border color', { property: 'colorEmpty', labelIcon: 'border_color', hint: 'The border color while no player sits here.' }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Hide when unused', { property: 'hideWhenUnused', hint: editorPropertyHints.hideWhenUnused }).render(this.moduleDOM);
 
+    this.addAppearanceSubTitle('When seated');
+    this.renderCompactStyledTextInput(widget, 'Text', 'display', '.seated', {
+      placeholders: [ 'playerName', 'seatIndex' ]
+    });
+
     this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'colorEmpty' ]);
+  }
+
+  // compact one-line styled text input: text, color and font size side by
+  // side, followed by the typography toggles; optional placeholder chips
+  // insert values like playerName at the cursor
+  renderCompactStyledTextInput(widget, title, textProperty, cssClass, options = {}) {
+    const wrap = div(this.moduleDOM, 'propertyInput compactStyledText');
+    const label = document.createElement('label');
+    label.textContent = title;
+    wrap.appendChild(label);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.oninput = () => this.inputValueUpdated(widget, textProperty, input.value);
+    wrap.appendChild(input);
+
+    wrap.appendChild(this.renderColorInput(widget, null, 'color', '#222222', 'css', cssClass));
+    wrap.appendChild(this.renderNumberInput(widget, null, 'font-size', { step: 1, min: 0 }, '25px', 'css', cssClass));
+    wrap.appendChild(this.renderSelectionButton(widget, '', 'font-weight', 'bold', 'css', cssClass, 'format_bold', 'Bold'));
+    wrap.appendChild(this.renderSelectionButton(widget, '', 'font-style', 'italic', 'css', cssClass, 'format_italic', 'Italic'));
+    wrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'left', 'css', cssClass, 'format_align_left', 'Align left'));
+    wrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'center', 'css', cssClass, 'format_align_center', 'Align center'));
+    wrap.appendChild(this.renderSelectionButton(widget, '', 'text-align', 'right', 'css', cssClass, 'format_align_right', 'Align right'));
+
+    for(const placeholder of options.placeholders || []) {
+      const chip = document.createElement('button');
+      chip.className = 'placeholderChip';
+      chip.textContent = placeholder;
+      chip.title = `Insert ${placeholder} - it is replaced by its current value on the seat`;
+      chip.onclick = () => {
+        const at = document.activeElement === input ? input.selectionStart : input.value.length;
+        input.value = input.value.slice(0, at) + placeholder + input.value.slice(at);
+        this.inputValueUpdated(widget, textProperty, input.value);
+      };
+      wrap.appendChild(chip);
+    }
+
+    this.addPropertyListener(widget, textProperty, w => {
+      if(document.activeElement !== input) {
+        const value = w.get(textProperty);
+        input.value = value === null || value === undefined ? '' : value;
+      }
+    });
+
+    return wrap;
   }
 
   // Shows who occupies the seat; taking and vacating mirrors what clicking
@@ -3771,13 +3915,13 @@ class PropertiesModule extends SidebarModule {
         const text = document.createElement('span');
         text.textContent = 'Currently being used by';
         row.appendChild(text);
+        const name = document.createElement('b');
+        name.textContent = player;
+        row.appendChild(name);
         const dot = document.createElement('span');
         dot.className = 'playerColorDot';
         dot.style.background = widget.get('color') || '#999999';
         row.appendChild(dot);
-        const name = document.createElement('b');
-        name.textContent = player;
-        row.appendChild(name);
         const remove = document.createElement('button');
         remove.setAttribute('icon', 'person_remove');
         remove.title = 'Remove the player from this seat';
@@ -3894,15 +4038,28 @@ class PropertiesModule extends SidebarModule {
     this.renderTimerTimeInput(widget, 'Current time', 'milliseconds', currentRow);
     new CheckboxInput(this, widget, 'Paused', { property: 'paused' }).render(currentRow);
 
-    new SelectInput(this, widget, 'Show updates every', {
+    const precisionSelect = new SelectInput(this, widget, 'Show updates every', {
       property: 'precision',
       choices: [
         { value: 60000, text: '1 minute' },
         { value: 10000, text: '10 seconds' },
         { value: 1000,  text: '1 second' },
-        { value: 100,   text: '0.1 seconds' }
-      ]
-    }).render(this.moduleDOM);
+        { value: 100,   text: '0.1 seconds' },
+        { value: 'custom', text: 'custom...' }
+      ],
+      setValue: value => {
+        if(value === 'custom') {
+          const entered = parseInt(prompt('Update interval in milliseconds:', widget.get('precision')));
+          if(Number.isFinite(entered) && entered > 0)
+            this.inputValueUpdated(widget, 'precision', entered);
+          else
+            precisionSelect.update(widget.get('precision')); // snap the dropdown back
+        } else {
+          this.inputValueUpdated(widget, 'precision', value);
+        }
+      }
+    });
+    precisionSelect.render(this.moduleDOM);
 
     // the alert property itself is computed by the timer from end/milliseconds,
     // so "alert when done" is controlled through whether an end value is set
@@ -4280,8 +4437,11 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader('Content');
 
-    // Editable checkbox: when checked, label is editable in play mode
-    this.renderCheckbox(widget, 'Editable (in play mode)', 'editable');
+    // editable in play mode, shown as a lock like the movable toggles
+    const editableRow = div(this.moduleDOM, 'propertyInput');
+    const editableToggle = this.renderLockToggle(editableRow, 'Editable by players', () => !widget.get('editable'),
+      locked => this.inputValueUpdated(widget, 'editable', !locked));
+    this.addPropertyListener(widget, 'editable', () => editableToggle.update());
 
     this.renderLargeTextInput(widget, 'Text Content', 'text');
 

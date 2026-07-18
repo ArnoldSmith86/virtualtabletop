@@ -9,6 +9,17 @@
   flex-wrap: wrap;
   gap: 6px;
   margin: 4px 0;
+  padding-right: 6px;
+}
+
+.editorModule input[type=range] {
+  accent-color: #4d88cb;
+}
+
+.editorModule .propertyInput > label .labelIcon {
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 .editorModule .propertyInput *,
@@ -57,10 +68,10 @@
   cursor: pointer;
 }
 
-/* checkbox rendered as a switch (reuses global .switchbox visuals) */
+/* checkbox rendered as a compact switch: 40x24 track with a 20px knob */
 .editorModule .switchInput label.switchbox {
   height: 24px;
-  width: 42px;
+  width: 40px;
   flex-grow: 0;
   flex-shrink: 0;
   margin: 2px;
@@ -68,6 +79,16 @@
   position: relative;
   font-size: 0;
   line-height: 0;
+  overflow: hidden;
+}
+.editorModule .switchInput label.switchbox::before {
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+.editorModule .switchInput input.switchbox:checked + label.switchbox::before {
+  margin-left: 18px;
 }
 .editorModule .switchInput input.switchbox {
   /* keep the hidden checkbox at its DOM position: moving it far off-screen
@@ -146,6 +167,37 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+}
+
+/* color inputs: 36x36 preview that is also the only toggle (no arrow) */
+.editorModule .colorInput .propertyPreviewButton {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 2px;
+}
+
+.editorModule .colorInput .propertyPreviewButton .propertyValueChip {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+}
+
+/* image inputs: bigger, square preview */
+.editorModule .imageInput .propertyValueChip {
+  border-radius: 0;
+}
+
+.editorModule .imageInput .propertyPreviewButton {
+  min-width: 60px;
+  min-height: 60px;
+}
+
+.editorModule .imageInput .propertyPreviewButton .propertyValueChip {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
 }
 
 .editorModule .propertyExpandButton {
@@ -521,6 +573,103 @@
   border-radius: 50%;
   border: 1px solid #0006;
   display: inline-block;
+}
+
+/* basic widget content: icon and image as side by side blocks */
+.editorModule .contentMediaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 6px 0;
+}
+
+.editorModule .contentMediaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.editorModule .contentMediaBlock .contentMediaTitle {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyInput {
+  margin: 0;
+  padding-right: 0;
+}
+
+.editorModule .contentMediaBlock.imageBlock .propertyPreviewButton {
+  min-width: 204px;
+  min-height: 204px;
+}
+
+.editorModule .contentMediaBlock.imageBlock .propertyPreviewButton .propertyValueChip {
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+}
+
+/* lock/unlock toggles for movable/editable style properties */
+.editorModule button.lockToggle {
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.editorModule button.lockToggle .material-symbols {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.editorModule button.lockToggle.locked .material-symbols {
+  color: #c43636;
+}
+
+.editorModule button.lockToggle.unlocked .material-symbols {
+  color: #2f8a3b;
+}
+
+/* compact one-line styled text input (seat texts) */
+.editorModule .compactStyledText input[type=text] {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
+.editorModule .compactStyledText .propertyInput {
+  margin: 0;
+  padding-right: 0;
+}
+
+.editorModule .compactStyledText .placeholderChip {
+  font-family: monospace;
+  font-size: 11px;
+  padding: 0 6px;
+}
+
+/* comment-style list of classes currently triggered by widget properties */
+.editorModule .cssTriggeredClasses {
+  font-size: 12px;
+  color: var(--textDimColor1, #777);
+  font-style: italic;
+  margin: 4px 0;
+}
+
+.editorModule .cssTriggeredClasses code {
+  font-style: normal;
+  font-family: monospace;
+  background: var(--backgroundHighlightColor1, #eee);
+  border-radius: 3px;
+  padding: 0 3px;
+  cursor: help;
 }
 
 body.editorWidgetPicking, body.editorWidgetPicking .widget {

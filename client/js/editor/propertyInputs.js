@@ -269,7 +269,17 @@ class PropertyInput {
     this.dom = div(target, `propertyInput ${this.cssClass()}`);
     if(this.labelText) {
       const label = document.createElement('label');
-      label.textContent = this.labelText;
+      if(this.options.labelIcon) {
+        // common color roles are shown as their material symbol instead of text
+        const icon = document.createElement('span');
+        icon.className = 'material-symbols labelIcon';
+        icon.textContent = this.options.labelIcon;
+        label.appendChild(icon);
+        label.title = this.labelText;
+        label.classList.add('iconOnly');
+      } else {
+        label.textContent = this.labelText;
+      }
       if(this.options.hint)
         infoButton(label, html(this.options.hint));
       this.dom.appendChild(label);
@@ -477,6 +487,11 @@ class PickerInput extends PropertyInput {
     return 'pickerInput';
   }
 
+  // whether an extra arrow button toggles the picker next to the preview
+  expandArrow() {
+    return true;
+  }
+
   renderControl(target) {
     this.previewButton = document.createElement('button');
     this.previewButton.className = 'propertyPreviewButton';
@@ -484,11 +499,13 @@ class PickerInput extends PropertyInput {
     this.previewButton.onclick = _=>this.togglePicker();
     target.appendChild(this.previewButton);
 
-    this.expandButton = document.createElement('button');
-    this.expandButton.className = 'propertyExpandButton';
-    this.expandButton.setAttribute('icon', 'expand_more');
-    this.expandButton.onclick = _=>this.togglePicker();
-    target.appendChild(this.expandButton);
+    if(this.expandArrow()) {
+      this.expandButton = document.createElement('button');
+      this.expandButton.className = 'propertyExpandButton';
+      this.expandButton.setAttribute('icon', 'expand_more');
+      this.expandButton.onclick = _=>this.togglePicker();
+      target.appendChild(this.expandButton);
+    }
 
     this.pickerDOM = div(target, 'propertyPicker');
     this.pickerDOM.style.display = 'none';
@@ -497,7 +514,9 @@ class PickerInput extends PropertyInput {
   togglePicker() {
     const open = this.pickerDOM.style.display == 'none';
     this.pickerDOM.style.display = open ? '' : 'none';
-    this.expandButton.classList.toggle('open', open);
+    if(this.expandButton)
+      this.expandButton.classList.toggle('open', open);
+    this.previewButton.classList.toggle('open', open);
     if(open)
       this.updatePicker(this.getValue());
   }
@@ -618,6 +637,10 @@ class ColorInput extends PickerInput {
     return 'pickerInput colorInput';
   }
 
+  expandArrow() {
+    return false;
+  }
+
   dimDefault() {
     return false;
   }
@@ -715,6 +738,10 @@ class IconInput extends PickerInput {
 class ImageInput extends PickerInput {
   cssClass() {
     return 'pickerInput imageInput';
+  }
+
+  expandArrow() {
+    return false;
   }
 
   renderChip(target, value) {
