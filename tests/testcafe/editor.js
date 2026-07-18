@@ -331,3 +331,72 @@ test('Deck editor: switching games while editing does not crash', async t => {
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await compareState(t, 'fa933ba639405309b6cf6aef448bfeb4');
 });
+
+// Covers creating a deck from the Properties tab radio option and the newer sidebar features: deleting all
+// faces and adding a color box to a faceless deck (auto-creates the face), one-click per-card-type
+// conversion, face border/radius editing, per-row property deletion and cardDefaults editing with undo.
+// Also guards against Escape leaking to the room editor behind the deck editor (it used to toggle the
+// sidebar tab and could exit edit mode entirely).
+test('Deck editor: create deck from scratch with color box, face and defaults', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // All sidebar sections share the same row markup; find a row by its section header and label text.
+  const findRow = (header, label) => {
+    const headers = document.querySelectorAll('#deckEditorSidebar header');
+    for(let i = 0; i < headers.length; ++i) {
+      if(headers[i].querySelector('h2').textContent != header)
+        continue;
+      const rows = headers[i].nextElementSibling.querySelectorAll('.genericInput');
+      for(let j = 0; j < rows.length; ++j)
+        if(rows[j].querySelector('label').textContent == label)
+          return rows[j];
+    }
+    return null;
+  };
+  const setField = ClientFunction((header, label, value) => {
+    const row = findRow(header, label);
+    if(!row)
+      return false;
+    const select = row.querySelector('select');
+    select.value = 'number';
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    const input = row.querySelector('input');
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    return true;
+  }, { dependencies: { findRow } });
+  const clickRowButton = ClientFunction((header, label, buttonSelector) => {
+    const row = findRow(header, label);
+    const button = row && row.querySelector(buttonSelector);
+    if(!button)
+      return false;
+    button.click();
+    return true;
+  }, { dependencies: { findRow } });
+
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('label[for=deckType2]')
+    .click('#editor .buttonBar button[icon=style]') // creates the new deck and opens the deck editor
+    .setNativeDialogHandler(() => true)
+    .click('#deckEditorDeleteFace')                 // delete both faces to get a faceless deck
+    .click('#deckEditorDeleteFace')
+    .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
+  await t.expect(setField('Card defaults', 'width', 120)).ok();
+  await t.wait(700); // let the debounced cardDefaults commit fire
+  // one-click conversion of the color box's color into a per-card-type property
+  await t.expect(clickRowButton('Face object 1 (image)', 'color', '.deckEditorMakeDynamic')).ok();
+  await t.pressKey('esc'); // deselect the object
+  await t.expect(setField('Face 0', 'radius', 8)).ok();
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  await t.expect(clickRowButton('Card defaults', 'width', '.deckEditorDeleteProperty')).ok();
+  await t
+    .click('#deckEditorUndo') // restores the deleted width
+    .pressKey('esc');         // closes the deck editor - and only the deck editor
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
+  await compareState(t, 'd4fa89bc3662165d407ec7f4f27093ed');
+});

@@ -341,6 +341,21 @@ body.deckEditorActive #deckEditor {
   font-size: 11px;
 }
 
+/* Face object rows have a second button: one-click "make different per card type" (amber = per-type accent). */
+#deckEditorSidebar .deckEditorObjectProperties .genericInput {
+  padding-right: 50px;
+}
+
+.deckEditorMakeDynamic {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  padding: 1px 3px;
+  font-size: 11px;
+  background: #ffb300;
+  color: #4d3800;
+}
+
 #deckEditorShowAll.active {
   background: var(--VTTblueDark);
   color: #fff;

@@ -274,6 +274,16 @@ class DeckEditor {
       }
     });
     window.addEventListener('keydown', e=>this.onKeyDown(e));
+    // The room editor behind the fullscreen deck editor also reacts to Escape (window.onkeyup in main.js
+    // toggles the active sidebar tab or even leaves edit mode, which closes the deck editor). Swallow the
+    // keyup while the deck editor is open - or was just closed by this very Escape - so Escape only means
+    // "deselect/close" here. Capture phase, so this runs before main.js's bubble-phase handler.
+    window.addEventListener('keyup', e=>{
+      if(e.key == 'Escape' && (this.isOpen() || this.closedByEscape)) {
+        this.closedByEscape = false;
+        e.stopImmediatePropagation();
+      }
+    }, true);
   }
 
   onKeyDown(e) {
@@ -298,10 +308,12 @@ class DeckEditor {
 
     if(e.key == 'Escape') {
       e.preventDefault();
-      if(this.selectedObject !== null)
+      if(this.selectedObject !== null) {
         this.selectObject(null);
-      else
+      } else {
+        this.closedByEscape = true; // so the keyup listener still swallows this Escape's keyup
         this.close();
+      }
     }
     if(e.key == 'Delete' && this.selectedObject !== null) {
       e.preventDefault();
@@ -931,7 +943,7 @@ class DeckEditor {
         `${getPlayerDetails().playerName} updated "${property}" of face object ${this.selectedObject+1} on face ${this.face} of deck ${this.deckID} in deck editor`,
         `field:faceTemplates:${this.face}:${this.selectedObject}:${property}`
       ];
-      const objectProps = div(sidebar, 'deckEditorProperties');
+      const objectProps = div(sidebar, 'deckEditorProperties deckEditorObjectProperties');
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
           continue;
@@ -945,6 +957,14 @@ class DeckEditor {
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         }), objectProps);
+        if(property != 'type') {
+          const makeDynamic = document.createElement('button');
+          makeDynamic.setAttribute('icon', 'style');
+          makeDynamic.className = 'deckEditorMakeDynamic';
+          makeDynamic.title = `Make "${property}" different per card type`;
+          makeDynamic.onclick = _=>this.makePropertyDynamic(object, property);
+          row.dom.append(makeDynamic);
+        }
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
           delete object[property];
@@ -1179,6 +1199,32 @@ class DeckEditor {
     await this.commit('cardTypes', cause, actionId);
   }
 
+  // One-click conversion of a static face object property into a per-card-type one: bind it to a (new) card
+  // type property and seed that property on EVERY card type with the previous static value, so no card
+  // changes visually until the values are edited per card type.
+  async makePropertyDynamic(object, property) {
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const typeProperty = this.generateUniquePropertyName(property == 'value' ? (object.type || 'text') : property);
+    const staticValue = object[property];
+    if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
+      object.dynamicProperties = {};
+    object.dynamicProperties[property] = typeProperty;
+    delete object[property]; // a static value would override the dynamic one
+
+    // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
+    const cause = `${getPlayerDetails().playerName} made "${property}" of a face object different per card type for deck ${this.deckID} in deck editor`;
+    const actionId = this.newAction();
+    if(staticValue !== undefined && Object.keys(this.cardTypes).length) {
+      for(const type of Object.keys(this.cardTypes))
+        if(this.cardTypes[type][typeProperty] === undefined)
+          this.cardTypes[type][typeProperty] = staticValue;
+      await this.commit('cardTypes', cause, actionId);
+    }
+    this.refreshMainCardFaces();
+    await this.commit('faceTemplates', cause, actionId);
+    this.renderSidebar();
+  }
+
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
     const typeProperty = this.generateUniquePropertyName(propertyBaseName);
     // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
@@ -1201,15 +1247,19 @@ class DeckEditor {
     h.innerText = 'Dynamic properties';
     sidebar.append(h);
 
-    const container = div(sidebar, 'deckEditorDynamicProperties', '<p>Dynamic properties fill properties of this object from the card type, so every card type can show different text, images or colors.</p>');
+    const container = div(sidebar, 'deckEditorDynamicProperties', '<p>Dynamic properties fill properties of this object from the card type, so every card type can show different text, images or colors. The <b>stack</b> button next to a property above converts it with one click.</p>');
 
     for(const [ objectProperty, typeProperty ] of Object.entries(object.dynamicProperties || {})) {
-      const row = div(container, 'deckEditorDynamicProperty', `<span><b>${html(objectProperty)}</b> from card type property <b>${html(String(typeProperty))}</b></span><button icon=delete></button>`);
+      const row = div(container, 'deckEditorDynamicProperty', `<span><b>${html(objectProperty)}</b> from card type property <b>${html(String(typeProperty))}</b></span><button icon=delete title="Remove this binding and make the property static again."></button>`);
       $('button', row).onclick = async _=>{
         await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
         delete object.dynamicProperties[objectProperty];
         if(!Object.keys(object.dynamicProperties).length)
           delete object.dynamicProperties;
+        // Restore the current card type's value as the static value so the card does not change visually.
+        const currentValue = this.cardType !== null ? this.cardTypes[this.cardType][typeProperty] : undefined;
+        if(currentValue !== undefined && object[objectProperty] === undefined)
+          object[objectProperty] = currentValue;
         this.refreshMainCardFaces();
         await this.commit('faceTemplates', `${getPlayerDetails().playerName} removed a dynamic property binding from deck ${this.deckID} in deck editor`);
         this.renderSidebar();
@@ -1254,14 +1304,25 @@ class DeckEditor {
   }
 
   async addObject(objectTemplate, cause, actionId) {
+    if(!this.deck())
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    // Starting from a deck without faces: create the first face as part of the same action (same commit).
+    if(!this.faceTemplates.length) {
+      this.faceTemplates.push({ objects: [] });
+      this.face = 0;
+      this.renderTopbar();
+    }
     const face = this.faceTemplates[this.face];
     if(!face)
       return;
-    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     if(!Array.isArray(face.objects))
       face.objects = [];
     face.objects.push(objectTemplate);
-    this.refreshMainCardFaces();
+    if(this.mainCard)
+      this.refreshMainCardFaces();
+    else
+      this.renderMain(); // the "no faces yet" empty state was showing before this
     await this.commit('faceTemplates', cause || `${getPlayerDetails().playerName} added a ${objectTemplate.type || 'basic'} object to deck ${this.deckID} in deck editor`, actionId);
     this.selectObject(face.objects.length-1);
   }
