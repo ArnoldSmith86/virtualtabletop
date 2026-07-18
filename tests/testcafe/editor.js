@@ -230,6 +230,74 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   await compareState(t, 'a2c9165768e325ccd6c8452f2194d314');
 });
 
+// Two different fields edited within one debounce window, then a structural action right after, must stay
+// three separate undo steps: undoing the added face must not revert the typed edits, and undoing once more
+// must revert only the second field.
+test('Deck editor: rapid cross-field edits stay separate undo steps', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+
+  const rapidEditsThenAddFace = ClientFunction(() => new Promise(resolve => {
+    const setField = (label, value) => {
+      const rows = document.querySelectorAll('#deckEditorSidebar > .deckEditorProperties:first-of-type .genericInput');
+      for(const row of rows) {
+        if(row.querySelector('label').textContent == label) {
+          const input = row.querySelector('input');
+          input.value = value;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          return;
+        }
+      }
+    };
+    setField('value', 'RapidValue');
+    setTimeout(() => { // second field well within the first field's 500ms debounce window
+      setField('fontSize', '55');
+      setTimeout(() => { // structural action while the second field's commit is still pending
+        document.querySelector('#deckEditorAddFace').click();
+        setTimeout(resolve, 200);
+      }, 50);
+    }, 50);
+  }));
+  const getTextObject = ClientFunction(deckID => {
+    for(const face of widgets.get(deckID).get('faceTemplates'))
+      for(const object of face.objects || [])
+        if(object.type == 'text')
+          return { value: object.value, fontSize: object.fontSize };
+    return null;
+  });
+  const getFaceCount = ClientFunction(deckID => widgets.get(deckID).get('faceTemplates').length);
+
+  await t
+    .click(`#w_${deckID}`)
+    .click('#editor [icon=edit]')
+    .click('.deckEditorAddCardType button')
+    .click('#deckEditorAddText');
+  await rapidEditsThenAddFace();
+  await t
+    .expect(getFaceCount(deckID)).eql(3)
+    .click('#deckEditorUndo') // reverts only the added face
+    .expect(getFaceCount(deckID)).eql(2)
+    .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 55 })
+    .click('#deckEditorUndo') // reverts only the fontSize edit
+    .expect(getTextObject(deckID)).eql({ value: 'RapidValue', fontSize: 20 })
+    .pressKey('esc');
+  await compareState(t, '6e41185d918e1b8dfe69610ff6f74e77');
+});
+
 // Regression test for the crash reported on switching games while a deck was being edited (the previously
 // selected deck/card no longer exists when the new state arrives). TestCafe fails the test on any uncaught
 // client error, so simply performing the switch guards against the crash coming back.

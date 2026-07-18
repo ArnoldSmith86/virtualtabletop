@@ -31,6 +31,7 @@ class DeckEditorDragButton extends ToolbarButton {
     for(const event of [ 'mouseup', 'touchend', 'touchcancel' ])
       document.addEventListener(event, this.upHandler);
 
+    await deckEditor.flushPendingCommits(); // don't absorb a pending typed edit into the drag's commit
     this.setFeedback(await this.dragStart());
   }
 
@@ -461,8 +462,28 @@ class DeckEditor {
   }
 
   async flushPendingCommits() {
+    // Let queued typed edits mutate + schedule first, so their pending commits are visible below. Only ever
+    // awaited from outside the queue (structural handlers, undo/redo, open/close), so this cannot deadlock.
+    await (this.fieldEditChain || Promise.resolve()).catch(_=>{});
     for(const property of Object.keys(this.commitTimers))
       await this.commit(property);
+  }
+
+  // Typed edits share one debounce timer (and one working copy) per deck property. Before the working copy
+  // absorbs an edit to a DIFFERENT field, commit the pending field under its own identity - otherwise two
+  // fields edited within one debounce window would silently become one breadcrumb/undo step labeled with only
+  // the second field. commit() takes its state snapshot synchronously, so awaiting this before mutating is safe.
+  async flushPendingCommitForOtherField(property, actionId) {
+    const pending = this.commitTimers[property];
+    if(pending && pending.actionId !== actionId)
+      await this.commit(property);
+  }
+
+  // Serializes typed-edit callbacks (flush other field -> mutate -> schedule) so two edits arriving in the
+  // same event-loop turn cannot interleave around the awaits above and skip the different-field flush.
+  queueFieldEdit(callback) {
+    this.fieldEditChain = (this.fieldEditChain || Promise.resolve()).catch(_=>{}).then(callback);
+    return this.fieldEditChain;
   }
 
   snapshot(cause, actionId, label) {
@@ -718,6 +739,10 @@ class DeckEditor {
   }
 
   startObjectDrag(name, e, index) {
+    // Flush before the first mousemove can mutate the working copy, so a pending typed edit is not absorbed
+    // into the drag's commit. commit() snapshots synchronously, so not awaiting this here is safe.
+    this.flushPendingCommits();
+
     const object = this.faceTemplates[this.face].objects[index];
     const startCoords = eventCoords(name, e);
     const startX = object.x || 0;
@@ -878,7 +903,8 @@ class DeckEditor {
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
           continue;
-        this.addInput(property, object[property], v=>{
+        this.addInput(property, object[property], v=>this.queueFieldEdit(async _=>{
+          await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
           if(typeof v === 'undefined')
             delete object[property];
           else
@@ -886,15 +912,16 @@ class DeckEditor {
           this.refreshMainCardFaces();
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
-        }, objectProps);
+        }), objectProps);
       }
-      addPropertyRow(sidebar, property=>{
+      addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
         if(property == 'dynamicProperties' || object[property] !== undefined)
           return;
+        await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
         object[property] = '';
         this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         this.renderSidebar();
-      });
+      }));
 
       this.renderDynamicProperties(sidebar, object);
 
@@ -905,6 +932,7 @@ class DeckEditor {
         upload.innerText = 'Upload image';
         upload.onclick = _=>uploadAsset().then(async asset=>{
           if(asset) {
+            await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
             object.value = asset;
             this.refreshMainCardFaces();
             await this.commit('faceTemplates', `${getPlayerDetails().playerName} uploaded an image for a face object of deck ${this.deckID} in deck editor`);
@@ -955,7 +983,8 @@ class DeckEditor {
     ];
     const typeProps = div(sidebar, 'deckEditorProperties');
     const addTypeInput = property=>{
-      this.addInput(property, typeProperties[property], v=>{
+      this.addInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
         if(typeof v === 'undefined') {
           delete typeProperties[property];
           if(this.mainCard)
@@ -965,7 +994,7 @@ class DeckEditor {
         }
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
-      }, typeProps);
+      }), typeProps);
     };
     for(const property of Object.keys(typeProperties))
       addTypeInput(property);
@@ -974,13 +1003,14 @@ class DeckEditor {
         for(const property of Object.values(object.dynamicProperties || {}))
           if(typeof typeProperties[property] === 'undefined' && [ 'cardType', 'id' ].indexOf(property) == -1)
             addTypeInput(property);
-    addPropertyRow(sidebar, property=>{
+    addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
       if(typeProperties[property] !== undefined)
         return;
+      await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
       typeProperties[property] = '';
       this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       this.renderSidebar();
-    });
+    }));
 
     const typeButtons = div(sidebar, 'buttonBar');
     const deleteType = document.createElement('button');
@@ -1018,6 +1048,7 @@ class DeckEditor {
   async seedCardTypeProperty(typeProperty, defaultValue, cause, actionId) {
     if(this.cardType === null || this.cardTypes[this.cardType][typeProperty] !== undefined)
       return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     this.cardTypes[this.cardType][typeProperty] = defaultValue;
     await this.commit('cardTypes', cause, actionId);
   }
@@ -1041,6 +1072,7 @@ class DeckEditor {
     for(const [ objectProperty, typeProperty ] of Object.entries(object.dynamicProperties || {})) {
       const row = div(container, 'deckEditorDynamicProperty', `<span><b>${html(objectProperty)}</b> from card type property <b>${html(String(typeProperty))}</b></span><button icon=delete></button>`);
       $('button', row).onclick = async _=>{
+        await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
         delete object.dynamicProperties[objectProperty];
         if(!Object.keys(object.dynamicProperties).length)
           delete object.dynamicProperties;
@@ -1063,6 +1095,7 @@ class DeckEditor {
       const typeProperty = $('.typeProperty', addRow).value.trim();
       if(!objectProperty || !typeProperty)
         return;
+      await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
       if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
         object.dynamicProperties = {};
       object.dynamicProperties[objectProperty] = typeProperty;
@@ -1082,6 +1115,7 @@ class DeckEditor {
     const face = this.faceTemplates[this.face];
     if(!face)
       return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     if(!Array.isArray(face.objects))
       face.objects = [];
     face.objects.push(objectTemplate);
@@ -1094,6 +1128,7 @@ class DeckEditor {
     const face = this.faceTemplates[this.face];
     if(!face || this.selectedObject === null)
       return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     face.objects.splice(this.selectedObject, 1);
     this.selectedObject = null;
     this.refreshMainCardFaces();
@@ -1105,6 +1140,7 @@ class DeckEditor {
   async addFace() {
     if(!this.deck())
       return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     this.faceTemplates.push({ objects: [] });
     this.face = this.faceTemplates.length-1;
     this.selectedObject = null;
@@ -1117,6 +1153,7 @@ class DeckEditor {
       return;
     if(!confirm(`Delete ${this.faceLabel(this.face)} from every card type of this deck?`))
       return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     this.faceTemplates.splice(this.face, 1);
     this.face = Math.min(this.face, Math.max(0, this.faceTemplates.length-1));
     this.selectedObject = null;
@@ -1127,6 +1164,7 @@ class DeckEditor {
   async addCardType() {
     if(!this.deck())
       return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     let index = Object.keys(this.cardTypes).length + 1;
     while(this.cardTypes[`type ${index}`] !== undefined)
       ++index;
@@ -1139,6 +1177,7 @@ class DeckEditor {
 
   async renameCardType(oldName, newName) {
     const deck = this.deck();
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     const newTypes = {};
     for(const key of Object.keys(this.cardTypes))
       newTypes[key == oldName ? newName : key] = this.cardTypes[key];
@@ -1165,6 +1204,7 @@ class DeckEditor {
     if(!confirm(`Delete card type "${name}"${cards.length ? ` and its ${cards.length} card(s)` : ''}?`))
       return;
 
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} removed card type ${name} from deck ${this.deckID} in deck editor`);
     for(const card of cards)
