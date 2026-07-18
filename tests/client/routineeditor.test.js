@@ -60,6 +60,16 @@ describe('routine operation metadata', () => {
     }
   });
 
+  test('every declared parameter is reachable as a chip in the template', () => {
+    for (const func in routineOperationMetadata) {
+      const editor = editorForOperation({ func });
+      editor.setOperationDetails({ state: {} }, { func }, [], []);
+      const referenced = (editor.getTemplate().match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m => m.slice(1, -1).split(','));
+      for (const name in routineOperationMetadata[func].parameters)
+        expect(referenced).toContain(name);
+    }
+  });
+
   test('operations resolve to the right editor', () => {
     expect(editorForOperation({ func: 'MOVE' })).toBeInstanceOf(RoutineOperationEditor);
     expect(editorForOperation({ func: 'IF' })).toBeInstanceOf(IfRoutineOperationEditor);

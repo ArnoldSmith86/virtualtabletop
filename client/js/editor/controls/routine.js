@@ -535,7 +535,18 @@ class RoutineOperationEditor {
   }
 
   getTemplate() {
-    return this.metadata.template;
+    return this.withExtraParameters(this.metadata.template);
+  }
+
+  // parameters the handwritten template does not mention still get a chip in an
+  // optional segment so every option the operation supports stays editable
+  withExtraParameters(template) {
+    const referenced = (template.match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m=>m.slice(1, -1).split(','));
+    let result = template;
+    for(const name in this.metadata.parameters)
+      if(referenced.indexOf(name) == -1)
+        result += `[, ${name} {${name}}]`;
+    return result;
   }
 
   notifyChangeListeners(value) {
@@ -675,10 +686,11 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
   }
 
   getTemplate() {
-    // a custom condition replaces the operand comparison
+    // a custom condition replaces the operand comparison (and makes it ignored,
+    // so the operand parameters get no extra chips in that case)
     if(this.operation && typeof this.operation.condition != 'undefined')
       return '{func} {condition}';
-    return '{func} {operand1} {relation} {operand2}';
+    return this.withExtraParameters('{func} {operand1} {relation} {operand2}');
   }
 
   isCollapsible() {
