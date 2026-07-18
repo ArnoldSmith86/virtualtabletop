@@ -93,9 +93,9 @@ describe('operation rendering', () => {
     expect(dom.textContent).toContain('<img src=x onerror=alert(1)>');
   });
 
-  test('the sentence shows default-valued segments and the arrow expands to a list view', () => {
+  test('the sentence hides default-valued segments and the arrow expands to a list view', () => {
     const { editor, dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2' });
-    expect(dom.querySelector('.routine-editor-operation-optional')).not.toBeNull(); // defaults visible in the sentence
+    expect(dom.querySelector('[data-parameter="face"]')).toBeNull(); // face at its default stays hidden
     const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
     expect(dom.firstChild).toBe(toggle); // the arrow sits at the start of the operation
@@ -122,7 +122,26 @@ describe('operation rendering', () => {
 
   test('shows optional segments when their parameter is explicitly set', () => {
     const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2', face: 0 });
-    expect(dom.querySelector('.routine-editor-operation-optional')).toBeNull();
+    expect(dom.querySelector('[data-parameter="face"]')).not.toBeNull();
+  });
+
+  test('conditional templates follow the parameter values', () => {
+    const template = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.getTemplate();
+    };
+    expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('a {faceCycle} face');
+    expect(template({ func: 'FLIP' })).toContain('cycle {faceCycle} by {face}');
+    expect(template({ func: 'MOVE', fillTo: 3 })).toContain('fill up to {fillTo}');
+    expect(template({ func: 'SELECT', mode: 'add' })).toContain('{mode} to {collection}');
+    expect(template({ func: 'SELECT' })).toContain('{mode} as {collection}');
+    expect(template({ func: 'TIMER', mode: 'inc', seconds: 5 })).toContain('time by {seconds} seconds');
+    expect(template({ func: 'TIMER' })).toContain('{mode} timers in {collection}');
+    expect(template({ func: 'SHUFFLE', mode: 'reverse' })).toContain('order of widgets');
+    expect(template({ func: 'TURN', turnCycle: 'random' })).toContain('choose a {turnCycle} seat');
+    expect(template({ func: 'LABEL', label: 'l1' })).toContain('to {label}');
+    expect(template({ func: 'LABEL' })).toContain('labels in {collection}');
   });
 
   test('classifies parameter chips for color coding', () => {

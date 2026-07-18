@@ -7,13 +7,15 @@
 // Template syntax: {name} is a clickable parameter chip; {a,b} shows the first
 // alternative that is explicitly set (or whose default is not null); segments
 // in [square brackets] are hidden while all their parameters use defaults.
+// A template can also be a function receiving an accessor for the effective
+// parameter values, so the wording can follow the operation's mode.
 //
 // Parameter types decide which popup opens: number, enum (with values),
 // string, json, widgets (pick widgets in the room), collection (pick widgets
 // or a collection name).
 const routineOperationMetadata = {
   AUDIO: {
-    template: '{func}: play {source} at volume {maxVolume}[ to {player}][, {count} time(s)]',
+    template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
     parameters: {
       source: { type: 'string', default: '' },
       maxVolume: { type: 'number', default: 1.0 },
@@ -24,7 +26,7 @@ const routineOperationMetadata = {
     }
   },
   CALL: {
-    template: '{func} {routine} on {widget}[, store result as {variable}][, arguments {arguments}]',
+    template: '{func} routine {routine} on {widget}[ and store result as {variable}][; arguments {arguments}]',
     parameters: {
       routine: { type: 'string', default: 'clickRoutine' },
       widget: { type: 'widgets', default: null, display: { 'null': 'this widget' } },
@@ -47,7 +49,7 @@ const routineOperationMetadata = {
     }
   },
   CLICK: {
-    template: '{func} widgets in {collection}[, {count} time(s)][, mode {mode}]',
+    template: '{func} widgets in {collection}[ {count} time(s)][, mode {mode}]',
     parameters: {
       collection: { type: 'collection', default: 'DEFAULT' },
       count: { type: 'number', default: 1 },
@@ -55,7 +57,7 @@ const routineOperationMetadata = {
     }
   },
   CLONE: {
-    template: '{func} {count} time(s) from {source}[ offset by ({xOffset}, {yOffset})] into {collection}[, properties {properties}]',
+    template: '{func} widgets in {source} {count} time(s)[; offset by ({xOffset}, {yOffset})][; store result into {collection}][; properties {properties}]',
     parameters: {
       source: { type: 'collection', default: 'DEFAULT' },
       count: { type: 'number', default: 1 },
@@ -90,7 +92,7 @@ const routineOperationMetadata = {
     }
   },
   FLIP: {
-    template: '{func} {count} widgets from {holder,collection}[ to face {face}][, faceCycle {faceCycle}]',
+    template: v=>v('faceCycle') == 'random' ? '{func} {count} widgets from {holder,collection} a {faceCycle} face' : '{func} {count} widgets from {holder,collection}; cycle {faceCycle} by {face}',
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
       holder: { type: 'widgets', default: null, display: { 'null': '?' } },
@@ -108,7 +110,7 @@ const routineOperationMetadata = {
     }
   },
   GET: {
-    template: '{func} {property} of {collection} ({aggregation}) and store as {variable}',
+    template: v=>v('aggregation') == 'array' ? '{func} ({aggregation}) value of {property} in {collection} and store as {variable}' : '{func} ({aggregation}) of values of {property} in {collection} and store as {variable}',
     parameters: {
       property: { type: 'string', default: 'id' },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -128,7 +130,7 @@ const routineOperationMetadata = {
     }
   },
   INPUT: {
-    template: '{func}: show fields {fields}[, confirm {confirmButtonText}][, cancel {cancelButtonText}]',
+    template: '{func}: show fields {fields}[; confirm with {confirmButtonText}][; cancel with {cancelButtonText}]',
     parameters: {
       fields: { type: 'json', default: [] },
       confirmButtonText: { type: 'string', default: 'Go' },
@@ -139,7 +141,7 @@ const routineOperationMetadata = {
     }
   },
   LABEL: {
-    template: '{func} {label,collection} to {value}[, mode {mode}]',
+    template: v=>v('label') != null ? '{func}: {mode} {value} to {label}' : '{func}: {mode} {value} to labels in {collection}',
     parameters: {
       label: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -148,7 +150,7 @@ const routineOperationMetadata = {
     }
   },
   MOVE: {
-    template: '{func} {fillTo,count} widgets from {from,collection} to {to}[, flipping them to face {face}]',
+    template: v=>v('fillTo') != null ? '{func} widgets from {from,collection} to {to}; fill up to {fillTo}[; flip them to face {face}]' : '{func} {count} widgets from {from,collection} to {to}[; flip them to face {face}]',
     parameters: {
       fillTo: { type: 'number', default: null },
       count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
@@ -159,7 +161,7 @@ const routineOperationMetadata = {
     }
   },
   MOVEXY: {
-    template: '{func} {count} widgets from {from} to ({x}, {y})[, flipping to face {face}]',
+    template: '{func} {count} widgets from {from} to ({x}, {y})[; flip to face {face}]',
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
       from: { type: 'widgets', default: null, display: { 'null': '?' } },
@@ -171,7 +173,7 @@ const routineOperationMetadata = {
     }
   },
   RECALL: {
-    template: '{func} cards into {holder}[, owned {owned}][, inHolder {inHolder}][, excluding {excludeCollection}]',
+    template: '{func} cards that belong to {holder}[; include cards in hands {owned}][, only cards in holders {inHolder}][, excluding {excludeCollection}]',
     parameters: {
       holder: { type: 'widgets', default: null, display: { 'null': '?' } },
       owned: { type: 'enum', values: [ true, false ], default: true },
@@ -187,7 +189,7 @@ const routineOperationMetadata = {
     }
   },
   ROTATE: {
-    template: '{func} {count} widgets in {holder,collection} by {angle} degrees[, mode {mode}]',
+    template: v=>v('mode') == 'set' ? '{func} {count} widgets in {holder,collection}; {mode} to {angle} degrees' : '{func} {count} widgets in {holder,collection}; {mode} {angle} degrees',
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
       holder: { type: 'widgets', default: null },
@@ -197,7 +199,7 @@ const routineOperationMetadata = {
     }
   },
   SCORE: {
-    template: '{func} {property} in {seats}[, round {round}], mode {mode}, value {value}',
+    template: '{func}: get {property} in {seats}[; for round {round}][; use as {mode}][ with multiplier {value}]',
     parameters: {
       property: { type: 'string', default: 'score' },
       seats: { type: 'widgets', default: null, display: { 'null': 'every seat' } },
@@ -207,7 +209,7 @@ const routineOperationMetadata = {
     }
   },
   SELECT: {
-    template: '{func} {max} {type} from {source}[ having {property} {relation} {value}] and {mode} {collection}',
+    template: v=>`{func} {max} {type} from {source}[ having {property} {relation} {value}] and {mode} ${ { set: 'as', add: 'to', remove: 'from', intersect: 'with' }[v('mode')] || 'as' } {collection}`,
     parameters: {
       max: { type: 'number', default: 999999, special: [ 'all' ], display: { '999999': 'all' } },
       type: { type: 'enum', values: [ 'all', 'button', 'canvas', 'card', 'deck', 'dice', 'holder', 'label', 'pile', 'scoreboard', 'seat', 'spinner', 'timer' ], default: 'all', display: { 'all': 'widgets', 'button': 'buttons', 'canvas': 'canvases', 'card': 'cards', 'deck': 'decks', 'dice': 'dice', 'holder': 'holders', 'label': 'labels', 'pile': 'piles', 'scoreboard': 'scoreboards', 'seat': 'seats', 'spinner': 'spinners', 'timer': 'timers' } },
@@ -215,7 +217,7 @@ const routineOperationMetadata = {
       property: { type: 'string', default: 'parent' },
       relation: { type: 'enum', values: [ '==', '!=', '<', '<=', '>=', '>', 'in' ], default: '==' },
       value: { type: 'string', default: null },
-      mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set', display: { 'set': 'store in', 'add': 'add to', 'remove': 'remove from', 'intersect': 'intersect with' } },
+      mode: { type: 'enum', values: [ 'set', 'add', 'remove', 'intersect' ], default: 'set' },
       collection: { type: 'collection', default: 'DEFAULT' },
       sortBy: { type: 'json', default: null },
       random: { type: 'enum', values: [ true, false ], default: false }
@@ -223,7 +225,7 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   SET: {
-    template: '{func} property {property} {relation} {value} of widgets in {collection}',
+    template: '{func} property {property} {relation} {value} for all widgets in {collection}',
     parameters: {
       property: { type: 'string', default: 'parent' },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -232,7 +234,15 @@ const routineOperationMetadata = {
     }
   },
   SHUFFLE: {
-    template: '{func} {holder,collection}[, mode {mode}][, modeValue {modeValue}]',
+    template: v=>{
+      if(v('mode') == 'reverse')
+        return '{func}: {mode} order of widgets in {holder,collection}';
+      if(v('mode') == 'seeded')
+        return '{func} {holder,collection}[; mode {mode} with value {modeValue}]';
+      if(v('mode') == 'overhand' || v('mode') == 'riffle')
+        return '{func} {holder,collection}[, mode {mode} {modeValue} times]';
+      return '{func} {holder,collection}'; // true random
+    },
     parameters: {
       holder: { type: 'widgets', default: null, display: { 'null': '?' } },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -241,7 +251,7 @@ const routineOperationMetadata = {
     }
   },
   SORT: {
-    template: '{func} {holder,collection} by {key}[, reverse {reverse}]',
+    template: '{func} {holder,collection} by {key}[; reverse {reverse}]',
     parameters: {
       holder: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -253,7 +263,7 @@ const routineOperationMetadata = {
     }
   },
   SWAPHANDS: {
-    template: '{func} hands among {source}[, interval {interval}][, direction {direction}]',
+    template: '{func} hands among players in {source}[, interval {interval}][, direction {direction}]',
     parameters: {
       source: { type: 'collection', default: 'all', display: { 'all': 'all seats' } },
       interval: { type: 'number', default: 1 },
@@ -261,7 +271,15 @@ const routineOperationMetadata = {
     }
   },
   TIMER: {
-    template: '{func}: {mode} {timer,collection}[, value {value}][, seconds {seconds}]',
+    template: v=>{
+      const target = v('timer') != null ? '{timer,collection}' : 'timers in {collection}';
+      const valuePart = typeof v('value') == 'string' ? 'value set in {value}' : (v('seconds') ? '{seconds} seconds' : '{value} milliseconds');
+      if(v('mode') == 'set')
+        return `{func}: for ${target} {mode} time to ${valuePart}`;
+      if(v('mode') == 'inc' || v('mode') == 'dec')
+        return `{func}: for ${target} {mode} time by ${valuePart}`;
+      return `{func}: {mode} ${target}`; // pause/start/toggle/reset ignore the value
+    },
     parameters: {
       timer: { type: 'widgets', default: null },
       collection: { type: 'collection', default: 'DEFAULT' },
@@ -271,7 +289,15 @@ const routineOperationMetadata = {
     }
   },
   TURN: {
-    template: '{func} to {turn}, cycle {turnCycle}[, among {source}][, store as {collection}]',
+    template: v=>{
+      if(v('turnCycle') == 'random')
+        return '{func} choose a {turnCycle} seat';
+      if(v('turnCycle') == 'position')
+        return '{func} to seat in {turnCycle}: {turn}';
+      if(v('turnCycle') == 'seat')
+        return '{func} to {turnCycle} with id {turn}';
+      return '{func} {turnCycle} by {turn}'; // forward / backward
+    },
     parameters: {
       turn: { type: 'string', default: 1 },
       turnCycle: { type: 'enum', values: [ 'forward', 'backward', 'random', 'position', 'seat' ], default: 'forward' },
@@ -538,7 +564,19 @@ class RoutineOperationEditor {
   }
 
   getTemplate() {
-    return this.withExtraParameters(this.metadata.template);
+    // templates can be functions of the effective parameter values so the
+    // sentence can change its wording with the mode of the operation
+    let template = this.metadata.template;
+    if(typeof template == 'function')
+      template = template(name=>this.parameterValue(name));
+    return this.withExtraParameters(template);
+  }
+
+  // the value the parameter effectively has: the explicitly set one or its default
+  parameterValue(name) {
+    if(this.operation && typeof this.operation == 'object' && typeof this.operation[name] != 'undefined')
+      return this.operation[name];
+    return this.getDefaults()[name];
   }
 
   // parameters the handwritten template does not mention still get a chip in an
@@ -619,8 +657,8 @@ class RoutineOperationEditor {
     return `<span class="routine-editor-operation-parameter routine-editor-parameter-${category}${missing}" data-parameter="${spec}" title="${categoryNames[category] || 'value'} - click to change ${spec.split(',').join(' / ')}">${escapeHTML(displayed)}</span>`;
   }
 
-  // the compact summary; segments in square brackets are styled as optional
-  // while all their parameters use defaults
+  // the compact summary; segments in square brackets are hidden while all
+  // their parameters use defaults - the list view shows every parameter
   renderSentenceView(dom) {
     let html = '';
     for(const segment of this.getTemplate().split(/(\[[^\]]*\])/)) {
@@ -628,11 +666,9 @@ class RoutineOperationEditor {
       const text = optional ? segment.slice(1, -1) : segment;
       const explicitlySet = (text.match(/\{([a-zA-Z0-9,]+)\}/g) || []).some(spec=>
         spec.slice(1, -1).split(',').some(p=>this.operation && typeof this.operation == 'object' && typeof this.operation[p] != 'undefined'));
-      const rendered = text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>this.renderParameterChip(spec));
       if(optional && !explicitlySet)
-        html += `<span class="routine-editor-operation-optional">${rendered}</span>`;
-      else
-        html += rendered;
+        continue;
+      html += text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>this.renderParameterChip(spec));
     }
     dom.innerHTML = html;
   }
