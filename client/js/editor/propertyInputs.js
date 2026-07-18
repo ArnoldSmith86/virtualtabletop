@@ -696,9 +696,7 @@ class ColorInput extends PickerInput {
     colorPicker.type = 'color';
     colorPicker.title = 'Open the color dialog';
     colorPicker.value = hexValue;
-    // some browsers (Firefox on some platforms) only fire "change" when the
-    // native dialog closes, so listen to both events
-    colorPicker.onchange = colorPicker.oninput = _=>{
+    colorPicker.oninput = _=>{
       this.setValue(colorPicker.value);
       if(hexInput && document.activeElement !== hexInput)
         hexInput.value = colorPicker.value;
@@ -725,35 +723,6 @@ class ColorInput extends PickerInput {
       }
     };
     target.appendChild(hexInput);
-  }
-
-  // Updates the summary in place: rebuilding it (like the base class does)
-  // would detach the native color input while its dialog is open, so later
-  // picks in the still-open dialog would be lost.
-  refreshPicker(value) {
-    if(this.summaryDOM) {
-      const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
-      const chip = this.summaryDOM.querySelector('.propertyValueChip');
-      if(chip) {
-        const newChip = renderColorChip(propertyInputValueSet(shown) ? shown : 'transparent', this.summaryDOM);
-        this.summaryDOM.insertBefore(newChip, chip);
-        chip.remove();
-      }
-      const valueText = this.summaryDOM.querySelector('.propertyPickerValueText');
-      if(valueText)
-        valueText.textContent = propertyInputValueSet(value) ? String(value) : (propertyInputValueSet(shown) ? String(shown) : 'not set');
-      const colorPicker = this.summaryDOM.querySelector('input[type=color]');
-      if(colorPicker && document.activeElement !== colorPicker && propertyInputValueSet(shown) && String(shown).match(/^#/))
-        colorPicker.value = toHex(shown);
-      const hexInput = this.summaryDOM.querySelector('.colorHexInput');
-      if(hexInput && document.activeElement !== hexInput)
-        hexInput.value = propertyInputValueSet(value) ? value : '';
-    }
-    for(const chip of $a('.propertyValueChip', this.pickerDOM))
-      if(chip.dataset.value !== undefined)
-        chip.classList.toggle('selected', chip.dataset.value == String(value));
-    if(this.footerDOM)
-      this.renderFooter(value);
   }
 
   renderPickerContent(target, value) {
