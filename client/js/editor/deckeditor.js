@@ -188,6 +188,7 @@ class DeckEditor {
     this.cardTypes = {};
     this.cardDefaults = {};
     this.showAllAreas = false;
+    this.addMode = 'static'; // 'static' = same on every card, 'dynamic' = different per card type
 
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
@@ -241,25 +242,19 @@ class DeckEditor {
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
       $('#deckEditorMain').classList.toggle('deckEditorShowAllAreas', this.showAllAreas);
     };
-    $('#deckEditorAddText').onclick = _=>this.addObject({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center', value: 'Text' });
+    // One set of add buttons; the mode toggle decides whether they add a static object (same on every card)
+    // or a per-card-type one. The toggle's highlighted side and the group's accent color are the indicators.
+    for(const button of $a('#deckEditorAddModeToggle button'))
+      button.onclick = _=>this.setAddMode(button.dataset.mode);
+    $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
     $('#deckEditorAddImage').onclick = _=>{
       uploadAsset().then(asset=>{
         if(asset)
-          this.addObject({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: 'transparent', value: asset });
+          this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: 'transparent' }, 'image', asset);
       });
     };
-    $('#deckEditorAddIcon').onclick = _=>this.addObject({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000', value: 'skoll/hearts' });
-    $('#deckEditorAddColor').onclick = _=>this.addObject(this.colorBoxTemplate());
-
-    $('#deckEditorAddTextDynamic').onclick = _=>this.addDynamicObject({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
-    $('#deckEditorAddImageDynamic').onclick = _=>{
-      uploadAsset().then(asset=>{
-        if(asset)
-          this.addDynamicObject({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: 'transparent' }, 'image', asset);
-      });
-    };
-    $('#deckEditorAddIconDynamic').onclick = _=>this.addDynamicObject({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', 'skoll/hearts');
-    $('#deckEditorAddColorDynamic').onclick = _=>this.addDynamicObject(this.colorBoxTemplate(), 'color', '#cccccc', 'color');
+    $('#deckEditorAddIcon').onclick = _=>this.addByMode({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', 'skoll/hearts');
+    $('#deckEditorAddColor').onclick = _=>this.addByMode(this.colorBoxTemplate(), 'color', '#cccccc', 'color');
 
     $('#deckEditorMain').onmousedown = e=>{
       if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
@@ -1266,6 +1261,25 @@ class DeckEditor {
     this.refreshMainCardFaces();
     await this.commit('faceTemplates', cause, actionId);
     this.renderSidebar();
+  }
+
+  // Adds an object in the currently selected add mode: a static object (value baked in) or a per-card-type one
+  // (the value bound to a fresh card type property). boundProperty is which object property carries the value.
+  async addByMode(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
+    if(this.addMode == 'dynamic')
+      return this.addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty);
+    return this.addObject({ ...objectTemplate, [boundProperty]: defaultValue });
+  }
+
+  setAddMode(mode) {
+    this.addMode = mode == 'dynamic' ? 'dynamic' : 'static';
+    const section = $('#deckEditorAddSection');
+    if(section) {
+      section.classList.toggle('deckEditorAddGroupStatic', this.addMode == 'static');
+      section.classList.toggle('deckEditorAddGroupDynamic', this.addMode == 'dynamic');
+    }
+    for(const button of $a('#deckEditorAddModeToggle button'))
+      button.classList.toggle('active', button.dataset.mode == this.addMode);
   }
 
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {

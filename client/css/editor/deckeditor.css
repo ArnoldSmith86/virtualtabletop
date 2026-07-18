@@ -87,8 +87,8 @@ body.deckEditorActive #editorDragToolbar {
   background: #ffffff1a;
 }
 
-/* The two "add object" groups get distinct accent colors and a gap so it's obvious that one adds the same
-   object to every card and the other adds an object that varies per card type. */
+/* The single add-object group takes the accent color of the currently selected mode (blue = same on every
+   card, amber = different per card type), so the color is one of the two mode indicators. */
 .deckEditorAddGroupStatic {
   background: rgba(120, 190, 255, 0.22);
   box-shadow: inset 3px 0 0 #4aa3ff;
@@ -99,21 +99,35 @@ body.deckEditorActive #editorDragToolbar {
   box-shadow: inset 3px 0 0 #ffb300;
 }
 
-.deckEditorAddGroupLabel {
+/* Segmented toggle: the highlighted side (blue/amber) is the other mode indicator. */
+#deckEditorAddModeToggle {
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+#deckEditorAddModeToggle button {
+  padding: 3px 8px;
   font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  margin-right: 4px;
   white-space: nowrap;
+  border-radius: 0;
+  background: #ffffff14;
+  color: #ffffff99;
 }
 
-.deckEditorAddGroupStatic .deckEditorAddGroupLabel {
-  color: #cfe8ff;
+#deckEditorAddModeToggle button.active[data-mode=static] {
+  background: #4aa3ff;
+  color: #fff;
 }
 
-.deckEditorAddGroupDynamic .deckEditorAddGroupLabel {
-  color: #ffe8c2;
+#deckEditorAddModeToggle button.active[data-mode=dynamic] {
+  background: #ffb300;
+  color: #222;
 }
 
 .deckEditorAddGroup button {

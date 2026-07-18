@@ -197,7 +197,9 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#editor [icon=edit]')
     .click('.deckEditorAddCardType button')
     .click('#deckEditorAddFace')
-    .click('#deckEditorAddTextDynamic')
+    .click('#deckEditorAddModeToggle button[data-mode=dynamic]') // switch the add mode to per-card-type
+    .click('#deckEditorAddText')
+    .click('#deckEditorAddModeToggle button[data-mode=static]')  // back to default so later adds are unchanged
     .pressKey('delete') // deletes the selected face object; also exercises the Delete-key path once nothing is focused
     .click('#deckEditorAddFace')
     .setNativeDialogHandler(() => true)
