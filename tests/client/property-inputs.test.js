@@ -60,6 +60,12 @@ describe('css helpers', () => {
     expect(cssHelpers.parsePropertyFromCSS({ default: { color: 'red' } }, 'color', null)).toBe('red');
     expect(cssHelpers.parsePropertyFromCSS({}, 'color', null)).toBe(null);
   });
+
+  test('parsePropertyFromCSS does not suffix-match prefixed properties', () => {
+    expect(cssHelpers.parsePropertyFromCSS('background-color: red; color: blue', 'color', null)).toBe('blue');
+    expect(cssHelpers.parsePropertyFromCSS('border-color: red', 'color', null)).toBe(null);
+    expect(cssHelpers.parsePropertyFromCSS('background-color: red', 'background-color', null)).toBe('red');
+  });
 });
 
 describe('timer time helpers', () => {

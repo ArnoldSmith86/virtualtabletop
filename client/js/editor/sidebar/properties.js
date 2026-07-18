@@ -120,7 +120,8 @@ function parsePropertyFromCSS(css, prop, defaultValue='', cssClass="default") {
 
   if (typeof css === 'string') {
     const propEsc = prop.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const re = new RegExp(propEsc + '\\s*:\\s*([^;]+)', 'i');
+    // anchor to a declaration boundary so "color" does not match inside "background-color"
+    const re = new RegExp('(?:^|;)\\s*' + propEsc + '\\s*:\\s*([^;]+)', 'i');
     const m = css.match(re);
     return m ? m[1].trim() : defaultValue;
   }
@@ -3600,8 +3601,16 @@ class PropertiesModule extends SidebarModule {
       removeButton.disabled = colorMap.length <= 1;
       removeButton.onclick = () => {
         const map = this.canvasColorMap(widget);
+        if(map.length <= 1)
+          return;
         map.pop();
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} removed a color from canvas ${widget.id} in editor`);
         this.inputValueUpdated(widget, 'colorMap', map);
+        // an out-of-range index would be persisted into the drawing chunks
+        if(Number(widget.get('activeColor')) >= map.length)
+          this.inputValueUpdated(widget, 'activeColor', map.length - 1);
+        batchEnd();
         rebuild();
       };
       row.appendChild(removeButton);
@@ -3642,8 +3651,9 @@ class PropertiesModule extends SidebarModule {
     input.style.flex = '0 0 auto';
     input.oninput = () => {
       const value = +input.value;
+      // invalid palette indices would be persisted into the drawing chunks
       if(Number.isFinite(value))
-        this.inputValueUpdated(widget, 'activeColor', value);
+        this.inputValueUpdated(widget, 'activeColor', Math.max(0, Math.min(this.canvasColorMap(widget).length - 1, Math.round(value))));
     };
     wrap.appendChild(input);
 
@@ -3894,9 +3904,13 @@ class PropertiesModule extends SidebarModule {
       ]
     }).render(this.moduleDOM);
 
+    // the alert property itself is computed by the timer from end/milliseconds,
+    // so "alert when done" is controlled through whether an end value is set
     new CheckboxInput(this, widget, 'Show alert when done', {
-      property: 'alert',
-      hint: 'The timer turns this on by itself when the end value is reached (and off when it is not). The inputs below style the alert state.'
+      hint: 'The timer shows a blinking alert once it reaches its end value. Unchecking this removes the end value.',
+      getValue: _=>widget.get('end') !== null && widget.get('end') !== undefined,
+      setValue: value=>this.inputValueUpdated(widget, 'end', value ? (typeof widget.get('end') == 'number' ? widget.get('end') : 0) : null),
+      listenTo: [ 'end' ]
     }).render(this.moduleDOM);
 
     // styles the alert state through the css custom properties the timer uses
@@ -3913,7 +3927,7 @@ class PropertiesModule extends SidebarModule {
       setValue: value=>blinkOptions.setValue(value === null || value === '' ? null : `blinker ${value}s linear infinite`)
     })).render(alertEditor);
 
-    this.addPropertyListener(widget, 'alert', w => alertEditor.style.display = w.get('alert') ? '' : 'none');
+    this.addPropertyListener(widget, 'end', w => alertEditor.style.display = w.get('end') !== null && w.get('end') !== undefined ? '' : 'none');
 
     this.renderOtherPropertiesSection(widget, [ 'milliseconds', 'precision', 'paused', 'alert', 'countdown', 'start', 'end' ]);
   }
