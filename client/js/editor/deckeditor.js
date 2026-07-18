@@ -454,7 +454,7 @@ class DeckEditor {
   }
 
   resetHistory() {
-    this.history = [ this.snapshot('__open__', null, 'Opened') ];
+    this.history = [ this.snapshot('__open__', null, 'Start') ];
     this.historyIndex = 0;
   }
 
@@ -486,7 +486,7 @@ class DeckEditor {
   // Turn a delta cause into a short human breadcrumb label. Causes all read "<player> <action> ... in deck editor".
   historyLabel(cause) {
     if(cause == '__open__')
-      return 'Opened';
+      return 'Start';
     if(cause == '__external__')
       return 'External change';
     if(/ updated faceTemplates /.test(cause))
@@ -603,8 +603,12 @@ class DeckEditor {
     $('#deckEditorDeleteFace').disabled = !this.faceTemplates.length;
   }
 
+  // Face 0 back / face 1 front is only the usual convention, so hedge with "usually" and drop the
+  // hint entirely for decks with a non-standard number of faces.
   faceLabel(face) {
-    return face == 0 ? 'Face 0 (back)' : face == 1 ? 'Face 1 (front)' : `Face ${face}`;
+    if(this.faceTemplates.length == 2)
+      return face == 0 ? 'Face 0 (usually the back)' : 'Face 1 (usually the front)';
+    return `Face ${face}`;
   }
 
   renderCard(cardType, face, target) {
@@ -810,10 +814,13 @@ class DeckEditor {
     if(!deck)
       return;
 
-    const addHeader = text=>{
-      const h = document.createElement('h2');
-      h.innerText = text;
-      sidebar.append(h);
+    // A <header> (not a div) so the test selector `.deckEditorProperties:first-of-type` keeps matching the
+    // first properties div. scopeClass carries the topbar's blue/amber accent into the sidebar sections.
+    const addHeader = (text, scopeClass, caption)=>{
+      const header = document.createElement('header');
+      header.className = `deckEditorSidebarHeader ${scopeClass}`;
+      header.innerHTML = `<h2>${html(text)}</h2><p>${html(caption)}</p>`;
+      sidebar.append(header);
     };
 
     const addPropertyRow = (target, onAdd)=>{
@@ -827,7 +834,7 @@ class DeckEditor {
 
     const object = this.selectedObjectTemplate();
     if(object) {
-      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`);
+      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Part of the face template — on every card');
       const objectProps = div(sidebar, 'deckEditorProperties');
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
@@ -880,7 +887,7 @@ class DeckEditor {
     if(this.cardType === null)
       return;
 
-    addHeader('Card type');
+    addHeader('Card type', 'deckEditorScopeThisType', 'Only this card type');
 
     const nameRow = div(sidebar, 'deckEditorCardTypeName', `<label>Name</label><input value="${html(String(this.cardType))}">`);
     $('input', nameRow).onchange = e=>{
@@ -1002,8 +1009,8 @@ class DeckEditor {
 
     const objectPropertySuggestions = [ 'value', 'color', 'width', 'height', 'display' ].filter(p=>!(object.dynamicProperties || {})[p]);
     const addRow = div(container, 'deckEditorAddProperty', `
-      <input class=objectProperty placeholder="object property" list=deckEditorObjectPropertySuggestions>
-      <input class=typeProperty placeholder="card type property" list=deckEditorTypePropertySuggestions>
+      <input class=objectProperty placeholder="object prop." list=deckEditorObjectPropertySuggestions>
+      <input class=typeProperty placeholder="card type prop." list=deckEditorTypePropertySuggestions>
       <button icon=add>Add</button>
       <datalist id=deckEditorObjectPropertySuggestions>${objectPropertySuggestions.map(p=>`<option value="${html(p)}">`).join('')}</datalist>
       <datalist id=deckEditorTypePropertySuggestions>${this.knownCardTypeProperties().map(p=>`<option value="${html(p)}">`).join('')}</datalist>

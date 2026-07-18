@@ -151,37 +151,41 @@
   <div id="editorDragToolbar"><div id="editorDragToolbarFeedback"></div></div>
   <div id="deckEditor">
     <div id="deckEditorTopbar">
-      <div class="deckEditorAddGroup">
-        <label>Deck: <select id="deckEditorDeckSelect"></select></label>
-        <label>Face: <select id="deckEditorFaceSelect"></select></label>
-        <button icon="add" id="deckEditorAddFace" title="Add a new, empty face to this deck.">Add face</button>
-        <button icon="remove" id="deckEditorDeleteFace" title="Delete the face currently shown from every card type of this deck.">Delete face</button>
+      <div id="deckEditorTopbarGroups">
+        <div class="deckEditorAddGroup">
+          <label>Deck: <select id="deckEditorDeckSelect"></select></label>
+          <label>Face: <select id="deckEditorFaceSelect"></select></label>
+          <button icon="add" id="deckEditorAddFace" title="Add a new, empty face to this deck.">Add face</button>
+          <button icon="remove" id="deckEditorDeleteFace" title="Delete the face currently shown from every card type of this deck.">Delete face</button>
+        </div>
+        <div class="spacer"></div>
+        <div class="deckEditorAddGroup deckEditorAddGroupStatic" title="Adds an object that looks the same on every card of this deck.">
+          <span class="deckEditorAddGroupLabel">Same on every card</span>
+          <button icon="format_size" id="deckEditorAddText">Text</button>
+          <button icon="image" id="deckEditorAddImage">Image</button>
+          <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
+        </div>
+        <div class="deckEditorAddGroup deckEditorAddGroupDynamic" title="Adds an object that can be different for each card type, like a rank, name or picture.">
+          <span class="deckEditorAddGroupLabel">Different per card type</span>
+          <button icon="format_size" id="deckEditorAddTextDynamic">Text</button>
+          <button icon="image" id="deckEditorAddImageDynamic">Image</button>
+          <button icon="add_reaction" id="deckEditorAddIconDynamic">Icon</button>
+        </div>
+        <div class="spacer"></div>
       </div>
-      <div class="spacer"></div>
-      <div class="deckEditorAddGroup deckEditorAddGroupStatic" title="Adds an object that looks the same on every card of this deck.">
-        <span class="deckEditorAddGroupLabel">Same on every card</span>
-        <button icon="format_size" id="deckEditorAddText">Text</button>
-        <button icon="image" id="deckEditorAddImage">Image</button>
-        <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
-      </div>
-      <div class="deckEditorAddGroup deckEditorAddGroupDynamic" title="Adds an object that can be different for each card type, like a rank, name or picture.">
-        <span class="deckEditorAddGroupLabel">Different per card type</span>
-        <button icon="format_size" id="deckEditorAddTextDynamic">Text</button>
-        <button icon="image" id="deckEditorAddImageDynamic">Image</button>
-        <button icon="add_reaction" id="deckEditorAddIconDynamic">Icon</button>
-      </div>
-      <div class="spacer"></div>
       <button icon="close" id="deckEditorClose">Close</button>
     </div>
     <div id="deckEditorHistory">
       <button icon="undo" id="deckEditorUndo" title="Undo the last change (Ctrl+Z).">Undo</button>
       <button icon="redo" id="deckEditorRedo" title="Redo the last undone change (Ctrl+Y).">Redo</button>
-      <div id="deckEditorBreadcrumb"></div>
+      <span id="deckEditorHistoryLabel">History:</span>
+      <div id="deckEditorBreadcrumb" title="Your edits this session — click a step to jump back or forward to it."></div>
     </div>
     <div id="deckEditorBody">
       <div id="deckEditorMain"></div>
       <div id="deckEditorSidebar"></div>
     </div>
+    <div id="deckEditorStripLabel">Card types — click one to edit it</div>
     <div id="deckEditorStrip"></div>
     <div id="deckEditorDragToolbar"><div id="deckEditorDragToolbarFeedback"></div></div>
   </div>

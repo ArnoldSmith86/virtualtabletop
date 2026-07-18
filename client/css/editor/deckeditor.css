@@ -20,8 +20,21 @@ body.deckEditorActive #deckEditor {
   min-height: var(--editToolbarHeight);
   background: var(--VTTblue);
   color: white;
-  flex-wrap: wrap;
   flex-shrink: 0; /* never let the wrapped topbar get squeezed shorter than its content, which would push its overflow into deckEditorBody below */
+}
+
+/* Only the button groups wrap on narrow windows; the Close button stays pinned to the right edge. */
+#deckEditorTopbarGroups {
+  display: flex;
+  align-items: center;
+  gap: 6px 10px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+#deckEditorClose {
+  flex-shrink: 0;
 }
 
 #deckEditorTopbar label {
@@ -80,7 +93,7 @@ body.deckEditorActive #deckEditor {
 }
 
 .deckEditorAddGroupDynamic .deckEditorAddGroupLabel {
-  color: #ffe0a3;
+  color: #ffe8c2;
 }
 
 .deckEditorAddGroup button {
@@ -104,6 +117,16 @@ body.deckEditorActive #deckEditor {
   padding: 3px 8px;
   font-size: 12px;
   flex-shrink: 0;
+}
+
+#deckEditorHistoryLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
 #deckEditorBreadcrumb {
@@ -187,7 +210,7 @@ body.deckEditorActive #deckEditor {
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject {
-  outline: calc(3px / var(--deckEditorCardScale)) solid yellow;
+  outline: calc(3px / var(--deckEditorCardScale)) solid var(--textHighlightColor2);
 }
 
 .deckEditorEmpty, .deckEditorHint {
@@ -204,9 +227,37 @@ body.deckEditorActive #deckEditor {
   box-sizing: border-box;
 }
 
-#deckEditorSidebar h2 {
+/* The sidebar's two sections edit different scopes: the face object is part of the shared face template
+   (edits affect every card of the deck), the card type section only affects one card type. Reuse the
+   blue/amber accent language of the topbar's add groups so the distinction carries through. */
+.deckEditorSidebarHeader {
   margin: 10px 0 5px 0;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.deckEditorSidebarHeader h2 {
+  margin: 0;
   font-size: 18px;
+}
+
+.deckEditorSidebarHeader p {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.deckEditorScopeEveryCard {
+  background: rgba(120, 190, 255, 0.15);
+  box-shadow: inset 3px 0 0 #4aa3ff;
+}
+
+.deckEditorScopeThisType {
+  background: rgba(255, 193, 7, 0.18);
+  box-shadow: inset 3px 0 0 #ffb300;
 }
 
 #deckEditorSidebar .genericInput {
@@ -259,15 +310,25 @@ body.deckEditorActive #deckEditor {
   width: 60px;
 }
 
+#deckEditorStripLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  padding: 4px 10px 0 10px;
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
 #deckEditorStrip {
   display: flex;
   gap: 5px;
-  padding: 5px 10px;
+  padding: 2px 10px 5px 10px;
   overflow-x: auto;
   align-items: flex-end;
-  min-height: 135px;
+  min-height: 130px;
   box-sizing: border-box;
-  border-top: 1px solid var(--backgroundHighlightColor1);
   flex-shrink: 0;
 }
 
