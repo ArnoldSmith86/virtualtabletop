@@ -37,28 +37,30 @@ body.deckEditorActive #editorDragToolbar {
   display: none;
 }
 
+/* The deck editor's own bar uses a distinct slate (not VTTblue) so it reads as a separate tool from the
+   room editor's blue toolbar and sidebar. The light group-accent labels below are tuned for this dark bar. */
+#deckEditor {
+  --deckEditorBarColor: #2f3e4d;
+}
+
 #deckEditorTopbar {
   display: flex;
   align-items: center;
-  gap: 6px 10px;
-  padding: 4px 10px;
-  background: var(--VTTblue);
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--deckEditorBarColor);
   color: white;
   flex-shrink: 0; /* never let the wrapped topbar get squeezed shorter than its content, which would push its overflow into deckEditorBody below */
 }
 
-/* Only the button groups wrap on narrow windows; the Close button stays pinned to the right edge. */
+/* The control group stays on the left; the two add-object groups wrap together as a unit on narrow widths. */
 #deckEditorTopbarGroups {
   display: flex;
   align-items: center;
-  gap: 6px 10px;
+  gap: 8px;
   flex-wrap: wrap;
   flex-grow: 1;
   min-width: 0;
-}
-
-#deckEditorClose {
-  flex-shrink: 0;
 }
 
 #deckEditorTopbar label {
@@ -69,10 +71,6 @@ body.deckEditorActive #editorDragToolbar {
 
 #deckEditorTopbar select {
   max-width: 200px;
-}
-
-#deckEditorTopbar .spacer {
-  flex-grow: 1;
 }
 
 #deckEditorTopbar button {
@@ -86,7 +84,7 @@ body.deckEditorActive #editorDragToolbar {
   gap: 3px;
   padding: 3px 8px;
   border-radius: 6px;
-  background: #0002;
+  background: #ffffff1a;
 }
 
 /* The two "add object" groups get distinct accent colors and a gap so it's obvious that one adds the same
@@ -94,13 +92,11 @@ body.deckEditorActive #editorDragToolbar {
 .deckEditorAddGroupStatic {
   background: rgba(120, 190, 255, 0.22);
   box-shadow: inset 3px 0 0 #4aa3ff;
-  margin-left: 8px;
 }
 
 .deckEditorAddGroupDynamic {
   background: rgba(255, 193, 7, 0.28);
   box-shadow: inset 3px 0 0 #ffb300;
-  margin-left: 16px;
 }
 
 .deckEditorAddGroupLabel {

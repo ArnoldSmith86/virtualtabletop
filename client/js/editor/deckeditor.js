@@ -226,7 +226,6 @@ class DeckEditor {
     for(const button of this.dragToolbarButtons)
       button.render($('#deckEditorDragToolbar'));
 
-    $('#deckEditorClose').onclick = _=>this.close();
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorDeckSelect').onchange = e=>this.open(e.target.value);
@@ -341,6 +340,26 @@ class DeckEditor {
 
     $('body').classList.add('deckEditorActive');
     this.render();
+    this.syncToolbarButton();
+  }
+
+  // Entry point for the toolbar toggle button: open the most relevant deck (a selected deck, a selected
+  // card's deck, or the last deck in the game) since the button carries no per-deck context of its own.
+  async openBestDeck() {
+    let deckID = null;
+    for(const widget of selectedWidgets) {
+      if(widget.get('type') == 'deck') { deckID = widget.get('id'); break; }
+      if(widget.get('type') == 'card' && widget.get('deck')) { deckID = widget.get('deck'); break; }
+    }
+    if(deckID === null) {
+      const decks = widgetFilter(w=>w.get('type') == 'deck');
+      if(decks.length)
+        deckID = decks[decks.length-1].get('id');
+    }
+    if(deckID !== null)
+      await this.open(deckID);
+    else
+      alert('This game has no deck yet. Add one first — the "Design a deck in the deck editor" option when adding a deck opens it here directly.');
   }
 
   async close() {
@@ -348,6 +367,14 @@ class DeckEditor {
     this.selectedObject = null;
     $('body').classList.remove('deckEditorActive');
     $('#deckEditorDragToolbar').classList.remove('active');
+    this.syncToolbarButton();
+  }
+
+  // Keep the toolbar toggle button's pressed state in sync however the editor was opened/closed (button,
+  // properties module, Escape, game switch). deckEditorToolbarButton is set when that button is constructed.
+  syncToolbarButton() {
+    if(deckEditorToolbarButton)
+      deckEditorToolbarButton.syncState();
   }
 
   cancelPendingCommits() {
@@ -368,6 +395,7 @@ class DeckEditor {
     this.historyIndex = -1;
     $('body').classList.remove('deckEditorActive');
     $('#deckEditorDragToolbar').classList.remove('active');
+    this.syncToolbarButton();
   }
 
   workingCopy(property) {
@@ -1186,12 +1214,20 @@ class DeckEditor {
     return [...properties];
   }
 
+  // Card widget properties a card type property must not be named after: cards carry these in their own
+  // state (position, rotation, the deck link etc.), which shadows the card type value everywhere outside
+  // the deck editor's main card - a binding to "x" would read the card's room position, and previews force
+  // x/y/rotation/scale to fixed values. So making "x" dynamic binds to "x2" instead.
+  reservedCardTypeProperties() {
+    return [ 'id', 'deck', 'cardType', 'activeFace', 'parent', 'owner', 'x', 'y', 'z', 'rotation', 'scale', 'layer', 'linkedToSeat', 'onlyVisibleForSeat' ];
+  }
+
   generateUniquePropertyName(base) {
-    const known = new Set(this.knownCardTypeProperties());
-    if(!known.has(base))
+    const taken = new Set([ ...this.knownCardTypeProperties(), ...this.reservedCardTypeProperties() ]);
+    if(!taken.has(base))
       return base;
     let suffix = 2;
-    while(known.has(base + suffix))
+    while(taken.has(base + suffix))
       ++suffix;
     return base + suffix;
   }
@@ -1295,9 +1331,11 @@ class DeckEditor {
     updateNewNameVisibility();
     $('button', addRow).onclick = async _=>{
       const objectProperty = $('.objectProperty', addRow).value;
-      const typeProperty = typeSelect.value == '__new__' ? $('.newTypeProperty input', addRow).value.trim() : typeSelect.value;
+      let typeProperty = typeSelect.value == '__new__' ? $('.newTypeProperty input', addRow).value.trim() : typeSelect.value;
       if(!objectProperty || !typeProperty)
         return;
+      if(typeSelect.value == '__new__' && this.reservedCardTypeProperties().includes(typeProperty))
+        typeProperty = this.generateUniquePropertyName(typeProperty); // a reserved name would be shadowed by the card widget's own property
       await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
       if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
         object.dynamicProperties = {};

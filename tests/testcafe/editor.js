@@ -494,3 +494,34 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
   await compareState(t, '4fd7ce515016591869c345b5b0d52e78');
 });
+
+test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck'); // the added deck is selected, so the toolbar button opens it
+
+  const toolbarButton = Selector('#editorToolbar .editorToolbarButton button[icon=style]');
+
+  // open via the toolbar toggle button
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.expect(toolbarButton.hasClass('active')).ok();
+  await t.expect(Selector('#deckEditorClose').exists).notOk(); // the old Close button is gone
+
+  // close via the same button
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
+
+  // reopen, then close with Escape -> the button must deactivate too
+  await t.click('#editorToolbar [icon=style]');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.pressKey('esc');
+  await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
+  await t.expect(toolbarButton.hasClass('active')).notOk();
+});

@@ -45,6 +45,10 @@ function initializeEditor(currentMetaData) {
 
     new ToolbarDivider(),
 
+    new DeckEditorButton(),
+
+    new ToolbarDivider(),
+
     new TutorialsButton(),
     new WikiButton()
     
