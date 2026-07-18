@@ -841,3 +841,54 @@ function cssValueOptions(module, widget, key, cssProperty='css', cssClass='defau
     listenTo: [ cssProperty ]
   }, extraOptions);
 }
+
+// Dual-mode options for color properties that map to a css custom property
+// (like the button's backgroundColor -> --wcMain): edit the widget property
+// when it is explicitly set, otherwise read/write the equivalent declaration
+// inside the css property.
+function propertyOrCssOptions(module, widget, property, cssKey, extraOptions={}) {
+  const propertySet = _=>widget.state[property] !== undefined && widget.state[property] !== null;
+  const cssOptions = cssValueOptions(module, widget, cssKey);
+  return Object.assign({
+    getValue: _=>propertySet() ? widget.state[property] : cssOptions.getValue(),
+    getEffective: _=>{
+      if(propertySet())
+        return widget.get(property);
+      const cssValue = cssOptions.getValue();
+      if(propertyInputValueSet(cssValue))
+        return cssValue;
+      const defaultValue = widget.get(property);
+      return defaultValue === undefined ? null : defaultValue;
+    },
+    setValue: v=>{
+      if(propertySet())
+        module.inputValueUpdated(widget, property, v);
+      else
+        cssOptions.setValue(v);
+    },
+    listenTo: [ property, 'css' ]
+  }, extraOptions);
+}
+
+// Dual-mode options for element css properties (like the spinner's valueCSS
+// which styles its .value element): edit the declaration inside that property
+// when it has content, otherwise read/write the element's selector inside
+// the css property.
+function elementCssOrSelectorOptions(module, widget, cssKey, elementCssProperty, selector, extraOptions={}) {
+  const elementSet = _=>{
+    const value = widget.state[elementCssProperty];
+    return value !== undefined && value !== null && value !== '';
+  };
+  const elementOptions = cssValueOptions(module, widget, cssKey, elementCssProperty);
+  const selectorOptions = cssValueOptions(module, widget, cssKey, 'css', selector);
+  return Object.assign({
+    getValue: _=>elementSet() ? elementOptions.getValue() : selectorOptions.getValue(),
+    setValue: v=>{
+      if(elementSet())
+        elementOptions.setValue(v);
+      else
+        selectorOptions.setValue(v);
+    },
+    listenTo: [ elementCssProperty, 'css' ]
+  }, extraOptions);
+}
