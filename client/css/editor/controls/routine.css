@@ -10,16 +10,16 @@
    while the operation cards inside keep their normal size */
 .routine-editor .routine-editor {
   margin: 4px -60px 4px 12px;
-  padding: 3px 57px 3px 3px;
+  padding: 5px 25px 5px 5px;
   background: var(--backgroundColor);
-  border-radius: 15px 0 0 15px;
+  border-radius: 10px 0 0 10px;
 }
 
 .routine-editor-operation {
   position: relative;
   background: var(--backgroundHighlightColor1);
   border-left: 3px solid var(--VTTblue);
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px 4px 4px 0;
   padding: 5px 60px 5px 8px; /* room on the right for the move/delete icons */
   line-height: 1.8;
   font-size: 13px;
