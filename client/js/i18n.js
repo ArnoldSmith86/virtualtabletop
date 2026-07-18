@@ -49,11 +49,22 @@ const translatedAttributes = [ 'placeholder', 'title', 'aria-label', 'data-label
 
 function skipTranslation(element) {
   // never touch game content: widgets in the room, game tiles and variants in the
-  // library and elements that display game metadata (data-field)
+  // library, the JSON editor surfaces and routine log, elements that display game
+  // metadata (data-field) and anything marked with the standard translate="no"
   return element.id == 'room' || element.id == 'playerCursors'
+      || element.id == 'jeText' || element.id == 'jeTextHighlight' || element.id == 'jeLog'
       || element.classList.contains('roomState') || element.classList.contains('variant')
-      || element.hasAttribute('data-field')
+      || element.hasAttribute('data-field') || element.getAttribute('translate') == 'no'
       || element.tagName == 'SCRIPT' || element.tagName == 'STYLE';
+}
+
+// nodes reported by the MutationObserver can be deep inside a skipped subtree,
+// so their ancestors have to be checked as well
+function insideSkippedSubtree(node) {
+  for(let element = node.nodeType == Node.ELEMENT_NODE ? node : node.parentElement; element && element.tagName != 'BODY'; element = element.parentElement)
+    if(skipTranslation(element))
+      return true;
+  return false;
 }
 
 function translateNode(node) {
@@ -102,7 +113,8 @@ export function translateOnChange(root) {
     new MutationObserver(function(mutations) {
       for(const mutation of mutations)
         for(const node of mutation.addedNodes)
-          translateNode(node);
+          if(!insideSkippedSubtree(node))
+            translateNode(node);
     }).observe(root, { childList: true, subtree: true });
   });
 }

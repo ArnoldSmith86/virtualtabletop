@@ -1149,7 +1149,7 @@ class WidgetsModule extends SidebarModule {
           ${this.renderPreviewHTML(state.preview)}
           <button icon="add" class="sidebarButton add-to-room-grid"><span>Add widget to room</span></button>
         </div>
-        <div class="widget-name">${html(state.name || state.id)}</div>
+        <div class="widget-name" translate="no">${html(state.name || state.id)}</div>
       </div>
     `;
   }

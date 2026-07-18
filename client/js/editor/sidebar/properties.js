@@ -359,6 +359,7 @@ class PropertiesModule extends SidebarModule {
 
     const selectionDiv = div(target, 'traditionalDecks');
     const detailsDiv = div(target, 'traditionalDeckDetails');
+    detailsDiv.setAttribute('translate', 'no');
 
     const createButton = document.createElement('button');
     createButton.innerText = 'Add to game';
