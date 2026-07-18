@@ -328,7 +328,7 @@ class DeckEditor {
 
   cancelPendingCommits() {
     for(const property of Object.keys(this.commitTimers))
-      clearTimeout(this.commitTimers[property]);
+      clearTimeout(this.commitTimers[property].timer);
     this.commitTimers = {};
   }
 
@@ -369,7 +369,8 @@ class DeckEditor {
     if(!this.deck())
       return this.close();
     for(const property of properties) {
-      clearTimeout(this.commitTimers[property]);
+      if(this.commitTimers[property])
+        clearTimeout(this.commitTimers[property].timer);
       delete this.commitTimers[property];
     }
     this.loadWorkingCopies(properties);
@@ -402,9 +403,18 @@ class DeckEditor {
     return result;
   }
 
-  scheduleCommit(property) {
-    clearTimeout(this.commitTimers[property]);
-    this.commitTimers[property] = setTimeout(_=>this.commit(property), 500);
+  // Debounced commit for typed edits. cause/actionId identify the edited FIELD (e.g. one property of one face
+  // object), so a typing burst on that field merges into one breadcrumb/undo step but edits to a different
+  // field become a separate step. They are remembered with the timer so flushes commit under the right cause.
+  scheduleCommit(property, cause, actionId) {
+    const pending = this.commitTimers[property];
+    if(pending)
+      clearTimeout(pending.timer);
+    this.commitTimers[property] = {
+      cause,
+      actionId,
+      timer: setTimeout(_=>this.commit(property), 500)
+    };
   }
 
   // Returns a fresh action id used to group the (possibly several) commits of one user action into a single
@@ -414,20 +424,30 @@ class DeckEditor {
   }
 
   // cause distinguishes this commit in the room undo protocol (consecutive same-cause deltas merge). actionId
-  // groups history: commits sharing an actionId collapse into one breadcrumb step. A structural action with no
-  // explicit actionId gets a unique one (its own step); the debounced per-keystroke edits pass no cause and
-  // share a per-property id so a typing burst on one property stays a single step.
+  // groups history: commits sharing an actionId collapse into one breadcrumb step. Structural actions get a
+  // unique "action:N" id whose number is appended to the cause, so two consecutive actions of the same kind
+  // (two drags, two adds, repeated Undo presses) stay separate room-undo entries as well - only the commits of
+  // one single action share a suffix and merge. Typed edits keep their stable per-field id and cause (from
+  // scheduleCommit) without a suffix, so a burst on one field still merges everywhere.
   async commit(property, cause, actionId) {
-    clearTimeout(this.commitTimers[property]);
-    delete this.commitTimers[property];
+    const pending = this.commitTimers[property];
+    if(pending) {
+      clearTimeout(pending.timer);
+      delete this.commitTimers[property];
+      if(cause === undefined) { // flushing the debounced edit: commit it under its own field identity
+        cause = pending.cause;
+        actionId = pending.actionId;
+      }
+    }
 
     const deck = this.deck();
     if(!deck)
       return;
 
-    const structural = !!cause;
-    const resolvedCause = cause || `${getPlayerDetails().playerName} updated ${property} of deck ${this.deckID} in deck editor`;
-    const resolvedActionId = actionId || (structural ? this.newAction() : `type:${property}`);
+    let resolvedCause = cause || `${getPlayerDetails().playerName} updated ${property} of deck ${this.deckID} in deck editor`;
+    const resolvedActionId = actionId || (cause ? this.newAction() : `field:${property}`);
+    if(resolvedActionId.startsWith('action:'))
+      resolvedCause += ` (#${resolvedActionId.slice('action:'.length)})`;
 
     batchStart();
     setDeltaCause(resolvedCause);
@@ -435,6 +455,8 @@ class DeckEditor {
     batchEnd();
 
     this.recordHistory(resolvedCause, resolvedActionId);
+    // Rebuilds every strip preview; fine for typical decks. If this ever gets janky on huge decks while
+    // typing, give the strip its own longer debounce instead of skipping it (typed edits do affect previews).
     this.renderStrip();
   }
 
@@ -489,6 +511,15 @@ class DeckEditor {
       return 'Start';
     if(cause == '__external__')
       return 'External change';
+
+    cause = cause.replace(/ \(#\d+\)$/, ''); // per-action suffix that keeps room-undo entries separate
+
+    let match = cause.match(/ updated "(.+?)" of face object (\d+) /);
+    if(match)
+      return `Edited ${match[1]} of object ${match[2]}`;
+    match = cause.match(/ updated "(.+?)" of card type "(.+?)" /);
+    if(match)
+      return `Edited ${match[1]} of ${match[2]}`;
     if(/ updated faceTemplates /.test(cause))
       return 'Edited face object';
     if(/ updated cardTypes /.test(cause))
@@ -524,12 +555,14 @@ class DeckEditor {
       this.face = Math.max(0, this.faceTemplates.length-1);
     this.selectedObject = null;
 
-    // applyingHistory keeps these re-commits from being recorded as new history entries.
+    // applyingHistory keeps these re-commits from being recorded as new history entries. One shared actionId
+    // keeps the (up to) two commits of this jump a single room-undo entry, while separate jumps stay separate.
+    const actionId = this.newAction();
     this.applyingHistory = true;
     if(faceChanged)
-      await this.commit('faceTemplates', cause);
+      await this.commit('faceTemplates', cause, actionId);
     if(typesChanged)
-      await this.commit('cardTypes', cause);
+      await this.commit('cardTypes', cause, actionId);
     this.applyingHistory = false;
 
     this.render();
@@ -835,6 +868,12 @@ class DeckEditor {
     const object = this.selectedObjectTemplate();
     if(object) {
       addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Part of the face template — on every card');
+      // One cause/actionId per edited field: a typing burst on one property of one object stays one
+      // breadcrumb/undo step, but edits to another property or object become their own step.
+      const objectFieldArgs = property=>[
+        `${getPlayerDetails().playerName} updated "${property}" of face object ${this.selectedObject+1} on face ${this.face} of deck ${this.deckID} in deck editor`,
+        `field:faceTemplates:${this.face}:${this.selectedObject}:${property}`
+      ];
       const objectProps = div(sidebar, 'deckEditorProperties');
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
@@ -846,14 +885,14 @@ class DeckEditor {
             object[property] = v;
           this.refreshMainCardFaces();
           this.updateDragToolbar();
-          this.scheduleCommit('faceTemplates');
+          this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         }, objectProps);
       }
       addPropertyRow(sidebar, property=>{
         if(property == 'dynamicProperties' || object[property] !== undefined)
           return;
         object[property] = '';
-        this.scheduleCommit('faceTemplates');
+        this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         this.renderSidebar();
       });
 
@@ -910,6 +949,10 @@ class DeckEditor {
     countInput.onchange = _=>applyCount(countInput.value);
 
     const typeProperties = this.cardTypes[this.cardType];
+    const typeFieldArgs = property=>[
+      `${getPlayerDetails().playerName} updated "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`,
+      `field:cardTypes:${this.cardType}:${property}`
+    ];
     const typeProps = div(sidebar, 'deckEditorProperties');
     const addTypeInput = property=>{
       this.addInput(property, typeProperties[property], v=>{
@@ -921,7 +964,7 @@ class DeckEditor {
           typeProperties[property] = v;
         }
         this.refreshMainCardFaces();
-        this.scheduleCommit('cardTypes');
+        this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       }, typeProps);
     };
     for(const property of Object.keys(typeProperties))
@@ -935,7 +978,7 @@ class DeckEditor {
       if(typeProperties[property] !== undefined)
         return;
       typeProperties[property] = '';
-      this.scheduleCommit('cardTypes');
+      this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       this.renderSidebar();
     });
 
