@@ -850,6 +850,25 @@ class ImageInput extends PickerInput {
 // options for inputs that edit a single declaration inside a css-like
 // property (through the parse/merge helpers in properties.js) so ColorInput
 // and NumberInput can edit e.g. the "color" declaration of the css property
+// Resolves a css color expression (e.g. "var(--wcMain)") to the actual color
+// it renders as, by measuring it on a throwaway element in the widget's
+// context so var() chains and inherited custom properties are fully applied.
+function resolveCssColorExpression(host, expression) {
+  const probe = document.createElement('span');
+  probe.style.color = expression;
+  if(!probe.style.color) // the browser rejected the expression
+    return null;
+  probe.style.position = 'absolute';
+  probe.style.visibility = 'hidden';
+  probe.style.pointerEvents = 'none';
+  (host || document.body).appendChild(probe);
+  let resolved = (getComputedStyle(probe).color || '').trim();
+  probe.remove();
+  if(resolved == 'rgba(0, 0, 0, 0)')
+    return 'transparent';
+  return resolved || null;
+}
+
 // Reads the value a css declaration/custom-property currently resolves to on
 // a rendered element, so a picker whose value is not explicitly set can still
 // preview the widget's actual default (e.g. a timer's default text color)
@@ -857,12 +876,15 @@ class ImageInput extends PickerInput {
 function computedCssValue(element, key) {
   if(!element)
     return null;
+  // custom properties are only substituted when actually used, so resolve
+  // them through a probe rather than reading the (possibly var()) declaration
+  if(key.startsWith('--'))
+    return resolveCssColorExpression(element, `var(${key})`);
   const style = getComputedStyle(element);
-  let value = key.startsWith('--') ? style.getPropertyValue(key) : style.getPropertyValue(key == 'background' ? 'background-color' : key);
-  value = (value || '').trim();
-  if(!value || value == 'rgba(0, 0, 0, 0)')
-    return value == 'rgba(0, 0, 0, 0)' ? 'transparent' : null;
-  return value;
+  let value = (style.getPropertyValue(key == 'background' ? 'background-color' : key) || '').trim();
+  if(value == 'rgba(0, 0, 0, 0)')
+    return 'transparent';
+  return value || null;
 }
 
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
@@ -917,7 +939,11 @@ function propertyOrCssOptions(module, widget, property, cssKey, extraOptions={})
       if(propertyInputValueSet(cssValue))
         return cssValue;
       const defaultValue = widget.get(property);
-      return defaultValue === undefined ? null : defaultValue;
+      if(propertyInputValueSet(defaultValue))
+        return defaultValue;
+      // nothing explicit: preview the color the custom property renders as
+      // (e.g. a fresh button's --wcMain / --wcMainOH resolved through :root)
+      return computedCssValue(widget.domElement, cssKey);
     },
     setValue: v=>{
       if(propertySet())
