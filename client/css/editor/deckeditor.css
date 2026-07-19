@@ -43,40 +43,6 @@ body.deckEditorActive #editorDragToolbar {
   --deckEditorBarColor: #2f3e4d;
 }
 
-#deckEditorTopbar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  background: var(--deckEditorBarColor);
-  color: white;
-  flex-shrink: 0; /* never let the wrapped topbar get squeezed shorter than its content, which would push its overflow into deckEditorBody below */
-}
-
-/* The control group stays on the left; the two add-object groups wrap together as a unit on narrow widths. */
-#deckEditorTopbarGroups {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  flex-grow: 1;
-  min-width: 0;
-}
-
-#deckEditorTopbar label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-#deckEditorTopbar select {
-  max-width: 200px;
-}
-
-#deckEditorTopbar button {
-  padding: 5px;
-}
-
 .deckEditorAddGroup {
   display: flex;
   align-items: center;
@@ -229,9 +195,10 @@ body.deckEditorActive #editorDragToolbar {
   min-height: 0;
 }
 
-/* Always-visible left "file directory" of the current face's objects. */
+/* Always-visible left "file directory" tree (Decks > Faces > Objects), full height with the unified toolbar
+   pinned at the bottom. */
 #deckEditorLeftSidebar {
-  width: 190px;
+  width: 200px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -240,21 +207,95 @@ body.deckEditorActive #editorDragToolbar {
   box-sizing: border-box;
 }
 
-#deckEditorLeftHeader {
-  font-size: 13px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  padding: 8px 10px 4px 10px;
-  flex-shrink: 0;
+#deckEditorTree {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 6px 6px 8px 6px;
+  min-height: 0;
 }
 
-/* Add / copy / delete face-object buttons, mirroring the card-type toolbar above the strip. */
+/* The right column: the history/undo row on top, then the card view + right sidebar. */
+#deckEditorRight {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+#deckEditorContent {
+  flex-grow: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Card column: the main card view plus the centered hint directly below it. */
+#deckEditorMainCol {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Tree nodes: increasing indent per level (deck > face > object). */
+.deckEditorTreeNode {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.deckEditorTreeNode:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorTreeNode.selected {
+  border-color: var(--textHighlightColor2);
+}
+
+.deckEditorTreeFace {
+  padding-left: 16px;
+}
+
+.deckEditorTreeNode.deckEditorObjectRow,
+.deckEditorTreeEmpty {
+  margin-left: 30px;
+}
+
+.deckEditorTreeEmpty {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.deckEditorTreeEmpty:hover {
+  background: none;
+}
+
+.deckEditorTwisty {
+  width: 12px;
+  flex-shrink: 0;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.deckEditorTreeLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Unified add / copy / delete (+ show areas) toolbar, pinned at the bottom of the left sidebar. */
 #deckEditorLeftToolbar {
   display: flex;
   gap: 4px;
-  padding: 0 10px 4px 10px;
+  padding: 6px 8px;
   flex-shrink: 0;
+  border-top: 1px solid var(--backgroundHighlightColor1);
 }
 
 #deckEditorLeftToolbar button {
@@ -276,22 +317,29 @@ body.deckEditorActive #editorDragToolbar {
 }
 
 /* The delete button is a red trash can (same treatment as the card-type delete above the strip). */
-#deckEditorObjDelete:not(:disabled),
+#deckEditorTreeDelete:not(:disabled),
 #deckEditorStripDelete:not(:disabled) {
   background: var(--VTTred, #c0392b);
 }
 
-#deckEditorObjDelete:hover:not(:disabled),
+#deckEditorTreeDelete:hover:not(:disabled),
 #deckEditorStripDelete:hover:not(:disabled) {
   background: #922b21;
 }
 
-/* The add-object controls are revealed by the "+" button (a vertical expander) between it and the list. */
+/* Show areas sits in the same toolbar; it lights up when active. */
+#deckEditorShowAll.active:not(:disabled) {
+  background: var(--VTTblueDark);
+  box-shadow: inset 0 0 0 2px #fff6;
+}
+
+/* The add-object controls are revealed by the "+" button (a vertical expander) just above the toolbar. */
 #deckEditorAddSection {
   display: none;
   flex-direction: column;
+  align-items: stretch;
   gap: 4px;
-  margin: 0 10px 6px 10px;
+  margin: 0 8px 6px 8px;
   padding: 6px;
   border-radius: 6px;
   flex-shrink: 0;
@@ -301,10 +349,6 @@ body.deckEditorActive #editorDragToolbar {
   display: flex;
 }
 
-#deckEditorAddSection {
-  align-items: stretch;
-}
-
 #deckEditorAddSection button {
   padding: 5px 6px;
   font-size: 12px;
@@ -312,36 +356,8 @@ body.deckEditorActive #editorDragToolbar {
   white-space: nowrap;
 }
 
-#deckEditorObjectList {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 4px 8px 8px 8px;
-  min-height: 0;
-}
-
-.deckEditorLeftEmpty {
-  padding: 8px 2px;
-  font-size: 12px;
-  opacity: 0.6;
-}
-
 .deckEditorObjectRow {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  padding: 4px;
-  margin-bottom: 3px;
-  border: 2px solid transparent;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.deckEditorObjectRow:hover {
-  background: var(--backgroundHighlightColor1);
-}
-
-.deckEditorObjectRow.selected {
-  border-color: var(--textHighlightColor2);
 }
 
 .deckEditorObjectRow.dragOver {
@@ -616,8 +632,8 @@ body.deckEditorActive #editorDragToolbar {
   top: 0;
   padding: 1px 3px;
   font-size: 11px;
-  background: #ffb300;
-  color: #4d3800;
+  background: var(--VTTblue);
+  color: #fff;
 }
 
 #deckEditorShowAll.active {
@@ -743,26 +759,27 @@ body.deckEditorActive #editorDragToolbar {
   padding: 0;
 }
 
+/* Sized inline in renderStrip() to match the card tiles; contents scale down to fit that small card. */
 .deckEditorDeckCardFace {
-  width: 84px;
-  height: 130px; /* default card aspect ratio 103 x 160 */
   box-sizing: border-box;
   background: var(--VTTblue);
-  border-radius: 6px;
+  border-radius: 5px;
   box-shadow: 0 0 6px #0005;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 10px 6px;
+  justify-content: center;
+  gap: 5px;
+  padding: 4px;
+  overflow: hidden;
   color: #fff;
 }
 
 .deckEditorStripCard .deckEditorDeckLabel {
-  font-size: 12px;
+  font-size: 8px;
   font-weight: bold;
   text-align: center;
-  line-height: 1.15;
+  line-height: 1.1;
   max-width: none;
   white-space: normal;
   overflow: visible;
@@ -770,8 +787,8 @@ body.deckEditorActive #editorDragToolbar {
 
 .deckEditorDeckGlyph {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #fff;
   display: flex;
@@ -784,16 +801,16 @@ body.deckEditorActive #editorDragToolbar {
 /* A small card icon above the count, both in the deck-tile blue. */
 .deckEditorDeckGlyph::before {
   content: '';
-  width: 18px;
-  height: 24px;
-  border: 2px solid var(--VTTblue);
-  border-radius: 3px;
+  width: 10px;
+  height: 13px;
+  border: 1.5px solid var(--VTTblue);
+  border-radius: 2px;
 }
 
 .deckEditorDeckCount {
   color: var(--VTTblue);
   font-weight: bold;
-  font-size: 13px;
+  font-size: 9px;
   line-height: 1;
 }
 

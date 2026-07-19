@@ -192,18 +192,21 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
   });
   const deckID = await getDeckID();
 
+  const faceNode = Selector('#deckEditorTree .deckEditorTreeFace');
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
-    .click('#deckEditorStripAdd')
-    .click('#deckEditorAddFace')
-    .click('#deckEditorObjAdd')                       // reveal the add-object controls in the left sidebar
+    .click('#deckEditorStripAdd')                     // add a card type
+    .click(faceNode.nth(0))                           // select a (non-empty) face
+    .click('#deckEditorTreeAdd')                      // adds a new empty face (now selected)
+    .click('#deckEditorTreeAdd')                      // empty face: reveal the add-object controls
     .click('#deckEditorAddMode input[value=dynamic]') // add per-card-type objects (seeds a card type property)
-    .click('#deckEditorAddText')                      // focus is now on the Text button, not the radio input
+    .click('#deckEditorAddText')                      // add the text object (auto-selected)
     .pressKey('delete') // deletes the selected object; also cleans up its now-orphaned card type property
-    .click('#deckEditorAddFace')
+    .click(faceNode.nth(0))                           // select a non-empty face again
+    .click('#deckEditorTreeAdd')                      // adds another new face (now selected)
     .setNativeDialogHandler(() => true)
-    .click('#deckEditorDeleteFace')
+    .click('#deckEditorTreeDelete')                   // delete the just-added (current) face
     .pressKey('esc') // closes the deck editor, since no face object is selected at this point
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
   await compareState(t, '8924f45d4e6a80729054e7a7c23f7599');
@@ -246,12 +249,14 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     return null;
   });
 
+  const faceNode = Selector('#deckEditorTree .deckEditorTreeFace');
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')  // step 1
-    .click('#deckEditorAddFace')             // step 2
-    .click('#deckEditorObjAdd')              // reveal the add-object controls (UI only, not a history step)
+    .click(faceNode.nth(0))                  // select a (non-empty) face
+    .click('#deckEditorTreeAdd')             // step 2: add a face (now empty, selected)
+    .click('#deckEditorTreeAdd')             // reveal the add-object controls (UI only, not a history step)
     .click('#deckEditorAddText');             // step 3
   await t.expect(getHistoryLength()).eql(4);
   await editTextAndUndoImmediately();         // flushes and undoes pending step 4, before its 500ms timer fires
@@ -304,12 +309,14 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
     return { text, receivedProperty: deck.get('cardTypes')['type 1'].receivedProperty };
   });
 
+  const faceNode = Selector('#deckEditorTree .deckEditorTreeFace');
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')
-    .click('#deckEditorAddFace')
-    .click('#deckEditorObjAdd')
+    .click(faceNode.nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorTreeAdd')
     .click('#deckEditorAddText');
   await editAndReceiveRemoteChange(deckID);
   await t
@@ -355,7 +362,8 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     setTimeout(() => { // second field well within the first field's 500ms debounce window
       setField('fontSize', '55');
       setTimeout(() => { // structural action while the second field's commit is still pending
-        document.querySelector('#deckEditorAddFace').click();
+        document.querySelector('#deckEditorTree .deckEditorTreeFace').click(); // select a face, then add one
+        document.querySelector('#deckEditorTreeAdd').click();
         setTimeout(resolve, 200);
       }, 50);
     }, 50);
@@ -373,7 +381,8 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')
-    .click('#deckEditorObjAdd')
+    .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0)) // select the existing object
+    .click('#deckEditorTreeAdd')                                    // reveal the add-object controls
     .click('#deckEditorAddText');
   await rapidEditsThenAddFace();
   await t
@@ -500,9 +509,9 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .click(Selector('#editor .headerRadioButtons label').withText('Design a deck in the deck editor'))
     .click('#editor .buttonBar button[icon=style]') // creates the new deck and opens the deck editor
     .setNativeDialogHandler(() => true)
-    .click('#deckEditorDeleteFace')                 // delete both faces to get a faceless deck
-    .click('#deckEditorDeleteFace')
-    .click('#deckEditorObjAdd')                     // reveal the add-object controls in the left sidebar
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete a face
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete the other -> faceless deck
+    .click('#deckEditorTreeAdd')                    // faceless deck: reveal the add-object controls
     .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
   // the color box is selected: one-click conversion of its color into a per-card-type property
   await t.expect(clickRowButton('Face object 1 (image)', 'color', '.deckEditorMakeDynamic')).ok();

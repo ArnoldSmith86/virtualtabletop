@@ -191,6 +191,7 @@ class DeckEditor {
     this.addMode = 'static'; // 'static' = same on every card, 'dynamic' = different per card type
     this.deckSymbolSelected = false; // the deck-widget strip entry is selected -> the sidebar edits card defaults
     this.addSectionOpen = false; // the left-sidebar "+" expander revealing the add-object controls
+    this.treeLevel = 'face'; // which tree level the unified add/copy/delete toolbar acts on: deck | face | object
 
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
@@ -231,14 +232,6 @@ class DeckEditor {
 
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
-    $('#deckEditorDeckSelect').onchange = e=>this.open(e.target.value);
-    $('#deckEditorFaceSelect').onchange = e=>{
-      this.face = +e.target.value;
-      this.selectedObject = null;
-      this.render();
-    };
-    $('#deckEditorAddFace').onclick = _=>this.addFace();
-    $('#deckEditorDeleteFace').onclick = _=>this.deleteFace();
     $('#deckEditorShowAll').onclick = _=>{
       this.showAllAreas = !this.showAllAreas;
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
@@ -259,14 +252,11 @@ class DeckEditor {
     $('#deckEditorStripCopy').onclick = _=>{ if(this.cardType !== null) this.addCardType(this.cardType); };
     $('#deckEditorStripDelete').onclick = _=>{ if(this.cardType !== null) this.deleteCardType(); };
 
-    // Face-object toolbar in the left sidebar: "+" toggles the add-object controls, copy/delete act on the
-    // currently selected face object.
-    $('#deckEditorObjAdd').onclick = _=>{
-      this.addSectionOpen = !this.addSectionOpen;
-      this.updateAddSection();
-    };
-    $('#deckEditorObjCopy').onclick = _=>this.copySelectedObject();
-    $('#deckEditorObjDelete').onclick = _=>this.deleteSelectedObject();
+    // Unified tree toolbar: add / copy / delete act on whatever level is selected in the tree (deck, face or
+    // object). Show areas lives here too and is only enabled while an object is selected.
+    $('#deckEditorTreeAdd').onclick = _=>this.treeAdd();
+    $('#deckEditorTreeCopy').onclick = _=>this.treeCopy();
+    $('#deckEditorTreeDelete').onclick = _=>this.treeDelete();
 
     $('#deckEditorMain').onmousedown = e=>{
       if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
@@ -348,6 +338,7 @@ class DeckEditor {
     const dynamicFaces = this.dynamicFaces();
     this.face = dynamicFaces.length ? dynamicFaces[dynamicFaces.length-1] : Math.max(0, this.faceTemplates.length-1);
     this.selectedObject = null;
+    this.treeLevel = 'face';
     this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
@@ -701,36 +692,12 @@ class DeckEditor {
   }
 
   render() {
-    this.renderTopbar();
     this.renderHistory();
     this.renderMain();
     this.renderStrip();
     this.renderLeftSidebar();
     this.renderSidebar();
     this.updateDragToolbar();
-  }
-
-  renderTopbar() {
-    const deckSelect = $('#deckEditorDeckSelect');
-    deckSelect.innerHTML = '';
-    for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
-      const option = document.createElement('option');
-      option.value = option.textContent = deck.id;
-      option.selected = deck.id == this.deckID;
-      deckSelect.append(option);
-    }
-
-    const faceSelect = $('#deckEditorFaceSelect');
-    faceSelect.innerHTML = '';
-    for(let face=0; face<this.faceTemplates.length; ++face) {
-      const option = document.createElement('option');
-      option.value = face;
-      option.textContent = this.faceLabel(face);
-      option.selected = face == this.face;
-      faceSelect.append(option);
-    }
-    faceSelect.disabled = !this.faceTemplates.length;
-    $('#deckEditorDeleteFace').disabled = !this.faceTemplates.length;
   }
 
   // Face 0 back / face 1 front is only the usual convention, so hedge with "usually" and drop the
@@ -857,8 +824,10 @@ class DeckEditor {
 
   selectObject(index) {
     this.selectedObject = index;
-    if(index !== null)
+    if(index !== null) {
       this.deckSymbolSelected = false; // selecting a face object leaves the card-defaults view
+      this.treeLevel = 'object';
+    }
     this.attachObjectHandlers();
     this.renderLeftSidebar(); // keep the left face-object list's highlight in sync with the main card
     this.renderSidebar();
@@ -917,8 +886,8 @@ class DeckEditor {
     $('#deckEditorStripCopy').disabled = this.cardType === null;
     $('#deckEditorStripDelete').disabled = this.cardType === null;
 
-    // First entry: the deck itself. A navy card carrying its label and a white deck-widget glyph with the
-    // live total card count; selecting it edits the card defaults.
+    // First entry: the deck itself. A VTTblue card the same size/shape as the card tiles, carrying its label
+    // and a white deck-widget glyph with the live total card count; selecting it edits the card defaults.
     const totalCards = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card').length;
     const deckTile = div(strip, 'deckEditorStripCard deckEditorDeckTile', `
       <div class=deckEditorDeckCardFace>
@@ -926,6 +895,12 @@ class DeckEditor {
         <div class=deckEditorDeckGlyph><span class=deckEditorDeckCount>${totalCards}</span></div>
       </div>
     `);
+    // Match the card tiles' rendered size (same 120x90 fit used below), so the deck tile is the same shape.
+    const cdw = (this.cardDefaults && +this.cardDefaults.width) || 103;
+    const cdh = (this.cardDefaults && +this.cardDefaults.height) || 160;
+    const dscale = Math.min(120 / cdw, 90 / cdh);
+    $('.deckEditorDeckCardFace', deckTile).style.width  = cdw * dscale + 'px';
+    $('.deckEditorDeckCardFace', deckTile).style.height = cdh * dscale + 'px';
     deckTile.classList.toggle('selected', this.deckSymbolSelected);
     deckTile.title = 'Edit the properties every card of this deck defaults to.';
     deckTile.onclick = _=>{
@@ -934,19 +909,13 @@ class DeckEditor {
       this.render();
     };
 
-    // One entry per card type. It shows the currently selected face; when that face has nothing dynamic (it
-    // looks the same on every card type, e.g. a static back), fall back to a dynamic face so the entries
-    // still tell the card types apart. Faces are switched with the dropdown, not by multiplying the strip.
-    const dynamicFaces = this.dynamicFaces();
-    const stripFace = !this.faceTemplates.length ? null
-                    : dynamicFaces.length && !dynamicFaces.includes(this.face) ? dynamicFaces[dynamicFaces.length-1]
-                    : this.face;
+    // One entry per card type, always rendered on the actually-selected face so the strip is a reliable visual
+    // indicator of which face is being worked on (even when that face looks the same on every card type).
+    const stripFace = this.faceTemplates.length ? this.face : null;
 
     for(const cardType of Object.keys(this.cardTypes)) {
       const button = div(strip, 'deckEditorStripCard', `<div class=renderedCard></div><span>${html(cardType)}</span>`);
       button.classList.toggle('selected', !this.deckSymbolSelected && cardType == this.cardType);
-      if(stripFace !== null && stripFace != this.face)
-        button.title = `${cardType} — showing face ${stripFace} because the selected face looks the same on every card type`;
       if(stripFace !== null) {
         try {
           const card = this.renderCard(cardType, stripFace, $('.renderedCard', button));
@@ -963,6 +932,8 @@ class DeckEditor {
         this.cardType = cardType;
         this.deckSymbolSelected = false;
         this.selectedObject = null;
+        if(this.treeLevel == 'object')
+          this.treeLevel = 'face';
         this.render();
       };
     }
@@ -984,12 +955,13 @@ class DeckEditor {
       sidebar.append(header);
     };
 
+    // The type selector is shown ONLY here (when adding a new property); the created row is then a fixed field.
     const addPropertyRow = (target, onAdd)=>{
-      const row = div(target, 'deckEditorAddProperty', '<input placeholder="new property"><button icon=add>Add</button>');
+      const row = div(target, 'deckEditorAddProperty', '<input placeholder="new property"><select><option value="text">text</option><option value="number">number</option></select><button icon=add>Add</button>');
       $('button', row).onclick = _=>{
         const property = $('input', row).value.trim();
         if(property)
-          onAdd(property);
+          onAdd(property, $('select', row).value);
       };
     };
 
@@ -1019,16 +991,16 @@ class DeckEditor {
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
           continue;
-        const row = this.addInput(property, object[property], v=>this.queueFieldEdit(async _=>{
+        // Known object properties get a fixed field type (number or text) with no type selector; the value's
+        // JS type decides for anything custom.
+        const fieldType = this.objectFieldType(property, object[property]);
+        const row = this.addTypedInput(property, object[property], v=>this.queueFieldEdit(async _=>{
           await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
-          if(typeof v === 'undefined')
-            delete object[property];
-          else
-            object[property] = v;
+          object[property] = v;
           this.refreshMainCardFaces();
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
-        }), objectProps);
+        }), objectProps, fieldType);
         if(property != 'type') {
           const makeDynamic = document.createElement('button');
           makeDynamic.setAttribute('icon', 'style');
@@ -1045,11 +1017,11 @@ class DeckEditor {
           this.renderSidebar();
         });
       }
-      addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
+      addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
         if(property == 'dynamicProperties' || object[property] !== undefined)
           return;
         await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
-        object[property] = '';
+        object[property] = type == 'number' ? 0 : '';
         this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         this.renderSidebar();
       }));
@@ -1132,11 +1104,11 @@ class DeckEditor {
         for(const property of Object.values(object.dynamicProperties || {}))
           if(typeof typeProperties[property] === 'undefined' && [ 'cardType', 'id' ].indexOf(property) == -1)
             addTypeInput(property);
-    addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
+    addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
       if(typeProperties[property] !== undefined)
         return;
       await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
-      typeProperties[property] = '';
+      typeProperties[property] = type == 'number' ? 0 : '';
       this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       this.renderSidebar();
     }));
@@ -1186,64 +1158,140 @@ class DeckEditor {
     }), faceProps);
   }
 
-  // The always-visible left sidebar: a "file directory" of this face's objects. Each row is numbered and shows
-  // a live preview of the object; clicking selects it (syncing with the main card), and rows drag to reorder.
-  // The add/copy/delete toolbar and the "+"-revealed add-object controls live above the list.
+  // The left "file directory" tree: Decks (top level, names only) → the current deck's Faces (names only) →
+  // the current face's objects (numbered, with previews). Selecting a node sets the level (deck/face/object)
+  // the unified add/copy/delete toolbar acts on.
   renderLeftSidebar() {
     this.updateAddSection();
-    const copyBtn = $('#deckEditorObjCopy'), delBtn = $('#deckEditorObjDelete'), addBtn = $('#deckEditorObjAdd');
-    const face = this.faceTemplates[this.face];
-    const objects = face && Array.isArray(face.objects) ? face.objects : [];
-    if(copyBtn) copyBtn.disabled = this.selectedObject === null;
-    if(delBtn)  delBtn.disabled  = this.selectedObject === null;
-    if(addBtn)  addBtn.disabled  = !this.deck();
-
-    const list = $('#deckEditorObjectList');
-    if(!list)
-      return;
-    list.innerHTML = '';
-    if(!this.deck())
-      return;
-    if(!objects.length) {
-      div(list, 'deckEditorLeftEmpty', '<p>No face objects yet. Use the + button above to add one.</p>');
-      return;
+    const tree = $('#deckEditorTree');
+    if(tree) {
+      tree.innerHTML = '';
+      for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
+        const isCurrent = deck.id == this.deckID;
+        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTwisty>${isCurrent ? '▾' : '▸'}</span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
+        deckRow.classList.toggle('selected', isCurrent && this.treeLevel == 'deck');
+        deckRow.onclick = _=>this.selectDeckNode(deck.id);
+        if(!isCurrent)
+          continue;
+        for(let f=0; f<this.faceTemplates.length; ++f) {
+          const faceRow = div(tree, 'deckEditorTreeNode deckEditorTreeFace', `<span class=deckEditorTreeLabel>${html(this.faceLabel(f))}</span>`);
+          faceRow.classList.toggle('selected', f == this.face && this.treeLevel == 'face');
+          faceRow.onclick = _=>this.selectFaceNode(f);
+          if(f != this.face)
+            continue;
+          const face = this.faceTemplates[f];
+          const objects = face && Array.isArray(face.objects) ? face.objects : [];
+          if(!objects.length)
+            div(tree, 'deckEditorTreeNode deckEditorTreeEmpty', '<span class=deckEditorTreeLabel>(no objects)</span>');
+          objects.forEach((object, index)=>this.renderTreeObjectRow(tree, object, index));
+        }
+      }
     }
-
-    objects.forEach((object, index)=>{
-      const row = div(list, 'deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><div class=deckEditorObjectPreview></div>`);
-      row.classList.toggle('selected', index === this.selectedObject);
-      row.title = `Face object ${index+1} (${object.type || 'text'})`;
-      this.renderObjectPreview($('.deckEditorObjectPreview', row), index);
-      row.onclick = _=>this.selectObject(index);
-      // Drag-and-drop reordering; dropping a row onto another moves it to that position (the list renumbers).
-      row.draggable = true;
-      row.ondragstart = e=>{
-        this.dragObjectFrom = index;
-        e.dataTransfer.effectAllowed = 'move';
-        try { e.dataTransfer.setData('text/plain', String(index)); } catch(_) {}
-        row.classList.add('dragging');
-      };
-      row.ondragend = _=>{ row.classList.remove('dragging'); this.dragObjectFrom = null; };
-      row.ondragover = e=>{ e.preventDefault(); e.dataTransfer.dropEffect = 'move'; row.classList.add('dragOver'); };
-      row.ondragleave = _=>row.classList.remove('dragOver');
-      row.ondrop = e=>{
-        e.preventDefault();
-        row.classList.remove('dragOver');
-        const from = this.dragObjectFrom;
-        if(from !== null && from !== undefined && from !== index)
-          this.moveFaceObject(from, index);
-      };
-    });
+    this.updateTreeToolbar();
   }
 
-  // Shows/hides the "+"-revealed add-object controls and reflects the toggle state on the + button.
+  renderTreeObjectRow(tree, object, index) {
+    const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><div class=deckEditorObjectPreview></div>`);
+    row.classList.toggle('selected', index === this.selectedObject);
+    row.title = `Face object ${index+1} (${object.type || 'text'})`;
+    this.renderObjectPreview($('.deckEditorObjectPreview', row), index);
+    row.onclick = _=>this.selectObject(index);
+    // Drag-and-drop reordering; dropping a row onto another moves it to that position (the list renumbers).
+    row.draggable = true;
+    row.ondragstart = e=>{
+      this.dragObjectFrom = index;
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', String(index)); } catch(_) {}
+      row.classList.add('dragging');
+    };
+    row.ondragend = _=>{ row.classList.remove('dragging'); this.dragObjectFrom = null; };
+    row.ondragover = e=>{ e.preventDefault(); e.dataTransfer.dropEffect = 'move'; row.classList.add('dragOver'); };
+    row.ondragleave = _=>row.classList.remove('dragOver');
+    row.ondrop = e=>{
+      e.preventDefault();
+      row.classList.remove('dragOver');
+      const from = this.dragObjectFrom;
+      if(from !== null && from !== undefined && from !== index)
+        this.moveFaceObject(from, index);
+    };
+  }
+
+  // Shows/hides the "+"-revealed add-object controls (only meaningful at object/empty-face level).
   updateAddSection() {
     const section = $('#deckEditorAddSection');
     if(section)
       section.classList.toggle('deckEditorAddSectionOpen', this.addSectionOpen);
-    const addBtn = $('#deckEditorObjAdd');
+    const addBtn = $('#deckEditorTreeAdd');
     if(addBtn)
       addBtn.classList.toggle('active', this.addSectionOpen);
+  }
+
+  // Reflects the tree selection level in the unified toolbar (labels + which buttons are usable). Show areas
+  // is only enabled while a face object is selected.
+  updateTreeToolbar() {
+    const hasDeck = !!this.deck();
+    const level = this.treeLevel;
+    const noun = level == 'object' ? 'object' : level;
+    const add = $('#deckEditorTreeAdd'), copy = $('#deckEditorTreeCopy'), del = $('#deckEditorTreeDelete'), show = $('#deckEditorShowAll');
+    if(add) {
+      add.disabled = level != 'deck' && !hasDeck;
+      add.title = level == 'deck' ? 'Add a new deck' : level == 'face' ? 'Add a face (or the first object of an empty face)' : 'Add a face object';
+    }
+    const noSelection = !hasDeck || (level == 'object' && this.selectedObject === null) || (level != 'deck' && !this.faceTemplates.length);
+    if(copy) { copy.disabled = noSelection; copy.title = `Copy the selected ${noun}`; }
+    if(del)  { del.disabled  = noSelection; del.title  = `Delete the selected ${noun}`; }
+    if(show) show.disabled = this.selectedObject === null;
+  }
+
+  async selectDeckNode(deckID) {
+    this.deckSymbolSelected = false;
+    this.addSectionOpen = false;
+    if(deckID != this.deckID)
+      await this.open(deckID); // switches deck (resets treeLevel to 'face')
+    else
+      this.selectedObject = null;
+    this.treeLevel = 'deck';
+    this.render();
+  }
+
+  selectFaceNode(face) {
+    this.treeLevel = 'face';
+    this.deckSymbolSelected = false;
+    this.addSectionOpen = false;
+    this.face = face;
+    this.selectedObject = null;
+    this.render();
+  }
+
+  // Unified add/copy/delete act on the selected tree level. Add on an object (or an empty face with no object
+  // to select yet) reveals the add-object type menu; on a face it adds a face; on a deck it adds a deck.
+  treeAdd() {
+    if(this.treeLevel == 'deck')
+      return this.addDeck();
+    const face = this.faceTemplates[this.face];
+    const faceEmpty = !face || !Array.isArray(face.objects) || !face.objects.length;
+    if(this.treeLevel == 'object' || (this.treeLevel == 'face' && faceEmpty)) {
+      this.addSectionOpen = !this.addSectionOpen;
+      this.updateAddSection();
+      return;
+    }
+    return this.addFace();
+  }
+
+  treeCopy() {
+    if(this.treeLevel == 'deck')
+      return this.copyDeck();
+    if(this.treeLevel == 'object')
+      return this.copySelectedObject();
+    return this.copyFace();
+  }
+
+  treeDelete() {
+    if(this.treeLevel == 'deck')
+      return this.deleteDeck();
+    if(this.treeLevel == 'object')
+      return this.deleteSelectedObject();
+    return this.deleteFace();
   }
 
   // Renders a small live preview of a face object by cloning its rendered node from the main card (so text,
@@ -1406,6 +1454,32 @@ class DeckEditor {
     return row;
   }
 
+  // The fixed field type for a known object property (number vs text); custom properties follow their value.
+  objectFieldType(property, value) {
+    if([ 'x', 'y', 'width', 'height', 'fontSize', 'size', 'strokeWidth', 'rotation' ].indexOf(property) != -1)
+      return 'number';
+    if([ 'textAlign', 'color', 'value', 'strokeColor', 'type' ].indexOf(property) != -1)
+      return 'text';
+    return typeof value === 'number' ? 'number' : 'text';
+  }
+
+  // A property row with a fixed input type (number or text) and no type selector — matches addInput's return
+  // shape ({ dom }) so the make-dynamic / delete buttons attach the same way.
+  addTypedInput(label, value, onValueChanged, target, fieldType) {
+    const wrapper = div(target, 'genericInput deckEditorTypedInput');
+    const labelEl = document.createElement('label');
+    labelEl.style.cssText = 'display:inline-block;width:100px';
+    labelEl.textContent = label;
+    const input = document.createElement('input');
+    input.type = fieldType == 'number' ? 'number' : 'text';
+    if(fieldType == 'number')
+      input.step = 'any';
+    input.value = value === undefined || value === null ? '' : value;
+    input.oninput = input.onchange = _=>onValueChanged(fieldType == 'number' ? (Number(input.value) || 0) : input.value);
+    wrapper.append(labelEl, input);
+    return { dom: wrapper };
+  }
+
   // The "Click a face object…" hint, shown below the card view (bottom-center) whenever a card type is being
   // edited but no object is selected. Blank in every other state.
   renderObjectHint() {
@@ -1448,11 +1522,11 @@ class DeckEditor {
     for(const property of [ 'width', 'height' ]) // the most common defaults are always offered
       if(this.cardDefaults[property] === undefined)
         addDefaultsInput(property);
-    addPropertyRow(sidebar, property=>this.queueFieldEdit(async _=>{
+    addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
       if(this.cardDefaults[property] !== undefined)
         return;
       await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
-      this.cardDefaults[property] = '';
+      this.cardDefaults[property] = type == 'number' ? 0 : '';
       this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
       this.renderSidebar();
     }));
@@ -1613,9 +1687,9 @@ class DeckEditor {
     const addRow = div(container, 'deckEditorAddBinding', `
       <div class=deckEditorAddBindingTitle>Fill a property from the card type</div>
       <div class=deckEditorAddBindingRow>
-        <select class=objectProperty title="Object property to fill">${objectPropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}</select>
+        <select class=objectProperty title="Object property to fill"><option value="" selected></option>${objectPropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}</select>
         <span class=deckEditorBindingArrow>←</span>
-        <select class=typeProperty title="Card type property to read from">${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select>
+        <select class=typeProperty title="Card type property to read from"><option value="" selected></option>${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select>
       </div>
       <input class=newTypeProperty style="display:none" placeholder="name of the new property, e.g. rank">
       <button class=deckEditorAddBindingButton icon=add>Bind</button>
@@ -1655,7 +1729,6 @@ class DeckEditor {
     if(!this.faceTemplates.length) {
       this.faceTemplates.push({ objects: [] });
       this.face = 0;
-      this.renderTopbar();
     }
     const face = this.faceTemplates[this.face];
     if(!face)
@@ -1729,6 +1802,7 @@ class DeckEditor {
     this.faceTemplates.push({ objects: [] });
     this.face = this.faceTemplates.length-1;
     this.selectedObject = null;
+    this.treeLevel = 'face';
     await this.commit('faceTemplates', `${getPlayerDetails().playerName} added a face to deck ${this.deckID} in deck editor`);
     this.render();
   }
@@ -1742,12 +1816,89 @@ class DeckEditor {
     const removed = this.faceTemplates.splice(this.face, 1);
     this.face = Math.min(this.face, Math.max(0, this.faceTemplates.length-1));
     this.selectedObject = null;
+    this.treeLevel = 'face';
     const cause = `${getPlayerDetails().playerName} deleted a face from deck ${this.deckID} in deck editor`;
     const actionId = this.newAction();
     await this.commit('faceTemplates', cause, actionId);
     if(this.removeOrphanedTypeProperties(removed[0] && removed[0].objects || []))
       await this.commit('cardTypes', cause, actionId);
     this.render();
+  }
+
+  // Inserts a deep copy of the current face right after it (faces are shared across card types, so this adds
+  // the face to every card type).
+  async copyFace() {
+    if(!this.deck() || !this.faceTemplates[this.face])
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const copy = JSON.parse(JSON.stringify(this.faceTemplates[this.face]));
+    this.faceTemplates.splice(this.face+1, 0, copy);
+    this.face = this.face+1;
+    this.selectedObject = null;
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} copied a face of deck ${this.deckID} in deck editor`);
+    this.render();
+  }
+
+  async addDeck() {
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    await this.open(await createStarterDeck());
+    this.treeLevel = 'deck';
+    this.render();
+  }
+
+  // Creates a new deck (holder + deck widget) with the current deck's faces, card types and card defaults.
+  async copyDeck() {
+    if(!this.deck())
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    batchStart();
+    const id = generateUniqueWidgetID();
+    setDeltaCause(`${getPlayerDetails().playerName} copied deck ${this.deckID} in deck editor`);
+    await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
+    await addWidgetLocal({
+      type: 'deck',
+      id: id+'D',
+      parent: id,
+      x: 12,
+      y: 41,
+      cardDefaults: JSON.parse(JSON.stringify(this.cardDefaults)),
+      cardTypes: JSON.parse(JSON.stringify(this.cardTypes)),
+      faceTemplates: JSON.parse(JSON.stringify(this.faceTemplates))
+    });
+    batchEnd();
+    await this.open(id+'D');
+    this.treeLevel = 'deck';
+    this.render();
+  }
+
+  async deleteDeck() {
+    const deck = this.deck();
+    if(!deck)
+      return;
+    const cards = widgetFilter(w=>w.get('deck') == this.deckID);
+    if(!confirm(`Delete deck "${this.deckID}"${cards.length ? ` and its ${cards.length} card(s)` : ''}?`))
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const parent = deck.get('parent');
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} deleted deck ${this.deckID} in deck editor`);
+    for(const card of cards)
+      await removeWidgetLocal(card.get('id'));
+    await removeWidgetLocal(deck.get('id'));
+    // Drop the holder created for this deck if nothing else lives in it.
+    if(parent && widgets.has(parent) && !widgetFilter(w=>w.get('parent') == parent).length)
+      await removeWidgetLocal(parent);
+    batchEnd();
+
+    const remaining = widgetFilter(w=>w.get('type') == 'deck');
+    if(remaining.length) {
+      await this.open(remaining[remaining.length-1].get('id'));
+      this.treeLevel = 'deck';
+      this.render();
+    } else {
+      this.deckID = null;
+      this.close();
+    }
   }
 
   // copyOf: name of an existing card type whose properties the new type starts with (null for a blank one).
