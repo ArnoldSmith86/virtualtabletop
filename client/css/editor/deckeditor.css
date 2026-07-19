@@ -43,11 +43,6 @@ body.deckEditorActive #enlarged {
   display: none !important;
 }
 
-/* The deck editor's own bar uses a distinct slate (not VTTblue) so it reads as a separate tool from the
-   room editor's blue toolbar and sidebar. The light group-accent labels below are tuned for this dark bar. */
-#deckEditor {
-  --deckEditorBarColor: #2f3e4d;
-}
 
 .deckEditorAddGroup {
   display: flex;
@@ -511,6 +506,12 @@ body.deckEditorActive #enlarged {
 .deckEditorEmpty, .deckEditorHint {
   padding: 10px;
   opacity: 0.7;
+}
+
+/* The empty-state message (e.g. the card-defaults placeholder) is centered in the large card stage. */
+#deckEditorMain > .deckEditorEmpty {
+  max-width: 420px;
+  text-align: center;
 }
 
 #deckEditorSidebar {

@@ -343,6 +343,11 @@ class DeckEditor {
     this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
+    // If a sidebar module (e.g. the deck's text Properties panel this editor is opened from) is open, close it
+    // so the visual editor owns the full width instead of sharing the screen with the panel it replaces.
+    const activeModuleButton = $('#editorSidebar button.active');
+    if(activeModuleButton)
+      activeModuleButton.click();
     this.render();
     this.syncToolbarButton();
   }
@@ -704,8 +709,10 @@ class DeckEditor {
   // Face 0 back / face 1 front is only the usual convention, so hedge with "usually" and drop the
   // hint entirely for decks with a non-standard number of faces.
   faceLabel(face) {
-    if(this.faceTemplates.length == 2)
-      return face == 0 ? 'Face 0 (usually the back)' : 'Face 1 (usually the front)';
+    if(face == 0)
+      return 'Face 0 (usually the back)';
+    if(face == 1)
+      return 'Face 1 (usually the front)';
     return `Face ${face}`;
   }
 
@@ -1004,6 +1011,12 @@ class DeckEditor {
       for(const property of Object.keys(object)) {
         if(property == 'dynamicProperties')
           continue;
+        // The object's structural "type" is a dropdown of the valid types (not a free-typed field that could
+        // be broken by a typo) and can't be deleted.
+        if(property == 'type') {
+          this.renderObjectTypeRow(objectProps, object);
+          continue;
+        }
         // Known object properties get a fixed field type (number or text) with no type selector; the value's
         // JS type decides for anything custom.
         const fieldType = this.objectFieldType(property);
@@ -1016,7 +1029,7 @@ class DeckEditor {
         }), objectProps, fieldType);
         if(property != 'type') {
           const makeDynamic = document.createElement('button');
-          makeDynamic.setAttribute('icon', 'style');
+          makeDynamic.setAttribute('icon', 'call_split'); // a branch/split reads as "vary per card type"
           makeDynamic.className = 'deckEditorMakeDynamic';
           makeDynamic.title = `Make "${property}" different per card type`;
           makeDynamic.onclick = _=>this.makePropertyDynamic(object, property);
@@ -1475,6 +1488,34 @@ class DeckEditor {
       case 'object': return {};
       default:       return '';
     }
+  }
+
+  // The object's "type" as a dropdown of valid values (text/image/icon/html); changing it re-renders because
+  // the header and the image-only upload button depend on it. It has no make-dynamic or delete control.
+  renderObjectTypeRow(target, object) {
+    const row = div(target, 'genericInput deckEditorTypedInput');
+    const labelEl = document.createElement('label');
+    labelEl.style.cssText = 'display:inline-block;width:100px';
+    labelEl.textContent = 'type';
+    const select = document.createElement('select');
+    for(const t of [ 'text', 'image', 'icon', 'html' ]) {
+      const opt = document.createElement('option');
+      opt.value = opt.textContent = t;
+      opt.selected = (object.type || 'text') == t;
+      select.append(opt);
+    }
+    select.onchange = _=>this.queueFieldEdit(async _=>{
+      const args = [
+        `${getPlayerDetails().playerName} changed the type of face object ${this.selectedObject+1} on face ${this.face} of deck ${this.deckID} in deck editor`,
+        `field:faceTemplates:${this.face}:${this.selectedObject}:type`
+      ];
+      await this.flushPendingCommitForOtherField('faceTemplates', args[1]);
+      object.type = select.value;
+      this.refreshMainCardFaces();
+      this.scheduleCommit('faceTemplates', ...args);
+      this.renderSidebar();
+    });
+    row.append(labelEl, select);
   }
 
   objectFieldType(property) {
