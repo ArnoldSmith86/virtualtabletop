@@ -721,6 +721,8 @@ class DeckEditor {
 
     if(!this.deck())
       return;
+    if(this.deckSymbolSelected)
+      return div(container, 'deckEditorEmpty', '<p>Edit the default properties of every card in this deck to the right, or select a card type below to edit that card.</p>');
     if(this.cardType === null)
       return div(container, 'deckEditorEmpty', '<p>This deck does not have any card types yet. Add one using the button in the bottom strip.</p>');
     if(!this.faceTemplates.length)
@@ -895,6 +897,7 @@ class DeckEditor {
         <span class=deckEditorDeckLabel>Edit all card defaults</span>
         <div class=deckEditorDeckGlyph><span class=deckEditorDeckCount>${totalCards}</span></div>
       </div>
+      <span class=deckEditorDeckBlankLabel>&nbsp;</span>
     `);
     // Size the deck tile to exactly match a real card tile: render a reference card (the current/first card
     // type on the current face) to read its actual dimensions, then apply the same 120x90 fit used below.
@@ -1542,7 +1545,10 @@ class DeckEditor {
   }
 
   renderCardDefaults(sidebar, addHeader, addPropertyRow) {
-    addHeader('Card defaults', 'deckEditorScopeEveryCard', 'Default properties of every card of this deck');
+    const header = document.createElement('header');
+    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
+    header.innerHTML = '<h2>Card defaults</h2>';
+    sidebar.append(header);
 
     const defaultsFieldArgs = property=>[
       `${getPlayerDetails().playerName} updated "${property}" of card defaults of deck ${this.deckID} in deck editor`,

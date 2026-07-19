@@ -37,6 +37,12 @@ body.deckEditorActive #editorDragToolbar {
   display: none;
 }
 
+/* Cards with an "enlarge" face property would pop up the fixed hover-enlarge overlay when the mouse passes
+   over the edit card, floating a huge copy over the editor. Suppress it while the deck editor is open. */
+body.deckEditorActive #enlarged {
+  display: none !important;
+}
+
 /* The deck editor's own bar uses a distinct slate (not VTTblue) so it reads as a separate tool from the
    room editor's blue toolbar and sidebar. The light group-accent labels below are tuned for this dark bar. */
 #deckEditor {
@@ -652,14 +658,14 @@ body.deckEditorActive #editorDragToolbar {
   color: #fff;
 }
 
-/* Face object rows also have the amber "make different per card type" button, with a gap before the trash. */
+/* Face object rows also have the "make different per card type" button, with a clear gap before the trash. */
 #deckEditorSidebar .deckEditorObjectProperties .genericInput {
-  padding-right: 56px;
+  padding-right: 62px;
 }
 
 .deckEditorMakeDynamic {
   position: absolute;
-  right: 28px;
+  right: 34px;
   top: 0;
   padding: 1px 3px;
   font-size: 11px;
@@ -793,11 +799,9 @@ body.deckEditorActive #editorDragToolbar {
   height: 90px;
 }
 
-/* The first strip entry is the deck itself: a navy card carrying the "Edit all card defaults" label and a
-   white circular deck-widget glyph (a card icon over the live card count) that opens the card defaults. */
-.deckEditorDeckTile {
-  padding: 0;
-}
+/* The first strip entry is the deck itself: a VTTblue card carrying the "Edit all card defaults" label and a
+   white circular deck-widget glyph (a card icon over the live card count) that opens the card defaults. It
+   keeps the standard strip-card padding and a blank label below so its total height matches the card tiles. */
 
 /* Sized inline in renderStrip() to match the card tiles; contents scale down to fit that small card. */
 .deckEditorDeckCardFace {
