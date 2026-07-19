@@ -54,6 +54,15 @@ describe('css helpers', () => {
       .toEqual({ default: { color: 'red' }, ' ::placeholder': { color: 'blue' } });
   });
 
+  test('mergePropertyFromCSS does not mutate the input (would drop the delta)', () => {
+    const css = { default: { 'font-size': '50px' }, ':hover': { color: 'grey' } };
+    const before = JSON.stringify(css);
+    const result = cssHelpers.mergePropertyFromCSS(css, '--wcMainOH', '#3cb44b', 'default');
+    expect(JSON.stringify(css)).toBe(before); // input untouched
+    expect(result).toEqual({ default: { 'font-size': '50px', '--wcMainOH': '#3cb44b' }, ':hover': { color: 'grey' } });
+    expect(result.default).not.toBe(css.default);
+  });
+
   test('parsePropertyFromCSS reads strings, objects and nested classes', () => {
     expect(cssHelpers.parsePropertyFromCSS('color: red; font-weight: bold', 'color', null)).toBe('red');
     expect(cssHelpers.parsePropertyFromCSS({ color: 'red' }, 'color', null)).toBe('red');

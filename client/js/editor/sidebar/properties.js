@@ -191,7 +191,10 @@ function mergePropertyFromCSS(css, prop, value, cssClass='default') {
   if (typeof source === 'string')
     source = cssStringToObject(source);
 
-  const sourceObject = isObjectLike(source) ? Object.assign({}, source) : {};
+  // Deep clone so mutating a nested class object below never touches the
+  // widget's live state (which would make widget.set() a no-op and silently
+  // drop the delta).
+  const sourceObject = isObjectLike(source) ? JSON.parse(JSON.stringify(source)) : {};
   const sourceIsNested = hasNestedCSSClasses(sourceObject);
   const out = sourceIsNested ? Object.assign({}, sourceObject) : { default: sourceObject };
   const className = cssClass || 'default';
