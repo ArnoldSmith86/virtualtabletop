@@ -896,12 +896,21 @@ class DeckEditor {
         <div class=deckEditorDeckGlyph><span class=deckEditorDeckCount>${totalCards}</span></div>
       </div>
     `);
-    // Match the card tiles' rendered size (same 120x90 fit used below), so the deck tile is the same shape.
-    const cdw = (this.cardDefaults && +this.cardDefaults.width) || 103;
-    const cdh = (this.cardDefaults && +this.cardDefaults.height) || 160;
-    const dscale = Math.min(120 / cdw, 90 / cdh);
-    $('.deckEditorDeckCardFace', deckTile).style.width  = cdw * dscale + 'px';
-    $('.deckEditorDeckCardFace', deckTile).style.height = cdh * dscale + 'px';
+    // Size the deck tile to exactly match a real card tile: render a reference card (the current/first card
+    // type on the current face) to read its actual dimensions, then apply the same 120x90 fit used below.
+    let refW = (this.cardDefaults && +this.cardDefaults.width) || 103;
+    let refH = (this.cardDefaults && +this.cardDefaults.height) || 160;
+    const refType = this.cardType !== null ? this.cardType : Object.keys(this.cardTypes)[0];
+    if(refType !== undefined && this.faceTemplates.length) {
+      try {
+        const probe = this.renderCard(refType, this.face, document.createElement('div'));
+        refW = probe.get('width');
+        refH = probe.get('height');
+      } catch(e) {}
+    }
+    const dscale = Math.min(120 / refW, 90 / refH);
+    $('.deckEditorDeckCardFace', deckTile).style.width  = refW * dscale + 'px';
+    $('.deckEditorDeckCardFace', deckTile).style.height = refH * dscale + 'px';
     deckTile.classList.toggle('selected', this.deckSymbolSelected);
     deckTile.title = 'Edit the properties every card of this deck defaults to.';
     deckTile.onclick = _=>{

@@ -274,14 +274,15 @@ body.deckEditorActive #editorDragToolbar {
   box-shadow: inset 3px 0 0 var(--VTTblue);
 }
 
+/* Indent via margin (not padding) so each level's accent stripe shifts right too, giving three clear levels. */
 .deckEditorTreeFace {
-  padding-left: 18px;
+  margin-left: 16px;
   box-shadow: inset 3px 0 0 #4aa3ff;
 }
 
 .deckEditorTreeNode.deckEditorObjectRow,
 .deckEditorTreeEmpty {
-  margin-left: 30px;
+  margin-left: 32px;
   box-shadow: inset 3px 0 0 var(--backgroundHighlightColor1);
 }
 
