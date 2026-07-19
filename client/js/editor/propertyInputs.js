@@ -881,7 +881,9 @@ function computedCssValue(element, key) {
   if(key.startsWith('--'))
     return resolveCssColorExpression(element, `var(${key})`);
   const style = getComputedStyle(element);
-  let value = (style.getPropertyValue(key == 'background' ? 'background-color' : key) || '').trim();
+  // shorthands don't resolve to a single value: read a representative longhand
+  const readKey = key == 'background' ? 'background-color' : (key == 'border-color' ? 'border-top-color' : key);
+  let value = (style.getPropertyValue(readKey) || '').trim();
   if(value == 'rgba(0, 0, 0, 0)')
     return 'transparent';
   return value || null;

@@ -392,7 +392,8 @@ const editorTypeSections = {
     // --holderTextColor from its properties, overriding the css property
     colors: [
       { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
-      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill' }
+      { label: 'Background',    property: 'color',        kind: 'color', labelIcon: 'format_color_fill' },
+      { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
@@ -3329,7 +3330,7 @@ class PropertiesModule extends SidebarModule {
     this.renderAppearanceBody(widget);
   }
 
-  renderAppearanceBody(widget) {
+  renderAppearanceBody(widget, beforeCss = null) {
     const sections = this.typeSections(widget);
     const colors = sections.colors || [];
     const hover = sections.hover || [];
@@ -3348,6 +3349,9 @@ class PropertiesModule extends SidebarModule {
       this.addAppearanceSubTitle('Style');
     if(misc.length)
       this.renderInputs(widget, misc);
+
+    if(beforeCss)
+      beforeCss();
 
     const cssSection = this.renderCollapsibleSection('CSS', true, body => {
       new TextInput(this, widget, 'User defined active classes', {
@@ -4290,6 +4294,8 @@ class PropertiesModule extends SidebarModule {
   renderForHolder(widget) {
     this.addHeader(`Holder ${widget.id}`);
     this.renderBasicSection(widget);
+    // holders extend ImageWidget, so they render text / icon / image like a basic widget
+    this.renderBasicContentSection(widget);
     this.addSubHeader('Target widgets');
     for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
       if(!Object.keys(deck.get('cardTypes')).length)
@@ -4383,9 +4389,41 @@ class PropertiesModule extends SidebarModule {
       }
     };
 
-    this.renderAppearanceBody(widget);
+    this.renderAppearanceBody(widget, () => {
+      // styling applied while a matching widget is being dragged (droptarget)
+      // or is hovering over the holder (droppable)
+      this.renderHolderStateSection(widget, 'When a widget can be dropped here', '.droptarget');
+      this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droppable');
+    });
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget' ]);
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image' ]);
+  }
+
+  // Text / background / border color plus a brightness filter written into a
+  // css state class (.droptarget / .droppable) of the holder.
+  renderHolderStateSection(widget, title, cssClass) {
+    this.addAppearanceSubTitle(title);
+    const row = div(this.moduleDOM, 'colorFlexRow');
+    const pickerArea = div(this.moduleDOM, 'contentMediaPickers');
+    const group = { target: pickerArea, current: null };
+    new ColorInput(this, widget, 'Text',       cssValueOptions(this, widget, 'color',        'css', cssClass, { pickerGroup: group, labelIcon: 'format_color_text' })).render(row);
+    new ColorInput(this, widget, 'Background', cssValueOptions(this, widget, 'background',   'css', cssClass, { pickerGroup: group, labelIcon: 'format_color_fill' })).render(row);
+    new ColorInput(this, widget, 'Border',     cssValueOptions(this, widget, 'border-color', 'css', cssClass, { pickerGroup: group, labelIcon: 'border_color' })).render(row);
+
+    new NumberInput(this, widget, 'Brightness', {
+      min: 0, max: 3, step: 0.05, slider: true, nullIfEmpty: true, placeholder: '1', listenTo: [ 'css' ],
+      hint: 'Brightens (>1) or dims (<1) the holder in this state. 1 leaves it unchanged.',
+      getValue: _=>{
+        const filter = parsePropertyFromCSS(widget.get('css'), 'filter', null, cssClass);
+        const match = String(filter === null ? '' : filter).match(/brightness\(\s*([0-9.]+)\s*\)/);
+        return match ? +match[1] : null;
+      },
+      setValue: value=>{
+        this.inputValueUpdated(widget, 'css', mergePropertyFromCSS(widget.get('css'), 'filter', (value === null || value === '') ? null : `brightness(${value})`, cssClass));
+        if(widget.applyDeltaToDOM)
+          widget.applyDeltaToDOM({ css: widget.get('css') });
+      }
+    }).render(this.moduleDOM);
   }
 
   renderForSpinner(widget) {
