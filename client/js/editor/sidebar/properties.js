@@ -435,9 +435,7 @@ const editorTypeSections = {
   },
   seat: {
     stateClasses: { '.seated': 'player', '.turn': 'turn', '.foreign': 'hideWhenUnused' },
-    colors: [
-      { label: 'Color',         property: 'color',        kind: 'color' }
-    ],
+    // the seat color is handled by the "use player's color" control below
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
     ]
@@ -3873,7 +3871,7 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     this.addSubHeader('Player');
     this.renderSeatPlayerStatus(widget);
-    this.renderAppearanceSection(widget);
+    this.renderAppearanceSection(widget, { before: () => this.renderSeatColorControl(widget) });
     this.addSubHeader('Seat');
 
     const indexRow = div(this.moduleDOM, 'propertyInlineRow');
@@ -3894,7 +3892,45 @@ class PropertiesModule extends SidebarModule {
       placeholders: [ 'playerName', 'seatIndex' ]
     });
 
-    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'colorEmpty' ]);
+    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'colorEmpty', 'color', 'usePlayerColor' ]);
+  }
+
+  // "use player's color" toggle: when on (default) an occupied seat takes the
+  // sitting player's color; when off a fixed seat color input appears,
+  // starting from the inactive-seat color.
+  renderSeatColorControl(widget) {
+    this.addAppearanceSubTitle('Colors');
+
+    new CheckboxInput(this, widget, "Use player's color", {
+      default: true,
+      listenTo: [ 'usePlayerColor' ],
+      getValue: _=>{
+        const value = widget.get('usePlayerColor');
+        return value === undefined || value === null ? true : value;
+      },
+      setValue: value=>{
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} toggled usePlayerColor of seat ${widget.id} in editor`);
+        widget.set('usePlayerColor', value);
+        // seed the fixed color from the inactive color when switching off
+        if(!value && !propertyInputValueSet(widget.state.color))
+          widget.set('color', widget.get('colorEmpty'));
+        batchEnd();
+      },
+      hint: "When on, a seat takes the sitting player's color. Turn off to give the seat a fixed color."
+    }).render(this.moduleDOM);
+
+    const colorHost = div(this.moduleDOM);
+    const renderColorInput = () => {
+      colorHost.innerHTML = '';
+      if(widget.get('usePlayerColor') === false)
+        new ColorInput(this, widget, 'Seat color', {
+          property: 'color',
+          getEffective: _=>propertyInputValueSet(widget.state.color) ? widget.get('color') : widget.get('colorEmpty')
+        }).render(colorHost);
+    };
+    renderColorInput();
+    this.addPropertyListener(widget, 'usePlayerColor', renderColorInput);
   }
 
   // compact one-line styled text input: text, color and font size side by
@@ -3966,7 +4002,8 @@ class PropertiesModule extends SidebarModule {
           batchStart();
           setDeltaCause(`${getPlayerDetails().playerName} removed player ${player} from seat ${widget.id} in editor`);
           await widget.set('player', null);
-          await widget.set('color', widget.get('colorEmpty'));
+          if(widget.get('usePlayerColor'))
+            await widget.set('color', widget.get('colorEmpty'));
           batchEnd();
         };
         row.appendChild(remove);
@@ -3978,7 +4015,8 @@ class PropertiesModule extends SidebarModule {
           batchStart();
           setDeltaCause(`${getPlayerDetails().playerName} took seat ${widget.id} in editor`);
           await widget.set('player', getPlayerDetails().playerName);
-          await widget.set('color', getPlayerDetails().playerColor);
+          if(widget.get('usePlayerColor'))
+            await widget.set('color', getPlayerDetails().playerColor);
           batchEnd();
         };
         container.appendChild(take);

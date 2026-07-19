@@ -145,7 +145,7 @@ const WIDGET_PROPERTIES = {
     },
     Seat: {
         ...COMMON_PROPERTIES,
-        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'id', color: 'any', colorEmpty: 'any', layer: 'any', borderRadius: 'any'
+        typeClasses: 'any', movable: 'boolean', index: 'any', turn: 'any', skipTurn: 'any', player: 'any', display: 'any', displayEmpty: 'any', hideTurn: 'any', hideWhenUnused: 'any', hand: 'id', color: 'any', colorEmpty: 'any', usePlayerColor: 'boolean', layer: 'any', borderRadius: 'any'
     },
     Spinner: {
         ...COMMON_PROPERTIES,
