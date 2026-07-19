@@ -1334,7 +1334,8 @@ class DeckEditor {
     const editable = !bound || this.cardType !== null;
     const input = document.createElement('input');
     input.className = 'deckEditorPreviewText';
-    input.value = bound ? (this.cardType !== null ? (this.cardTypes[this.cardType][bound] ?? '') : '') : (object.value ?? '');
+    let current = bound ? (this.cardType !== null ? this.cardTypes[this.cardType][bound] : undefined) : object.value;
+    input.value = current === undefined || current === null ? '' : current;
     input.disabled = !editable;
     input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")` : 'Text on every card';
     // Clicking/dragging inside the field must not start a row drag or re-select via the row handler.
