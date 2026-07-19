@@ -230,6 +230,7 @@ class DeckEditor {
     for(const button of this.dragToolbarButtons)
       button.render($('#deckEditorDragToolbar'));
 
+    $('#deckEditorAddDeck').onclick = _=>this.addDeck();
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorShowAll').onclick = _=>{
@@ -899,8 +900,11 @@ class DeckEditor {
     const cdw = (this.cardDefaults && +this.cardDefaults.width) || 103;
     const cdh = (this.cardDefaults && +this.cardDefaults.height) || 160;
     const dscale = Math.min(120 / cdw, 90 / cdh);
-    $('.deckEditorDeckCardFace', deckTile).style.width  = cdw * dscale + 'px';
+    const tileWidth = cdw * dscale;
+    $('.deckEditorDeckCardFace', deckTile).style.width  = tileWidth + 'px';
     $('.deckEditorDeckCardFace', deckTile).style.height = cdh * dscale + 'px';
+    // Fit the card-type add/copy/delete toolbar to exactly the deck tile's width (item: not wider than the tile).
+    $('#deckEditorStripToolbar').style.width = tileWidth + 'px';
     deckTile.classList.toggle('selected', this.deckSymbolSelected);
     deckTile.title = 'Edit the properties every card of this deck defaults to.';
     deckTile.onclick = _=>{
@@ -957,7 +961,7 @@ class DeckEditor {
 
     // The type selector is shown ONLY here (when adding a new property); the created row is then a fixed field.
     const addPropertyRow = (target, onAdd)=>{
-      const row = div(target, 'deckEditorAddProperty', '<input placeholder="new property"><select><option value="text">text</option><option value="number">number</option></select><button icon=add>Add</button>');
+      const row = div(target, 'deckEditorAddProperty', '<input placeholder="new property"><select><option value="text">text</option><option value="number">number</option><option value="true">true</option><option value="false">false</option><option value="object">object/array</option></select><button icon=add>Add</button>');
       $('button', row).onclick = _=>{
         const property = $('input', row).value.trim();
         if(property)
@@ -993,7 +997,7 @@ class DeckEditor {
           continue;
         // Known object properties get a fixed field type (number or text) with no type selector; the value's
         // JS type decides for anything custom.
-        const fieldType = this.objectFieldType(property, object[property]);
+        const fieldType = this.objectFieldType(property);
         const row = this.addTypedInput(property, object[property], v=>this.queueFieldEdit(async _=>{
           await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
           object[property] = v;
@@ -1021,7 +1025,7 @@ class DeckEditor {
         if(property == 'dynamicProperties' || object[property] !== undefined)
           return;
         await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
-        object[property] = type == 'number' ? 0 : '';
+        object[property] = this.initialValueForType(type);
         this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         this.renderSidebar();
       }));
@@ -1073,15 +1077,9 @@ class DeckEditor {
     ];
     const typeProps = div(sidebar, 'deckEditorProperties');
     const addTypeInput = property=>{
-      const row = this.addInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
+      const row = this.addTypedInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
-        if(typeof v === 'undefined') {
-          delete typeProperties[property];
-          if(this.mainCard)
-            delete this.mainCard.state[property];
-        } else {
-          typeProperties[property] = v;
-        }
+        typeProperties[property] = v;
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       }), typeProps);
@@ -1108,7 +1106,7 @@ class DeckEditor {
       if(typeProperties[property] !== undefined)
         return;
       await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
-      typeProperties[property] = type == 'number' ? 0 : '';
+      typeProperties[property] = this.initialValueForType(type);
       this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       this.renderSidebar();
     }));
@@ -1168,13 +1166,13 @@ class DeckEditor {
       tree.innerHTML = '';
       for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
         const isCurrent = deck.id == this.deckID;
-        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTwisty>${isCurrent ? '▾' : '▸'}</span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
+        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTwisty>${isCurrent ? '▾' : '▸'}</span><span class=deckEditorTreeIcon icon=style></span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
         deckRow.classList.toggle('selected', isCurrent && this.treeLevel == 'deck');
         deckRow.onclick = _=>this.selectDeckNode(deck.id);
         if(!isCurrent)
           continue;
         for(let f=0; f<this.faceTemplates.length; ++f) {
-          const faceRow = div(tree, 'deckEditorTreeNode deckEditorTreeFace', `<span class=deckEditorTreeLabel>${html(this.faceLabel(f))}</span>`);
+          const faceRow = div(tree, 'deckEditorTreeNode deckEditorTreeFace', `<span class=deckEditorTreeIcon icon=crop_portrait></span><span class=deckEditorTreeLabel>${html(this.faceLabel(f))}</span>`);
           faceRow.classList.toggle('selected', f == this.face && this.treeLevel == 'face');
           faceRow.onclick = _=>this.selectFaceNode(f);
           if(f != this.face)
@@ -1191,7 +1189,8 @@ class DeckEditor {
   }
 
   renderTreeObjectRow(tree, object, index) {
-    const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><div class=deckEditorObjectPreview></div>`);
+    const typeIcon = { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
+    const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
     row.classList.toggle('selected', index === this.selectedObject);
     row.title = `Face object ${index+1} (${object.type || 'text'})`;
     this.renderObjectPreview($('.deckEditorObjectPreview', row), index);
@@ -1234,8 +1233,8 @@ class DeckEditor {
     const noun = level == 'object' ? 'object' : level;
     const add = $('#deckEditorTreeAdd'), copy = $('#deckEditorTreeCopy'), del = $('#deckEditorTreeDelete'), show = $('#deckEditorShowAll');
     if(add) {
-      add.disabled = level != 'deck' && !hasDeck;
-      add.title = level == 'deck' ? 'Add a new deck' : level == 'face' ? 'Add a face (or the first object of an empty face)' : 'Add a face object';
+      add.disabled = !hasDeck;
+      add.title = level == 'deck' ? 'Add a face to this deck' : 'Add a face object';
     }
     const noSelection = !hasDeck || (level == 'object' && this.selectedObject === null) || (level != 'deck' && !this.faceTemplates.length);
     if(copy) { copy.disabled = noSelection; copy.title = `Copy the selected ${noun}`; }
@@ -1263,19 +1262,13 @@ class DeckEditor {
     this.render();
   }
 
-  // Unified add/copy/delete act on the selected tree level. Add on an object (or an empty face with no object
-  // to select yet) reveals the add-object type menu; on a face it adds a face; on a deck it adds a deck.
+  // The "+" adds one level down from the selection: a deck's "+" adds a face; a face's or object's "+" adds an
+  // object (revealing the type menu). New decks come from the separate "Add New Deck" button.
   treeAdd() {
     if(this.treeLevel == 'deck')
-      return this.addDeck();
-    const face = this.faceTemplates[this.face];
-    const faceEmpty = !face || !Array.isArray(face.objects) || !face.objects.length;
-    if(this.treeLevel == 'object' || (this.treeLevel == 'face' && faceEmpty)) {
-      this.addSectionOpen = !this.addSectionOpen;
-      this.updateAddSection();
-      return;
-    }
-    return this.addFace();
+      return this.addFace();
+    this.addSectionOpen = !this.addSectionOpen;
+    this.updateAddSection();
   }
 
   treeCopy() {
@@ -1454,29 +1447,64 @@ class DeckEditor {
     return row;
   }
 
-  // The fixed field type for a known object property (number vs text); custom properties follow their value.
-  objectFieldType(property, value) {
+  // The fixed field type for a known object property (number vs text); undefined for anything else so its own
+  // value's JS type decides (handles booleans and objects/arrays too).
+  // The initial value for a newly-added property of the chosen type (from the add-property selector).
+  initialValueForType(type) {
+    switch(type) {
+      case 'number': return 0;
+      case 'true':   return true;
+      case 'false':  return false;
+      case 'object': return {};
+      default:       return '';
+    }
+  }
+
+  objectFieldType(property) {
     if([ 'x', 'y', 'width', 'height', 'fontSize', 'size', 'strokeWidth', 'rotation' ].indexOf(property) != -1)
       return 'number';
     if([ 'textAlign', 'color', 'value', 'strokeColor', 'type' ].indexOf(property) != -1)
       return 'text';
-    return typeof value === 'number' ? 'number' : 'text';
+    return undefined;
   }
 
-  // A property row with a fixed input type (number or text) and no type selector — matches addInput's return
-  // shape ({ dom }) so the make-dynamic / delete buttons attach the same way.
+  // A property row with a fixed input type and NO type selector — matches addInput's return shape ({ dom }) so
+  // the make-dynamic / delete buttons attach the same way. fieldType may be forced (number/text/boolean/object)
+  // or left undefined to follow the value's JS type.
   addTypedInput(label, value, onValueChanged, target, fieldType) {
+    if(!fieldType) {
+      if(typeof value === 'number') fieldType = 'number';
+      else if(typeof value === 'boolean') fieldType = 'boolean';
+      else if(value !== null && typeof value === 'object') fieldType = 'object';
+      else fieldType = 'text';
+    }
     const wrapper = div(target, 'genericInput deckEditorTypedInput');
     const labelEl = document.createElement('label');
     labelEl.style.cssText = 'display:inline-block;width:100px';
     labelEl.textContent = label;
-    const input = document.createElement('input');
-    input.type = fieldType == 'number' ? 'number' : 'text';
-    if(fieldType == 'number')
-      input.step = 'any';
-    input.value = value === undefined || value === null ? '' : value;
-    input.oninput = input.onchange = _=>onValueChanged(fieldType == 'number' ? (Number(input.value) || 0) : input.value);
-    wrapper.append(labelEl, input);
+    wrapper.append(labelEl);
+    let input;
+    if(fieldType == 'boolean') {
+      input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = !!value;
+      input.onchange = _=>onValueChanged(input.checked);
+    } else if(fieldType == 'object') {
+      input = document.createElement('textarea');
+      input.value = value !== undefined && value !== null ? JSON.stringify(value, null, '  ') : '{}';
+      input.oninput = input.onchange = _=>{
+        try { onValueChanged(JSON.parse(input.value)); input.classList.remove('inputError'); }
+        catch(e) { input.classList.add('inputError'); }
+      };
+    } else {
+      input = document.createElement('input');
+      input.type = fieldType == 'number' ? 'number' : 'text';
+      if(fieldType == 'number')
+        input.step = 'any';
+      input.value = value === undefined || value === null ? '' : value;
+      input.oninput = input.onchange = _=>onValueChanged(fieldType == 'number' ? (Number(input.value) || 0) : input.value);
+    }
+    wrapper.append(input);
     return { dom: wrapper };
   }
 
@@ -1500,14 +1528,12 @@ class DeckEditor {
     ];
     const defaultsProps = div(sidebar, 'deckEditorProperties');
     const addDefaultsInput = property=>{
-      const row = this.addInput(property, this.cardDefaults[property], v=>this.queueFieldEdit(async _=>{
+      const forced = (property == 'width' || property == 'height') ? 'number' : undefined;
+      const row = this.addTypedInput(property, this.cardDefaults[property], v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
-        if(typeof v === 'undefined')
-          delete this.cardDefaults[property];
-        else
-          this.cardDefaults[property] = v;
+        this.cardDefaults[property] = v;
         this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
-      }), defaultsProps);
+      }), defaultsProps, forced);
       if(this.cardDefaults[property] !== undefined) {
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
@@ -1526,7 +1552,7 @@ class DeckEditor {
       if(this.cardDefaults[property] !== undefined)
         return;
       await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
-      this.cardDefaults[property] = type == 'number' ? 0 : '';
+      this.cardDefaults[property] = this.initialValueForType(type);
       this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
       this.renderSidebar();
     }));

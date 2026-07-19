@@ -131,6 +131,16 @@ body.deckEditorActive #editorDragToolbar {
   flex-shrink: 0;
 }
 
+/* "Add New Deck" then a divider before the undo/redo/history controls. */
+.deckEditorHistoryDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 2px 4px;
+  background: var(--textColor);
+  opacity: 0.25;
+  flex-shrink: 0;
+}
+
 #deckEditorHistoryLabel {
   font-size: 11px;
   font-weight: bold;
@@ -258,13 +268,21 @@ body.deckEditorActive #editorDragToolbar {
   border-color: var(--textHighlightColor2);
 }
 
+/* Level indent + a left accent stripe per level so the deck > face > object hierarchy reads clearly. */
+.deckEditorTreeDeck {
+  font-weight: bold;
+  box-shadow: inset 3px 0 0 var(--VTTblue);
+}
+
 .deckEditorTreeFace {
-  padding-left: 16px;
+  padding-left: 18px;
+  box-shadow: inset 3px 0 0 #4aa3ff;
 }
 
 .deckEditorTreeNode.deckEditorObjectRow,
 .deckEditorTreeEmpty {
   margin-left: 30px;
+  box-shadow: inset 3px 0 0 var(--backgroundHighlightColor1);
 }
 
 .deckEditorTreeEmpty {
@@ -283,19 +301,37 @@ body.deckEditorActive #editorDragToolbar {
   opacity: 0.8;
 }
 
+/* Level icons (deck/face/object) rendered from the icon attribute, like the toolbar buttons. */
+.deckEditorTreeIcon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.deckEditorTreeIcon::before {
+  content: attr(icon);
+  font-family: "Material Symbols";
+  font-size: 18px;
+  line-height: 1;
+}
+
 .deckEditorTreeLabel {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Unified add / copy / delete (+ show areas) toolbar, pinned at the bottom of the left sidebar. */
+/* Unified add / copy / delete (+ show areas) toolbar, at the top of the left sidebar. */
 #deckEditorLeftToolbar {
   display: flex;
   gap: 4px;
   padding: 6px 8px;
   flex-shrink: 0;
-  border-top: 1px solid var(--backgroundHighlightColor1);
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
 }
 
 #deckEditorLeftToolbar button {
@@ -656,20 +692,30 @@ body.deckEditorActive #editorDragToolbar {
   flex-shrink: 0;
 }
 
+/* Width is set inline in renderStrip() to match the deck tile; the three buttons share it. */
 #deckEditorStripToolbar {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   flex-shrink: 0;
 }
 
 /* Blue/white icon-only buttons with the native title as tooltip. */
 #deckEditorStripToolbar button {
-  width: 26px;
-  height: 26px;
+  flex: 1;
+  min-width: 0;
+  height: 24px;
   padding: 0;
   background: var(--VTTblue);
   color: #fff;
   border-radius: 4px;
+}
+
+/* Smaller icon glyphs so they fit the compact icon-only toolbar buttons. */
+#deckEditorStripToolbar button::before,
+#deckEditorLeftToolbar button::before {
+  font-size: 18px;
+  width: auto;
+  margin: 0;
 }
 
 #deckEditorStripToolbar button:hover:not(:disabled) {
