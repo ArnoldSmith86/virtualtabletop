@@ -1453,7 +1453,11 @@ class DeckEditor {
     const row = div(target, 'deckEditorNumberInput', `<label>${html(label)}</label><input type=number step=any>`);
     const input = $('input', row);
     input.value = value === undefined || value === null ? 0 : value;
-    input.oninput = _=>onValueChanged(Number(input.value) || 0);
+    input.oninput = _=>{
+      if(input.value.trim() === '') // a momentarily-empty field shouldn't commit 0 over the real value
+        return;
+      onValueChanged(Number(input.value) || 0);
+    };
     return row;
   }
 
@@ -1512,7 +1516,15 @@ class DeckEditor {
       if(fieldType == 'number')
         input.step = 'any';
       input.value = value === undefined || value === null ? '' : value;
-      input.oninput = input.onchange = _=>onValueChanged(fieldType == 'number' ? (Number(input.value) || 0) : input.value);
+      input.oninput = input.onchange = _=>{
+        if(fieldType == 'number') {
+          if(input.value.trim() === '') // a momentarily-empty field shouldn't commit 0 over the real value
+            return;
+          onValueChanged(Number(input.value) || 0);
+        } else {
+          onValueChanged(input.value);
+        }
+      };
     }
     wrapper.append(input);
     return { dom: wrapper };
