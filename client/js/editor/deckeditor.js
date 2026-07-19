@@ -980,7 +980,7 @@ class DeckEditor {
     const addHeader = (text, scopeClass, caption)=>{
       const header = document.createElement('header');
       header.className = `deckEditorSidebarHeader ${scopeClass}`;
-      header.innerHTML = `<h2>${html(text)}</h2><p>${html(caption)}</p>`;
+      header.innerHTML = `<h2>${html(text)}</h2>${caption ? `<p>${html(caption)}</p>` : ''}`;
       sidebar.append(header);
     };
 
@@ -1003,7 +1003,12 @@ class DeckEditor {
     }
 
     if(object) {
-      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Part of the face template — on every card');
+      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard');
+
+      // For image objects the upload button sits right under the header (its most useful spot).
+      if(object.type == 'image')
+        this.renderUploadImageButton(sidebar, object);
+
       // One cause/actionId per edited field: a typing burst on one property of one object stays one
       // breadcrumb/undo step, but edits to another property or object become their own step.
       const objectFieldArgs = property=>[
@@ -1051,38 +1056,7 @@ class DeckEditor {
 
       this.renderDynamicProperties(sidebar, object);
 
-      const objectButtons = div(sidebar, 'buttonBar');
-      if(object.type == 'image') {
-        const upload = document.createElement('button');
-        upload.setAttribute('icon', 'upload');
-        upload.innerText = 'Upload image';
-        upload.onclick = _=>uploadAsset().then(async asset=>{
-          if(!asset)
-            return;
-          await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-          // When the image's value is bound per card type, upload into this card type's property, not the
-          // shared template — otherwise it would show on every card type at once.
-          const boundTo = object.dynamicProperties && object.dynamicProperties.value;
-          if(boundTo && this.cardType !== null) {
-            this.cardTypes[this.cardType][boundTo] = asset;
-            this.refreshMainCardFaces();
-            await this.commit('cardTypes', `${getPlayerDetails().playerName} uploaded an image for card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
-          } else {
-            object.value = asset;
-            this.refreshMainCardFaces();
-            await this.commit('faceTemplates', `${getPlayerDetails().playerName} uploaded an image for a face object of deck ${this.deckID} in deck editor`);
-          }
-          this.renderSidebar();
-        });
-        objectButtons.append(upload);
-      }
-      const deleteObject = document.createElement('button');
-      deleteObject.setAttribute('icon', 'delete');
-      deleteObject.className = 'red';
-      deleteObject.innerText = 'Delete object';
-      deleteObject.onclick = _=>this.deleteSelectedObject();
-      objectButtons.append(deleteObject);
-
+      // No "Delete object" button here — objects are deleted from the left face-object list (or Delete key).
       this.renderObjectHint();
       return;
     }
@@ -1098,7 +1072,7 @@ class DeckEditor {
     if(this.cardType === null)
       return;
 
-    addHeader('Card type', 'deckEditorScopeThisType', 'Only this card type');
+    addHeader('Card type properties', 'deckEditorScopeThisType');
 
     const nameRow = div(sidebar, 'deckEditorCardTypeName', `<label>Name</label><input value="${html(String(this.cardType))}">`);
     $('input', nameRow).onchange = e=>{
@@ -1274,11 +1248,46 @@ class DeckEditor {
 
   // Renders a small live preview of a face object by cloning its rendered node from the main card (so text,
   // icons, images and color boxes all look right); falls back to a swatch/label when the card can't render.
+  // Upload button for image objects. When the value is bound per card type it uploads into that card type's
+  // property, otherwise into the shared template.
+  renderUploadImageButton(sidebar, object) {
+    const bar = div(sidebar, 'buttonBar deckEditorUploadBar');
+    const upload = document.createElement('button');
+    upload.setAttribute('icon', 'upload');
+    upload.innerText = 'Upload image';
+    upload.onclick = _=>uploadAsset().then(async asset=>{
+      if(!asset)
+        return;
+      await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+      const boundTo = object.dynamicProperties && object.dynamicProperties.value;
+      if(boundTo && this.cardType !== null) {
+        this.cardTypes[this.cardType][boundTo] = asset;
+        this.refreshMainCardFaces();
+        await this.commit('cardTypes', `${getPlayerDetails().playerName} uploaded an image for card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+      } else {
+        object.value = asset;
+        this.refreshMainCardFaces();
+        await this.commit('faceTemplates', `${getPlayerDetails().playerName} uploaded an image for a face object of deck ${this.deckID} in deck editor`);
+      }
+      this.renderSidebar();
+    });
+    bar.append(upload);
+  }
+
   renderObjectPreview(box, index) {
     const face = this.faceTemplates[this.face];
     const object = face && Array.isArray(face.objects) ? face.objects[index] : null;
     if(!box || !object)
       return;
+    const type = object.type || 'text';
+
+    // Text objects show the actual text in an inline editable field (like the right sidebar's value field):
+    // clicking the field edits it, clicking the row around it selects the object.
+    if(type == 'text') {
+      this.renderPreviewTextField(box, object, index);
+      return;
+    }
+
     const bw = 44, bh = 60;
     let node = null;
     if(this.mainCard) {
@@ -1286,13 +1295,26 @@ class DeckEditor {
       if(faceDiv && faceDiv.children[index])
         node = faceDiv.children[index].cloneNode(true);
     }
+
+    // Images fill the preview with the whole picture (contain), so the entire image shows, not a corner.
+    if(type == 'image') {
+      const bg = node ? node.style.backgroundImage : '';
+      const fill = div(box, 'deckEditorPreviewFill');
+      if(bg && bg != 'none')
+        fill.style.backgroundImage = bg;
+      if(object.color && object.color != 'transparent')
+        fill.style.backgroundColor = object.color;
+      return;
+    }
+
+    // Icons (and anything else) are scaled to fit the box from their own bounds, so the whole glyph shows.
     if(node) {
-      const w = object.width || object.size || 40;
-      const h = object.height || object.size || 40;
-      const scale = Math.min(bw / w, bh / h, 1);
+      const w = type == 'icon' ? (object.size || object.width || 40) : (object.width || object.size || 40);
+      const h = type == 'icon' ? (object.size || object.height || 40) : (object.height || object.size || 40);
+      const scale = Math.min(bw / w, bh / h);
       node.style.left = '0';
       node.style.top = '0';
-      node.style.transform = (object.rotation ? `rotate(${object.rotation}deg) ` : '') + `scale(${scale})`;
+      node.style.transform = `scale(${scale})`;
       node.style.transformOrigin = 'top left';
       node.style.pointerEvents = 'none';
       const wrap = div(box, 'deckEditorObjectPreviewInner');
@@ -1301,13 +1323,47 @@ class DeckEditor {
       wrap.append(node);
       return;
     }
-    if(object.type == 'image') {
-      box.style.background = object.color || '#ccc';
-    } else if(object.type == 'icon') {
-      box.textContent = '★';
-    } else {
-      box.textContent = String(object.value || 'Text').slice(0, 6);
-    }
+    box.textContent = type == 'icon' ? '★' : String(object.value || '').slice(0, 6);
+  }
+
+  // The editable text field shown in a text object's list row. Edits the static value, or — when the value is
+  // bound per card type — the current card type's property, committed with the same debounce as the sidebar.
+  renderPreviewTextField(box, object, index) {
+    box.classList.add('deckEditorPreviewTextBox');
+    const bound = object.dynamicProperties && object.dynamicProperties.value;
+    const editable = !bound || this.cardType !== null;
+    const input = document.createElement('input');
+    input.className = 'deckEditorPreviewText';
+    input.value = bound ? (this.cardType !== null ? (this.cardTypes[this.cardType][bound] ?? '') : '') : (object.value ?? '');
+    input.disabled = !editable;
+    input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")` : 'Text on every card';
+    // Clicking/dragging inside the field must not start a row drag or re-select via the row handler.
+    input.onmousedown = e=>e.stopPropagation();
+    input.onclick = e=>e.stopPropagation();
+    input.ondragstart = e=>{ e.preventDefault(); e.stopPropagation(); };
+    input.oninput = _=>this.queueFieldEdit(async _=>{
+      const value = input.value;
+      if(bound && this.cardType !== null) {
+        const args = [
+          `${getPlayerDetails().playerName} updated "${bound}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`,
+          `field:cardTypes:${this.cardType}:${bound}`
+        ];
+        await this.flushPendingCommitForOtherField('cardTypes', args[1]);
+        this.cardTypes[this.cardType][bound] = value;
+        this.refreshMainCardFaces();
+        this.scheduleCommit('cardTypes', ...args);
+      } else {
+        const args = [
+          `${getPlayerDetails().playerName} updated "value" of face object ${index+1} on face ${this.face} of deck ${this.deckID} in deck editor`,
+          `field:faceTemplates:${this.face}:${index}:value`
+        ];
+        await this.flushPendingCommitForOtherField('faceTemplates', args[1]);
+        object.value = value;
+        this.refreshMainCardFaces();
+        this.scheduleCommit('faceTemplates', ...args);
+      }
+    });
+    box.append(input);
   }
 
   async copySelectedObject() {
@@ -1515,14 +1571,18 @@ class DeckEditor {
   }
 
   renderDynamicProperties(sidebar, object) {
-    const h = document.createElement('h3');
-    h.innerText = 'Dynamic properties';
-    sidebar.append(h);
+    // A proper VTTblue section header (matches the other sidebar bands).
+    const header = document.createElement('header');
+    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
+    header.innerHTML = '<h2>Dynamic properties</h2>';
+    sidebar.append(header);
 
-    const container = div(sidebar, 'deckEditorDynamicProperties', '<p>Dynamic properties fill properties of this object from the card type, so every card type can show different text, images or colors. The <b>stack</b> button next to a property above converts it with one click.</p>');
+    const container = div(sidebar, 'deckEditorDynamicProperties');
 
-    for(const [ objectProperty, typeProperty ] of Object.entries(object.dynamicProperties || {})) {
-      const row = div(container, 'deckEditorDynamicProperty', `<span><b>${html(objectProperty)}</b> from card type property <b>${html(String(typeProperty))}</b></span><button icon=delete title="Remove this binding and make the property static again."></button>`);
+    // The already-active bindings: each row is a live "object property ← card type property" with a red trash.
+    const bindings = Object.entries(object.dynamicProperties || {});
+    for(const [ objectProperty, typeProperty ] of bindings) {
+      const row = div(container, 'deckEditorDynamicProperty', `<span class=deckEditorBindingText><b>${html(objectProperty)}</b> <span class=deckEditorBindingArrow>←</span> card type <b>${html(String(typeProperty))}</b></span><button icon=delete class="red deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
       $('button', row).onclick = async _=>{
         await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
         delete object.dynamicProperties[objectProperty];
@@ -1542,17 +1602,22 @@ class DeckEditor {
       };
     }
 
-    // Both sides are dropdowns: the object side offers common displayable properties plus the object's own
-    // ones, the card type side offers every property any card type already has plus a "new property" choice.
+    // Redesigned "add binding" control: one compact "<object property> ← <card type property>" row with a
+    // clear Bind button. The object side offers common displayable properties plus the object's own ones; the
+    // card type side offers every property any card type already has plus a "new property" choice.
     const bound = object.dynamicProperties || {};
     const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...Object.keys(object) ])]
       .filter(p=>p != 'type' && p != 'dynamicProperties' && bound[p] === undefined);
     const typePropertyOptions = this.knownCardTypeProperties();
     const addRow = div(container, 'deckEditorAddBinding', `
-      <div><label>Object property to fill</label><select class=objectProperty>${objectPropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}</select></div>
-      <div><label>From card type property</label><select class=typeProperty>${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select></div>
-      <div class=newTypeProperty style="display:none"><label>Name of the new property</label><input placeholder="e.g. rank"></div>
-      <div class=buttonBar><button icon=add>Add dynamic property</button></div>
+      <div class=deckEditorAddBindingTitle>Fill a property from the card type</div>
+      <div class=deckEditorAddBindingRow>
+        <select class=objectProperty title="Object property to fill">${objectPropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}</select>
+        <span class=deckEditorBindingArrow>←</span>
+        <select class=typeProperty title="Card type property to read from">${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select>
+      </div>
+      <input class=newTypeProperty style="display:none" placeholder="name of the new property, e.g. rank">
+      <button class=deckEditorAddBindingButton icon=add>Bind</button>
     `);
     const typeSelect = $('.typeProperty', addRow);
     const updateNewNameVisibility = _=>$('.newTypeProperty', addRow).style.display = typeSelect.value == '__new__' ? '' : 'none';
@@ -1560,7 +1625,7 @@ class DeckEditor {
     updateNewNameVisibility();
     $('button', addRow).onclick = async _=>{
       const objectProperty = $('.objectProperty', addRow).value;
-      let typeProperty = typeSelect.value == '__new__' ? $('.newTypeProperty input', addRow).value.trim() : typeSelect.value;
+      let typeProperty = typeSelect.value == '__new__' ? $('.newTypeProperty', addRow).value.trim() : typeSelect.value;
       if(!objectProperty || !typeProperty)
         return;
       if(typeSelect.value == '__new__' && this.reservedCardTypeProperties().includes(typeProperty))
@@ -1651,6 +1716,7 @@ class DeckEditor {
     await this.commit('faceTemplates', cause, actionId);
     if(this.removeOrphanedTypeProperties(removed))
       await this.commit('cardTypes', cause, actionId);
+    this.renderLeftSidebar(); // drop the deleted row from the left list right away
     this.renderSidebar();
     this.updateDragToolbar();
   }

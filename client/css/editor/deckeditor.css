@@ -386,6 +386,34 @@ body.deckEditorActive #editorDragToolbar {
   position: absolute;
 }
 
+/* Image previews: the whole picture, contained and centered in the box. */
+.deckEditorPreviewFill {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Text previews: an inline editable field instead of a scaled thumbnail. */
+.deckEditorObjectPreview.deckEditorPreviewTextBox {
+  flex: 1;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  background: none;
+  border: none;
+  justify-content: stretch;
+}
+
+.deckEditorPreviewText {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+  padding: 3px 4px;
+}
+
 #deckEditorMain {
   flex-grow: 1;
   display: flex;
@@ -495,22 +523,29 @@ body.deckEditorActive #editorDragToolbar {
   font-size: 14px;
 }
 
-.deckEditorDynamicProperties p {
-  margin: 5px 0;
-  font-size: 12px;
-  opacity: 0.7;
-}
-
+/* Active bindings: "<object property> ← <card type property>" rows, each with a red trash. */
 .deckEditorDynamicProperty {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 5px;
-  margin: 2px 0;
+  gap: 6px;
+  margin: 3px 0;
+  padding: 3px 5px;
+  border-radius: 4px;
+  background: var(--backgroundHighlightColor1);
 }
 
-.deckEditorDynamicProperty span {
+.deckEditorBindingText {
   font-size: 13px;
+}
+
+.deckEditorBindingArrow {
+  opacity: 0.7;
+  padding: 0 2px;
+}
+
+.deckEditorBindingDelete {
+  flex-shrink: 0;
 }
 
 .deckEditorAddProperty input {
@@ -518,21 +553,40 @@ body.deckEditorActive #editorDragToolbar {
   flex-grow: 1;
 }
 
-.deckEditorAddBinding div {
+/* Redesigned "add binding" control: a titled compact row + a full-width Bind button. */
+.deckEditorAddBinding {
+  margin-top: 8px;
+  padding: 6px;
+  border-radius: 6px;
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorAddBindingTitle {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.deckEditorAddBindingRow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 5px;
-  margin: 3px 0;
 }
 
-.deckEditorAddBinding label {
-  font-size: 12px;
-}
-
-.deckEditorAddBinding select, .deckEditorAddBinding input {
+.deckEditorAddBindingRow select {
+  flex: 1;
   min-width: 0;
-  width: 150px;
+}
+
+.deckEditorAddBinding .newTypeProperty {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.deckEditorAddBindingButton {
+  width: 100%;
+  margin-top: 6px;
 }
 
 #deckEditorSidebar .deckEditorProperties .genericInput {
@@ -540,22 +594,25 @@ body.deckEditorActive #editorDragToolbar {
   padding-right: 24px;
 }
 
+/* Property rows: red trash to delete the property. */
 .deckEditorDeleteProperty {
   position: absolute;
   right: 0;
   top: 0;
   padding: 1px 3px;
   font-size: 11px;
+  background: var(--VTTred, #c0392b);
+  color: #fff;
 }
 
-/* Face object rows have a second button: one-click "make different per card type" (amber = per-type accent). */
+/* Face object rows also have the amber "make different per card type" button, with a gap before the trash. */
 #deckEditorSidebar .deckEditorObjectProperties .genericInput {
-  padding-right: 50px;
+  padding-right: 56px;
 }
 
 .deckEditorMakeDynamic {
   position: absolute;
-  right: 25px;
+  right: 28px;
   top: 0;
   padding: 1px 3px;
   font-size: 11px;
@@ -608,12 +665,12 @@ body.deckEditorActive #editorDragToolbar {
   cursor: default;
 }
 
+/* Match the left sidebar's "FACE OBJECTS" header font/size/colour. */
 #deckEditorStripLabel {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  opacity: 0.7;
   flex-shrink: 0;
 }
 
@@ -688,16 +745,16 @@ body.deckEditorActive #editorDragToolbar {
 
 .deckEditorDeckCardFace {
   width: 84px;
-  height: 116px;
+  height: 130px; /* default card aspect ratio 103 x 160 */
   box-sizing: border-box;
-  background: #22344a;
+  background: var(--VTTblue);
   border-radius: 6px;
   box-shadow: 0 0 6px #0005;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 9px 6px;
+  gap: 10px;
+  padding: 10px 6px;
   color: #fff;
 }
 
@@ -724,17 +781,17 @@ body.deckEditorActive #editorDragToolbar {
   gap: 1px;
 }
 
-/* A small card icon above the count, both in the navy card color. */
+/* A small card icon above the count, both in the deck-tile blue. */
 .deckEditorDeckGlyph::before {
   content: '';
   width: 18px;
   height: 24px;
-  border: 2px solid #22344a;
+  border: 2px solid var(--VTTblue);
   border-radius: 3px;
 }
 
 .deckEditorDeckCount {
-  color: #22344a;
+  color: var(--VTTblue);
   font-weight: bold;
   font-size: 13px;
   line-height: 1;
