@@ -381,8 +381,12 @@ class NumberInput extends PropertyInput {
     const numeric = typeof value == 'number' ? value : +value || 0;
     if(document.activeElement !== this.input)
       this.input.value = value === null ? '' : numeric;
-    if(this.slider && document.activeElement !== this.slider)
-      this.slider.value = numeric;
+    if(this.slider && document.activeElement !== this.slider) {
+      // when unset, rest the slider at the numeric placeholder (the shown
+      // default) instead of dropping it to its minimum
+      const placeholder = this.options.placeholder !== undefined && this.options.placeholder !== '' ? +this.options.placeholder : NaN;
+      this.slider.value = value === null && Number.isFinite(placeholder) ? placeholder : numeric;
+    }
   }
 }
 
