@@ -197,6 +197,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')
     .click('#deckEditorAddFace')
+    .click('#deckEditorObjAdd')                       // reveal the add-object controls in the left sidebar
     .click('#deckEditorAddMode input[value=dynamic]') // add per-card-type objects (seeds a card type property)
     .click('#deckEditorAddText')                      // focus is now on the Text button, not the radio input
     .pressKey('delete') // deletes the selected object; also cleans up its now-orphaned card type property
@@ -250,6 +251,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')  // step 1
     .click('#deckEditorAddFace')             // step 2
+    .click('#deckEditorObjAdd')              // reveal the add-object controls (UI only, not a history step)
     .click('#deckEditorAddText');             // step 3
   await t.expect(getHistoryLength()).eql(4);
   await editTextAndUndoImmediately();         // flushes and undoes pending step 4, before its 500ms timer fires
@@ -307,6 +309,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')
     .click('#deckEditorAddFace')
+    .click('#deckEditorObjAdd')
     .click('#deckEditorAddText');
   await editAndReceiveRemoteChange(deckID);
   await t
@@ -370,6 +373,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
     .click('#deckEditorStripAdd')
+    .click('#deckEditorObjAdd')
     .click('#deckEditorAddText');
   await rapidEditsThenAddFace();
   await t
@@ -495,6 +499,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .setNativeDialogHandler(() => true)
     .click('#deckEditorDeleteFace')                 // delete both faces to get a faceless deck
     .click('#deckEditorDeleteFace')
+    .click('#deckEditorObjAdd')                     // reveal the add-object controls in the left sidebar
     .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
   // the color box is selected: one-click conversion of its color into a per-card-type property
   await t.expect(clickRowButton('Face object 1 (image)', 'color', '.deckEditorMakeDynamic')).ok();

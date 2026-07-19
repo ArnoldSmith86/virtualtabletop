@@ -179,6 +179,22 @@
           <button icon="remove" id="deckEditorDeleteFace" title="Delete the face currently shown from every card type of this deck.">Delete face</button>
           <button icon="highlight_alt" id="deckEditorShowAll" title="Outline all face objects on the card so you can see every area at once.">Show areas</button>
         </div>
+      </div>
+    </div>
+    <div id="deckEditorHistory">
+      <button icon="undo" id="deckEditorUndo" title="Undo the last change (Ctrl+Z).">Undo</button>
+      <button icon="redo" id="deckEditorRedo" title="Redo the last undone change (Ctrl+Y).">Redo</button>
+      <span id="deckEditorHistoryLabel">History:</span>
+      <div id="deckEditorBreadcrumb" title="Your edits this session — click a step to jump back or forward to it."></div>
+    </div>
+    <div id="deckEditorBody">
+      <div id="deckEditorLeftSidebar">
+        <header id="deckEditorLeftHeader">Face objects</header>
+        <div id="deckEditorLeftToolbar">
+          <button id="deckEditorObjAdd" icon="add" title="Add a face object"></button>
+          <button id="deckEditorObjCopy" icon="content_copy" title="Copy the selected face object"></button>
+          <button id="deckEditorObjDelete" icon="delete" title="Delete the selected face object"></button>
+        </div>
         <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
           <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type). The selected option also sets the group color.">
             <span class="deckEditorAddModeTitle">Add to:</span>
@@ -192,15 +208,8 @@
           <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
           <button icon="palette" id="deckEditorAddColor" title="Adds a solid color box, e.g. as a background.">Color</button>
         </div>
+        <div id="deckEditorObjectList"></div>
       </div>
-    </div>
-    <div id="deckEditorHistory">
-      <button icon="undo" id="deckEditorUndo" title="Undo the last change (Ctrl+Z).">Undo</button>
-      <button icon="redo" id="deckEditorRedo" title="Redo the last undone change (Ctrl+Y).">Redo</button>
-      <span id="deckEditorHistoryLabel">History:</span>
-      <div id="deckEditorBreadcrumb" title="Your edits this session — click a step to jump back or forward to it."></div>
-    </div>
-    <div id="deckEditorBody">
       <div id="deckEditorMain"></div>
       <div id="deckEditorSidebar"></div>
     </div>
@@ -209,9 +218,9 @@
       <div id="deckEditorStripToolbar">
         <button id="deckEditorStripAdd" icon="add" title="Add a blank card type"></button>
         <button id="deckEditorStripCopy" icon="content_copy" title="Copy the selected card type"></button>
-        <button id="deckEditorStripDelete" icon="remove" title="Delete the selected card type"></button>
+        <button id="deckEditorStripDelete" icon="delete" title="Delete the selected card type"></button>
       </div>
-      <span id="deckEditorStripLabel">Card types — click one to edit it</span>
+      <span id="deckEditorStripLabel">Card types</span>
     </div>
     <div id="deckEditorStrip"></div>
     <div id="deckEditorDragToolbar"><div id="deckEditorDragToolbarFeedback"></div></div>

@@ -91,12 +91,10 @@ body.deckEditorActive #editorDragToolbar {
    card, amber = different per card type), so the color is one of the two mode indicators. */
 .deckEditorAddGroupStatic {
   background: rgba(120, 190, 255, 0.22);
-  box-shadow: inset 3px 0 0 #4aa3ff;
 }
 
 .deckEditorAddGroupDynamic {
   background: rgba(255, 193, 7, 0.28);
-  box-shadow: inset 3px 0 0 #ffb300;
 }
 
 /* "Add to:" label over the mode radios - two lines fitting the height of the button row beside it. The
@@ -231,6 +229,163 @@ body.deckEditorActive #editorDragToolbar {
   min-height: 0;
 }
 
+/* Always-visible left "file directory" of the current face's objects. */
+#deckEditorLeftSidebar {
+  width: 190px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--backgroundHighlightColor1);
+  box-sizing: border-box;
+}
+
+#deckEditorLeftHeader {
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 8px 10px 4px 10px;
+  flex-shrink: 0;
+}
+
+/* Add / copy / delete face-object buttons, mirroring the card-type toolbar above the strip. */
+#deckEditorLeftToolbar {
+  display: flex;
+  gap: 4px;
+  padding: 0 10px 4px 10px;
+  flex-shrink: 0;
+}
+
+#deckEditorLeftToolbar button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 4px;
+}
+
+#deckEditorLeftToolbar button:hover:not(:disabled) {
+  background: var(--VTTblueDark);
+}
+
+#deckEditorLeftToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* The delete button is a red trash can (same treatment as the card-type delete above the strip). */
+#deckEditorObjDelete:not(:disabled),
+#deckEditorStripDelete:not(:disabled) {
+  background: var(--VTTred, #c0392b);
+}
+
+#deckEditorObjDelete:hover:not(:disabled),
+#deckEditorStripDelete:hover:not(:disabled) {
+  background: #922b21;
+}
+
+/* The add-object controls are revealed by the "+" button (a vertical expander) between it and the list. */
+#deckEditorAddSection {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 10px 6px 10px;
+  padding: 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+#deckEditorAddSection.deckEditorAddSectionOpen {
+  display: flex;
+}
+
+#deckEditorAddSection {
+  align-items: stretch;
+}
+
+#deckEditorAddSection button {
+  padding: 5px 6px;
+  font-size: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+#deckEditorObjectList {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 4px 8px 8px 8px;
+  min-height: 0;
+}
+
+.deckEditorLeftEmpty {
+  padding: 8px 2px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.deckEditorObjectRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  margin-bottom: 3px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.deckEditorObjectRow:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorObjectRow.selected {
+  border-color: var(--textHighlightColor2);
+}
+
+.deckEditorObjectRow.dragOver {
+  border-color: var(--VTTblue);
+}
+
+.deckEditorObjectRow.dragging {
+  opacity: 0.4;
+}
+
+.deckEditorObjectNum {
+  font-size: 12px;
+  font-weight: bold;
+  width: 16px;
+  flex-shrink: 0;
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* Preview box holding a scaled clone of the object's rendered node (or a swatch/label fallback). */
+.deckEditorObjectPreview {
+  width: 46px;
+  height: 62px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: repeating-conic-gradient(#0000000d 0% 25%, transparent 0% 50%) 50% / 12px 12px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 3px;
+  font-size: 11px;
+  color: var(--textColor);
+}
+
+.deckEditorObjectPreviewInner {
+  position: relative;
+  pointer-events: none;
+}
+
+.deckEditorObjectPreviewInner .cardFaceObject {
+  position: absolute;
+}
+
 #deckEditorMain {
   flex-grow: 1;
   display: flex;
@@ -311,12 +466,10 @@ body.deckEditorActive #editorDragToolbar {
 
 .deckEditorScopeEveryCard {
   background: rgba(120, 190, 255, 0.15);
-  box-shadow: inset 3px 0 0 #4aa3ff;
 }
 
 .deckEditorScopeThisType {
   background: rgba(255, 193, 7, 0.18);
-  box-shadow: inset 3px 0 0 #ffb300;
 }
 
 #deckEditorSidebar .genericInput {
@@ -419,11 +572,12 @@ body.deckEditorActive #editorDragToolbar {
   width: 60px;
 }
 
-/* The strip header pins the card-type toolbar (add/copy/delete) to the far left with the label beside it. */
+/* The strip header stacks the card-type toolbar (add/copy/delete) on its own row above the label. */
 #deckEditorStripHeader {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
   padding: 4px 10px 0 10px;
   border-top: 1px solid var(--backgroundHighlightColor1);
   flex-shrink: 0;
@@ -526,61 +680,64 @@ body.deckEditorActive #editorDragToolbar {
   height: 90px;
 }
 
-/* The first strip entry is the deck itself: a blue "deck widget" glyph (a spread pile of cards behind the
-   live card count) that opens the card defaults. White-on-blue so it reads as the deck, not a card type. */
-.deckEditorDeckTile .renderedCard {
-  width: 90px;
-  height: 90px;
+/* The first strip entry is the deck itself: a navy card carrying the "Edit all card defaults" label and a
+   white circular deck-widget glyph (a card icon over the live card count) that opens the card defaults. */
+.deckEditorDeckTile {
+  padding: 0;
+}
+
+.deckEditorDeckCardFace {
+  width: 84px;
+  height: 116px;
+  box-sizing: border-box;
+  background: #22344a;
+  border-radius: 6px;
+  box-shadow: 0 0 6px #0005;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 8px;
+  padding: 9px 6px;
+  color: #fff;
+}
+
+.deckEditorStripCard .deckEditorDeckLabel {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.15;
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
 }
 
 .deckEditorDeckGlyph {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: var(--VTTblue);
+  background: #fff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 4px #0005;
+  gap: 1px;
 }
 
-/* Two white cards fanned out behind the number to suggest a pile. */
-.deckEditorDeckGlyph::before,
-.deckEditorDeckGlyph::after {
-  content: '';
-  position: absolute;
-  bottom: 14px;
-  width: 16px;
-  height: 24px;
-  background: #fff;
-  border: 1px solid var(--VTTblue);
-  border-radius: 2px;
-}
-
+/* A small card icon above the count, both in the navy card color. */
 .deckEditorDeckGlyph::before {
-  transform: rotate(-18deg) translate(-9px, 4px);
+  content: '';
+  width: 18px;
+  height: 24px;
+  border: 2px solid #22344a;
+  border-radius: 3px;
 }
 
-.deckEditorDeckGlyph::after {
-  transform: rotate(18deg) translate(9px, 4px);
-}
-
-/* A small blue backing keeps the white count readable where it overlaps the white cards. */
 .deckEditorDeckCount {
-  position: relative;
-  z-index: 1;
-  color: #fff;
+  color: #22344a;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 13px;
   line-height: 1;
-  padding: 1px 5px;
-  border-radius: 9px;
-  background: var(--VTTblue);
-  box-shadow: 0 0 3px 3px var(--VTTblue);
 }
 
 /* The "Entire face" / "Face objects" bands: solid VTTblue with white text. */
@@ -608,40 +765,6 @@ body.deckEditorActive #editorDragToolbar {
 
 .deckEditorNumberInput input {
   width: 70px;
-}
-
-/* The face-object list: one row per object with reorder arrows and a delete button; the label selects it. */
-.deckEditorFaceObjectList {
-  margin: 4px 0 8px 0;
-}
-
-.deckEditorFaceObjectRow {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 4px;
-  border-radius: 4px;
-}
-
-.deckEditorFaceObjectRow:hover {
-  background: var(--backgroundHighlightColor1);
-}
-
-.deckEditorFaceObjectLabel {
-  flex-grow: 1;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.deckEditorFaceObjectRow button {
-  padding: 2px 4px;
-  font-size: 12px;
-  flex-shrink: 0;
-}
-
-.deckEditorFaceObjectRow button:disabled {
-  opacity: 0.3;
-  cursor: default;
 }
 
 /* While a deck is being edited, the room-editor toolbar only keeps the actions that still make sense:
