@@ -188,6 +188,53 @@ function searchIconIndex(query, limit=42) {
   return results.slice(0, limit);
 }
 
+// Info button (design inspired by the routine editor in PR #2439): a small
+// "i" icon that opens a dismissable popup with an explanation. The popup
+// closes with its close button, a click outside of it or Escape.
+// NOTE: this is the only definition of infoButton on this branch - the
+// routine editor's controls/popup.js (which also declares one) is not part of
+// this branch's editor bundle. Do not remove this without adding that file to
+// server/minify.mjs first, or every info button call site throws.
+function infoButton(appendTo, infoHTML) {
+  const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
+  dom.addEventListener('click', e=>{
+    e.stopPropagation();
+    const popup = div($('#editor'), 'inline-popup', `<button class=popup-close icon=close title=Close></button><div class=content></div>`);
+    $('.content', popup).innerHTML = infoHTML;
+
+    const sourceRect = dom.getBoundingClientRect();
+    popup.style.left = `${sourceRect.left}px`;
+    popup.style.top  = `${sourceRect.bottom}px`;
+    const rect = popup.getBoundingClientRect();
+    if(rect.right > window.innerWidth - 10)
+      popup.style.left = `${Math.max(10, window.innerWidth - rect.width - 10)}px`;
+    if(rect.bottom > window.innerHeight - 10)
+      popup.style.top = `${Math.max(10, window.innerHeight - rect.height - 10)}px`;
+
+    const close = _=>{
+      document.removeEventListener('click', onOutsideClick);
+      document.removeEventListener('keydown', onKeyDown, true);
+      popup.remove();
+    };
+    const onOutsideClick = e=>{
+      if(!popup.contains(e.target))
+        close();
+    };
+    // capture phase so Escape only closes the popup instead of also deselecting in the editor
+    const onKeyDown = e=>{
+      if(e.key == 'Escape') {
+        e.stopPropagation();
+        close();
+      }
+    };
+    $('.popup-close', popup).onclick = close;
+    document.addEventListener('keydown', onKeyDown, true);
+    // defer so the click that opened the popup doesn't immediately close it
+    setTimeout(_=>document.addEventListener('click', onOutsideClick), 0);
+  });
+  return dom;
+}
+
 function propertyInputNumberOrText(rawValue, nullIfEmpty=false) {
   const value = String(rawValue).trim();
   if(value === '' && nullIfEmpty)
