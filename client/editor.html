@@ -180,9 +180,12 @@
           <button icon="highlight_alt" id="deckEditorShowAll" title="Outline all face objects on the card so you can see every area at once.">Show areas</button>
         </div>
         <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
-          <div id="deckEditorAddModeToggle" title="Switch between adding an object that looks the same on every card and one that can differ per card type. The highlighted side and the group color show which mode you are in.">
-            <button data-mode="static" class="active">Same on every card</button>
-            <button data-mode="dynamic">Different per card type</button>
+          <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type). The selected option also sets the group color.">
+            <span class="deckEditorAddModeTitle">Add to:</span>
+            <div class="deckEditorAddModeRadios">
+              <label><input type="radio" name="deckEditorAddMode" value="static" checked>All Cards</label>
+              <label><input type="radio" name="deckEditorAddMode" value="dynamic">Card Type</label>
+            </div>
           </div>
           <button icon="format_size" id="deckEditorAddText">Text</button>
           <button icon="image" id="deckEditorAddImage">Image</button>

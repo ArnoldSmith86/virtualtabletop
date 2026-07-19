@@ -242,10 +242,10 @@ class DeckEditor {
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
       $('#deckEditorMain').classList.toggle('deckEditorShowAllAreas', this.showAllAreas);
     };
-    // One set of add buttons; the mode toggle decides whether they add a static object (same on every card)
-    // or a per-card-type one. The toggle's highlighted side and the group's accent color are the indicators.
-    for(const button of $a('#deckEditorAddModeToggle button'))
-      button.onclick = _=>this.setAddMode(button.dataset.mode);
+    // One set of add buttons; the "Add to:" radios decide whether they add a static object (All Cards) or a
+    // per-card-type one (Card Type). The selected radio and the group's accent color are the indicators.
+    for(const radio of $a('#deckEditorAddMode input[type=radio]'))
+      radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
     $('#deckEditorAddImage').onclick = _=>{
       uploadAsset().then(asset=>{
@@ -348,13 +348,9 @@ class DeckEditor {
     }
     if(deckID === null) {
       const decks = widgetFilter(w=>w.get('type') == 'deck');
-      if(decks.length)
-        deckID = decks[decks.length-1].get('id');
+      deckID = decks.length ? decks[decks.length-1].get('id') : await createStarterDeck();
     }
-    if(deckID !== null)
-      await this.open(deckID);
-    else
-      alert('This game has no deck yet. Add one first — the "Design a deck in the deck editor" option when adding a deck opens it here directly.');
+    await this.open(deckID);
   }
 
   async close() {
@@ -1278,8 +1274,9 @@ class DeckEditor {
       section.classList.toggle('deckEditorAddGroupStatic', this.addMode == 'static');
       section.classList.toggle('deckEditorAddGroupDynamic', this.addMode == 'dynamic');
     }
-    for(const button of $a('#deckEditorAddModeToggle button'))
-      button.classList.toggle('active', button.dataset.mode == this.addMode);
+    const radio = $(`#deckEditorAddMode input[value=${this.addMode}]`);
+    if(radio)
+      radio.checked = true;
   }
 
   async addDynamicObject(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
@@ -1543,6 +1540,32 @@ class DeckEditor {
 }
 
 const deckEditor = new DeckEditor();
+
+// Creates a minimal deck to start designing from scratch (holder + deck with one card type, a colored back
+// and a white front, plus one card) and returns the deck's id. Shared by the toolbar button (when the game
+// has no deck yet) and the properties module's "Design a deck in the deck editor" option.
+async function createStarterDeck() {
+  batchStart();
+  const id = generateUniqueWidgetID();
+  setDeltaCause(`${getPlayerDetails().playerName} created deck ${id}D for the deck editor`);
+  await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
+  await addWidgetLocal({
+    type: 'deck',
+    id: id+'D',
+    parent: id,
+    x: 12,
+    y: 41,
+    cardDefaults: { width: 103, height: 160 },
+    cardTypes: { 'type 1': {} },
+    faceTemplates: [
+      { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: VTTblue } ] },
+      { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: '#ffffff' } ] }
+    ]
+  });
+  await addWidgetLocal({ type: 'card', deck: id+'D', cardType: 'type 1', parent: id, activeFace: 1 });
+  batchEnd();
+  return id+'D';
+}
 
 async function deckEditorReceiveDelta(delta) {
   if(!deckEditor.isOpen())

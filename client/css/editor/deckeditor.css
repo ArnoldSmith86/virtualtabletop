@@ -99,35 +99,49 @@ body.deckEditorActive #editorDragToolbar {
   box-shadow: inset 3px 0 0 #ffb300;
 }
 
-/* Segmented toggle: the highlighted side (blue/amber) is the other mode indicator. */
-#deckEditorAddModeToggle {
+/* "Add to:" label over the mode radios - two lines fitting the height of the button row beside it. The
+   selected radio (and the group color above) are the indicators of what the add buttons will create. */
+#deckEditorAddMode {
   display: flex;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-right: 4px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  margin-right: 6px;
   flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1.15;
 }
 
-#deckEditorAddModeToggle button {
-  padding: 3px 8px;
-  font-size: 11px;
+.deckEditorAddModeTitle {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  white-space: nowrap;
-  border-radius: 0;
-  background: #ffffff14;
-  color: #ffffff99;
 }
 
-#deckEditorAddModeToggle button.active[data-mode=static] {
-  background: #4aa3ff;
-  color: #fff;
+.deckEditorAddModeRadios {
+  display: flex;
+  gap: 8px;
 }
 
-#deckEditorAddModeToggle button.active[data-mode=dynamic] {
-  background: #ffb300;
-  color: #222;
+.deckEditorAddModeRadios label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.deckEditorAddModeRadios input {
+  margin: 0;
+  cursor: pointer;
+}
+
+.deckEditorAddGroupStatic .deckEditorAddModeRadios input {
+  accent-color: #4aa3ff;
+}
+
+.deckEditorAddGroupDynamic .deckEditorAddModeRadios input {
+  accent-color: #ffb300;
 }
 
 .deckEditorAddGroup button {
@@ -239,27 +253,23 @@ body.deckEditorActive #editorDragToolbar {
   cursor: move;
 }
 
-/* The room clips cards to their bounds, but the editor's big card does not: the object outlines below
-   sit outside the objects, so on an object covering the whole card they would otherwise be clipped away
-   entirely (overflow clips at the padding box, so even an inset outline vanishes once the face has a
-   border). This also shows objects dragged past the card's edge instead of silently hiding them. The
-   strip previews below keep the real clipping. */
-#deckEditorMain .deckEditorCard .card,
-#deckEditorMain .deckEditorCard .cardFace {
-  overflow: visible;
-}
-
+/* Clip the big edit card to its bounds like the real card does, so an object dragged past the card's edge
+   is hidden instead of floating out over the editor. The object outlines below are drawn INSIDE the object
+   (negative outline-offset) so a full-card object's outline stays visible within the clip. */
 /* before :hover and .deckEditorSelectedObject so those still win on the hovered/selected object */
 #deckEditorMain.deckEditorShowAllAreas .deckEditorCard .cardFaceObject {
   outline: calc(2px / var(--deckEditorCardScale)) dotted var(--textHighlightColor2);
+  outline-offset: calc(-2px / var(--deckEditorCardScale));
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject:hover {
   outline: calc(2px / var(--deckEditorCardScale)) dashed var(--textHighlightColor2);
+  outline-offset: calc(-2px / var(--deckEditorCardScale));
 }
 
 #deckEditorMain .deckEditorCard .cardFaceObject.deckEditorSelectedObject {
   outline: calc(3px / var(--deckEditorCardScale)) solid var(--textHighlightColor2);
+  outline-offset: calc(-3px / var(--deckEditorCardScale));
 }
 
 .deckEditorEmpty, .deckEditorHint {

@@ -197,10 +197,9 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#editor [icon=edit]')
     .click('.deckEditorAddCardType button')
     .click('#deckEditorAddFace')
-    .click('#deckEditorAddModeToggle button[data-mode=dynamic]') // switch the add mode to per-card-type
-    .click('#deckEditorAddText')
-    .click('#deckEditorAddModeToggle button[data-mode=static]')  // back to default so later adds are unchanged
-    .pressKey('delete') // deletes the selected face object; also exercises the Delete-key path once nothing is focused
+    .click('#deckEditorAddMode input[value=dynamic]') // add per-card-type objects (seeds a card type property)
+    .click('#deckEditorAddText')                      // focus is now on the Text button, not the radio input
+    .pressKey('delete') // deletes the selected object; also cleans up its now-orphaned card type property
     .click('#deckEditorAddFace')
     .setNativeDialogHandler(() => true)
     .click('#deckEditorDeleteFace')
@@ -526,4 +525,27 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.pressKey('esc');
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(toolbarButton.hasClass('active')).notOk();
+});
+
+// With no deck in the game, the toolbar button creates a starter deck (like the Properties tab option) and
+// opens it, instead of doing nothing.
+test('Deck editor: toolbar button creates a deck when the game has none', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  const deckCount = ClientFunction(() => {
+    let count = 0;
+    widgets.forEach(w => { if(w.get('type') == 'deck') count++; });
+    return count;
+  });
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar [icon=style]'); // no deck exists yet
+  await t
+    .expect(Selector('body').hasClass('deckEditorActive')).ok()
+    .expect(deckCount()).eql(1)      // a starter deck was created
+    .pressKey('esc');
+  await compareState(t, 'ab6dea2fb85252f1375a260da833826d');
 });

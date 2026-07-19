@@ -362,28 +362,7 @@ class PropertiesModule extends SidebarModule {
 
   deckEditorStart(target) {
     const bar = div(target, 'buttonBar', '<button icon=style class=green>Open Deck Editor</button>');
-    $('button', bar).onclick = async _=>{
-      batchStart();
-      const id = generateUniqueWidgetID();
-      setDeltaCause(`${getPlayerDetails().playerName} created deck ${id}D for the deck editor`);
-      await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
-      await addWidgetLocal({
-        type: 'deck',
-        id: id+'D',
-        parent: id,
-        x: 12,
-        y: 41,
-        cardDefaults: { width: 103, height: 160 },
-        cardTypes: { 'type 1': {} },
-        faceTemplates: [
-          { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: VTTblue } ] },
-          { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: '#ffffff' } ] }
-        ]
-      });
-      await addWidgetLocal({ type: 'card', deck: id+'D', cardType: 'type 1', parent: id, activeFace: 1 });
-      batchEnd();
-      deckEditor.open(id+'D');
-    };
+    $('button', bar).onclick = async _=>deckEditor.open(await createStarterDeck());
   }
 
   async deckTraditional(target) {
