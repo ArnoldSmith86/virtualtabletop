@@ -240,13 +240,17 @@ body.deckEditorActive #enlarged {
   min-height: 0;
 }
 
-/* Card column: the main card view plus the centered hint directly below it. */
+/* Card column: the main card view fills it; the hint is overlaid at the bottom (out of flow) so showing/
+   hiding it never changes the card view's height (which would otherwise let the fitted card overflow). */
 #deckEditorMainCol {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  position: relative;
   min-width: 0;
   min-height: 0;
+}
+
+#deckEditorMainCol #deckEditorMain {
+  height: 100%;
 }
 
 /* Tree nodes: increasing indent per level (deck > face > object). */
@@ -737,13 +741,18 @@ body.deckEditorActive #enlarged {
   flex-shrink: 0;
 }
 
-/* The "Click a face object…" hint sits centered under the card view, just above the card-type strip. */
+/* The "Click a face object…" hint is overlaid at the bottom-center of the card view (out of flow), so it
+   never changes the card view's height. */
 #deckEditorObjectHint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   text-align: center;
   font-size: 12px;
   opacity: 0.7;
   padding: 4px 10px;
-  flex-shrink: 0;
+  pointer-events: none;
 }
 
 #deckEditorObjectHint:empty {

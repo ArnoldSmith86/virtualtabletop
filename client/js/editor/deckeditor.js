@@ -699,8 +699,11 @@ class DeckEditor {
 
   render() {
     this.renderHistory();
-    this.renderMain();
+    // Render the card-types strip BEFORE the main card: the strip takes vertical space in the right column, so
+    // measuring #deckEditorMain while the strip is still empty would size the card to a too-tall area and let
+    // it overflow once the strip fills in.
     this.renderStrip();
+    this.renderMain();
     this.renderLeftSidebar();
     this.renderSidebar();
     this.updateDragToolbar();
