@@ -449,7 +449,8 @@ const editorTypeSections = {
       { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
       { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background', cssProperty: 'backgroundCSS', effectiveSelector: '.background' },
       { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color' },
-      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', cssKey: 'color', cssProperty: 'valueCSS', effectiveSelector: '.value' }
+      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', labelIconNoFill: true, cssKey: 'color', cssProperty: 'valueCSS', effectiveSelector: '.value' },
+      { label: 'Value background', kind: 'color', labelIcon: 'counter_1', cssKey: 'background', cssProperty: 'valueCSS', effectiveSelector: '.value' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },

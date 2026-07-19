@@ -276,7 +276,7 @@ class PropertyInput {
       if(this.options.labelIcon) {
         // common color roles are shown as their material symbol instead of text
         const icon = document.createElement('span');
-        icon.className = 'material-symbols labelIcon';
+        icon.className = `${this.options.labelIconNoFill ? 'material-symbols-nofill' : 'material-symbols'} labelIcon`;
         icon.textContent = this.options.labelIcon;
         label.appendChild(icon);
         label.title = this.labelText;
