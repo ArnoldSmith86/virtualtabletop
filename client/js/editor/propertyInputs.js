@@ -191,11 +191,12 @@ function searchIconIndex(query, limit=42) {
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
 // closes with its close button, a click outside of it or Escape.
-// NOTE: this is the only definition of infoButton on this branch - the
-// routine editor's controls/popup.js (which also declares one) is not part of
-// this branch's editor bundle. Do not remove this without adding that file to
-// server/minify.mjs first, or every info button call site throws.
-function infoButton(appendTo, infoHTML) {
+// Named propertyInfoButton (not infoButton) because controls/popup.js
+// declares its own top-level infoButton(); both files land in the editor
+// bundle whenever this PR and the routine editor are merged together (e.g.
+// on the beta branch), and duplicate top-level declarations in the bundled
+// module throw "Identifier has already been declared".
+function propertyInfoButton(appendTo, infoHTML) {
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
   dom.addEventListener('click', e=>{
     e.stopPropagation();
@@ -285,10 +286,10 @@ class PropertyInput {
         label.textContent = this.labelText;
       }
       if(this.options.hint)
-        infoButton(label, html(this.options.hint));
+        propertyInfoButton(label, html(this.options.hint));
       this.dom.appendChild(label);
     } else if(this.options.hint) {
-      infoButton(this.dom, html(this.options.hint));
+      propertyInfoButton(this.dom, html(this.options.hint));
     }
     this.renderControl(this.dom);
     for(const property of this.listenProperties())

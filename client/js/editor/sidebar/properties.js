@@ -2733,7 +2733,7 @@ class PropertiesModule extends SidebarModule {
   renderInfoIcon(infoText, options = {}) {
     const holder = document.createElement('span');
     holder.setAttribute('aria-label', options.ariaLabel || 'Information');
-    infoButton(holder, html(infoText || ''));
+    propertyInfoButton(holder, html(infoText || ''));
     return holder;
   }
 
@@ -3376,7 +3376,7 @@ class PropertiesModule extends SidebarModule {
           showTitle: cssProperties.length > 1
         });
     }, null, `${widget.id}:css`);
-    infoButton($('.collapsibleHeader', cssSection), html(editorPropertyHints.css));
+    propertyInfoButton($('.collapsibleHeader', cssSection), html(editorPropertyHints.css));
   }
 
   // comment-style line listing the classes the widget currently applies on
@@ -3424,7 +3424,7 @@ class PropertiesModule extends SidebarModule {
       const title = div(wrap, 'propertyPickerSectionTitle');
       title.textContent = property;
       if(editorPropertyHints[property] || property == 'css')
-        infoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
+        propertyInfoButton(title, html(editorPropertyHints[property] || editorPropertyHints.css));
     }
     const container = div(wrap);
 
@@ -3460,7 +3460,7 @@ class PropertiesModule extends SidebarModule {
       }, section, stateKey);
 
       if(className == 'default')
-        infoButton($('.collapsibleHeader', section), 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".');
+        propertyInfoButton($('.collapsibleHeader', section), 'Declarations applied to the widget itself. Other sections style sub-elements or states like ":hover".');
 
       if(!wholeProperty) {
         const header = $('.collapsibleHeader', section);
@@ -3603,7 +3603,7 @@ class PropertiesModule extends SidebarModule {
     const textRow = div(this.moduleDOM, 'propertyInput');
     const textLabel = document.createElement('label');
     textLabel.textContent = 'Text';
-    infoButton(textLabel, html(editorPropertyHints.text));
+    propertyInfoButton(textLabel, html(editorPropertyHints.text));
     textRow.appendChild(textLabel);
 
     const textInput = document.createElement('input');
@@ -3652,13 +3652,13 @@ class PropertiesModule extends SidebarModule {
     const iconBlock = div(mediaRow, 'contentMediaBlock');
     const iconTitle = div(iconBlock, 'contentMediaTitle');
     iconTitle.textContent = 'Icon';
-    infoButton(iconTitle, html(editorPropertyHints.icon));
+    propertyInfoButton(iconTitle, html(editorPropertyHints.icon));
     new IconInput(this, widget, null, { property: 'icon', pickerGroup }).render(iconBlock);
 
     const imageBlock = div(mediaRow, 'contentMediaBlock');
     const imageTitle = div(imageBlock, 'contentMediaTitle');
     imageTitle.textContent = 'Image';
-    infoButton(imageTitle, html(editorPropertyHints.image));
+    propertyInfoButton(imageTitle, html(editorPropertyHints.image));
     new ImageInput(this, widget, null, { property: 'image', pickerGroup }).render(imageBlock);
   }
 
@@ -3778,7 +3778,7 @@ class PropertiesModule extends SidebarModule {
     const wrap = div(this.moduleDOM, 'propertyInput');
     const label = document.createElement('label');
     label.textContent = 'Active color';
-    infoButton(label, html(editorPropertyHints.activeColor));
+    propertyInfoButton(label, html(editorPropertyHints.activeColor));
     wrap.appendChild(label);
 
     const input = document.createElement('input');
@@ -3996,7 +3996,7 @@ class PropertiesModule extends SidebarModule {
     const wrap = div(this.moduleDOM, 'propertyInput');
     const label = document.createElement('label');
     label.textContent = 'Hand holder';
-    infoButton(label, html(editorPropertyHints.hand));
+    propertyInfoButton(label, html(editorPropertyHints.hand));
     wrap.appendChild(label);
 
     const input = document.createElement('input');
@@ -4029,7 +4029,7 @@ class PropertiesModule extends SidebarModule {
     const label = document.createElement('label');
     label.textContent = labelText;
     if(options.hint)
-      infoButton(label, html(options.hint));
+      propertyInfoButton(label, html(options.hint));
     wrap.appendChild(label);
 
     const input = document.createElement('input');
