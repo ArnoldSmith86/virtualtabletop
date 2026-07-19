@@ -3330,7 +3330,7 @@ class PropertiesModule extends SidebarModule {
     this.renderAppearanceBody(widget);
   }
 
-  renderAppearanceBody(widget, beforeCss = null) {
+  renderAppearanceBody(widget, afterColors = null) {
     const sections = this.typeSections(widget);
     const colors = sections.colors || [];
     const hover = sections.hover || [];
@@ -3345,13 +3345,16 @@ class PropertiesModule extends SidebarModule {
       this.addAppearanceSubTitle('Hover');
       this.renderColorRow(widget, hover);
     }
+
+    // extra color-like subsections (e.g. holder droptarget/droppable) sit
+    // after the colors and before the Style inputs
+    if(afterColors)
+      afterColors();
+
     if((colors.length || hover.length) && misc.length)
       this.addAppearanceSubTitle('Style');
     if(misc.length)
       this.renderInputs(widget, misc);
-
-    if(beforeCss)
-      beforeCss();
 
     const cssSection = this.renderCollapsibleSection('CSS', true, body => {
       new TextInput(this, widget, 'User defined active classes', {
@@ -4390,10 +4393,10 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.renderAppearanceBody(widget, () => {
-      // styling applied while a matching widget is being dragged (droptarget)
-      // or is hovering over the holder (droppable)
-      this.renderHolderStateSection(widget, 'When a widget can be dropped here', '.droptarget');
-      this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droppable');
+      // .droppable is set on every valid target while a matching widget is
+      // dragged; .droptarget is the one currently hovered over
+      this.renderHolderStateSection(widget, 'When a widget can be dropped here', '.droppable');
+      this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droptarget');
     });
     this.renderBehaviorSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image' ]);
