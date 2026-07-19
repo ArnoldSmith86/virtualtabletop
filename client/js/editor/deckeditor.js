@@ -900,11 +900,8 @@ class DeckEditor {
     const cdw = (this.cardDefaults && +this.cardDefaults.width) || 103;
     const cdh = (this.cardDefaults && +this.cardDefaults.height) || 160;
     const dscale = Math.min(120 / cdw, 90 / cdh);
-    const tileWidth = cdw * dscale;
-    $('.deckEditorDeckCardFace', deckTile).style.width  = tileWidth + 'px';
+    $('.deckEditorDeckCardFace', deckTile).style.width  = cdw * dscale + 'px';
     $('.deckEditorDeckCardFace', deckTile).style.height = cdh * dscale + 'px';
-    // Fit the card-type add/copy/delete toolbar to exactly the deck tile's width (item: not wider than the tile).
-    $('#deckEditorStripToolbar').style.width = tileWidth + 'px';
     deckTile.classList.toggle('selected', this.deckSymbolSelected);
     deckTile.title = 'Edit the properties every card of this deck defaults to.';
     deckTile.onclick = _=>{
@@ -1166,7 +1163,7 @@ class DeckEditor {
       tree.innerHTML = '';
       for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
         const isCurrent = deck.id == this.deckID;
-        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTwisty>${isCurrent ? '▾' : '▸'}</span><span class=deckEditorTreeIcon icon=style></span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
+        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTreeIcon icon=style></span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
         deckRow.classList.toggle('selected', isCurrent && this.treeLevel == 'deck');
         deckRow.onclick = _=>this.selectDeckNode(deck.id);
         if(!isCurrent)
@@ -1184,6 +1181,10 @@ class DeckEditor {
           objects.forEach((object, index)=>this.renderTreeObjectRow(tree, object, index));
         }
       }
+      // Keep the selected object's row visible (e.g. when it was selected by clicking it in the big card view).
+      const selectedRow = this.selectedObject !== null ? $a('.deckEditorObjectRow', tree)[this.selectedObject] : null;
+      if(selectedRow)
+        selectedRow.scrollIntoView({ block: 'nearest' });
     }
     this.updateTreeToolbar();
   }
