@@ -446,9 +446,9 @@ const editorTypeSections = {
     // --lineColor from its properties, overriding the css property
     colors: [
       { label: 'Text',          property: 'textColor',    kind: 'color', labelIcon: 'format_color_text' },
-      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background', cssProperty: 'backgroundCSS' },
+      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background', cssProperty: 'backgroundCSS', effectiveSelector: '.background' },
       { label: 'Line',          property: 'lineColor',    kind: 'color', labelIcon: 'border_color' },
-      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', cssKey: 'color', cssProperty: 'valueCSS' }
+      { label: 'Value text',    kind: 'color', labelIcon: 'counter_1', cssKey: 'color', cssProperty: 'valueCSS', effectiveSelector: '.value' }
     ],
     cssProperties: [ 'css', 'backgroundCSS', 'spinnerCSS', 'valueCSS' ]
   },
@@ -3284,7 +3284,7 @@ class PropertiesModule extends SidebarModule {
       if(options.hint === undefined && def.property && editorPropertyHints[def.property])
         options.hint = editorPropertyHints[def.property];
       if(def.cssKey)
-        Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css'));
+        Object.assign(options, cssValueOptions(this, widget, def.cssKey, def.cssProperty || 'css', 'default', { effectiveSelector: def.effectiveSelector }));
       if(def.propertyOrCss)
         Object.assign(options, propertyOrCssOptions(this, widget, def.property, def.propertyOrCss));
       new kinds[def.kind](this, widget, def.label, options).render(target || this.moduleDOM);

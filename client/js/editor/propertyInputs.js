@@ -850,10 +850,38 @@ class ImageInput extends PickerInput {
 // options for inputs that edit a single declaration inside a css-like
 // property (through the parse/merge helpers in properties.js) so ColorInput
 // and NumberInput can edit e.g. the "color" declaration of the css property
+// Reads the value a css declaration/custom-property currently resolves to on
+// a rendered element, so a picker whose value is not explicitly set can still
+// preview the widget's actual default (e.g. a timer's default text color)
+// instead of showing "not set".
+function computedCssValue(element, key) {
+  if(!element)
+    return null;
+  const style = getComputedStyle(element);
+  let value = key.startsWith('--') ? style.getPropertyValue(key) : style.getPropertyValue(key == 'background' ? 'background-color' : key);
+  value = (value || '').trim();
+  if(!value || value == 'rgba(0, 0, 0, 0)')
+    return value == 'rgba(0, 0, 0, 0)' ? 'transparent' : null;
+  return value;
+}
+
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
   let warned = false;
+  // element the declaration actually renders on, used to preview the effective
+  // default when nothing is explicitly set
+  const effectiveElement = _=>{
+    if(extraOptions.effectiveSelector && widget.domElement)
+      return widget.domElement.querySelector(extraOptions.effectiveSelector);
+    return widget.domElement;
+  };
   return Object.assign({
     getValue: _=>parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass),
+    getEffective: _=>{
+      const raw = parsePropertyFromCSS(widget.get(cssProperty), key, null, cssClass);
+      if(propertyInputValueSet(raw))
+        return raw;
+      return computedCssValue(effectiveElement(), key);
+    },
     setValue: v=>{
       const css = widget.get(cssProperty);
       // mergePropertyFromCSS refuses strings it cannot parse without losing
