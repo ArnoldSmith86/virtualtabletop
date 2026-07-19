@@ -195,7 +195,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
-    .click('.deckEditorAddCardType button')
+    .click('#deckEditorStripAdd')
     .click('#deckEditorAddFace')
     .click('#deckEditorAddMode input[value=dynamic]') // add per-card-type objects (seeds a card type property)
     .click('#deckEditorAddText')                      // focus is now on the Text button, not the radio input
@@ -248,7 +248,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
-    .click('.deckEditorAddCardType button')  // step 1
+    .click('#deckEditorStripAdd')  // step 1
     .click('#deckEditorAddFace')             // step 2
     .click('#deckEditorAddText');             // step 3
   await t.expect(getHistoryLength()).eql(4);
@@ -305,7 +305,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
-    .click('.deckEditorAddCardType button')
+    .click('#deckEditorStripAdd')
     .click('#deckEditorAddFace')
     .click('#deckEditorAddText');
   await editAndReceiveRemoteChange(deckID);
@@ -369,7 +369,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
-    .click('.deckEditorAddCardType button')
+    .click('#deckEditorStripAdd')
     .click('#deckEditorAddText');
   await rapidEditsThenAddFace();
   await t
@@ -407,7 +407,7 @@ test('Deck editor: switching games while editing does not crash', async t => {
   await t
     .click(`#w_${deckID}`)
     .click('#editor [icon=edit]')
-    .click('.deckEditorAddCardType button'); // make a change, leaving the deck editor open
+    .click('#deckEditorStripAdd'); // make a change, leaving the deck editor open
 
   // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
   await setRoomState({ switchedLabel: { id: 'switchedLabel', type: 'label', x: 100, y: 100, text: 'Another game' } });
@@ -440,6 +440,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     }
     return null;
   };
+  // Card defaults rows are generic inputs with a type dropdown.
   const setField = ClientFunction((header, label, value) => {
     const row = findRow(header, label);
     if(!row)
@@ -452,6 +453,23 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     input.dispatchEvent(new Event('input', { bubbles: true }));
     return true;
   }, { dependencies: { findRow } });
+  // The "Entire face" band uses plain number inputs (border/radius/enlarge), not the generic dropdown rows.
+  const setNumberField = ClientFunction((header, label, value) => {
+    const headers = document.querySelectorAll('#deckEditorSidebar header');
+    for(let i = 0; i < headers.length; ++i) {
+      if(headers[i].querySelector('h2').textContent != header)
+        continue;
+      const rows = headers[i].nextElementSibling.querySelectorAll('.deckEditorNumberInput');
+      for(let j = 0; j < rows.length; ++j)
+        if(rows[j].querySelector('label').textContent == label) {
+          const input = rows[j].querySelector('input');
+          input.value = value;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          return true;
+        }
+    }
+    return false;
+  });
   const clickRowButton = ClientFunction((header, label, buttonSelector) => {
     const row = findRow(header, label);
     const button = row && row.querySelector(buttonSelector);
@@ -460,15 +478,13 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     button.click();
     return true;
   }, { dependencies: { findRow } });
-  const clickStripButton = ClientFunction(labelPart => {
-    const tiles = document.querySelectorAll('#deckEditorStrip .deckEditorAddCardType');
-    for(let i = 0; i < tiles.length; ++i) {
-      if(tiles[i].textContent.indexOf(labelPart) != -1) {
-        tiles[i].querySelector('button').click();
-        return true;
-      }
-    }
-    return false;
+  // The deck symbol is the first strip entry; selecting it shows the card defaults in the sidebar.
+  const selectDeckTile = ClientFunction(() => {
+    const tile = document.querySelector('#deckEditorStrip .deckEditorDeckTile');
+    if(!tile)
+      return false;
+    tile.click();
+    return true;
   });
 
   await t
@@ -480,20 +496,22 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .click('#deckEditorDeleteFace')                 // delete both faces to get a faceless deck
     .click('#deckEditorDeleteFace')
     .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
+  // the color box is selected: one-click conversion of its color into a per-card-type property
+  await t.expect(clickRowButton('Face object 1 (image)', 'color', '.deckEditorMakeDynamic')).ok();
+  await t.pressKey('esc'); // deselect the object -> the "Entire face" and "Face objects" bands appear
+  await t.expect(setNumberField('Entire face', 'radius', 8)).ok();
+  await t.wait(700); // let the debounced faceTemplates commit fire
+  // edit the card defaults, which live behind the deck symbol in the strip
+  await t.expect(selectDeckTile()).ok();
   await t.expect(setField('Card defaults', 'width', 120)).ok();
   await t.wait(700); // let the debounced cardDefaults commit fire
-  // one-click conversion of the color box's color into a per-card-type property
-  await t.expect(clickRowButton('Face object 1 (image)', 'color', '.deckEditorMakeDynamic')).ok();
-  await t.pressKey('esc'); // deselect the object
-  await t.expect(setField('Face 0', 'radius', 8)).ok();
-  await t.wait(700); // let the debounced faceTemplates commit fire
   await t.expect(clickRowButton('Card defaults', 'width', '.deckEditorDeleteProperty')).ok();
   await t.click('#deckEditorUndo'); // restores the deleted width
-  await t.expect(clickStripButton('Copy card type')).ok(); // copies "type 1" including its color property
+  await t.click('#deckEditorStripCopy'); // copies "type 1" (still current) including its color property
   await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, '4fd7ce515016591869c345b5b0d52e78');
+  await compareState(t, '13618c8d4a21ba92c161783689ab14fb');
 });
 
 test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {

@@ -419,15 +419,61 @@ body.deckEditorActive #editorDragToolbar {
   width: 60px;
 }
 
+/* The strip header pins the card-type toolbar (add/copy/delete) to the far left with the label beside it. */
+#deckEditorStripHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px 0 10px;
+  border-top: 1px solid var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+#deckEditorStripToolbar {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Blue/white icon-only buttons with the native title as tooltip. */
+#deckEditorStripToolbar button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 4px;
+}
+
+#deckEditorStripToolbar button:hover:not(:disabled) {
+  background: var(--VTTblueDark);
+}
+
+#deckEditorStripToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 #deckEditorStripLabel {
   font-size: 11px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.3px;
   opacity: 0.7;
-  padding: 4px 10px 0 10px;
-  border-top: 1px solid var(--backgroundHighlightColor1);
   flex-shrink: 0;
+}
+
+/* The "Click a face object…" hint sits centered under the card view, just above the card-type strip. */
+#deckEditorObjectHint {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+  padding: 4px 10px;
+  flex-shrink: 0;
+}
+
+#deckEditorObjectHint:empty {
+  display: none;
 }
 
 #deckEditorStrip {
@@ -478,6 +524,132 @@ body.deckEditorActive #editorDragToolbar {
 .deckEditorAddCardType button {
   width: 60px;
   height: 90px;
+}
+
+/* The first strip entry is the deck itself: a blue "deck widget" glyph (a spread pile of cards behind the
+   live card count) that opens the card defaults. White-on-blue so it reads as the deck, not a card type. */
+.deckEditorDeckTile .renderedCard {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deckEditorDeckGlyph {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--VTTblue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px #0005;
+}
+
+/* Two white cards fanned out behind the number to suggest a pile. */
+.deckEditorDeckGlyph::before,
+.deckEditorDeckGlyph::after {
+  content: '';
+  position: absolute;
+  bottom: 14px;
+  width: 16px;
+  height: 24px;
+  background: #fff;
+  border: 1px solid var(--VTTblue);
+  border-radius: 2px;
+}
+
+.deckEditorDeckGlyph::before {
+  transform: rotate(-18deg) translate(-9px, 4px);
+}
+
+.deckEditorDeckGlyph::after {
+  transform: rotate(18deg) translate(9px, 4px);
+}
+
+/* A small blue backing keeps the white count readable where it overlaps the white cards. */
+.deckEditorDeckCount {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1;
+  padding: 1px 5px;
+  border-radius: 9px;
+  background: var(--VTTblue);
+  box-shadow: 0 0 3px 3px var(--VTTblue);
+}
+
+/* The "Entire face" / "Face objects" bands: solid VTTblue with white text. */
+.deckEditorSidebarHeader.deckEditorBand {
+  background: var(--VTTblue);
+  box-shadow: none;
+  color: #fff;
+}
+
+.deckEditorSidebarHeader.deckEditorBand h2 {
+  color: #fff;
+}
+
+/* Whole-face number fields (border/radius/enlarge): a plain label + number input, no type dropdown. */
+.deckEditorNumberInput {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 4px 0;
+}
+
+.deckEditorNumberInput label {
+  flex-grow: 1;
+}
+
+.deckEditorNumberInput input {
+  width: 70px;
+}
+
+/* The face-object list: one row per object with reorder arrows and a delete button; the label selects it. */
+.deckEditorFaceObjectList {
+  margin: 4px 0 8px 0;
+}
+
+.deckEditorFaceObjectRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 4px;
+  border-radius: 4px;
+}
+
+.deckEditorFaceObjectRow:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.deckEditorFaceObjectLabel {
+  flex-grow: 1;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.deckEditorFaceObjectRow button {
+  padding: 2px 4px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.deckEditorFaceObjectRow button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* While a deck is being edited, the room-editor toolbar only keeps the actions that still make sense:
+   new room, save, dark mode, fullscreen, close editor, the deck-editor toggle, tutorials and the wiki.
+   Everything else is greyed out and inert (hotkeys are already blocked in layout.js while the editor is open). */
+body.deckEditorActive #editorToolbar .editorToolbarButton button:not([icon=note_add]):not([icon=save]):not([icon=dark_mode]):not([icon=fullscreen]):not([icon=close]):not([icon=style]):not([icon=school]):not([icon=help]) {
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 /* see common rules in toolbar.css and dragtoolbar.css */

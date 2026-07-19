@@ -189,6 +189,7 @@ class DeckEditor {
     this.cardDefaults = {};
     this.showAllAreas = false;
     this.addMode = 'static'; // 'static' = same on every card, 'dynamic' = different per card type
+    this.deckSymbolSelected = false; // the deck-widget strip entry is selected -> the sidebar edits card defaults
 
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
@@ -219,10 +220,10 @@ class DeckEditor {
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
-      new DeckEditorMoveButton(),
       new DeckEditorResizeButton(false),
       new DeckEditorResizeButton(true),
-      new DeckEditorRotateButton()
+      new DeckEditorRotateButton(),
+      new DeckEditorMoveButton() // "drag to move" last, like the room editor's drag toolbar
     ];
     for(const button of this.dragToolbarButtons)
       button.render($('#deckEditorDragToolbar'));
@@ -247,14 +248,15 @@ class DeckEditor {
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
       radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
-    $('#deckEditorAddImage').onclick = _=>{
-      uploadAsset().then(asset=>{
-        if(asset)
-          this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: 'transparent' }, 'image', asset);
-      });
-    };
+    // Adds a placeholder image object; the user uploads afterwards via the "Upload image" button next to Delete.
+    $('#deckEditorAddImage').onclick = _=>this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: '#cccccc' }, 'image', '');
     $('#deckEditorAddIcon').onclick = _=>this.addByMode({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', 'skoll/hearts');
     $('#deckEditorAddColor').onclick = _=>this.addByMode(this.colorBoxTemplate(), 'color', '#cccccc', 'color');
+
+    // Card-type toolbar above the strip (item: add blank / copy / delete the current card type).
+    $('#deckEditorStripAdd').onclick = _=>this.addCardType();
+    $('#deckEditorStripCopy').onclick = _=>{ if(this.cardType !== null) this.addCardType(this.cardType); };
+    $('#deckEditorStripDelete').onclick = _=>{ if(this.cardType !== null) this.deleteCardType(); };
 
     $('#deckEditorMain').onmousedown = e=>{
       if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
@@ -839,6 +841,8 @@ class DeckEditor {
 
   selectObject(index) {
     this.selectedObject = index;
+    if(index !== null)
+      this.deckSymbolSelected = false; // selecting a face object leaves the card-defaults view
     this.attachObjectHandlers();
     this.renderSidebar();
     this.updateDragToolbar();
@@ -892,6 +896,24 @@ class DeckEditor {
     if(!this.deck())
       return;
 
+    // The card-type toolbar's copy/delete need a selected card type.
+    $('#deckEditorStripCopy').disabled = this.cardType === null;
+    $('#deckEditorStripDelete').disabled = this.cardType === null;
+
+    // First entry: the deck itself. A blue tile with the live total card count that edits the card defaults.
+    const totalCards = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card').length;
+    const deckTile = div(strip, 'deckEditorStripCard deckEditorDeckTile', `
+      <div class=renderedCard><div class=deckEditorDeckGlyph><span class=deckEditorDeckCount>${totalCards}</span></div></div>
+      <span>Edit all card defaults</span>
+    `);
+    deckTile.classList.toggle('selected', this.deckSymbolSelected);
+    deckTile.title = 'Edit the properties every card of this deck defaults to.';
+    deckTile.onclick = _=>{
+      this.deckSymbolSelected = true;
+      this.selectedObject = null;
+      this.render();
+    };
+
     // One entry per card type. It shows the currently selected face; when that face has nothing dynamic (it
     // looks the same on every card type, e.g. a static back), fall back to a dynamic face so the entries
     // still tell the card types apart. Faces are switched with the dropdown, not by multiplying the strip.
@@ -902,7 +924,7 @@ class DeckEditor {
 
     for(const cardType of Object.keys(this.cardTypes)) {
       const button = div(strip, 'deckEditorStripCard', `<div class=renderedCard></div><span>${html(cardType)}</span>`);
-      button.classList.toggle('selected', cardType == this.cardType);
+      button.classList.toggle('selected', !this.deckSymbolSelected && cardType == this.cardType);
       if(stripFace !== null && stripFace != this.face)
         button.title = `${cardType} — showing face ${stripFace} because the selected face looks the same on every card type`;
       if(stripFace !== null) {
@@ -919,19 +941,10 @@ class DeckEditor {
       }
       button.onclick = _=>{
         this.cardType = cardType;
+        this.deckSymbolSelected = false;
         this.selectedObject = null;
         this.render();
       };
-    }
-
-    const addButton = div(strip, 'deckEditorStripCard deckEditorAddCardType', '<button icon=add></button><span>Add blank card type</span>');
-    addButton.title = 'Adds a new card type without any properties.';
-    $('button', addButton).onclick = _=>this.addCardType();
-
-    if(this.cardType !== null) {
-      const copyButton = div(strip, 'deckEditorStripCard deckEditorAddCardType', '<button icon=content_copy></button><span>Copy card type</span>');
-      copyButton.title = `Adds a new card type with the same properties as "${this.cardType}".`;
-      $('button', copyButton).onclick = _=>this.addCardType(this.cardType);
     }
   }
 
@@ -961,6 +974,14 @@ class DeckEditor {
     };
 
     const object = this.selectedObjectTemplate();
+
+    // State A: the deck symbol is selected in the strip — show only the card defaults.
+    if(this.deckSymbolSelected && !object) {
+      this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
+      this.renderObjectHint();
+      return;
+    }
+
     if(object) {
       addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Part of the face template — on every card');
       // One cause/actionId per edited field: a typing burst on one property of one object stays one
@@ -1016,13 +1037,22 @@ class DeckEditor {
         upload.setAttribute('icon', 'upload');
         upload.innerText = 'Upload image';
         upload.onclick = _=>uploadAsset().then(async asset=>{
-          if(asset) {
-            await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+          if(!asset)
+            return;
+          await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+          // When the image's value is bound per card type, upload into this card type's property, not the
+          // shared template — otherwise it would show on every card type at once.
+          const boundTo = object.dynamicProperties && object.dynamicProperties.value;
+          if(boundTo && this.cardType !== null) {
+            this.cardTypes[this.cardType][boundTo] = asset;
+            this.refreshMainCardFaces();
+            await this.commit('cardTypes', `${getPlayerDetails().playerName} uploaded an image for card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+          } else {
             object.value = asset;
             this.refreshMainCardFaces();
             await this.commit('faceTemplates', `${getPlayerDetails().playerName} uploaded an image for a face object of deck ${this.deckID} in deck editor`);
-            this.renderSidebar();
           }
+          this.renderSidebar();
         });
         objectButtons.append(upload);
       }
@@ -1032,35 +1062,22 @@ class DeckEditor {
       deleteObject.innerText = 'Delete object';
       deleteObject.onclick = _=>this.deleteSelectedObject();
       objectButtons.append(deleteObject);
-    } else if(this.faceTemplates.length) {
-      div(sidebar, 'deckEditorHint', '<p>Click a face object in the big card view to select and edit it. Drag it to move it around.</p>');
-    }
 
-    if(this.faceTemplates[this.face]) {
-      const face = this.faceTemplates[this.face];
-      addHeader(this.faceLabel(this.face), 'deckEditorScopeEveryCard', 'Settings of the whole face — on every card');
-      const faceFieldArgs = property=>[
-        `${getPlayerDetails().playerName} updated "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`,
-        `field:faceTemplates:face:${this.face}:${property}`
-      ];
-      const faceProps = div(sidebar, 'deckEditorProperties');
-      for(const property of [ 'border', 'radius' ]) {
-        this.addInput(property, face[property], v=>this.queueFieldEdit(async _=>{
-          await this.flushPendingCommitForOtherField('faceTemplates', faceFieldArgs(property)[1]);
-          if(typeof v === 'undefined')
-            delete face[property];
-          else
-            face[property] = v;
-          this.refreshMainCardFaces();
-          this.scheduleCommit('faceTemplates', ...faceFieldArgs(property));
-        }), faceProps);
-      }
-    }
-
-    if(this.cardType === null) {
-      this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
+      this.renderObjectHint();
       return;
     }
+
+    // State C: a card type is selected but no face object — whole-face settings, the face-object list and
+    // (below) the card type's own properties. The card defaults live behind the deck symbol only.
+    if(this.faceTemplates[this.face]) {
+      this.renderEntireFaceSection(sidebar);
+      this.renderFaceObjectsSection(sidebar);
+    }
+
+    this.renderObjectHint();
+
+    if(this.cardType === null)
+      return;
 
     addHeader('Card type', 'deckEditorScopeThisType', 'Only this card type');
 
@@ -1131,15 +1148,118 @@ class DeckEditor {
       this.renderSidebar();
     }));
 
-    const typeButtons = div(sidebar, 'buttonBar');
-    const deleteType = document.createElement('button');
-    deleteType.setAttribute('icon', 'delete');
-    deleteType.className = 'red';
-    deleteType.innerText = 'Delete card type';
-    deleteType.onclick = _=>this.deleteCardType();
-    typeButtons.append(deleteType);
+  }
 
-    this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
+  // The "Entire face" band: whole-face settings (on every card of the deck). border/radius are plain numbers
+  // (0 = absent); "enlarge" is stored under the face template's "properties" object so it reaches the card.
+  renderEntireFaceSection(sidebar) {
+    const face = this.faceTemplates[this.face];
+    if(!face)
+      return;
+    const header = document.createElement('header');
+    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
+    header.innerHTML = '<h2>Entire face</h2>';
+    sidebar.append(header);
+
+    const faceProps = div(sidebar, 'deckEditorProperties');
+    const fieldArgs = property=>[
+      `${getPlayerDetails().playerName} updated "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`,
+      `field:faceTemplates:face:${this.face}:${property}`
+    ];
+    for(const property of [ 'border', 'radius' ]) {
+      this.addNumberInput(property, face[property], value=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
+        if(value)
+          face[property] = value;
+        else
+          delete face[property]; // 0 is the default, so keep the template clean
+        this.refreshMainCardFaces();
+        this.scheduleCommit('faceTemplates', ...fieldArgs(property));
+      }), faceProps);
+    }
+    this.addNumberInput('enlarge', face.properties && face.properties.enlarge, value=>this.queueFieldEdit(async _=>{
+      await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs('enlarge')[1]);
+      if(value) {
+        if(!face.properties || typeof face.properties != 'object')
+          face.properties = {};
+        face.properties.enlarge = value;
+      } else if(face.properties) {
+        delete face.properties.enlarge;
+        if(!Object.keys(face.properties).length)
+          delete face.properties;
+      }
+      this.refreshMainCardFaces();
+      this.scheduleCommit('faceTemplates', ...fieldArgs('enlarge'));
+    }), faceProps);
+  }
+
+  // The "Face objects" band: every object on this face, one row each, with reorder and delete controls.
+  // Clicking a row selects the object just like clicking it in the big card view.
+  renderFaceObjectsSection(sidebar) {
+    const face = this.faceTemplates[this.face];
+    if(!face)
+      return;
+    const header = document.createElement('header');
+    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
+    header.innerHTML = '<h2>Face objects</h2>';
+    sidebar.append(header);
+
+    const objects = Array.isArray(face.objects) ? face.objects : [];
+    if(!objects.length) {
+      div(sidebar, 'deckEditorHint', '<p>No objects on this face yet. Add text, an icon, an image or HTML using the buttons in the top bar.</p>');
+      return;
+    }
+
+    const list = div(sidebar, 'deckEditorFaceObjectList');
+    objects.forEach((object, index)=>{
+      const row = div(list, 'deckEditorFaceObjectRow', `
+        <span class=deckEditorFaceObjectLabel>${index+1} (${html(object.type || 'text')})</span>
+        <button icon=arrow_upward title="Move up"></button>
+        <button icon=arrow_downward title="Move down"></button>
+        <button icon=delete class=red title="Delete object"></button>
+      `);
+      $('.deckEditorFaceObjectLabel', row).onclick = _=>this.selectObject(index);
+      const up = $('[icon=arrow_upward]', row), down = $('[icon=arrow_downward]', row);
+      up.disabled = index == 0;
+      down.disabled = index == objects.length-1;
+      up.onclick = _=>this.moveFaceObject(index, index-1);
+      down.onclick = _=>this.moveFaceObject(index, index+1);
+      $('[icon=delete]', row).onclick = _=>{ this.selectedObject = index; this.deleteSelectedObject(); };
+    });
+  }
+
+  async moveFaceObject(from, to) {
+    const face = this.faceTemplates[this.face];
+    if(!face || !Array.isArray(face.objects) || to < 0 || to >= face.objects.length)
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const [ object ] = face.objects.splice(from, 1);
+    face.objects.splice(to, 0, object);
+    this.selectedObject = null;
+    this.refreshMainCardFaces();
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} reordered a face object of deck ${this.deckID} in deck editor`);
+    this.renderSidebar();
+    this.updateDragToolbar();
+  }
+
+  // A plain number field (default 0) for whole-face settings; unlike addInput it has no type dropdown.
+  addNumberInput(label, value, onValueChanged, target) {
+    const row = div(target, 'deckEditorNumberInput', `<label>${html(label)}</label><input type=number step=any>`);
+    const input = $('input', row);
+    input.value = value === undefined || value === null ? 0 : value;
+    input.oninput = _=>onValueChanged(Number(input.value) || 0);
+    return row;
+  }
+
+  // The "Click a face object…" hint, shown below the card view (bottom-center) whenever a card type is being
+  // edited but no object is selected. Blank in every other state.
+  renderObjectHint() {
+    const hint = $('#deckEditorObjectHint');
+    if(!hint)
+      return;
+    const show = this.deck() && !this.deckSymbolSelected && this.selectedObject === null && this.faceTemplates.length;
+    hint.textContent = show ? 'Click a face object in the big card view to select and edit it. Drag it to move it around.' : '';
+    hint.classList.toggle('active', !!show);
   }
 
   renderCardDefaults(sidebar, addHeader, addPropertyRow) {
@@ -1472,10 +1592,15 @@ class DeckEditor {
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
     let name;
     if(copyOf !== null) {
-      name = `${copyOf} copy`;
-      let index = 2;
-      while(this.cardTypes[name] !== undefined)
-        name = `${copyOf} copy ${index++}`;
+      // Same clone convention as widget cloning: increment a trailing number if the name has one,
+      // otherwise start at 1 (so "Hero" -> "Hero1", "type 3" -> "type 4").
+      const match = String(copyOf).match(/^(.*?)([0-9]+)([^0-9]*)$/);
+      const head = match ? match[1] : String(copyOf);
+      const tail = match && match[3] ? match[3] : '';
+      let number = match ? parseInt(match[2]) : 0;
+      do {
+        name = `${head}${++number}${tail}`;
+      } while(this.cardTypes[name] !== undefined);
       this.cardTypes[name] = JSON.parse(JSON.stringify(this.cardTypes[copyOf]));
     } else {
       let index = Object.keys(this.cardTypes).length + 1;
