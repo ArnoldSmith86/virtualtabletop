@@ -181,7 +181,6 @@
         "property": "value",
         "value": 1,
         "source": "DEFAULT",
-        "mode": "set",
         "collection": "all1"
       },
       {
@@ -195,7 +194,6 @@
         "property": "value",
         "value": 2,
         "source": "DEFAULT",
-        "mode": "set",
         "collection": "all2"
       },
       {
@@ -209,7 +207,6 @@
         "property": "value",
         "value": 3,
         "source": "DEFAULT",
-        "mode": "set",
         "collection": "all3"
       },
       {
@@ -437,12 +434,7 @@
       {
         "func": "LABEL",
         "label": "rz15",
-        "applyVariables": [
-          {
-            "parameter": "value",
-            "variable": "sumResult"
-          }
-        ]
+        "value": "${sumResult}"
       }
     ],
     "x": 83,
@@ -622,7 +614,7 @@
     "id": "d20o"
   },
   "_meta": {
-    "version": 1,
+    "version": 21,
     "info": {
       "name": "Types - Spinner",
       "image": "/assets/797406932_11103",
@@ -646,6 +638,9 @@
       "variant": "Automations",
       "language": "en-US",
       "players": "1"
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   }
 }

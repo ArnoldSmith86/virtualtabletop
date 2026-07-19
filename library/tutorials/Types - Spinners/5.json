@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 1,
+    "version": 21,
     "info": {
       "name": "Types - Spinner",
       "image": "/assets/797406932_11103",
@@ -24,6 +24,9 @@
       "variant": "CSS Selectors & Hover",
       "language": "en-US",
       "players": "1"
+    },
+    "gameSettings": {
+      "legacyModes": {}
     }
   },
   "8fr3": {
