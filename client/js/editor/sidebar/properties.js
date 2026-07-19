@@ -4396,7 +4396,7 @@ class PropertiesModule extends SidebarModule {
       // .droppable is set on every valid target while a matching widget is
       // dragged; .droptarget is the one currently hovered over
       this.renderHolderStateSection(widget, 'When a widget can be dropped here', '.droppable');
-      this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droptarget');
+      this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droptarget.droppable');
     });
     this.renderBehaviorSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image' ]);
@@ -4414,8 +4414,8 @@ class PropertiesModule extends SidebarModule {
     new ColorInput(this, widget, 'Border',     cssValueOptions(this, widget, 'border-color', 'css', cssClass, { pickerGroup: group, labelIcon: 'border_color' })).render(row);
 
     new NumberInput(this, widget, 'Brightness', {
-      min: 0, max: 3, step: 0.05, slider: true, nullIfEmpty: true, placeholder: '1', listenTo: [ 'css' ],
-      hint: 'Brightens (>1) or dims (<1) the holder in this state. 1 leaves it unchanged.',
+      min: 0, max: 1, step: 0.05, slider: true, nullIfEmpty: true, placeholder: '1', listenTo: [ 'css' ],
+      hint: 'Dims the holder in this state (0 = black, 1 = unchanged).',
       getValue: _=>{
         const filter = parsePropertyFromCSS(widget.get('css'), 'filter', null, cssClass);
         const match = String(filter === null ? '' : filter).match(/brightness\(\s*([0-9.]+)\s*\)/);
