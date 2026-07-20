@@ -463,6 +463,126 @@ const editorTypeSections = {
   }
 };
 
+// Seat style presets copied from the public-library games Five of a Kind Duel
+// (Background color) and Uncheckered (Fixed color) - visual style only, with
+// instance keys and the games' click routines stripped. Used by
+// PropertiesModule.seatStylePresets().
+const SEAT_PRESET_BACKGROUND = {
+  "width": 172,
+  "height": 48,
+  "borderRadius": 8,
+  "css": {
+    "default": {
+      "cursor": "pointer",
+      "gap": "5px",
+      "font-size": "21px",
+      "box-shadow": "0 2px 5px #00000066",
+      "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+      "background": "${PROPERTY mainColor}",
+      "color": "white",
+      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+      "box-sizing": "border-box"
+    },
+    ".seated.turn": {
+      "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+    },
+    ".seated.turn::after": {
+      "xcontent": "'Active Player'",
+      "content": "'!'",
+      "font-size": "18px",
+      "line-height": "1em",
+      "white-space": "wrap",
+      "background-color": "${PROPERTY outlineColor}",
+      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+      "background-size": "200% auto",
+      "color": "${PROPERTY mainColor}",
+      "text-shadow": "0 1px 5px #000000cc",
+      "width": "1em",
+      "height": "1em",
+      "text-align": "center",
+      "text-transform": "uppercase",
+      "position": "absolute",
+      "right": "-12px",
+      "top": "-12px",
+      "padding": "2px",
+      "border-radius": "100px",
+      "box-shadow": "0 0 5px #000000bb",
+      "pointer-events": "none",
+      "transform-origin": "50% 50%",
+      "animation": "turnPulse 1s ease-in-out"
+    },
+    "@keyframes turnPulse": {
+      "0%": {
+        "transform": "scale(1)"
+      },
+      "50%": {
+        "transform": "scale(8)"
+      },
+      "100%": {
+        "transform": "scale(1)"
+      }
+    }
+  },
+  "mainColor": "#dddddd",
+  "outlineColor": "#000000bb",
+  "textColor": "#000000",
+  "textShadowBlur": 2,
+  "textShadowDistance": 2,
+  "hideWhenUnused": true
+};
+
+const SEAT_PRESET_FIXED = {
+  "width": 172,
+  "height": 48,
+  "borderRadius": 8,
+  "css": {
+    "default": {
+      "cursor": "pointer",
+      "gap": "5px",
+      "font-size": "21px",
+      "box-shadow": "0 2px 5px #00000066",
+      "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
+      "background": "${PROPERTY mainColor}",
+      "color": "white",
+      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+      "box-sizing": "border-box"
+    },
+    ".seated.turn": {
+      "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
+    },
+    ".seated.turn::after": {
+      "xcontent": "'Active Player'",
+      "content": "'!'",
+      "font-size": "18px",
+      "line-height": "1em",
+      "white-space": "wrap",
+      "background-color": "${PROPERTY outlineColor}",
+      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
+      "background-size": "200% auto",
+      "color": "#ffffff",
+      "text-shadow": "0 1px 5px #000000cc",
+      "width": "1em",
+      "height": "1em",
+      "text-align": "center",
+      "text-transform": "uppercase",
+      "position": "absolute",
+      "right": "-12px",
+      "top": "-12px",
+      "padding": "2px",
+      "border-radius": "100px",
+      "box-shadow": "0 0 5px #000000bb",
+      "pointer-events": "none"
+    }
+  },
+  "mainColor": "#f41000",
+  "outlineColor": "#000000bb",
+  "textColor": "#ffffff",
+  "textShadowBlur": 2,
+  "textShadowDistance": 2,
+  "glowColor": "#ffffff",
+  "colorContrast": "#000000"
+};
+
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
@@ -3839,9 +3959,14 @@ class PropertiesModule extends SidebarModule {
       { label: 'Resolution', property: 'resolution', kind: 'number', min: 10, max: 1000 },
       { label: 'Line width', property: 'lineWidth',  kind: 'number', min: 1, max: 10, slider: true }
     ]);
+
+    this.renderAdvancedSection(widget, body => {
+      new TextInput(this, widget, 'Artist', { property: 'artist', nullIfEmpty: true, hint: 'Restrict drawing to this player (by name). Leave empty to let everyone draw.' }).render(body);
+    });
+
     // cXX properties hold the drawing data chunks and are not hand-editable
     const chunkProperties = Object.keys(widget.state).filter(key => key.match(/^c[0-9][0-9]$/));
-    this.renderOtherPropertiesSection(widget, [ 'colorMap', 'activeColor', 'resolution', 'lineWidth' ].concat(chunkProperties));
+    this.renderOtherPropertiesSection(widget, [ 'colorMap', 'activeColor', 'resolution', 'lineWidth', 'artist' ].concat(chunkProperties));
   }
 
   canvasColorMap(widget) {
@@ -4028,7 +4153,10 @@ class PropertiesModule extends SidebarModule {
     // --- Round ---
     this.addAppearanceSubTitle('Round');
     new TextInput(this, widget, 'Round label', { property: 'roundLabel', hint: 'Header shown on the round column/row.' }).render(this.moduleDOM);
-    this.renderListEditor(widget, 'rounds', 'Round names', 'Custom names for each round. Leave empty to number rounds automatically.');
+    const roundNamesSection = this.renderCollapsibleSection('Round names', true, body => {
+      this.renderListEditor(widget, 'rounds', null, null, body);
+    }, null, `${widget.id}:roundNames`);
+    propertyInfoButton($('.collapsibleHeader', roundNamesSection), html('Custom names for each round. Leave empty to number rounds automatically.'));
     new CheckboxInput(this, widget, 'Show all rounds', { property: 'showAllRounds', hint: editorPropertyHints.showAllRounds }).render(this.moduleDOM);
 
     // --- Layout: how the table is arranged ---
@@ -4082,7 +4210,7 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     this.addSubHeader('Player');
     this.renderSeatPlayerStatus(widget);
-    this.renderAppearanceSection(widget);
+    this.renderAppearanceSection(widget, { before: _=>this.renderSeatPresets(widget) });
     this.addSubHeader('Seat');
 
     const indexRow = div(this.moduleDOM, 'propertyInlineRow');
@@ -4102,8 +4230,83 @@ class PropertiesModule extends SidebarModule {
     this.renderCompactStyledTextInput(widget, 'Text', 'display', '.seated', {
       placeholders: [ 'playerName', 'seatIndex' ]
     });
+    this.renderSeatColorMode(widget);
 
     this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'colorEmpty' ]);
+  }
+
+  // Style presets for seats: "Classic" is the plain default seat; "Background
+  // color" and "Fixed color" reproduce the look of the seats in the public
+  // library games Five of a Kind Duel and Uncheckered (visual style only - the
+  // games' click routines are not imported). Applying a preset resets every
+  // style key the presets touch, so switching between them is clean.
+  seatStylePresets() {
+    return {
+      classic: { label: 'Classic', preset: { width: 150, height: 40, borderRadius: 5 } },
+      background: { label: 'Background color', preset: SEAT_PRESET_BACKGROUND },
+      fixed: { label: 'Fixed color', preset: SEAT_PRESET_FIXED }
+    };
+  }
+
+  renderSeatPresets(widget) {
+    this.addAppearanceSubTitle('Style presets');
+    const presets = this.seatStylePresets();
+    const styleKeys = new Set();
+    for(const { preset } of Object.values(presets))
+      Object.keys(preset).forEach(k => styleKeys.add(k));
+
+    const row = div(this.moduleDOM, 'seatPresetRow');
+    for(const [ presetKey, { label, preset } ] of Object.entries(presets)) {
+      // a unique id per preview keeps each seat's scoped css (#w_<id>.seated ...)
+      // from bleeding into the other previews (the id must be on the widget, not
+      // the state - renderReadonlyCopyRaw deletes state.id)
+      const previewSeat = new Seat(`seatPreview_${widget.id}_${presetKey}`);
+      const button = this.renderWidgetButton(previewSeat, Object.assign({ type: 'seat', player: label, width: 150, height: 44 }, preset), row);
+      button.title = label;
+
+      const presetCss = JSON.stringify(preset.css || null);
+      this.addPropertyListener(widget, 'css', w => button.classList.toggle('selected', JSON.stringify(w.get('css') || null) === presetCss));
+
+      button.onclick = async () => {
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} applied the ${label} seat preset to ${widget.id} in editor`);
+        for(const key of styleKeys)
+          await widget.set(key, key in preset ? preset[key] : null);
+        batchEnd();
+      };
+    }
+  }
+
+  // "Use player color" toggle: when on (default) the seat shows the seated
+  // player's color; when off, a fixed color is written as
+  // ".seated { --color: <color> !important }" so it overrides the per-player
+  // color the engine sets inline when someone sits down.
+  renderSeatColorMode(widget) {
+    const cssClass = '.seated';
+    const key = '--color';
+    const readOverride = () => {
+      const raw = parsePropertyFromCSS(widget.get('css'), key, null, cssClass);
+      return typeof raw === 'string' ? raw.replace(/\s*!important\s*$/i, '').trim() : null;
+    };
+    const usesPlayerColor = () => readOverride() === null;
+    const writeOverride = value => this.inputValueUpdated(widget, 'css',
+      mergePropertyFromCSS(widget.get('css'), key, value === null ? null : `${value} !important`, cssClass));
+
+    new CheckboxInput(this, widget, 'Use player color', {
+      hint: 'On: the seat shows the seated player\'s color. Off: it always uses the fixed color below.',
+      getValue: () => usesPlayerColor(),
+      setValue: on => writeOverride(on ? null : (readOverride() || widget.get('colorEmpty') || '#999999')),
+      listenTo: [ 'css' ]
+    }).render(this.moduleDOM);
+
+    const colorInput = new ColorInput(this, widget, 'Seat color', {
+      hint: 'Fixed color used for this seat while a player is sitting in it.',
+      getValue: () => readOverride() || widget.get('colorEmpty') || '#999999',
+      setValue: value => writeOverride(value || '#999999'),
+      listenTo: [ 'css' ]
+    });
+    colorInput.render(this.moduleDOM);
+    this.addPropertyListener(widget, 'css', () => colorInput.dom.style.display = usesPlayerColor() ? 'none' : '');
   }
 
   // compact one-line styled text input: text, color and font size side by

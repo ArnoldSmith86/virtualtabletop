@@ -792,3 +792,10 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   display: flex;
   gap: 2px;
 }
+
+/* seat style preset preview buttons */
+.editorModule .seatPresetRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
