@@ -97,21 +97,33 @@ function usedGameImages() {
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
-  chip.title = value;
-  if(value.match(/^\/assets\/|^https?:\/\//)) {
-    chip.innerHTML = `<img src="${html(mapAssetURLs(value))}">`;
-  } else if(value.match(/\//)) {
-    chip.innerHTML = `<img src="${html(`i/game-icons.net/${value}.svg`)}">`;
-  } else if(value.match(/^\[/)) {
-    div(chip, 'symbols', html(value));
-  } else if(value.match(/^[a-z0-9].*_NOFILL$/)) {
-    div(chip, 'material-symbols-nofill', html(value.replace(/_NOFILL$/, '')));
-  } else if(value.match(/^[a-z0-9]/)) {
-    div(chip, 'material-symbols', html(value));
-  } else if(value.match(/^\(.*\)$/)) {
-    div(chip, 'emoji-monochrome', html(toNotoMonochrome(value.replace(/^\((.*)\)$/, '$1'))));
+  // an icon can also be a symbol object { name, scale, ... } or an array of
+  // them (see generateSymbolsDiv); preview the first symbol's name, which uses
+  // the same string formats below, instead of crashing on .match
+  let icon = value;
+  if(value && typeof value == 'object') {
+    chip.title = JSON.stringify(value);
+    const first = Array.isArray(value) ? value[0] : value;
+    icon = first && typeof first == 'object' ? first.name : first;
   } else {
-    div(chip, 'emojiColorChip', html(value)); // raw emoji: native color rendering
+    chip.title = value;
+  }
+  if(typeof icon != 'string')
+    return chip; // nothing renderable (e.g. an empty or malformed icon object)
+  if(icon.match(/^\/assets\/|^https?:\/\//)) {
+    chip.innerHTML = `<img src="${html(mapAssetURLs(icon))}">`;
+  } else if(icon.match(/\//)) {
+    chip.innerHTML = `<img src="${html(`i/game-icons.net/${icon}.svg`)}">`;
+  } else if(icon.match(/^\[/)) {
+    div(chip, 'symbols', html(icon));
+  } else if(icon.match(/^[a-z0-9].*_NOFILL$/)) {
+    div(chip, 'material-symbols-nofill', html(icon.replace(/_NOFILL$/, '')));
+  } else if(icon.match(/^[a-z0-9]/)) {
+    div(chip, 'material-symbols', html(icon));
+  } else if(icon.match(/^\(.*\)$/)) {
+    div(chip, 'emoji-monochrome', html(toNotoMonochrome(icon.replace(/^\((.*)\)$/, '$1'))));
+  } else {
+    div(chip, 'emojiColorChip', html(icon)); // raw emoji: native color rendering
   }
   return chip;
 }
