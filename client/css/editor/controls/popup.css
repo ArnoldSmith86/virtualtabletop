@@ -105,6 +105,19 @@ body.edit.darkMode .inline-popup button:hover {
   margin: 4px 0;
 }
 
+/* the reused properties-module pickers are scoped to .editorModule, which is
+   hidden by default; re-show the wrapper so their chip/picker sizing applies */
+.inline-popup .editorModule {
+  display: block;
+  overflow: visible;
+  background: none;
+}
+
+.inline-popup .editorModule .propertyPicker {
+  border: none;
+  padding: 0;
+}
+
 .inline-popup .info-button {
   cursor: pointer;
   color: gray;

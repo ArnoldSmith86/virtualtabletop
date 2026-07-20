@@ -43,7 +43,7 @@ const routineOperationMetadata = {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       collection: { type: 'collection', default: 'DEFAULT' },
       value: { type: 'number', default: 1 },
-      color: { type: 'string', default: '#1F5CA6' },
+      color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 }
     }
@@ -134,9 +134,9 @@ const routineOperationMetadata = {
     parameters: {
       fields: { type: 'json', default: [] },
       confirmButtonText: { type: 'string', default: 'Go' },
-      confirmButtonIcon: { type: 'string', default: null },
+      confirmButtonIcon: { type: 'icon', default: null },
       cancelButtonText: { type: 'string', default: 'Cancel' },
-      cancelButtonIcon: { type: 'string', default: null },
+      cancelButtonIcon: { type: 'icon', default: null },
       header: { type: 'string', default: '' }
     }
   },
@@ -507,6 +507,8 @@ class RoutineOperationEditor {
       case 'widgets':    return new RoutineWidgetIDPopup();
       case 'collection': return new RoutineHoldersOrCollectionSourcePopup();
       case 'json':       return new RoutineJSONPopup();
+      case 'color':      return new RoutineColorPopup();
+      case 'icon':       return new RoutineIconPopup();
       default:           return new RoutineStringPopup();
     }
   }

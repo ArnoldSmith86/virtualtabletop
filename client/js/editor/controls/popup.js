@@ -163,11 +163,13 @@ class Popup {
     // defer so the click that opened the popup doesn't immediately close it
     setTimeout(_=>document.addEventListener('click', this.boundOnOutsideClick), 0);
     // move back into view when the content grows after opening, e.g. when
-    // picking widgets in the room adds rows to the popup near the bottom edge
-    // (moveIntoView is idempotent, so its own style writes cannot loop this)
+    // picking widgets in the room adds rows to the popup near the bottom edge.
+    // Only childList is observed: watching style/class would feed moveIntoView's
+    // own style writes back into the observer (and picker inputs toggle classes
+    // constantly), so it stays limited to actual content changes.
     if(typeof MutationObserver != 'undefined' && !this.mutationObserver) {
       this.mutationObserver = new MutationObserver(_=>this.moveIntoView());
-      this.mutationObserver.observe(this.domElement, { childList: true, subtree: true, attributes: true, attributeFilter: [ 'style', 'class' ] });
+      this.mutationObserver.observe(this.domElement, { childList: true, subtree: true });
     }
   }
 }
@@ -570,6 +572,100 @@ class RoutineFullOperationJSONPopup extends RoutineJSONPopup {
   setNewValue(value) {
     // this popup edits the entire operation instead of a single parameter
     this.notifyChangeListeners(value);
+  }
+}
+
+// Reuses #3035's ColorInput/IconInput (the same pickers the properties sidebar
+// uses) for color/icon parameters. The picker edits a local working value and
+// the parameter is only written when the popup closes, so the native color
+// dialog's live drag and the routine re-render don't fight each other.
+class RoutinePickerPopup extends RoutinePopup {
+  constructor() {
+    super();
+    this.workingValue = undefined;
+    this.workingChanged = false;
+  }
+
+  inputClass() {
+    return null;
+  }
+
+  valueHint() {
+    return 'Use a fixed value that will always behave the same way.';
+  }
+
+  hide() {
+    // apply the picked value on close (before super.hide()'s cancel listener, so
+    // its resolve(undefined) is ignored once we have resolved with the value).
+    // notifyChangeListeners triggers newRoutineValues to call hide() again, so
+    // guard against re-entering the notify.
+    if(this.workingChanged && !this.applied) {
+      this.applied = true;
+      this.notifyChangeListeners({ [this.parameterNames[0]]: this.workingValue });
+    }
+    super.hide();
+  }
+
+  show() {
+    const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
+    infoButton(valueTitle, this.valueHint());
+    this.workingValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
+
+    const InputClass = this.inputClass();
+    if(typeof InputClass == 'function') {
+      // a minimal stand-in for the properties module: the picker syncs through
+      // getValue/setValue instead of the widget, so the listener is a no-op
+      const module = { addPropertyListener() {}, inputValueUpdated() {} };
+      const input = new InputClass(module, this.widget, '', {
+        getValue: ()=>this.workingValue === undefined ? null : this.workingValue,
+        getEffective: ()=>this.workingValue === undefined ? null : this.workingValue,
+        setValue: v=>{
+          this.workingValue = v;
+          this.workingChanged = true;
+          input.update(v);
+        },
+        clearable: false
+      });
+      // the properties module's picker CSS is scoped to .editorModule, so render
+      // into a matching wrapper to inherit the chip/picker sizing
+      const host = div(valueContent, 'editorModule');
+      input.render(host);
+      if(input.openPicker)
+        input.openPicker();
+    } else {
+      // fallback for environments without the properties module (e.g. jest)
+      const input = document.createElement('input');
+      input.type = 'text';
+      if(typeof this.workingValue == 'string')
+        input.value = this.workingValue;
+      input.addEventListener('change', _=>{
+        this.workingValue = input.value;
+        this.workingChanged = true;
+      });
+      valueContent.append(input);
+    }
+
+    super.show(true, false);
+  }
+}
+
+class RoutineColorPopup extends RoutinePickerPopup {
+  inputClass() {
+    return typeof ColorInput != 'undefined' ? ColorInput : null;
+  }
+
+  valueHint() {
+    return 'Pick a color, or type a hex value or "transparent".';
+  }
+}
+
+class RoutineIconPopup extends RoutinePickerPopup {
+  inputClass() {
+    return typeof IconInput != 'undefined' ? IconInput : null;
+  }
+
+  valueHint() {
+    return 'Pick an icon from the ones used in this game or search the icon library.';
   }
 }
 

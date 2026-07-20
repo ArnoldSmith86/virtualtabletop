@@ -35,7 +35,8 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup', 'RoutineNumberPopup'
+    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup', 'RoutineNumberPopup',
+    'RoutineColorPopup', 'RoutineIconPopup'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -369,6 +370,51 @@ describe('resetting parameters to their default', () => {
     const setEditor = editorForOperation({ func: 'SET', value: null });
     setEditor.setOperationDetails({ state: {} }, { func: 'SET', value: null }, [], []);
     expect(String(setEditor.getDisplayedValue('value'))).toBe('null'); // explicit null is a real value, rendered as-is
+  });
+});
+
+describe('color and icon parameters use the picker popups', () => {
+  function editorFor(operation) {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    return editor;
+  }
+
+  test('CANVAS color and INPUT icons open the picker popups', () => {
+    expect(editorFor({ func: 'CANVAS' }).createPopup([ 'color' ])).toBeInstanceOf(RoutineColorPopup);
+    expect(editorFor({ func: 'INPUT' }).createPopup([ 'confirmButtonIcon' ])).toBeInstanceOf(RoutineIconPopup);
+    expect(editorFor({ func: 'INPUT' }).createPopup([ 'cancelButtonIcon' ])).toBeInstanceOf(RoutineIconPopup);
+  });
+
+  test('the picker applies its working value when the popup closes', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineColorPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'CANVAS' }, [ 'color' ], { state: {} }, [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show(); // ColorInput is absent in jest, so the text fallback is used
+    const input = popup.domElement.querySelector('input[type=text]');
+    expect(input).not.toBeNull();
+    input.value = '#ff0000';
+    input.dispatchEvent(new Event('change'));
+    expect(value).toBeNull(); // nothing applied until the popup closes
+    popup.hide();
+    expect(value).toEqual({ color: '#ff0000' });
+  });
+
+  test('closing without a change applies nothing', () => {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineColorPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'CANVAS' }, [ 'color' ], { state: {} }, [], []);
+    let notified = false;
+    popup.registerChangeListener(() => notified = true);
+    popup.show();
+    popup.hide();
+    expect(notified).toBe(false);
   });
 });
 
