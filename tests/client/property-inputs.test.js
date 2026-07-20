@@ -17,6 +17,21 @@ const inputHelpers = new Function(inputsSource + `;
   };
 `)();
 
+// renderIconChip needs a few globals from the room bundle; inject minimal stubs
+// (a tiny fake DOM) so it can be exercised without jsdom
+const renderIconChip = new Function('div', 'html', 'mapAssetURLs', 'toNotoMonochrome', inputsSource + `;
+  return renderIconChip;
+`)(
+  (parent, className, innerHTML) => {
+    const el = { className: className || '', title: '', innerHTML: innerHTML || '', children: [] };
+    if(parent && parent.children) parent.children.push(el);
+    return el;
+  },
+  value => String(value),
+  value => value,
+  value => value
+);
+
 const cssHelpers = new Function('SidebarModule', propertiesSource + `;
   return {
     cssTextFromValue,
@@ -115,6 +130,22 @@ describe('property input helpers', () => {
     expect(inputHelpers.propertyInputValueSet('')).toBe(false);
     expect(inputHelpers.propertyInputValueSet(0)).toBe(true);
     expect(inputHelpers.propertyInputValueSet('transparent')).toBe(true);
+  });
+
+  test('renderIconChip renders object and array icons without crashing', () => {
+    const target = { children: [] };
+    // a symbol object icon (e.g. Turtle Tower's turnButton) previews its name
+    const objectChip = renderIconChip({ name: 'skip_next', scale: 1.5 }, target);
+    expect(objectChip.children[0].className).toBe('material-symbols');
+    expect(objectChip.children[0].innerHTML).toBe('skip_next');
+    // an array of symbol objects previews the first one (a game-icons path)
+    const arrayChip = renderIconChip([ { name: 'lorc/drop' }, { name: 'star' } ], target);
+    expect(arrayChip.innerHTML).toContain('game-icons.net/lorc/drop.svg');
+    // a malformed icon object just yields an empty chip
+    expect(() => renderIconChip({ scale: 2 }, target)).not.toThrow();
+    // plain string icons still work
+    const stringChip = renderIconChip('star', target);
+    expect(stringChip.children[0].className).toBe('material-symbols');
   });
 
   test('searchIconIndex interleaves font and image matches', () => {
