@@ -182,7 +182,11 @@ class DeckEditor {
     this.cardType = null;
     this.face = 0;
     this.selectedObject = null;
-    this.cardScale = 1;
+    this.cardScale = 1;   // effective scale = fitScale * userZoom (drag math divides by this)
+    this.fitScale = 1;    // scale that fits the card in the main area
+    this.userZoom = 1;    // extra zoom from scroll wheel / pinch
+    this.panX = 0;
+    this.panY = 0;
     this.commitTimers = {};
     this.faceTemplates = [];
     this.cardTypes = {};
@@ -305,6 +309,56 @@ class DeckEditor {
       if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
         this.selectObject(null);
     };
+
+    // Scroll-wheel zoom on the card design area (reuses the same zoom-to-cursor idea as the room).
+    $('#deckEditorMain').addEventListener('wheel', e=>{
+      if(!this.mainCard)
+        return;
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.85 : 1.15;
+      this.zoomCardAroundPoint(this.userZoom * delta, e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Hold Space and drag to pan (the room's zoom.js already sets body.spacePanActive while Space is held in
+    // edit mode). Capture phase so it takes precedence over an object's own drag handler.
+    let panning = false;
+    let panStart = null;
+    $('#deckEditorMain').addEventListener('mousedown', e=>{
+      if(e.button != 0 || !document.body.classList.contains('spacePanActive'))
+        return;
+      e.preventDefault();
+      e.stopPropagation();
+      panning = true;
+      panStart = { x: e.clientX, y: e.clientY, panX: this.panX, panY: this.panY };
+    }, true);
+    window.addEventListener('mousemove', e=>{
+      if(!panning)
+        return;
+      this.panX = panStart.panX + (e.clientX - panStart.x);
+      this.panY = panStart.panY + (e.clientY - panStart.y);
+      this.applyCardTransform();
+    });
+    window.addEventListener('mouseup', _=>{ panning = false; });
+
+    // Pinch-to-zoom (two fingers) on touch devices.
+    let pinchStartDist = 0;
+    let pinchStartZoom = 1;
+    $('#deckEditorMain').addEventListener('touchstart', e=>{
+      if(e.touches.length == 2 && this.mainCard) {
+        pinchStartDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        pinchStartZoom = this.userZoom;
+      }
+    }, { passive: false });
+    $('#deckEditorMain').addEventListener('touchmove', e=>{
+      if(e.touches.length == 2 && pinchStartDist > 0) {
+        e.preventDefault();
+        const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        const midX = (e.touches[0].clientX + e.touches[1].clientX)/2;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY)/2;
+        this.zoomCardAroundPoint(pinchStartZoom * (dist / pinchStartDist), midX, midY);
+      }
+    }, { passive: false });
+    $('#deckEditorMain').addEventListener('touchend', e=>{ if(e.touches.length < 2) pinchStartDist = 0; });
 
     window.addEventListener('resize', _=>{
       if(this.isOpen()) {
@@ -719,6 +773,9 @@ class DeckEditor {
     this.face = dynamicFaces.length ? dynamicFaces[dynamicFaces.length-1] : Math.max(0, this.faceTemplates.length-1);
     this.selectedObject = null;
     this.treeLevel = 'face';
+    this.userZoom = 1; // start each deck at fit scale, unpanned
+    this.panX = 0;
+    this.panY = 0;
     this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
@@ -1128,12 +1185,13 @@ class DeckEditor {
     const cardWidth  = this.mainCard.get('width');
     const cardHeight = this.mainCard.get('height');
     const available = container.getBoundingClientRect();
-    this.cardScale = Math.max(0.1, Math.min((available.width-100)/cardWidth, (available.height-100)/cardHeight));
+    this.fitScale = Math.max(0.1, Math.min((available.width-100)/cardWidth, (available.height-100)/cardHeight));
+    this.cardScale = this.fitScale * this.userZoom;
 
     wrapper.style.width  = cardWidth  + 'px';
     wrapper.style.height = cardHeight + 'px';
-    wrapper.style.transform = `scale(${this.cardScale})`;
-    wrapper.style.setProperty('--deckEditorCardScale', this.cardScale);
+    this.cardWrapper = wrapper;
+    this.applyCardTransform();
 
     // Grid overlay covering the card in its own design coordinates (shown only while the toolbar grid is on).
     const grid = div(wrapper, 'deckEditorGrid');
@@ -1141,6 +1199,35 @@ class DeckEditor {
     grid.style.height = cardHeight + 'px';
 
     this.refreshMainCardFaces();
+  }
+
+  // Applies the current fit scale, user zoom and pan to the card wrapper. Because cardScale includes the user
+  // zoom, the object-drag math (which divides screen deltas by cardScale) keeps working unchanged.
+  applyCardTransform() {
+    if(!this.cardWrapper)
+      return;
+    this.cardWrapper.style.transform = `translate(${this.panX}px, ${this.panY}px) scale(${this.cardScale})`;
+    this.cardWrapper.style.setProperty('--deckEditorCardScale', this.cardScale);
+  }
+
+  // Scroll-wheel / pinch zoom that keeps the point under the cursor fixed (mirrors the room's zoom-to-cursor).
+  zoomCardAroundPoint(newZoom, clientX, clientY) {
+    newZoom = Math.max(1, Math.min(6, newZoom));
+    if(!this.cardWrapper || newZoom == this.userZoom)
+      return;
+    const container = $('#deckEditorMain').getBoundingClientRect();
+    const centerX = container.left + container.width/2;
+    const centerY = container.top + container.height/2;
+    const ratio = newZoom / this.userZoom;
+    this.panX = (clientX - centerX) * (1 - ratio) + this.panX * ratio;
+    this.panY = (clientY - centerY) * (1 - ratio) + this.panY * ratio;
+    this.userZoom = newZoom;
+    if(this.userZoom == 1) { // back to fit: recenter
+      this.panX = 0;
+      this.panY = 0;
+    }
+    this.cardScale = this.fitScale * this.userZoom;
+    this.applyCardTransform();
   }
 
   refreshMainCardFaces() {
