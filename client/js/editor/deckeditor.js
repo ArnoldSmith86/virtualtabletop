@@ -225,6 +225,10 @@ class DeckEditor {
     $('#editor').append($('#deckEditorExportOverlay'));
     $('#editor').append($('#deckEditorImportOverlay'));
     $('#editor').append($('#deckEditorNewDeckOverlay'));
+    // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
+    // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
+    // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
+    $('#editor').append($('#libraryDecksOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -2310,10 +2314,10 @@ class DeckEditor {
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=library_add class=green>Create empty deck</button>');
       $('button', bar).onclick = _=>{ this.closeNewDeckOverlay(); this.addDeck(); };
     } else if(mode == 'library') {
-      // The library overlay lives outside the deck editor's stacking context, so drop out of the editor
-      // to show it (picking a deck adds it to the game; the user can reopen the editor on it afterwards).
+      // Keep the deck editor open: the library overlay is moved into #editor (see initializeDOM) so it shows
+      // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added.
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
-      $('button', bar).onclick = _=>{ this.pendingNewDeck = false; this.close(); openLibraryDecksOverlay(); };
+      $('button', bar).onclick = _=>openLibraryDecksOverlay();
     } else {
       // Render the existing PropertiesModule deck-creation flow inside a container carrying the same classes
       // the sidebar uses ("tune editorModule"), so its scoped CSS (preview tiles, suit editors, TTS input)
@@ -2595,6 +2599,23 @@ async function createStarterDeck() {
   const id = generateUniqueWidgetID();
   setDeltaCause(`${getPlayerDetails().playerName} created deck ${id}D for the deck editor`);
   await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
+  // Recall & Shuffle button on the holder, matching the add-widget overlay's deck composite.
+  await addWidgetLocal({
+    id: id+'B',
+    parent: id,
+    fixedParent: true,
+    y: 171.36,
+    width: 111,
+    height: 40,
+    type: 'button',
+    text: 'Recall & Shuffle',
+    movableInEdit: false,
+    clickRoutine: [
+      { func: 'RECALL',  holder: '${PROPERTY parent}' },
+      { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+      { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+    ]
+  });
   await addWidgetLocal({
     type: 'deck',
     id: id+'D',

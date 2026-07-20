@@ -283,86 +283,30 @@ class PropertiesModule extends SidebarModule {
       this.addDeck();
   }
 
+  // Shown when the Properties module is open with nothing selected. The deck-creation flows themselves
+  // (deckTraditional/deckGenerator/deckImages/deckImportTTS) now live in the deck editor's "Add New Deck"
+  // submenu, so this just points the user at the two starting actions.
   addDeck() {
-    this.addHeader('Add deck');
+    this.addHeader('Edit widgets');
 
-    const browseButton = document.createElement('button');
-    browseButton.innerText = 'Browse public library decks';
-    browseButton.setAttribute('icon', 'style');
-    browseButton.className = 'libraryDecksBrowseButton';
-    browseButton.onclick = _=>openLibraryDecksOverlay();
-    this.moduleDOM.append(browseButton);
+    const intro = document.createElement('p');
+    intro.className = 'noSelectionIntro';
+    intro.innerText = 'You do not have a widget selected. To get started:';
+    this.moduleDOM.append(intro);
 
-    this.addSubHeader('Or create a new deck');
+    const addWidgetButton = document.createElement('button');
+    addWidgetButton.innerText = 'Add a new widget';
+    addWidgetButton.setAttribute('icon', 'add');
+    addWidgetButton.className = 'noSelectionButton';
+    addWidgetButton.onclick = _=>{ setSelection([]); showOverlay('addOverlay'); };
+    this.moduleDOM.append(addWidgetButton);
 
-    function createRadioButtons(target, name, options, callback) {
-      let html = '';
-      Object.keys(options).forEach((key, index) => {
-        const option = options[key];
-        html += `
-          <div>
-            <input type="radio" id="${name}${index}" name="${name}" value="${key}">
-            <label for="${name}${index}"><strong>${option.header}</strong><div>${option.description}</div></label>
-          </div>
-        `;
-      });
-
-      const radioButtonsHTML = `<div class=headerRadioButtons>${html}</div>`;
-      const container = document.createElement('div');
-      container.innerHTML = radioButtonsHTML;
-      target.append(container);
-
-      Object.keys(options).forEach((_, index) => {
-        const radioButton = container.querySelector(`#${name}${index}`);
-        radioButton.addEventListener('change', (event) => {
-          callback(event.target.value);
-        });
-      });
-
-      return container;
-    }
-
-    createRadioButtons(this.moduleDOM, 'deckType', {
-      traditional: {
-        header: 'Traditional deck',
-        description: 'Add a ready-made deck: standard playing cards, Spanish, German or Swiss suited cards, tarot, hanafuda, mahjong tiles or dominoes'
-      },
-      custom: {
-        header: 'Custom deck of cards',
-        description: 'Generate a deck by defining suits (symbols and colors) and ranks for each suit'
-      },
-      images: {
-        header: 'Upload one image per card or tiled images with multiple cards',
-        description: 'Generate a deck by uploading images that cover the whole card. You may need to remove gaps or margins for tiled images in an image editor.'
-      },
-      tts: {
-        header: 'Import from Tabletop Simulator',
-        description: 'Enter the link of a TTS Steam Workshop item, preview the decks it contains and import the ones you want'
-      },
-      deckeditor: {
-        header: 'Design a deck in the deck editor',
-        description: 'Create a new deck and design its faces and card types visually in the deck editor'
-      }
-    }, v=>{
-      options.innerHTML = '';
-      if(v == 'traditional')
-        this.deckTraditional(options);
-      if(v == 'custom')
-        this.deckGenerator(options);
-      if(v == 'images')
-      this.deckImages(options);
-      if(v == 'tts')
-        this.deckImportTTS(options);
-      if(v == 'deckeditor')
-        this.deckEditorStart(options);
-    });
-
-    const options = div(this.moduleDOM);
-  }
-
-  deckEditorStart(target) {
-    const bar = div(target, 'buttonBar', '<button icon=style class=green>Open Deck Editor</button>');
-    $('button', bar).onclick = async _=>deckEditor.open(await createStarterDeck());
+    const deckEditorButton = document.createElement('button');
+    deckEditorButton.innerText = 'Open deck editor';
+    deckEditorButton.setAttribute('icon', 'style');
+    deckEditorButton.className = 'noSelectionButton';
+    deckEditorButton.onclick = _=>deckEditor.openBestDeck();
+    this.moduleDOM.append(deckEditorButton);
   }
 
   async deckTraditional(target) {
@@ -602,11 +546,38 @@ class PropertiesModule extends SidebarModule {
       batchStart();
       const deck = getDeckDefinition(standardDeck);
       setDeltaCause(`${getPlayerDetails().playerName} added custom deck "${deck.id}" in editor`);
-      await addWidgetLocal(deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck));
+      const finalDeck = deckTemplates[$('.selected.deckTemplateButton', target).dataset.index](deck);
 
-      let suitIndex = 0;
+      // Same holder/button/pile structure as addDeckWithCards, so custom decks aren't spread out either.
+      const cardWidth  = finalDeck.cardDefaults && finalDeck.cardDefaults.width  || finalDeck.width  || 103;
+      const cardHeight = finalDeck.cardDefaults && finalDeck.cardDefaults.height || finalDeck.height || 160;
+      const deckWidth  = finalDeck.width  || cardWidth;
+      const deckHeight = finalDeck.height || cardHeight;
+      const holderWidth  = cardWidth  + 8;
+      const holderHeight = cardHeight + 11;
+      const holderID = generateUniqueWidgetID();
+      await addWidgetLocal({
+        type: 'holder', id: holderID,
+        x: Math.round(800 - holderWidth/2), y: Math.round(500 - holderHeight/2),
+        width: holderWidth, height: holderHeight, dropTarget: { type: 'card' }
+      });
+      await addWidgetLocal({
+        id: holderID+'B', parent: holderID, fixedParent: true, y: holderHeight,
+        width: holderWidth, height: 40, type: 'button', text: 'Recall & Shuffle', movableInEdit: false,
+        clickRoutine: [
+          { func: 'RECALL',  holder: '${PROPERTY parent}' },
+          { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+          { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+        ]
+      });
+      await addWidgetLocal(Object.assign({}, finalDeck, {
+        parent: holderID,
+        x: Math.round((holderWidth -deckWidth )/2),
+        y: Math.round((holderHeight-deckHeight)/2)
+      }));
+      await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
+
       for(const [ suitSymbol, suitColor ] of Object.entries(colors)) {
-        let x = 0;
         for(const rank of parseRankRange(ranks[suitSymbol])) {
           const cT = `${rank} of ${suitSymbol.replace(/.*\//, '')}`;
           await addWidgetLocal({
@@ -614,13 +585,10 @@ class PropertiesModule extends SidebarModule {
             id: `${deck.id} ${cT}`,
             deck: deck.id,
             cardType: cT,
-            x,
-            y: suitIndex * 160,
+            parent: holderID+'P',
             activeFace: 1
           });
-          x += 103;
         }
-        suitIndex += 1;
       }
 
       batchEnd();
@@ -866,29 +834,60 @@ class PropertiesModule extends SidebarModule {
   async addDeckWithCards(deck, type, counts) {
     batchStart();
     setDeltaCause(`${getPlayerDetails().playerName} added ${type} deck "${deck.id}" in editor`);
-    await addWidgetLocal(deck);
 
-    const cardWidth = deck.cardDefaults && deck.cardDefaults.width || 103;
-    let x = 0;
-    let y = 0;
+    // Match the public-library flow: a holder sized to the cards, a Recall & Shuffle button, the deck
+    // centered in it and the cards stacked in a pile - rather than spreading loose cards across the table.
+    const cardWidth  = deck.cardDefaults && deck.cardDefaults.width  || deck.width  || 103;
+    const cardHeight = deck.cardDefaults && deck.cardDefaults.height || deck.height || 160;
+    const deckWidth  = deck.width  || cardWidth;
+    const deckHeight = deck.height || cardHeight;
+    const holderWidth  = cardWidth  + 8;
+    const holderHeight = cardHeight + 11;
+    const holderID = generateUniqueWidgetID();
+
+    await addWidgetLocal({
+      type: 'holder',
+      id: holderID,
+      x: Math.round(800 - holderWidth/2),
+      y: Math.round(500 - holderHeight/2),
+      width: holderWidth,
+      height: holderHeight,
+      dropTarget: { type: 'card' }
+    });
+    await addWidgetLocal({
+      id: holderID+'B',
+      parent: holderID,
+      fixedParent: true,
+      y: holderHeight,
+      width: holderWidth,
+      height: 40,
+      type: 'button',
+      text: 'Recall & Shuffle',
+      movableInEdit: false,
+      clickRoutine: [
+        { func: 'RECALL',  holder: '${PROPERTY parent}' },
+        { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+        { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+      ]
+    });
+    await addWidgetLocal(Object.assign({}, deck, {
+      parent: holderID,
+      x: Math.round((holderWidth -deckWidth )/2),
+      y: Math.round((holderHeight-deckHeight)/2)
+    }));
+    await addWidgetLocal({ type: 'pile', id: holderID+'P', parent: holderID, width: cardWidth, height: cardHeight });
+
     for(const cardType in deck.cardTypes) {
       const count = counts ? counts[cardType] || 0 : 1;
-      for(let i=1; i<=count; ++i) {
+      for(let i=1; i<=count; ++i)
         await addWidgetLocal({
           type: 'card',
           id: `${deck.id} ${cardType}${count > 1 ? ' '+i : ''}`,
           deck: deck.id,
           cardType: cardType,
-          x,
-          y: y * 160,
+          parent: holderID+'P',
           activeFace: 1
         });
-        x += cardWidth;
-        if(x+cardWidth > 1600) {
-          y += 1;
-          x = 0;
-        }
-      }
     }
 
     batchEnd();

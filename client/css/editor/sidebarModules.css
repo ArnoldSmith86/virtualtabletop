@@ -19,6 +19,22 @@
   display: inline-flex;
 }
 
+/* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). */
+.editorModule .noSelectionIntro {
+  color: white;
+  margin: 10px 5px 15px;
+}
+
+.editorModule .noSelectionButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  justify-content: center;
+}
+
 /* properties */
 
 .editorModule .widgetSelectionButton {

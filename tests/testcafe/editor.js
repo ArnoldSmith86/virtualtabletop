@@ -508,8 +508,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t
     .click('#editButton')
     .click('#editorSidebar [icon=tune]')
-    .click(Selector('#editor .headerRadioButtons label').withText('Design a deck in the deck editor'))
-    .click('#editor .buttonBar button[icon=style]') // creates the new deck and opens the deck editor
+    .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": creates a starter deck and opens the deck editor
     .setNativeDialogHandler(() => true)
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete a face
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete the other -> faceless deck
@@ -530,7 +529,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.pressKey('esc');          // closes the deck editor - and only the deck editor
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(Selector('body').hasClass('edit')).ok(); // Escape must not have left edit mode
-  await compareState(t, '13618c8d4a21ba92c161783689ab14fb');
+  await compareState(t, '5a122712291686381f805ac9bad1376e');
 });
 
 test('Deck editor: toolbar button toggles the editor and stays in sync with Escape', async t => {
@@ -584,5 +583,5 @@ test('Deck editor: toolbar button creates a deck when the game has none', async 
     .expect(Selector('body').hasClass('deckEditorActive')).ok()
     .expect(deckCount()).eql(1)      // a starter deck was created
     .pressKey('esc');
-  await compareState(t, 'ab6dea2fb85252f1375a260da833826d');
+  await compareState(t, '7fd7f52f6c52afda3aa9984939eee464');
 });
