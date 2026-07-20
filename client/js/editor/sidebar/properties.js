@@ -426,26 +426,11 @@ const editorTypeSections = {
   },
   label: {},
   scoreboard: {
+    // most scoreboard properties are curated in renderForScoreboard; only the
+    // border radius stays in the generic appearance/style block
     stateClasses: { '.equalWidth': 'autosizeColumns', '.verticalHeader': 'verticalHeader' },
     appearance: [
-      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
-      { label: 'Player colors',      property: 'showPlayerColors', kind: 'checkbox' },
-      { label: 'Vertical header',    property: 'verticalHeader',   kind: 'checkbox' },
-      { label: 'Autosize columns',   property: 'autosizeColumns',  kind: 'checkbox' }
-    ],
-    behavior: [
-      { label: 'Score property',     property: 'scoreProperty',    kind: 'text' },
-      { label: 'Players in columns', property: 'playersInColumns', kind: 'checkbox' },
-      { label: 'Show totals',        property: 'showTotals',       kind: 'checkbox' },
-      { label: 'Show all rounds',    property: 'showAllRounds',    kind: 'checkbox' },
-      { label: 'Show all seats',     property: 'showAllSeats',     kind: 'checkbox' },
-      { label: 'Round label',        property: 'roundLabel',       kind: 'text' },
-      { label: 'Totals label',       property: 'totalsLabel',      kind: 'text' },
-      { label: 'Current round',      property: 'currentRound',     kind: 'number', nullIfEmpty: true },
-      { label: 'Sort field',         property: 'sortField',        kind: 'text' },
-      { label: 'Sort ascending',     property: 'sortAscending',    kind: 'checkbox' },
-      { label: 'First column width', property: 'firstColWidth',    kind: 'number', min: 10, max: 500 },
-      { label: 'Edit pane title',    property: 'editPaneTitle',    kind: 'text' }
+      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
     ]
   },
   seat: {
@@ -4024,9 +4009,70 @@ class PropertiesModule extends SidebarModule {
   renderForScoreboard(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
+
+    // --- Scores: where scores come from and how they total up ---
+    this.addSubHeader('Scores');
+    new TextInput(this, widget, 'Score property', { property: 'scoreProperty', hint: editorPropertyHints.scoreProperty }).render(this.moduleDOM);
+
+    // show totals, with the totals label revealed only when they are shown
+    const totalsRow = div(this.moduleDOM, 'propertyInlineRow');
+    new CheckboxInput(this, widget, 'Show totals', { property: 'showTotals', hint: editorPropertyHints.showTotals }).render(totalsRow);
+    const totalsLabelInput = new TextInput(this, widget, 'Totals label', { property: 'totalsLabel' });
+    totalsLabelInput.render(totalsRow);
+    this.addPropertyListener(widget, 'showTotals', w => totalsLabelInput.dom.style.display = w.get('showTotals') ? '' : 'none');
+
+    new NumberInput(this, widget, 'Highlight round', { property: 'currentRound', step: 1, nullIfEmpty: true, hint: 'Highlights this round in the table (1 = first round). Leave empty for none.' }).render(this.moduleDOM);
+
+    // --- Rounds ---
+    this.addSubHeader('Rounds');
+    new TextInput(this, widget, 'Round label', { property: 'roundLabel', hint: 'Header shown on the round column/row.' }).render(this.moduleDOM);
+    this.renderListEditor(widget, 'rounds', 'Round names', 'Custom names for each round. Leave empty to number rounds automatically.');
+    new CheckboxInput(this, widget, 'Show all rounds', { property: 'showAllRounds', hint: editorPropertyHints.showAllRounds }).render(this.moduleDOM);
+
+    // --- Layout: how the table is arranged ---
+    this.addSubHeader('Layout');
+    new SelectInput(this, widget, 'Orientation', {
+      property: 'playersInColumns',
+      hint: editorPropertyHints.playersInColumns,
+      choices: [ { value: true, text: 'Players in columns' }, { value: false, text: 'Players in rows' } ]
+    }).render(this.moduleDOM);
+
+    const sortRow = div(this.moduleDOM, 'propertyInlineRow');
+    new SelectInput(this, widget, 'Sort by', {
+      property: 'sortField',
+      hint: editorPropertyHints.sortField,
+      choices: [ { value: 'index', text: 'Seat order' }, { value: 'total', text: 'Total score' }, { value: 'player', text: 'Player name' } ]
+    }).render(sortRow);
+    new SelectInput(this, widget, 'Direction', {
+      property: 'sortAscending',
+      choices: [ { value: true, text: 'Ascending' }, { value: false, text: 'Descending' } ]
+    }).render(sortRow);
+
+    new CheckboxInput(this, widget, 'Use player colors', { property: 'showPlayerColors', hint: editorPropertyHints.showPlayerColors }).render(this.moduleDOM);
+    new CheckboxInput(this, widget, 'Vertical header', { property: 'verticalHeader', hint: editorPropertyHints.verticalHeader }).render(this.moduleDOM);
+
+    // border radius + CSS editor
     this.renderAppearanceSection(widget);
-    this.renderBehaviorSection(widget, 'Scores');
-    this.renderOtherPropertiesSection(widget);
+
+    // --- Advanced: less common tweaks, collapsed and last ---
+    this.renderAdvancedSection(widget, body => {
+      new CheckboxInput(this, widget, 'Include empty seats', { property: 'showAllSeats', hint: editorPropertyHints.showAllSeats }).render(body);
+      new CheckboxInput(this, widget, 'Autosize columns', { property: 'autosizeColumns', hint: editorPropertyHints.autosizeColumns }).render(body);
+      const firstColInput = new NumberInput(this, widget, 'First column width', { property: 'firstColWidth', min: 10, max: 500, step: 1, hint: editorPropertyHints.firstColWidth });
+      firstColInput.render(body);
+      // this width only applies when columns are not autosized
+      this.addPropertyListener(widget, 'autosizeColumns', w => firstColInput.dom.style.display = w.get('autosizeColumns') ? 'none' : '');
+      new TextInput(this, widget, 'Edit pane title', { property: 'editPaneTitle', hint: 'Title of the dialog shown when a player clicks the scoreboard to enter a score.' }).render(body);
+    });
+
+    // 'seats' stays in the generic list: it can be a seat list or a team map,
+    // which the generic JSON input handles safely
+    this.renderOtherPropertiesSection(widget, [
+      'scoreProperty', 'showTotals', 'totalsLabel', 'currentRound',
+      'roundLabel', 'rounds', 'showAllRounds',
+      'playersInColumns', 'sortField', 'sortAscending', 'showPlayerColors', 'verticalHeader',
+      'showAllSeats', 'autosizeColumns', 'firstColWidth', 'editPaneTitle'
+    ]);
   }
 
   renderForSeat(widget) {
