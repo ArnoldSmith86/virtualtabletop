@@ -20,7 +20,6 @@ class Seat extends Widget {
 
       color: '#999999',
       colorEmpty: '#999999',
-      usePlayerColor: true,
       layer: -1,
       borderRadius: 5
     });
@@ -95,12 +94,10 @@ class Seat extends Widget {
   async setPlayer() {
     if(this.get('player') == '') {
       await this.set('player', playerName);
-      if(this.get('usePlayerColor'))
-        await this.set('color', playerColor);
+      await this.set('color', playerColor);
     } else {
       await this.set('player', null);
-      if(this.get('usePlayerColor'))
-        await this.set('color', this.get('colorEmpty'));
+      await this.set('color', this.get('colorEmpty'));
     }
   }
 
