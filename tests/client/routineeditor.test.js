@@ -36,7 +36,7 @@ beforeAll(() => {
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
     'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup', 'RoutineNumberPopup',
-    'RoutineColorPopup', 'RoutineIconPopup'
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -59,6 +59,13 @@ describe('routine operation metadata', () => {
         if (key != 'func')
           expect(routineOperationMetadata[newOperation.func].parameters[key]).toBeDefined();
     }
+  });
+
+  test('common operations include SELECT and one MOVE, and drop AUDIO', () => {
+    const funcs = simpleRoutineOperationExamples.map(e => e.newOperation.func);
+    expect(funcs).toContain('SELECT');
+    expect(funcs.filter(f => f == 'MOVE')).toHaveLength(1);
+    expect(funcs).not.toContain('AUDIO');
   });
 
   test('every declared parameter is reachable as a chip in the template', () => {
@@ -124,6 +131,36 @@ describe('operation rendering', () => {
   test('shows optional segments when their parameter is explicitly set', () => {
     const { dom } = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2', face: 0 });
     expect(dom.querySelector('[data-parameter="face"]')).not.toBeNull();
+  });
+
+  test('the list view strikes ignored parameters and explains why', () => {
+    const move = editorForOperation({ func: 'MOVE', fillTo: 3, count: 2 });
+    move.setOperationDetails({ state: {} }, { func: 'MOVE', fillTo: 3, count: 2 }, [], []);
+    expect(move.ignoredParameters().count).toMatch(/fill up to/);
+    const rendered = renderInListView({ func: 'MOVE', fillTo: 3, count: 2 });
+    const countRow = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('count'));
+    expect(countRow.classList.contains('routine-editor-parameter-ignored')).toBe(true);
+    expect(countRow.querySelector('.routine-editor-parameter-ignored-warning').title).toMatch(/fill up to/);
+  });
+
+  test('IF ignores the operands when a custom condition is set', () => {
+    const ifOp = editorForOperation({ func: 'IF', condition: '${x}', operand1: 1 });
+    ifOp.setOperationDetails({ state: {} }, { func: 'IF', condition: '${x}', operand1: 1 }, [], []);
+    expect(Object.keys(ifOp.ignoredParameters())).toEqual([ 'operand1', 'relation', 'operand2' ]);
+  });
+
+  function renderInListView(operation) {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails({ state: {} }, operation, [], []);
+    const dom = editor.render();
+    const toggle = dom.querySelector('.routine-editor-view-toggle');
+    toggle.dispatchEvent(new Event('click'));
+    return editor.domElement;
+  }
+
+  test('the expanded view offers a raw-JSON button', () => {
+    const dom = renderInListView({ func: 'MOVE', from: 'h1' });
+    expect(dom.querySelector('.routine-editor-operation-json')).not.toBeNull();
   });
 
   test('conditional templates follow the parameter values', () => {
@@ -227,6 +264,41 @@ describe('routine editor state handling', () => {
     expect(notified[0].func).toBe('SHUFFLE');
   });
 
+  test('moves an operation into an adjacent IF block', () => {
+    const routine = [ { func: 'IF', operand1: 1 }, { func: 'FLIP' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    // the FLIP row shows a ↰ to nest into the IF above
+    const upInto = [...editor.domElement.querySelectorAll('.routine-editor-block-arrow')].find(b => b.textContent == '↰');
+    expect(upInto).not.toBeNull();
+    upInto.dispatchEvent(new Event('click'));
+    expect(notified).toHaveLength(1);
+    expect(notified[0].func).toBe('IF');
+    expect(notified[0].thenRoutine).toEqual([ { func: 'FLIP' } ]);
+  });
+
+  test('moves an operation out of a nested block into the parent', () => {
+    const routine = [ { func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' }, { func: 'SHUFFLE' } ] } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    // the ↱ inside the IF block hoists the first nested op out after the IF
+    const out = [...editor.domElement.querySelectorAll('.routine-editor .routine-editor-block-arrow')].find(b => b.textContent == '↱');
+    expect(out).not.toBeNull();
+    out.dispatchEvent(new Event('click'));
+    expect(notified).toHaveLength(2);
+    expect(notified[0].thenRoutine).toEqual([ { func: 'SHUFFLE' } ]);
+    expect(notified[1].func).toBe('FLIP');
+  });
+
+  test('IF and FOREACH blocks show tailored empty hints', () => {
+    const ifEditor = new RoutineEditor({ state: {} }, [ { func: 'IF', operand1: 1, thenRoutine: [] } ]);
+    expect(ifEditor.domElement.textContent).toContain('Add operations to run when the condition is true');
+    const foreachEditor = new RoutineEditor({ state: {} }, [ { func: 'FOREACH', loopRoutine: [] } ]);
+    expect(foreachEditor.domElement.textContent).toContain('Add operations to run for each iteration');
+  });
+
   test('ignores echoes of its own edits but applies remote changes', () => {
     const routine = [ { func: 'FLIP' } ];
     const editor = new RoutineEditor({ state: {} }, routine);
@@ -255,8 +327,10 @@ describe('events editor', () => {
 });
 
 describe('property automations', () => {
+  let editorCounter = 0;
   function makeEditor(state, onChange = () => {}) {
-    const widget = { state, get(p) { return this.state[p]; } };
+    // a unique id per editor so the persisted expandedEvents map does not leak between tests
+    const widget = { state: { id: `w${editorCounter++}`, ...state }, get(p) { return this.state[p]; } };
     return { widget, editor: new EventsEditor(widget, onChange) };
   }
 
@@ -498,6 +572,44 @@ describe('popup closing', () => {
     expect(document.body.contains(outer.domElement)).toBe(true);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     expect(document.body.contains(outer.domElement)).toBe(false);
+  });
+});
+
+describe('JSON parameter popup', () => {
+  function showJson(operation, parameterNames) {
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineJSONPopup();
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, { state: {} }, [], []);
+    popup.show();
+    return popup;
+  }
+
+  test('auto-quotes a bare word as a string (e.g. SELECT sortBy)', () => {
+    const popup = showJson({ func: 'SELECT' }, [ 'sortBy' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const textarea = popup.domElement.querySelector('textarea');
+    textarea.value = 'vp';
+    textarea.dispatchEvent(new Event('change'));
+    expect(value).toEqual({ sortBy: 'vp' });
+    expect(textarea.classList.contains('inputError')).toBe(false);
+    popup.hide();
+  });
+
+  test('still parses real JSON and rejects malformed input', () => {
+    const popup = showJson({ func: 'SELECT' }, [ 'sortBy' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    const textarea = popup.domElement.querySelector('textarea');
+    textarea.value = '[ "a", "b" ]';
+    textarea.dispatchEvent(new Event('change'));
+    expect(value).toEqual({ sortBy: [ 'a', 'b' ] });
+    textarea.value = '{ broken';
+    textarea.dispatchEvent(new Event('change'));
+    expect(textarea.classList.contains('inputError')).toBe(true);
+    popup.hide();
   });
 });
 

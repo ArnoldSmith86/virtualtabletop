@@ -23,7 +23,8 @@ const routineOperationMetadata = {
       player: { type: 'string', default: null, display: { 'null': 'everyone' } },
       silence: { type: 'enum', values: [ true, false ], default: false },
       count: { type: 'number', default: 1, special: [ 'loop' ] }
-    }
+    },
+    ignored: v=>v('length') != null ? { count: 'ignored because a length is set' } : {}
   },
   CALL: {
     template: '{func} routine {routine} on {widget}[ and store result as {variable}][; arguments {arguments}]',
@@ -99,7 +100,8 @@ const routineOperationMetadata = {
       collection: { type: 'collection', default: 'DEFAULT' },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'next' } },
       faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
-    }
+    },
+    ignored: v=>v('face') != null ? { faceCycle: 'ignored because a target face is set' } : {}
   },
   FOREACH: {
     template: '{func} {in,range,collection}',
@@ -158,7 +160,8 @@ const routineOperationMetadata = {
       collection: { type: 'collection', default: 'DEFAULT' },
       to: { type: 'widgets', default: null, display: { 'null': '?' } },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } }
-    }
+    },
+    ignored: v=>v('fillTo') != null ? { count: 'ignored because "fill up to" is set' } : {}
   },
   MOVEXY: {
     template: '{func} {count} widgets from {from} to ({x}, {y})[; flip to face {face}]',
@@ -286,6 +289,13 @@ const routineOperationMetadata = {
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
       value: { type: 'number', default: 0, special: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' },
       seconds: { type: 'number', default: 0 }
+    },
+    ignored: v=>{
+      if([ 'pause', 'start', 'toggle', 'reset' ].indexOf(v('mode')) != -1)
+        return { value: 'ignored for this mode', seconds: 'ignored for this mode' };
+      if(v('seconds'))
+        return { value: 'ignored because seconds is set' };
+      return {};
     }
   },
   TURN: {
@@ -350,12 +360,15 @@ function operationUIState(operation) {
 }
 
 class RoutineEditor {
-  constructor(widget, routine, variables=[], collections=[]) {
+  constructor(widget, routine, variables=[], collections=[], options={}) {
     this.domElement = document.createElement('div');
     this.domElement.classList.add('routine-editor');
     this.widget = widget;
     this.variables = variables;
     this.collections = collections;
+    this.emptyHint = options.emptyHint || 'No operations yet.';
+    // set for nested routines: hoists an operation out of this block into the parent
+    this.onHoist = options.onHoist || null;
     this.changeListeners = [];
     // the caller clones at the widget-state boundary; nested editors share references
     this.setRoutine(routine);
@@ -398,6 +411,13 @@ class RoutineEditor {
         this.routine[index] = v;
         this.routineChanged();
       });
+      // let a container operation (IF/FOREACH) hoist an operation out of its
+      // nested block into this routine, right after the container itself
+      editor.hoistIntoParent = op=>{
+        const at = this.routine.indexOf(editor.operation);
+        this.routine.splice((at < 0 ? this.routine.length-1 : at) + 1, 0, op);
+        this.routineChanged();
+      };
 
       variables = [ ...new Set([ ...variables, ...editor.getDefinedVariables() ]) ];
       collections = [ ...new Set([ ...collections, ...editor.getDefinedCollections() ]) ];
@@ -418,9 +438,9 @@ class RoutineEditor {
 
       const buttonsDOM = document.createElement('span');
       buttonsDOM.className = 'routine-editor-operation-buttons';
-      const operationButton = (icon, title, onClick)=>{
+      const operationButton = (icon, title, onClick, glyphClass='material-symbols')=>{
         const buttonDOM = document.createElement('span');
-        buttonDOM.className = 'material-symbols';
+        buttonDOM.className = glyphClass;
         buttonDOM.textContent = icon;
         buttonDOM.title = title;
         buttonDOM.addEventListener('click', e=>{
@@ -428,6 +448,18 @@ class RoutineEditor {
           onClick();
         });
         buttonsDOM.append(buttonDOM);
+      };
+      // the block property an adjacent operation would nest this one into
+      const blockOf = op=>op && typeof op == 'object' ? ({ IF: 'thenRoutine', FOREACH: 'loopRoutine' })[op.func] : undefined;
+      const moveInto = (adjOp, prop, toStart)=>{
+        if(!Array.isArray(adjOp[prop]))
+          adjOp[prop] = [];
+        const op = this.routine.splice(index, 1)[0];
+        if(toStart)
+          adjOp[prop].unshift(op);
+        else
+          adjOp[prop].push(op);
+        this.routineChanged();
       };
       if(index > 0)
         operationButton('arrow_upward', 'Move this operation up', _=>{
@@ -439,6 +471,19 @@ class RoutineEditor {
           this.routine.splice(index+1, 0, this.routine.splice(index, 1)[0]);
           this.routineChanged();
         });
+      // ↰ / ↲ nest this operation into an adjacent IF/FOREACH block
+      const prevBlock = blockOf(this.routine[index-1]);
+      if(prevBlock)
+        operationButton('↰', `Move into the ${this.routine[index-1].func} block above`, _=>moveInto(this.routine[index-1], prevBlock, false), 'routine-editor-block-arrow');
+      const nextBlock = blockOf(this.routine[index+1]);
+      if(nextBlock)
+        operationButton('↲', `Move into the ${this.routine[index+1].func} block below`, _=>moveInto(this.routine[index+1], nextBlock, true), 'routine-editor-block-arrow');
+      // ↱ move this operation out of the current block into the parent routine
+      if(this.onHoist)
+        operationButton('↱', 'Move out of this block', _=>{
+          const op = this.routine.splice(index, 1)[0];
+          this.onHoist(op);
+        }, 'routine-editor-block-arrow');
       operationButton('delete', 'Remove this operation', _=>{
         this.routine.splice(index, 1);
         this.routineChanged();
@@ -451,7 +496,7 @@ class RoutineEditor {
     if(!this.operations.length) {
       const emptyHint = document.createElement('div');
       emptyHint.className = 'routine-editor-empty';
-      emptyHint.textContent = 'No operations yet.';
+      emptyHint.textContent = this.emptyHint;
       this.domElement.append(emptyHint);
     }
 
@@ -581,6 +626,14 @@ class RoutineOperationEditor {
     return this.getDefaults()[name];
   }
 
+  // { parameterName: reason } for parameters the engine currently ignores because
+  // of how other parameters are set (e.g. MOVE count when fillTo is set)
+  ignoredParameters() {
+    if(typeof this.metadata.ignored == 'function')
+      return this.metadata.ignored(name=>this.parameterValue(name)) || {};
+    return {};
+  }
+
   // parameters the handwritten template does not mention still get a chip in an
   // optional segment so every option the operation supports stays editable
   withExtraParameters(template) {
@@ -633,6 +686,24 @@ class RoutineOperationEditor {
     if(this.isExpandable())
       ($('.routine-editor-parameter-row', dom) || dom).prepend(this.renderViewToggle());
 
+    // in the expanded view, a top-right button shows the operation as raw JSON
+    if(uiState.listView && this.operation && typeof this.operation == 'object') {
+      const jsonButton = document.createElement('span');
+      jsonButton.className = 'material-symbols routine-editor-operation-json';
+      jsonButton.textContent = 'data_object';
+      jsonButton.title = 'Edit this operation as JSON';
+      jsonButton.addEventListener('click', async e=>{
+        e.stopPropagation();
+        const popup = new RoutineFullOperationJSONPopup();
+        popup.setSource(jsonButton);
+        popup.setOperationDetails(this.operation, [ 'json' ], this.widget, this.variables, this.collections);
+        const values = await newRoutineValues(popup);
+        if(values !== undefined)
+          this.onNewValue(values);
+      });
+      dom.append(jsonButton);
+    }
+
     for(const span of $a('span[data-parameter]', dom)) {
       span.addEventListener('click', async e=>{
         e.stopPropagation();
@@ -677,10 +748,22 @@ class RoutineOperationEditor {
 
   // one line per declared parameter, including the ones the operation does not define
   renderListView(dom) {
+    const ignored = this.ignoredParameters();
     let html = `<div class="routine-editor-parameter-row">${this.renderParameterChip('func')}</div>`;
-    for(const name in this.metadata.parameters)
-      html += `<div class="routine-editor-parameter-row"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
+    for(const name in this.metadata.parameters) {
+      const isIgnored = Object.prototype.hasOwnProperty.call(ignored, name);
+      html += `<div class="routine-editor-parameter-row${isIgnored ? ' routine-editor-parameter-ignored' : ''}"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
+    }
     dom.innerHTML = html;
+    // a red "!" at the end of every ignored line explains why it has no effect
+    for(const row of $a('.routine-editor-parameter-row.routine-editor-parameter-ignored', dom)) {
+      const name = $('.routine-editor-parameter-name', row).textContent;
+      const warning = document.createElement('span');
+      warning.className = 'material-symbols routine-editor-parameter-ignored-warning';
+      warning.textContent = 'error';
+      warning.title = ignored[name];
+      row.append(warning);
+    }
   }
 
   // operations with parameters can expand from the sentence to the list view
@@ -709,10 +792,13 @@ class RoutineOperationEditor {
     return toggle;
   }
 
-  renderSubroutine(dom, property) {
+  renderSubroutine(dom, property, options={}) {
     // only assign the array to the operation when something actually changes
     const routine = Array.isArray(this.operation[property]) ? this.operation[property] : [];
-    const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections);
+    // hoisting out of a nested block means removing from here and asking the
+    // parent routine (via the container editor) to re-insert after the container
+    options = { ...options, onHoist: op=>this.hoistIntoParent && this.hoistIntoParent(op) };
+    const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections, options);
     routineEditor.registerChangeListener(v=>{
       this.operation[property] = v;
       this.notifyChangeListeners(this.operation);
@@ -752,15 +838,22 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
     return this.withExtraParameters('{func} {operand1} {relation} {operand2}');
   }
 
+  ignoredParameters() {
+    // a custom condition overrides the operand comparison
+    if(this.operation && typeof this.operation.condition != 'undefined')
+      return { operand1: 'ignored because a custom condition is set', relation: 'ignored because a custom condition is set', operand2: 'ignored because a custom condition is set' };
+    return {};
+  }
+
   render() {
     super.render();
-    this.renderSubroutine(this.domElement, 'thenRoutine');
+    this.renderSubroutine(this.domElement, 'thenRoutine', { emptyHint: 'Add operations to run when the condition is true' });
     if(Array.isArray(this.operation.elseRoutine)) {
       const elseLabel = document.createElement('div');
       elseLabel.className = 'routine-editor-else';
       elseLabel.textContent = 'ELSE';
       this.domElement.append(elseLabel);
-      this.renderSubroutine(this.domElement, 'elseRoutine');
+      this.renderSubroutine(this.domElement, 'elseRoutine', { emptyHint: 'Add operations to run when the condition is false' });
     } else {
       const addElse = button(this.domElement, 'add ELSE', _=>{
         this.operation.elseRoutine = [];
@@ -785,7 +878,7 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
 
   render() {
     super.render();
-    this.renderSubroutine(this.domElement, 'loopRoutine');
+    this.renderSubroutine(this.domElement, 'loopRoutine', { emptyHint: 'Add operations to run for each iteration' });
     return this.domElement;
   }
 }
@@ -904,12 +997,11 @@ function editorForOperation(operation) {
 
 // pre-filled simple versions of common operations, offered first when adding one
 const simpleRoutineOperationExamples = [
-  { example: 'MOVE 1 card from a to b', newOperation: { func: 'MOVE', count: 1, from: null, to: null } },
-  { example: 'MOVE all cards from a to b', newOperation: { func: 'MOVE', count: 'all', from: null, to: null } },
+  { example: 'MOVE cards from a to b', newOperation: { func: 'MOVE', count: 1, from: null, to: null } },
   { example: 'FLIP the top card of a holder', newOperation: { func: 'FLIP', count: 1, holder: null } },
   { example: 'SHUFFLE a holder', newOperation: { func: 'SHUFFLE', holder: null } },
   { example: 'RECALL all cards to their holder', newOperation: { func: 'RECALL', holder: null } },
-  { example: 'AUDIO plays a sound', newOperation: { func: 'AUDIO', source: '' } },
+  { example: 'SELECT widgets into a collection', newOperation: { func: 'SELECT' } },
   { example: 'TURN moves to the next player', newOperation: { func: 'TURN' } }
 ];
 

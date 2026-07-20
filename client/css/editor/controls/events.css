@@ -66,6 +66,16 @@ body.edit.darkMode .events-editor-property {
   color: var(--VTTblue);
 }
 
+.events-editor-json {
+  font-size: 15px;
+  color: gray;
+  cursor: pointer;
+}
+
+.events-editor-json:hover {
+  color: var(--VTTblue);
+}
+
 .events-editor-remove {
   font-size: 16px;
   color: gray;

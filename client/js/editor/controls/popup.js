@@ -537,7 +537,7 @@ class RoutineJSONPopup extends RoutinePopup {
   show() {
     // the current value is the most likely thing to edit, so it comes first and open
     const [ valueTitle, valueContent ] = this.addAccordionSection('Value');
-    infoButton(valueTitle, 'Enter a JSON value (object, array, string, number, boolean or null).');
+    infoButton(valueTitle, 'Enter a JSON value (object, array, string, number, boolean or null). A bare word is quoted automatically as a string.');
     const textarea = document.createElement('textarea');
     const currentValue = this.getCurrentValue();
     textarea.value = JSON.stringify(typeof currentValue != 'undefined' ? currentValue : null, null, '  ');
@@ -547,7 +547,14 @@ class RoutineJSONPopup extends RoutinePopup {
         textarea.classList.remove('inputError');
         this.setNewValue(newValue);
       } catch(e) {
-        textarea.classList.add('inputError');
+        // a bare word (e.g. a sortBy property name) is almost always meant as a
+        // string, so quote it automatically instead of rejecting the input
+        if(textarea.value.trim().match(/^[A-Za-z_][\w.-]*$/)) {
+          textarea.classList.remove('inputError');
+          this.setNewValue(textarea.value.trim());
+        } else {
+          textarea.classList.add('inputError');
+        }
       }
     });
     valueContent.append(textarea);

@@ -147,13 +147,39 @@ class AddEventPopup extends Popup {
   }
 }
 
+// opens the JSON editor module and scrolls it to the given widget property key
+function openWidgetJsonAtProperty(property) {
+  const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
+  if(jsonModuleButton)
+    jsonModuleButton.click();
+  if(!property)
+    return;
+  // defer so the JSON editor has rendered and colorized its keys
+  setTimeout(_=>{
+    const highlight = $('#jeTextHighlight');
+    if(!highlight)
+      return;
+    for(const key of $a('i.key', highlight)) {
+      if(key.textContent == property) {
+        key.scrollIntoView({ block: 'center' });
+        break;
+      }
+    }
+  }, 120);
+}
+
+// which automation cards were open, kept per widget id so re-selecting a widget
+// reopens the same ones (like the JSON editor remembering the cursor position)
+const expandedEventsByWidget = {};
+
 class EventsEditor {
   constructor(widget, onChange) {
     this.widget = widget;
     this.onChange = onChange; // called with (property, newValueOrUndefined)
     this.domElement = document.createElement('div');
     this.domElement.classList.add('events-editor');
-    this.expandedEvents = {};
+    const widgetID = typeof widget.get == 'function' ? widget.get('id') : widget.state.id;
+    this.expandedEvents = expandedEventsByWidget[widgetID] || (expandedEventsByWidget[widgetID] = {});
     this.routineEditors = {}; // kept across renders so folding and other UI state survive
     this.render();
   }
@@ -212,6 +238,16 @@ class EventsEditor {
       headerDOM.append(name);
 
       infoButton(headerDOM, `<pre>${escapeHTML(event.description)}</pre>`);
+
+      const jsonButton = document.createElement('span');
+      jsonButton.className = 'material-symbols events-editor-json';
+      jsonButton.textContent = 'data_object';
+      jsonButton.title = 'Open this routine in the JSON editor';
+      jsonButton.addEventListener('click', e=>{
+        e.stopPropagation();
+        openWidgetJsonAtProperty(property);
+      });
+      headerDOM.append(jsonButton);
 
       const removeButton = document.createElement('span');
       removeButton.className = 'material-symbols events-editor-remove';
