@@ -221,8 +221,9 @@ class DeckEditor {
       return;
 
     // Editor overlays are normally hosted in #roomArea, which sits below the full-screen deck editor's
-    // stacking context. Move this one into #editor so opening it from the left toolbar is actually visible.
+    // stacking context. Move these into #editor so opening them from the deck editor is actually visible.
     $('#editor').append($('#deckEditorExportOverlay'));
+    $('#editor').append($('#deckEditorImportOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -258,6 +259,16 @@ class DeckEditor {
         throw e;
       }
     });
+    $('#deckEditorExportCSV').onclick = _=>this.exportCardTypesCSV();
+
+    // Import card types from CSV (upload button between add and copy in the card-type strip toolbar).
+    $('#deckEditorStripImport').onclick = _=>{ if(this.deck()) showOverlay('deckEditorImportOverlay'); };
+    $('#deckEditorImportClose').onclick = _=>showOverlay();
+    $('#deckEditorImportChoose').onclick = async _=>{
+      const mode = $('#deckEditorImportOverlay input[name=deckEditorImportMode]:checked');
+      showOverlay();
+      await this.importCardTypesFromFile(mode ? mode.value : 'replace');
+    };
     // One set of add buttons; the "Add to:" radios decide whether they add a static object (All Cards) or a
     // per-card-type one (Card Type). The selected radio and the group's accent color are the indicators.
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
@@ -2398,6 +2409,125 @@ class DeckEditor {
     // with zero cards is a valid state, and the room-level toolbar undo restores the deleted card widgets too).
     this.recordHistory(cause, this.newAction());
     this.render();
+  }
+
+  // --- Card type CSV import/export (mirrors the JSON editor's je_exportCSV / je_importCSV, but driven from the
+  // deck editor's own UI and working copies). ---
+
+  csvEscapeField(v) {
+    if(v === undefined)
+      return '';
+    if(typeof v == 'number')
+      return v.toString();
+    return typeof v == 'string' && !v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$|^JSON:/) ? `"${v.replace(/"/g, '""')}"` : `"JSON:${JSON.stringify(v).replace(/"/g, '""')}"`;
+  }
+
+  csvUnescapeField(v) {
+    try {
+      if(v.match(/^JSON:/))
+        return JSON.parse(v.substr(5));
+      else if(v && v.match(/^-?[0-9]*(\.[0-9]+)?(e[0-9]+)?$/))
+        return parseFloat(v);
+      else if(v)
+        return v;
+    } catch(e) {
+      return e.toString();
+    }
+  }
+
+  csvToArray(text, delimiter) {
+    let p = '', row = [ '' ], ret = [ row ], i = 0, r = 0, s = !0, l;
+    for(l of text) {
+      if('"' === l) {
+        if(s && l === p) row[i] += l;
+        s = !s;
+      } else if(delimiter === l && s) l = row[++i] = '';
+      else if('\n' === l && s) {
+        if('\r' === p) row[i] = row[i].slice(0, -1);
+        row = ret[++r] = [ l = '' ]; i = 0;
+      } else row[i] += l;
+      p = l;
+    }
+    return ret;
+  }
+
+  exportCardTypesCSV(separator) {
+    if(!this.deck())
+      return;
+    separator = separator || ',';
+    const allProperties = [ ...new Set(Object.values(this.cardTypes).reduce((a, t)=>a.concat(...Object.keys(t)), [])) ];
+    let csvText = `id::INTERNAL${separator}${allProperties.map(p=>this.csvEscapeField(p)).join(separator)}${separator}cardCount::INTERNAL\n`;
+    for(const [ id, type ] of Object.entries(this.cardTypes)) {
+      const cardCount = widgetFilter(w=>w.get('deck') == this.deckID && w.get('cardType') == id).length;
+      csvText += `${this.csvEscapeField(id)}${separator}${allProperties.map(p=>this.csvEscapeField(type[p])).join(separator)}${separator}${cardCount}\n`;
+    }
+    const blob = new Blob([ csvText ], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.download = `${this.deckID} cardTypes.csv`;
+    link.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  async importCardTypesCSV(csvText, mode) {
+    const deck = this.deck();
+    if(!deck)
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const oldIDs = Object.keys(this.cardTypes);
+    if(mode == 'replace')
+      this.cardTypes = {};
+
+    const lines = this.csvToArray(csvText, csvText.split(';').length > csvText.split(',').length ? ';' : ',');
+    const headers = lines[0].map(v=>this.csvUnescapeField(v));
+    const targetCounts = {};
+    for(let i=1; i<lines.length; i++) {
+      const line = lines[i];
+      if(line.length == 1 && !line[0])
+        continue;
+      const obj = {};
+      for(let j=0; j<Math.min(headers.length, line.length); j++)
+        obj[headers[j]] = this.csvUnescapeField(line[j]);
+      const id = obj['id::INTERNAL'] || generateUniqueWidgetID();
+      delete obj['id::INTERNAL'];
+      targetCounts[id] = obj['cardCount::INTERNAL'];
+      delete obj['cardCount::INTERNAL'];
+      this.cardTypes[id] = obj;
+    }
+
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} imported card types from CSV to deck ${this.deckID} in deck editor`);
+    for(const oldID of oldIDs)
+      if(!this.cardTypes[oldID])
+        for(const card of widgetFilter(w=>w.get('deck') == this.deckID && w.get('cardType') == oldID))
+          await removeWidgetLocal(card.get('id'));
+    await deck.set('cardTypes', JSON.parse(JSON.stringify(this.cardTypes)));
+    batchEnd();
+
+    // Card counts from the file (blank leaves the existing count as-is).
+    for(const [ id, count ] of Object.entries(targetCounts))
+      if(count !== undefined && count !== '')
+        await setCardCount(deck, id, parseInt(count, 10) || 0);
+
+    this.cardType = Object.keys(this.cardTypes)[0] || null;
+    this.selectedObject = null;
+    // Card widgets changed outside the deck-editor snapshots, so restart its history (the room-level undo still
+    // reverts the whole import).
+    this.resetHistory();
+    this.render();
+  }
+
+  async importCardTypesFromFile(mode) {
+    let csv;
+    try {
+      csv = await selectFile('TEXT');
+    } catch(e) {
+      if(e.message != 'File selection cancelled.')
+        alert(`Error: ${e.toString()}`);
+      return;
+    }
+    await this.importCardTypesCSV(csv.content, mode);
   }
 }
 

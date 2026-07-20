@@ -207,7 +207,22 @@
       <label class="deckEditorExportCheckbox"><input id="deckEditorExportCropMarks" type="checkbox">Include crop marks in print/PDF</label>
       <div id="deckEditorExportSummary"></div>
       <div class="deckEditorExportActions">
+        <button id="deckEditorExportCSV" icon="table_view">Export card types to CSV</button>
         <button id="deckEditorExportPDF" icon="print">Print / Save as PDF</button>
+      </div>
+    </div>
+  </div>
+  <div id="deckEditorImportOverlay" class="overlay" style="display: none">
+    <div id="deckEditorImportDialog">
+      <button id="deckEditorImportClose" icon="close" title="Close"></button>
+      <h1>Import card types from CSV</h1>
+      <p>Choose a CSV file (such as one exported from this dialog). Each row becomes a card type; the <code>id::INTERNAL</code> column sets its name and <code>cardCount::INTERNAL</code> sets how many cards of it are in the game.</p>
+      <div class="deckEditorImportModes">
+        <label><input type="radio" name="deckEditorImportMode" value="replace" checked>Replace all card types with the file</label>
+        <label><input type="radio" name="deckEditorImportMode" value="add">Add the file's card types to the existing ones</label>
+      </div>
+      <div class="deckEditorImportActions">
+        <button id="deckEditorImportChoose" icon="upload">Choose CSV file &amp; import</button>
       </div>
     </div>
   </div>
@@ -265,6 +280,7 @@
           <span id="deckEditorStripLabel">Card types</span>
           <div id="deckEditorStripToolbar">
             <button id="deckEditorStripAdd" icon="add" title="Add a blank card type"></button>
+            <button id="deckEditorStripImport" icon="upload" title="Import card types from a CSV file"></button>
             <button id="deckEditorStripCopy" icon="content_copy" title="Copy the selected card type"></button>
             <button id="deckEditorStripDelete" icon="delete_forever" title="Delete the selected card type"></button>
           </div>
