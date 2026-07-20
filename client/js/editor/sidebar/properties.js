@@ -1828,6 +1828,8 @@ class PropertiesModule extends SidebarModule {
     const host = target || this.moduleDOM;
     const buttonHost = options.buttonHost || host;
     let expanded = false;
+    let button = null;
+    let container = null;
 
     const isPropertySet = (property, value) => {
       if(typeof options.isPropertySet === 'function')
@@ -1836,24 +1838,65 @@ class PropertiesModule extends SidebarModule {
     };
 
     const hasAnySetValue = w => properties.some(property => isPropertySet(property, w.get(property)));
+
+    const showButton = () => {
+      button = document.createElement('button');
+      button.className = 'blue';
+      button.textContent = title;
+      button.style.marginTop = '2px';
+      button.style.marginBottom = '1px';
+      buttonHost.appendChild(button);
+      button.onclick = e => {
+        e.preventDefault();
+        expand(button);
+      };
+    };
+
+    const collapse = () => {
+      if(!expanded)
+        return;
+      expanded = false;
+      if(container && container.parentNode)
+        container.remove();
+      container = null;
+      showButton();
+    };
+
     const expand = (replaceNode = null) => {
       if(expanded)
         return;
       expanded = true;
-      const container = document.createElement('div');
+      container = document.createElement('div');
       container.className = 'obscurePropertyContainer';
       container.style.paddingLeft = '10px';
-      
+
       // If we have a separate buttonHost, remove the button and insert into host (contentWrapper)
       if(replaceNode && replaceNode.parentNode) {
         replaceNode.remove();
       }
-      
+      button = null;
+
       // Insert content into the target (contentWrapper/block display)
       if(buttonHost !== host && buttonHost.parentNode === host)
         host.insertBefore(container, buttonHost);
       else
         host.appendChild(container);
+
+      // trash icon to remove the whole link (parent/seat/inheritFrom) and
+      // collapse back to the "add" button
+      if(options.onRemove) {
+        const removeButton = document.createElement('button');
+        removeButton.setAttribute('icon', 'delete');
+        removeButton.className = 'onDemandRemove';
+        removeButton.title = options.removeTitle || `Remove ${title.replace(/^add /i, '')}`;
+        removeButton.onclick = e => {
+          e.preventDefault();
+          options.onRemove();
+          collapse();
+        };
+        container.appendChild(removeButton);
+      }
+
       renderer(container);
     };
 
@@ -1862,26 +1905,14 @@ class PropertiesModule extends SidebarModule {
       return;
     }
 
-    const button = document.createElement('button');
-    button.className = 'blue';
-    button.textContent = title;
-    button.style.marginTop = '2px';
-    button.style.marginBottom = '1px';
-    buttonHost.appendChild(button);
+    showButton();
 
     const tryExpand = w => {
-      if(hasAnySetValue(w)) {
+      if(hasAnySetValue(w) && !expanded)
         expand(button);
-      }
     };
-
     for(const property of properties)
       this.addPropertyListener(widget, property, tryExpand);
-
-    button.onclick = e => {
-      e.preventDefault();
-      expand(button);
-    };
   }
 
   createOnDemandButtonWrapper(target = null) {
@@ -2005,7 +2036,10 @@ class PropertiesModule extends SidebarModule {
     wrap.style.display = 'inline-flex';
     wrap.style.alignItems = 'center';
     wrap.style.gap = '6px';
-    wrap.style.flex = '1 1 300px';
+    // equalFlex makes paired fields (x/y, w/h) take the exact same width
+    wrap.style.flex = options.equalFlex ? '1 1 0' : '1 1 300px';
+    if(options.equalFlex)
+      wrap.style.minWidth = '0';
 
     const label = document.createElement('label');
     label.textContent = title + ':';
@@ -2138,14 +2172,9 @@ class PropertiesModule extends SidebarModule {
     row.style.gap = '8px';
     row.style.flexWrap = 'wrap';
 
-    this.renderNumberWithSlider(widget, left.property, left.title, row, leftOptionsWithRatio);
-
-    const separator = document.createElement('span');
-    separator.textContent = '|';
-    separator.style.color = '#777';
-    row.appendChild(separator);
-
-    this.renderNumberWithSlider(widget, right.property, right.title, row, rightOptionsWithRatio);
+    // both fields share the row equally so the x/y (and w/h) sliders line up
+    this.renderNumberWithSlider(widget, left.property, left.title, row, Object.assign({ equalFlex: true }, leftOptionsWithRatio));
+    this.renderNumberWithSlider(widget, right.property, right.title, row, Object.assign({ equalFlex: true }, rightOptionsWithRatio));
   }
 
   // lock/unlock icon button (red locked, green unlocked) with a text label
@@ -2221,7 +2250,7 @@ class PropertiesModule extends SidebarModule {
 
     const editorToggle = this.renderLockToggle(row, 'Also in editor', () => !widget.get('movableInEdit'),
       locked => this.inputValueUpdated(widget, 'movableInEdit', !locked));
-    const lockInEditorInfo = this.renderInfoIcon('This only applies to mouse input. You can still edit position in this sidebar');
+    const lockInEditorInfo = this.renderInfoIcon('This only applies to mouse input. You can still edit position in this sidebar or by using the drag handle on the widget.');
     editorToggle.wrap.appendChild(lockInEditorInfo);
 
     const updateLockInputs = w => {
@@ -3258,6 +3287,14 @@ class PropertiesModule extends SidebarModule {
       this.renderParentWidgetInput(widget, container);
     }, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper,
+      removeTitle: 'Remove parent',
+      onRemove: () => {
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} removed parent of widget ${widget.id} in editor`);
+        this.setWidgetParent(widget, null);
+        widget.set('fixedParent', null);
+        batchEnd();
+      },
       isPropertySet: (property, value) => {
         if(property == 'fixedParent')
           return value === true;
@@ -3280,11 +3317,21 @@ class PropertiesModule extends SidebarModule {
         buttonHost: seatSection.newPropertiesWrapper
       });
     }, linksSection.contentWrapper, {
-      buttonHost: linksSection.newPropertiesWrapper
+      buttonHost: linksSection.newPropertiesWrapper,
+      removeTitle: 'Remove seat links',
+      onRemove: () => {
+        batchStart();
+        setDeltaCause(`${getPlayerDetails().playerName} removed seat links of widget ${widget.id} in editor`);
+        widget.set('linkedToSeat', null);
+        widget.set('onlyVisibleForSeat', null);
+        batchEnd();
+      }
     });
 
     this.renderInheritFromButton(widget, linksSection.contentWrapper, {
-      buttonHost: linksSection.newPropertiesWrapper
+      buttonHost: linksSection.newPropertiesWrapper,
+      removeTitle: 'Remove inheritance',
+      onRemove: () => this.inputValueUpdated(widget, 'inheritFrom', null)
     });
   }
 

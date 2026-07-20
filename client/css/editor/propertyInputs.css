@@ -718,6 +718,36 @@
   overflow-wrap: anywhere;
 }
 
+/* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
+.editorModule .obscurePropertyContainer {
+  position: relative;
+}
+
+.editorModule button.onDemandRemove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--textColor);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.editorModule button.onDemandRemove::before {
+  margin: 0;
+  font-size: 18px;
+}
+
+.editorModule button.onDemandRemove:hover {
+  color: #c43636;
+}
+
 body.editorWidgetPicking, body.editorWidgetPicking .widget {
   cursor: crosshair !important;
 }
