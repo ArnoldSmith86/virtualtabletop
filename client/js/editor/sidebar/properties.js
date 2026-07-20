@@ -463,124 +463,46 @@ const editorTypeSections = {
   }
 };
 
-// Seat style presets copied from the public-library games Five of a Kind Duel
-// (Background color) and Uncheckered (Fixed color) - visual style only, with
-// instance keys and the games' click routines stripped. Used by
-// PropertiesModule.seatStylePresets().
+// Seat style presets (kept deliberately small). "Background color" shows the
+// seated player color via background:var(--color); "Fixed color" pins it to the
+// seat' colorEmpty through a .seated override. Used by seatStylePresets().
 const SEAT_PRESET_BACKGROUND = {
   "width": 172,
   "height": 48,
   "borderRadius": 8,
+  "colorEmpty": "#ff0000",
   "css": {
     "default": {
-      "cursor": "pointer",
-      "gap": "5px",
       "font-size": "21px",
       "box-shadow": "0 2px 5px #00000066",
-      "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
-      "background": "${PROPERTY mainColor}",
+      "text-shadow": "2px 2px 2px #000000bb, -2px 2px 2px #000000bb, 2px -2px 2px #000000bb, -2px -2px 2px #000000bb",
+      "background": "var(--color)",
       "color": "white",
-      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+      "border": "2px solid #000000bb",
       "box-sizing": "border-box"
-    },
-    ".seated.turn": {
-      "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
-    },
-    ".seated.turn::after": {
-      "xcontent": "'Active Player'",
-      "content": "'!'",
-      "font-size": "18px",
-      "line-height": "1em",
-      "white-space": "wrap",
-      "background-color": "${PROPERTY outlineColor}",
-      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
-      "background-size": "200% auto",
-      "color": "${PROPERTY mainColor}",
-      "text-shadow": "0 1px 5px #000000cc",
-      "width": "1em",
-      "height": "1em",
-      "text-align": "center",
-      "text-transform": "uppercase",
-      "position": "absolute",
-      "right": "-12px",
-      "top": "-12px",
-      "padding": "2px",
-      "border-radius": "100px",
-      "box-shadow": "0 0 5px #000000bb",
-      "pointer-events": "none",
-      "transform-origin": "50% 50%",
-      "animation": "turnPulse 1s ease-in-out"
-    },
-    "@keyframes turnPulse": {
-      "0%": {
-        "transform": "scale(1)"
-      },
-      "50%": {
-        "transform": "scale(8)"
-      },
-      "100%": {
-        "transform": "scale(1)"
-      }
     }
-  },
-  "mainColor": "#dddddd",
-  "outlineColor": "#000000bb",
-  "textColor": "#000000",
-  "textShadowBlur": 2,
-  "textShadowDistance": 2,
-  "hideWhenUnused": true
+  }
 };
 
 const SEAT_PRESET_FIXED = {
   "width": 172,
   "height": 48,
   "borderRadius": 8,
+  "colorEmpty": "#ff0000",
   "css": {
     "default": {
-      "cursor": "pointer",
-      "gap": "5px",
       "font-size": "21px",
       "box-shadow": "0 2px 5px #00000066",
-      "text-shadow": "${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px ${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, ${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}, -${PROPERTY textShadowDistance}px -${PROPERTY textShadowDistance}px ${PROPERTY textShadowBlur}px ${PROPERTY outlineColor}",
-      "background": "${PROPERTY mainColor}",
+      "text-shadow": "2px 2px 2px #000000bb, -2px 2px 2px #000000bb, 2px -2px 2px #000000bb, -2px -2px 2px #000000bb",
+      "background": "var(--color)",
       "color": "white",
-      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY outlineColor}",
+      "border": "2px solid #000000bb",
       "box-sizing": "border-box"
     },
-    ".seated.turn": {
-      "box-shadow": "0px 0px 20px 5px ${PROPERTY glowColor}"
-    },
-    ".seated.turn::after": {
-      "xcontent": "'Active Player'",
-      "content": "'!'",
-      "font-size": "18px",
-      "line-height": "1em",
-      "white-space": "wrap",
-      "background-color": "${PROPERTY outlineColor}",
-      "border": "${PROPERTY textShadowDistance}px solid ${PROPERTY mainColor}",
-      "background-size": "200% auto",
-      "color": "#ffffff",
-      "text-shadow": "0 1px 5px #000000cc",
-      "width": "1em",
-      "height": "1em",
-      "text-align": "center",
-      "text-transform": "uppercase",
-      "position": "absolute",
-      "right": "-12px",
-      "top": "-12px",
-      "padding": "2px",
-      "border-radius": "100px",
-      "box-shadow": "0 0 5px #000000bb",
-      "pointer-events": "none"
+    ".seated": {
+      "--color": "${PROPERTY colorEmpty} !important"
     }
-  },
-  "mainColor": "#f41000",
-  "outlineColor": "#000000bb",
-  "textColor": "#ffffff",
-  "textShadowBlur": 2,
-  "textShadowDistance": 2,
-  "glowColor": "#ffffff",
-  "colorContrast": "#000000"
+  }
 };
 
 class PropertiesModule extends SidebarModule {
@@ -4236,10 +4158,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   // Style presets for seats: "Classic" is the plain default seat; "Background
-  // color" and "Fixed color" reproduce the look of the seats in the public
-  // library games Five of a Kind Duel and Uncheckered (visual style only - the
-  // games' click routines are not imported). Applying a preset resets every
-  // style key the presets touch, so switching between them is clean.
+  // color" shows the seated player's color as the seat background; "Fixed color"
+  // pins the seat to its colorEmpty regardless of who sits. Applying a preset
+  // resets every style key the presets touch, so switching between them is clean.
   seatStylePresets() {
     return {
       classic: { label: 'Classic', preset: { width: 150, height: 40, borderRadius: 5 } },
@@ -4261,7 +4182,9 @@ class PropertiesModule extends SidebarModule {
       // from bleeding into the other previews (the id must be on the widget, not
       // the state - renderReadonlyCopyRaw deletes state.id)
       const previewSeat = new Seat(`seatPreview_${widget.id}_${presetKey}`);
-      const button = this.renderWidgetButton(previewSeat, Object.assign({ type: 'seat', player: label, width: 150, height: 44 }, preset), row);
+      // a sample color so "Background color" shows a colored seat; "Fixed color"
+      // ignores it (its .seated override pins --color to colorEmpty)
+      const button = this.renderWidgetButton(previewSeat, Object.assign({ type: 'seat', player: label, color: '#1e88e5', width: 150, height: 44 }, preset), row);
       button.title = label;
 
       const presetCss = JSON.stringify(preset.css || null);
