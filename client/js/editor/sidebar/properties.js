@@ -3681,109 +3681,6 @@ class PropertiesModule extends SidebarModule {
     return row;
   }
 
-  // Editor for an object property whose entries are "childProperty: value" (the
-  // holder onEnter / onLeave sets applied to children entering / leaving).
-  // suggestions populates a datalist on the add-property input.
-  renderPropSetEditor(widget, property, title, hint, suggestions = [], target = null) {
-    const wrap = div(target || this.moduleDOM, 'propSetEditor');
-    const heading = div(wrap, 'propSetTitle');
-    heading.textContent = title;
-    if(hint)
-      propertyInfoButton(heading, html(hint));
-    const list = div(wrap, 'propSetList');
-
-    const getObject = () => {
-      const value = widget.get(property);
-      return isObjectLike(value) ? value : {};
-    };
-    const save = obj => this.inputValueUpdated(widget, property, Object.keys(obj).length ? obj : null);
-
-    const rebuild = (focusKey = null) => {
-      list.innerHTML = '';
-      const obj = getObject();
-      for(const key of Object.keys(obj)) {
-        const rowValue = obj[key];
-        const rowDOM = div(list, 'propSetRow');
-        // the property name is fixed once added; show it as a label
-        const keyLabel = document.createElement('span');
-        keyLabel.className = 'propSetKey';
-        keyLabel.textContent = key;
-        rowDOM.appendChild(keyLabel);
-
-        const valueInput = document.createElement('input');
-        valueInput.type = 'text';
-        valueInput.className = 'propSetValue';
-        valueInput.value = typeof rowValue === 'object' && rowValue !== null ? JSON.stringify(rowValue) : String(rowValue);
-        valueInput.placeholder = 'value';
-        valueInput.oninput = () => {
-          const next = Object.assign({}, getObject());
-          let parsed = valueInput.value;
-          try { parsed = JSON.parse(valueInput.value); } catch(e) { /* keep as string */ }
-          next[key] = parsed;
-          save(next);
-        };
-        rowDOM.appendChild(valueInput);
-        if(key === focusKey)
-          valueInput.focus();
-
-        const remove = document.createElement('button');
-        remove.setAttribute('icon', 'delete');
-        remove.title = 'Remove';
-        remove.onclick = () => {
-          const next = Object.assign({}, getObject());
-          delete next[key];
-          save(next);
-          rebuild();
-        };
-        rowDOM.appendChild(remove);
-      }
-
-      // single "add property" input with a datalist of common suggestions,
-      // mirroring the CSS selector add-row
-      const addRow = div(list, 'propSetRow propSetAddRow');
-      const addKey = document.createElement('input');
-      addKey.type = 'text';
-      addKey.placeholder = 'property to set on child';
-      if(suggestions && suggestions.length) {
-        const listID = `propSet_${widget.id}_${property}_${rand().toString(36).substring(3, 9)}`;
-        const datalist = document.createElement('datalist');
-        datalist.id = listID;
-        for(const suggestion of suggestions) {
-          if(getObject()[suggestion] !== undefined)
-            continue;
-          const option = document.createElement('option');
-          option.value = suggestion;
-          datalist.appendChild(option);
-        }
-        addRow.appendChild(datalist);
-        addKey.setAttribute('list', listID);
-      }
-      addRow.appendChild(addKey);
-      const addButton = document.createElement('button');
-      addButton.setAttribute('icon', 'add');
-      addButton.title = 'Add';
-      const addKeyValue = () => {
-        const key = addKey.value.trim();
-        if(!key || getObject()[key] !== undefined)
-          return;
-        const next = Object.assign({}, getObject());
-        next[key] = '';
-        save(next);
-        rebuild(key);
-      };
-      addButton.onclick = addKeyValue;
-      addKey.onkeydown = e => { if(e.key == 'Enter') addKeyValue(); };
-      addRow.appendChild(addButton);
-    };
-
-    rebuild();
-    this.addPropertyListener(widget, property, () => {
-      if(!list.contains(document.activeElement))
-        rebuild();
-    });
-    return wrap;
-  }
-
   // Editor for an array property: add / remove / reorder simple values (the
   // spinner wheel options). Values are stored as numbers when numeric.
   renderListEditor(widget, property, title, hint, target = null) {
@@ -4673,10 +4570,6 @@ class PropertiesModule extends SidebarModule {
       { label: 'X', property: 'stackOffsetX' },
       { label: 'Y', property: 'stackOffsetY' }
     ]);
-    // property sets applied to widgets entering / leaving the holder
-    const childPropertySuggestions = [ 'face', 'rotation', 'enlarge' ];
-    this.renderPropSetEditor(widget, 'onEnter', 'When a widget enters', 'Properties applied to a widget when it is dropped into this holder.', childPropertySuggestions);
-    this.renderPropSetEditor(widget, 'onLeave', 'When a widget leaves', 'Properties applied to a widget when it is removed from this holder.', childPropertySuggestions);
 
     this.renderAdvancedSection(widget, body => {
       this.renderSeatReferenceInput(widget, 'showInactiveFaceToSeat', 'Show inactive face to seat:', body, {
@@ -4686,7 +4579,8 @@ class PropertiesModule extends SidebarModule {
       });
     });
 
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'onEnter', 'onLeave', 'showInactiveFaceToSeat' ]);
+    // onEnter / onLeave stay in the generic property list (handled in PR #3034)
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'showInactiveFaceToSeat' ]);
   }
 
   // Text / background / border color plus a brightness filter written into a

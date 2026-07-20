@@ -759,8 +759,7 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   font-size: 13px;
 }
 
-/* property-set editors (holder onEnter/onLeave) and list editors (spinner options) */
-.editorModule .propSetEditor,
+/* list editor (spinner wheel options) */
 .editorModule .listEditor {
   margin: 6px 0;
 }
@@ -773,7 +772,6 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin-bottom: 4px;
 }
 
-.editorModule .propSetRow,
 .editorModule .listEditorRow {
   display: flex;
   align-items: center;
@@ -781,20 +779,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin: 3px 0;
 }
 
-.editorModule .propSetRow span.propSetKey {
-  flex: 0 0 auto;
-  min-width: 90px;
-  font-size: 13px;
-  font-family: monospace;
-}
-
-.editorModule .propSetRow input.propSetValue,
 .editorModule .listEditorRow input {
   flex: 1 1 auto;
   min-width: 60px;
 }
 
-.editorModule .propSetRow button[icon],
 .editorModule .listEditorRow button[icon] {
   flex: 0 0 auto;
 }
