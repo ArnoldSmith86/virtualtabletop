@@ -1070,9 +1070,9 @@ class DeckEditor {
   // hint entirely for decks with a non-standard number of faces.
   faceLabel(face) {
     if(face == 0)
-      return 'Face 0 (usually the back)';
+      return 'Face 0 (back)';
     if(face == 1)
-      return 'Face 1 (usually the front)';
+      return 'Face 1 (front)';
     return `Face ${face}`;
   }
 
@@ -1248,6 +1248,7 @@ class DeckEditor {
 
   renderStrip() {
     const strip = $('#deckEditorStrip');
+    const prevScroll = strip.scrollLeft; // keep the selected card type in view instead of snapping to the start
     strip.innerHTML = '';
     if(!this.deck())
       return;
@@ -1317,6 +1318,11 @@ class DeckEditor {
         this.render();
       };
     }
+    // Restore the scroll position, then make sure the selected tile is actually visible.
+    strip.scrollLeft = prevScroll;
+    const selectedTile = $('.deckEditorStripCard.selected', strip);
+    if(selectedTile && selectedTile.scrollIntoView)
+      selectedTile.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
   renderSidebar() {
@@ -1990,7 +1996,7 @@ class DeckEditor {
   // The type dropdown's "not set" only unsets the value until the next re-render; this removes the row too.
   addPropertyDeleteButton(row, property, onDelete) {
     const button = document.createElement('button');
-    button.setAttribute('icon', 'delete');
+    button.setAttribute('icon', 'delete_forever');
     button.className = 'deckEditorDeleteProperty';
     button.title = `Delete property "${property}"`;
     button.onclick = onDelete;
@@ -2112,7 +2118,7 @@ class DeckEditor {
     // The already-active bindings: each row is a live "object property ← card type property" with a red trash.
     const bindings = Object.entries(object.dynamicProperties || {});
     for(const [ objectProperty, typeProperty ] of bindings) {
-      const row = div(container, 'deckEditorDynamicProperty', `<span class=deckEditorBindingText><b>${html(objectProperty)}</b> <span class=deckEditorBindingArrow>←</span> card type <b>${html(String(typeProperty))}</b></span><button icon=delete class="red deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
+      const row = div(container, 'deckEditorDynamicProperty', `<span class=deckEditorBindingText><b>${html(objectProperty)}</b> <span class=deckEditorBindingArrow>←</span> card type <b>${html(String(typeProperty))}</b></span><button icon=delete_forever class="red deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
       $('button', row).onclick = async _=>{
         await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
         delete object.dynamicProperties[objectProperty];
@@ -2144,7 +2150,7 @@ class DeckEditor {
         <select class=typeProperty title="Card type property to read from"><option value="" selected></option>${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select>
       </div>
       <input class=newTypeProperty style="display:none" placeholder="name of the new property, e.g. rank">
-      <button class=deckEditorAddBindingButton icon=add>Bind</button>
+      <button class=deckEditorAddBindingButton icon=link>Link</button>
     `);
     const typeSelect = $('.typeProperty', addRow);
     const updateNewNameVisibility = _=>$('.newTypeProperty', addRow).style.display = typeSelect.value == '__new__' ? '' : 'none';
