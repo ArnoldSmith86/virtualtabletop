@@ -2383,8 +2383,9 @@ class DeckEditor {
       return;
 
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const cause = `${getPlayerDetails().playerName} removed card type ${name} from deck ${this.deckID} in deck editor`;
     batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} removed card type ${name} from deck ${this.deckID} in deck editor`);
+    setDeltaCause(cause);
     for(const card of cards)
       await removeWidgetLocal(card.get('id'));
     delete this.cardTypes[name];
@@ -2393,9 +2394,9 @@ class DeckEditor {
 
     this.cardType = Object.keys(this.cardTypes)[0] || null;
     this.selectedObject = null;
-    // Removed card widgets aren't in the snapshots, so restart deck-editor history to avoid an in-editor undo
-    // resurrecting a cardType with no cards (the toolbar undo still restores the cards).
-    this.resetHistory();
+    // Record the deletion as a breadcrumb step (in-editor undo restores the card type definition; a card type
+    // with zero cards is a valid state, and the room-level toolbar undo restores the deleted card widgets too).
+    this.recordHistory(cause, this.newAction());
     this.render();
   }
 }
