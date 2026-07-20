@@ -229,6 +229,9 @@ class DeckEditor {
     // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
     // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
     $('#editor').append($('#libraryDecksOverlay'));
+    // Same for the grid-options overlay, so the grid button's settings are reachable while editing a deck.
+    if($('#gridOverlay'))
+      $('#editor').append($('#gridOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -1131,6 +1134,11 @@ class DeckEditor {
     wrapper.style.height = cardHeight + 'px';
     wrapper.style.transform = `scale(${this.cardScale})`;
     wrapper.style.setProperty('--deckEditorCardScale', this.cardScale);
+
+    // Grid overlay covering the card in its own design coordinates (shown only while the toolbar grid is on).
+    const grid = div(wrapper, 'deckEditorGrid');
+    grid.style.width  = cardWidth  + 'px';
+    grid.style.height = cardHeight + 'px';
 
     this.refreshMainCardFaces();
   }

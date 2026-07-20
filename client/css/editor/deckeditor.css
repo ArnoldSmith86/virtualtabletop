@@ -1134,9 +1134,32 @@ body.deckEditorActive #enlarged {
 /* While a deck is being edited, the room-editor toolbar only keeps the actions that still make sense:
    new room, save, dark mode, fullscreen, close editor, the deck-editor toggle, tutorials and the wiki.
    Everything else is greyed out and inert (hotkeys are already blocked in layout.js while the editor is open). */
-body.deckEditorActive #editorToolbar .editorToolbarButton button:not([icon=note_add]):not([icon=save]):not([icon=dark_mode]):not([icon=fullscreen]):not([icon=close]):not([icon=style]):not([icon=school]):not([icon=help]) {
+body.deckEditorActive #editorToolbar .editorToolbarButton button:not([icon=note_add]):not([icon=save]):not([icon=dark_mode]):not([icon=fullscreen]):not([icon=close]):not([icon=style]):not([icon=school]):not([icon=help]):not([icon=grid_4x4]) {
   opacity: 0.35;
   pointer-events: none;
+}
+
+/* Grid overlay on the card design area (toggled by the room-editor grid button, which stays enabled while
+   the deck editor is open). It lives inside the scaled .deckEditorCard wrapper, so its --gridSize squares are
+   in the card's own design coordinates and scale with the card - helping line up face objects. */
+.deckEditorGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: none;
+}
+
+body.gridLines .deckEditorGrid,
+body.gridLines20 .deckEditorGrid,
+body.gridLines25 .deckEditorGrid,
+body.gridLines33 .deckEditorGrid {
+  display: block;
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
+    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize));
+  background-size: var(--gridSize) var(--gridSize);
 }
 
 /* see common rules in toolbar.css and dragtoolbar.css */
