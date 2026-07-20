@@ -291,7 +291,7 @@ class PropertiesModule extends SidebarModule {
 
     const intro = document.createElement('p');
     intro.className = 'noSelectionIntro';
-    intro.innerText = 'You do not have a widget selected. To get started:';
+    intro.innerText = 'You do not have a widget selected. To get started, click on one to the left or:';
     this.moduleDOM.append(intro);
 
     const addWidgetButton = document.createElement('button');

@@ -319,16 +319,33 @@ class DeckEditor {
       this.zoomCardAroundPoint(this.userZoom * delta, e.clientX, e.clientY);
     }, { passive: false });
 
-    // Hold Space and drag to pan (the room's zoom.js already sets body.spacePanActive while Space is held in
-    // edit mode). Capture phase so it takes precedence over an object's own drag handler.
+    // Hold Space and drag to pan. Track Space ourselves rather than relying on zoom.js's body.spacePanActive,
+    // which is suppressed while an overlay is active - toggling the grid opens the grid-options overlay, so
+    // reusing that flag made panning stop working whenever the grid was on. Capture phase so the pan takes
+    // precedence over an object's own drag handler.
+    this.spaceHeld = false;
     let panning = false;
     let panStart = null;
+    window.addEventListener('keydown', e=>{
+      if(this.isOpen() && (e.code == 'Space' || e.key == ' ') && [ 'INPUT', 'TEXTAREA', 'SELECT' ].indexOf(e.target.tagName) == -1 && !e.target.isContentEditable) {
+        this.spaceHeld = true;
+        document.body.classList.add('deckEditorSpacePan');
+        e.preventDefault();
+      }
+    });
+    window.addEventListener('keyup', e=>{
+      if(e.code == 'Space' || e.key == ' ') {
+        this.spaceHeld = false;
+        document.body.classList.remove('deckEditorSpacePan');
+      }
+    });
     $('#deckEditorMain').addEventListener('mousedown', e=>{
-      if(e.button != 0 || !document.body.classList.contains('spacePanActive'))
+      if(e.button != 0 || !this.spaceHeld)
         return;
       e.preventDefault();
       e.stopPropagation();
       panning = true;
+      document.body.classList.add('deckEditorPanning');
       panStart = { x: e.clientX, y: e.clientY, panX: this.panX, panY: this.panY };
     }, true);
     window.addEventListener('mousemove', e=>{
@@ -338,7 +355,7 @@ class DeckEditor {
       this.panY = panStart.panY + (e.clientY - panStart.y);
       this.applyCardTransform();
     });
-    window.addEventListener('mouseup', _=>{ panning = false; });
+    window.addEventListener('mouseup', _=>{ panning = false; document.body.classList.remove('deckEditorPanning'); });
 
     // Pinch-to-zoom (two fingers) on touch devices.
     let pinchStartDist = 0;
@@ -2472,17 +2489,23 @@ class DeckEditor {
     // Drop the holder created for this deck if nothing else lives in it.
     if(parent && widgets.has(parent) && !widgetFilter(w=>w.get('parent') == parent).length)
       await removeWidgetLocal(parent);
+    // Clear the current deck before the removal delta lands so deckEditorReceiveDelta doesn't force-close the
+    // editor (deleting the last deck should leave the editor open on an empty state, not exit it).
+    this.deckID = null;
     batchEnd();
 
     const remaining = widgetFilter(w=>w.get('type') == 'deck');
     if(remaining.length) {
       await this.open(remaining[remaining.length-1].get('id'));
       this.treeLevel = 'deck';
-      this.render();
     } else {
-      this.deckID = null;
-      this.close();
+      // No decks left: stay open with an empty editor so the user can add a new deck from here.
+      this.cardType = null;
+      this.selectedObject = null;
+      this.treeLevel = 'deck';
+      this.resetHistory();
     }
+    this.render();
   }
 
   // copyOf: name of an existing card type whose properties the new type starts with (null for a blank one).
@@ -2747,6 +2770,10 @@ async function deckEditorReceiveDelta(delta) {
       }
     }
   }
+  // The editor can be open with no deck selected (e.g. right after deleting the last deck) - there is nothing
+  // to track or close in that case; the user can add a new deck from the still-open editor.
+  if(deckEditor.deckID === null)
+    return;
   if(delta.s && delta.s[deckEditor.deckID] === null || !widgets.has(deckEditor.deckID))
     return deckEditor.close();
   const deckDelta = delta.s && delta.s[deckEditor.deckID];

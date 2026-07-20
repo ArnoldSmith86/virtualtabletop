@@ -711,6 +711,16 @@ body.deckEditorActive #enlarged {
   position: relative;
 }
 
+/* Space-to-pan cursor feedback on the card design area. */
+body.deckEditorSpacePan #deckEditorMain {
+  cursor: grab;
+}
+
+body.deckEditorPanning #deckEditorMain,
+body.deckEditorPanning #deckEditorMain * {
+  cursor: grabbing;
+}
+
 #deckEditorMain .deckEditorCard {
   position: relative;
   box-shadow: 0 0 10px #0006;
@@ -1147,19 +1157,24 @@ body.deckEditorActive #editorToolbar .editorToolbarButton button:not([icon=note_
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 5;
+  z-index: 1000001; /* above the card widget (z-index 1000000) so the grid overlays the face objects too */
   display: none;
 }
 
+/* Forced 5px minor / 10px major grid in the card's own design coordinates (unlike the room grid, which lets
+   the user pick a size for a much larger area, this is fixed to help line up small face objects). The major
+   layers are listed first so they paint over the coincident minor lines at every 10px. */
 body.gridLines .deckEditorGrid,
 body.gridLines20 .deckEditorGrid,
 body.gridLines25 .deckEditorGrid,
 body.gridLines33 .deckEditorGrid {
   display: block;
   background-image:
-    linear-gradient(to right, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize)),
-    linear-gradient(to bottom, transparent 0, transparent calc(var(--gridSize) - 1px), var(--gridColor) var(--gridSize), var(--gridColor) var(--gridSize));
-  background-size: var(--gridSize) var(--gridSize);
+    linear-gradient(to right,  rgba(60,60,60,0.85) 0, rgba(60,60,60,0.85) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(60,60,60,0.85) 0, rgba(60,60,60,0.85) 1px, transparent 1px),
+    linear-gradient(to right,  rgba(120,120,120,0.55) 0, rgba(120,120,120,0.55) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120,120,120,0.55) 0, rgba(120,120,120,0.55) 1px, transparent 1px);
+  background-size: 10px 10px, 10px 10px, 5px 5px, 5px 5px;
 }
 
 /* see common rules in toolbar.css and dragtoolbar.css */
