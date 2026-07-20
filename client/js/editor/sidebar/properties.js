@@ -421,11 +421,7 @@ const editorTypeSections = {
     behavior: [
       { label: 'Align dropped widgets', property: 'alignChildren',    kind: 'checkbox' },
       { label: 'Prevent piles',         property: 'preventPiles',     kind: 'checkbox' },
-      { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' },
-      { label: 'Drop offset X',         property: 'dropOffsetX',      kind: 'number' },
-      { label: 'Drop offset Y',         property: 'dropOffsetY',      kind: 'number' },
-      { label: 'Stack offset X',        property: 'stackOffsetX',     kind: 'number' },
-      { label: 'Stack offset Y',        property: 'stackOffsetY',     kind: 'number' }
+      { label: 'Children per owner',    property: 'childrenPerOwner', kind: 'checkbox' }
     ]
   },
   label: {},
@@ -3663,6 +3659,182 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, exclude);
   }
 
+  // --- shared curated inputs ---
+
+  // Collapsed-by-default "Advanced" subsection, rendered as the last curated
+  // group of an editor.
+  renderAdvancedSection(widget, renderBody) {
+    this.renderCollapsibleSection('Advanced', true, body => renderBody(body), null, `${widget.id}:advanced`);
+  }
+
+  // Labelled group of side-by-side number inputs, e.g. an X/Y offset pair.
+  renderNumberPairRow(widget, title, fields, target = null) {
+    const row = div(target || this.moduleDOM, 'propertyInlineRow numberPairRow');
+    if(title) {
+      const label = document.createElement('span');
+      label.className = 'numberPairLabel';
+      label.textContent = title;
+      row.appendChild(label);
+    }
+    for(const field of fields)
+      new NumberInput(this, widget, field.label, Object.assign({ property: field.property, step: 1 }, field.options || {})).render(row);
+    return row;
+  }
+
+  // Editor for an object property whose entries are "childProperty: value" (the
+  // holder onEnter / onLeave sets applied to children entering / leaving).
+  renderPropSetEditor(widget, property, title, hint, target = null) {
+    const wrap = div(target || this.moduleDOM, 'propSetEditor');
+    const heading = div(wrap, 'propSetTitle');
+    heading.textContent = title;
+    if(hint)
+      propertyInfoButton(heading, html(hint));
+    const list = div(wrap, 'propSetList');
+
+    const getObject = () => {
+      const value = widget.get(property);
+      return isObjectLike(value) ? value : {};
+    };
+    const save = obj => this.inputValueUpdated(widget, property, Object.keys(obj).length ? obj : null);
+
+    const rebuild = () => {
+      list.innerHTML = '';
+      const obj = getObject();
+      for(const key of Object.keys(obj)) {
+        const rowValue = obj[key];
+        const rowDOM = div(list, 'propSetRow');
+        const keyInput = document.createElement('input');
+        keyInput.type = 'text';
+        keyInput.className = 'propSetKey';
+        keyInput.value = key;
+        keyInput.placeholder = 'property';
+        keyInput.onchange = () => {
+          const newKey = keyInput.value.trim();
+          if(!newKey || newKey == key)
+            return;
+          const next = Object.assign({}, getObject());
+          next[newKey] = next[key];
+          delete next[key];
+          save(next);
+        };
+        rowDOM.appendChild(keyInput);
+
+        const valueInput = document.createElement('input');
+        valueInput.type = 'text';
+        valueInput.className = 'propSetValue';
+        valueInput.value = typeof rowValue === 'object' && rowValue !== null ? JSON.stringify(rowValue) : String(rowValue);
+        valueInput.placeholder = 'value';
+        valueInput.oninput = () => {
+          const next = Object.assign({}, getObject());
+          let parsed = valueInput.value;
+          try { parsed = JSON.parse(valueInput.value); } catch(e) { /* keep as string */ }
+          next[key] = parsed;
+          save(next);
+        };
+        rowDOM.appendChild(valueInput);
+
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = 'Remove';
+        remove.onclick = () => {
+          const next = Object.assign({}, getObject());
+          delete next[key];
+          save(next);
+          rebuild();
+        };
+        rowDOM.appendChild(remove);
+      }
+
+      const addRow = div(list, 'propSetRow propSetAddRow');
+      const addKey = document.createElement('input');
+      addKey.type = 'text';
+      addKey.placeholder = 'property to set on child';
+      addRow.appendChild(addKey);
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.title = 'Add';
+      addButton.onclick = () => {
+        const key = addKey.value.trim();
+        if(!key || getObject()[key] !== undefined)
+          return;
+        const next = Object.assign({}, getObject());
+        next[key] = '';
+        save(next);
+        rebuild();
+      };
+      addRow.appendChild(addButton);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, property, () => {
+      if(!list.contains(document.activeElement))
+        rebuild();
+    });
+    return wrap;
+  }
+
+  // Editor for an array property: add / remove / reorder simple values (the
+  // spinner wheel options). Values are stored as numbers when numeric.
+  renderListEditor(widget, property, title, hint, target = null) {
+    const wrap = div(target || this.moduleDOM, 'listEditor');
+    if(title) {
+      const heading = div(wrap, 'propSetTitle');
+      heading.textContent = title;
+      if(hint)
+        propertyInfoButton(heading, html(hint));
+    }
+    const list = div(wrap, 'listEditorList');
+
+    const getArray = () => asArray(widget.get(property) || []).slice();
+    const save = arr => this.inputValueUpdated(widget, property, arr);
+
+    const rebuild = () => {
+      list.innerHTML = '';
+      const arr = getArray();
+      arr.forEach((value, index) => {
+        const rowDOM = div(list, 'listEditorRow');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = value === null || value === undefined ? '' : String(value);
+        input.oninput = () => {
+          const next = getArray();
+          next[index] = propertyInputNumberOrText(input.value);
+          save(next);
+        };
+        rowDOM.appendChild(input);
+
+        const controls = div(rowDOM, 'faceOrderControls');
+        const up = document.createElement('button');
+        up.setAttribute('icon', 'arrow_upward');
+        up.disabled = index == 0;
+        up.onclick = () => { const next = getArray(); next.splice(index - 1, 0, next.splice(index, 1)[0]); save(next); rebuild(); };
+        controls.appendChild(up);
+        const down = document.createElement('button');
+        down.setAttribute('icon', 'arrow_downward');
+        down.disabled = index == arr.length - 1;
+        down.onclick = () => { const next = getArray(); next.splice(index + 1, 0, next.splice(index, 1)[0]); save(next); rebuild(); };
+        controls.appendChild(down);
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.onclick = () => { const next = getArray(); next.splice(index, 1); save(next.length ? next : []); rebuild(); };
+        controls.appendChild(remove);
+      });
+
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.textContent = 'Add value';
+      addButton.onclick = () => { const next = getArray(); next.push(next.length + 1); save(next); rebuild(); };
+      list.appendChild(addButton);
+    };
+
+    rebuild();
+    this.addPropertyListener(widget, property, () => {
+      if(!list.contains(document.activeElement))
+        rebuild();
+    });
+    return wrap;
+  }
+
   // --- per-type editors ---
 
   renderForBasic(widget) {
@@ -4481,7 +4653,28 @@ class PropertiesModule extends SidebarModule {
       this.renderHolderStateSection(widget, 'When a widget hovers over it', '.droptarget.droppable');
     });
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image' ]);
+    // offsets as two labelled X/Y number pairs
+    this.renderNumberPairRow(widget, 'Drop offset', [
+      { label: 'X', property: 'dropOffsetX' },
+      { label: 'Y', property: 'dropOffsetY' }
+    ]);
+    this.renderNumberPairRow(widget, 'Stack offset', [
+      { label: 'X', property: 'stackOffsetX' },
+      { label: 'Y', property: 'stackOffsetY' }
+    ]);
+    // property sets applied to widgets entering / leaving the holder
+    this.renderPropSetEditor(widget, 'onEnter', 'When a widget enters', 'Properties applied to a widget when it is dropped into this holder.');
+    this.renderPropSetEditor(widget, 'onLeave', 'When a widget leaves', 'Properties applied to a widget when it is removed from this holder.');
+
+    this.renderAdvancedSection(widget, body => {
+      this.renderSeatReferenceInput(widget, 'showInactiveFaceToSeat', 'Show inactive face to seat:', body, {
+        enablePicker: true,
+        pickerKey: 'showInactiveFaceToSeat',
+        infoText: 'Seats that see the back / inactive face of cards in this holder (e.g. a hand only its owner can read).'
+      });
+    });
+
+    this.renderOtherPropertiesSection(widget, [ 'dropTarget', 'text', 'icon', 'image', 'dropOffsetX', 'dropOffsetY', 'stackOffsetX', 'stackOffsetY', 'onEnter', 'onLeave', 'showInactiveFaceToSeat' ]);
   }
 
   // Text / background / border color plus a brightness filter written into a
@@ -4549,6 +4742,9 @@ class PropertiesModule extends SidebarModule {
       };
     }
 
+    // fine-tune the wheel values: add / remove / reorder individual options
+    this.renderListEditor(widget, 'options', 'Wheel values', 'The values shown on the spinner wheel. Presets above are shortcuts for common sets.');
+
     // current angle and value: temporary state that changes on every spin
     const temporaryRow = div(this.moduleDOM, 'propertyInlineRow temporaryValues');
 
@@ -4593,6 +4789,13 @@ class PropertiesModule extends SidebarModule {
       locked => this.inputValueUpdated(widget, 'editable', !locked));
     this.addPropertyListener(widget, 'editable', () => editableToggle.update());
 
+    // options that only matter while the label is editable
+    const editableOptions = div(this.moduleDOM, 'revealPanel');
+    editableOptions.style.paddingLeft = '10px';
+    new CheckboxInput(this, widget, 'Spell check', { property: 'spellCheck' }).render(editableOptions);
+    new NumberInput(this, widget, 'Tab index', { property: 'tabIndex', step: 1, nullIfEmpty: true, hint: 'Keyboard tab order for this editable label.' }).render(editableOptions);
+    this.addPropertyListener(widget, 'editable', w => editableOptions.style.display = w.get('editable') ? '' : 'none');
+
     this.renderLargeTextInput(widget, 'Text Content', 'text');
 
     this.addLineBreak();
@@ -4604,7 +4807,15 @@ class PropertiesModule extends SidebarModule {
     this.renderAppearanceSection(widget, {
       before: _=>this.renderLabelStylePresets(widget)
     });
-    this.renderOtherPropertiesSection(widget, [ 'editable', 'placeholderText', 'text' ]);
+
+    this.renderAdvancedSection(widget, body => {
+      new CheckboxInput(this, widget, 'Two-row bottom align', {
+        property: 'twoRowBottomAlign',
+        hint: 'PCIO compatibility: bottom-aligns text that wraps to a second row.'
+      }).render(body);
+    });
+
+    this.renderOtherPropertiesSection(widget, [ 'editable', 'placeholderText', 'text', 'spellCheck', 'tabIndex', 'twoRowBottomAlign' ]);
   }
 
   // style presets shown as preview buttons like the deck templates
