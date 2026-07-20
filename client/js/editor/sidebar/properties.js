@@ -3573,20 +3573,6 @@ class PropertiesModule extends SidebarModule {
           addClass(nameInput.value.trim());
       };
       addRow.appendChild(addButton);
-
-      // one-click buttons for the classes this widget type applies on its own
-      const missingSuggestions = classSuggestions.filter(className => !hasNestedCSSClasses(value) || value[className] === undefined);
-      if(missingSuggestions.length) {
-        const suggestionRow = div(container, 'cssSuggestionRow');
-        for(const className of missingSuggestions) {
-          const suggestionButton = document.createElement('button');
-          suggestionButton.setAttribute('icon', 'add');
-          suggestionButton.textContent = className;
-          suggestionButton.title = `Add a section styling the widget's ${className} state`;
-          suggestionButton.onclick = () => addClass(className);
-          suggestionRow.appendChild(suggestionButton);
-        }
-      }
     };
 
     rebuild();

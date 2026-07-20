@@ -515,18 +515,6 @@
   font-size: 12px;
 }
 
-.editorModule .cssEditor .cssSuggestionRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 4px;
-}
-
-.editorModule .cssEditor .cssSuggestionRow button {
-  font-family: monospace;
-  font-size: 12px;
-}
-
 /* several labeled inputs sharing one line (timer rows, seat index/turn, ...) */
 .editorModule .propertyInlineRow {
   display: flex;
