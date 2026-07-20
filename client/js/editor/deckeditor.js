@@ -233,9 +233,6 @@ class DeckEditor {
     // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
     // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
     $('#editor').append($('#libraryDecksOverlay'));
-    // Same for the grid-options overlay, so the grid button's settings are reachable while editing a deck.
-    if($('#gridOverlay'))
-      $('#editor').append($('#gridOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
