@@ -3683,7 +3683,8 @@ class PropertiesModule extends SidebarModule {
 
   // Editor for an object property whose entries are "childProperty: value" (the
   // holder onEnter / onLeave sets applied to children entering / leaving).
-  renderPropSetEditor(widget, property, title, hint, target = null) {
+  // suggestions populates a datalist on the add-property input.
+  renderPropSetEditor(widget, property, title, hint, suggestions = [], target = null) {
     const wrap = div(target || this.moduleDOM, 'propSetEditor');
     const heading = div(wrap, 'propSetTitle');
     heading.textContent = title;
@@ -3697,27 +3698,17 @@ class PropertiesModule extends SidebarModule {
     };
     const save = obj => this.inputValueUpdated(widget, property, Object.keys(obj).length ? obj : null);
 
-    const rebuild = () => {
+    const rebuild = (focusKey = null) => {
       list.innerHTML = '';
       const obj = getObject();
       for(const key of Object.keys(obj)) {
         const rowValue = obj[key];
         const rowDOM = div(list, 'propSetRow');
-        const keyInput = document.createElement('input');
-        keyInput.type = 'text';
-        keyInput.className = 'propSetKey';
-        keyInput.value = key;
-        keyInput.placeholder = 'property';
-        keyInput.onchange = () => {
-          const newKey = keyInput.value.trim();
-          if(!newKey || newKey == key)
-            return;
-          const next = Object.assign({}, getObject());
-          next[newKey] = next[key];
-          delete next[key];
-          save(next);
-        };
-        rowDOM.appendChild(keyInput);
+        // the property name is fixed once added; show it as a label
+        const keyLabel = document.createElement('span');
+        keyLabel.className = 'propSetKey';
+        keyLabel.textContent = key;
+        rowDOM.appendChild(keyLabel);
 
         const valueInput = document.createElement('input');
         valueInput.type = 'text';
@@ -3732,6 +3723,8 @@ class PropertiesModule extends SidebarModule {
           save(next);
         };
         rowDOM.appendChild(valueInput);
+        if(key === focusKey)
+          valueInput.focus();
 
         const remove = document.createElement('button');
         remove.setAttribute('icon', 'delete');
@@ -3745,23 +3738,41 @@ class PropertiesModule extends SidebarModule {
         rowDOM.appendChild(remove);
       }
 
+      // single "add property" input with a datalist of common suggestions,
+      // mirroring the CSS selector add-row
       const addRow = div(list, 'propSetRow propSetAddRow');
       const addKey = document.createElement('input');
       addKey.type = 'text';
       addKey.placeholder = 'property to set on child';
+      if(suggestions && suggestions.length) {
+        const listID = `propSet_${widget.id}_${property}_${rand().toString(36).substring(3, 9)}`;
+        const datalist = document.createElement('datalist');
+        datalist.id = listID;
+        for(const suggestion of suggestions) {
+          if(getObject()[suggestion] !== undefined)
+            continue;
+          const option = document.createElement('option');
+          option.value = suggestion;
+          datalist.appendChild(option);
+        }
+        addRow.appendChild(datalist);
+        addKey.setAttribute('list', listID);
+      }
       addRow.appendChild(addKey);
       const addButton = document.createElement('button');
       addButton.setAttribute('icon', 'add');
       addButton.title = 'Add';
-      addButton.onclick = () => {
+      const addKeyValue = () => {
         const key = addKey.value.trim();
         if(!key || getObject()[key] !== undefined)
           return;
         const next = Object.assign({}, getObject());
         next[key] = '';
         save(next);
-        rebuild();
+        rebuild(key);
       };
+      addButton.onclick = addKeyValue;
+      addKey.onkeydown = e => { if(e.key == 'Enter') addKeyValue(); };
       addRow.appendChild(addButton);
     };
 
@@ -4663,8 +4674,9 @@ class PropertiesModule extends SidebarModule {
       { label: 'Y', property: 'stackOffsetY' }
     ]);
     // property sets applied to widgets entering / leaving the holder
-    this.renderPropSetEditor(widget, 'onEnter', 'When a widget enters', 'Properties applied to a widget when it is dropped into this holder.');
-    this.renderPropSetEditor(widget, 'onLeave', 'When a widget leaves', 'Properties applied to a widget when it is removed from this holder.');
+    const childPropertySuggestions = [ 'face', 'rotation', 'enlarge' ];
+    this.renderPropSetEditor(widget, 'onEnter', 'When a widget enters', 'Properties applied to a widget when it is dropped into this holder.', childPropertySuggestions);
+    this.renderPropSetEditor(widget, 'onLeave', 'When a widget leaves', 'Properties applied to a widget when it is removed from this holder.', childPropertySuggestions);
 
     this.renderAdvancedSection(widget, body => {
       this.renderSeatReferenceInput(widget, 'showInactiveFaceToSeat', 'Show inactive face to seat:', body, {

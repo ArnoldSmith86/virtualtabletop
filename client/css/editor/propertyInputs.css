@@ -781,9 +781,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin: 3px 0;
 }
 
-.editorModule .propSetRow input.propSetKey {
-  flex: 0 1 45%;
-  min-width: 60px;
+.editorModule .propSetRow span.propSetKey {
+  flex: 0 0 auto;
+  min-width: 90px;
+  font-size: 13px;
+  font-family: monospace;
 }
 
 .editorModule .propSetRow input.propSetValue,
