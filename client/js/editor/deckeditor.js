@@ -1766,11 +1766,8 @@ class DeckEditor {
         if(currentValue !== undefined && object[objectProperty] === undefined)
           object[objectProperty] = currentValue;
         this.refreshMainCardFaces();
-        const cause = `${getPlayerDetails().playerName} removed a dynamic property binding from deck ${this.deckID} in deck editor`;
-        const actionId = this.newAction();
-        await this.commit('faceTemplates', cause, actionId);
-        if(this.removeOrphanedTypeProperties([ { dynamicProperties: { [objectProperty]: typeProperty } } ]))
-          await this.commit('cardTypes', cause, actionId);
+        // Keep the card type property this binding used: it may still be referenced by routines / SELECT / CSS.
+        await this.commit('faceTemplates', `${getPlayerDetails().playerName} removed a dynamic property binding from deck ${this.deckID} in deck editor`);
         this.renderSidebar();
       };
     }
@@ -1842,52 +1839,17 @@ class DeckEditor {
     this.selectObject(face.objects.length-1);
   }
 
-  // Card type properties the given objects pull values from (dynamicProperties, svgReplaces, ${PROPERTY ...}).
-  referencedTypeProperties(objects) {
-    const properties = new Set();
-    for(const object of objects) {
-      for(const property of Object.values(object.dynamicProperties || {}))
-        properties.add(property);
-      for(const property of Object.values(object.svgReplaces || {}))
-        properties.add(property);
-      if(object.type == 'html')
-        for(const match of String(object.value).matchAll(/\$\{PROPERTY ([^}]+)\}/g))
-          properties.add(match[1]);
-    }
-    return properties;
-  }
-
-  // Removes card type properties that are no longer referenced by any face object after the given objects
-  // were removed, so deleting an object doesn't leave orphaned per-card-type data behind (and the next
-  // added object can reuse the property name). Returns whether cardTypes changed.
-  removeOrphanedTypeProperties(removedObjects) {
-    const stillReferenced = this.referencedTypeProperties(this.faceTemplates.flatMap(face=>face.objects || []));
-
-    let changed = false;
-    for(const property of this.referencedTypeProperties(removedObjects))
-      if(!stillReferenced.has(property))
-        for(const typeProperties of Object.values(this.cardTypes))
-          if(typeProperties[property] !== undefined) {
-            delete typeProperties[property];
-            changed = true;
-          }
-    return changed;
-  }
-
   async deleteSelectedObject() {
     const face = this.faceTemplates[this.face];
     if(!face || this.selectedObject === null)
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    const removed = face.objects.splice(this.selectedObject, 1);
+    face.objects.splice(this.selectedObject, 1);
     this.selectedObject = null;
     this.refreshMainCardFaces();
-    // One cause + one actionId so the object removal and the orphaned-property cleanup are one undo step.
-    const cause = `${getPlayerDetails().playerName} deleted a face object from deck ${this.deckID} in deck editor`;
-    const actionId = this.newAction();
-    await this.commit('faceTemplates', cause, actionId);
-    if(this.removeOrphanedTypeProperties(removed))
-      await this.commit('cardTypes', cause, actionId);
+    // Only the face template changes: card type properties this object referenced are deliberately kept, since
+    // routines / SELECT / CSS can use them independently of any face object (deleting them could break a game).
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted a face object from deck ${this.deckID} in deck editor`);
     this.renderLeftSidebar(); // drop the deleted row from the left list right away
     this.renderSidebar();
     this.updateDragToolbar();
@@ -1911,15 +1873,12 @@ class DeckEditor {
     if(!confirm(`Delete ${this.faceLabel(this.face)} from every card type of this deck?`))
       return;
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    const removed = this.faceTemplates.splice(this.face, 1);
+    this.faceTemplates.splice(this.face, 1);
     this.face = Math.min(this.face, Math.max(0, this.faceTemplates.length-1));
     this.selectedObject = null;
     this.treeLevel = 'face';
-    const cause = `${getPlayerDetails().playerName} deleted a face from deck ${this.deckID} in deck editor`;
-    const actionId = this.newAction();
-    await this.commit('faceTemplates', cause, actionId);
-    if(this.removeOrphanedTypeProperties(removed[0] && removed[0].objects || []))
-      await this.commit('cardTypes', cause, actionId);
+    // As with deleting a single object, card type properties are kept (they may be used outside face rendering).
+    await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted a face from deck ${this.deckID} in deck editor`);
     this.render();
   }
 

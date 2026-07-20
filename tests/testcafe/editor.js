@@ -191,6 +191,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     return deckID;
   });
   const deckID = await getDeckID();
+  const getCardTypes = ClientFunction(deckID => JSON.stringify(widgets.get(deckID).get('cardTypes')));
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
@@ -202,14 +203,18 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
     .click('#deckEditorTreeAdd')                      // face "+" reveals the add-object controls
     .click('#deckEditorAddMode input[value=dynamic]') // add per-card-type objects (seeds a card type property)
     .click('#deckEditorAddText')                      // add the text object (auto-selected)
-    .pressKey('delete') // deletes the selected object; also cleans up its now-orphaned card type property
+    .pressKey('delete'); // deletes the object; its seeded card type property is deliberately KEPT (see below)
+  // Regression: deleting a face object's last visual binding must NOT auto-delete the card type property it
+  // used, since routines / SELECT / CSS can reference it independently of face rendering.
+  await t.expect(getCardTypes(deckID)).contains('"text":"Text"');
+  await t
     .click(deckNode)                                  // select the deck again
     .click('#deckEditorTreeAdd')                      // deck "+" adds another new face (now selected)
     .setNativeDialogHandler(() => true)
     .click('#deckEditorTreeDelete')                   // delete the just-added (current) face
     .pressKey('esc') // closes the deck editor, since no face object is selected at this point
     .click('#editorToolbar [icon=undo]'); // undoes the face deletion through the normal room undo protocol
-  await compareState(t, '8924f45d4e6a80729054e7a7c23f7599');
+  await compareState(t, '3e20074150f78219095df84abeeb74dc');
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {
