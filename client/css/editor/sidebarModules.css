@@ -19,9 +19,10 @@
   display: inline-flex;
 }
 
-/* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). */
+/* Shown by the Properties module when nothing is selected (see PropertiesModule.addDeck). Use the theme
+   text color so the intro is readable in both themes (white on the dark editor theme, dark in light mode). */
 .editorModule .noSelectionIntro {
-  color: white;
+  color: var(--textColor);
   margin: 10px 5px 15px;
 }
 
