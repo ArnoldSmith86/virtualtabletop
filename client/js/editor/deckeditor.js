@@ -224,6 +224,7 @@ class DeckEditor {
     // stacking context. Move these into #editor so opening them from the deck editor is actually visible.
     $('#editor').append($('#deckEditorExportOverlay'));
     $('#editor').append($('#deckEditorImportOverlay'));
+    $('#editor').append($('#deckEditorNewDeckOverlay'));
 
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
@@ -235,7 +236,10 @@ class DeckEditor {
     for(const button of this.dragToolbarButtons)
       button.render($('#deckEditorDragToolbar'));
 
-    $('#deckEditorAddDeck').onclick = _=>this.addDeck();
+    $('#deckEditorAddDeck').onclick = _=>this.openNewDeckOverlay();
+    $('#deckEditorNewDeckClose').onclick = _=>this.closeNewDeckOverlay();
+    for(const radio of $a('#deckEditorNewDeckOverlay input[name=deckEditorNewDeckMode]'))
+      radio.onchange = _=>this.renderNewDeckPanel(radio.value);
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
     $('#deckEditorShowAll').onclick = _=>{
@@ -2277,6 +2281,51 @@ class DeckEditor {
     this.render();
   }
 
+  // "Add New Deck" opens a small submenu offering every existing way to create a deck. Rather than
+  // reinventing those flows, we reuse the ones the properties sidebar already implements (traditional,
+  // custom, image upload, TTS import) by rendering them, and the public-library and empty-deck flows.
+  openNewDeckOverlay() {
+    if(!this.deckCreator)
+      this.deckCreator = new PropertiesModule();
+    // Always start on the "empty deck" default so the submenu is predictable each time it opens.
+    const empty = $('#deckEditorNewDeckOverlay input[value=empty]');
+    empty.checked = true;
+    this.renderNewDeckPanel('empty');
+    showOverlay('deckEditorNewDeckOverlay');
+  }
+
+  closeNewDeckOverlay() {
+    this.pendingNewDeck = false;
+    showOverlay();
+  }
+
+  // Each mode renders its existing creation flow into the overlay's panel. traditional/custom/images/tts
+  // (and the library) add a fresh deck to the game; once that lands as a delta, deckEditorReceiveDelta
+  // switches the editor to it (this.pendingNewDeck). "empty" opens the new deck here directly.
+  renderNewDeckPanel(mode) {
+    const panel = $('#deckEditorNewDeckPanel');
+    panel.innerHTML = '';
+    this.deckCreator.moduleDOM = panel;
+    this.pendingNewDeck = mode != 'empty';
+    if(mode == 'empty') {
+      const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=library_add class=green>Create empty deck</button>');
+      $('button', bar).onclick = _=>{ this.closeNewDeckOverlay(); this.addDeck(); };
+    } else if(mode == 'library') {
+      // The library overlay lives outside the deck editor's stacking context, so drop out of the editor
+      // to show it (picking a deck adds it to the game; the user can reopen the editor on it afterwards).
+      const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
+      $('button', bar).onclick = _=>{ this.pendingNewDeck = false; this.close(); openLibraryDecksOverlay(); };
+    } else if(mode == 'traditional') {
+      this.deckCreator.deckTraditional(panel);
+    } else if(mode == 'custom') {
+      this.deckCreator.deckGenerator(panel);
+    } else if(mode == 'images') {
+      this.deckCreator.deckImages(panel);
+    } else if(mode == 'tts') {
+      this.deckCreator.deckImportTTS(panel);
+    }
+  }
+
   // Creates a new deck (holder + deck widget) with the current deck's faces, card types and card defaults.
   async copyDeck() {
     if(!this.deck())
@@ -2562,6 +2611,21 @@ async function createStarterDeck() {
 async function deckEditorReceiveDelta(delta) {
   if(!deckEditor.isOpen())
     return;
+  // The "Add New Deck" submenu just triggered a creation flow (traditional/custom/image/TTS): when the new
+  // deck lands, close the submenu and switch the editor to it so the freshly created deck is shown.
+  if(deckEditor.pendingNewDeck && delta.s) {
+    for(const id in delta.s) {
+      const w = delta.s[id];
+      if(w && w.type == 'deck' && id != deckEditor.deckID) {
+        deckEditor.pendingNewDeck = false;
+        showOverlay();
+        await deckEditor.open(id);
+        deckEditor.treeLevel = 'deck';
+        deckEditor.render();
+        return;
+      }
+    }
+  }
   if(delta.s && delta.s[deckEditor.deckID] === null || !widgets.has(deckEditor.deckID))
     return deckEditor.close();
   const deckDelta = delta.s && delta.s[deckEditor.deckID];

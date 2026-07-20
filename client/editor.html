@@ -226,6 +226,22 @@
       </div>
     </div>
   </div>
+  <div id="deckEditorNewDeckOverlay" class="overlay" style="display: none">
+    <div id="deckEditorNewDeckDialog">
+      <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
+      <h1>Add a new deck</h1>
+      <p>Pick how to create the new deck. Every option reuses the game's existing deck-creation tools.</p>
+      <div class="deckEditorNewDeckModes">
+        <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck &mdash; design its faces and card types here in the deck editor</label>
+        <label><input type="radio" name="deckEditorNewDeckMode" value="library">Browse the public library of ready-made decks</label>
+        <label><input type="radio" name="deckEditorNewDeckMode" value="traditional">Traditional deck (standard, Spanish, German, Swiss, tarot, hanafuda, mahjong, dominoes)</label>
+        <label><input type="radio" name="deckEditorNewDeckMode" value="custom">Custom deck of cards (define suits and ranks)</label>
+        <label><input type="radio" name="deckEditorNewDeckMode" value="images">Upload one image per card or tiled images</label>
+        <label><input type="radio" name="deckEditorNewDeckMode" value="tts">Import from Tabletop Simulator</label>
+      </div>
+      <div id="deckEditorNewDeckPanel"></div>
+    </div>
+  </div>
   <div id="editorModuleOverlay" class="overlay" style="display: none">
     <div id="editorModuleInOverlay" class="editorModule"></div>
   </div>

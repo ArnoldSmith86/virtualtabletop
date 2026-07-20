@@ -526,6 +526,71 @@ body.deckEditorActive #enlarged {
   padding: 8px 12px;
 }
 
+#deckEditorNewDeckOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+
+#deckEditorNewDeckDialog {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  border: 1px solid #0002;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px #0004;
+  background: white;
+}
+
+#deckEditorNewDeckDialog h1 {
+  margin-top: 0;
+}
+
+#deckEditorNewDeckClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.deckEditorNewDeckModes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.deckEditorNewDeckModes label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+#deckEditorNewDeckPanel:not(:empty) {
+  border-top: 1px solid #0002;
+  padding-top: 16px;
+}
+
+.deckEditorNewDeckButtonBar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deckEditorNewDeckButtonBar button {
+  padding: 8px 12px;
+}
+
 @media (max-width: 700px) {
   .deckEditorExportOptions {
     grid-template-columns: 1fr;
