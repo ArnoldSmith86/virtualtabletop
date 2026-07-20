@@ -220,6 +220,10 @@ class DeckEditor {
     if(this.dragToolbarButtons)
       return;
 
+    // Editor overlays are normally hosted in #roomArea, which sits below the full-screen deck editor's
+    // stacking context. Move this one into #editor so opening it from the left toolbar is actually visible.
+    $('#editor').append($('#deckEditorExportOverlay'));
+
     this.dragToolbarButtons = [
       new DeckEditorDragDragButton(),
       new DeckEditorResizeButton(false),
@@ -238,6 +242,22 @@ class DeckEditor {
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
       $('#deckEditorMain').classList.toggle('deckEditorShowAllAreas', this.showAllAreas);
     };
+    $('#deckEditorExport').onclick = _=>this.openExportOverlay();
+    $('#deckEditorExportClose').onclick = _=>this.closeExportOverlay();
+    for(const control of $a('#deckEditorExportDialog input, #deckEditorExportDialog select')) {
+      control.oninput = _=>this.updateExportSummary();
+      control.onchange = _=>this.updateExportSummary();
+    }
+    progressButton($('#deckEditorExportPDF'), async updateProgress=>{
+      this.updateExportSummary();
+      try { await this.printDeck(updateProgress); }
+      catch(e) {
+        if(this.isExportCancelled(e))
+          return;
+        this.showExportError(e);
+        throw e;
+      }
+    });
     // One set of add buttons; the "Add to:" radios decide whether they add a static object (All Cards) or a
     // per-card-type one (Card Type). The selected radio and the group's accent color are the indicators.
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
@@ -281,6 +301,343 @@ class DeckEditor {
         e.stopImmediatePropagation();
       }
     }, true);
+  }
+
+  openExportOverlay() {
+    if(!this.deck())
+      return;
+    this.updateExportSummary();
+    showOverlay('deckEditorExportOverlay');
+  }
+
+  closeExportOverlay() {
+    this.cancelExport();
+    showOverlay();
+  }
+
+  beginExport() {
+    this.cancelExport();
+    this.exportAbortController = new AbortController();
+    return this.exportAbortController.signal;
+  }
+
+  finishExport(signal) {
+    if(this.exportAbortController && this.exportAbortController.signal == signal)
+      delete this.exportAbortController;
+  }
+
+  cancelExport() {
+    if(this.exportAbortController) {
+      this.exportAbortController.abort();
+      delete this.exportAbortController;
+    }
+    if(this.exportPrintWindow && !this.exportPrintWindow.closed)
+      this.exportPrintWindow.close();
+    delete this.exportPrintWindow;
+  }
+
+  isExportCancelled(error) {
+    return error && error.name == 'AbortError';
+  }
+
+  checkExportCancelled(signal) {
+    if(signal && signal.aborted)
+      throw new DOMException('Export cancelled.', 'AbortError');
+  }
+
+  async waitForExportPromise(promise, signal) {
+    this.checkExportCancelled(signal);
+    if(!signal)
+      return await promise;
+    return await new Promise((resolve, reject)=>{
+      const abort = _=>reject(new DOMException('Export cancelled.', 'AbortError'));
+      signal.addEventListener('abort', abort, { once: true });
+      Promise.resolve(promise).then(value=>{
+        signal.removeEventListener('abort', abort);
+        resolve(value);
+      }, error=>{
+        signal.removeEventListener('abort', abort);
+        reject(error);
+      });
+    });
+  }
+
+  showExportError(error) {
+    const summary = $('#deckEditorExportSummary');
+    summary.textContent = error && error.message ? error.message : String(error);
+    summary.classList.add('error');
+  }
+
+  exportOptions() {
+    const numberValue = (id, minimum)=>{
+      const value = Number($(id).value);
+      if(!Number.isFinite(value) || value < minimum)
+        throw new Error(`${$(id).parentElement.firstChild.textContent.trim()} must be at least ${minimum}.`);
+      return value;
+    };
+    const papers = {
+      a4: [ 210, 297 ],
+      letter: [ 215.9, 279.4 ],
+      legal: [ 215.9, 355.6 ]
+    };
+    const paperName = $('#deckEditorExportPaper').value;
+    let [ paperWidth, paperHeight ] = papers[paperName] || papers.letter;
+    const orientation = $('#deckEditorExportOrientation').value;
+    if(orientation == 'landscape')
+      [ paperWidth, paperHeight ] = [ paperHeight, paperWidth ];
+
+    return {
+      copies: $('#deckEditorExportCopies').value,
+      faces: $('#deckEditorExportFaces').value,
+      paperName,
+      orientation,
+      duplex: $('#deckEditorExportDuplex').value,
+      paperWidth,
+      paperHeight,
+      cardWidth: numberValue('#deckEditorExportCardWidth', 10),
+      cardHeight: numberValue('#deckEditorExportCardHeight', 10),
+      margin: numberValue('#deckEditorExportMargin', 0),
+      gap: numberValue('#deckEditorExportGap', 0),
+      bleed: numberValue('#deckEditorExportBleed', 0),
+      cropMarks: $('#deckEditorExportCropMarks').checked
+    };
+  }
+
+  exportCardEntries(options) {
+    const entries = [];
+    let typeIndex = 0;
+    for(const cardType of Object.keys(this.cardTypes)) {
+      const count = options.copies == 'one' ? 1 : widgetFilter(w=>w.get('deck') == this.deckID && w.get('cardType') == cardType).length;
+      for(let copy=0; copy<count; ++copy)
+        entries.push({ cardType, copy, typeIndex });
+      ++typeIndex;
+    }
+    return entries;
+  }
+
+  exportFaceDescriptors(options) {
+    const faceCount = this.faceTemplates.length;
+    if(!faceCount)
+      return [];
+    const front = faceCount > 1 ? 1 : 0;
+    if(options.faces == 'front')
+      return [ { face: front, name: 'front' } ];
+    if(options.faces == 'all')
+      return this.faceTemplates.map((_, face)=>({ face, name: `face-${face}` }));
+    const result = [ { face: front, name: 'front' } ];
+    if(faceCount > 1)
+      result.push({ face: 0, name: 'back', back: true });
+    return result;
+  }
+
+  exportLayout(options) {
+    const artworkWidth = options.cardWidth + 2*options.bleed;
+    const artworkHeight = options.cardHeight + 2*options.bleed;
+    const usableWidth = options.paperWidth - 2*options.margin;
+    const usableHeight = options.paperHeight - 2*options.margin;
+    const columns = Math.floor((usableWidth + options.gap) / (artworkWidth + options.gap));
+    const rows = Math.floor((usableHeight + options.gap) / (artworkHeight + options.gap));
+    if(columns < 1 || rows < 1)
+      throw new Error('The selected card size, bleed, and margins do not fit on this paper.');
+    return { artworkWidth, artworkHeight, columns, rows, capacity: columns*rows };
+  }
+
+  updateExportSummary() {
+    const summary = $('#deckEditorExportSummary');
+    if(!summary)
+      return;
+    try {
+      const options = this.exportOptions();
+      const entries = this.exportCardEntries(options);
+      const faces = this.exportFaceDescriptors(options);
+      const layout = this.exportLayout(options);
+      if(!entries.length)
+        throw new Error(options.copies == 'game' ? 'This deck has no cards in the game. Choose “One of each card type” to export its designs.' : 'This deck has no card types to export.');
+      if(!faces.length)
+        throw new Error('This deck has no faces to export.');
+      const sheetSets = Math.ceil(entries.length/layout.capacity);
+      const printedPages = sheetSets*faces.length;
+      summary.textContent = `${entries.length} card${entries.length == 1 ? '' : 's'} · ${layout.columns} × ${layout.rows} per sheet · ${printedPages} printed page${printedPages == 1 ? '' : 's'}${options.faces == 'frontBack' && faces.length == 2 ? ` (${sheetSets} duplex sheet${sheetSets == 1 ? '' : 's'})` : ''}`;
+      summary.classList.remove('error');
+      if(!$('#deckEditorExportPDF').classList.contains('progress'))
+        $('#deckEditorExportPDF').disabled = false;
+    } catch(e) {
+      summary.textContent = e.message || String(e);
+      summary.classList.add('error');
+      if(!$('#deckEditorExportPDF').classList.contains('progress'))
+        $('#deckEditorExportPDF').disabled = true;
+    }
+  }
+
+  exportCardDOM(cardType, face) {
+    const host = document.createElement('div');
+    const card = this.renderCard(cardType, face, host);
+    const cardDOM = card.domElement;
+    cardDOM.classList.remove('hidden', 'foreign', 'selectedInEdit', 'selectedInEditPreview');
+    cardDOM.style.position = 'absolute';
+    cardDOM.style.left = '0';
+    cardDOM.style.top = '0';
+    cardDOM.style.margin = '0';
+    cardDOM.style.transformOrigin = 'top left';
+    return { card, cardDOM };
+  }
+
+  async waitForExportArtwork(cardDOMs, signal) {
+    this.checkExportCancelled(signal);
+    if(document.fonts && document.fonts.ready)
+      await this.waitForExportPromise(document.fonts.ready, signal);
+    const needsBackground = [];
+    for(const cardDOM of cardDOMs) {
+      const faces = $a('.cardFace', cardDOM);
+      for(let face=0; face<this.faceTemplates.length; ++face) {
+        const objects = this.faceTemplates[face].objects || [];
+        const renderedObjects = faces[face] ? $a('.cardFaceObject', faces[face]) : [];
+        for(let object=0; object<objects.length; ++object)
+          if(objects[object].type == 'image' && (objects[object].value || objects[object].dynamicProperties && objects[object].dynamicProperties.value) && renderedObjects[object])
+            needsBackground.push(renderedObjects[object]);
+      }
+    }
+    const deadline = Date.now()+5000;
+    while(needsBackground.some(node=>!node.style.backgroundImage) && Date.now()<deadline) {
+      await this.waitForExportPromise(sleep(50), signal);
+      this.checkExportCancelled(signal);
+    }
+    const images = cardDOMs.flatMap(cardDOM=>[ ...cardDOM.querySelectorAll('img') ]);
+    await this.waitForExportPromise(Promise.all(images.map(image=>image.complete ? Promise.resolve() : new Promise(resolve=>{
+      image.onload = resolve;
+      image.onerror = resolve;
+    }))), signal);
+    await this.waitForExportPromise(sleep(100), signal);
+  }
+
+  async preparePrintCardHTML(entries, faces, layout, signal) {
+    const host = div(document.body);
+    host.id = 'deckEditorExportRenderHost';
+    const records = new Map();
+    try {
+      for(const entry of entries) {
+        for(const descriptor of faces) {
+          this.checkExportCancelled(signal);
+          const key = `${entry.cardType}\n${descriptor.face}`;
+          if(records.has(key))
+            continue;
+          const { card, cardDOM } = this.exportCardDOM(entry.cardType, descriptor.face);
+          cardDOM.style.transform = `scale(${layout.artworkWidth*96/25.4/card.get('width')}, ${layout.artworkHeight*96/25.4/card.get('height')})`;
+          host.append(cardDOM);
+          records.set(key, cardDOM);
+        }
+      }
+      await this.waitForExportArtwork([ ...records.values() ], signal);
+      this.checkExportCancelled(signal);
+      return new Map([ ...records ].map(([ key, cardDOM ])=>[ key, cardDOM.outerHTML ]));
+    } finally {
+      host.remove();
+    }
+  }
+
+  printCardHTML(entry, face, options, cardHTML) {
+    const renderedCard = cardHTML.get(`${entry.cardType}\n${face}`);
+    const marks = options.cropMarks ? '<i class="cropMark cropTLH"></i><i class="cropMark cropTLV"></i><i class="cropMark cropTRH"></i><i class="cropMark cropTRV"></i><i class="cropMark cropBLH"></i><i class="cropMark cropBLV"></i><i class="cropMark cropBRH"></i><i class="cropMark cropBRV"></i>' : '';
+    return `<div class="printCardArtwork">${renderedCard}</div>${marks}`;
+  }
+
+  printSheetHTML(entries, face, back, options, layout, cardHTML) {
+    const mirrorHorizontally = back && (options.duplex == 'long') == (options.orientation == 'portrait');
+    const mirrorVertically = back && !mirrorHorizontally;
+    const cards = entries.map((entry, index)=>{
+      const row = Math.floor(index/layout.columns) + 1;
+      const column = index%layout.columns + 1;
+      const printColumn = mirrorHorizontally ? layout.columns-column+1 : column;
+      const printRow = mirrorVertically ? layout.rows-row+1 : row;
+      return `<div class="printCardSlot" style="grid-row:${printRow};grid-column:${printColumn}">${this.printCardHTML(entry, face, options, cardHTML)}</div>`;
+    }).join('');
+    return `<section class="printSheet">${cards}</section>`;
+  }
+
+  async waitForPrintWindow(printWindow, signal) {
+    if(printWindow.document.readyState != 'complete')
+      await this.waitForExportPromise(new Promise(resolve=>printWindow.addEventListener('load', resolve, { once: true })), signal);
+    if(printWindow.document.fonts && printWindow.document.fonts.ready)
+      await this.waitForExportPromise(printWindow.document.fonts.ready, signal);
+    const images = [ ...printWindow.document.images ];
+    await this.waitForExportPromise(Promise.all(images.map(image=>image.complete ? Promise.resolve() : new Promise(resolve=>{
+      image.onload = resolve;
+      image.onerror = resolve;
+    }))), signal);
+    await this.waitForExportPromise(sleep(100), signal);
+  }
+
+  async printDeck(updateProgress) {
+    const signal = this.beginExport();
+    const printWindow = window.open('', '_blank');
+    if(!printWindow) {
+      this.finishExport(signal);
+      throw new Error('The print window was blocked. Allow pop-ups for this site and try again.');
+    }
+    this.exportPrintWindow = printWindow;
+    try {
+      updateProgress('Preparing cards...');
+      await this.flushPendingCommits();
+      this.checkExportCancelled(signal);
+      const options = this.exportOptions();
+      const entries = this.exportCardEntries(options);
+      const faces = this.exportFaceDescriptors(options);
+      const layout = this.exportLayout(options);
+      if(!entries.length || !faces.length)
+        throw new Error('There are no cards or faces to print.');
+
+      updateProgress('Loading artwork...');
+      const cardHTML = await this.preparePrintCardHTML(entries, faces, layout, signal);
+      let sheets = '';
+      for(let start=0; start<entries.length; start+=layout.capacity) {
+        this.checkExportCancelled(signal);
+        const pageEntries = entries.slice(start, start+layout.capacity);
+        for(const descriptor of faces) {
+          this.checkExportCancelled(signal);
+          sheets += this.printSheetHTML(pageEntries, descriptor.face, !!descriptor.back, options, layout, cardHTML);
+        }
+      }
+
+      const inheritedStyles = [ ...document.head.querySelectorAll('style, link[rel="stylesheet"]') ].map(node=>node.outerHTML).join('\n');
+      const pageSize = `${options.paperWidth}mm ${options.paperHeight}mm`;
+      const title = html(`Print ${this.deckID}`);
+      printWindow.document.open();
+      printWindow.document.write(`<!doctype html><html><head><base href="${html(location.href)}"><meta charset="utf-8"><title>${title}</title>${inheritedStyles}<style>
+        @page { size: ${pageSize}; margin: 0; }
+        html, body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { color: black; }
+        .printSheet { width: ${options.paperWidth}mm; height: ${options.paperHeight}mm; padding: ${options.margin}mm; box-sizing: border-box; display: grid; grid-template-columns: repeat(${layout.columns}, ${layout.artworkWidth}mm); grid-template-rows: repeat(${layout.rows}, ${layout.artworkHeight}mm); gap: ${options.gap}mm; place-content: center; break-after: page; page-break-after: always; overflow: hidden; }
+        .printSheet:last-child { break-after: auto; page-break-after: auto; }
+        .printCardSlot { position: relative; width: ${layout.artworkWidth}mm; height: ${layout.artworkHeight}mm; overflow: visible; }
+        .printCardArtwork { position: absolute; inset: 0; overflow: hidden; }
+        .printCardArtwork > .widget { left: 0 !important; top: 0 !important; margin: 0 !important; transform-origin: top left !important; }
+        .cropMark { position: absolute; display: block; background: #000; z-index: 100000; }
+        .cropTLH, .cropBLH { left: calc(${options.bleed}mm - 2.5mm); width: 2mm; height: .2mm; }
+        .cropTRH, .cropBRH { left: calc(${options.bleed + options.cardWidth}mm + .5mm); width: 2mm; height: .2mm; }
+        .cropTLV, .cropTRV { top: calc(${options.bleed}mm - 2.5mm); width: .2mm; height: 2mm; }
+        .cropBLV, .cropBRV { top: calc(${options.bleed + options.cardHeight}mm + .5mm); width: .2mm; height: 2mm; }
+        .cropTLH, .cropTRH { top: ${options.bleed}mm; }
+        .cropBLH, .cropBRH { top: ${options.bleed + options.cardHeight}mm; }
+        .cropTLV, .cropBLV { left: ${options.bleed}mm; }
+        .cropTRV, .cropBRV { left: ${options.bleed + options.cardWidth}mm; }
+        @media screen { body { background: #ddd; } .printSheet { margin: 8mm auto; background: white; box-shadow: 0 2mm 8mm #0004; } }
+      </style></head><body>${sheets}</body></html>`);
+      printWindow.document.close();
+      updateProgress('Preparing print preview...');
+      await this.waitForPrintWindow(printWindow, signal);
+      this.checkExportCancelled(signal);
+      updateProgress('Opening print dialog...');
+      printWindow.focus();
+      printWindow.addEventListener('afterprint', _=>printWindow.close(), { once: true });
+      printWindow.print();
+    } catch(e) {
+      printWindow.close();
+      throw e;
+    } finally {
+      if(this.exportPrintWindow == printWindow)
+        delete this.exportPrintWindow;
+      this.finishExport(signal);
+    }
   }
 
   onKeyDown(e) {

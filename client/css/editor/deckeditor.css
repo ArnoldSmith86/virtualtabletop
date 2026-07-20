@@ -369,6 +369,108 @@ body.deckEditorActive #enlarged {
   box-shadow: inset 0 0 0 2px #fff6;
 }
 
+/* Print / PDF options. */
+#deckEditorExportOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 20;
+}
+
+#deckEditorExportDialog {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  border: 1px solid #0002;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px #0004;
+  background: white;
+}
+
+#deckEditorExportDialog h1 {
+  margin-top: 0;
+}
+
+#deckEditorExportClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.deckEditorExportOptions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
+  margin: 20px 0 14px;
+}
+
+.deckEditorExportOptions label {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) minmax(110px, 1fr);
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.deckEditorExportOptions input,
+.deckEditorExportOptions select {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.deckEditorExportCheckbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#deckEditorExportSummary {
+  min-height: 20px;
+  margin: 14px 0;
+  padding: 9px 12px;
+  border-radius: 5px;
+  background: #0000000c;
+  color: #333;
+}
+
+#deckEditorExportSummary.error {
+  color: var(--VTTred, #c0392b);
+  background: #c0392b12;
+}
+
+.deckEditorExportActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.deckEditorExportActions button {
+  padding: 8px 12px;
+}
+
+#deckEditorExportRenderHost {
+  position: fixed;
+  left: -100000px;
+  top: 0;
+  background: transparent;
+}
+
+@media (max-width: 700px) {
+  .deckEditorExportOptions {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* The add-object controls are revealed by the "+" button (a vertical expander) just above the toolbar. */
 #deckEditorAddSection {
   display: none;

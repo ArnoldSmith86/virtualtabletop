@@ -160,6 +160,57 @@
     </div>
     <div id="libraryDecksList"></div>
   </div>
+  <div id="deckEditorExportOverlay" class="overlay" style="display: none">
+    <div id="deckEditorExportDialog">
+      <button id="deckEditorExportClose" icon="close" title="Close"></button>
+      <h1>Print or save deck as PDF</h1>
+      <p>Cards are arranged to use as much of each sheet as possible. Print to a printer or choose “Save as PDF” in the browser print dialog. Front/back output alternates mirrored pages; enable two-sided printing with the matching duplex flip setting.</p>
+      <div class="deckEditorExportOptions">
+        <label>Cards
+          <select id="deckEditorExportCopies">
+            <option value="game" selected>Use card counts in game</option>
+            <option value="one">One of each card type</option>
+          </select>
+        </label>
+        <label>Faces
+          <select id="deckEditorExportFaces">
+            <option value="frontBack" selected>Fronts and backs</option>
+            <option value="front">Fronts only</option>
+            <option value="all">All faces</option>
+          </select>
+        </label>
+        <label>Paper
+          <select id="deckEditorExportPaper">
+            <option value="letter" selected>Letter (8.5 × 11 in)</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="legal">Legal (8.5 × 14 in)</option>
+          </select>
+        </label>
+        <label>Orientation
+          <select id="deckEditorExportOrientation">
+            <option value="portrait" selected>Portrait</option>
+            <option value="landscape">Landscape</option>
+          </select>
+        </label>
+        <label>Duplex flip
+          <select id="deckEditorExportDuplex">
+            <option value="long" selected>Long edge</option>
+            <option value="short">Short edge</option>
+          </select>
+        </label>
+        <label>Card width (mm)<input id="deckEditorExportCardWidth" type="number" min="10" max="300" step="0.1" value="63.5"></label>
+        <label>Card height (mm)<input id="deckEditorExportCardHeight" type="number" min="10" max="400" step="0.1" value="88.9"></label>
+        <label>Paper margin (mm)<input id="deckEditorExportMargin" type="number" min="0" max="50" step="0.5" value="6"></label>
+        <label>Card spacing (mm)<input id="deckEditorExportGap" type="number" min="0" max="50" step="0.5" value="0"></label>
+        <label>Bleed (mm)<input id="deckEditorExportBleed" type="number" min="0" max="10" step="0.5" value="0"></label>
+      </div>
+      <label class="deckEditorExportCheckbox"><input id="deckEditorExportCropMarks" type="checkbox">Include crop marks in print/PDF</label>
+      <div id="deckEditorExportSummary"></div>
+      <div class="deckEditorExportActions">
+        <button id="deckEditorExportPDF" icon="print">Print / Save as PDF</button>
+      </div>
+    </div>
+  </div>
   <div id="editorModuleOverlay" class="overlay" style="display: none">
     <div id="editorModuleInOverlay" class="editorModule"></div>
   </div>
@@ -177,6 +228,7 @@
           <button id="deckEditorTreeCopy" icon="content_copy"></button>
           <button id="deckEditorTreeDelete" icon="delete"></button>
           <button id="deckEditorShowAll" icon="highlight_alt" title="Outline all face objects on the card so you can see every area at once."></button>
+          <button id="deckEditorExport" icon="save" title="Print or save the current deck as PDF."></button>
         </div>
         <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
           <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type). The selected option also sets the group color.">
