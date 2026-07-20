@@ -4010,8 +4010,10 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
 
-    // --- Scores: where scores come from and how they total up ---
-    this.addSubHeader('Scores');
+    this.addSubHeader('Scoreboard');
+
+    // --- Score: where scores come from and how they total up ---
+    this.addAppearanceSubTitle('Score');
     new TextInput(this, widget, 'Score property', { property: 'scoreProperty', hint: editorPropertyHints.scoreProperty }).render(this.moduleDOM);
 
     // show totals, with the totals label revealed only when they are shown
@@ -4023,14 +4025,14 @@ class PropertiesModule extends SidebarModule {
 
     new NumberInput(this, widget, 'Highlight round', { property: 'currentRound', step: 1, nullIfEmpty: true, hint: 'Highlights this round in the table (1 = first round). Leave empty for none.' }).render(this.moduleDOM);
 
-    // --- Rounds ---
-    this.addSubHeader('Rounds');
+    // --- Round ---
+    this.addAppearanceSubTitle('Round');
     new TextInput(this, widget, 'Round label', { property: 'roundLabel', hint: 'Header shown on the round column/row.' }).render(this.moduleDOM);
     this.renderListEditor(widget, 'rounds', 'Round names', 'Custom names for each round. Leave empty to number rounds automatically.');
     new CheckboxInput(this, widget, 'Show all rounds', { property: 'showAllRounds', hint: editorPropertyHints.showAllRounds }).render(this.moduleDOM);
 
     // --- Layout: how the table is arranged ---
-    this.addSubHeader('Layout');
+    this.addAppearanceSubTitle('Layout');
     new SelectInput(this, widget, 'Orientation', {
       property: 'playersInColumns',
       hint: editorPropertyHints.playersInColumns,
@@ -4051,10 +4053,7 @@ class PropertiesModule extends SidebarModule {
     new CheckboxInput(this, widget, 'Use player colors', { property: 'showPlayerColors', hint: editorPropertyHints.showPlayerColors }).render(this.moduleDOM);
     new CheckboxInput(this, widget, 'Vertical header', { property: 'verticalHeader', hint: editorPropertyHints.verticalHeader }).render(this.moduleDOM);
 
-    // border radius + CSS editor
-    this.renderAppearanceSection(widget);
-
-    // --- Advanced: less common tweaks, collapsed and last ---
+    // --- Advanced: less common tweaks, collapsed, last inside Scoreboard ---
     this.renderAdvancedSection(widget, body => {
       new CheckboxInput(this, widget, 'Include empty seats', { property: 'showAllSeats', hint: editorPropertyHints.showAllSeats }).render(body);
       new CheckboxInput(this, widget, 'Autosize columns', { property: 'autosizeColumns', hint: editorPropertyHints.autosizeColumns }).render(body);
@@ -4064,6 +4063,9 @@ class PropertiesModule extends SidebarModule {
       this.addPropertyListener(widget, 'autosizeColumns', w => firstColInput.dom.style.display = w.get('autosizeColumns') ? 'none' : '');
       new TextInput(this, widget, 'Edit pane title', { property: 'editPaneTitle', hint: 'Title of the dialog shown when a player clicks the scoreboard to enter a score.' }).render(body);
     });
+
+    // border radius + CSS editor
+    this.renderAppearanceSection(widget);
 
     // 'seats' stays in the generic list: it can be a seat list or a team map,
     // which the generic JSON input handles safely
