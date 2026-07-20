@@ -591,6 +591,14 @@ body.deckEditorActive #enlarged {
   padding: 8px 12px;
 }
 
+/* The reused deck-creation flows carry the sidebar's "editorModule" classes so their scoped CSS applies;
+   override the module's default display:none and themed background so they render inside the white dialog. */
+.deckEditorNewDeckModule.editorModule {
+  display: block;
+  background: transparent;
+  color: inherit;
+}
+
 @media (max-width: 700px) {
   .deckEditorExportOptions {
     grid-template-columns: 1fr;

@@ -2305,7 +2305,6 @@ class DeckEditor {
   renderNewDeckPanel(mode) {
     const panel = $('#deckEditorNewDeckPanel');
     panel.innerHTML = '';
-    this.deckCreator.moduleDOM = panel;
     this.pendingNewDeck = mode != 'empty';
     if(mode == 'empty') {
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=library_add class=green>Create empty deck</button>');
@@ -2315,14 +2314,20 @@ class DeckEditor {
       // to show it (picking a deck adds it to the game; the user can reopen the editor on it afterwards).
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=style class=green>Browse the public library</button>');
       $('button', bar).onclick = _=>{ this.pendingNewDeck = false; this.close(); openLibraryDecksOverlay(); };
-    } else if(mode == 'traditional') {
-      this.deckCreator.deckTraditional(panel);
-    } else if(mode == 'custom') {
-      this.deckCreator.deckGenerator(panel);
-    } else if(mode == 'images') {
-      this.deckCreator.deckImages(panel);
-    } else if(mode == 'tts') {
-      this.deckCreator.deckImportTTS(panel);
+    } else {
+      // Render the existing PropertiesModule deck-creation flow inside a container carrying the same classes
+      // the sidebar uses ("tune editorModule"), so its scoped CSS (preview tiles, suit editors, TTS input)
+      // applies and it looks and works exactly like the Properties panel it is reused from.
+      const moduleDOM = div(panel, 'tune editorModule deckEditorNewDeckModule');
+      this.deckCreator.moduleDOM = moduleDOM;
+      if(mode == 'traditional')
+        this.deckCreator.deckTraditional(moduleDOM);
+      else if(mode == 'custom')
+        this.deckCreator.deckGenerator(moduleDOM);
+      else if(mode == 'images')
+        this.deckCreator.deckImages(moduleDOM);
+      else if(mode == 'tts')
+        this.deckCreator.deckImportTTS(moduleDOM);
     }
   }
 
