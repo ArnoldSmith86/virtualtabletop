@@ -250,6 +250,25 @@ function parseFontSize(fontSize) {
 
 /* end helper functions */
 
+// Selectors offered in the CSS editor's "add class/selector" dropdown. The
+// common ones apply to every widget; the per-type list is scanned from each
+// widget's client/css/widgets/*.css (the part after the widget element), so
+// creators can style sub-elements and states without knowing the markup.
+const commonCssSelectors = [ ':hover', '::before', '::after' ];
+const cssSelectorSuggestions = {
+  button:     [],
+  canvas:     [ ' > canvas', ' > .canvasCursor' ],
+  card:       [ ' > .cardFace', ' > .active.cardFace' ],
+  dice:       [ '.shape3D', ' > * > .diceFace' ],
+  holder:     [ ' > .widget', ' > .holderTextOnly', '.transparent', '.hasImage', '.hasImage::before', '.showCardBack', '.droppable', '.droptarget', '.droppable.droptarget' ],
+  label:      [ ' > textarea', ' > textarea:read-only', ' ::placeholder' ],
+  pile:       [ ' .handle' ],
+  scoreboard: [ '.equalWidth', '.verticalHeader', ' > div.scoreboardIntermediate' ],
+  seat:       [ '.seated', '.turn', '.seated.turn', '.foreign' ],
+  spinner:    [ ' > svg.background', ' > div.spinningPart', ' > div.value' ],
+  timer:      [ '.alert', '.paused' ]
+};
+
 const editorTypeNames = {
   basic: 'Widget',
   button: 'Button',
@@ -3431,7 +3450,9 @@ class PropertiesModule extends SidebarModule {
     const renderClassSection = (className, classValue, wholeProperty) => {
       const section = div(container, 'cssClassSection');
       const stateKey = `${widget.id}:${property}:${className}`;
-      this.renderCollapsibleSection(className, false, body => {
+      // the "default" class is the widget itself - show a friendlier label
+      const displayName = className == 'default' ? 'Base widget' : className;
+      this.renderCollapsibleSection(displayName, false, body => {
         const textarea = document.createElement('textarea');
         textarea.value = cssTextFromValue(classValue);
         textarea.placeholder = 'property: value;';
@@ -3521,10 +3542,29 @@ class PropertiesModule extends SidebarModule {
       if(options.allowClasses === false)
         return;
 
+      // dropdown (datalist) of common + per-type selectors, minus the ones
+      // already present, so the field has a picker but still allows free text
+      const type = widget.get('type') || 'basic';
+      const isPresent = selector => hasNestedCSSClasses(value) && value[selector] !== undefined;
+      const dropdownSuggestions = [ ...new Set([ ...commonCssSelectors, ...(cssSelectorSuggestions[type] || []), ...classSuggestions ]) ]
+        .filter(selector => !isPresent(selector));
+
       const addRow = div(container, 'cssAddClassRow');
       const nameInput = document.createElement('input');
       nameInput.placeholder = 'new class/selector, e.g. ":hover"';
       addRow.appendChild(nameInput);
+      if(dropdownSuggestions.length) {
+        const listID = `cssSelectors_${widget.id}_${property}_${rand().toString(36).substring(3, 9)}`;
+        const datalist = document.createElement('datalist');
+        datalist.id = listID;
+        for(const selector of dropdownSuggestions) {
+          const option = document.createElement('option');
+          option.value = selector;
+          datalist.appendChild(option);
+        }
+        addRow.appendChild(datalist);
+        nameInput.setAttribute('list', listID);
+      }
       const addButton = document.createElement('button');
       addButton.setAttribute('icon', 'add');
       addButton.title = 'Add a class/selector section';
