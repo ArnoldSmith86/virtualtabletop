@@ -700,6 +700,24 @@
   cursor: help;
 }
 
+/* widget header: type in the accent color, id in the plain text color */
+.editorModule .widgetHeader {
+  text-align: center;
+  margin: 0.4em 0;
+}
+
+.editorModule .widgetHeader .widgetHeaderType {
+  color: var(--VTTblue);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.editorModule .widgetHeader .widgetHeaderId {
+  color: var(--textColor);
+  font-size: 1em;
+  overflow-wrap: anywhere;
+}
+
 body.editorWidgetPicking, body.editorWidgetPicking .widget {
   cursor: crosshair !important;
 }

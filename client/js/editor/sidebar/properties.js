@@ -484,7 +484,7 @@ const editorTypeSections = {
 
 class PropertiesModule extends SidebarModule {
   constructor() {
-    super('tune', 'Properties', 'Edit widget properties.');
+    super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
     this.collapsibleStates = {};
   }
@@ -2768,7 +2768,11 @@ class PropertiesModule extends SidebarModule {
 
   renderTypeHeader(widget) {
     const type = widget.get('type') || 'basic';
-    this.addHeader(`${editorTypeNames[type] || type} ${widget.id}`);
+    // type in the header's accent color, id in the plain text color so the two
+    // are easy to tell apart
+    const header = div(this.moduleDOM, 'widgetHeader');
+    div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
+    div(header, 'widgetHeaderId', `Widget id: ${html(widget.id)}`);
   }
 
   // A block whose body can be folded away by clicking the header.
@@ -4151,7 +4155,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForCard(widget) {
-    this.addHeader(`Card ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
@@ -4167,7 +4171,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForDeck(widget) {
-    this.addHeader(`Deck ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.addSubHeader(`Card types`);
     div(this.moduleDOM, 'buttonBar', `
@@ -4218,7 +4222,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForDice(widget) {
-    this.addHeader(`Dice ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     const widgetFaces = widget.get('faces');
     const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
@@ -4322,7 +4326,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForHolder(widget) {
-    this.addHeader(`Holder ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     // holders extend ImageWidget, so they render text / icon / image like a basic widget
     this.renderBasicContentSection(widget);
@@ -4457,7 +4461,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForSpinner(widget) {
-    this.addHeader(`Spinner ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     
     this.addSubHeader('Spinner');
@@ -4527,7 +4531,7 @@ class PropertiesModule extends SidebarModule {
    * editable flag, color, placeholder, and generic properties.
    */
   renderForLabel(widget) {
-    this.addHeader(`Label ${widget.id}`);
+    this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
 
     this.addSubHeader('Content');
