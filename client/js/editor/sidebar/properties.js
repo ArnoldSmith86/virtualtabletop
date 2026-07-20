@@ -2036,10 +2036,12 @@ class PropertiesModule extends SidebarModule {
     wrap.style.display = 'inline-flex';
     wrap.style.alignItems = 'center';
     wrap.style.gap = '6px';
-    // equalFlex makes paired fields (x/y, w/h) take the exact same width
-    wrap.style.flex = options.equalFlex ? '1 1 0' : '1 1 300px';
+    // equalFlex makes paired fields (x/y, w/h) equal width but keeps each
+    // "label + number + slider" unit together and lets it wrap to its own line
+    // once the sidebar gets too narrow (mobile)
+    wrap.style.flex = options.equalFlex ? '1 1 210px' : '1 1 300px';
     if(options.equalFlex)
-      wrap.style.minWidth = '0';
+      wrap.style.minWidth = '190px';
 
     const label = document.createElement('label');
     label.textContent = title + ':';
@@ -2060,6 +2062,7 @@ class PropertiesModule extends SidebarModule {
     rangeInput.max = String(max);
     rangeInput.step = String(step);
     rangeInput.style.flex = '1 1 auto';
+    rangeInput.style.minWidth = '60px';
     wrap.appendChild(rangeInput);
 
     const clampForRange = value => Math.max(min, Math.min(max, value));
@@ -2569,6 +2572,7 @@ class PropertiesModule extends SidebarModule {
     const updateLockParentButton = () => {
       const isParentLocked = !!widget.get('fixedParent');
       lockParentButton.textContent = isParentLocked ? 'Unlock parent' : 'Lock parent';
+      lockParentButton.setAttribute('icon', isParentLocked ? 'lock' : 'lock_open');
       lockParentButton.classList.toggle('selected', isParentLocked);
     };
 
