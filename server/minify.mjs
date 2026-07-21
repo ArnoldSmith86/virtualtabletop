@@ -181,6 +181,7 @@ const EDITOR_CSS = [
   'client/css/editor/controls/selectionbar.css',
   'client/css/editor/controls/popup.css',
   'client/css/editor/controls/events.css',
+  'client/css/editor/controls/aiRoutine.css',
 
   'client/css/editmode.css',
   'client/css/jsonedit.css',
@@ -233,6 +234,7 @@ const EDITOR_JS = [
 
   'client/js/editor/controls/routine.js',
   'client/js/editor/controls/popup.js',
+  'client/js/editor/controls/aiRoutine.js',
   'client/js/editor/controls/events.js',
 
   'client/js/editmode.js',
