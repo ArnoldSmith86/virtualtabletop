@@ -2251,7 +2251,7 @@ class DeckEditor {
     for(const [ objectProperty, typeProperty ] of bindings) {
       // Both sides are editable text fields with a link icon between them ("value ⛓ rank"): the left is the
       // object property that gets filled, the right is the card type property it reads from.
-      const row = div(container, 'deckEditorDynamicProperty', `<input class=deckEditorBindingObjectProp title="Object property that gets filled"><span class="deckEditorBindingLink material-symbols" title="filled from the card type">link</span><input class=deckEditorBindingTypeProp title="Card type property to read from"><button icon=delete_forever class="red deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
+      const row = div(container, 'deckEditorDynamicProperty', `<input class=deckEditorBindingObjectProp title="Object property that gets filled"><span class="deckEditorBindingLink material-symbols" title="filled from the card type">link</span><input class=deckEditorBindingTypeProp title="Card type property to read from"><button icon=delete_forever class="deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
       const objInput = $('.deckEditorBindingObjectProp', row);
       const typeInput = $('.deckEditorBindingTypeProp', row);
       objInput.value = objectProperty;

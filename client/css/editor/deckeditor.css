@@ -812,7 +812,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 #deckEditorSidebar .genericInput {
-  margin-bottom: 6px; /* a little more separation so the trash icons are visually distinct row-to-row */
+  margin-bottom: 10px; /* clear separation so the small trash icons are visually distinct row-to-row */
 }
 
 #deckEditorSidebar .buttonBar {
@@ -855,8 +855,18 @@ body.deckEditorPanning #deckEditorMain * {
   padding: 0 2px;
 }
 
+/* Same red and small glyph as the other property trash icons (not the default darkred .red button). */
 .deckEditorBindingDelete {
   flex-shrink: 0;
+  padding: 3px;
+  background: var(--VTTred, #c0392b);
+  color: #fff;
+}
+
+.deckEditorBindingDelete[icon]::before {
+  font-size: 14px;
+  width: 14px;
+  margin: 0;
 }
 
 /* Shorter, smaller fields matching the "add new property" rows above; keep the placeholder readable. */
@@ -918,6 +928,7 @@ body.deckEditorPanning #deckEditorMain * {
 
 .deckEditorAddBindingRow {
   background: transparent;
+  padding-right: 0; /* so the Link button reaches the same right edge as the "+ Add" button above */
 }
 
 .deckEditorAddBindingButton {
@@ -929,16 +940,22 @@ body.deckEditorPanning #deckEditorMain * {
   padding-right: 24px;
 }
 
-/* Property rows: a small red trash to delete the property. */
+/* Property rows: a small red trash to delete the property. The glyph size lives on ::before (button[icon]
+   hardcodes 24px), so override it there or the icon stays large and rows crowd together. */
 .deckEditorDeleteProperty {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  padding: 0 2px;
-  font-size: 9px;
+  padding: 1px 2px;
   background: var(--VTTred, #c0392b);
   color: #fff;
+}
+
+.deckEditorDeleteProperty[icon]::before {
+  font-size: 13px;
+  width: 13px;
+  margin: 0;
 }
 
 #deckEditorShowAll.active {
