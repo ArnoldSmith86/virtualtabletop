@@ -1784,7 +1784,11 @@
       9,
       8,
       7
-    ]
+    ],
+    "roundLabel:de-DE": "Runde",
+    "roundLabel:pt-BR": "Rodada",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "settings": {
     "type": "button",
@@ -3158,7 +3162,11 @@
       "seat6",
       "seat7",
       "seat8"
-    ]
+    ],
+    "roundLabel:de-DE": "Spieler",
+    "roundLabel:pt-BR": "Jogadores",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "dealButton": {
     "type": "button",
@@ -8602,7 +8610,9 @@
     "rounds": [
       "Card Points"
     ],
-    "scale": 0
+    "scale": 0,
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "seat1": {
     "type": "seat",
@@ -12058,7 +12068,11 @@
       "seat7",
       "seat8"
     ],
-    "scale": 0
+    "scale": 0,
+    "roundLabel:de-DE": "Runde",
+    "roundLabel:pt-BR": "Rodada",
+    "totalsLabel:de-DE": "Ges",
+    "totalsLabel:pt-BR": "Tot"
   },
   "4pScoreCoiffeurButton": {
     "type": "button",
@@ -22678,7 +22692,11 @@
     "scoreProperty": "score12",
     "movable": false,
     "movableInEdit": false,
-    "y": 265
+    "y": 265,
+    "roundLabel:de-DE": "Kontrakt",
+    "roundLabel:pt-BR": "Contrato",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "messageButton": {
     "id": "messageButton",
@@ -23114,7 +23132,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Szenario",
+    "roundLabel:pt-BR": "Cenário",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID21": {
     "id": "gameID21",
@@ -23329,7 +23351,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Szenario",
+    "roundLabel:pt-BR": "Cenário",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid20": {
     "id": "playerAid20",
@@ -24443,7 +24469,11 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score25",
-    "y": 260
+    "y": 260,
+    "roundLabel:de-DE": "Wert",
+    "roundLabel:pt-BR": "Valor",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "3w0o": {
     "width": 30,
@@ -25493,7 +25523,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score26"
+    "scoreProperty": "score26",
+    "roundLabel:de-DE": "Farbe",
+    "roundLabel:pt-BR": "Naipe",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "scoreSpecial": {
     "type": "button",
@@ -26016,7 +26050,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score27"
+    "scoreProperty": "score27",
+    "roundLabel:de-DE": "Farbe",
+    "roundLabel:pt-BR": "Naipe",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID28": {
     "id": "gameID28",
@@ -27132,7 +27170,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid25a": {
     "type": "scoreboard",
@@ -27167,7 +27209,11 @@
     "seats": "playerAidDetail2",
     "y": 250,
     "x": -90,
-    "height": 220
+    "height": 220,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAidDetail2": {
     "type": "seat",
@@ -27243,7 +27289,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid12a": {
     "type": "scoreboard",
@@ -27277,7 +27327,11 @@
     "seats": "playerAidDetail2",
     "showAllRounds": true,
     "showPlayerColors": false,
-    "showTotals": false
+    "showTotals": false,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid2a": {
     "type": "scoreboard",
@@ -27311,7 +27365,11 @@
     "showTotals": false,
     "parent": "playerAid2",
     "fixedParent": true,
-    "y": 270
+    "y": 270,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid4": {
     "type": "scoreboard",
@@ -27346,7 +27404,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "germanDeck": {
     "type": "deck",
@@ -28003,7 +28065,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Anzahl Stiche",
+    "roundLabel:pt-BR": "Número de vazas",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "choose15": {
     "type": "button",
@@ -29556,7 +29622,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score30"
+    "scoreProperty": "score30",
+    "roundLabel:de-DE": "Multiplikator",
+    "roundLabel:pt-BR": "Multiplicador",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAidDetail3": {
     "type": "seat",
@@ -29636,7 +29706,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "fixedParent": true,
-    "parent": "playerAid30"
+    "parent": "playerAid30",
+    "roundLabel:de-DE": "Null-Kontrakte",
+    "roundLabel:pt-BR": "Contratos nulos",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "deckSuitsSettings": {
     "id": "deckSuitsSettings",
@@ -33503,7 +33577,11 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score33",
-    "roundLabel": "Score"
+    "roundLabel": "Score",
+    "roundLabel:de-DE": "Punkte",
+    "roundLabel:pt-BR": "Pontuação",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "agonyInfoLabel": {
     "id": "agonyInfoLabel",
@@ -33675,7 +33753,11 @@
     "rounds": [
       "Winning no tricks gives a multiplier of 10."
     ],
-    "seats": ""
+    "seats": "",
+    "roundLabel:de-DE": "Multipliziere deine gewonnenen Stiche mit denen deines Agenten.",
+    "roundLabel:pt-BR": "Multiplique suas vazas ganhas pelas do seu agente.",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID35": {
     "id": "gameID35",
@@ -35073,7 +35155,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "onlyVisibleForSeat": []
+    "onlyVisibleForSeat": [],
+    "roundLabel:de-DE": "Kategorie",
+    "roundLabel:pt-BR": "Categoria",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid36a": {
     "type": "scoreboard",
@@ -35092,7 +35178,11 @@
     "scoreProperty": "score36",
     "seats": "playerAidDetail2",
     "playerAid": false,
-    "height": 181
+    "height": 181,
+    "roundLabel:de-DE": "Handpunkte",
+    "roundLabel:pt-BR": "Pontos da mão",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid36b": {
     "type": "scoreboard",
@@ -35112,7 +35202,11 @@
     "scoreProperty": "score36",
     "seats": "playerAidDetail3",
     "playerAid": false,
-    "width": 645
+    "width": 645,
+    "roundLabel:de-DE": "Hinweise",
+    "roundLabel:pt-BR": "Lembretes",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID37": {
     "id": "gameID37",
@@ -36907,7 +37001,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score41"
+    "scoreProperty": "score41",
+    "roundLabel:de-DE": "Punkte",
+    "roundLabel:pt-BR": "Pontuação",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "99BidLabel": {
     "id": "99BidLabel",
@@ -37188,7 +37286,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score42"
+    "scoreProperty": "score42",
+    "roundLabel:de-DE": "Farbe",
+    "roundLabel:pt-BR": "Naipe",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "bidWinnerLabel": {
     "id": "bidWinnerLabel",
@@ -39089,7 +39191,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score18"
+    "scoreProperty": "score18",
+    "roundLabel:de-DE": "Thema",
+    "roundLabel:pt-BR": "Tópico",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid18a": {
     "type": "scoreboard",
@@ -39110,7 +39216,11 @@
     ],
     "scoreProperty": "score18",
     "seats": "playerAidDetail2",
-    "playerAid": false
+    "playerAid": false,
+    "roundLabel:de-DE": "Sonderkarten",
+    "roundLabel:pt-BR": "Cartas especiais",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "offHolder": {
     "type": "holder",

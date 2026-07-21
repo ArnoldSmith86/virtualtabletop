@@ -5195,7 +5195,9 @@
       "text": ""
     },
     "tabIndex": 1,
-    "placeholderText": "clue"
+    "placeholderText": "clue",
+    "placeholderText:de-DE": "Hinweis",
+    "placeholderText:pt-BR": "dica"
   },
   "Player1Name": {
     "type": "label",
