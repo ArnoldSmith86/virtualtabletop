@@ -2657,7 +2657,15 @@ class DeckEditor {
       do {
         name = `${head}${++number}${tail}`;
       } while(this.cardTypes[name] !== undefined);
-      this.cardTypes[name] = JSON.parse(JSON.stringify(this.cardTypes[copyOf]));
+      // Insert the copy right after the original (object key order = strip order), not at the end.
+      const copy = JSON.parse(JSON.stringify(this.cardTypes[copyOf]));
+      const reordered = {};
+      for(const key of Object.keys(this.cardTypes)) {
+        reordered[key] = this.cardTypes[key];
+        if(key === copyOf)
+          reordered[name] = copy;
+      }
+      this.cardTypes = reordered;
     } else {
       let index = Object.keys(this.cardTypes).length + 1;
       while(this.cardTypes[`type ${index}`] !== undefined)
