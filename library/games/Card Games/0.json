@@ -866,17 +866,23 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Choose sort direction ..."
+                "text": "Choose sort direction ...",
+                "text:de-DE": "Sortierrichtung wählen ...",
+                "text:pt-BR": "Escolher direção de ordenação ..."
               },
               {
                 "type": "subtitle",
-                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time per game."
+                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time per game.",
+                "text:de-DE": "Wähle die Richtung, in der deine Karten sortiert werden. Du musst diese Wahl nur einmal pro Spiel treffen.",
+                "text:pt-BR": "Escolha a direção em que suas cartas serão ordenadas. Você só precisa fazer essa escolha uma vez por jogo."
               },
               {
                 "type": "checkbox",
                 "label": "Sort high to low left to right (uncheck to sort low to high left to right)?",
                 "value": true,
-                "variable": "sortDirection"
+                "variable": "sortDirection",
+                "label:de-DE": "Von hoch nach niedrig, links nach rechts sortieren (abwählen für niedrig nach hoch)?",
+                "label:pt-BR": "Ordenar de alto para baixo, da esquerda para a direita (desmarque para baixo para alto)?"
               }
             ]
           },
@@ -1806,107 +1812,147 @@
         "fields": [
           {
             "type": "title",
-            "text": "Choose settings ..."
+            "text": "Choose settings ...",
+            "text:de-DE": "Einstellungen wählen ...",
+            "text:pt-BR": "Escolher configurações ..."
           },
           {
             "type": "subtitle",
-            "text": "Play Holder"
+            "text": "Play Holder",
+            "text:de-DE": "Spielablage",
+            "text:pt-BR": "Área de jogo"
           },
           {
             "type": "checkbox",
             "label": "Click cards in hand to send to play holder (uncheck to deactive click)?",
             "variable": "clickPlay",
-            "value": "${PROPERTY clickPlay}"
+            "value": "${PROPERTY clickPlay}",
+            "label:de-DE": "Karten in der Hand anklicken, um sie in die Spielablage zu legen (abwählen, um Klick zu deaktivieren)?",
+            "label:pt-BR": "Clicar nas cartas da mão para enviá-las à área de jogo (desmarque para desativar o clique)?"
           },
           {
             "type": "checkbox",
             "label": "Show common holder (uncheck to hide)?",
             "variable": "centerShow",
-            "value": "${PROPERTY centerShow}"
+            "value": "${PROPERTY centerShow}",
+            "label:de-DE": "Gemeinsame Ablage anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar suporte comum (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Spread out cards in common holder (uncheck to make a pile)?",
             "variable": "centerSpread",
-            "value": "${PROPERTY centerSpread}"
+            "value": "${PROPERTY centerSpread}",
+            "label:de-DE": "Karten in der gemeinsamen Ablage ausbreiten (abwählen für einen Stapel)?",
+            "label:pt-BR": "Espalhar as cartas no suporte comum (desmarque para fazer uma pilha)?"
           },
           {
             "type": "checkbox",
             "label": "Play cards face up in play area (uncheck to make face down)?",
             "variable": "centerFace",
-            "value": "${PROPERTY centerFace}"
+            "value": "${PROPERTY centerFace}",
+            "label:de-DE": "Karten offen im Spielbereich ausspielen (abwählen für verdeckt)?",
+            "label:pt-BR": "Jogar cartas viradas para cima na área de jogo (desmarque para viradas para baixo)?"
           },
           {
             "type": "checkbox",
             "label": "Show face-up minature captured cards holder (check to display)?",
             "variable": "capturedHolder",
-            "value": "${PROPERTY capturedHolder}"
+            "value": "${PROPERTY capturedHolder}",
+            "label:de-DE": "Verkleinerte Ablage der offen erfassten Karten anzeigen (ankreuzen zum Anzeigen)?",
+            "label:pt-BR": "Mostrar o suporte reduzido de cartas capturadas viradas para cima (marque para exibir)?"
           },
           {
             "type": "subtitle",
-            "text": "Bid & Score Displays"
+            "text": "Bid & Score Displays",
+            "text:de-DE": "Gebot- & Punkteanzeigen",
+            "text:pt-BR": "Exibições de aposta e pontuação"
           },
           {
             "type": "checkbox",
             "label": "Show scoreboard (uncheck to hide)?",
             "variable": "showScore",
-            "value": "${PROPERTY showScore}"
+            "value": "${PROPERTY showScore}",
+            "label:de-DE": "Punktetafel anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar placar (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show count of tricks taken per player (uncheck to hide)?",
             "variable": "showTricks",
-            "value": "${PROPERTY showTricks}"
+            "value": "${PROPERTY showTricks}",
+            "label:de-DE": "Anzahl der Stiche pro Spieler anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar a contagem de vazas por jogador (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bid value (uncheck to hide)?",
             "variable": "showBidValue",
-            "value": "${PROPERTY showBidValue}"
+            "value": "${PROPERTY showBidValue}",
+            "label:de-DE": "Gebotswert anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar valor da aposta (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bid suit (uncheck to hide)?",
             "variable": "showBidSuit",
-            "value": "${PROPERTY showBidSuit}"
+            "value": "${PROPERTY showBidSuit}",
+            "label:de-DE": "Gebotsfarbe anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar naipe da aposta (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show discard holder (uncheck to hide)?",
             "variable": "showDiscard",
-            "value": "${PROPERTY showDiscard}"
+            "value": "${PROPERTY showDiscard}",
+            "label:de-DE": "Ablagestapel anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar suporte de descarte (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bid history (uncheck to hide)?",
             "variable": "showBidHistory",
-            "value": "${PROPERTY showBidHistory}"
+            "value": "${PROPERTY showBidHistory}",
+            "label:de-DE": "Gebotsverlauf anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar histórico de apostas (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bids to everyone (uncheck for secret bidding)?",
             "variable": "showPublicBid",
-            "value": "${PROPERTY showPublicBid}"
+            "value": "${PROPERTY showPublicBid}",
+            "label:de-DE": "Gebote allen zeigen (abwählen für geheimes Bieten)?",
+            "label:pt-BR": "Mostrar apostas para todos (desmarque para apostas secretas)?"
           },
           {
             "type": "subtitle",
-            "text": "Other"
+            "text": "Other",
+            "text:de-DE": "Sonstiges",
+            "text:pt-BR": "Outros"
           },
           {
             "type": "checkbox",
             "label": "Turn moves clockwise (uncheck for counter-clockwise)?",
             "variable": "turnDirection",
-            "value": "${PROPERTY turnDirection}"
+            "value": "${PROPERTY turnDirection}",
+            "label:de-DE": "Zug verläuft im Uhrzeigersinn (abwählen für gegen den Uhrzeigersinn)?",
+            "label:pt-BR": "O turno segue em sentido horário (desmarque para anti-horário)?"
           },
           {
             "type": "color",
             "label": "Choose background color",
             "variable": "bgColor",
-            "value": "#deeaf0"
+            "value": "#deeaf0",
+            "label:de-DE": "Hintergrundfarbe wählen",
+            "label:pt-BR": "Escolher cor de fundo"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -5621,15 +5667,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Deleting cards ..."
+            "text": "Deleting cards ...",
+            "text:de-DE": "Karten werden gelöscht ...",
+            "text:pt-BR": "Excluindo cartas ..."
           },
           {
             "type": "subtitle",
-            "text": "This will delete all cards in the Discard holder from this game. They can only be restored by reloading the game preset. Are you sure?"
+            "text": "This will delete all cards in the Discard holder from this game. They can only be restored by reloading the game preset. Are you sure?",
+            "text:de-DE": "Damit werden alle Karten im Ablagestapel aus diesem Spiel gelöscht. Sie können nur durch erneutes Laden der Spielvorlage wiederhergestellt werden. Bist du sicher?",
+            "text:pt-BR": "Isso excluirá todas as cartas do suporte de descarte deste jogo. Elas só podem ser restauradas recarregando a predefinição do jogo. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "SELECT",
@@ -5876,15 +5930,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Calculating score ..."
+            "text": "Calculating score ...",
+            "text:de-DE": "Punkte werden berechnet ...",
+            "text:pt-BR": "Calculando pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will enter scores in the small scoreboard directly above. Make sure: (1) all cards to be counted are in the player holders for captured tricks,(2) the trump indicator is correct (if needed for proper scoring for this game),and (3) the declarer and all team members are correct (if needed for proper scoring). Are you sure you want to continue?"
+            "text": "This will enter scores in the small scoreboard directly above. Make sure: (1) all cards to be counted are in the player holders for captured tricks,(2) the trump indicator is correct (if needed for proper scoring for this game),and (3) the declarer and all team members are correct (if needed for proper scoring). Are you sure you want to continue?",
+            "text:de-DE": "Damit werden die Punkte in die kleine Punktetafel direkt darüber eingetragen. Stelle sicher: (1) alle zu zählenden Karten liegen in den Spielerablagen für erzielte Stiche, (2) die Trumpfanzeige stimmt (falls für die korrekte Wertung dieses Spiels nötig) und (3) der Alleinspieler und alle Teammitglieder stimmen (falls für die Wertung nötig). Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso registrará as pontuações no pequeno placar logo acima. Certifique-se de que: (1) todas as cartas a serem contadas estão nos suportes dos jogadores para as vazas capturadas, (2) o indicador de trunfo está correto (se necessário para a pontuação correta deste jogo) e (3) o declarante e todos os membros da equipe estão corretos (se necessário para a pontuação). Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "IF",
@@ -5900,15 +5962,23 @@
                 "fields": [
                   {
                     "type": "title",
-                    "text": "Trump not set..."
+                    "text": "Trump not set...",
+                    "text:de-DE": "Trumpf nicht gesetzt...",
+                    "text:pt-BR": "Trunfo não definido..."
                   },
                   {
                     "type": "subtitle",
-                    "text": "The trump indicator is not set. Setting it is necessary for most games using this scoring system. Are you sure you want to continue?"
+                    "text": "The trump indicator is not set. Setting it is necessary for most games using this scoring system. Are you sure you want to continue?",
+                    "text:de-DE": "Die Trumpfanzeige ist nicht gesetzt. Für die meisten Spiele mit diesem Wertungssystem ist das Setzen erforderlich. Möchtest du wirklich fortfahren?",
+                    "text:pt-BR": "O indicador de trunfo não está definido. Defini-lo é necessário para a maioria dos jogos que usam este sistema de pontuação. Tem certeza de que deseja continuar?"
                   }
                 ],
                 "confirmButtonText": "Yes",
-                "cancelButtonText": "No"
+                "cancelButtonText": "No",
+                "confirmButtonText:de-DE": "Ja",
+                "confirmButtonText:pt-BR": "Sim",
+                "cancelButtonText:de-DE": "Nein",
+                "cancelButtonText:pt-BR": "Não"
               },
               {
                 "func": "CALL",
@@ -6367,11 +6437,15 @@
         "fields": [
           {
             "type": "title",
-            "text": "Choose settings ..."
+            "text": "Choose settings ...",
+            "text:de-DE": "Einstellungen wählen ...",
+            "text:pt-BR": "Escolher configurações ..."
           },
           {
             "type": "subtitle",
-            "text": "Players"
+            "text": "Players",
+            "text:de-DE": "Spieler",
+            "text:pt-BR": "Jogadores"
           },
           {
             "label": "Number of players:",
@@ -6379,7 +6453,9 @@
             "min": 2,
             "max": 8,
             "variable": "seatCount",
-            "value": "${PROPERTY seatCount}"
+            "value": "${PROPERTY seatCount}",
+            "label:de-DE": "Anzahl der Spieler:",
+            "label:pt-BR": "Número de jogadores:"
           },
           {
             "type": "select",
@@ -6389,21 +6465,31 @@
             "options": [
               {
                 "text": "None",
-                "value": "0"
+                "value": "0",
+                "text:de-DE": "Keine",
+                "text:pt-BR": "Nenhuma"
               },
               {
                 "text": "Face Up",
-                "value": 1
+                "value": 1,
+                "text:de-DE": "Offen",
+                "text:pt-BR": "Virada para cima"
               },
               {
                 "text": "Face Down",
-                "value": 2
+                "value": 2,
+                "text:de-DE": "Verdeckt",
+                "text:pt-BR": "Virada para baixo"
               }
-            ]
+            ],
+            "label:de-DE": "Dummy-Hand (im mittleren unteren Platz):",
+            "label:pt-BR": "Mão do morto (no assento inferior central):"
           },
           {
             "type": "subtitle",
-            "text": "Cards and Decks"
+            "text": "Cards and Decks",
+            "text:de-DE": "Karten und Decks",
+            "text:pt-BR": "Cartas e baralhos"
           },
           {
             "type": "select",
@@ -6414,37 +6500,55 @@
               {
                 "text": "52 Standard (1-13, Clubs, Diamonds, Hearts, Spades)",
                 "value": "0",
-                "select": true
+                "select": true,
+                "text:de-DE": "52 Standard (1-13, Kreuz, Karo, Herz, Pik)",
+                "text:pt-BR": "52 padrão (1-13, Paus, Ouros, Copas, Espadas)"
               },
               {
                 "text": "Two 52 Standard Decks",
-                "value": 1
+                "value": 1,
+                "text:de-DE": "Zwei 52er-Standarddecks",
+                "text:pt-BR": "Dois baralhos padrão de 52"
               },
               {
                 "text": "Taroky (1-4 Red, 7-10 Black, 22 Tarot)",
-                "value": 2
+                "value": 2,
+                "text:de-DE": "Taroky (1-4 Rot, 7-10 Schwarz, 22 Tarot)",
+                "text:pt-BR": "Taroky (1-4 vermelhas, 7-10 pretas, 22 Tarô)"
               },
               {
                 "text": "Tarot (52 Standard, 4 Cavaliers, 22 Tarot)",
-                "value": 7
+                "value": 7,
+                "text:de-DE": "Tarot (52 Standard, 4 Cavaliere, 22 Tarot)",
+                "text:pt-BR": "Tarô (52 padrão, 4 Cavaleiros, 22 Tarô)"
               },
               {
                 "text": "Crow (1-14, 5 Colors, 1 Crow)",
-                "value": 3
+                "value": 3,
+                "text:de-DE": "Crow (1-14, 5 Farben, 1 Krähe)",
+                "text:pt-BR": "Crow (1-14, 5 cores, 1 Corvo)"
               },
               {
                 "text": "Spanish (1-12, Clubs, Coins, Cups, Swords)",
-                "value": 4
+                "value": 4,
+                "text:de-DE": "Spanisch (1-12, Stäbe, Münzen, Becher, Schwerter)",
+                "text:pt-BR": "Espanhol (1-12, Paus, Ouros, Copas, Espadas)"
               },
               {
                 "text": "German (5-A, Acorns, Bells, Leaves, Hearts)",
-                "value": 5
+                "value": 5,
+                "text:de-DE": "Deutsch (5-A, Eichel, Schellen, Laub, Herz)",
+                "text:pt-BR": "Alemão (5-A, Bolotas, Guizos, Folhas, Corações)"
               },
               {
                 "text": "Swiss (6-A, Acorns, Bells, Roses, Shields)",
-                "value": 6
+                "value": 6,
+                "text:de-DE": "Schweizerisch (6-A, Eichel, Schellen, Rosen, Schilde)",
+                "text:pt-BR": "Suíço (6-A, Bolotas, Guizos, Rosas, Escudos)"
               }
-            ]
+            ],
+            "label:de-DE": "Art des Decks:",
+            "label:pt-BR": "Tipo de baralho:"
           },
           {
             "label": "Number of jokers:",
@@ -6452,14 +6556,18 @@
             "min": 0,
             "max": 4,
             "variable": "jokerCount",
-            "value": "${PROPERTY jokerCount}"
+            "value": "${PROPERTY jokerCount}",
+            "label:de-DE": "Anzahl der Joker:",
+            "label:pt-BR": "Número de coringas:"
           },
           {
             "label": "Deal this many cards to start:",
             "type": "number",
             "min": 0,
             "variable": "cardCount",
-            "value": "${PROPERTY cardCount}"
+            "value": "${PROPERTY cardCount}",
+            "label:de-DE": "So viele Karten zu Beginn geben:",
+            "label:pt-BR": "Distribuir esta quantidade de cartas no início:"
           },
           {
             "type": "select",
@@ -6469,7 +6577,9 @@
             "options": [
               {
                 "text": "None",
-                "value": "0"
+                "value": "0",
+                "text:de-DE": "Keine",
+                "text:pt-BR": "Nenhuma"
               },
               {
                 "text": "2",
@@ -6511,13 +6621,17 @@
                 "text": "8,9",
                 "value": 10
               }
-            ]
+            ],
+            "label:de-DE": "Ausgewählte Karten entfernen:",
+            "label:pt-BR": "Remover cartas selecionadas:"
           },
           {
             "type": "checkbox",
             "label": "Show clone/delete buttons to handle specific cards (check to show)?",
             "variable": "showDelete",
-            "value": "${PROPERTY showDelete}"
+            "value": "${PROPERTY showDelete}",
+            "label:de-DE": "Klon-/Löschen-Schaltflächen für bestimmte Karten anzeigen (ankreuzen zum Anzeigen)?",
+            "label:pt-BR": "Mostrar botões de clonar/excluir para lidar com cartas específicas (marque para exibir)?"
           },
           {
             "type": "select",
@@ -6527,37 +6641,53 @@
             "options": [
               {
                 "value": 1,
-                "text": "Standard shuffle"
+                "text": "Standard shuffle",
+                "text:de-DE": "Standardmischen",
+                "text:pt-BR": "Embaralhamento padrão"
               },
               {
                 "value": 2,
-                "text": "1 Cut"
+                "text": "1 Cut",
+                "text:de-DE": "1 Abheben",
+                "text:pt-BR": "1 corte"
               },
               {
                 "value": 3,
-                "text": "Few large cuts"
+                "text": "Few large cuts",
+                "text:de-DE": "Wenige große Abhebungen",
+                "text:pt-BR": "Poucos cortes grandes"
               },
               {
                 "value": 4,
-                "text": "Several small Cuts"
+                "text": "Several small Cuts",
+                "text:de-DE": "Mehrere kleine Abhebungen",
+                "text:pt-BR": "Vários cortes pequenos"
               }
-            ]
+            ],
+            "label:de-DE": "Mischmethode:",
+            "label:pt-BR": "Método de embaralhar:"
           },
           {
             "type": "subtitle",
-            "text": "Scoring"
+            "text": "Scoring",
+            "text:de-DE": "Wertung",
+            "text:pt-BR": "Pontuação"
           },
           {
             "type": "checkbox",
             "label": "4 player team scoring (check to enable)?",
             "variable": "teamScore",
-            "value": "${PROPERTY teamScore}"
+            "value": "${PROPERTY teamScore}",
+            "label:de-DE": "Teamwertung für 4 Spieler (ankreuzen zum Aktivieren)?",
+            "label:pt-BR": "Pontuação em equipe de 4 jogadores (marque para ativar)?"
           },
           {
             "type": "checkbox",
             "label": "Contract type button (check to enable)?",
             "variable": "contractType",
-            "value": "${PROPERTY contractType}"
+            "value": "${PROPERTY contractType}",
+            "label:de-DE": "Schaltfläche für Kontrakttyp (ankreuzen zum Aktivieren)?",
+            "label:pt-BR": "Botão de tipo de contrato (marque para ativar)?"
           },
           {
             "type": "select",
@@ -6567,27 +6697,41 @@
             "options": [
               {
                 "value": 1,
-                "text": "Do not use variable partnserships"
+                "text": "Do not use variable partnserships",
+                "text:de-DE": "Keine wechselnden Partnerschaften verwenden",
+                "text:pt-BR": "Não usar parcerias variáveis"
               },
               {
                 "value": 2,
-                "text": "Show Declarer and Opponent teams"
+                "text": "Show Declarer and Opponent teams",
+                "text:de-DE": "Alleinspieler- und Gegner-Teams anzeigen",
+                "text:pt-BR": "Mostrar equipes de Declarante e Oponentes"
               },
               {
                 "value": 3,
-                "text": "Show Declarer and Opponent teams plus individual/spearate scoring (uncommon)"
+                "text": "Show Declarer and Opponent teams plus individual/spearate scoring (uncommon)",
+                "text:de-DE": "Alleinspieler- und Gegner-Teams sowie individuelle/getrennte Wertung anzeigen (unüblich)",
+                "text:pt-BR": "Mostrar equipes de Declarante e Oponentes mais pontuação individual/separada (incomum)"
               }
-            ]
+            ],
+            "label:de-DE": "Wertung mit wechselnden Partnerschaften",
+            "label:pt-BR": "Pontuação com parcerias variáveis"
           },
           {
             "type": "checkbox",
             "label": "Enter score in temporary scoreboard (check to enable)?",
             "variable": "tempScore",
-            "value": "${PROPERTY tempScore}"
+            "value": "${PROPERTY tempScore}",
+            "label:de-DE": "Punkte in temporäre Punktetafel eintragen (ankreuzen zum Aktivieren)?",
+            "label:pt-BR": "Registrar pontuação no placar temporário (marque para ativar)?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -7935,15 +8079,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Resetting scores ..."
+            "text": "Resetting scores ...",
+            "text:de-DE": "Punkte werden zurückgesetzt ...",
+            "text:pt-BR": "Zerando pontuações ..."
           },
           {
             "type": "subtitle",
-            "text": "This will reset all the scores. Be patient. This button also does many other things behind the scenes and can take a long time. Are you sure?"
+            "text": "This will reset all the scores. Be patient. This button also does many other things behind the scenes and can take a long time. Are you sure?",
+            "text:de-DE": "Damit werden alle Punkte zurückgesetzt. Hab Geduld. Diese Schaltfläche erledigt im Hintergrund auch viele andere Dinge und kann lange dauern. Bist du sicher?",
+            "text:pt-BR": "Isso zerará todas as pontuações. Tenha paciência. Este botão também faz muitas outras coisas nos bastidores e pode demorar. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "CALL",
@@ -8642,7 +8794,9 @@
                     "type": "string",
                     "label": "Name",
                     "variable": "playerName",
-                    "value": "${playerName}"
+                    "value": "${playerName}",
+                    "label:de-DE": "Name",
+                    "label:pt-BR": "Nome"
                   },
                   {
                     "type": "palette",
@@ -8668,9 +8822,13 @@
                       "#000000"
                     ],
                     "variable": "playerColor",
-                    "value": "${playerColor}"
+                    "value": "${playerColor}",
+                    "label:de-DE": "Farbe",
+                    "label:pt-BR": "Cor"
                   }
-                ]
+                ],
+                "header:de-DE": "Spielernamen und Farbe eingeben",
+                "header:pt-BR": "Digite o nome e a cor do jogador"
               }
             ]
           }
@@ -8950,26 +9108,38 @@
         "fields": [
           {
             "type": "title",
-            "text": "Setting up game ..."
+            "text": "Setting up game ...",
+            "text:de-DE": "Spiel wird eingerichtet ...",
+            "text:pt-BR": "Preparando o jogo ..."
           },
           {
             "type": "subtitle",
-            "text": "WARNING: Switching games may take several seconds. Be patient and do not click the button again."
+            "text": "WARNING: Switching games may take several seconds. Be patient and do not click the button again.",
+            "text:de-DE": "WARNUNG: Der Spielwechsel kann einige Sekunden dauern. Hab Geduld und klicke die Schaltfläche nicht erneut.",
+            "text:pt-BR": "AVISO: Trocar de jogo pode levar alguns segundos. Tenha paciência e não clique no botão novamente."
           },
           {
             "type": "subtitle",
-            "text": "Some games have pre-set defaults configured. Choose your game from the drop-down menu below. You can still edit specific details using the Option buttons."
+            "text": "Some games have pre-set defaults configured. Choose your game from the drop-down menu below. You can still edit specific details using the Option buttons.",
+            "text:de-DE": "Für einige Spiele sind Voreinstellungen konfiguriert. Wähle dein Spiel aus dem Dropdown-Menü unten. Bestimmte Details kannst du weiterhin über die Optionen-Schaltflächen anpassen.",
+            "text:pt-BR": "Alguns jogos têm padrões predefinidos configurados. Escolha o seu jogo no menu suspenso abaixo. Você ainda pode editar detalhes específicos usando os botões de Opções."
           },
           {
             "type": "select",
             "label": "Choose game:",
             "value": "${PROPERTY preSet}",
             "variable": "preSet",
-            "options": "${inputArray}"
+            "options": "${inputArray}",
+            "label:de-DE": "Spiel wählen:",
+            "label:pt-BR": "Escolher jogo:"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -9544,15 +9714,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Show bid to other players ..."
+            "text": "Show bid to other players ...",
+            "text:de-DE": "Gebot anderen Spielern zeigen ...",
+            "text:pt-BR": "Mostrar aposta aos outros jogadores ..."
           },
           {
             "type": "subtitle",
-            "text": "This will show your bid to the other players. Are you sure?"
+            "text": "This will show your bid to the other players. Are you sure?",
+            "text:de-DE": "Damit wird dein Gebot den anderen Spielern gezeigt. Bist du sicher?",
+            "text:pt-BR": "Isso mostrará a sua aposta aos outros jogadores. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "CALL",
@@ -12466,15 +12644,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Show hand to other players ..."
+            "text": "Show hand to other players ...",
+            "text:de-DE": "Hand anderen Spielern zeigen ...",
+            "text:pt-BR": "Mostrar mão aos outros jogadores ..."
           },
           {
             "type": "subtitle",
-            "text": "This will make the cards in your hand visible to the other players. Are you sure?"
+            "text": "This will make the cards in your hand visible to the other players. Are you sure?",
+            "text:de-DE": "Damit werden die Karten in deiner Hand für die anderen Spieler sichtbar. Bist du sicher?",
+            "text:pt-BR": "Isso tornará as cartas da sua mão visíveis para os outros jogadores. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "SET",
@@ -13338,17 +13524,23 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Choose sort direction ..."
+                "text": "Choose sort direction ...",
+                "text:de-DE": "Sortierrichtung wählen ...",
+                "text:pt-BR": "Escolher direção de ordenação ..."
               },
               {
                 "type": "subtitle",
-                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time."
+                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time.",
+                "text:de-DE": "Wähle die Richtung, in der deine Karten sortiert werden. Du musst diese Wahl nur einmal treffen.",
+                "text:pt-BR": "Escolha a direção em que suas cartas serão ordenadas. Você só precisa fazer essa escolha uma vez."
               },
               {
                 "type": "checkbox",
                 "label": "Sort high to low left to right (uncheck to sort low to high left to right)?",
                 "value": true,
-                "variable": "sortDirection"
+                "variable": "sortDirection",
+                "label:de-DE": "Von hoch nach niedrig, links nach rechts sortieren (abwählen für niedrig nach hoch)?",
+                "label:pt-BR": "Ordenar de alto para baixo, da esquerda para a direita (desmarque para baixo para alto)?"
               }
             ]
           },
@@ -13674,15 +13866,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -14429,15 +14629,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Dabei werden Kartenpunkte, Weis, Stock und der Bonus für alle Stiche addiert und mit dem Kontraktmultiplikator multipliziert. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Serão somados os Pontos das Cartas, Weis, Stock e o bônus de Todas as Vazas, e o total será multiplicado pelo multiplicador do contrato. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -15717,15 +15925,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the difference between the players' actual scores and predicted scores to the main scoreboard. Are you sure you want to continue?"
+            "text": "This will transfer the difference between the players' actual scores and predicted scores to the main scoreboard. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Differenz zwischen den tatsächlichen und den vorhergesagten Punktzahlen der Spieler auf die Haupttafel übertragen. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá para o placar principal a diferença entre as pontuações reais dos jogadores e as previstas. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -16080,15 +16296,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. (1) Only the player with the contract should use this buttons. (2) This only works if the activity log reflects the player's contract. (3) Only press it once or the Match totals may change each press. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. (1) Only the player with the contract should use this buttons. (2) This only works if the activity log reflects the player's contract. (3) Only press it once or the Match totals may change each press. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. (1) Nur der Spieler mit dem Kontrakt sollte diese Schaltfläche verwenden. (2) Das funktioniert nur, wenn das Aktivitätsprotokoll den Kontrakt des Spielers widerspiegelt. (3) Drücke sie nur einmal, sonst können sich die Match-Summen bei jedem Druck ändern. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. (1) Apenas o jogador com o contrato deve usar este botão. (2) Isso só funciona se o registro de atividades refletir o contrato do jogador. (3) Pressione apenas uma vez, ou os totais da partida podem mudar a cada toque. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       "var contract = ${PROPERTY auctionType OF contractType}",
       {
@@ -16834,15 +17058,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will determine the team that won the contract and transfer the scores in the temporary scoreboard to the main one. This will transfer the total from the temporary scoreboard (which includes the doubled bid, if appropriate) to the main scoreboard. Are you sure you want to continue?"
+            "text": "This will determine the team that won the contract and transfer the scores in the temporary scoreboard to the main one. This will transfer the total from the temporary scoreboard (which includes the doubled bid, if appropriate) to the main scoreboard. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird das Team ermittelt, das den Kontrakt gewonnen hat, und die Punkte werden von der temporären Punktetafel auf die Haupttafel übertragen. Die Summe der temporären Punktetafel (einschließlich des verdoppelten Gebots, falls zutreffend) wird auf die Haupttafel übertragen. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso determinará a equipe que ganhou o contrato e transferirá as pontuações do placar temporário para o principal. O total do placar temporário (incluindo a aposta dobrada, se aplicável) será transferido para o placar principal. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -19558,15 +19790,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the player with the contract should use this buttons. Also, this only works if the activity log reflects the player's contract. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the player with the contract should use this buttons. Also, this only works if the activity log reflects the player's contract. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Nur der Spieler mit dem Kontrakt sollte diese Schaltfläche verwenden. Außerdem funktioniert das nur, wenn das Aktivitätsprotokoll den Kontrakt des Spielers widerspiegelt. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Apenas o jogador com o contrato deve usar este botão. Além disso, isso só funciona se o registro de atividades refletir o contrato do jogador. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       "var contract = ${PROPERTY message OF bids}",
       {
@@ -22617,15 +22857,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the Contract row and the Bonus row will be transferred. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, Contract and Bonus row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the Contract row and the Bonus row will be transferred. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, Contract and Bonus row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Nur die Zeile Kontrakt und die Zeile Bonus werden übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Die Werte der Zeilen Kontrakt und Bonus müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Apenas a linha Contrato e a linha Bônus serão transferidas. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os valores das linhas Contrato e Bônus devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -22730,7 +22978,11 @@
           }
         ],
         "confirmButtonText": "Submit Message",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Nachricht senden",
+        "confirmButtonText:pt-BR": "Enviar mensagem",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -23433,7 +23685,11 @@
           }
         ],
         "confirmButtonText": "Choose version",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Version wählen",
+        "confirmButtonText:pt-BR": "Escolher versão",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -23501,15 +23757,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Cloning cards ..."
+            "text": "Cloning cards ...",
+            "text:de-DE": "Karten werden geklont ...",
+            "text:pt-BR": "Clonando cartas ..."
           },
           {
             "type": "subtitle",
-            "text": "This will clone all cards in the Discard holder from this game. They will be deleted when a new game pre-set is selected or when the room is reloaded from its saved state. Are you sure?"
+            "text": "This will clone all cards in the Discard holder from this game. They will be deleted when a new game pre-set is selected or when the room is reloaded from its saved state. Are you sure?",
+            "text:de-DE": "Damit werden alle Karten im Ablagestapel aus diesem Spiel geklont. Sie werden gelöscht, wenn eine neue Spielvorlage gewählt oder der Raum aus seinem gespeicherten Zustand neu geladen wird. Bist du sicher?",
+            "text:pt-BR": "Isso clonará todas as cartas do suporte de descarte deste jogo. Elas serão excluídas quando uma nova predefinição de jogo for selecionada ou quando a sala for recarregada a partir do seu estado salvo. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "SELECT",
@@ -25547,15 +25811,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will calculate the scores and enter them on the main scoreboard above. Are you sure you want to continue?"
+            "text": "This will calculate the scores and enter them on the main scoreboard above. Are you sure you want to continue?",
+            "text:de-DE": "Damit werden die Punkte berechnet und in die Haupttafel darüber eingetragen. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso calculará as pontuações e as registrará no placar principal acima. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
@@ -29116,15 +29388,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -33303,15 +33583,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Returning pieces ..."
+            "text": "Returning pieces ...",
+            "text:de-DE": "Steine werden zurückgegeben ...",
+            "text:pt-BR": "Devolvendo peças ..."
           },
           {
             "type": "subtitle",
-            "text": "Use this to return 1/2 of your pieces if you won one or more tricks but did not take any penalties (do not have any counters on the board). Do you want to return 1/2 of your pieces?"
+            "text": "Use this to return 1/2 of your pieces if you won one or more tricks but did not take any penalties (do not have any counters on the board). Do you want to return 1/2 of your pieces?",
+            "text:de-DE": "Verwende dies, um die Hälfte deiner Steine zurückzugeben, wenn du einen oder mehrere Stiche gewonnen, aber keine Strafen erhalten hast (keine Marker auf dem Feld). Möchtest du die Hälfte deiner Steine zurückgeben?",
+            "text:pt-BR": "Use isto para devolver 1/2 das suas peças se você ganhou uma ou mais vazas, mas não sofreu penalidades (não tem fichas no tabuleiro). Deseja devolver 1/2 das suas peças?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       "var index = ${PROPERTY index OF $seatID}",
       {
@@ -33375,15 +33663,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Returning pieces ..."
+            "text": "Returning pieces ...",
+            "text:de-DE": "Steine werden zurückgegeben ...",
+            "text:pt-BR": "Devolvendo peças ..."
           },
           {
             "type": "subtitle",
-            "text": "Use this to return all of your pieces if either (1) you won every trick or (2) you lost every trick and no other player won every trick. Do you want to return all of your pieces?"
+            "text": "Use this to return all of your pieces if either (1) you won every trick or (2) you lost every trick and no other player won every trick. Do you want to return all of your pieces?",
+            "text:de-DE": "Verwende dies, um alle deine Steine zurückzugeben, wenn entweder (1) du jeden Stich gewonnen hast oder (2) du jeden Stich verloren hast und kein anderer Spieler jeden Stich gewonnen hat. Möchtest du alle deine Steine zurückgeben?",
+            "text:pt-BR": "Use isto para devolver todas as suas peças se (1) você ganhou todas as vazas ou (2) perdeu todas as vazas e nenhum outro jogador ganhou todas. Deseja devolver todas as suas peças?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       "var index = ${PROPERTY index OF $seatID}",
       {
@@ -33438,15 +33734,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Moving pieces to discard ..."
+            "text": "Moving pieces to discard ...",
+            "text:de-DE": "Steine werden auf den Ablagestapel gelegt ...",
+            "text:pt-BR": "Movendo peças para o descarte ..."
           },
           {
             "type": "subtitle",
-            "text": "Use this to move all remaining pieces from the board to the discard holder. Do you want to continue?"
+            "text": "Use this to move all remaining pieces from the board to the discard holder. Do you want to continue?",
+            "text:de-DE": "Verwende dies, um alle verbleibenden Steine vom Feld auf den Ablagestapel zu legen. Möchtest du fortfahren?",
+            "text:pt-BR": "Use isto para mover todas as peças restantes do tabuleiro para o suporte de descarte. Deseja continuar?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SELECT",
@@ -36023,15 +36327,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -37694,7 +38006,9 @@
         "fields": [
           {
             "type": "subtitle",
-            "text": "Choose number of cards to pass"
+            "text": "Choose number of cards to pass",
+            "text:de-DE": "Anzahl der weiterzugebenden Karten wählen",
+            "text:pt-BR": "Escolher o número de cartas a passar"
           },
           {
             "type": "number",
@@ -37704,7 +38018,9 @@
             "value": "${PROPERTY text}"
           }
         ],
-        "confirmButtonText": "Confirm"
+        "confirmButtonText": "Confirm",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar"
       },
       "var passCount = parseFloat ${passCount}",
       {
@@ -37757,7 +38073,9 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Choose ${passCount} cards to pass"
+                "text": "Choose ${passCount} cards to pass",
+                "text:de-DE": "Wähle ${passCount} Karten zum Weitergeben",
+                "text:pt-BR": "Escolha ${passCount} cartas para passar"
               },
               {
                 "type": "choose",
@@ -37768,7 +38086,9 @@
                 "max": "${passCount}"
               }
             ],
-            "confirmButtonText": "Pass these cards"
+            "confirmButtonText": "Pass these cards",
+            "confirmButtonText:de-DE": "Diese Karten weitergeben",
+            "confirmButtonText:pt-BR": "Passar estas cartas"
           },
           {
             "func": "MOVE",
@@ -41754,15 +42074,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -44943,15 +45271,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -46302,15 +46638,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -46776,15 +47120,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Dabei werden Kartenpunkte, Weis, Stock und der Bonus für alle Stiche addiert und mit dem Kontraktmultiplikator multipliziert. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Serão somados os Pontos das Cartas, Weis, Stock e o bônus de Todas as Vazas, e o total será multiplicado pelo multiplicador do contrato. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
