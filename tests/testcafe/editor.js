@@ -517,13 +517,10 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .click('#deckEditorTreeAdd')                    // faceless deck: reveal the add-object controls
     .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
   // the color box is selected: bind its color to a new "color" card-type property via the Dynamic properties
-  // Link control (the per-row split button was removed)
+  // Link control (the per-row split button was removed; both sides are type-or-pick comboboxes)
   await t
-    .click('.deckEditorAddBinding .objectProperty')
-    .click('.deckEditorAddBinding .objectProperty option[value="color"]')
-    .click('.deckEditorAddBinding .typeProperty')
-    .click('.deckEditorAddBinding .typeProperty option[value="__new__"]')
-    .typeText('.deckEditorAddBinding .newTypeProperty', 'color')
+    .typeText('.deckEditorAddBinding .objectProperty', 'color')
+    .typeText('.deckEditorAddBinding .typeProperty', 'color')
     .click('.deckEditorAddBindingButton');
   await t.pressKey('esc'); // deselect the object -> the "Entire face properties" and "Face objects" bands appear
   await t.expect(setNumberField('Entire face properties', 'radius', 8)).ok();

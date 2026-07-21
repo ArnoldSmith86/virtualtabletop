@@ -868,8 +868,30 @@ body.deckEditorPanning #deckEditorMain * {
 
 .deckEditorBindingLink {
   flex-shrink: 0;
+  width: 20px;
+  text-align: center;
   opacity: 0.7;
   font-size: 18px;
+}
+
+.deckEditorDynamicPropertiesIntro {
+  font-size: 12px;
+  opacity: 0.85;
+  margin: 2px 5px 8px;
+}
+
+/* Column headers over the binding rows; share the row layout but without the row's highlight background. */
+.deckEditorDynamicPropertyHeaders {
+  background: transparent;
+  font-size: 11px;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+/* Stand-in for the trash button column so the two input columns line up in the header and add rows. */
+.deckEditorBindingDeleteSpacer {
+  flex-shrink: 0;
+  width: 34px;
 }
 
 .deckEditorAddProperty input {
@@ -877,35 +899,22 @@ body.deckEditorPanning #deckEditorMain * {
   flex-grow: 1;
 }
 
-/* Redesigned "add binding" control: a titled compact row + a full-width Bind button. */
+/* "Add binding" control: a title, a row on the same grid as the bindings above, then a full-width Link button.
+   No inset padding/background so its two input columns line up with the headers and existing binding rows. */
 .deckEditorAddBinding {
   margin-top: 8px;
-  padding: 6px;
-  border-radius: 6px;
-  background: var(--backgroundHighlightColor1);
+  border-top: 1px solid #0003;
+  padding-top: 8px;
 }
 
 .deckEditorAddBindingTitle {
   font-size: 12px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin: 0 5px 5px;
 }
 
 .deckEditorAddBindingRow {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.deckEditorAddBindingRow select {
-  flex: 1;
-  min-width: 0;
-}
-
-.deckEditorAddBinding .newTypeProperty {
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 5px;
+  background: transparent;
 }
 
 .deckEditorAddBindingButton {

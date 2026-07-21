@@ -1518,7 +1518,8 @@ class DeckEditor {
     }
 
     if(object) {
-      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard');
+      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard',
+        object.type == 'html' ? 'The JSON Editor should be used for editing HTML face objects.' : undefined);
 
       // For image objects the upload button sits right under the header (its most useful spot).
       if(object.type == 'image')
@@ -2239,6 +2240,10 @@ class DeckEditor {
     sidebar.append(header);
 
     const container = div(sidebar, 'deckEditorDynamicProperties');
+    div(container, 'deckEditorDynamicPropertiesIntro').textContent = 'These specify a different face object for each card type.';
+
+    // Column headers, laid out with the same flex structure as the binding rows so they line up above them.
+    div(container, 'deckEditorDynamicProperty deckEditorDynamicPropertyHeaders', '<span class=deckEditorBindingObjectProp>Object property</span><span class=deckEditorBindingLink></span><span class=deckEditorBindingTypeProp>Card property</span><span class=deckEditorBindingDeleteSpacer></span>');
 
     // The already-active bindings: each row is a live "object property ← card type property" with a red trash.
     const bindings = Object.entries(object.dynamicProperties || {});
@@ -2294,33 +2299,30 @@ class DeckEditor {
       };
     }
 
-    // Redesigned "add binding" control: one compact "<object property> ← <card type property>" row with a
-    // clear Bind button. The object side offers common displayable properties plus the object's own ones; the
-    // card type side offers every property any card type already has plus a "new property" choice.
+    // Add-binding control laid out on the same grid as the rows above. Both sides are editable comboboxes
+    // (input + datalist): pick an existing property or just type a new one in the same box - no separate field.
     const bound = object.dynamicProperties || {};
     const objectPropertyOptions = [...new Set([ 'value', 'color', 'width', 'height', 'display', ...Object.keys(object) ])]
       .filter(p=>p != 'type' && p != 'dynamicProperties' && bound[p] === undefined);
     const typePropertyOptions = this.knownCardTypeProperties();
     const addRow = div(container, 'deckEditorAddBinding', `
-      <div class=deckEditorAddBindingTitle>Fill a property from the card type</div>
-      <div class=deckEditorAddBindingRow>
-        <select class=objectProperty title="Object property to fill"><option value="" selected></option>${objectPropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}</select>
-        <span class=deckEditorBindingArrow>←</span>
-        <select class=typeProperty title="Card type property to read from"><option value="" selected></option>${typePropertyOptions.map(p=>`<option value="${html(p)}">${html(p)}</option>`).join('')}<option value="__new__">new property…</option></select>
+      <div class=deckEditorAddBindingTitle>Add a new dynamic property link</div>
+      <div class="deckEditorDynamicProperty deckEditorAddBindingRow">
+        <input class="objectProperty deckEditorBindingObjectProp" list=deckEditorObjPropList placeholder="Object property" title="Object property to fill - pick one or type a new name">
+        <datalist id=deckEditorObjPropList>${objectPropertyOptions.map(p=>`<option value="${html(p)}"></option>`).join('')}</datalist>
+        <span class="deckEditorBindingLink material-symbols">link</span>
+        <input class="typeProperty deckEditorBindingTypeProp" list=deckEditorTypePropList placeholder="Card property" title="Card type property to read from - pick one or type a new name">
+        <datalist id=deckEditorTypePropList>${typePropertyOptions.map(p=>`<option value="${html(p)}"></option>`).join('')}</datalist>
+        <span class=deckEditorBindingDeleteSpacer></span>
       </div>
-      <input class=newTypeProperty style="display:none" placeholder="name of the new property, e.g. rank">
       <button class=deckEditorAddBindingButton icon=link>Link</button>
     `);
-    const typeSelect = $('.typeProperty', addRow);
-    const updateNewNameVisibility = _=>$('.newTypeProperty', addRow).style.display = typeSelect.value == '__new__' ? '' : 'none';
-    typeSelect.onchange = updateNewNameVisibility;
-    updateNewNameVisibility();
     $('button', addRow).onclick = async _=>{
-      const objectProperty = $('.objectProperty', addRow).value;
-      let typeProperty = typeSelect.value == '__new__' ? $('.newTypeProperty', addRow).value.trim() : typeSelect.value;
+      const objectProperty = $('.objectProperty', addRow).value.trim();
+      let typeProperty = $('.typeProperty', addRow).value.trim();
       if(!objectProperty || !typeProperty)
         return;
-      if(typeSelect.value == '__new__' && this.reservedCardTypeProperties().includes(typeProperty))
+      if(this.reservedCardTypeProperties().includes(typeProperty))
         typeProperty = this.generateUniquePropertyName(typeProperty); // a reserved name would be shadowed by the card widget's own property
       await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
       if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
