@@ -370,6 +370,14 @@ body.deckEditorActive #enlarged {
 }
 
 /* Print / PDF options. */
+/* Float the dialog over the deck editor with just a dim backdrop instead of the .overlay class's solid white
+   that hides everything behind it. */
+#deckEditorExportOverlay,
+#deckEditorImportOverlay,
+#deckEditorNewDeckOverlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
@@ -752,6 +760,7 @@ body.deckEditorActive #enlarged {
   justify-content: center;
   overflow: hidden;
   position: relative;
+  touch-action: none; /* our JS owns touch here (object drag, pan, pinch); stop the browser scrolling/zooming */
 }
 
 /* Space-to-pan cursor feedback on the card design area. */
