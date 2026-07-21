@@ -508,7 +508,9 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t
     .click('#editButton')
     .click('#editorSidebar [icon=tune]')
-    .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": creates a starter deck and opens the deck editor
+    .click('#editor .noSelectionButton[icon=style]') // "Open deck editor": opens the empty editor (no auto-created deck)
+    .click('#deckEditorAddDeck')                     // Add New Deck submenu (defaults to the Empty deck option)
+    .click('#deckEditorNewDeckPanel button')         // "Create empty deck" -> creates a starter deck and opens it
     .setNativeDialogHandler(() => true)
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete a face
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete the other -> faceless deck
@@ -565,7 +567,7 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
 
 // With no deck in the game, the toolbar button creates a starter deck (like the Properties tab option) and
 // opens it, instead of doing nothing.
-test('Deck editor: toolbar button creates a deck when the game has none', async t => {
+test('Deck editor: toolbar button opens an empty editor when the game has none', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
   await setName(t);
@@ -580,8 +582,8 @@ test('Deck editor: toolbar button creates a deck when the game has none', async 
     .click('#editButton')
     .click('#editorToolbar [icon=style]'); // no deck exists yet
   await t
-    .expect(Selector('body').hasClass('deckEditorActive')).ok()
-    .expect(deckCount()).eql(1)      // a starter deck was created
-    .pressKey('esc');
-  await compareState(t, '7fd7f52f6c52afda3aa9984939eee464');
+    .expect(Selector('body').hasClass('deckEditorActive')).ok()  // the editor opens...
+    .expect(deckCount()).eql(0)      // ...but no deck is auto-created
+    .pressKey('esc')
+    .expect(Selector('body').hasClass('deckEditorActive')).notOk();
 });

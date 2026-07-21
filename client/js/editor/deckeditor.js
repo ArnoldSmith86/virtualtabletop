@@ -812,9 +812,38 @@ class DeckEditor {
     }
     if(deckID === null) {
       const decks = widgetFilter(w=>w.get('type') == 'deck');
-      deckID = decks.length ? decks[decks.length-1].get('id') : await createStarterDeck();
+      if(decks.length)
+        deckID = decks[decks.length-1].get('id');
     }
+    // Don't auto-create a deck when the room has none; open an empty editor and let the user add one.
+    if(deckID === null)
+      return this.openEmpty();
     await this.open(deckID);
+  }
+
+  // Open the deck editor with no deck selected. Renders an empty editor (empty tree/main/strip) from which
+  // the user can create a deck with the "Add New Deck" button.
+  async openEmpty() {
+    this.initializeDOM();
+    if(this.deckID !== null)
+      await this.flushPendingCommits();
+    this.deckID = null;
+    this.faceTemplates = [];
+    this.cardTypes = {};
+    this.cardDefaults = {};
+    this.cardType = null;
+    this.selectedObject = null;
+    this.treeLevel = 'deck';
+    this.userZoom = 1;
+    this.panX = 0;
+    this.panY = 0;
+    this.resetHistory();
+    $('body').classList.add('deckEditorActive');
+    const activeModuleButton = $('#editorSidebar button.active');
+    if(activeModuleButton)
+      activeModuleButton.click();
+    this.render();
+    this.syncToolbarButton();
   }
 
   async close() {
@@ -2387,9 +2416,13 @@ class DeckEditor {
     this.render();
   }
 
-  async addDeck() {
+  async addDeck(deckID) {
+    if(deckID && widgets.has(deckID)) {
+      alert(`A widget with the id "${deckID}" already exists. Please choose a different deck id.`);
+      return;
+    }
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    await this.open(await createStarterDeck());
+    await this.open(await createStarterDeck(deckID));
     this.treeLevel = 'deck';
     this.render();
   }
@@ -2420,8 +2453,21 @@ class DeckEditor {
     panel.innerHTML = '';
     this.pendingNewDeck = mode != 'empty';
     if(mode == 'empty') {
+      const idInput = document.createElement('input');
+      idInput.type = 'text';
+      idInput.className = 'deckEditorNewDeckId';
+      idInput.placeholder = "Deck id (optional) - leave blank to generate one";
+      panel.append(idInput);
       const bar = div(panel, 'deckEditorNewDeckButtonBar', '<button icon=library_add class=green>Create empty deck</button>');
-      $('button', bar).onclick = _=>{ this.closeNewDeckOverlay(); this.addDeck(); };
+      $('button', bar).onclick = _=>{
+        const id = idInput.value.trim();
+        if(id && widgets.has(id)) {
+          alert(`A widget with the id "${id}" already exists. Please choose a different deck id.`);
+          return;
+        }
+        this.closeNewDeckOverlay();
+        this.addDeck(id || undefined);
+      };
     } else if(mode == 'library') {
       // Keep the deck editor open: the library overlay is moved into #editor (see initializeDOM) so it shows
       // above the editor, and pendingNewDeck makes the picked deck open in the editor once it is added.
@@ -2709,10 +2755,13 @@ const deckEditor = new DeckEditor();
 // Creates a minimal deck to start designing from scratch (holder + deck with one card type, a colored back
 // and a white front, plus one card) and returns the deck's id. Shared by the toolbar button (when the game
 // has no deck yet) and the properties module's "Design a deck in the deck editor" option.
-async function createStarterDeck() {
+// deckID: optional id for the deck widget itself (from the "Add New Deck" dialog); the holder and button
+// still get generated ids. Defaults to the holder id + 'D' when not given.
+async function createStarterDeck(deckID) {
   batchStart();
   const id = generateUniqueWidgetID();
-  setDeltaCause(`${getPlayerDetails().playerName} created deck ${id}D for the deck editor`);
+  const dID = deckID || id+'D';
+  setDeltaCause(`${getPlayerDetails().playerName} created deck ${dID} for the deck editor`);
   await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
   // Recall & Shuffle button on the holder, matching the add-widget overlay's deck composite.
   await addWidgetLocal({
@@ -2733,7 +2782,7 @@ async function createStarterDeck() {
   });
   await addWidgetLocal({
     type: 'deck',
-    id: id+'D',
+    id: dID,
     parent: id,
     x: 12,
     y: 41,
@@ -2744,9 +2793,9 @@ async function createStarterDeck() {
       { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: '#ffffff' } ] }
     ]
   });
-  await addWidgetLocal({ type: 'card', deck: id+'D', cardType: 'type 1', parent: id, activeFace: 1 });
+  await addWidgetLocal({ type: 'card', deck: dID, cardType: 'type 1', parent: id, activeFace: 1 });
   batchEnd();
-  return id+'D';
+  return dID;
 }
 
 async function deckEditorReceiveDelta(delta) {

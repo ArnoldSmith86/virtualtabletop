@@ -582,6 +582,13 @@ body.deckEditorActive #enlarged {
   padding-top: 16px;
 }
 
+.deckEditorNewDeckId {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  margin: 4px 0 12px;
+}
+
 .deckEditorNewDeckButtonBar {
   display: flex;
   justify-content: flex-end;
