@@ -281,6 +281,49 @@
   font-style: italic;
 }
 
+/* AI assistant */
+
+.smart_toy.editorModule .aiAssistantControls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.smart_toy.editorModule .aiAssistantControls textarea {
+  width: 100%;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.smart_toy.editorModule .aiAssistantRoutinePreview {
+  background-color: var(--backgroundHighlightColor1);
+  border: 1px solid var(--textColor);
+  border-radius: 4px;
+  padding: 8px;
+  max-height: 300px;
+  overflow: auto;
+  font-size: 11px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.smart_toy.editorModule .aiAssistantError {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.smart_toy.editorModule .aiAssistantSuccess {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.smart_toy.editorModule .aiAssistantProblems ul {
+  margin: 6px 0;
+  padding-left: 18px;
+  font-size: 12px;
+}
+
 /* undo */
 
 .undo.editorModule > .undoEntry {
