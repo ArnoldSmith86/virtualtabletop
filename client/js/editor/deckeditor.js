@@ -1618,7 +1618,7 @@ class DeckEditor {
           this.refreshMainCardFaces();
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
-        }), objectProps, fieldType);
+        }), objectProps, fieldType, true);
         // Per-row "make different per card type" (split) button removed; that binding is created from the
         // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
         this.addPropertyDeleteButton(row, property, async _=>{
@@ -2158,7 +2158,7 @@ class DeckEditor {
   // A property row with a fixed input type and NO type selector — matches addInput's return shape ({ dom }) so
   // the make-dynamic / delete buttons attach the same way. fieldType may be forced (number/text/boolean/object)
   // or left undefined to follow the value's JS type.
-  addTypedInput(label, value, onValueChanged, target, fieldType) {
+  addTypedInput(label, value, onValueChanged, target, fieldType, emptyIsZero) {
     if(!fieldType) {
       if(typeof value === 'number') fieldType = 'number';
       else if(typeof value === 'boolean') fieldType = 'boolean';
@@ -2191,8 +2191,11 @@ class DeckEditor {
       input.value = value === undefined || value === null ? '' : value;
       input.oninput = input.onchange = _=>{
         if(fieldType == 'number') {
-          if(input.value.trim() === '') // a momentarily-empty field shouldn't commit 0 over the real value
-            return;
+          if(input.value.trim() === '') {
+            if(emptyIsZero) // face object properties: an erased number reads as 0
+              onValueChanged(0);
+            return; // otherwise a momentarily-empty field shouldn't commit 0 over the real value
+          }
           onValueChanged(Number(input.value) || 0);
         } else {
           onValueChanged(input.value);
