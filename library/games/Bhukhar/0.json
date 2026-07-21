@@ -345,7 +345,9 @@
     "x": 240,
     "y": 1832,
     "z": 28622,
-    "id": "btnDealOneCard"
+    "id": "btnDealOneCard",
+    "text:de-DE": "1 KARTE GEBEN",
+    "text:pt-BR": "DAR 1 CARTA"
   },
   "player1": {
     "type": "holder",
@@ -11598,7 +11600,9 @@
       "similarName": "Bhukhar",
       "description": "Team game in Rummy family.  Cards played in sets or sequences earn points according to card value.  Team with most points wins.",
       "showName": false,
-      "lastUpdate": 1672499411000
+      "lastUpdate": 1672499411000,
+      "description:de-DE": "Teamspiel aus der Rommé-Familie. Karten, die in Sätzen oder Sequenzen ausgelegt werden, bringen Punkte entsprechend dem Kartenwert. Das Team mit den meisten Punkten gewinnt.",
+      "description:pt-BR": "Jogo em equipe da família do Rummy. Cartas jogadas em grupos ou sequências valem pontos de acordo com o valor da carta. A equipe com mais pontos vence."
     }
   },
   "shieldDiscard": {

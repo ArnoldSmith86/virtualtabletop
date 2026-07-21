@@ -127,7 +127,9 @@
     "movable": false,
     "css": "font-size:16pt",
     "width": 150,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Gesamtpunktzahl",
+    "text:pt-BR": "Pontuação total"
   },
   "xprj7": {
     "id": "xprj7",
@@ -309,7 +311,9 @@
     "movable": false,
     "css": "font-weight:bold;font-size:20pt",
     "text": "Grand Total",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Endsumme",
+    "text:pt-BR": "Total geral"
   },
   "table": {
     "id": "table",

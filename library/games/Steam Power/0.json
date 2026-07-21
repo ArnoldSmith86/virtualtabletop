@@ -23,7 +23,9 @@
       "variantImage": "",
       "variant": "Steel Belt map",
       "language": "en-US",
-      "players": "2-5"
+      "players": "2-5",
+      "description:de-DE": "Baue dein Schienennetz, errichte deine Fabriken und ernte die Belohnungen.",
+      "description:pt-BR": "Construa a sua malha ferroviária, estabeleça as suas fábricas e colha as recompensas."
     }
   },
   "board_deck": {
@@ -1694,7 +1696,9 @@
         "value": "${visibleToSeats}"
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Verlauf anzeigen",
+    "text:pt-BR": "Ver histórico completo"
   },
   "contracts_deck": {
     "type": "deck",

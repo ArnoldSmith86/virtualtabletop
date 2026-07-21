@@ -24,7 +24,9 @@
       "variant": "",
       "language": "en-GB",
       "players": "2-4",
-      "similarDesigner": "Reiner Knizia"
+      "similarDesigner": "Reiner Knizia",
+      "description:de-DE": "Wetteifert um das Land und die Städte zwischen den Flüssen und befehligt dabei mächtige Zikkurats.",
+      "description:pt-BR": "Dispute as terras e cidades entre os rios enquanto comanda poderosos zigurates."
     }
   },
   "board-4": {
@@ -3793,7 +3795,9 @@
     "css": {
       "font-size": "20px"
     },
-    "text": "SCORE"
+    "text": "SCORE",
+    "text:de-DE": "PUNKTE",
+    "text:pt-BR": "PONTOS"
   },
   "button-score-dec-p1": {
     "id": "button-score-dec-p1",
@@ -5215,7 +5219,9 @@
     "css": {
       "font-size": "16px"
     },
-    "text": "CITIES"
+    "text": "CITIES",
+    "text:de-DE": "STÄDTE",
+    "text:pt-BR": "CIDADES"
   },
   "holder-cities-p2": {
     "id": "holder-cities-p2",
@@ -5287,7 +5293,9 @@
     "css": {
       "font-size": "16px"
     },
-    "text": "ZIGGURAT TILES"
+    "text": "ZIGGURAT TILES",
+    "text:de-DE": "ZIKKURAT-PLÄTTCHEN",
+    "text:pt-BR": "PEÇAS DE ZIGURATE"
   },
   "holder-ziggurats-p2": {
     "id": "holder-ziggurats-p2",
@@ -5389,7 +5397,9 @@
         "func": "TURN",
         "turnCycle": "forward"
       }
-    ]
+    ],
+    "text:de-DE": "Zug beenden",
+    "text:pt-BR": "Encerrar turno"
   },
   "button-score-cities": {
     "id": "button-score-cities",
@@ -5433,7 +5443,9 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Städte werten",
+    "text:pt-BR": "Pontuar cidades"
   },
   "holder-ziggurats": {
     "id": "holder-ziggurats",

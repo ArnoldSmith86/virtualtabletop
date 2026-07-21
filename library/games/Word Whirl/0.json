@@ -4377,7 +4377,9 @@
       "cinc",
       "cremallera",
       "zoológico"
-    ]
+    ],
+    "text:de-DE": "Wortliste",
+    "text:pt-BR": "Lista de palavras"
   },
   "Background": {
     "id": "Background",
@@ -8548,7 +8550,9 @@
       "language": "de-DE, en-US, es-ES, fr-FR, pt-BR",
       "variant": "",
       "variantImage": "",
-      "usesAIImagery": true
+      "usesAIImagery": true,
+      "description:de-DE": "Verbinde die Wörter auf deinen Karten mit cleveren Hinweisen. Errät gemeinsam die Anordnung der Karten anhand dieser Hinweise. Ein kooperatives Wortspiel-Abenteuer!",
+      "description:pt-BR": "Crie ligações entre as palavras das suas cartas usando dicas espertas. Juntos, adivinhem a disposição das cartas a partir dessas pistas. Um desafio cooperativo de palavras!"
     }
   }
 }

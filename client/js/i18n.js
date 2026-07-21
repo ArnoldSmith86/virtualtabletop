@@ -45,6 +45,64 @@ export function translate(text) {
   return dictionary[text] || text;
 }
 
+// --- Game translation: language-suffixed properties -------------------------
+// Games (unlike the static UI) are translated by the game author: any widget
+// property or game-metadata field may carry a language suffix, e.g. `label:de`
+// or `description:pt-BR`. When the suffix matches the currently selected UI
+// language the suffixed value overrides the unsuffixed one, so a single game
+// can be translated without duplicating it per language. The resolution happens
+// locally on read, so the shared room state is never modified (two players may
+// look at the same game in different languages).
+
+// Only a `base:suffix` key whose suffix looks like a BCP-47 language tag is
+// treated as a translation, so ordinary property names are never misinterpreted.
+const languageSuffixRegex = /^(.+):([a-z]{2,3}(?:-[a-z0-9]+)*)$/i;
+
+// How well a property-name language suffix matches the selected language.
+// Returns 0 for no match; higher scores win when several suffixes are present.
+function languageSuffixScore(suffix) {
+  const lang = language.toLowerCase();
+  suffix = suffix.toLowerCase();
+  if(suffix == lang)
+    return 3;                                        // exact tag, e.g. pt-BR
+  if(suffix == lang.split('-')[0] || lang == suffix.split('-')[0])
+    return 2;                                        // primary subtag, e.g. de vs de-DE
+  if(suffix.split('-')[0] == lang.split('-')[0])
+    return 1;                                        // same language, other region
+  return 0;
+}
+
+// For an object with (possibly) language-suffixed keys, return a map of
+// base-property -> overriding value for the currently selected language, or
+// null when there are none (the common case, kept allocation-free).
+export function languageOverrides(object) {
+  let overrides = null;
+  let scores = null;
+  for(const key in object) {
+    const match = key.match(languageSuffixRegex);
+    if(!match)
+      continue;
+    const score = languageSuffixScore(match[2]);
+    if(!score)
+      continue;
+    const base = match[1];
+    if(!overrides)
+      overrides = {}, scores = {};
+    if(scores[base] === undefined || score > scores[base]) {
+      scores[base] = score;
+      overrides[base] = object[key];
+    }
+  }
+  return overrides;
+}
+
+// Apply language overrides onto a metadata object in place (name, description,
+// ruleText, …) so downstream code that reads the plain field names gets the
+// translated value.
+export function localizeMeta(object) {
+  return object && Object.assign(object, languageOverrides(object));
+}
+
 const translatedAttributes = [ 'placeholder', 'title', 'aria-label', 'data-label', 'data-placeholder' ];
 
 function skipTranslation(element) {

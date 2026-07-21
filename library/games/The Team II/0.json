@@ -155,7 +155,9 @@
         "func": "CALL",
         "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3981"
       }
-    ]
+    ],
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir"
   },
   "146344a4-f702-48c7-9acf-b10cf7da85f8": {
     "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
@@ -428,7 +430,9 @@
     "text": "Communication",
     "x": 390,
     "z": 21782,
-    "twoRowBottomAlign": true
+    "twoRowBottomAlign": true,
+    "text:de-DE": "Kommunikation",
+    "text:pt-BR": "Comunicação"
   },
   "45f2a7e7-60f0-4b81-9481-87a19cc08f25": {
     "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25",
@@ -1023,7 +1027,9 @@
     "css": "font-size:120%;color:white",
     "text": "Tasks",
     "x": 985.8125,
-    "z": 21781
+    "z": 21781,
+    "text:de-DE": "Aufgaben",
+    "text:pt-BR": "Tarefas"
   },
   "discard1": {
     "id": "discard1",
@@ -2356,7 +2362,9 @@
         "face": 1,
         "count": 0
       }
-    ]
+    ],
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir"
   },
   "b0b2bf3c-50e3-4145-87cf-e9fb106d3983": {
     "id": "b0b2bf3c-50e3-4145-87cf-e9fb106d3983",
@@ -3487,7 +3495,9 @@
       "variant": "",
       "language": "en-US",
       "players": "2",
-      "similarDesigner": "Thomas Sing"
+      "similarDesigner": "Thomas Sing",
+      "description:de-DE": "Kooperatives Stichspiel. Arbeitet bei Missionsaufgaben zusammen, damit bestimmte Stiche von bestimmten Spielern gewonnen werden – ganz ohne eure Handkarten zu verraten.",
+      "description:pt-BR": "Jogo cooperativo de vazas. Trabalhem juntos nas tarefas da missão para garantir que certas vazas sejam feitas por certos jogadores, tudo isso sem revelar a sua mão."
     }
   },
   "3lcfP": {

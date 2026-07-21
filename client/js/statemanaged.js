@@ -1,6 +1,7 @@
 import { dropTargets } from './main.js';
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
+import { languageOverrides } from './i18n.js';
 
 export class StateManaged {
   constructor() {
@@ -15,7 +16,10 @@ export class StateManaged {
 
   applyDelta(delta) {
     const deltaForDOM = {};
+    let overridesChanged = false;
     for(const i in delta) {
+      if(i.indexOf(':') != -1)
+        overridesChanged = true;
       if(delta[i] === null) {
         delete this.unalteredState[i];
         delete this.state[i];
@@ -24,6 +28,17 @@ export class StateManaged {
         deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
+
+    // language-suffixed properties (e.g. `x:de`) override their base property
+    // for the selected UI language; resolve them locally so the base property
+    // in the DOM reflects the override for every property that gained, lost or
+    // still has one (see i18n.js)
+    const previousOverrides = this.languageOverrides;
+    if(overridesChanged)
+      this.languageOverrides = languageOverrides(this.state);
+    if(previousOverrides || this.languageOverrides)
+      for(const base in Object.assign({}, previousOverrides, this.languageOverrides))
+        deltaForDOM[base] = this.get(base);
 
     this.applyDeltaToDOM(deltaForDOM);
 
@@ -54,7 +69,9 @@ export class StateManaged {
   }
 
   get(property) {
-    const value = this.state[property];
+    const value = this.languageOverrides && this.languageOverrides[property] !== undefined
+      ? this.languageOverrides[property]
+      : this.state[property];
     if(value !== undefined) {
       if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
         return +value;

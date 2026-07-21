@@ -1188,6 +1188,13 @@ onLoad(function() {
 
   onMessage('meta', args=>{
     currentMetaData = args;
+    // resolve language-suffixed metadata fields (name, description, …) for the
+    // selected UI language before anything reads them (see i18n.js)
+    for(const state of Object.values(args.meta.states || {})) {
+      localizeMeta(state);
+      for(const variant of state.variants || [])
+        localizeMeta(variant);
+    }
     fillStatesList(args.meta.states, args.meta.starred, args.meta.activeState, args.meta.returnServer, args.activePlayers);
   });
 
