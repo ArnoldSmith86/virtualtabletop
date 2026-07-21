@@ -3434,9 +3434,13 @@
                 "text": "05:00",
                 "value": 300
               }
-            ]
+            ],
+            "label:de-DE": "Dauer",
+            "label:pt-BR": "Duração"
           }
-        ]
+        ],
+        "header:de-DE": "Timer hinzufügen",
+        "header:pt-BR": "Adicionar cronômetro"
       },
       {
         "func": "SELECT",
@@ -3507,7 +3511,7 @@
       "helpText": "",
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "2",
       "similarDesigner": "Thomas Sing",
       "description:de-DE": "Kooperatives Stichspiel. Arbeitet bei Missionsaufgaben zusammen, damit bestimmte Stiche von bestimmten Spielern gewonnen werden – ganz ohne eure Handkarten zu verraten.",
@@ -3527,16 +3531,22 @@
           {
             "type": "checkbox",
             "label": "Private",
-            "variable": "private"
+            "variable": "private",
+            "label:de-DE": "Verdeckt",
+            "label:pt-BR": "Em segredo"
           },
           {
             "type": "number",
             "label": "Tricks",
             "variable": "tricks",
             "min": "0",
-            "max": 13
+            "max": 13,
+            "label:de-DE": "Stiche",
+            "label:pt-BR": "Vazas"
           }
-        ]
+        ],
+        "header:de-DE": "Stiche vorhersagen",
+        "header:pt-BR": "Prever vazas"
       },
       "var target = 'openTricksPrediction'",
       {

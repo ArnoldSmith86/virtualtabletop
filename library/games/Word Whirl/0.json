@@ -16,31 +16,47 @@
             "options": [
               {
                 "value": "en-US",
-                "text": "American English"
+                "text": "American English",
+                "text:de-DE": "Amerikanisches Englisch",
+                "text:pt-BR": "Inglês americano"
               },
               {
                 "value": "de-DE",
-                "text": "German"
+                "text": "German",
+                "text:de-DE": "Deutsch",
+                "text:pt-BR": "Alemão"
               },
               {
                 "value": "pt-BR",
-                "text": "Brazilian Portuguese"
+                "text": "Brazilian Portuguese",
+                "text:de-DE": "Brasilianisches Portugiesisch",
+                "text:pt-BR": "Português brasileiro"
               },
               {
                 "value": "fr-FR",
-                "text": "French"
+                "text": "French",
+                "text:de-DE": "Französisch",
+                "text:pt-BR": "Francês"
               },
               {
                 "value": "es-ES",
-                "text": "Spanish"
+                "text": "Spanish",
+                "text:de-DE": "Spanisch",
+                "text:pt-BR": "Espanhol"
               }
-            ]
+            ],
+            "label:de-DE": "Sprache",
+            "label:pt-BR": "Idioma"
           }
         ],
         "confirmButtonText": "New Game",
         "confirmButtonIcon": "play_arrow",
         "cancelButtonText": "Resume Game",
-        "cancelButtonIcon": "close"
+        "cancelButtonIcon": "close",
+        "confirmButtonText:de-DE": "Neues Spiel",
+        "confirmButtonText:pt-BR": "Novo jogo",
+        "cancelButtonText:de-DE": "Spiel fortsetzen",
+        "cancelButtonText:pt-BR": "Retomar jogo"
       },
       {
         "func": "SET",
@@ -4693,7 +4709,9 @@
                 "type": "string",
                 "label": "Name",
                 "variable": "playerName",
-                "value": "${playerName}"
+                "value": "${playerName}",
+                "label:de-DE": "Name",
+                "label:pt-BR": "Nome"
               },
               {
                 "type": "palette",
@@ -4718,9 +4736,13 @@
                   "#607d8b"
                 ],
                 "variable": "playerColor",
-                "value": "${playerColor}"
+                "value": "${playerColor}",
+                "label:de-DE": "Farbe",
+                "label:pt-BR": "Cor"
               }
-            ]
+            ],
+            "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+            "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
           }
         ]
       },
@@ -4799,7 +4821,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -4824,9 +4848,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -5743,7 +5771,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -5768,9 +5798,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6484,7 +6518,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6509,9 +6545,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6621,7 +6661,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6646,9 +6688,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6759,7 +6805,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6784,9 +6832,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6897,7 +6949,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6922,9 +6976,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",

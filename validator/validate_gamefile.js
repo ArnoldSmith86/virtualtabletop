@@ -449,7 +449,9 @@ function validateRoutine(routine, context, propertyPath = []) {
             const propPath = [...operationPath, prop];
             
             // Handle both Set and object-based property definitions
-            const isKnown = knownProps instanceof Set ? knownProps.has(prop) : knownProps[prop] !== undefined;
+            // (accept language-suffixed properties, e.g. header:de-DE)
+            const baseProp = baseLanguageProperty(prop);
+            const isKnown = knownProps instanceof Set ? knownProps.has(baseProp) : knownProps[baseProp] !== undefined;
             let propMatch, varMatch;
             
             if (!isKnown) {

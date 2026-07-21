@@ -5167,9 +5167,13 @@
                 "parameter": "value",
                 "variable": "myColor"
               }
-            ]
+            ],
+            "label:de-DE": "Welche Farbe magst du?",
+            "label:pt-BR": "De qual cor você gosta?"
           }
-        ]
+        ],
+        "header:de-DE": "Ein Kopftext für das Overlay.",
+        "header:pt-BR": "Um texto de cabeçalho para a sobreposição."
       }
     ],
     "x": 517,
@@ -11753,7 +11757,7 @@
       "mode": "teams",
       "time": "30-60",
       "players": "4,6,8",
-      "language": "en-GB",
+      "language": "en-GB, de-DE, pt-BR",
       "variant": "version 1.2",
       "attribution": "This game is released to the public under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Licence.(https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nThe playing card images are by Adrian Kennard and released under CC0 public domain license (https://www.me.uk/cards).\n\nBig thanks to the whole team at Virtual Tabletop.\n\nGame layout for online bhukhar created by:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion on Discord)\n\nv 1.2",
       "similarName": "Bhukhar",

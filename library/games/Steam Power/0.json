@@ -22,7 +22,7 @@
       "helpText": "Players choose a seat by clicking any \"click to sit\" buttons, then type in their name and select their desired color in the popup window. Sit down by clicking the green \"Go\" button.<div><br></div><div>After all players have chosen seats,&nbsp; any one player must click the \"Setup\" button, click the check box in the popup window, and then click the \"Reset the game!\" button. This will randomly determine the starting player, randomly place all city tiles, and give every player 5 random contracts.<div><div><br></div><div>Once done with their turn, the player should click the \"Click to end turn\" button button to the left of their name, which will move to the next player in order. The next player will hear a soft sound and a text alert on screen, reminding them that their turn has begun. Clicking anywhere on the screen will remove the text alert. Any players who do not want to hear the sound and/or see the text alert when it is their turn can click the \"Turn Options\" button in the bottom left corner and change their preference.<br><div><br></div><div>Hovering your mouse over any of the five white boxes in the bottom right corner of the screen will reveal helpful player aids.</div><div><br></div><div>In order to play a track tile, left click and drag the desired type from a holder in the top left corer and place it on the map. Left clicking on a tile on the map rotates it clockwise. The number between the tiles shows how many of that type are left in the supply (when played in person, there are 3 tiles with different front and backs, these are split up in this mod to make it easier to place the type desired).</div><div><br></div><div>Place trains on placed track by left clicking and dragging the train from the stack to the left of that player's name. The trains will snap their orientation to one of 6 sides on the hexagonal grid, let go of the train in the desired location.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Place Factories on empty cities by left clicking and dragging the Factory from the stack to the left of that player's name.&nbsp;</span>When placing Factories onto cities, 5 of the correct resource will automatically be placed onto the city. When spending resources, click on the stack under the number on the city and drag the resource to any edge of the screen and let go, deleting the resource (track tiles can be deleted in the same way).</div><div><br></div><div>Draw new contracts by left clicking on the Contracts Supply stack, dragging the tile to the bottom left corner of the screen and letting go in the area labeled \"Your Hidden Contracts Hand\". The number of contracts each player currently has is displayed to the left of their name.</div><div><br></div><div>When completing Contracts, click and drag them out of the Hidden Contracts Hand, and place them in the \"Completed Contracts\" box to the left of that player's name. The victory points and money gained from the contract will be automatically added to that players supply. The player must perform the bonus action manually, this is not automated.</div><div><br></div><div>In order to pay an opponent any amount of money, left click on the \"pay -&gt;\" button to the left of their name, type in the amount of money you owe them (as a positive number) and then press enter (or click the green \"pay\" button). Money can be taken from opponents in a similar way by typing in a negative number.</div><div><br></div><div>In order to edit their current total points or total money amount, the player must left click on the \"edit -&gt;\" button to the left of the chosen resource, type a number into the box, and press enter (or click the green \"pay\" button). A positive number inputted will increase the resource by that amount, a negative number will decrease by that amount.&nbsp;</div><div><br></div><div>The game end and final scoring are described in the \"Endgame Trigger\" and \"Final Scoring\" white player aid boxes in the bottom right corner. The only automated part of final scoring is the money and victory points from completed contracts already being given to players.</div></div></div></div>",
       "variantImage": "",
       "variant": "Steel Belt map",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "2-5",
       "description:de-DE": "Baue dein Schienennetz, errichte deine Fabriken und ernte die Belohnungen.",
       "description:pt-BR": "Construa a sua malha ferroviária, estabeleça as suas fábricas e colha as recompensas."
@@ -668,7 +668,9 @@
                 "type": "string",
                 "label": "Your Name:",
                 "variable": "name",
-                "value": "${playerName}"
+                "value": "${playerName}",
+                "label:de-DE": "Dein Name:",
+                "label:pt-BR": "Seu nome:"
               },
               {
                 "type": "palette",
@@ -694,9 +696,13 @@
                   "#607d8b"
                 ],
                 "variable": "color",
-                "value": "${playerColor}"
+                "value": "${playerColor}",
+                "label:de-DE": "Deine Farbe:",
+                "label:pt-BR": "Sua cor:"
               }
-            ]
+            ],
+            "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+            "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
           }
         ],
         "elseRoutine": [
@@ -714,7 +720,9 @@
                     "type": "string",
                     "label": "Your Name:",
                     "variable": "name",
-                    "value": "${playerName}"
+                    "value": "${playerName}",
+                    "label:de-DE": "Dein Name:",
+                    "label:pt-BR": "Seu nome:"
                   },
                   {
                     "type": "palette",
@@ -740,20 +748,28 @@
                       "#607d8b"
                     ],
                     "variable": "color",
-                    "value": "${playerColor}"
+                    "value": "${playerColor}",
+                    "label:de-DE": "Deine Farbe:",
+                    "label:pt-BR": "Sua cor:"
                   },
                   {
                     "type": "subtitle",
                     "text": "All done?",
-                    "css": "background-color: var(--VTTblue);color:white;"
+                    "css": "background-color: var(--VTTblue);color:white;",
+                    "text:de-DE": "Alles fertig?",
+                    "text:pt-BR": "Tudo pronto?"
                   },
                   {
                     "type": "checkbox",
                     "label": "Stand up from seat",
                     "variable": "LeaveSeat",
-                    "value": false
+                    "value": false,
+                    "label:de-DE": "Vom Platz aufstehen",
+                    "label:pt-BR": "Levantar do assento"
                   }
-                ]
+                ],
+                "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+                "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
               }
             ],
             "elseRoutine": [
@@ -767,9 +783,17 @@
                     "type": "checkbox",
                     "label": "Remove this player from their seat",
                     "variable": "LeaveSeat",
-                    "value": false
+                    "value": false,
+                    "label:de-DE": "Diesen Spieler von seinem Platz entfernen",
+                    "label:pt-BR": "Remover este jogador do seu assento"
                   }
-                ]
+                ],
+                "header:de-DE": "Möchtest du ${PROPERTY player} wirklich von diesem Platz entfernen?",
+                "header:pt-BR": "Tem certeza de que deseja remover ${PROPERTY player} deste assento?",
+                "confirmButtonText:de-DE": "Okay",
+                "confirmButtonText:pt-BR": "Okay",
+                "cancelButtonText:de-DE": "Abbrechen",
+                "cancelButtonText:pt-BR": "Cancelar"
               }
             ]
           }
@@ -1413,17 +1437,23 @@
           {
             "type": "title",
             "text": "Modify ${player_name}'s Victory Points",
-            "css": "background-color:var(--VTTblue);color:white;"
+            "css": "background-color:var(--VTTblue);color:white;",
+            "text:de-DE": "${player_name}s Siegpunkte ändern",
+            "text:pt-BR": "Modificar os Pontos de Vitória de ${player_name}"
           },
           {
             "type": "number",
             "label": "Type the number of points gained or lost. Put a - before the number to lose points.",
             "variable": "value_change",
-            "value": 0
+            "value": 0,
+            "label:de-DE": "Gib die Anzahl der gewonnenen oder verlorenen Punkte ein. Setze ein - vor die Zahl, um Punkte zu verlieren.",
+            "label:pt-BR": "Digite o número de pontos ganhos ou perdidos. Coloque um - antes do número para perder pontos."
           }
         ],
         "confirmButtonText": "Modify Score",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Punkte ändern",
+        "confirmButtonText:pt-BR": "Modificar pontuação"
       },
       {
         "func": "GET",
@@ -1578,17 +1608,23 @@
           {
             "type": "title",
             "text": "Modify ${player_name}'s Money",
-            "css": "background-color:var(--VTTblue);color:white;"
+            "css": "background-color:var(--VTTblue);color:white;",
+            "text:de-DE": "${player_name}s Geld ändern",
+            "text:pt-BR": "Modificar o dinheiro de ${player_name}"
           },
           {
             "type": "number",
             "label": "Type the number of money gained or lost. Put a - before the number to lose money.",
             "variable": "value_change",
-            "value": 0
+            "value": 0,
+            "label:de-DE": "Gib den Geldbetrag ein, der gewonnen oder verloren wird. Setze ein - vor die Zahl, um Geld zu verlieren.",
+            "label:pt-BR": "Digite a quantia de dinheiro ganha ou perdida. Coloque um - antes do número para perder dinheiro."
           }
         ],
         "confirmButtonText": "Modify Money",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Geld ändern",
+        "confirmButtonText:pt-BR": "Modificar dinheiro"
       },
       {
         "func": "GET",
@@ -3072,11 +3108,15 @@
             "type": "checkbox",
             "label": "Check this box and click the green button to reset the game.",
             "variable": "checkbox",
-            "value": false
+            "value": false,
+            "label:de-DE": "Aktiviere dieses Kästchen und klicke auf die grüne Schaltfläche, um das Spiel zurückzusetzen.",
+            "label:pt-BR": "Marque esta caixa e clique no botão verde para reiniciar o jogo."
           }
         ],
         "confirmButtonText": "Reset the game!",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Spiel zurücksetzen!",
+        "confirmButtonText:pt-BR": "Reiniciar o jogo!"
       },
       {
         "func": "IF",
@@ -9306,17 +9346,23 @@
           {
             "type": "title",
             "text": "Pay ${player_name} Money",
-            "css": "background-color:var(--VTTblue);color:white;"
+            "css": "background-color:var(--VTTblue);color:white;",
+            "text:de-DE": "${player_name} Geld zahlen",
+            "text:pt-BR": "Pagar dinheiro a ${player_name}"
           },
           {
             "type": "number",
             "label": "Type the amount of money you owe ${player_name}:",
             "variable": "value_change",
-            "value": 0
+            "value": 0,
+            "label:de-DE": "Gib den Geldbetrag ein, den du ${player_name} schuldest:",
+            "label:pt-BR": "Digite a quantia de dinheiro que você deve a ${player_name}:"
           }
         ],
         "confirmButtonText": "Pay",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Zahlen",
+        "confirmButtonText:pt-BR": "Pagar"
       },
       {
         "func": "GET",
@@ -10113,21 +10159,29 @@
         "fields": [
           {
             "type": "title",
-            "text": "Player Settings"
+            "text": "Player Settings",
+            "text:de-DE": "Spieler-Einstellungen",
+            "text:pt-BR": "Configurações do jogador"
           },
           {
             "type": "checkbox",
             "label": "Play a sound when it is your turn?",
             "variable": "audio_check",
-            "value": "${audio_enabled}"
+            "value": "${audio_enabled}",
+            "label:de-DE": "Einen Ton abspielen, wenn du am Zug bist?",
+            "label:pt-BR": "Tocar um som quando for a sua vez?"
           },
           {
             "type": "checkbox",
             "label": "Show the 'Its Your Turn!' box?",
             "variable": "banner_check",
-            "value": "${turn_alert_enabled}"
+            "value": "${turn_alert_enabled}",
+            "label:de-DE": "Das Feld 'Du bist dran!' anzeigen?",
+            "label:pt-BR": "Mostrar a caixa 'É a sua vez!'?"
           }
-        ]
+        ],
+        "confirmButtonText:de-DE": "Zug-Einstellungen",
+        "confirmButtonText:pt-BR": "Configurações de turno"
       },
       {
         "func": "SET",

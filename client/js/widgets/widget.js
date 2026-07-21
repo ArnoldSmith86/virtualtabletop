@@ -1,5 +1,5 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
-import { translate } from '../i18n.js';
+import { translate, languageOverrides } from '../i18n.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -38,6 +38,22 @@ function cloneInputOverlayForPlayer(overlay, player, playerIndex) {
       field[property] = inputFieldValueForPlayer(field[property], player, playerIndex);
   }
   return clone;
+}
+
+// Resolve language-suffixed texts of an INPUT overlay (header/button texts and
+// each field's label/text/option texts) for the client that displays it, so a
+// game's INPUT dialogs are translated per player. Returns a shallow copy; the
+// shared routine op is never mutated.
+function localizeInputOverlay(overlay) {
+  const localized = Object.assign({}, overlay, languageOverrides(overlay));
+  if(Array.isArray(overlay.fields))
+    localized.fields = overlay.fields.map(field => {
+      const f = Object.assign({}, field, languageOverrides(field));
+      if(Array.isArray(f.options))
+        f.options = f.options.map(o => (o && typeof o == 'object') ? Object.assign({}, o, languageOverrides(o)) : o);
+      return f;
+    });
+  return localized;
 }
 
 function hasPlayerSpecificChooseField(overlay) {
@@ -2809,6 +2825,8 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, collections, getCollection, problems, handle) {
+    // translate the dialog's texts for the player who sees it (see i18n.js)
+    o = localizeInputOverlay(o);
     this.showInputOverlayWorkingState(false);
 
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';

@@ -17,7 +17,7 @@
       "skill": "",
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "2",
       "similarImage": "",
       "similarAwards": "",
@@ -59,14 +59,20 @@
         "fields": [
           {
             "type": "text",
-            "text": "You're about to recall all cards belonging into this holder. Are you sure?"
+            "text": "You're about to recall all cards belonging into this holder. Are you sure?",
+            "text:de-DE": "Du bist dabei, alle Karten zurückzurufen, die in diesen Halter gehören. Bist du sicher?",
+            "text:pt-BR": "Você está prestes a recolher todas as cartas que pertencem a este suporte. Tem certeza?"
           },
           {
             "type": "checkbox",
             "label": "Recall player-owned cards",
-            "variable": "owned"
+            "variable": "owned",
+            "label:de-DE": "Spielereigene Karten zurückrufen",
+            "label:pt-BR": "Recolher cartas dos jogadores"
           }
-        ]
+        ],
+        "header:de-DE": "Karten werden zurückgerufen...",
+        "header:pt-BR": "Recolhendo cartas..."
       },
       {
         "func": "RECALL",

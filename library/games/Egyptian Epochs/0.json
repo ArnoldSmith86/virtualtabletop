@@ -22,7 +22,7 @@
       "lastUpdate": 1741966570199,
       "variantImage": "",
       "variant": "Egyptian Epochs",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "2-5",
       "usesAIImagery": false,
       "description:de-DE": "Kann deine ägyptische Dynastie die Prüfung der Zeit bestehen?",
@@ -4140,9 +4140,17 @@
         "fields": [
           {
             "type": "text",
-            "text": "Do you really want to end this game and start another? All tiles will be returned and a new game set up for ${playerCount} players."
+            "text": "Do you really want to end this game and start another? All tiles will be returned and a new game set up for ${playerCount} players.",
+            "text:de-DE": "Möchtest du dieses Spiel wirklich beenden und ein neues starten? Alle Plättchen werden zurückgegeben und ein neues Spiel für ${playerCount} Spieler wird eingerichtet.",
+            "text:pt-BR": "Você realmente quer encerrar este jogo e começar outro? Todas as peças serão devolvidas e um novo jogo será preparado para ${playerCount} jogadores."
           }
-        ]
+        ],
+        "header:de-DE": "Möchtest du wirklich ein neues Spiel starten?",
+        "header:pt-BR": "Tem certeza de que deseja iniciar um novo jogo?",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "LABEL",
@@ -4439,9 +4447,17 @@
         "fields": [
           {
             "type": "text",
-            "text": "Check that you really want to end the epoch and start another. You should have completed scoring for this epoch already as tiles without the red scarab icon will be discarded."
+            "text": "Check that you really want to end the epoch and start another. You should have completed scoring for this epoch already as tiles without the red scarab icon will be discarded.",
+            "text:de-DE": "Vergewissere dich, dass du die Epoche wirklich beenden und eine neue beginnen willst. Die Wertung für diese Epoche sollte bereits abgeschlossen sein, da Plättchen ohne das rote Skarabäus-Symbol abgeworfen werden.",
+            "text:pt-BR": "Confirme que você realmente quer encerrar a época e começar outra. Você já deve ter concluído a pontuação desta época, pois as peças sem o ícone do escaravelho vermelho serão descartadas."
           }
-        ]
+        ],
+        "header:de-DE": "Möchtest du wirklich eine neue Epoche beginnen?",
+        "header:pt-BR": "Tem certeza de que deseja iniciar uma nova época?",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",

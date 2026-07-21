@@ -21,7 +21,7 @@
       "lastUpdate": 1682279750595,
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "1-6",
       "similarDesigner": "Edwin S. Lowe",
       "description:de-DE": "Ein Würfelspiel aus Glück und Entscheidungen: Würfle pro Zug bis zu dreimal mit fünf Würfeln und trage das beste Ergebnis in deinem Wertungsblock ein. Fülle alle Felder, um zu gewinnen.",
@@ -1558,15 +1558,21 @@
                     "type": "string",
                     "label": "Name",
                     "variable": "playerName",
-                    "value": "${playerName}"
+                    "value": "${playerName}",
+                    "label:de-DE": "Name",
+                    "label:pt-BR": "Nome"
                   },
                   {
                     "type": "color",
                     "label": "Color",
                     "variable": "playerColor",
-                    "value": "${playerColor}"
+                    "value": "${playerColor}",
+                    "label:de-DE": "Farbe",
+                    "label:pt-BR": "Cor"
                   }
-                ]
+                ],
+                "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+                "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
               }
             ]
           },
@@ -3653,14 +3659,22 @@
           {
             "type": "title",
             "text": "End game",
-            "css": "background:green"
+            "css": "background:green",
+            "text:de-DE": "Spiel beenden",
+            "text:pt-BR": "Encerrar jogo"
           },
           {
             "type": "text",
             "text": "This will end the current game. Are you sure?",
-            "css": "font-size: 24px"
+            "css": "font-size: 24px",
+            "text:de-DE": "Damit wird das aktuelle Spiel beendet. Bist du sicher?",
+            "text:pt-BR": "Isso encerrará o jogo atual. Tem certeza?"
           }
-        ]
+        ],
+        "confirmButtonText:de-DE": "Los",
+        "confirmButtonText:pt-BR": "Fazer",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "CALL",
