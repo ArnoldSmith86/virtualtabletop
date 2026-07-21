@@ -4436,13 +4436,7 @@
     ],
     "parent": "MasterCardHolder",
     "text:de-DE": "Zurückrufen & Mischen",
-    "text:pt-BR": "Recolher & Embaralhar",
-    "css:de-DE": {
-      "font-size": "12px"
-    },
-    "css:pt-BR": {
-      "font-size": "12px"
-    }
+    "text:pt-BR": "Recolher & Embaralhar"
   },
   "numberOfPlayers": {
     "type": "label",
