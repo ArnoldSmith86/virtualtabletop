@@ -1832,7 +1832,18 @@ class DeckEditor {
         // selects (leaving other branches open), double click collapses. Objects only render for the current
         // deck (its faces are the loaded working copy); expanding a face of another deck switches to it.
         const deckExpanded = !this.collapsedDecks.has(deck.id) && (isCurrent || this.expandedDecks.has(deck.id));
-        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTreeIcon icon=style></span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
+        // The current deck's id is editable inline; other decks show a plain label.
+        const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTreeIcon icon=style></span>` + (isCurrent
+          ? `<input class=deckEditorTreeDeckId title="Edit the deck's id">`
+          : `<span class=deckEditorTreeLabel>${html(deck.id)}</span>`));
+        if(isCurrent) {
+          const idInput = $('.deckEditorTreeDeckId', deckRow);
+          idInput.value = deck.id;
+          idInput.onmousedown = e=>e.stopPropagation();
+          idInput.onclick = e=>e.stopPropagation();
+          idInput.ondblclick = e=>e.stopPropagation();
+          idInput.onchange = _=>{ const v = idInput.value.trim(); if(v && v != deck.id) this.changeDeckId(v); else idInput.value = deck.id; };
+        }
         const deckSel = isCurrent && this.treeLevel == 'deck';
         deckRow.classList.toggle('selected', deckSel && this.activeArea == 'tree');
         deckRow.classList.toggle('selectedInactive', deckSel && this.activeArea != 'tree');
@@ -2799,6 +2810,40 @@ class DeckEditor {
     this.render();
   }
 
+  // Rename the deck widget's id (from the tree). updateWidgetId re-parents children, repoints the cards'
+  // "deck" property and any inheritFrom, so nothing else breaks.
+  async changeDeckId(newID) {
+    newID = String(newID).trim();
+    const deck = this.deck();
+    const oldID = this.deckID;
+    if(!deck || !newID || newID == oldID)
+      return;
+    if(widgets.has(newID)) {
+      alert(`A widget with the id "${newID}" already exists. Please choose a different deck id.`);
+      this.renderLeftSidebar();
+      return;
+    }
+    await this.flushPendingCommits(); // save pending edits onto the old deck first
+    const newState = JSON.parse(JSON.stringify(deck.state));
+    newState.id = newID;
+    this.renamingDeck = true;
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} renamed deck ${oldID} to ${newID} in deck editor`);
+    await updateWidgetId(newState, oldID);
+    batchEnd();
+    this.renamingDeck = false;
+    // Migrate the editor's per-deck tree state to the new id.
+    for(const set of [ this.expandedDecks, this.collapsedDecks ])
+      if(set.has(oldID)) { set.delete(oldID); set.add(newID); }
+    for(const set of [ this.expandedFaces, this.collapsedFaces ])
+      for(const key of [...set])
+        if(key.slice(0, oldID.length + 1) == oldID + ':') { set.delete(key); set.add(newID + key.slice(oldID.length)); }
+    this.deckID = newID;
+    this.loadWorkingCopies();
+    this.resetHistory();
+    this.render();
+  }
+
   async renameCardType(oldName, newName) {
     const deck = this.deck();
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
@@ -3016,6 +3061,10 @@ async function createStarterDeck(deckID) {
 
 async function deckEditorReceiveDelta(delta) {
   if(!deckEditor.isOpen())
+    return;
+  // A deck-id rename removes the old deck and adds it back under a new id; changeDeckId reloads the editor
+  // itself, so ignore the delta here (otherwise the old-deck removal would close the editor).
+  if(deckEditor.renamingDeck)
     return;
   // The "Add New Deck" submenu just triggered a creation flow (traditional/custom/image/TTS): when the new
   // deck lands, close the submenu and switch the editor to it so the freshly created deck is shown.
