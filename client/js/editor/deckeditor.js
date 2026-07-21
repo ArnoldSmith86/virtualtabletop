@@ -1503,6 +1503,23 @@ class DeckEditor {
           this.treeLevel = 'face';
         this.render();
       };
+      // Drag-and-drop reordering of card types (dropping one onto another moves it to that position).
+      button.draggable = true;
+      button.ondragstart = e=>{
+        this.dragCardTypeFrom = cardType;
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', cardType); } catch(_) {}
+        button.classList.add('dragging');
+      };
+      button.ondragend = _=>{ button.classList.remove('dragging'); this.dragCardTypeFrom = null; };
+      button.ondragover = e=>{ e.preventDefault(); e.dataTransfer.dropEffect = 'move'; button.classList.add('dragOver'); };
+      button.ondragleave = _=>button.classList.remove('dragOver');
+      button.ondrop = e=>{
+        e.preventDefault();
+        button.classList.remove('dragOver');
+        if(this.dragCardTypeFrom && this.dragCardTypeFrom !== cardType)
+          this.reorderCardType(this.dragCardTypeFrom, cardType);
+      };
     }
     // Restore the scroll position, then make sure the selected tile is actually visible.
     strip.scrollLeft = prevScroll;
@@ -2678,6 +2695,21 @@ class DeckEditor {
     await this.commit('cardTypes', copyOf !== null
       ? `${getPlayerDetails().playerName} copied card type ${copyOf} of deck ${this.deckID} in deck editor`
       : `${getPlayerDetails().playerName} added a card type to deck ${this.deckID} in deck editor`);
+    this.render();
+  }
+
+  // Reorder card types by moving `from` to `to`'s position in the strip (object key order).
+  async reorderCardType(from, to) {
+    if(from === to || this.cardTypes[from] === undefined || this.cardTypes[to] === undefined)
+      return;
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const keys = Object.keys(this.cardTypes).filter(k=>k !== from);
+    keys.splice(keys.indexOf(to), 0, from);
+    const reordered = {};
+    for(const k of keys)
+      reordered[k] = this.cardTypes[k];
+    this.cardTypes = reordered;
+    await this.commit('cardTypes', `${getPlayerDetails().playerName} reordered card types of deck ${this.deckID} in deck editor`);
     this.render();
   }
 
