@@ -155,7 +155,9 @@
         "func": "CALL",
         "widget": "b0b2bf3c-50e3-4145-87cf-e9fb106d3981"
       }
-    ]
+    ],
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir"
   },
   "146344a4-f702-48c7-9acf-b10cf7da85f8": {
     "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
@@ -428,7 +430,9 @@
     "text": "Communication",
     "x": 390,
     "z": 21782,
-    "twoRowBottomAlign": true
+    "twoRowBottomAlign": true,
+    "text:de-DE": "Kommunikation",
+    "text:pt-BR": "Comunicação"
   },
   "45f2a7e7-60f0-4b81-9481-87a19cc08f25": {
     "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25",
@@ -934,7 +938,9 @@
     "movableInEdit": false,
     "css": "font-size:120%;color:white",
     "z": 21778,
-    "parent": "AI Pile"
+    "parent": "AI Pile",
+    "text:de-DE": "KI",
+    "text:pt-BR": "IA"
   },
   "tgc6": {
     "type": "holder",
@@ -1023,7 +1029,9 @@
     "css": "font-size:120%;color:white",
     "text": "Tasks",
     "x": 985.8125,
-    "z": 21781
+    "z": 21781,
+    "text:de-DE": "Aufgaben",
+    "text:pt-BR": "Tarefas"
   },
   "discard1": {
     "id": "discard1",
@@ -1057,7 +1065,9 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false,
     "css": "font-size:120%;color:white",
-    "parent": "discard2"
+    "parent": "discard2",
+    "text:de-DE": "Stiche",
+    "text:pt-BR": "Vazas"
   },
   "AI Pile": {
     "type": "holder",
@@ -1174,7 +1184,9 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "text": "Take"
+    "text": "Take",
+    "text:de-DE": "Nehmen",
+    "text:pt-BR": "Pegar"
   },
   "take2": {
     "type": "button",
@@ -2356,7 +2368,9 @@
         "face": 1,
         "count": 0
       }
-    ]
+    ],
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir"
   },
   "b0b2bf3c-50e3-4145-87cf-e9fb106d3983": {
     "id": "b0b2bf3c-50e3-4145-87cf-e9fb106d3983",
@@ -2381,7 +2395,10 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Mischen",
+    "text:pt-BR": "Embaralhar",
+    "css:pt-BR": "background-color: #243a4e88;border-color:white;color:white; font-size: 14px;"
   },
   "difficulty": {
     "type": "label",
@@ -3370,7 +3387,9 @@
     "css": "font-size:120%;color:white",
     "text": "Current Mission",
     "z": 21790,
-    "twoRowBottomAlign": true
+    "twoRowBottomAlign": true,
+    "text:de-DE": "Aktuelle Mission",
+    "text:pt-BR": "Missão atual"
   },
   "2lcfP": {
     "id": "2lcfP",
@@ -3441,7 +3460,10 @@
     "css": "background-color: #243a4e88;border-color:white;color:white;",
     "z": 21816,
     "text": "Timer",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Timer",
+    "text:pt-BR": "Cronômetro",
+    "css:pt-BR": "background-color: #243a4e88;border-color:white;color:white; font-size: 13px;"
   },
   "timer": {
     "type": "timer",
@@ -3548,7 +3570,10 @@
     "css": "background-color: #243a4e88;border-color:white;color:white;",
     "z": 21819,
     "text": "Predict",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Vorhersagen",
+    "text:pt-BR": "Prever",
+    "css:de-DE": "background-color: #243a4e88;border-color:white;color:white; font-size: 13px;"
   },
   "privateTricksPrediction": {
     "type": "label",
@@ -3922,7 +3947,9 @@
     "z": 21914,
     "width": 140,
     "owner": [],
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Wenn du keine zeitlich begrenzte (Echtzeit-)Mission spielen möchtest, stelle die Schwierigkeit auf 12 und die Kommunikation auf normal.",
+    "text:pt-BR": "Se você não quiser jogar uma missão cronometrada (em tempo real), defina a dificuldade como 12 e a comunicação como normal."
   },
   "timed": {
     "type": "button",
@@ -3995,7 +4022,9 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "text": "Help"
+    "text": "Help",
+    "text:de-DE": "Hilfe",
+    "text:pt-BR": "Ajuda"
   },
   "e5yj": {
     "deck": "helpTaskDeck",
@@ -4031,7 +4060,9 @@
     "x": 20,
     "y": 260,
     "width": 360,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Ein grünes Kästchen mit einer '6' verweist auf genau diese Karte: die grüne 6. Raketen sind schwarz.",
+    "text:pt-BR": "Uma caixa verde com um '6' se refere a essa carta específica: o 6 verde. Os foguetes são pretos."
   },
   "e7yj": {
     "deck": "helpTaskDeck",
@@ -4066,14 +4097,18 @@
     "x": 898,
     "y": 116,
     "inheritFrom": "5j18",
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Alle dürfen kommunizieren, aber niemand darf anzeigen, ob es die niedrigste, höchste oder einzige Karte ist.\nDie Karte muss dennoch eines dieser Kriterien erfüllen.",
+    "text:pt-BR": "Todos podem se comunicar, mas ninguém pode indicar se é a carta mais baixa, mais alta ou a única.\nAinda assim, a carta precisa satisfazer um desses critérios."
   },
   "5j20": {
     "id": "5j20",
     "text": "There are two communication tokens less than players. As long as there's still a token left, anyone can communicate. One player can even take multiple tokens (even at the same time).",
     "y": 254.66666666666663,
     "inheritFrom": "5j19",
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Es gibt zwei Kommunikationsmarker weniger als Spieler. Solange noch ein Marker übrig ist, darf jeder kommunizieren. Ein Spieler darf sogar mehrere Marker nehmen (auch gleichzeitig).",
+    "text:pt-BR": "Há dois marcadores de comunicação a menos que o número de jogadores. Enquanto houver um marcador disponível, qualquer um pode se comunicar. Um jogador pode até pegar vários marcadores (mesmo ao mesmo tempo)."
   },
   "helpComm2": {
     "type": "button",
@@ -4095,7 +4130,9 @@
     "text": "Grey cards indicate any of the four colors. Black rockets are not included.",
     "y": 470,
     "inheritFrom": "5j18",
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Graue Karten stehen für jede der vier Farben. Schwarze Raketen sind nicht enthalten.",
+    "text:pt-BR": "Cartas cinzas representam qualquer uma das quatro cores. Foguetes pretos não estão incluídos."
   },
   "helpDiscuss1": {
     "type": "button",
@@ -4132,14 +4169,18 @@
     "text": "Discuss and distribute the tasks freely among all players.\nThe tasks do not have to be distributed evenly. One player could even take all of them.",
     "y": 393.3333333333333,
     "inheritFrom": "5j19",
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Besprecht und verteilt die Aufgaben frei unter allen Spielern.\nDie Aufgaben müssen nicht gleichmäßig verteilt werden. Ein Spieler könnte sogar alle übernehmen.",
+    "text:pt-BR": "Discutam e distribuam as tarefas livremente entre todos os jogadores.\nAs tarefas não precisam ser distribuídas igualmente. Um jogador poderia até pegar todas."
   },
   "5j23": {
     "id": "5j23",
     "text": "Mission symbols",
     "x": 864,
     "inheritFrom": "5j24",
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Missionssymbole",
+    "text:pt-BR": "Símbolos da missão"
   },
   "5j24": {
     "id": "5j24",
@@ -4149,7 +4190,9 @@
     "inheritFrom": "5j18",
     "parent": "helpOverlay",
     "z": 21946,
-    "css": "color: white; font-size: 40px; "
+    "css": "color: white; font-size: 40px; ",
+    "text:de-DE": "Aufgabenkarten",
+    "text:pt-BR": "Cartas de tarefa"
   },
   "e8yj": {
     "deck": "helpTaskDeck",
@@ -4205,7 +4248,9 @@
     "text": "Winning only certain trump cards is impossible if one player has all of them. These cards contain footnotes that tell you for which constellations you have to re-deal the cards.",
     "y": 656,
     "inheritFrom": "5j18",
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Nur bestimmte Trumpfkarten zu gewinnen ist unmöglich, wenn ein Spieler alle davon hat. Diese Karten enthalten Fußnoten, die dir sagen, bei welchen Konstellationen ihr die Karten neu geben müsst.",
+    "text:pt-BR": "Ganhar apenas certas cartas de trunfo é impossível se um jogador tiver todas elas. Essas cartas contêm notas de rodapé que indicam em quais situações vocês precisam redistribuir as cartas."
   },
   "e12yj": {
     "deck": "helpTaskDeck",
@@ -4312,7 +4357,9 @@
       "5j27": "x",
       "5j21": "*"
     },
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Manche Aufgaben verlangen, dass du einen Stich mit einer bestimmten Karte gewinnst oder eröffnest.",
+    "text:pt-BR": "Algumas tarefas exigem que você ganhe ou inicie uma vaza jogando uma carta específica."
   },
   "5j27": {
     "id": "5j27",
@@ -4320,7 +4367,9 @@
     "inheritFrom": "5j18",
     "x": 401,
     "parent": "helpOverlay",
-    "activeFace": 0
+    "activeFace": 0,
+    "text:de-DE": "Kästchen ohne Zahl stehen für eine beliebige oder mehrere Karten der gezeigten Farbe.",
+    "text:pt-BR": "Caixas que não mostram um número representam uma ou várias cartas da cor exibida."
   },
   "5j28": {
     "id": "5j28",
@@ -4329,7 +4378,9 @@
       "5j27": "x",
       "5j25": "*"
     },
-    "parent": "helpOverlay"
+    "parent": "helpOverlay",
+    "text:de-DE": "Zum Vorhersagen von Stichen benutze bitte die Schaltfläche 'Vorhersagen'. Verdeckt vorhergesagte Stiche werden aufgedeckt, nachdem beim letzten Stich eine 'Nehmen'-Schaltfläche gedrückt wurde.",
+    "text:pt-BR": "Para prever vazas, use o botão 'Prever'. As vazas previstas em segredo serão reveladas após pressionar um botão 'Pegar' na última vaza."
   },
   "5j29": {
     "id": "5j29",
@@ -4337,7 +4388,9 @@
     "y": 532,
     "inheritFrom": "5j19",
     "parent": "helpOverlay",
-    "activeFace": 0
+    "activeFace": 0,
+    "text:de-DE": "Vier Missionen haben ein Zeitlimit.\nDer Kommandant fragt reihum jeden Spieler. Der erste Spieler, der 'Ja' sagt, nimmt alle Aufgaben (der Kommandant ist zuletzt dran und hat keine Wahl).\nBei '2p' geht es weiter, bis ein zweiter Spieler 'Ja' sagt (die letzten 2 haben keine Wahl). Danach besprechen und verteilen sie die Aufgaben.\nBenutze die Schaltfläche 'Timer' vor dem ersten Stich und jeglicher Kommunikation.",
+    "text:pt-BR": "Quatro missões têm um limite de tempo.\nO comandante pergunta a cada jogador na sua vez. O primeiro jogador a responder 'Sim' pega todas as tarefas (o comandante é o último e não tem escolha).\nNo '2p', continua até um segundo jogador dizer 'Sim' (os 2 últimos não têm escolha). Depois eles discutem e distribuem as tarefas.\nUse o botão 'Cronômetro' antes da primeira vaza e de qualquer comunicação."
   },
   "helpOverlayCloseCover": {
     "id": "helpOverlayCloseCover",

@@ -259,7 +259,15 @@
         "relation": "=",
         "value": null
       }
-    ]
+    ],
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "15px"
+    },
+    "css:pt-BR": {
+      "font-size": "15px"
+    }
   },
   "resource_holder1": {
     "type": "holder",
@@ -1468,7 +1476,9 @@
       "1_seat": [
         "color"
       ]
-    }
+    },
+    "text:de-DE": "bearbeiten ->",
+    "text:pt-BR": "editar ->"
   },
   "1_player_money": {
     "type": "label",
@@ -1632,7 +1642,9 @@
       "1_seat": [
         "color"
       ]
-    }
+    },
+    "text:de-DE": "bearbeiten ->",
+    "text:pt-BR": "editar ->"
   },
   "history_toggle": {
     "type": "button",
@@ -1696,7 +1708,9 @@
         "value": "${visibleToSeats}"
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Gesamten Verlauf ansehen",
+    "text:pt-BR": "Ver histórico completo"
   },
   "contracts_deck": {
     "type": "deck",
@@ -3546,7 +3560,17 @@
       }
     ],
     "y": 956,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Aufbau",
+    "text:pt-BR": "Preparação",
+    "css:pt-BR": {
+      "default": {
+        "color": "${PROPERTY textColor}",
+        "font-size": "11px",
+        "background-color": "${PROPERTY backgroundColor}",
+        "border": "5px solid white"
+      }
+    }
   },
   "contract_supply": {
     "type": "holder",
@@ -3889,7 +3913,9 @@
         ]
       }
     ],
-    "current_turn_player_name": "Jonathan"
+    "current_turn_player_name": "Jonathan",
+    "text:de-DE": "Klicken zum Zug beenden",
+    "text:pt-BR": "Clique para encerrar o turno"
   },
   "1_turn_holder": {
     "type": "holder",
@@ -4155,7 +4181,9 @@
         "pointer-events": "none"
       }
     },
-    "text": "On Your Turn"
+    "text": "On Your Turn",
+    "text:de-DE": "In deinem Zug",
+    "text:pt-BR": "No seu turno"
   },
   "hhyq11": {
     "type": "label",
@@ -4166,7 +4194,11 @@
     "css": "font-size: 20px;color: white",
     "text": "Hover for:",
     "x": 724,
-    "y": 973
+    "y": 973,
+    "text:de-DE": "Zeigen für:",
+    "text:pt-BR": "Passe o mouse para:",
+    "css:de-DE": "color: white; font-size: 19px;",
+    "css:pt-BR": "color: white; font-size: 10px;"
   },
   "info_endgame_asset": {
     "id": "info_endgame_asset",
@@ -4225,7 +4257,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Endgame Trigger",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Endspiel-Auslöser",
+    "text:pt-BR": "Gatilho de fim de jogo"
   },
   "info_icons_icon": {
     "id": "info_icons_icon",
@@ -4251,7 +4285,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Icon List",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Symbolliste",
+    "text:pt-BR": "Lista de ícones"
   },
   "info_icons_asset": {
     "id": "info_icons_asset",
@@ -4341,7 +4377,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Final Scoring",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Endwertung",
+    "text:pt-BR": "Pontuação final"
   },
   "info_delivery_asset": {
     "id": "info_delivery_asset",
@@ -4400,7 +4438,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Delivery Info",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Lieferinfo",
+    "text:pt-BR": "Informações de entrega"
   },
   "first_player": {
     "id": "first_player",
@@ -4773,7 +4813,9 @@
     "fixedParent": true,
     "width": 147,
     "y": 8,
-    "x": -7
+    "x": -7,
+    "text:de-DE": "Erfüllte Verträge:\nGeld & Punkte werden automatisch gewertet.",
+    "text:pt-BR": "Contratos concluídos:\nDinheiro e pontos são pontuados automaticamente."
   },
   "2_completed_contracts_label": {
     "type": "label",
@@ -5035,7 +5077,9 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Müll",
+    "text:pt-BR": "Lixo"
   },
   "trash_can2": {
     "type": "holder",
@@ -9374,7 +9418,9 @@
     },
     "outlineColor": "#000000",
     "textShadowBlur": 0,
-    "textShadowDistance": 1
+    "textShadowDistance": 1,
+    "text:de-DE": "zahlen ->",
+    "text:pt-BR": "pagar ->"
   },
   "2_pay_them": {
     "type": "button",
@@ -9460,7 +9506,9 @@
       }
     },
     "height": 50,
-    "x": 146
+    "x": 146,
+    "text:de-DE": "Vollständiger Spielverlauf",
+    "text:pt-BR": "Histórico completo do jogo"
   },
   "your_hand_label": {
     "type": "label",
@@ -9473,7 +9521,9 @@
     "z": 474,
     "movableInEdit": false,
     "css": "font-size: 14px; color: white",
-    "text": "Your Hidden Contracts Hand"
+    "text": "Your Hidden Contracts Hand",
+    "text:de-DE": "Deine verdeckten Verträge",
+    "text:pt-BR": "Sua mão de contratos ocultos"
   },
   "track_straight_supply_holder": {
     "type": "holder",
@@ -9934,7 +9984,9 @@
     "z": 474,
     "movableInEdit": false,
     "css": "font-size: 18px; color: white",
-    "text": "Contracts Supply"
+    "text": "Contracts Supply",
+    "text:de-DE": "Vertragsvorrat",
+    "text:pt-BR": "Reserva de contratos"
   },
   "contracts_supply_label1": {
     "type": "label",
@@ -9945,7 +9997,9 @@
     "z": 474,
     "movableInEdit": false,
     "css": "font-size: 18px; color: white",
-    "text": "Resources Supply"
+    "text": "Resources Supply",
+    "text:de-DE": "Ressourcenvorrat",
+    "text:pt-BR": "Reserva de recursos"
   },
   "straight_gentle_large_holder_BLOCKER": {
     "type": "holder",
@@ -10093,7 +10147,9 @@
         "value": "${banner_check}"
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Hinweis-Einstellungen",
+    "text:pt-BR": "Configurações de alerta"
   },
   "resource_holder32": {
     "type": "holder",
@@ -10345,7 +10401,9 @@
     "text": "It's Your Turn!",
     "passed": false,
     "background_color_solid": "#dddddd",
-    "background_color_transparent": "#dddddd48"
+    "background_color_transparent": "#dddddd48",
+    "text:de-DE": "Du bist dran!",
+    "text:pt-BR": "É a sua vez!"
   },
   "your_turn_label_border": {
     "type": "label",
@@ -10406,6 +10464,8 @@
     "text": "Click anywhere to continue.",
     "background_color_solid": "#9c27b0",
     "background_color_transparent": "#9c27b048",
-    "passed": false
+    "passed": false,
+    "text:de-DE": "Klicke irgendwo, um fortzufahren.",
+    "text:pt-BR": "Clique em qualquer lugar para continuar."
   }
 }

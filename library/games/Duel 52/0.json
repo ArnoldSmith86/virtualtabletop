@@ -40,7 +40,9 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false,
     "css": "color:#000000; font-family:Arial,sans-serif; color:#333; font-size:16px;",
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Nachziehstapel",
+    "text:pt-BR": "Pilha de compra"
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe_shuffleButton": {
     "id": "d3270c7c-2233-4925-acd9-f07932ccd4fe_shuffleButton",
@@ -89,7 +91,9 @@
     "z": 1695,
     "x": 22,
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1.1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold; padding:5px;",
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar"
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe": {
     "id": "d3270c7c-2233-4925-acd9-f07932ccd4fe",
@@ -116,7 +120,9 @@
     "movableInEdit": true,
     "css": "color:#000000; font-family:Arial,sans-serif; color:#333; font-size:16px;",
     "movable": false,
-    "z": 1687
+    "z": 1687,
+    "text:de-DE": "Ablage",
+    "text:pt-BR": "Descarte"
   },
   "1ec0164d-49ff-4bc6-9bdd-daba9d47dd41": {
     "id": "1ec0164d-49ff-4bc6-9bdd-daba9d47dd41",
@@ -173,7 +179,9 @@
     ],
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Starthand nehmen",
+    "text:pt-BR": "Pegar mão inicial"
   },
   "hand2": {
     "id": "hand2",
@@ -225,7 +233,9 @@
     ],
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Basen aufstellen",
+    "text:pt-BR": "Posicionar bases"
   },
   "base1": {
     "id": "base1",
@@ -836,7 +846,9 @@
     "height": 63,
     "movableInEdit": false,
     "movable": false,
-    "css": "font-weight: normal; text-align: left; font-family:Arial,sans-serif; color:#333; font-size:16px;"
+    "css": "font-weight: normal; text-align: left; font-family:Arial,sans-serif; color:#333; font-size:16px;",
+    "text:de-DE": "Kartenvorschau",
+    "text:pt-BR": "Espiar carta"
   },
   "ma3m": {
     "type": "label",
@@ -849,7 +861,9 @@
     "width": 125,
     "height": 63,
     "movableInEdit": true,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Deine Hand",
+    "text:pt-BR": "Sua mão"
   },
   "9yox": {
     "type": "label",
@@ -862,7 +876,9 @@
     "width": 154,
     "height": 25,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Marker",
+    "text:pt-BR": "Fichas"
   },
   "2e9f": {
     "type": "label",
@@ -874,7 +890,9 @@
     "width": 77,
     "css": "text-align: center; font-family:Arial,sans-serif; font-size:11px; color:#323232;",
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Eingefroren",
+    "text:pt-BR": "Congelado"
   },
   "c4og": {
     "type": "label",
@@ -886,7 +904,9 @@
     "width": 77,
     "css": "text-align: center; font-family:Arial,sans-serif; font-size:11px; color:#323232;",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Beschädigt",
+    "text:pt-BR": "Danificado"
   },
   "q9z2": {
     "image": "/assets/-1105183405_572",
@@ -945,7 +965,9 @@
     ],
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "10 abwerfen",
+    "text:pt-BR": "Descartar 10"
   },
   "aen3": {
     "image": "/assets/-1105183405_572",
@@ -1212,7 +1234,11 @@
     "css": "font-family:Arial, sans-serif; font-size:12px; color:#323232;",
     "layer": 1,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Vollständige Regeln unter",
+    "text:pt-BR": "Regras completas em",
+    "css:de-DE": "font-family:Arial, sans-serif;  color:#323232; font-size: 8px;",
+    "css:pt-BR": "font-family:Arial, sans-serif;  color:#323232; font-size: 10px;"
   },
   "rk5i": {
     "image": "/assets/404518135_2843",
@@ -1254,7 +1280,9 @@
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movableInEdit": true,
     "movable": true,
-    "id": "dff6"
+    "id": "dff6",
+    "text:de-DE": "Karte ziehen",
+    "text:pt-BR": "Comprar uma carta"
   },
   "cc2cba6f-b6a3-43c6-98cc-e046704efd81": {
     "id": "cc2cba6f-b6a3-43c6-98cc-e046704efd81",

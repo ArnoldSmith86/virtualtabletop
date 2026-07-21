@@ -172,7 +172,9 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir"
   },
   "146344a4-f702-48c7-9acf-b10cf7da85f8": {
     "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
@@ -652,7 +654,9 @@
     "text": "Communication",
     "x": 390,
     "z": 21782,
-    "twoRowBottomAlign": true
+    "twoRowBottomAlign": true,
+    "text:de-DE": "Kommunikation",
+    "text:pt-BR": "Comunicação"
   },
   "45f2a7e7-60f0-4b81-9481-87a19cc08f25": {
     "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25",
@@ -1608,7 +1612,9 @@
     "movableInEdit": false,
     "css": "font-size:120%;color:white",
     "z": 21778,
-    "parent": "AI Pile"
+    "parent": "AI Pile",
+    "text:de-DE": "KI",
+    "text:pt-BR": "IA"
   },
   "tgc6": {
     "type": "holder",
@@ -1697,7 +1703,9 @@
     "css": "font-size:120%;color:white",
     "text": "Tasks",
     "x": 968.5,
-    "z": 21781
+    "z": 21781,
+    "text:de-DE": "Aufgaben",
+    "text:pt-BR": "Tarefas"
   },
   "discard1": {
     "id": "discard1",
@@ -1731,7 +1739,9 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false,
     "css": "font-size:120%;color:white",
-    "parent": "discard2"
+    "parent": "discard2",
+    "text:de-DE": "Stiche",
+    "text:pt-BR": "Vazas"
   },
   "khsx1": {
     "type": "holder",
@@ -5347,7 +5357,9 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "text": "Take"
+    "text": "Take",
+    "text:de-DE": "Nehmen",
+    "text:pt-BR": "Pegar"
   },
   "take2": {
     "type": "button",

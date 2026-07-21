@@ -419,7 +419,9 @@
         "skip": "${skipClick}"
       }
     ],
-    "language": "en-US"
+    "language": "en-US",
+    "text:de-DE": "Wort",
+    "text:pt-BR": "Palavra"
   },
   "WordList": {
     "id": "WordList",
@@ -4377,7 +4379,9 @@
       "cinc",
       "cremallera",
       "zoológico"
-    ]
+    ],
+    "text:de-DE": "Wortliste",
+    "text:pt-BR": "Lista de palavras"
   },
   "Background": {
     "id": "Background",
@@ -4430,7 +4434,15 @@
         "holder": "${PROPERTY parent}"
       }
     ],
-    "parent": "MasterCardHolder"
+    "parent": "MasterCardHolder",
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "15px"
+    },
+    "css:pt-BR": {
+      "font-size": "15px"
+    }
   },
   "numberOfPlayers": {
     "type": "label",
@@ -5650,7 +5662,9 @@
         "collection": "phaseLabel",
         "value": "1"
       }
-    ]
+    ],
+    "text:de-DE": "Schreibe deine Hinweise",
+    "text:pt-BR": "Escreva suas dicas"
   },
   "Phase2Button": {
     "type": "button",
@@ -5674,7 +5688,9 @@
         "collection": "phaseLabel",
         "value": "2"
       }
-    ]
+    ],
+    "text:de-DE": "Errate die Tafeln",
+    "text:pt-BR": "Adivinhe os tabuleiros"
   },
   "Player2Seat": {
     "type": "seat",
@@ -6406,7 +6422,9 @@
       "color": "white",
       "pointer-events": "none"
     },
-    "text": "Guess\nClues"
+    "text": "Guess\nClues",
+    "text:de-DE": "Hinweise\nerraten",
+    "text:pt-BR": "Adivinhar\ndicas"
   },
   "Player2ViewLabel": {
     "id": "Player2ViewLabel",
@@ -8404,7 +8422,9 @@
       "color": "white",
       "pointer-events": "none"
     },
-    "text": "Write\nClues"
+    "text": "Write\nClues",
+    "text:de-DE": "Hinweise\nschreiben",
+    "text:pt-BR": "Escrever\ndicas"
   },
   "Player2EditLabel": {
     "type": "label",
@@ -8447,7 +8467,9 @@
     "z": 43,
     "classes": "standard_font",
     "css": "font-size: 20px;color:white;text-align:right",
-    "text": "When you think you've got it, press:"
+    "text": "When you think you've got it, press:",
+    "text:de-DE": "Wenn du glaubst, es zu wissen, drücke:",
+    "text:pt-BR": "Quando achar que sabe, aperte:"
   },
   "Player2GuessButtonLabel": {
     "type": "label",
@@ -8491,7 +8513,9 @@
     "css": "font-size: 16px;color:black;text-align:center",
     "width": 550,
     "height": 50,
-    "x": -225
+    "x": -225,
+    "text:de-DE": "Wenn du deine Hinweise geschrieben hast,\nmarkiere dich als bereit:",
+    "text:pt-BR": "Quando terminar de escrever suas dicas,\nmarque-se como pronto:"
   },
   "Player2ReadyButtonLabel": {
     "type": "label",

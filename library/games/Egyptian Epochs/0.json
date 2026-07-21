@@ -1107,7 +1107,9 @@
       "font-size": "12px",
       "font-weight": "bold"
     },
-    "height": 40
+    "height": 40,
+    "text:de-DE": "3 SP\nje",
+    "text:pt-BR": "3 PV\ncada"
   },
   "label-example-god-scoring": {
     "type": "label",
@@ -1120,7 +1122,9 @@
       ],
       "label-example-god-quantity": "*"
     },
-    "text": "2VP\neach"
+    "text": "2VP\neach",
+    "text:de-DE": "2 SP\nje",
+    "text:pt-BR": "2 PV\ncada"
   },
   "label-example-pharaoh-scoring": {
     "type": "label",
@@ -1133,7 +1137,15 @@
       ],
       "label-example-pharaoh-quantity": "*"
     },
-    "text": "Most 5VP\nLess -2VP"
+    "text": "Most 5VP\nLess -2VP",
+    "text:de-DE": "Meiste 5 SP\nWenigste -2 SP",
+    "text:pt-BR": "Mais 5 PV\nMenos -2 PV",
+    "css:de-DE": {
+      "font-size": "10px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -1147,7 +1159,9 @@
       "label-example-nile-quantity": "*"
     },
     "text": "1VP each as long as\nat least one is a flood",
-    "width": 140
+    "width": 140,
+    "text:de-DE": "1 SP je, solange\nmind. eine Flut dabei ist",
+    "text:pt-BR": "1 PV cada, desde que\nhaja ao menos uma cheia"
   },
   "label-example-civ-scoring": {
     "type": "label",
@@ -1161,7 +1175,9 @@
       "label-example-civ-quantity": "*"
     },
     "text": "None -5VP\n3/4/5 different types 5/10/15VP",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Keine -5 SP\n3/4/5 verschiedene Typen 5/10/15 SP",
+    "text:pt-BR": "Nenhum -5 PV\n3/4/5 tipos diferentes 5/10/15 PV"
   },
   "label-example-civ-quantity": {
     "type": "label",
@@ -1169,7 +1185,9 @@
     "x": 637,
     "width": 350,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "5 of each"
+    "text": "5 of each",
+    "text:de-DE": "5 von jedem",
+    "text:pt-BR": "5 de cada"
   },
   "label-example-monument-quantity": {
     "type": "label",
@@ -1177,7 +1195,9 @@
     "x": 1015,
     "width": 560,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "5 of each"
+    "text": "5 of each",
+    "text:de-DE": "5 von jedem",
+    "text:pt-BR": "5 de cada"
   },
   "label-example-monument-scoring": {
     "type": "label",
@@ -1194,7 +1214,9 @@
       "label-example-monument-quantity": "*"
     },
     "text": "-- FINAL EPOCH ONLY --\n1/2/3/4/5/6/7/8 different types 1/2/3/4/5/6/10/15VP\nEach 3/4/5 of a kind 5/10/15VP",
-    "x": 1195
+    "x": 1195,
+    "text:de-DE": "-- NUR LETZTE EPOCHE --\n1/2/3/4/5/6/7/8 verschiedene Typen 1/2/3/4/5/6/10/15 SP\nJe 3/4/5 gleiche 5/10/15 SP",
+    "text:pt-BR": "-- SOMENTE ÉPOCA FINAL --\n1/2/3/4/5/6/7/8 tipos diferentes 1/2/3/4/5/6/10/15 PV\nCada 3/4/5 iguais 5/10/15 PV"
   },
   "pile-suns": {
     "type": "pile",
@@ -2191,7 +2213,17 @@
       "color": "#000000",
       "font-size": "12px"
     },
-    "height": 12
+    "height": 12,
+    "text:de-DE": "NACHZIEHSTAPEL",
+    "text:pt-BR": "PILHA DE COMPRA",
+    "css:de-DE": {
+      "color": "#000000",
+      "font-size": "8px"
+    },
+    "css:pt-BR": {
+      "color": "#000000",
+      "font-size": "8px"
+    }
   },
   "holder-tiles-discard": {
     "type": "holder",
@@ -2205,7 +2237,9 @@
     "id": "label-tiles-discard",
     "parent": "holder-tiles-discard",
     "text": "DISCARD",
-    "inheritFrom": "label-tiles-draw"
+    "inheritFrom": "label-tiles-draw",
+    "text:de-DE": "ABLAGE",
+    "text:pt-BR": "DESCARTE"
   },
   "label-example-suns-scoring": {
     "type": "label",
@@ -2219,7 +2253,9 @@
       ],
       "label-example-monument-quantity": "*"
     },
-    "text": "-- FINAL EPOCH ONLY --\nHighest suns total +5VP\nLowest suns total -5VP"
+    "text": "-- FINAL EPOCH ONLY --\nHighest suns total +5VP\nLowest suns total -5VP",
+    "text:de-DE": "-- NUR LETZTE EPOCHE --\nHöchste Sonnensumme +5 SP\nNiedrigste Sonnensumme -5 SP",
+    "text:pt-BR": "-- SOMENTE ÉPOCA FINAL --\nMaior total de sóis +5 PV\nMenor total de sóis -5 PV"
   },
   "tile-horus-1": {
     "type": "card",
@@ -4037,7 +4073,15 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Plättchen ziehen",
+    "text:pt-BR": "Comprar peça",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "button-end-turn": {
     "type": "button",
@@ -4060,7 +4104,15 @@
         ],
         "face": 0
       }
-    ]
+    ],
+    "text:de-DE": "Zug beenden",
+    "text:pt-BR": "Encerrar turno",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "button-new-game": {
     "type": "button",
@@ -4361,7 +4413,9 @@
       ]
     },
     "z": 2,
-    "y": 34
+    "y": 34,
+    "text:de-DE": "Neues Spiel",
+    "text:pt-BR": "Novo jogo"
   },
   "button-new-epoch": {
     "type": "button",
@@ -4455,7 +4509,12 @@
         "widget": "button-new-game",
         "routine": "setStartPlayerRoutine"
       }
-    ]
+    ],
+    "text:de-DE": "Neue Epoche",
+    "text:pt-BR": "Nova época",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "button-empty-auction": {
     "type": "button",
@@ -4471,7 +4530,12 @@
         "to": "holder-tiles-discard",
         "count": "all"
       }
-    ]
+    ],
+    "text:de-DE": "Alle ablegen",
+    "text:pt-BR": "Descartar tudo",
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "button-win-p1": {
     "type": "button",
@@ -4599,7 +4663,12 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Sieg",
+    "text:pt-BR": "Vitória",
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "button-win-p2": {
     "type": "button",
@@ -4715,6 +4784,14 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Punkte verbergen",
+    "text:pt-BR": "Ocultar pontuação",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   }
 }

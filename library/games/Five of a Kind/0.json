@@ -37,7 +37,9 @@
     "movable": false,
     "width": 130,
     "x": 130,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Asse",
+    "text:pt-BR": "Some e adicione\napenas os Ases"
   },
   "xprj1": {
     "id": "xprj1",
@@ -53,7 +55,9 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Zweien",
+    "text:pt-BR": "Some e adicione\napenas os Dois"
   },
   "xprj2": {
     "id": "xprj2",
@@ -69,7 +73,9 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Dreien",
+    "text:pt-BR": "Some e adicione\napenas os Três"
   },
   "xprj3": {
     "id": "xprj3",
@@ -85,7 +91,12 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Vieren",
+    "text:pt-BR": "Some e adicione\napenas os Quatros",
+    "css:pt-BR": {
+      "font-size": "15px"
+    }
   },
   "xprj4": {
     "id": "xprj4",
@@ -101,7 +112,9 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Fünfen",
+    "text:pt-BR": "Some e adicione\napenas os Cincos"
   },
   "xprj5": {
     "id": "xprj5",
@@ -117,7 +130,9 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Sechsen",
+    "text:pt-BR": "Some e adicione\napenas os Seis"
   },
   "xprj6": {
     "id": "xprj6",
@@ -129,7 +144,10 @@
     "movable": false,
     "css": "font-size:16pt",
     "width": 150,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Gesamtpunktzahl",
+    "text:pt-BR": "Pontuação total",
+    "css:de-DE": "font-size: 19px;"
   },
   "xprj7": {
     "id": "xprj7",
@@ -141,7 +159,9 @@
     "width": 180,
     "movable": false,
     "css": "font-size:16pt",
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Bonus (bei 63\noder mehr)",
+    "text:pt-BR": "Bônus (se 63\nou mais)"
   },
   "xprj8": {
     "id": "xprj8",
@@ -152,7 +172,9 @@
     "height": 50,
     "width": 180,
     "css": "font-weight:bold;font-size:16pt",
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Summe oberer Teil",
+    "text:pt-BR": "Total da seção superior"
   },
   "sggf": {
     "text": "3 of a kind",
@@ -162,7 +184,10 @@
     "height": 30,
     "y": 22,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Dreierpasch",
+    "text:pt-BR": "Trinca",
+    "css:de-DE": "font-weight:bold; font-size: 18px;"
   },
   "54hx": {
     "text": "Add total of\n all dice",
@@ -171,7 +196,9 @@
     "x": 185,
     "y": 15,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe aller\nWürfel",
+    "text:pt-BR": "Some todos\nos dados"
   },
   "sggf1": {
     "text": "4 of a kind",
@@ -181,7 +208,10 @@
     "height": 30,
     "y": 92,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Viererpasch",
+    "text:pt-BR": "Quadra",
+    "css:de-DE": "font-weight:bold; font-size: 18px;"
   },
   "sggf2": {
     "text": "Full House",
@@ -191,7 +221,9 @@
     "height": 30,
     "y": 162,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Full House",
+    "text:pt-BR": "Full House"
   },
   "sggf3": {
     "text": "Small Straight",
@@ -202,7 +234,10 @@
     "y": 232,
     "css": "font-size:14pt;font-weight:bold",
     "width": 120,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Kleine Straße",
+    "text:pt-BR": "Sequência pequena",
+    "css:pt-BR": "font-weight:bold; font-size: 14px;"
   },
   "sggf4": {
     "text": "Large Straight",
@@ -213,7 +248,10 @@
     "y": 302,
     "css": "font-size:14pt;font-weight:bold",
     "width": 120,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Große Straße",
+    "text:pt-BR": "Sequência grande",
+    "css:pt-BR": "font-weight:bold; font-size: 15px;"
   },
   "sggf5": {
     "text": "5 of a kind!",
@@ -223,7 +261,10 @@
     "height": 30,
     "y": 372,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Fünferpasch!",
+    "text:pt-BR": "Quina!",
+    "css:de-DE": "font-weight:bold; font-size: 16px;"
   },
   "sggf6": {
     "text": "Chance",
@@ -233,7 +274,9 @@
     "height": 30,
     "y": 442,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Chance",
+    "text:pt-BR": "Chance"
   },
   "55hx": {
     "text": "Add total of\n all dice",
@@ -242,7 +285,9 @@
     "x": 185,
     "y": 85,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe aller\nWürfel",
+    "text:pt-BR": "Some todos\nos dados"
   },
   "56hx": {
     "text": "Score 25",
@@ -251,7 +296,9 @@
     "x": 185,
     "y": 162,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "25 Punkte",
+    "text:pt-BR": "25 pontos"
   },
   "57hx": {
     "text": "Score 30",
@@ -260,7 +307,9 @@
     "x": 185,
     "y": 232,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "30 Punkte",
+    "text:pt-BR": "30 pontos"
   },
   "58hx": {
     "text": "Score 40",
@@ -269,7 +318,9 @@
     "x": 185,
     "y": 302,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "40 Punkte",
+    "text:pt-BR": "40 pontos"
   },
   "59hx": {
     "text": "Score 50\nfor first",
@@ -278,7 +329,9 @@
     "x": 185,
     "y": 365,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "50 Punkte\n(erstes Mal)",
+    "text:pt-BR": "50 pontos\n(primeiro)"
   },
   "60hx": {
     "text": "Add total of\n all dice",
@@ -287,7 +340,9 @@
     "x": 185,
     "y": 435,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe aller\nWürfel",
+    "text:pt-BR": "Some todos\nos dados"
   },
   "xprj9": {
     "id": "xprj9",
@@ -299,7 +354,9 @@
     "css": "font-weight:bold;font-size:16pt",
     "movable": false,
     "x": 30,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe unterer Teil",
+    "text:pt-BR": "Total da seção inferior"
   },
   "xprj10": {
     "id": "xprj10",
@@ -311,7 +368,9 @@
     "movable": false,
     "css": "font-weight:bold;font-size:20pt",
     "text": "Grand Total",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Endsumme",
+    "text:pt-BR": "Total geral"
   },
   "table": {
     "id": "table",
@@ -1429,7 +1488,10 @@
       }
     ],
     "pendingYahtzee": false,
-    "clickable": false
+    "clickable": false,
+    "text:de-DE": "Erster Wurf",
+    "text:pt-BR": "Primeira jogada",
+    "css:pt-BR": "background:gray; font-size: 24px;"
   },
   "p1": {
     "type": "seat",
@@ -2811,7 +2873,9 @@
     "parent": "brief",
     "text": "FH",
     "height": 20,
-    "inheritFrom": "yh2y"
+    "inheritFrom": "yh2y",
+    "text:de-DE": "FH",
+    "text:pt-BR": "FH"
   },
   "yh5y": {
     "type": "label",
@@ -2819,7 +2883,9 @@
     "id": "yh5y",
     "parent": "brief",
     "text": "SS",
-    "inheritFrom": "yh2y"
+    "inheritFrom": "yh2y",
+    "text:de-DE": "KS",
+    "text:pt-BR": "SP"
   },
   "yh6y": {
     "type": "label",
@@ -2827,7 +2893,9 @@
     "id": "yh6y",
     "parent": "brief",
     "text": "LS",
-    "inheritFrom": "yh2y"
+    "inheritFrom": "yh2y",
+    "text:de-DE": "GS",
+    "text:pt-BR": "SG"
   },
   "yh7y": {
     "type": "label",
@@ -3693,7 +3761,9 @@
         "value": true
       }
     ],
-    "clickable": false
+    "clickable": false,
+    "text:de-DE": "Spiel starten",
+    "text:pt-BR": "Iniciar jogo"
   },
   "message": {
     "type": "label",
@@ -3703,7 +3773,9 @@
     "width": 500,
     "height": 70,
     "css": "background-color:white; border-color:black; border:5px solid black; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; font-size:60px; color:red",
-    "text": "Game Over"
+    "text": "Game Over",
+    "text:de-DE": "Spiel vorbei",
+    "text:pt-BR": "Fim de jogo"
   },
   "vm6aP": {
     "fixedParent": true,
