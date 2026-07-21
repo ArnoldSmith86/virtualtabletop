@@ -1696,9 +1696,7 @@
         "value": "${visibleToSeats}"
       }
     ],
-    "movableInEdit": false,
-    "text:de-DE": "Verlauf anzeigen",
-    "text:pt-BR": "Ver histórico completo"
+    "movableInEdit": false
   },
   "contracts_deck": {
     "type": "deck",

@@ -12,7 +12,7 @@
       "attribution": "The room design and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nThe library image is by AlbertHerring and is available under CC BY 2.0 from https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
       "showName": true,
       "skill": "",
-      "description": "",
+      "description": "A dice game of luck and choices: roll five dice up to three times per turn and claim the best category on your scorecard. Fill every box to win.",
       "similarImage": "",
       "similarName": "Yahtzee",
       "similarAwards": "",
@@ -23,7 +23,9 @@
       "variant": "",
       "language": "en-US",
       "players": "1-6",
-      "similarDesigner": "Edwin S. Lowe"
+      "similarDesigner": "Edwin S. Lowe",
+      "description:de-DE": "Ein Würfelspiel aus Glück und Entscheidungen: Würfle pro Zug bis zu dreimal mit fünf Würfeln und trage das beste Ergebnis in deinem Wertungsblock ein. Fülle alle Felder, um zu gewinnen.",
+      "description:pt-BR": "Um jogo de dados de sorte e escolhas: jogue cinco dados até três vezes por turno e marque a melhor categoria na sua tabela. Preencha todos os campos para vencer."
     }
   },
   "xprj": {
@@ -127,9 +129,7 @@
     "movable": false,
     "css": "font-size:16pt",
     "width": 150,
-    "parent": "h1",
-    "text:de-DE": "Gesamtpunktzahl",
-    "text:pt-BR": "Pontuação total"
+    "parent": "h1"
   },
   "xprj7": {
     "id": "xprj7",
@@ -311,9 +311,7 @@
     "movable": false,
     "css": "font-weight:bold;font-size:20pt",
     "text": "Grand Total",
-    "parent": "h2",
-    "text:de-DE": "Endsumme",
-    "text:pt-BR": "Total geral"
+    "parent": "h2"
   },
   "table": {
     "id": "table",

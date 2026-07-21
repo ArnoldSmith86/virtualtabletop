@@ -3795,9 +3795,7 @@
     "css": {
       "font-size": "20px"
     },
-    "text": "SCORE",
-    "text:de-DE": "PUNKTE",
-    "text:pt-BR": "PONTOS"
+    "text": "SCORE"
   },
   "button-score-dec-p1": {
     "id": "button-score-dec-p1",
@@ -5219,9 +5217,7 @@
     "css": {
       "font-size": "16px"
     },
-    "text": "CITIES",
-    "text:de-DE": "STÄDTE",
-    "text:pt-BR": "CIDADES"
+    "text": "CITIES"
   },
   "holder-cities-p2": {
     "id": "holder-cities-p2",
@@ -5293,9 +5289,7 @@
     "css": {
       "font-size": "16px"
     },
-    "text": "ZIGGURAT TILES",
-    "text:de-DE": "ZIKKURAT-PLÄTTCHEN",
-    "text:pt-BR": "PEÇAS DE ZIGURATE"
+    "text": "ZIGGURAT TILES"
   },
   "holder-ziggurats-p2": {
     "id": "holder-ziggurats-p2",
@@ -5397,9 +5391,7 @@
         "func": "TURN",
         "turnCycle": "forward"
       }
-    ],
-    "text:de-DE": "Zug beenden",
-    "text:pt-BR": "Encerrar turno"
+    ]
   },
   "button-score-cities": {
     "id": "button-score-cities",
@@ -5443,9 +5435,7 @@
           }
         ]
       }
-    ],
-    "text:de-DE": "Städte werten",
-    "text:pt-BR": "Pontuar cidades"
+    ]
   },
   "holder-ziggurats": {
     "id": "holder-ziggurats",

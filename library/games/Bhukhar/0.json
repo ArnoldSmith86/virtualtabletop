@@ -345,9 +345,7 @@
     "x": 240,
     "y": 1832,
     "z": 28622,
-    "id": "btnDealOneCard",
-    "text:de-DE": "1 KARTE GEBEN",
-    "text:pt-BR": "DAR 1 CARTA"
+    "id": "btnDealOneCard"
   },
   "player1": {
     "type": "holder",

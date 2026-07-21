@@ -40,9 +40,7 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false,
     "css": "color:#000000; font-family:Arial,sans-serif; color:#333; font-size:16px;",
-    "movable": false,
-    "text:de-DE": "Nachziehstapel",
-    "text:pt-BR": "Pilha de compra"
+    "movable": false
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe_shuffleButton": {
     "id": "d3270c7c-2233-4925-acd9-f07932ccd4fe_shuffleButton",
@@ -118,9 +116,7 @@
     "movableInEdit": true,
     "css": "color:#000000; font-family:Arial,sans-serif; color:#333; font-size:16px;",
     "movable": false,
-    "z": 1687,
-    "text:de-DE": "Ablage",
-    "text:pt-BR": "Descarte"
+    "z": 1687
   },
   "1ec0164d-49ff-4bc6-9bdd-daba9d47dd41": {
     "id": "1ec0164d-49ff-4bc6-9bdd-daba9d47dd41",
@@ -840,9 +836,7 @@
     "height": 63,
     "movableInEdit": false,
     "movable": false,
-    "css": "font-weight: normal; text-align: left; font-family:Arial,sans-serif; color:#333; font-size:16px;",
-    "text:de-DE": "Kartenvorschau",
-    "text:pt-BR": "Espiar carta"
+    "css": "font-weight: normal; text-align: left; font-family:Arial,sans-serif; color:#333; font-size:16px;"
   },
   "ma3m": {
     "type": "label",
@@ -855,9 +849,7 @@
     "width": 125,
     "height": 63,
     "movableInEdit": true,
-    "movable": false,
-    "text:de-DE": "Deine Hand",
-    "text:pt-BR": "Sua mão"
+    "movable": false
   },
   "9yox": {
     "type": "label",
@@ -870,9 +862,7 @@
     "width": 154,
     "height": 25,
     "movable": false,
-    "movableInEdit": false,
-    "text:de-DE": "Marker",
-    "text:pt-BR": "Fichas"
+    "movableInEdit": false
   },
   "2e9f": {
     "type": "label",
