@@ -60,11 +60,14 @@ export class StateManaged {
     this.applyDelta(delta);
   }
 
-  getDefaultValue(key) {
+  getDefaultValue(key, raw) {
+    // `raw` resolves inherited properties through getRaw() so the value stays
+    // language-neutral for routine reads (see get()/getRaw())
+    const read = w => raw ? w.getRaw(key) : w.get(key);
     if(this.inheritedProperties)
       for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-          return widgets.get(id).get(key);
+        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && read(widgets.get(id)) !== undefined)
+          return read(widgets.get(id));
     return this.defaults[key];
   }
 
@@ -76,21 +79,21 @@ export class StateManaged {
     const value = this.languageOverrides && this.languageOverrides[property] !== undefined
       ? this.languageOverrides[property]
       : this.state[property];
-    return this.coerceValue(property, value);
+    return this.coerceValue(property, value, false);
   }
 
   getRaw(property) {
-    return this.coerceValue(property, this.state[property]);
+    return this.coerceValue(property, this.state[property], true);
   }
 
-  coerceValue(property, value) {
+  coerceValue(property, value, raw) {
     if(value !== undefined) {
       if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
         return +value;
       else
         return value;
     } else {
-      const defaultValue = this.getDefaultValue(property);
+      const defaultValue = this.getDefaultValue(property, raw);
       return defaultValue !== undefined ? defaultValue : null;
     }
   }

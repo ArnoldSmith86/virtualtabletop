@@ -268,7 +268,8 @@ const ALLOWED_LANGUAGES = [
 // otherwise `prop` itself, so it is validated like the property it translates.
 function baseLanguageProperty(prop) {
     const match = prop.match(/^(.+):([A-Za-z][A-Za-z0-9-]*)$/);
-    return match && ALLOWED_LANGUAGES.includes(match[2]) ? match[1] : prop;
+    // runtime language matching (i18n.js) is case-insensitive, so match here too
+    return match && ALLOWED_LANGUAGES.some(l => l.toLowerCase() === match[2].toLowerCase()) ? match[1] : prop;
 }
 
 function asArray(value) {

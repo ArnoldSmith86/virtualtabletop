@@ -539,8 +539,8 @@ export class Widget extends StateManaged {
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
       if(!parent || !widgets.get(parent).get('alignChildren')) {
-        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.getRaw('x')) + xOffset);
+        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.getRaw('y')) + yOffset);
         await cWidget.updatePiles();
       }
       delete cWidget.movedByButton;
