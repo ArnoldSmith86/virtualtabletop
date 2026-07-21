@@ -1237,8 +1237,10 @@
     "movableInEdit": false,
     "text:de-DE": "Vollständige Regeln unter",
     "text:pt-BR": "Regras completas em",
-    "css:de-DE": "font-family:Arial, sans-serif;  color:#323232; font-size: 8px;",
-    "css:pt-BR": "font-family:Arial, sans-serif;  color:#323232; font-size: 10px;"
+    "css:de-DE": "font-family:Arial, sans-serif;  color:#323232; font-size: 11px;",
+    "height:de-DE": 32,
+    "css:pt-BR": "font-family:Arial, sans-serif;  color:#323232; font-size: 11px;",
+    "height:pt-BR": 32
   },
   "rk5i": {
     "image": "/assets/404518135_2843",

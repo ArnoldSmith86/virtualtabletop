@@ -93,10 +93,7 @@
     "movableInEdit": true,
     "parent": "h1",
     "text:de-DE": "Zähle und addiere\nnur Vieren",
-    "text:pt-BR": "Some e adicione\napenas os Quatros",
-    "css:pt-BR": {
-      "font-size": "15px"
-    }
+    "text:pt-BR": "Some e adicione\napenas os Quatros"
   },
   "xprj4": {
     "id": "xprj4",
@@ -146,8 +143,7 @@
     "width": 150,
     "parent": "h1",
     "text:de-DE": "Gesamtpunktzahl",
-    "text:pt-BR": "Pontuação total",
-    "css:de-DE": "font-size: 19px;"
+    "text:pt-BR": "Pontuação total"
   },
   "xprj7": {
     "id": "xprj7",
@@ -186,8 +182,7 @@
     "css": "font-size:14pt;font-weight:bold",
     "parent": "h2",
     "text:de-DE": "Dreierpasch",
-    "text:pt-BR": "Trinca",
-    "css:de-DE": "font-weight:bold; font-size: 18px;"
+    "text:pt-BR": "Trinca"
   },
   "54hx": {
     "text": "Add total of\n all dice",
@@ -210,8 +205,7 @@
     "css": "font-size:14pt;font-weight:bold",
     "parent": "h2",
     "text:de-DE": "Viererpasch",
-    "text:pt-BR": "Quadra",
-    "css:de-DE": "font-weight:bold; font-size: 18px;"
+    "text:pt-BR": "Quadra"
   },
   "sggf2": {
     "text": "Full House",
@@ -236,8 +230,7 @@
     "width": 120,
     "parent": "h2",
     "text:de-DE": "Kleine Straße",
-    "text:pt-BR": "Sequência pequena",
-    "css:pt-BR": "font-weight:bold; font-size: 14px;"
+    "text:pt-BR": "Sequência pequena"
   },
   "sggf4": {
     "text": "Large Straight",
@@ -250,8 +243,7 @@
     "width": 120,
     "parent": "h2",
     "text:de-DE": "Große Straße",
-    "text:pt-BR": "Sequência grande",
-    "css:pt-BR": "font-weight:bold; font-size: 15px;"
+    "text:pt-BR": "Sequência grande"
   },
   "sggf5": {
     "text": "5 of a kind!",
@@ -263,8 +255,7 @@
     "css": "font-size:14pt;font-weight:bold",
     "parent": "h2",
     "text:de-DE": "Fünferpasch!",
-    "text:pt-BR": "Quina!",
-    "css:de-DE": "font-weight:bold; font-size: 16px;"
+    "text:pt-BR": "Quina!"
   },
   "sggf6": {
     "text": "Chance",
@@ -1490,8 +1481,7 @@
     "pendingYahtzee": false,
     "clickable": false,
     "text:de-DE": "Erster Wurf",
-    "text:pt-BR": "Primeira jogada",
-    "css:pt-BR": "background:gray; font-size: 24px;"
+    "text:pt-BR": "Primeira jogada"
   },
   "p1": {
     "type": "seat",

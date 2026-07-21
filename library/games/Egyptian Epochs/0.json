@@ -1139,13 +1139,7 @@
     },
     "text": "Most 5VP\nLess -2VP",
     "text:de-DE": "Meiste 5 SP\nWenigste -2 SP",
-    "text:pt-BR": "Mais 5 PV\nMenos -2 PV",
-    "css:de-DE": {
-      "font-size": "10px"
-    },
-    "css:pt-BR": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Mais 5 PV\nMenos -2 PV"
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -2215,15 +2209,7 @@
     },
     "height": 12,
     "text:de-DE": "NACHZIEHSTAPEL",
-    "text:pt-BR": "PILHA DE COMPRA",
-    "css:de-DE": {
-      "color": "#000000",
-      "font-size": "8px"
-    },
-    "css:pt-BR": {
-      "color": "#000000",
-      "font-size": "8px"
-    }
+    "text:pt-BR": "PILHA DE COMPRA"
   },
   "holder-tiles-discard": {
     "type": "holder",
@@ -4075,13 +4061,7 @@
       }
     ],
     "text:de-DE": "Plättchen ziehen",
-    "text:pt-BR": "Comprar peça",
-    "css:de-DE": {
-      "font-size": "11px"
-    },
-    "css:pt-BR": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Comprar peça"
   },
   "button-end-turn": {
     "type": "button",
@@ -4106,13 +4086,7 @@
       }
     ],
     "text:de-DE": "Zug beenden",
-    "text:pt-BR": "Encerrar turno",
-    "css:de-DE": {
-      "font-size": "11px"
-    },
-    "css:pt-BR": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Encerrar turno"
   },
   "button-new-game": {
     "type": "button",
@@ -4511,10 +4485,7 @@
       }
     ],
     "text:de-DE": "Neue Epoche",
-    "text:pt-BR": "Nova época",
-    "css:de-DE": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Nova época"
   },
   "button-empty-auction": {
     "type": "button",
@@ -4532,10 +4503,7 @@
       }
     ],
     "text:de-DE": "Alle ablegen",
-    "text:pt-BR": "Descartar tudo",
-    "css:pt-BR": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Descartar tudo"
   },
   "button-win-p1": {
     "type": "button",
@@ -4665,10 +4633,7 @@
       }
     ],
     "text:de-DE": "Sieg",
-    "text:pt-BR": "Vitória",
-    "css:pt-BR": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Vitória"
   },
   "button-win-p2": {
     "type": "button",
@@ -4786,12 +4751,6 @@
       }
     ],
     "text:de-DE": "Punkte verbergen",
-    "text:pt-BR": "Ocultar pontuação",
-    "css:de-DE": {
-      "font-size": "11px"
-    },
-    "css:pt-BR": {
-      "font-size": "11px"
-    }
+    "text:pt-BR": "Ocultar pontuação"
   }
 }
