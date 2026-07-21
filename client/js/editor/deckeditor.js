@@ -1518,8 +1518,10 @@ class DeckEditor {
     }
 
     if(object) {
-      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard',
-        object.type == 'html' ? 'The JSON Editor should be used for editing HTML face objects.' : undefined);
+      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard');
+      // Note below (not part of) the header, in the same style as the Dynamic properties note.
+      if(object.type == 'html')
+        div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
 
       // For image objects the upload button sits right under the header (its most useful spot).
       if(object.type == 'image')
@@ -2240,7 +2242,7 @@ class DeckEditor {
     sidebar.append(header);
 
     const container = div(sidebar, 'deckEditorDynamicProperties');
-    div(container, 'deckEditorDynamicPropertiesIntro').textContent = 'These specify a different face object for each card type.';
+    div(container, 'deckEditorSectionNote').textContent = 'These specify a different face object for each card type.';
 
     // Column headers, laid out with the same flex structure as the binding rows so they line up above them.
     div(container, 'deckEditorDynamicProperty deckEditorDynamicPropertyHeaders', '<span class=deckEditorBindingObjectProp>Object property</span><span class=deckEditorBindingLink></span><span class=deckEditorBindingTypeProp>Card property</span><span class=deckEditorBindingDeleteSpacer></span>');
@@ -2313,9 +2315,8 @@ class DeckEditor {
         <span class="deckEditorBindingLink material-symbols">link</span>
         <input class="typeProperty deckEditorBindingTypeProp" list=deckEditorTypePropList placeholder="Card property" title="Card type property to read from - pick one or type a new name">
         <datalist id=deckEditorTypePropList>${typePropertyOptions.map(p=>`<option value="${html(p)}"></option>`).join('')}</datalist>
-        <span class=deckEditorBindingDeleteSpacer></span>
+        <button class=deckEditorAddBindingButton icon=link title="Add new dynamic property link"></button>
       </div>
-      <button class=deckEditorAddBindingButton icon=link>Link</button>
     `);
     $('button', addRow).onclick = async _=>{
       const objectProperty = $('.objectProperty', addRow).value.trim();

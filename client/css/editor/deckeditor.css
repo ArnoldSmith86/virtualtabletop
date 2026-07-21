@@ -772,7 +772,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 #deckEditorSidebar {
-  width: 320px;
+  width: 380px;
   flex-shrink: 0;
   overflow-y: auto;
   border-left: 1px solid var(--backgroundHighlightColor1);
@@ -859,22 +859,25 @@ body.deckEditorPanning #deckEditorMain * {
   flex-shrink: 0;
 }
 
+/* Shorter, smaller fields matching the "add new property" rows above; keep the placeholder readable. */
 .deckEditorBindingObjectProp,
 .deckEditorBindingTypeProp {
   flex: 1 1 0;
   min-width: 0;
-  padding: 4px;
+  padding: 2px 4px;
+  font-size: 12px;
 }
 
 .deckEditorBindingLink {
   flex-shrink: 0;
-  width: 20px;
+  width: 16px;
   text-align: center;
   opacity: 0.7;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-.deckEditorDynamicPropertiesIntro {
+/* Shared style for the small notes under section headers (Dynamic properties intro, HTML-object hint). */
+.deckEditorSectionNote {
   font-size: 12px;
   opacity: 0.85;
   margin: 2px 5px 8px;
@@ -899,11 +902,11 @@ body.deckEditorPanning #deckEditorMain * {
   flex-grow: 1;
 }
 
-/* "Add binding" control: a title, a row on the same grid as the bindings above, then a full-width Link button.
-   No inset padding/background so its two input columns line up with the headers and existing binding rows. */
+/* "Add binding" control: a title, then a row on the same grid as the bindings above with the Link button at
+   the far right (where the trash sits on saved rows). No inset padding/background so the input columns align. */
 .deckEditorAddBinding {
   margin-top: 8px;
-  border-top: 1px solid #0003;
+  border-top: 1px solid rgba(128, 128, 128, 0.45); /* visible in both light and dark themes */
   padding-top: 8px;
 }
 
@@ -918,8 +921,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 .deckEditorAddBindingButton {
-  width: 100%;
-  margin-top: 6px;
+  flex-shrink: 0;
 }
 
 #deckEditorSidebar .deckEditorProperties .genericInput {
