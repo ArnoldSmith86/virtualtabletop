@@ -52,8 +52,15 @@ class Deck extends Widget {
   cardPropertyGet(cardType, face, property) {
     const thisFaceTemplates = this.get('faceTemplates');
     const thisCardTypes = this.get('cardTypes');
-    if(thisCardTypes[cardType] && thisCardTypes[cardType][property] !== undefined)
-      return thisCardTypes[cardType][property];
+    if(thisCardTypes[cardType]) {
+      // resolve language-suffixed card-type properties (e.g. cardName:de-DE) for
+      // the selected UI language, so card faces can be translated (see i18n.js)
+      const overrides = languageOverrides(thisCardTypes[cardType]);
+      if(overrides && overrides[property] !== undefined)
+        return overrides[property];
+      if(thisCardTypes[cardType][property] !== undefined)
+        return thisCardTypes[cardType][property];
+    }
     if(thisFaceTemplates[face] && thisFaceTemplates[face].properties && thisFaceTemplates[face].properties[property] !== undefined)
       return thisFaceTemplates[face].properties[property];
 

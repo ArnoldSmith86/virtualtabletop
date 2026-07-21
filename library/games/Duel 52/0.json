@@ -1303,56 +1303,95 @@
     "type": "deck",
     "cardTypes": {
       "type-42677dda-ead0-4e9c-a08b-c97b6192d1d0": {
-        "image": "/assets/-807826676_3742",
-        "label": "2"
+        "image": "/assets/95349274_3262",
+        "label": "2",
+        "cardName": "VIEW",
+        "cardName:de-DE": "SPÄHEN",
+        "cardName:pt-BR": "ESPIAR"
       },
       "type-0070e59b-1c48-4e50-b328-5f0251f46c86": {
-        "image": "/assets/-1775852099_4503",
-        "label": "Q"
+        "image": "/assets/-88210342_3328",
+        "label": "Q",
+        "cardName": "MOVE",
+        "cardName:de-DE": "BEWEGEN",
+        "cardName:pt-BR": "MOVER"
       },
       "type-7bb0f0cb-e5c7-4e79-ae26-480855960423": {
-        "image": "/assets/-1119635725_5437",
-        "label": "3"
+        "image": "/assets/-2108261412_4323",
+        "label": "3",
+        "cardName": "TRAP",
+        "cardName:de-DE": "FALLE",
+        "cardName:pt-BR": "ARMADILHA"
       },
       "type-c1be99d5-57ef-445e-be74-b22de55e3645": {
-        "image": "/assets/1788264312_5407",
-        "label": "4"
+        "image": "/assets/-863214040_2085",
+        "label": "4",
+        "cardName": "FORESIGHT",
+        "cardName:de-DE": "WEITBLICK",
+        "cardName:pt-BR": "PREVISÃO"
       },
       "type-f2ee73a8-f3aa-4e69-87fb-be6c10b2cdaf": {
-        "image": "/assets/881358387_3839",
-        "label": "5"
+        "image": "/assets/-446340422_3160",
+        "label": "5",
+        "cardName": "FLIP",
+        "cardName:de-DE": "DREHEN",
+        "cardName:pt-BR": "VIRAR"
       },
       "type-df8186bd-8d47-4f78-8d2f-b395dc8bed9d": {
-        "image": "/assets/1345659874_4993",
-        "label": "6"
+        "image": "/assets/1385411659_3976",
+        "label": "6",
+        "cardName": "FREEZE",
+        "cardName:de-DE": "EINFRIEREN",
+        "cardName:pt-BR": "CONGELAR"
       },
       "type-31605589-d09a-45cc-bd19-80b45267f931": {
-        "image": "/assets/-270728683_1730",
-        "label": "7"
+        "image": "/assets/589223063_907",
+        "label": "7",
+        "cardName": "HEAL ALL",
+        "cardName:de-DE": "ALLE HEILEN",
+        "cardName:pt-BR": "CURAR TUDO"
       },
       "type-80825a7b-adfd-445d-8af4-42bccb7bebe4": {
-        "image": "/assets/1835860572_7463",
-        "label": "8"
+        "image": "/assets/329159359_6114",
+        "label": "8",
+        "cardName": "RETALIATE",
+        "cardName:de-DE": "VERGELTUNG",
+        "cardName:pt-BR": "RETALIAR"
       },
       "type-39ffcef1-5d79-4287-821c-f2be12f7e1c5": {
-        "image": "/assets/-897384564_3528",
-        "label": "9"
+        "image": "/assets/-1752483789_2358",
+        "label": "9",
+        "cardName": "NIMBLE",
+        "cardName:de-DE": "FLINK",
+        "cardName:pt-BR": "ÁGIL"
       },
       "type-a667fe9e-e800-4833-9ee2-fe1fc2afdd14": {
-        "image": "/assets/-822165465_6383",
-        "label": "10"
+        "image": "/assets/-930545820_4101",
+        "label": "10",
+        "cardName": "TWINSTRIKE",
+        "cardName:de-DE": "DOPPELHIEB",
+        "cardName:pt-BR": "GOLPE DUPLO"
       },
       "type-a047f208-a789-49df-9c63-cbbce54d268f": {
-        "image": "/assets/-617719848_3087",
-        "label": "A"
+        "image": "/assets/1107145246_1224",
+        "label": "A",
+        "cardName": "ACTION",
+        "cardName:de-DE": "AKTION",
+        "cardName:pt-BR": "AÇÃO"
       },
       "type-f3b3a76a-9773-46d7-b7e0-1a836578cf84": {
-        "image": "/assets/1097818669_2928",
-        "label": "J"
+        "image": "/assets/-1867212964_2123",
+        "label": "J",
+        "cardName": "TAUNT",
+        "cardName:de-DE": "SPOTT",
+        "cardName:pt-BR": "PROVOCAR"
       },
       "type-c2c369a3-f666-4ed8-ba65-d2ceab421471": {
-        "image": "/assets/861512278_4868",
-        "label": "K"
+        "image": "/assets/-979585399_2697",
+        "label": "K",
+        "cardName": "EMPOWER",
+        "cardName:de-DE": "STÄRKEN",
+        "cardName:pt-BR": "FORTALECER"
       }
     },
     "faceTemplates": [
@@ -1384,6 +1423,19 @@
             "value": "image",
             "width": 100,
             "height": 100
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 70,
+            "width": 100,
+            "height": 30,
+            "color": "#ffffff",
+            "fontSize": 13,
+            "textAlign": "center",
+            "valueType": "dynamic",
+            "value": "cardName",
+            "css": "display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Roboto', sans-serif; white-space: nowrap;"
           }
         ],
         "border": 1,
