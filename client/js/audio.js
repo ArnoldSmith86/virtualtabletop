@@ -1,39 +1,53 @@
 let muted = false;
 let unmuteVol = 30;
 
-let audioPickerData = null;
+let audioPickerLoad = null;
 let audioPickerPreview = null;
 
 // Builds the list of bundled Kenney sound effects (see assets/audio/audio.json)
 // once and wires up the search box. Mirrors loadSymbolPicker in symbols.js.
+// The load is memoized in a promise so concurrent callers all wait for the same
+// fetch+build instead of racing on a half-built list.
 export async function loadAudioPicker() {
-  if(audioPickerData === null) {
-    audioPickerData = 'loading';
-    audioPickerData = await (await fetch('i/audio/audio.json')).json();
-    let list = '';
-    for(const [ category, { directory, sounds } ] of Object.entries(audioPickerData)) {
-      list += `<h2>${category}</h2>`;
-      for(const sound of sounds) {
-        const url = `/i/audio/${directory}/${sound}.ogg`;
-        const keywords = `${category} ${directory} ${sound}`.toLowerCase().replace(/[-_/]+/g, ' ');
-        list += `<div class="audioEntry" data-url="${url}" data-keywords="${keywords}"><button icon="play_arrow" class="audioPreview"></button><span>${sound}</span></div>`;
+  if(!audioPickerLoad) {
+    audioPickerLoad = (async function() {
+      const audioPickerData = await (await fetch('i/audio/audio.json')).json();
+      let list = '';
+      for(const [ category, { directory, sounds } ] of Object.entries(audioPickerData)) {
+        list += `<h2 data-category="${directory}">${category}</h2>`;
+        for(const sound of sounds) {
+          const url = `/i/audio/${directory}/${sound}.mp3`;
+          // search on the pack directory and the sound name only, not the display
+          // category, so e.g. "dice" matches dice sounds and not every card/chip.
+          const keywords = `${directory} ${sound}`.toLowerCase().replace(/[-_/]+/g, ' ');
+          list += `<div class="audioEntry" data-category="${directory}" data-url="${url}" data-keywords="${keywords}"><button icon="play_arrow" class="audioPreview"></button><span>${sound}</span></div>`;
+        }
       }
-    }
-    $('#audioList').innerHTML = list;
+      $('#audioList').innerHTML = list;
 
-    $('#audioPickerOverlay input').onkeyup = function() {
-      const text = regexEscape($('#audioPickerOverlay input').value.toLowerCase());
-      for(const entry of $a('#audioList .audioEntry'))
-        toggleClass(entry, 'hidden', !entry.dataset.keywords.match(text));
-      for(const title of $a('#audioList h2'))
-        toggleClass(title, 'hidden', text);
-    };
+      $('#audioPickerOverlay input').onkeyup = function() {
+        const text = regexEscape($('#audioPickerOverlay input').value.toLowerCase());
+        const visibleCategories = {};
+        for(const entry of $a('#audioList .audioEntry')) {
+          const match = !!entry.dataset.keywords.match(text);
+          toggleClass(entry, 'hidden', !match);
+          if(match)
+            visibleCategories[entry.dataset.category] = true;
+        }
+        // keep the header of any category that still has visible sounds so results
+        // stay grouped and labelled instead of collapsing into a flat list.
+        for(const title of $a('#audioList h2'))
+          toggleClass(title, 'hidden', !visibleCategories[title.dataset.category]);
+      };
+    })().catch(e => { audioPickerLoad = null; throw e; }); // allow retry on failure
   }
+  await audioPickerLoad;
 }
 
 function stopAudioPickerPreview() {
   if(audioPickerPreview) {
-    audioPickerPreview.pause();
+    audioPickerPreview.audio.pause();
+    audioPickerPreview.entry.classList.remove('playing');
     audioPickerPreview = null;
   }
 }
@@ -62,9 +76,19 @@ export async function pickAudio(closeOverlay=true) {
     for(const entry of $a('#audioList .audioEntry')) {
       $('.audioPreview', entry).onclick = function(e) {
         e.stopPropagation();
+        const wasThisEntry = audioPickerPreview && audioPickerPreview.entry == entry;
         stopAudioPickerPreview();
-        audioPickerPreview = new Audio(mapAssetURLs(entry.dataset.url));
-        audioPickerPreview.play().catch(()=>{});
+        if(wasThisEntry)
+          return; // clicking the playing entry again stops it
+        const audio = new Audio(mapAssetURLs(entry.dataset.url));
+        audioPickerPreview = { audio, entry };
+        entry.classList.add('playing');
+        audio.onended = function() {
+          entry.classList.remove('playing');
+          if(audioPickerPreview && audioPickerPreview.entry == entry)
+            audioPickerPreview = null;
+        };
+        audio.play().catch(()=>{});
       };
       entry.onclick = function() {
         stopAudioPickerPreview();

@@ -16,8 +16,10 @@ They are the complete set of free audio packs from Kenney's Audio category
   voiceover/         - "Voiceover Pack"      (https://kenney.nl/assets/voiceover-pack)
   voiceover-fighter/ - "Voiceover Pack (Fighter)" (https://kenney.nl/assets/voiceover-pack-fighter)
 
-Preview/montage tracks were omitted. Files from packs with sub-folders (e.g.
-the Voiceover Male/Female sets) were flattened with a folder-name prefix to keep
-every filename unique.
+The originals are distributed as Ogg Vorbis. They were transcoded to MP3
+(LAME VBR -q:a 5, ~130 kbps) so they play on every browser including Safari/iOS
+while keeping the bundle small. Preview/montage tracks were omitted; files from
+packs with sub-folders (e.g. the Voiceover Male/Female sets) were flattened with
+a folder-name prefix to keep every filename unique.
 
 Crediting Kenney or www.kenney.nl is appreciated but not required.

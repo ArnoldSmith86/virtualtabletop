@@ -520,7 +520,6 @@
   font-size: 16px;
   border-bottom: 1px solid black;
   padding-left: 4px;
-  color: black;
 }
 
 #audioList {
@@ -541,7 +540,8 @@
   word-break: break-word;
 }
 
-#audioList .audioEntry:hover span {
+#audioList .audioEntry:hover span,
+#audioList .audioEntry.playing span {
   text-decoration: underline;
 }
 
@@ -549,8 +549,28 @@
   padding: 2px;
 }
 
+/* show a stop icon while a sound is previewing (see button[icon]::before) */
+#audioList .audioEntry.playing .audioPreview::before {
+  content: 'stop';
+}
+
 #audioList .hidden {
   display: none;
+}
+
+@media (max-width: 600px), (max-height: 375px) {
+  #audioPickerOverlay {
+    padding: 2%;
+  }
+}
+@media (max-width: 300px), (max-height: 187px) {
+  #audioPickerOverlay {
+    padding: 0;
+  }
+  #audioPickerOverlay h1 {
+    text-align: left;
+    margin: 10px 50px 10px 5px;
+  }
 }
 
 p[icon] {
