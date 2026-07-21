@@ -17,13 +17,17 @@
       "skill": "",
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "2",
       "similarImage": "",
       "similarAwards": "",
       "ruleText": "",
       "helpText": "",
-      "similarDesigner": "Judd Madden"
+      "similarDesigner": "Judd Madden",
+      "description:de-DE": "Nutze Kartenfähigkeiten, um gegnerische Karten auf drei Bahnen des Spielfelds zu entfernen. Wer zuerst zwei Bahnen kontrolliert, gewinnt.",
+      "description:pt-BR": "Use os poderes das cartas para remover as cartas do oponente em três pistas do tabuleiro. O primeiro jogador a controlar duas pistas vence.",
+      "attribution:de-DE": "Duel 52 wurde von Judd Madden und Nina Riddell entwickelt. Alle Grafiken und Texte sind unter der Lizenz CC BY-NC 3.0 veröffentlicht:\nhttp://juddmadden.com/duel52/\n\nDies ist eine offizielle Umsetzung des Spiels. Das Spiellayout (JSON) und zwei Hintergrundbilder wurden gemeinsam von https://www.reddit.com/user/RaphaelAlvez und Judd Madden erstellt und über CC0 gemeinfrei veröffentlicht.\n\n\nSpielbeschreibung des Designers:\n\nEin kostenloses Zwei-Spieler-Kartenspiel, das ein normales Kartendeck verwendet.\n\nDuel 52 ist ein Spiel um Feldkontrolle und Tempo. Das Spielfeld ist in drei gegnerische Bahnen unterteilt, in denen beide Spieler um die Kontrolle kämpfen.\n\nDie Spieler ziehen abwechselnd Karten, spielen Karten in Bahnen, nutzen Fähigkeiten und greifen das Spielfeld des Gegners an.\n\nDas Spiel endet, wenn ein Spieler zwei Bahnen gewinnt. Eine Bahn wird gewonnen, indem alle gegnerischen Karten in dieser Bahn zerstört werden.",
+      "attribution:pt-BR": "Duel 52 foi criado por Judd Madden e Nina Riddell. Toda a arte e o texto são disponibilizados sob a licença CC BY-NC 3.0:\nhttp://juddmadden.com/duel52/\n\nEsta é uma implementação oficial do jogo. O layout do jogo (JSON) e duas imagens de fundo foram criados em conjunto por https://www.reddit.com/user/RaphaelAlvez e por Judd Madden e disponibilizados em domínio público via CC0.\n\n\nDescrição do jogo pelo designer:\n\nUm jogo de cartas gratuito para dois jogadores que usa um baralho comum.\n\nDuel 52 é um jogo de controle de tabuleiro e ritmo. O tabuleiro é dividido em três pistas opostas, onde ambos os jogadores lutam pelo controle.\n\nOs jogadores se revezam comprando cartas, jogando cartas nas pistas, usando poderes e atacando o tabuleiro do oponente.\n\nO jogo termina quando um jogador vence duas pistas. Uma pista é vencida eliminando todas as cartas adversárias nela."
     }
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe_label": {
@@ -38,7 +42,9 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false,
     "css": "color:#000000; font-family:Arial,sans-serif; color:#333; font-size:16px;",
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Nachziehstapel",
+    "text:pt-BR": "Pilha de compra"
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe_shuffleButton": {
     "id": "d3270c7c-2233-4925-acd9-f07932ccd4fe_shuffleButton",
@@ -55,14 +61,20 @@
         "fields": [
           {
             "type": "text",
-            "text": "You're about to recall all cards belonging into this holder. Are you sure?"
+            "text": "You're about to recall all cards belonging into this holder. Are you sure?",
+            "text:de-DE": "Du bist dabei, alle Karten zurückzurufen, die in diesen Halter gehören. Bist du sicher?",
+            "text:pt-BR": "Você está prestes a recolher todas as cartas que pertencem a este suporte. Tem certeza?"
           },
           {
             "type": "checkbox",
             "label": "Recall player-owned cards",
-            "variable": "owned"
+            "variable": "owned",
+            "label:de-DE": "Spielereigene Karten zurückrufen",
+            "label:pt-BR": "Recolher cartas dos jogadores"
           }
-        ]
+        ],
+        "header:de-DE": "Karten werden zurückgerufen...",
+        "header:pt-BR": "Recolhendo cartas..."
       },
       {
         "func": "RECALL",
@@ -87,7 +99,9 @@
     "z": 1695,
     "x": 22,
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1.1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold; padding:5px;",
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar"
   },
   "d3270c7c-2233-4925-acd9-f07932ccd4fe": {
     "id": "d3270c7c-2233-4925-acd9-f07932ccd4fe",
@@ -114,7 +128,9 @@
     "movableInEdit": true,
     "css": "color:#000000; font-family:Arial,sans-serif; color:#333; font-size:16px;",
     "movable": false,
-    "z": 1687
+    "z": 1687,
+    "text:de-DE": "Ablage",
+    "text:pt-BR": "Descarte"
   },
   "1ec0164d-49ff-4bc6-9bdd-daba9d47dd41": {
     "id": "1ec0164d-49ff-4bc6-9bdd-daba9d47dd41",
@@ -171,7 +187,10 @@
     ],
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Starthand nehmen",
+    "text:pt-BR": "Pegar mão inicial",
+    "css:pt-BR": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1;  color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold; font-size: 12px;"
   },
   "hand2": {
     "id": "hand2",
@@ -223,7 +242,9 @@
     ],
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Basen aufstellen",
+    "text:pt-BR": "Posicionar bases"
   },
   "base1": {
     "id": "base1",
@@ -834,7 +855,9 @@
     "height": 63,
     "movableInEdit": false,
     "movable": false,
-    "css": "font-weight: normal; text-align: left; font-family:Arial,sans-serif; color:#333; font-size:16px;"
+    "css": "font-weight: normal; text-align: left; font-family:Arial,sans-serif; color:#333; font-size:16px;",
+    "text:de-DE": "Kartenvorschau",
+    "text:pt-BR": "Espiar carta"
   },
   "ma3m": {
     "type": "label",
@@ -847,7 +870,9 @@
     "width": 125,
     "height": 63,
     "movableInEdit": true,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Deine Hand",
+    "text:pt-BR": "Sua mão"
   },
   "9yox": {
     "type": "label",
@@ -860,7 +885,9 @@
     "width": 154,
     "height": 25,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Marker",
+    "text:pt-BR": "Fichas"
   },
   "2e9f": {
     "type": "label",
@@ -872,7 +899,9 @@
     "width": 77,
     "css": "text-align: center; font-family:Arial,sans-serif; font-size:11px; color:#323232;",
     "movableInEdit": false,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Eingefroren",
+    "text:pt-BR": "Congelado"
   },
   "c4og": {
     "type": "label",
@@ -884,7 +913,9 @@
     "width": 77,
     "css": "text-align: center; font-family:Arial,sans-serif; font-size:11px; color:#323232;",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Beschädigt",
+    "text:pt-BR": "Danificado"
   },
   "q9z2": {
     "image": "/assets/-1105183405_572",
@@ -943,7 +974,9 @@
     ],
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "10 abwerfen",
+    "text:pt-BR": "Descartar 10"
   },
   "aen3": {
     "image": "/assets/-1105183405_572",
@@ -1210,7 +1243,13 @@
     "css": "font-family:Arial, sans-serif; font-size:12px; color:#323232;",
     "layer": 1,
     "movable": false,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Vollständige Regeln unter",
+    "text:pt-BR": "Regras completas em",
+    "css:de-DE": "font-family:Arial, sans-serif;  color:#323232; font-size: 11px;",
+    "height:de-DE": 36,
+    "css:pt-BR": "font-family:Arial, sans-serif;  color:#323232; font-size: 11px;",
+    "height:pt-BR": 36
   },
   "rk5i": {
     "image": "/assets/404518135_2843",
@@ -1252,7 +1291,9 @@
     "css": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1; font-size:13px; color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold;",
     "movableInEdit": true,
     "movable": true,
-    "id": "dff6"
+    "id": "dff6",
+    "text:de-DE": "Karte ziehen",
+    "text:pt-BR": "Comprar uma carta"
   },
   "cc2cba6f-b6a3-43c6-98cc-e046704efd81": {
     "id": "cc2cba6f-b6a3-43c6-98cc-e046704efd81",
@@ -1262,56 +1303,95 @@
     "type": "deck",
     "cardTypes": {
       "type-42677dda-ead0-4e9c-a08b-c97b6192d1d0": {
-        "image": "/assets/-807826676_3742",
-        "label": "2"
+        "image": "/assets/95349274_3262",
+        "label": "2",
+        "cardName": "VIEW",
+        "cardName:de-DE": "SPÄHEN",
+        "cardName:pt-BR": "ESPIAR"
       },
       "type-0070e59b-1c48-4e50-b328-5f0251f46c86": {
-        "image": "/assets/-1775852099_4503",
-        "label": "Q"
+        "image": "/assets/-88210342_3328",
+        "label": "Q",
+        "cardName": "MOVE",
+        "cardName:de-DE": "BEWEGEN",
+        "cardName:pt-BR": "MOVER"
       },
       "type-7bb0f0cb-e5c7-4e79-ae26-480855960423": {
-        "image": "/assets/-1119635725_5437",
-        "label": "3"
+        "image": "/assets/-2108261412_4323",
+        "label": "3",
+        "cardName": "TRAP",
+        "cardName:de-DE": "FALLE",
+        "cardName:pt-BR": "ARMADILHA"
       },
       "type-c1be99d5-57ef-445e-be74-b22de55e3645": {
-        "image": "/assets/1788264312_5407",
-        "label": "4"
+        "image": "/assets/-863214040_2085",
+        "label": "4",
+        "cardName": "FORESIGHT",
+        "cardName:de-DE": "WEITBLICK",
+        "cardName:pt-BR": "PREVISÃO"
       },
       "type-f2ee73a8-f3aa-4e69-87fb-be6c10b2cdaf": {
-        "image": "/assets/881358387_3839",
-        "label": "5"
+        "image": "/assets/-446340422_3160",
+        "label": "5",
+        "cardName": "FLIP",
+        "cardName:de-DE": "DREHEN",
+        "cardName:pt-BR": "VIRAR"
       },
       "type-df8186bd-8d47-4f78-8d2f-b395dc8bed9d": {
-        "image": "/assets/1345659874_4993",
-        "label": "6"
+        "image": "/assets/1385411659_3976",
+        "label": "6",
+        "cardName": "FREEZE",
+        "cardName:de-DE": "EINFRIEREN",
+        "cardName:pt-BR": "CONGELAR"
       },
       "type-31605589-d09a-45cc-bd19-80b45267f931": {
-        "image": "/assets/-270728683_1730",
-        "label": "7"
+        "image": "/assets/589223063_907",
+        "label": "7",
+        "cardName": "HEAL ALL",
+        "cardName:de-DE": "ALLE HEILEN",
+        "cardName:pt-BR": "CURAR TUDO"
       },
       "type-80825a7b-adfd-445d-8af4-42bccb7bebe4": {
-        "image": "/assets/1835860572_7463",
-        "label": "8"
+        "image": "/assets/329159359_6114",
+        "label": "8",
+        "cardName": "RETALIATE",
+        "cardName:de-DE": "VERGELTUNG",
+        "cardName:pt-BR": "RETALIAR"
       },
       "type-39ffcef1-5d79-4287-821c-f2be12f7e1c5": {
-        "image": "/assets/-897384564_3528",
-        "label": "9"
+        "image": "/assets/-1752483789_2358",
+        "label": "9",
+        "cardName": "NIMBLE",
+        "cardName:de-DE": "FLINK",
+        "cardName:pt-BR": "ÁGIL"
       },
       "type-a667fe9e-e800-4833-9ee2-fe1fc2afdd14": {
-        "image": "/assets/-822165465_6383",
-        "label": "10"
+        "image": "/assets/-930545820_4101",
+        "label": "10",
+        "cardName": "TWINSTRIKE",
+        "cardName:de-DE": "DOPPELHIEB",
+        "cardName:pt-BR": "GOLPE DUPLO"
       },
       "type-a047f208-a789-49df-9c63-cbbce54d268f": {
-        "image": "/assets/-617719848_3087",
-        "label": "A"
+        "image": "/assets/1107145246_1224",
+        "label": "A",
+        "cardName": "ACTION",
+        "cardName:de-DE": "AKTION",
+        "cardName:pt-BR": "AÇÃO"
       },
       "type-f3b3a76a-9773-46d7-b7e0-1a836578cf84": {
-        "image": "/assets/1097818669_2928",
-        "label": "J"
+        "image": "/assets/-1867212964_2123",
+        "label": "J",
+        "cardName": "TAUNT",
+        "cardName:de-DE": "SPOTT",
+        "cardName:pt-BR": "PROVOCAR"
       },
       "type-c2c369a3-f666-4ed8-ba65-d2ceab421471": {
-        "image": "/assets/861512278_4868",
-        "label": "K"
+        "image": "/assets/-979585399_2697",
+        "label": "K",
+        "cardName": "EMPOWER",
+        "cardName:de-DE": "STÄRKEN",
+        "cardName:pt-BR": "FORTALECER"
       }
     },
     "faceTemplates": [
@@ -1343,6 +1423,19 @@
             "value": "image",
             "width": 100,
             "height": 100
+          },
+          {
+            "type": "text",
+            "x": 0,
+            "y": 70,
+            "width": 100,
+            "height": 30,
+            "color": "#ffffff",
+            "fontSize": 13,
+            "textAlign": "center",
+            "valueType": "dynamic",
+            "value": "cardName",
+            "css": "display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Roboto', sans-serif; white-space: nowrap;"
           }
         ],
         "border": 1,

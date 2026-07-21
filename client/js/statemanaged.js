@@ -1,6 +1,7 @@
 import { dropTargets } from './main.js';
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
+import { languageOverrides, isLanguageSuffixedKey } from './i18n.js';
 
 export class StateManaged {
   constructor() {
@@ -15,7 +16,10 @@ export class StateManaged {
 
   applyDelta(delta) {
     const deltaForDOM = {};
+    let overridesChanged = false;
     for(const i in delta) {
+      if(isLanguageSuffixedKey(i))
+        overridesChanged = true;
       if(delta[i] === null) {
         delete this.unalteredState[i];
         delete this.state[i];
@@ -24,6 +28,17 @@ export class StateManaged {
         deltaForDOM[i] = this.unalteredState[i] = this.state[i] = delta[i];
       }
     }
+
+    // language-suffixed properties (e.g. `x:de`) override their base property
+    // for the selected UI language; resolve them locally so the base property
+    // in the DOM reflects the override for every property that gained, lost or
+    // still has one (see i18n.js)
+    const previousOverrides = this.languageOverrides;
+    if(overridesChanged)
+      this.languageOverrides = languageOverrides(this.state);
+    if(previousOverrides || this.languageOverrides)
+      for(const base in Object.assign({}, previousOverrides, this.languageOverrides))
+        deltaForDOM[base] = this.get(base);
 
     this.applyDeltaToDOM(deltaForDOM);
 
@@ -45,23 +60,40 @@ export class StateManaged {
     this.applyDelta(delta);
   }
 
-  getDefaultValue(key) {
+  getDefaultValue(key, raw) {
+    // `raw` resolves inherited properties through getRaw() so the value stays
+    // language-neutral for routine reads (see get()/getRaw())
+    const read = w => raw ? w.getRaw(key) : w.get(key);
     if(this.inheritedProperties)
       for(const [ id, properties ] of Object.entries(this.inheritFrom()))
-        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && widgets.get(id).get(key) !== undefined)
-          return widgets.get(id).get(key);
+        if(this.inheritedProperties[key] && this.inheritFromIsValid(properties, key) && widgets.has(id) && read(widgets.get(id)) !== undefined)
+          return read(widgets.get(id));
     return this.defaults[key];
   }
 
+  // get() resolves language-suffixed overrides and is used for display/UI.
+  // getRaw() returns the unsuffixed shared-state value and is used by the
+  // routine interpreter, so game logic stays identical for every player
+  // regardless of the language they selected (see i18n.js).
   get(property) {
-    const value = this.state[property];
+    const value = this.languageOverrides && this.languageOverrides[property] !== undefined
+      ? this.languageOverrides[property]
+      : this.state[property];
+    return this.coerceValue(property, value, false);
+  }
+
+  getRaw(property) {
+    return this.coerceValue(property, this.state[property], true);
+  }
+
+  coerceValue(property, value, raw) {
     if(value !== undefined) {
       if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
         return +value;
       else
         return value;
     } else {
-      const defaultValue = this.getDefaultValue(property);
+      const defaultValue = this.getDefaultValue(property, raw);
       return defaultValue !== undefined ? defaultValue : null;
     }
   }
@@ -125,6 +157,12 @@ export class StateManaged {
       delete this.state[property];
     else
       this.state[property] = JSON.parse(JSONvalue);
+    // the delta batcher defers applyDelta() (which normally recomputes the
+    // override cache) until the batch ends, so refresh it here too — otherwise a
+    // routine that sets a suffixed property and reads its base later in the same
+    // batch would see the previous override
+    if(isLanguageSuffixedKey(property))
+      this.languageOverrides = languageOverrides(this.state);
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 

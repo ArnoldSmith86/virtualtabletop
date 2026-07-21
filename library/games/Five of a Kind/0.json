@@ -12,7 +12,7 @@
       "attribution": "The room design and other room elements are by RogerLipsett and are released to the Public Domain under CC0.\n\nThe library image is by AlbertHerring and is available under CC BY 2.0 from https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
       "showName": true,
       "skill": "",
-      "description": "",
+      "description": "A dice game of luck and choices: roll five dice up to three times per turn and claim the best category on your scorecard. Fill every box to win.",
       "similarImage": "",
       "similarName": "Yahtzee",
       "similarAwards": "",
@@ -21,9 +21,13 @@
       "lastUpdate": 1682279750595,
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "1-6",
-      "similarDesigner": "Edwin S. Lowe"
+      "similarDesigner": "Edwin S. Lowe",
+      "description:de-DE": "Ein Würfelspiel aus Glück und Entscheidungen: Würfle pro Zug bis zu dreimal mit fünf Würfeln und trage das beste Ergebnis in deinem Wertungsblock ein. Fülle alle Felder, um zu gewinnen.",
+      "description:pt-BR": "Um jogo de dados de sorte e escolhas: jogue cinco dados até três vezes por turno e marque a melhor categoria na sua tabela. Preencha todos os campos para vencer.",
+      "attribution:de-DE": "Das Raumdesign und die übrigen Raumelemente stammen von RogerLipsett und sind über CC0 gemeinfrei veröffentlicht.\n\nDas Bibliotheksbild stammt von AlbertHerring und ist unter CC BY 2.0 verfügbar unter https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
+      "attribution:pt-BR": "O design da sala e os demais elementos da sala são de RogerLipsett e disponibilizados em domínio público via CC0.\n\nA imagem da biblioteca é de AlbertHerring e está disponível sob CC BY 2.0 em https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg."
     }
   },
   "xprj": {
@@ -35,7 +39,12 @@
     "movable": false,
     "width": 130,
     "x": 130,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Asse",
+    "text:pt-BR": "Some e adicione\napenas os Ases",
+    "css:de-DE": {
+      "font-size": "15px"
+    }
   },
   "xprj1": {
     "id": "xprj1",
@@ -51,7 +60,12 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Zweien",
+    "text:pt-BR": "Some e adicione\napenas os Dois",
+    "css:de-DE": {
+      "font-size": "15px"
+    }
   },
   "xprj2": {
     "id": "xprj2",
@@ -67,7 +81,12 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Dreien",
+    "text:pt-BR": "Some e adicione\napenas os Três",
+    "css:de-DE": {
+      "font-size": "15px"
+    }
   },
   "xprj3": {
     "id": "xprj3",
@@ -83,7 +102,15 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Vieren",
+    "text:pt-BR": "Some e adicione\napenas os Quatros",
+    "css:de-DE": {
+      "font-size": "15px"
+    },
+    "css:pt-BR": {
+      "font-size": "14px"
+    }
   },
   "xprj4": {
     "id": "xprj4",
@@ -99,7 +126,12 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Fünfen",
+    "text:pt-BR": "Some e adicione\napenas os Cincos",
+    "css:de-DE": {
+      "font-size": "15px"
+    }
   },
   "xprj5": {
     "id": "xprj5",
@@ -115,7 +147,12 @@
       ]
     },
     "movableInEdit": true,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Zähle und addiere\nnur Sechsen",
+    "text:pt-BR": "Some e adicione\napenas os Seis",
+    "css:de-DE": {
+      "font-size": "15px"
+    }
   },
   "xprj6": {
     "id": "xprj6",
@@ -127,7 +164,11 @@
     "movable": false,
     "css": "font-size:16pt",
     "width": 150,
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Gesamtpunktzahl",
+    "text:pt-BR": "Pontuação total",
+    "css:de-DE": "font-size: 18px;",
+    "css:pt-BR": "font-size: 20px;"
   },
   "xprj7": {
     "id": "xprj7",
@@ -139,7 +180,9 @@
     "width": 180,
     "movable": false,
     "css": "font-size:16pt",
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Bonus (bei 63\noder mehr)",
+    "text:pt-BR": "Bônus (se 63\nou mais)"
   },
   "xprj8": {
     "id": "xprj8",
@@ -150,7 +193,10 @@
     "height": 50,
     "width": 180,
     "css": "font-weight:bold;font-size:16pt",
-    "parent": "h1"
+    "parent": "h1",
+    "text:de-DE": "Summe oberer Teil",
+    "text:pt-BR": "Total da seção superior",
+    "css:de-DE": "font-weight:bold; font-size: 20px;"
   },
   "sggf": {
     "text": "3 of a kind",
@@ -160,7 +206,10 @@
     "height": 30,
     "y": 22,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Dreierpasch",
+    "text:pt-BR": "Trinca",
+    "css:de-DE": "font-weight:bold; font-size: 17px;"
   },
   "54hx": {
     "text": "Add total of\n all dice",
@@ -169,7 +218,9 @@
     "x": 185,
     "y": 15,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe aller\nWürfel",
+    "text:pt-BR": "Some todos\nos dados"
   },
   "sggf1": {
     "text": "4 of a kind",
@@ -179,7 +230,10 @@
     "height": 30,
     "y": 92,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Viererpasch",
+    "text:pt-BR": "Quadra",
+    "css:de-DE": "font-weight:bold; font-size: 17px;"
   },
   "sggf2": {
     "text": "Full House",
@@ -189,7 +243,9 @@
     "height": 30,
     "y": 162,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Full House",
+    "text:pt-BR": "Full House"
   },
   "sggf3": {
     "text": "Small Straight",
@@ -200,7 +256,10 @@
     "y": 232,
     "css": "font-size:14pt;font-weight:bold",
     "width": 120,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Kleine Straße",
+    "text:pt-BR": "Sequência pequena",
+    "css:pt-BR": "font-weight:bold; font-size: 13px;"
   },
   "sggf4": {
     "text": "Large Straight",
@@ -211,7 +270,10 @@
     "y": 302,
     "css": "font-size:14pt;font-weight:bold",
     "width": 120,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Große Straße",
+    "text:pt-BR": "Sequência grande",
+    "css:pt-BR": "font-weight:bold; font-size: 13px;"
   },
   "sggf5": {
     "text": "5 of a kind!",
@@ -221,7 +283,10 @@
     "height": 30,
     "y": 372,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Fünferpasch!",
+    "text:pt-BR": "Quina!",
+    "css:de-DE": "font-weight:bold; font-size: 15px;"
   },
   "sggf6": {
     "text": "Chance",
@@ -231,7 +296,9 @@
     "height": 30,
     "y": 442,
     "css": "font-size:14pt;font-weight:bold",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Chance",
+    "text:pt-BR": "Chance"
   },
   "55hx": {
     "text": "Add total of\n all dice",
@@ -240,7 +307,9 @@
     "x": 185,
     "y": 85,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe aller\nWürfel",
+    "text:pt-BR": "Some todos\nos dados"
   },
   "56hx": {
     "text": "Score 25",
@@ -249,7 +318,9 @@
     "x": 185,
     "y": 162,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "25 Punkte",
+    "text:pt-BR": "25 pontos"
   },
   "57hx": {
     "text": "Score 30",
@@ -258,7 +329,9 @@
     "x": 185,
     "y": 232,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "30 Punkte",
+    "text:pt-BR": "30 pontos"
   },
   "58hx": {
     "text": "Score 40",
@@ -267,7 +340,9 @@
     "x": 185,
     "y": 302,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "40 Punkte",
+    "text:pt-BR": "40 pontos"
   },
   "59hx": {
     "text": "Score 50\nfor first",
@@ -276,7 +351,9 @@
     "x": 185,
     "y": 365,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "50 Punkte\n(erstes Mal)",
+    "text:pt-BR": "50 pontos\n(primeiro)"
   },
   "60hx": {
     "text": "Add total of\n all dice",
@@ -285,7 +362,9 @@
     "x": 185,
     "y": 435,
     "height": 50,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe aller\nWürfel",
+    "text:pt-BR": "Some todos\nos dados"
   },
   "xprj9": {
     "id": "xprj9",
@@ -297,7 +376,9 @@
     "css": "font-weight:bold;font-size:16pt",
     "movable": false,
     "x": 30,
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Summe unterer Teil",
+    "text:pt-BR": "Total da seção inferior"
   },
   "xprj10": {
     "id": "xprj10",
@@ -309,7 +390,9 @@
     "movable": false,
     "css": "font-weight:bold;font-size:20pt",
     "text": "Grand Total",
-    "parent": "h2"
+    "parent": "h2",
+    "text:de-DE": "Endsumme",
+    "text:pt-BR": "Total geral"
   },
   "table": {
     "id": "table",
@@ -1427,7 +1510,10 @@
       }
     ],
     "pendingYahtzee": false,
-    "clickable": false
+    "clickable": false,
+    "text:de-DE": "Erster Wurf",
+    "text:pt-BR": "Primeira jogada",
+    "css:pt-BR": "background:gray; font-size: 23px;"
   },
   "p1": {
     "type": "seat",
@@ -1474,15 +1560,21 @@
                     "type": "string",
                     "label": "Name",
                     "variable": "playerName",
-                    "value": "${playerName}"
+                    "value": "${playerName}",
+                    "label:de-DE": "Name",
+                    "label:pt-BR": "Nome"
                   },
                   {
                     "type": "color",
                     "label": "Color",
                     "variable": "playerColor",
-                    "value": "${playerColor}"
+                    "value": "${playerColor}",
+                    "label:de-DE": "Farbe",
+                    "label:pt-BR": "Cor"
                   }
-                ]
+                ],
+                "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+                "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
               }
             ]
           },
@@ -2809,7 +2901,9 @@
     "parent": "brief",
     "text": "FH",
     "height": 20,
-    "inheritFrom": "yh2y"
+    "inheritFrom": "yh2y",
+    "text:de-DE": "FH",
+    "text:pt-BR": "FH"
   },
   "yh5y": {
     "type": "label",
@@ -2817,7 +2911,9 @@
     "id": "yh5y",
     "parent": "brief",
     "text": "SS",
-    "inheritFrom": "yh2y"
+    "inheritFrom": "yh2y",
+    "text:de-DE": "KS",
+    "text:pt-BR": "SP"
   },
   "yh6y": {
     "type": "label",
@@ -2825,7 +2921,9 @@
     "id": "yh6y",
     "parent": "brief",
     "text": "LS",
-    "inheritFrom": "yh2y"
+    "inheritFrom": "yh2y",
+    "text:de-DE": "GS",
+    "text:pt-BR": "SG"
   },
   "yh7y": {
     "type": "label",
@@ -3563,14 +3661,22 @@
           {
             "type": "title",
             "text": "End game",
-            "css": "background:green"
+            "css": "background:green",
+            "text:de-DE": "Spiel beenden",
+            "text:pt-BR": "Encerrar jogo"
           },
           {
             "type": "text",
             "text": "This will end the current game. Are you sure?",
-            "css": "font-size: 24px"
+            "css": "font-size: 24px",
+            "text:de-DE": "Damit wird das aktuelle Spiel beendet. Bist du sicher?",
+            "text:pt-BR": "Isso encerrará o jogo atual. Tem certeza?"
           }
-        ]
+        ],
+        "confirmButtonText:de-DE": "Los",
+        "confirmButtonText:pt-BR": "Fazer",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "CALL",
@@ -3691,7 +3797,9 @@
         "value": true
       }
     ],
-    "clickable": false
+    "clickable": false,
+    "text:de-DE": "Spiel starten",
+    "text:pt-BR": "Iniciar jogo"
   },
   "message": {
     "type": "label",
@@ -3701,7 +3809,9 @@
     "width": 500,
     "height": 70,
     "css": "background-color:white; border-color:black; border:5px solid black; filter: drop-shadow(1px 2px 10px #000) !important;text-align:center; font-size:60px; color:red",
-    "text": "Game Over"
+    "text": "Game Over",
+    "text:de-DE": "Spiel vorbei",
+    "text:pt-BR": "Fim de jogo"
   },
   "vm6aP": {
     "fixedParent": true,

@@ -22,9 +22,17 @@
       "ruleText": "PLAYER DECK:\nEach player has a deck of tiles containing 12 farmers and 6 each of three different suits of nobles, for 30 tiles in total. The default hand size is five tiles.\n\nPLACING TILES:\nOn their turn, a player places either two tiles or three or more face-up farmers. (Exception: During the first turn of the game, the first player may place only one tile and the second player may place only two tiles.)\n\nTiles are placed face-up in unoccupied land spaces, or face-down in unoccupied water spaces. A tile may instead be placed onto a farm tile, claiming and scoring it immediately, but only if the player placing the tile already has a player tile in a hex adjacent to the farm tile. The farm tile showing a grey hex is worth X points, where X is the total number of city tiles collected by all players during the game so far.\n\nWhen a player places next to a red ziggurat, they immediately score X points, where X is the number of ziggurats they now have a tile next to, including the latest placement.\n\nFINISHING YOUR TURN:\nAfter making their two placements, a player scores all cities and ziggurats on the board which have been newly surrounded (counting land spaces only - the water spaces may optionally be occupied but are not required) during their turn, and then draws back up to their hand size of five tiles.\n\nSCORING CITIES:\nWhen a city scores, first each player scores for all noble tiles matching any of the symbols on the city and connected to it through a contiguous chain of their own player tiles. For each such noble, they score 2 points.\n\nNext, check whether one player has more tiles directly surrounding the city than any other. If they do, then this player collects the city tile. At any point when a player collects a city tile, all players immediately score points equal to the number of cities they have collected during the game, including the newly-collected city. If two or more players are tied for the number of tiles directly adjacent to the newly-surrounded city, then the city tile is instead discarded and players do not score for their existing city tiles.\n\nSCORING ZIGGURATS:\nIf one player has more tiles directly adjacent to a newly-surrounded ziggurat than any other player, then they collect one ziggurat tile of their choice from the public display and now benefit from its power.\n\nZIGGURAT POWERS:\n\n1: Immediately gain 10 points.\n2: On any one turn, either this turn or a future one, you may after drawing tiles at the end of their turn decide and declare that they are taking an immediate extra turn following the full standard turn sequence.\n3: Your hand size is now 7 tiles instead of 5 for the remainder of the game.\n4: Instead of the usual placement options on your turn, you may place 1 noble tile of each suit, all face up.\n5: When placing 3 or more farmer tiles as your placement for the turn, you may additionally place 1 noble. All these placements must be face up.\n6: You may place nobles directly onto farm tiles, claiming them and not requiring any already-adjacent tile as is normally the case for claiming them with a farmer.\n7: Any time you score for your collected city tiles, you score 1 extra point for every pair of collected cities.\n8: Unoccupied land spaces on the central land area between the two rivers form part of your chains of connected pieces for noble scoring when a city is scored.\n9: Unoccipied water spaces form part of your chains of connected pieces for noble scoring when a city is scored.\n\nEND OF THE GAME:\nThe game ends at the end of any player's turn where either: (a) they have no pieces remaining (they have all been placed on the board); or (b) there are 0 or 1 cities left on the game board.",
       "variantImage": "",
       "variant": "",
-      "language": "en-GB",
+      "language": "en-GB, de-DE, pt-BR",
       "players": "2-4",
-      "similarDesigner": "Reiner Knizia"
+      "similarDesigner": "Reiner Knizia",
+      "description:de-DE": "Wetteifert um das Land und die Städte zwischen den Flüssen und befehligt dabei mächtige Zikkurats.",
+      "description:pt-BR": "Dispute as terras e cidades entre os rios enquanto comanda poderosos zigurates.",
+      "attribution:de-DE": "Spiellayout und Skripting von Andy Pymont, über CC0 gemeinfrei veröffentlicht. Die Plättchengrafiken stammen von https://game-icons.net/ und https://thenounproject.com/ und werden unter der Lizenz CC BY 3.0 verwendet:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: stammt aus diesem Projekt.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
+      "attribution:pt-BR": "Layout do jogo e scripts por Andy Pymont, disponibilizados em domínio público via CC0. Os gráficos das peças são de https://game-icons.net/ e https://thenounproject.com/ e são usados sob a licença CC BY 3.0:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: tem origem neste projeto.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
+      "ruleText:de-DE": "SPIELERDECK:\nJeder Spieler hat ein Deck aus 12 Bauern und je 6 Adligen in drei verschiedenen Farben, insgesamt 30 Plättchen. Die Standard-Handgröße beträgt fünf Plättchen.\n\nPLÄTTCHEN LEGEN:\nIn seinem Zug legt ein Spieler entweder zwei Plättchen oder drei oder mehr offene Bauern. (Ausnahme: Im ersten Zug des Spiels darf der erste Spieler nur ein Plättchen und der zweite Spieler nur zwei Plättchen legen.)\n\nPlättchen werden offen auf freie Landfelder oder verdeckt auf freie Wasserfelder gelegt. Ein Plättchen darf stattdessen auf ein Farmplättchen gelegt werden, wodurch es sofort beansprucht und gewertet wird – aber nur, wenn der legende Spieler bereits ein eigenes Plättchen in einem an das Farmplättchen angrenzenden Feld hat. Das Farmplättchen mit einem grauen Feld ist X Punkte wert, wobei X die Gesamtzahl der bisher von allen Spielern im Spiel gesammelten Stadtplättchen ist.\n\nWenn ein Spieler neben eine rote Zikkurat legt, wertet er sofort X Punkte, wobei X die Anzahl der Zikkurats ist, neben denen er nun ein Plättchen hat, einschließlich der neuesten Platzierung.\n\nZUG BEENDEN:\nNachdem ein Spieler seine zwei Platzierungen vorgenommen hat, wertet er alle Städte und Zikkurats auf dem Spielfeld, die während seines Zuges neu umschlossen wurden (nur Landfelder zählen – die Wasserfelder dürfen optional besetzt sein, sind aber nicht erforderlich), und zieht dann wieder auf seine Handgröße von fünf Plättchen nach.\n\nSTÄDTE WERTEN:\nWenn eine Stadt gewertet wird, wertet zuerst jeder Spieler für alle Adligenplättchen, die zu einem der Symbole auf der Stadt passen und über eine durchgehende Kette eigener Plättchen mit ihr verbunden sind. Für jeden solchen Adligen erhält er 2 Punkte.\n\nPrüfe anschließend, ob ein Spieler mehr Plättchen direkt um die Stadt herum hat als jeder andere. Wenn ja, erhält dieser Spieler das Stadtplättchen. Sobald ein Spieler ein Stadtplättchen erhält, werten alle Spieler sofort Punkte in Höhe der Anzahl der Städte, die sie im Spiel gesammelt haben, einschließlich der neu erhaltenen Stadt. Wenn zwei oder mehr Spieler bei der Anzahl der direkt an die neu umschlossene Stadt angrenzenden Plättchen gleichauf liegen, wird das Stadtplättchen stattdessen abgeworfen und die Spieler werten nicht für ihre vorhandenen Stadtplättchen.\n\nZIKKURATS WERTEN:\nWenn ein Spieler mehr Plättchen direkt an einer neu umschlossenen Zikkurat angrenzend hat als jeder andere Spieler, erhält er ein Zikkurat-Plättchen seiner Wahl aus der öffentlichen Auslage und profitiert nun von dessen Fähigkeit.\n\nZIKKURAT-FÄHIGKEITEN:\n\n1: Erhalte sofort 10 Punkte.\n2: In einem beliebigen Zug, sei es dieser oder ein späterer, darfst du nach dem Nachziehen der Plättchen am Ende deines Zuges entscheiden und ansagen, dass du einen sofortigen Extrazug nimmst, der dem vollständigen Standard-Zugablauf folgt.\n3: Deine Handgröße beträgt für den Rest des Spiels nun 7 statt 5 Plättchen.\n4: Anstelle der üblichen Platzierungsoptionen in deinem Zug darfst du je 1 Adligenplättchen jeder Farbe legen, alle offen.\n5: Wenn du in deinem Zug 3 oder mehr Bauernplättchen als Platzierung legst, darfst du zusätzlich 1 Adligen legen. Alle diese Platzierungen müssen offen sein.\n6: Du darfst Adlige direkt auf Farmplättchen legen, um sie zu beanspruchen, ohne dass ein bereits angrenzendes Plättchen erforderlich ist, wie es beim Beanspruchen mit einem Bauern normalerweise der Fall ist.\n7: Immer wenn du für deine gesammelten Stadtplättchen wertest, erhältst du 1 zusätzlichen Punkt für jedes Paar gesammelter Städte.\n8: Freie Landfelder im zentralen Landbereich zwischen den beiden Flüssen zählen zu deinen Ketten verbundener Teile für die Adligenwertung, wenn eine Stadt gewertet wird.\n9: Freie Wasserfelder zählen zu deinen Ketten verbundener Teile für die Adligenwertung, wenn eine Stadt gewertet wird.\n\nSPIELENDE:\nDas Spiel endet am Ende des Zuges eines Spielers, wenn entweder: (a) er keine Teile mehr übrig hat (alle wurden auf dem Spielfeld platziert); oder (b) sich noch 0 oder 1 Städte auf dem Spielfeld befinden.",
+      "ruleText:pt-BR": "BARALHO DO JOGADOR:\nCada jogador tem um baralho de peças contendo 12 camponeses e 6 de cada um dos três naipes diferentes de nobres, totalizando 30 peças. O tamanho padrão da mão é de cinco peças.\n\nCOLOCAR PEÇAS:\nNo seu turno, um jogador coloca duas peças ou três ou mais camponeses virados para cima. (Exceção: no primeiro turno do jogo, o primeiro jogador pode colocar apenas uma peça e o segundo jogador apenas duas peças.)\n\nAs peças são colocadas viradas para cima em espaços de terra desocupados, ou viradas para baixo em espaços de água desocupados. Uma peça pode, em vez disso, ser colocada sobre uma peça de fazenda, reivindicando-a e pontuando-a imediatamente, mas apenas se o jogador que a coloca já tiver uma peça sua em um hexágono adjacente à peça de fazenda. A peça de fazenda que mostra um hexágono cinza vale X pontos, onde X é o número total de peças de cidade coletadas por todos os jogadores no jogo até agora.\n\nQuando um jogador coloca ao lado de um zigurate vermelho, ele pontua imediatamente X pontos, onde X é o número de zigurates ao lado dos quais ele agora tem uma peça, incluindo a colocação mais recente.\n\nENCERRAR O TURNO:\nApós fazer suas duas colocações, um jogador pontua todas as cidades e zigurates no tabuleiro que foram recém-cercados (contando apenas os espaços de terra – os espaços de água podem opcionalmente ser ocupados, mas não são obrigatórios) durante o seu turno e, em seguida, compra peças de volta até o tamanho da sua mão de cinco peças.\n\nPONTUAR CIDADES:\nQuando uma cidade é pontuada, primeiro cada jogador pontua por todas as peças de nobre que correspondam a qualquer um dos símbolos na cidade e estejam conectadas a ela por uma cadeia contígua de suas próprias peças. Por cada nobre desses, marca 2 pontos.\n\nEm seguida, verifique se um jogador tem mais peças cercando diretamente a cidade do que qualquer outro. Se tiver, esse jogador coleta a peça de cidade. Em qualquer momento em que um jogador coleta uma peça de cidade, todos os jogadores pontuam imediatamente pontos iguais ao número de cidades que coletaram durante o jogo, incluindo a cidade recém-coletada. Se dois ou mais jogadores empatarem no número de peças diretamente adjacentes à cidade recém-cercada, a peça de cidade é descartada e os jogadores não pontuam por suas peças de cidade existentes.\n\nPONTUAR ZIGURATES:\nSe um jogador tiver mais peças diretamente adjacentes a um zigurate recém-cercado do que qualquer outro jogador, ele coleta uma peça de zigurate à sua escolha do display público e passa a se beneficiar do seu poder.\n\nPODERES DOS ZIGURATES:\n\n1: Ganhe imediatamente 10 pontos.\n2: Em qualquer turno, seja este ou um futuro, você pode, após comprar peças no fim do turno, decidir e declarar que fará um turno extra imediato seguindo a sequência padrão completa de turno.\n3: O tamanho da sua mão passa a ser 7 peças em vez de 5 pelo restante do jogo.\n4: Em vez das opções usuais de colocação no seu turno, você pode colocar 1 peça de nobre de cada naipe, todas viradas para cima.\n5: Ao colocar 3 ou mais peças de camponês como sua colocação do turno, você pode colocar adicionalmente 1 nobre. Todas essas colocações devem estar viradas para cima.\n6: Você pode colocar nobres diretamente sobre peças de fazenda, reivindicando-as sem exigir nenhuma peça já adjacente, como normalmente é o caso ao reivindicá-las com um camponês.\n7: Sempre que você pontuar por suas peças de cidade coletadas, marca 1 ponto extra para cada par de cidades coletadas.\n8: Espaços de terra desocupados na área central de terra entre os dois rios fazem parte das suas cadeias de peças conectadas para a pontuação de nobres quando uma cidade é pontuada.\n9: Espaços de água desocupados fazem parte das suas cadeias de peças conectadas para a pontuação de nobres quando uma cidade é pontuada.\n\nFIM DO JOGO:\nO jogo termina ao fim do turno de qualquer jogador em que: (a) ele não tenha mais peças (todas foram colocadas no tabuleiro); ou (b) restem 0 ou 1 cidades no tabuleiro.",
+      "helpText:de-DE": "Lasst jeden Spieler Platz nehmen und drückt dann die Schaltfläche „Aufbau\", um das passende Spielbrett für die Spieleranzahl auszuwählen, die anfänglichen Stadt- und Ernteplättchen einzurichten, jedem Spieler eine Starthand auszuteilen und zufällig einen Startspieler zu bestimmen.\n\nWenn du Platz nimmst, werden deine Spielteile an die in VirtualTabletop eingestellte Spielerfarbe angepasst. Du kannst aufstehen, deine Farbe ändern und dich wieder hinsetzen, falls du diese anpassen musst, z. B. um einen guten Kontrast zu anderen Spielern sicherzustellen.\n\nDie Spieler können mit den Schaltflächen +1 und +X ihre Punktzahl erhöhen. +X fragt dich, wie viele Punkte du wertest, und addiert sie zu deiner bestehenden Punktzahl.\n\nNachdem du ein Ernteplättchen gewertet hast, oder wenn eine Stadt gewertet, aber dann von keinem Spieler eingesammelt wird (wegen eines Gleichstands bei der Mehrheit der umgebenden Plättchen), kannst du das Plättchen auf den ursprünglichen Nachziehstapel für Stadt- und Ernteplättchen auf der rechten Seite des Tisches ablegen, unterhalb der Schaltfläche „Aufbau\".\n\nBewahre deine gesammelten Stadt- und Zikkurat-Plättchen in den entsprechenden Ablagen in deinem Spielerbereich auf. Nachdem du eine Stadt hinzugefügt hast, klicke auf die Schaltfläche „Städte werten\", um die Stadtplättchen aller Spieler zu werten. (Dabei wird auch Zikkurat 7 für einen Spieler berücksichtigt, der sie besitzt und in seine Zikkurat-Ablage gelegt hat.)\n\nDrücke am Ende deines Zuges die Schaltfläche „Zug beenden\", um wieder auf deine Handgröße nachzuziehen und den nächsten Spieler als aktiv festzulegen.",
+      "helpText:pt-BR": "Peça que cada jogador ocupe um assento e, em seguida, pressione o botão Preparação para selecionar o tabuleiro adequado ao número de jogadores, preparar as peças iniciais de cidade e de colheita, distribuir a cada jogador uma mão inicial e escolher aleatoriamente um jogador inicial.\n\nQuando você ocupa um assento, as suas peças de jogador serão alteradas para corresponder à cor de jogador definida no virtualtabletop. Você pode levantar-se, mudar a sua cor e sentar-se novamente, caso precise atualizá-las para, por exemplo, garantir um bom contraste com os outros jogadores.\n\nOs jogadores podem usar os botões +1 e +X para aumentar a sua pontuação. O +X pergunta quantos pontos você está marcando e os adiciona à sua pontuação atual.\n\nDepois de pontuar uma peça de colheita, ou se uma cidade for pontuada e então não coletada por um jogador (por causa de um empate na maioria das peças ao redor), você pode descartar a peça na pilha de compra original de peças de cidade e colheita, no lado direito da mesa, abaixo do botão Preparação.\n\nGuarde as suas peças de cidade e de zigurate coletadas nos suportes apropriados na sua área de jogador. Depois de adicionar uma cidade, clique no botão Pontuar cidades para pontuar as peças de cidade de todos os jogadores. (Isso também levará em conta o zigurate 7 para um jogador que o possua e o tenha colocado no seu suporte de zigurate.)\n\nAo final do seu turno, pressione o botão Encerrar turno para comprar novamente até o tamanho da sua mão e definir o próximo jogador como ativo."
     }
   },
   "board-4": {
@@ -3793,7 +3801,15 @@
     "css": {
       "font-size": "20px"
     },
-    "text": "SCORE"
+    "text": "SCORE",
+    "text:de-DE": "PUNKTE",
+    "text:pt-BR": "PONTOS",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "button-score-dec-p1": {
     "id": "button-score-dec-p1",
@@ -3887,7 +3903,13 @@
             "variable": "addToScore",
             "value": ""
           }
-        ]
+        ],
+        "header:de-DE": "Betrag eingeben, der zu ${playerDesc}s Punktzahl addiert wird",
+        "header:pt-BR": "Digite o valor a adicionar à pontuação de ${playerDesc}",
+        "confirmButtonText:de-DE": "Hinzufügen",
+        "confirmButtonText:pt-BR": "Adicionar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       "var checkInt = ${addToScore} % 1",
       {
@@ -5215,7 +5237,9 @@
     "css": {
       "font-size": "16px"
     },
-    "text": "CITIES"
+    "text": "CITIES",
+    "text:de-DE": "STÄDTE",
+    "text:pt-BR": "CIDADES"
   },
   "holder-cities-p2": {
     "id": "holder-cities-p2",
@@ -5287,7 +5311,9 @@
     "css": {
       "font-size": "16px"
     },
-    "text": "ZIGGURAT TILES"
+    "text": "ZIGGURAT TILES",
+    "text:de-DE": "ZIKKURAT-PLÄTTCHEN",
+    "text:pt-BR": "PEÇAS DE ZIGURATE"
   },
   "holder-ziggurats-p2": {
     "id": "holder-ziggurats-p2",
@@ -5389,7 +5415,15 @@
         "func": "TURN",
         "turnCycle": "forward"
       }
-    ]
+    ],
+    "text:de-DE": "Zug beenden",
+    "text:pt-BR": "Encerrar turno",
+    "css:de-DE": {
+      "font-size": "15px"
+    },
+    "css:pt-BR": {
+      "font-size": "13px"
+    }
   },
   "button-score-cities": {
     "id": "button-score-cities",
@@ -5433,7 +5467,15 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Städte werten",
+    "text:pt-BR": "Pontuar cidades",
+    "css:de-DE": {
+      "font-size": "13px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "holder-ziggurats": {
     "id": "holder-ziggurats",
@@ -5655,9 +5697,15 @@
           {
             "label": "Variant setup (7 random ziggurats)",
             "type": "switch",
-            "variable": "variantSetup"
+            "variable": "variantSetup",
+            "label:de-DE": "Variantenaufbau (7 zufällige Zikkurats)",
+            "label:pt-BR": "Preparação da variante (7 zigurates aleatórios)"
           }
-        ]
+        ],
+        "header:de-DE": "Neues Spiel einrichten",
+        "header:pt-BR": "Preparar um novo jogo",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "note": "Recall all the ziggurats",
@@ -5901,7 +5949,9 @@
         "func": "TURN",
         "turnCycle": "random"
       }
-    ]
+    ],
+    "text:de-DE": "Aufbau",
+    "text:pt-BR": "Preparação"
   },
   "holder-tiles": {
     "id": "holder-tiles",

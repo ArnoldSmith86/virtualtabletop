@@ -839,7 +839,15 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "13px"
+    },
+    "css:pt-BR": {
+      "font-size": "13px"
+    }
   },
   "sortButton": {
     "type": "button",
@@ -858,17 +866,23 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Choose sort direction ..."
+                "text": "Choose sort direction ...",
+                "text:de-DE": "Sortierrichtung wählen ...",
+                "text:pt-BR": "Escolher direção de ordenação ..."
               },
               {
                 "type": "subtitle",
-                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time per game."
+                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time per game.",
+                "text:de-DE": "Wähle die Richtung, in der deine Karten sortiert werden. Du musst diese Wahl nur einmal pro Spiel treffen.",
+                "text:pt-BR": "Escolha a direção em que suas cartas serão ordenadas. Você só precisa fazer essa escolha uma vez por jogo."
               },
               {
                 "type": "checkbox",
                 "label": "Sort high to low left to right (uncheck to sort low to high left to right)?",
                 "value": true,
-                "variable": "sortDirection"
+                "variable": "sortDirection",
+                "label:de-DE": "Von hoch nach niedrig, links nach rechts sortieren (abwählen für niedrig nach hoch)?",
+                "label:pt-BR": "Ordenar de alto para baixo, da esquerda para a direita (desmarque para baixo para alto)?"
               }
             ]
           },
@@ -971,6 +985,16 @@
     ],
     "css": {
       "border-radius": "10px 4px 4px 10px"
+    },
+    "text:de-DE": "Sortieren",
+    "text:pt-BR": "Ordenar",
+    "css:de-DE": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "13px"
     }
   },
   "bidValue1": {
@@ -1433,7 +1457,9 @@
     "image": "",
     "text": "No\nTrump",
     "deckSuitsColor": "",
-    "deckSuitsUni": "NT"
+    "deckSuitsUni": "NT",
+    "text:de-DE": "Kein\nTrumpf",
+    "text:pt-BR": "Sem\ntrunfo"
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -1669,7 +1695,9 @@
       {
         "func": "DELETE"
       }
-    ]
+    ],
+    "text:de-DE": "Schließen",
+    "text:pt-BR": "Fechar"
   },
   "scoreboard": {
     "type": "scoreboard",
@@ -1762,7 +1790,11 @@
       9,
       8,
       7
-    ]
+    ],
+    "roundLabel:de-DE": "Runde",
+    "roundLabel:pt-BR": "Rodada",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "settings": {
     "type": "button",
@@ -1780,107 +1812,147 @@
         "fields": [
           {
             "type": "title",
-            "text": "Choose settings ..."
+            "text": "Choose settings ...",
+            "text:de-DE": "Einstellungen wählen ...",
+            "text:pt-BR": "Escolher configurações ..."
           },
           {
             "type": "subtitle",
-            "text": "Play Holder"
+            "text": "Play Holder",
+            "text:de-DE": "Spielablage",
+            "text:pt-BR": "Área de jogo"
           },
           {
             "type": "checkbox",
             "label": "Click cards in hand to send to play holder (uncheck to deactive click)?",
             "variable": "clickPlay",
-            "value": "${PROPERTY clickPlay}"
+            "value": "${PROPERTY clickPlay}",
+            "label:de-DE": "Karten in der Hand anklicken, um sie in die Spielablage zu legen (abwählen, um Klick zu deaktivieren)?",
+            "label:pt-BR": "Clicar nas cartas da mão para enviá-las à área de jogo (desmarque para desativar o clique)?"
           },
           {
             "type": "checkbox",
             "label": "Show common holder (uncheck to hide)?",
             "variable": "centerShow",
-            "value": "${PROPERTY centerShow}"
+            "value": "${PROPERTY centerShow}",
+            "label:de-DE": "Gemeinsame Ablage anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar suporte comum (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Spread out cards in common holder (uncheck to make a pile)?",
             "variable": "centerSpread",
-            "value": "${PROPERTY centerSpread}"
+            "value": "${PROPERTY centerSpread}",
+            "label:de-DE": "Karten in der gemeinsamen Ablage ausbreiten (abwählen für einen Stapel)?",
+            "label:pt-BR": "Espalhar as cartas no suporte comum (desmarque para fazer uma pilha)?"
           },
           {
             "type": "checkbox",
             "label": "Play cards face up in play area (uncheck to make face down)?",
             "variable": "centerFace",
-            "value": "${PROPERTY centerFace}"
+            "value": "${PROPERTY centerFace}",
+            "label:de-DE": "Karten offen im Spielbereich ausspielen (abwählen für verdeckt)?",
+            "label:pt-BR": "Jogar cartas viradas para cima na área de jogo (desmarque para viradas para baixo)?"
           },
           {
             "type": "checkbox",
             "label": "Show face-up minature captured cards holder (check to display)?",
             "variable": "capturedHolder",
-            "value": "${PROPERTY capturedHolder}"
+            "value": "${PROPERTY capturedHolder}",
+            "label:de-DE": "Verkleinerte Ablage der offen erfassten Karten anzeigen (ankreuzen zum Anzeigen)?",
+            "label:pt-BR": "Mostrar o suporte reduzido de cartas capturadas viradas para cima (marque para exibir)?"
           },
           {
             "type": "subtitle",
-            "text": "Bid & Score Displays"
+            "text": "Bid & Score Displays",
+            "text:de-DE": "Gebot- & Punkteanzeigen",
+            "text:pt-BR": "Exibições de aposta e pontuação"
           },
           {
             "type": "checkbox",
             "label": "Show scoreboard (uncheck to hide)?",
             "variable": "showScore",
-            "value": "${PROPERTY showScore}"
+            "value": "${PROPERTY showScore}",
+            "label:de-DE": "Punktetafel anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar placar (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show count of tricks taken per player (uncheck to hide)?",
             "variable": "showTricks",
-            "value": "${PROPERTY showTricks}"
+            "value": "${PROPERTY showTricks}",
+            "label:de-DE": "Anzahl der Stiche pro Spieler anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar a contagem de vazas por jogador (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bid value (uncheck to hide)?",
             "variable": "showBidValue",
-            "value": "${PROPERTY showBidValue}"
+            "value": "${PROPERTY showBidValue}",
+            "label:de-DE": "Gebotswert anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar valor da aposta (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bid suit (uncheck to hide)?",
             "variable": "showBidSuit",
-            "value": "${PROPERTY showBidSuit}"
+            "value": "${PROPERTY showBidSuit}",
+            "label:de-DE": "Gebotsfarbe anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar naipe da aposta (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show discard holder (uncheck to hide)?",
             "variable": "showDiscard",
-            "value": "${PROPERTY showDiscard}"
+            "value": "${PROPERTY showDiscard}",
+            "label:de-DE": "Ablagestapel anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar suporte de descarte (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bid history (uncheck to hide)?",
             "variable": "showBidHistory",
-            "value": "${PROPERTY showBidHistory}"
+            "value": "${PROPERTY showBidHistory}",
+            "label:de-DE": "Gebotsverlauf anzeigen (abwählen zum Ausblenden)?",
+            "label:pt-BR": "Mostrar histórico de apostas (desmarque para ocultar)?"
           },
           {
             "type": "checkbox",
             "label": "Show bids to everyone (uncheck for secret bidding)?",
             "variable": "showPublicBid",
-            "value": "${PROPERTY showPublicBid}"
+            "value": "${PROPERTY showPublicBid}",
+            "label:de-DE": "Gebote allen zeigen (abwählen für geheimes Bieten)?",
+            "label:pt-BR": "Mostrar apostas para todos (desmarque para apostas secretas)?"
           },
           {
             "type": "subtitle",
-            "text": "Other"
+            "text": "Other",
+            "text:de-DE": "Sonstiges",
+            "text:pt-BR": "Outros"
           },
           {
             "type": "checkbox",
             "label": "Turn moves clockwise (uncheck for counter-clockwise)?",
             "variable": "turnDirection",
-            "value": "${PROPERTY turnDirection}"
+            "value": "${PROPERTY turnDirection}",
+            "label:de-DE": "Zug verläuft im Uhrzeigersinn (abwählen für gegen den Uhrzeigersinn)?",
+            "label:pt-BR": "O turno segue em sentido horário (desmarque para anti-horário)?"
           },
           {
             "type": "color",
             "label": "Choose background color",
             "variable": "bgColor",
-            "value": "#deeaf0"
+            "value": "#deeaf0",
+            "label:de-DE": "Hintergrundfarbe wählen",
+            "label:pt-BR": "Escolher cor de fundo"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -2628,7 +2700,9 @@
     "bgColor": "#deeaf0",
     "showbidHistory": false,
     "tempScore": false,
-    "showSuitValue": false
+    "showSuitValue": false,
+    "text:de-DE": "Optik & Sonstiges",
+    "text:pt-BR": "Visual & Outros"
   },
   "holder1": {
     "type": "holder",
@@ -3134,7 +3208,11 @@
       "seat6",
       "seat7",
       "seat8"
-    ]
+    ],
+    "roundLabel:de-DE": "Spieler",
+    "roundLabel:pt-BR": "Jogadores",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "dealButton": {
     "type": "button",
@@ -3401,7 +3479,12 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir",
+    "css:pt-BR": {
+      "font-size": "12px"
+    }
   },
   "deck1": {
     "type": "deck",
@@ -5584,15 +5667,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Deleting cards ..."
+            "text": "Deleting cards ...",
+            "text:de-DE": "Karten werden gelöscht ...",
+            "text:pt-BR": "Excluindo cartas ..."
           },
           {
             "type": "subtitle",
-            "text": "This will delete all cards in the Discard holder from this game. They can only be restored by reloading the game preset. Are you sure?"
+            "text": "This will delete all cards in the Discard holder from this game. They can only be restored by reloading the game preset. Are you sure?",
+            "text:de-DE": "Damit werden alle Karten im Ablagestapel aus diesem Spiel gelöscht. Sie können nur durch erneutes Laden der Spielvorlage wiederhergestellt werden. Bist du sicher?",
+            "text:pt-BR": "Isso excluirá todas as cartas do suporte de descarte deste jogo. Elas só podem ser restauradas recarregando a predefinição do jogo. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "SELECT",
@@ -5604,7 +5695,9 @@
         "func": "DELETE"
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Löschen",
+    "text:pt-BR": "Excluir"
   },
   "trump": {
     "id": "trump",
@@ -5837,15 +5930,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Calculating score ..."
+            "text": "Calculating score ...",
+            "text:de-DE": "Punkte werden berechnet ...",
+            "text:pt-BR": "Calculando pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will enter scores in the small scoreboard directly above. Make sure: (1) all cards to be counted are in the player holders for captured tricks,(2) the trump indicator is correct (if needed for proper scoring for this game),and (3) the declarer and all team members are correct (if needed for proper scoring). Are you sure you want to continue?"
+            "text": "This will enter scores in the small scoreboard directly above. Make sure: (1) all cards to be counted are in the player holders for captured tricks,(2) the trump indicator is correct (if needed for proper scoring for this game),and (3) the declarer and all team members are correct (if needed for proper scoring). Are you sure you want to continue?",
+            "text:de-DE": "Damit werden die Punkte in die kleine Punktetafel direkt darüber eingetragen. Stelle sicher: (1) alle zu zählenden Karten liegen in den Spielerablagen für erzielte Stiche, (2) die Trumpfanzeige stimmt (falls für die korrekte Wertung dieses Spiels nötig) und (3) der Alleinspieler und alle Teammitglieder stimmen (falls für die Wertung nötig). Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso registrará as pontuações no pequeno placar logo acima. Certifique-se de que: (1) todas as cartas a serem contadas estão nos suportes dos jogadores para as vazas capturadas, (2) o indicador de trunfo está correto (se necessário para a pontuação correta deste jogo) e (3) o declarante e todos os membros da equipe estão corretos (se necessário para a pontuação). Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "IF",
@@ -5861,15 +5962,23 @@
                 "fields": [
                   {
                     "type": "title",
-                    "text": "Trump not set..."
+                    "text": "Trump not set...",
+                    "text:de-DE": "Trumpf nicht gesetzt...",
+                    "text:pt-BR": "Trunfo não definido..."
                   },
                   {
                     "type": "subtitle",
-                    "text": "The trump indicator is not set. Setting it is necessary for most games using this scoring system. Are you sure you want to continue?"
+                    "text": "The trump indicator is not set. Setting it is necessary for most games using this scoring system. Are you sure you want to continue?",
+                    "text:de-DE": "Die Trumpfanzeige ist nicht gesetzt. Für die meisten Spiele mit diesem Wertungssystem ist das Setzen erforderlich. Möchtest du wirklich fortfahren?",
+                    "text:pt-BR": "O indicador de trunfo não está definido. Defini-lo é necessário para a maioria dos jogos que usam este sistema de pontuação. Tem certeza de que deseja continuar?"
                   }
                 ],
                 "confirmButtonText": "Yes",
-                "cancelButtonText": "No"
+                "cancelButtonText": "No",
+                "confirmButtonText:de-DE": "Ja",
+                "confirmButtonText:pt-BR": "Sim",
+                "cancelButtonText:de-DE": "Nein",
+                "cancelButtonText:pt-BR": "Não"
               },
               {
                 "func": "CALL",
@@ -6294,7 +6403,19 @@
       }
     ],
     "activeGameChangeRoutine": [],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Kartenpunkte +",
+    "text:pt-BR": "Somar pontos",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 123,
+    "height:de-DE": 70,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "width:pt-BR": 123,
+    "height:pt-BR": 70
   },
   "settingsDecks": {
     "type": "button",
@@ -6316,11 +6437,15 @@
         "fields": [
           {
             "type": "title",
-            "text": "Choose settings ..."
+            "text": "Choose settings ...",
+            "text:de-DE": "Einstellungen wählen ...",
+            "text:pt-BR": "Escolher configurações ..."
           },
           {
             "type": "subtitle",
-            "text": "Players"
+            "text": "Players",
+            "text:de-DE": "Spieler",
+            "text:pt-BR": "Jogadores"
           },
           {
             "label": "Number of players:",
@@ -6328,7 +6453,9 @@
             "min": 2,
             "max": 8,
             "variable": "seatCount",
-            "value": "${PROPERTY seatCount}"
+            "value": "${PROPERTY seatCount}",
+            "label:de-DE": "Anzahl der Spieler:",
+            "label:pt-BR": "Número de jogadores:"
           },
           {
             "type": "select",
@@ -6338,21 +6465,31 @@
             "options": [
               {
                 "text": "None",
-                "value": "0"
+                "value": "0",
+                "text:de-DE": "Keine",
+                "text:pt-BR": "Nenhuma"
               },
               {
                 "text": "Face Up",
-                "value": 1
+                "value": 1,
+                "text:de-DE": "Offen",
+                "text:pt-BR": "Virada para cima"
               },
               {
                 "text": "Face Down",
-                "value": 2
+                "value": 2,
+                "text:de-DE": "Verdeckt",
+                "text:pt-BR": "Virada para baixo"
               }
-            ]
+            ],
+            "label:de-DE": "Dummy-Hand (im mittleren unteren Platz):",
+            "label:pt-BR": "Mão do morto (no assento inferior central):"
           },
           {
             "type": "subtitle",
-            "text": "Cards and Decks"
+            "text": "Cards and Decks",
+            "text:de-DE": "Karten und Decks",
+            "text:pt-BR": "Cartas e baralhos"
           },
           {
             "type": "select",
@@ -6363,37 +6500,55 @@
               {
                 "text": "52 Standard (1-13, Clubs, Diamonds, Hearts, Spades)",
                 "value": "0",
-                "select": true
+                "select": true,
+                "text:de-DE": "52 Standard (1-13, Kreuz, Karo, Herz, Pik)",
+                "text:pt-BR": "52 padrão (1-13, Paus, Ouros, Copas, Espadas)"
               },
               {
                 "text": "Two 52 Standard Decks",
-                "value": 1
+                "value": 1,
+                "text:de-DE": "Zwei 52er-Standarddecks",
+                "text:pt-BR": "Dois baralhos padrão de 52"
               },
               {
                 "text": "Taroky (1-4 Red, 7-10 Black, 22 Tarot)",
-                "value": 2
+                "value": 2,
+                "text:de-DE": "Taroky (1-4 Rot, 7-10 Schwarz, 22 Tarot)",
+                "text:pt-BR": "Taroky (1-4 vermelhas, 7-10 pretas, 22 Tarô)"
               },
               {
                 "text": "Tarot (52 Standard, 4 Cavaliers, 22 Tarot)",
-                "value": 7
+                "value": 7,
+                "text:de-DE": "Tarot (52 Standard, 4 Cavaliere, 22 Tarot)",
+                "text:pt-BR": "Tarô (52 padrão, 4 Cavaleiros, 22 Tarô)"
               },
               {
                 "text": "Crow (1-14, 5 Colors, 1 Crow)",
-                "value": 3
+                "value": 3,
+                "text:de-DE": "Crow (1-14, 5 Farben, 1 Krähe)",
+                "text:pt-BR": "Crow (1-14, 5 cores, 1 Corvo)"
               },
               {
                 "text": "Spanish (1-12, Clubs, Coins, Cups, Swords)",
-                "value": 4
+                "value": 4,
+                "text:de-DE": "Spanisch (1-12, Stäbe, Münzen, Becher, Schwerter)",
+                "text:pt-BR": "Espanhol (1-12, Paus, Ouros, Copas, Espadas)"
               },
               {
                 "text": "German (5-A, Acorns, Bells, Leaves, Hearts)",
-                "value": 5
+                "value": 5,
+                "text:de-DE": "Deutsch (5-A, Eichel, Schellen, Laub, Herz)",
+                "text:pt-BR": "Alemão (5-A, Bolotas, Guizos, Folhas, Corações)"
               },
               {
                 "text": "Swiss (6-A, Acorns, Bells, Roses, Shields)",
-                "value": 6
+                "value": 6,
+                "text:de-DE": "Schweizerisch (6-A, Eichel, Schellen, Rosen, Schilde)",
+                "text:pt-BR": "Suíço (6-A, Bolotas, Guizos, Rosas, Escudos)"
               }
-            ]
+            ],
+            "label:de-DE": "Art des Decks:",
+            "label:pt-BR": "Tipo de baralho:"
           },
           {
             "label": "Number of jokers:",
@@ -6401,14 +6556,18 @@
             "min": 0,
             "max": 4,
             "variable": "jokerCount",
-            "value": "${PROPERTY jokerCount}"
+            "value": "${PROPERTY jokerCount}",
+            "label:de-DE": "Anzahl der Joker:",
+            "label:pt-BR": "Número de coringas:"
           },
           {
             "label": "Deal this many cards to start:",
             "type": "number",
             "min": 0,
             "variable": "cardCount",
-            "value": "${PROPERTY cardCount}"
+            "value": "${PROPERTY cardCount}",
+            "label:de-DE": "So viele Karten zu Beginn geben:",
+            "label:pt-BR": "Distribuir esta quantidade de cartas no início:"
           },
           {
             "type": "select",
@@ -6418,7 +6577,9 @@
             "options": [
               {
                 "text": "None",
-                "value": "0"
+                "value": "0",
+                "text:de-DE": "Keine",
+                "text:pt-BR": "Nenhuma"
               },
               {
                 "text": "2",
@@ -6460,13 +6621,17 @@
                 "text": "8,9",
                 "value": 10
               }
-            ]
+            ],
+            "label:de-DE": "Ausgewählte Karten entfernen:",
+            "label:pt-BR": "Remover cartas selecionadas:"
           },
           {
             "type": "checkbox",
             "label": "Show clone/delete buttons to handle specific cards (check to show)?",
             "variable": "showDelete",
-            "value": "${PROPERTY showDelete}"
+            "value": "${PROPERTY showDelete}",
+            "label:de-DE": "Klon-/Löschen-Schaltflächen für bestimmte Karten anzeigen (ankreuzen zum Anzeigen)?",
+            "label:pt-BR": "Mostrar botões de clonar/excluir para lidar com cartas específicas (marque para exibir)?"
           },
           {
             "type": "select",
@@ -6476,37 +6641,53 @@
             "options": [
               {
                 "value": 1,
-                "text": "Standard shuffle"
+                "text": "Standard shuffle",
+                "text:de-DE": "Standardmischen",
+                "text:pt-BR": "Embaralhamento padrão"
               },
               {
                 "value": 2,
-                "text": "1 Cut"
+                "text": "1 Cut",
+                "text:de-DE": "1 Abheben",
+                "text:pt-BR": "1 corte"
               },
               {
                 "value": 3,
-                "text": "Few large cuts"
+                "text": "Few large cuts",
+                "text:de-DE": "Wenige große Abhebungen",
+                "text:pt-BR": "Poucos cortes grandes"
               },
               {
                 "value": 4,
-                "text": "Several small Cuts"
+                "text": "Several small Cuts",
+                "text:de-DE": "Mehrere kleine Abhebungen",
+                "text:pt-BR": "Vários cortes pequenos"
               }
-            ]
+            ],
+            "label:de-DE": "Mischmethode:",
+            "label:pt-BR": "Método de embaralhar:"
           },
           {
             "type": "subtitle",
-            "text": "Scoring"
+            "text": "Scoring",
+            "text:de-DE": "Wertung",
+            "text:pt-BR": "Pontuação"
           },
           {
             "type": "checkbox",
             "label": "4 player team scoring (check to enable)?",
             "variable": "teamScore",
-            "value": "${PROPERTY teamScore}"
+            "value": "${PROPERTY teamScore}",
+            "label:de-DE": "Teamwertung für 4 Spieler (ankreuzen zum Aktivieren)?",
+            "label:pt-BR": "Pontuação em equipe de 4 jogadores (marque para ativar)?"
           },
           {
             "type": "checkbox",
             "label": "Contract type button (check to enable)?",
             "variable": "contractType",
-            "value": "${PROPERTY contractType}"
+            "value": "${PROPERTY contractType}",
+            "label:de-DE": "Schaltfläche für Kontrakttyp (ankreuzen zum Aktivieren)?",
+            "label:pt-BR": "Botão de tipo de contrato (marque para ativar)?"
           },
           {
             "type": "select",
@@ -6516,27 +6697,41 @@
             "options": [
               {
                 "value": 1,
-                "text": "Do not use variable partnserships"
+                "text": "Do not use variable partnserships",
+                "text:de-DE": "Keine wechselnden Partnerschaften verwenden",
+                "text:pt-BR": "Não usar parcerias variáveis"
               },
               {
                 "value": 2,
-                "text": "Show Declarer and Opponent teams"
+                "text": "Show Declarer and Opponent teams",
+                "text:de-DE": "Alleinspieler- und Gegner-Teams anzeigen",
+                "text:pt-BR": "Mostrar equipes de Declarante e Oponentes"
               },
               {
                 "value": 3,
-                "text": "Show Declarer and Opponent teams plus individual/spearate scoring (uncommon)"
+                "text": "Show Declarer and Opponent teams plus individual/spearate scoring (uncommon)",
+                "text:de-DE": "Alleinspieler- und Gegner-Teams sowie individuelle/getrennte Wertung anzeigen (unüblich)",
+                "text:pt-BR": "Mostrar equipes de Declarante e Oponentes mais pontuação individual/separada (incomum)"
               }
-            ]
+            ],
+            "label:de-DE": "Wertung mit wechselnden Partnerschaften",
+            "label:pt-BR": "Pontuação com parcerias variáveis"
           },
           {
             "type": "checkbox",
             "label": "Enter score in temporary scoreboard (check to enable)?",
             "variable": "tempScore",
-            "value": "${PROPERTY tempScore}"
+            "value": "${PROPERTY tempScore}",
+            "label:de-DE": "Punkte in temporäre Punktetafel eintragen (ankreuzen zum Aktivieren)?",
+            "label:pt-BR": "Registrar pontuação no placar temporário (marque para ativar)?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -7654,7 +7849,10 @@
       }
     ],
     "variableScore": 1,
-    "contractType": false
+    "contractType": false,
+    "text:de-DE": "Decks & Spieler",
+    "text:pt-BR": "Baralhos & Jogadores",
+    "css:pt-BR": "line-height:1.05; font-size: 15px;"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -7881,15 +8079,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Resetting scores ..."
+            "text": "Resetting scores ...",
+            "text:de-DE": "Punkte werden zurückgesetzt ...",
+            "text:pt-BR": "Zerando pontuações ..."
           },
           {
             "type": "subtitle",
-            "text": "This will reset all the scores. Be patient. This button also does many other things behind the scenes and can take a long time. Are you sure?"
+            "text": "This will reset all the scores. Be patient. This button also does many other things behind the scenes and can take a long time. Are you sure?",
+            "text:de-DE": "Damit werden alle Punkte zurückgesetzt. Hab Geduld. Diese Schaltfläche erledigt im Hintergrund auch viele andere Dinge und kann lange dauern. Bist du sicher?",
+            "text:pt-BR": "Isso zerará todas as pontuações. Tenha paciência. Este botão também faz muitas outras coisas nos bastidores e pode demorar. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "CALL",
@@ -8002,7 +8208,9 @@
         "func": "SHUFFLE",
         "holder": "deckHolder"
       }
-    ]
+    ],
+    "text:de-DE": "Reset",
+    "text:pt-BR": "Zerar"
   },
   "score+10": {
     "type": "button",
@@ -8144,7 +8352,9 @@
     "movableInEdit": false,
     "layer": -5,
     "width": 105,
-    "borderRadius": 8
+    "borderRadius": 8,
+    "text:de-DE": "Optionen",
+    "text:pt-BR": "Opções"
   },
   "turnButton": {
     "type": "button",
@@ -8200,7 +8410,9 @@
     "direction": "forward",
     "css": {
       "border-radius": "10px 4px 4px 10px"
-    }
+    },
+    "text:de-DE": "Zug",
+    "text:pt-BR": "Turno"
   },
   "discardLabel": {
     "id": "discardLabel",
@@ -8215,7 +8427,17 @@
       "font-size": "20px",
       "text-align": "center"
     },
-    "text": "Discard"
+    "text": "Discard",
+    "text:de-DE": "Ablegen",
+    "text:pt-BR": "Descartar",
+    "css:de-DE": {
+      "font-size": "11px",
+      "text-align": "center"
+    },
+    "css:pt-BR": {
+      "font-size": "11px",
+      "text-align": "center"
+    }
   },
   "takeButton": {
     "type": "button",
@@ -8406,7 +8628,9 @@
         "color": "black"
       }
     },
-    "felos9Show": "none"
+    "felos9Show": "none",
+    "text:de-DE": "Nimm",
+    "text:pt-BR": "Pegar"
   },
   "background": {
     "id": "background",
@@ -8538,7 +8762,9 @@
     "rounds": [
       "Card Points"
     ],
-    "scale": 0
+    "scale": 0,
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "seat1": {
     "type": "seat",
@@ -8568,7 +8794,9 @@
                     "type": "string",
                     "label": "Name",
                     "variable": "playerName",
-                    "value": "${playerName}"
+                    "value": "${playerName}",
+                    "label:de-DE": "Name",
+                    "label:pt-BR": "Nome"
                   },
                   {
                     "type": "palette",
@@ -8594,9 +8822,13 @@
                       "#000000"
                     ],
                     "variable": "playerColor",
-                    "value": "${playerColor}"
+                    "value": "${playerColor}",
+                    "label:de-DE": "Farbe",
+                    "label:pt-BR": "Cor"
                   }
-                ]
+                ],
+                "header:de-DE": "Spielernamen und Farbe eingeben",
+                "header:pt-BR": "Digite o nome e a cor do jogador"
               }
             ]
           }
@@ -8876,26 +9108,38 @@
         "fields": [
           {
             "type": "title",
-            "text": "Setting up game ..."
+            "text": "Setting up game ...",
+            "text:de-DE": "Spiel wird eingerichtet ...",
+            "text:pt-BR": "Preparando o jogo ..."
           },
           {
             "type": "subtitle",
-            "text": "WARNING: Switching games may take several seconds. Be patient and do not click the button again."
+            "text": "WARNING: Switching games may take several seconds. Be patient and do not click the button again.",
+            "text:de-DE": "WARNUNG: Der Spielwechsel kann einige Sekunden dauern. Hab Geduld und klicke die Schaltfläche nicht erneut.",
+            "text:pt-BR": "AVISO: Trocar de jogo pode levar alguns segundos. Tenha paciência e não clique no botão novamente."
           },
           {
             "type": "subtitle",
-            "text": "Some games have pre-set defaults configured. Choose your game from the drop-down menu below. You can still edit specific details using the Option buttons."
+            "text": "Some games have pre-set defaults configured. Choose your game from the drop-down menu below. You can still edit specific details using the Option buttons.",
+            "text:de-DE": "Für einige Spiele sind Voreinstellungen konfiguriert. Wähle dein Spiel aus dem Dropdown-Menü unten. Bestimmte Details kannst du weiterhin über die Optionen-Schaltflächen anpassen.",
+            "text:pt-BR": "Alguns jogos têm padrões predefinidos configurados. Escolha o seu jogo no menu suspenso abaixo. Você ainda pode editar detalhes específicos usando os botões de Opções."
           },
           {
             "type": "select",
             "label": "Choose game:",
             "value": "${PROPERTY preSet}",
             "variable": "preSet",
-            "options": "${inputArray}"
+            "options": "${inputArray}",
+            "label:de-DE": "Spiel wählen:",
+            "label:pt-BR": "Escolher jogo:"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -9218,7 +9462,9 @@
       "text": "Default",
       "value": "0"
     },
-    "preSet": "0"
+    "preSet": "0",
+    "text:de-DE": "Spiel:",
+    "text:pt-BR": "Jogo:"
   },
   "bids": {
     "id": "bids",
@@ -9296,7 +9542,9 @@
     "text": "Activity Log",
     "x": 5,
     "parent": "bids",
-    "fixedParent": true
+    "fixedParent": true,
+    "text:de-DE": "Aktivitätsprotokoll",
+    "text:pt-BR": "Registro de atividades"
   },
   "bidButton": {
     "type": "button",
@@ -9377,7 +9625,9 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Bieten",
+    "text:pt-BR": "Apostar"
   },
   "bidWinner": {
     "id": "bidWinner",
@@ -9464,15 +9714,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Show bid to other players ..."
+            "text": "Show bid to other players ...",
+            "text:de-DE": "Gebot anderen Spielern zeigen ...",
+            "text:pt-BR": "Mostrar aposta aos outros jogadores ..."
           },
           {
             "type": "subtitle",
-            "text": "This will show your bid to the other players. Are you sure?"
+            "text": "This will show your bid to the other players. Are you sure?",
+            "text:de-DE": "Damit wird dein Gebot den anderen Spielern gezeigt. Bist du sicher?",
+            "text:pt-BR": "Isso mostrará a sua aposta aos outros jogadores. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "CALL",
@@ -9572,7 +9830,9 @@
           "actionsButton"
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Gebot zeigen",
+    "text:pt-BR": "Mostrar aposta"
   },
   "count1": {
     "id": "count1",
@@ -10593,7 +10853,9 @@
         "property": "height",
         "value": 20
       }
-    ]
+    ],
+    "text:de-DE": "Routinen",
+    "text:pt-BR": "Rotinas"
   },
   "tarokyDeck": {
     "type": "deck",
@@ -11984,7 +12246,11 @@
       "seat7",
       "seat8"
     ],
-    "scale": 0
+    "scale": 0,
+    "roundLabel:de-DE": "Runde",
+    "roundLabel:pt-BR": "Rodada",
+    "totalsLabel:de-DE": "Ges",
+    "totalsLabel:pt-BR": "Tot"
   },
   "4pScoreCoiffeurButton": {
     "type": "button",
@@ -12059,7 +12325,12 @@
     ],
     "x": 60,
     "text": "Convert",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Umwandeln",
+    "text:pt-BR": "Converter",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "3pScoreCoiffeurButton": {
     "type": "button",
@@ -12352,7 +12623,12 @@
       "seat7"
     ],
     "x": 60,
-    "text": "Convert"
+    "text": "Convert",
+    "text:de-DE": "Umwandeln",
+    "text:pt-BR": "Converter",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "showHandButton": {
     "type": "button",
@@ -12368,15 +12644,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Show hand to other players ..."
+            "text": "Show hand to other players ...",
+            "text:de-DE": "Hand anderen Spielern zeigen ...",
+            "text:pt-BR": "Mostrar mão aos outros jogadores ..."
           },
           {
             "type": "subtitle",
-            "text": "This will make the cards in your hand visible to the other players. Are you sure?"
+            "text": "This will make the cards in your hand visible to the other players. Are you sure?",
+            "text:de-DE": "Damit werden die Karten in deiner Hand für die anderen Spieler sichtbar. Bist du sicher?",
+            "text:pt-BR": "Isso tornará as cartas da sua mão visíveis para os outros jogadores. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "SET",
@@ -12453,7 +12737,9 @@
     ],
     "fixedParent": true,
     "parent": "actionsBox",
-    "width": 83
+    "width": 83,
+    "text:de-DE": "Hand zeigen",
+    "text:pt-BR": "Mostrar mão"
   },
   "showHolder1": {
     "type": "holder",
@@ -12595,7 +12881,15 @@
       "font-size": "20px"
     },
     "text": "Tricks:",
-    "x": 17
+    "x": 17,
+    "text:de-DE": "Stiche:",
+    "text:pt-BR": "Vazas:",
+    "css:de-DE": {
+      "font-size": "16px"
+    },
+    "css:pt-BR": {
+      "font-size": "16px"
+    }
   },
   "tricksCount": {
     "id": "tricksCount",
@@ -12675,7 +12969,19 @@
     "layer": -6,
     "movableInEdit": false,
     "width": 24,
-    "rotation": 180
+    "rotation": 180,
+    "text:de-DE": "Aktionen",
+    "text:pt-BR": "Ações",
+    "css:de-DE": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    }
   },
   "actionsBox": {
     "id": "actionsBox",
@@ -12751,7 +13057,9 @@
       }
     ],
     "width": 83,
-    "x": 5
+    "x": 5,
+    "text:de-DE": "Pfeil zeigen",
+    "text:pt-BR": "Mostrar seta"
   },
   "transferScoreButton": {
     "type": "button",
@@ -12799,7 +13107,15 @@
     "width": 120,
     "fixedParent": true,
     "parent": "scoreButton",
-    "x": -5
+    "x": -5,
+    "text:de-DE": "Punkte übertragen",
+    "text:pt-BR": "Transferir pontos",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "doppelLabel": {
     "id": "doppelLabel",
@@ -13208,17 +13524,23 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Choose sort direction ..."
+                "text": "Choose sort direction ...",
+                "text:de-DE": "Sortierrichtung wählen ...",
+                "text:pt-BR": "Escolher direção de ordenação ..."
               },
               {
                 "type": "subtitle",
-                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time."
+                "text": "Choose the direction that your cards will be sorted. You only have to make this choice one time.",
+                "text:de-DE": "Wähle die Richtung, in der deine Karten sortiert werden. Du musst diese Wahl nur einmal treffen.",
+                "text:pt-BR": "Escolha a direção em que suas cartas serão ordenadas. Você só precisa fazer essa escolha uma vez."
               },
               {
                 "type": "checkbox",
                 "label": "Sort high to low left to right (uncheck to sort low to high left to right)?",
                 "value": true,
-                "variable": "sortDirection"
+                "variable": "sortDirection",
+                "label:de-DE": "Von hoch nach niedrig, links nach rechts sortieren (abwählen für niedrig nach hoch)?",
+                "label:pt-BR": "Ordenar de alto para baixo, da esquerda para a direita (desmarque para baixo para alto)?"
               }
             ]
           },
@@ -13283,7 +13605,17 @@
       }
     ],
     "Inuka": true,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Solo sortieren",
+    "text:pt-BR": "Ordenar solo",
+    "css:de-DE": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    }
   },
   "playerAidButton": {
     "type": "button",
@@ -13336,7 +13668,12 @@
       }
     ],
     "movableInEdit": false,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Spielhilfe ein/aus",
+    "text:pt-BR": "Mostrar/ocultar ajuda",
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "playerAid9": {
     "id": "playerAid9",
@@ -13529,15 +13866,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -14011,7 +14356,14 @@
     ],
     "customFaceCount": 6,
     "showTempScoreTotals": true,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Standard",
+    "text:pt-BR": "Padrão",
+    "css:de-DE": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "23px"
+    }
   },
   "gameID1": {
     "id": "gameID1",
@@ -14277,15 +14629,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Dabei werden Kartenpunkte, Weis, Stock und der Bonus für alle Stiche addiert und mit dem Kontraktmultiplikator multipliziert. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Serão somados os Pontos das Cartas, Weis, Stock e o bônus de Todas as Vazas, e o total será multiplicado pelo multiplicador do contrato. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -15565,15 +15925,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the difference between the players' actual scores and predicted scores to the main scoreboard. Are you sure you want to continue?"
+            "text": "This will transfer the difference between the players' actual scores and predicted scores to the main scoreboard. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Differenz zwischen den tatsächlichen und den vorhergesagten Punktzahlen der Spieler auf die Haupttafel übertragen. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá para o placar principal a diferença entre as pontuações reais dos jogadores e as previstas. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -15928,15 +16296,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. (1) Only the player with the contract should use this buttons. (2) This only works if the activity log reflects the player's contract. (3) Only press it once or the Match totals may change each press. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. (1) Only the player with the contract should use this buttons. (2) This only works if the activity log reflects the player's contract. (3) Only press it once or the Match totals may change each press. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. (1) Nur der Spieler mit dem Kontrakt sollte diese Schaltfläche verwenden. (2) Das funktioniert nur, wenn das Aktivitätsprotokoll den Kontrakt des Spielers widerspiegelt. (3) Drücke sie nur einmal, sonst können sich die Match-Summen bei jedem Druck ändern. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. (1) Apenas o jogador com o contrato deve usar este botão. (2) Isso só funciona se o registro de atividades refletir o contrato do jogador. (3) Pressione apenas uma vez, ou os totais da partida podem mudar a cada toque. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       "var contract = ${PROPERTY auctionType OF contractType}",
       {
@@ -16682,15 +17058,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will determine the team that won the contract and transfer the scores in the temporary scoreboard to the main one. This will transfer the total from the temporary scoreboard (which includes the doubled bid, if appropriate) to the main scoreboard. Are you sure you want to continue?"
+            "text": "This will determine the team that won the contract and transfer the scores in the temporary scoreboard to the main one. This will transfer the total from the temporary scoreboard (which includes the doubled bid, if appropriate) to the main scoreboard. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird das Team ermittelt, das den Kontrakt gewonnen hat, und die Punkte werden von der temporären Punktetafel auf die Haupttafel übertragen. Die Summe der temporären Punktetafel (einschließlich des verdoppelten Gebots, falls zutreffend) wird auf die Haupttafel übertragen. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso determinará a equipe que ganhou o contrato e transferirá as pontuações do placar temporário para o principal. O total do placar temporário (incluindo a aposta dobrada, se aplicável) será transferido para o placar principal. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -17130,7 +17514,19 @@
     "width": 24,
     "text": "Items",
     "rotation": 180,
-    "layer": -4
+    "layer": -4,
+    "text:de-DE": "Objekte",
+    "text:pt-BR": "Itens",
+    "css:de-DE": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    }
   },
   "itemsBox": {
     "id": "itemsBox",
@@ -17187,7 +17583,9 @@
         "func": "DELETE"
       }
     ],
-    "text": "Recall All"
+    "text": "Recall All",
+    "text:de-DE": "Alle zurückrufen",
+    "text:pt-BR": "Recolher tudo"
   },
   "itemsRecallMineButton": {
     "type": "button",
@@ -17219,7 +17617,9 @@
       {
         "func": "DELETE"
       }
-    ]
+    ],
+    "text:de-DE": "Meine zurückrufen",
+    "text:pt-BR": "Recolher as minhas"
   },
   "itemsHolder1": {
     "type": "holder",
@@ -19390,15 +19790,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the player with the contract should use this buttons. Also, this only works if the activity log reflects the player's contract. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the player with the contract should use this buttons. Also, this only works if the activity log reflects the player's contract. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Nur der Spieler mit dem Kontrakt sollte diese Schaltfläche verwenden. Außerdem funktioniert das nur, wenn das Aktivitätsprotokoll den Kontrakt des Spielers widerspiegelt. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Apenas o jogador com o contrato deve usar este botão. Além disso, isso só funciona se o registro de atividades refletir o contrato do jogador. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       "var contract = ${PROPERTY message OF bids}",
       {
@@ -19748,7 +20156,9 @@
     "text": "Default",
     "movable": false,
     "movableInEdit": false,
-    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\""
+    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
+    "text:de-DE": "Standard",
+    "text:pt-BR": "Padrão"
   },
   "gameID15": {
     "id": "gameID15",
@@ -20019,7 +20429,17 @@
         "widget": "routines",
         "routine": "autoSortRoutine"
       }
-    ]
+    ],
+    "text:de-DE": "1 nehmen",
+    "text:pt-BR": "Pegar 1",
+    "css:de-DE": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "14px"
+    }
   },
   "score+50": {
     "type": "button",
@@ -20155,7 +20575,17 @@
       }
     ],
     "text": "Reverse Sort",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Umgekehrt sortieren",
+    "text:pt-BR": "Ordenar ao contrário",
+    "css:de-DE": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    }
   },
   "slideHolderVertical": {
     "id": "slideHolderVertical",
@@ -22069,7 +22499,18 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Mischen",
+    "text:pt-BR": "Embaralhar",
+    "css:de-DE": {
+      "border-radius": "0px 10px 10px 0px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "0px 10px 10px 0px",
+      "font-size": "11px"
+    },
+    "width:pt-BR": 63
   },
   "dummyHand": {
     "type": "holder",
@@ -22144,7 +22585,9 @@
         }
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Dummy nimmt",
+    "text:pt-BR": "Morto pega"
   },
   "playerAidDetail1": {
     "type": "seat",
@@ -22414,15 +22857,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the Contract row and the Bonus row will be transferred. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, Contract and Bonus row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. Only the Contract row and the Bonus row will be transferred. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, Contract and Bonus row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Nur die Zeile Kontrakt und die Zeile Bonus werden übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Die Werte der Zeilen Kontrakt und Bonus müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Apenas a linha Contrato e a linha Bônus serão transferidas. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os valores das linhas Contrato e Bônus devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -22489,7 +22940,11 @@
     "scoreProperty": "score12",
     "movable": false,
     "movableInEdit": false,
-    "y": 265
+    "y": 265,
+    "roundLabel:de-DE": "Kontrakt",
+    "roundLabel:pt-BR": "Contrato",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "messageButton": {
     "id": "messageButton",
@@ -22523,7 +22978,11 @@
           }
         ],
         "confirmButtonText": "Submit Message",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Nachricht senden",
+        "confirmButtonText:pt-BR": "Enviar mensagem",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -22556,7 +23015,18 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Nachricht",
+    "text:pt-BR": "Mensagem",
+    "css:pt-BR": {
+      "background": "#ffffff",
+      "border": "1px solid black",
+      "font-size": "11px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "black"
+    }
   },
   "itemsHolder16": {
     "inheritFrom": {
@@ -22792,7 +23262,29 @@
       "align-items": "center"
     },
     "text": "Standard Deck Misc",
-    "height": 140
+    "height": 140,
+    "text:de-DE": "Standarddeck – Sonstiges",
+    "text:pt-BR": "Baralho padrão – diversos",
+    "css:de-DE": {
+      "font-size": "52px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "css:pt-BR": {
+      "font-size": "55px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    }
   },
   "gamesOtherLabel": {
     "id": "gamesOtherLabel",
@@ -22811,7 +23303,29 @@
       "justify-content": "center",
       "align-items": "center"
     },
-    "text": "Other Decks Misc"
+    "text": "Other Decks Misc",
+    "text:de-DE": "Andere Decks – Sonstiges",
+    "text:pt-BR": "Outros baralhos – diversos",
+    "css:de-DE": {
+      "font-size": "52px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "css:pt-BR": {
+      "font-size": "46px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    }
   },
   "gamesTarotLabel": {
     "id": "gamesTarotLabel",
@@ -22870,7 +23384,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Szenario",
+    "roundLabel:pt-BR": "Cenário",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID21": {
     "id": "gameID21",
@@ -23085,7 +23603,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Szenario",
+    "roundLabel:pt-BR": "Cenário",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid20": {
     "id": "playerAid20",
@@ -23163,7 +23685,11 @@
           }
         ],
         "confirmButtonText": "Choose version",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Version wählen",
+        "confirmButtonText:pt-BR": "Escolher versão",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SET",
@@ -23203,7 +23729,9 @@
     ],
     "movableInEdit": false,
     "versionNumber": "0",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Version",
+    "text:pt-BR": "Versão"
   },
   "cloneButton": {
     "type": "button",
@@ -23229,15 +23757,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Cloning cards ..."
+            "text": "Cloning cards ...",
+            "text:de-DE": "Karten werden geklont ...",
+            "text:pt-BR": "Clonando cartas ..."
           },
           {
             "type": "subtitle",
-            "text": "This will clone all cards in the Discard holder from this game. They will be deleted when a new game pre-set is selected or when the room is reloaded from its saved state. Are you sure?"
+            "text": "This will clone all cards in the Discard holder from this game. They will be deleted when a new game pre-set is selected or when the room is reloaded from its saved state. Are you sure?",
+            "text:de-DE": "Damit werden alle Karten im Ablagestapel aus diesem Spiel geklont. Sie werden gelöscht, wenn eine neue Spielvorlage gewählt oder der Raum aus seinem gespeicherten Zustand neu geladen wird. Bist du sicher?",
+            "text:pt-BR": "Isso clonará todas as cartas do suporte de descarte deste jogo. Elas serão excluídas quando uma nova predefinição de jogo for selecionada ou quando a sala for recarregada a partir do seu estado salvo. Tem certeza?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "SELECT",
@@ -23253,7 +23789,9 @@
       }
     ],
     "text": "Clone",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Klonen",
+    "text:pt-BR": "Clonar"
   },
   "gameID22": {
     "id": "gameID22",
@@ -24195,7 +24733,11 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score25",
-    "y": 260
+    "y": 260,
+    "roundLabel:de-DE": "Wert",
+    "roundLabel:pt-BR": "Valor",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "3w0o": {
     "width": 30,
@@ -24365,7 +24907,9 @@
     "ownedBy": null,
     "clickable": null,
     "id": "yywx",
-    "parent": "itemsHolder7"
+    "parent": "itemsHolder7",
+    "text:de-DE": "Beschriftung",
+    "text:pt-BR": "Rótulo"
   },
   "kt1e": {
     "width": 30,
@@ -25243,7 +25787,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score26"
+    "scoreProperty": "score26",
+    "roundLabel:de-DE": "Farbe",
+    "roundLabel:pt-BR": "Naipe",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "scoreSpecial": {
     "type": "button",
@@ -25263,15 +25811,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will calculate the scores and enter them on the main scoreboard above. Are you sure you want to continue?"
+            "text": "This will calculate the scores and enter them on the main scoreboard above. Are you sure you want to continue?",
+            "text:de-DE": "Damit werden die Punkte berechnet und in die Haupttafel darüber eingetragen. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso calculará as pontuações e as registrará no placar principal acima. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       "var gameID = 'gameID' + ${PROPERTY preSet OF preSetsButton}",
       {
@@ -25286,7 +25842,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontuação"
   },
   "takeSpecial": {
     "type": "button",
@@ -25312,7 +25870,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Nimm",
+    "text:pt-BR": "Pegar"
   },
   "gameID27": {
     "id": "gameID27",
@@ -25762,7 +26322,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score27"
+    "scoreProperty": "score27",
+    "roundLabel:de-DE": "Farbe",
+    "roundLabel:pt-BR": "Naipe",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID28": {
     "id": "gameID28",
@@ -26878,7 +27442,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid25a": {
     "type": "scoreboard",
@@ -26913,7 +27481,11 @@
     "seats": "playerAidDetail2",
     "y": 250,
     "x": -90,
-    "height": 220
+    "height": 220,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAidDetail2": {
     "type": "seat",
@@ -26989,7 +27561,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid12a": {
     "type": "scoreboard",
@@ -27023,7 +27599,11 @@
     "seats": "playerAidDetail2",
     "showAllRounds": true,
     "showPlayerColors": false,
-    "showTotals": false
+    "showTotals": false,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid2a": {
     "type": "scoreboard",
@@ -27057,7 +27637,11 @@
     "showTotals": false,
     "parent": "playerAid2",
     "fixedParent": true,
-    "y": 270
+    "y": 270,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid4": {
     "type": "scoreboard",
@@ -27092,7 +27676,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Trumpf-Hinweise",
+    "roundLabel:pt-BR": "Lembretes de trunfo",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "germanDeck": {
     "type": "deck",
@@ -27749,7 +28337,11 @@
     "showAllRounds": true,
     "showPlayerColors": false,
     "showTotals": false,
-    "playerAid": true
+    "playerAid": true,
+    "roundLabel:de-DE": "Anzahl Stiche",
+    "roundLabel:pt-BR": "Número de vazas",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "choose15": {
     "type": "button",
@@ -27763,7 +28355,9 @@
     "image": "",
     "text": "All\nTrump",
     "deckSuitsColor": "",
-    "deckSuitsUni": "AT"
+    "deckSuitsUni": "AT",
+    "text:de-DE": "Alles\nTrumpf",
+    "text:pt-BR": "Tudo\ntrunfo"
   },
   "choose16": {
     "type": "button",
@@ -27788,7 +28382,9 @@
         "property": "text",
         "value": "${bid}"
       }
-    ]
+    ],
+    "text:de-DE": "Passen",
+    "text:pt-BR": "Passar"
   },
   "choose17": {
     "type": "button",
@@ -28792,15 +29388,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -29298,7 +29902,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score30"
+    "scoreProperty": "score30",
+    "roundLabel:de-DE": "Multiplikator",
+    "roundLabel:pt-BR": "Multiplicador",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAidDetail3": {
     "type": "seat",
@@ -29378,7 +29986,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "fixedParent": true,
-    "parent": "playerAid30"
+    "parent": "playerAid30",
+    "roundLabel:de-DE": "Null-Kontrakte",
+    "roundLabel:pt-BR": "Contratos nulos",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "deckSuitsSettings": {
     "id": "deckSuitsSettings",
@@ -32971,15 +33583,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Returning pieces ..."
+            "text": "Returning pieces ...",
+            "text:de-DE": "Steine werden zurückgegeben ...",
+            "text:pt-BR": "Devolvendo peças ..."
           },
           {
             "type": "subtitle",
-            "text": "Use this to return 1/2 of your pieces if you won one or more tricks but did not take any penalties (do not have any counters on the board). Do you want to return 1/2 of your pieces?"
+            "text": "Use this to return 1/2 of your pieces if you won one or more tricks but did not take any penalties (do not have any counters on the board). Do you want to return 1/2 of your pieces?",
+            "text:de-DE": "Verwende dies, um die Hälfte deiner Steine zurückzugeben, wenn du einen oder mehrere Stiche gewonnen, aber keine Strafen erhalten hast (keine Marker auf dem Feld). Möchtest du die Hälfte deiner Steine zurückgeben?",
+            "text:pt-BR": "Use isto para devolver 1/2 das suas peças se você ganhou uma ou mais vazas, mas não sofreu penalidades (não tem fichas no tabuleiro). Deseja devolver 1/2 das suas peças?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       "var index = ${PROPERTY index OF $seatID}",
       {
@@ -33028,7 +33648,9 @@
     "text": "Return 1/2 Mine",
     "height": 45,
     "width": 90,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "1/2 meiner zurück",
+    "text:pt-BR": "Devolver 1/2 minhas"
   },
   "agonyTokensButton2": {
     "type": "button",
@@ -33041,15 +33663,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Returning pieces ..."
+            "text": "Returning pieces ...",
+            "text:de-DE": "Steine werden zurückgegeben ...",
+            "text:pt-BR": "Devolvendo peças ..."
           },
           {
             "type": "subtitle",
-            "text": "Use this to return all of your pieces if either (1) you won every trick or (2) you lost every trick and no other player won every trick. Do you want to return all of your pieces?"
+            "text": "Use this to return all of your pieces if either (1) you won every trick or (2) you lost every trick and no other player won every trick. Do you want to return all of your pieces?",
+            "text:de-DE": "Verwende dies, um alle deine Steine zurückzugeben, wenn entweder (1) du jeden Stich gewonnen hast oder (2) du jeden Stich verloren hast und kein anderer Spieler jeden Stich gewonnen hat. Möchtest du alle deine Steine zurückgeben?",
+            "text:pt-BR": "Use isto para devolver todas as suas peças se (1) você ganhou todas as vazas ou (2) perdeu todas as vazas e nenhum outro jogador ganhou todas. Deseja devolver todas as suas peças?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       "var index = ${PROPERTY index OF $seatID}",
       {
@@ -33086,7 +33716,12 @@
     "text": "Return All Mine",
     "height": 45,
     "width": 90,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Alle meine zurück",
+    "text:pt-BR": "Devolver todas as minhas",
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "agonyTokensButton3": {
     "type": "button",
@@ -33099,15 +33734,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Moving pieces to discard ..."
+            "text": "Moving pieces to discard ...",
+            "text:de-DE": "Steine werden auf den Ablagestapel gelegt ...",
+            "text:pt-BR": "Movendo peças para o descarte ..."
           },
           {
             "type": "subtitle",
-            "text": "Use this to move all remaining pieces from the board to the discard holder. Do you want to continue?"
+            "text": "Use this to move all remaining pieces from the board to the discard holder. Do you want to continue?",
+            "text:de-DE": "Verwende dies, um alle verbleibenden Steine vom Feld auf den Ablagestapel zu legen. Möchtest du fortfahren?",
+            "text:pt-BR": "Use isto para mover todas as peças restantes do tabuleiro para o suporte de descarte. Deseja continuar?"
           }
         ],
         "confirmButtonText": "Confirm",
-        "cancelButtonText": "Cancel"
+        "cancelButtonText": "Cancel",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar",
+        "cancelButtonText:de-DE": "Abbrechen",
+        "cancelButtonText:pt-BR": "Cancelar"
       },
       {
         "func": "SELECT",
@@ -33131,7 +33774,9 @@
     "text": "Empty Board",
     "height": 45,
     "width": 90,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Feld leeren",
+    "text:pt-BR": "Esvaziar mesa"
   },
   "agonyDiscard": {
     "type": "holder",
@@ -33194,7 +33839,17 @@
       "color": "red"
     },
     "text": "Dump Trick",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Stich abwerfen",
+    "text:pt-BR": "Descartar vaza",
+    "css:de-DE": {
+      "font-size": "11px",
+      "color": "red"
+    },
+    "css:pt-BR": {
+      "font-size": "11px",
+      "color": "red"
+    }
   },
   "playerAid33": {
     "type": "scoreboard",
@@ -33226,7 +33881,11 @@
     "showTotals": false,
     "playerAid": true,
     "scoreProperty": "score33",
-    "roundLabel": "Score"
+    "roundLabel": "Score",
+    "roundLabel:de-DE": "Punkte",
+    "roundLabel:pt-BR": "Pontuação",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "agonyInfoLabel": {
     "id": "agonyInfoLabel",
@@ -33238,7 +33897,15 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "agonyAuntBack",
-    "fixedParent": true
+    "fixedParent": true,
+    "text:de-DE": "Entferne 1 zusätzlichen Marker aus deinem Stapel für jede Reihe/Spalte/Diagonale mit 3 von deinen.",
+    "text:pt-BR": "Remova 1 ficha extra da sua pilha para cada linha/coluna/diagonal com 3 das suas.",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "gameID34": {
     "id": "gameID34",
@@ -33390,7 +34057,11 @@
     "rounds": [
       "Winning no tricks gives a multiplier of 10."
     ],
-    "seats": ""
+    "seats": "",
+    "roundLabel:de-DE": "Multipliziere deine gewonnenen Stiche mit denen deines Agenten.",
+    "roundLabel:pt-BR": "Multiplique suas vazas ganhas pelas do seu agente.",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID35": {
     "id": "gameID35",
@@ -34288,7 +34959,16 @@
       }
     ],
     "text": "Burn",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Verbrennen",
+    "text:pt-BR": "Queimar",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 63,
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "showHideBidsB": {
     "type": "button",
@@ -34347,7 +35027,9 @@
         "value": "Hide Bids"
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Gebote zeigen",
+    "text:pt-BR": "Mostrar apostas"
   },
   "gameID36": {
     "id": "gameID36",
@@ -34777,7 +35459,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "onlyVisibleForSeat": []
+    "onlyVisibleForSeat": [],
+    "roundLabel:de-DE": "Kategorie",
+    "roundLabel:pt-BR": "Categoria",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid36a": {
     "type": "scoreboard",
@@ -34796,7 +35482,11 @@
     "scoreProperty": "score36",
     "seats": "playerAidDetail2",
     "playerAid": false,
-    "height": 181
+    "height": 181,
+    "roundLabel:de-DE": "Handpunkte",
+    "roundLabel:pt-BR": "Pontos da mão",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid36b": {
     "type": "scoreboard",
@@ -34816,7 +35506,11 @@
     "scoreProperty": "score36",
     "seats": "playerAidDetail3",
     "playerAid": false,
-    "width": 645
+    "width": 645,
+    "roundLabel:de-DE": "Hinweise",
+    "roundLabel:pt-BR": "Lembretes",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "gameID37": {
     "id": "gameID37",
@@ -35128,7 +35822,19 @@
       }
     ],
     "z": 24,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Spielverzeichnis",
+    "text:pt-BR": "Índice de jogos",
+    "css:de-DE": {
+      "background": "red",
+      "color": "white",
+      "font-size": "13px"
+    },
+    "css:pt-BR": {
+      "background": "red",
+      "color": "white",
+      "font-size": "22px"
+    }
   },
   "gameID38": {
     "id": "gameID38",
@@ -35621,15 +36327,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -36599,7 +37313,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score41"
+    "scoreProperty": "score41",
+    "roundLabel:de-DE": "Punkte",
+    "roundLabel:pt-BR": "Pontuação",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "99BidLabel": {
     "id": "99BidLabel",
@@ -36611,7 +37329,15 @@
     "movable": false,
     "movableInEdit": false,
     "layer": -1,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Dein Gebot:",
+    "text:pt-BR": "Sua aposta:",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "99Bid1": {
     "id": "99Bid1",
@@ -36872,7 +37598,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score42"
+    "scoreProperty": "score42",
+    "roundLabel:de-DE": "Farbe",
+    "roundLabel:pt-BR": "Naipe",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "bidWinnerLabel": {
     "id": "bidWinnerLabel",
@@ -36888,7 +37618,13 @@
       "color": "black",
       "font-size": "16px"
     },
-    "text": "Declarer"
+    "text": "Declarer",
+    "text:de-DE": "Alleinspieler",
+    "text:pt-BR": "Declarante",
+    "css:de-DE": {
+      "color": "black",
+      "font-size": "14px"
+    }
   },
   "trumpLabel": {
     "id": "trumpLabel",
@@ -36903,7 +37639,17 @@
     "css": {
       "color": "black"
     },
-    "text": "Trump"
+    "text": "Trump",
+    "text:de-DE": "Trumpf",
+    "text:pt-BR": "Trunfo",
+    "css:de-DE": {
+      "color": "black",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "color": "black",
+      "font-size": "12px"
+    }
   },
   "gameID43": {
     "id": "gameID43",
@@ -37260,7 +38006,9 @@
         "fields": [
           {
             "type": "subtitle",
-            "text": "Choose number of cards to pass"
+            "text": "Choose number of cards to pass",
+            "text:de-DE": "Anzahl der weiterzugebenden Karten wählen",
+            "text:pt-BR": "Escolher o número de cartas a passar"
           },
           {
             "type": "number",
@@ -37270,7 +38018,9 @@
             "value": "${PROPERTY text}"
           }
         ],
-        "confirmButtonText": "Confirm"
+        "confirmButtonText": "Confirm",
+        "confirmButtonText:de-DE": "Bestätigen",
+        "confirmButtonText:pt-BR": "Confirmar"
       },
       "var passCount = parseFloat ${passCount}",
       {
@@ -37323,7 +38073,9 @@
             "fields": [
               {
                 "type": "title",
-                "text": "Choose ${passCount} cards to pass"
+                "text": "Choose ${passCount} cards to pass",
+                "text:de-DE": "Wähle ${passCount} Karten zum Weitergeben",
+                "text:pt-BR": "Escolha ${passCount} cartas para passar"
               },
               {
                 "type": "choose",
@@ -37334,7 +38086,9 @@
                 "max": "${passCount}"
               }
             ],
-            "confirmButtonText": "Pass these cards"
+            "confirmButtonText": "Pass these cards",
+            "confirmButtonText:de-DE": "Diese Karten weitergeben",
+            "confirmButtonText:pt-BR": "Passar estas cartas"
           },
           {
             "func": "MOVE",
@@ -37501,7 +38255,18 @@
     ],
     "width": 60,
     "height": 60,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Weitergeben",
+    "text:pt-BR": "Passar",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 69,
+    "height:de-DE": 119,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 119
   },
   "gameID44": {
     "id": "gameID44",
@@ -38053,7 +38818,9 @@
       "T 2J",
       "T 1J",
       "T 2J"
-    ]
+    ],
+    "text:de-DE": "Karten erstellen",
+    "text:pt-BR": "Criar cartas"
   },
   "bidValue5": {
     "inheritFrom": {
@@ -38744,7 +39511,11 @@
     "showPlayerColors": false,
     "showTotals": false,
     "playerAid": true,
-    "scoreProperty": "score18"
+    "scoreProperty": "score18",
+    "roundLabel:de-DE": "Thema",
+    "roundLabel:pt-BR": "Tópico",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "playerAid18a": {
     "type": "scoreboard",
@@ -38765,7 +39536,11 @@
     ],
     "scoreProperty": "score18",
     "seats": "playerAidDetail2",
-    "playerAid": false
+    "playerAid": false,
+    "roundLabel:de-DE": "Sonderkarten",
+    "roundLabel:pt-BR": "Cartas especiais",
+    "totalsLabel:de-DE": "Gesamt",
+    "totalsLabel:pt-BR": "Totais"
   },
   "offHolder": {
     "type": "holder",
@@ -39794,7 +40569,9 @@
         "background": "white"
       }
     },
-    "text": "Auctions"
+    "text": "Auctions",
+    "text:de-DE": "Auktionen",
+    "text:pt-BR": "Leilões"
   },
   "playerAid46aAsset": {
     "id": "playerAid46aAsset",
@@ -39828,7 +40605,9 @@
         "background": "white"
       }
     },
-    "text": "Contracts"
+    "text": "Contracts",
+    "text:de-DE": "Kontrakte",
+    "text:pt-BR": "Contratos"
   },
   "playerAid46bAsset": {
     "id": "playerAid46bAsset",
@@ -39896,7 +40675,9 @@
         "background": "white"
       }
     },
-    "text": "Points"
+    "text": "Points",
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontos"
   },
   "playerAid46dAsset": {
     "id": "playerAid46dAsset",
@@ -40328,7 +41109,9 @@
         ]
       }
     ],
-    "teamButton": 1
+    "teamButton": 1,
+    "text:de-DE": "Alleinspieler",
+    "text:pt-BR": "Declarante(s)"
   },
   "teamButton2": {
     "id": "teamButton2",
@@ -40341,7 +41124,9 @@
     "teamButton": 2,
     "x": 112,
     "z": 2,
-    "y": 0
+    "y": 0,
+    "text:de-DE": "Gegner",
+    "text:pt-BR": "Oponente(s)"
   },
   "teamList1": {
     "id": "teamList1",
@@ -40762,7 +41547,9 @@
     "bgColor": "#ffffff",
     "teamButton": 3,
     "z": 3,
-    "parent": "teamsAndContractsOff"
+    "parent": "teamsAndContractsOff",
+    "text:de-DE": "Trennen",
+    "text:pt-BR": "Separar"
   },
   "teamList3": {
     "inheritFrom": {
@@ -40843,7 +41630,49 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Punkte\nx\n\n",
+    "text:pt-BR": "Pontos\nx\n\n",
+    "css:de-DE": {
+      "default": {
+        "background": "#ffffff",
+        "border": "1px solid black",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "black",
+        "line-height": "0.8em",
+        "font-size": "11px"
+      },
+      "::after": {
+        "content": "\"${PROPERTY multiple}\"",
+        "position": "absolute",
+        "margin-top": "30px",
+        "color": "black"
+      }
+    },
+    "width:de-DE": 83,
+    "css:pt-BR": {
+      "default": {
+        "background": "#ffffff",
+        "border": "1px solid black",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "black",
+        "line-height": "0.8em",
+        "font-size": "11px"
+      },
+      "::after": {
+        "content": "\"${PROPERTY multiple}\"",
+        "position": "absolute",
+        "margin-top": "30px",
+        "color": "black"
+      }
+    },
+    "width:pt-BR": 83
   },
   "scoreMultiplierMinus": {
     "type": "basic",
@@ -40935,8 +41764,14 @@
       "similarDesigner": "",
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
-      "players": "2-8"
+      "language": "en-US, de-DE, pt-BR",
+      "players": "2-8",
+      "description:de-DE": "Dieser Raum eignet sich für viele Arten von Kartenspielen. Besonders geeignet ist er für Stich- und Punktstichspiele. Er ist hochgradig anpassbar und bietet viele Spiele mit voreingestellten Konfigurationen.\n\nv2.0.1",
+      "description:pt-BR": "Esta sala pode ser usada para jogar muitos tipos de jogos de cartas. É especialmente adequada para jogos de vazas e de pontos por vaza. É altamente personalizável, com muitos jogos disponíveis em configurações predefinidas.\n\nv2.0.1",
+      "attribution:de-DE": "Der Raum und die meisten Spielelemente und -mechaniken stammen von LawDawg96 und sind über CC0 gemeinfrei veröffentlicht.<div><br></div><div>Weitere Beiträge zu Spielvorlagen und Spielhilfen&nbsp;<span style=\"color: var(--overlayFontColor);\">über CC0 gemeinfrei veröffentlicht&nbsp;</span><span style=\"color: var(--overlayFontColor);\">von anewcar, jade-alarm, jkandell und Shobu.</span></div><div><div><br></div><div>Spielhilfen:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Decks und Karten</div></div></div><div><ul><li>Crow</li><ul><li>Kartendesign von LawDawg96 und über CC0 gemeinfrei veröffentlicht.</li><li>Verbündeter-/Freund-Symbol in der Auktions-Vorlage von Random Panda, verfügbar unter CC BY 3.0 unter https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Objekte (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
+      "attribution:pt-BR": "A sala e a maioria dos elementos e mecânicas do jogo são de LawDawg96 e disponibilizados em domínio público via CC0.<div><br></div><div>Contribuições adicionais para predefinições de jogos e ajudas ao jogador&nbsp;<span style=\"color: var(--overlayFontColor);\">disponibilizadas em domínio público via CC0&nbsp;</span><span style=\"color: var(--overlayFontColor);\">por anewcar, jade-alarm, jkandell e Shobu.</span></div><div><div><br></div><div>Ajudas ao jogador:</div><div><div><ul><li>Doppelkopf by jkandell</li><li>Königrufen by jkandell<br></li><li>Felõs by Shobu</li><li>Israeli Whist by jkandell</li><li>Color Whist by jkandell</li></ul><div>Baralhos e cartas</div></div></div><div><ul><li>Crow</li><ul><li>Design das cartas por LawDawg96 e disponibilizado em domínio público via CC0.</li><li>Ícone de aliado/amigo usado na predefinição de Leilão por Random Panda e disponível sob CC BY 3.0 em https://thenounproject.com/icon/friend-96006/</li></ul></ul><div><div>Itens (CC BY 3.0):</div><div><ul><li>Caro Asercion</li><ul><li>Fox, https://game-icons.net/1x1/caro-asercion/fox.html</li></ul><li>Delapouite</li><ul><li>Barrel,&nbsp;https://game-icons.net/1x1/delapouite/barrel.html</li><li>Lovers, https://game-icons.net/1x1/delapouite/lovers.html</li></ul><li>Lorc</li><ul><li>Screw, https://game-icons.net/1x1/lorc/screw.html</li></ul></ul></div></div></div></div>",
+      "helpText:de-DE": "<div><i><font color=\"#2d5da8\"><b>Liste der Spiele:</b></font></i></div><div><i><font color=\"#2d5da8\"><b><br></b></font></i></div><div><span style=\"white-space-collapse: collapse;\">99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bauerntarock, Bavarian Tarock (Haferltarock), Bid Whist, Botifarra, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Dobbm, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi,&nbsp;Israeli Whist, Klaverjassen, Königrufen, La Bâtarde,&nbsp;La Mèn'che, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schafkopf Palatinate, Schieber Jass, Sechser-Schieber Secret Agent, Sheepshead, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado, Ulti, Wallachen</span></div><div><i><font color=\"#2d5da8\"><b><br></b></font></i></div><div><i><font color=\"#2d5da8\"><b>Schaltfläche Spiel</b></font></i><div><br></div>Verwende die Schaltfläche Spiel, um den Raum automatisch für einen bestimmten Spieltyp einzurichten. Wenn ein Spieltyp im Dropdown-Menü verfügbar ist, richtet er den Raum mit den unten beschriebenen Optionseinstellungen für die häufigste Variante dieses Spieltyps ein. Auch wenn du eine verfügbare Vorlage verwendest, kannst du andere Werte weiterhin über die unten beschriebenen Optionsschaltflächen ändern.</div><div><br></div><div>Wenn keine Spielvorlage verfügbar ist, kannst du dennoch viele Spiele spielen, indem du die Optionen konfigurierst. Die einzige Einschränkung ist, dass es dann kaum Automatisierung gibt.</div><div><br></div><div>Rechts neben der Schaltfläche Spiel steht der Name des aktuell voreingestellten Spiels. In vielen Räumen werden beim Überfahren dieses Textes mit dem Cursor Tipps zur Nutzung der Automatisierung in diesem bestimmten voreingestellten Spiel angezeigt.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Optionsschaltflächen</b></font></i><br></div></div><div><br></div>Verwende die Optionsschaltflächen unten rechts, um den Raum wie gewünscht einzurichten.&nbsp;<div><br></div><div><b>Optik und Sonstiges</b></div><div><ul><li><b>Spielablage</b></li><ul><li>Wenn man auf eine Karte in der Hand klickt, wird die Karte in die Spielablage gelegt; das Klicken zum Ausspielen kann aber deaktiviert werden. Weitere Informationen findest du unter „Eine Karte ausspielen“ im Automatisierungsabschnitt weiter unten.</li><li>Karten werden entweder in eine gemeinsame Ablage in der Mitte des Spielfelds oder in die Ablagen neben jedem Platz ausgespielt. Die gemeinsame Ablage ist standardmäßig deaktiviert.</li><li>Die gemeinsame Ablage kann Karten ausgebreitet oder als Stapel anzeigen. Wenn sie ausgebreitet sind, wird der Abstand zwischen den Karten kleiner, sobald es mehr als 5 sind, damit alle hineinpassen, ohne über die Ablage hinauszuragen. Etwa 12 Karten passen hinein, bevor es schwierig wird, die Karten zu erkennen.</li><li>Die Spielablage kann Karten dazu zwingen, offen oder verdeckt zu liegen, wenn sie hineinkommen.</li><li>Über der normalen Ablage kann eine Mini-Ablage für erfasste Karten hinzugefügt werden. Das ist nützlich in Spielen, bei denen einige oder alle erfassten Karten während des Spiels offen angezeigt werden müssen.</li></ul></ul><ul><li><b>Gebots- &amp; Punkteanzeigen</b></li><ul><li>Die Punktetafel auf der linken Seite des Bildschirms kann angezeigt oder ausgeblendet werden.</li><li>Die Anzahl der pro Spieler in dieser Runde gewonnenen Stiche kann angezeigt oder ausgeblendet werden. Die Gesamtzahl der Stiche wird immer unter der Schaltfläche Zurückrufen &amp; Mischen angezeigt.</li><li>Die weißen, quadratischen Gebotswert-Widgets links an jedem Spielerplatz können angezeigt oder ausgeblendet werden.</li><li>Die weißen, quadratischen Gebotsfarben-Widgets rechts an jedem Spielerplatz können angezeigt oder ausgeblendet werden.</li><li>Der Ablagestapel unter der Stichanzeige kann angezeigt oder ausgeblendet werden.</li><li>Ein Aktivitätsprotokoll, das einen Verlauf der Gebote und anderer Nachrichten zeigt, kann angezeigt oder ausgeblendet werden.</li><li>Gebotswerte können allen angezeigt oder geheim gehalten werden, bis der Spieler sie aufdecken möchte.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Sonstiges</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">Die Zug-Schaltfläche kann so eingestellt werden, dass sie die leuchtende Zuganzeige auf den Plätzen im oder gegen den Uhrzeigersinn bewegt.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">Du kannst die Hintergrundfarbe des Raums in eine andere Farbe ändern.</span></li></ul></ul><div><div><b>Decks und Spieler</b></div><div><ul><li><b>Spieler</b></li><ul><li>Die Spielerzahl kann zwischen 2 und 8 eingestellt werden. Für jede Spielerzahl gibt es vordefinierte Plätze, die nicht geändert werden können. Das Ändern der Spielerzahl, während Spieler sitzen, wirft alle Spieler aus den vorhandenen Plätzen.</li><li>Eine Dummy-Hand kann zu Platz 1 (unten Mitte) hinzugefügt werden. Karten können der Dummy-Hand offen oder verdeckt gegeben werden. Alle Spieler dürfen die Dummy-Hand sehen und mit ihr interagieren.</li></ul></ul><ul><li><b>Karten und Decks</b></li><ul><li>Verfügbare Decks:</li><ul><li>Standard-Deck mit 52 Karten und französischen Farben</li><li>Zwei Standard-Decks mit 52 Karten</li><li>Taroky (54 Karten)</li><li>Tarot (78 Karten)</li><li>Crow (ähnlich wie Rook)</li><li>Spanisch (1-12, Stäbe, Münzen, Becher, Schwerter)</li><li>Deutsch (5-A, Eichel, Schellen, Laub, Herz)</li><li>Schweizerisch (6-A, Eichel, Schellen, Rosen, Schilde)</li></ul><li>Die Anzahl der Joker kann zwischen 0 (Standard) und 4 eingestellt werden. Der erste hinzugefügte Joker ist die schwarze 1, der zweite eine rote 2, der dritte eine weitere schwarze 1 und der vierte eine weitere rote 2.</li><li>Du kannst die Anzahl der Karten festlegen, die an jeden Platz gegeben werden (einschließlich der Dummy-Hand, falls verwendet), von 0 bis zu einem beliebigen Wert.</li><li>Es gibt Optionen, um bestimmte Karten zu entfernen. Das funktioniert bei den Standard-, spanischen und Crow-Decks, aber nicht bei Tarot.</li><li>Im Raum kann eine Löschen-Schaltfläche angezeigt werden. Um diese Funktion zu nutzen, aktiviere das Kästchen in den Einstellungen, ziehe die zu entfernenden Karten in den Ablagestapel und drücke die rote Schaltfläche Löschen. Alle Karten im Ablagestapel werden nach Bestätigung deiner Absicht in einem Pop-up-Menü aus dem Raum gelöscht. Diese Karten können nur durch erneutes Laden der Spielvorlage in den Raum zurückgeholt werden.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Wertung</b></li><ul><li>Bei einem Spiel mit 4 Spielern ist eine Team-/Partnerschaftswertung mit Nord-Süd- und Ost-West-Partnern verfügbar.</li><li>Kleine Widgets können hinzugefügt werden, um „Teams“ anzuzeigen, die sich von Runde zu Runde ändern. Dadurch wird die Wertung mit wechselnden Partnerschaften bei bestimmten Vorlagen automatisiert. Andernfalls ist es nur eine visuelle Erinnerung.</li><li>Eine kleinere, temporäre Punktetafel auf der linken Seite des Bildschirms kann ebenfalls angezeigt oder ausgeblendet werden (Standard). Sie dient dazu, Boni und andere Werte zu berechnen, bevor eine endgültige Summe in die Haupttafel eingetragen wird. Die temporäre Punktetafel erfasst nur eine Runde an Punkten. Sie wird hauptsächlich von Vorlagen verwendet.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automatisierung</b></font></i><div><br></div>Im Raum stehen mehrere Widgets und Schaltflächen zur Verfügung, um bei der Automatisierung einiger grundlegender Aufgaben zu helfen.</div></div></div><div><div><ul><li><b>Geben</b></li><ul><li>Dadurch wird die in der Schaltfläche Decks &amp; Spieler eingestellte Kartenanzahl automatisch an jeden Platz (und an die Dummy-Hand, falls verwendet) gegeben.</li><li>Diese Schaltfläche gibt nur Karten in der Ablage daneben aus. Um eine neue Runde zu beginnen, drücke zuerst die Schaltfläche Zurückrufen &amp; Mischen.</li></ul></ul></div><div><ul><li><b>Zurückrufen &amp; Mischen</b></li><ul><li>Dadurch wird die aktuelle Runde beendet, das Aktivitätsprotokoll gelöscht und die Karten werden zurückgerufen und gemischt.</li></ul></ul><div><ul><li><b>1 nehmen</b></li><ul><li>Dadurch wird eine Karte von der Hauptdeck-Ablage auf die Hand des Spielers gelegt, der die Schaltfläche drückt.</li></ul></ul></div></div></div><div><ul><li><b>Eine Karte ausspielen</b></li><ul><li>Wenn das Klicken zum Ausspielen aktiviert ist:</li><ul><li>Jeder Spieler darf den ersten Stich einer neuen Runde ausspielen. Danach wandert die Zuganzeige zum nächsten Spieler. Die Zuganzeige muss korrekt sein, damit das Klicken zum Ausspielen funktioniert.</li><li>Wenn ein Spieler am Zug ist, wird durch Klicken auf eine Karte diese sofort in den ausgewählten Spielbereich ausgespielt.</li><li>Während Spieler auf ihren Zug warten, können sie auf eine Karte klicken, um sie zum Ausspielen bereitzustellen (sie hebt sich ein paar Pixel über die anderen Karten). Jede Karte in dieser Position wird sofort ausgespielt, wenn die Zuganzeige zu diesem Spieler wandert.</li><li>Wenn eines dieser Szenarien mit dem Spiel, das du spielst, nicht vereinbar ist, deaktiviere das Klicken zum Ausspielen. Du kannst Karten immer manuell ziehen, auch wenn das Klicken zum Ausspielen aktiviert ist.</li></ul><li>Die Kreise mit Zahlen oben links an jedem Platz zeigen die Anzahl der Karten in der Hand dieses Spielers an.</li></ul></ul></div><div><ul><li><b>Haupt-Punktetafel</b></li><ul><li>Die roten und grünen Schaltflächen über der Punktetafel verringern und erhöhen die Punktzahl für die aktuelle Runde für den Spieler, der die Schaltfläche drückt. Hinweis: Die +/- Schaltflächen wirken möglicherweise stattdessen auf die zweite Punktetafel; siehe unten.</li><li>Jedes Mal, wenn die Schaltfläche Zurückrufen &amp; Mischen gedrückt wird, wird eine neue Runde erstellt.</li><li>Spieler können auch direkt auf das Punktetafel-Widget klicken. Ein Pop-up fragt, welche Spielerpunktzahl gesetzt werden soll, welche Runde und einen Wert. Auf diese Weise eingegebene Daten überschreiben sofort die vorhandenen Werte in der ausgewählten Runde für den ausgewählten Spieler.</li><li>Wenn im Optionsmenü ein Wertungssystem ausgewählt wurde, werden unten in der Punktetafel eine Schaltfläche Kartenpunkte +, eine Trumpfanzeige, eine Alleinspieler-Anzeige und möglicherweise eine Schaltfläche Punkte übertragen angezeigt.</li><ul><li>Die Trumpfanzeige wird automatisch anhand der letzten Gebotsfarben-Schaltfläche gesetzt, die ein Spieler gedrückt hat, oder durch Würfeln (nur in einigen Spielen oben rechts für einen zufälligen Trumpf angezeigt). Du kannst das jedoch überschreiben, indem du auf das quadratische Trumpf-Widget klickst, um durch die Optionen zu wechseln. Wenn die Kartenpunktwerte für Trumpfkarten unterschiedlich sind oder wenn ein Gebot „ohne Trumpf“ oder „alles Trumpf“ die Punktwerte ändert, muss dieses Widget vor dem Eintragen der Punkte korrekt gesetzt sein. Die Anzeige kann im Raum umhergezogen werden.</li><li>Die Alleinspieler-Anzeige zeigt den Spieler, der das letzte Gebot abgegeben hat. Du kannst das jedoch überschreiben, indem du darauf klickst, um durch die Namen der Spieler zu wechseln.</li><li>Die Schaltfläche Kartenpunkte + trägt die vordefinierten Punktwerte für die aktuelle Runde in die zweite Punktetafel ein. Wenn in der aktuellen Runde bereits Punkte vorhanden sind, ersetzt das Drücken der Schaltfläche die vorhandenen Werte durch die neuen. Es werden nur Karten in den Ablagen nahe dem Platz jedes Spielers gezählt. Es gibt 3 Ablagen nahe dem Platz jedes Spielers (nicht alle sind sichtbar) und alle 3 werden für diesen Spieler gezählt.</li><li>Die Schaltfläche Punkte übertragen ist in einigen voreingestellten Spielen verfügbar, um Punkte zwischen der zweiten Punktetafel und der Haupttafel zu verschieben und/oder umzurechnen. Falls verfügbar, prüfe die Spieltipps, indem du den Cursor über den Namen der Vorlage bewegst. Falls nicht verfügbar, musst du die Werte manuell in die Haupt-Punktetafel eintragen, bevor du die Schaltfläche Zurückrufen &amp; Mischen drückst.</li></ul></ul></ul><ul><li><b>Zweite Punktetafel</b></li><ul><li>Die zweite Punktetafel ist eine kleinere Tafel unter der Haupttafel. Sie wird in vielen Vorlagen als temporärer Ort verwendet, um Zwischenpunkte zu berechnen, etwa den Wert erfasster Kartenpunkte.</li><li>Zusätzlich zur Zeile Kartenpunkte können weitere Zeilen verfügbar sein. Ziehe den Schieberegler rechts neben der zweiten Punktetafel nach oben und unten, um verschiedene Zeilen hervorzuheben. Die roten und grünen +/- Schaltflächen wirken auf die jeweils hervorgehobene Zeile.</li><li>Die roten und grünen +/- Schaltflächen können immer nur auf eine Punktetafel gleichzeitig wirken. Um die Schaltflächen wieder für die Haupt-Punktetafel zu aktivieren, schiebe den Regler ganz nach oben.</li></ul></ul><ul><li><b>Bieten</b></li><ul><li>Das quadratische Widget auf der linken Seite des Spielerplatzes wird verwendet, um einen Gebotswert anzuzeigen. Das Widget rechts zeigt die Farbe des Gebots an.</li><li>Durch Drücken eines der beiden Widgets öffnet sich in der Mitte des Bildschirms ein Menü, das nur für diesen Spieler sichtbar ist. In diesem Menü kann der Spieler Zahlen und/oder Farben drücken, um ein Gebot anzugeben. Zahlen werden wie bei einem Taschenrechner nacheinander eingegeben. Verwende das leere Feld, um eine Zahleneingabe zu löschen und neu zu beginnen.</li><li>Gebote werden sofort auf den weißen quadratischen Widgets angezeigt, sodass die anderen Spieler sie sehen können, es sei denn, geheimes Bieten ist aktiviert.</li><li>Durch Drücken der grünen Schaltfläche Bieten wird das Gebot optional in einem Aktivitätsprotokoll unten rechts in umgekehrter chronologischer Reihenfolge angezeigt. Wenn geheimes Bieten aktiviert ist, meldet das Aktivitätsprotokoll nur, dass der Spieler ein Gebot abgegeben hat. Der Gebotsverlauf wird gelöscht, wenn die Karten für die nächste Runde zurückgerufen werden.</li><li>Wenn in der Vorlage zusätzliche Nachrichten aktiviert sind, erscheint über dem Aktivitätsprotokoll eine weiße rechteckige Schaltfläche Nachricht. Durch Drücken dieser Schaltfläche können Spieler aus einer Auswahl spielbezogener Nachrichten wählen, die im Aktivitätsprotokoll veröffentlicht werden.</li><li>Um das Bietmenü zu schließen, drücke die Schaltfläche Schließen, die grüne Schaltfläche Bieten oder erneut eines der weißen quadratischen Biet-Widgets.</li><li>Wenn in den Einstellungen geheimes Bieten aktiviert wurde, sollte jeder Spieler zum passenden Zeitpunkt die Schaltfläche Aktionen rechts neben der Hand drücken. Drücke im Pop-up-Menü die Schaltfläche Gebote zeigen. Drücke die Schaltfläche Aktionen erneut, um das Pop-up zu schließen.</li></ul></ul><ul><li><b>Sortieren</b></li><ul><li>Eine Schaltfläche Sortieren links neben der Hand sortiert die Karten in der Hand nur für den Spieler, der die Schaltfläche drückt. Die Farben werden bei Verwendung des Standarddecks immer von links nach rechts in dieser Reihenfolge sortiert: Kreuz, Karo, Herz, Pik. Andere Decks haben eine ähnliche Standardsortierung.</li><li>Wenn ein Spieler die Schaltfläche Sortieren zum ersten Mal drückt, wird er gefragt, wie er innerhalb jeder Farbe nach Wert sortieren möchte: von hoch nach niedrig oder von niedrig nach hoch. Nach der Auswahl sieht der Spieler die Option erst wieder, wenn ein neues voreingestelltes Spiel ausgewählt wird.</li><li>Nach der Auswahl werden alle nachfolgenden Gaben an diese Spieler automatisch sortiert.</li><li>In einigen voreingestellten Spielen ändert ein erneutes Drücken der Sortier-Schaltfläche, nachdem der Trumpf gewählt wurde, die Sortierreihenfolge.</li><li>Einige voreingestellte Spiele fügen außerdem eine zusätzliche Sortier-Schaltfläche für ein einzigartiges, mit diesem Spiel verknüpftes Verhalten hinzu.</li></ul></ul><ul><li><b>Nehmen</b></li><ul><li>Die Schaltfläche Nehmen verschiebt alle in der Runde ausgespielten Karten in eine Ablage, die dem Spieler gehört, der die Schaltfläche drückt. Die Karten werden verdeckt und zu einem Stapel gelegt.</li><ul><li>Bei Verwendung der gemeinsamen Spielablage werden die Karten in die Ablage nahe dem Platz des Spielers verschoben.</li><li>Wird die gemeinsame Spielablage nicht verwendet, werden die Karten in eine Ablage hinter und leicht über und rechts von der Ablage nahe dem Platz des Spielers verschoben. Diese Ablage ist unsichtbar, kann aber verwendet werden – sei also vorsichtig, wenn du Karten manuell ziehst.</li><li>Bei Verwendung der Mini-Ablage zum Anzeigen erfasster Karten können Karten manuell aus der Ablage mit den erfassten Karten in die Mini-Ablage gezogen werden. Einige Spielvorlagen tun das automatisch.</li></ul><li>Durch Klicken auf die Schaltfläche wird die Anzahl der gewonnenen Stiche im Stichwertungs-Widget auf der rechten Seite des Raums um 1 erhöht.</li><li>Die Zuganzeige wandert zum Platz des Spielers, der die Schaltfläche drückt, um den nächsten Stich zu eröffnen.</li></ul></ul><ul><li><b>Aktionen</b></li><ul><li>Dadurch wird ein Pop-up-Menü mit weiteren Schaltflächen angezeigt, die im Spiel verwendet werden können.</li><li>Die Schaltfläche Hand zeigen erstellt eine Mini-Ablage über dem Platz des Spielers, der die Schaltfläche drückt. Kopien der Karten in der Hand des Spielers werden dort verkleinert angezeigt. Kein Spieler kann mit diesen Kopien interagieren. Sie erscheinen und verschwinden nach Bedarf, um die Karten in der Hand dieses Spielers widerzuspiegeln.</li><li>Die Schaltfläche Gebot zeigen wird wie oben beschrieben verwendet, um Gebote aufzudecken, die geheim waren.</li><li>Die Schaltfläche Pfeil zeigen zeigt links neben der Hand einen schwarz-weißen Pfeil an, der nach oben oder unten zeigen kann. Dies wird in einigen voreingestellten Spielen verwendet, um anzuzeigen, wann niedrige Karten hoch sind und umgekehrt.</li></ul></ul><ul><li><b>Objekte</b></li><ul><li>Dadurch wird ein Pop-up-Menü mit mehreren Widgets angezeigt, die im Spiel umhergezogen und verwendet werden können.</li><li>Die meisten Widgets (außer den 4 Kartenfarben) ändern ihre Farbe, um die Farbe des Spielers widerzuspiegeln, der sie genommen hat.</li><li>Das Beschriftungs-Widget kann durch Greifen am dicken Rand gezogen werden, und du kannst kurze Nachrichten hineinschreiben, indem du in den Textbereich klickst.</li><li>Die Widgets mit Zahlen können angeklickt werden, um sie zu ändern.</li><ul><li>Die runden Widgets wechseln von 1 zu x1, von 6 zu x6 usw.</li><li>Das quadratische Widget ist ein Dopplerwürfel und durchläuft x2, x4, x8, x16, x32, x64.</li></ul><li>Um ein einzelnes Widget vom Spielfeld zu entfernen, lege es einfach irgendwo auf das Objekte-„Tablett“.</li><li>Ein Spieler kann alle seine eigenen Widgets löschen, indem er die Schaltfläche Meine zurückrufen drückt.</li><li>Jeder Spieler kann alle Widgets im Raum löschen, indem er die Schaltfläche Alle zurückrufen drückt.</li></ul></ul><ul><li><b>Punkte zurücksetzen</b></li><ul><li>Die Schaltfläche zum Zurücksetzen der Punkte löscht alle Spielerpunkte im Punktetafel-Widget und die Stichzahl im Stichwertungs-Widget. Sie löscht außerdem alle vom Objekte-„Tablett“ genommenen Widgets.</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Eine neue Vorlage erstellen</i></b><br></div></div><div><br></div><div>Wenn du daran interessiert bist, deine eigene Vorlage hinzuzufügen (und sie hoffentlich der öffentlichen Bibliothek zurückzugeben), dann sieh dir die Wiki-Diskussion unter&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki an.</div>",
+      "helpText:pt-BR": "<div><i><font color=\"#2d5da8\"><b>Lista de jogos:</b></font></i></div><div><i><font color=\"#2d5da8\"><b><br></b></font></i></div><div><span style=\"white-space-collapse: collapse;\">99, 200, 1000, Agony Aunt, Auctions (similar to Bids), Bauerntarock, Bavarian Tarock (Haferltarock), Bid Whist, Botifarra, Bouncers, Coiffeur Jass, Chwech, Coinche, Collusion, Color Whist, Counterpoint, Cross Purposes, Crow (Similar to Rook), Czech Taroky, Differenzler Jass, Dobbm, Doppelkopf, Felsõs, French Tarot, Gong Zhu, Hearts, Hold My Beer Huutopussi,&nbsp;Israeli Whist, Klaverjassen, Königrufen, La Bâtarde,&nbsp;La Mèn'che, Mighty, Mittlere Jass, Molotow Jass, Papayou, Pitch Pawnee 10 Point, Schafkopf, Schafkopf Palatinate, Schieber Jass, Sechser-Schieber Secret Agent, Sheepshead, Sidi Barrani Jass, Slovenian Tarok, Spades, State (Similar to Ohio), Tracktrick, Truco, and Tute Subastado, Ulti, Wallachen</span></div><div><i><font color=\"#2d5da8\"><b><br></b></font></i></div><div><i><font color=\"#2d5da8\"><b>Botão Jogo</b></font></i><div><br></div>Use o botão Jogo para configurar automaticamente a sala para um tipo de jogo específico. Se um tipo de jogo estiver disponível no menu suspenso, ele configurará a sala usando as opções descritas abaixo para a variação mais comum desse tipo de jogo. Mesmo usando uma predefinição disponível, você ainda pode alterar outros valores usando os botões de Opções descritos abaixo.</div><div><br></div><div>Se uma predefinição de jogo não estiver disponível, você ainda pode jogar muitos jogos configurando as opções. A única limitação é que haverá muito pouca automação.</div><div><br></div><div>À direita do botão Jogo está o nome do jogo predefinido atual. Em muitas salas, passar o cursor sobre esse texto exibe dicas de como usar a automação naquele jogo predefinido específico.</div><div><span style=\"color: var(--overlayFontColor);\"><br></span></div><div><div><i style=\"color: var(--overlayFontColor);\"><font color=\"#2d5da8\"><b>Botões de Opções</b></font></i><br></div></div><div><br></div>Use os botões de opções no canto inferior direito para configurar a sala como desejar.&nbsp;<div><br></div><div><b>Visual e Outros</b></div><div><ul><li><b>Área de jogo</b></li><ul><li>Clicar em uma carta da mão envia a carta para a área de jogo, mas o clique para jogar pode ser desativado. Veja Jogar uma carta na seção de automação abaixo para mais informações.</li><li>As cartas são jogadas em um suporte comum no meio do tabuleiro ou nos suportes adjacentes a cada assento. O suporte comum está desativado por padrão.</li><li>O suporte comum pode exibir as cartas espalhadas ou em pilha. Quando espalhadas, o espaço entre as cartas diminui se houver mais de 5, para que todas caibam sem ultrapassar o suporte. Cerca de 12 cartas cabem antes de ficar difícil identificá-las.</li><li>A área de jogo pode forçar as cartas a ficarem viradas para cima ou para baixo ao entrarem.</li><li>Um mini-suporte pode ser adicionado sobre o suporte normal para cartas capturadas. Isso é útil em jogos que exigem que algumas ou todas as cartas capturadas fiquem viradas para cima durante o jogo.</li></ul></ul><ul><li><b>Exibições de Aposta &amp; Pontuação</b></li><ul><li>O placar no lado esquerdo da tela pode ser exibido ou ocultado.</li><li>A contagem de vazas feitas por jogador nesta rodada pode ser exibida ou ocultada. A contagem total de vazas é sempre exibida abaixo do botão Recolher &amp; Embaralhar.</li><li>Os widgets brancos e quadrados de valor de aposta à esquerda de cada assento podem ser exibidos ou ocultados.</li><li>Os widgets brancos e quadrados de naipe da aposta à direita de cada assento podem ser exibidos ou ocultados.</li><li>O suporte de descarte abaixo da contagem de vazas pode ser exibido ou ocultado.</li><li>Um registro de atividades que mostra um histórico de apostas e outras mensagens pode ser exibido ou ocultado.</li><li>Os valores das apostas podem ser exibidos a todos ou mantidos em segredo até o jogador decidir revelá-los.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Outros</b><br></li><ul><li><span style=\"color: var(--overlayFontColor);\">O botão de turno pode ser configurado para mover o indicador de turno brilhante nos assentos em sentido horário ou anti-horário.</span><br></li><li><span style=\"color: var(--overlayFontColor);\">Você pode mudar a cor de fundo da sala para outra cor.</span></li></ul></ul><div><div><b>Baralhos e Jogadores</b></div><div><ul><li><b>Jogadores</b></li><ul><li>O número de jogadores pode ser definido entre 2 e 8. Cada número de jogadores tem assentos predefinidos que não podem ser alterados. Alterar o número de jogadores enquanto há jogadores sentados expulsa todos os jogadores dos assentos existentes.</li><li>Uma mão de morto pode ser adicionada ao assento 1 (inferior central). As cartas podem ser distribuídas à mão do morto viradas para cima ou para baixo. Todos os jogadores podem ver e interagir com a mão do morto.</li></ul></ul><ul><li><b>Cartas e Baralhos</b></li><ul><li>Baralhos disponíveis:</li><ul><li>Baralho padrão de 52 cartas com naipes franceses</li><li>Dois baralhos padrão de 52 cartas</li><li>Taroky (54 cartas)</li><li>Tarô (78 cartas)</li><li>Crow (semelhante a Rook)</li><li>Espanhol (1-12, paus, ouros, copas, espadas)</li><li>Alemão (5-A, bolotas, guizos, folhas, corações)</li><li>Suíço (6-A, bolotas, guizos, rosas, escudos)</li></ul><li>O número de coringas pode ser definido entre 0 (padrão) e 4. O primeiro coringa adicionado é o 1 preto, o segundo é um 2 vermelho, o terceiro é outro 1 preto e o quarto é outro 2 vermelho.</li><li>Você pode definir o número de cartas distribuídas a cada assento (incluindo o morto, quando usado) de 0 até qualquer valor.</li><li>Há opções para remover certas cartas. Isso funciona nos baralhos padrão, espanhol e Crow, mas não no Tarô.</li><li>Um botão Excluir pode ser exibido na sala. Para usar este recurso, marque a caixa nas configurações, arraste as cartas que devem ser removidas do baralho para o suporte de descarte e pressione o botão vermelho Excluir. Todas as cartas no suporte de descarte são excluídas da sala após você confirmar sua intenção em um menu pop-up. Essas cartas só podem ser retornadas à sala recarregando a predefinição do jogo.</li></ul></ul><ul><li><b style=\"color: var(--overlayFontColor);\">Pontuação</b></li><ul><li>A pontuação em equipe/parceria com parceiros Norte-Sul e Leste-Oeste está disponível ao jogar um jogo de 4 jogadores.</li><li>Pequenos widgets podem ser adicionados para indicar \"equipes\" que mudam a cada rodada. Isso automatiza a pontuação com parcerias variáveis ao usar certas predefinições. Caso contrário, é apenas um lembrete visual.</li><li>Um placar temporário menor no lado esquerdo da tela também pode ser exibido ou ocultado (padrão). Ele é usado para calcular bônus e outros valores antes de registrar um total final no placar principal. O placar temporário registra apenas uma rodada de pontuações. É usado principalmente pelas predefinições.</li></ul></ul><i><font color=\"#2d5da8\"><b>Automação</b></font></i><div><br></div>Vários widgets e botões estão disponíveis na sala para ajudar a automatizar algumas tarefas básicas.</div></div></div><div><div><ul><li><b>Distribuir</b></li><ul><li>Isso distribui automaticamente o número de cartas definido no botão Baralhos &amp; Jogadores a cada assento (e à mão do morto, se usada).</li><li>Este botão só distribui as cartas do suporte ao seu lado. Para iniciar uma nova rodada, pressione primeiro o botão Recolher &amp; Embaralhar.</li></ul></ul></div><div><ul><li><b>Recolher &amp; Embaralhar</b></li><ul><li>Isso encerra a rodada atual, apaga o registro de atividades e recolhe e embaralha as cartas.</li></ul></ul><div><ul><li><b>Pegar 1</b></li><ul><li>Isso envia uma carta do suporte do baralho principal para a mão do jogador que pressiona o botão.</li></ul></ul></div></div></div><div><ul><li><b>Jogar uma carta</b></li><ul><li>Quando o clique para jogar está ativado:</li><ul><li>Qualquer jogador pode jogar a primeira vaza de uma nova rodada. Depois disso, o indicador de turno passa para o próximo jogador. O indicador de turno deve estar correto para que o clique para jogar funcione.</li><li>Durante o turno de um jogador, clicar em uma carta a joga imediatamente na área de jogo selecionada.</li><li>Enquanto esperam sua vez, os jogadores podem clicar em uma carta para prepará-la para jogar (ela se eleva alguns pixels acima das outras cartas). Qualquer carta nessa posição quando o indicador de turno chegar a esse jogador será jogada imediatamente.</li><li>Se algum desses cenários for incompatível com o jogo que você está jogando, desative o clique para jogar. Você sempre pode arrastar as cartas manualmente, mesmo com o clique para jogar ativado.</li></ul><li>Os círculos com números no canto superior esquerdo de cada assento indicam o número de cartas na mão daquele jogador.</li></ul></ul></div><div><ul><li><b>Placar principal</b></li><ul><li>Os botões vermelho e verde acima do placar diminuem e aumentam a pontuação da rodada atual para o jogador que pressiona o botão. Observação: os botões +/- podem atuar no placar secundário; veja abaixo.</li><li>Uma nova rodada é criada sempre que o botão Recolher &amp; Embaralhar é pressionado.</li><li>Os jogadores também podem clicar diretamente no widget do placar. Um pop-up pergunta qual pontuação de jogador definir, qual rodada e um valor. Dados inseridos dessa forma substituem imediatamente os valores existentes na rodada e no jogador selecionados.</li><li>Se um sistema de pontuação foi selecionado no menu de opções, então um botão Kartenpunkte +, um indicador de trunfo, um indicador de declarante e, possivelmente, um botão Punkte übertragen são exibidos na parte inferior do placar.</li><ul><li>O indicador de trunfo é definido automaticamente com base no último botão de naipe de aposta pressionado por um jogador ou pela rolagem do dado (exibido apenas em alguns jogos no canto superior direito para um trunfo aleatório). Mas você pode substituí-lo clicando no widget quadrado de trunfo para alternar entre as opções. Se os valores de pontos das cartas forem diferentes para cartas de trunfo, ou quando uma aposta de \"sem trunfo\" ou \"tudo trunfo\" alterar os valores de pontos, este widget deve ser definido corretamente antes de registrar as pontuações. O indicador pode ser arrastado pela sala.</li><li>O indicador de Declarante mostra o jogador que fez a última aposta. Mas você pode substituí-lo clicando nele para alternar entre os nomes dos jogadores.</li><li>O botão Kartenpunkte + aplica os valores de pontos predefinidos ao placar secundário para a rodada atual. Se já houver pontos na rodada atual, pressionar o botão substitui os valores existentes pelos novos. Apenas as cartas nos suportes próximos ao assento de cada jogador são contadas. Há 3 suportes próximos ao assento de cada jogador (nem todos visíveis) e os 3 são contados para aquele jogador.</li><li>O botão Punkte übertragen está disponível em alguns jogos predefinidos para mover e/ou converter pontuações entre o placar secundário e o principal. Se disponível, verifique as dicas do jogo passando o cursor sobre o nome da predefinição. Se não estiver disponível, você precisa inserir os valores manualmente no placar principal antes de pressionar o botão Recolher &amp; Embaralhar.</li></ul></ul></ul><ul><li><b>Placar secundário</b></li><ul><li>O placar secundário é um placar menor abaixo do principal. Ele é usado em muitas predefinições como um local temporário para calcular pontuações intermediárias, como o valor dos pontos das cartas capturadas.</li><li>Além da linha Pontos das Cartas, outras linhas podem estar disponíveis. Arraste o controle deslizante à direita do placar secundário para cima e para baixo para destacar diferentes linhas. Os botões +/- vermelho e verde atuam na linha destacada.</li><li>Os botões +/- vermelho e verde só podem atuar em um placar de cada vez. Para reativar os botões no placar principal, mova o controle deslizante totalmente para cima.</li></ul></ul><ul><li><b>Apostar</b></li><ul><li>O widget quadrado no lado esquerdo do assento do jogador é usado para indicar um valor de aposta. O widget à direita indica o naipe da aposta.</li><li>Pressionar qualquer um dos widgets abre um menu no meio da tela visível apenas para aquele jogador. Nesse menu, o jogador pode pressionar números e/ou naipes para indicar uma aposta. Os números são inseridos como em uma calculadora, um de cada vez. Use o quadrado em branco para apagar uma entrada de número e recomeçar.</li><li>As apostas são refletidas imediatamente nos widgets brancos quadrados para os outros jogadores verem, a menos que a aposta secreta esteja ativada.</li><li>Pressionar o botão verde Apostar exibe opcionalmente a aposta em um registro de atividades no canto inferior direito, em ordem cronológica inversa. Se a aposta secreta estiver ativada, o registro apenas informa que o jogador fez uma aposta. O histórico de apostas é apagado quando as cartas são recolhidas para a próxima rodada.</li><li>Se mensagens adicionais estiverem ativadas na predefinição, um botão retangular branco Nachricht aparece acima do registro de atividades. Pressionar esse botão permite que os jogadores escolham entre uma seleção de mensagens relacionadas ao jogo que são publicadas no registro de atividades.</li><li>Para fechar o menu de apostas, pressione o botão Fechar, o botão verde Apostar ou pressione novamente um dos widgets brancos quadrados de aposta.</li><li>Se a aposta secreta foi ativada nas configurações, no momento apropriado cada jogador deve pressionar o botão Ações à direita da mão. No menu pop-up, pressione o botão Mostrar apostas. Pressione o botão Ações novamente para fechar o pop-up.</li></ul></ul><ul><li><b>Ordenar</b></li><ul><li>Um botão Ordenar à esquerda da mão ordena as cartas da mão apenas para o jogador que pressiona o botão. Os naipes são sempre ordenados da esquerda para a direita na ordem: paus, ouros, copas, espadas ao usar o baralho padrão. Outros baralhos têm ordenação padrão semelhante.</li><li>Na primeira vez que um jogador pressiona o botão Ordenar, ele é solicitado a escolher como ordenar por valor dentro de cada naipe: de alto para baixo ou de baixo para alto. Após a escolha, o jogador não verá a opção novamente até que uma nova predefinição de jogo seja selecionada.</li><li>Após as escolhas, todas as distribuições subsequentes a esses jogadores serão ordenadas automaticamente.</li><li>Em alguns jogos predefinidos, pressionar o botão de ordenar novamente após o trunfo ser escolhido altera a ordem de classificação.</li><li>Alguns jogos predefinidos também adicionam um botão de ordenar adicional para um comportamento único ligado àquele jogo.</li></ul></ul><ul><li><b>Pegar</b></li><ul><li>O botão Pegar move todas as cartas jogadas na rodada para um suporte pertencente ao jogador que pressiona o botão. As cartas são viradas para baixo e colocadas em uma pilha.</li><ul><li>Ao usar o suporte de jogo comum, as cartas são movidas para o suporte próximo ao assento do jogador.</li><li>Se o suporte de jogo comum não estiver em uso, as cartas são movidas para um suporte atrás e ligeiramente acima e à direita do suporte próximo ao assento do jogador. Esse suporte é invisível, mas pode ser usado, então tenha cuidado ao arrastar cartas manualmente.</li><li>Ao usar o mini-suporte para exibir cartas capturadas, as cartas podem ser arrastadas manualmente do suporte com as cartas capturadas para o mini-suporte. Algumas predefinições de jogo fazem isso automaticamente.</li></ul><li>Clicar no botão aumenta em 1 a contagem de vazas feitas no widget de contagem de vazas no lado direito da sala.</li><li>O indicador de turno passa para o assento do jogador que pressiona o botão para liderar a próxima vaza.</li></ul></ul><ul><li><b>Ações</b></li><ul><li>Isso exibe um menu pop-up com outros botões que podem ser usados no jogo.</li><li>O botão Mostrar mão cria um mini-suporte sobre o assento do jogador que pressiona o botão. Cópias das cartas na mão do jogador são exibidas ali em miniatura. Nenhum jogador pode interagir com essas cópias. Elas aparecem e desaparecem conforme necessário para refletir as cartas na mão daquele jogador.</li><li>O botão Mostrar aposta é usado como descrito acima para revelar apostas que estavam secretas.</li><li>O botão Mostrar seta exibe uma seta em preto e branco à esquerda da mão que pode apontar para cima ou para baixo. Isso é usado em alguns jogos predefinidos para indicar quando cartas baixas valem como altas e vice-versa.</li></ul></ul><ul><li><b>Itens</b></li><ul><li>Isso exibe um menu pop-up com vários widgets que podem ser arrastados e usados no jogo.</li><li>A maioria dos widgets (exceto os 4 naipes) muda de cor para refletir a cor do jogador que o pegou.</li><li>O widget Rótulo pode ser arrastado pela borda grossa, e você pode digitar mensagens curtas nele clicando na área de texto.</li><li>Os widgets com números podem ser clicados para mudar.</li><ul><li>Os widgets circulares mudam de 1 para x1, de 6 para x6, etc.</li><li>O widget quadrado é um cubo de dobra e passa por x2, x4, x8, x16, x32, x64.</li></ul><li>Para remover um único widget do tabuleiro, basta soltá-lo em qualquer lugar da \"bandeja\" de Itens.</li><li>Um jogador pode excluir todos os seus próprios widgets pressionando o botão Recolher as minhas.</li><li>Qualquer jogador pode excluir todos os widgets da sala pressionando o botão Recolher tudo.</li></ul></ul><ul><li><b>Zerar pontuações</b></li><ul><li>O botão de zerar pontuações apaga todas as pontuações dos jogadores no widget do placar e a contagem de vazas no widget de contagem de vazas. Ele também exclui todos os widgets pegos da \"bandeja\" de Itens.</li></ul></ul><div><b style=\"color: rgb(45, 93, 168);\"><i>Criar uma nova predefinição</i></b><br></div></div><div><br></div><div>Se você tem interesse em adicionar sua própria predefinição (e, com sorte, contribuí-la de volta à biblioteca pública), consulte a discussão no wiki em&nbsp;https://github.com/96LawDawg/Cards-Tricks/wiki.</div>"
     }
   },
   "u74d": {
@@ -41243,15 +42078,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -41403,7 +42246,9 @@
         "background": "white"
       }
     },
-    "text": "Scoring"
+    "text": "Scoring",
+    "text:de-DE": "Wertung",
+    "text:pt-BR": "Pontuação"
   },
   "playerAid45bAsset": {
     "id": "playerAid45bAsset",
@@ -41468,7 +42313,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid45cAsset": {
     "id": "playerAid45cAsset",
@@ -41516,7 +42363,9 @@
         "background": "white"
       }
     },
-    "text": "Contracts"
+    "text": "Contracts",
+    "text:de-DE": "Kontrakte",
+    "text:pt-BR": "Contratos"
   },
   "playerAid45dAsset": {
     "id": "playerAid45dAsset",
@@ -41614,7 +42463,9 @@
         "z": 100
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Talon",
+    "text:pt-BR": "Talão"
   },
   "playerAid6": {
     "id": "playerAid6",
@@ -41652,7 +42503,9 @@
         "background": "white"
       }
     },
-    "text": "Ranks & Points"
+    "text": "Ranks & Points",
+    "text:de-DE": "Ränge & Punkte",
+    "text:pt-BR": "Valores & Pontos"
   },
   "playerAid6aAsset": {
     "id": "playerAid6aAsset",
@@ -41717,7 +42570,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid6bAsset": {
     "id": "playerAid6bAsset",
@@ -41780,7 +42635,9 @@
         "background": "white"
       }
     },
-    "text": "Ranks & Points"
+    "text": "Ranks & Points",
+    "text:de-DE": "Ränge & Punkte",
+    "text:pt-BR": "Valores & Pontos"
   },
   "playerAid1aAsset": {
     "id": "playerAid1aAsset",
@@ -41845,7 +42702,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid1bAsset": {
     "id": "playerAid1bAsset",
@@ -41977,7 +42836,9 @@
         "background": "white"
       }
     },
-    "text": "Scoring"
+    "text": "Scoring",
+    "text:de-DE": "Wertung",
+    "text:pt-BR": "Pontuação"
   },
   "playerAid24bAsset": {
     "id": "playerAid24bAsset",
@@ -42037,7 +42898,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid24cAsset": {
     "id": "playerAid24cAsset",
@@ -42103,7 +42966,9 @@
       }
     },
     "text": "General",
-    "y": -25
+    "y": -25,
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid14aAsset": {
     "id": "playerAid14aAsset",
@@ -42154,7 +43019,9 @@
         "background": "white"
       }
     },
-    "text": "Scoring"
+    "text": "Scoring",
+    "text:de-DE": "Wertung",
+    "text:pt-BR": "Pontuação"
   },
   "playerAid14bAsset": {
     "id": "playerAid14bAsset",
@@ -42213,7 +43080,9 @@
         "background": "white"
       }
     },
-    "text": "Other"
+    "text": "Other",
+    "text:de-DE": "Sonstiges",
+    "text:pt-BR": "Outros"
   },
   "playerAid14cAsset": {
     "id": "playerAid14cAsset",
@@ -42936,7 +43805,9 @@
         "func": "DELETE"
       }
     ],
-    "parent": "chooseValueRank"
+    "parent": "chooseValueRank",
+    "text:de-DE": "Schließen",
+    "text:pt-BR": "Fechar"
   },
   "bidButton1": {
     "type": "button",
@@ -43339,7 +44210,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid47aAsset": {
     "id": "playerAid47aAsset",
@@ -43386,7 +44259,9 @@
       }
     },
     "hoverParent": "rankIndicator",
-    "text": "Rank (High -> Low)"
+    "text": "Rank (High -> Low)",
+    "text:de-DE": "Rang (Hoch -> Niedrig)",
+    "text:pt-BR": "Valor (Alto -> Baixo)"
   },
   "rank2": {
     "id": "rank2",
@@ -43625,7 +44500,9 @@
         "background": "white"
       }
     },
-    "text": "Dealing"
+    "text": "Dealing",
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuição"
   },
   "playerAid31d": {
     "id": "playerAid31d",
@@ -43648,7 +44525,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid31c": {
     "id": "playerAid31c",
@@ -43776,7 +44655,19 @@
     "css": {
       "color": "black"
     },
-    "text": "Marked/Simple"
+    "text": "Marked/Simple",
+    "text:de-DE": "Mark./Einfach",
+    "text:pt-BR": "Marc./Simples",
+    "css:de-DE": {
+      "color": "black",
+      "font-size": "11px"
+    },
+    "width:de-DE": 79,
+    "css:pt-BR": {
+      "color": "black",
+      "font-size": "11px"
+    },
+    "width:pt-BR": 83
   },
   "markedButton": {
     "id": "markedButton",
@@ -43919,7 +44810,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "secretAgentLabel": {
     "id": "secretAgentLabel",
@@ -43933,7 +44826,9 @@
       "font-size": "25px"
     },
     "width": 160,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Dein Agent ist:",
+    "text:pt-BR": "Seu agente é:"
   },
   "secretAgent1": {
     "id": "secretAgent1",
@@ -43952,7 +44847,9 @@
         "justify-content": "center",
         "align-items": "center"
       }
-    }
+    },
+    "text:de-DE": "Spieler im Uhrzeigersinn",
+    "text:pt-BR": "Jogador em sentido horário"
   },
   "secretAgent2": {
     "id": "secretAgent2",
@@ -43971,7 +44868,9 @@
         "align-items": "center"
       }
     },
-    "x": -60
+    "x": -60,
+    "text:de-DE": "Spieler gegen den Uhrzeigersinn",
+    "text:pt-BR": "Jogador em sentido anti-horário"
   },
   "secretAgent3": {
     "id": "secretAgent3",
@@ -43990,7 +44889,9 @@
         "align-items": "center"
       }
     },
-    "x": -65
+    "x": -65,
+    "text:de-DE": "Gegenüberliegender Spieler",
+    "text:pt-BR": "Jogador oposto"
   },
   "secretAgent4": {
     "id": "secretAgent4",
@@ -44009,7 +44910,9 @@
         "justify-content": "center",
         "align-items": "center"
       }
-    }
+    },
+    "text:de-DE": "Du selbst",
+    "text:pt-BR": "Você mesmo"
   },
   "tarokBonusTable1": {
     "id": "tarokBonusTable1",
@@ -44372,15 +45275,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round. However, other row values must be entered separately for each player.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden. Andere Zeilenwerte müssen jedoch für jeden Spieler einzeln eingegeben werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada. No entanto, os outros valores das linhas devem ser inseridos separadamente para cada jogador."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -45731,15 +46642,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round."
+            "text": "This will transfer the score in the temporary scoreboard to the main one. The Card Points row is only displayed as an aid to assist in determining if players made their contract. The value of the Card Points row will be subtracted when transferring the score. The Card Points row should automatically show the same for each player on the same 'team' for this round.",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Die Zeile Kartenpunkte dient nur als Hilfe, um festzustellen, ob die Spieler ihren Kontrakt erfüllt haben. Der Wert der Zeile Kartenpunkte wird beim Übertragen der Punkte abgezogen. Die Zeile Kartenpunkte sollte für jeden Spieler desselben 'Teams' in dieser Runde automatisch gleich angezeigt werden.",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. A linha Pontos das Cartas é exibida apenas como auxílio para determinar se os jogadores cumpriram seu contrato. O valor da linha Pontos das Cartas será subtraído ao transferir a pontuação. A linha Pontos das Cartas deve mostrar automaticamente o mesmo para cada jogador da mesma 'equipe' nesta rodada."
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -46205,15 +47124,23 @@
         "fields": [
           {
             "type": "title",
-            "text": "Transferring score ..."
+            "text": "Transferring score ...",
+            "text:de-DE": "Punkte werden übertragen ...",
+            "text:pt-BR": "Transferindo pontuação ..."
           },
           {
             "type": "subtitle",
-            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?"
+            "text": "This will transfer the score in the temporary scoreboard to the main one. This will add the Card Points, Weis, Stock, and All Tricks bonus and multiply by the contract multiplier. Are you sure you want to continue?",
+            "text:de-DE": "Damit wird die Punktzahl von der temporären Punktetafel auf die Haupttafel übertragen. Dabei werden Kartenpunkte, Weis, Stock und der Bonus für alle Stiche addiert und mit dem Kontraktmultiplikator multipliziert. Möchtest du wirklich fortfahren?",
+            "text:pt-BR": "Isso transferirá a pontuação do placar temporário para o principal. Serão somados os Pontos das Cartas, Weis, Stock e o bônus de Todas as Vazas, e o total será multiplicado pelo multiplicador do contrato. Tem certeza de que deseja continuar?"
           }
         ],
         "confirmButtonText": "Yes",
-        "cancelButtonText": "No"
+        "cancelButtonText": "No",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",

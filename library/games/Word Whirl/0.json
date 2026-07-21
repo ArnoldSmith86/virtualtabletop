@@ -16,31 +16,47 @@
             "options": [
               {
                 "value": "en-US",
-                "text": "American English"
+                "text": "American English",
+                "text:de-DE": "Amerikanisches Englisch",
+                "text:pt-BR": "Inglês americano"
               },
               {
                 "value": "de-DE",
-                "text": "German"
+                "text": "German",
+                "text:de-DE": "Deutsch",
+                "text:pt-BR": "Alemão"
               },
               {
                 "value": "pt-BR",
-                "text": "Brazilian Portuguese"
+                "text": "Brazilian Portuguese",
+                "text:de-DE": "Brasilianisches Portugiesisch",
+                "text:pt-BR": "Português brasileiro"
               },
               {
                 "value": "fr-FR",
-                "text": "French"
+                "text": "French",
+                "text:de-DE": "Französisch",
+                "text:pt-BR": "Francês"
               },
               {
                 "value": "es-ES",
-                "text": "Spanish"
+                "text": "Spanish",
+                "text:de-DE": "Spanisch",
+                "text:pt-BR": "Espanhol"
               }
-            ]
+            ],
+            "label:de-DE": "Sprache",
+            "label:pt-BR": "Idioma"
           }
         ],
         "confirmButtonText": "New Game",
         "confirmButtonIcon": "play_arrow",
         "cancelButtonText": "Resume Game",
-        "cancelButtonIcon": "close"
+        "cancelButtonIcon": "close",
+        "confirmButtonText:de-DE": "Neues Spiel",
+        "confirmButtonText:pt-BR": "Novo jogo",
+        "cancelButtonText:de-DE": "Spiel fortsetzen",
+        "cancelButtonText:pt-BR": "Retomar jogo"
       },
       {
         "func": "SET",
@@ -419,7 +435,9 @@
         "skip": "${skipClick}"
       }
     ],
-    "language": "en-US"
+    "language": "en-US",
+    "text:de-DE": "Wort",
+    "text:pt-BR": "Palavra"
   },
   "WordList": {
     "id": "WordList",
@@ -4377,7 +4395,9 @@
       "cinc",
       "cremallera",
       "zoológico"
-    ]
+    ],
+    "text:de-DE": "Wortliste",
+    "text:pt-BR": "Lista de palavras"
   },
   "Background": {
     "id": "Background",
@@ -4430,7 +4450,15 @@
         "holder": "${PROPERTY parent}"
       }
     ],
-    "parent": "MasterCardHolder"
+    "parent": "MasterCardHolder",
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "13px"
+    },
+    "css:pt-BR": {
+      "font-size": "13px"
+    }
   },
   "numberOfPlayers": {
     "type": "label",
@@ -4681,7 +4709,9 @@
                 "type": "string",
                 "label": "Name",
                 "variable": "playerName",
-                "value": "${playerName}"
+                "value": "${playerName}",
+                "label:de-DE": "Name",
+                "label:pt-BR": "Nome"
               },
               {
                 "type": "palette",
@@ -4706,9 +4736,13 @@
                   "#607d8b"
                 ],
                 "variable": "playerColor",
-                "value": "${playerColor}"
+                "value": "${playerColor}",
+                "label:de-DE": "Farbe",
+                "label:pt-BR": "Cor"
               }
-            ]
+            ],
+            "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+            "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
           }
         ]
       },
@@ -4787,7 +4821,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -4812,9 +4848,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -5183,7 +5223,9 @@
       "text": ""
     },
     "tabIndex": 1,
-    "placeholderText": "clue"
+    "placeholderText": "clue",
+    "placeholderText:de-DE": "Hinweis",
+    "placeholderText:pt-BR": "dica"
   },
   "Player1Name": {
     "type": "label",
@@ -5650,7 +5692,9 @@
         "collection": "phaseLabel",
         "value": "1"
       }
-    ]
+    ],
+    "text:de-DE": "Schreibe deine Hinweise",
+    "text:pt-BR": "Escreva suas dicas"
   },
   "Phase2Button": {
     "type": "button",
@@ -5674,7 +5718,9 @@
         "collection": "phaseLabel",
         "value": "2"
       }
-    ]
+    ],
+    "text:de-DE": "Errate die Tafeln",
+    "text:pt-BR": "Adivinhe os tabuleiros"
   },
   "Player2Seat": {
     "type": "seat",
@@ -5725,7 +5771,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -5750,9 +5798,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6406,7 +6458,9 @@
       "color": "white",
       "pointer-events": "none"
     },
-    "text": "Guess\nClues"
+    "text": "Guess\nClues",
+    "text:de-DE": "Hinweise\nerraten",
+    "text:pt-BR": "Adivinhar\ndicas"
   },
   "Player2ViewLabel": {
     "id": "Player2ViewLabel",
@@ -6464,7 +6518,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6489,9 +6545,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6601,7 +6661,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6626,9 +6688,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6739,7 +6805,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6764,9 +6832,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -6877,7 +6949,9 @@
             "type": "string",
             "label": "Name",
             "variable": "name",
-            "value": "${playerName}"
+            "value": "${playerName}",
+            "label:de-DE": "Name",
+            "label:pt-BR": "Nome"
           },
           {
             "type": "palette",
@@ -6902,9 +6976,13 @@
               "#607d8b"
             ],
             "variable": "color",
-            "value": "${playerColor}"
+            "value": "${playerColor}",
+            "label:de-DE": "Farbe",
+            "label:pt-BR": "Cor"
           }
-        ]
+        ],
+        "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+        "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
       },
       {
         "func": "SELECT",
@@ -8404,7 +8482,9 @@
       "color": "white",
       "pointer-events": "none"
     },
-    "text": "Write\nClues"
+    "text": "Write\nClues",
+    "text:de-DE": "Hinweise\nschreiben",
+    "text:pt-BR": "Escrever\ndicas"
   },
   "Player2EditLabel": {
     "type": "label",
@@ -8447,7 +8527,9 @@
     "z": 43,
     "classes": "standard_font",
     "css": "font-size: 20px;color:white;text-align:right",
-    "text": "When you think you've got it, press:"
+    "text": "When you think you've got it, press:",
+    "text:de-DE": "Wenn du glaubst, es zu wissen, drücke:",
+    "text:pt-BR": "Quando achar que sabe, aperte:"
   },
   "Player2GuessButtonLabel": {
     "type": "label",
@@ -8491,7 +8573,9 @@
     "css": "font-size: 16px;color:black;text-align:center",
     "width": 550,
     "height": 50,
-    "x": -225
+    "x": -225,
+    "text:de-DE": "Wenn du deine Hinweise geschrieben hast,\nmarkiere dich als bereit:",
+    "text:pt-BR": "Quando terminar de escrever suas dicas,\nmarque-se como pronto:"
   },
   "Player2ReadyButtonLabel": {
     "type": "label",
@@ -8548,7 +8632,13 @@
       "language": "de-DE, en-US, es-ES, fr-FR, pt-BR",
       "variant": "",
       "variantImage": "",
-      "usesAIImagery": true
+      "usesAIImagery": true,
+      "description:de-DE": "Verbinde die Wörter auf deinen Karten mit cleveren Hinweisen. Errät gemeinsam die Anordnung der Karten anhand dieser Hinweise. Ein kooperatives Wortspiel-Abenteuer!",
+      "description:pt-BR": "Crie ligações entre as palavras das suas cartas usando dicas espertas. Juntos, adivinhem a disposição das cartas a partir dessas pistas. Um desafio cooperativo de palavras!",
+      "attribution:de-DE": "<div><div>Spielfeldlayout von ArnoldSmith86 und mousewax. Über CC0 gemeinfrei veröffentlicht.</div><div><br></div><div>Das Bibliotheksbild wurde von Midjourney mit dem Prompt \"word whirl, water color painting\". Das Hintergrundbild mit dem Prompt \n\"wallpaper of a festive restaurant --v 5 --ar 16:10\".</div></div><div><br></div><div>Die Wortliste wurde mit https://www.randomlists.com/nouns erstellt und von ChatGPT übersetzt.<br></div><div><br></div><div>Name, Beschreibung und Regelerklärung wurden von ChatGPT generiert und von ArnoldSmith86 angepasst.<br></div>",
+      "attribution:pt-BR": "<div><div>Layout do tabuleiro por ArnoldSmith86 e mousewax. Disponibilizado em domínio público via CC0.</div><div><br></div><div>A imagem da biblioteca foi gerada pelo Midjourney usando o prompt \"word whirl, water color painting\". A imagem de fundo usando o prompt \n\"wallpaper of a festive restaurant --v 5 --ar 16:10\".</div></div><div><br></div><div>A lista de palavras foi criada com https://www.randomlists.com/nouns e traduzida pelo ChatGPT.<br></div><div><br></div><div>Nome, descrição e explicação das regras foram gerados pelo ChatGPT e ajustados por ArnoldSmith86.<br></div>",
+      "ruleText:de-DE": "<h4><strong>Aufbau</strong> 📐</h4><ol><li>Jeder Spieler tritt bei, indem er links auf einen Platz klickt.</li><li>Klicke auf <i class=\"richtextSymbol material-icons\">restart_alt</i>, um das Spiel zu starten.<br></li></ol><h4><strong>Hinweise schreiben</strong> ✍️</h4><div>Im ersten Teil des Spiels schreiben alle Spieler gleichzeitig Hinweise für ihre Karten auf.<br></div><ol><li>Ohne die Wortkarten zu bewegen oder zu drehen, schreibe auf jede Seite einen Hinweis, der die beiden Wörter auf dieser Seite deines Wortquadrats verbindet. Diese Hinweise sollen den anderen Spielern helfen, die Anordnung deiner Karten zu erraten. Wenn die Wörter zum Beispiel „Schnee\" und „Sonne\" lauten, könnte der Hinweis „Wetter\" sein.<br></li><li>Drücke nach dem Schreiben der Hinweise auf <i class=\"richtextSymbol material-icons\">done</i>.</li><li>Warte, bis alle ihre Hinweise fertig haben.</li></ol><div><h4>Anordnung erraten 🗣️</h4><div>Im zweiten Teil des Spiels geht ihr als Team alle Hinweise durch und versucht, die richtige Wortanordnung zu finden.<br></div></div><ol><li>Klicke links auf die Schaltfläche „Hinweise erraten\" eines beliebigen Spielers.</li><li>Versucht als Team, die Hinweise den Wortkarten zuzuordnen, indem ihr sie dreht (anklickt) und in eine der Ecken zieht. Der Spieler, der sich die Hinweise ausgedacht hat, muss völlig still bleiben und darf nicht eingreifen.<br></li><li>Wenn alle Wortkarten platziert sind, drücke auf <i class=\"richtextSymbol material-icons\">thumb_up</i>. Richtige Antworten werden grün hervorgehoben, falsche Karten werden in die Ablage rechts zurückgelegt. Für jede richtige Zuordnung erhält das Team einen Punkt. ⭐</li><li>Macht weiter, bis ihr die Kartenanordnung jedes Spielers erraten habt.<br></li></ol><h4><strong>Das Spiel gewinnen</strong> 🏆\n</h4><p>Bei Word Whirl spielt ihr nicht gegeneinander, sondern als Team gegen das Spiel selbst. Das Spiel endet, wenn alle Spieler einmal die Hinweisgeber waren. Die Gesamtpunktzahl (Anzahl der richtigen Zuordnungen) wird mit früheren Spielen verglichen. Das eigentliche Ziel ist es aber, Spaß zu haben.<br></p>",
+      "ruleText:pt-BR": "<h4><strong>Preparação</strong> 📐</h4><ol><li>Cada jogador entra clicando em um assento à esquerda.</li><li>Clique em <i class=\"richtextSymbol material-icons\">restart_alt</i> para iniciar o jogo.<br></li></ol><h4><strong>Escrever dicas</strong> ✍️</h4><div>Na primeira parte do jogo, todos os jogadores escrevem dicas para suas cartas simultaneamente.<br></div><ol><li>Sem mover ou girar as cartas de palavras, escreva em cada lado uma dica que relacione as duas palavras daquele lado do seu quadrado de palavras. Essas dicas devem ajudar os outros jogadores a adivinhar a disposição das suas cartas. Por exemplo, se as palavras forem \"Neve\" e \"Sol\", a dica poderia ser \"Clima\".<br></li><li>Depois de escrever as dicas, pressione <i class=\"richtextSymbol material-icons\">done</i>.</li><li>Espere que todos terminem suas dicas.</li></ol><div><h4>Adivinhar a disposição 🗣️</h4><div>Na segunda parte do jogo, vocês analisam as dicas de todos em equipe e tentam encontrar a disposição correta das palavras.<br></div></div><ol><li>Clique no botão \"Adivinhar dicas\" de qualquer jogador à esquerda.</li><li>Em equipe, tentem associar as dicas às cartas de palavras girando (clicando) e arrastando-as para um dos cantos. O jogador que criou as dicas deve permanecer completamente em silêncio e não pode intervir.<br></li><li>Depois de colocar todas as cartas de palavras, pressione <i class=\"richtextSymbol material-icons\">thumb_up</i>. As respostas corretas ficarão destacadas em verde, e as cartas incorretas voltarão para o suporte à direita. Para cada acerto, a equipe ganha um ponto. ⭐</li><li>Continuem até adivinharem a disposição das cartas de cada jogador.<br></li></ol><h4><strong>Vencer o jogo</strong> 🏆\n</h4><p>No Word Whirl, vocês não jogam uns contra os outros, mas em equipe contra o próprio jogo. O jogo termina quando todos os jogadores tiverem tido a chance de dar as dicas. A pontuação total (número de acertos) é comparada com jogos anteriores. Mesmo assim, o verdadeiro objetivo é se divertir.<br></p>"
     }
   }
 }

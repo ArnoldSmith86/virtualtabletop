@@ -1,5 +1,5 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
-import { translate } from '../i18n.js';
+import { translate, languageOverrides } from '../i18n.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
 import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
@@ -38,6 +38,22 @@ function cloneInputOverlayForPlayer(overlay, player, playerIndex) {
       field[property] = inputFieldValueForPlayer(field[property], player, playerIndex);
   }
   return clone;
+}
+
+// Resolve language-suffixed texts of an INPUT overlay (header/button texts and
+// each field's label/text/option texts) for the client that displays it, so a
+// game's INPUT dialogs are translated per player. Returns a shallow copy; the
+// shared routine op is never mutated.
+function localizeInputOverlay(overlay) {
+  const localized = Object.assign({}, overlay, languageOverrides(overlay));
+  if(Array.isArray(overlay.fields))
+    localized.fields = overlay.fields.map(field => {
+      const f = Object.assign({}, field, languageOverrides(field));
+      if(Array.isArray(f.options))
+        f.options = f.options.map(o => (o && typeof o == 'object') ? Object.assign({}, o, languageOverrides(o)) : o);
+      return f;
+    });
+  return localized;
 }
 
 function hasPlayerSpecificChooseField(overlay) {
@@ -539,8 +555,8 @@ export class Widget extends StateManaged {
 
       // moveToHolder causes the position to be wrong if the target holder does not have alignChildren
       if(!parent || !widgets.get(parent).get('alignChildren')) {
-        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.get('x')) + xOffset);
-        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.get('y')) + yOffset);
+        await cWidget.set('x', (overrideProperties.x !== undefined ? overrideProperties.x : this.getRaw('x')) + xOffset);
+        await cWidget.set('y', (overrideProperties.y !== undefined ? overrideProperties.y : this.getRaw('y')) + yOffset);
         await cWidget.updatePiles();
       }
       delete cWidget.movedByButton;
@@ -886,7 +902,7 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
-        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
+        return JSON.parse(JSON.stringify(widget.getRaw(evaluateIdentifier(match[5], match[6]))));
       }
 
       return null;
@@ -1432,7 +1448,7 @@ export class Widget extends StateManaged {
         const collection = getCollection(a.collection);
         if(collection) {
 
-          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.getRaw(mainProperty))));
           for(const subkey of propertyPath)
             c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
 
@@ -1784,7 +1800,7 @@ export class Widget extends StateManaged {
       if (a.func == 'RESET') {
         setDefaults(a, { property: 'resetProperties' });      
         for(const widget of widgets.values()) {
-          for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
+          for(const [ key, value ] of Object.entries(widget.getRaw(a.property) || {})) {
             if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
             } else {
@@ -1851,7 +1867,7 @@ export class Widget extends StateManaged {
 
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
-          let newScore = [...asArray(seats[i].get(a.property) || 0)];
+          let newScore = [...asArray(seats[i].getRaw(a.property) || 0)];
           const seatRound = a.round === null ? newScore.length + 1 : a.round;
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
@@ -1881,20 +1897,20 @@ export class Widget extends StateManaged {
             if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
               return false;
             if(a.relation === '<')
-              return w.get(a.property) < a.value;
+              return w.getRaw(a.property) < a.value;
             else if(a.relation === '<=')
-              return w.get(a.property) <= a.value;
+              return w.getRaw(a.property) <= a.value;
             else if(a.relation === '!=')
-              return w.get(a.property) != a.value;
+              return w.getRaw(a.property) != a.value;
             else if(a.relation === '>=')
-              return w.get(a.property) >= a.value;
+              return w.getRaw(a.property) >= a.value;
             else if(a.relation === '>')
-              return w.get(a.property) > a.value;
+              return w.getRaw(a.property) > a.value;
             else if(a.relation === 'in' && Array.isArray(a.value))
-              return a.value.indexOf(w.get(a.property)) != -1;
+              return a.value.indexOf(w.getRaw(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
-            return w.get(a.property) === a.value;
+            return w.getRaw(a.property) === a.value;
           });
 
           // resolve piles
@@ -1942,7 +1958,7 @@ export class Widget extends StateManaged {
             for(const oldWidget of collections[collection]) {
               const oldID = oldWidget.get('id');
               let newState = JSON.parse(JSON.stringify(oldWidget.state));
-              newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
+              newState.id = await compute(a.relation, null, oldWidget.getRaw(a.property), a.value);
 
               if(widgets.has(newState.id)) {
                 problems.push(`id ${newState.id} already in use, ignored.`);
@@ -1961,12 +1977,12 @@ export class Widget extends StateManaged {
                 continue;
               }
 
-              if(a.relation == '+' && w.get(String(a.property)) == null)
+              if(a.relation == '+' && w.getRaw(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
                 problems.push(`null value being appended, SET ignored`);
               else
-                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
+                await w.set(String(a.property), await compute(a.relation, null, w.getRaw(String(a.property)), a.value));
             }
           }
         }
@@ -2809,6 +2825,8 @@ export class Widget extends StateManaged {
   }
 
   async showInputOverlay(o, widgets, variables, collections, getCollection, problems, handle) {
+    // translate the dialog's texts for the player who sees it (see i18n.js)
+    o = localizeInputOverlay(o);
     this.showInputOverlayWorkingState(false);
 
     $('#activeGameButton').dataset.overlay = 'buttonInputOverlay';

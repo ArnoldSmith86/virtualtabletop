@@ -45,6 +45,96 @@ export function translate(text) {
   return dictionary[text] || text;
 }
 
+// --- Game translation: language-suffixed properties -------------------------
+// Games (unlike the static UI) are translated by the game author: any widget
+// property or game-metadata field may carry a language suffix, e.g. `label:de`
+// or `description:pt-BR`. When the suffix matches the currently selected UI
+// language the suffixed value overrides the unsuffixed one, so a single game
+// can be translated without duplicating it per language. The resolution happens
+// locally on read, so the shared room state is never modified (two players may
+// look at the same game in different languages).
+//
+// This is a PRESENTATION feature: the override is resolved per client on read,
+// so it must only affect what is *displayed* (labels, text, images, positions,
+// css, …), never game logic — otherwise two players with different languages
+// would compute different results from the same shared state. The engine keeps
+// this deterministic on two fronts: the routine interpreter reads properties via
+// getRaw() (the unsuffixed value, see statemanaged.js), and the properties that
+// drive logic/interaction (below) are never localized in the first place.
+
+// Only a `base:suffix` key whose suffix looks like a BCP-47 language tag is
+// treated as a translation, so ordinary property names are never misinterpreted.
+const languageSuffixRegex = /^(.+):([a-z]{2,3}(?:-[a-z0-9]+)*)$/i;
+
+// Properties that drive shared game logic or interaction are never localized: a
+// per-language override of these would make widgets link, type, click, drag,
+// belong or drop differently between players and desync the shared state. Only
+// content/presentation properties (text, x, css, image, width, …) are
+// translatable. Routine properties (…Routine) are excluded too, so which routine
+// runs on a click never depends on the player's language. (The identity subset
+// mirrors the non-inheritable set in statemanaged.js.)
+const nonLocalizableProperties = new Set([
+  'id', 'type', 'parent', 'deck', 'cardType', 'inheritFrom',
+  'owner', 'movable', 'clickable', 'dragging', 'dropTarget', 'activeFace'
+]);
+
+function isLocalizableProperty(base) {
+  return !nonLocalizableProperties.has(base) && !/Routine$/.test(base);
+}
+
+// Does a key look like a language-suffixed property (regardless of which
+// language)? Used to decide cheaply whether overrides need recomputing.
+export function isLanguageSuffixedKey(key) {
+  return languageSuffixRegex.test(key);
+}
+
+// How well a property-name language suffix matches the selected language.
+// Returns 0 for no match; higher scores win when several suffixes are present.
+function languageSuffixScore(suffix) {
+  const lang = language.toLowerCase();
+  suffix = suffix.toLowerCase();
+  if(suffix == lang)
+    return 3;                                        // exact tag, e.g. pt-BR
+  if(suffix == lang.split('-')[0] || lang == suffix.split('-')[0])
+    return 2;                                        // primary subtag, e.g. de vs de-DE
+  if(suffix.split('-')[0] == lang.split('-')[0])
+    return 1;                                        // same language, other region
+  return 0;
+}
+
+// For an object with (possibly) language-suffixed keys, return a map of
+// base-property -> overriding value for the currently selected language, or
+// null when there are none (the common case, kept allocation-free).
+export function languageOverrides(object) {
+  let overrides = null;
+  let scores = null;
+  for(const key in object) {
+    const match = key.match(languageSuffixRegex);
+    if(!match)
+      continue;
+    const score = languageSuffixScore(match[2]);
+    if(!score)
+      continue;
+    const base = match[1];
+    if(!isLocalizableProperty(base))
+      continue;
+    if(!overrides)
+      overrides = {}, scores = {};
+    if(scores[base] === undefined || score > scores[base]) {
+      scores[base] = score;
+      overrides[base] = object[key];
+    }
+  }
+  return overrides;
+}
+
+// Apply language overrides onto a metadata object in place (name, description,
+// ruleText, …) so downstream code that reads the plain field names gets the
+// translated value.
+export function localizeMeta(object) {
+  return object && Object.assign(object, languageOverrides(object));
+}
+
 const translatedAttributes = [ 'placeholder', 'title', 'aria-label', 'data-label', 'data-placeholder' ];
 
 function skipTranslation(element) {

@@ -22,8 +22,14 @@
       "helpText": "Players choose a seat by clicking any \"click to sit\" buttons, then type in their name and select their desired color in the popup window. Sit down by clicking the green \"Go\" button.<div><br></div><div>After all players have chosen seats,&nbsp; any one player must click the \"Setup\" button, click the check box in the popup window, and then click the \"Reset the game!\" button. This will randomly determine the starting player, randomly place all city tiles, and give every player 5 random contracts.<div><div><br></div><div>Once done with their turn, the player should click the \"Click to end turn\" button button to the left of their name, which will move to the next player in order. The next player will hear a soft sound and a text alert on screen, reminding them that their turn has begun. Clicking anywhere on the screen will remove the text alert. Any players who do not want to hear the sound and/or see the text alert when it is their turn can click the \"Turn Options\" button in the bottom left corner and change their preference.<br><div><br></div><div>Hovering your mouse over any of the five white boxes in the bottom right corner of the screen will reveal helpful player aids.</div><div><br></div><div>In order to play a track tile, left click and drag the desired type from a holder in the top left corer and place it on the map. Left clicking on a tile on the map rotates it clockwise. The number between the tiles shows how many of that type are left in the supply (when played in person, there are 3 tiles with different front and backs, these are split up in this mod to make it easier to place the type desired).</div><div><br></div><div>Place trains on placed track by left clicking and dragging the train from the stack to the left of that player's name. The trains will snap their orientation to one of 6 sides on the hexagonal grid, let go of the train in the desired location.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Place Factories on empty cities by left clicking and dragging the Factory from the stack to the left of that player's name.&nbsp;</span>When placing Factories onto cities, 5 of the correct resource will automatically be placed onto the city. When spending resources, click on the stack under the number on the city and drag the resource to any edge of the screen and let go, deleting the resource (track tiles can be deleted in the same way).</div><div><br></div><div>Draw new contracts by left clicking on the Contracts Supply stack, dragging the tile to the bottom left corner of the screen and letting go in the area labeled \"Your Hidden Contracts Hand\". The number of contracts each player currently has is displayed to the left of their name.</div><div><br></div><div>When completing Contracts, click and drag them out of the Hidden Contracts Hand, and place them in the \"Completed Contracts\" box to the left of that player's name. The victory points and money gained from the contract will be automatically added to that players supply. The player must perform the bonus action manually, this is not automated.</div><div><br></div><div>In order to pay an opponent any amount of money, left click on the \"pay -&gt;\" button to the left of their name, type in the amount of money you owe them (as a positive number) and then press enter (or click the green \"pay\" button). Money can be taken from opponents in a similar way by typing in a negative number.</div><div><br></div><div>In order to edit their current total points or total money amount, the player must left click on the \"edit -&gt;\" button to the left of the chosen resource, type a number into the box, and press enter (or click the green \"pay\" button). A positive number inputted will increase the resource by that amount, a negative number will decrease by that amount.&nbsp;</div><div><br></div><div>The game end and final scoring are described in the \"Endgame Trigger\" and \"Final Scoring\" white player aid boxes in the bottom right corner. The only automated part of final scoring is the money and victory points from completed contracts already being given to players.</div></div></div></div>",
       "variantImage": "",
       "variant": "Steel Belt map",
-      "language": "en-US",
-      "players": "2-5"
+      "language": "en-US, de-DE, pt-BR",
+      "players": "2-5",
+      "description:de-DE": "Baue dein Schienennetz, errichte deine Fabriken und ernte die Belohnungen.",
+      "description:pt-BR": "Construa a sua malha ferroviária, estabeleça as suas fábricas e colha as recompensas.",
+      "attribution:de-DE": "Layoutdesign und Programmierung von Jonathan Cox (E-Mail: JonGetsGames@gmail.com für Anfragen). Spielname und alle verwendeten Grafik-Assets mit Genehmigung des Rechteinhabers Wallace Designs verwendet. Audioquelle „Wrong Answer\" von [UNIVERSFIELD] über https://pixabay.com/sound-effects/wrong-answer-129254/.",
+      "attribution:pt-BR": "Design de layout e programação por Jonathan Cox (e-mail: JonGetsGames@gmail.com para consultas). Nome do jogo e todos os recursos de arte usados com permissão do detentor dos direitos, Wallace Designs. Fonte de áudio \"Wrong Answer\" de [UNIVERSFIELD] via https://pixabay.com/sound-effects/wrong-answer-129254/.",
+      "helpText:de-DE": "Die Spieler wählen einen Platz, indem sie auf eine der Schaltflächen „click to sit\" klicken, dann ihren Namen eingeben und im Popup-Fenster ihre gewünschte Farbe auswählen. Setze dich, indem du auf die grüne Schaltfläche „Los\" klickst.<div><br></div><div>Nachdem alle Spieler ihre Plätze gewählt haben, muss ein beliebiger Spieler auf die Schaltfläche „Aufbau\" klicken, im Popup-Fenster das Kontrollkästchen anklicken und dann auf die Schaltfläche „Spiel zurücksetzen!\" klicken. Dadurch werden der Startspieler zufällig bestimmt, alle Stadtplättchen zufällig platziert und jedem Spieler 5 zufällige Verträge gegeben.<div><div><br></div><div>Wenn ein Spieler mit seinem Zug fertig ist, sollte er auf die Schaltfläche „Klicken zum Zug beenden\" links neben seinem Namen klicken, wodurch der nächste Spieler an die Reihe kommt. Der nächste Spieler hört einen leisen Ton und sieht einen Texthinweis auf dem Bildschirm, der ihn daran erinnert, dass sein Zug begonnen hat. Ein Klick an eine beliebige Stelle des Bildschirms entfernt den Texthinweis. Spieler, die den Ton und/oder den Texthinweis bei ihrem Zug nicht wahrnehmen möchten, können unten links auf die Schaltfläche „Zug-Einstellungen\" klicken und ihre Einstellung ändern.<br><div><br></div><div>Wenn du mit der Maus über eine der fünf weißen Boxen unten rechts auf dem Bildschirm fährst, werden hilfreiche Spielhilfen angezeigt.</div><div><br></div><div>Um ein Streckenplättchen zu spielen, klicke mit der linken Maustaste und ziehe den gewünschten Typ aus einer Ablage oben links und lege ihn auf die Karte. Ein Linksklick auf ein Plättchen auf der Karte dreht es im Uhrzeigersinn. Die Zahl zwischen den Plättchen zeigt, wie viele dieses Typs noch im Vorrat sind (im echten Spiel gibt es 3 Plättchen mit unterschiedlichen Vorder- und Rückseiten; diese sind in diesem Mod aufgeteilt, um das Platzieren des gewünschten Typs zu erleichtern).</div><div><br></div><div>Platziere Züge auf gelegten Strecken, indem du den Zug aus dem Stapel links neben dem Namen des Spielers mit der linken Maustaste ziehst. Die Züge richten ihre Ausrichtung an einer der 6 Seiten des Sechseckrasters aus; lass den Zug an der gewünschten Stelle los.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Platziere Fabriken auf leeren Städten, indem du die Fabrik aus dem Stapel links neben dem Namen des Spielers mit der linken Maustaste ziehst.&nbsp;</span>Wenn du Fabriken auf Städte setzt, werden automatisch 5 der richtigen Ressource auf die Stadt gelegt. Um Ressourcen auszugeben, klicke auf den Stapel unter der Zahl auf der Stadt, ziehe die Ressource an einen beliebigen Bildschirmrand und lass sie los, wodurch die Ressource gelöscht wird (Streckenplättchen können auf die gleiche Weise gelöscht werden).</div><div><br></div><div>Ziehe neue Verträge, indem du mit der linken Maustaste auf den Stapel „Vertragsvorrat\" klickst, das Plättchen in die untere linke Ecke des Bildschirms ziehst und es im Bereich mit der Bezeichnung „Deine verdeckten Verträge\" loslässt. Die Anzahl der Verträge, die jeder Spieler derzeit hat, wird links neben seinem Namen angezeigt.</div><div><br></div><div>Wenn du Verträge erfüllst, ziehe sie aus den verdeckten Verträgen heraus und lege sie in die Box „Erfüllte Verträge\" links neben dem Namen des Spielers. Die Siegpunkte und das Geld aus dem Vertrag werden automatisch dem Vorrat dieses Spielers hinzugefügt. Die Bonusaktion muss der Spieler manuell ausführen, das ist nicht automatisiert.</div><div><br></div><div>Um einem Gegner einen beliebigen Geldbetrag zu zahlen, klicke mit der linken Maustaste auf die Schaltfläche „zahlen ->\" links neben seinem Namen, gib den Betrag ein, den du ihm schuldest (als positive Zahl), und drücke Enter (oder klicke auf die grüne Schaltfläche „Zahlen\"). Auf ähnliche Weise kann man Gegnern Geld abnehmen, indem man eine negative Zahl eingibt.</div><div><br></div><div>Um seine aktuellen Gesamtpunkte oder seinen Gesamtgeldbetrag zu bearbeiten, muss der Spieler mit der linken Maustaste auf die Schaltfläche „bearbeiten ->\" links neben der gewählten Ressource klicken, eine Zahl in das Feld eingeben und Enter drücken (oder auf die grüne Schaltfläche „Zahlen\" klicken). Eine eingegebene positive Zahl erhöht die Ressource um diesen Betrag, eine negative Zahl verringert sie um diesen Betrag.&nbsp;</div><div><br></div><div>Das Spielende und die Endwertung werden in den weißen Spielhilfe-Boxen „Endspiel-Auslöser\" und „Endwertung\" unten rechts beschrieben. Der einzige automatisierte Teil der Endwertung ist, dass das Geld und die Siegpunkte aus erfüllten Verträgen den Spielern bereits gutgeschrieben werden.</div></div></div></div>",
+      "helpText:pt-BR": "Os jogadores escolhem um assento clicando em qualquer botão \"click to sit\", depois digitam o seu nome e selecionam a cor desejada na janela pop-up. Sente-se clicando no botão verde \"Ir\".<div><br></div><div>Depois que todos os jogadores escolherem os assentos, qualquer jogador deve clicar no botão \"Preparação\", marcar a caixa de seleção na janela pop-up e então clicar no botão \"Reiniciar o jogo!\". Isso determinará aleatoriamente o jogador inicial, posicionará aleatoriamente todas as peças de cidade e dará a cada jogador 5 contratos aleatórios.<div><div><br></div><div>Ao terminar o seu turno, o jogador deve clicar no botão \"Clique para encerrar o turno\" à esquerda do seu nome, o que passará para o próximo jogador na ordem. O próximo jogador ouvirá um som suave e verá um alerta de texto na tela, lembrando-o de que o seu turno começou. Clicar em qualquer lugar da tela remove o alerta de texto. Os jogadores que não quiserem ouvir o som e/ou ver o alerta de texto quando for a sua vez podem clicar no botão \"Configurações de turno\" no canto inferior esquerdo e alterar a sua preferência.<br><div><br></div><div>Passar o mouse sobre qualquer uma das cinco caixas brancas no canto inferior direito da tela revelará ajudas úteis ao jogador.</div><div><br></div><div>Para jogar uma peça de trilho, clique com o botão esquerdo e arraste o tipo desejado de um suporte no canto superior esquerdo e coloque-o no mapa. Clicar com o botão esquerdo em uma peça no mapa a gira em sentido horário. O número entre as peças mostra quantas daquele tipo restam na reserva (ao jogar presencialmente, há 3 peças com frentes e versos diferentes; elas são separadas neste mod para facilitar a colocação do tipo desejado).</div><div><br></div><div>Coloque trens sobre trilhos já colocados clicando com o botão esquerdo e arrastando o trem da pilha à esquerda do nome do jogador. Os trens ajustarão a sua orientação a um dos 6 lados da grade hexagonal; solte o trem no local desejado.</div><div><br></div><div><span style=\"color: var(--overlayFontColor);\">Coloque fábricas em cidades vazias clicando com o botão esquerdo e arrastando a fábrica da pilha à esquerda do nome do jogador.&nbsp;</span>Ao colocar fábricas nas cidades, 5 do recurso correto serão colocados automaticamente na cidade. Para gastar recursos, clique na pilha sob o número na cidade, arraste o recurso para qualquer borda da tela e solte, excluindo o recurso (as peças de trilho podem ser excluídas da mesma forma).</div><div><br></div><div>Compre novos contratos clicando com o botão esquerdo na pilha \"Reserva de contratos\", arrastando a peça para o canto inferior esquerdo da tela e soltando na área rotulada \"Sua mão de contratos ocultos\". O número de contratos que cada jogador tem atualmente é exibido à esquerda do seu nome.</div><div><br></div><div>Ao concluir contratos, arraste-os para fora da mão de contratos ocultos e coloque-os na caixa \"Contratos concluídos\" à esquerda do nome do jogador. Os pontos de vitória e o dinheiro obtidos com o contrato serão adicionados automaticamente à reserva desse jogador. O jogador deve executar a ação de bônus manualmente; isso não é automatizado.</div><div><br></div><div>Para pagar a um oponente qualquer quantia em dinheiro, clique com o botão esquerdo no botão \"pagar ->\" à esquerda do nome dele, digite a quantia que você lhe deve (como número positivo) e pressione Enter (ou clique no botão verde \"Pagar\"). Também é possível tirar dinheiro dos oponentes de forma semelhante, digitando um número negativo.</div><div><br></div><div>Para editar o seu total atual de pontos ou de dinheiro, o jogador deve clicar com o botão esquerdo no botão \"editar ->\" à esquerda do recurso escolhido, digitar um número na caixa e pressionar Enter (ou clicar no botão verde \"Pagar\"). Um número positivo inserido aumentará o recurso nessa quantia; um número negativo o diminuirá nessa quantia.&nbsp;</div><div><br></div><div>O fim do jogo e a pontuação final são descritos nas caixas brancas de ajuda ao jogador \"Gatilho de fim de jogo\" e \"Pontuação final\" no canto inferior direito. A única parte automatizada da pontuação final é o dinheiro e os pontos de vitória dos contratos concluídos já concedidos aos jogadores.</div></div></div></div>"
     }
   },
   "board_deck": {
@@ -257,7 +263,15 @@
         "relation": "=",
         "value": null
       }
-    ]
+    ],
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "font-size": "12px"
+    }
   },
   "resource_holder1": {
     "type": "holder",
@@ -658,7 +672,9 @@
                 "type": "string",
                 "label": "Your Name:",
                 "variable": "name",
-                "value": "${playerName}"
+                "value": "${playerName}",
+                "label:de-DE": "Dein Name:",
+                "label:pt-BR": "Seu nome:"
               },
               {
                 "type": "palette",
@@ -684,9 +700,13 @@
                   "#607d8b"
                 ],
                 "variable": "color",
-                "value": "${playerColor}"
+                "value": "${playerColor}",
+                "label:de-DE": "Deine Farbe:",
+                "label:pt-BR": "Sua cor:"
               }
-            ]
+            ],
+            "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+            "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
           }
         ],
         "elseRoutine": [
@@ -704,7 +724,9 @@
                     "type": "string",
                     "label": "Your Name:",
                     "variable": "name",
-                    "value": "${playerName}"
+                    "value": "${playerName}",
+                    "label:de-DE": "Dein Name:",
+                    "label:pt-BR": "Seu nome:"
                   },
                   {
                     "type": "palette",
@@ -730,20 +752,28 @@
                       "#607d8b"
                     ],
                     "variable": "color",
-                    "value": "${playerColor}"
+                    "value": "${playerColor}",
+                    "label:de-DE": "Deine Farbe:",
+                    "label:pt-BR": "Sua cor:"
                   },
                   {
                     "type": "subtitle",
                     "text": "All done?",
-                    "css": "background-color: var(--VTTblue);color:white;"
+                    "css": "background-color: var(--VTTblue);color:white;",
+                    "text:de-DE": "Alles fertig?",
+                    "text:pt-BR": "Tudo pronto?"
                   },
                   {
                     "type": "checkbox",
                     "label": "Stand up from seat",
                     "variable": "LeaveSeat",
-                    "value": false
+                    "value": false,
+                    "label:de-DE": "Vom Platz aufstehen",
+                    "label:pt-BR": "Levantar do assento"
                   }
-                ]
+                ],
+                "header:de-DE": "Gib deinen Namen und deine Spielerfarbe ein.",
+                "header:pt-BR": "Digite seu nome e escolha a cor do jogador."
               }
             ],
             "elseRoutine": [
@@ -757,9 +787,17 @@
                     "type": "checkbox",
                     "label": "Remove this player from their seat",
                     "variable": "LeaveSeat",
-                    "value": false
+                    "value": false,
+                    "label:de-DE": "Diesen Spieler von seinem Platz entfernen",
+                    "label:pt-BR": "Remover este jogador do seu assento"
                   }
-                ]
+                ],
+                "header:de-DE": "Möchtest du ${PROPERTY player} wirklich von diesem Platz entfernen?",
+                "header:pt-BR": "Tem certeza de que deseja remover ${PROPERTY player} deste assento?",
+                "confirmButtonText:de-DE": "Okay",
+                "confirmButtonText:pt-BR": "Okay",
+                "cancelButtonText:de-DE": "Abbrechen",
+                "cancelButtonText:pt-BR": "Cancelar"
               }
             ]
           }
@@ -1403,17 +1441,23 @@
           {
             "type": "title",
             "text": "Modify ${player_name}'s Victory Points",
-            "css": "background-color:var(--VTTblue);color:white;"
+            "css": "background-color:var(--VTTblue);color:white;",
+            "text:de-DE": "${player_name}s Siegpunkte ändern",
+            "text:pt-BR": "Modificar os Pontos de Vitória de ${player_name}"
           },
           {
             "type": "number",
             "label": "Type the number of points gained or lost. Put a - before the number to lose points.",
             "variable": "value_change",
-            "value": 0
+            "value": 0,
+            "label:de-DE": "Gib die Anzahl der gewonnenen oder verlorenen Punkte ein. Setze ein - vor die Zahl, um Punkte zu verlieren.",
+            "label:pt-BR": "Digite o número de pontos ganhos ou perdidos. Coloque um - antes do número para perder pontos."
           }
         ],
         "confirmButtonText": "Modify Score",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Punkte ändern",
+        "confirmButtonText:pt-BR": "Modificar pontuação"
       },
       {
         "func": "GET",
@@ -1466,7 +1510,9 @@
       "1_seat": [
         "color"
       ]
-    }
+    },
+    "text:de-DE": "bearbeiten ->",
+    "text:pt-BR": "editar ->"
   },
   "1_player_money": {
     "type": "label",
@@ -1566,17 +1612,23 @@
           {
             "type": "title",
             "text": "Modify ${player_name}'s Money",
-            "css": "background-color:var(--VTTblue);color:white;"
+            "css": "background-color:var(--VTTblue);color:white;",
+            "text:de-DE": "${player_name}s Geld ändern",
+            "text:pt-BR": "Modificar o dinheiro de ${player_name}"
           },
           {
             "type": "number",
             "label": "Type the number of money gained or lost. Put a - before the number to lose money.",
             "variable": "value_change",
-            "value": 0
+            "value": 0,
+            "label:de-DE": "Gib den Geldbetrag ein, der gewonnen oder verloren wird. Setze ein - vor die Zahl, um Geld zu verlieren.",
+            "label:pt-BR": "Digite a quantia de dinheiro ganha ou perdida. Coloque um - antes do número para perder dinheiro."
           }
         ],
         "confirmButtonText": "Modify Money",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Geld ändern",
+        "confirmButtonText:pt-BR": "Modificar dinheiro"
       },
       {
         "func": "GET",
@@ -1630,7 +1682,9 @@
       "1_seat": [
         "color"
       ]
-    }
+    },
+    "text:de-DE": "bearbeiten ->",
+    "text:pt-BR": "editar ->"
   },
   "history_toggle": {
     "type": "button",
@@ -1694,7 +1748,9 @@
         "value": "${visibleToSeats}"
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Gesamten Verlauf ansehen",
+    "text:pt-BR": "Ver histórico completo"
   },
   "contracts_deck": {
     "type": "deck",
@@ -3056,11 +3112,15 @@
             "type": "checkbox",
             "label": "Check this box and click the green button to reset the game.",
             "variable": "checkbox",
-            "value": false
+            "value": false,
+            "label:de-DE": "Aktiviere dieses Kästchen und klicke auf die grüne Schaltfläche, um das Spiel zurückzusetzen.",
+            "label:pt-BR": "Marque esta caixa e clique no botão verde para reiniciar o jogo."
           }
         ],
         "confirmButtonText": "Reset the game!",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Spiel zurücksetzen!",
+        "confirmButtonText:pt-BR": "Reiniciar o jogo!"
       },
       {
         "func": "IF",
@@ -3544,7 +3604,17 @@
       }
     ],
     "y": 956,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Aufbau",
+    "text:pt-BR": "Preparação",
+    "css:pt-BR": {
+      "default": {
+        "color": "${PROPERTY textColor}",
+        "font-size": "11px",
+        "background-color": "${PROPERTY backgroundColor}",
+        "border": "5px solid white"
+      }
+    }
   },
   "contract_supply": {
     "type": "holder",
@@ -3887,7 +3957,9 @@
         ]
       }
     ],
-    "current_turn_player_name": "Jonathan"
+    "current_turn_player_name": "Jonathan",
+    "text:de-DE": "Klicken zum Zug beenden",
+    "text:pt-BR": "Clique para encerrar o turno"
   },
   "1_turn_holder": {
     "type": "holder",
@@ -4153,7 +4225,9 @@
         "pointer-events": "none"
       }
     },
-    "text": "On Your Turn"
+    "text": "On Your Turn",
+    "text:de-DE": "In deinem Zug",
+    "text:pt-BR": "No seu turno"
   },
   "hhyq11": {
     "type": "label",
@@ -4164,7 +4238,12 @@
     "css": "font-size: 20px;color: white",
     "text": "Hover for:",
     "x": 724,
-    "y": 973
+    "y": 973,
+    "text:de-DE": "Zeigen für:",
+    "text:pt-BR": "Passe o mouse para:",
+    "css:de-DE": "color: white; font-size: 11px;",
+    "css:pt-BR": "color: white; font-size: 11px;",
+    "height:pt-BR": 56
   },
   "info_endgame_asset": {
     "id": "info_endgame_asset",
@@ -4223,7 +4302,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Endgame Trigger",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Endspiel-Auslöser",
+    "text:pt-BR": "Gatilho de fim de jogo"
   },
   "info_icons_icon": {
     "id": "info_icons_icon",
@@ -4249,7 +4330,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Icon List",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Symbolliste",
+    "text:pt-BR": "Lista de ícones"
   },
   "info_icons_asset": {
     "id": "info_icons_asset",
@@ -4339,7 +4422,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Final Scoring",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Endwertung",
+    "text:pt-BR": "Pontuação final"
   },
   "info_delivery_asset": {
     "id": "info_delivery_asset",
@@ -4398,7 +4483,9 @@
     },
     "inheritFrom": "info_template_icon",
     "text": "Delivery Info",
-    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging."
+    "note": "The pointer-events CSS declaration means it won't stand in the way of the item under it but you also can't select it by clicking on it so you have to find it in the tree. Make sure the z here is greater than the z on the item you're enlarging.",
+    "text:de-DE": "Lieferinfo",
+    "text:pt-BR": "Informações de entrega"
   },
   "first_player": {
     "id": "first_player",
@@ -4771,7 +4858,9 @@
     "fixedParent": true,
     "width": 147,
     "y": 8,
-    "x": -7
+    "x": -7,
+    "text:de-DE": "Erfüllte Verträge:\nGeld & Punkte werden automatisch gewertet.",
+    "text:pt-BR": "Contratos concluídos:\nDinheiro e pontos são pontuados automaticamente."
   },
   "2_completed_contracts_label": {
     "type": "label",
@@ -5033,7 +5122,9 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Müll",
+    "text:pt-BR": "Lixo"
   },
   "trash_can2": {
     "type": "holder",
@@ -9259,17 +9350,23 @@
           {
             "type": "title",
             "text": "Pay ${player_name} Money",
-            "css": "background-color:var(--VTTblue);color:white;"
+            "css": "background-color:var(--VTTblue);color:white;",
+            "text:de-DE": "${player_name} Geld zahlen",
+            "text:pt-BR": "Pagar dinheiro a ${player_name}"
           },
           {
             "type": "number",
             "label": "Type the amount of money you owe ${player_name}:",
             "variable": "value_change",
-            "value": 0
+            "value": 0,
+            "label:de-DE": "Gib den Geldbetrag ein, den du ${player_name} schuldest:",
+            "label:pt-BR": "Digite a quantia de dinheiro que você deve a ${player_name}:"
           }
         ],
         "confirmButtonText": "Pay",
-        "cancelButtonIcon": "cancel"
+        "cancelButtonIcon": "cancel",
+        "confirmButtonText:de-DE": "Zahlen",
+        "confirmButtonText:pt-BR": "Pagar"
       },
       {
         "func": "GET",
@@ -9372,7 +9469,9 @@
     },
     "outlineColor": "#000000",
     "textShadowBlur": 0,
-    "textShadowDistance": 1
+    "textShadowDistance": 1,
+    "text:de-DE": "zahlen ->",
+    "text:pt-BR": "pagar ->"
   },
   "2_pay_them": {
     "type": "button",
@@ -9458,7 +9557,9 @@
       }
     },
     "height": 50,
-    "x": 146
+    "x": 146,
+    "text:de-DE": "Vollständiger Spielverlauf",
+    "text:pt-BR": "Histórico completo do jogo"
   },
   "your_hand_label": {
     "type": "label",
@@ -9471,7 +9572,9 @@
     "z": 474,
     "movableInEdit": false,
     "css": "font-size: 14px; color: white",
-    "text": "Your Hidden Contracts Hand"
+    "text": "Your Hidden Contracts Hand",
+    "text:de-DE": "Deine verdeckten Verträge",
+    "text:pt-BR": "Sua mão de contratos ocultos"
   },
   "track_straight_supply_holder": {
     "type": "holder",
@@ -9932,7 +10035,9 @@
     "z": 474,
     "movableInEdit": false,
     "css": "font-size: 18px; color: white",
-    "text": "Contracts Supply"
+    "text": "Contracts Supply",
+    "text:de-DE": "Vertragsvorrat",
+    "text:pt-BR": "Reserva de contratos"
   },
   "contracts_supply_label1": {
     "type": "label",
@@ -9943,7 +10048,9 @@
     "z": 474,
     "movableInEdit": false,
     "css": "font-size: 18px; color: white",
-    "text": "Resources Supply"
+    "text": "Resources Supply",
+    "text:de-DE": "Ressourcenvorrat",
+    "text:pt-BR": "Reserva de recursos"
   },
   "straight_gentle_large_holder_BLOCKER": {
     "type": "holder",
@@ -10056,21 +10163,29 @@
         "fields": [
           {
             "type": "title",
-            "text": "Player Settings"
+            "text": "Player Settings",
+            "text:de-DE": "Spieler-Einstellungen",
+            "text:pt-BR": "Configurações do jogador"
           },
           {
             "type": "checkbox",
             "label": "Play a sound when it is your turn?",
             "variable": "audio_check",
-            "value": "${audio_enabled}"
+            "value": "${audio_enabled}",
+            "label:de-DE": "Einen Ton abspielen, wenn du am Zug bist?",
+            "label:pt-BR": "Tocar um som quando for a sua vez?"
           },
           {
             "type": "checkbox",
             "label": "Show the 'Its Your Turn!' box?",
             "variable": "banner_check",
-            "value": "${turn_alert_enabled}"
+            "value": "${turn_alert_enabled}",
+            "label:de-DE": "Das Feld 'Du bist dran!' anzeigen?",
+            "label:pt-BR": "Mostrar a caixa 'É a sua vez!'?"
           }
-        ]
+        ],
+        "confirmButtonText:de-DE": "Zug-Einstellungen",
+        "confirmButtonText:pt-BR": "Configurações de turno"
       },
       {
         "func": "SET",
@@ -10091,7 +10206,9 @@
         "value": "${banner_check}"
       }
     ],
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Hinweis-Einstellungen",
+    "text:pt-BR": "Configurações de alerta"
   },
   "resource_holder32": {
     "type": "holder",
@@ -10343,7 +10460,9 @@
     "text": "It's Your Turn!",
     "passed": false,
     "background_color_solid": "#dddddd",
-    "background_color_transparent": "#dddddd48"
+    "background_color_transparent": "#dddddd48",
+    "text:de-DE": "Du bist dran!",
+    "text:pt-BR": "É a sua vez!"
   },
   "your_turn_label_border": {
     "type": "label",
@@ -10404,6 +10523,8 @@
     "text": "Click anywhere to continue.",
     "background_color_solid": "#9c27b0",
     "background_color_transparent": "#9c27b048",
-    "passed": false
+    "passed": false,
+    "text:de-DE": "Klicke irgendwo, um fortzufahren.",
+    "text:pt-BR": "Clique em qualquer lugar para continuar."
   }
 }

@@ -22,9 +22,17 @@
       "lastUpdate": 1741966570199,
       "variantImage": "",
       "variant": "Egyptian Epochs",
-      "language": "en-US",
+      "language": "en-US, de-DE, pt-BR",
       "players": "2-5",
-      "usesAIImagery": false
+      "usesAIImagery": false,
+      "description:de-DE": "Kann deine ägyptische Dynastie die Prüfung der Zeit bestehen?",
+      "description:pt-BR": "Será que a sua dinastia egípcia resistirá à prova do tempo?",
+      "attribution:de-DE": "Spiellayout und Skripting von Andy Pymont, Thomas Williams und zulmetefza, über CC0 gemeinfrei veröffentlicht.\n\nDie Plättchengrafiken stammen von https://game-icons.net/ und werden unter der Lizenz CC BY 3.0 verwendet:\n\nDelapouite\n• Anubis https://game-icons.net/1x1/delapouite/anubis.html\n• Banging Gavel https://game-icons.net/1x1/delapouite/banging-gavel.html\n• Bastet https://game-icons.net/1x1/delapouite/bastet.html\n• Canopic Jars https://game-icons.net/1x1/delapouite/egyptian-urns.html\n• Djed Pillar https://game-icons.net/1x1/delapouite/djed-pillar.html\n• Eye of Horus https://game-icons.net/1x1/delapouite/eye-of-horus.html\n• Great Pyramid https://game-icons.net/1x1/delapouite/great-pyramid.html\n• Oasis https://game-icons.net/1x1/delapouite/oasis.html\n• Obelisk https://game-icons.net/1x1/delapouite/obelisk.html\n• Palm tree https://game-icons.net/1x1/delapouite/palm-tree.html\n• Pharaoh Nefertiti https://game-icons.net/1x1/delapouite/nefertiti.html\n• Pottery https://game-icons.net/1x1/delapouite/painted-pottery.html\n• Pyramids https://game-icons.net/1x1/delapouite/egyptian-pyramids.html\n• Sphinx https://game-icons.net/1x1/delapouite/egyptian-sphinx.html\n• Star Gate https://game-icons.net/1x1/delapouite/star-gate.html\n• Temple https://game-icons.net/1x1/delapouite/egyptian-temple.html\n• Zigzag heiroglyph https://game-icons.net/1x1/delapouite/zigzag-hieroglyph.html\n\nLorc\n• Ankh https://game-icons.net/1x1/lorc/ankh.html\n• Gold bar https://game-icons.net/1x1/lorc/metal-bar.html\n• Night sky https://game-icons.net/1x1/lorc/night-sky.html\n• Scarab https://game-icons.net/1x1/lorc/gold-scarab.html\n• Wheat https://game-icons.net/1x1/lorc/wheat.html\n\nSbed\n• Cancel https://game-icons.net/1x1/sbed/cancel.html\n• Cross https://game-icons.net/1x1/sbed/health-normal.html\n<div><br></div><div>Das Bibliotheksbild ist das Gemälde <i>The Pyramids at Dusk</i> (1907) von Carl Wutke, bezogen von https://artvee.com/dl/the-pyramids-at-dusk und gemeinfrei.",
+      "attribution:pt-BR": "Layout do jogo e scripts por Andy Pymont, Thomas Williams e zulmetefza, disponibilizados em domínio público via CC0.\n\nOs gráficos das peças são de https://game-icons.net/ e são usados sob a licença CC BY 3.0:\n\nDelapouite\n• Anubis https://game-icons.net/1x1/delapouite/anubis.html\n• Banging Gavel https://game-icons.net/1x1/delapouite/banging-gavel.html\n• Bastet https://game-icons.net/1x1/delapouite/bastet.html\n• Canopic Jars https://game-icons.net/1x1/delapouite/egyptian-urns.html\n• Djed Pillar https://game-icons.net/1x1/delapouite/djed-pillar.html\n• Eye of Horus https://game-icons.net/1x1/delapouite/eye-of-horus.html\n• Great Pyramid https://game-icons.net/1x1/delapouite/great-pyramid.html\n• Oasis https://game-icons.net/1x1/delapouite/oasis.html\n• Obelisk https://game-icons.net/1x1/delapouite/obelisk.html\n• Palm tree https://game-icons.net/1x1/delapouite/palm-tree.html\n• Pharaoh Nefertiti https://game-icons.net/1x1/delapouite/nefertiti.html\n• Pottery https://game-icons.net/1x1/delapouite/painted-pottery.html\n• Pyramids https://game-icons.net/1x1/delapouite/egyptian-pyramids.html\n• Sphinx https://game-icons.net/1x1/delapouite/egyptian-sphinx.html\n• Star Gate https://game-icons.net/1x1/delapouite/star-gate.html\n• Temple https://game-icons.net/1x1/delapouite/egyptian-temple.html\n• Zigzag heiroglyph https://game-icons.net/1x1/delapouite/zigzag-hieroglyph.html\n\nLorc\n• Ankh https://game-icons.net/1x1/lorc/ankh.html\n• Gold bar https://game-icons.net/1x1/lorc/metal-bar.html\n• Night sky https://game-icons.net/1x1/lorc/night-sky.html\n• Scarab https://game-icons.net/1x1/lorc/gold-scarab.html\n• Wheat https://game-icons.net/1x1/lorc/wheat.html\n\nSbed\n• Cancel https://game-icons.net/1x1/sbed/cancel.html\n• Cross https://game-icons.net/1x1/sbed/health-normal.html\n<div><br></div><div>A imagem da biblioteca é a pintura <i>The Pyramids at Dusk</i> (1907), de Carl Wutke, obtida em https://artvee.com/dl/the-pyramids-at-dusk e que está em domínio público.",
+      "ruleText:de-DE": "<div><b>Ziel</b><br></div><div>Erwirb im Laufe von drei Epochen (Runden) durch geschickten Einsatz deiner Münzen Plättchen in Auktionen. Am Ende jeder Epoche findet eine Wertungsphase statt. Nach dem Abschluss und der Wertungsphase der dritten Epoche endet das Spiel und der Spieler mit den meisten Punkten gewinnt.</div><div><br></div><div><b>Wertung</b><br></div><div>Deine Plättchensammlung wird am Ende jeder Epoche wie folgt gewertet:</div><div><br></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i>: je 3 Punkte</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>: je 2 Punkte</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i>: 5 Punkte, wenn du die meisten hast, -2 Punkte, wenn du von allen Spielern die wenigsten hast</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/palm-tree.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>: Wenn mindestens eines deiner blauen Plättchen eine <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i> ist, bringen alle deine blauen Plättchen je 1 Punkt. Wenn nicht, bringen sie keine Punkte.</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/painted-pottery.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/wheat.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/bastet.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/night-sky.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/zigzag-hieroglyph.svg\"></i>: Wertung danach, wie viele verschiedene Typen du hast: -5, wenn du keine Typen hast, 0 bei 1 oder 2 Typen und 5/10/15 Punkte bei 3/4/5 Typen.</div><div><br></div><div>Nur in der dritten Epoche wertest du außerdem:</div><div><i class=\"richtextSymbol material-symbols\">fiber_manual_record</i> Münzen: 5 Punkte, wenn du die höchste Summe hast, -5 Punkte, wenn du von allen Spielern die niedrigste Summe hast</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-pyramids.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-sphinx.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-temple.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/great-pyramid.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/djed-pillar.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/obelisk.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-urns.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/star-gate.svg\"></i>: Werte beides – nach der Anzahl deiner Typen (1/2/3/4/5/6/10/15 Punkte für 1/2/3/4/5/6/7/8 Typen) und für Sätze desselben Typs (5/10/15 Punkte für jeden Satz aus 3/4/5 identischen Plättchen).<br></div><br><div>Plättchen, die mit dem roten <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> markiert sind, werden nach jeder Wertung behalten, ebenso wie alle Münzen eines Spielers – sowohl die während der gerade beendeten Epoche benutzten als auch die unbenutzten. Plättchen ohne den <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> werden nach jeder Wertung am Ende der Epoche abgeworfen.</div><div><br></div><div>Wenn Spieler bei der Wertung von <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i> oder bei der Münzwertung am Spielende gleichauf sind, erhalten alle gleichauf liegenden Spieler die Belohnung.<br></div><div><br></div><div><b>Spielablauf</b><br></div><div>Jede Epoche dauert an, bis entweder alle Spieler all ihre Münzen verwendet haben oder die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> Leiste voll ist, je nachdem, was zuerst eintritt. Am Ende der Epoche wertet jeder Spieler seine Plättchensammlung wie oben beschrieben.</div><div><br></div><div>Die Epoche besteht darin, dass die Spieler nacheinander Züge machen, beginnend mit dem Spieler, der die höchstwertige Münze besitzt. Sobald ein Spieler all seine Plättchen verwendet hat, macht er keine Züge mehr und wird in dieser Reihenfolge übersprungen.</div><div><br></div><div><b>Spielerzüge</b><br></div><div>In deinem Zug musst du eine von drei Aktionen ausführen:</div><div>• Ziehe ein Plättchen vom Plättchenstapel;</div><div>• Rufe eine Auktion über den aktuellen Inhalt der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Reihe aus;</div><div>• Nutze die Sonderfähigkeit von 1 oder mehr zuvor gesammelten <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> Plättchen.</div><div><br></div><div>Du darfst die Ziehen-Aktion nicht wählen, wenn die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Reihe bereits voll ist.</div><div><br></div><div><b>Ein Plättchen ziehen</b></div><div>Ziehe das nächste Plättchen vom Plättchenstapel.</div><div><br></div><div>Wenn das Plättchen ein <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> ist, lege es auf die entsprechende Leiste. Wenn dadurch die Leiste voll wird, endet die Epoche sofort. Wenn nicht, wird stattdessen eine Auktion ausgerufen.</div><div><br></div><div>Wenn das Plättchen kein <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> war, lege es auf die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste.</div><div><br></div><div><b>Auktion</b></div><div>Wenn eine Auktion ausgerufen wird (entweder weil der aktuelle Spieler sie als seine Aktion wählt oder durch das Ziehen eines <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> Plättchens), besteht das versteigerte Los aus allen Plättchen, die sich derzeit auf der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste befinden, plus der Münze daneben.</div><div><br></div><div>Es wird eine Auktion einmal um den Tisch durchgeführt, beginnend mit dem nächsten Spieler nach dem aktiven Spieler. Jeder Spieler passt entweder oder bietet eine einzelne Münze, die höherwertig ist als alle bereits in dieser Auktion gebotenen Münzen.</div><div><br></div><div>Wenn die Auktion vom aktiven Spieler als seine Aktion ausgerufen wurde und die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste nicht voll ist, muss während der Auktion geboten werden: Der letzte Bieter, der aktive Spieler, muss bieten, wenn alle anderen Spieler passen.</div><div><br></div><div>Wenn die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste voll ist und alle Spieler passen, wirf alle Plättchen auf der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste.<br></div><div><br></div><div>Der Höchstbietende gewinnt die Auktion. Der Auktionsgewinner erhält das Los aus allen Plättchen auf der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste und die Münze daneben. Er bezahlt die Münze, die er geboten hat (und alle anderen Gebote werden ihren Besitzern zurückgegeben), die auf das Feld neben der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste gelegt wird (und daher beim nächsten Ausrufen einer Auktion Teil des Loses wird).</div><div><br></div><div>In einer Auktion erworbene Münzen stehen in dieser Epoche nicht zur Verfügung, aber ein Spieler sammelt sie zur Verwendung in zukünftigen Epochen (oder, in der letzten Epoche, für die Endwertung).<br></div><div><br></div><div>Wenn ein oder mehr <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> Plättchen im gewonnenen Los waren, werden diese nach dem Erwerb der anderen Plättchen abgehandelt. Jedes wird zusammen mit zwei Plättchen des Spielers derselben Farbe abgeworfen. <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i> Plättchen müssen beim Abhandeln der blauen <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> zuerst abgeworfen werden, aber in allen anderen Fällen wählt der Spieler, welche Plättchen er abwirft.</div><div><br></div><div><b> verwenden</b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i><b> Plättchen</b></div><div>Anstatt ein Plättchen zu ziehen oder eine Auktion auszurufen, darf ein Spieler stattdessen ein oder mehr zuvor gesammelte <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> Plättchen aus seiner Sammlung abwerfen. Für jedes abgeworfene <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> nimmt der Spieler ein Plättchen von der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leiste und fügt es direkt seiner Sammlung hinzu (ohne dass eine Auktion nötig ist).</div>",
+      "ruleText:pt-BR": "<div><b>Objetivo</b><br></div><div>Ao longo de três épocas (rodadas), adquira peças em leilões usando suas moedas com inteligência. Uma fase de pontuação ocorre no fim de cada época. Após a conclusão e a fase de pontuação da terceira época, o jogo termina e o jogador com mais pontos vence.</div><div><br></div><div><b>Pontuação</b><br></div><div>Sua coleção de peças é pontuada no fim de cada época da seguinte forma:</div><div><br></div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i>: 3 pontos cada</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>: 2 pontos cada</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i>: 5 pontos se você tiver mais, -2 pontos se você tiver menos que todos os jogadores</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/palm-tree.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>: Se pelo menos uma das suas peças azuis for um <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i>, todas as suas peças azuis valem 1 ponto cada. Caso contrário, não pontuam.</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/painted-pottery.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/wheat.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/bastet.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/night-sky.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/zigzag-hieroglyph.svg\"></i>: Pontue conforme quantos tipos diferentes você tem: -5 se você não tiver nenhum tipo, 0 se tiver 1 ou 2 tipos, e 5/10/15 pontos se tiver 3/4/5 tipos.</div><div><br></div><div>Somente na terceira época, você também pontua:</div><div><i class=\"richtextSymbol material-symbols\">fiber_manual_record</i> Moedas: 5 pontos se você tiver o total mais alto, -5 pontos se tiver o total mais baixo de todos os jogadores</div><div><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-pyramids.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-sphinx.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-temple.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/great-pyramid.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/djed-pillar.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/obelisk.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/egyptian-urns.svg\"></i><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/star-gate.svg\"></i>: Pontue ambos – conforme quantos tipos você tem (1/2/3/4/5/6/10/15 pontos para 1/2/3/4/5/6/7/8 tipos) e por conjuntos do mesmo tipo (5/10/15 pontos para cada conjunto de 3/4/5 peças idênticas).<br></div><br><div>Peças marcadas com o <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> vermelho são mantidas após cada pontuação, assim como todas as moedas de um jogador – tanto as usadas quanto as não usadas durante a época que acabou de terminar. Peças sem o <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> são descartadas após cada pontuação de fim de época.</div><div><br></div><div>Se os jogadores empatarem na pontuação de <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/nefertiti.svg\"></i> ou na pontuação de moedas no fim do jogo, todos os jogadores empatados recebem a recompensa.<br></div><div><br></div><div><b>Sequência de jogo</b><br></div><div>Cada época continua até que todos os jogadores tenham usado todas as suas moedas ou a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> trilha esteja cheia, o que ocorrer primeiro. No fim da época, cada jogador pontua sua coleção de peças conforme descrito acima.</div><div><br></div><div>A época consiste em os jogadores jogarem em sequência, começando pelo jogador que possui a moeda de maior valor. Assim que um jogador tiver usado todas as suas peças, ele para de jogar e é pulado nesta sequência.</div><div><br></div><div><b>Turnos dos jogadores</b><br></div><div>No seu turno, você deve realizar uma de três ações:</div><div>• Comprar uma peça da pilha de peças;</div><div>• Convocar um leilão do conteúdo atual da <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> fileira;</div><div>• Usar o poder especial de 1 ou mais peças <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> coletadas anteriormente.</div><div><br></div><div>Você não pode selecionar a ação de comprar se a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> fileira já estiver cheia.</div><div><br></div><div><b>Comprar uma peça</b></div><div>Compre a próxima peça da pilha de peças.</div><div><br></div><div>Se a peça for um <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> então coloque-a na trilha correspondente. Se isso encher a trilha, a época termina imediatamente. Caso contrário, um leilão é convocado.</div><div><br></div><div>Se a peça não for um <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i>, coloque-a na <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha.</div><div><br></div><div><b>Leilão</b></div><div>Quando um leilão é convocado (seja pelo jogador atual escolhendo-o como sua ação, seja pela compra de uma <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> peça), o lote em leilão consiste em todas as peças que estão atualmente na <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha, mais a moeda ao lado dela.</div><div><br></div><div>Um leilão de uma volta pela mesa é conduzido, começando pelo próximo jogador após o jogador ativo. Cada jogador passa ou aposta uma única moeda de valor mais alto que todas as moedas já apostadas no leilão.</div><div><br></div><div>Se o leilão foi convocado pelo jogador ativo como sua ação e a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha não está cheia, então deve haver um lance durante o leilão: o último a apostar, o jogador ativo, deve apostar se todos os outros jogadores passarem.</div><div><br></div><div>Se a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha estiver cheia e todos os jogadores passarem, descarte todas as peças na <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha.<br></div><div><br></div><div>O maior apostador vence o leilão. O vencedor do leilão recebe o lote com todas as peças na <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha e a moeda ao lado dela. Ele paga a moeda que apostou (e todas as outras apostas são devolvidas aos seus donos), que é colocada no espaço ao lado da <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha (e, portanto, se tornará parte do lote na próxima vez que um leilão for convocado).</div><div><br></div><div>Moedas adquiridas em um leilão não ficam disponíveis nesta época, mas o jogador as coleta para usar em épocas futuras (ou, na época final, para fins de pontuação de fim de jogo).<br></div><div><br></div><div>Se uma ou mais <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> peças estavam no lote vencido, elas são resolvidas após adquirir as outras peças. Cada uma é descartada junto com duas peças do jogador da mesma cor. <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/oasis.svg\"></i> peças devem ser descartadas primeiro ao resolver as azuis <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i>, mas em todos os outros casos o jogador escolhe quais peças descartar.</div><div><br></div><div><b>Usar peças </b><i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i><b> </b></div><div>Em vez de comprar uma peça ou convocar um leilão, um jogador pode, em vez disso, descartar uma ou mais peças <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> coletadas anteriormente da sua coleção. Para cada <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i> descartada, o jogador pega uma peça da <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilha e a adiciona diretamente à sua coleção (sem necessidade de um leilão).</div>",
+      "helpText:de-DE": "<div><b>Erste Schritte</b><br></div><div>Lasst alle Spieler Platz nehmen und drückt die Schaltfläche Neues Spiel, um die Start-Sonnen zu verteilen, die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> Leiste für die Spielerzahl aufzubauen und das Deck zu mischen.</div><div><br></div><div><b>Plättchen ziehen<br></b></div><div>Du kannst ein Plättchen vom Stapel ziehen und es in die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> oder <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Reihe gemäß den Spielregeln legen. Alternativ kann die Schaltfläche Plättchen ziehen verwendet werden, die das für dich erledigt und deinen Zug beendet, wenn du kein <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> Plättchen gezogen hast.</div><div><br></div><div><b>Deine Münzen verwalten<br></b></div><div>Jeder Spieler hat drei Ablagen für Münzen: Die obere Reihe wird für deine aktuell verfügbaren Münzen dieser Epoche verwendet. Die untere Reihe wird für Münzen verwendet, die in Auktionen gesammelt wurden, in dieser Epoche aber nicht verfügbar sind. Der Platz rechts daneben wird für dein aktuelles Gebot verwendet.</div><div><br></div><div><b>Auktionen</b></div><div>Um zu bieten, ziehe eine Münze auf den Platz rechts neben deinen Münzreihen in deinem Spielerbereich. Um zu passen, klicke stattdessen auf denselben kleinen Platz, um ihn mit einem X zu füllen, was anzeigt, dass du nicht bieten möchtest.</div><div><br></div><div>Am Ende der Auktion kann der Gewinner auf die Schaltfläche Sieg klicken, um seine Münze zu bezahlen, die Münzen der anderen Spieler in ihre verfügbare Reihe zurückzugeben und das Auktionslos einzusammeln. Dadurch wird auch der Zug des aktiven Spielers beendet.<br></div><div><br></div><div>Die Sieg-Schaltflächen sammeln keine <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> Plättchen ein. Der Auktionsgewinner sollte die von ihm vorgesehenen Abwürfe in die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Reihe ziehen, damit sie zum <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> Plättchen kommen, und sobald er sicher ist, dass er dies korrekt aufgelöst hat, auf die Schaltfläche Alle ablegen neben der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Reihe klicken, um sie alle abzuwerfen.</div><div><br></div><div>Wenn eine Auktion mit einer vollen <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Reihe abgeschlossen wird und alle Spieler gepasst haben, kann die Schaltfläche Alle ablegen verwendet werden, um sie zu leeren.<br></div><div><br></div><div><b>Ende der Epoche</b></div><div>Wenn eine Epoche endet, sollten die Spieler ihre Plättchensammlungen manuell werten, indem sie den Text auf dem Tisch als Spielhilfe und die Schaltflächen + und - neben ihrem Platz zum Anpassen ihrer Punktzahl verwenden. Nach der Wertung kann ein Spieler die Schaltfläche Neue Epoche drücken, wodurch alle Münzen in die verfügbaren Reihen verschoben, alle Plättchen aus den Sammlungen der Spieler ohne das <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> Symbol abgeworfen, die <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> und <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> Leisten geleert und der Spieler mit der höchsten Einzelmünze als aktiver Spieler festgelegt wird, bereit, die nächste Epoche zu beginnen.<b><br></b></div><div><b><br></b></div><div><b>Variante ‚Pharaoh's Fury'</b></div><div>Die Variante ‚Pharaoh's Fury' verwendet einen kleineren Satz Plättchen, der keine der <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> Plättchen enthält, aber auch eine kürzere <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> Reihe, selbst bei Spielen mit vielen Spielern. Das ergibt ein etwas anderes Spielerlebnis, inspiriert vom Kartenspiel <i>Razzia.</i><br></div><div><b><br></b></div><div><b>Variante ‚Ankh Angst'</b></div><div>Die Variante ‚Ankh Angst' fügt einen neuen Plättchentyp hinzu, <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/ankh.svg\"></i> Plättchen. Diese Plättchen sind am Ende der Epoche je 1 SP wert, was die Spieler wie üblich auf die gleiche Weise werten sollten wie <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i> und <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>.</div><div><br></div><div>Außerdem werten immer dann, wenn ein Spieler eines dieser Plättchen sammelt, alle <i>anderen</i> Spieler sofort 1 SP für jedes solche Plättchen, das sie bereits haben. Diese Umsetzung wertet diese Bonuspunkte sofort, wenn die Plättchen in die Ablage eines Spielers gezogen oder in einer Auktion mit der Schaltfläche Sieg gewonnen werden.</div>",
+      "helpText:pt-BR": "<div><b>Primeiros passos</b><br></div><div>Faça todos os jogadores sentarem-se e pressione o botão Novo jogo para distribuir os sóis iniciais, preparar a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> trilha conforme o número de jogadores e embaralhar o baralho.</div><div><br></div><div><b>Comprar peças<br></b></div><div>Você pode comprar uma peça da pilha e colocá-la na <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> ou na <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> fileira conforme as regras do jogo. Como alternativa, o botão Comprar peça pode ser usado, que faz isso por você e encerra seu turno se você não comprou uma <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> peça.</div><div><br></div><div><b>Gerenciar suas moedas<br></b></div><div>Cada jogador tem três suportes para moedas: a fileira de cima é usada para suas moedas disponíveis nesta época. A fileira de baixo é usada para moedas coletadas em leilões, mas não disponíveis nesta época. O espaço à direita delas é usado para sua aposta atual.</div><div><br></div><div><b>Leilões</b></div><div>Para apostar, arraste uma moeda para o espaço à direita das suas fileiras de moedas na sua área de jogador. Para passar, clique nesse mesmo espaço pequeno para preenchê-lo com um X, indicando que você não quer apostar.</div><div><br></div><div>No fim do leilão, o vencedor pode clicar no botão Vitória para pagar sua moeda, devolver as moedas dos outros jogadores à fileira disponível deles e coletar o lote do leilão. Isso também encerra o turno do jogador ativo.<br></div><div><br></div><div>Os botões Vitória não coletam <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> peças. O vencedor do leilão deve arrastar os descartes pretendidos para a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> fileira para se juntarem à <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> peça, e quando tiver certeza de que resolveu isso corretamente, clicar no botão Descartar tudo ao lado da <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> fileira para descartá-las todas.</div><div><br></div><div>Quando um leilão com uma <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> fileira cheia é concluído com todos os jogadores tendo passado, o botão Descartar tudo pode ser usado para esvaziá-la.<br></div><div><br></div><div><b>Fim da época</b></div><div>Quando uma época termina, os jogadores devem pontuar manualmente suas coleções de peças usando o texto na mesa como ajuda e os botões + e - ao lado do assento para ajustar sua pontuação. Após a pontuação, um jogador pode pressionar o botão Nova época, que moverá todas as moedas para as fileiras disponíveis, descartará todas as peças da coleção dos jogadores que não tenham o <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/gold-scarab.svg\"></i> ícone, esvaziará a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> e a <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/banging-gavel.svg\"></i> trilhas, e definirá o jogador com a maior moeda individual como o jogador ativo, pronto para começar a próxima época.<b><br></b></div><div><b><br></b></div><div><b>Variante 'Pharaoh's Fury'</b></div><div>A variante 'Pharaoh's Fury' usa um conjunto menor de peças, sem nenhuma das <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/sbed/cancel.svg\"></i> peças, mas também uma <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/eye-of-horus.svg\"></i> fileira mais curta, mesmo em jogos com muitos jogadores. Isso proporciona uma experiência de jogo um pouco diferente, inspirada no jogo de cartas <i>Razzia.</i><br></div><div><b><br></b></div><div><b>Variante 'Ankh Angst'</b></div><div>A variante 'Ankh Angst' adiciona um novo tipo de peça, <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/ankh.svg\"></i> peças. Essas peças valem 1 PV cada no fim da época, que os jogadores devem pontuar normalmente da mesma forma que <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/lorc/metal-bar.svg\"></i> e <i class=\"richtextSymbol gameicons\"><img src=\"/i/game-icons.net/delapouite/anubis.svg\"></i>.</div><div><br></div><div>Além disso, sempre que um jogador coleta uma dessas peças, todos os <i>outros</i> jogadores pontuam imediatamente 1 PV para cada peça desse tipo que já possuem. Esta implementação pontua esses pontos de bônus instantaneamente quando as peças são arrastadas para o suporte de um jogador ou ganhas em leilão com o botão Vitória.</div>"
     }
   },
   "seat-p1": {
@@ -1105,7 +1113,9 @@
       "font-size": "12px",
       "font-weight": "bold"
     },
-    "height": 40
+    "height": 40,
+    "text:de-DE": "3 SP\nje",
+    "text:pt-BR": "3 PV\ncada"
   },
   "label-example-god-scoring": {
     "type": "label",
@@ -1118,7 +1128,9 @@
       ],
       "label-example-god-quantity": "*"
     },
-    "text": "2VP\neach"
+    "text": "2VP\neach",
+    "text:de-DE": "2 SP\nje",
+    "text:pt-BR": "2 PV\ncada"
   },
   "label-example-pharaoh-scoring": {
     "type": "label",
@@ -1131,7 +1143,16 @@
       ],
       "label-example-pharaoh-quantity": "*"
     },
-    "text": "Most 5VP\nLess -2VP"
+    "text": "Most 5VP\nLess -2VP",
+    "text:de-DE": "Meiste 5 SP\nWenigste -2 SP",
+    "text:pt-BR": "Mais 5 PV\nMenos -2 PV",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "height:de-DE": 68,
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -1145,7 +1166,9 @@
       "label-example-nile-quantity": "*"
     },
     "text": "1VP each as long as\nat least one is a flood",
-    "width": 140
+    "width": 140,
+    "text:de-DE": "1 SP je, solange\nmind. eine Flut dabei ist",
+    "text:pt-BR": "1 PV cada, desde que\nhaja ao menos uma cheia"
   },
   "label-example-civ-scoring": {
     "type": "label",
@@ -1159,7 +1182,9 @@
       "label-example-civ-quantity": "*"
     },
     "text": "None -5VP\n3/4/5 different types 5/10/15VP",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Keine -5 SP\n3/4/5 verschiedene Typen 5/10/15 SP",
+    "text:pt-BR": "Nenhum -5 PV\n3/4/5 tipos diferentes 5/10/15 PV"
   },
   "label-example-civ-quantity": {
     "type": "label",
@@ -1167,7 +1192,9 @@
     "x": 637,
     "width": 350,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "5 of each"
+    "text": "5 of each",
+    "text:de-DE": "5 von jedem",
+    "text:pt-BR": "5 de cada"
   },
   "label-example-monument-quantity": {
     "type": "label",
@@ -1175,7 +1202,9 @@
     "x": 1015,
     "width": 560,
     "inheritFrom": "label-example-gold-quantity",
-    "text": "5 of each"
+    "text": "5 of each",
+    "text:de-DE": "5 von jedem",
+    "text:pt-BR": "5 de cada"
   },
   "label-example-monument-scoring": {
     "type": "label",
@@ -1192,7 +1221,9 @@
       "label-example-monument-quantity": "*"
     },
     "text": "-- FINAL EPOCH ONLY --\n1/2/3/4/5/6/7/8 different types 1/2/3/4/5/6/10/15VP\nEach 3/4/5 of a kind 5/10/15VP",
-    "x": 1195
+    "x": 1195,
+    "text:de-DE": "-- NUR LETZTE EPOCHE --\n1/2/3/4/5/6/7/8 verschiedene Typen 1/2/3/4/5/6/10/15 SP\nJe 3/4/5 gleiche 5/10/15 SP",
+    "text:pt-BR": "-- SOMENTE ÉPOCA FINAL --\n1/2/3/4/5/6/7/8 tipos diferentes 1/2/3/4/5/6/10/15 PV\nCada 3/4/5 iguais 5/10/15 PV"
   },
   "pile-suns": {
     "type": "pile",
@@ -2189,7 +2220,19 @@
       "color": "#000000",
       "font-size": "12px"
     },
-    "height": 12
+    "height": 12,
+    "text:de-DE": "NACHZIEHSTAPEL",
+    "text:pt-BR": "PILHA DE COMPRA",
+    "css:de-DE": {
+      "color": "#000000",
+      "font-size": "11px"
+    },
+    "height:de-DE": 36,
+    "css:pt-BR": {
+      "color": "#000000",
+      "font-size": "11px"
+    },
+    "height:pt-BR": 36
   },
   "holder-tiles-discard": {
     "type": "holder",
@@ -2203,7 +2246,9 @@
     "id": "label-tiles-discard",
     "parent": "holder-tiles-discard",
     "text": "DISCARD",
-    "inheritFrom": "label-tiles-draw"
+    "inheritFrom": "label-tiles-draw",
+    "text:de-DE": "ABLAGE",
+    "text:pt-BR": "DESCARTE"
   },
   "label-example-suns-scoring": {
     "type": "label",
@@ -2217,7 +2262,9 @@
       ],
       "label-example-monument-quantity": "*"
     },
-    "text": "-- FINAL EPOCH ONLY --\nHighest suns total +5VP\nLowest suns total -5VP"
+    "text": "-- FINAL EPOCH ONLY --\nHighest suns total +5VP\nLowest suns total -5VP",
+    "text:de-DE": "-- NUR LETZTE EPOCHE --\nHöchste Sonnensumme +5 SP\nNiedrigste Sonnensumme -5 SP",
+    "text:pt-BR": "-- SOMENTE ÉPOCA FINAL --\nMaior total de sóis +5 PV\nMenor total de sóis -5 PV"
   },
   "tile-horus-1": {
     "type": "card",
@@ -4035,7 +4082,17 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Plättchen ziehen",
+    "text:pt-BR": "Comprar peça",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "height:de-DE": 35,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   },
   "button-end-turn": {
     "type": "button",
@@ -4058,7 +4115,16 @@
         ],
         "face": 0
       }
-    ]
+    ],
+    "text:de-DE": "Zug beenden",
+    "text:pt-BR": "Encerrar turno",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   },
   "button-new-game": {
     "type": "button",
@@ -4080,9 +4146,17 @@
         "fields": [
           {
             "type": "text",
-            "text": "Do you really want to end this game and start another? All tiles will be returned and a new game set up for ${playerCount} players."
+            "text": "Do you really want to end this game and start another? All tiles will be returned and a new game set up for ${playerCount} players.",
+            "text:de-DE": "Möchtest du dieses Spiel wirklich beenden und ein neues starten? Alle Plättchen werden zurückgegeben und ein neues Spiel für ${playerCount} Spieler wird eingerichtet.",
+            "text:pt-BR": "Você realmente quer encerrar este jogo e começar outro? Todas as peças serão devolvidas e um novo jogo será preparado para ${playerCount} jogadores."
           }
-        ]
+        ],
+        "header:de-DE": "Möchtest du wirklich ein neues Spiel starten?",
+        "header:pt-BR": "Tem certeza de que deseja iniciar um novo jogo?",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "LABEL",
@@ -4359,7 +4433,9 @@
       ]
     },
     "z": 2,
-    "y": 34
+    "y": 34,
+    "text:de-DE": "Neues Spiel",
+    "text:pt-BR": "Novo jogo"
   },
   "button-new-epoch": {
     "type": "button",
@@ -4377,9 +4453,17 @@
         "fields": [
           {
             "type": "text",
-            "text": "Check that you really want to end the epoch and start another. You should have completed scoring for this epoch already as tiles without the red scarab icon will be discarded."
+            "text": "Check that you really want to end the epoch and start another. You should have completed scoring for this epoch already as tiles without the red scarab icon will be discarded.",
+            "text:de-DE": "Vergewissere dich, dass du die Epoche wirklich beenden und eine neue beginnen willst. Die Wertung für diese Epoche sollte bereits abgeschlossen sein, da Plättchen ohne das rote Skarabäus-Symbol abgeworfen werden.",
+            "text:pt-BR": "Confirme que você realmente quer encerrar a época e começar outra. Você já deve ter concluído a pontuação desta época, pois as peças sem o ícone do escaravelho vermelho serão descartadas."
           }
-        ]
+        ],
+        "header:de-DE": "Möchtest du wirklich eine neue Epoche beginnen?",
+        "header:pt-BR": "Tem certeza de que deseja iniciar uma nova época?",
+        "confirmButtonText:de-DE": "Ja",
+        "confirmButtonText:pt-BR": "Sim",
+        "cancelButtonText:de-DE": "Nein",
+        "cancelButtonText:pt-BR": "Não"
       },
       {
         "func": "FOREACH",
@@ -4453,7 +4537,12 @@
         "widget": "button-new-game",
         "routine": "setStartPlayerRoutine"
       }
-    ]
+    ],
+    "text:de-DE": "Neue Epoche",
+    "text:pt-BR": "Nova época",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "button-empty-auction": {
     "type": "button",
@@ -4469,7 +4558,16 @@
         "to": "holder-tiles-discard",
         "count": "all"
       }
-    ]
+    ],
+    "text:de-DE": "Alle ablegen",
+    "text:pt-BR": "Descartar tudo",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   },
   "button-win-p1": {
     "type": "button",
@@ -4597,7 +4695,13 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Sieg",
+    "text:pt-BR": "Vitória",
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "width:pt-BR": 45
   },
   "button-win-p2": {
     "type": "button",
@@ -4713,6 +4817,16 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Punkte verbergen",
+    "text:pt-BR": "Ocultar pontuação",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "height:de-DE": 35,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   }
 }

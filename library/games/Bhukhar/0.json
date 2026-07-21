@@ -230,7 +230,10 @@
     "height": 60,
     "width": 180,
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "♦ Karten geben ♣",
+    "text:pt-BR": "♦ Distribuir cartas ♣",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 18px;"
   },
   "dealPile1": {
     "type": "holder",
@@ -345,7 +348,9 @@
     "x": 240,
     "y": 1832,
     "z": 28622,
-    "id": "btnDealOneCard"
+    "id": "btnDealOneCard",
+    "text:de-DE": "1 KARTE GEBEN",
+    "text:pt-BR": "DAR 1 CARTA"
   },
   "player1": {
     "type": "holder",
@@ -802,7 +807,12 @@
     "x": 135,
     "y": 1834,
     "z": 43354,
-    "id": "btnCountMain"
+    "id": "btnCountMain",
+    "text:de-DE": "Hauptstapel zählen",
+    "text:pt-BR": "Contar principal",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "btnTakeOne": {
     "y": 57,
@@ -996,7 +1006,10 @@
     "css": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-size:20px;  font-weight:bold; color: #ffffff;  background-color: #008000;",
     "parent": "top",
     "clicked": false,
-    "group": "takeButtons"
+    "group": "takeButtons",
+    "text:de-DE": "Eine nehmen",
+    "text:pt-BR": "Pegar uma",
+    "css:de-DE": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;    font-weight:bold; color: #ffffff;  background-color: #008000; font-size: 18px;"
   },
   "btnResetTakeButtons": {
     "type": "button",
@@ -1058,7 +1071,9 @@
     "x": 722,
     "y": 1826,
     "z": 43359,
-    "id": "btnResetTakeButtons"
+    "id": "btnResetTakeButtons",
+    "text:de-DE": "NEHMEN RESET",
+    "text:pt-BR": "RESET PEGAR"
   },
   "btnPickUp": {
     "width": 101,
@@ -1230,7 +1245,10 @@
     "css": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-size:20px;  font-weight:bold; color: #ffffff;  background-color: #008000;",
     "group": "takeButtons",
     "clicked": false,
-    "y": 1150
+    "y": 1150,
+    "text:de-DE": "Aufnehmen",
+    "text:pt-BR": "Pegar",
+    "css:de-DE": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;    font-weight:bold; color: #ffffff;  background-color: #008000; font-size: 16px;"
   },
   "btnNextPlayer": {
     "type": "button",
@@ -1350,7 +1368,9 @@
     "width": 200,
     "height": 60,
     "clicked": true,
-    "y": 1150
+    "y": 1150,
+    "text:de-DE": "Nächster Spieler",
+    "text:pt-BR": "Próximo jogador"
   },
   "btnSetNextPlayer": {
     "type": "button",
@@ -1475,7 +1495,15 @@
     "x": 822,
     "y": 1830,
     "z": 43360,
-    "id": "btnSetNextPlayer"
+    "id": "btnSetNextPlayer",
+    "text:de-DE": "NÄCHSTEN SPIELER SETZEN",
+    "text:pt-BR": "DEFINIR PRÓXIMO JOGADOR",
+    "css:de-DE": {
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "font-size": "14px"
+    }
   },
   "lblDealPile8": {
     "type": "label",
@@ -1604,7 +1632,9 @@
     "height": 50,
     "width": 300,
     "id": "btnCloseSettings",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "✖ Einstellungen schließen ✖",
+    "text:pt-BR": "✖ Fechar configurações ✖"
   },
   "btn4Players": {
     "x": 400,
@@ -2017,7 +2047,9 @@
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "id": "btn4Players",
     "parent": "menuSettings",
-    "group": "playerButtons"
+    "group": "playerButtons",
+    "text:de-DE": "4 Spieler",
+    "text:pt-BR": "4 Jogadores"
   },
   "btn6Players": {
     "x": 575,
@@ -2525,7 +2557,9 @@
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #ffffff;  background-color: #008000;",
     "id": "btn6Players",
     "parent": "menuSettings",
-    "group": "playerButtons"
+    "group": "playerButtons",
+    "text:de-DE": "6 Spieler",
+    "text:pt-BR": "6 Jogadores"
   },
   "btn8Players": {
     "x": 750,
@@ -3159,7 +3193,9 @@
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "id": "btn8Players",
     "group": "playerButtons",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "8 Spieler",
+    "text:pt-BR": "8 Jogadores"
   },
   "btn3Packs": {
     "x": 400,
@@ -3329,7 +3365,9 @@
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #ffffff;  background-color: #008000;",
     "id": "btn3Packs",
     "packs": 3,
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "3 Päckchen",
+    "text:pt-BR": "3 Baralhos"
   },
   "btn4Packs": {
     "x": 575,
@@ -3498,7 +3536,9 @@
     "width": 150,
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "id": "btn4Packs",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "4 Päckchen",
+    "text:pt-BR": "4 Baralhos"
   },
   "lblPlayers": {
     "text": "Players",
@@ -3510,7 +3550,9 @@
     "z": 44936,
     "id": "lblPlayers",
     "movable": false,
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "Spieler",
+    "text:pt-BR": "Jogadores"
   },
   "lblCards": {
     "text": "Cards",
@@ -3522,7 +3564,9 @@
     "z": 44937,
     "movable": false,
     "id": "lblCards",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "Karten",
+    "text:pt-BR": "Cartas"
   },
   "btnEnablePoints": {
     "x": 400,
@@ -3584,7 +3628,9 @@
     "width": 150,
     "id": "btnEnablePoints",
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #ffffff;  background-color: #008000;",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "Aktivieren",
+    "text:pt-BR": "Ativar"
   },
   "lblPoints": {
     "text": "Points",
@@ -3596,7 +3642,9 @@
     "z": 44937,
     "movable": false,
     "parent": "menuSettings",
-    "id": "lblPoints"
+    "id": "lblPoints",
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontos"
   },
   "lblDealPile1": {
     "type": "label",
@@ -3723,7 +3771,9 @@
     "id": "t1score",
     "width": 80,
     "editable": true,
-    "parent": "t1points"
+    "parent": "t1points",
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontos"
   },
   "t2points": {
     "type": "holder",
@@ -3834,7 +3884,9 @@
     "width": 80,
     "z": 35840,
     "editable": true,
-    "parent": "t2points"
+    "parent": "t2points",
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontos"
   },
   "redbox": {
     "z": 1000,
@@ -3860,7 +3912,10 @@
     "z": 44930,
     "id": "txtGameSettings",
     "movable": false,
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "Benutze beim ersten Mal die Schaltfläche Einstellungen, um die Anzahl der Spieler und Kartenpäckchen festzulegen, Teams auszuwählen und weitere Optionen einzustellen.",
+    "text:pt-BR": "Use o botão Configurações na primeira vez para definir o número de jogadores e de baralhos, escolher equipes e outras opções.",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 19px;"
   },
   "txtSetPlayerNames": {
     "text": "1. Update the player names by editing the text in the grid boxes below.",
@@ -3872,7 +3927,9 @@
     "z": 44953,
     "movable": false,
     "id": "txtSetPlayerNames",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "1. Aktualisiere die Spielernamen, indem du den Text in den Rasterfeldern unten bearbeitest.",
+    "text:pt-BR": "1. Atualize os nomes dos jogadores editando o texto nas caixas da grade abaixo."
   },
   "txtFirstPlayer": {
     "text": "2. Click Select Player as many times as necessary until the starting player for this game is highlighted in below.\nUse this button also whenever someone takes their turn early to cycle back to the correct player. ",
@@ -3884,7 +3941,10 @@
     "z": 44940,
     "movable": false,
     "id": "txtFirstPlayer",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "2. Klicke so oft wie nötig auf Spieler auswählen, bis der Startspieler für dieses Spiel unten hervorgehoben ist.\nBenutze diese Schaltfläche auch, wenn jemand vorzeitig am Zug ist, um zum richtigen Spieler zurückzuwechseln. ",
+    "text:pt-BR": "2. Clique em Selecionar jogador quantas vezes forem necessárias até que o jogador inicial desta partida fique destacado abaixo.\nUse este botão também sempre que alguém jogar antes da hora para voltar ao jogador correto. ",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 18px;"
   },
   "txtDealCards": {
     "text": "3. Click Deal Cards and ask the players to click their own named buttons below to get their cards.",
@@ -3896,7 +3956,11 @@
     "z": 44954,
     "movable": false,
     "id": "txtDealCards",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "3. Klicke auf Karten geben und bitte die Spieler, unten auf ihre eigenen benannten Schaltflächen zu klicken, um ihre Karten zu erhalten.",
+    "text:pt-BR": "3. Clique em Distribuir cartas e peça aos jogadores que cliquem nos próprios botões com seus nomes abaixo para receber as cartas.",
+    "css:de-DE": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 17px;",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 17px;"
   },
   "txtStartGame": {
     "text": "4. Click Start Game to play. At the end of a game, click the square |☰| menu button in the bottom left of the screen.",
@@ -3908,7 +3972,10 @@
     "z": 44940,
     "movable": false,
     "id": "txtStartGame",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "4. Klicke auf Spiel starten, um zu spielen. Klicke am Ende eines Spiels auf die quadratische |☰|-Menüschaltfläche unten links auf dem Bildschirm.",
+    "text:pt-BR": "4. Clique em Iniciar jogo para jogar. Ao final de uma partida, clique no botão de menu quadrado |☰| no canto inferior esquerdo da tela.",
+    "css:de-DE": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 17px;"
   },
   "btnPile1": {
     "x": -20,
@@ -4290,7 +4357,9 @@
     "width": 150,
     "id": "btnDisablePoints",
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "Deaktivieren",
+    "text:pt-BR": "Desativar"
   },
   "btnSetPlayerNamesForDealPiles": {
     "type": "button",
@@ -4440,7 +4509,12 @@
     "z": 43407,
     "id": "btnSetPlayerNamesForDealPiles",
     "playerId": 1,
-    "btnPileId": 7
+    "btnPileId": 7,
+    "text:de-DE": "NAMEN FÜR GEBESTAPEL",
+    "text:pt-BR": "NOMES DAS PILHAS",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "shieldDealPile1": {
     "type": "holder",
@@ -4596,7 +4670,9 @@
     "height": 30,
     "id": "lblt1closed",
     "width": 100,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "geschlossen",
+    "text:pt-BR": "fechado"
   },
   "lblt2closed": {
     "text": "closed",
@@ -4607,7 +4683,9 @@
     "height": 30,
     "width": 100,
     "id": "lblt2closed",
-    "movable": false
+    "movable": false,
+    "text:de-DE": "geschlossen",
+    "text:pt-BR": "fechado"
   },
   "gameData": {
     "text": "Game Data",
@@ -4667,7 +4745,11 @@
     "8p8y": "649",
     "4p0x": "510",
     "4p0y": "649",
-    "numPacks": "3"
+    "numPacks": "3",
+    "text:de-DE": "Spieldaten",
+    "text:pt-BR": "Dados do jogo",
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 15px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 11px;"
   },
   "btnHidePlayerBoxes": {
     "type": "button",
@@ -4693,7 +4775,15 @@
     "x": 422,
     "y": 1827,
     "z": 43411,
-    "id": "btnHidePlayerBoxes"
+    "id": "btnHidePlayerBoxes",
+    "text:de-DE": "BOXEN AUSBLENDEN",
+    "text:pt-BR": "OCULTAR CAIXAS",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "15px"
+    }
   },
   "player0": {
     "type": "holder",
@@ -4894,7 +4984,15 @@
     "z": 43414,
     "id": "btnShowPlayerBox",
     "playerId": 1,
-    "numPlayers": 4
+    "numPlayers": 4,
+    "text:de-DE": "SPIELERBOX ANZEIGEN",
+    "text:pt-BR": "MOSTRAR CAIXA DO JOGADOR",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "13px"
+    }
   },
   "dealPileData": {
     "text": "Deal Pile Data",
@@ -4921,7 +5019,13 @@
     "dp7x": "1250",
     "dp7y": "450",
     "dp8x": "1450",
-    "dp8y": "450"
+    "dp8y": "450",
+    "text:de-DE": "Gebestapel-Daten",
+    "text:pt-BR": "Dados das pilhas de distribuição",
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 11px;",
+    "width:de-DE": 104,
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 11px;",
+    "width:pt-BR": 178
   },
   "btnHideDealPiles": {
     "type": "button",
@@ -4947,7 +5051,17 @@
     "x": 332,
     "y": 1829,
     "z": 43416,
-    "id": "btnHideDealPiles"
+    "id": "btnHideDealPiles",
+    "text:de-DE": "GEBESTAPEL AUSBLENDEN",
+    "text:pt-BR": "OCULTAR PILHAS DE DISTRIBUIÇÃO",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 84,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "width:pt-BR": 86
   },
   "btnRecall3": {
     "id": "btnRecall3",
@@ -4967,7 +5081,12 @@
       }
     ],
     "z": 43432,
-    "x": 1371
+    "x": 1371,
+    "text:de-DE": "3er-Päckchen zurückrufen",
+    "text:pt-BR": "Recolher 3 baralhos",
+    "css:de-DE": {
+      "font-size": "12px"
+    }
   },
   "btnRecall4": {
     "y": 1825,
@@ -4987,7 +5106,12 @@
     ],
     "z": 43419,
     "x": 1486,
-    "id": "btnRecall4"
+    "id": "btnRecall4",
+    "text:de-DE": "4er-Päckchen zurückrufen",
+    "text:pt-BR": "Recolher 4 baralhos",
+    "css:de-DE": {
+      "font-size": "12px"
+    }
   },
   "btnRecallMain": {
     "y": 1826,
@@ -5020,7 +5144,11 @@
     "z": 1100,
     "x": 1254,
     "id": "btnRecallMain",
-    "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;"
+    "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
+    "text:de-DE": "Zurückrufen",
+    "text:pt-BR": "Recolher",
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 12px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;"
   },
   "btnPickColour": {
     "type": "button",
@@ -5039,15 +5167,21 @@
                 "parameter": "value",
                 "variable": "myColor"
               }
-            ]
+            ],
+            "label:de-DE": "Welche Farbe magst du?",
+            "label:pt-BR": "De qual cor você gosta?"
           }
-        ]
+        ],
+        "header:de-DE": "Ein Kopftext für das Overlay.",
+        "header:pt-BR": "Um texto de cabeçalho para a sobreposição."
       }
     ],
     "x": 517,
     "y": 1829,
     "z": 43440,
-    "id": "btnPickColour"
+    "id": "btnPickColour",
+    "text:de-DE": "Farbe wählen",
+    "text:pt-BR": "Escolher cor"
   },
   "lblDiscard": {
     "text": "Discard",
@@ -5059,7 +5193,9 @@
     "height": 25,
     "layer": -3,
     "parent": "discard",
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Ablegen",
+    "text:pt-BR": "Descartar"
   },
   "4s9m": {
     "type": "card",
@@ -9528,7 +9664,15 @@
     "x": 623,
     "y": 1827,
     "z": 43446,
-    "id": "btnResetNextPlayerButton"
+    "id": "btnResetNextPlayerButton",
+    "text:de-DE": "Nächster-Spieler-Knopf zurücksetzen",
+    "text:pt-BR": "Redefinir botão de próximo jogador",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "14px"
+    }
   },
   "t1h1": {
     "type": "holder",
@@ -11280,7 +11424,9 @@
     ],
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "text": "♥ Start Game ♠",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "♥ Spiel starten ♠",
+    "text:pt-BR": "♥ Iniciar jogo ♠"
   },
   "menuGame": {
     "type": "holder",
@@ -11385,7 +11531,10 @@
     "width": 180,
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "id": "btnMenuSettings",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "⚙ Einstellungen ⚙",
+    "text:pt-BR": "⚙ Configurações ⚙",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 18px;"
   },
   "btnSelectPlayer": {
     "x": 230,
@@ -11429,7 +11578,11 @@
     "width": 180,
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "id": "btnSelectPlayer",
-    "parent": "menuGame"
+    "parent": "menuGame",
+    "text:de-DE": "☛ Spieler auswählen ☚",
+    "text:pt-BR": "☛ Selecionar jogador ☚",
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;"
   },
   "btnShuffleMain": {
     "y": 1831,
@@ -11446,7 +11599,11 @@
     "z": 43448,
     "x": 1121,
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
-    "id": "btnShuffleMain"
+    "id": "btnShuffleMain",
+    "text:de-DE": "Mischen",
+    "text:pt-BR": "Misturar",
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 17px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 17px;"
   },
   "uo8p": {
     "type": "pile",
@@ -11530,7 +11687,9 @@
     "x": 37,
     "y": 1832,
     "z": 43450,
-    "id": "btnCountHand"
+    "id": "btnCountHand",
+    "text:de-DE": "Hand zählen",
+    "text:pt-BR": "Contar mão"
   },
   "spin12": {
     "type": "spinner",
@@ -11567,7 +11726,11 @@
     "z": 44958,
     "movable": false,
     "id": "txtHelpSpinner",
-    "parent": "menuSettings"
+    "parent": "menuSettings",
+    "text:de-DE": "Bitte die Spieler, auf den Drehpfeil zu klicken, um bei der Auswahl der Teammitglieder zu helfen.",
+    "text:pt-BR": "Peça aos jogadores que cliquem no giro para ajudar a escolher os membros das equipes.",
+    "css:de-DE": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 18px;",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 14px;"
   },
   "lblTeams": {
     "text": "Teams",
@@ -11579,7 +11742,9 @@
     "z": 44937,
     "movable": false,
     "parent": "menuSettings",
-    "id": "lblTeams"
+    "id": "lblTeams",
+    "text:de-DE": "Teams",
+    "text:pt-BR": "Equipes"
   },
   "_meta": {
     "version": 1,
@@ -11592,13 +11757,17 @@
       "mode": "teams",
       "time": "30-60",
       "players": "4,6,8",
-      "language": "en-GB",
+      "language": "en-GB, de-DE, pt-BR",
       "variant": "version 1.2",
       "attribution": "This game is released to the public under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Licence.(https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nThe playing card images are by Adrian Kennard and released under CC0 public domain license (https://www.me.uk/cards).\n\nBig thanks to the whole team at Virtual Tabletop.\n\nGame layout for online bhukhar created by:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion on Discord)\n\nv 1.2",
       "similarName": "Bhukhar",
       "description": "Team game in Rummy family.  Cards played in sets or sequences earn points according to card value.  Team with most points wins.",
       "showName": false,
-      "lastUpdate": 1672499411000
+      "lastUpdate": 1672499411000,
+      "description:de-DE": "Teamspiel aus der Rommé-Familie. Karten, die in Sätzen oder Sequenzen ausgelegt werden, bringen Punkte entsprechend dem Kartenwert. Das Team mit den meisten Punkten gewinnt.",
+      "description:pt-BR": "Jogo em equipe da família do Rummy. Cartas jogadas em grupos ou sequências valem pontos de acordo com o valor da carta. A equipe com mais pontos vence.",
+      "attribution:de-DE": "Dieses Spiel wird der Öffentlichkeit unter einer Creative Commons Namensnennung-NichtKommerziell-Weitergabe unter gleichen Bedingungen 4.0 International Lizenz zur Verfügung gestellt. (https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nDie Spielkartenbilder stammen von Adrian Kennard und sind unter der CC0-Public-Domain-Lizenz veröffentlicht (https://www.me.uk/cards).\n\nEin großes Dankeschön an das gesamte Team von Virtual Tabletop.\n\nSpiellayout für Online-Bhukhar erstellt von:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion auf Discord)\n\nv 1.2",
+      "attribution:pt-BR": "Este jogo é disponibilizado ao público sob uma Licença Internacional Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0. (https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nAs imagens das cartas são de Adrian Kennard e disponibilizadas sob a licença de domínio público CC0 (https://www.me.uk/cards).\n\nUm grande obrigado a toda a equipe do Virtual Tabletop.\n\nLayout do jogo para o Bhukhar online criado por:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion no Discord)\n\nv 1.2"
     }
   },
   "shieldDiscard": {

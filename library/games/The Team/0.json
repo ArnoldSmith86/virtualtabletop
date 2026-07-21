@@ -172,7 +172,9 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "height": 40
+    "height": 40,
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir"
   },
   "146344a4-f702-48c7-9acf-b10cf7da85f8": {
     "id": "146344a4-f702-48c7-9acf-b10cf7da85f8",
@@ -652,7 +654,9 @@
     "text": "Communication",
     "x": 390,
     "z": 21782,
-    "twoRowBottomAlign": true
+    "twoRowBottomAlign": true,
+    "text:de-DE": "Kommunikation",
+    "text:pt-BR": "Comunicação"
   },
   "45f2a7e7-60f0-4b81-9481-87a19cc08f25": {
     "id": "45f2a7e7-60f0-4b81-9481-87a19cc08f25",
@@ -1608,7 +1612,9 @@
     "movableInEdit": false,
     "css": "font-size:120%;color:white",
     "z": 21778,
-    "parent": "AI Pile"
+    "parent": "AI Pile",
+    "text:de-DE": "KI",
+    "text:pt-BR": "IA"
   },
   "tgc6": {
     "type": "holder",
@@ -1697,7 +1703,9 @@
     "css": "font-size:120%;color:white",
     "text": "Tasks",
     "x": 968.5,
-    "z": 21781
+    "z": 21781,
+    "text:de-DE": "Aufgaben",
+    "text:pt-BR": "Tarefas"
   },
   "discard1": {
     "id": "discard1",
@@ -1731,7 +1739,9 @@
     "twoRowBottomAlign": true,
     "movableInEdit": false,
     "css": "font-size:120%;color:white",
-    "parent": "discard2"
+    "parent": "discard2",
+    "text:de-DE": "Stiche",
+    "text:pt-BR": "Vazas"
   },
   "khsx1": {
     "type": "holder",
@@ -5285,8 +5295,12 @@
       "similarDesigner": "Thomas Sing",
       "variantImage": "",
       "variant": "",
-      "language": "en-US",
-      "players": "2"
+      "language": "en-US, de-DE, pt-BR",
+      "players": "2",
+      "description:de-DE": "Kooperatives Stichspiel. Arbeitet bei Missionsaufgaben zusammen, damit bestimmte Stiche von bestimmten Spielern gewonnen werden – ganz ohne eure Handkarten zu verraten.",
+      "description:pt-BR": "Jogo cooperativo de vazas. Trabalhem juntos nas tarefas da missão para garantir que certas vazas sejam feitas por certos jogadores, tudo isso sem revelar a sua mão.",
+      "attribution:de-DE": "Ursprüngliche Karten und Spielfeldlayout von https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez und ArnoldSmith86. Über CC0 gemeinfrei veröffentlicht.\n\nKarten basieren auf Assets von https://unsplash.com/license\n\nAstronauten-Marker basieren auf dem Asset https://game-icons.net/1x1/delapouite/astronaut-helmet.html von Delapouite unter CC BY 3.0",
+      "attribution:pt-BR": "Cartas e layout do tabuleiro originais de https://www.reddit.com/user/inseend1, https://www.reddit.com/user/RaphaelAlvez e ArnoldSmith86. Disponibilizados em domínio público via CC0.\n\nCartas baseadas em recursos de https://unsplash.com/license\n\nFichas de astronauta baseadas no recurso https://game-icons.net/1x1/delapouite/astronaut-helmet.html de Delapouite sob CC BY 3.0"
     }
   },
   "take1": {
@@ -5345,7 +5359,9 @@
       }
     ],
     "css": "background-color: #243a4e88;border-color:white;color:white;",
-    "text": "Take"
+    "text": "Take",
+    "text:de-DE": "Nehmen",
+    "text:pt-BR": "Pegar"
   },
   "take2": {
     "type": "button",

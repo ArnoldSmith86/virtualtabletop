@@ -262,6 +262,16 @@ const ALLOWED_LANGUAGES = [
     'he-IL', 'it-IT', 'pt-BR', 'uk-UA', 'zh-CN', ''
 ];
 
+// A widget property or meta field may carry a language suffix (e.g. `x:de-DE`)
+// that overrides the base property when that UI language is selected. Return
+// the base property name when `prop` ends in an allowed language suffix,
+// otherwise `prop` itself, so it is validated like the property it translates.
+function baseLanguageProperty(prop) {
+    const match = prop.match(/^(.+):([A-Za-z][A-Za-z0-9-]*)$/);
+    // runtime language matching (i18n.js) is case-insensitive, so match here too
+    return match && ALLOWED_LANGUAGES.some(l => l.toLowerCase() === match[2].toLowerCase()) ? match[1] : prop;
+}
+
 function asArray(value) {
     if (Array.isArray(value)) return value;
     if (value === null || value === undefined) return [];
@@ -439,7 +449,9 @@ function validateRoutine(routine, context, propertyPath = []) {
             const propPath = [...operationPath, prop];
             
             // Handle both Set and object-based property definitions
-            const isKnown = knownProps instanceof Set ? knownProps.has(prop) : knownProps[prop] !== undefined;
+            // (accept language-suffixed properties, e.g. header:de-DE)
+            const baseProp = baseLanguageProperty(prop);
+            const isKnown = knownProps instanceof Set ? knownProps.has(baseProp) : knownProps[baseProp] !== undefined;
             let propMatch, varMatch;
             
             if (!isKnown) {
@@ -1126,7 +1138,7 @@ function validateGameFile(data, checkMeta) {
                 'players', 'variant', 'variantImage', 'importer', 'importerTime', 'usesAIImagery'
             ];
             for (const prop of Object.keys(data._meta.info)) {
-                if (!infoProps.includes(prop)) {
+                if (!infoProps.includes(baseLanguageProperty(prop))) {
                     problems.push({
                         widget: '',
                         property: ['_meta', 'info', prop],
@@ -1181,9 +1193,14 @@ function validateGameFile(data, checkMeta) {
             if(wtype == 'Canvas' && prop.match(/^c[0-9]+$/))
                 continue;
 
-            if (!(prop in known) && !prop.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
+            // treat a language-suffixed property like its base property
+            const baseProp = baseLanguageProperty(prop);
+
+            if (!(baseProp in known) && !baseProp.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
                 // Only warn if this property is not used anywhere in the game file
-                if (!customProperties.includes(prop)) {
+                // (check the base property so a used custom property `foo` also
+                // covers its language-suffixed `foo:de-DE`)
+                if (!customProperties.includes(baseProp)) {
                     problems.push({
                         widget: key,
                         property: [prop],
@@ -1192,17 +1209,17 @@ function validateGameFile(data, checkMeta) {
                 }
             } else {
                 // Validate property value if a validator is defined
-                let validator = known[prop];
+                let validator = known[baseProp];
                 if (typeof validator === 'string' && validators[validator]) {
                     validator = validators[validator];
                 }
-                if(prop.match(/^.+ChangeRoutine$/))
+                if(baseProp.match(/^.+ChangeRoutine$/))
                     validator = getRoutineValidator({oldValue: 1, value: 1}, {}, false);
-                if(prop == 'changeRoutine')
+                if(baseProp == 'changeRoutine')
                     validator = getRoutineValidator({property: 1, oldValue: 1, value: 1}, {}, false);
-                if(prop.match(/^.+GlobalUpdateRoutine$/))
+                if(baseProp.match(/^.+GlobalUpdateRoutine$/))
                     validator = getRoutineValidator({widgetID: 1, oldValue: 1, value: 1}, {widget: 1}, false);
-                if(prop == 'globalUpdateRoutine')
+                if(baseProp == 'globalUpdateRoutine')
                     validator = getRoutineValidator({widgetID: 1, property: 1, oldValue: 1, value: 1}, {widget: 1}, false);
 
                 if (typeof validator === 'function') {
