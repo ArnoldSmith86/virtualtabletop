@@ -1,6 +1,81 @@
 let muted = false;
 let unmuteVol = 30;
 
+let audioPickerData = null;
+let audioPickerPreview = null;
+
+// Builds the list of bundled Kenney sound effects (see assets/audio/audio.json)
+// once and wires up the search box. Mirrors loadSymbolPicker in symbols.js.
+export async function loadAudioPicker() {
+  if(audioPickerData === null) {
+    audioPickerData = 'loading';
+    audioPickerData = await (await fetch('i/audio/audio.json')).json();
+    let list = '';
+    for(const [ category, { directory, sounds } ] of Object.entries(audioPickerData)) {
+      list += `<h2>${category}</h2>`;
+      for(const sound of sounds) {
+        const url = `/i/audio/${directory}/${sound}.ogg`;
+        const keywords = `${category} ${directory} ${sound}`.toLowerCase().replace(/[-_/]+/g, ' ');
+        list += `<div class="audioEntry" data-url="${url}" data-keywords="${keywords}"><button icon="play_arrow" class="audioPreview"></button><span>${sound}</span></div>`;
+      }
+    }
+    $('#audioList').innerHTML = list;
+
+    $('#audioPickerOverlay input').onkeyup = function() {
+      const text = regexEscape($('#audioPickerOverlay input').value.toLowerCase());
+      for(const entry of $a('#audioList .audioEntry'))
+        toggleClass(entry, 'hidden', !entry.dataset.keywords.match(text));
+      for(const title of $a('#audioList h2'))
+        toggleClass(title, 'hidden', text);
+    };
+  }
+}
+
+function stopAudioPickerPreview() {
+  if(audioPickerPreview) {
+    audioPickerPreview.pause();
+    audioPickerPreview = null;
+  }
+}
+
+// Opens the sound picker and resolves with the selected /i/audio/… path (or null
+// when cancelled). Used by the JSON editor for AUDIO source and clickSound.
+export async function pickAudio(closeOverlay=true) {
+  if($('#statesButton').dataset.overlay == 'audioPickerOverlay')
+    $('#statesButton').dataset.overlay = detailsOverlay;
+
+  await loadAudioPicker();
+  return new Promise(resolve => {
+    showOverlay('audioPickerOverlay');
+    $('#audioPickerOverlay').scrollTop = 0;
+    $('#audioPickerOverlay input').value = '';
+    $('#audioPickerOverlay input').focus();
+    $('#audioPickerOverlay input').onkeyup();
+
+    $('#audioPickerOverlay [icon=close]').onclick = function() {
+      stopAudioPickerPreview();
+      if(closeOverlay)
+        showOverlay(null);
+      resolve(null);
+    };
+
+    for(const entry of $a('#audioList .audioEntry')) {
+      $('.audioPreview', entry).onclick = function(e) {
+        e.stopPropagation();
+        stopAudioPickerPreview();
+        audioPickerPreview = new Audio(mapAssetURLs(entry.dataset.url));
+        audioPickerPreview.play().catch(()=>{});
+      };
+      entry.onclick = function() {
+        stopAudioPickerPreview();
+        if(closeOverlay)
+          showOverlay(null);
+        resolve(entry.dataset.url);
+      };
+    }
+  });
+}
+
 export let audioContext;
 const events = ['mousedown', 'keydown', 'touchstart'];
 let audioBufferObj = {}

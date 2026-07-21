@@ -1,0 +1,8 @@
+Sound effects in this directory were created by Kenney (https://kenney.nl) and
+are released under the Creative Commons Zero (CC0) license, dedicating them to
+the public domain: https://creativecommons.org/publicdomain/zero/1.0/
+
+  casino/    - from the "Casino Audio" pack   (https://kenney.nl/assets/casino-audio)
+  interface/ - from the "Interface Sounds" pack (https://kenney.nl/assets/interface-sounds)
+
+Crediting Kenney or www.kenney.nl is appreciated but not required.

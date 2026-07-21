@@ -507,6 +507,52 @@
   }
 }
 
+#audioPickerOverlay input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#audioPickerOverlay h1 {
+  margin-top: 0;
+}
+
+#audioPickerOverlay h2 {
+  font-size: 16px;
+  border-bottom: 1px solid black;
+  padding-left: 4px;
+  color: black;
+}
+
+#audioList {
+  color: black;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#audioList .audioEntry {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 8px 2px 0;
+  cursor: pointer;
+}
+
+#audioList .audioEntry span {
+  word-break: break-word;
+}
+
+#audioList .audioEntry:hover span {
+  text-decoration: underline;
+}
+
+#audioList .audioPreview {
+  padding: 2px;
+}
+
+#audioList .hidden {
+  display: none;
+}
+
 p[icon] {
   color: black;
   margin: 20px;
