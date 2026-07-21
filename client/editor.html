@@ -161,7 +161,7 @@
     <div id="libraryDecksList"></div>
   </div>
   <div id="deckEditorExportOverlay" class="overlay" style="display: none">
-    <div id="deckEditorExportDialog">
+    <div id="deckEditorExportDialog" class="deckEditorModal">
       <button id="deckEditorExportClose" icon="close" title="Close"></button>
       <h1>Print or save deck as PDF</h1>
       <p>Cards are arranged to use as much of each sheet as possible. Print to a printer or choose “Save as PDF” in the browser print dialog. Front/back output alternates mirrored pages; enable two-sided printing with the matching duplex flip setting.</p>
@@ -213,7 +213,7 @@
     </div>
   </div>
   <div id="deckEditorImportOverlay" class="overlay" style="display: none">
-    <div id="deckEditorImportDialog">
+    <div id="deckEditorImportDialog" class="deckEditorModal">
       <button id="deckEditorImportClose" icon="close" title="Close"></button>
       <h1>Import card types from CSV</h1>
       <p>Choose a CSV file (such as one exported from this dialog). Each row becomes a card type; the <code>id::INTERNAL</code> column sets its name and <code>cardCount::INTERNAL</code> sets how many cards of it are in the game.</p>
@@ -227,7 +227,7 @@
     </div>
   </div>
   <div id="deckEditorNewDeckOverlay" class="overlay" style="display: none">
-    <div id="deckEditorNewDeckDialog">
+    <div id="deckEditorNewDeckDialog" class="deckEditorModal">
       <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
       <h1>Add a new deck</h1>
       <p>Pick how to create the new deck. Every option reuses the game's existing deck-creation tools.</p>

@@ -563,6 +563,42 @@ body.deckEditorActive #enlarged {
   right: 10px;
 }
 
+/* Match the standard VTT modal look (see .modal in layout.css): themed background, VTTblue top/bottom
+   accent, and a VTTblueDark title bar. Placed after the per-dialog rules so it overrides their white bg. */
+#deckEditorExportDialog,
+#deckEditorImportDialog,
+#deckEditorNewDeckDialog {
+  color: var(--modalTextColor);
+  background: var(--modalBackgroundColor);
+  border: none;
+  border-top: 3px solid var(--VTTblue);
+  border-bottom: 3px solid var(--VTTblue);
+  border-radius: 8px;
+  box-shadow: 0 5px 10px #000000aa;
+  padding: 0 24px 20px 24px;
+}
+
+#deckEditorExportDialog h1,
+#deckEditorImportDialog h1,
+#deckEditorNewDeckDialog h1 {
+  margin: 0 -24px 16px -24px;
+  padding: 12px 44px 12px 16px;
+  background: var(--VTTblueDark);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+/* Close button sits on the dark title bar. */
+#deckEditorExportClose,
+#deckEditorImportClose,
+#deckEditorNewDeckClose {
+  background: transparent;
+  color: #fff;
+}
+
 .deckEditorNewDeckModes {
   display: flex;
   flex-direction: column;
