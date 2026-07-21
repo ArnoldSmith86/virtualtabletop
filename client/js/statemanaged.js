@@ -1,7 +1,7 @@
 import { dropTargets } from './main.js';
 import { sendPropertyUpdate } from './serverstate.js';
 import { tracingEnabled } from './tracing.js';
-import { languageOverrides } from './i18n.js';
+import { languageOverrides, isLanguageSuffixedKey } from './i18n.js';
 
 export class StateManaged {
   constructor() {
@@ -18,7 +18,7 @@ export class StateManaged {
     const deltaForDOM = {};
     let overridesChanged = false;
     for(const i in delta) {
-      if(i.indexOf(':') != -1)
+      if(isLanguageSuffixedKey(i))
         overridesChanged = true;
       if(delta[i] === null) {
         delete this.unalteredState[i];

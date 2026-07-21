@@ -53,10 +53,30 @@ export function translate(text) {
 // can be translated without duplicating it per language. The resolution happens
 // locally on read, so the shared room state is never modified (two players may
 // look at the same game in different languages).
+//
+// This is a PRESENTATION feature: the override is resolved per client on read,
+// so it must only be used for content that is *displayed* (labels, text, images,
+// positions, css, …). A routine must not depend on a language-suffixed property
+// for game logic — it should read the base (unsuffixed) property, otherwise two
+// players with different languages would compute different results from the same
+// shared state. Structural/identity properties (see below) are therefore never
+// localized so hierarchy and links stay language-independent no matter what.
 
 // Only a `base:suffix` key whose suffix looks like a BCP-47 language tag is
 // treated as a translation, so ordinary property names are never misinterpreted.
 const languageSuffixRegex = /^(.+):([a-z]{2,3}(?:-[a-z0-9]+)*)$/i;
+
+// Properties that define a widget's identity, type or place in the hierarchy are
+// never localized: a per-language override of these would re-link or re-type
+// widgets and desync the shared state. (Mirrors the non-inheritable set in
+// statemanaged.js.)
+const nonLocalizableProperties = new Set([ 'id', 'type', 'parent', 'deck', 'cardType' ]);
+
+// Does a key look like a language-suffixed property (regardless of which
+// language)? Used to decide cheaply whether overrides need recomputing.
+export function isLanguageSuffixedKey(key) {
+  return languageSuffixRegex.test(key);
+}
 
 // How well a property-name language suffix matches the selected language.
 // Returns 0 for no match; higher scores win when several suffixes are present.
@@ -86,6 +106,8 @@ export function languageOverrides(object) {
     if(!score)
       continue;
     const base = match[1];
+    if(nonLocalizableProperties.has(base))
+      continue;
     if(!overrides)
       overrides = {}, scores = {};
     if(scores[base] === undefined || score > scores[base]) {
