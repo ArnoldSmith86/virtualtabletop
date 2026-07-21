@@ -4438,10 +4438,10 @@
     "text:de-DE": "Zurückrufen & Mischen",
     "text:pt-BR": "Recolher & Embaralhar",
     "css:de-DE": {
-      "font-size": "15px"
+      "font-size": "12px"
     },
     "css:pt-BR": {
-      "font-size": "15px"
+      "font-size": "12px"
     }
   },
   "numberOfPlayers": {

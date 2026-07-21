@@ -1139,7 +1139,14 @@
     },
     "text": "Most 5VP\nLess -2VP",
     "text:de-DE": "Meiste 5 SP\nWenigste -2 SP",
-    "text:pt-BR": "Mais 5 PV\nMenos -2 PV"
+    "text:pt-BR": "Mais 5 PV\nMenos -2 PV",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "height:de-DE": 68,
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "label-example-nile-scoring": {
     "type": "label",
@@ -2209,7 +2216,17 @@
     },
     "height": 12,
     "text:de-DE": "NACHZIEHSTAPEL",
-    "text:pt-BR": "PILHA DE COMPRA"
+    "text:pt-BR": "PILHA DE COMPRA",
+    "css:de-DE": {
+      "color": "#000000",
+      "font-size": "11px"
+    },
+    "height:de-DE": 36,
+    "css:pt-BR": {
+      "color": "#000000",
+      "font-size": "11px"
+    },
+    "height:pt-BR": 36
   },
   "holder-tiles-discard": {
     "type": "holder",
@@ -4061,7 +4078,15 @@
       }
     ],
     "text:de-DE": "Plättchen ziehen",
-    "text:pt-BR": "Comprar peça"
+    "text:pt-BR": "Comprar peça",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "height:de-DE": 35,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   },
   "button-end-turn": {
     "type": "button",
@@ -4086,7 +4111,14 @@
       }
     ],
     "text:de-DE": "Zug beenden",
-    "text:pt-BR": "Encerrar turno"
+    "text:pt-BR": "Encerrar turno",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   },
   "button-new-game": {
     "type": "button",
@@ -4485,7 +4517,10 @@
       }
     ],
     "text:de-DE": "Neue Epoche",
-    "text:pt-BR": "Nova época"
+    "text:pt-BR": "Nova época",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "button-empty-auction": {
     "type": "button",
@@ -4503,7 +4538,14 @@
       }
     ],
     "text:de-DE": "Alle ablegen",
-    "text:pt-BR": "Descartar tudo"
+    "text:pt-BR": "Descartar tudo",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   },
   "button-win-p1": {
     "type": "button",
@@ -4633,7 +4675,11 @@
       }
     ],
     "text:de-DE": "Sieg",
-    "text:pt-BR": "Vitória"
+    "text:pt-BR": "Vitória",
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "width:pt-BR": 45
   },
   "button-win-p2": {
     "type": "button",
@@ -4751,6 +4797,14 @@
       }
     ],
     "text:de-DE": "Punkte verbergen",
-    "text:pt-BR": "Ocultar pontuação"
+    "text:pt-BR": "Ocultar pontuação",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "height:de-DE": 35,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 35
   }
 }

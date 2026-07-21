@@ -233,7 +233,7 @@
     "parent": "menuGame",
     "text:de-DE": "♦ Karten geben ♣",
     "text:pt-BR": "♦ Distribuir cartas ♣",
-    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 19px;"
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 18px;"
   },
   "dealPile1": {
     "type": "holder",
@@ -811,7 +811,7 @@
     "text:de-DE": "Hauptstapel zählen",
     "text:pt-BR": "Contar principal",
     "css:de-DE": {
-      "font-size": "13px"
+      "font-size": "11px"
     }
   },
   "btnTakeOne": {
@@ -1009,7 +1009,7 @@
     "group": "takeButtons",
     "text:de-DE": "Eine nehmen",
     "text:pt-BR": "Pegar uma",
-    "css:de-DE": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;    font-weight:bold; color: #ffffff;  background-color: #008000; font-size: 19px;"
+    "css:de-DE": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;    font-weight:bold; color: #ffffff;  background-color: #008000; font-size: 18px;"
   },
   "btnResetTakeButtons": {
     "type": "button",
@@ -1248,7 +1248,7 @@
     "y": 1150,
     "text:de-DE": "Aufnehmen",
     "text:pt-BR": "Pegar",
-    "css:de-DE": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;    font-weight:bold; color: #ffffff;  background-color: #008000; font-size: 18px;"
+    "css:de-DE": "box-sizing: border-box;padding: 0 16px;vertical-align: middle;text-align: center;box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);line-height: 48px; outline: none;  cursor: pointer;  transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;    font-weight:bold; color: #ffffff;  background-color: #008000; font-size: 16px;"
   },
   "btnNextPlayer": {
     "type": "button",
@@ -1499,6 +1499,9 @@
     "text:de-DE": "NÄCHSTEN SPIELER SETZEN",
     "text:pt-BR": "DEFINIR PRÓXIMO JOGADOR",
     "css:de-DE": {
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
       "font-size": "14px"
     }
   },
@@ -3911,7 +3914,8 @@
     "movable": false,
     "parent": "menuGame",
     "text:de-DE": "Benutze beim ersten Mal die Schaltfläche Einstellungen, um die Anzahl der Spieler und Kartenpäckchen festzulegen, Teams auszuwählen und weitere Optionen einzustellen.",
-    "text:pt-BR": "Use o botão Configurações na primeira vez para definir o número de jogadores e de baralhos, escolher equipes e outras opções."
+    "text:pt-BR": "Use o botão Configurações na primeira vez para definir o número de jogadores e de baralhos, escolher equipes e outras opções.",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 19px;"
   },
   "txtSetPlayerNames": {
     "text": "1. Update the player names by editing the text in the grid boxes below.",
@@ -3954,7 +3958,9 @@
     "id": "txtDealCards",
     "parent": "menuGame",
     "text:de-DE": "3. Klicke auf Karten geben und bitte die Spieler, unten auf ihre eigenen benannten Schaltflächen zu klicken, um ihre Karten zu erhalten.",
-    "text:pt-BR": "3. Clique em Distribuir cartas e peça aos jogadores que cliquem nos próprios botões com seus nomes abaixo para receber as cartas."
+    "text:pt-BR": "3. Clique em Distribuir cartas e peça aos jogadores que cliquem nos próprios botões com seus nomes abaixo para receber as cartas.",
+    "css:de-DE": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 17px;",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 17px;"
   },
   "txtStartGame": {
     "text": "4. Click Start Game to play. At the end of a game, click the square |☰| menu button in the bottom left of the screen.",
@@ -3968,7 +3974,8 @@
     "id": "txtStartGame",
     "parent": "menuGame",
     "text:de-DE": "4. Klicke auf Spiel starten, um zu spielen. Klicke am Ende eines Spiels auf die quadratische |☰|-Menüschaltfläche unten links auf dem Bildschirm.",
-    "text:pt-BR": "4. Clique em Iniciar jogo para jogar. Ao final de uma partida, clique no botão de menu quadrado |☰| no canto inferior esquerdo da tela."
+    "text:pt-BR": "4. Clique em Iniciar jogo para jogar. Ao final de uma partida, clique no botão de menu quadrado |☰| no canto inferior esquerdo da tela.",
+    "css:de-DE": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 17px;"
   },
   "btnPile1": {
     "x": -20,
@@ -4506,7 +4513,7 @@
     "text:de-DE": "NAMEN FÜR GEBESTAPEL",
     "text:pt-BR": "NOMES DAS PILHAS",
     "css:de-DE": {
-      "font-size": "12px"
+      "font-size": "11px"
     }
   },
   "shieldDealPile1": {
@@ -4741,8 +4748,8 @@
     "numPacks": "3",
     "text:de-DE": "Spieldaten",
     "text:pt-BR": "Dados do jogo",
-    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;",
-    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 13px;"
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 15px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 11px;"
   },
   "btnHidePlayerBoxes": {
     "type": "button",
@@ -4773,6 +4780,9 @@
     "text:pt-BR": "OCULTAR CAIXAS",
     "css:de-DE": {
       "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "15px"
     }
   },
   "player0": {
@@ -4978,10 +4988,10 @@
     "text:de-DE": "SPIELERBOX ANZEIGEN",
     "text:pt-BR": "MOSTRAR CAIXA DO JOGADOR",
     "css:de-DE": {
-      "font-size": "13px"
+      "font-size": "11px"
     },
     "css:pt-BR": {
-      "font-size": "15px"
+      "font-size": "13px"
     }
   },
   "dealPileData": {
@@ -5013,9 +5023,9 @@
     "text:de-DE": "Gebestapel-Daten",
     "text:pt-BR": "Dados das pilhas de distribuição",
     "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 11px;",
-    "width:de-DE": 96,
+    "width:de-DE": 104,
     "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 11px;",
-    "width:pt-BR": 168
+    "width:pt-BR": 178
   },
   "btnHideDealPiles": {
     "type": "button",
@@ -5047,9 +5057,11 @@
     "css:de-DE": {
       "font-size": "11px"
     },
+    "width:de-DE": 84,
     "css:pt-BR": {
       "font-size": "11px"
-    }
+    },
+    "width:pt-BR": 86
   },
   "btnRecall3": {
     "id": "btnRecall3",
@@ -5073,7 +5085,7 @@
     "text:de-DE": "3er-Päckchen zurückrufen",
     "text:pt-BR": "Recolher 3 baralhos",
     "css:de-DE": {
-      "font-size": "13px"
+      "font-size": "12px"
     }
   },
   "btnRecall4": {
@@ -5098,7 +5110,7 @@
     "text:de-DE": "4er-Päckchen zurückrufen",
     "text:pt-BR": "Recolher 4 baralhos",
     "css:de-DE": {
-      "font-size": "13px"
+      "font-size": "12px"
     }
   },
   "btnRecallMain": {
@@ -5135,8 +5147,8 @@
     "css": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px; font-size:20px; font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0;",
     "text:de-DE": "Zurückrufen",
     "text:pt-BR": "Recolher",
-    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 13px;",
-    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 18px;"
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 12px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;"
   },
   "btnPickColour": {
     "type": "button",
@@ -9652,7 +9664,10 @@
     "text:de-DE": "Nächster-Spieler-Knopf zurücksetzen",
     "text:pt-BR": "Redefinir botão de próximo jogador",
     "css:de-DE": {
-      "font-size": "12px"
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "14px"
     }
   },
   "t1h1": {
@@ -11514,7 +11529,8 @@
     "id": "btnMenuSettings",
     "parent": "menuGame",
     "text:de-DE": "⚙ Einstellungen ⚙",
-    "text:pt-BR": "⚙ Configurações ⚙"
+    "text:pt-BR": "⚙ Configurações ⚙",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 18px;"
   },
   "btnSelectPlayer": {
     "x": 230,
@@ -11561,8 +11577,8 @@
     "parent": "menuGame",
     "text:de-DE": "☛ Spieler auswählen ☚",
     "text:pt-BR": "☛ Selecionar jogador ☚",
-    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 17px;",
-    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 17px;"
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 16px;"
   },
   "btnShuffleMain": {
     "y": 1831,
@@ -11582,8 +11598,8 @@
     "id": "btnShuffleMain",
     "text:de-DE": "Mischen",
     "text:pt-BR": "Misturar",
-    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 19px;",
-    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 19px;"
+    "css:de-DE": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 17px;",
+    "css:pt-BR": "box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12); transition: box-shadow 0.2s;  white-space: nowrap;border-radius: 8px;  font-weight:bold; color: #1f5ca6;  background-color: #f0f0f0; font-size: 17px;"
   },
   "uo8p": {
     "type": "pile",
@@ -11708,7 +11724,9 @@
     "id": "txtHelpSpinner",
     "parent": "menuSettings",
     "text:de-DE": "Bitte die Spieler, auf den Drehpfeil zu klicken, um bei der Auswahl der Teammitglieder zu helfen.",
-    "text:pt-BR": "Peça aos jogadores que cliquem no giro para ajudar a escolher os membros das equipes."
+    "text:pt-BR": "Peça aos jogadores que cliquem no giro para ajudar a escolher os membros das equipes.",
+    "css:de-DE": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 18px;",
+    "css:pt-BR": "font-weight:bold; color: white; display: flex; justify-content: left; align-items: center; font-size: 14px;"
   },
   "lblTeams": {
     "text": "Teams",

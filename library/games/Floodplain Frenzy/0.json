@@ -3799,10 +3799,10 @@
     "text:de-DE": "PUNKTE",
     "text:pt-BR": "PONTOS",
     "css:de-DE": {
-      "font-size": "17px"
+      "font-size": "11px"
     },
     "css:pt-BR": {
-      "font-size": "16px"
+      "font-size": "11px"
     }
   },
   "button-score-dec-p1": {
@@ -5406,8 +5406,11 @@
     ],
     "text:de-DE": "Zug beenden",
     "text:pt-BR": "Encerrar turno",
+    "css:de-DE": {
+      "font-size": "15px"
+    },
     "css:pt-BR": {
-      "font-size": "14px"
+      "font-size": "13px"
     }
   },
   "button-score-cities": {
@@ -5456,10 +5459,10 @@
     "text:de-DE": "Städte werten",
     "text:pt-BR": "Pontuar cidades",
     "css:de-DE": {
-      "font-size": "15px"
+      "font-size": "13px"
     },
     "css:pt-BR": {
-      "font-size": "13px"
+      "font-size": "11px"
     }
   },
   "holder-ziggurats": {

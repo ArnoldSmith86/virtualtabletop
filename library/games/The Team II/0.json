@@ -2397,7 +2397,8 @@
     "css": "background-color: #243a4e88;border-color:white;color:white;",
     "height": 40,
     "text:de-DE": "Mischen",
-    "text:pt-BR": "Embaralhar"
+    "text:pt-BR": "Embaralhar",
+    "css:pt-BR": "background-color: #243a4e88;border-color:white;color:white; font-size: 13px;"
   },
   "difficulty": {
     "type": "label",
@@ -3461,7 +3462,8 @@
     "text": "Timer",
     "height": 40,
     "text:de-DE": "Timer",
-    "text:pt-BR": "Cronômetro"
+    "text:pt-BR": "Cronômetro",
+    "css:pt-BR": "background-color: #243a4e88;border-color:white;color:white; font-size: 13px;"
   },
   "timer": {
     "type": "timer",
@@ -3570,7 +3572,8 @@
     "text": "Predict",
     "height": 40,
     "text:de-DE": "Vorhersagen",
-    "text:pt-BR": "Prever"
+    "text:pt-BR": "Prever",
+    "css:de-DE": "background-color: #243a4e88;border-color:white;color:white; font-size: 11px;"
   },
   "privateTricksPrediction": {
     "type": "label",

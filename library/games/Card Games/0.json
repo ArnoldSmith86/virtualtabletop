@@ -839,7 +839,15 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Zurückrufen & Mischen",
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "13px"
+    },
+    "css:pt-BR": {
+      "font-size": "13px"
+    }
   },
   "sortButton": {
     "type": "button",
@@ -971,6 +979,16 @@
     ],
     "css": {
       "border-radius": "10px 4px 4px 10px"
+    },
+    "text:de-DE": "Sortieren",
+    "text:pt-BR": "Ordenar",
+    "css:de-DE": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "13px"
     }
   },
   "bidValue1": {
@@ -1433,7 +1451,9 @@
     "image": "",
     "text": "No\nTrump",
     "deckSuitsColor": "",
-    "deckSuitsUni": "NT"
+    "deckSuitsUni": "NT",
+    "text:de-DE": "Kein\nTrumpf",
+    "text:pt-BR": "Sem\ntrunfo"
   },
   "bidSuit1": {
     "id": "bidSuit1",
@@ -1669,7 +1689,9 @@
       {
         "func": "DELETE"
       }
-    ]
+    ],
+    "text:de-DE": "Schließen",
+    "text:pt-BR": "Fechar"
   },
   "scoreboard": {
     "type": "scoreboard",
@@ -2628,7 +2650,9 @@
     "bgColor": "#deeaf0",
     "showbidHistory": false,
     "tempScore": false,
-    "showSuitValue": false
+    "showSuitValue": false,
+    "text:de-DE": "Optik & Sonstiges",
+    "text:pt-BR": "Visual & Outros"
   },
   "holder1": {
     "type": "holder",
@@ -3401,7 +3425,12 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuir",
+    "css:pt-BR": {
+      "font-size": "12px"
+    }
   },
   "deck1": {
     "type": "deck",
@@ -5604,7 +5633,9 @@
         "func": "DELETE"
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Löschen",
+    "text:pt-BR": "Excluir"
   },
   "trump": {
     "id": "trump",
@@ -6294,7 +6325,19 @@
       }
     ],
     "activeGameChangeRoutine": [],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Kartenpunkte +",
+    "text:pt-BR": "Somar pontos",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 123,
+    "height:de-DE": 72,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "width:pt-BR": 123,
+    "height:pt-BR": 72
   },
   "settingsDecks": {
     "type": "button",
@@ -7654,7 +7697,10 @@
       }
     ],
     "variableScore": 1,
-    "contractType": false
+    "contractType": false,
+    "text:de-DE": "Decks & Spieler",
+    "text:pt-BR": "Baralhos & Jogadores",
+    "css:pt-BR": "line-height:1.05; font-size: 15px;"
   },
   "deckOptions": {
     "id": "deckOptions",
@@ -8002,7 +8048,9 @@
         "func": "SHUFFLE",
         "holder": "deckHolder"
       }
-    ]
+    ],
+    "text:de-DE": "Reset",
+    "text:pt-BR": "Zerar"
   },
   "score+10": {
     "type": "button",
@@ -8144,7 +8192,9 @@
     "movableInEdit": false,
     "layer": -5,
     "width": 105,
-    "borderRadius": 8
+    "borderRadius": 8,
+    "text:de-DE": "Optionen",
+    "text:pt-BR": "Opções"
   },
   "turnButton": {
     "type": "button",
@@ -8200,7 +8250,9 @@
     "direction": "forward",
     "css": {
       "border-radius": "10px 4px 4px 10px"
-    }
+    },
+    "text:de-DE": "Zug",
+    "text:pt-BR": "Turno"
   },
   "discardLabel": {
     "id": "discardLabel",
@@ -8215,7 +8267,17 @@
       "font-size": "20px",
       "text-align": "center"
     },
-    "text": "Discard"
+    "text": "Discard",
+    "text:de-DE": "Ablegen",
+    "text:pt-BR": "Descartar",
+    "css:de-DE": {
+      "font-size": "11px",
+      "text-align": "center"
+    },
+    "css:pt-BR": {
+      "font-size": "11px",
+      "text-align": "center"
+    }
   },
   "takeButton": {
     "type": "button",
@@ -8406,7 +8468,9 @@
         "color": "black"
       }
     },
-    "felos9Show": "none"
+    "felos9Show": "none",
+    "text:de-DE": "Nimm",
+    "text:pt-BR": "Pegar"
   },
   "background": {
     "id": "background",
@@ -9218,7 +9282,9 @@
       "text": "Default",
       "value": "0"
     },
-    "preSet": "0"
+    "preSet": "0",
+    "text:de-DE": "Spiel:",
+    "text:pt-BR": "Jogo:"
   },
   "bids": {
     "id": "bids",
@@ -9296,7 +9362,9 @@
     "text": "Activity Log",
     "x": 5,
     "parent": "bids",
-    "fixedParent": true
+    "fixedParent": true,
+    "text:de-DE": "Aktivitätsprotokoll",
+    "text:pt-BR": "Registro de atividades"
   },
   "bidButton": {
     "type": "button",
@@ -9377,7 +9445,9 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Bieten",
+    "text:pt-BR": "Apostar"
   },
   "bidWinner": {
     "id": "bidWinner",
@@ -9572,7 +9642,9 @@
           "actionsButton"
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Gebot zeigen",
+    "text:pt-BR": "Mostrar aposta"
   },
   "count1": {
     "id": "count1",
@@ -10593,7 +10665,9 @@
         "property": "height",
         "value": 20
       }
-    ]
+    ],
+    "text:de-DE": "Routinen",
+    "text:pt-BR": "Rotinas"
   },
   "tarokyDeck": {
     "type": "deck",
@@ -12059,7 +12133,12 @@
     ],
     "x": 60,
     "text": "Convert",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Umwandeln",
+    "text:pt-BR": "Converter",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "3pScoreCoiffeurButton": {
     "type": "button",
@@ -12352,7 +12431,12 @@
       "seat7"
     ],
     "x": 60,
-    "text": "Convert"
+    "text": "Convert",
+    "text:de-DE": "Umwandeln",
+    "text:pt-BR": "Converter",
+    "css:de-DE": {
+      "font-size": "11px"
+    }
   },
   "showHandButton": {
     "type": "button",
@@ -12453,7 +12537,9 @@
     ],
     "fixedParent": true,
     "parent": "actionsBox",
-    "width": 83
+    "width": 83,
+    "text:de-DE": "Hand zeigen",
+    "text:pt-BR": "Mostrar mão"
   },
   "showHolder1": {
     "type": "holder",
@@ -12595,7 +12681,15 @@
       "font-size": "20px"
     },
     "text": "Tricks:",
-    "x": 17
+    "x": 17,
+    "text:de-DE": "Stiche:",
+    "text:pt-BR": "Vazas:",
+    "css:de-DE": {
+      "font-size": "16px"
+    },
+    "css:pt-BR": {
+      "font-size": "16px"
+    }
   },
   "tricksCount": {
     "id": "tricksCount",
@@ -12675,7 +12769,19 @@
     "layer": -6,
     "movableInEdit": false,
     "width": 24,
-    "rotation": 180
+    "rotation": 180,
+    "text:de-DE": "Aktionen",
+    "text:pt-BR": "Ações",
+    "css:de-DE": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    }
   },
   "actionsBox": {
     "id": "actionsBox",
@@ -12751,7 +12857,9 @@
       }
     ],
     "width": 83,
-    "x": 5
+    "x": 5,
+    "text:de-DE": "Pfeil zeigen",
+    "text:pt-BR": "Mostrar seta"
   },
   "transferScoreButton": {
     "type": "button",
@@ -12799,7 +12907,15 @@
     "width": 120,
     "fixedParent": true,
     "parent": "scoreButton",
-    "x": -5
+    "x": -5,
+    "text:de-DE": "Punkte übertragen",
+    "text:pt-BR": "Transferir pontos",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "doppelLabel": {
     "id": "doppelLabel",
@@ -13283,7 +13399,17 @@
       }
     ],
     "Inuka": true,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Solo sortieren",
+    "text:pt-BR": "Ordenar solo",
+    "css:de-DE": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    }
   },
   "playerAidButton": {
     "type": "button",
@@ -13336,7 +13462,12 @@
       }
     ],
     "movableInEdit": false,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Spielhilfe ein/aus",
+    "text:pt-BR": "Mostrar/ocultar ajuda",
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "playerAid9": {
     "id": "playerAid9",
@@ -14011,7 +14142,14 @@
     ],
     "customFaceCount": 6,
     "showTempScoreTotals": true,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Standard",
+    "text:pt-BR": "Padrão",
+    "css:de-DE": {
+      "background": "blue",
+      "color": "white",
+      "font-size": "23px"
+    }
   },
   "gameID1": {
     "id": "gameID1",
@@ -17130,7 +17268,19 @@
     "width": 24,
     "text": "Items",
     "rotation": 180,
-    "layer": -4
+    "layer": -4,
+    "text:de-DE": "Objekte",
+    "text:pt-BR": "Itens",
+    "css:de-DE": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "border-radius": "17px 0px 0px 17px",
+      "writing-mode": "vertical-lr",
+      "font-size": "12px"
+    }
   },
   "itemsBox": {
     "id": "itemsBox",
@@ -17187,7 +17337,9 @@
         "func": "DELETE"
       }
     ],
-    "text": "Recall All"
+    "text": "Recall All",
+    "text:de-DE": "Alle zurückrufen",
+    "text:pt-BR": "Recolher tudo"
   },
   "itemsRecallMineButton": {
     "type": "button",
@@ -17219,7 +17371,9 @@
       {
         "func": "DELETE"
       }
-    ]
+    ],
+    "text:de-DE": "Meine zurückrufen",
+    "text:pt-BR": "Recolher as minhas"
   },
   "itemsHolder1": {
     "type": "holder",
@@ -19748,7 +19902,9 @@
     "text": "Default",
     "movable": false,
     "movableInEdit": false,
-    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\""
+    "hintText": "\"Choose a pre-set game by pressing the Game button to the left.\\a\\a Even if no pre-set is available, many trick taking card games can be played in this room. Use the Options buttons in the lower-right corner to configure the number of players, decks, and other settings.\\a\\a Without a pre-set, there will be limited automation, but you can still have fun. If you want to make your own pre-set, visit https://github.com/96LawDawg/Cards-Tricks/wiki.\"",
+    "text:de-DE": "Standard",
+    "text:pt-BR": "Padrão"
   },
   "gameID15": {
     "id": "gameID15",
@@ -20019,7 +20175,17 @@
         "widget": "routines",
         "routine": "autoSortRoutine"
       }
-    ]
+    ],
+    "text:de-DE": "1 nehmen",
+    "text:pt-BR": "Pegar 1",
+    "css:de-DE": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 4px 4px 10px",
+      "font-size": "14px"
+    }
   },
   "score+50": {
     "type": "button",
@@ -20155,7 +20321,17 @@
       }
     ],
     "text": "Reverse Sort",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Umgekehrt sortieren",
+    "text:pt-BR": "Ordenar ao contrário",
+    "css:de-DE": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "10px 0px 0px 10px",
+      "font-size": "11px"
+    }
   },
   "slideHolderVertical": {
     "id": "slideHolderVertical",
@@ -22069,7 +22245,18 @@
           }
         ]
       }
-    ]
+    ],
+    "text:de-DE": "Mischen",
+    "text:pt-BR": "Embaralhar",
+    "css:de-DE": {
+      "border-radius": "0px 10px 10px 0px",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "border-radius": "0px 10px 10px 0px",
+      "font-size": "11px"
+    },
+    "width:pt-BR": 63
   },
   "dummyHand": {
     "type": "holder",
@@ -22144,7 +22331,9 @@
         }
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Dummy nimmt",
+    "text:pt-BR": "Morto pega"
   },
   "playerAidDetail1": {
     "type": "seat",
@@ -22556,7 +22745,18 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Nachricht",
+    "text:pt-BR": "Mensagem",
+    "css:pt-BR": {
+      "background": "#ffffff",
+      "border": "1px solid black",
+      "font-size": "11px",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "color": "black"
+    }
   },
   "itemsHolder16": {
     "inheritFrom": {
@@ -22792,7 +22992,29 @@
       "align-items": "center"
     },
     "text": "Standard Deck Misc",
-    "height": 140
+    "height": 140,
+    "text:de-DE": "Standarddeck – Sonstiges",
+    "text:pt-BR": "Baralho padrão – diversos",
+    "css:de-DE": {
+      "font-size": "52px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "css:pt-BR": {
+      "font-size": "55px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    }
   },
   "gamesOtherLabel": {
     "id": "gamesOtherLabel",
@@ -22811,7 +23033,29 @@
       "justify-content": "center",
       "align-items": "center"
     },
-    "text": "Other Decks Misc"
+    "text": "Other Decks Misc",
+    "text:de-DE": "Andere Decks – Sonstiges",
+    "text:pt-BR": "Outros baralhos – diversos",
+    "css:de-DE": {
+      "font-size": "52px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    },
+    "css:pt-BR": {
+      "font-size": "46px",
+      "background": "black",
+      "border": "5px solid white",
+      "color": "white",
+      "text-align": "center",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center"
+    }
   },
   "gamesTarotLabel": {
     "id": "gamesTarotLabel",
@@ -23203,7 +23447,9 @@
     ],
     "movableInEdit": false,
     "versionNumber": "0",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Version",
+    "text:pt-BR": "Versão"
   },
   "cloneButton": {
     "type": "button",
@@ -23253,7 +23499,9 @@
       }
     ],
     "text": "Clone",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Klonen",
+    "text:pt-BR": "Clonar"
   },
   "gameID22": {
     "id": "gameID22",
@@ -24365,7 +24613,9 @@
     "ownedBy": null,
     "clickable": null,
     "id": "yywx",
-    "parent": "itemsHolder7"
+    "parent": "itemsHolder7",
+    "text:de-DE": "Beschriftung",
+    "text:pt-BR": "Rótulo"
   },
   "kt1e": {
     "width": 30,
@@ -25286,7 +25536,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontuação"
   },
   "takeSpecial": {
     "type": "button",
@@ -25312,7 +25564,9 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Nimm",
+    "text:pt-BR": "Pegar"
   },
   "gameID27": {
     "id": "gameID27",
@@ -27763,7 +28017,9 @@
     "image": "",
     "text": "All\nTrump",
     "deckSuitsColor": "",
-    "deckSuitsUni": "AT"
+    "deckSuitsUni": "AT",
+    "text:de-DE": "Alles\nTrumpf",
+    "text:pt-BR": "Tudo\ntrunfo"
   },
   "choose16": {
     "type": "button",
@@ -27788,7 +28044,9 @@
         "property": "text",
         "value": "${bid}"
       }
-    ]
+    ],
+    "text:de-DE": "Passen",
+    "text:pt-BR": "Passar"
   },
   "choose17": {
     "type": "button",
@@ -33028,7 +33286,9 @@
     "text": "Return 1/2 Mine",
     "height": 45,
     "width": 90,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "1/2 meiner zurück",
+    "text:pt-BR": "Devolver 1/2 minhas"
   },
   "agonyTokensButton2": {
     "type": "button",
@@ -33086,7 +33346,12 @@
     "text": "Return All Mine",
     "height": 45,
     "width": 90,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Alle meine zurück",
+    "text:pt-BR": "Devolver todas as minhas",
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "agonyTokensButton3": {
     "type": "button",
@@ -33131,7 +33396,9 @@
     "text": "Empty Board",
     "height": 45,
     "width": 90,
-    "movableInEdit": false
+    "movableInEdit": false,
+    "text:de-DE": "Feld leeren",
+    "text:pt-BR": "Esvaziar mesa"
   },
   "agonyDiscard": {
     "type": "holder",
@@ -33194,7 +33461,17 @@
       "color": "red"
     },
     "text": "Dump Trick",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Stich abwerfen",
+    "text:pt-BR": "Descartar vaza",
+    "css:de-DE": {
+      "font-size": "11px",
+      "color": "red"
+    },
+    "css:pt-BR": {
+      "font-size": "11px",
+      "color": "red"
+    }
   },
   "playerAid33": {
     "type": "scoreboard",
@@ -33238,7 +33515,15 @@
     "movable": false,
     "movableInEdit": false,
     "parent": "agonyAuntBack",
-    "fixedParent": true
+    "fixedParent": true,
+    "text:de-DE": "Entferne 1 zusätzlichen Marker aus deinem Stapel für jede Reihe/Spalte/Diagonale mit 3 von deinen.",
+    "text:pt-BR": "Remova 1 ficha extra da sua pilha para cada linha/coluna/diagonal com 3 das suas.",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "gameID34": {
     "id": "gameID34",
@@ -34288,7 +34573,16 @@
       }
     ],
     "text": "Burn",
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Verbrennen",
+    "text:pt-BR": "Queimar",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 63,
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "showHideBidsB": {
     "type": "button",
@@ -34347,7 +34641,9 @@
         "value": "Hide Bids"
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Gebote zeigen",
+    "text:pt-BR": "Mostrar apostas"
   },
   "gameID36": {
     "id": "gameID36",
@@ -35128,7 +35424,19 @@
       }
     ],
     "z": 24,
-    "movable": false
+    "movable": false,
+    "text:de-DE": "Spielverzeichnis",
+    "text:pt-BR": "Índice de jogos",
+    "css:de-DE": {
+      "background": "red",
+      "color": "white",
+      "font-size": "13px"
+    },
+    "css:pt-BR": {
+      "background": "red",
+      "color": "white",
+      "font-size": "22px"
+    }
   },
   "gameID38": {
     "id": "gameID38",
@@ -36611,7 +36919,15 @@
     "movable": false,
     "movableInEdit": false,
     "layer": -1,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Dein Gebot:",
+    "text:pt-BR": "Sua aposta:",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "font-size": "11px"
+    }
   },
   "99Bid1": {
     "id": "99Bid1",
@@ -36888,7 +37204,13 @@
       "color": "black",
       "font-size": "16px"
     },
-    "text": "Declarer"
+    "text": "Declarer",
+    "text:de-DE": "Alleinspieler",
+    "text:pt-BR": "Declarante",
+    "css:de-DE": {
+      "color": "black",
+      "font-size": "14px"
+    }
   },
   "trumpLabel": {
     "id": "trumpLabel",
@@ -36903,7 +37225,17 @@
     "css": {
       "color": "black"
     },
-    "text": "Trump"
+    "text": "Trump",
+    "text:de-DE": "Trumpf",
+    "text:pt-BR": "Trunfo",
+    "css:de-DE": {
+      "color": "black",
+      "font-size": "11px"
+    },
+    "css:pt-BR": {
+      "color": "black",
+      "font-size": "12px"
+    }
   },
   "gameID43": {
     "id": "gameID43",
@@ -37501,7 +37833,18 @@
     ],
     "width": 60,
     "height": 60,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Weitergeben",
+    "text:pt-BR": "Passar",
+    "css:de-DE": {
+      "font-size": "11px"
+    },
+    "width:de-DE": 71,
+    "height:de-DE": 119,
+    "css:pt-BR": {
+      "font-size": "11px"
+    },
+    "height:pt-BR": 119
   },
   "gameID44": {
     "id": "gameID44",
@@ -38053,7 +38396,9 @@
       "T 2J",
       "T 1J",
       "T 2J"
-    ]
+    ],
+    "text:de-DE": "Karten erstellen",
+    "text:pt-BR": "Criar cartas"
   },
   "bidValue5": {
     "inheritFrom": {
@@ -39794,7 +40139,9 @@
         "background": "white"
       }
     },
-    "text": "Auctions"
+    "text": "Auctions",
+    "text:de-DE": "Auktionen",
+    "text:pt-BR": "Leilões"
   },
   "playerAid46aAsset": {
     "id": "playerAid46aAsset",
@@ -39828,7 +40175,9 @@
         "background": "white"
       }
     },
-    "text": "Contracts"
+    "text": "Contracts",
+    "text:de-DE": "Kontrakte",
+    "text:pt-BR": "Contratos"
   },
   "playerAid46bAsset": {
     "id": "playerAid46bAsset",
@@ -39896,7 +40245,9 @@
         "background": "white"
       }
     },
-    "text": "Points"
+    "text": "Points",
+    "text:de-DE": "Punkte",
+    "text:pt-BR": "Pontos"
   },
   "playerAid46dAsset": {
     "id": "playerAid46dAsset",
@@ -40328,7 +40679,9 @@
         ]
       }
     ],
-    "teamButton": 1
+    "teamButton": 1,
+    "text:de-DE": "Alleinspieler",
+    "text:pt-BR": "Declarante(s)"
   },
   "teamButton2": {
     "id": "teamButton2",
@@ -40341,7 +40694,9 @@
     "teamButton": 2,
     "x": 112,
     "z": 2,
-    "y": 0
+    "y": 0,
+    "text:de-DE": "Gegner",
+    "text:pt-BR": "Oponente(s)"
   },
   "teamList1": {
     "id": "teamList1",
@@ -40762,7 +41117,9 @@
     "bgColor": "#ffffff",
     "teamButton": 3,
     "z": 3,
-    "parent": "teamsAndContractsOff"
+    "parent": "teamsAndContractsOff",
+    "text:de-DE": "Trennen",
+    "text:pt-BR": "Separar"
   },
   "teamList3": {
     "inheritFrom": {
@@ -40843,7 +41200,49 @@
         ]
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Punkte\nx\n\n",
+    "text:pt-BR": "Pontos\nx\n\n",
+    "css:de-DE": {
+      "default": {
+        "background": "#ffffff",
+        "border": "1px solid black",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "black",
+        "line-height": "0.8em",
+        "font-size": "11px"
+      },
+      "::after": {
+        "content": "\"${PROPERTY multiple}\"",
+        "position": "absolute",
+        "margin-top": "30px",
+        "color": "black"
+      }
+    },
+    "width:de-DE": 85,
+    "css:pt-BR": {
+      "default": {
+        "background": "#ffffff",
+        "border": "1px solid black",
+        "text-align": "center",
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center",
+        "color": "black",
+        "line-height": "0.8em",
+        "font-size": "11px"
+      },
+      "::after": {
+        "content": "\"${PROPERTY multiple}\"",
+        "position": "absolute",
+        "margin-top": "30px",
+        "color": "black"
+      }
+    },
+    "width:pt-BR": 85
   },
   "scoreMultiplierMinus": {
     "type": "basic",
@@ -41405,7 +41804,9 @@
         "background": "white"
       }
     },
-    "text": "Scoring"
+    "text": "Scoring",
+    "text:de-DE": "Wertung",
+    "text:pt-BR": "Pontuação"
   },
   "playerAid45bAsset": {
     "id": "playerAid45bAsset",
@@ -41470,7 +41871,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid45cAsset": {
     "id": "playerAid45cAsset",
@@ -41518,7 +41921,9 @@
         "background": "white"
       }
     },
-    "text": "Contracts"
+    "text": "Contracts",
+    "text:de-DE": "Kontrakte",
+    "text:pt-BR": "Contratos"
   },
   "playerAid45dAsset": {
     "id": "playerAid45dAsset",
@@ -41616,7 +42021,9 @@
         "z": 100
       }
     ],
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Talon",
+    "text:pt-BR": "Talão"
   },
   "playerAid6": {
     "id": "playerAid6",
@@ -41654,7 +42061,9 @@
         "background": "white"
       }
     },
-    "text": "Ranks & Points"
+    "text": "Ranks & Points",
+    "text:de-DE": "Ränge & Punkte",
+    "text:pt-BR": "Valores & Pontos"
   },
   "playerAid6aAsset": {
     "id": "playerAid6aAsset",
@@ -41719,7 +42128,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid6bAsset": {
     "id": "playerAid6bAsset",
@@ -41782,7 +42193,9 @@
         "background": "white"
       }
     },
-    "text": "Ranks & Points"
+    "text": "Ranks & Points",
+    "text:de-DE": "Ränge & Punkte",
+    "text:pt-BR": "Valores & Pontos"
   },
   "playerAid1aAsset": {
     "id": "playerAid1aAsset",
@@ -41847,7 +42260,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid1bAsset": {
     "id": "playerAid1bAsset",
@@ -41979,7 +42394,9 @@
         "background": "white"
       }
     },
-    "text": "Scoring"
+    "text": "Scoring",
+    "text:de-DE": "Wertung",
+    "text:pt-BR": "Pontuação"
   },
   "playerAid24bAsset": {
     "id": "playerAid24bAsset",
@@ -42039,7 +42456,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid24cAsset": {
     "id": "playerAid24cAsset",
@@ -42105,7 +42524,9 @@
       }
     },
     "text": "General",
-    "y": -25
+    "y": -25,
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid14aAsset": {
     "id": "playerAid14aAsset",
@@ -42156,7 +42577,9 @@
         "background": "white"
       }
     },
-    "text": "Scoring"
+    "text": "Scoring",
+    "text:de-DE": "Wertung",
+    "text:pt-BR": "Pontuação"
   },
   "playerAid14bAsset": {
     "id": "playerAid14bAsset",
@@ -42215,7 +42638,9 @@
         "background": "white"
       }
     },
-    "text": "Other"
+    "text": "Other",
+    "text:de-DE": "Sonstiges",
+    "text:pt-BR": "Outros"
   },
   "playerAid14cAsset": {
     "id": "playerAid14cAsset",
@@ -42938,7 +43363,9 @@
         "func": "DELETE"
       }
     ],
-    "parent": "chooseValueRank"
+    "parent": "chooseValueRank",
+    "text:de-DE": "Schließen",
+    "text:pt-BR": "Fechar"
   },
   "bidButton1": {
     "type": "button",
@@ -43341,7 +43768,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid47aAsset": {
     "id": "playerAid47aAsset",
@@ -43388,7 +43817,9 @@
       }
     },
     "hoverParent": "rankIndicator",
-    "text": "Rank (High -> Low)"
+    "text": "Rank (High -> Low)",
+    "text:de-DE": "Rang (Hoch -> Niedrig)",
+    "text:pt-BR": "Valor (Alto -> Baixo)"
   },
   "rank2": {
     "id": "rank2",
@@ -43627,7 +44058,9 @@
         "background": "white"
       }
     },
-    "text": "Dealing"
+    "text": "Dealing",
+    "text:de-DE": "Geben",
+    "text:pt-BR": "Distribuição"
   },
   "playerAid31d": {
     "id": "playerAid31d",
@@ -43650,7 +44083,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "playerAid31c": {
     "id": "playerAid31c",
@@ -43778,7 +44213,19 @@
     "css": {
       "color": "black"
     },
-    "text": "Marked/Simple"
+    "text": "Marked/Simple",
+    "text:de-DE": "Mark./Einfach",
+    "text:pt-BR": "Marc./Simples",
+    "css:de-DE": {
+      "color": "black",
+      "font-size": "11px"
+    },
+    "width:de-DE": 79,
+    "css:pt-BR": {
+      "color": "black",
+      "font-size": "11px"
+    },
+    "width:pt-BR": 83
   },
   "markedButton": {
     "id": "markedButton",
@@ -43921,7 +44368,9 @@
         "background": "white"
       }
     },
-    "text": "General"
+    "text": "General",
+    "text:de-DE": "Allgemein",
+    "text:pt-BR": "Geral"
   },
   "secretAgentLabel": {
     "id": "secretAgentLabel",
@@ -43935,7 +44384,9 @@
       "font-size": "25px"
     },
     "width": 160,
-    "scale": 0
+    "scale": 0,
+    "text:de-DE": "Dein Agent ist:",
+    "text:pt-BR": "Seu agente é:"
   },
   "secretAgent1": {
     "id": "secretAgent1",
@@ -43954,7 +44405,9 @@
         "justify-content": "center",
         "align-items": "center"
       }
-    }
+    },
+    "text:de-DE": "Spieler im Uhrzeigersinn",
+    "text:pt-BR": "Jogador em sentido horário"
   },
   "secretAgent2": {
     "id": "secretAgent2",
@@ -43973,7 +44426,9 @@
         "align-items": "center"
       }
     },
-    "x": -60
+    "x": -60,
+    "text:de-DE": "Spieler gegen den Uhrzeigersinn",
+    "text:pt-BR": "Jogador em sentido anti-horário"
   },
   "secretAgent3": {
     "id": "secretAgent3",
@@ -43992,7 +44447,9 @@
         "align-items": "center"
       }
     },
-    "x": -65
+    "x": -65,
+    "text:de-DE": "Gegenüberliegender Spieler",
+    "text:pt-BR": "Jogador oposto"
   },
   "secretAgent4": {
     "id": "secretAgent4",
@@ -44011,7 +44468,9 @@
         "justify-content": "center",
         "align-items": "center"
       }
-    }
+    },
+    "text:de-DE": "Du selbst",
+    "text:pt-BR": "Você mesmo"
   },
   "tarokBonusTable1": {
     "id": "tarokBonusTable1",

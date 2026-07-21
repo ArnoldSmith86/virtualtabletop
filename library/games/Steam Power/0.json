@@ -261,7 +261,13 @@
       }
     ],
     "text:de-DE": "Zurückrufen & Mischen",
-    "text:pt-BR": "Recolher & Embaralhar"
+    "text:pt-BR": "Recolher & Embaralhar",
+    "css:de-DE": {
+      "font-size": "12px"
+    },
+    "css:pt-BR": {
+      "font-size": "12px"
+    }
   },
   "resource_holder1": {
     "type": "holder",
@@ -3556,7 +3562,15 @@
     "y": 956,
     "movableInEdit": false,
     "text:de-DE": "Aufbau",
-    "text:pt-BR": "Preparação"
+    "text:pt-BR": "Preparação",
+    "css:pt-BR": {
+      "default": {
+        "color": "${PROPERTY textColor}",
+        "font-size": "11px",
+        "background-color": "${PROPERTY backgroundColor}",
+        "border": "5px solid white"
+      }
+    }
   },
   "contract_supply": {
     "type": "holder",
@@ -4182,7 +4196,10 @@
     "x": 724,
     "y": 973,
     "text:de-DE": "Zeigen für:",
-    "text:pt-BR": "Passe o mouse para:"
+    "text:pt-BR": "Passe o mouse para:",
+    "css:de-DE": "color: white; font-size: 11px;",
+    "css:pt-BR": "color: white; font-size: 11px;",
+    "height:pt-BR": 56
   },
   "info_endgame_asset": {
     "id": "info_endgame_asset",

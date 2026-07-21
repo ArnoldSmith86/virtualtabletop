@@ -181,7 +181,8 @@
     "movableInEdit": false,
     "movable": false,
     "text:de-DE": "Starthand nehmen",
-    "text:pt-BR": "Pegar mão inicial"
+    "text:pt-BR": "Pegar mão inicial",
+    "css:pt-BR": "border-radius: 5px; background: #C9B195; text-align:center; line-height:1;  color: #323232; filter: drop-shadow(0px 3px 0px #B8A187); border: hidden; font-family:Arial,sans-serif; font-weight:bold; font-size: 12px;"
   },
   "hand2": {
     "id": "hand2",
@@ -1238,9 +1239,9 @@
     "text:de-DE": "Vollständige Regeln unter",
     "text:pt-BR": "Regras completas em",
     "css:de-DE": "font-family:Arial, sans-serif;  color:#323232; font-size: 11px;",
-    "height:de-DE": 32,
+    "height:de-DE": 36,
     "css:pt-BR": "font-family:Arial, sans-serif;  color:#323232; font-size: 11px;",
-    "height:pt-BR": 32
+    "height:pt-BR": 36
   },
   "rk5i": {
     "image": "/assets/404518135_2843",
