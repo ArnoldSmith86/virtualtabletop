@@ -196,6 +196,8 @@ class DeckEditor {
     this.expandedFaces = new Set(); // keyed "deckID:faceIndex"
     this.collapsedDecks = new Set(); // branches the user double-click-collapsed (overrides the implicit current)
     this.collapsedFaces = new Set();
+    this.activeArea = 'tree'; // which side was interacted with last: 'tree' (left) or 'strip' (card types) - the
+                              // active one gets a solid outline, the other's selection a dashed one
     this.addMode = 'static'; // 'static' = same on every card, 'dynamic' = different per card type
     this.deckSymbolSelected = false; // the deck-widget strip entry is selected -> the sidebar edits card defaults
     this.addSectionOpen = false; // the left-sidebar "+" expander revealing the add-object controls
@@ -1368,6 +1370,8 @@ class DeckEditor {
   }
 
   selectObject(index, face) {
+    if(index !== null)
+      this.activeArea = 'tree';
     // Clicking an object of another (expanded) face makes that face current first.
     if(index !== null && face !== undefined && face !== this.face) {
       if(this.deckID)
@@ -1468,10 +1472,12 @@ class DeckEditor {
     const dscale = Math.min(120 / refW, 90 / refH);
     $('.deckEditorDeckCardFace', deckTile).style.width  = refW * dscale + 'px';
     $('.deckEditorDeckCardFace', deckTile).style.height = refH * dscale + 'px';
-    deckTile.classList.toggle('selected', this.deckSymbolSelected);
+    deckTile.classList.toggle('selected', this.deckSymbolSelected && this.activeArea == 'strip');
+    deckTile.classList.toggle('selectedInactive', this.deckSymbolSelected && this.activeArea != 'strip');
     deckTile.title = 'Edit the properties every card of this deck defaults to.';
     deckTile.onclick = _=>{
       this.deckSymbolSelected = true;
+      this.activeArea = 'strip';
       this.selectedObject = null;
       this.render();
     };
@@ -1494,7 +1500,9 @@ class DeckEditor {
 
     for(const cardType of Object.keys(this.cardTypes)) {
       const button = div(strip, 'deckEditorStripCard', `<div class=renderedCard></div><span>${html(cardType)}</span>`);
-      button.classList.toggle('selected', !this.deckSymbolSelected && cardType == this.cardType);
+      const cardSel = !this.deckSymbolSelected && cardType == this.cardType;
+      button.classList.toggle('selected', cardSel && this.activeArea == 'strip');
+      button.classList.toggle('selectedInactive', cardSel && this.activeArea != 'strip');
       if(stripFace !== null) {
         try {
           const card = this.renderCard(cardType, stripFace, $('.renderedCard', button));
@@ -1509,6 +1517,7 @@ class DeckEditor {
       }
       button.onclick = _=>{
         this.cardType = cardType;
+        this.activeArea = 'strip';
         this.deckSymbolSelected = false;
         this.selectedObject = null;
         if(this.treeLevel == 'object')
@@ -1768,7 +1777,9 @@ class DeckEditor {
         // deck (its faces are the loaded working copy); expanding a face of another deck switches to it.
         const deckExpanded = !this.collapsedDecks.has(deck.id) && (isCurrent || this.expandedDecks.has(deck.id));
         const deckRow = div(tree, 'deckEditorTreeNode deckEditorTreeDeck', `<span class=deckEditorTreeIcon icon=style></span><span class=deckEditorTreeLabel>${html(deck.id)}</span>`);
-        deckRow.classList.toggle('selected', isCurrent && this.treeLevel == 'deck');
+        const deckSel = isCurrent && this.treeLevel == 'deck';
+        deckRow.classList.toggle('selected', deckSel && this.activeArea == 'tree');
+        deckRow.classList.toggle('selectedInactive', deckSel && this.activeArea != 'tree');
         deckRow.classList.toggle('deckEditorTreeExpanded', deckExpanded);
         this.wireTreeExpandCollapse(deckRow, `deck:${deck.id}`, _=>{ this.collapsedDecks.delete(deck.id); this.expandedDecks.add(deck.id); this.selectDeckNode(deck.id); }, _=>{ this.collapsedDecks.add(deck.id); this.expandedDecks.delete(deck.id); this.renderLeftSidebar(); });
         if(!deckExpanded)
@@ -1778,7 +1789,9 @@ class DeckEditor {
           const faceKey = `${deck.id}:${f}`;
           const faceExpanded = !this.collapsedFaces.has(faceKey) && ((isCurrent && f == this.face) || this.expandedFaces.has(faceKey));
           const faceRow = div(tree, 'deckEditorTreeNode deckEditorTreeFace', `<span class=deckEditorTreeIcon icon=crop_portrait></span><span class=deckEditorTreeLabel>${html(this.faceLabel(f))}</span>`);
-          faceRow.classList.toggle('selected', isCurrent && f == this.face && this.treeLevel == 'face');
+          const faceSel = isCurrent && f == this.face && this.treeLevel == 'face';
+          faceRow.classList.toggle('selected', faceSel && this.activeArea == 'tree');
+          faceRow.classList.toggle('selectedInactive', faceSel && this.activeArea != 'tree');
           faceRow.classList.toggle('deckEditorTreeExpanded', faceExpanded);
           this.wireTreeExpandCollapse(faceRow, `face:${faceKey}`, _=>{ this.collapsedFaces.delete(faceKey); this.expandedFaces.add(faceKey); this.selectFaceNodeIn(deck.id, f); }, _=>{ this.collapsedFaces.add(faceKey); this.expandedFaces.delete(faceKey); this.renderLeftSidebar(); });
           if(!faceExpanded || !isCurrent)
@@ -1801,7 +1814,9 @@ class DeckEditor {
   renderTreeObjectRow(tree, object, index, face = this.face) {
     const typeIcon = { text: 'format_size', image: 'image', icon: 'add_reaction', html: 'code' }[object.type || 'text'] || 'category';
     const row = div(tree, 'deckEditorTreeNode deckEditorObjectRow', `<span class=deckEditorObjectNum>${index+1}</span><span class=deckEditorTreeIcon icon=${typeIcon}></span><div class=deckEditorObjectPreview></div>`);
-    row.classList.toggle('selected', face === this.face && index === this.selectedObject);
+    const objSel = face === this.face && index === this.selectedObject;
+    row.classList.toggle('selected', objSel && this.activeArea == 'tree');
+    row.classList.toggle('selectedInactive', objSel && this.activeArea != 'tree');
     row.title = `Face object ${index+1} (${object.type || 'text'})`;
     this.renderObjectPreview($('.deckEditorObjectPreview', row), index, face);
     row.onclick = _=>this.selectObject(index, face);
@@ -1855,6 +1870,7 @@ class DeckEditor {
 
   async selectDeckNode(deckID) {
     this.deckSymbolSelected = false;
+    this.activeArea = 'tree';
     this.addSectionOpen = false;
     if(deckID != this.deckID) {
       if(this.deckID)
@@ -1870,6 +1886,7 @@ class DeckEditor {
 
   selectFaceNode(face) {
     this.treeLevel = 'face';
+    this.activeArea = 'tree';
     this.deckSymbolSelected = false;
     this.addSectionOpen = false;
     if(this.deckID && this.face !== face)

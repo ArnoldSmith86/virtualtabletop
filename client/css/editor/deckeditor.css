@@ -273,6 +273,13 @@ body.deckEditorActive #enlarged {
   border-color: var(--textHighlightColor2);
 }
 
+/* The selection in whichever side isn't currently active gets a dashed (rather than solid) orange outline, so
+   it's clear which of the tree selection / card type is actually being edited on the right. */
+.deckEditorTreeNode.selectedInactive {
+  border-color: var(--textHighlightColor2);
+  border-style: dashed;
+}
+
 /* Level indent + a left accent stripe per level so the deck > face > object hierarchy reads clearly. */
 .deckEditorTreeDeck {
   font-weight: bold;
@@ -1114,6 +1121,11 @@ body.deckEditorPanning #deckEditorMain * {
 
 .deckEditorStripCard.selected {
   border-color: var(--textHighlightColor2);
+}
+
+.deckEditorStripCard.selectedInactive {
+  border-color: var(--textHighlightColor2);
+  border-style: dashed;
 }
 
 /* Drag-and-drop reordering of card types in the strip. */
