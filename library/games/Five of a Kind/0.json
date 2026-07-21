@@ -25,7 +25,9 @@
       "players": "1-6",
       "similarDesigner": "Edwin S. Lowe",
       "description:de-DE": "Ein Würfelspiel aus Glück und Entscheidungen: Würfle pro Zug bis zu dreimal mit fünf Würfeln und trage das beste Ergebnis in deinem Wertungsblock ein. Fülle alle Felder, um zu gewinnen.",
-      "description:pt-BR": "Um jogo de dados de sorte e escolhas: jogue cinco dados até três vezes por turno e marque a melhor categoria na sua tabela. Preencha todos os campos para vencer."
+      "description:pt-BR": "Um jogo de dados de sorte e escolhas: jogue cinco dados até três vezes por turno e marque a melhor categoria na sua tabela. Preencha todos os campos para vencer.",
+      "attribution:de-DE": "Das Raumdesign und die übrigen Raumelemente stammen von RogerLipsett und sind über CC0 gemeinfrei veröffentlicht.\n\nDas Bibliotheksbild stammt von AlbertHerring und ist unter CC BY 2.0 verfügbar unter https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg.",
+      "attribution:pt-BR": "O design da sala e os demais elementos da sala são de RogerLipsett e disponibilizados em domínio público via CC0.\n\nA imagem da biblioteca é de AlbertHerring e está disponível sob CC BY 2.0 em https://en.wikipedia.org/wiki/Yahtzee#/media/File:Yahtzee_game_example.jpg."
     }
   },
   "xprj": {

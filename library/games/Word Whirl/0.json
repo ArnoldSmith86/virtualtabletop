@@ -8634,7 +8634,9 @@
       "variantImage": "",
       "usesAIImagery": true,
       "description:de-DE": "Verbinde die Wörter auf deinen Karten mit cleveren Hinweisen. Errät gemeinsam die Anordnung der Karten anhand dieser Hinweise. Ein kooperatives Wortspiel-Abenteuer!",
-      "description:pt-BR": "Crie ligações entre as palavras das suas cartas usando dicas espertas. Juntos, adivinhem a disposição das cartas a partir dessas pistas. Um desafio cooperativo de palavras!"
+      "description:pt-BR": "Crie ligações entre as palavras das suas cartas usando dicas espertas. Juntos, adivinhem a disposição das cartas a partir dessas pistas. Um desafio cooperativo de palavras!",
+      "attribution:de-DE": "<div><div>Spielfeldlayout von ArnoldSmith86 und mousewax. Über CC0 gemeinfrei veröffentlicht.</div><div><br></div><div>Das Bibliotheksbild wurde von Midjourney mit dem Prompt \"word whirl, water color painting\". Das Hintergrundbild mit dem Prompt \n\"wallpaper of a festive restaurant --v 5 --ar 16:10\".</div></div><div><br></div><div>Die Wortliste wurde mit https://www.randomlists.com/nouns erstellt und von ChatGPT übersetzt.<br></div><div><br></div><div>Name, Beschreibung und Regelerklärung wurden von ChatGPT generiert und von ArnoldSmith86 angepasst.<br></div>",
+      "attribution:pt-BR": "<div><div>Layout do tabuleiro por ArnoldSmith86 e mousewax. Disponibilizado em domínio público via CC0.</div><div><br></div><div>A imagem da biblioteca foi gerada pelo Midjourney usando o prompt \"word whirl, water color painting\". A imagem de fundo usando o prompt \n\"wallpaper of a festive restaurant --v 5 --ar 16:10\".</div></div><div><br></div><div>A lista de palavras foi criada com https://www.randomlists.com/nouns e traduzida pelo ChatGPT.<br></div><div><br></div><div>Nome, descrição e explicação das regras foram gerados pelo ChatGPT e ajustados por ArnoldSmith86.<br></div>"
     }
   }
 }

@@ -26,7 +26,9 @@
       "players": "2-4",
       "similarDesigner": "Reiner Knizia",
       "description:de-DE": "Wetteifert um das Land und die Städte zwischen den Flüssen und befehligt dabei mächtige Zikkurats.",
-      "description:pt-BR": "Dispute as terras e cidades entre os rios enquanto comanda poderosos zigurates."
+      "description:pt-BR": "Dispute as terras e cidades entre os rios enquanto comanda poderosos zigurates.",
+      "attribution:de-DE": "Spiellayout und Skripting von Andy Pymont, über CC0 gemeinfrei veröffentlicht. Die Plättchengrafiken stammen von https://game-icons.net/ und https://thenounproject.com/ und werden unter der Lizenz CC BY 3.0 verwendet:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: stammt aus diesem Projekt.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/",
+      "attribution:pt-BR": "Layout do jogo e scripts por Andy Pymont, disponibilizados em domínio público via CC0. Os gráficos das peças são de https://game-icons.net/ e https://thenounproject.com/ e são usados sob a licença CC BY 3.0:\n\nAaron A. Kim:\n- Hand: https://thenounproject.com/icon/hand-123919/\n\nAndy Pymont\n- Ziggurat: tem origem neste projeto.\n\nAyub Irawan\n- Scythe: https://thenounproject.com/icon/scythe-4338250/\n\nDelapouite:\n- Amphora: https://game-icons.net/1x1/delapouite/amphora.html/\n\nLorc:\n- Crown: https://game-icons.net/1x1/lorc/queen-crown.html\n\nNorbert Kucsera:\n- Corn: https://thenounproject.com/icon/corn-2144640/\n\nPaul Verhulst:\n- Circle arrow: https://thenounproject.com/icon/circle-arrow-1979672/\n\nSiri Masriatun:\n- Star: https://thenounproject.com/icon/star-5662351/"
     }
   },
   "board-4": {

@@ -11765,7 +11765,9 @@
       "showName": false,
       "lastUpdate": 1672499411000,
       "description:de-DE": "Teamspiel aus der Rommé-Familie. Karten, die in Sätzen oder Sequenzen ausgelegt werden, bringen Punkte entsprechend dem Kartenwert. Das Team mit den meisten Punkten gewinnt.",
-      "description:pt-BR": "Jogo em equipe da família do Rummy. Cartas jogadas em grupos ou sequências valem pontos de acordo com o valor da carta. A equipe com mais pontos vence."
+      "description:pt-BR": "Jogo em equipe da família do Rummy. Cartas jogadas em grupos ou sequências valem pontos de acordo com o valor da carta. A equipe com mais pontos vence.",
+      "attribution:de-DE": "Dieses Spiel wird der Öffentlichkeit unter einer Creative Commons Namensnennung-NichtKommerziell-Weitergabe unter gleichen Bedingungen 4.0 International Lizenz zur Verfügung gestellt. (https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nDie Spielkartenbilder stammen von Adrian Kennard und sind unter der CC0-Public-Domain-Lizenz veröffentlicht (https://www.me.uk/cards).\n\nEin großes Dankeschön an das gesamte Team von Virtual Tabletop.\n\nSpiellayout für Online-Bhukhar erstellt von:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion auf Discord)\n\nv 1.2",
+      "attribution:pt-BR": "Este jogo é disponibilizado ao público sob uma Licença Internacional Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0. (https://creativecommons.org/licenses/by-nc-sa/4.0).\n\nAs imagens das cartas são de Adrian Kennard e disponibilizadas sob a licença de domínio público CC0 (https://www.me.uk/cards).\n\nUm grande obrigado a toda a equipe do Virtual Tabletop.\n\nLayout do jogo para o Bhukhar online criado por:\nRahul Haria\nPradeep Shah\nBharat Shah\nPiyush Shah (GroggyLion no Discord)\n\nv 1.2"
     }
   },
   "shieldDiscard": {

@@ -25,7 +25,9 @@
       "language": "en-US, de-DE, pt-BR",
       "players": "2-5",
       "description:de-DE": "Baue dein Schienennetz, errichte deine Fabriken und ernte die Belohnungen.",
-      "description:pt-BR": "Construa a sua malha ferroviária, estabeleça as suas fábricas e colha as recompensas."
+      "description:pt-BR": "Construa a sua malha ferroviária, estabeleça as suas fábricas e colha as recompensas.",
+      "attribution:de-DE": "Layoutdesign und Programmierung von Jonathan Cox (E-Mail: JonGetsGames@gmail.com für Anfragen). Spielname und alle verwendeten Grafik-Assets mit Genehmigung des Rechteinhabers Wallace Designs verwendet. Audioquelle „Wrong Answer\" von [UNIVERSFIELD] über https://pixabay.com/sound-effects/wrong-answer-129254/.",
+      "attribution:pt-BR": "Design de layout e programação por Jonathan Cox (e-mail: JonGetsGames@gmail.com para consultas). Nome do jogo e todos os recursos de arte usados com permissão do detentor dos direitos, Wallace Designs. Fonte de áudio \"Wrong Answer\" de [UNIVERSFIELD] via https://pixabay.com/sound-effects/wrong-answer-129254/."
     }
   },
   "board_deck": {
