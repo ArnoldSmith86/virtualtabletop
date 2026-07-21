@@ -1550,14 +1550,8 @@ class DeckEditor {
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
         }), objectProps, fieldType);
-        if(property != 'type') {
-          const makeDynamic = document.createElement('button');
-          makeDynamic.setAttribute('icon', 'call_split'); // a branch/split reads as "vary per card type"
-          makeDynamic.className = 'deckEditorMakeDynamic';
-          makeDynamic.title = `Make "${property}" different per card type`;
-          makeDynamic.onclick = _=>this.makePropertyDynamic(object, property);
-          row.dom.append(makeDynamic);
-        }
+        // Per-row "make different per card type" (split) button removed; that binding is created from the
+        // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
           delete object[property];
@@ -1666,7 +1660,7 @@ class DeckEditor {
       return;
     const header = document.createElement('header');
     header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
-    header.innerHTML = '<h2>Entire face</h2>';
+    header.innerHTML = '<h2>Entire face properties</h2>';
     sidebar.append(header);
 
     const faceProps = div(sidebar, 'deckEditorProperties');
@@ -2200,32 +2194,6 @@ class DeckEditor {
     await this.commit('cardTypes', cause, actionId);
   }
 
-  // One-click conversion of a static face object property into a per-card-type one: bind it to a (new) card
-  // type property and seed that property on EVERY card type with the previous static value, so no card
-  // changes visually until the values are edited per card type.
-  async makePropertyDynamic(object, property) {
-    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    const typeProperty = this.generateUniquePropertyName(property == 'value' ? (object.type || 'text') : property);
-    const staticValue = object[property];
-    if(!object.dynamicProperties || typeof object.dynamicProperties != 'object')
-      object.dynamicProperties = {};
-    object.dynamicProperties[property] = typeProperty;
-    delete object[property]; // a static value would override the dynamic one
-
-    // One cause + one actionId so this single user action is one undo step and one breadcrumb, not two.
-    const cause = `${getPlayerDetails().playerName} made "${property}" of a face object different per card type for deck ${this.deckID} in deck editor`;
-    const actionId = this.newAction();
-    if(staticValue !== undefined && Object.keys(this.cardTypes).length) {
-      for(const type of Object.keys(this.cardTypes))
-        if(this.cardTypes[type][typeProperty] === undefined)
-          this.cardTypes[type][typeProperty] = staticValue;
-      await this.commit('cardTypes', cause, actionId);
-    }
-    this.refreshMainCardFaces();
-    await this.commit('faceTemplates', cause, actionId);
-    this.renderSidebar();
-  }
-
   // Adds an object in the currently selected add mode: a static object (value baked in) or a per-card-type one
   // (the value bound to a fresh card type property). boundProperty is which object property carries the value.
   async addByMode(objectTemplate, propertyBaseName, defaultValue, boundProperty = 'value') {
@@ -2275,8 +2243,42 @@ class DeckEditor {
     // The already-active bindings: each row is a live "object property ← card type property" with a red trash.
     const bindings = Object.entries(object.dynamicProperties || {});
     for(const [ objectProperty, typeProperty ] of bindings) {
-      const row = div(container, 'deckEditorDynamicProperty', `<span class=deckEditorBindingText><b>${html(objectProperty)}</b> <span class=deckEditorBindingArrow>←</span> card type <b>${html(String(typeProperty))}</b></span><button icon=delete_forever class="red deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
-      $('button', row).onclick = async _=>{
+      // Both sides are editable text fields with a link icon between them ("value ⛓ rank"): the left is the
+      // object property that gets filled, the right is the card type property it reads from.
+      const row = div(container, 'deckEditorDynamicProperty', `<input class=deckEditorBindingObjectProp title="Object property that gets filled"><span class="deckEditorBindingLink material-symbols" title="filled from the card type">link</span><input class=deckEditorBindingTypeProp title="Card type property to read from"><button icon=delete_forever class="red deckEditorBindingDelete" title="Remove this binding and make the property static again."></button>`);
+      const objInput = $('.deckEditorBindingObjectProp', row);
+      const typeInput = $('.deckEditorBindingTypeProp', row);
+      objInput.value = objectProperty;
+      typeInput.value = String(typeProperty);
+
+      // Rename the object property this binding fills (rename the key in dynamicProperties).
+      objInput.onchange = async _=>{
+        const newProp = objInput.value.trim();
+        if(!newProp || newProp == objectProperty) { objInput.value = objectProperty; return; }
+        await this.flushPendingCommits();
+        const readsFrom = object.dynamicProperties[objectProperty];
+        delete object.dynamicProperties[objectProperty];
+        object.dynamicProperties[newProp] = readsFrom;
+        this.refreshMainCardFaces();
+        await this.commit('faceTemplates', `${getPlayerDetails().playerName} renamed a dynamic property binding of deck ${this.deckID} in deck editor`);
+        this.renderSidebar();
+      };
+
+      // Repoint the binding to a different (possibly new) card type property.
+      typeInput.onchange = async _=>{
+        const newType = typeInput.value.trim();
+        if(!newType || newType == String(typeProperty)) { typeInput.value = String(typeProperty); return; }
+        await this.flushPendingCommits();
+        const cause = `${getPlayerDetails().playerName} repointed a dynamic property binding of deck ${this.deckID} in deck editor`;
+        const actionId = this.newAction();
+        object.dynamicProperties[objectProperty] = newType;
+        await this.seedCardTypeProperty(newType, '', cause, actionId); // make sure the target property exists
+        this.refreshMainCardFaces();
+        await this.commit('faceTemplates', cause, actionId);
+        this.renderSidebar();
+      };
+
+      $('.deckEditorBindingDelete', row).onclick = async _=>{
         await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
         delete object.dynamicProperties[objectProperty];
         if(!Object.keys(object.dynamicProperties).length)

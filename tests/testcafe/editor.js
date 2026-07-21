@@ -516,10 +516,17 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0)).click('#deckEditorTreeDelete') // delete the other -> faceless deck
     .click('#deckEditorTreeAdd')                    // faceless deck: reveal the add-object controls
     .click('#deckEditorAddColor');                  // no faces left: auto-creates the first face
-  // the color box is selected: one-click conversion of its color into a per-card-type property
-  await t.expect(clickRowButton('Face object 1 (image)', 'color', '.deckEditorMakeDynamic')).ok();
-  await t.pressKey('esc'); // deselect the object -> the "Entire face" and "Face objects" bands appear
-  await t.expect(setNumberField('Entire face', 'radius', 8)).ok();
+  // the color box is selected: bind its color to a new "color" card-type property via the Dynamic properties
+  // Link control (the per-row split button was removed)
+  await t
+    .click('.deckEditorAddBinding .objectProperty')
+    .click('.deckEditorAddBinding .objectProperty option[value="color"]')
+    .click('.deckEditorAddBinding .typeProperty')
+    .click('.deckEditorAddBinding .typeProperty option[value="__new__"]')
+    .typeText('.deckEditorAddBinding .newTypeProperty', 'color')
+    .click('.deckEditorAddBindingButton');
+  await t.pressKey('esc'); // deselect the object -> the "Entire face properties" and "Face objects" bands appear
+  await t.expect(setNumberField('Entire face properties', 'radius', 8)).ok();
   await t.wait(700); // let the debounced faceTemplates commit fire
   // edit the card defaults, which live behind the deck symbol in the strip
   await t.expect(selectDeckTile()).ok();
