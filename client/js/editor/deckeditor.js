@@ -203,6 +203,12 @@ class DeckEditor {
     this.addSectionOpen = false; // the left-sidebar "+" expander revealing the add-object controls
     this.treeLevel = 'face'; // which tree level the unified add/copy/delete toolbar acts on: deck | face | object
 
+    // Remember where the user left off per deck (tree node + card type) so leaving and returning restores it,
+    // like the JSON editor's per-widget cursor (#2503). lastDeckID is the deck to reopen when the toolbar
+    // button carries no selection context; the first ever open of a deck falls back to sensible defaults.
+    this.selectionMemory = {};
+    this.lastDeckID = null;
+
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
     // delta path, so they sync and are themselves room-undoable. applyingHistory suppresses recording while
@@ -795,16 +801,15 @@ class DeckEditor {
     if(!deck || deck.get('type') != 'deck')
       return;
 
-    if(this.deckID !== null && this.deckID != deckID)
+    if(this.deckID !== null && this.deckID != deckID) {
+      this.saveSelection(); // remember where the user left off in the deck we're switching away from
       await this.flushPendingCommits();
+    }
 
     this.deckID = deckID;
+    this.lastDeckID = deckID;
     this.loadWorkingCopies();
-    this.cardType = Object.keys(this.cardTypes)[0] || null;
-    const dynamicFaces = this.dynamicFaces();
-    this.face = dynamicFaces.length ? dynamicFaces[dynamicFaces.length-1] : Math.max(0, this.faceTemplates.length-1);
-    this.selectedObject = null;
-    this.treeLevel = 'face';
+    this.restoreSelection(deckID); // first open -> face 1 + "edit all card defaults"; later -> where left off
     this.expandedDecks.add(deckID); // open this deck's branch and its current face by default
     this.expandedFaces.add(`${deckID}:${this.face}`);
     this.userZoom = 1; // start each deck at fit scale, unpanned
@@ -832,8 +837,10 @@ class DeckEditor {
     }
     if(deckID === null) {
       const decks = widgetFilter(w=>w.get('type') == 'deck');
-      if(decks.length)
-        deckID = decks[decks.length-1].get('id');
+      if(this.lastDeckID && decks.some(d=>d.get('id') == this.lastDeckID))
+        deckID = this.lastDeckID; // return to the last deck the user worked on this session
+      else if(decks.length)
+        deckID = decks[0].get('id'); // first open with no context: the first deck in the list
     }
     // Don't auto-create a deck when the room has none; open an empty editor and let the user add one.
     if(deckID === null)
@@ -866,7 +873,48 @@ class DeckEditor {
     this.syncToolbarButton();
   }
 
+  // Snapshot the current tree/strip selection so reopening this deck returns to it (see restoreSelection).
+  saveSelection() {
+    if(this.deckID == null)
+      return;
+    this.selectionMemory[this.deckID] = {
+      treeLevel: this.treeLevel,
+      face: this.face,
+      selectedObject: this.selectedObject,
+      cardType: this.cardType,
+      deckSymbolSelected: this.deckSymbolSelected,
+      activeArea: this.activeArea
+    };
+  }
+
+  // Restore the remembered selection for a deck, clamping stale indices to the current structure. With no
+  // memory yet (first open of this deck this session), default to face 1 with the "edit all card defaults"
+  // strip tile selected.
+  restoreSelection(deckID) {
+    const mem = this.selectionMemory[deckID];
+    this.cardType = mem && mem.cardType != null && this.cardTypes[mem.cardType]
+      ? mem.cardType : (Object.keys(this.cardTypes)[0] || null);
+    if(!mem) {
+      this.face = Math.min(1, Math.max(0, this.faceTemplates.length - 1));
+      this.selectedObject = null;
+      this.treeLevel = 'face';
+      this.deckSymbolSelected = true;
+      this.activeArea = 'strip';
+      return;
+    }
+    this.face = mem.face != null && mem.face < this.faceTemplates.length
+      ? mem.face : Math.max(0, this.faceTemplates.length - 1);
+    this.deckSymbolSelected = !!mem.deckSymbolSelected;
+    this.activeArea = mem.activeArea == 'strip' ? 'strip' : 'tree';
+    this.treeLevel = mem.treeLevel || 'face';
+    const objects = (this.faceTemplates[this.face] && this.faceTemplates[this.face].objects) || [];
+    this.selectedObject = mem.selectedObject != null && mem.selectedObject < objects.length ? mem.selectedObject : null;
+    if(this.selectedObject === null && this.treeLevel == 'object')
+      this.treeLevel = 'face';
+  }
+
   async close() {
+    this.saveSelection(); // remember this deck's selection for the next time the editor opens
     await this.flushPendingCommits();
     this.selectedObject = null;
     $('body').classList.remove('deckEditorActive');
@@ -891,6 +939,9 @@ class DeckEditor {
   // without flushing (they'd target the missing deck) and hide the editor. Don't call close(), which flushes.
   handleStateReplaced() {
     this.cancelPendingCommits();
+    // The old decks are gone; drop the remembered selections so a new game starts fresh.
+    this.selectionMemory = {};
+    this.lastDeckID = null;
     if(!this.isOpen())
       return;
     this.deckID = null;
@@ -947,22 +998,6 @@ class DeckEditor {
     // own breadcrumb step (no actionId => never merges) rather than swapping the working copy out silently.
     this.recordHistory('__external__', null);
     this.render();
-  }
-
-  dynamicFaces() {
-    const isDynamic = object=>{
-      if(object.dynamicProperties && Object.keys(object.dynamicProperties).length)
-        return true;
-      if(object.svgReplaces && Object.keys(object.svgReplaces).length)
-        return true;
-      return object.type == 'html' && String(object.value).match(/\$\{PROPERTY /);
-    };
-
-    const result = [];
-    for(let face=0; face<this.faceTemplates.length; ++face)
-      if((this.faceTemplates[face].objects || []).filter(isDynamic).length)
-        result.push(face);
-    return result;
   }
 
   // Debounced commit for typed edits. cause/actionId identify the edited FIELD (e.g. one property of one face
