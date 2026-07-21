@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import fs from 'fs';
+import { validateGameFile } from '../../validator/validate_gamefile.js';
 
 // The routine editor files are plain scripts that the server concatenates into
 // the editor bundle, so load them the same way here and provide the handful of
@@ -36,6 +37,7 @@ beforeAll(() => {
     'client/js/editor/controls/widgetselection.js',
     'client/js/editor/controls/popup.js',
     'client/js/editor/controls/routine.js',
+    'client/js/editor/controls/aiRoutine.js',
     'client/js/editor/controls/events.js'
   ];
   const code = files.map(f => fs.readFileSync(f, 'utf8')).join('\n');
@@ -54,7 +56,7 @@ beforeAll(() => {
     'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
     'handleWidgetPickerSelection', 'handleWidgetPickerClick', 'selectWidgetsInRoom', 'widgetPickerTarget', 'endWidgetPickerWithoutTarget',
     'isWidgetPickerChangingSelection', 'closeEditorPopups', 'commonInfoTopic', 'parameterInfoLine', 'templateLead', 'leadLabel', 'infoButton',
-    'structureInfoHTML'
+    'structureInfoHTML', 'openPopups', 'aiRoutineButton', 'AiRoutinePopup', 'aiValidateRoutine'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -3932,5 +3934,53 @@ describe('working out a value with var', () => {
     expect(plain.querySelector('.popup-operation-func')).toBeNull();
     expect(plain.querySelector('.popup-operation-example').textContent).toBe('the value');
     popup.hide();
+  });
+});
+
+describe('AI routine assistant', () => {
+  let counter = 0;
+  function makeEditor(state, onChange = () => {}) {
+    const widget = { state: { id: `ai${counter++}`, ...state }, get(p) { return this.state[p]; } };
+    return { widget, editor: new EventsEditor(widget, onChange) };
+  }
+
+  test('every routine card offers the AI button', () => {
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [ { func: 'FLIP' } ] });
+    const buttons = [...editor.domElement.querySelectorAll('.events-editor-ai')];
+    expect(buttons.length).toBe(1);
+    expect(buttons[0].textContent).toBe('auto_awesome');
+  });
+
+  test('applying a generated routine writes it and opens the card on the result', () => {
+    const written = [];
+    const { editor } = makeEditor({ type: 'button', clickRoutine: [] }, (property, value) => written.push([ property, value ]));
+    // the popup hands the routine to the callback the button was built with
+    const routine = [ { func: 'SHUFFLE', holder: 'deck' } ];
+    editor.domElement.querySelector('.events-editor-ai').dispatchEvent(new Event('click'));
+    const popup = openPopups.find(p => p instanceof AiRoutinePopup);
+    expect(popup).toBeDefined();
+    popup.apply(routine);
+    expect(written).toContainEqual([ 'clickRoutine', routine ]);
+    expect(editor.expandedEvents.clickRoutine).toBe(true);
+    popup.hide();
+  });
+
+  test('validation reports only what the routine adds, not what the room already had', () => {
+    const before = globalThis.widgets;
+    const state = {
+      board: { id: 'board', type: 'holder', clickRoutine: [ { func: 'NOPE' } ] },
+      b1: { id: 'b1', type: 'button' }
+    };
+    globalThis.validateGameFile = validateGameFile;
+    globalThis.widgets = new Map(Object.entries(state).map(([ id, s ]) => [ id, { unalteredState: s } ]));
+    try {
+      const clean = aiValidateRoutine('b1', 'clickRoutine', [ { func: 'SHUFFLE', holder: 'board' } ]);
+      expect(clean).toEqual([]); // the room's own broken routine is not this one's fault
+      const broken = aiValidateRoutine('b1', 'clickRoutine', [ { func: 'SHUFFLE', holder: 'ghost' } ]);
+      expect(broken.length).toBeGreaterThan(0);
+      expect(JSON.stringify(broken)).toContain('ghost');
+    } finally {
+      globalThis.widgets = before;
+    }
   });
 });
