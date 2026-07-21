@@ -1126,6 +1126,38 @@ body.deckEditorPanning #deckEditorMain * {
   box-shadow: -3px 0 0 var(--VTTblue);
 }
 
+/* Per-card-type "cards in game" +/- count row under each strip tile (and "- All"/"+ All" under the deck tile). */
+.deckEditorStripCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-top: 3px;
+}
+
+.deckEditorStripCount button[icon] {
+  padding: 1px 3px;
+  min-width: 0;
+}
+
+.deckEditorStripCount button[icon]::before {
+  font-size: 15px;
+  width: 15px;
+  margin: 0;
+}
+
+.deckEditorStripCountVal {
+  min-width: 22px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.deckEditorStripAllCount button {
+  font-size: 10px;
+  gap: 1px;
+}
+
 .deckEditorStripCard .renderedCard {
   position: relative;
   pointer-events: none;

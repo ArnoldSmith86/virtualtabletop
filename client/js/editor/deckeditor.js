@@ -1475,6 +1475,18 @@ class DeckEditor {
       this.selectedObject = null;
       this.render();
     };
+    // "- All" / "+ All" under the deck tile change every card type's count together.
+    const allRow = div(deckTile, 'deckEditorStripCount deckEditorStripAllCount', `<button icon=remove title="One fewer card of every type">All</button><button icon=add title="One more card of every type">All</button>`);
+    allRow.onmousedown = e=>e.stopPropagation();
+    const changeAll = async delta=>{
+      for(const type of Object.keys(this.cardTypes)) {
+        const c = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card' && w.get('cardType') == type).length;
+        await setCardCount(this.deck(), type, Math.max(0, c + delta));
+      }
+      this.renderStrip();
+    };
+    $('[icon=remove]', allRow).onclick = e=>{ e.stopPropagation(); changeAll(-1); };
+    $('[icon=add]',    allRow).onclick = e=>{ e.stopPropagation(); changeAll(1); };
 
     // One entry per card type, always rendered on the actually-selected face so the strip is a reliable visual
     // indicator of which face is being worked on (even when that face looks the same on every card type).
@@ -1520,6 +1532,14 @@ class DeckEditor {
         if(this.dragCardTypeFrom && this.dragCardTypeFrom !== cardType)
           this.reorderCardType(this.dragCardTypeFrom, cardType);
       };
+      // Per-card-type "cards in game" count with +/- right under the tile.
+      const count = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card' && w.get('cardType') == cardType).length;
+      const countRow = div(button, 'deckEditorStripCount', `<button icon=remove title="One fewer card of this type"></button><span class=deckEditorStripCountVal>${count}</span><button icon=add title="One more card of this type"></button>`);
+      countRow.draggable = false;
+      countRow.onmousedown = e=>e.stopPropagation();
+      countRow.ondragstart = e=>{ e.preventDefault(); e.stopPropagation(); };
+      $('[icon=remove]', countRow).onclick = async e=>{ e.stopPropagation(); await setCardCount(this.deck(), cardType, Math.max(0, count-1)); this.renderStrip(); };
+      $('[icon=add]',    countRow).onclick = async e=>{ e.stopPropagation(); await setCardCount(this.deck(), cardType, count+1); this.renderStrip(); };
     }
     // Restore the scroll position, then make sure the selected tile is actually visible.
     strip.scrollLeft = prevScroll;
@@ -1647,17 +1667,7 @@ class DeckEditor {
         e.target.value = this.cardType;
     };
 
-    const cardCount = widgetFilter(w=>w.get('deck') == this.deckID && w.get('cardType') == this.cardType).length;
-    const countRow = div(sidebar, 'deckEditorCardCount', `<label>Cards in game</label><button icon=remove></button><input type=number min=0 value=${cardCount}><button icon=add></button>`);
-    const countInput = $('input', countRow);
-    const applyCount = count=>{
-      countInput.value = Math.max(0, parseInt(count, 10) || 0);
-      setCardCount(deck, this.cardType, +countInput.value);
-    };
-    $('[icon=remove]', countRow).onclick = _=>applyCount(+countInput.value - 1);
-    $('[icon=add]',    countRow).onclick = _=>applyCount(+countInput.value + 1);
-    countInput.onchange = _=>applyCount(countInput.value);
-
+    // The per-card-type "Cards in game" +/- now lives under each card type tile in the bottom strip.
     const typeProperties = this.cardTypes[this.cardType];
     const typeFieldArgs = property=>[
       `${getPlayerDetails().playerName} updated "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`,
