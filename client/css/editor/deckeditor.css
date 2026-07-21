@@ -812,7 +812,7 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 #deckEditorSidebar .genericInput {
-  margin-bottom: 2px;
+  margin-bottom: 6px; /* a little more separation so the trash icons are visually distinct row-to-row */
 }
 
 #deckEditorSidebar .buttonBar {
@@ -929,29 +929,15 @@ body.deckEditorPanning #deckEditorMain * {
   padding-right: 24px;
 }
 
-/* Property rows: red trash to delete the property. */
+/* Property rows: a small red trash to delete the property. */
 .deckEditorDeleteProperty {
   position: absolute;
   right: 0;
-  top: 0;
-  padding: 1px 3px;
-  font-size: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 2px;
+  font-size: 9px;
   background: var(--VTTred, #c0392b);
-  color: #fff;
-}
-
-/* Face object rows also have the "make different per card type" button, with a clear gap before the trash. */
-#deckEditorSidebar .deckEditorObjectProperties .genericInput {
-  padding-right: 62px;
-}
-
-.deckEditorMakeDynamic {
-  position: absolute;
-  right: 34px;
-  top: 0;
-  padding: 1px 3px;
-  font-size: 11px;
-  background: var(--VTTblue);
   color: #fff;
 }
 

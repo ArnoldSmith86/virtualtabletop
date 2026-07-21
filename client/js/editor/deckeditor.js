@@ -1625,17 +1625,16 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       }), typeProps);
-      if(typeProperties[property] !== undefined) {
-        this.addPropertyDeleteButton(row, property, async _=>{
-          await this.flushPendingCommits();
-          delete typeProperties[property];
-          if(this.mainCard)
-            delete this.mainCard.state[property];
-          this.refreshMainCardFaces();
-          await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
-          this.renderSidebar();
-        });
-      }
+      // A trash on every card type property row, including blank ones pulled in from a face binding.
+      this.addPropertyDeleteButton(row, property, async _=>{
+        await this.flushPendingCommits();
+        delete typeProperties[property];
+        if(this.mainCard)
+          delete this.mainCard.state[property];
+        this.refreshMainCardFaces();
+        await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+        this.renderSidebar();
+      });
     };
     for(const property of Object.keys(typeProperties))
       addTypeInput(property);
@@ -2315,7 +2314,7 @@ class DeckEditor {
         <span class="deckEditorBindingLink material-symbols">link</span>
         <input class="typeProperty deckEditorBindingTypeProp" list=deckEditorTypePropList placeholder="Card property" title="Card type property to read from - pick one or type a new name">
         <datalist id=deckEditorTypePropList>${typePropertyOptions.map(p=>`<option value="${html(p)}"></option>`).join('')}</datalist>
-        <button class=deckEditorAddBindingButton icon=link title="Add new dynamic property link"></button>
+        <button class=deckEditorAddBindingButton icon=link title="Add new dynamic property link">Link</button>
       </div>
     `);
     $('button', addRow).onclick = async _=>{
