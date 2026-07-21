@@ -68,10 +68,22 @@ export class StateManaged {
     return this.defaults[key];
   }
 
+  // get() resolves language-suffixed overrides and is used for display/UI.
+  // getRaw() returns the unsuffixed shared-state value and is used by the
+  // routine interpreter, so game logic stays identical for every player
+  // regardless of the language they selected (see i18n.js).
   get(property) {
     const value = this.languageOverrides && this.languageOverrides[property] !== undefined
       ? this.languageOverrides[property]
       : this.state[property];
+    return this.coerceValue(property, value);
+  }
+
+  getRaw(property) {
+    return this.coerceValue(property, this.state[property]);
+  }
+
+  coerceValue(property, value) {
     if(value !== undefined) {
       if(property == 'x' || property == 'y' || property == 'z' || property == 'layer' || property == 'width' || property == 'height')
         return +value;
@@ -142,6 +154,12 @@ export class StateManaged {
       delete this.state[property];
     else
       this.state[property] = JSON.parse(JSONvalue);
+    // the delta batcher defers applyDelta() (which normally recomputes the
+    // override cache) until the batch ends, so refresh it here too — otherwise a
+    // routine that sets a suffixed property and reads its base later in the same
+    // batch would see the previous override
+    if(isLanguageSuffixedKey(property))
+      this.languageOverrides = languageOverrides(this.state);
     sendPropertyUpdate(this.get('id'), property, value);
     await this.onPropertyChange(property, oldValue, value);
 

@@ -363,8 +363,8 @@ export async function sortWidgets(collection, keys, reverse, locales, options, r
   collection.sort((w1,w2)=>{
     let comp = 0;
     for(const keyObj of k) {
-      const key1 = w1.get(keyObj.key);
-      const key2 = w2.get(keyObj.key);
+      const key1 = w1.getRaw(keyObj.key);
+      const key2 = w2.getRaw(keyObj.key);
       if(key1 === key2)
         continue;
       let i1 = -1;

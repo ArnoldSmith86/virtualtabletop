@@ -886,7 +886,7 @@ export class Widget extends StateManaged {
             return null;
           widget = widgets.get(id);
         }
-        return JSON.parse(JSON.stringify(widget.get(evaluateIdentifier(match[5], match[6]))));
+        return JSON.parse(JSON.stringify(widget.getRaw(evaluateIdentifier(match[5], match[6]))));
       }
 
       return null;
@@ -1432,7 +1432,7 @@ export class Widget extends StateManaged {
         const collection = getCollection(a.collection);
         if(collection) {
 
-          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.get(mainProperty))));
+          let c = JSON.parse(JSON.stringify(collections[collection].map(w=>w.getRaw(mainProperty))));
           for(const subkey of propertyPath)
             c = c.map(v=>v && typeof v == 'object' && v[subkey] || null);
 
@@ -1784,7 +1784,7 @@ export class Widget extends StateManaged {
       if (a.func == 'RESET') {
         setDefaults(a, { property: 'resetProperties' });      
         for(const widget of widgets.values()) {
-          for(const [ key, value ] of Object.entries(widget.get(a.property) || {})) {
+          for(const [ key, value ] of Object.entries(widget.getRaw(a.property) || {})) {
             if((key == 'parent' || key == 'deck') && value !== null && !widgets.has(value)) {
               problems.push(`Tried setting ${key} on widget ${widget.id} to ${value} which doesn't exist.`);
             } else {
@@ -1851,7 +1851,7 @@ export class Widget extends StateManaged {
 
         const relation = (a.mode == 'set') ? '=' : (a.mode == 'dec' ? '-' : '+');
         for(let i=0; i < seats.length; i++) {
-          let newScore = [...asArray(seats[i].get(a.property) || 0)];
+          let newScore = [...asArray(seats[i].getRaw(a.property) || 0)];
           const seatRound = a.round === null ? newScore.length + 1 : a.round;
           if(a.round > newScore.length)
             newScore = newScore.concat(Array(a.round - newScore.length).fill(0));
@@ -1881,20 +1881,20 @@ export class Widget extends StateManaged {
             if(a.type != 'all' && (w.get('type') != a.type && (a.type != 'card' || w.get('type') != 'pile')))
               return false;
             if(a.relation === '<')
-              return w.get(a.property) < a.value;
+              return w.getRaw(a.property) < a.value;
             else if(a.relation === '<=')
-              return w.get(a.property) <= a.value;
+              return w.getRaw(a.property) <= a.value;
             else if(a.relation === '!=')
-              return w.get(a.property) != a.value;
+              return w.getRaw(a.property) != a.value;
             else if(a.relation === '>=')
-              return w.get(a.property) >= a.value;
+              return w.getRaw(a.property) >= a.value;
             else if(a.relation === '>')
-              return w.get(a.property) > a.value;
+              return w.getRaw(a.property) > a.value;
             else if(a.relation === 'in' && Array.isArray(a.value))
-              return a.value.indexOf(w.get(a.property)) != -1;
+              return a.value.indexOf(w.getRaw(a.property)) != -1;
             if(a.relation != '==')
               problems.push(`Warning: Relation ${a.relation} interpreted as ==.`);
-            return w.get(a.property) === a.value;
+            return w.getRaw(a.property) === a.value;
           });
 
           // resolve piles
@@ -1942,7 +1942,7 @@ export class Widget extends StateManaged {
             for(const oldWidget of collections[collection]) {
               const oldID = oldWidget.get('id');
               let newState = JSON.parse(JSON.stringify(oldWidget.state));
-              newState.id = await compute(a.relation, null, oldWidget.get(a.property), a.value);
+              newState.id = await compute(a.relation, null, oldWidget.getRaw(a.property), a.value);
 
               if(widgets.has(newState.id)) {
                 problems.push(`id ${newState.id} already in use, ignored.`);
@@ -1961,12 +1961,12 @@ export class Widget extends StateManaged {
                 continue;
               }
 
-              if(a.relation == '+' && w.get(String(a.property)) == null)
+              if(a.relation == '+' && w.getRaw(String(a.property)) == null)
                 a.relation = '=';
               if(a.relation == '+' && a.value == null)
                 problems.push(`null value being appended, SET ignored`);
               else
-                await w.set(String(a.property), await compute(a.relation, null, w.get(String(a.property)), a.value));
+                await w.set(String(a.property), await compute(a.relation, null, w.getRaw(String(a.property)), a.value));
             }
           }
         }

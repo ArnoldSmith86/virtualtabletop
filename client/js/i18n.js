@@ -55,22 +55,32 @@ export function translate(text) {
 // look at the same game in different languages).
 //
 // This is a PRESENTATION feature: the override is resolved per client on read,
-// so it must only be used for content that is *displayed* (labels, text, images,
-// positions, css, …). A routine must not depend on a language-suffixed property
-// for game logic — it should read the base (unsuffixed) property, otherwise two
-// players with different languages would compute different results from the same
-// shared state. Structural/identity properties (see below) are therefore never
-// localized so hierarchy and links stay language-independent no matter what.
+// so it must only affect what is *displayed* (labels, text, images, positions,
+// css, …), never game logic — otherwise two players with different languages
+// would compute different results from the same shared state. The engine keeps
+// this deterministic on two fronts: the routine interpreter reads properties via
+// getRaw() (the unsuffixed value, see statemanaged.js), and the properties that
+// drive logic/interaction (below) are never localized in the first place.
 
 // Only a `base:suffix` key whose suffix looks like a BCP-47 language tag is
 // treated as a translation, so ordinary property names are never misinterpreted.
 const languageSuffixRegex = /^(.+):([a-z]{2,3}(?:-[a-z0-9]+)*)$/i;
 
-// Properties that define a widget's identity, type or place in the hierarchy are
-// never localized: a per-language override of these would re-link or re-type
-// widgets and desync the shared state. (Mirrors the non-inheritable set in
-// statemanaged.js.)
-const nonLocalizableProperties = new Set([ 'id', 'type', 'parent', 'deck', 'cardType' ]);
+// Properties that drive shared game logic or interaction are never localized: a
+// per-language override of these would make widgets link, type, click, drag,
+// belong or drop differently between players and desync the shared state. Only
+// content/presentation properties (text, x, css, image, width, …) are
+// translatable. Routine properties (…Routine) are excluded too, so which routine
+// runs on a click never depends on the player's language. (The identity subset
+// mirrors the non-inheritable set in statemanaged.js.)
+const nonLocalizableProperties = new Set([
+  'id', 'type', 'parent', 'deck', 'cardType', 'inheritFrom',
+  'owner', 'movable', 'clickable', 'dragging', 'dropTarget', 'activeFace'
+]);
+
+function isLocalizableProperty(base) {
+  return !nonLocalizableProperties.has(base) && !/Routine$/.test(base);
+}
 
 // Does a key look like a language-suffixed property (regardless of which
 // language)? Used to decide cheaply whether overrides need recomputing.
@@ -106,7 +116,7 @@ export function languageOverrides(object) {
     if(!score)
       continue;
     const base = match[1];
-    if(nonLocalizableProperties.has(base))
+    if(!isLocalizableProperty(base))
       continue;
     if(!overrides)
       overrides = {}, scores = {};

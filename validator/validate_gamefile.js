@@ -1195,7 +1195,9 @@ function validateGameFile(data, checkMeta) {
 
             if (!(baseProp in known) && !baseProp.match(/^((.+G|g)lobalUpdateRoutine|(.+C|c)hangeRoutine)$/)) {
                 // Only warn if this property is not used anywhere in the game file
-                if (!customProperties.includes(prop)) {
+                // (check the base property so a used custom property `foo` also
+                // covers its language-suffixed `foo:de-DE`)
+                if (!customProperties.includes(baseProp)) {
                     problems.push({
                         widget: key,
                         property: [prop],
