@@ -354,13 +354,20 @@ class DeckEditor {
     });
     window.addEventListener('mouseup', _=>{ panning = false; document.body.classList.remove('deckEditorPanning'); });
 
-    // Pinch-to-zoom (two fingers) on touch devices.
+    // Touch: pinch (two fingers) to zoom, one finger to pan (unless the finger is on a face object, which
+    // drags the object instead).
     let pinchStartDist = 0;
     let pinchStartZoom = 1;
+    let touchPanning = false;
+    let touchPanStart = null;
     $('#deckEditorMain').addEventListener('touchstart', e=>{
       if(e.touches.length == 2 && this.mainCard) {
+        touchPanning = false;
         pinchStartDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
         pinchStartZoom = this.userZoom;
+      } else if(e.touches.length == 1 && this.mainCard && !(e.target.closest && e.target.closest('.cardFaceObject'))) {
+        touchPanning = true;
+        touchPanStart = { x: e.touches[0].clientX, y: e.touches[0].clientY, panX: this.panX, panY: this.panY };
       }
     }, { passive: false });
     $('#deckEditorMain').addEventListener('touchmove', e=>{
@@ -370,9 +377,14 @@ class DeckEditor {
         const midX = (e.touches[0].clientX + e.touches[1].clientX)/2;
         const midY = (e.touches[0].clientY + e.touches[1].clientY)/2;
         this.zoomCardAroundPoint(pinchStartZoom * (dist / pinchStartDist), midX, midY);
+      } else if(e.touches.length == 1 && touchPanning) {
+        e.preventDefault();
+        this.panX = touchPanStart.panX + (e.touches[0].clientX - touchPanStart.x);
+        this.panY = touchPanStart.panY + (e.touches[0].clientY - touchPanStart.y);
+        this.applyCardTransform();
       }
     }, { passive: false });
-    $('#deckEditorMain').addEventListener('touchend', e=>{ if(e.touches.length < 2) pinchStartDist = 0; });
+    $('#deckEditorMain').addEventListener('touchend', e=>{ if(e.touches.length < 2) pinchStartDist = 0; if(!e.touches.length) touchPanning = false; });
 
     window.addEventListener('resize', _=>{
       if(this.isOpen()) {
@@ -1784,7 +1796,8 @@ class DeckEditor {
     const noSelection = !hasDeck || (level == 'object' && this.selectedObject === null) || (level != 'deck' && !this.faceTemplates.length);
     if(copy) { copy.disabled = noSelection; copy.title = `Copy the selected ${noun}`; }
     if(del)  { del.disabled  = noSelection; del.title  = `Delete the selected ${noun}`; }
-    if(show) show.disabled = this.selectedObject === null;
+    // "Outline all face objects" applies whenever a card is shown, not only when an object is selected.
+    if(show) show.disabled = !(hasDeck && !this.deckSymbolSelected && this.cardType !== null && this.faceTemplates.length > 0);
   }
 
   async selectDeckNode(deckID) {
