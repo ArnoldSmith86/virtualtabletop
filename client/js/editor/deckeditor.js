@@ -1658,7 +1658,7 @@ class DeckEditor {
     // own properties. The face-object list lives in the always-visible left sidebar; the card defaults live
     // behind the deck symbol only.
     if(this.faceTemplates[this.face])
-      this.renderEntireFaceSection(sidebar);
+      this.renderEntireFaceSection(sidebar, addPropertyRow);
 
     this.renderObjectHint();
 
@@ -1721,7 +1721,7 @@ class DeckEditor {
 
   // The "Entire face" band: whole-face settings (on every card of the deck). border/radius are plain numbers
   // (0 = absent); "enlarge" is stored under the face template's "properties" object so it reaches the card.
-  renderEntireFaceSection(sidebar) {
+  renderEntireFaceSection(sidebar, addPropertyRow) {
     const face = this.faceTemplates[this.face];
     if(!face)
       return;
@@ -1735,8 +1735,13 @@ class DeckEditor {
       `${getPlayerDetails().playerName} updated "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`,
       `field:faceTemplates:face:${this.face}:${property}`
     ];
+    // A trash on a number row (addNumberInput returns the row div, addPropertyDeleteButton wants {dom}).
+    const addFaceTrash = (row, property, onDelete)=>this.addPropertyDeleteButton({ dom: row }, property, onDelete);
+    const deleteCause = property=>`${getPlayerDetails().playerName} deleted property "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`;
+
+    // border & radius live on the face template itself (0/absent = default).
     for(const property of [ 'border', 'radius' ]) {
-      this.addNumberInput(property, face[property], value=>this.queueFieldEdit(async _=>{
+      const row = this.addNumberInput(property, face[property], value=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
         if(value)
           face[property] = value;
@@ -1745,21 +1750,72 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('faceTemplates', ...fieldArgs(property));
       }), faceProps);
+      addFaceTrash(row, property, async _=>{
+        await this.flushPendingCommits();
+        delete face[property];
+        this.refreshMainCardFaces();
+        await this.commit('faceTemplates', deleteCause(property));
+        this.renderSidebar();
+      });
     }
-    this.addNumberInput('enlarge', face.properties && face.properties.enlarge, value=>this.queueFieldEdit(async _=>{
-      await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs('enlarge')[1]);
-      if(value) {
+
+    // Properties that reach the card live under face.properties (enlarge and any custom ones added below).
+    const setFaceProperty = (property, value)=>{
+      if(!value) {
+        if(face.properties) {
+          delete face.properties[property];
+          if(!Object.keys(face.properties).length)
+            delete face.properties;
+        }
+      } else {
         if(!face.properties || typeof face.properties != 'object')
           face.properties = {};
-        face.properties.enlarge = value;
-      } else if(face.properties) {
-        delete face.properties.enlarge;
+        face.properties[property] = value;
+      }
+    };
+    const deleteFaceProperty = async property=>{
+      await this.flushPendingCommits();
+      if(face.properties) {
+        delete face.properties[property];
         if(!Object.keys(face.properties).length)
           delete face.properties;
       }
       this.refreshMainCardFaces();
+      await this.commit('faceTemplates', deleteCause(property));
+      this.renderSidebar();
+    };
+    const faceProperties = (face.properties && typeof face.properties == 'object') ? face.properties : {};
+    // enlarge is a known number property; then any custom ones the user added.
+    const enlargeRow = this.addNumberInput('enlarge', faceProperties.enlarge, value=>this.queueFieldEdit(async _=>{
+      await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs('enlarge')[1]);
+      setFaceProperty('enlarge', value);
+      this.refreshMainCardFaces();
       this.scheduleCommit('faceTemplates', ...fieldArgs('enlarge'));
     }), faceProps);
+    addFaceTrash(enlargeRow, 'enlarge', _=>deleteFaceProperty('enlarge'));
+    for(const property of Object.keys(faceProperties)) {
+      if(property == 'enlarge')
+        continue;
+      const row = this.addTypedInput(property, faceProperties[property], value=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
+        setFaceProperty(property, value);
+        this.refreshMainCardFaces();
+        this.scheduleCommit('faceTemplates', ...fieldArgs(property));
+      }), faceProps);
+      this.addPropertyDeleteButton(row, property, _=>deleteFaceProperty(property));
+    }
+
+    // Add a new custom whole-face property (stored under face.properties).
+    addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
+      if(face.properties && face.properties[property] !== undefined)
+        return;
+      await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
+      if(!face.properties || typeof face.properties != 'object')
+        face.properties = {};
+      face.properties[property] = this.initialValueForType(type);
+      this.scheduleCommit('faceTemplates', ...fieldArgs(property));
+      this.renderSidebar();
+    }));
   }
 
   // The left "file directory" tree: Decks (top level, names only) → the current deck's Faces (names only) →

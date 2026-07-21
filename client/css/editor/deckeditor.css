@@ -1264,6 +1264,8 @@ body.deckEditorPanning #deckEditorMain * {
   align-items: center;
   gap: 5px;
   margin: 4px 0;
+  position: relative;
+  padding-right: 24px; /* room for the property trash icon (Entire face properties) */
 }
 
 .deckEditorNumberInput label {
