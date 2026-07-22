@@ -200,12 +200,27 @@ function searchIconIndex(query, limit=42) {
   return results.slice(0, limit);
 }
 
+function imageURLFromSymbol(symbol) {
+  if(symbol.includes('/'))
+    return `/i/game-icons.net/${symbol}.svg`;
+  const filename = [...symbol].map(char => char.codePointAt(0).toString(16).padStart(4, '0')).join('_').replace(/_fe0f/g, '');
+  return `/i/noto-emoji/emoji_u${filename}.svg`;
+}
+
+function searchImageIndex(query, limit=42) {
+  const terms = query.toLowerCase().split(/\s+/).filter(term => term);
+  return (iconSearchIndex || [])
+    .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
+    .slice(0, limit)
+    .map(entry => imageURLFromSymbol(entry.value));
+}
+
 let activePropertyInfoPopup = null;
 
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
-// opens on hover or click and closes with its close button, a click outside
-// of it or Escape.
+// opens on hover or click. Hovered popups close when leaving the icon; clicked
+// popups stay open until closed explicitly, outside click or Escape.
 // Named propertyInfoButton (not infoButton) because controls/popup.js
 // declares its own top-level infoButton(); both files land in the editor
 // bundle whenever this PR and the routine editor are merged together (e.g.
@@ -213,12 +228,17 @@ let activePropertyInfoPopup = null;
 // module throw "Identifier has already been declared".
 function propertyInfoButton(appendTo, infoHTML) {
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
-  const open = e=>{
-    if(e)
-      e.stopPropagation();
+  let closePopup = null;
+  let pinned = false;
+  const open = stick=>{
+    if(closePopup) {
+      pinned = pinned || stick;
+      return;
+    }
     if(activePropertyInfoPopup)
       activePropertyInfoPopup();
     const popup = div($('#editor'), 'inline-popup', `<button class=popup-close icon=close title=Close></button><div class=content></div>`);
+    let outsideClickTimer = null;
     $('.content', popup).innerHTML = infoHTML;
 
     const sourceRect = dom.getBoundingClientRect();
@@ -231,9 +251,11 @@ function propertyInfoButton(appendTo, infoHTML) {
       popup.style.top = `${Math.max(10, window.innerHeight - rect.height - 10)}px`;
 
     const close = _=>{
+      clearTimeout(outsideClickTimer);
       document.removeEventListener('click', onOutsideClick);
       document.removeEventListener('keydown', onKeyDown, true);
       popup.remove();
+      closePopup = null;
       if(activePropertyInfoPopup == close)
         activePropertyInfoPopup = null;
     };
@@ -249,13 +271,25 @@ function propertyInfoButton(appendTo, infoHTML) {
       }
     };
     $('.popup-close', popup).onclick = close;
+    pinned = stick;
+    closePopup = close;
     activePropertyInfoPopup = close;
     document.addEventListener('keydown', onKeyDown, true);
     // defer so the click that opened the popup doesn't immediately close it
-    setTimeout(_=>document.addEventListener('click', onOutsideClick), 0);
+    outsideClickTimer = setTimeout(_=>{
+      if(closePopup == close)
+        document.addEventListener('click', onOutsideClick);
+    }, 0);
   };
-  dom.addEventListener('mouseenter', open);
-  dom.addEventListener('click', open);
+  dom.addEventListener('mouseenter', _=>open(false));
+  dom.addEventListener('mouseleave', _=>{
+    if(!pinned && closePopup)
+      closePopup();
+  });
+  dom.addEventListener('click', e=>{
+    e.stopPropagation();
+    open(true);
+  });
   return dom;
 }
 
@@ -820,6 +854,16 @@ class IconInput extends PickerInput {
     const frequentlyUsed = [...new Set(usedGameIcons().concat(topUsedLibraryIcons))].slice(0, 42);
     showResults(frequentlyUsed);
 
+    const showAll = document.createElement('button');
+    showAll.setAttribute('icon', 'apps');
+    showAll.textContent = 'Show all';
+    showAll.onclick = async _=>{
+      const symbol = await pickSymbol();
+      if(symbol)
+        this.setValue(symbol.symbol);
+    };
+    searchSection.appendChild(showAll);
+
     search.oninput = async _=>{
       await loadIconSearchIndex().catch(_=>null);
       showResults(search.value.trim() ? searchIconIndex(search.value.trim()) : frequentlyUsed);
@@ -846,6 +890,43 @@ class ImageInput extends PickerInput {
   renderPickerContent(target, value) {
     this.addChipList(target, 'Used in this game', usedGameImages(), value, renderImageChip);
     this.addChipList(target, 'Game pieces', builtinGamePieceImages, value, renderImageChip);
+
+    const searchSection = div(target, 'propertyPickerSection');
+    const search = document.createElement('input');
+    search.placeholder = 'Search images...';
+    searchSection.appendChild(search);
+    const results = div(searchSection, 'propertyPickerChips');
+
+    const showResults = values=>{
+      results.innerHTML = '';
+      for(const imageValue of values) {
+        const chip = renderImageChip(imageValue, results);
+        chip.dataset.value = imageValue;
+        chip.classList.toggle('selected', imageValue == this.getValue());
+        chip.onclick = _=>this.setValue(imageValue);
+      }
+      if(!values.length)
+        div(results, 'propertyPickerEmpty', 'No results.');
+    };
+
+    const frequentlyUsed = [...new Set(usedGameImages().concat(builtinGamePieceImages))].slice(0, 42);
+    showResults(frequentlyUsed);
+
+    const showAll = document.createElement('button');
+    showAll.setAttribute('icon', 'apps');
+    showAll.textContent = 'Show all';
+    showAll.onclick = async _=>{
+      const symbol = await pickSymbol('images');
+      if(symbol)
+        this.setValue(symbol.url);
+    };
+    searchSection.appendChild(showAll);
+
+    search.oninput = async _=>{
+      await loadIconSearchIndex().catch(_=>null);
+      showResults(search.value.trim() ? searchImageIndex(search.value.trim()) : frequentlyUsed);
+    };
+    loadIconSearchIndex().catch(_=>null);
 
     const section = div(target, 'propertyPickerSection');
     const upload = document.createElement('button');

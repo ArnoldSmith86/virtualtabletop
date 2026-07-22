@@ -13,6 +13,7 @@ const inputHelpers = new Function(inputsSource + `;
     propertyInputNumberOrText,
     propertyInputValueSet,
     searchIconIndex,
+    searchImageIndex,
     setIconSearchIndex: index => { iconSearchIndex = index; }
   };
 `)();
@@ -191,5 +192,18 @@ describe('property input helpers', () => {
     expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'grade' ]);
     expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
+  });
+
+  test('searchImageIndex returns image URLs for matching glyphs', () => {
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/dice-six-faces-six', keywords: 'dice six', image: true },
+      { value: '🎲', keywords: 'dice game', image: true },
+      { value: 'casino', keywords: 'dice casino', image: false }
+    ]);
+
+    expect(inputHelpers.searchImageIndex('dice')).toEqual([
+      '/i/game-icons.net/lorc/dice-six-faces-six.svg',
+      '/i/noto-emoji/emoji_u1f3b2.svg'
+    ]);
   });
 });

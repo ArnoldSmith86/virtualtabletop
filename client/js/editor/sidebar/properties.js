@@ -471,9 +471,6 @@ const editorTypeSections = {
   },
   seat: {
     stateClasses: { '.seated': 'player', '.turn': 'turn', '.foreign': 'hideWhenUnused' },
-    colors: [
-      { label: 'Color',         property: 'color',        kind: 'color' }
-    ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
@@ -1936,6 +1933,8 @@ class PropertiesModule extends SidebarModule {
       container = document.createElement('div');
       container.className = 'obscurePropertyContainer';
       container.style.paddingLeft = '10px';
+      if(options.onRemove)
+        container.style.paddingRight = '32px';
 
       // If we have a separate buttonHost, remove the button and insert into host (contentWrapper)
       if(replaceNode && replaceNode.parentNode) {
@@ -3510,8 +3509,11 @@ class PropertiesModule extends SidebarModule {
 
     if((colors.length || hover.length) && misc.length)
       this.addAppearanceSubTitle('Style');
-    if(misc.length)
+    if(misc.length) {
       this.renderInputs(widget, misc);
+      if(misc.some(def => def.property == 'borderRadius'))
+        this.renderBorderWidthInput(widget);
+    }
 
     const cssSection = this.renderCollapsibleSection('CSS', true, body => {
       new TextInput(this, widget, 'User defined active classes', {
@@ -3533,6 +3535,22 @@ class PropertiesModule extends SidebarModule {
         });
     }, null, `${widget.id}:css`);
     propertyInfoButton($('.collapsibleHeader', cssSection), html(editorPropertyHints.css));
+  }
+
+  renderBorderWidthInput(widget, target = null) {
+    const cssOptions = cssValueOptions(this, widget, 'border-width');
+    new NumberInput(this, widget, 'Border width', Object.assign({}, cssOptions, {
+      getValue: () => {
+        const value = cssOptions.getValue();
+        const width = Number.parseFloat(value);
+        return Number.isFinite(width) ? width : null;
+      },
+      setValue: value => cssOptions.setValue(value === null ? null : `${value}px`),
+      min: 0,
+      step: 1,
+      nullIfEmpty: true,
+      hint: 'Width of the border in pixels. Set this to show a border color on widgets without a default border.'
+    })).render(target || this.moduleDOM);
   }
 
   // comment-style line listing the classes the widget currently applies on
@@ -4240,7 +4258,7 @@ class PropertiesModule extends SidebarModule {
     });
     this.renderSeatColorMode(widget);
 
-    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'colorEmpty' ]);
+    this.renderOtherPropertiesSection(widget, [ 'player', 'hand', 'index', 'turn', 'skipTurn', 'hideTurn', 'hideWhenUnused', 'display', 'displayEmpty', 'color', 'colorEmpty' ]);
   }
 
   // Style presets for seats: "Classic" is the plain default seat; "Background
