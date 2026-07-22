@@ -51,9 +51,11 @@ describe('css helpers', () => {
       '#primary': 'color',
       '#accent': 'accentColor1',
       '#outline': 'outlineColor2',
-      '#ignored': 'borderColor',
+      '#border': 'borderColor',
+      '#empty': 'colorEmpty',
+      '#secondary': 'secondaryColor',
       '#alsoIgnored': 'title'
-    })).toEqual([ 'color', 'accentColor1', 'outlineColor2' ]);
+    })).toEqual([ 'color', 'accentColor1', 'outlineColor2', 'borderColor', 'colorEmpty', 'secondaryColor' ]);
   });
 
   test('cssTextFromValue renders all value shapes', () => {

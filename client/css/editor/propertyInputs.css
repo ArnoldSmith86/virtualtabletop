@@ -46,6 +46,14 @@
   min-width: 80px;
 }
 
+/* Values such as border radii are usually short (e.g. 8px or 50%). */
+.editorModule .propertyInput.compactInput input[type=text],
+.editorModule .propertyInput.compactInput input:not([type]) {
+  flex: 0 0 calc(5ch + 12px);
+  min-width: calc(5ch + 12px);
+  width: calc(5ch + 12px);
+}
+
 .editorModule .propertyInput textarea {
   flex: 1 1 200px;
   min-height: 4em;

@@ -333,7 +333,7 @@ class PropertyInput {
 
 class TextInput extends PropertyInput {
   cssClass() {
-    return this.options.multiline ? 'textInput multiline' : 'textInput';
+    return `${this.options.multiline ? 'textInput multiline' : 'textInput'}${this.options.compact ? ' compactInput' : ''}`;
   }
 
   renderControl(target) {
@@ -414,11 +414,10 @@ class NumberInput extends PropertyInput {
   }
 }
 
-// Accepts either a number (editable by text or slider) or a CSS-like string.
-// The slider is disabled while a string value such as "50%" is in use.
+// Accepts either a number or a CSS-like string such as "50%".
 class NumberOrTextInput extends PropertyInput {
   cssClass() {
-    return 'numberInput numberOrTextInput';
+    return `numberInput numberOrTextInput${this.options.compact ? ' compactInput' : ''}`;
   }
 
   renderControl(target) {
@@ -427,24 +426,12 @@ class NumberOrTextInput extends PropertyInput {
     if(this.options.placeholder !== undefined) this.input.placeholder = this.options.placeholder;
     this.input.oninput = _=>this.setValue(propertyInputNumberOrText(this.input.value, this.options.nullIfEmpty));
     target.appendChild(this.input);
-
-    this.slider = document.createElement('input');
-    this.slider.type = 'range';
-    this.slider.min = this.options.min !== undefined ? this.options.min : 0;
-    this.slider.max = this.options.max !== undefined ? this.options.max : 100;
-    this.slider.step = this.options.step !== undefined ? this.options.step : 1;
-    this.slider.oninput = _=>this.setValue(+this.slider.value);
-    target.appendChild(this.slider);
   }
 
   update(value) {
-    const numeric = typeof value == 'number' && Number.isFinite(value);
     this.input.placeholder = this.options.placeholder || 'e.g. 8, 8px, 50%';
     if(document.activeElement !== this.input)
       this.input.value = value === null ? '' : value;
-    this.slider.disabled = !numeric;
-    if(numeric && document.activeElement !== this.slider)
-      this.slider.value = value;
   }
 }
 

@@ -114,7 +114,7 @@ function svgReplaceColorProperties(svgReplaces) {
   if(!isObjectLike(svgReplaces))
     return [];
   return [...new Set(Object.values(svgReplaces).flat())]
-    .filter(property => typeof property == 'string' && (property == 'color' || /^[A-Za-z]+Color\d+$/.test(property)));
+    .filter(property => typeof property == 'string' && /^(?:[A-Za-z]*Color\d*|color[A-Za-z]*\d*)$/.test(property));
 }
 
 function svgReplaceColorLabel(property) {
@@ -381,7 +381,7 @@ const editorTypeSections = {
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 200, nullIfEmpty: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
   button: {
@@ -401,7 +401,7 @@ const editorTypeSections = {
       { label: 'Border',           property: 'borderColorOH',     kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorderOH' }
     ],
     appearance: [
-      { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, nullIfEmpty: true }
+      { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
   canvas: {},
@@ -414,7 +414,7 @@ const editorTypeSections = {
       { label: 'Pips',          property: 'pipColor',     kind: 'color', labelIcon: 'casino', labelIconNoFill: true }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 16%', nullIfEmpty: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, placeholder: 'e.g. 16%', nullIfEmpty: true }
     ],
     behavior: [
       { label: 'Roll time (ms)', property: 'rollTime', kind: 'number', min: 0, max: 5000 },
@@ -432,7 +432,7 @@ const editorTypeSections = {
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, nullIfEmpty: true },
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true },
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
     ],
     behavior: [
@@ -447,7 +447,7 @@ const editorTypeSections = {
     // border radius stays in the generic appearance/style block
     stateClasses: { '.equalWidth': 'autosizeColumns', '.verticalHeader': 'verticalHeader' },
     appearance: [
-      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, nullIfEmpty: true }
+      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
   seat: {
@@ -456,7 +456,7 @@ const editorTypeSections = {
       { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, nullIfEmpty: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
     ]
   },
   spinner: {
@@ -4584,8 +4584,31 @@ class PropertiesModule extends SidebarModule {
   renderForDice(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
-    const widgetFaces = widget.get('faces');
-    const faceCount = Array.isArray(widgetFaces) ? widgetFaces.length : 0;
+    const dicePreviews = [];
+    const renderDicePreview = overrides => {
+      const preview = new Dice();
+      const state = _=>{
+        const faces = overrides.faces === undefined ? widget.get('faces') : overrides.faces;
+        return {
+          type: 'dice',
+          faces,
+          activeFace: faces.length - 1,
+          shape3d: overrides.shape3d === undefined ? widget.get('shape3d') : overrides.shape3d,
+          pipSymbols: overrides.pipSymbols === undefined ? widget.get('pipSymbols') : overrides.pipSymbols
+        };
+      };
+      const button = this.renderWidgetButton(preview, state(), this.moduleDOM);
+      const baseTransform = preview.domElement.style.transform;
+      const update = _=>{
+        const previewState = state();
+        preview.applyDelta(previewState);
+        button.classList.toggle('isometricDicePreview', previewState.shape3d);
+        preview.domElement.style.transform = `${baseTransform}${previewState.shape3d ? ' rotateX(18deg) rotateY(-25deg)' : ''}`;
+      };
+      dicePreviews.push(update);
+      update();
+      return button;
+    };
 
     this.addSubHeader('Content');
     this.addAppearanceSubTitle('Dice type');
@@ -4601,16 +4624,10 @@ class PropertiesModule extends SidebarModule {
     ];
 
     for (const f of faces) {
-      const dice = this.renderWidgetButton(new Dice(), {
-        type: 'dice',
-        faces: f,
-        activeFace: f.length - 1,
-        shape3d: widget.get('shape3d'),
-        pipSymbols: widget.get('pipSymbols')
-      }, this.moduleDOM);
+      const dice = renderDicePreview({ faces: f });
 
       this.addPropertyListener(widget, 'faces', widget => {
-        if (JSON.stringify(widgetFaces) === JSON.stringify(f)) {
+        if (JSON.stringify(widget.get('faces')) === JSON.stringify(f)) {
           dice.classList.add('selected');
         } else {
           dice.classList.remove('selected');
@@ -4627,14 +4644,7 @@ class PropertiesModule extends SidebarModule {
     const shape = [true, false];
 
     for (const s of shape) {
-      const diceShape = this.renderWidgetButton(new Dice(), {
-        type: 'dice',
-        faces: widgetFaces,
-        activeFace: faceCount - 1,
-        shape3d: s,
-        pipSymbols: widget.get('pipSymbols')
-      }, this.moduleDOM);
-      // the static previews look the same - the difference only shows while rolling
+      const diceShape = renderDicePreview({ shape3d: s });
       diceShape.title = s ? '3D shape that rolls over the table' : 'Flat face that swaps on each roll';
 
       this.addPropertyListener(widget, 'shape3d', widget => {
@@ -4656,13 +4666,7 @@ class PropertiesModule extends SidebarModule {
     const pipType = [true, false];
 
     for (const p of pipType) {
-      const dicePip = this.renderWidgetButton(new Dice(), {
-        type: 'dice',
-        faces: widgetFaces,
-        activeFace: faceCount - 1,
-        shape3d: widget.get('shape3d'),
-        pipSymbols: p
-      }, this.moduleDOM);
+      const dicePip = renderDicePreview({ pipSymbols: p });
       dicePip.title = p ? 'Pip symbols' : 'Numbers';
 
       this.addPropertyListener(widget, 'pipSymbols', widget => {
@@ -4679,6 +4683,9 @@ class PropertiesModule extends SidebarModule {
         }
       };
     }
+
+    for(const property of [ 'faces', 'shape3d', 'pipSymbols' ])
+      this.addPropertyListener(widget, property, _=>dicePreviews.forEach(update => update()));
 
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
