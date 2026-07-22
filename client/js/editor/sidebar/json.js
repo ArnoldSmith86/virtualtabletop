@@ -40,6 +40,8 @@ class JsonModule extends SidebarModule {
       jeSelectWidget(newSelection[0]);
     } else if(newSelection.length) {
       jeSelectSetMulti(newSelection);
+    } else if(deckEditor.isOpen() && deckEditor.deck()) {
+      jeSelectWidget(deckEditor.deck());
     } else {
       jeEmpty();
     }

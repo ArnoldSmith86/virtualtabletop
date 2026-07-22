@@ -216,6 +216,55 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
   await compareState(t, '3e20074150f78219095df84abeeb74dc');
 });
 
+test('Deck editor: symbol pickers and JSON fallback', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  await t
+    .click('#editButton')
+    .click('#editorToolbar > div > [icon=add]')
+    .click('#add-empty-deck')
+    .click('#editorSidebar [icon=tune]');
+
+  const getDeckID = ClientFunction(() => {
+    let deckID = null;
+    widgets.forEach(w => { if(w.get('type') == 'deck') deckID = w.get('id'); });
+    return deckID;
+  });
+  const deckID = await getDeckID();
+  const getObjectTypeCounts = ClientFunction(deckID => {
+    const objects = widgets.get(deckID).get('faceTemplates').flatMap(face => face.objects || []);
+    return {
+      image: objects.filter(object => object.type == 'image').length,
+      icon: objects.filter(object => object.type == 'icon').length
+    };
+  });
+  const getJSONText = ClientFunction(() => document.querySelector('#jeText').textContent);
+
+  await t
+    .click('#topSurface', { offsetX: 10, offsetY: 10 })
+    .click('#editorToolbar [icon=style]')
+    .click(Selector('#deckEditorTree .deckEditorTreeFace').nth(0))
+    .click('#deckEditorTreeAdd')
+    .click('#deckEditorAddImage')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .click(Selector('#symbolList .gameicons').nth(0))
+    .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 0 })
+    .click('#deckEditorAddIcon')
+    .expect(Selector('#symbolPickerOverlay').visible).ok()
+    .click(Selector('#symbolList .material-symbols').nth(0))
+    .expect(getObjectTypeCounts(deckID)).eql({ image: 3, icon: 1 });
+
+  await t
+    .click('#editorSidebar [icon=data_object]')
+    .expect(getJSONText()).contains(deckID)
+    .click('#editorSidebar [icon=data_object]')
+    .pressKey('esc')
+    .pressKey('esc');
+  await compareState(t, '9d61c3a5ea48b289960bc019f03a2ec5');
+});
+
 test('Deck editor: breadcrumb undo and redo', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
