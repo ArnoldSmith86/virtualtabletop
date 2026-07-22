@@ -125,12 +125,12 @@ function svgReplaceColorLabel(property) {
 
 function dicePreviewRotation(faceCount) {
   if(faceCount == 2)
-    return 'rotateY(-30deg)';
+    return 'rotateY(30deg)';
   if(faceCount == 4)
-    return 'rotateX(10deg) rotateY(-75deg)';
+    return 'rotateX(-10deg) rotateY(75deg)';
   if(faceCount == 6)
-    return 'rotateX(30deg) rotateY(-30deg)';
-  return 'rotateX(18deg) rotateY(-25deg)';
+    return 'rotateX(-30deg) rotateY(30deg)';
+  return 'rotateX(-18deg) rotateY(25deg)';
 }
 
 function hasNestedCSSClasses(css) {
@@ -4602,7 +4602,9 @@ class PropertiesModule extends SidebarModule {
         return {
           type: 'dice',
           faces,
-          activeFace: faces.length - 1,
+          // The fourth D4 face is the untransformed base of its tetrahedron;
+          // previewing the first face exposes its three-dimensional sides.
+          activeFace: faces.length == 4 ? 0 : faces.length - 1,
           shape3d: overrides.shape3d === undefined ? widget.get('shape3d') : overrides.shape3d,
           pipSymbols: overrides.pipSymbols === undefined ? widget.get('pipSymbols') : overrides.pipSymbols
         };
@@ -4613,7 +4615,11 @@ class PropertiesModule extends SidebarModule {
         const previewState = state();
         preview.applyDelta(previewState);
         button.classList.toggle('isometricDicePreview', previewState.shape3d);
-        preview.domElement.style.transform = `${baseTransform}${previewState.shape3d ? ` ${dicePreviewRotation(previewState.faces.length)}` : ''}`;
+        preview.domElement.style.transform = baseTransform;
+        if(previewState.shape3d)
+          preview.facesElement.style.setProperty('--editorPreviewRotation', dicePreviewRotation(previewState.faces.length));
+        else
+          preview.facesElement.style.removeProperty('--editorPreviewRotation');
       };
       dicePreviews.push(update);
       update();

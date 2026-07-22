@@ -59,6 +59,12 @@
 .editorModule .widgetSelectionButton.isometricDicePreview {
   perspective: 300px;
 }
+.editorModule .widgetSelectionButton.isometricDicePreview > .shape3D.dice.widget {
+  transform-style: preserve-3d;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .shape3D.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot) var(--editorPreviewRotation);
+}
 .editorModule .widgetSelectionButton.isometricDicePreview > .d2,
 .editorModule .widgetSelectionButton.isometricDicePreview > .d4,
 .editorModule .widgetSelectionButton.isometricDicePreview > .d6 {
@@ -69,6 +75,9 @@
 }
 .editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D:not(.d2-flip) > * > .diceFace:nth-child(2n) {
   transform: rotateY(180deg) translateZ(calc(var(--size) * .06));
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D > .diceFaces > .diceFace {
+  box-shadow: 7px 7px 0 var(--backgroundColor), 8px 8px 0 var(--borderColor);
 }
 .editorModule .widgetSelectionButton .spinner > svg.background {
   left: 0;
