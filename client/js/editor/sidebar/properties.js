@@ -2098,6 +2098,7 @@ class PropertiesModule extends SidebarModule {
     const min = typeof options.min === 'number' ? options.min : -5000;
     const max = typeof options.max === 'number' ? options.max : 5000;
     const step = typeof options.step === 'number' ? options.step : 1;
+    const slider = options.slider !== false;
 
     const wrap = div(target || this.moduleDOM);
     wrap.style.display = 'inline-flex';
@@ -2123,14 +2124,17 @@ class PropertiesModule extends SidebarModule {
     numberInput.style.boxSizing = 'border-box';
     wrap.appendChild(numberInput);
 
-    const rangeInput = document.createElement('input');
-    rangeInput.type = 'range';
-    rangeInput.min = String(min);
-    rangeInput.max = String(max);
-    rangeInput.step = String(step);
-    rangeInput.style.flex = '1 1 auto';
-    rangeInput.style.minWidth = '60px';
-    wrap.appendChild(rangeInput);
+    let rangeInput = null;
+    if(slider) {
+      rangeInput = document.createElement('input');
+      rangeInput.type = 'range';
+      rangeInput.min = String(min);
+      rangeInput.max = String(max);
+      rangeInput.step = String(step);
+      rangeInput.style.flex = '1 1 auto';
+      rangeInput.style.minWidth = '60px';
+      wrap.appendChild(rangeInput);
+    }
 
     const clampForRange = value => Math.max(min, Math.min(max, value));
     const normalizeValue = value => {
@@ -2142,7 +2146,7 @@ class PropertiesModule extends SidebarModule {
       const normalized = normalizeValue(value);
       if(document.activeElement !== numberInput)
         numberInput.value = String(normalized);
-      if(document.activeElement !== rangeInput)
+      if(rangeInput && document.activeElement !== rangeInput)
         rangeInput.value = String(clampForRange(normalized));
     };
 
@@ -2153,16 +2157,18 @@ class PropertiesModule extends SidebarModule {
     numberInput.oninput = () => {
       const value = normalizeValue(numberInput.value);
       setValue(value);
-      if(document.activeElement === numberInput)
+      if(rangeInput && document.activeElement === numberInput)
         rangeInput.value = String(clampForRange(value));
     };
 
-    rangeInput.oninput = () => {
-      const value = normalizeValue(rangeInput.value);
-      setValue(value);
-      if(document.activeElement === rangeInput)
-        numberInput.value = String(value);
-    };
+    if(rangeInput) {
+      rangeInput.oninput = () => {
+        const value = normalizeValue(rangeInput.value);
+        setValue(value);
+        if(document.activeElement === rangeInput)
+          numberInput.value = String(value);
+      };
+    }
 
     this.addPropertyListener(widget, property, w=>updateInputs(w.get(property)));
   }
@@ -2921,7 +2927,7 @@ class PropertiesModule extends SidebarModule {
 
     this.renderCollapsibleSection('Generic', true, body=>{
       this.renderCheckbox(widget, 'Clickable', 'clickable', body);
-      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, max: 10, step: .1 });
+      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, step: 1, slider: false });
       this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body);
     }, null, `${widget.id}:generic`);
 
