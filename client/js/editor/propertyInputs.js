@@ -869,7 +869,6 @@ class IconInput extends PickerInput {
     search.placeholder = 'Search icons...';
     searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
-    const results = div(searchSection, 'propertyPickerChips');
 
     const showResults = values=>{
       results.innerHTML = '';
@@ -915,6 +914,7 @@ class IconInput extends PickerInput {
       typeToggles.appendChild(toggle);
     }
 
+    const results = div(searchSection, 'propertyPickerChips');
     showResults(frequentlyUsed());
 
     const showAll = document.createElement('button');
