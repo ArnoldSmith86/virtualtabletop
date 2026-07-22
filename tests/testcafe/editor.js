@@ -262,7 +262,7 @@ test('Deck editor: symbol pickers and JSON fallback', async t => {
     .click('#editorSidebar [icon=data_object]')
     .pressKey('esc')
     .pressKey('esc');
-  await compareState(t, '9d61c3a5ea48b289960bc019f03a2ec5');
+  await compareState(t, '5019957515d8552f09fed2340a4e1d3d');
 });
 
 test('Deck editor: breadcrumb undo and redo', async t => {

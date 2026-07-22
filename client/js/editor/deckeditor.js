@@ -303,7 +303,7 @@ class DeckEditor {
     $('#deckEditorAddImage').onclick = async _=>{
       const symbol = await pickSymbol('images');
       if(symbol && symbol.url)
-        this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: '#cccccc' }, 'image', symbol.url);
+        this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: 'transparent' }, 'image', symbol.url);
     };
     $('#deckEditorAddIcon').onclick = async _=>{
       const symbol = await pickSymbol();
