@@ -77,7 +77,7 @@
   transform: rotateY(180deg) translateZ(calc(var(--size) * .06));
 }
 .editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D > .diceFaces > .diceFace {
-  box-shadow: 7px 7px 0 var(--backgroundColor), 8px 8px 0 var(--borderColor);
+  box-shadow: -5px -0px 02px #FFFd, -6px -0px 0 var(--borderColor);
 }
 .editorModule .widgetSelectionButton .spinner > svg.background {
   left: 0;

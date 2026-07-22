@@ -125,12 +125,12 @@ function svgReplaceColorLabel(property) {
 
 function dicePreviewRotation(faceCount) {
   if(faceCount == 2)
-    return 'rotateY(30deg)';
+    return 'rotateY(-30deg)';
   if(faceCount == 4)
-    return 'rotateX(-10deg) rotateY(75deg)';
+    return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
   if(faceCount == 6)
-    return 'rotateX(-30deg) rotateY(30deg)';
-  return 'rotateX(-18deg) rotateY(25deg)';
+    return 'rotateX(15deg) rotateY(20deg)';
+  return 'rotateX(18deg) rotateY(-25deg)';
 }
 
 function hasNestedCSSClasses(css) {

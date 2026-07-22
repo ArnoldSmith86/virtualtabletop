@@ -48,9 +48,9 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
 
 describe('css helpers', () => {
   test('dice previews use face-count-specific isometric rotations', () => {
-    expect(cssHelpers.dicePreviewRotation(2)).toBe('rotateY(30deg)');
-    expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateX(-10deg) rotateY(75deg)');
-    expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(-30deg) rotateY(30deg)');
+    expect(cssHelpers.dicePreviewRotation(2)).toBe('rotateY(-30deg)');
+    expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateZ(105deg) rotateX(110deg) rotateY(0deg)');
+    expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(15deg) rotateY(20deg)');
   });
 
   test('svg replacement colors use only declared conventional color properties', () => {
