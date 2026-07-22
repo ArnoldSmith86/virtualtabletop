@@ -242,6 +242,7 @@ class DeckEditor {
     $('#editor').append($('#deckEditorExportOverlay'));
     $('#editor').append($('#deckEditorImportOverlay'));
     $('#editor').append($('#deckEditorNewDeckOverlay'));
+    $('#editor').append($('#symbolPickerOverlay'));
     // Move the shared public-library overlay into #editor too, so "Browse the public library" from the deck
     // editor's Add New Deck submenu shows above the editor instead of behind it (it still works normally in
     // plain edit mode - overlays are position:fixed, so the parent only affects stacking).
@@ -299,9 +300,16 @@ class DeckEditor {
     for(const radio of $a('#deckEditorAddMode input[type=radio]'))
       radio.onchange = _=>this.setAddMode(radio.value);
     $('#deckEditorAddText').onclick = _=>this.addByMode({ type: 'text', x: 10, y: 10, width: 80, height: 30, fontSize: 20, textAlign: 'center' }, 'text', 'Text');
-    // Adds a placeholder image object; the user uploads afterwards via the "Upload image" button next to Delete.
-    $('#deckEditorAddImage').onclick = _=>this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: '#cccccc' }, 'image', '');
-    $('#deckEditorAddIcon').onclick = _=>this.addByMode({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', 'skoll/hearts');
+    $('#deckEditorAddImage').onclick = async _=>{
+      const symbol = await pickSymbol('images');
+      if(symbol && symbol.url)
+        this.addByMode({ type: 'image', x: 10, y: 10, width: 50, height: 50, color: '#cccccc' }, 'image', symbol.url);
+    };
+    $('#deckEditorAddIcon').onclick = async _=>{
+      const symbol = await pickSymbol();
+      if(symbol)
+        this.addByMode({ type: 'icon', x: 10, y: 10, size: 50, color: '#000000' }, 'icon', symbol.symbol);
+    };
     $('#deckEditorAddColor').onclick = _=>this.addByMode(this.colorBoxTemplate(), 'color', '#cccccc', 'color');
 
     // Card-type toolbar above the strip (item: add blank / copy / delete the current card type).
