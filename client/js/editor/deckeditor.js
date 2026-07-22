@@ -208,6 +208,7 @@ class DeckEditor {
     // button carries no selection context; the first ever open of a deck falls back to sensible defaults.
     this.selectionMemory = {};
     this.lastDeckID = null;
+    this.suggestSeq = 0; // unique-id counter for the add-property datalists
 
     // Self-contained edit history for the breadcrumb + undo/redo (scoped to the deck editor, rebuilt on open).
     // Each entry is a full snapshot of the working copies; undo/redo re-commit a snapshot through the normal
@@ -1609,8 +1610,11 @@ class DeckEditor {
     };
 
     // The type selector is shown ONLY here (when adding a new property); the created row is then a fixed field.
-    const addPropertyRow = (target, onAdd)=>{
-      const row = div(target, 'deckEditorAddProperty', '<input placeholder="new property"><select><option value="text">text</option><option value="number">number</option><option value="true">true</option><option value="false">false</option><option value="object">object/array</option></select><button icon=add>Add</button>');
+    // suggestions (optional) populate a datalist so known-but-currently-absent properties stay discoverable.
+    const addPropertyRow = (target, onAdd, suggestions)=>{
+      const listId = suggestions && suggestions.length ? `deckEditorPropSuggest${++this.suggestSeq}` : '';
+      const list = listId ? `<datalist id=${listId}>${suggestions.map(s=>`<option value="${html(s)}">`).join('')}</datalist>` : '';
+      const row = div(target, 'deckEditorAddProperty', `<input placeholder="new property"${listId ? ` list=${listId}` : ''}>${list}<select><option value="text">text</option><option value="number">number</option><option value="true">true</option><option value="false">false</option><option value="object">object/array</option></select><button icon=add>Add</button>`);
       $('button', row).onclick = _=>{
         const property = $('input', row).value.trim();
         if(property)
@@ -1718,6 +1722,14 @@ class DeckEditor {
       `field:cardTypes:${this.cardType}:${property}`
     ];
     const typeProps = div(sidebar, 'deckEditorProperties');
+    // Properties a face object binds to are structural: the object reads them, so their row must stay even
+    // when blank. Only free-standing properties get a trash (which removes the whole row + JSON); to remove a
+    // bound one, remove the object's binding.
+    const boundProperties = new Set();
+    for(const face of this.faceTemplates)
+      for(const object of face.objects || [])
+        for(const property of Object.values(object.dynamicProperties || {}))
+          boundProperties.add(property);
     const addTypeInput = property=>{
       const row = this.addTypedInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
@@ -1725,24 +1737,22 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
       }), typeProps);
-      // A trash on every card type property row, including blank ones pulled in from a face binding.
-      this.addPropertyDeleteButton(row, property, async _=>{
-        await this.flushPendingCommits();
-        delete typeProperties[property];
-        if(this.mainCard)
-          delete this.mainCard.state[property];
-        this.refreshMainCardFaces();
-        await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
-        this.renderSidebar();
-      });
+      if(!boundProperties.has(property))
+        this.addPropertyDeleteButton(row, property, async _=>{
+          await this.flushPendingCommits();
+          delete typeProperties[property];
+          if(this.mainCard)
+            delete this.mainCard.state[property];
+          this.refreshMainCardFaces();
+          await this.commit('cardTypes', `${getPlayerDetails().playerName} deleted property "${property}" of card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+          this.renderSidebar();
+        });
     };
     for(const property of Object.keys(typeProperties))
       addTypeInput(property);
-    for(const face of this.faceTemplates)
-      for(const object of face.objects || [])
-        for(const property of Object.values(object.dynamicProperties || {}))
-          if(typeof typeProperties[property] === 'undefined' && [ 'cardType', 'id' ].indexOf(property) == -1)
-            addTypeInput(property);
+    for(const property of boundProperties)
+      if(typeof typeProperties[property] === 'undefined' && [ 'cardType', 'id' ].indexOf(property) == -1)
+        addTypeInput(property);
     addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
       if(typeProperties[property] !== undefined)
         return;
@@ -1774,14 +1784,14 @@ class DeckEditor {
     const addFaceTrash = (row, property, onDelete)=>this.addPropertyDeleteButton({ dom: row }, property, onDelete);
     const deleteCause = property=>`${getPlayerDetails().playerName} deleted property "${property}" of face ${this.face} of deck ${this.deckID} in deck editor`;
 
-    // border & radius live on the face template itself (0/absent = default).
+    // border & radius live on the face template itself (numbers). Like the Card type section, a property is a
+    // row only while it exists, so its trash removes the whole row; add absent ones from the row below.
     for(const property of [ 'border', 'radius' ]) {
+      if(face[property] === undefined)
+        continue;
       const row = this.addNumberInput(property, face[property], value=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
-        if(value)
-          face[property] = value;
-        else
-          delete face[property]; // 0 is the default, so keep the template clean
+        face[property] = value;
         this.refreshMainCardFaces();
         this.scheduleCommit('faceTemplates', ...fieldArgs(property));
       }), faceProps);
@@ -1794,19 +1804,11 @@ class DeckEditor {
       });
     }
 
-    // Properties that reach the card live under face.properties (enlarge and any custom ones added below).
+    // Properties that reach the card live under face.properties (enlarge and any custom ones).
     const setFaceProperty = (property, value)=>{
-      if(!value) {
-        if(face.properties) {
-          delete face.properties[property];
-          if(!Object.keys(face.properties).length)
-            delete face.properties;
-        }
-      } else {
-        if(!face.properties || typeof face.properties != 'object')
-          face.properties = {};
-        face.properties[property] = value;
-      }
+      if(!face.properties || typeof face.properties != 'object')
+        face.properties = {};
+      face.properties[property] = value;
     };
     const deleteFaceProperty = async property=>{
       await this.flushPendingCommits();
@@ -1820,14 +1822,16 @@ class DeckEditor {
       this.renderSidebar();
     };
     const faceProperties = (face.properties && typeof face.properties == 'object') ? face.properties : {};
-    // enlarge is a known number property; then any custom ones the user added.
-    const enlargeRow = this.addNumberInput('enlarge', faceProperties.enlarge, value=>this.queueFieldEdit(async _=>{
-      await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs('enlarge')[1]);
-      setFaceProperty('enlarge', value);
-      this.refreshMainCardFaces();
-      this.scheduleCommit('faceTemplates', ...fieldArgs('enlarge'));
-    }), faceProps);
-    addFaceTrash(enlargeRow, 'enlarge', _=>deleteFaceProperty('enlarge'));
+    // enlarge is a known number property; then any custom ones the user added. All rendered only while present.
+    if(faceProperties.enlarge !== undefined) {
+      const enlargeRow = this.addNumberInput('enlarge', faceProperties.enlarge, value=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs('enlarge')[1]);
+        setFaceProperty('enlarge', value);
+        this.refreshMainCardFaces();
+        this.scheduleCommit('faceTemplates', ...fieldArgs('enlarge'));
+      }), faceProps);
+      addFaceTrash(enlargeRow, 'enlarge', _=>deleteFaceProperty('enlarge'));
+    }
     for(const property of Object.keys(faceProperties)) {
       if(property == 'enlarge')
         continue;
@@ -1840,17 +1844,22 @@ class DeckEditor {
       this.addPropertyDeleteButton(row, property, _=>deleteFaceProperty(property));
     }
 
-    // Add a new custom whole-face property (stored under face.properties).
+    // Add a whole-face property. border/radius are numbers on the face template itself; enlarge and custom ones
+    // live under face.properties. Known face knobs are offered as datalist suggestions so they stay discoverable.
+    const faceLevel = property=>[ 'border', 'radius' ].indexOf(property) != -1;
+    const hasFaceProperty = property=>faceLevel(property) ? face[property] !== undefined : faceProperties[property] !== undefined;
+    const suggestions = [ 'border', 'radius', 'enlarge' ].filter(p=>!hasFaceProperty(p));
     addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
-      if(face.properties && face.properties[property] !== undefined)
+      if(hasFaceProperty(property))
         return;
       await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
-      if(!face.properties || typeof face.properties != 'object')
-        face.properties = {};
-      face.properties[property] = this.initialValueForType(type);
+      if(faceLevel(property))
+        face[property] = 0; // border/radius are numeric face-template properties
+      else
+        setFaceProperty(property, property == 'enlarge' ? 0 : this.initialValueForType(type));
       this.scheduleCommit('faceTemplates', ...fieldArgs(property));
       this.renderSidebar();
-    }));
+    }), suggestions);
   }
 
   // The left "file directory" tree: Decks (top level, names only) → the current deck's Faces (names only) →

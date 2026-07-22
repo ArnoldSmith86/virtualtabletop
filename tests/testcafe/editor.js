@@ -499,6 +499,16 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     tile.click();
     return true;
   });
+  // Entire-face properties (border/radius/enlarge/custom) are rows only while present; add one via the section's
+  // "add property" control (the first .deckEditorAddProperty). border/radius are forced to numbers on the face.
+  const addFaceProperty = ClientFunction(name => {
+    const add = document.querySelectorAll('#deckEditorSidebar .deckEditorAddProperty')[0];
+    if(!add)
+      return false;
+    add.querySelector('input').value = name;
+    add.querySelector('button').click();
+    return true;
+  });
 
   await t
     .click('#editButton')
@@ -518,6 +528,7 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .typeText('.deckEditorAddBinding .typeProperty', 'color')
     .click('.deckEditorAddBindingButton');
   await t.pressKey('esc'); // deselect the object -> the "Entire face properties" and "Face objects" bands appear
+  await t.expect(addFaceProperty('radius')).ok(); // radius is a row only once added
   await t.expect(setNumberField('Entire face properties', 'radius', 8)).ok();
   await t.wait(700); // let the debounced faceTemplates commit fire
   // edit the card defaults, which live behind the deck symbol in the strip
