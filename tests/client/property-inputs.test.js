@@ -40,11 +40,22 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     parsePropertyFromCSS,
     mergePropertyFromCSS,
     formatTimerMs,
-    parseTimerInput
+    parseTimerInput,
+    svgReplaceColorProperties
   };
 `)(class {});
 
 describe('css helpers', () => {
+  test('svg replacement colors use only declared conventional color properties', () => {
+    expect(cssHelpers.svgReplaceColorProperties({
+      '#primary': 'color',
+      '#accent': 'accentColor1',
+      '#outline': 'outlineColor2',
+      '#ignored': 'borderColor',
+      '#alsoIgnored': 'title'
+    })).toEqual([ 'color', 'accentColor1', 'outlineColor2' ]);
+  });
+
   test('cssTextFromValue renders all value shapes', () => {
     expect(cssHelpers.cssTextFromValue(null)).toBe('');
     expect(cssHelpers.cssTextFromValue('color: red')).toBe('color: red');

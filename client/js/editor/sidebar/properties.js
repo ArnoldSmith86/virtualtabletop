@@ -107,6 +107,22 @@ function isObjectLike(value) {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
+// SVG replacements map an SVG token to a widget property. Expose only the
+// conventional color properties, so arbitrary replacement properties remain
+// in the generic editor.
+function svgReplaceColorProperties(svgReplaces) {
+  if(!isObjectLike(svgReplaces))
+    return [];
+  return [...new Set(Object.values(svgReplaces).flat())]
+    .filter(property => typeof property == 'string' && (property == 'color' || /^[A-Za-z]+Color\d+$/.test(property)));
+}
+
+function svgReplaceColorLabel(property) {
+  if(property == 'color')
+    return 'Color';
+  return property.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/^./, char => char.toUpperCase());
+}
+
 function hasNestedCSSClasses(css) {
   return isObjectLike(css) && Object.values(css).some(v => isObjectLike(v));
 }
@@ -360,7 +376,9 @@ const editorTypeSections = {
       { label: 'Image',         property: 'image',        kind: 'image' }
     ],
     colors: [
-      { label: 'Color',         property: 'color',        kind: 'color' }
+      { label: 'Text',          kind: 'color', labelIcon: 'format_color_text', cssKey: 'color' },
+      { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background' },
+      { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 200, nullIfEmpty: true }
@@ -375,8 +393,7 @@ const editorTypeSections = {
     colors: [
       { label: 'Text',             property: 'textColor',         kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--wcFont' },
       { label: 'Background',       property: 'backgroundColor',   kind: 'color', labelIcon: 'format_color_fill', propertyOrCss: '--wcMain' },
-      { label: 'Border',           property: 'borderColor',       kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorder' },
-      { label: 'SVG',              property: 'color',             kind: 'color' }
+      { label: 'Border',           property: 'borderColor',       kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorder' }
     ],
     hover: [
       { label: 'Text',             property: 'textColorOH',       kind: 'color', labelIcon: 'format_color_text', propertyOrCss: '--wcFontOH' },
@@ -393,8 +410,8 @@ const editorTypeSections = {
   dice: {
     stateClasses: { '.shape3D': 'shape3d' },
     colors: [
-      { label: 'Color',         property: 'color',        kind: 'color' },
-      { label: 'Pips',          property: 'pipColor',     kind: 'color' }
+      { label: 'Color',         property: 'color',        kind: 'color', labelIcon: 'casino' },
+      { label: 'Pips',          property: 'pipColor',     kind: 'color', labelIcon: 'casino', labelIconNoFill: true }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'text', placeholder: 'e.g. 16%', nullIfEmpty: true }
@@ -3411,6 +3428,7 @@ class PropertiesModule extends SidebarModule {
       for(const def of sections[group] || [])
         if(def.property)
           properties.push(def.property);
+    properties.push(...svgReplaceColorProperties(widget.get('svgReplaces')));
     return properties;
   }
 
@@ -3451,6 +3469,8 @@ class PropertiesModule extends SidebarModule {
       this.addAppearanceSubTitle('Hover');
       this.renderColorRow(widget, hover);
     }
+
+    this.renderSvgReplaceColors(widget);
 
     // extra color-like subsections (e.g. holder droptarget/droppable) sit
     // after the colors and before the Style inputs
@@ -3675,6 +3695,19 @@ class PropertiesModule extends SidebarModule {
     const row = div(host, 'colorFlexRow');
     const pickerArea = div(host, 'contentMediaPickers');
     this.renderInputs(widget, defs, row, { pickerGroup: { target: pickerArea, current: null } });
+  }
+
+  renderSvgReplaceColors(widget) {
+    const properties = svgReplaceColorProperties(widget.get('svgReplaces'));
+    if(!properties.length)
+      return;
+    this.renderCollapsibleSection('SVG colors', true, body => {
+      this.renderColorRow(widget, properties.map(property => ({
+        label: svgReplaceColorLabel(property),
+        property,
+        kind: 'color'
+      })), body);
+    }, null, `${widget.id}:svgColors`);
   }
 
   renderBehaviorSection(widget, title = 'Behavior') {
