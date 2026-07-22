@@ -97,6 +97,8 @@ Using [Termux](https://termux.dev/), you can use an Android phone as the server 
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ArnoldSmith86/virtualtabletop)
 
+Anyone can edit the project by [forking the repository](https://github.com/ArnoldSmith86/virtualtabletop/fork), making changes on a branch in their fork, and opening a pull request. Direct pushes to the shared repository are restricted so that changes can be reviewed first.
+
 If you want to contribute to virtualtabletop.io development, please read [Helping Out](https://github.com/ArnoldSmith86/virtualtabletop/wiki/Helping-out).
 
 Finally, we appreciate donations that go towards paying for the domain name, the servers, and additional software supporting game development.  You can donate at https://www.patreon.com/virtualtabletop/about.
