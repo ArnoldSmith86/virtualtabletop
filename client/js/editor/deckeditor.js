@@ -1860,6 +1860,11 @@ class DeckEditor {
     this.updateAddSection();
     const tree = $('#deckEditorTree');
     if(tree) {
+      // Preserve the deck-id field's focus/caret across the rebuild: selecting the deck re-renders the tree,
+      // which would otherwise blur the field mid-edit.
+      const focused = document.activeElement;
+      const keepIdFocus = focused && focused.classList && focused.classList.contains('deckEditorTreeDeckId');
+      const idCaret = keepIdFocus ? [ focused.selectionStart, focused.selectionEnd ] : null;
       tree.innerHTML = '';
       for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
         const isCurrent = deck.id == this.deckID;
@@ -1874,9 +1879,9 @@ class DeckEditor {
         if(isCurrent) {
           const idInput = $('.deckEditorTreeDeckId', deckRow);
           idInput.value = deck.id;
-          idInput.onmousedown = e=>e.stopPropagation();
-          idInput.onclick = e=>e.stopPropagation();
-          idInput.ondblclick = e=>e.stopPropagation();
+          // Clicking the field still selects the deck node (so the tree toolbar acts on the deck); the caret is
+          // restored below after the resulting re-render so typing isn't interrupted. Enter/blur commits the id.
+          idInput.onkeydown = e=>{ if(e.key == 'Enter') idInput.blur(); };
           idInput.onchange = _=>{ const v = idInput.value.trim(); if(v && v != deck.id) this.changeDeckId(v); else idInput.value = deck.id; };
         }
         const deckSel = isCurrent && this.treeLevel == 'deck';
@@ -1909,6 +1914,13 @@ class DeckEditor {
       const selectedRow = this.selectedObject !== null ? $a('.deckEditorObjectRow', tree)[this.selectedObject] : null;
       if(selectedRow)
         selectedRow.scrollIntoView({ block: 'nearest' });
+      if(keepIdFocus) {
+        const newInput = $('.deckEditorTreeDeckId', tree);
+        if(newInput) {
+          newInput.focus();
+          try { newInput.setSelectionRange(idCaret[0], idCaret[1]); } catch(e) {}
+        }
+      }
     }
     this.updateTreeToolbar();
   }
