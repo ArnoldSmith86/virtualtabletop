@@ -363,7 +363,7 @@ const editorTypeSections = {
       { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 200, slider: true, nullIfEmpty: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 200, nullIfEmpty: true }
     ]
   },
   button: {
@@ -384,7 +384,7 @@ const editorTypeSections = {
       { label: 'Border',           property: 'borderColorOH',     kind: 'color', labelIcon: 'border_color', propertyOrCss: '--wcBorderOH' }
     ],
     appearance: [
-      { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, slider: true, nullIfEmpty: true }
+      { label: 'Border radius',    property: 'borderRadius',      kind: 'numberOrText', min: 0, max: 800, nullIfEmpty: true }
     ]
   },
   canvas: {},
@@ -415,7 +415,7 @@ const editorTypeSections = {
       { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true },
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, nullIfEmpty: true },
       { label: 'Drop shadow',   property: 'dropShadow',   kind: 'checkbox' }
     ],
     behavior: [
@@ -430,7 +430,7 @@ const editorTypeSections = {
     // border radius stays in the generic appearance/style block
     stateClasses: { '.equalWidth': 'autosizeColumns', '.verticalHeader': 'verticalHeader' },
     appearance: [
-      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
+      { label: 'Border radius',      property: 'borderRadius',     kind: 'numberOrText', min: 0, max: 100, nullIfEmpty: true }
     ]
   },
   seat: {
@@ -439,7 +439,7 @@ const editorTypeSections = {
       { label: 'Color',         property: 'color',        kind: 'color' }
     ],
     appearance: [
-      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, slider: true, nullIfEmpty: true }
+      { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', min: 0, max: 100, nullIfEmpty: true }
     ]
   },
   spinner: {
@@ -480,6 +480,10 @@ const SEAT_PRESET_BACKGROUND = {
       "color": "white",
       "border": "2px solid #000000bb",
       "box-sizing": "border-box"
+    },
+    "> .basic": {
+      "box-shadow": "initial",
+      "text-shadow": "initial"
     }
   }
 };
@@ -501,6 +505,10 @@ const SEAT_PRESET_FIXED = {
     },
     ".seated": {
       "--color": "${PROPERTY colorEmpty} !important"
+    },
+    "> .basic": {
+      "box-shadow": "initial",
+      "text-shadow": "initial"
     }
   }
 };
@@ -1912,9 +1920,9 @@ class PropertiesModule extends SidebarModule {
         removeButton.setAttribute('icon', 'delete');
         removeButton.className = 'onDemandRemove';
         removeButton.title = options.removeTitle || `Remove ${title.replace(/^add /i, '')}`;
-        removeButton.onclick = e => {
+        removeButton.onclick = async e => {
           e.preventDefault();
-          options.onRemove();
+          await options.onRemove();
           collapse();
         };
         container.appendChild(removeButton);
@@ -2445,12 +2453,15 @@ class PropertiesModule extends SidebarModule {
         } else {
           this.startWidgetPicker(widget.id, (targetWidget, pickedWidget)=>{
             if(options.multiple)
-              options.apply([...new Set(selectedIDs().concat(pickedWidget.id))]);
+              options.apply(pickedWidget.map(picked=>picked.id));
             else
               options.apply(pickedWidget.id);
           }, {
             pickerKey: options.pickerKey,
-            filter: pickedWidget=>excludedIDs().indexOf(pickedWidget.id) == -1 && (!typeFilter || (pickedWidget.get('type') || 'basic') == typeFilter)
+            filter: pickedWidget=>excludedIDs().indexOf(pickedWidget.id) == -1 && (!typeFilter || (pickedWidget.get('type') || 'basic') == typeFilter),
+            allowMultiple: !!options.multiple,
+            pendingWidgetIDs: options.multiple ? selectedIDs() : [],
+            onPendingChanged: options.multiple ? widgetIDs=>options.apply(widgetIDs) : null
           });
         }
         updatePickButton();
@@ -2544,7 +2555,7 @@ class PropertiesModule extends SidebarModule {
     if(newParent && newParent.isDescendantOf(widget))
       return `Widget ${newParent.id} is inside ${widget.id}, so using it as the parent would create a loop.`;
 
-    const global = widget.coordGlobalFromCoordParent({ x: widget.get('x'), y: widget.get('y') });
+    const global = { x: widget.get('_absoluteX'), y: widget.get('_absoluteY') };
     const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
 
     batchStart();
@@ -3315,12 +3326,9 @@ class PropertiesModule extends SidebarModule {
     }, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper,
       removeTitle: 'Remove parent',
-      onRemove: () => {
-        batchStart();
-        setDeltaCause(`${getPlayerDetails().playerName} removed parent of widget ${widget.id} in editor`);
-        this.setWidgetParent(widget, null);
-        widget.set('fixedParent', null);
-        batchEnd();
+      onRemove: async () => {
+        await this.setWidgetParent(widget, null);
+        await widget.set('fixedParent', null);
       },
       isPropertySet: (property, value) => {
         if(property == 'fixedParent')
@@ -3678,12 +3686,38 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderOtherPropertiesSection(widget, extraExclude = []) {
-    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(extraExclude));
+    const automationProperties = this.renderAutomationsSection(widget);
+    const exclude = this.basicPropertyExcludeList(this.typeSectionProperties(widget).concat(automationProperties, extraExclude));
     const remaining = Object.keys(widget.state).filter(property => [ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) == -1);
     if(!remaining.length)
       return;
     this.addSubHeader('Other properties');
     this.renderGenericProperties(widget, exclude);
+  }
+
+  renderAutomationsSection(widget) {
+    const playerRoutines = [ 'clickRoutine', 'doubleClickRoutine', 'changeRoutine', 'enterRoutine', 'leaveRoutine' ]
+      .filter(property => property == 'clickRoutine' || widget.state[property] !== undefined);
+    if(!playerRoutines.length)
+      return [];
+
+    this.addSubHeader('Automations');
+    for(const property of playerRoutines) {
+      const row = div(this.moduleDOM, 'propertyInput automationInput');
+      const label = document.createElement('label');
+      label.textContent = property.replace(/Routine$/, '').replace(/([A-Z])/g, ' $1').replace(/^./, char=>char.toUpperCase());
+      row.appendChild(label);
+      const button = document.createElement('button');
+      button.setAttribute('icon', 'data_object');
+      button.textContent = `Edit ${property} in JSON editor`;
+      button.onclick = () => {
+        const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
+        if(jsonModuleButton)
+          jsonModuleButton.click();
+      };
+      row.appendChild(button);
+    }
+    return playerRoutines;
   }
 
   // --- shared curated inputs ---
@@ -3855,18 +3889,6 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     this.renderBasicContentSection(widget);
     this.renderAppearanceSection(widget);
-    this.addSubHeader('Behavior');
-    div(this.moduleDOM, '', `
-      <p>What the button does when clicked is defined by its <b>clickRoutine</b> which you can edit in the JSON editor.</p>
-      <div class=buttonBar>
-        <button icon=data_object>Open in JSON editor</button>
-      </div>
-    `);
-    $('[icon=data_object]', this.moduleDOM).onclick = _=>{
-      const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-      if(jsonModuleButton)
-        jsonModuleButton.click();
-    };
     this.renderOtherPropertiesSection(widget);
   }
 

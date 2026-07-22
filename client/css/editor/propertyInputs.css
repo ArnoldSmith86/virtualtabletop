@@ -694,9 +694,10 @@
 .editorModule .cssTriggeredClasses code {
   font-style: normal;
   font-family: monospace;
-  background: var(--backgroundHighlightColor1, #eee);
+  background: var(--VTTblue);
+  color: #fff;
   border-radius: 3px;
-  padding: 0 3px;
+  padding: 1px 5px;
   cursor: help;
 }
 

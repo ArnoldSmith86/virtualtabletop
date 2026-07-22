@@ -200,9 +200,12 @@ function searchIconIndex(query, limit=42) {
   return results.slice(0, limit);
 }
 
+let activePropertyInfoPopup = null;
+
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
-// closes with its close button, a click outside of it or Escape.
+// opens on hover or click and closes with its close button, a click outside
+// of it or Escape.
 // Named propertyInfoButton (not infoButton) because controls/popup.js
 // declares its own top-level infoButton(); both files land in the editor
 // bundle whenever this PR and the routine editor are merged together (e.g.
@@ -210,8 +213,11 @@ function searchIconIndex(query, limit=42) {
 // module throw "Identifier has already been declared".
 function propertyInfoButton(appendTo, infoHTML) {
   const dom = div(appendTo, 'info-button', `<span class=material-symbols>info</span>`);
-  dom.addEventListener('click', e=>{
-    e.stopPropagation();
+  const open = e=>{
+    if(e)
+      e.stopPropagation();
+    if(activePropertyInfoPopup)
+      activePropertyInfoPopup();
     const popup = div($('#editor'), 'inline-popup', `<button class=popup-close icon=close title=Close></button><div class=content></div>`);
     $('.content', popup).innerHTML = infoHTML;
 
@@ -228,6 +234,8 @@ function propertyInfoButton(appendTo, infoHTML) {
       document.removeEventListener('click', onOutsideClick);
       document.removeEventListener('keydown', onKeyDown, true);
       popup.remove();
+      if(activePropertyInfoPopup == close)
+        activePropertyInfoPopup = null;
     };
     const onOutsideClick = e=>{
       if(!popup.contains(e.target))
@@ -241,10 +249,13 @@ function propertyInfoButton(appendTo, infoHTML) {
       }
     };
     $('.popup-close', popup).onclick = close;
+    activePropertyInfoPopup = close;
     document.addEventListener('keydown', onKeyDown, true);
     // defer so the click that opened the popup doesn't immediately close it
     setTimeout(_=>document.addEventListener('click', onOutsideClick), 0);
-  });
+  };
+  dom.addEventListener('mouseenter', open);
+  dom.addEventListener('click', open);
   return dom;
 }
 
