@@ -249,9 +249,8 @@
   width: auto;
   min-width: 0;
   padding: 0 8px;
-  background: none;
   font-size: 13px;
-  color: var(--textDimColor1, #777);
+  color: var(--textColor);
 }
 
 .editorModule .propertyEmptyChipLabel::after {
@@ -474,7 +473,7 @@
 }
 
 .editorModule .collapsibleSummary {
-  color: var(--textDimColor1, #777);
+  color: var(--textColor);
   font-weight: normal;
 }
 
@@ -682,25 +681,31 @@
   font-size: 120px;
 }
 
-/* Unset media starts as a compact, clearly labelled action. Once selected,
-   the preview expands to the regular 200px tile above. */
+/* Unset media starts as a compact, clearly labelled checkerboard tile. Once
+   selected, the preview expands to the regular 200px tile above. */
 .editorModule .contentMediaBlock .propertyPreviewButton.emptyValue {
-  min-width: 0;
-  min-height: 0;
+  min-width: 79px;
+  min-height: 79px;
   padding: 4px;
 }
 
 .editorModule .contentMediaBlock .propertyPreviewButton.emptyValue .propertyEmptyChipLabel {
-  width: auto;
-  height: 30px;
-  min-width: 0;
+  width: 75px;
+  height: 75px;
+  min-width: 75px;
   padding: 0 8px;
   border-radius: 4px;
   font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
+  background-position: 0 0, 8px 8px;
+  background-size: 16px 16px;
 }
 
 .editorModule .basicGeometryHint {
-  color: var(--textDimColor1, #777);
+  color: var(--textColor);
   font-size: 12px;
   margin: 2px 0 6px;
 }
