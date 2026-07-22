@@ -14,6 +14,7 @@ const inputHelpers = new Function(inputsSource + `;
     propertyInputValueSet,
     searchIconIndex,
     searchImageIndex,
+    iconValueType,
     setIconSearchIndex: index => { iconSearchIndex = index; }
   };
 `)();
@@ -205,6 +206,21 @@ describe('property input helpers', () => {
       '/i/game-icons.net/lorc/dice-six-faces-six.svg',
       '/i/noto-emoji/emoji_u1f3b2.svg'
     ]);
+  });
+
+  test('icon search classifies and filters every icon family', () => {
+    expect(inputHelpers.iconValueType('lorc/star')).toBe('game-icons');
+    expect(inputHelpers.iconValueType('star_NOFILL')).toBe('material-symbols');
+    expect(inputHelpers.iconValueType('🎲')).toBe('emoji-color');
+    expect(inputHelpers.iconValueType('(🎲)')).toBe('emoji-monochrome');
+    expect(inputHelpers.iconValueType('[die_face_6]')).toBe('vtt-symbols');
+    expect(inputHelpers.iconValueType('https://example.com/icon.svg')).toBe(null);
+
+    inputHelpers.setIconSearchIndex([
+      { value: 'lorc/star', type: 'game-icons', keywords: 'star', image: true },
+      { value: 'star', type: 'material-symbols', keywords: 'star', image: false }
+    ]);
+    expect(inputHelpers.searchIconIndex('star', 100, new Set([ 'material-symbols' ]))).toEqual([ 'star' ]);
   });
 
   test('picker searches show up to 100 results', () => {

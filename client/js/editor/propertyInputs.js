@@ -94,6 +94,35 @@ function usedGameImages() {
   });
 }
 
+const iconPickerTypes = [
+  { type: 'game-icons',       title: 'Game-icons.net',   icon: 'lorc/dice-six-faces-six' },
+  { type: 'material-symbols', title: 'Material symbols',  icon: 'star' },
+  { type: 'emoji-color',      title: 'Color emoji',      icon: '🎲' },
+  { type: 'emoji-monochrome', title: 'Mono emoji',       icon: '(🎲)' },
+  { type: 'vtt-symbols',      title: 'VTT symbols',      icon: '[die_face_6]' }
+];
+
+function iconValueType(value) {
+  if(typeof value != 'string')
+    return null;
+  if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/))
+    return 'game-icons';
+  if(value.match(/^\[/))
+    return 'vtt-symbols';
+  if(value.match(/^[a-z0-9][a-z0-9_]*(_NOFILL)?$/))
+    return 'material-symbols';
+  if(value.match(/^\(.*\)$/))
+    return 'emoji-monochrome';
+  if(value && !value.match(/^[\x00-\x7F]*$/))
+    return 'emoji-color';
+  return null;
+}
+
+function iconTypeEnabled(value, enabledTypes) {
+  const type = iconValueType(value);
+  return !type || enabledTypes.has(type);
+}
+
 // Renders a small preview for an icon property value (same formats as getIconDetails).
 function renderIconChip(value, target) {
   const chip = div(target, 'propertyValueChip');
@@ -156,20 +185,20 @@ function loadIconSearchIndex() {
         for(let [ symbol, keywords ] of Object.entries(symbols)) {
           if(symbol.includes('/')) {
             keywords = keywords.slice(1); // first entry is the spritesheet index
-            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true });
+            index.push({ value: symbol, keywords: `${symbol.split('/')[1]},${keywords.join()}`.toLowerCase(), image: true, type: 'game-icons' });
           } else {
             const hasNoFillVariant = symbol.match(/ \(FILL\+NOFILL\)$/);
             symbol = symbol.replace(/ \(FILL\+NOFILL\)$/, '');
             const allKeywords = `${symbol},${keywords.join()}`.toLowerCase();
             if(symbol.match(/^\[/) || symbol.match(/^[a-z0-9_]+$/)) {
-              index.push({ value: symbol, keywords: allKeywords, image: false }); // VTT/material symbol font
+              index.push({ value: symbol, keywords: allKeywords, image: false, type: symbol.match(/^\[/) ? 'vtt-symbols' : 'material-symbols' });
               if(hasNoFillVariant)
-                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false });
+                index.push({ value: `${symbol}_NOFILL`, keywords: allKeywords, image: false, type: 'material-symbols' });
             } else {
               // emoji: offer both the color image and the monochrome font variant
-              index.push({ value: symbol, keywords: allKeywords, image: true });
+              index.push({ value: symbol, keywords: allKeywords, image: true, type: 'emoji-color' });
               if(!skipForNotoMonochrome(symbol))
-                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false });
+                index.push({ value: `(${symbol})`, keywords: allKeywords, image: false, type: 'emoji-monochrome' });
             }
           }
         }
@@ -184,12 +213,12 @@ function loadIconSearchIndex() {
 
 // Interleave font-style and image-style matches so both are represented in the
 // top results even when one kind (usually game-icons) dominates the matches.
-function searchIconIndex(query, limit=100) {
+function searchIconIndex(query, limit=100, enabledTypes=null) {
   const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
   const fonts = [];
   const images = [];
   for(const entry of iconSearchIndex || []) {
-    if(terms.every(term=>entry.keywords.includes(term)))
+    if(terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
       (entry.image ? images : fonts).push(entry.value);
   }
   const results = [];
@@ -836,9 +865,11 @@ class IconInput extends PickerInput {
     this.addChipList(target, 'Used in this game', usedGameIcons(), value, renderIconChip);
 
     const searchSection = div(target, 'propertyPickerSection');
+    const searchControls = div(searchSection, 'iconPickerSearchControls');
     const search = document.createElement('input');
     search.placeholder = 'Search icons...';
-    searchSection.appendChild(search);
+    searchControls.appendChild(search);
+    const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
     const results = div(searchSection, 'propertyPickerChips');
 
     const showResults = values=>{
@@ -853,8 +884,36 @@ class IconInput extends PickerInput {
         div(results, 'propertyPickerEmpty', 'No results.');
     };
 
-    const frequentlyUsed = [...new Set(usedGameIcons().concat(topUsedLibraryIcons))].slice(0, 100);
-    showResults(frequentlyUsed);
+    const frequentlyUsed = _=>[...new Set(usedGameIcons().concat(topUsedLibraryIcons))]
+      .filter(icon => iconTypeEnabled(icon, enabledTypes))
+      .slice(0, 100);
+    const updateResults = async _=>{
+      const query = search.value.trim();
+      if(query)
+        await loadIconSearchIndex().catch(_=>null);
+      showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
+    };
+
+    const typeToggles = div(searchControls, 'iconPickerTypeToggles');
+    for(const iconType of iconPickerTypes) {
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'iconPickerTypeToggle active';
+      toggle.title = iconType.title;
+      toggle.setAttribute('aria-label', iconType.title);
+      renderIconChip(iconType.icon, toggle);
+      toggle.onclick = _=>{
+        if(enabledTypes.has(iconType.type))
+          enabledTypes.delete(iconType.type);
+        else
+          enabledTypes.add(iconType.type);
+        toggle.classList.toggle('active', enabledTypes.has(iconType.type));
+        updateResults();
+      };
+      typeToggles.appendChild(toggle);
+    }
+
+    showResults(frequentlyUsed());
 
     const showAll = document.createElement('button');
     showAll.setAttribute('icon', 'apps');
@@ -866,10 +925,7 @@ class IconInput extends PickerInput {
     };
     searchSection.appendChild(showAll);
 
-    search.oninput = async _=>{
-      await loadIconSearchIndex().catch(_=>null);
-      showResults(search.value.trim() ? searchIconIndex(search.value.trim()) : frequentlyUsed);
-    };
+    search.oninput = updateResults;
     loadIconSearchIndex().catch(_=>null);
   }
 }

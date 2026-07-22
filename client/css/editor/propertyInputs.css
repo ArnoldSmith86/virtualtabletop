@@ -315,6 +315,46 @@
   margin: 4px 0;
 }
 
+.editorModule .iconPickerSearchControls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .iconPickerSearchControls input {
+  flex: 1 1 80px;
+  min-width: 0;
+}
+
+.editorModule .iconPickerTypeToggles {
+  display: flex;
+  gap: 2px;
+}
+
+.editorModule .iconPickerTypeToggle {
+  width: 28px;
+  height: 28px;
+  padding: 1px;
+  border: 1px solid var(--textDimColor1, #999);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.editorModule .iconPickerTypeToggle.active {
+  border-color: var(--VTTblue);
+  background: var(--VTTblueLight, #e4effb);
+}
+
+.editorModule .iconPickerTypeToggle .propertyValueChip {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border: none;
+  background: none;
+  font-size: 18px;
+}
+
 .editorModule .propertyPickerSectionTitle {
   font-weight: bold;
   font-size: 12px;
