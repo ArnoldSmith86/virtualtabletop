@@ -95,7 +95,7 @@ function usedGameImages() {
 }
 
 const iconPickerTypes = [
-  { type: 'game-icons',       title: 'Game-icons.net',   icon: 'lorc/dice-six-faces-six' },
+  { type: 'game-icons',       title: 'Game-icons.net',   icon: 'delapouite/dice-six-faces-six' },
   { type: 'material-symbols', title: 'Material symbols',  icon: 'star' },
   { type: 'emoji-color',      title: 'Color emoji',      icon: '🎲' },
   { type: 'emoji-monochrome', title: 'Mono emoji',       icon: '(🎲)' },
