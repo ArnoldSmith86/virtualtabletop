@@ -1884,7 +1884,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
   }
 
   isOnDemandPropertyValueSet(value) {
@@ -2918,6 +2918,12 @@ class PropertiesModule extends SidebarModule {
       });
       this.renderSizeRatioLock(widget, body);
     }, null, `${widget.id}:size`);
+
+    this.renderCollapsibleSection('Generic', true, body=>{
+      this.renderCheckbox(widget, 'Clickable', 'clickable', body);
+      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, max: 10, step: .1 });
+      this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body);
+    }, null, `${widget.id}:generic`);
 
     this.renderAssociatedWidgetsSection(widget);
   }
@@ -5291,8 +5297,8 @@ class PropertiesModule extends SidebarModule {
     return wrapper;
   }
 
-  renderCheckbox(widget, title, property) {
-    const wrap = div(this.moduleDOM);
+  renderCheckbox(widget, title, property, target = null) {
+    const wrap = div(target || this.moduleDOM);
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = `${property}_${widget.id}`;

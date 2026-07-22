@@ -41,6 +41,7 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     mergePropertyFromCSS,
     formatTimerMs,
     parseTimerInput,
+    basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
     svgReplaceColorProperties,
     dicePreviewRotation,
     dicePreviewActiveFace
@@ -48,6 +49,10 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
 `)(class {});
 
 describe('css helpers', () => {
+  test('basic properties exclude the generic inputs from other property sections', () => {
+    expect(cssHelpers.basicPropertyExcludeList()).toEqual(expect.arrayContaining([ 'clickable', 'enlarge', 'ignoreZoom' ]));
+  });
+
   test('only D4 and D6 previews use the requested extra rotations', () => {
     expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateZ(105deg) rotateX(110deg) rotateY(0deg)');
     expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(15deg) rotateY(20deg)');
