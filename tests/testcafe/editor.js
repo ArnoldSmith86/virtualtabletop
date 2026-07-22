@@ -195,8 +195,7 @@ test('Deck editor: add card type, dynamic object, delete face, undo', async t =>
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`)
-    .click('#editor [icon=edit]')
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
     .click('#deckEditorStripAdd')                     // add a card type
     .click(deckNode)                                  // select the deck
     .click('#deckEditorTreeAdd')                      // deck "+" adds a new (empty) face, now selected
@@ -256,8 +255,7 @@ test('Deck editor: breadcrumb undo and redo', async t => {
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`)
-    .click('#editor [icon=edit]')
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
     .click('#deckEditorStripAdd')  // step 1
     .click(deckNode)                         // select the deck
     .click('#deckEditorTreeAdd')             // step 2: deck "+" adds a face (now empty, selected)
@@ -316,8 +314,7 @@ test('Deck editor: remote update preserves an unrelated pending edit', async t =
 
   const deckNode = Selector('#deckEditorTree .deckEditorTreeDeck');
   await t
-    .click(`#w_${deckID}`)
-    .click('#editor [icon=edit]')
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
     .click('#deckEditorStripAdd')
     .click(deckNode)
     .click('#deckEditorTreeAdd')
@@ -383,8 +380,7 @@ test('Deck editor: rapid cross-field edits stay separate undo steps', async t =>
   const getFaceCount = ClientFunction(deckID => widgets.get(deckID).get('faceTemplates').length);
 
   await t
-    .click(`#w_${deckID}`)
-    .click('#editor [icon=edit]')
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
     .click('#deckEditorStripAdd')
     .click(Selector('#deckEditorTree .deckEditorObjectRow').nth(0)) // select the existing object
     .click('#deckEditorTreeAdd')                                    // reveal the add-object controls
@@ -423,8 +419,7 @@ test('Deck editor: switching games while editing does not crash', async t => {
   const deckID = await getDeckID();
 
   await t
-    .click(`#w_${deckID}`)
-    .click('#editor [icon=edit]')
+    .click(`#w_${deckID}`) // selecting the deck opens the deck editor directly (no separate "edit" button)
     .click('#deckEditorStripAdd'); // make a change, leaving the deck editor open
 
   // Simulate switching to another game: replace the whole room state. The deck being edited disappears.
