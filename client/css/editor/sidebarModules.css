@@ -59,6 +59,17 @@
 .editorModule .widgetSelectionButton.isometricDicePreview {
   perspective: 300px;
 }
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d4,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6 {
+  overflow: visible;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D:not(.d2-flip) > * > .diceFace:nth-child(2n + 1) {
+  transform: rotateY(0deg) translateZ(calc(var(--size) * .06));
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D:not(.d2-flip) > * > .diceFace:nth-child(2n) {
+  transform: rotateY(180deg) translateZ(calc(var(--size) * .06));
+}
 .editorModule .widgetSelectionButton .spinner > svg.background {
   left: 0;
 }

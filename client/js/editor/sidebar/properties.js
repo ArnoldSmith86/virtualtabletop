@@ -123,6 +123,16 @@ function svgReplaceColorLabel(property) {
   return property.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/^./, char => char.toUpperCase());
 }
 
+function dicePreviewRotation(faceCount) {
+  if(faceCount == 2)
+    return 'rotateY(-30deg)';
+  if(faceCount == 4)
+    return 'rotateX(10deg) rotateY(-75deg)';
+  if(faceCount == 6)
+    return 'rotateX(30deg) rotateY(-30deg)';
+  return 'rotateX(18deg) rotateY(-25deg)';
+}
+
 function hasNestedCSSClasses(css) {
   return isObjectLike(css) && Object.values(css).some(v => isObjectLike(v));
 }
@@ -4603,7 +4613,7 @@ class PropertiesModule extends SidebarModule {
         const previewState = state();
         preview.applyDelta(previewState);
         button.classList.toggle('isometricDicePreview', previewState.shape3d);
-        preview.domElement.style.transform = `${baseTransform}${previewState.shape3d ? ' rotateX(18deg) rotateY(-25deg)' : ''}`;
+        preview.domElement.style.transform = `${baseTransform}${previewState.shape3d ? ` ${dicePreviewRotation(previewState.faces.length)}` : ''}`;
       };
       dicePreviews.push(update);
       update();
