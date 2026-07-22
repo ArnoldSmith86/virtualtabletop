@@ -327,8 +327,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  max-height: 220px;
-  overflow-y: auto;
 }
 
 .editorModule .propertyPickerChips .symbols,
