@@ -123,16 +123,6 @@ function svgReplaceColorLabel(property) {
   return property.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/^./, char => char.toUpperCase());
 }
 
-function dicePreviewRotation(faceCount) {
-  if(faceCount == 2)
-    return 'rotateY(-30deg)';
-  if(faceCount == 4)
-    return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
-  if(faceCount == 6)
-    return 'rotateX(15deg) rotateY(20deg)';
-  return '';
-}
-
 function dicePreviewActiveFace(faces) {
   if(faces.length == 4)
     return 0;
@@ -4627,11 +4617,8 @@ class PropertiesModule extends SidebarModule {
         preview.applyDelta(previewState);
         button.classList.toggle('isometricDicePreview', previewState.shape3d);
         preview.domElement.style.transform = baseTransform;
-        const previewRotation = dicePreviewRotation(previewState.faces.length);
-        if(previewState.shape3d && previewRotation)
-          preview.facesElement.style.setProperty('--editorPreviewRotation', previewRotation);
-        else
-          preview.facesElement.style.removeProperty('--editorPreviewRotation');
+        // Dice.threeDfaces derives --curRot from the selected face's transform,
+        // aligning both its normal and local up vector without Euler angles.
       };
       dicePreviews.push(update);
       update();

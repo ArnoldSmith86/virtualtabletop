@@ -42,19 +42,11 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     formatTimerMs,
     parseTimerInput,
     svgReplaceColorProperties,
-    dicePreviewRotation,
     dicePreviewActiveFace
   };
 `)(class {});
 
 describe('css helpers', () => {
-  test('dice previews use face-count-specific isometric rotations', () => {
-    expect(cssHelpers.dicePreviewRotation(2)).toBe('rotateY(-30deg)');
-    expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateZ(105deg) rotateX(110deg) rotateY(0deg)');
-    expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(15deg) rotateY(20deg)');
-    expect(cssHelpers.dicePreviewRotation(8)).toBe('');
-  });
-
   test('larger dice previews show their highest numeric face', () => {
     expect(cssHelpers.dicePreviewActiveFace([ 1, 2, 3, 4 ])).toBe(0);
     expect(cssHelpers.dicePreviewActiveFace([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ])).toBe(9);
