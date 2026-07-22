@@ -52,6 +52,7 @@ describe('css helpers', () => {
     expect(cssHelpers.dicePreviewRotation(2)).toBe('rotateY(-30deg)');
     expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateZ(105deg) rotateX(110deg) rotateY(0deg)');
     expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(15deg) rotateY(20deg)');
+    expect(cssHelpers.dicePreviewRotation(8)).toBe('');
   });
 
   test('larger dice previews show their highest numeric face', () => {

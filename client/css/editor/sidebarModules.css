@@ -79,6 +79,9 @@
 .editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D > .diceFaces > .diceFace {
   box-shadow: -5px -0px 02px #FFFd, -6px -0px 0 var(--borderColor);
 }
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6.shape3D > * > .diceFace {
+  border-radius: 0;
+}
 .editorModule .widgetSelectionButton .spinner > svg.background {
   left: 0;
 }

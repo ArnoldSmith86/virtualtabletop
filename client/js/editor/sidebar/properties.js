@@ -130,7 +130,7 @@ function dicePreviewRotation(faceCount) {
     return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
   if(faceCount == 6)
     return 'rotateX(15deg) rotateY(20deg)';
-  return 'rotateX(18deg) rotateY(-25deg)';
+  return '';
 }
 
 function dicePreviewActiveFace(faces) {
@@ -4627,8 +4627,9 @@ class PropertiesModule extends SidebarModule {
         preview.applyDelta(previewState);
         button.classList.toggle('isometricDicePreview', previewState.shape3d);
         preview.domElement.style.transform = baseTransform;
-        if(previewState.shape3d)
-          preview.facesElement.style.setProperty('--editorPreviewRotation', dicePreviewRotation(previewState.faces.length));
+        const previewRotation = dicePreviewRotation(previewState.faces.length);
+        if(previewState.shape3d && previewRotation)
+          preview.facesElement.style.setProperty('--editorPreviewRotation', previewRotation);
         else
           preview.facesElement.style.removeProperty('--editorPreviewRotation');
       };
