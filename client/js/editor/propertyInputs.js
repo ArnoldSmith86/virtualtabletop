@@ -95,11 +95,11 @@ function usedGameImages() {
 }
 
 const iconPickerTypes = [
-  { type: 'game-icons',       title: 'Game-icons.net',   icon: 'delapouite/dice-six-faces-six' },
-  { type: 'material-symbols', title: 'Material symbols',  icon: 'star' },
-  { type: 'emoji-color',      title: 'Color emoji',      icon: '🎲' },
-  { type: 'emoji-monochrome', title: 'Mono emoji',       icon: '(🎲)' },
-  { type: 'vtt-symbols',      title: 'VTT symbols',      icon: '[die_face_6]' }
+  { type: 'game-icons',       label: 'Game Icons',  title: 'Include icons from Game-icons.net' },
+  { type: 'material-symbols', label: 'Material',    title: 'Include Google\'s Material Symbols' },
+  { type: 'emoji-color',      label: 'Color Emoji', title: 'Include color emoji' },
+  { type: 'emoji-monochrome', label: 'Mono Emoji',  title: 'Include monochrome emoji' },
+  { type: 'vtt-symbols',      label: 'VTT',         title: 'Include VTT symbols' }
 ];
 
 function iconValueType(value) {
@@ -865,10 +865,9 @@ class IconInput extends PickerInput {
     this.addChipList(target, 'Used in this game', usedGameIcons(), value, renderIconChip);
 
     const searchSection = div(target, 'propertyPickerSection');
-    const searchControls = div(searchSection, 'iconPickerSearchControls');
     const search = document.createElement('input');
     search.placeholder = 'Search icons...';
-    searchControls.appendChild(search);
+    searchSection.appendChild(search);
     const enabledTypes = new Set(iconPickerTypes.map(({ type }) => type));
     const results = div(searchSection, 'propertyPickerChips');
 
@@ -894,22 +893,25 @@ class IconInput extends PickerInput {
       showResults(query ? searchIconIndex(query, 100, enabledTypes) : frequentlyUsed());
     };
 
-    const typeToggles = div(searchControls, 'iconPickerTypeToggles');
+    const typeToggles = div(searchSection, 'iconPickerFilterChips');
+    div(typeToggles, 'iconPickerFilterTitle', 'Libraries:');
     for(const iconType of iconPickerTypes) {
-      const toggle = document.createElement('button');
-      toggle.type = 'button';
-      toggle.className = 'iconPickerTypeToggle active';
+      const toggle = document.createElement('label');
+      toggle.className = 'iconPickerFilterChip';
       toggle.title = iconType.title;
-      toggle.setAttribute('aria-label', iconType.title);
-      renderIconChip(iconType.icon, toggle);
-      toggle.onclick = _=>{
-        if(enabledTypes.has(iconType.type))
-          enabledTypes.delete(iconType.type);
-        else
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = true;
+      checkbox.title = iconType.title;
+      checkbox.onchange = _=>{
+        if(checkbox.checked)
           enabledTypes.add(iconType.type);
-        toggle.classList.toggle('active', enabledTypes.has(iconType.type));
+        else
+          enabledTypes.delete(iconType.type);
         updateResults();
       };
+      toggle.appendChild(checkbox);
+      toggle.append(iconType.label);
       typeToggles.appendChild(toggle);
     }
 

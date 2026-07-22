@@ -315,44 +315,32 @@
   margin: 4px 0;
 }
 
-.editorModule .iconPickerSearchControls {
+.editorModule .iconPickerFilterChips {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
+  gap: 4px 12px;
+  margin: 2px 0 8px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1, #ccc);
 }
 
-.editorModule .iconPickerSearchControls input {
-  flex: 1 1 80px;
-  min-width: 0;
+.editorModule .iconPickerFilterTitle {
+  font-size: 12px;
+  font-weight: bold;
 }
 
-.editorModule .iconPickerTypeToggles {
-  display: flex;
-  gap: 2px;
-}
-
-.editorModule .iconPickerTypeToggle {
-  width: 28px;
-  height: 28px;
-  padding: 1px;
-  border: 1px solid var(--textDimColor1, #999);
-  border-radius: 4px;
-  background: transparent;
+.editorModule .iconPickerFilterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   cursor: pointer;
+  font-size: 12px;
 }
 
-.editorModule .iconPickerTypeToggle.active {
-  border-color: var(--VTTblue);
-  background: var(--VTTblueLight, #e4effb);
-}
-
-.editorModule .iconPickerTypeToggle .propertyValueChip {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  border: none;
-  background: none;
-  font-size: 18px;
+.editorModule .iconPickerFilterChip input {
+  width: auto;
+  margin: 0;
 }
 
 .editorModule .propertyPickerSectionTitle {
