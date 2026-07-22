@@ -184,7 +184,7 @@ function loadIconSearchIndex() {
 
 // Interleave font-style and image-style matches so both are represented in the
 // top results even when one kind (usually game-icons) dominates the matches.
-function searchIconIndex(query, limit=42) {
+function searchIconIndex(query, limit=100) {
   const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
   const fonts = [];
   const images = [];
@@ -207,7 +207,7 @@ function imageURLFromSymbol(symbol) {
   return `/i/noto-emoji/emoji_u${filename}.svg`;
 }
 
-function searchImageIndex(query, limit=42) {
+function searchImageIndex(query, limit=100) {
   const terms = query.toLowerCase().split(/\s+/).filter(term => term);
   return (iconSearchIndex || [])
     .filter(entry => entry.image && terms.every(term => entry.keywords.includes(term)))
@@ -586,6 +586,9 @@ class PickerInput extends PropertyInput {
       this.expandButton.classList.add('open');
     this.previewButton.classList.add('open');
     this.updatePicker(this.getValue());
+    const search = this.pickerDOM.querySelector('input[placeholder^="Search "]');
+    if(search)
+      search.focus();
   }
 
   closePicker() {
@@ -850,7 +853,7 @@ class IconInput extends PickerInput {
         div(results, 'propertyPickerEmpty', 'No results.');
     };
 
-    const frequentlyUsed = [...new Set(usedGameIcons().concat(topUsedLibraryIcons))].slice(0, 42);
+    const frequentlyUsed = [...new Set(usedGameIcons().concat(topUsedLibraryIcons))].slice(0, 100);
     showResults(frequentlyUsed);
 
     const showAll = document.createElement('button');
@@ -908,7 +911,7 @@ class ImageInput extends PickerInput {
         div(results, 'propertyPickerEmpty', 'No results.');
     };
 
-    const frequentlyUsed = [...new Set(usedGameImages().concat(builtinGamePieceImages))].slice(0, 42);
+    const frequentlyUsed = [...new Set(usedGameImages().concat(builtinGamePieceImages))].slice(0, 100);
     showResults(frequentlyUsed);
 
     const showAll = document.createElement('button');

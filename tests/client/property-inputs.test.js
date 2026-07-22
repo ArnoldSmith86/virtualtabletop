@@ -206,4 +206,15 @@ describe('property input helpers', () => {
       '/i/noto-emoji/emoji_u1f3b2.svg'
     ]);
   });
+
+  test('picker searches show up to 100 results', () => {
+    inputHelpers.setIconSearchIndex(Array.from({ length: 101 }, (_, index) => ({
+      value: `icons/icon-${index}`,
+      keywords: 'icon',
+      image: true
+    })));
+
+    expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
+    expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
+  });
 });
