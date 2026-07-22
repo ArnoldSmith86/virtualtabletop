@@ -183,14 +183,14 @@ describe('property input helpers', () => {
     expect(stringChip.children[0].className).toBe('material-symbols');
   });
 
-  test('searchIconIndex interleaves font and image matches', () => {
+  test('searchIconIndex preserves symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
       { value: 'star',           keywords: 'star,favorite', image: false },
       { value: 'grade',          keywords: 'star,grade',    image: false },
       { value: 'lorc/star',      keywords: 'star,shiny',    image: true },
       { value: 'delapouite/sun', keywords: 'sun,light',     image: true }
     ]);
-    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'lorc/star', 'grade' ]);
+    expect(inputHelpers.searchIconIndex('star')).toEqual([ 'star', 'grade', 'lorc/star' ]);
     expect(inputHelpers.searchIconIndex('sun')).toEqual([ 'delapouite/sun' ]);
     expect(inputHelpers.searchIconIndex('nothing')).toEqual([]);
   });

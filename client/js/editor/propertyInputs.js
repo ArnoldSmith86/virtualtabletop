@@ -211,22 +211,13 @@ function loadIconSearchIndex() {
   return iconSearchIndexPromise;
 }
 
-// Interleave font-style and image-style matches so both are represented in the
-// top results even when one kind (usually game-icons) dominates the matches.
+// Keep matches in symbols.json order so related icon families stay together.
 function searchIconIndex(query, limit=100, enabledTypes=null) {
   const terms = query.toLowerCase().split(/\s+/).filter(t=>t);
-  const fonts = [];
-  const images = [];
-  for(const entry of iconSearchIndex || []) {
-    if(terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
-      (entry.image ? images : fonts).push(entry.value);
-  }
-  const results = [];
-  for(let i=0; results.length < limit && (i < fonts.length || i < images.length); i++) {
-    if(i < fonts.length)  results.push(fonts[i]);
-    if(i < images.length) results.push(images[i]);
-  }
-  return results.slice(0, limit);
+  return (iconSearchIndex || [])
+    .filter(entry => terms.every(term=>entry.keywords.includes(term)) && (!enabledTypes || enabledTypes.has(entry.type)))
+    .slice(0, limit)
+    .map(entry => entry.value);
 }
 
 function imageURLFromSymbol(symbol) {
