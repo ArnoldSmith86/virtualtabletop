@@ -15,6 +15,7 @@ const inputHelpers = new Function(inputsSource + `;
     searchIconIndex,
     searchImageIndex,
     iconValueType,
+    usedGameIconValue,
     setIconSearchIndex: index => { iconSearchIndex = index; }
   };
 `)();
@@ -165,6 +166,14 @@ describe('property input helpers', () => {
     expect(inputHelpers.propertyInputValueSet('')).toBe(false);
     expect(inputHelpers.propertyInputValueSet(0)).toBe(true);
     expect(inputHelpers.propertyInputValueSet('transparent')).toBe(true);
+  });
+
+  test('used icon suggestions ignore generic name and value fields', () => {
+    expect(inputHelpers.usedGameIconValue('icon', 'lorc/star', [ 'icon' ], {})).toBe('lorc/star');
+    expect(inputHelpers.usedGameIconValue('name', 'lorc/star', [ 'icon', 'name' ], {})).toBe('lorc/star');
+    expect(inputHelpers.usedGameIconValue('value', 'lorc/star', [ 'faceTemplates', '0', 'value' ], { type: 'icon' })).toBe('lorc/star');
+    expect(inputHelpers.usedGameIconValue('name', 'lorc/star', [ 'routine', 'name' ], {})).toBe(null);
+    expect(inputHelpers.usedGameIconValue('value', 'lorc/star', [ 'routine', 'value' ], {})).toBe(null);
   });
 
   test('renderIconChip renders object and array icons without crashing', () => {

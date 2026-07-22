@@ -42,14 +42,15 @@ function propertyInputValueSet(value) {
   return value !== undefined && value !== null && value !== '';
 }
 
-// Walks the state of all widgets and calls callback(key, value) for every string value.
+// Walks the state of all widgets and calls callback(key, value, path, object)
+// for every string value.
 function forEachStringInGameState(callback) {
-  function walk(obj) {
+  function walk(obj, path = []) {
     for(const [ key, value ] of Object.entries(obj)) {
       if(typeof value == 'string')
-        callback(key, value);
+        callback(key, value, path.concat(key), obj);
       else if(typeof value == 'object' && value !== null)
-        walk(value);
+        walk(value, path.concat(key));
     }
   }
   for(const widget of widgets.values())
@@ -58,8 +59,8 @@ function forEachStringInGameState(callback) {
 
 function usedValuesInGame(callback) {
   const counts = {};
-  forEachStringInGameState((key, value)=>{
-    const match = callback(key, value);
+  forEachStringInGameState((key, value, path, object)=>{
+    const match = callback(key, value, path, object);
     if(match)
       counts[match] = (counts[match] || 0) + 1;
   });
@@ -70,21 +71,30 @@ function usedGameColors() {
   return usedValuesInGame((key, value)=>value == 'transparent' || value.match(/^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$|^(?:rgb|hsl)a?\(.*\)$/) ? value : null);
 }
 
-function usedGameIcons() {
-  return usedValuesInGame((key, value)=>{
-    // game-icons paths are unambiguous enough under any icon-ish key
-    // (icon properties, deck suits, symbol lists, face template values)
-    if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/) && [ 'icon', 'suit', 'name', 'value' ].indexOf(key) != -1)
+function usedGameIconValue(key, value, path = [], object = {}) {
+  // game-icons paths need context: generic `name` and `value` fields occur
+  // throughout routines, so only accept them when they are part of an icon
+  // value (an icon object or an icon face-template object).
+  if(value.match(/^[a-z0-9-]+\/[a-z0-9-]+$/)) {
+    if(key == 'icon' || key == 'suit')
       return value;
-    if(key != 'icon')
-      return null;
-    // all other formats getIconDetails accepts for the icon property
-    if(value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/) || value.match(/^\/assets\/|^https?:\/\//))
-      return value;
-    if(value && !value.match(/^[\x00-\x7F]*$/)) // non-ASCII: emoji icons
+    if((key == 'name' && path.slice(0, -1).indexOf('icon') != -1) ||
+      ((key == 'name' || key == 'value') && object.type == 'icon'))
       return value;
     return null;
-  });
+  }
+  if(key != 'icon')
+    return null;
+  // all other formats getIconDetails accepts for the icon property
+  if(value.match(/^[a-z][a-z0-9_]+(_NOFILL)?$/) || value.match(/^\[.*\]$|^\(.*\)$/) || value.match(/^\/assets\/|^https?:\/\//))
+    return value;
+  if(value && !value.match(/^[\x00-\x7F]*$/)) // non-ASCII: emoji icons
+    return value;
+  return null;
+}
+
+function usedGameIcons() {
+  return usedValuesInGame(usedGameIconValue);
 }
 
 function usedGameImages() {
