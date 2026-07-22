@@ -138,7 +138,7 @@
   color: var(--textColor);
   z-index: 9;
   padding: 10px;
-  padding-right: 30px;
+  padding-right: 10px;
   border-radius: 8px;
   min-width: 220px;
   max-width: 50vw;
@@ -147,26 +147,6 @@
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
   border: 1px solid var(--backgroundHighlightColor1);
   font-size: 13px;
-}
-
-.inline-popup .popup-close {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  min-width: 22px;
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  color: var(--textColor);
-  cursor: pointer;
-}
-
-.inline-popup .popup-close::before {
-  margin: 0;
-  font-size: 16px;
 }
 
 /* picker inputs (color, icon, image) */

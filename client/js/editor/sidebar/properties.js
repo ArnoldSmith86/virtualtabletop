@@ -338,6 +338,7 @@ const editorPropertyHints = {
   icon: 'A symbol shown on the widget. Pick a game-icon, a material symbol or an emoji.',
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
+  html: 'HTML content shown instead of the widget text, icon and image.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
@@ -3903,16 +3904,28 @@ class PropertiesModule extends SidebarModule {
   renderForBasic(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
-    this.renderBasicContentSection(widget);
+    this.renderBasicContentSection(widget, true);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget);
+    this.renderOtherPropertiesSection(widget, [ 'html' ]);
   }
 
   // Content section of basic widgets: text with a text/symbol mode dropdown,
   // then icon and image as side by side blocks.
-  renderBasicContentSection(widget) {
+  renderBasicContentSection(widget, supportsHTML = false) {
     this.addSubHeader('Content');
+
+    if(supportsHTML && widget.get('html') !== null) {
+      const htmlInput = new TextInput(this, widget, 'HTML', {
+        property: 'html',
+        multiline: true,
+        nullIfEmpty: true,
+        hint: editorPropertyHints.html
+      });
+      htmlInput.render(this.moduleDOM);
+      htmlInput.input.rows = 10;
+      return;
+    }
 
     const hasSymbolsClass = () => String(widget.get('classes') || '').split(/\s+/).indexOf('symbols') != -1;
 

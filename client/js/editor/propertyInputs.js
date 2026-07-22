@@ -220,7 +220,7 @@ let activePropertyInfoPopup = null;
 // Info button (design inspired by the routine editor in PR #2439): a small
 // "i" icon that opens a dismissable popup with an explanation. The popup
 // opens on hover or click. Hovered popups close when leaving the icon; clicked
-// popups stay open until closed explicitly, outside click or Escape.
+// popups stay open until an outside click or Escape.
 // Named propertyInfoButton (not infoButton) because controls/popup.js
 // declares its own top-level infoButton(); both files land in the editor
 // bundle whenever this PR and the routine editor are merged together (e.g.
@@ -237,7 +237,7 @@ function propertyInfoButton(appendTo, infoHTML) {
     }
     if(activePropertyInfoPopup)
       activePropertyInfoPopup();
-    const popup = div($('#editor'), 'inline-popup', `<button class=popup-close icon=close title=Close></button><div class=content></div>`);
+    const popup = div($('#editor'), 'inline-popup', '<div class=content></div>');
     let outsideClickTimer = null;
     $('.content', popup).innerHTML = infoHTML;
 
@@ -270,7 +270,6 @@ function propertyInfoButton(appendTo, infoHTML) {
         close();
       }
     };
-    $('.popup-close', popup).onclick = close;
     pinned = stick;
     closePopup = close;
     activePropertyInfoPopup = close;
