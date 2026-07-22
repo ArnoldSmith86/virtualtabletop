@@ -331,6 +331,29 @@ body.deckEditorActive #enlarged {
   white-space: nowrap;
 }
 
+/* The current deck's id is an inline editable field that blends into the row until hovered/focused. */
+.deckEditorTreeDeckId {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-weight: bold;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0 3px;
+  margin: 0;
+}
+
+.deckEditorTreeDeckId:hover {
+  border-color: rgba(128, 128, 128, 0.4);
+}
+
+.deckEditorTreeDeckId:focus {
+  outline: none;
+  border-color: var(--VTTblue);
+}
+
 /* Unified add / copy / delete (+ show areas) toolbar, at the top of the left sidebar. */
 #deckEditorLeftToolbar {
   display: flex;
