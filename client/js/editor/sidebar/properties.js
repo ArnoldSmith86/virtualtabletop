@@ -398,7 +398,8 @@ const editorTypeSections = {
     colors: [
       { label: 'Text',          kind: 'color', labelIcon: 'format_color_text', cssKey: 'color' },
       { label: 'Background',    kind: 'color', labelIcon: 'format_color_fill', cssKey: 'background' },
-      { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' }
+      { label: 'Border',        kind: 'color', labelIcon: 'border_color', cssKey: 'border-color' },
+      { label: 'Icon/Symbol',   property: 'color', kind: 'color', labelIcon: 'category' }
     ],
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, nullIfEmpty: true }
