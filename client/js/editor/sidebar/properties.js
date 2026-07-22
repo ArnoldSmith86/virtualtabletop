@@ -3511,8 +3511,10 @@ class PropertiesModule extends SidebarModule {
       this.addAppearanceSubTitle('Style');
     if(misc.length) {
       this.renderInputs(widget, misc);
-      if(misc.some(def => def.property == 'borderRadius'))
+      if(misc.some(def => def.property == 'borderRadius')) {
         this.renderBorderWidthInput(widget);
+        this.renderBorderStyleInput(widget);
+      }
     }
 
     const cssSection = this.renderCollapsibleSection('CSS', true, body => {
@@ -3550,6 +3552,16 @@ class PropertiesModule extends SidebarModule {
       step: 1,
       nullIfEmpty: true,
       hint: 'Width of the border in pixels. Set this to show a border color on widgets without a default border.'
+    })).render(target || this.moduleDOM);
+  }
+
+  renderBorderStyleInput(widget, target = null) {
+    const cssOptions = cssValueOptions(this, widget, 'border-style');
+    new SelectInput(this, widget, 'Border style', Object.assign({}, cssOptions, {
+      getValue: () => cssOptions.getValue() || cssOptions.getEffective() || 'none',
+      choices: [ 'none', 'solid', 'dashed', 'dotted', 'double', 'groove', 'ridge', 'inset', 'outset', 'hidden' ]
+        .map(value => ({ value, text: value })),
+      hint: 'Line style used by the border.'
     })).render(target || this.moduleDOM);
   }
 
