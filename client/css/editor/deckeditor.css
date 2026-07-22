@@ -408,6 +408,19 @@ body.deckEditorActive #enlarged {
   background: rgba(0, 0, 0, 0.4);
 }
 
+/* The shared symbol picker normally lives in the room overlays. Host it above the fullscreen deck editor
+   while adding an image or icon, so it remains visible instead of opening behind the editor. */
+body.deckEditorActive #symbolPickerOverlay {
+  position: fixed;
+  top: var(--editToolbarHeight);
+  right: var(--editSidebarWidth);
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  z-index: 20;
+}
+
 #deckEditorExportOverlay {
   position: fixed;
   top: var(--editToolbarHeight);
@@ -1243,30 +1256,30 @@ body.deckEditorPanning #deckEditorMain * {
 
 .deckEditorDeckGlyph {
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1px;
+  gap: 2px;
 }
 
-/* A small card icon above the count, both in the deck-tile blue. */
+/* Match the edit-mode deck widget: the VTT-Symbols [cards] glyph above the live count. */
 .deckEditorDeckGlyph::before {
-  content: '';
-  width: 10px;
-  height: 13px;
-  border: 1.5px solid var(--VTTblue);
-  border-radius: 2px;
+  content: '[cards]';
+  color: var(--VTTblue);
+  font-family: 'VTT-Symbols';
+  font-size: 22px;
+  line-height: 1;
 }
 
 .deckEditorDeckCount {
   color: var(--VTTblue);
   font-weight: bold;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1;
 }
 

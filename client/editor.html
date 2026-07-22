@@ -216,7 +216,7 @@
     <div id="deckEditorImportDialog" class="deckEditorModal">
       <button id="deckEditorImportClose" icon="close" title="Close"></button>
       <h1>Import card types from CSV</h1>
-      <p>Choose a CSV file (such as one exported from this dialog). Each row becomes a card type; the <code>id::INTERNAL</code> column sets its name and <code>cardCount::INTERNAL</code> sets how many cards of it are in the game.</p>
+      <p>Choose a CSV file to import from. This will not import other deck data such as face objects. This makes each row in the CSV a card type; the id::INTERNAL column sets its name and cardCount::INTERNAL sets how many cards of it are in the game. To generate a CSV file with the appropriate data, use the save icon in the upper left.</p>
       <div class="deckEditorImportModes">
         <label><input type="radio" name="deckEditorImportMode" value="replace" checked>Replace all card types with the file</label>
         <label><input type="radio" name="deckEditorImportMode" value="add">Add the file's card types to the existing ones</label>
@@ -230,7 +230,7 @@
     <div id="deckEditorNewDeckDialog" class="deckEditorModal">
       <button id="deckEditorNewDeckClose" icon="close" title="Close"></button>
       <h1>Add a new deck</h1>
-      <p>Pick how to create the new deck. Every option reuses the game's existing deck-creation tools.</p>
+      <p>Add blank deck or choose an existing one to add to the game</p>
       <div class="deckEditorNewDeckModes">
         <label><input type="radio" name="deckEditorNewDeckMode" value="empty" checked>Empty deck &mdash; design its faces and card types here in the deck editor</label>
         <label><input type="radio" name="deckEditorNewDeckMode" value="library">Browse the public library of ready-made decks</label>
@@ -262,7 +262,7 @@
           <button id="deckEditorExport" icon="save" title="Save, print, or export decks"></button>
         </div>
         <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
-          <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type). The selected option also sets the group color.">
+          <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type).">
             <span class="deckEditorAddModeTitle">Add to:</span>
             <div class="deckEditorAddModeRadios">
               <label><input type="radio" name="deckEditorAddMode" value="static" checked>All Cards</label>
