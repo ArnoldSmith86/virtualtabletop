@@ -42,7 +42,8 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     formatTimerMs,
     parseTimerInput,
     svgReplaceColorProperties,
-    dicePreviewRotation
+    dicePreviewRotation,
+    dicePreviewActiveFace
   };
 `)(class {});
 
@@ -51,6 +52,13 @@ describe('css helpers', () => {
     expect(cssHelpers.dicePreviewRotation(2)).toBe('rotateY(-30deg)');
     expect(cssHelpers.dicePreviewRotation(4)).toBe('rotateZ(105deg) rotateX(110deg) rotateY(0deg)');
     expect(cssHelpers.dicePreviewRotation(6)).toBe('rotateX(15deg) rotateY(20deg)');
+  });
+
+  test('larger dice previews show their highest numeric face', () => {
+    expect(cssHelpers.dicePreviewActiveFace([ 1, 2, 3, 4 ])).toBe(0);
+    expect(cssHelpers.dicePreviewActiveFace([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ])).toBe(9);
+    expect(cssHelpers.dicePreviewActiveFace([ 2, 12, 4, 8, 6, 10, 1, 3 ])).toBe(1);
+    expect(cssHelpers.dicePreviewActiveFace([ { value: 4 }, { value: 20 }, { value: 8 }, { value: 12 }, { value: 16 }, { value: 6 }, { value: 10 } ])).toBe(1);
   });
 
   test('svg replacement colors use only declared conventional color properties', () => {

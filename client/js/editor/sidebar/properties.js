@@ -133,6 +133,17 @@ function dicePreviewRotation(faceCount) {
   return 'rotateX(18deg) rotateY(-25deg)';
 }
 
+function dicePreviewActiveFace(faces) {
+  if(faces.length == 4)
+    return 0;
+  if(faces.length <= 6)
+    return faces.length - 1;
+
+  const values = faces.map(face => Number(isObjectLike(face) ? face.value : face));
+  const highestIndex = values.reduce((highest, value, index) => Number.isFinite(value) && value > values[highest] ? index : highest, 0);
+  return Number.isFinite(values[highestIndex]) ? highestIndex : faces.length - 1;
+}
+
 function hasNestedCSSClasses(css) {
   return isObjectLike(css) && Object.values(css).some(v => isObjectLike(v));
 }
@@ -4603,8 +4614,8 @@ class PropertiesModule extends SidebarModule {
           type: 'dice',
           faces,
           // The fourth D4 face is the untransformed base of its tetrahedron;
-          // previewing the first face exposes its three-dimensional sides.
-          activeFace: faces.length == 4 ? 0 : faces.length - 1,
+          // bigger dice instead preview their numerically highest face.
+          activeFace: dicePreviewActiveFace(faces),
           shape3d: overrides.shape3d === undefined ? widget.get('shape3d') : overrides.shape3d,
           pipSymbols: overrides.pipSymbols === undefined ? widget.get('pipSymbols') : overrides.pipSymbols
         };
