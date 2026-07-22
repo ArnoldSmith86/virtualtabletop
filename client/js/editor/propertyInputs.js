@@ -662,9 +662,30 @@ class PickerInput extends PropertyInput {
   }
 
   updatePreview() {
+    const rawValue = this.getValue();
+    const previewValue = this.previewValue();
     this.previewButton.innerHTML = '';
-    this.renderChip(this.previewButton, this.previewValue());
-    this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(this.getValue()));
+    this.renderChip(this.previewButton, previewValue);
+    const isEmpty = !propertyInputValueSet(previewValue);
+    const emptyLabel = this.emptyLabel();
+    this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(rawValue));
+    this.previewButton.classList.toggle('emptyValue', isEmpty);
+    this.previewButton.title = isEmpty && emptyLabel ? emptyLabel : 'Click to edit';
+    this.previewButton.setAttribute('aria-label', isEmpty && emptyLabel ? emptyLabel : 'Edit value');
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || null;
+  }
+
+  renderEmptyChip(target) {
+    const chip = div(target, 'propertyValueChip propertyEmptyChip');
+    const label = this.emptyLabel();
+    if(label) {
+      chip.classList.add('propertyEmptyChipLabel');
+      chip.textContent = label;
+    }
+    return chip;
   }
 
   updatePicker(value) {
@@ -849,7 +870,11 @@ class IconInput extends PickerInput {
   renderChip(target, value) {
     if(propertyInputValueSet(value))
       return renderIconChip(value, target);
-    return div(target, 'propertyValueChip propertyEmptyChip');
+    return this.renderEmptyChip(target);
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || 'Choose icon';
   }
 
   renderPickerContent(target, value) {
@@ -935,7 +960,11 @@ class ImageInput extends PickerInput {
   renderChip(target, value) {
     if(propertyInputValueSet(value))
       return renderImageChip(value, target);
-    return div(target, 'propertyValueChip propertyEmptyChip');
+    return this.renderEmptyChip(target);
+  }
+
+  emptyLabel() {
+    return this.options.emptyLabel || 'Choose image';
   }
 
   renderPickerContent(target, value) {

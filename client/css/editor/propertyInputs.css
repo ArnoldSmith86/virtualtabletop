@@ -245,6 +245,19 @@
   color: #999;
 }
 
+.editorModule .propertyEmptyChipLabel {
+  width: auto;
+  min-width: 0;
+  padding: 0 8px;
+  background: none;
+  font-size: 13px;
+  color: var(--textDimColor1, #777);
+}
+
+.editorModule .propertyEmptyChipLabel::after {
+  content: none;
+}
+
 .editorModule .propertyPicker {
   flex-basis: 100%;
   border: 1px solid var(--VTTblue);
@@ -449,6 +462,20 @@
   padding: 4px 6px;
   background: var(--backgroundHighlightColor1, #eee);
   border-radius: 4px;
+  border: 0;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.editorModule .collapsibleHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.editorModule .collapsibleSummary {
+  color: var(--textDimColor1, #777);
+  font-weight: normal;
 }
 
 .editorModule .collapseArrow::before {
@@ -653,6 +680,29 @@
 .editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emoji-monochrome,
 .editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emojiColorChip {
   font-size: 120px;
+}
+
+/* Unset media starts as a compact, clearly labelled action. Once selected,
+   the preview expands to the regular 200px tile above. */
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue {
+  min-width: 0;
+  min-height: 0;
+  padding: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue .propertyEmptyChipLabel {
+  width: auto;
+  height: 30px;
+  min-width: 0;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.editorModule .basicGeometryHint {
+  color: var(--textDimColor1, #777);
+  font-size: 12px;
+  margin: 2px 0 6px;
 }
 
 /* lock/unlock toggles for movable/editable style properties */

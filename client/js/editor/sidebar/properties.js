@@ -2886,14 +2886,31 @@ class PropertiesModule extends SidebarModule {
   }
 
   // A block whose body can be folded away by clicking the header.
-  renderCollapsibleSection(title, collapsed, renderBody, target = null, stateKey = null) {
+  renderCollapsibleSection(title, collapsed, renderBody, target = null, stateKey = null, options = {}) {
     if(stateKey !== null && this.collapsibleStates[stateKey] !== undefined)
       collapsed = this.collapsibleStates[stateKey];
     const wrap = div(target || this.moduleDOM, 'collapsibleSection' + (collapsed ? ' collapsed' : ''));
-    const header = div(wrap, 'collapsibleHeader', `<span class=collapseArrow></span><span>${html(title)}</span>`);
+    const header = document.createElement('button');
+    header.type = 'button';
+    header.className = 'collapsibleHeader';
+    header.setAttribute('aria-expanded', String(!collapsed));
+    const arrow = document.createElement('span');
+    arrow.className = 'collapseArrow';
+    header.appendChild(arrow);
+    const heading = document.createElement('span');
+    heading.textContent = title;
+    header.appendChild(heading);
+    if(options.renderSummary) {
+      const summary = document.createElement('span');
+      summary.className = 'collapsibleSummary';
+      header.appendChild(summary);
+      options.renderSummary(summary);
+    }
+    wrap.appendChild(header);
     const body = div(wrap, 'collapsibleBody');
     header.onclick = _=>{
       wrap.classList.toggle('collapsed');
+      header.setAttribute('aria-expanded', String(!wrap.classList.contains('collapsed')));
       if(stateKey !== null)
         this.collapsibleStates[stateKey] = wrap.classList.contains('collapsed');
     };
@@ -2903,6 +2920,7 @@ class PropertiesModule extends SidebarModule {
 
   renderBasicSection(widget) {
     this.addSubHeader('Basic');
+    div(this.moduleDOM, 'basicGeometryHint', 'Drag on the table or expand Position and Size to enter exact values.');
 
     // position and size are usually changed with the drag toolbar, so they
     // start collapsed and only get expanded for active tweaking
@@ -2915,7 +2933,13 @@ class PropertiesModule extends SidebarModule {
       this.renderPositionLocks(widget, body);
       this.renderLayerSelect(widget, body);
       this.renderRotationInput(widget, body);
-    }, null, `${widget.id}:position`);
+    }, null, `${widget.id}:position`, {
+      renderSummary: summary => {
+        const update = w => summary.textContent = `${w.get('x')}, ${w.get('y')}`;
+        this.addPropertyListener(widget, 'x', update);
+        this.addPropertyListener(widget, 'y', update);
+      }
+    });
 
     this.renderCollapsibleSection('Size', true, body=>{
       this.renderDualNumberWithSlider(widget, null, { title: 'W', property: 'width' }, { title: 'H', property: 'height' }, {
@@ -2924,7 +2948,13 @@ class PropertiesModule extends SidebarModule {
         target: body
       });
       this.renderSizeRatioLock(widget, body);
-    }, null, `${widget.id}:size`);
+    }, null, `${widget.id}:size`, {
+      renderSummary: summary => {
+        const update = w => summary.textContent = `${w.get('width')} × ${w.get('height')}`;
+        this.addPropertyListener(widget, 'width', update);
+        this.addPropertyListener(widget, 'height', update);
+      }
+    });
 
     this.renderCollapsibleSection('Generic', true, body=>{
       this.renderCheckbox(widget, 'Clickable', 'clickable', body);
