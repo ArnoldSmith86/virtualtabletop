@@ -360,13 +360,14 @@ class PropertyInput {
     this.dom = div(target, `propertyInput ${this.cssClass()}`);
     if(this.labelText) {
       const label = document.createElement('label');
+      label.title = this.labelText;
       if(this.options.labelIcon) {
         // common color roles are shown as their material symbol instead of text
         const icon = document.createElement('span');
         icon.className = `${this.options.labelIconNoFill ? 'material-symbols-nofill' : 'material-symbols'} labelIcon`;
         icon.textContent = this.options.labelIcon;
         label.appendChild(icon);
-        label.title = this.labelText;
+        label.dataset.label = this.labelText;
         label.classList.add('iconOnly');
       } else {
         label.textContent = this.labelText;

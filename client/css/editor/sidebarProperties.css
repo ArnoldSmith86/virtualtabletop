@@ -167,8 +167,21 @@
 }
 
 .tune.editorModule .inheritFromDeclaredPropertyLabel {
-  text-decoration: line-through;
+  color: #444;
+  font-weight: 600;
+}
+
+.tune.editorModule .inheritFromDeclaredPropertyLabel::after {
+  content: ' (declared here)';
   color: #666;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.tune.editorModule .inheritFromShowAllButton {
+  margin: 0 0 6px 0;
+  padding: 2px 5px;
+  font-size: 11px;
 }
 
 .tune.editorModule .inheritFromIconActionButton {

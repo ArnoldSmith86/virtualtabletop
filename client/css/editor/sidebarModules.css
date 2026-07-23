@@ -220,6 +220,11 @@
 .genericInput textarea {
   height: 200px;
 }
+.genericInputLabel {
+  display: inline-block;
+  width: 132px;
+  overflow-wrap: anywhere;
+}
 .genericInput > * {
   vertical-align: top;
 }

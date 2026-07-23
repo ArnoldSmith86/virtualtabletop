@@ -695,7 +695,7 @@ class PropertiesModule extends SidebarModule {
     let inputDOM = null;
 
     const wrapperDOM = div(target || this.moduleDOM, 'genericInput', `
-      <label for=${id}_type style="display:inline-block;width:100px">${html(labelText)}</label>
+      <label class=genericInputLabel for=${id}_type title="${html(labelText)}">${html(labelText)}</label>
       <select id=${id}_type>
         <option>not set</option>
         <option>text</option>
@@ -2468,7 +2468,7 @@ class PropertiesModule extends SidebarModule {
     row.style.flexWrap = 'wrap';
     row.style.marginTop = '6px';
 
-    const positionToggle = this.renderLockToggle(row, 'Position', () => !widget.get('movable'), locked => {
+    const positionToggle = this.renderLockToggle(row, 'Move in play', () => !widget.get('movable'), locked => {
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} updated lock state of widget ${widget.id} in editor`);
       widget.set('movable', !locked);
@@ -2480,7 +2480,7 @@ class PropertiesModule extends SidebarModule {
     separator.style.color = '#777';
     row.appendChild(separator);
 
-    const editorToggle = this.renderLockToggle(row, 'Also in editor', () => !widget.get('movableInEdit'),
+    const editorToggle = this.renderLockToggle(row, 'Lock in editor too', () => !widget.get('movableInEdit'),
       locked => this.inputValueUpdated(widget, 'movableInEdit', !locked));
     const lockInEditorInfo = this.renderInfoIcon('This only applies to mouse input. You can still edit position in this sidebar or by using the drag handle on the widget.');
     editorToggle.wrap.appendChild(lockInEditorInfo);
@@ -3189,6 +3189,7 @@ class PropertiesModule extends SidebarModule {
     listEntriesContainer.classList.add('inheritFromListEntries');
     const expandedStates = {};
     const modeStates = {};
+    const showAllPropertyStates = {};
 
     const updateList = () => {
       listEntriesContainer.innerHTML = '';
@@ -3212,7 +3213,9 @@ class PropertiesModule extends SidebarModule {
             modeStates[widgetId] || null,
             nextMode => modeStates[widgetId] = nextMode,
             !!expandedStates[widgetId],
-            expanded => expandedStates[widgetId] = expanded
+            expanded => expandedStates[widgetId] = expanded,
+            !!showAllPropertyStates[widgetId],
+            showAll => showAllPropertyStates[widgetId] = showAll
           );
         }
       }
@@ -3268,11 +3271,25 @@ class PropertiesModule extends SidebarModule {
     return Array.from(allProps).sort();
   }
 
-  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, preferredMode = null, onModeChanged = () => {}, initialExpanded = false, onExpandChanged = () => {}) {
+  isPropertyDeclaredOnWidget(widget, property) {
+    const state = widget.state || {};
+    const defaults = widget.defaults || {};
+
+    if(!Object.prototype.hasOwnProperty.call(state, property))
+      return false;
+
+    if(!Object.prototype.hasOwnProperty.call(defaults, property))
+      return true;
+
+    return JSON.stringify(state[property]) !== JSON.stringify(defaults[property]);
+  }
+
+  renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, preferredMode = null, onModeChanged = () => {}, initialExpanded = false, onExpandChanged = () => {}, initialShowAllProperties = false, onShowAllPropertiesChanged = () => {}) {
     const sourceWidget = widgets && widgets.get(sourceWidgetId);
     if(!sourceWidget) return;
 
     let expanded = !!initialExpanded;
+    let showAllProperties = !!initialShowAllProperties;
 
     const rowWrap = div(container);
     rowWrap.classList.add('inheritFromRowWrap');
@@ -3395,7 +3412,19 @@ class PropertiesModule extends SidebarModule {
       }
 
       propsContainer.classList.remove('inheritFromHidden');
-      this.renderInheritFromPropertyCheckboxes(propsContainer, sourceWidget, widget, dropdown.value, currentMode);
+      this.renderInheritFromPropertyCheckboxes(
+        propsContainer,
+        sourceWidget,
+        widget,
+        dropdown.value,
+        currentMode,
+        showAllProperties,
+        showAll => {
+          showAllProperties = showAll;
+          onShowAllPropertiesChanged(showAll);
+          renderCheckboxes();
+        }
+      );
     };
 
     // Toggle expand/collapse
@@ -3438,7 +3467,7 @@ class PropertiesModule extends SidebarModule {
     errorWrap.appendChild(modeInput);
   }
 
-  renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode) {
+  renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, currentMode, showAllProperties = false, onShowAllPropertiesChanged = () => {}) {
     const title = document.createElement('div');
     if(modeValue === 'excluded') {
       title.textContent = 'Exclude properties:';
@@ -3458,20 +3487,26 @@ class PropertiesModule extends SidebarModule {
       ? currentMode.map(p => p.startsWith('!') ? p.substring(1) : p)
       : [];
 
-    const isPropertyDeclaredOnTarget = prop => {
-      const state = targetWidget.state || {};
-      const defaults = targetWidget.defaults || {};
+    // Most widgets share a large defaults object. Show the properties that are
+    // actually declared by either widget (and any selected property) first;
+    // the full defaults list remains available for unusual cases.
+    const relevantProps = allProps.filter(prop => currentProps.includes(prop)
+      || this.isPropertyDeclaredOnWidget(sourceWidget, prop)
+      || this.isPropertyDeclaredOnWidget(targetWidget, prop));
+    const visibleProps = showAllProperties ? allProps : relevantProps;
 
-      if(!Object.prototype.hasOwnProperty.call(state, prop))
-        return false;
+    if(relevantProps.length < allProps.length) {
+      const showAllButton = document.createElement('button');
+      showAllButton.type = 'button';
+      showAllButton.classList.add('inheritFromShowAllButton');
+      showAllButton.textContent = showAllProperties
+        ? 'Show declared properties'
+        : `Show all ${allProps.length} properties`;
+      showAllButton.onclick = () => onShowAllPropertiesChanged(!showAllProperties);
+      container.appendChild(showAllButton);
+    }
 
-      if(!Object.prototype.hasOwnProperty.call(defaults, prop))
-        return true;
-
-      return JSON.stringify(state[prop]) !== JSON.stringify(defaults[prop]);
-    };
-
-    const hasBlockedProps = allProps.some(prop => isPropertyDeclaredOnTarget(prop));
+    const hasBlockedProps = visibleProps.some(prop => this.isPropertyDeclaredOnWidget(targetWidget, prop));
     if(hasBlockedProps) {
       const tip = document.createElement('div');
       tip.textContent = 'Some properties are not copied because they are declared in the current widget.';
@@ -3479,11 +3514,18 @@ class PropertiesModule extends SidebarModule {
       container.appendChild(tip);
     }
 
-    allProps.forEach(prop => {
+    if(!visibleProps.length) {
+      const empty = document.createElement('div');
+      empty.classList.add('inheritFromEmptyMessage');
+      empty.textContent = 'No properties are declared by either widget.';
+      container.appendChild(empty);
+    }
+
+    visibleProps.forEach(prop => {
       const checkboxWrap = div(container);
       checkboxWrap.classList.add('inheritFromCheckboxWrap');
 
-      const isDeclaredOnTarget = isPropertyDeclaredOnTarget(prop);
+      const isDeclaredOnTarget = this.isPropertyDeclaredOnWidget(targetWidget, prop);
       if(isDeclaredOnTarget) {
         checkboxWrap.classList.add('inheritFromDeclaredProperty');
       }
@@ -3514,7 +3556,10 @@ class PropertiesModule extends SidebarModule {
 
       checkbox.onchange = () => {
         const inheritFrom = this.normalizeInheritFromObject(targetWidget.get('inheritFrom'));
-        const selectedProps = [];
+        // Keep selections outside this view, including declared properties
+        // whose disabled checkbox cannot be changed here.
+        const selectedProps = currentProps.filter(prop => !visibleProps.includes(prop)
+          || this.isPropertyDeclaredOnWidget(targetWidget, prop));
 
         // Collect all checked boxes
         const allCheckboxes = container.querySelectorAll('input[type="checkbox"][data-property]');
@@ -3560,7 +3605,7 @@ class PropertiesModule extends SidebarModule {
           this.inputValueUpdated(targetWidget, prop, undefined);
           const refreshedMode = (targetWidget.get('inheritFrom') || {})[sourceWidget.id] || '*';
           container.innerHTML = '';
-          this.renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, refreshedMode);
+          this.renderInheritFromPropertyCheckboxes(container, sourceWidget, targetWidget, modeValue, refreshedMode, showAllProperties, onShowAllPropertiesChanged);
         };
         checkboxWrap.appendChild(clearBtn);
       }
@@ -3575,7 +3620,7 @@ class PropertiesModule extends SidebarModule {
     wrap.style.flexWrap = 'wrap';
 
     const label = document.createElement('label');
-    label.textContent = '+ Add widget';
+    label.textContent = 'Add source widget:';
     wrap.appendChild(label);
 
     const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
@@ -3606,7 +3651,7 @@ class PropertiesModule extends SidebarModule {
   renderAssociatedWidgetsSectionBody(widget, target) {
     const linksSection = this.createOnDemandSectionStructure(target);
 
-    this.renderOnDemandSection(widget, 'add Parent', [ 'parent', 'fixedParent' ], container => {
+    this.renderOnDemandSection(widget, 'Add parent', [ 'parent', 'fixedParent' ], container => {
       this.renderParentWidgetInput(widget, container);
     }, linksSection.contentWrapper, {
       buttonHost: linksSection.newPropertiesWrapper,
@@ -3622,7 +3667,7 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
-    this.renderOnDemandSection(widget, 'add Seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
+    this.renderOnDemandSection(widget, 'Add seat', [ 'linkedToSeat', 'onlyVisibleForSeat' ], container => {
       const seatSection = this.createOnDemandSectionStructure(container);
 
       this.renderSeatReferenceInput(widget, 'linkedToSeat', 'Seat:', seatSection.contentWrapper, {

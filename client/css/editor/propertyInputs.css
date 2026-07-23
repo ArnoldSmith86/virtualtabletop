@@ -298,6 +298,33 @@
   min-width: 0;
 }
 
+/* Color symbols are compact, but their names make the control clear to a
+   first-time editor. Keep an attached hint after the text rather than between
+   the icon and its swatch. */
+.editorModule .colorFlexRow .propertyInput > label.iconOnly {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly::after {
+  content: attr(data-label);
+  font-size: 10px;
+  line-height: 1.1;
+  max-width: 72px;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly .labelIcon {
+  order: 1;
+}
+
+.editorModule .colorFlexRow .propertyInput > label.iconOnly .info-button {
+  order: 3;
+  margin-left: 0;
+}
+
 /* mark the native color input as "opens a dialog" instead of looking like a
    plain swatch of its current value */
 .editorModule .propertyPickerSummary input[type=color] {
@@ -799,7 +826,7 @@
   border-bottom: 1px dashed currentColor;
   border-radius: 2px;
   background: transparent;
-  text-align: center;
+  text-align: left;
 }
 
 .editorModule .widgetHeader .widgetHeaderIdInput:hover {
