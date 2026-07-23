@@ -2983,8 +2983,7 @@ class PropertiesModule extends SidebarModule {
 
   renderBasicSection(widget) {
     this.addSubHeader('Basic');
-    div(this.moduleDOM, 'basicGeometryHint', 'Drag on the table or expand Position and Size to enter exact values.');
-
+    
     // position and size are usually changed with the drag toolbar, so they
     // start collapsed and only get expanded for active tweaking
     this.renderCollapsibleSection('Position', true, body=>{
