@@ -47,7 +47,9 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
     svgReplaceColorProperties,
     dicePreviewRotation,
-    dicePreviewActiveFace
+    dicePreviewActiveFace,
+    textSymbolClass,
+    textValueFromSymbol
   };
 `)(class {});
 
@@ -67,6 +69,16 @@ describe('css helpers', () => {
     expect(cssHelpers.dicePreviewActiveFace([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ])).toBe(9);
     expect(cssHelpers.dicePreviewActiveFace([ 2, 12, 4, 8, 6, 10, 1, 3 ])).toBe(1);
     expect(cssHelpers.dicePreviewActiveFace([ { value: 4 }, { value: 20 }, { value: 8 }, { value: 12 }, { value: 16 }, { value: 6 }, { value: 10 } ])).toBe(1);
+  });
+
+  test('picked text symbols select the matching font class and stored value', () => {
+    expect(cssHelpers.textSymbolClass({ type: 'symbols', symbol: '[die_face_6]' })).toBe('symbols');
+    expect(cssHelpers.textSymbolClass({ type: 'material-symbols', symbol: 'casino' })).toBe('material-symbols');
+    expect(cssHelpers.textSymbolClass({ type: 'material-symbols-nofill', symbol: 'casino_NOFILL' })).toBe('material-symbols-nofill');
+    expect(cssHelpers.textSymbolClass({ type: 'emoji-monochrome', symbol: '(🎲)' })).toBe('emoji-monochrome');
+    expect(cssHelpers.textValueFromSymbol({ type: 'symbols', symbol: '[die_face_6]' })).toBe('[die_face_6]');
+    expect(cssHelpers.textValueFromSymbol({ type: 'material-symbols-nofill', symbol: 'casino_NOFILL' })).toBe('casino');
+    expect(cssHelpers.textValueFromSymbol({ type: 'emoji-monochrome', symbol: '(🎲)' })).toBe('🎲');
   });
 
   test('svg replacement colors use only declared conventional color properties', () => {

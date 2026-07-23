@@ -142,6 +142,17 @@ function dicePreviewActiveFace(faces) {
   return Number.isFinite(values[highestIndex]) ? highestIndex : faces.length - 1;
 }
 
+const textSymbolClasses = [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ];
+
+function textSymbolClass(symbol) {
+  return symbol && textSymbolClasses.includes(symbol.type) ? symbol.type : 'symbols';
+}
+
+function textValueFromSymbol(symbol) {
+  const value = String(symbol.symbol || '');
+  return symbol.type == 'emoji-monochrome' ? value.replace(/^\((.*)\)$/, '$1') : value.replace(/_NOFILL$/, '');
+}
+
 function hasNestedCSSClasses(css) {
   return isObjectLike(css) && Object.values(css).some(v => isObjectLike(v));
 }
@@ -4010,7 +4021,15 @@ class PropertiesModule extends SidebarModule {
       return;
     }
 
-    const hasSymbolsClass = () => String(widget.get('classes') || '').split(/\s+/).indexOf('symbols') != -1;
+    const currentSymbolClass = () => String(widget.get('classes') || '').split(/\s+/)
+      .find(className => textSymbolClasses.includes(className)) || null;
+    const setSymbolClass = symbolClass => {
+      const classes = String(widget.get('classes') || '').split(/\s+/)
+        .filter(className => className && !textSymbolClasses.includes(className));
+      if(symbolClass)
+        classes.push(symbolClass);
+      this.inputValueUpdated(widget, 'classes', classes.length ? classes.join(' ') : null);
+    };
 
     const textRow = div(this.moduleDOM, 'propertyInput');
     const textLabel = document.createElement('label');
@@ -4023,14 +4042,14 @@ class PropertiesModule extends SidebarModule {
     textInput.oninput = () => this.inputValueUpdated(widget, 'text', textInput.value === '' ? null : textInput.value);
     textRow.appendChild(textInput);
 
-    // switches the "symbols" class which renders the text with the symbol font
+    // switches the text into a symbol font; the picker below selects its exact family
     const modeSelect = document.createElement('select');
     modeSelect.innerHTML = '<option value="text">text</option><option value="symbol">symbol</option>';
     modeSelect.onchange = () => {
-      const classes = String(widget.get('classes') || '').split(/\s+/).filter(name => name && name != 'symbols');
       if(modeSelect.value == 'symbol')
-        classes.push('symbols');
-      this.inputValueUpdated(widget, 'classes', classes.length ? classes.join(' ') : null);
+        setSymbolClass(currentSymbolClass() || 'symbols');
+      else
+        setSymbolClass(null);
     };
     textRow.appendChild(modeSelect);
 
@@ -4039,8 +4058,10 @@ class PropertiesModule extends SidebarModule {
     symbolButton.title = 'Pick a symbol';
     symbolButton.onclick = async () => {
       const symbol = await pickSymbol('fonts');
-      if(symbol && symbol.symbol)
-        this.inputValueUpdated(widget, 'text', symbol.symbol);
+      if(symbol && symbol.symbol) {
+        setSymbolClass(textSymbolClass(symbol));
+        this.inputValueUpdated(widget, 'text', textValueFromSymbol(symbol));
+      }
     };
     textRow.appendChild(symbolButton);
 
@@ -4049,8 +4070,8 @@ class PropertiesModule extends SidebarModule {
         const value = widget.get('text');
         textInput.value = value === null || value === undefined ? '' : value;
       }
-      modeSelect.value = hasSymbolsClass() ? 'symbol' : 'text';
-      symbolButton.style.display = hasSymbolsClass() ? '' : 'none';
+      modeSelect.value = currentSymbolClass() ? 'symbol' : 'text';
+      symbolButton.style.display = currentSymbolClass() ? '' : 'none';
     };
 
     this.addPropertyListener(widget, 'text', update);
