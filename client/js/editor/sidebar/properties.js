@@ -2882,7 +2882,59 @@ class PropertiesModule extends SidebarModule {
     // are easy to tell apart
     const header = div(this.moduleDOM, 'widgetHeader');
     div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
-    div(header, 'widgetHeaderId', `Widget id: ${html(widget.id)}`);
+    const idArea = div(header, 'widgetHeaderId');
+    idArea.append('Widget id: ');
+    const idInput = document.createElement('input');
+    idInput.type = 'text';
+    idInput.className = 'widgetHeaderIdInput';
+    idInput.value = widget.id;
+    idInput.title = 'Rename widget';
+    idInput.setAttribute('aria-label', 'Widget id');
+    idArea.appendChild(idInput);
+
+    idInput.onchange = async () => {
+      const oldID = widget.id;
+      const newID = idInput.value.trim();
+      if(newID == oldID) {
+        idInput.value = oldID;
+        return;
+      }
+      if(!newID) {
+        alert('Widget id cannot be empty.');
+        idInput.value = oldID;
+        return;
+      }
+      if(widgets.has(newID)) {
+        alert(`A widget with the id "${newID}" already exists.`);
+        idInput.value = oldID;
+        return;
+      }
+
+      idInput.disabled = true;
+      batchStart();
+      try {
+        setDeltaCause(`${getPlayerDetails().playerName} renamed widget ${oldID} to ${newID} in editor`);
+        const state = JSON.parse(JSON.stringify(widget.state));
+        state.id = newID;
+        await updateWidgetId(state, oldID);
+        const renamedWidget = widgets.get(newID);
+        if(renamedWidget)
+          setSelection([ renamedWidget ]);
+      } catch(error) {
+        alert(`Could not rename widget: ${error}`);
+        idInput.value = oldID;
+      } finally {
+        batchEnd();
+        idInput.disabled = false;
+      }
+    };
+
+    idInput.onkeydown = event => {
+      if(event.key == 'Escape') {
+        idInput.value = widget.id;
+        idInput.blur();
+      }
+    };
   }
 
   // A block whose body can be folded away by clicking the header.

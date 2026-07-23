@@ -788,6 +788,30 @@
   overflow-wrap: anywhere;
 }
 
+/* Keep the ID in the header, but make its rename affordance discoverable
+   without making it look like a regular properties-row field. */
+.editorModule .widgetHeader .widgetHeaderIdInput {
+  color: inherit;
+  font: inherit;
+  max-width: 80%;
+  padding: 0 3px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+  text-align: center;
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+
 /* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
 .editorModule .obscurePropertyContainer {
   position: relative;
