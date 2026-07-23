@@ -156,7 +156,7 @@ function applySelectionRectangle(addToSelection) {
 
 function setSelection(newSelectedWidgets) {
   const previousSelectedWidgets = [...selectedWidgets];
-  selectedWidgets = newSelectedWidgets;
+  selectedWidgets = smartCloneProcessSelection(newSelectedWidgets);
 
   for(const widget of previousSelectedWidgets)
     widget.setHighlighted(false);
@@ -184,9 +184,11 @@ export async function editClick(widget) {
 export function editorReceiveDelta(delta) {
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
+  smartCloneDeltaReceived(delta);
 }
 
 function receiveStateFromServer(state) {
+  smartCloneInit();
   for(const module of sidebarModules) {
     module.onSelectionChanged(selectedWidgets, []);
     module.onStateReceived(state);
