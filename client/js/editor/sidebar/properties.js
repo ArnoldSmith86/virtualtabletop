@@ -1753,10 +1753,23 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, ['options']);
   }    
 
+  renderEvents(widget) {
+    this.addSubHeader('Events');
+    const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
+    for(const property in widget.state)
+      if(property.match(/Routine$/))
+        this.addPropertyListener(widget, property, _=>eventsEditor.onPropertyChange());
+    this.moduleDOM.append(eventsEditor.domElement);
+  }
+
   renderGenericProperties(widget, exclude) {
+    this.renderEvents(widget);
+    this.addSubHeader('Properties');
     for(const property in widget.state) {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
+      if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
+        continue; // edited in the Events section above
 
       const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
       if(!this.inputUpdaters[widget.id][property])

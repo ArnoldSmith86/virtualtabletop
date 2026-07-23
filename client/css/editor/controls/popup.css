@@ -1,0 +1,125 @@
+.inline-popup {
+  position: fixed;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  z-index: 9;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 220px;
+  max-width: 50vw;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--backgroundHighlightColor1);
+  font-size: 13px;
+}
+
+.inline-popup h1 {
+  font-size: 15px;
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--VTTblue);
+}
+
+.inline-popup .accordion-section h3 {
+  cursor: pointer;
+  font-size: 13px;
+  margin: 6px 0 2px 0;
+  padding: 3px 6px;
+  background: var(--backgroundHighlightColor1);
+  border-radius: 4px;
+}
+
+.inline-popup .accordion-section h3:hover {
+  outline: 1px solid var(--VTTblue);
+}
+
+.inline-popup .accordion-content {
+  display: none;
+  padding: 4px 2px;
+}
+
+.inline-popup .accordion-content.open {
+  display: block;
+}
+
+.inline-popup button {
+  margin: 2px;
+  padding: 2px 8px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  cursor: pointer;
+}
+
+.inline-popup button:hover {
+  border-color: var(--VTTblue);
+  color: var(--VTTblue);
+}
+
+body.edit.darkMode .inline-popup button:hover {
+  color: var(--textHighlightColor7);
+}
+
+.inline-popup input,
+.inline-popup textarea {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 4px;
+  padding: 4px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 4px;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+}
+
+.inline-popup textarea {
+  min-height: 90px;
+  font-family: monospace;
+}
+
+.inline-popup pre {
+  white-space: pre-wrap;
+  margin: 4px 0;
+}
+
+.inline-popup .info-button {
+  cursor: pointer;
+  color: gray;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.inline-popup .info-button:hover {
+  color: var(--VTTblue);
+}
+
+.inline-popup .highlight {
+  color: var(--VTTblue);
+  cursor: pointer;
+}
+
+.inline-popup .popup-entry {
+  margin-bottom: 4px;
+}
+
+.inline-popup .popup-entry-description {
+  font-size: 11px;
+  color: gray;
+  margin: 0 2px 2px 2px;
+  max-width: 300px;
+}
+
+.inline-popup table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.inline-popup th,
+.inline-popup td {
+  text-align: left;
+  padding: 2px 6px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+}
