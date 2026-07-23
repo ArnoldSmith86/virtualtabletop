@@ -98,7 +98,7 @@ const COMMON_PROPERTIES = {
     clickRoutine: 'routine',
     doubleClickRoutine: 'routine',
     changeRoutine: 'routine',
-    enterRoutine: getRoutineValidator({}, {'child': 1}),
+    enterRoutine: getRoutineValidator({'oldParentID': 1}, {'child': 1}),
     leaveRoutine: getRoutineValidator({}, {'child': 1}),
     globalUpdateRoutine: 'routine',
     gameStartRoutine: 'routine',
@@ -533,8 +533,12 @@ function validateRoutine(routine, context, propertyPath = []) {
             for(const field of operation.fields) {
                 if(typeof field.variable === 'string')
                     context.validVariables[field.variable] = 1;
-                if(field.type === 'choose')
-                    context.validCollections[field.collection || 'DEFAULT'] = 1;
+                if(field.type === 'choose') {
+                    const outputCollections = field.collection && typeof field.collection === 'object' && !Array.isArray(field.collection) ? Object.values(field.collection) : [field.collection || 'DEFAULT'];
+                    for(const collection of outputCollections)
+                        if(typeof collection === 'string')
+                            context.validCollections[collection] = 1;
+                }
             }
         }
         if(func === 'SELECT')
@@ -700,6 +704,8 @@ const operationProps = {
         'header': v=>typeof v === 'string',
         'fields': v=>Array.isArray(v) || 'fields must be an array',
         'css': v=>typeof v === 'string',
+        'player':    v => v === null || typeof v === 'string' || (Array.isArray(v) && v.every(x => typeof x === 'string')),
+        'block':     'boolean',
     },
     'LABEL': {
         'label': 'idArray',
@@ -821,7 +827,8 @@ function customRoutineChecks(operation, problems, context, operationPath) {
 function customWidgetChecks(widget, widgets, problems) {
     if(widget.type === 'deck') {
         for(const prop of ['width', 'height', 'movable', 'layer', 'clickable']) {
-            if(widget[prop] !== undefined) {
+            const matchingCardDefaultSet = ['width', 'height'].includes(prop) && widget.cardDefaults && widget.cardDefaults[prop] !== undefined;
+            if(widget[prop] !== undefined && !matchingCardDefaultSet) {
                 problems.push({
                     widget: widget.id,
                     property: [prop],

@@ -1206,6 +1206,237 @@ function populateAddWidgetOverlay() {
 }
 // end of JSON generators
 
+// The public library deck browser: lazy-loads the deck catalog from the server
+// the first time it is opened and renders previews only when they scroll into view.
+let libraryDecksIndex = null;
+let libraryDecksObserver = null;
+let libraryDeckPreviewCounter = 0;
+const libraryDeckDetailsCache = {};
+
+function getLibraryDeckDetails(entry) {
+  const key = `${entry.library}/${entry.game}/${entry.file}/${entry.deck}`;
+  if(!libraryDeckDetailsCache[key]) {
+    const url = `${config.urlPrefix}/api/library/decks/` + [ entry.library, entry.game, entry.file, entry.deck ].map(encodeURIComponent).join('/');
+    libraryDeckDetailsCache[key] = fetch(url).then(function(response) {
+      if(!response.ok)
+        throw new Error(`Loading deck details failed with status ${response.status}.`);
+      return response.json();
+    }).catch(function(e) {
+      delete libraryDeckDetailsCache[key];
+      throw e;
+    });
+  }
+  return libraryDeckDetailsCache[key];
+}
+
+async function openLibraryDecksOverlay() {
+  showOverlay('libraryDecksOverlay');
+  if(libraryDecksIndex == 'loading')
+    return;
+  // refetch every time the overlay opens so the star/popularity counts (which
+  // change while the deck catalog stays cached) are always up to date
+  libraryDecksIndex = 'loading';
+  $('#libraryDecksList').textContent = 'Loading deck list...';
+  try {
+    const response = await fetch(`${config.urlPrefix}/api/library/decks`);
+    if(!response.ok)
+      throw new Error(`Loading the deck list failed with status ${response.status}.`);
+    libraryDecksIndex = await response.json();
+  } catch(e) {
+    libraryDecksIndex = null;
+    $('#libraryDecksList').textContent = 'Loading the deck list failed. Please close the overlay and try again.';
+    return;
+  }
+  renderLibraryDecksList();
+}
+
+function renderLibraryDecksList() {
+  if(!Array.isArray(libraryDecksIndex))
+    return;
+
+  const filter = $('#libraryDecksFilter').value.trim().toLowerCase();
+  const list = $('#libraryDecksList');
+  list.innerHTML = '';
+
+  if(libraryDecksObserver)
+    libraryDecksObserver.disconnect();
+  libraryDecksObserver = new IntersectionObserver(function(observed) {
+    for(const o of observed) {
+      if(o.isIntersecting) {
+        libraryDecksObserver.unobserve(o.target);
+        const preview = $('.libraryDeckPreview', o.target);
+        renderLibraryDeckPreview(libraryDecksIndex[+o.target.dataset.index], preview).catch(function() {
+          preview.textContent = 'Preview failed to load.';
+        });
+      }
+    }
+  }, { root: list, rootMargin: '300px' });
+
+  // group the decks by game so game groups can be reordered as a whole, like the
+  // public library game shelf sorts games (decks keep their in-game order)
+  const groups = [];
+  const groupByGame = {};
+  libraryDecksIndex.forEach(function(entry, index) {
+    if(filter && `${entry.gameName} ${entry.deck}`.toLowerCase().indexOf(filter) == -1)
+      return;
+    const key = `${entry.library}/${entry.game}`;
+    if(!groupByGame[key]) {
+      groupByGame[key] = { gameName: entry.gameName, stars: entry.stars || 0, timePlayed: entry.timePlayed || 0, entries: [] };
+      groups.push(groupByGame[key]);
+    }
+    groupByGame[key].entries.push({ entry, index });
+  });
+
+  const sortMode = $('#libraryDecksSort').value;
+  groups.sort(function(a, b) {
+    if(sortMode == 'stars' && b.stars != a.stars)
+      return b.stars - a.stars;
+    if(sortMode == 'popularity' && b.timePlayed != a.timePlayed)
+      return b.timePlayed - a.timePlayed;
+    return a.gameName.localeCompare(b.gameName);
+  });
+
+  for(const group of groups) {
+    const badge = group.stars ? `<span class="libraryDeckGameStat">★ ${group.stars}</span>` : '';
+    const gameContainer = div(list, 'libraryDeckGame', `<h2>${html(group.gameName)}${badge}</h2>`);
+    for(const { entry, index } of group.entries) {
+      const el = div(gameContainer, 'libraryDeckEntry', `
+        <div class="libraryDeckPreview"><span>Loading preview...</span></div>
+        <div class="libraryDeckCaption"><b>${html(entry.deck)}</b><span>${entry.cardCount} card${entry.cardCount == 1 ? '' : 's'} - ${entry.cardTypeCount} card type${entry.cardTypeCount == 1 ? '' : 's'}</span></div>
+      `);
+      el.dataset.index = index;
+      el.addEventListener('click', _=>addLibraryDeckToGame(entry));
+      libraryDecksObserver.observe(el);
+    }
+  }
+
+  if(!list.children.length)
+    list.textContent = 'No decks match your filter.';
+}
+
+// renders up to three sample cards of a deck using the real widget classes,
+// the same trick addCompositeWidgetToAddWidgetOverlay uses
+async function renderLibraryDeckPreview(entry, container) {
+  const details = await getLibraryDeckDetails(entry);
+
+  // sample from the deck's own card types so every type is guaranteed to exist
+  // in the deck (Card.applyInitialDelta throws for a cardType the deck lacks -
+  // some games have cards referencing types that are not in cardTypes)
+  const cardTypes = details.deck.cardTypes || {};
+  const sampleTypes = Object.keys(cardTypes).filter(t=>cardTypes[t]).slice(0, 3);
+
+  const deckID = `libraryDeckPreview${++libraryDeckPreviewCounter}`;
+  const deckWidget = new Deck(deckID);
+  const createdIDs = [ deckID ];
+  widgets.set(deckID, deckWidget);
+
+  // Every widget created via applyInitialDelta is appended to #topSurface (its
+  // parent defaults to null). The cards get moved into the preview below; the
+  // throwaway deck and anything left behind by a failed render must be cleaned
+  // up in the finally block so no artifacts linger in the room.
+  try {
+    deckWidget.applyInitialDelta(Object.assign({}, details.deck, { id: deckID }));
+
+    const offset = Math.round(entry.cardWidth*0.4);
+    const wrapper = div(null, 'libraryDeckPreviewCards');
+    const scaled = div(wrapper, 'libraryDeckPreviewScale');
+    sampleTypes.forEach(function(cardType, i) {
+      const cardID = `${deckID}C${i}`;
+      const card = new Card(cardID);
+      widgets.set(cardID, card);
+      createdIDs.push(cardID);
+      card.applyInitialDelta({ id: cardID, type: 'card', deck: deckID, cardType, activeFace: entry.faceCount > 1 ? 1 : 0, x: i*offset, y: 0 });
+      scaled.appendChild(card.domElement);
+    });
+
+    const totalWidth = entry.cardWidth + offset*(sampleTypes.length-1);
+    const scale = Math.min(190/totalWidth, 150/entry.cardHeight, 1);
+    wrapper.style.width = `${Math.ceil(totalWidth*scale)}px`;
+    wrapper.style.height = `${Math.ceil(entry.cardHeight*scale)}px`;
+    scaled.style.transform = `scale(${scale})`;
+
+    container.innerHTML = '';
+    container.appendChild(wrapper);
+  } finally {
+    // remove throwaway widgets from the map and drop any of their elements that
+    // are still sitting in #topSurface (cards that rendered were moved into the
+    // preview and so are no longer there, and are kept)
+    const topSurface = $('#topSurface');
+    for(const id of createdIDs) {
+      const widget = widgets.get(id);
+      if(widget && (id == deckID || (topSurface && topSurface.contains(widget.domElement))))
+        widget.domElement.remove();
+      widgets.delete(id);
+    }
+  }
+}
+
+// adds the deck like the "add deck" entry of the add widget overlay does:
+// a holder containing the deck, a pile with all its cards and a shuffle button
+async function addLibraryDeckToGame(entry) {
+  let details;
+  try {
+    details = await getLibraryDeckDetails(entry);
+  } catch(e) {
+    alert('Loading the deck failed. Please try again.');
+    return;
+  }
+
+  batchStart();
+  setDeltaCause(`${getPlayerDetails().playerName} added deck ${entry.deck} from public library game ${entry.gameName} in editor`);
+
+  let id = null;
+  const suffixes = [ 'B', 'D', 'P', ...details.cards.map((_, i)=>`C${i+1}`) ];
+  do {
+    id = generateUniqueWidgetID();
+  } while(suffixes.some(suffix=>widgets.has(id+suffix)));
+
+  const holderWidth  = entry.cardWidth  + 8;
+  const holderHeight = entry.cardHeight + 11;
+  await addWidgetLocal({
+    type: 'holder',
+    id,
+    x: Math.round(800 - holderWidth/2),
+    y: Math.round(500 - holderHeight/2),
+    width: holderWidth,
+    height: holderHeight,
+    dropTarget: { type: 'card' }
+  });
+  await addWidgetLocal({
+    id: id+'B',
+    parent: id,
+    fixedParent: true,
+    y: holderHeight,
+    width: holderWidth,
+    height: 40,
+    type: 'button',
+    text: 'Recall & Shuffle',
+    movableInEdit: false,
+
+    clickRoutine: [
+      { func: 'RECALL',  holder: '${PROPERTY parent}' },
+      { func: 'FLIP',    holder: '${PROPERTY parent}', face: 0 },
+      { func: 'SHUFFLE', holder: '${PROPERTY parent}' }
+    ]
+  });
+
+  const deckWidth  = details.deck.width  || 86;
+  const deckHeight = details.deck.height || 86;
+  await addWidgetLocal(Object.assign({}, details.deck, {
+    id: id+'D',
+    parent: id,
+    x: Math.round((holderWidth -deckWidth )/2),
+    y: Math.round((holderHeight-deckHeight)/2)
+  }));
+  await addWidgetLocal({ type: 'pile', id: id+'P', parent: id, width: entry.cardWidth, height: entry.cardHeight });
+
+  for(const [ i, card ] of details.cards.entries())
+    await addWidgetLocal(Object.assign({}, card, { id: `${id}C${i+1}`, parent: id+'P', deck: id+'D' }));
+
+  overlayDone(id);
+  batchEnd();
+}
+
 function uploadWidget(preset) {
   uploadAsset().then(async function(asset) {
     let id;
@@ -1297,7 +1528,7 @@ async function onClickUpdateWidget(applyChangesFromUI) {
   showOverlay();
 }
 
-async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems) { // incrementKind: '', 'Letters', 'Numbers'
+async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties, incrementKind, incrementIn, xOffset, yOffset, xCopies, yCopies, problems, inheritFromSourceId) { // incrementKind: '', 'Letters', 'Numbers'
 
   const incrementCaps = function(l) {
     const m = l.match(/Z+$/);
@@ -1315,12 +1546,19 @@ async function duplicateWidget(widget, recursive, inheritFrom, inheritProperties
       const inheritAll = JSON.stringify(inheritProperties) == '[""]';
       const inheritWidget = {};
       inheritWidget['inheritFrom'] = {};
-      inheritWidget['inheritFrom'][widget.get('id')] = inheritAll ? "*" : inheritProperties;
+      const sourceId = inheritFromSourceId || widget.get('id');
+      inheritWidget['inheritFrom'][sourceId] = inheritAll ? "*" : inheritProperties;
 
       // Copy properties from source to new object unless inheritAll is set or the property is in the inherit list.
       for(const key of Object.keys(currentWidget))
         if(currentWidget[key] != undefined && (['id','type','deck','cardType'].includes(key) || !(inheritAll || inheritProperties.includes(key))))
           inheritWidget[key] = currentWidget[key];
+
+      // Ensure increment targets exist locally so they can be updated after inheritFrom.
+      for(const property of incrementIn) {
+        if(property != 'inheritFrom' && inheritWidget[property] === undefined && currentWidget[property] !== undefined)
+          inheritWidget[property] = currentWidget[property];
+      }
       currentWidget = inheritWidget;
     }
 
@@ -1438,6 +1676,11 @@ export function initializeEditMode(currentMetaData) {
       hand.id = 'hand';
     overlayDone(await addWidgetLocal(hand));
   });
+
+  on('#browseLibraryDecks', 'click', openLibraryDecksOverlay);
+  on('#libraryDecksFilter', 'input', renderLibraryDecksList);
+  on('#libraryDecksSort', 'change', renderLibraryDecksList);
+  on('#libraryDecksClose', 'click', _=>showOverlay());
 
   on('#addCanvas', 'click', async function() {
     const id = await addWidgetLocal({

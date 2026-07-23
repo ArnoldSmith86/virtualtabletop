@@ -52,6 +52,7 @@ function initializeEditor(currentMetaData) {
 
   renderDragToolbar(dragToolbarButtons = [
     new DragDragButton(),
+    new SettingsDragButton(),
 
     new ToolbarDivider(),
 
@@ -68,7 +69,6 @@ function initializeEditor(currentMetaData) {
     new UndoModule(),
     new JsonModule(),
     new WidgetsModule(),
-    new TreeModule(),
     new DebugModule(),
     new AssetsModule(),
     new ToolboxModule(),

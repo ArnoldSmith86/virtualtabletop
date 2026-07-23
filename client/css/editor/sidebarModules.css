@@ -113,6 +113,21 @@
 }
 
 
+.tune.editorModule .traditionalDeckDetails {
+  margin: 5px 0;
+}
+
+.tune.editorModule .traditionalDeckDetails .name {
+  font-weight: bold;
+}
+
+.tune.editorModule .traditionalDeckDetails .attribution {
+  margin-top: 5px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+
 .tune.editorModule .cardFrontPreview {
   display: flex;
   margin-bottom: 10px;
@@ -130,6 +145,31 @@
 .tune.editorModule .cardFrontPreview [type=number] {
   vertical-align: super;
   width: 50px;
+}
+
+
+.tune.editorModule .ttsImportLink {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.tune.editorModule .ttsImportLink input {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.tune.editorModule .ttsDeckButton .deckCardCount {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2px 0;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #fffb;
+  color: black;
+  z-index: 1;
 }
 
 

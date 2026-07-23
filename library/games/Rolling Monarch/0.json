@@ -1,0 +1,5179 @@
+{
+  "_meta": {
+    "version": 21,
+    "info": {
+      "name": "Rolling Monarch",
+      "image": "/assets/1291098254_35644",
+      "rules": "https://boardgamegeek.com/filepage/92048/pasha-english-rules",
+      "bgg": "https://boardgamegeek.com/boardgame/144499/pasha",
+      "year": "2013",
+      "mode": "vs",
+      "time": "30",
+      "attribution": "<div>Game layout, library image, and scripting by Robin Harn, released to the Public Domain under CC0.</div><div><br></div><div>The following graphics are from https://game-icons.net and are used under CC BY 3.0:</div><div>* Arrow Up</div><div>* Arrow Down</div><div>* Heart Plus</div><div>* Chewed Skull</div><div>* Card Discard</div><div>* Recycle</div><div>* Roll Dice</div><div><br></div><div>Coin icon is from Google Noto Color Emoji and are used under   the SIL Open Font License: \nhttps://fonts.google.com/noto/specimen/Noto+Color+Emoji</div><div><br></div><div>The following graphics are from http://www.magnific.com and are used under the Magnific License:</div><div>* Letter A https://www.magnific.com/icon/letter_9590136</div><div>* Letter B https://www.magnific.com/icon/letter-b_9590140</div><div>* Letter C https://www.magnific.com/icon/letter-c_9590143</div><div>* Background https://www.magnific.com/free-vector/decorative-abstract-repeat-texture-red-background-design_422667589.htm</div>",
+      "lastUpdate": 1782188235529,
+      "skill": "",
+      "description": "Bet points, chuck dice, and combine wisely to become the monarch!",
+      "similarImage": "",
+      "similarName": "Pasha",
+      "similarDesigner": "Stefan Dorra",
+      "similarAwards": "",
+      "ruleText": "(see rules overview link)",
+      "helpText": "<div>* Click the Next Round button to start a new round. Manually reveal the next bonus card (from the A, B, and C pile in that order).</div><div><br></div><div>* Drag and drop all victory point cards and bonus cards into your player board, then during the endgame, add up all your points to determine your final score.</div>",
+      "usesAIImagery": false,
+      "showName": true,
+      "variantImage": "",
+      "variant": "",
+      "language": "en-US",
+      "players": "2-5"
+    },
+    "gameSettings": {
+      "legacyModes": {}
+    }
+  },
+  "button-endturn": {
+    "type": "button",
+    "id": "button-endturn",
+    "x": 955,
+    "y": 770,
+    "z": 43851,
+    "clickRoutine": [
+      {
+        "func": "CALL",
+        "routine": "resetDiceRoutine"
+      }
+    ],
+    "text": "End\nTurn",
+    "css": "font-size:20px;font-weight:bold;border-radius:7px",
+    "width": 90,
+    "height": 65,
+    "resetDiceRoutine": [
+      {
+        "note": "// set random x,y to each dice",
+        "func": "SELECT",
+        "property": "type",
+        "relation": "==",
+        "value": "dice"
+      },
+      {
+        "func": "FOREACH",
+        "loopRoutine": [
+          "var maxX = ${PROPERTY width OF holder-tray} - ${PROPERTY width OF dice-1}",
+          "var maxY = ${PROPERTY height OF holder-tray} - ${PROPERTY height OF dice-1}",
+          "var x = randInt 0 ${maxX}",
+          "var y = randInt 0 ${maxY}",
+          {
+            "func": "SET",
+            "property": "parent",
+            "value": "holder-tray"
+          },
+          {
+            "func": "SET",
+            "property": "x",
+            "value": "${x}"
+          },
+          {
+            "func": "SET",
+            "property": "y",
+            "value": "${y}"
+          }
+        ]
+      },
+      {
+        "func": "TURN"
+      }
+    ]
+  },
+  "image-dice-6": {
+    "id": "image-dice-6",
+    "x": 400,
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 2345,
+    "image": "/i/game-icons.net/skoll/inverted-dice-6.svg",
+    "movable": false,
+    "parent": "image-board"
+  },
+  "image-board": {
+    "id": "image-board",
+    "x": 536,
+    "width": 460,
+    "height": 450,
+    "layer": -4,
+    "z": 56,
+    "movable": false,
+    "image": "/assets/1786231420_3366",
+    "y": 180
+  },
+  "image-dice-5": {
+    "id": "image-dice-5",
+    "parent": "image-board",
+    "x": 336,
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 2343,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-5.svg"
+  },
+  "image-dice-4": {
+    "id": "image-dice-4",
+    "parent": "image-board",
+    "x": 273,
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 2346,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-4.svg"
+  },
+  "image-dice-3": {
+    "id": "image-dice-3",
+    "parent": "image-board",
+    "x": 209,
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 2059,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg"
+  },
+  "image-dice-2": {
+    "id": "image-dice-2",
+    "parent": "image-board",
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 2074,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-2.svg",
+    "x": 145,
+    "rotation": 90
+  },
+  "image-dice-1": {
+    "id": "image-dice-1",
+    "parent": "image-board",
+    "x": 81,
+    "y": 9,
+    "width": 50,
+    "height": 50,
+    "z": 2342,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "box-seat-p1": {
+    "id": "box-seat-p1",
+    "x": 60,
+    "y": 10,
+    "width": 280,
+    "height": 310,
+    "layer": -3,
+    "z": 62075,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "dimgray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "seat-p1": {
+    "type": "seat",
+    "id": "seat-p1",
+    "parent": "box-seat-p1",
+    "x": 9,
+    "width": 250,
+    "z": 43730,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "28px"
+      },
+      ".seated": {
+        "background": "crimson",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "crimson",
+        "border": "2px solid white",
+        "background-size": "200% auto",
+        "color": "white",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-10px",
+        "top": "-9px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "y": 6,
+    "hideWhenUnused": true
+  },
+  "image-dice-b1": {
+    "id": "image-dice-b1",
+    "parent": "image-board",
+    "x": 13,
+    "y": 144,
+    "width": 22,
+    "height": 22,
+    "z": 2317,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "rotation": 60
+  },
+  "image-dice-b2": {
+    "id": "image-dice-b2",
+    "parent": "image-board",
+    "x": 32,
+    "y": 133,
+    "width": 22,
+    "height": 22,
+    "z": 2176,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "rotation": 60
+  },
+  "image-dice-b3": {
+    "id": "image-dice-b3",
+    "parent": "image-board",
+    "x": 24,
+    "y": 163,
+    "width": 22,
+    "height": 22,
+    "z": 2321,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "rotation": 60
+  },
+  "image-dice-b4": {
+    "id": "image-dice-b4",
+    "parent": "image-board",
+    "x": 43,
+    "y": 152,
+    "width": 22,
+    "height": 22,
+    "z": 2320,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "rotation": 60
+  },
+  "image-dice-a1": {
+    "id": "image-dice-a1",
+    "parent": "image-board",
+    "y": 86,
+    "width": 22,
+    "height": 22,
+    "z": 2313,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+    "x": 8,
+    "rotation": 150
+  },
+  "image-dice-a2": {
+    "id": "image-dice-a2",
+    "parent": "image-board",
+    "y": 75,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2312,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+    "x": 27
+  },
+  "image-dice-a3": {
+    "id": "image-dice-a3",
+    "parent": "image-board",
+    "y": 64,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2314,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+    "x": 46
+  },
+  "image-dice-a4": {
+    "id": "image-dice-a4",
+    "parent": "image-board",
+    "y": 99,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2316,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+    "x": 29
+  },
+  "image-dice-a5": {
+    "id": "image-dice-a5",
+    "parent": "image-board",
+    "y": 88,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2315,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+    "x": 48
+  },
+  "image-dice-c1": {
+    "id": "image-dice-c1",
+    "parent": "image-board",
+    "y": 214,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2323,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "x": 8
+  },
+  "image-dice-c2": {
+    "id": "image-dice-c2",
+    "parent": "image-board",
+    "x": 27,
+    "y": 203,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2322,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-c3": {
+    "id": "image-dice-c3",
+    "parent": "image-board",
+    "x": 46,
+    "y": 192,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2170,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-c4": {
+    "id": "image-dice-c4",
+    "parent": "image-board",
+    "x": 28,
+    "y": 227,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2326,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg"
+  },
+  "image-dice-c5": {
+    "id": "image-dice-c5",
+    "parent": "image-board",
+    "x": 48,
+    "y": 216,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2325,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg"
+  },
+  "image-dice-d1": {
+    "id": "image-dice-d1",
+    "parent": "image-board",
+    "x": 9,
+    "y": 288,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2327,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-d2": {
+    "id": "image-dice-d2",
+    "parent": "image-board",
+    "x": 28,
+    "y": 277,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2164,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-d3": {
+    "id": "image-dice-d3",
+    "parent": "image-board",
+    "x": 47,
+    "y": 266,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2328,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-e1": {
+    "id": "image-dice-e1",
+    "parent": "image-board",
+    "x": 12,
+    "y": 336,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2340,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-e2": {
+    "id": "image-dice-e2",
+    "parent": "image-board",
+    "x": 31,
+    "y": 325,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2339,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg"
+  },
+  "image-dice-e3": {
+    "id": "image-dice-e3",
+    "parent": "image-board",
+    "x": 23,
+    "y": 355,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2336,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg"
+  },
+  "image-dice-e4": {
+    "id": "image-dice-e4",
+    "parent": "image-board",
+    "x": 42,
+    "y": 344,
+    "width": 22,
+    "height": 22,
+    "rotation": 150,
+    "z": 2337,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-3.svg"
+  },
+  "image-dice-e5": {
+    "id": "image-dice-e5",
+    "parent": "image-board",
+    "y": 410,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2341,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "x": 17
+  },
+  "image-dice-e6": {
+    "id": "image-dice-e6",
+    "parent": "image-board",
+    "y": 399,
+    "width": 22,
+    "height": 22,
+    "rotation": 60,
+    "z": 2193,
+    "movable": false,
+    "image": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+    "x": 36
+  },
+  "nlytB": {
+    "id": "nlytB",
+    "parent": "holder-deck-bonus-a",
+    "fixedParent": true,
+    "y": -170,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "fiy7": {
+    "deck": "deck-bonus-a",
+    "type": "card",
+    "cardType": "a1",
+    "id": "fiy7",
+    "z": 10587,
+    "parent": "bsku"
+  },
+  "fvqk": {
+    "deck": "deck-bonus-a",
+    "type": "card",
+    "cardType": "a2",
+    "id": "fvqk",
+    "z": 10585,
+    "parent": "bsku"
+  },
+  "1jme": {
+    "deck": "deck-bonus-a",
+    "type": "card",
+    "cardType": "a3",
+    "id": "1jme",
+    "z": 10586,
+    "parent": "bsku"
+  },
+  "label-score-p1": {
+    "type": "label",
+    "id": "label-score-p1",
+    "parent": "seat-p1",
+    "x": 96,
+    "width": 60,
+    "height": 42,
+    "z": 43848,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "white",
+      "line-height": "38px"
+    },
+    "editable": true,
+    "text": 0,
+    "y": 54
+  },
+  "button-score-inc-p1": {
+    "type": "button",
+    "id": "button-score-inc-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:white; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p1": {
+    "type": "button",
+    "id": "button-score-dec-p1",
+    "parent": "label-score-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:white; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "deck-meeple-seat-p1": {
+    "type": "deck",
+    "id": "deck-meeple-seat-p1",
+    "cardTypes": {
+      "meeple": {
+        "color": "crimson",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 452,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeple-seat-p1"
+      }
+    },
+    "width": 46,
+    "height": 46,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p1"
+  },
+  "nlytB1": {
+    "id": "nlytB1",
+    "parent": "holder-deck-bonus-b",
+    "fixedParent": true,
+    "y": -170,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-bonus-a": {
+    "type": "deck",
+    "id": "deck-bonus-a",
+    "parent": "holder-deck-bonus-a",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#B91545",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "a1": {
+        "number": "2 VP",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-4.svg",
+        "sortingOrder": 1
+      },
+      "a2": {
+        "number": "",
+        "image-center": "/i/noto-emoji/emoji_u1fa99.svg",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+        "sortingOrder": 2
+      },
+      "a3": {
+        "number": "",
+        "image-left": "/i/noto-emoji/emoji_u1fa99.svg",
+        "image-right": "/i/noto-emoji/emoji_u1fa99.svg",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-2.svg",
+        "sortingOrder": 3
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "color": "transparent",
+            "value": "/assets/-1310032749_1876",
+            "width": 80,
+            "height": 80
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 36,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-dice"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "height": 46,
+    "width": 46
+  },
+  "holder-deck-bonus-a": {
+    "type": "holder",
+    "id": "holder-deck-bonus-a",
+    "x": 668,
+    "height": 70,
+    "z": 61979,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70,
+    "y": 22,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "holder-deck-bonus-b": {
+    "type": "holder",
+    "id": "holder-deck-bonus-b",
+    "x": 764,
+    "height": 70,
+    "z": 61982,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70,
+    "y": 22,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "deck-bonus-b": {
+    "type": "deck",
+    "id": "deck-bonus-b",
+    "parent": "holder-deck-bonus-b",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#B91545",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "b1": {
+        "number": "",
+        "image-center": "/i/noto-emoji/emoji_u1fa99.svg",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+        "sortingOrder": 1
+      },
+      "b2": {
+        "number": "",
+        "image-left": "/i/noto-emoji/emoji_u1fa99.svg",
+        "image-right": "/i/noto-emoji/emoji_u1fa99.svg",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-4.svg",
+        "sortingOrder": 2
+      },
+      "b3": {
+        "number": "",
+        "image-left": "/i/game-icons.net/faithtoken/card-discard.svg",
+        "image-right": "/assets/210177824_288",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-3.svg",
+        "sortingOrder": 3
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "color": "transparent",
+            "value": "/assets/-991235337_1916",
+            "width": 80,
+            "height": 80
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 36,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-dice"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "fk0s": {
+    "deck": "deck-bonus-b",
+    "type": "card",
+    "cardType": "b1",
+    "id": "fk0s",
+    "z": 10590,
+    "parent": "m7ah"
+  },
+  "kq82": {
+    "deck": "deck-bonus-b",
+    "type": "card",
+    "cardType": "b2",
+    "id": "kq82",
+    "z": 10589,
+    "parent": "m7ah"
+  },
+  "rsz3": {
+    "deck": "deck-bonus-b",
+    "type": "card",
+    "cardType": "b3",
+    "id": "rsz3",
+    "z": 10588,
+    "parent": "m7ah"
+  },
+  "holder-meeple-seat-p1": {
+    "type": "holder",
+    "id": "holder-meeple-seat-p1",
+    "parent": "seat-p1",
+    "x": 99,
+    "y": 140,
+    "width": 60,
+    "height": 60,
+    "z": 61948,
+    "css": {
+      "border": "2px transparent",
+      "background": "transparent"
+    },
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "card"
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "preventPiles": true
+  },
+  "button-score-inc-p2": {
+    "type": "button",
+    "id": "button-score-inc-p2",
+    "parent": "label-coins-p1",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:gold; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p2": {
+    "type": "button",
+    "id": "button-score-dec-p2",
+    "parent": "label-coins-p1",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:gold; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "label-coins-p1": {
+    "type": "label",
+    "id": "label-coins-p1",
+    "parent": "seat-p1",
+    "x": 96,
+    "y": 94,
+    "width": 60,
+    "height": 42,
+    "z": 43847,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "gold",
+      "line-height": "38px",
+      "text-shadow": "1px 1px 1px silver"
+    },
+    "editable": true,
+    "text": 5
+  },
+  "holder-cardswon-seat-p1": {
+    "type": "holder",
+    "id": "holder-cardswon-seat-p1",
+    "parent": "seat-p1",
+    "x": 192,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61949,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-bonuseswon-seat-p1": {
+    "type": "holder",
+    "id": "holder-bonuseswon-seat-p1",
+    "parent": "seat-p1",
+    "x": -10,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61944,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-seat-p1": {
+    "type": "holder",
+    "id": "holder-seat-p1",
+    "parent": "seat-p1",
+    "x": 92,
+    "y": 222,
+    "width": 70,
+    "height": 70,
+    "z": 61947,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "class": "cards"
+      }
+    ]
+  },
+  "nlytB2": {
+    "id": "nlytB2",
+    "parent": "holder-deck-bonus-c",
+    "fixedParent": true,
+    "y": -172,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "holder-deck-bonus-c": {
+    "type": "holder",
+    "id": "holder-deck-bonus-c",
+    "x": 858,
+    "y": 22,
+    "height": 70,
+    "z": 61981,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0
+  },
+  "deck-bonus-c": {
+    "type": "deck",
+    "id": "deck-bonus-c",
+    "parent": "holder-deck-bonus-c",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#B91545",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "c1": {
+        "number": "3 VP",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-2.svg",
+        "sortingOrder": 1
+      },
+      "c2": {
+        "number": "4 VP",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-1.svg",
+        "sortingOrder": 2
+      },
+      "c3": {
+        "number": "",
+        "image-left": "/i/game-icons.net/faithtoken/card-discard.svg",
+        "image-right": "/assets/210177824_288",
+        "image-dice": "/i/game-icons.net/skoll/inverted-dice-5.svg",
+        "sortingOrder": 3
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": -5,
+            "y": -5,
+            "color": "transparent",
+            "value": "/assets/1350655700_2250",
+            "width": 80,
+            "height": 80
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 36,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-dice"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "6ggs": {
+    "deck": "deck-bonus-c",
+    "type": "card",
+    "cardType": "c1",
+    "id": "6ggs",
+    "z": 10592,
+    "parent": "mo2n"
+  },
+  "bzj4": {
+    "deck": "deck-bonus-c",
+    "type": "card",
+    "cardType": "c2",
+    "id": "bzj4",
+    "z": 10591,
+    "parent": "mo2n"
+  },
+  "zax2": {
+    "deck": "deck-bonus-c",
+    "type": "card",
+    "cardType": "c3",
+    "id": "zax2",
+    "z": 10593,
+    "parent": "mo2n"
+  },
+  "nlytB3": {
+    "id": "nlytB3",
+    "parent": "holder-deck-seat-p1",
+    "fixedParent": true,
+    "y": 70,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-seat-p1": {
+    "type": "deck",
+    "id": "deck-seat-p1",
+    "parent": "holder-deck-seat-p1",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#799AC4",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1 VP *",
+        "image-art": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "sortingOrder": 2
+      },
+      "2": {
+        "number": "2 VP *",
+        "image-art": "/i/game-icons.net/lorc/recycle.svg",
+        "sortingOrder": 3
+      },
+      "3": {
+        "number": "3 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 4
+      },
+      "4": {
+        "number": "4 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 5
+      },
+      "5": {
+        "number": "5 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 6
+      },
+      "7": {
+        "number": "7 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 7
+      },
+      "-1": {
+        "number": "-1 VP",
+        "image-art": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "svgReplaces": {
+              "#000": "backcolor"
+            },
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/divided-square.svg",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 30,
+            "width": 35,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-art"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "holder-deck-seat-p1": {
+    "type": "holder",
+    "id": "holder-deck-seat-p1",
+    "x": 634,
+    "y": 1127,
+    "height": 70,
+    "z": 61983,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70
+  },
+  "button-reset": {
+    "type": "button",
+    "id": "button-reset",
+    "x": 1140,
+    "y": 919,
+    "height": 65,
+    "z": 43844,
+    "classes": "symbols",
+    "css": "font-size:40px;font-weight:bold;border-radius:7px",
+    "text": "skip_next",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Reset Game",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to reset the game. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "CALL",
+        "routine": "gameStartRoutine"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetScoresRoutine"
+      }
+    ],
+    "gameStartRoutine": [
+      {
+        "func": "RESET",
+        "property": "button-resetReset"
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-deck-seat-p1",
+          "holder-deck-seat-p2",
+          "holder-deck-seat-p3",
+          "holder-deck-seat-p4",
+          "holder-deck-seat-p5",
+          "holder-meeple-seat-p1",
+          "holder-meeple-seat-p2",
+          "holder-meeple-seat-p3",
+          "holder-meeple-seat-p4",
+          "holder-meeple-seat-p5",
+          "holder-deck-bonus-a",
+          "holder-deck-bonus-b",
+          "holder-deck-bonus-c"
+        ]
+      },
+      {
+        "func": "FLIP",
+        "holder": [
+          "holder-deck-bonus-a",
+          "holder-deck-bonus-b",
+          "holder-deck-bonus-c",
+          "holder-deck-seat-p1",
+          "holder-deck-seat-p2",
+          "holder-deck-seat-p3",
+          "holder-deck-seat-p4",
+          "holder-deck-seat-p5"
+        ],
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": [
+          "holder-deck-bonus-a",
+          "holder-deck-bonus-b",
+          "holder-deck-bonus-c",
+          "holder-deck-seat-p1",
+          "holder-deck-seat-p2",
+          "holder-deck-seat-p3",
+          "holder-deck-seat-p4",
+          "holder-deck-seat-p5"
+        ]
+      },
+      {
+        "note": "Get player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "note": "Deal each player 3 cards",
+            "func": "MOVE",
+            "from": "holder-deck-${widgetID}",
+            "to": "${widgetID}",
+            "face": 1,
+            "count": 3
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "hand"
+        ],
+        "key": "sortingOrder",
+        "reverse": true
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetDiceRoutine",
+        "widget": "button-endturn"
+      }
+    ],
+    "resetScoresRoutine": [
+      {
+        "note": "Set each player's starting score to 0, and starting coins to 5",
+        "func": "FOREACH",
+        "range": 5,
+        "loopRoutine": [
+          {
+            "func": "SELECT",
+            "property": "playerIndex",
+            "value": "${value}"
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-score-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 0
+          },
+          {
+            "func": "SELECT",
+            "property": "id",
+            "value": "label-coins-p${value}"
+          },
+          {
+            "func": "SET",
+            "property": "text",
+            "relation": "=",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "width": 90
+  },
+  "woxf": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "-1",
+    "id": "woxf",
+    "z": 10594,
+    "parent": "r80t"
+  },
+  "ypxi": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "-1",
+    "id": "ypxi",
+    "z": 10596,
+    "parent": "r80t"
+  },
+  "ezix": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "-1",
+    "id": "ezix",
+    "z": 10599,
+    "parent": "r80t"
+  },
+  "kxmp": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "7",
+    "id": "kxmp",
+    "z": 10597,
+    "parent": "r80t"
+  },
+  "970m": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "5",
+    "id": "970m",
+    "z": 10598,
+    "parent": "r80t"
+  },
+  "jbdp": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "4",
+    "id": "jbdp",
+    "z": 10600,
+    "parent": "r80t"
+  },
+  "34y2": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "3",
+    "id": "34y2",
+    "z": 10601,
+    "parent": "r80t"
+  },
+  "hods": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "2",
+    "id": "hods",
+    "z": 10595,
+    "parent": "r80t"
+  },
+  "4x4w": {
+    "deck": "deck-seat-p1",
+    "type": "card",
+    "cardType": "1",
+    "id": "4x4w",
+    "z": 10602,
+    "parent": "r80t"
+  },
+  "box-seat-p2": {
+    "id": "box-seat-p2",
+    "y": 10,
+    "width": 280,
+    "height": 310,
+    "layer": -3,
+    "z": 62077,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "dimgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "x": 1250
+  },
+  "seat-p2": {
+    "type": "seat",
+    "id": "seat-p2",
+    "parent": "box-seat-p2",
+    "x": 9,
+    "width": 250,
+    "z": 43853,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "28px"
+      },
+      ".seated": {
+        "background": "royalblue",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "royalblue",
+        "border": "2px solid white",
+        "background-size": "200% auto",
+        "color": "white",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-10px",
+        "top": "-9px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "y": 5,
+    "index": 2,
+    "hideWhenUnused": true,
+    "turn": true
+  },
+  "label-score-p2": {
+    "type": "label",
+    "id": "label-score-p2",
+    "parent": "seat-p2",
+    "x": 96,
+    "width": 60,
+    "height": 42,
+    "z": 43848,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "white",
+      "line-height": "38px"
+    },
+    "editable": true,
+    "text": 0,
+    "y": 54
+  },
+  "button-score-inc-p3": {
+    "type": "button",
+    "id": "button-score-inc-p3",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:white; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p3": {
+    "type": "button",
+    "id": "button-score-dec-p3",
+    "parent": "label-score-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:white; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-meeple-seat-p2": {
+    "type": "holder",
+    "id": "holder-meeple-seat-p2",
+    "parent": "seat-p2",
+    "x": 99,
+    "y": 140,
+    "width": 60,
+    "height": 60,
+    "z": 61948,
+    "css": {
+      "border": "2px transparent",
+      "background": "transparent"
+    },
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "card"
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "preventPiles": true
+  },
+  "deck-meeple-seat-p2": {
+    "type": "deck",
+    "id": "deck-meeple-seat-p2",
+    "cardTypes": {
+      "meeple": {
+        "color": "royalblue",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 452,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeple-seat-p2"
+      }
+    },
+    "width": 46,
+    "height": 46,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p2"
+  },
+  "label-coins-p2": {
+    "type": "label",
+    "id": "label-coins-p2",
+    "parent": "seat-p2",
+    "x": 96,
+    "y": 94,
+    "width": 60,
+    "height": 42,
+    "z": 43847,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "gold",
+      "line-height": "38px",
+      "text-shadow": "1px 1px 1px silver"
+    },
+    "editable": true,
+    "text": 5
+  },
+  "button-score-inc-p4": {
+    "type": "button",
+    "id": "button-score-inc-p4",
+    "parent": "label-coins-p2",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:gold; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p4": {
+    "type": "button",
+    "id": "button-score-dec-p4",
+    "parent": "label-coins-p2",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:gold; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-cardswon-seat-p2": {
+    "type": "holder",
+    "id": "holder-cardswon-seat-p2",
+    "parent": "seat-p2",
+    "x": 192,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61949,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-bonuseswon-seat-p2": {
+    "type": "holder",
+    "id": "holder-bonuseswon-seat-p2",
+    "parent": "seat-p2",
+    "x": -10,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61944,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-seat-p2": {
+    "type": "holder",
+    "id": "holder-seat-p2",
+    "parent": "seat-p2",
+    "x": 92,
+    "y": 222,
+    "width": 70,
+    "height": 70,
+    "z": 61947,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "class": "cards"
+      }
+    ]
+  },
+  "box-seat-p3": {
+    "id": "box-seat-p3",
+    "x": 1250,
+    "y": 340,
+    "width": 280,
+    "height": 310,
+    "layer": -3,
+    "z": 62078,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "dimgray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "seat-p3": {
+    "type": "seat",
+    "id": "seat-p3",
+    "parent": "box-seat-p3",
+    "x": 9,
+    "width": 250,
+    "z": 43730,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "28px"
+      },
+      ".seated": {
+        "background": "black",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "black",
+        "border": "2px solid white",
+        "background-size": "200% auto",
+        "color": "white",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-10px",
+        "top": "-9px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "y": 6,
+    "index": 3,
+    "hideWhenUnused": true
+  },
+  "label-score-p3": {
+    "type": "label",
+    "id": "label-score-p3",
+    "parent": "seat-p3",
+    "x": 96,
+    "width": 60,
+    "height": 42,
+    "z": 43848,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "white",
+      "line-height": "38px"
+    },
+    "editable": true,
+    "text": 0,
+    "y": 54
+  },
+  "button-score-inc-p5": {
+    "type": "button",
+    "id": "button-score-inc-p5",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:white; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p5": {
+    "type": "button",
+    "id": "button-score-dec-p5",
+    "parent": "label-score-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:white; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-meeple-seat-p3": {
+    "type": "holder",
+    "id": "holder-meeple-seat-p3",
+    "parent": "seat-p3",
+    "x": 99,
+    "y": 140,
+    "width": 60,
+    "height": 60,
+    "z": 61948,
+    "css": {
+      "border": "2px transparent",
+      "background": "transparent"
+    },
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "card"
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "preventPiles": true
+  },
+  "deck-meeple-seat-p3": {
+    "type": "deck",
+    "id": "deck-meeple-seat-p3",
+    "cardTypes": {
+      "meeple": {
+        "color": "black",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 452,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeple-seat-p3"
+      }
+    },
+    "width": 46,
+    "height": 46,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p3"
+  },
+  "label-coins-p3": {
+    "type": "label",
+    "id": "label-coins-p3",
+    "parent": "seat-p3",
+    "x": 96,
+    "y": 94,
+    "width": 60,
+    "height": 42,
+    "z": 43847,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "gold",
+      "line-height": "38px",
+      "text-shadow": "1px 1px 1px silver"
+    },
+    "editable": true,
+    "text": 5
+  },
+  "button-score-inc-p6": {
+    "type": "button",
+    "id": "button-score-inc-p6",
+    "parent": "label-coins-p3",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:gold; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p6": {
+    "type": "button",
+    "id": "button-score-dec-p6",
+    "parent": "label-coins-p3",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:gold; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-cardswon-seat-p3": {
+    "type": "holder",
+    "id": "holder-cardswon-seat-p3",
+    "parent": "seat-p3",
+    "x": 192,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61949,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-bonuseswon-seat-p3": {
+    "type": "holder",
+    "id": "holder-bonuseswon-seat-p3",
+    "parent": "seat-p3",
+    "x": -10,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61944,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-seat-p3": {
+    "type": "holder",
+    "id": "holder-seat-p3",
+    "parent": "seat-p3",
+    "x": 92,
+    "y": 222,
+    "width": 70,
+    "height": 70,
+    "z": 61947,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "class": "cards"
+      }
+    ]
+  },
+  "box-seat-p4": {
+    "id": "box-seat-p4",
+    "x": 60,
+    "width": 280,
+    "height": 310,
+    "layer": -3,
+    "z": 62073,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "dimgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "y": 670
+  },
+  "seat-p4": {
+    "type": "seat",
+    "id": "seat-p4",
+    "parent": "box-seat-p4",
+    "x": 9,
+    "width": 250,
+    "z": 43730,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "28px"
+      },
+      ".seated": {
+        "background": "darkgreen",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "darkgreen",
+        "border": "2px solid white",
+        "background-size": "200% auto",
+        "color": "white",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-10px",
+        "top": "-9px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "y": 6,
+    "index": 4,
+    "hideWhenUnused": true
+  },
+  "label-score-p4": {
+    "type": "label",
+    "id": "label-score-p4",
+    "parent": "seat-p4",
+    "x": 96,
+    "width": 60,
+    "height": 42,
+    "z": 43848,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "white",
+      "line-height": "38px"
+    },
+    "editable": true,
+    "text": 0,
+    "y": 54
+  },
+  "button-score-inc-p7": {
+    "type": "button",
+    "id": "button-score-inc-p7",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:white; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p7": {
+    "type": "button",
+    "id": "button-score-dec-p7",
+    "parent": "label-score-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:white; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-meeple-seat-p4": {
+    "type": "holder",
+    "id": "holder-meeple-seat-p4",
+    "parent": "seat-p4",
+    "x": 99,
+    "y": 140,
+    "width": 60,
+    "height": 60,
+    "z": 61948,
+    "css": {
+      "border": "2px transparent",
+      "background": "transparent"
+    },
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "card"
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "preventPiles": true
+  },
+  "deck-meeple-seat-p4": {
+    "type": "deck",
+    "id": "deck-meeple-seat-p4",
+    "cardTypes": {
+      "meeple": {
+        "color": "darkgreen",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 452,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeple-seat-p4"
+      }
+    },
+    "width": 46,
+    "height": 46,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p4"
+  },
+  "label-coins-p4": {
+    "type": "label",
+    "id": "label-coins-p4",
+    "parent": "seat-p4",
+    "x": 96,
+    "y": 94,
+    "width": 60,
+    "height": 42,
+    "z": 43847,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "gold",
+      "line-height": "38px",
+      "text-shadow": "1px 1px 1px silver"
+    },
+    "editable": true,
+    "text": 5
+  },
+  "button-score-inc-p8": {
+    "type": "button",
+    "id": "button-score-inc-p8",
+    "parent": "label-coins-p4",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:gold; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p8": {
+    "type": "button",
+    "id": "button-score-dec-p8",
+    "parent": "label-coins-p4",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:gold; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-cardswon-seat-p4": {
+    "type": "holder",
+    "id": "holder-cardswon-seat-p4",
+    "parent": "seat-p4",
+    "x": 192,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61949,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-bonuseswon-seat-p4": {
+    "type": "holder",
+    "id": "holder-bonuseswon-seat-p4",
+    "parent": "seat-p4",
+    "x": -10,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61944,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-seat-p4": {
+    "type": "holder",
+    "id": "holder-seat-p4",
+    "parent": "seat-p4",
+    "x": 92,
+    "y": 222,
+    "width": 70,
+    "height": 70,
+    "z": 61947,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "class": "cards"
+      }
+    ]
+  },
+  "box-seat-p5": {
+    "id": "box-seat-p5",
+    "x": 60,
+    "y": 340,
+    "width": 280,
+    "height": 310,
+    "layer": -3,
+    "z": 62067,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "dimgray",
+      "box-shadow": "1px 1px 1px black"
+    }
+  },
+  "seat-p5": {
+    "type": "seat",
+    "id": "seat-p5",
+    "parent": "box-seat-p5",
+    "x": 9,
+    "width": 250,
+    "z": 43730,
+    "css": {
+      "default": {
+        "border": "5px solid #999999",
+        "box-shadow": "0 2px 5px #00000066",
+        "color": "#000000",
+        "font-size": "28px"
+      },
+      ".seated": {
+        "background": "darkorange",
+        "border": "5px solid #000000",
+        "color": "white"
+      },
+      ".seated.turn": {
+        "border": "5px dotted white"
+      },
+      ".seated.turn::after": {
+        "xcontent": "'Active Player'",
+        "content": "'send'",
+        "font-family": "Material Symbols",
+        "font-size": "30px",
+        "line-height": "1em",
+        "white-space": "wrap",
+        "background-color": "darkorange",
+        "border": "2px solid white",
+        "background-size": "200% auto",
+        "color": "white",
+        "text-shadow": "0 1px 5px #000000cc",
+        "width": "1em",
+        "height": "1em",
+        "text-align": "center",
+        "text-transform": "uppercase",
+        "position": "absolute",
+        "left": "-10px",
+        "top": "-9px",
+        "padding": "2px",
+        "border-radius": "100px",
+        "box-shadow": "0 0 5px #000000bb",
+        "pointer-events": "none",
+        "transform-origin": "center",
+        "animation": "turnPulse 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+      },
+      "@keyframes turnPulse": {
+        "0%": {
+          "transform": "scale(1)"
+        },
+        "50%": {
+          "transform": "scale(2)"
+        },
+        "100%": {
+          "transform": "scale(1)"
+        }
+      }
+    },
+    "y": 6,
+    "index": 5,
+    "hideWhenUnused": true
+  },
+  "label-score-p5": {
+    "type": "label",
+    "id": "label-score-p5",
+    "parent": "seat-p5",
+    "x": 96,
+    "width": 60,
+    "height": 42,
+    "z": 43848,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "white",
+      "line-height": "38px"
+    },
+    "editable": true,
+    "text": 0,
+    "y": 54
+  },
+  "button-score-inc-p9": {
+    "type": "button",
+    "id": "button-score-inc-p9",
+    "parent": "label-score-p5",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:white; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p9": {
+    "type": "button",
+    "id": "button-score-dec-p9",
+    "parent": "label-score-p5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:white; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-meeple-seat-p5": {
+    "type": "holder",
+    "id": "holder-meeple-seat-p5",
+    "parent": "seat-p5",
+    "x": 99,
+    "y": 140,
+    "width": 60,
+    "height": 60,
+    "z": 61948,
+    "css": {
+      "border": "2px transparent",
+      "background": "transparent"
+    },
+    "dropLimit": 1,
+    "dropTarget": {
+      "type": "card"
+    },
+    "image": "/i/game-pieces/3D/Meeple-3D.svg",
+    "preventPiles": true
+  },
+  "deck-meeple-seat-p5": {
+    "type": "deck",
+    "id": "deck-meeple-seat-p5",
+    "cardTypes": {
+      "meeple": {
+        "color": "darkorange",
+        "image": "i/game-pieces/3D/Meeple-3D.svg"
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 55,
+            "height": 55,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image"
+            },
+            "svgReplaces": {
+              "#primaryColor": "color",
+              "#borderColor": "borderColor",
+              "#borderWidth": "borderWidth"
+            }
+          },
+          {
+            "type": "text",
+            "x": 8,
+            "y": 32,
+            "width": 100,
+            "fontSize": "20",
+            "textAlign": "center",
+            "dynamicProperties": {
+              "value": "text",
+              "css": "cssText"
+            }
+          }
+        ]
+      }
+    ],
+    "z": 452,
+    "cardDefaults": {
+      "class": "house",
+      "width": 55,
+      "height": 55,
+      "borderColor": "black",
+      "borderWidth": "3px",
+      "cssText": "color:dimgray;font-weight:bold",
+      "onPileCreation": {
+        "handleCSS": "position:sticky; width:16px; height:16px; background-color:black;color:white;font-size:16px;font-weight:bold; padding:0.22rem 0.22rem 0.22rem 0.22rem;",
+        "handlePosition": "right"
+      },
+      "pilesWith": {
+        "type": "card"
+      },
+      "button-resetReset": {
+        "parent": "holder-meeple-seat-p5"
+      }
+    },
+    "width": 46,
+    "height": 46,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p5"
+  },
+  "s4qt": {
+    "deck": "deck-meeple-seat-p1",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "s4qt",
+    "z": 10571,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p1"
+  },
+  "label-coins-p5": {
+    "type": "label",
+    "id": "label-coins-p5",
+    "parent": "seat-p5",
+    "x": 96,
+    "y": 94,
+    "width": 60,
+    "height": 42,
+    "z": 43847,
+    "css": {
+      "font-weight": "bold",
+      "font-size": "36px",
+      "color": "gold",
+      "line-height": "38px",
+      "text-shadow": "1px 1px 1px silver"
+    },
+    "editable": true,
+    "text": 5
+  },
+  "button-score-inc-p10": {
+    "type": "button",
+    "id": "button-score-inc-p10",
+    "parent": "label-coins-p5",
+    "fixedParent": true,
+    "x": 62,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "css": "color:black;font-size: 24px; background-color:gold; border:3px solid black",
+    "text": "+",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "inc",
+        "value": 1
+      }
+    ]
+  },
+  "button-score-dec-p10": {
+    "type": "button",
+    "id": "button-score-dec-p10",
+    "parent": "label-coins-p5",
+    "fixedParent": true,
+    "x": -38,
+    "y": 2,
+    "width": 35,
+    "height": 35,
+    "movableInEdit": false,
+    "classes": "symbols",
+    "css": "color:black;font-size: 28px; background-color:gold; border:3px solid black",
+    "text": "remove",
+    "clickRoutine": [
+      {
+        "func": "LABEL",
+        "label": "${PROPERTY parent}",
+        "mode": "dec",
+        "value": 1
+      }
+    ]
+  },
+  "holder-cardswon-seat-p5": {
+    "type": "holder",
+    "id": "holder-cardswon-seat-p5",
+    "parent": "seat-p5",
+    "x": 192,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61949,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-bonuseswon-seat-p5": {
+    "type": "holder",
+    "id": "holder-bonuseswon-seat-p5",
+    "parent": "seat-p5",
+    "x": -10,
+    "y": 25,
+    "width": 70,
+    "height": 300,
+    "scale": 0.8,
+    "z": 61944,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "preventPiles": true,
+    "stackOffsetY": 28
+  },
+  "holder-seat-p5": {
+    "type": "holder",
+    "id": "holder-seat-p5",
+    "parent": "seat-p5",
+    "x": 92,
+    "y": 222,
+    "width": 70,
+    "height": 70,
+    "z": 61947,
+    "inheritChildZ": true,
+    "dropLimit": 1,
+    "dropOffsetX": 0,
+    "dropOffsetY": 0,
+    "dropTarget": [
+      {
+        "class": "cards"
+      }
+    ]
+  },
+  "mauh": {
+    "deck": "deck-meeple-seat-p2",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "mauh",
+    "z": 10572,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p2"
+  },
+  "bqq9": {
+    "deck": "deck-meeple-seat-p3",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "bqq9",
+    "z": 10573,
+    "parent": "holder-meeple-seat-p3",
+    "x": 4,
+    "y": 4
+  },
+  "rrpo": {
+    "deck": "deck-meeple-seat-p4",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "rrpo",
+    "z": 10574,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p4"
+  },
+  "a6c3": {
+    "deck": "deck-meeple-seat-p5",
+    "type": "card",
+    "cardType": "meeple",
+    "id": "a6c3",
+    "z": 10575,
+    "x": 4,
+    "y": 4,
+    "parent": "holder-meeple-seat-p5"
+  },
+  "holder-tray": {
+    "type": "holder",
+    "id": "holder-tray",
+    "x": 645,
+    "y": 730,
+    "width": 300,
+    "height": 150,
+    "z": 62083,
+    "alignChildren": false,
+    "css": {
+      "background": "white"
+    },
+    "dropTarget": {
+      "type": "dice"
+    }
+  },
+  "button-roll": {
+    "type": "button",
+    "id": "button-roll",
+    "x": 546,
+    "y": 770,
+    "z": 43852,
+    "borderColor": "mistyrose",
+    "clickRoutine": [
+      {
+        "func": "SELECT",
+        "property": "parent",
+        "value": "holder-tray",
+        "relation": "=="
+      },
+      {
+        "func": "CLICK"
+      }
+    ],
+    "width": 90,
+    "height": 65,
+    "css": "font-size:20px;font-weight:bold;border-radius:7px",
+    "image": "/i/game-icons.net/delapouite/rolling-dices.svg",
+    "backgroundColor": "white"
+  },
+  "dice-1": {
+    "type": "dice",
+    "id": "dice-1",
+    "x": 123,
+    "width": 55,
+    "height": 55,
+    "z": 3512,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": true,
+    "rollCount": 717,
+    "y": 11,
+    "activeFace": 4,
+    "parent": "holder-tray"
+  },
+  "dice-2": {
+    "type": "dice",
+    "id": "dice-2",
+    "width": 55,
+    "height": 55,
+    "z": 3526,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": true,
+    "rollCount": 708,
+    "y": 9,
+    "x": 140,
+    "hoverParent": "holder-tray",
+    "activeFace": 4,
+    "parent": "holder-tray"
+  },
+  "dice-3": {
+    "type": "dice",
+    "id": "dice-3",
+    "x": 64,
+    "width": 55,
+    "height": 55,
+    "z": 3528,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": true,
+    "rollCount": 699,
+    "activeFace": 2,
+    "hoverParent": "holder-tray",
+    "y": 52,
+    "parent": "holder-tray"
+  },
+  "dice-4": {
+    "type": "dice",
+    "id": "dice-4",
+    "x": 144,
+    "y": 9,
+    "width": 55,
+    "height": 55,
+    "z": 3530,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": true,
+    "rollCount": 711,
+    "hoverParent": "holder-tray",
+    "parent": "holder-tray"
+  },
+  "dice-5": {
+    "type": "dice",
+    "id": "dice-5",
+    "width": 55,
+    "height": 55,
+    "z": 3511,
+    "movable": true,
+    "faces": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "pipSymbols": true,
+    "rollCount": 686,
+    "y": 75,
+    "activeFace": 3,
+    "x": 81,
+    "parent": "holder-tray"
+  },
+  "hand": {
+    "type": "holder",
+    "id": "hand",
+    "x": 690,
+    "y": 897,
+    "width": 220,
+    "height": 80,
+    "z": 62064,
+    "stackOffsetX": 70,
+    "inheritChildZ": true,
+    "childrenPerOwner": true
+  },
+  "636a": {
+    "type": "holder",
+    "x": 1140,
+    "y": 670,
+    "z": 62081,
+    "id": "636a",
+    "image": "/i/game-icons.net/delapouite/trash-can.svg",
+    "height": 90,
+    "width": 90,
+    "dropOffsetX": 10,
+    "dropOffsetY": 10,
+    "preventPiles": true
+  },
+  "holder-deck-seat-p2": {
+    "type": "holder",
+    "id": "holder-deck-seat-p2",
+    "x": 704,
+    "y": 1127,
+    "height": 70,
+    "z": 61983,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70
+  },
+  "nlytB4": {
+    "id": "nlytB4",
+    "parent": "holder-deck-seat-p2",
+    "fixedParent": true,
+    "y": 70,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-seat-p2": {
+    "type": "deck",
+    "id": "deck-seat-p2",
+    "parent": "holder-deck-seat-p2",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#799AC4",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1 VP *",
+        "image-art": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "sortingOrder": 2
+      },
+      "2": {
+        "number": "2 VP *",
+        "image-art": "/i/game-icons.net/lorc/recycle.svg",
+        "sortingOrder": 3
+      },
+      "3": {
+        "number": "3 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 4
+      },
+      "4": {
+        "number": "4 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 5
+      },
+      "5": {
+        "number": "5 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 6
+      },
+      "7": {
+        "number": "7 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 7
+      },
+      "-1": {
+        "number": "-1 VP",
+        "image-art": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "svgReplaces": {
+              "#000": "backcolor"
+            },
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/divided-square.svg",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 30,
+            "width": 35,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-art"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "holder-deck-seat-p3": {
+    "type": "holder",
+    "id": "holder-deck-seat-p3",
+    "x": 774,
+    "y": 1127,
+    "height": 70,
+    "z": 61983,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70
+  },
+  "nlytB5": {
+    "id": "nlytB5",
+    "parent": "holder-deck-seat-p3",
+    "fixedParent": true,
+    "y": 70,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-seat-p3": {
+    "type": "deck",
+    "id": "deck-seat-p3",
+    "parent": "holder-deck-seat-p3",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#799AC4",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1 VP *",
+        "image-art": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "sortingOrder": 2
+      },
+      "2": {
+        "number": "2 VP *",
+        "image-art": "/i/game-icons.net/lorc/recycle.svg",
+        "sortingOrder": 3
+      },
+      "3": {
+        "number": "3 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 4
+      },
+      "4": {
+        "number": "4 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 5
+      },
+      "5": {
+        "number": "5 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 6
+      },
+      "7": {
+        "number": "7 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 7
+      },
+      "-1": {
+        "number": "-1 VP",
+        "image-art": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "svgReplaces": {
+              "#000": "backcolor"
+            },
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/divided-square.svg",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 30,
+            "width": 35,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-art"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "holder-deck-seat-p4": {
+    "type": "holder",
+    "id": "holder-deck-seat-p4",
+    "x": 844,
+    "y": 1127,
+    "height": 70,
+    "z": 61983,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70
+  },
+  "nlytB6": {
+    "id": "nlytB6",
+    "parent": "holder-deck-seat-p4",
+    "fixedParent": true,
+    "y": 70,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-seat-p4": {
+    "type": "deck",
+    "id": "deck-seat-p4",
+    "parent": "holder-deck-seat-p4",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#799AC4",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1 VP *",
+        "image-art": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "sortingOrder": 2
+      },
+      "2": {
+        "number": "2 VP *",
+        "image-art": "/i/game-icons.net/lorc/recycle.svg",
+        "sortingOrder": 3
+      },
+      "3": {
+        "number": "3 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 4
+      },
+      "4": {
+        "number": "4 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 5
+      },
+      "5": {
+        "number": "5 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 6
+      },
+      "7": {
+        "number": "7 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 7
+      },
+      "-1": {
+        "number": "-1 VP",
+        "image-art": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "svgReplaces": {
+              "#000": "backcolor"
+            },
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/divided-square.svg",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 30,
+            "width": 35,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-art"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "holder-deck-seat-p5": {
+    "type": "holder",
+    "id": "holder-deck-seat-p5",
+    "x": 914,
+    "y": 1127,
+    "height": 70,
+    "z": 61983,
+    "dropTarget": {
+      "type": "card"
+    },
+    "width": 70
+  },
+  "nlytB7": {
+    "id": "nlytB7",
+    "parent": "holder-deck-seat-p5",
+    "fixedParent": true,
+    "y": 70,
+    "width": 70,
+    "height": 40,
+    "type": "button",
+    "text": "Recall & Shuffle",
+    "movableInEdit": false,
+    "clickRoutine": [
+      {
+        "func": "RECALL",
+        "holder": "${PROPERTY parent}"
+      },
+      {
+        "func": "FLIP",
+        "holder": "${PROPERTY parent}",
+        "face": 0
+      },
+      {
+        "func": "SHUFFLE",
+        "holder": "${PROPERTY parent}"
+      }
+    ]
+  },
+  "deck-seat-p5": {
+    "type": "deck",
+    "id": "deck-seat-p5",
+    "parent": "holder-deck-seat-p5",
+    "x": 4,
+    "y": 4,
+    "z": 40,
+    "cardDefaults": {
+      "class": "cards",
+      "classes": "transition",
+      "width": 70,
+      "height": 70,
+      "bgcolor": "#799AC4",
+      "css": {
+        "font-weight": "bold",
+        "color": "white",
+        "text-shadow": "1px 1px 1px black"
+      },
+      "onPileCreation": {
+        "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+        "handlePosition": "left"
+      }
+    },
+    "cardTypes": {
+      "1": {
+        "number": "1 VP *",
+        "image-art": "/i/game-icons.net/delapouite/rolling-dices.svg",
+        "sortingOrder": 2
+      },
+      "2": {
+        "number": "2 VP *",
+        "image-art": "/i/game-icons.net/lorc/recycle.svg",
+        "sortingOrder": 3
+      },
+      "3": {
+        "number": "3 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 4
+      },
+      "4": {
+        "number": "4 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 5
+      },
+      "5": {
+        "number": "5 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 6
+      },
+      "7": {
+        "number": "7 VP",
+        "image-art": "/i/game-icons.net/lorc/crowned-heart.svg",
+        "sortingOrder": 7
+      },
+      "-1": {
+        "number": "-1 VP",
+        "image-art": "/i/game-icons.net/lorc/chewed-skull.svg",
+        "sortingOrder": 1
+      }
+    },
+    "faceTemplates": [
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "color": "dimgray"
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "svgReplaces": {
+              "#000": "backcolor"
+            },
+            "color": "transparent",
+            "value": "/i/game-icons.net/skoll/divided-square.svg",
+            "width": 70,
+            "height": 70
+          }
+        ],
+        "border": 1,
+        "radius": 8
+      },
+      {
+        "objects": [
+          {
+            "width": 70,
+            "height": 70,
+            "type": "image",
+            "value": ""
+          },
+          {
+            "type": "image",
+            "x": 0,
+            "y": 0,
+            "width": 70,
+            "height": 70,
+            "dynamicProperties": {
+              "value": "image",
+              "color": "bgcolor"
+            }
+          },
+          {
+            "type": "image",
+            "x": 10,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-left"
+            }
+          },
+          {
+            "type": "image",
+            "x": 36,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-right"
+            }
+          },
+          {
+            "type": "image",
+            "x": 22,
+            "y": 4,
+            "width": 25,
+            "height": 25,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-center"
+            }
+          },
+          {
+            "type": "image",
+            "x": 17,
+            "y": 30,
+            "width": 35,
+            "height": 35,
+            "color": "transparent",
+            "dynamicProperties": {
+              "value": "image-art"
+            }
+          },
+          {
+            "type": "text",
+            "x": 6,
+            "y": 3,
+            "fontSize": 20,
+            "textAlign": "center",
+            "width": 58,
+            "dynamicProperties": {
+              "value": "number"
+            }
+          }
+        ],
+        "border": 2,
+        "radius": 8
+      }
+    ],
+    "width": 46,
+    "height": 46
+  },
+  "button-nextround": {
+    "type": "button",
+    "id": "button-nextround",
+    "x": 1140,
+    "y": 770,
+    "height": 65,
+    "z": 43846,
+    "css": "font-size:20px;font-weight:bold;border-radius:7px",
+    "clickRoutine": [
+      {
+        "func": "INPUT",
+        "header": "Next Round",
+        "fields": [
+          {
+            "type": "text",
+            "text": "You're about to start the next round. Are you sure?"
+          }
+        ]
+      },
+      {
+        "func": "RECALL",
+        "holder": [
+          "holder-meeple-seat-p1",
+          "holder-meeple-seat-p2",
+          "holder-meeple-seat-p3",
+          "holder-meeple-seat-p4",
+          "holder-meeple-seat-p5"
+        ]
+      },
+      {
+        "note": "Select a random start player",
+        "func": "TURN",
+        "turnCycle": "random"
+      },
+      {
+        "func": "CALL",
+        "routine": "resetDiceRoutine",
+        "widget": "button-endturn"
+      },
+      {
+        "func": "CALL",
+        "routine": "checkForEmptyHandRoutine",
+        "variable": "isAnEmptyHand"
+      },
+      {
+        "func": "IF",
+        "operand1": "${isAnEmptyHand}",
+        "operand2": true,
+        "thenRoutine": [
+          {
+            "func": "CALL",
+            "routine": "scoreHandCardsRoutine"
+          },
+          "var round = ${PROPERTY round} + 1",
+          {
+            "func": "SET",
+            "collection": "thisButton",
+            "property": "round",
+            "value": "${round}"
+          },
+          {
+            "func": "CALL",
+            "routine": "dealCardsRoutine"
+          }
+        ]
+      }
+    ],
+    "text": "Next Round",
+    "width": 90,
+    "checkForEmptyHandRoutine": [
+      "var fewestCardsInHand = 99",
+      "var result = false",
+      {
+        "func": "SELECT",
+        "type": "seat",
+        "property": "player",
+        "relation": "!=",
+        "value": "",
+        "collection": "players"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "players",
+        "loopRoutine": [
+          "var index = ${PROPERTY index OF $widgetID}",
+          "var handCounter = 'hand-counter-p' + ${index}",
+          "var handCount = ${PROPERTY text OF $handCounter}",
+          "var fewestCardsInHand = min ${handCount} ${fewestCardsInHand}"
+        ]
+      },
+      {
+        "func": "IF",
+        "operand1": "${fewestCardsInHand}",
+        "operand2": 0,
+        "thenRoutine": [
+          "var result = true"
+        ]
+      }
+    ],
+    "dealCardsRoutine": [
+      {
+        "note": "Get player count",
+        "func": "COUNT",
+        "collection": "activeSeats"
+      },
+      {
+        "func": "FOREACH",
+        "collection": "activeSeats",
+        "loopRoutine": [
+          {
+            "note": "Deal each player 3 cards",
+            "func": "MOVE",
+            "from": "holder-deck-${widgetID}",
+            "to": "${widgetID}",
+            "face": 1,
+            "fillTo": 3
+          }
+        ]
+      },
+      {
+        "func": "SORT",
+        "holder": [
+          "hand"
+        ],
+        "key": "sortingOrder",
+        "reverse": true
+      }
+    ],
+    "round": 6
+  },
+  "qj87": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "-1",
+    "id": "qj87",
+    "z": 10605,
+    "parent": "jzg0"
+  },
+  "7oz0": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "-1",
+    "id": "7oz0",
+    "z": 10611,
+    "parent": "jzg0"
+  },
+  "6jvx": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "-1",
+    "id": "6jvx",
+    "z": 10606,
+    "parent": "jzg0"
+  },
+  "3yw4": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "7",
+    "id": "3yw4",
+    "z": 10607,
+    "parent": "jzg0"
+  },
+  "nhej": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "5",
+    "id": "nhej",
+    "z": 10603,
+    "parent": "jzg0"
+  },
+  "dsht": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "1",
+    "id": "dsht",
+    "z": 10608,
+    "parent": "jzg0"
+  },
+  "45rs": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "2",
+    "id": "45rs",
+    "z": 10609,
+    "parent": "jzg0"
+  },
+  "qh2q": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "3",
+    "id": "qh2q",
+    "z": 10604,
+    "parent": "jzg0"
+  },
+  "rx9q": {
+    "deck": "deck-seat-p2",
+    "type": "card",
+    "cardType": "4",
+    "id": "rx9q",
+    "z": 10610,
+    "parent": "jzg0"
+  },
+  "bner": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "1",
+    "id": "bner",
+    "z": 10618,
+    "parent": "vhhp"
+  },
+  "zvtv": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "2",
+    "id": "zvtv",
+    "z": 10617,
+    "parent": "vhhp"
+  },
+  "pejy": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "3",
+    "id": "pejy",
+    "z": 10614,
+    "parent": "vhhp"
+  },
+  "8i2r": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "4",
+    "id": "8i2r",
+    "z": 10615,
+    "parent": "vhhp"
+  },
+  "z2hx": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "5",
+    "id": "z2hx",
+    "z": 10612,
+    "parent": "vhhp"
+  },
+  "3xsk": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "7",
+    "id": "3xsk",
+    "z": 10619,
+    "parent": "vhhp"
+  },
+  "uzg2": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "-1",
+    "id": "uzg2",
+    "z": 10620,
+    "parent": "vhhp"
+  },
+  "cxy3": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "-1",
+    "id": "cxy3",
+    "z": 10613,
+    "parent": "vhhp"
+  },
+  "3gfd": {
+    "deck": "deck-seat-p3",
+    "type": "card",
+    "cardType": "-1",
+    "id": "3gfd",
+    "z": 10616,
+    "parent": "vhhp"
+  },
+  "ytnd": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "1",
+    "id": "ytnd",
+    "z": 10628,
+    "parent": "gzvy"
+  },
+  "41qy": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "2",
+    "id": "41qy",
+    "z": 10627,
+    "parent": "gzvy"
+  },
+  "xj3e": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "3",
+    "id": "xj3e",
+    "z": 10629,
+    "parent": "gzvy"
+  },
+  "62un": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "4",
+    "id": "62un",
+    "z": 10621,
+    "parent": "gzvy"
+  },
+  "kyms": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "5",
+    "id": "kyms",
+    "z": 10625,
+    "parent": "gzvy"
+  },
+  "2df4": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "7",
+    "id": "2df4",
+    "z": 10626,
+    "parent": "gzvy"
+  },
+  "6yvf": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "-1",
+    "id": "6yvf",
+    "z": 10623,
+    "parent": "gzvy"
+  },
+  "i7c6": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "-1",
+    "id": "i7c6",
+    "z": 10624,
+    "parent": "gzvy"
+  },
+  "mfla": {
+    "deck": "deck-seat-p4",
+    "type": "card",
+    "cardType": "-1",
+    "id": "mfla",
+    "z": 10622,
+    "parent": "gzvy"
+  },
+  "vm42": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "1",
+    "id": "vm42",
+    "z": 10635,
+    "parent": "ofh8"
+  },
+  "glin": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "2",
+    "id": "glin",
+    "z": 10633,
+    "parent": "ofh8"
+  },
+  "ye1t": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "3",
+    "id": "ye1t",
+    "z": 10632,
+    "parent": "ofh8"
+  },
+  "divw": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "4",
+    "id": "divw",
+    "z": 10637,
+    "parent": "ofh8"
+  },
+  "xp5j": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "5",
+    "id": "xp5j",
+    "z": 10630,
+    "parent": "ofh8"
+  },
+  "ufoi": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "7",
+    "id": "ufoi",
+    "z": 10638,
+    "parent": "ofh8"
+  },
+  "y3cx": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "-1",
+    "id": "y3cx",
+    "z": 10636,
+    "parent": "ofh8"
+  },
+  "wbtq": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "-1",
+    "id": "wbtq",
+    "z": 10634,
+    "parent": "ofh8"
+  },
+  "pjq6": {
+    "deck": "deck-seat-p5",
+    "type": "card",
+    "cardType": "-1",
+    "id": "pjq6",
+    "z": 10631,
+    "parent": "ofh8"
+  },
+  "xibo": {
+    "text": "Basic widget",
+    "id": "xibo",
+    "image": "/i/game-icons.net/faithtoken/card-discard.svg",
+    "z": 2721,
+    "y": -152,
+    "x": 272
+  },
+  "button-guide": {
+    "type": "button",
+    "id": "button-guide",
+    "x": 1140,
+    "y": 844,
+    "width": 90,
+    "height": 65,
+    "z": 43847,
+    "css": "font-size:20px;font-weight:bold;border-radius:7px",
+    "clickRoutine": [
+      {
+        "func": "IF",
+        "operand1": "${PROPERTY text}",
+        "operand2": "Show Guide",
+        "thenRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-guide"
+            ],
+            "property": "text",
+            "value": "Hide Guide"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "box-guide",
+              "image-guide-1",
+              "image-guide-2",
+              "image-guide-3",
+              "image-guide-4"
+            ],
+            "property": "display",
+            "value": true
+          }
+        ],
+        "elseRoutine": [
+          {
+            "func": "SET",
+            "collection": [
+              "button-guide"
+            ],
+            "property": "text",
+            "value": "Show Guide"
+          },
+          {
+            "func": "SET",
+            "collection": [
+              "box-guide",
+              "image-guide-1",
+              "image-guide-2",
+              "image-guide-3",
+              "image-guide-4"
+            ],
+            "property": "display",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "text": "Show Guide"
+  },
+  "label-guide": {
+    "type": "label",
+    "id": "label-guide",
+    "y": 9,
+    "width": 270,
+    "z": 43877,
+    "css": {
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "left"
+    },
+    "text": "Round Structure:\n* If empty-handed, draw 3 new cards\n* Reveal new bonus card (A, B, C)\n* Take turns (monarch goes first)\n* Draft cards (highest row goes first)\n* Award bonus card (if applicable)\n* Assign new monarch (first drafter)\n\nTurn Structure:\n* Play card from hand\n* Roll dice (up to 3x)\n* Place meeple on grid\n\n* Deck Composition:\n-1, -1, -1, 1, 2, 3, 4, 5, 7",
+    "parent": "box-guide",
+    "height": 290,
+    "x": 7
+  },
+  "hand-counter-p2": {
+    "id": "hand-counter-p2",
+    "parent": "seat-p2",
+    "x": 225,
+    "width": 36,
+    "height": 36,
+    "borderRadius": 100,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "movable": false,
+    "z": 3321,
+    "y": -8,
+    "fixedParent": true,
+    "hoverParent": "seat-p1"
+  },
+  "hand-counter-p3": {
+    "id": "hand-counter-p3",
+    "parent": "seat-p3",
+    "x": 225,
+    "width": 36,
+    "height": 36,
+    "borderRadius": 100,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "movable": false,
+    "z": 3321,
+    "y": -8,
+    "fixedParent": true,
+    "hoverParent": "seat-p1"
+  },
+  "hand-counter-p4": {
+    "id": "hand-counter-p4",
+    "parent": "seat-p4",
+    "x": 225,
+    "width": 36,
+    "height": 36,
+    "borderRadius": 100,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "movable": false,
+    "z": 3321,
+    "fixedParent": true,
+    "y": -8,
+    "hoverParent": "seat-p1"
+  },
+  "hand-counter-p5": {
+    "id": "hand-counter-p5",
+    "parent": "seat-p5",
+    "x": 225,
+    "width": 36,
+    "height": 36,
+    "borderRadius": 100,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "movable": false,
+    "z": 3321,
+    "fixedParent": true,
+    "y": -8,
+    "hoverParent": "seat-p1"
+  },
+  "box-guide": {
+    "id": "box-guide",
+    "x": 1250,
+    "y": 670,
+    "width": 280,
+    "height": 310,
+    "layer": -3,
+    "z": 62080,
+    "movable": false,
+    "css": {
+      "border": "1px solid black",
+      "background": "dimgray",
+      "box-shadow": "1px 1px 1px black"
+    },
+    "display": false
+  },
+  "image-guide-1": {
+    "id": "image-guide-1",
+    "parent": "image-board",
+    "x": 471,
+    "y": 12,
+    "width": 50,
+    "height": 50,
+    "rotation": -90,
+    "z": 3365,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/tron-arrow.svg",
+    "display": false
+  },
+  "image-guide-2": {
+    "id": "image-guide-2",
+    "parent": "image-board",
+    "x": 468,
+    "y": 66,
+    "width": 50,
+    "height": 50,
+    "z": 3374,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/crowned-heart.svg",
+    "display": false
+  },
+  "image-guide-3": {
+    "id": "image-guide-3",
+    "parent": "image-board",
+    "x": -50,
+    "y": 395,
+    "width": 50,
+    "height": 50,
+    "rotation": 90,
+    "z": 3370,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/tron-arrow.svg",
+    "display": false
+  },
+  "image-guide-4": {
+    "id": "image-guide-4",
+    "parent": "image-board",
+    "x": -48,
+    "y": 347,
+    "width": 45,
+    "height": 45,
+    "z": 3376,
+    "movable": false,
+    "image": "/i/game-icons.net/lorc/chewed-skull.svg",
+    "display": false
+  },
+  "hand-counter-p1": {
+    "id": "hand-counter-p1",
+    "parent": "seat-p1",
+    "fixedParent": true,
+    "x": 225,
+    "width": 36,
+    "height": 36,
+    "borderRadius": 100,
+    "z": 3321,
+    "movable": false,
+    "clickable": false,
+    "css": {
+      "border": "2px solid black",
+      "font-size": "24px",
+      "color": "white",
+      "font-weight": "bold",
+      "text-align": "center",
+      "line-height": "34px",
+      "background-color": "gray",
+      "text-shadow": "2px 2px 3px black",
+      "background-image": "url('/i/game-icons.net/lorc/poker-hand.svg')"
+    },
+    "hoverParent": "seat-p1",
+    "text": 0,
+    "ownerGlobalUpdateRoutine": [
+      "var parent = ${PROPERTY parent}",
+      "var COUNT = 0",
+      {
+        "func": "SELECT",
+        "property": "_ancestor",
+        "value": "${PROPERTY hand OF $parent}"
+      },
+      {
+        "func": "COUNT",
+        "owner": "${PROPERTY player OF $parent}"
+      },
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${COUNT}"
+      }
+    ],
+    "playerGlobalUpdateRoutine": [
+      {
+        "func": "CALL",
+        "routine": "ownerGlobalUpdateRoutine",
+        "widget": "${PROPERTY id}"
+      }
+    ],
+    "y": -8
+  },
+  "image-background": {
+    "id": "image-background",
+    "width": 1600,
+    "height": 1600,
+    "layer": -5,
+    "z": 53,
+    "movable": false,
+    "css": {
+      "opacity": 0.15
+    },
+    "image": "/assets/-741595978_98438"
+  },
+  "r80t": {
+    "type": "pile",
+    "parent": "holder-deck-seat-p1",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "left",
+    "id": "r80t"
+  },
+  "jzg0": {
+    "type": "pile",
+    "parent": "holder-deck-seat-p2",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "left",
+    "id": "jzg0"
+  },
+  "vhhp": {
+    "type": "pile",
+    "parent": "holder-deck-seat-p3",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "left",
+    "id": "vhhp"
+  },
+  "gzvy": {
+    "type": "pile",
+    "parent": "holder-deck-seat-p4",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "left",
+    "id": "gzvy"
+  },
+  "ofh8": {
+    "type": "pile",
+    "parent": "holder-deck-seat-p5",
+    "x": 4,
+    "y": 4,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.2rem 0.2rem 0.2rem 0.2rem;",
+    "handlePosition": "left",
+    "id": "ofh8"
+  },
+  "bsku": {
+    "type": "pile",
+    "parent": "holder-deck-bonus-a",
+    "x": 0,
+    "y": 0,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "left",
+    "id": "bsku"
+  },
+  "m7ah": {
+    "type": "pile",
+    "parent": "holder-deck-bonus-b",
+    "x": 0,
+    "y": 0,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "left",
+    "id": "m7ah"
+  },
+  "mo2n": {
+    "type": "pile",
+    "parent": "holder-deck-bonus-c",
+    "x": 0,
+    "y": 0,
+    "width": 70,
+    "height": 70,
+    "handleCSS": "width:28px; height:28px; background-color:black;color:white;font-size:28px;font-weight:bold; padding:0.1rem 0.1rem 0.1rem 0.1rem;",
+    "handlePosition": "left",
+    "id": "mo2n"
+  }
+}
