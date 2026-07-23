@@ -1,7 +1,7 @@
 import { $, removeFromDOM, asArray, escapeID, mapAssetURLs } from '../domhelpers.js';
 import { StateManaged } from '../statemanaged.js';
 import { playerName, playerColor, activePlayers, activeColors, mouseCoords } from '../overlays/players.js';
-import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, runInput } from '../serverstate.js';
+import { batchStart, batchEnd, widgetFilter, widgets, flushDelta, validateParentAssignment, runInput } from '../serverstate.js';
 import { showOverlay, shuffleWidgets, sortWidgets } from '../main.js';
 import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
@@ -1958,6 +1958,18 @@ export class Widget extends StateManaged {
               if (w.readOnlyProperties().has(a.property)) {
                 problems.push(`Tried setting read-only property ${a.property}.`);
                 continue;
+              }
+
+              if(a.property === 'parent' && a.value) {
+                const parentProblem = validateParentAssignment(w.id, a.value);
+                if(parentProblem === 'self') {
+                  problems.push(`Widget ${w.id} cannot set its parent to itself.`);
+                  continue;
+                }
+                if(parentProblem === 'descendant') {
+                  problems.push(`Widget ${w.id} cannot set its parent to ${a.value} because ${a.value} is a descendant of ${w.id}.`);
+                  continue;
+                }
               }
 
               if(a.relation == '+' && w.get(String(a.property)) == null)

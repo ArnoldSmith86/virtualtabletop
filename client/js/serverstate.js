@@ -8,6 +8,27 @@ let isLoading = true;
 
 export const widgets = new Map();
 
+export function validateParentAssignment(widgetId, proposedParentId) {
+  if(proposedParentId == null)
+    return null;
+  if(proposedParentId === widgetId)
+    return 'self';
+  // Track visited ids so a pre-existing parent cycle (the corruption this bug
+  // can produce) doesn't turn the walk into an infinite loop.
+  const seen = new Set();
+  let currentParentId = proposedParentId;
+  while(currentParentId !== null && !seen.has(currentParentId)) {
+    if(currentParentId === widgetId)
+      return 'descendant';
+    seen.add(currentParentId);
+    const currentParent = widgets.get(currentParentId);
+    if(!currentParent || !currentParent.state || !currentParent.get('parent'))
+      break;
+    currentParentId = currentParent.get('parent');
+  }
+  return null;
+}
+
 let deferredCards = {};
 let deferredChildren = {};
 
