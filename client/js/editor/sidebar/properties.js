@@ -3080,7 +3080,7 @@ class PropertiesModule extends SidebarModule {
     // Widget info
     const widgetInfo = document.createElement('div');
     widgetInfo.classList.add('inheritFromWidgetInfo');
-    widgetInfo.textContent = `${sourceWidget.get('type')} #${sourceWidgetId}`;
+    widgetInfo.textContent = `${sourceWidgetId} (${sourceWidget.get('type') || 'basic'})`;
     rowWrap.appendChild(widgetInfo);
 
     // Mode dropdown
