@@ -1,0 +1,895 @@
+/* horizontal scrolling is never wanted in the properties module */
+.tune.editorModule {
+  overflow-x: hidden;
+}
+
+.editorModule .propertyInput {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0;
+  padding-right: 6px;
+}
+
+.editorModule input[type=range] {
+  accent-color: #4d88cb;
+}
+
+.editorModule .propertyInput > label .labelIcon {
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.editorModule .propertyInput *,
+.editorModule .propertyPicker * {
+  box-sizing: border-box;
+}
+
+/* fixed label column so the inputs line up across rows; block flow so the
+   (i) hint stays glued to the last word even when the label wraps */
+.editorModule .propertyInput > label {
+  width: 132px;
+  min-width: 132px;
+  overflow-wrap: anywhere;
+  display: inline-block;
+}
+
+.editorModule .propertyInput > label .info-button {
+  margin-left: 4px;
+}
+
+.editorModule .propertyInput input[type=text],
+.editorModule .propertyInput input:not([type]) {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
+/* Values such as border radii are usually short (e.g. 8px or 50%). */
+.editorModule .propertyInput.compactInput input[type=text],
+.editorModule .propertyInput.compactInput input:not([type]) {
+  flex: 0 0 calc(5ch + 12px);
+  min-width: calc(5ch + 12px);
+  width: calc(5ch + 12px);
+}
+
+.editorModule .propertyInput textarea {
+  flex: 1 1 200px;
+  min-height: 4em;
+}
+
+.editorModule .numberInput input[type=number] {
+  width: 70px;
+}
+
+.editorModule .numberInput input[type=range] {
+  flex: 1 1 80px;
+  min-width: 60px;
+}
+
+.editorModule .propertyInputUnit {
+  color: var(--textDimColor1, #777);
+}
+
+.editorModule .checkboxInput > label {
+  cursor: pointer;
+}
+
+/* checkbox rendered as a compact switch: 40x24 track with a 20px knob.
+   min/max-width guard against the 132px label column rule which also
+   matches this label. */
+.editorModule .switchInput label.switchbox {
+  height: 24px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  flex: 0 0 40px;
+  margin: 2px;
+  padding: 0;
+  position: relative;
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+.editorModule .switchInput label.switchbox::before {
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+.editorModule .switchInput input.switchbox:checked + label.switchbox::before {
+  margin-left: 18px;
+}
+.editorModule .switchInput input.switchbox {
+  /* keep the hidden checkbox at its DOM position: moving it far off-screen
+     makes the browser scroll it into view when the label click focuses it */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.editorModule .colorHexInput {
+  width: 90px;
+  font-family: monospace;
+}
+
+/* info buttons (design from the routine editor in PR #2439) */
+.info-button {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--VTTblue);
+  vertical-align: middle;
+}
+
+.info-button .material-symbols {
+  font-size: 18px;
+  line-height: 1;
+  user-select: none;
+}
+
+.inline-popup {
+  position: fixed;
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  z-index: 9;
+  padding: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+  min-width: 220px;
+  max-width: 50vw;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--backgroundHighlightColor1);
+  font-size: 13px;
+}
+
+/* picker inputs (color, icon, image) */
+
+.editorModule .propertyPreviewButton {
+  padding: 2px;
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* color inputs: 36x36 preview that is also the only toggle (no arrow) */
+.editorModule .colorInput .propertyPreviewButton {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 2px;
+}
+
+.editorModule .colorInput .propertyPreviewButton .propertyValueChip {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+}
+
+/* image inputs: bigger, square preview */
+.editorModule .imageInput .propertyValueChip {
+  border-radius: 0;
+}
+
+.editorModule .imageInput .propertyPreviewButton {
+  min-width: 60px;
+  min-height: 60px;
+}
+
+.editorModule .imageInput .propertyPreviewButton .propertyValueChip {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+}
+
+.editorModule .propertyExpandButton {
+  padding: 2px;
+  min-width: 30px;
+  justify-content: center;
+}
+
+.editorModule .propertyExpandButton.open::before {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.editorModule .propertyValueChip {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(45deg, #0002 25%, transparent 25%, transparent 75%, #0002 75%, #0002 0), linear-gradient(45deg, #0002 25%, transparent 25%, transparent 75%, #0002 75%, #0002 0), white;
+  background-position: 0px 0, 4px 4px;
+  background-size: 8px 8px, 8px 8px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  font-size: 24px;
+  color: black;
+}
+
+.editorModule .propertyValueChip.selected, .editorModule .propertyValueChip:hover {
+  border-color: var(--VTTblue);
+}
+
+.editorModule .propertyValueChip img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.editorModule .propertyColorChip {
+  background: var(--chipColor, transparent);
+}
+
+.editorModule .propertyColorChip[style*="--chipColor: transparent"] {
+  background: repeating-linear-gradient(45deg, #fff, #fff 4px, #eee 4px, #eee 8px);
+}
+
+.editorModule .propertyEmptyChip::after {
+  content: 'close';
+  font-family: 'Material Symbols';
+  color: #999;
+}
+
+.editorModule .propertyEmptyChipLabel {
+  width: auto;
+  min-width: 0;
+  padding: 0 8px;
+  font-size: 13px;
+  color: var(--textColor);
+}
+
+.editorModule .propertyEmptyChipLabel::after {
+  content: none;
+}
+
+.editorModule .propertyPicker {
+  flex-basis: 100%;
+  border: 1px solid var(--VTTblue);
+  border-radius: 5px;
+  padding: 6px;
+  margin-bottom: 6px;
+}
+
+.editorModule .propertyPickerSummary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editorModule .propertyPickerFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+/* color inputs of a subsection sit side by side; their pickers open below */
+.editorModule .colorFlexRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 4px 0;
+}
+
+.editorModule .colorFlexRow .propertyInput {
+  margin: 0;
+  padding-right: 0;
+  flex: 0 0 auto;
+}
+
+.editorModule .colorFlexRow .propertyInput > label {
+  width: auto;
+  min-width: 0;
+}
+
+/* mark the native color input as "opens a dialog" instead of looking like a
+   plain swatch of its current value */
+.editorModule .propertyPickerSummary input[type=color] {
+  width: 34px;
+  height: 34px;
+  padding: 1px;
+  border: 2px dashed var(--textDimColor1, #999);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.editorModule .propertyPickerValueText {
+  flex: 1 1 100px;
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.editorModule .propertyPickerSection {
+  margin-top: 8px;
+}
+
+.editorModule .propertyPickerSection input {
+  width: calc(100% - 12px);
+  margin: 4px 0;
+}
+
+.editorModule .iconPickerFilterChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  margin: 2px 0 8px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--backgroundHighlightColor1, #ccc);
+}
+
+.editorModule .iconPickerFilterTitle {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.editorModule .iconPickerFilterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.editorModule .iconPickerFilterChip input {
+  width: auto;
+  margin: 0;
+}
+
+.editorModule .propertyPickerSectionTitle {
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--textColor, #333);
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.editorModule .propertyPickerChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .propertyPickerChips .symbols,
+.editorModule .propertyPickerChips .material-symbols,
+.editorModule .propertyPickerChips .material-symbols-nofill,
+.editorModule .propertyPickerChips .emoji-monochrome,
+.editorModule .propertyPickerChips .emojiColorChip {
+  font-size: 24px;
+  overflow: hidden;
+}
+
+/* icon search previews are shown ~50% bigger than other chips */
+.editorModule .iconInput .propertyPickerChips .propertyValueChip {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  font-size: 36px;
+}
+
+.editorModule .iconInput .propertyPickerChips .symbols,
+.editorModule .iconInput .propertyPickerChips .material-symbols,
+.editorModule .iconInput .propertyPickerChips .material-symbols-nofill,
+.editorModule .iconInput .propertyPickerChips .emoji-monochrome,
+.editorModule .iconInput .propertyPickerChips .emojiColorChip {
+  font-size: 36px;
+}
+
+.editorModule .propertyPickerEmpty {
+  color: var(--textDimColor1, #777);
+  font-style: italic;
+}
+
+/* a picker showing the applying default (no explicit value) is dimmed */
+.editorModule .propertyPreviewButton.usingDefault .propertyValueChip,
+.editorModule .propertyPickerValueText.usingDefault {
+  opacity: 0.55;
+}
+
+.editorModule .propertyPickerValueText.usingDefault {
+  font-style: italic;
+}
+
+/* widget selection popout (parent, seats, inheritFrom, ...) */
+.editorModule .widgetSelectPopout .propertyPickerSection select {
+  max-width: 100%;
+}
+
+.editorModule .widgetPickerList {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.editorModule .widgetPickerEntry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.editorModule .widgetPickerEntry:hover, .editorModule .widgetPickerEntry.selected {
+  background: var(--backgroundHighlightColor1, #eee);
+}
+
+.editorModule .widgetPickerEntry .widgetPickerType {
+  color: var(--textDimColor1, #777);
+  font-size: 11px;
+  margin-left: auto;
+}
+
+.editorModule .widgetPickerEntry.selected::before {
+  content: 'check';
+  font-family: 'Material Symbols';
+  font-size: 14px;
+  color: var(--VTTblue);
+}
+
+/* collapsible blocks (Position, Size, Widget's links, CSS) */
+.editorModule .collapsibleSection {
+  margin: 6px 0;
+  border: 1px solid var(--backgroundHighlightColor1, #ddd);
+  border-radius: 5px;
+}
+
+.editorModule .collapsibleHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 4px 6px;
+  background: var(--backgroundHighlightColor1, #eee);
+  border-radius: 4px;
+  border: 0;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.editorModule .collapsibleHeader:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.editorModule .collapsibleSummary {
+  color: var(--textColor);
+  font-weight: normal;
+}
+
+.editorModule .collapseArrow::before {
+  content: 'expand_more';
+  font-family: 'Material Symbols';
+  display: inline-block;
+}
+
+.editorModule .collapsibleSection.collapsed .collapseArrow::before {
+  content: 'chevron_right';
+}
+
+.editorModule .collapsibleSection.collapsed .collapsibleBody {
+  display: none;
+}
+
+.editorModule .collapsibleBody {
+  padding: 4px 6px;
+}
+
+/* subsection titles inside the appearance section */
+.editorModule .appearanceSubTitle {
+  font-weight: bold;
+  color: var(--VTTblue);
+  margin: 8px 0 2px;
+}
+
+/* CSS editor: one collapsible section per class with a plain declaration input */
+.editorModule .cssEditor .cssClassSection {
+  margin: 4px 0;
+}
+
+.editorModule .cssEditor .cssClassHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.editorModule .cssEditor .cssClassHeader .cssClassName {
+  font-family: monospace;
+  font-size: 12px;
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
+}
+
+.editorModule .cssEditor .cssClassHeader button {
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+}
+
+.editorModule .cssEditor .cssClassHeader button::before {
+  margin: 0;
+  font-size: 16px;
+}
+
+.editorModule .cssEditor textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 4em;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.editorModule .cssEditor .cssAddClassRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.editorModule .cssEditor .cssAddClassRow input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* several labeled inputs sharing one line (timer rows, seat index/turn, ...) */
+.editorModule .propertyInlineRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 4px 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput {
+  flex: 0 1 auto;
+  margin: 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput > label:not(.switchbox) {
+  width: auto;
+  min-width: 0;
+}
+
+.editorModule .propertyInlineRow .propertyInput input[type=text],
+.editorModule .propertyInlineRow .propertyInput input:not([type]) {
+  flex: 0 1 80px;
+  min-width: 60px;
+}
+
+/* temporary game state (spinner angle/value): editable but visually muted */
+.editorModule .temporaryValues input {
+  opacity: 0.65;
+}
+
+.editorModule .temporaryValues input:focus {
+  opacity: 1;
+}
+
+.editorModule .canvasColorMapRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.editorModule .canvasColorMapRow .propertyInput {
+  margin: 0;
+}
+
+.editorModule .canvasColorMapRow > button {
+  min-width: 34px;
+  justify-content: center;
+}
+
+.editorModule .propertyNote {
+  font-size: 12px;
+  color: var(--textColor, #333);
+  margin: 2px 0;
+}
+
+.editorModule .timerAlertEditor {
+  padding-left: 10px;
+  border-left: 2px solid var(--backgroundHighlightColor1, #ddd);
+}
+
+.editorModule .seatPlayerRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 4px 0;
+}
+
+.editorModule .playerColorDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #0006;
+  display: inline-block;
+}
+
+/* basic widget content: icon and image as side by side blocks */
+.editorModule .contentMediaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 6px 0;
+}
+
+.editorModule .contentMediaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.editorModule .contentMediaBlock .contentMediaTitle {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyInput {
+  margin: 0;
+  padding-right: 0;
+}
+
+/* icon and image blocks look identical: 200x200 square previews */
+.editorModule .contentMediaBlock .propertyPreviewButton {
+  min-width: 204px;
+  min-height: 204px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip {
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  border-radius: 0;
+  font-size: 120px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .symbols,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .material-symbols-nofill,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emoji-monochrome,
+.editorModule .contentMediaBlock .propertyPreviewButton .propertyValueChip .emojiColorChip {
+  font-size: 120px;
+}
+
+/* Unset media starts as a compact, clearly labelled checkerboard tile. Once
+   selected, the preview expands to the regular 200px tile above. */
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue {
+  min-width: 79px;
+  min-height: 79px;
+  padding: 4px;
+}
+
+.editorModule .contentMediaBlock .propertyPreviewButton.emptyValue .propertyEmptyChipLabel {
+  width: 75px;
+  height: 75px;
+  min-width: 75px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  background: linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), linear-gradient(45deg, var(--backgroundHighlightColor1) 25%, transparent 25%, transparent 75%, var(--backgroundHighlightColor1) 75%, var(--backgroundHighlightColor1) 0), var(--backgroundColor);
+  background-position: 0 0, 8px 8px;
+  background-size: 16px 16px;
+}
+
+.editorModule .basicGeometryHint {
+  color: var(--textColor);
+  font-size: 12px;
+  margin: 2px 0 6px;
+}
+
+/* lock/unlock toggles for movable/editable style properties */
+.editorModule button.lockToggle {
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.editorModule button.lockToggle .material-symbols {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.editorModule button.lockToggle.locked .material-symbols {
+  color: #c43636;
+}
+
+.editorModule button.lockToggle.unlocked .material-symbols {
+  color: #2f8a3b;
+}
+
+/* compact one-line styled text input (seat texts) */
+.editorModule .compactStyledText input[type=text] {
+  flex: 1 1 120px;
+  min-width: 80px;
+}
+
+.editorModule .compactStyledText .propertyInput {
+  margin: 0;
+  padding-right: 0;
+}
+
+.editorModule .compactStyledText .placeholderChip {
+  font-family: monospace;
+  font-size: 11px;
+  padding: 0 6px;
+}
+
+/* comment-style list of classes currently triggered by widget properties */
+.editorModule .cssTriggeredClasses {
+  font-size: 12px;
+  color: var(--textDimColor1, #777);
+  font-style: italic;
+  margin: 4px 0;
+}
+
+.editorModule .cssTriggeredClasses code {
+  font-style: normal;
+  font-family: monospace;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 3px;
+  padding: 1px 5px;
+  cursor: help;
+}
+
+/* widget header: type in the accent color, id in the plain text color */
+.editorModule .widgetHeader {
+  text-align: center;
+  margin: 0.4em 0;
+}
+
+.editorModule .widgetHeader .widgetHeaderType {
+  color: var(--VTTblue);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.editorModule .widgetHeader .widgetHeaderId {
+  color: var(--textColor);
+  font-size: 1em;
+  overflow-wrap: anywhere;
+}
+
+/* Keep the ID in the header, but make its rename affordance discoverable
+   without making it look like a regular properties-row field. */
+.editorModule .widgetHeader .widgetHeaderIdInput {
+  color: inherit;
+  font: inherit;
+  max-width: 80%;
+  padding: 0 3px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+  text-align: center;
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+
+.editorModule .widgetHeader .widgetHeaderIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
+
+/* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
+.editorModule .obscurePropertyContainer {
+  position: relative;
+}
+
+.editorModule button.onDemandRemove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 26px;
+  width: 26px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--textColor);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.editorModule button.onDemandRemove::before {
+  margin: 0;
+  font-size: 18px;
+}
+
+.editorModule button.onDemandRemove:hover {
+  color: #c43636;
+}
+
+body.editorWidgetPicking, body.editorWidgetPicking .widget {
+  cursor: crosshair !important;
+}
+
+/* labelled X/Y number pairs (holder drop/stack offsets) */
+.editorModule .numberPairRow .numberPairLabel {
+  flex: 0 0 auto;
+  min-width: 80px;
+  font-size: 13px;
+}
+
+/* list editor (spinner wheel options) */
+.editorModule .listEditor {
+  margin: 6px 0;
+}
+
+.editorModule .propSetTitle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.editorModule .listEditorRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+
+.editorModule .listEditorRow input {
+  flex: 1 1 auto;
+  min-width: 60px;
+}
+
+.editorModule .listEditorRow button[icon] {
+  flex: 0 0 auto;
+}
+
+.editorModule .listEditorRow .faceOrderControls {
+  display: flex;
+  gap: 2px;
+}
+
+/* seat style preset preview buttons */
+.editorModule .seatPresetRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

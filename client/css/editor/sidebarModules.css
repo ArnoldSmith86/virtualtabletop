@@ -56,6 +56,27 @@
   top: -3px;
   right: -3px;
 }
+.editorModule .widgetSelectionButton.isometricDicePreview {
+  perspective: 300px;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .shape3D.dice.widget {
+  transform-style: preserve-3d;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d4.shape3D.dice.widget > .diceFaces,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6.shape3D.dice.widget > .diceFaces {
+  transform: translateY(var(--translateY)) translateZ(var(--translateZ)) var(--curRot) var(--editorPreviewRotation);
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d4,
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6 {
+  overflow: visible;
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d2.shape3D > .diceFaces > .diceFace {
+  box-shadow: -5px -0px 02px #FFFd, -6px -0px 0 var(--borderColor);
+}
+.editorModule .widgetSelectionButton.isometricDicePreview > .d6.shape3D > * > .diceFace {
+  border-radius: 0;
+}
 .editorModule .widgetSelectionButton .spinner > svg.background {
   left: 0;
 }
