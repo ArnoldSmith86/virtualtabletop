@@ -2983,7 +2983,7 @@ class PropertiesModule extends SidebarModule {
 
   renderBasicSection(widget) {
     this.addSubHeader('Basic');
-    
+
     // position and size are usually changed with the drag toolbar, so they
     // start collapsed and only get expanded for active tweaking
     this.renderCollapsibleSection('Position', true, body=>{
