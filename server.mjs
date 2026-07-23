@@ -342,6 +342,11 @@ MinifyHTML().then(function(result) {
 
   router.get('/edit.js', function(req, res, next) {
     res.setHeader('Content-Type', 'text/javascript');
+    // edit.js is built separately from the room bundle but depends on globals
+    // exported by that bundle. Never let a browser or proxy combine versions
+    // from different deployments.
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Vary', 'Accept-Encoding');
     if(req.headers['accept-encoding'] && req.headers['accept-encoding'].match(/\bgzip\b/)) {
       res.setHeader('Content-Encoding', 'gzip');
       res.send(result.editorJSgzipped);
@@ -535,4 +540,3 @@ autosaveRooms();
       process.exit();
   });
 });
-
