@@ -291,7 +291,7 @@ function parseTimerInput(text) {
 
 function parseFontSize(fontSize) {
   const [, value, unit] = String(fontSize).trim().match(/^(-?\d*\.?\d+)([a-z%]*)$/i) || [];
-  return value ? { value: +value, unit: unit || null } : null;
+  return { value: value ? +value : null, unit: unit || null };
 }
 
 /* end helper functions */

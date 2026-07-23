@@ -42,6 +42,7 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     cssStringToObject,
     parsePropertyFromCSS,
     mergePropertyFromCSS,
+    parseFontSize,
     formatTimerMs,
     parseTimerInput,
     basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
@@ -137,6 +138,12 @@ describe('css helpers', () => {
     expect(cssHelpers.parsePropertyFromCSS('background-color: red; color: blue', 'color', null)).toBe('blue');
     expect(cssHelpers.parsePropertyFromCSS('border-color: red', 'color', null)).toBe(null);
     expect(cssHelpers.parsePropertyFromCSS('background-color: red', 'background-color', null)).toBe('red');
+  });
+
+  test('parseFontSize safely handles incomplete CSS declarations', () => {
+    expect(cssHelpers.parseFontSize('30px')).toEqual({ value: 30, unit: 'px' });
+    expect(cssHelpers.parseFontSize('')).toEqual({ value: null, unit: null });
+    expect(cssHelpers.parseFontSize(null)).toEqual({ value: null, unit: null });
   });
 });
 
