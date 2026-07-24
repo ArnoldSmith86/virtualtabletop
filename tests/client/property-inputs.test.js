@@ -12,6 +12,7 @@ const inputHelpers = new Function(inputsSource + `;
   return {
     propertyInputNumberOrText,
     propertyInputValueSet,
+    numericInputValue,
     searchIconIndex,
     searchImageIndex,
     iconValueType,
@@ -35,7 +36,8 @@ const renderIconChip = new Function('div', 'html', 'mapAssetURLs', 'toNotoMonoch
   value => value
 );
 
-const cssHelpers = new Function('SidebarModule', propertiesSource + `;
+const testWidgets = new Map();
+const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -45,6 +47,11 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     parseFontSize,
     formatTimerMs,
     parseTimerInput,
+    inheritModeFromSelection,
+    isPropertyDeclaredOnWidget: PropertiesModule.prototype.isPropertyDeclaredOnWidget,
+    isSizeRatioLockEnabled: PropertiesModule.prototype.isSizeRatioLockEnabled,
+    inheritSourceWouldCreateCycle: PropertiesModule.prototype.inheritSourceWouldCreateCycle,
+    normalizeInheritFromObject: PropertiesModule.prototype.normalizeInheritFromObject,
     basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
     svgReplaceColorProperties,
     dicePreviewRotation,
@@ -52,7 +59,7 @@ const cssHelpers = new Function('SidebarModule', propertiesSource + `;
     textSymbolClass,
     textValueFromSymbol
   };
-`)(class {});
+`)(class {}, testWidgets);
 
 describe('css helpers', () => {
   test('basic properties exclude the generic inputs from other property sections', () => {
@@ -145,6 +152,39 @@ describe('css helpers', () => {
     expect(cssHelpers.parseFontSize('')).toEqual({ value: null, unit: null });
     expect(cssHelpers.parseFontSize(null)).toEqual({ value: null, unit: null });
   });
+
+  test('inherit declarations respect explicit default-valued state', () => {
+    const widget = { state: { width: 100 }, defaults: { width: 100 } };
+    expect(cssHelpers.isPropertyDeclaredOnWidget(widget, 'width')).toBe(true);
+    expect(cssHelpers.isPropertyDeclaredOnWidget(widget, 'height')).toBe(false);
+  });
+
+  test('an empty exclusion selection preserves copy-all inheritance', () => {
+    expect(cssHelpers.inheritModeFromSelection('all')).toBe('*');
+    expect(cssHelpers.inheritModeFromSelection('selected')).toEqual([]);
+    expect(cssHelpers.inheritModeFromSelection('excluded')).toBe('*');
+    expect(cssHelpers.inheritModeFromSelection('excluded', [ 'width', 'height' ])).toEqual([ '!width', '!height' ]);
+  });
+
+  test('inherit-source selection rejects direct and transitive cycles', () => {
+    const target = { id: 'target', get: () => ({}) };
+    const source = { id: 'source', get: property => property == 'inheritFrom' ? { target: '*' } : null };
+    const indirect = { id: 'indirect', get: property => property == 'inheritFrom' ? { source: '*' } : null };
+    testWidgets.clear();
+    testWidgets.set('target', target);
+    testWidgets.set('source', source);
+    testWidgets.set('indirect', indirect);
+    const module = { normalizeInheritFromObject: cssHelpers.normalizeInheritFromObject };
+    expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'source')).toBe(true);
+    expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'indirect')).toBe(true);
+    expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'missing')).toBe(false);
+  });
+
+  test('the size-ratio lock stays local while honoring a legacy false value', () => {
+    const module = { sizeRatioLocks: new WeakMap() };
+    expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: {} })).toBe(true);
+    expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: { lockSizeRatio: false } })).toBe(false);
+  });
 });
 
 describe('timer time helpers', () => {
@@ -185,6 +225,14 @@ describe('property input helpers', () => {
     expect(inputHelpers.propertyInputValueSet('')).toBe(false);
     expect(inputHelpers.propertyInputValueSet(0)).toBe(true);
     expect(inputHelpers.propertyInputValueSet('transparent')).toBe(true);
+  });
+
+  test('numericInputValue ignores incomplete fields and enforces bounds', () => {
+    expect(inputHelpers.numericInputValue('')).toBe(null);
+    expect(inputHelpers.numericInputValue('abc')).toBe(null);
+    expect(inputHelpers.numericInputValue('8', 1, 16)).toBe(8);
+    expect(inputHelpers.numericInputValue('0', 1, 16)).toBe(1);
+    expect(inputHelpers.numericInputValue('99', 1, 16)).toBe(16);
   });
 
   test('used icon suggestions ignore generic name and value fields', () => {

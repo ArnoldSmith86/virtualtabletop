@@ -42,6 +42,21 @@ function propertyInputValueSet(value) {
   return value !== undefined && value !== null && value !== '';
 }
 
+function numericInputValue(rawValue, min, max) {
+  if(rawValue === '' || rawValue === null || rawValue === undefined)
+    return null;
+
+  const value = Number(rawValue);
+  if(!Number.isFinite(value))
+    return null;
+
+  if(typeof min === 'number')
+    return Math.max(min, typeof max === 'number' ? Math.min(max, value) : value);
+  if(typeof max === 'number')
+    return Math.min(max, value);
+  return value;
+}
+
 // Walks the state of all widgets and calls callback(key, value, path, object)
 // for every string value.
 function forEachStringInGameState(callback) {
@@ -459,14 +474,15 @@ class NumberInput extends PropertyInput {
       this.setValue(null);
       return;
     }
-    const value = +rawValue;
-    if(Number.isFinite(value)) {
-      this.setValue(value);
-      if(this.slider && document.activeElement !== this.slider)
-        this.slider.value = value;
-      if(document.activeElement !== this.input)
-        this.input.value = value;
-    }
+    const value = numericInputValue(rawValue, this.options.min, this.options.max);
+    if(value === null)
+      return;
+
+    this.setValue(value);
+    if(this.slider && document.activeElement !== this.slider)
+      this.slider.value = value;
+    if(document.activeElement !== this.input || String(rawValue) !== String(value))
+      this.input.value = value;
   }
 
   update(value) {

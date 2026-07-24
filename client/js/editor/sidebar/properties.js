@@ -107,6 +107,15 @@ function isObjectLike(value) {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
+function inheritModeFromSelection(mode, properties = []) {
+  const selected = [...new Set(properties.filter(property => typeof property == 'string' && property.length))];
+  if(mode == 'all')
+    return '*';
+  if(mode == 'excluded')
+    return selected.length ? selected.map(property => '!' + property) : '*';
+  return selected;
+}
+
 // SVG replacements map an SVG token to a widget property. Expose only the
 // conventional color properties, so arbitrary replacement properties remain
 // in the generic editor.
@@ -564,6 +573,7 @@ class PropertiesModule extends SidebarModule {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
     this.collapsibleStates = {};
+    this.sizeRatioLocks = new WeakMap();
   }
 
   startWidgetPicker(targetWidgetID, onPick, options = {}) {
@@ -2038,7 +2048,13 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'lockSizeRatio', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+  }
+
+  isSizeRatioLockEnabled(widget) {
+    if(!this.sizeRatioLocks.has(widget))
+      this.sizeRatioLocks.set(widget, !(widget.state && widget.state.lockSizeRatio === false));
+    return this.sizeRatioLocks.get(widget);
   }
 
   isOnDemandPropertyValueSet(value) {
@@ -2294,12 +2310,16 @@ class PropertiesModule extends SidebarModule {
 
     const clampForRange = value => Math.max(min, Math.min(max, value));
     const normalizeValue = value => {
+      if(value === '' || value === null || value === undefined)
+        return null;
       const parsed = Number(value);
-      return Number.isFinite(parsed) ? parsed : 0;
+      return Number.isFinite(parsed) ? clampForRange(parsed) : null;
     };
 
     const updateInputs = value => {
       const normalized = normalizeValue(value);
+      if(normalized === null)
+        return;
       if(document.activeElement !== numberInput)
         numberInput.value = String(normalized);
       if(rangeInput && document.activeElement !== rangeInput)
@@ -2312,7 +2332,10 @@ class PropertiesModule extends SidebarModule {
 
     numberInput.oninput = () => {
       const value = normalizeValue(numberInput.value);
+      if(value === null)
+        return;
       setValue(value);
+      numberInput.value = String(value);
       if(rangeInput && document.activeElement === numberInput)
         rangeInput.value = String(clampForRange(value));
     };
@@ -2320,6 +2343,8 @@ class PropertiesModule extends SidebarModule {
     if(rangeInput) {
       rangeInput.oninput = () => {
         const value = normalizeValue(rangeInput.value);
+        if(value === null)
+          return;
         setValue(value);
         if(document.activeElement === rangeInput)
           numberInput.value = String(value);
@@ -2335,10 +2360,7 @@ class PropertiesModule extends SidebarModule {
     const isSizePair = left.property == 'width' && right.property == 'height';
     let syncingAspectRatio = false;
 
-    const isRatioLockEnabled = () => {
-      const lockValue = widget.get('lockSizeRatio');
-      return lockValue === undefined || lockValue === null ? true : !!lockValue;
-    };
+    const isRatioLockEnabled = () => this.isSizeRatioLockEnabled(widget);
 
     const leftOptionsWithRatio = Object.assign({}, leftOptions, {
       setValue: value => {
@@ -2451,13 +2473,11 @@ class PropertiesModule extends SidebarModule {
     wrap.style.flexWrap = 'wrap';
     wrap.style.marginTop = '6px';
 
-    const isLocked = () => {
-      const value = widget.get('lockSizeRatio');
-      return value === undefined || value === null ? true : !!value;
-    };
-    const toggle = this.renderLockToggle(wrap, 'Size ratio', isLocked, locked => this.inputValueUpdated(widget, 'lockSizeRatio', locked));
-
-    this.addPropertyListener(widget, 'lockSizeRatio', () => toggle.update());
+    const isLocked = () => this.isSizeRatioLockEnabled(widget);
+    const toggle = this.renderLockToggle(wrap, 'Size ratio', isLocked, locked => {
+      this.sizeRatioLocks.set(widget, locked);
+      toggle.update();
+    });
   }
 
   renderPositionLocks(widget, target = null) {
@@ -3273,15 +3293,7 @@ class PropertiesModule extends SidebarModule {
 
   isPropertyDeclaredOnWidget(widget, property) {
     const state = widget.state || {};
-    const defaults = widget.defaults || {};
-
-    if(!Object.prototype.hasOwnProperty.call(state, property))
-      return false;
-
-    if(!Object.prototype.hasOwnProperty.call(defaults, property))
-      return true;
-
-    return JSON.stringify(state[property]) !== JSON.stringify(defaults[property]);
+    return Object.prototype.hasOwnProperty.call(state, property);
   }
 
   renderInheritFromWidgetRow(container, widget, sourceWidgetId, mode, preferredMode = null, onModeChanged = () => {}, initialExpanded = false, onExpandChanged = () => {}, initialShowAllProperties = false, onShowAllPropertiesChanged = () => {}) {
@@ -3324,7 +3336,7 @@ class PropertiesModule extends SidebarModule {
     const hasMixedMode = !!(modeArray && hasExcluded && hasIncluded);
 
     // Determine current mode
-    let currentModeValue = 'all';
+    let currentModeValue = mode == '*' && preferredMode == 'excluded' ? 'excluded' : 'all';
     if(modeArray) {
       if(hasMixedMode) {
         currentModeValue = 'mixed';
@@ -3383,19 +3395,7 @@ class PropertiesModule extends SidebarModule {
       onModeChanged(dropdown.value);
 
       const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
-      let newMode = '*';
-
-      if(dropdown.value === 'all') {
-        newMode = '*';
-      } else if(dropdown.value === 'selected') {
-        // Start with no properties selected by default.
-        newMode = [];
-      } else if(dropdown.value === 'excluded') {
-        // Start with no properties excluded by default.
-        newMode = [];
-      }
-
-      inheritFrom[sourceWidgetId] = newMode;
+      inheritFrom[sourceWidgetId] = inheritModeFromSelection(dropdown.value);
       this.inputValueUpdated(widget, 'inheritFrom', inheritFrom);
       renderCheckboxes();
     };
@@ -3571,12 +3571,9 @@ class PropertiesModule extends SidebarModule {
         }
 
         if(modeValue === 'excluded') {
-          // Convert checked items to excluded list.
-          const finalMode = selectedProps.map(p => '!' + p);
-          inheritFrom[sourceWidget.id] = finalMode;
+          inheritFrom[sourceWidget.id] = inheritModeFromSelection('excluded', selectedProps);
         } else {
-          // Include mode: just store selected properties
-          inheritFrom[sourceWidget.id] = selectedProps;
+          inheritFrom[sourceWidget.id] = inheritModeFromSelection('selected', selectedProps);
         }
 
         this.inputValueUpdated(targetWidget, 'inheritFrom', inheritFrom);
@@ -3612,6 +3609,22 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
+  inheritSourceWouldCreateCycle(targetWidget, sourceWidgetID) {
+    const visited = new Set();
+    const reachesTarget = widgetID => {
+      if(widgetID == targetWidget.id)
+        return true;
+      if(visited.has(widgetID) || !widgets.has(widgetID))
+        return false;
+
+      visited.add(widgetID);
+      return Object.keys(this.normalizeInheritFromObject(widgets.get(widgetID).get('inheritFrom')))
+        .some(reachesTarget);
+    };
+
+    return reachesTarget(sourceWidgetID);
+  }
+
   renderInheritFromAddButton(container, widget) {
     const wrap = div(container, 'inheritFromAddWidgetWrap');
     wrap.style.display = 'flex';
@@ -3627,12 +3640,16 @@ class PropertiesModule extends SidebarModule {
       title: 'Choose a widget to inherit properties from',
       pickerKey: 'inheritFrom',
       apply: pickedWidgetID => {
+        if(this.inheritSourceWouldCreateCycle(widget, pickedWidgetID))
+          return;
         const inheritFrom = this.normalizeInheritFromObject(widget.get('inheritFrom'));
         inheritFrom[pickedWidgetID] = '*'; // Default to copy all
         this.inputValueUpdated(widget, 'inheritFrom', inheritFrom);
       },
-      // can't inherit from widgets that are already selected
-      excludeIDs: () => Object.keys(this.normalizeInheritFromObject(widget.get('inheritFrom')))
+      // Can't inherit from widgets that are already selected or whose own
+      // inherit chain reaches this widget.
+      excludeIDs: () => widgetFilter(sourceWidget => this.inheritSourceWouldCreateCycle(widget, sourceWidget.id))
+        .map(sourceWidget => sourceWidget.id)
     });
     wrap.appendChild(popoutControls.popout);
 
