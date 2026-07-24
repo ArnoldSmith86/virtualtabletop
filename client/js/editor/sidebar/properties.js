@@ -4118,8 +4118,10 @@ class PropertiesModule extends SidebarModule {
           const commit = () => {
             const newSelector = selectorInput.value.trim();
             const rawProperty = propertyInput.value.trim();
-            if(!newSelector || !rawProperty)
+            if(!newSelector || !rawProperty) {
+              rebuild();
               return;
+            }
             const newProperty = rawProperty.indexOf(',') != -1 ?
               rawProperty.split(',').map(part => part.trim()).filter(part => part) : rawProperty;
             const current = widget.get('svgReplaces');

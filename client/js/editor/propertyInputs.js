@@ -760,7 +760,7 @@ class PickerInput extends PropertyInput {
     }
     for(const chip of $a('.propertyValueChip', this.pickerDOM))
       if(chip.dataset.value !== undefined)
-        chip.classList.toggle('selected', chip.dataset.value == String(value));
+        chip.classList.toggle('selected', chip.dataset.value == this.chipMatchValue(value));
     if(this.footerDOM)
       this.renderFooter(value);
   }
@@ -792,6 +792,20 @@ class PickerInput extends PropertyInput {
     return String(value);
   }
 
+  // comparable string used to decide which chip shows as selected - override
+  // when the picker value isn't itself the chip key (e.g. an icon's
+  // {name, color, scale} object form, matched by name)
+  chipMatchValue(value) {
+    return String(value);
+  }
+
+  // value to store when a chip is clicked - override to merge the selection
+  // into the current value instead of replacing it outright (e.g. keep an
+  // icon's color/scale when swapping which glyph is shown)
+  valueForChip(chipValue) {
+    return chipValue;
+  }
+
   renderChip(target, value) {
   }
 
@@ -807,8 +821,8 @@ class PickerInput extends PropertyInput {
     for(const value of values) {
       const chip = renderer(value, list);
       chip.dataset.value = value;
-      chip.classList.toggle('selected', value == currentValue);
-      chip.onclick = _=>this.setValue(value);
+      chip.classList.toggle('selected', String(value) == this.chipMatchValue(currentValue));
+      chip.onclick = _=>this.setValue(this.valueForChip(value));
     }
   }
 }
@@ -901,7 +915,7 @@ class ColorInput extends PickerInput {
     }
     for(const chip of $a('.propertyValueChip', this.pickerDOM))
       if(chip.dataset.value !== undefined)
-        chip.classList.toggle('selected', chip.dataset.value == String(value));
+        chip.classList.toggle('selected', chip.dataset.value == this.chipMatchValue(value));
     if(this.footerDOM)
       this.renderFooter(value);
   }
@@ -963,6 +977,17 @@ class IconInput extends PickerInput {
     if(Array.isArray(value))
       return value.map(v => iconName(v) || '').join(', ');
     return iconName(value) || '';
+  }
+
+  // match/select chips by icon name so the object form (with color/scale set)
+  // still highlights the right chip, and clicking a chip merges the new name
+  // into the current value instead of discarding its color/scale
+  chipMatchValue(value) {
+    return Array.isArray(value) ? '' : (iconName(value) || '');
+  }
+
+  valueForChip(chipValue) {
+    return iconWithOption(this.getValue(), 'name', chipValue);
   }
 
   emptyLabel() {
@@ -1069,8 +1094,8 @@ class IconInput extends PickerInput {
       for(const iconValue of values) {
         const chip = renderIconChip(iconValue, results);
         chip.dataset.value = iconValue;
-        chip.classList.toggle('selected', iconValue == this.getValue());
-        chip.onclick = _=>this.setValue(iconValue);
+        chip.classList.toggle('selected', String(iconValue) == this.chipMatchValue(this.getValue()));
+        chip.onclick = _=>this.setValue(this.valueForChip(iconValue));
       }
       if(!values.length)
         div(results, 'propertyPickerEmpty', 'No results.');
@@ -1117,7 +1142,7 @@ class IconInput extends PickerInput {
     showAll.onclick = async _=>{
       const symbol = await pickSymbol();
       if(symbol)
-        this.setValue(symbol.symbol);
+        this.setValue(this.valueForChip(symbol.symbol));
     };
     searchSection.appendChild(showAll);
 

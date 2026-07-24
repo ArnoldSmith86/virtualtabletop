@@ -17,7 +17,11 @@ const inputHelpers = new Function(inputsSource + `;
     searchImageIndex,
     iconValueType,
     usedGameIconValue,
-    setIconSearchIndex: index => { iconSearchIndex = index; }
+    setIconSearchIndex: index => { iconSearchIndex = index; },
+    iconObjectValue,
+    iconName,
+    iconOption,
+    iconWithOption
   };
 `)();
 
@@ -308,5 +312,31 @@ describe('property input helpers', () => {
 
     expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
     expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
+  });
+});
+
+describe('icon value helpers', () => {
+  test('iconName reads the name from both plain strings and the object form', () => {
+    expect(inputHelpers.iconName('skull')).toBe('skull');
+    expect(inputHelpers.iconName({ name: 'skull', color: '#f00' })).toBe('skull');
+  });
+
+  test('iconWithOption sets and clears an option, collapsing back to a plain string once empty', () => {
+    const withColor = inputHelpers.iconWithOption('skull', 'color', '#f00');
+    expect(withColor).toEqual({ name: 'skull', color: '#f00' });
+    expect(inputHelpers.iconWithOption(withColor, 'color', null)).toBe('skull');
+  });
+
+  test('iconWithOption swaps the icon name while preserving other options (chip click keeps color/scale)', () => {
+    const withColor = { name: 'a', color: '#f00' };
+    expect(inputHelpers.iconWithOption(withColor, 'name', 'b')).toEqual({ name: 'b', color: '#f00' });
+  });
+
+  test('iconWithOption on a plain string with no options set stays a plain string', () => {
+    expect(inputHelpers.iconWithOption('skull', 'name', 'heart')).toBe('heart');
+  });
+
+  test('iconWithOption on a null value creates a plain string once a name is set', () => {
+    expect(inputHelpers.iconWithOption(null, 'name', 'skull')).toBe('skull');
   });
 });
