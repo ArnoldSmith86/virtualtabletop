@@ -905,6 +905,36 @@ class ColorInput extends PickerInput {
   }
 }
 
+// An icon property value can be a plain string (icon name) or a symbol object
+// like { name, scale, color, ... } (see generateSymbolsDiv in symbols.js) -
+// these helpers read/write that object form without disturbing a plain string
+// value unless a basic option is actually used.
+function iconObjectValue(value) {
+  return value && typeof value == 'object' && !Array.isArray(value) ? value : null;
+}
+
+function iconName(value) {
+  const object = iconObjectValue(value);
+  return object ? object.name : value;
+}
+
+function iconOption(value, key) {
+  const object = iconObjectValue(value);
+  return object ? object[key] : undefined;
+}
+
+function iconWithOption(value, key, optionValue) {
+  const object = Object.assign({}, iconObjectValue(value), { name: iconName(value) });
+  if(optionValue === null || optionValue === undefined || optionValue === '')
+    delete object[key];
+  else
+    object[key] = optionValue;
+  // collapse back to a plain string once no basic option is set, so simple
+  // icons round-trip exactly like before this feature existed
+  const keys = Object.keys(object).filter(k => k != 'name');
+  return keys.length ? object : (object.name || null);
+}
+
 class IconInput extends PickerInput {
   cssClass() {
     return 'pickerInput iconInput';
@@ -924,7 +954,83 @@ class IconInput extends PickerInput {
     return this.options.emptyLabel || 'Choose icon';
   }
 
+  // Basic inline options (color, scale) for the icon actually selected -
+  // stored on the icon value itself (as its object form) rather than as
+  // separate widget properties, since the underlying icon rendering already
+  // supports that form (see generateSymbolsDiv).
+  renderBasicOptions(target, value) {
+    if(Array.isArray(value))
+      return; // multi-icon combos are edited elsewhere, not as basic options
+    const section = div(target, 'propertyPickerSection iconBasicOptions');
+    this.renderBasicOptionsContent(section, value);
+  }
+
+  renderBasicOptionsContent(section, value) {
+    div(section, 'propertyPickerSectionTitle', 'Basic options');
+    const row = div(section, 'iconBasicOptionsRow');
+
+    const colorWrap = div(row, 'iconBasicOption');
+    const colorLabel = document.createElement('label');
+    colorLabel.textContent = 'Color';
+    colorWrap.appendChild(colorLabel);
+    const defaultColor = typeof this.widget.getDefaultIconColor == 'function' ? this.widget.getDefaultIconColor() : null;
+    const colorValue = iconOption(value, 'color');
+    const colorPicker = document.createElement('input');
+    colorPicker.type = 'color';
+    colorPicker.title = 'Icon color';
+    colorPicker.value = toHex(propertyInputValueSet(colorValue) ? colorValue : (defaultColor || '#000000'));
+    colorPicker.onchange = colorPicker.oninput = _=>this.setValue(iconWithOption(this.getValue(), 'color', colorPicker.value));
+    colorWrap.appendChild(colorPicker);
+    const clearColor = document.createElement('button');
+    clearColor.setAttribute('icon', 'delete');
+    clearColor.title = 'Use the widget\'s default color';
+    clearColor.onclick = _=>this.setValue(iconWithOption(this.getValue(), 'color', null));
+    colorWrap.appendChild(clearColor);
+
+    const scaleWrap = div(row, 'iconBasicOption');
+    const scaleLabel = document.createElement('label');
+    scaleLabel.textContent = 'Scale';
+    scaleWrap.appendChild(scaleLabel);
+    const defaultScale = typeof this.widget.getDefaultIconScale == 'function' ? this.widget.getDefaultIconScale() : 1;
+    const scaleValue = iconOption(value, 'scale');
+    const scaleInput = document.createElement('input');
+    scaleInput.type = 'number';
+    scaleInput.step = '0.05';
+    scaleInput.min = '0.1';
+    scaleInput.max = '5';
+    scaleInput.placeholder = String(defaultScale !== undefined && defaultScale !== null ? defaultScale : 1);
+    scaleInput.value = scaleValue !== undefined && scaleValue !== null ? scaleValue : '';
+    scaleInput.oninput = _=>{
+      const parsed = scaleInput.value === '' ? null : Number.parseFloat(scaleInput.value);
+      this.setValue(iconWithOption(this.getValue(), 'scale', Number.isFinite(parsed) ? parsed : null));
+    };
+    scaleWrap.appendChild(scaleInput);
+    const clearScale = document.createElement('button');
+    clearScale.setAttribute('icon', 'delete');
+    clearScale.title = 'Use the widget\'s default scale';
+    clearScale.onclick = _=>{
+      scaleInput.value = '';
+      this.setValue(iconWithOption(this.getValue(), 'scale', null));
+    };
+    scaleWrap.appendChild(clearScale);
+  }
+
+  // basic options live in their own section so refreshPicker (called on every
+  // remote/undo update while the picker is open) can update them without
+  // losing focus on the search input further down
+  refreshPicker(value) {
+    super.refreshPicker(value);
+    if(this.pickerDOM) {
+      const section = this.pickerDOM.querySelector('.iconBasicOptions');
+      if(section && !section.contains(document.activeElement)) {
+        section.innerHTML = '';
+        this.renderBasicOptionsContent(section, value);
+      }
+    }
+  }
+
   renderPickerContent(target, value) {
+    this.renderBasicOptions(target, value);
     this.addChipList(target, 'Used in this game', usedGameIcons(), value, renderIconChip);
 
     const searchSection = div(target, 'propertyPickerSection');

@@ -426,6 +426,52 @@
   font-style: italic;
 }
 
+.editorModule .iconBasicOptionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.editorModule .iconBasicOption {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .iconBasicOption label {
+  font-size: 12px;
+}
+
+.editorModule .iconBasicOption input[type=number] {
+  width: 60px;
+}
+
+.editorModule .iconBasicOption input[type=color] {
+  width: 32px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+}
+
+.editorModule .svgReplacesList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.editorModule .svgReplaceRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .svgReplaceRow input {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 /* a picker showing the applying default (no explicit value) is dimmed */
 .editorModule .propertyPreviewButton.usingDefault .propertyValueChip,
 .editorModule .propertyPickerValueText.usingDefault {
@@ -657,6 +703,22 @@
   border-radius: 50%;
   border: 1px solid #0006;
   display: inline-block;
+}
+
+.editorModule .contentHtmlToggleRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.editorModule .contentHtmlToggleRow input {
+  width: auto;
+  margin: 0;
+}
+
+.editorModule .svgReplaceArrow {
+  opacity: 0.7;
 }
 
 /* basic widget content: icon and image as side by side blocks */

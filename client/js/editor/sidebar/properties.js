@@ -359,6 +359,7 @@ const editorPropertyHints = {
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
   html: 'HTML content shown instead of the widget text, icon and image.',
+  svgReplaces: 'Maps a token found inside an uploaded SVG image (like #000 or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be recolored per widget.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
@@ -3759,6 +3760,8 @@ class PropertiesModule extends SidebarModule {
         if(def.property)
           properties.push(def.property);
     properties.push(...svgReplaceColorProperties(widget.get('svgReplaces')));
+    if(widget.defaults.svgReplaces !== undefined)
+      properties.push('svgReplaces');
     return properties;
   }
 
@@ -3800,7 +3803,7 @@ class PropertiesModule extends SidebarModule {
       this.renderColorRow(widget, hover);
     }
 
-    this.renderSvgReplaceColors(widget);
+    this.renderSvgReplacesEditor(widget);
 
     // extra color-like subsections (e.g. holder droptarget/droppable) sit
     // after the colors and before the Style inputs
@@ -4071,6 +4074,110 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:svgColors`);
   }
 
+  // Curated editor for the raw svgReplaces map (only widget types built on
+  // ImageWidget/Dice/Timer support it - see their addDefaults). Each entry
+  // maps a token found in an uploaded SVG (e.g. "#000" or "#borderColor") to
+  // the widget property whose value replaces it - see getSvgReplaces()/getImage()
+  // in imagewidget.js and the equivalent logic in dice.js/timer.js. Entries
+  // that point at a *Color-style property also get an actual color picker via
+  // renderSvgReplaceColors, so this only has to handle the mapping itself.
+  renderSvgReplacesEditor(widget) {
+    if(widget.defaults.svgReplaces === undefined)
+      return;
+
+    const section = this.renderCollapsibleSection('SVG replacements', false, body => {
+      const list = div(body, 'svgReplacesList');
+
+      const rebuild = () => {
+        list.innerHTML = '';
+        const map = widget.get('svgReplaces');
+        const rows = isObjectLike(map) ? Object.entries(map) : [];
+        if(!rows.length)
+          div(list, 'propertyPickerEmpty', 'No SVG token replacements yet.');
+        for(const [ selector, property ] of rows) {
+          const row = div(list, 'svgReplaceRow');
+
+          const selectorInput = document.createElement('input');
+          selectorInput.type = 'text';
+          selectorInput.value = selector;
+          selectorInput.placeholder = '#token or #color in the SVG';
+          selectorInput.title = 'The token inside the SVG file that gets replaced, e.g. #000 or a custom token like #borderColor.';
+
+          const arrow = document.createElement('span');
+          arrow.className = 'svgReplaceArrow';
+          arrow.textContent = '→';
+
+          const propertyInput = document.createElement('input');
+          propertyInput.type = 'text';
+          propertyInput.value = Array.isArray(property) ? property.join(', ') : (property || '');
+          propertyInput.placeholder = 'widget property, e.g. color';
+          propertyInput.title = 'The widget property whose value is substituted for the token. A comma separated list applies a gradient (see the wiki).';
+
+          const commit = () => {
+            const newSelector = selectorInput.value.trim();
+            const rawProperty = propertyInput.value.trim();
+            if(!newSelector || !rawProperty)
+              return;
+            const newProperty = rawProperty.indexOf(',') != -1 ?
+              rawProperty.split(',').map(part => part.trim()).filter(part => part) : rawProperty;
+            const current = widget.get('svgReplaces');
+            const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+            if(newSelector != selector)
+              delete newMap[selector];
+            newMap[newSelector] = newProperty;
+            this.inputValueUpdated(widget, 'svgReplaces', newMap);
+            if(widget.applyDeltaToDOM)
+              widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+            rebuild();
+          };
+          selectorInput.onchange = commit;
+          propertyInput.onchange = commit;
+
+          const removeButton = document.createElement('button');
+          removeButton.setAttribute('icon', 'delete');
+          removeButton.title = 'Remove this replacement';
+          removeButton.onclick = () => {
+            const current = widget.get('svgReplaces');
+            const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+            delete newMap[selector];
+            this.inputValueUpdated(widget, 'svgReplaces', Object.keys(newMap).length ? newMap : null);
+            if(widget.applyDeltaToDOM)
+              widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+            rebuild();
+          };
+
+          row.appendChild(selectorInput);
+          row.appendChild(arrow);
+          row.appendChild(propertyInput);
+          row.appendChild(removeButton);
+        }
+      };
+      rebuild();
+
+      const addButton = document.createElement('button');
+      addButton.setAttribute('icon', 'add');
+      addButton.textContent = 'Add replacement';
+      addButton.onclick = () => {
+        const current = widget.get('svgReplaces');
+        const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+        let token = '#000';
+        let i = 1;
+        while(newMap[token] !== undefined)
+          token = `#000${++i}`;
+        newMap[token] = 'color';
+        this.inputValueUpdated(widget, 'svgReplaces', newMap);
+        if(widget.applyDeltaToDOM)
+          widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+        rebuild();
+      };
+      body.appendChild(addButton);
+    }, null, `${widget.id}:svgReplacesEditor`);
+    propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.svgReplaces));
+
+    // quick color pickers for entries pointing at *Color-style properties
+    this.renderSvgReplaceColors(widget);
+  }
+
   renderBehaviorSection(widget, title = 'Behavior') {
     const defs = this.typeSections(widget).behavior || [];
     if(!defs.length)
@@ -4210,22 +4317,69 @@ class PropertiesModule extends SidebarModule {
   }
 
   // Content section of basic widgets: text with a text/symbol mode dropdown,
-  // then icon and image as side by side blocks.
+  // then icon and image as side by side blocks - or, for basic widgets, a
+  // large HTML field instead once "Use custom HTML" is switched on.
   renderBasicContentSection(widget, supportsHTML = false) {
     this.addSubHeader('Content');
 
-    if(supportsHTML && widget.get('html') !== null) {
-      const htmlInput = new TextInput(this, widget, 'HTML', {
-        property: 'html',
-        multiline: true,
-        nullIfEmpty: true,
-        hint: editorPropertyHints.html
-      });
-      htmlInput.render(this.moduleDOM);
-      htmlInput.input.rows = 10;
+    if(!supportsHTML) {
+      this.renderBasicContentInputs(widget, this.moduleDOM);
       return;
     }
 
+    const container = div(this.moduleDOM, 'basicContentBody');
+
+    const rebuild = () => {
+      container.innerHTML = '';
+
+      const toggleRow = div(container, 'contentHtmlToggleRow');
+      const toggleCheckbox = document.createElement('input');
+      toggleCheckbox.type = 'checkbox';
+      toggleCheckbox.id = `htmlToggle_${widget.id}`;
+      toggleCheckbox.checked = widget.get('html') !== null;
+      const toggleLabel = document.createElement('label');
+      toggleLabel.htmlFor = toggleCheckbox.id;
+      toggleLabel.textContent = 'Use custom HTML instead of text/icon/image';
+      toggleCheckbox.onchange = () => {
+        // switching on starts from an empty (rather than null) field so the
+        // textarea below appears immediately; switching off drops back to
+        // the regular text/icon/image content, leaving those properties as
+        // they were
+        this.inputValueUpdated(widget, 'html', toggleCheckbox.checked ? '' : null);
+        rebuild();
+      };
+      toggleRow.appendChild(toggleCheckbox);
+      toggleRow.appendChild(toggleLabel);
+      propertyInfoButton(toggleRow, html(editorPropertyHints.html));
+
+      if(widget.get('html') !== null) {
+        const htmlInput = new TextInput(this, widget, 'HTML', {
+          property: 'html',
+          multiline: true,
+          nullIfEmpty: true,
+          hint: editorPropertyHints.html
+        });
+        htmlInput.render(container);
+        htmlInput.input.rows = 10;
+      } else {
+        this.renderBasicContentInputs(widget, container);
+      }
+    };
+
+    this.addPropertyListener(widget, 'html', () => {
+      // only rebuild on a mode switch (null <-> non-null); typing in the
+      // textarea itself is handled by TextInput's own listener
+      const usingHTML = widget.get('html') !== null;
+      if(usingHTML != (container.querySelector('.textInput.multiline') !== null))
+        rebuild();
+    });
+    rebuild();
+  }
+
+  // Text (with a text/symbol mode dropdown) plus icon and image as side by
+  // side blocks - the "classic" basic-widget content editor, also reused
+  // in the custom-HTML toggle above and by widget types without HTML support.
+  renderBasicContentInputs(widget, target) {
     const currentSymbolClass = () => String(widget.get('classes') || '').split(/\s+/)
       .find(className => textSymbolClasses.includes(className)) || null;
     const setSymbolClass = symbolClass => {
@@ -4236,7 +4390,7 @@ class PropertiesModule extends SidebarModule {
       this.inputValueUpdated(widget, 'classes', classes.length ? classes.join(' ') : null);
     };
 
-    const textRow = div(this.moduleDOM, 'propertyInput');
+    const textRow = div(target, 'propertyInput');
     const textLabel = document.createElement('label');
     textLabel.textContent = 'Text';
     propertyInfoButton(textLabel, html(editorPropertyHints.text));
@@ -4282,10 +4436,10 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'text', update);
     this.addPropertyListener(widget, 'classes', update);
 
-    const mediaRow = div(this.moduleDOM, 'contentMediaRow');
+    const mediaRow = div(target, 'contentMediaRow');
     // pickers open below the row so the two blocks never move around, and
     // only one of them is open at a time
-    const pickerGroup = { target: div(this.moduleDOM, 'contentMediaPickers'), current: null };
+    const pickerGroup = { target: div(target, 'contentMediaPickers'), current: null };
 
     const iconBlock = div(mediaRow, 'contentMediaBlock');
     const iconTitle = div(iconBlock, 'contentMediaTitle');
