@@ -474,7 +474,7 @@
 
 /* collapsible blocks (Position, Size, Widget's links, CSS) */
 .editorModule .collapsibleSection {
-  margin: 6px 0;
+  margin: 6px 10px 6px 0;
   border: 1px solid var(--backgroundHighlightColor1, #ddd);
   border-radius: 5px;
 }
