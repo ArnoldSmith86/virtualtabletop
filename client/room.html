@@ -27,6 +27,7 @@
     <button id="statesButton" data-overlay="statesOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Game Shelf</span></button>
     <button id="activeGameButton" class="toolbarButton toolbarTab" ><span class="tooltip">Active Game</span></button>
     <button id="playersButton" data-overlay="playerOverlay" class="toolbarButton toolbarTab" ><span class="tooltip">Players</span></button>
+    <button id="chatButton" class="toolbarButton toolbarTab"><span class="tooltip">Chat</span></button>
     <button id="aboutButton" data-overlay="aboutOverlay" class="toolbarButton toolbarTab"><span class="tooltip">About</span></button>
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
@@ -592,6 +593,53 @@
     </div>
 
     <div id="playerCursors"></div>
+  </div>
+
+  <div id="chatPanel" class="hidden">
+    <div id="chatHeader">
+      <span>Chat</span>
+      <span class="chatHeaderButtons">
+        <button icon="settings" id="chatSettingsButton" title="Chat settings"></button>
+        <button icon="close" id="chatCloseButton"></button>
+      </span>
+    </div>
+    <div id="chatSettings" class="hidden">
+      <label>Theme
+        <select id="chatThemeSelect">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+      <label>Notification sound
+        <select id="chatSoundSelect">
+          <option value="none">None</option>
+          <option value="ding">Ding</option>
+        </select>
+      </label>
+      <label>Font size
+        <select id="chatFontSelect">
+          <option value="s">Small</option>
+          <option value="m">Medium</option>
+          <option value="l">Large</option>
+        </select>
+      </label>
+      <label class="chatSettingsCheck">
+        <input type="checkbox" id="chatAutoScrollToggle"> Auto-scroll only when at bottom
+      </label>
+    </div>
+    <template id="template-chat-message" type="text/template">
+      <span class="chatTime"></span>
+      <span class="chatPlayer"></span>
+      <span class="chatText"></span>
+    </template>
+    <div id="chatMessages"></div>
+    <div id="chatInputRow">
+      <input id="chatInput" placeholder="Type a message" maxlength="1000" />
+      <button icon="send" id="chatSendButton">Send</button>
+    </div>
+    <div class="chatResize chatResize-e"></div>
+    <div class="chatResize chatResize-s"></div>
+    <div class="chatResize chatResize-se"></div>
   </div>
 
   <div id="clientPointer">

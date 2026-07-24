@@ -265,6 +265,15 @@ export default class Room {
         player.send(func, args);
   }
 
+  chat(player, message) {
+    if(typeof message != 'string')
+      return;
+    message = message.trim().substr(0, 1000);
+    if(!message)
+      return;
+    this.broadcast('chat', { player: player.name, message, time: +new Date() });
+  }
+
   async createTempState(tempID, fileContent) {
     const filenameSuffix = tempID || String(+new Date()) + Math.random().toString(36).substring(3, 7);
 

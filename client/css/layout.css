@@ -529,103 +529,121 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    @media (max-height: 120px) {
+    @media (max-height: 150px) {
       body.wideToolbar #editButton, body.wideToolbar #addButton {
         display: none;
       }
     }
 
-    @media (max-height: 290px) {
+    @media (max-height: 325px) {
       body:not(.horizontalToolbar,.aspectTooGood) #toolbar .divider, body:not(.horizontalToolbar,.aspectTooGood) #optionsButton, body:not(.horizontalToolbar,.aspectTooGood) #lightsButton {
         display: none;
       }
     }
 
-    @media (max-width: 550px) {
+    @media (max-width: 600px) {
       body.aspectTooGood #toolbar .divider, body.aspectTooGood #optionsButton, body.aspectTooGood #lightsButton {
         display: none;
       }
     }
 
-    @media (max-height: 230px) {
+    @media (max-height: 290px) {
+      body:not(.horizontalToolbar) #chatButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 550px) {
+      body.aspectTooGood #chatButton {
+        display: none;
+      }
+    }
+
+    @media (max-height: 265px) {
       body:not(.horizontalToolbar) #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 460px) {
+    @media (max-width: 500px) {
       body.aspectTooGood #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 410px) {
+    @media (max-width: 450px) {
       body.aspectTooGood #editButton {
         display: none;
       }
     }
 
-    @media (max-height: 190px) {
+    @media (max-height: 225px) {
       body:not(.horizontalToolbar) #editButton {
         display: none;
       }
     }
 
-    @media (max-height: 160px) {
+    @media (max-height: 190px) {
       body:not(.horizontalToolbar) #playersButton {
         display: none;
       }
     }
 
-    @media (max-height: 120px) {
+    @media (max-height: 150px) {
       body:not(.horizontalToolbar) #zoom2xButton {
         display: none;
       }
     }
 
-    @media (max-width: 350px) {
+    @media (max-width: 390px) {
       body.aspectTooGood #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 295px) {
+    @media (max-width: 320px) {
       body.aspectTooGood #hideToolbarButton {
         display: none;
       }
     }
 
-    @media (max-width: 250px) {
+    @media (max-width: 270px) {
       body.aspectTooGood #zoom2xButton {
         display: none;
       }
     }
 
-    @media (max-width: 390px) {
+    @media (max-width: 440px) {
       body.horizontalToolbar #toolbar .divider, body.horizontalToolbar #optionsButton, body.horizontalToolbar #lightsButton {
         display: none;
       }
     }
 
-    @media (max-width: 320px) {
+    @media (max-width: 380px) {
+      body.horizontalToolbar #chatButton {
+        display: none;
+      }
+    }
+
+    @media (max-width: 330px) {
       body.horizontalToolbar #aboutButton {
         display: none;
       }
     }
 
-    @media (max-width: 260px) {
+    @media (max-width: 270px) {
       body.horizontalToolbar #editButton {
         display: none;
       }
     }
 
-    @media (max-width: 220px) {
+    @media (max-width: 230px) {
       body.horizontalToolbar #playersButton {
         display: none;
       }
     }
 
-    @media (max-width: 160px) {
+    @media (max-width: 170px) {
       body.horizontalToolbar #zoom2xButton {
         display: none;
       }

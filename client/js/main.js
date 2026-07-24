@@ -571,6 +571,13 @@ onLoad(function() {
   });
 
   on('.toolbarTab', 'click', function(e) {
+    // chat is a floating panel, not one of the mutually-exclusive overlay tabs - it can stay open
+    // alongside whichever tab/overlay is active
+    if(e.currentTarget == $('#chatButton')) {
+      toggleChatPanel();
+      e.stopImmediatePropagation();
+      return;
+    }
     if(e.currentTarget.classList.contains('active')) {
       if($('#stateDetailsOverlay.notEditing') && $('#stateDetailsOverlay.notEditing').style.display != 'none')
         showStatesOverlay('statesOverlay');

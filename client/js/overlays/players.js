@@ -1,4 +1,4 @@
-import { asArray, onLoad, rand } from '../domhelpers.js';
+import { asArray, domByTemplate, onLoad, rand, removeFromDOM } from '../domhelpers.js';
 
 let playerCursors = {};
 let playerCursorsTimeout = {};
@@ -15,6 +15,107 @@ export {
   activePlayers,
   activeColors,
   mouseCoords
+}
+
+let chatPlayerColors = {};
+let unreadChatMessages = 0;
+let chatOpen = false;
+let chatState = {};
+try {
+  chatState = JSON.parse(localStorage.getItem('chatPanelState')) || {};
+} catch(e) {}
+
+function saveChatState() {
+  localStorage.setItem('chatPanelState', JSON.stringify(chatState));
+}
+
+let chatSettings = { theme: 'light', sound: 'none', fontSize: 'm', autoScrollBottomOnly: true };
+try {
+  Object.assign(chatSettings, JSON.parse(localStorage.getItem('chatSettings')) || {});
+} catch(e) {}
+
+function saveChatSettings() {
+  localStorage.setItem('chatSettings', JSON.stringify(chatSettings));
+}
+
+function applyChatSettings() {
+  const panel = $('#chatPanel');
+  panel.dataset.theme = chatSettings.theme;
+  panel.dataset.fontSize = chatSettings.fontSize;
+}
+
+let chatAudioContext;
+function chatDing() {
+  try {
+    if(!chatAudioContext)
+      chatAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = chatAudioContext;
+    if(ctx.state == 'suspended')
+      ctx.resume();
+    const now = ctx.currentTime;
+    for(const [ freq, at ] of [ [ 880, 0 ], [ 1320, 0.12 ] ]) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, now + at);
+      gain.gain.exponentialRampToValueAtTime(0.15, now + at + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + at + 0.18);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + at);
+      osc.stop(now + at + 0.2);
+    }
+  } catch(e) {}
+}
+
+function updateChatBadge() {
+  const button = $('#chatButton');
+  const tooltip = $('.tooltip', button);
+  if(unreadChatMessages) {
+    const badge = unreadChatMessages > 99 ? '99+' : String(unreadChatMessages);
+    button.dataset.unreadChat = badge;
+    if(tooltip) tooltip.dataset.unreadChat = badge;
+  } else {
+    delete button.dataset.unreadChat;
+    if(tooltip) delete tooltip.dataset.unreadChat;
+  }
+}
+
+function applyChatGeometry() {
+  const panel = $('#chatPanel');
+  if(chatState.width) panel.style.width = chatState.width;
+  if(chatState.height) panel.style.height = chatState.height;
+  if(chatState.left && chatState.top) {
+    panel.style.left = chatState.left;
+    panel.style.top = chatState.top;
+    panel.style.right = 'auto';
+    panel.style.bottom = 'auto';
+  }
+}
+
+function openChat() {
+  chatOpen = true;
+  chatState.open = true;
+  $('#chatPanel').classList.remove('hidden');
+  unreadChatMessages = 0;
+  updateChatBadge();
+  setTimeout(_=>$('#chatMessages').scrollTop = $('#chatMessages').scrollHeight, 0);
+  saveChatState();
+}
+
+function closeChat() {
+  chatOpen = false;
+  chatState.open = false;
+  $('#chatPanel').classList.add('hidden');
+  saveChatState();
+}
+
+function toggleChatPanel() {
+  if(chatOpen)
+    closeChat();
+  else
+    openChat();
 }
 
 function getPlayerDetails() {
@@ -87,7 +188,10 @@ function updatePlayerCountDisplay() {
 }
 
 onLoad(function() {
-  onMessage('meta', args=>fillPlayerList(args.meta.players, args.activePlayers));
+  onMessage('meta', args=>{
+    chatPlayerColors = args.meta.players;
+    fillPlayerList(args.meta.players, args.activePlayers);
+  });
   onMessage('mouse', function(args) {
     if(args.player != playerName && playerCursors[args.player]) {
       clearTimeout(playerCursorsTimeout[args.player]);
@@ -128,4 +232,149 @@ onLoad(function() {
 
   // share URL when clicking button
   shareButton($('#playersShareButton'), _=>location.href);
+
+  applyChatGeometry();
+  if(chatState.open)
+    openChat();
+
+  applyChatSettings();
+  $('#chatThemeSelect').value = chatSettings.theme;
+  $('#chatSoundSelect').value = chatSettings.sound;
+  $('#chatFontSelect').value = chatSettings.fontSize;
+  $('#chatAutoScrollToggle').checked = chatSettings.autoScrollBottomOnly !== false;
+
+  $('#chatSettingsButton').addEventListener('click', function() {
+    $('#chatSettings').classList.toggle('hidden');
+  });
+  $('#chatThemeSelect').addEventListener('change', function() {
+    chatSettings.theme = this.value;
+    applyChatSettings();
+    saveChatSettings();
+  });
+  $('#chatSoundSelect').addEventListener('change', function() {
+    chatSettings.sound = this.value;
+    saveChatSettings();
+    if(this.value == 'ding')
+      chatDing(); // preview + primes the audio context on this user gesture
+  });
+  $('#chatFontSelect').addEventListener('change', function() {
+    chatSettings.fontSize = this.value;
+    applyChatSettings();
+    saveChatSettings();
+  });
+  $('#chatAutoScrollToggle').addEventListener('change', function() {
+    chatSettings.autoScrollBottomOnly = this.checked;
+    saveChatSettings();
+  });
+
+  // drags/resizes the chat panel while blocking the room's own mouse/touch handling (panning, widget
+  // dragging) which would otherwise also react to the same pointer events bubbling up to the window
+  function trackDrag(e, onMove, onEnd) {
+    e.preventDefault();
+    e.stopPropagation();
+    const isTouch = e.type == 'touchstart';
+    const start = isTouch ? e.touches[0] : e;
+    const startX = start.clientX, startY = start.clientY;
+    function move(e2) {
+      e2.preventDefault();
+      const point = isTouch ? e2.touches[0] : e2;
+      onMove(point.clientX - startX, point.clientY - startY);
+    }
+    function end(e2) {
+      document.removeEventListener(isTouch ? 'touchmove' : 'mousemove', move);
+      document.removeEventListener(isTouch ? 'touchend' : 'mouseup', end);
+      onEnd();
+    }
+    document.addEventListener(isTouch ? 'touchmove' : 'mousemove', move, { passive: false });
+    document.addEventListener(isTouch ? 'touchend' : 'mouseup', end);
+  }
+
+  function startHeaderDrag(e) {
+    if(e.target.closest('button'))
+      return;
+    const panel = $('#chatPanel');
+    const rect = panel.getBoundingClientRect();
+    panel.classList.add('dragging');
+    trackDrag(e, function(dx, dy) {
+      const left = Math.max(0, Math.min(window.innerWidth - rect.width, rect.left + dx));
+      const top = Math.max(0, Math.min(window.innerHeight - rect.height, rect.top + dy));
+      panel.style.left = `${left}px`;
+      panel.style.top = `${top}px`;
+      panel.style.right = 'auto';
+      panel.style.bottom = 'auto';
+    }, function() {
+      panel.classList.remove('dragging');
+      chatState.left = panel.style.left;
+      chatState.top = panel.style.top;
+      saveChatState();
+    });
+  }
+
+  function startResize(e, resizeWidth, resizeHeight) {
+    const panel = $('#chatPanel');
+    const rect = panel.getBoundingClientRect();
+    trackDrag(e, function(dx, dy) {
+      if(resizeWidth)
+        panel.style.width = `${Math.min(window.innerWidth - rect.left, rect.width + dx)}px`;
+      if(resizeHeight)
+        panel.style.height = `${Math.min(window.innerHeight - rect.top, rect.height + dy)}px`;
+    }, function() {
+      chatState.width = panel.style.width;
+      chatState.height = panel.style.height;
+      saveChatState();
+    });
+  }
+
+  for(const eventName of [ 'mousedown', 'touchstart' ]) {
+    $('#chatHeader').addEventListener(eventName, startHeaderDrag);
+    $('.chatResize-e').addEventListener(eventName, e=>startResize(e, true, false));
+    $('.chatResize-s').addEventListener(eventName, e=>startResize(e, false, true));
+    $('.chatResize-se').addEventListener(eventName, e=>startResize(e, true, true));
+  }
+
+  $('#chatCloseButton').addEventListener('click', closeChat);
+
+  function addChatMessage(entry) {
+    const message = domByTemplate('template-chat-message', {}, 'div');
+    message.className = 'chatMessage';
+    message.dataset.player = entry.player;
+    $('.chatTime', message).textContent = new Date(entry.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    $('.chatPlayer', message).textContent = entry.player;
+    if(chatPlayerColors[entry.player] !== undefined)
+      $('.chatPlayer', message).style.color = chatPlayerColors[entry.player];
+    $('.chatText', message).textContent = entry.message;
+    const log = $('#chatMessages');
+    // don't steal the scroll position while the user is reading older messages
+    const wasAtBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 5;
+    log.appendChild(message);
+    // cap the log so it doesn't grow unbounded over a long session; there is no server-side
+    // history, so this is purely a client-side memory bound, not a sync guarantee
+    while(log.children.length > 200)
+      removeFromDOM(log.firstElementChild);
+    // "auto-scroll only when at bottom" (default on) keeps the position while reading older
+    // messages; turning it off always jumps to the newest message
+    if(wasAtBottom || chatSettings.autoScrollBottomOnly === false)
+      log.scrollTop = log.scrollHeight;
+    if(entry.player != playerName && !chatOpen) {
+      ++unreadChatMessages;
+      updateChatBadge();
+      if(chatSettings.sound == 'ding')
+        chatDing();
+    }
+  }
+
+  onMessage('chat', addChatMessage);
+
+  function sendChatMessage() {
+    const message = $('#chatInput').value.trim();
+    if(!message)
+      return;
+    toServer('chat', { message });
+    $('#chatInput').value = '';
+  }
+  $('#chatSendButton').addEventListener('click', sendChatMessage);
+  $('#chatInput').addEventListener('keydown', function(e) {
+    if(e.key == 'Enter' && !e.isComposing)
+      sendChatMessage();
+  });
 });
