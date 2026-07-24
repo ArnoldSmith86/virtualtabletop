@@ -4061,26 +4061,13 @@ class PropertiesModule extends SidebarModule {
     this.renderInputs(widget, defs, row, { pickerGroup: { target: pickerArea, current: null } });
   }
 
-  renderSvgReplaceColors(widget, target = null) {
-    const properties = svgReplaceColorProperties(widget.get('svgReplaces'));
-    if(!properties.length)
-      return;
-    this.renderCollapsibleSection('SVG colors', false, body => {
-      this.renderColorRow(widget, properties.map(property => ({
-        label: svgReplaceColorLabel(property),
-        property,
-        kind: 'color'
-      })), body);
-    }, target, `${widget.id}:svgColors`);
-  }
-
   // Curated editor for the raw svgReplaces map (only widget types built on
   // ImageWidget/Dice/Timer support it - see their addDefaults). Each entry
   // maps a token found in an uploaded SVG (e.g. "#000" or "#borderColor") to
   // the widget property whose value replaces it - see getSvgReplaces()/getImage()
   // in imagewidget.js and the equivalent logic in dice.js/timer.js. Entries
-  // that point at a *Color-style property also get an actual color picker via
-  // renderSvgReplaceColors, so this only has to handle the mapping itself.
+  // that point at a *Color-style property also get an actual color picker
+  // right below the "Add replacement" button.
   renderSvgReplacesEditor(widget) {
     if(widget.defaults.svgReplaces === undefined)
       return;
@@ -4183,18 +4170,25 @@ class PropertiesModule extends SidebarModule {
         refreshColors();
       };
       body.appendChild(addButton);
+
+      // quick color pickers for entries pointing at *Color-style properties;
+      // kept in a dedicated host so adding/renaming/removing a mapping can
+      // refresh just the pickers without re-rendering the whole section
+      const colorsHost = div(body, 'svgReplaceColorsHost');
+      refreshColors = () => {
+        colorsHost.innerHTML = '';
+        const properties = svgReplaceColorProperties(widget.get('svgReplaces'));
+        if(!properties.length)
+          return;
+        this.renderColorRow(widget, properties.map(property => ({
+          label: svgReplaceColorLabel(property),
+          property,
+          kind: 'color'
+        })), colorsHost);
+      };
+      refreshColors();
     }, null, `${widget.id}:svgReplacesEditor`);
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.svgReplaces));
-
-    // quick color pickers for entries pointing at *Color-style properties;
-    // kept in a dedicated host so adding/renaming/removing a mapping can
-    // refresh just the pickers without re-rendering the whole panel
-    const colorsHost = div(this.moduleDOM, 'svgReplaceColorsHost');
-    refreshColors = () => {
-      colorsHost.innerHTML = '';
-      this.renderSvgReplaceColors(widget, colorsHost);
-    };
-    refreshColors();
   }
 
   renderBehaviorSection(widget, title = 'Behavior') {
