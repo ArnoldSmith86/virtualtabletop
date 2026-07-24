@@ -770,9 +770,9 @@ class PickerInput extends PropertyInput {
     this.renderChip(target, this.previewValue());
     this.renderSummaryControls(target, value);
     if(isSet)
-      div(target, 'propertyPickerValueText', html(String(value)));
+      div(target, 'propertyPickerValueText', html(this.summaryValueText(value)));
     else if(propertyInputValueSet(this.getEffectiveValue()))
-      div(target, `propertyPickerValueText${this.dimDefault() ? ' usingDefault' : ''}`, this.dimDefault() ? `default: ${html(String(this.getEffectiveValue()))}` : html(String(this.getEffectiveValue())));
+      div(target, `propertyPickerValueText${this.dimDefault() ? ' usingDefault' : ''}`, this.dimDefault() ? `default: ${html(this.summaryValueText(this.getEffectiveValue()))}` : html(this.summaryValueText(this.getEffectiveValue())));
     else
       div(target, 'propertyPickerValueText', '<i>not set</i>');
     const close = document.createElement('button');
@@ -783,6 +783,13 @@ class PickerInput extends PropertyInput {
   }
 
   renderSummaryControls(target, value) {
+  }
+
+  // most pickers hold plain string/number values - override for values (like
+  // an icon's object form) that need a human-readable summary instead of
+  // stringifying the raw value
+  summaryValueText(value) {
+    return String(value);
   }
 
   renderChip(target, value) {
@@ -950,6 +957,14 @@ class IconInput extends PickerInput {
     return this.renderEmptyChip(target);
   }
 
+  // an icon value can be the object form ({name, color, scale, ...}) or an
+  // array of icons (combos) - show the name(s) instead of "[object Object]"
+  summaryValueText(value) {
+    if(Array.isArray(value))
+      return value.map(v => iconName(v) || '').join(', ');
+    return iconName(value) || '';
+  }
+
   emptyLabel() {
     return this.options.emptyLabel || 'Choose icon';
   }
@@ -967,6 +982,13 @@ class IconInput extends PickerInput {
 
   renderBasicOptionsContent(section, value) {
     div(section, 'propertyPickerSectionTitle', 'Basic options');
+    // color/scale apply to a specific icon - without one chosen yet there is
+    // nothing to attach them to (and doing so anyway would create a bogus
+    // { name: null, ... } icon value), so ask for an icon first
+    if(!iconName(value)) {
+      div(section, 'propertyPickerEmpty', 'Choose an icon below to set its color and scale.');
+      return;
+    }
     const row = div(section, 'iconBasicOptionsRow');
 
     const colorWrap = div(row, 'iconBasicOption');
@@ -991,14 +1013,17 @@ class IconInput extends PickerInput {
     const scaleLabel = document.createElement('label');
     scaleLabel.textContent = 'Scale';
     scaleWrap.appendChild(scaleLabel);
-    const defaultScale = typeof this.widget.getDefaultIconScale == 'function' ? this.widget.getDefaultIconScale() : 1;
+    // this scale is the per-symbol scale from generateSymbolsDiv (symbols.js),
+    // which always defaults to 1 - it's independent of the widget-level
+    // getDefaultIconScale() (applied separately as the whole symbol wrapper's
+    // transform), so that isn't the right fallback to show here.
     const scaleValue = iconOption(value, 'scale');
     const scaleInput = document.createElement('input');
     scaleInput.type = 'number';
     scaleInput.step = '0.05';
     scaleInput.min = '0.1';
     scaleInput.max = '5';
-    scaleInput.placeholder = String(defaultScale !== undefined && defaultScale !== null ? defaultScale : 1);
+    scaleInput.placeholder = '1';
     scaleInput.value = scaleValue !== undefined && scaleValue !== null ? scaleValue : '';
     scaleInput.oninput = _=>{
       const parsed = scaleInput.value === '' ? null : Number.parseFloat(scaleInput.value);
@@ -1007,7 +1032,7 @@ class IconInput extends PickerInput {
     scaleWrap.appendChild(scaleInput);
     const clearScale = document.createElement('button');
     clearScale.setAttribute('icon', 'delete');
-    clearScale.title = 'Use the widget\'s default scale';
+    clearScale.title = 'Reset to scale 1';
     clearScale.onclick = _=>{
       scaleInput.value = '';
       this.setValue(iconWithOption(this.getValue(), 'scale', null));
