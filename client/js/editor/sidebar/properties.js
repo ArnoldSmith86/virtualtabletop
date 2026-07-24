@@ -4061,17 +4061,17 @@ class PropertiesModule extends SidebarModule {
     this.renderInputs(widget, defs, row, { pickerGroup: { target: pickerArea, current: null } });
   }
 
-  renderSvgReplaceColors(widget) {
+  renderSvgReplaceColors(widget, target = null) {
     const properties = svgReplaceColorProperties(widget.get('svgReplaces'));
     if(!properties.length)
       return;
-    this.renderCollapsibleSection('SVG colors', true, body => {
+    this.renderCollapsibleSection('SVG colors', false, body => {
       this.renderColorRow(widget, properties.map(property => ({
         label: svgReplaceColorLabel(property),
         property,
         kind: 'color'
       })), body);
-    }, null, `${widget.id}:svgColors`);
+    }, target, `${widget.id}:svgColors`);
   }
 
   // Curated editor for the raw svgReplaces map (only widget types built on
@@ -4084,6 +4084,8 @@ class PropertiesModule extends SidebarModule {
   renderSvgReplacesEditor(widget) {
     if(widget.defaults.svgReplaces === undefined)
       return;
+
+    let refreshColors = () => {};
 
     const section = this.renderCollapsibleSection('SVG replacements', false, body => {
       const list = div(body, 'svgReplacesList');
@@ -4129,6 +4131,7 @@ class PropertiesModule extends SidebarModule {
             if(widget.applyDeltaToDOM)
               widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
             rebuild();
+            refreshColors();
           };
           selectorInput.onchange = commit;
           propertyInput.onchange = commit;
@@ -4144,6 +4147,7 @@ class PropertiesModule extends SidebarModule {
             if(widget.applyDeltaToDOM)
               widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
             rebuild();
+            refreshColors();
           };
 
           row.appendChild(selectorInput);
@@ -4164,18 +4168,31 @@ class PropertiesModule extends SidebarModule {
         let i = 1;
         while(newMap[token] !== undefined)
           token = `#000${++i}`;
-        newMap[token] = 'color';
+        const existingProperties = new Set(Object.values(newMap).flat());
+        let property = 'newColor';
+        let j = 1;
+        while(existingProperties.has(property))
+          property = `newColor${++j}`;
+        newMap[token] = property;
         this.inputValueUpdated(widget, 'svgReplaces', newMap);
         if(widget.applyDeltaToDOM)
           widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
         rebuild();
+        refreshColors();
       };
       body.appendChild(addButton);
     }, null, `${widget.id}:svgReplacesEditor`);
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.svgReplaces));
 
-    // quick color pickers for entries pointing at *Color-style properties
-    this.renderSvgReplaceColors(widget);
+    // quick color pickers for entries pointing at *Color-style properties;
+    // kept in a dedicated host so adding/renaming/removing a mapping can
+    // refresh just the pickers without re-rendering the whole panel
+    const colorsHost = div(this.moduleDOM, 'svgReplaceColorsHost');
+    refreshColors = () => {
+      colorsHost.innerHTML = '';
+      this.renderSvgReplaceColors(widget, colorsHost);
+    };
+    refreshColors();
   }
 
   renderBehaviorSection(widget, title = 'Behavior') {
