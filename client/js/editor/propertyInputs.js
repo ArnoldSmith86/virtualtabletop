@@ -176,7 +176,6 @@ function renderImageChip(value, target) {
 
 function renderColorChip(value, target) {
   const chip = div(target, 'propertyValueChip propertyColorChip');
-  chip.title = value;
   chip.style.setProperty('--chipColor', value);
   return chip;
 }
@@ -360,7 +359,6 @@ class PropertyInput {
     this.dom = div(target, `propertyInput ${this.cssClass()}`);
     if(this.labelText) {
       const label = document.createElement('label');
-      label.title = this.labelText;
       if(this.options.labelIcon) {
         // common color roles are shown as their material symbol instead of text
         const icon = document.createElement('span');
@@ -371,6 +369,8 @@ class PropertyInput {
         label.classList.add('iconOnly');
       } else {
         label.textContent = this.labelText;
+        if(this.showLabelTitle())
+          label.title = this.labelText;
       }
       if(this.options.hint)
         propertyInfoButton(label, html(this.options.hint));
@@ -386,6 +386,10 @@ class PropertyInput {
 
   cssClass() {
     return '';
+  }
+
+  showLabelTitle() {
+    return true;
   }
 
   renderControl(target) {
@@ -681,8 +685,16 @@ class PickerInput extends PropertyInput {
     const emptyLabel = this.emptyLabel();
     this.previewButton.classList.toggle('usingDefault', this.dimDefault() && !propertyInputValueSet(rawValue));
     this.previewButton.classList.toggle('emptyValue', isEmpty);
-    this.previewButton.title = isEmpty && emptyLabel ? emptyLabel : 'Click to edit';
+    const title = this.previewTitle(isEmpty, emptyLabel);
+    if(title)
+      this.previewButton.title = title;
+    else
+      this.previewButton.removeAttribute('title');
     this.previewButton.setAttribute('aria-label', isEmpty && emptyLabel ? emptyLabel : 'Edit value');
+  }
+
+  previewTitle(isEmpty, emptyLabel) {
+    return isEmpty && emptyLabel ? emptyLabel : 'Click to edit';
   }
 
   emptyLabel() {
@@ -788,6 +800,14 @@ class ColorInput extends PickerInput {
   }
 
   dimDefault() {
+    return false;
+  }
+
+  previewTitle() {
+    return null;
+  }
+
+  showLabelTitle() {
     return false;
   }
 
