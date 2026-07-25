@@ -451,10 +451,8 @@ const editorTypeSections = {
   deck: {},
   dice: {
     stateClasses: { '.shape3D': 'shape3d' },
-    colors: [
-      { label: 'Color',         property: 'color',        kind: 'color', labelIcon: 'casino' },
-      { label: 'Pips',          property: 'pipColor',     kind: 'color', labelIcon: 'casino', labelIconNoFill: true }
-    ],
+    // color/pipColor/borderColor are edited per-face (or locked to the widget)
+    // by the "Face colors" controls in the dice face editor instead
     appearance: [
       { label: 'Border radius', property: 'borderRadius', kind: 'numberOrText', compact: true, placeholder: 'e.g. 16%', nullIfEmpty: true }
     ],
@@ -5312,6 +5310,316 @@ class PropertiesModule extends SidebarModule {
     this.renderGenericProperties(widget, this.basicPropertyExcludeList([ 'cardTypes', 'faceTemplates', 'cardDefaults', 'z' ]));
   }
 
+  // --- dice face editor ---
+
+  diceFaces(widget) {
+    const faces = widget.get('faces');
+    if(typeof faces == 'string')
+      return faces.split('');
+    return Array.isArray(faces) ? JSON.parse(JSON.stringify(faces)) : [];
+  }
+
+  diceUsesPips(widget) {
+    return widget.get('pipSymbols') !== false;
+  }
+
+  // Normalize a face entry to a { type, ... } shape for editing.
+  diceFaceType(widget, face) {
+    if(typeof face == 'object' && face !== null) {
+      if(face.image !== undefined) return 'image';
+      if(face.icon !== undefined)  return 'icon';
+      if(face.pips !== undefined)  return 'pips';
+      if(face.text !== undefined)  return 'text';
+      if(face.value !== undefined) return this.diceUsesPips(widget) && String(+face.value) === String(face.value) ? 'pips' : 'text';
+      return 'text';
+    }
+    if(typeof face == 'string' && face.match(/^\/(assets|i)\//)) return 'image';
+    return this.diceUsesPips(widget) && String(+face) === String(face) ? 'pips' : 'text';
+  }
+
+  diceFaceValue(widget, face, type) {
+    const o = (typeof face == 'object' && face !== null) ? face : {};
+    if(type == 'image') return o.image !== undefined ? o.image : (typeof face == 'string' ? face : null);
+    if(type == 'icon')  return o.icon  !== undefined ? o.icon  : null;
+    if(type == 'pips')  return o.pips  !== undefined ? o.pips  : (o.value !== undefined ? o.value : (typeof face == 'object' ? 1 : face));
+    return o.text !== undefined ? o.text : (o.value !== undefined ? o.value : (typeof face == 'object' ? '' : face));
+  }
+
+  buildDiceFace(type, value, existingFace) {
+    const property = type == 'pips' ? 'pips' : type;
+    if(type == 'pips') value = (value === '' || value == null) ? 0 : +value;
+    if(type == 'text') value = String(value == null ? '' : value);
+    if((type == 'icon' || type == 'image') && !value) value = null;
+    return replaceExclusiveProperties(existingFace, [ 'value', 'pips', 'text', 'icon', 'image' ], property, value);
+  }
+
+  setDiceFaces(widget, faces, activeFace=null) {
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited faces of dice ${widget.id} in editor`);
+    widget.set('faces', faces);
+    if(activeFace !== null)
+      widget.set('activeFace', activeFace);
+    else if(widget.get('activeFace') >= faces.length)
+      widget.set('activeFace', Math.max(0, faces.length - 1));
+    batchEnd();
+  }
+
+  renderDiceFaceEditor(widget) {
+    this.addSubHeader('Faces');
+
+    const addFace = document.createElement('button');
+    addFace.setAttribute('icon', 'add');
+    addFace.className = 'green diceAddFace';
+    addFace.textContent = 'Add face';
+    addFace.onclick = _=>{
+      const faces = this.diceFaces(widget);
+      faces.push({ pips: Math.min(faces.length + 1, 6) });
+      this.setDiceFaces(widget, faces);
+    };
+    this.moduleDOM.appendChild(addFace);
+
+    const facesContainer = div(this.moduleDOM, 'diceFacesEditor');
+
+    // locked = the property lives on the dice widget (same for all faces);
+    // unlocked = each face gets its own value in the faces array
+    this.addAppearanceSubTitle('Face colors');
+    const lockRow = div(this.moduleDOM, 'diceColorLocks');
+    const colorDefs = [
+      { key: 'color',       label: 'Background' },
+      { key: 'pipColor',    label: 'Pips/icon' },
+      { key: 'borderColor', label: 'Border' }
+    ];
+    const locks = {};
+    const renderLockRow = def=>{
+      def.wrap.innerHTML = '';
+      new CheckboxInput(this, widget, `${def.label} same for all faces`, {
+        getValue: _=>locks[def.key],
+        setValue: v=>{
+          const scrollTop = this.moduleDOM.scrollTop;
+          locks[def.key] = v;
+          if(v) {
+            // move any per-face value onto the widget and clear from faces
+            const faces = this.diceFaces(widget);
+            let moved = null;
+            for(const f of faces)
+              if(typeof f == 'object' && f !== null && f[def.key] !== undefined) {
+                moved = moved === null ? f[def.key] : moved;
+                delete f[def.key];
+              }
+            batchStart();
+            setDeltaCause(`${getPlayerDetails().playerName} locked ${def.label.toLowerCase()} of dice ${widget.id} in editor`);
+            if(moved !== null) widget.set(def.key, moved);
+            widget.set('faces', faces);
+            batchEnd();
+          }
+          renderLockRow(def);
+          rebuild();
+          this.moduleDOM.scrollTop = scrollTop;
+        },
+        listenTo: [ def.key ],
+        hint: `When on, ${def.label.toLowerCase()} is stored once on the dice. Turn it off to choose a different value on every face.`
+      }).render(def.wrap);
+      if(locks[def.key])
+        new ColorInput(this, widget, def.label, { property: def.key }).render(def.wrap);
+    };
+    for(const def of colorDefs) {
+      // default locked unless a face already defines a per-face value
+      locks[def.key] = !this.diceFaces(widget).some(f=>typeof f == 'object' && f !== null && f[def.key] !== undefined);
+      def.wrap = div(lockRow, 'diceColorLock');
+      renderLockRow(def);
+    }
+
+    const rebuild = ()=>{
+      const scrollTop = this.moduleDOM.scrollTop;
+      facesContainer.innerHTML = '';
+      const faces = this.diceFaces(widget);
+      faces.forEach((face, index)=>this.renderDiceFaceRow(widget, index, locks, facesContainer));
+      this.moduleDOM.scrollTop = scrollTop;
+    };
+    rebuild();
+
+    // rebuild the rows when the number of faces or the pip mode changes, but
+    // not on every value edit (those inputs update themselves)
+    let lastSignature = JSON.stringify(this.diceFaces(widget).map(f=>this.diceFaceType(widget, f)));
+    this.addPropertyListener(widget, 'faces', _=>{
+      const signature = JSON.stringify(this.diceFaces(widget).map(f=>this.diceFaceType(widget, f)));
+      if(signature !== lastSignature) {
+        lastSignature = signature;
+        rebuild();
+      } else {
+        this.refreshDiceFacePreviews(widget, facesContainer);
+      }
+    });
+    for(const p of [ 'shape3d', 'color', 'pipColor', 'borderColor', 'pipSymbols' ])
+      this.addPropertyListener(widget, p, _=>this.refreshDiceFacePreviews(widget, facesContainer));
+  }
+
+  renderDiceFacePreview(widget, index, target) {
+    const preview = div(target, 'diceFacePreview');
+    preview.dataset.face = index;
+    const dice = new Dice();
+    dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, { id: generateUniqueWidgetID(), activeFace: index }), preview);
+    return preview;
+  }
+
+  refreshDiceFacePreviews(widget, facesContainer) {
+    for(const preview of $a('.diceFacePreview', facesContainer)) {
+      preview.innerHTML = '';
+      const dice = new Dice();
+      dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, { id: generateUniqueWidgetID(), activeFace: +preview.dataset.face }), preview);
+    }
+  }
+
+  renderDiceFaceRow(widget, index, locks, container) {
+    const row = div(container, 'diceFaceRow');
+    row.dataset.face = index;
+    this.renderDiceFacePreview(widget, index, row);
+
+    const controls = div(row, 'diceFaceControls');
+
+    // reorder and delete live in a column on the right side of the row
+    const actions = div(row, 'faceRowActions');
+    this.renderFaceOrderControls(actions, index, this.diceFaces(widget).length, (from, to)=>{
+      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setDiceFaces(widget, faces, activeFace));
+    }, row);
+    const type = this.diceFaceType(widget, this.diceFaces(widget)[index]);
+
+    new SelectInput(this, widget, 'Type', {
+      listenTo: [ 'faces' ],
+      hint: 'Choose how this face is rendered. Changing the type keeps a compatible value and its per-face colors.',
+      getValue: _=>this.diceFaceType(widget, this.diceFaces(widget)[index]),
+      setValue: newType=>{
+        const faces = this.diceFaces(widget);
+        const oldType = this.diceFaceType(widget, faces[index]);
+        const oldValue = this.diceFaceValue(widget, faces[index], oldType);
+        let value = null;
+        if(newType == 'pips') value = String(+oldValue).match(/^\d+$/) ? +oldValue : index + 1;
+        else if(newType == 'text') value = oldValue == null ? '' : String(oldValue);
+        faces[index] = this.buildDiceFace(newType, value, faces[index]);
+        this.setDiceFaces(widget, faces);
+      },
+      choices: [
+        { value: 'pips',  text: 'Pips' },
+        { value: 'text',  text: 'Number/text' },
+        { value: 'icon',  text: 'Icon' },
+        { value: 'image', text: 'Image' }
+      ]
+    }).render(controls);
+
+    const setFaceValue = value=>{
+      const faces = this.diceFaces(widget);
+      const t = this.diceFaceType(widget, faces[index]);
+      faces[index] = this.buildDiceFace(t, value, faces[index]);
+      this.setDiceFaces(widget, faces);
+    };
+    const getFaceValue = _=>{
+      const faces = this.diceFaces(widget);
+      const currentType = this.diceFaceType(widget, faces[index]);
+      return currentType == type ? this.diceFaceValue(widget, faces[index], currentType) : null;
+    };
+
+    if(type == 'pips')
+      new NumberInput(this, widget, 'Pips', { min: 0, max: 9, step: 1, listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+    else if(type == 'text')
+      new TextInput(this, widget, 'Text', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+    else if(type == 'icon')
+      new IconInput(this, widget, 'Icon', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+    else if(type == 'image')
+      new ImageInput(this, widget, 'Image', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
+
+    // per-face colors for whichever properties are unlocked
+    for(const def of [ { key: 'color', label: 'Background' }, { key: 'pipColor', label: 'Pips/icon' }, { key: 'borderColor', label: 'Border' } ]) {
+      if(locks[def.key])
+        continue;
+      new ColorInput(this, widget, def.label, {
+        listenTo: [ 'faces' ],
+        getValue: _=>{
+          const face = this.diceFaces(widget)[index];
+          return (typeof face == 'object' && face !== null && face[def.key] !== undefined) ? face[def.key] : null;
+        },
+        setValue: v=>{
+          const faces = this.diceFaces(widget);
+          if(typeof faces[index] != 'object' || faces[index] === null)
+            faces[index] = this.buildDiceFace(this.diceFaceType(widget, faces[index]), this.diceFaceValue(widget, faces[index], this.diceFaceType(widget, faces[index])), faces[index]);
+          if(v == null) delete faces[index][def.key];
+          else faces[index][def.key] = v;
+          this.setDiceFaces(widget, faces);
+        }
+      }).render(controls);
+    }
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.className = 'red diceRemoveFace';
+    remove.title = 'Remove this face';
+    remove.onclick = _=>{
+      const faces = this.diceFaces(widget);
+      faces.splice(index, 1);
+      this.setDiceFaces(widget, faces);
+    };
+    actions.appendChild(remove);
+  }
+
+  reorderFaces(widget, faces, from, to, setFaces) {
+    if(!Number.isInteger(from) || !Number.isInteger(to) || from == to || from < 0 || to < 0 || from >= faces.length || to >= faces.length)
+      return;
+    const [ movedFace ] = faces.splice(from, 1);
+    faces.splice(to, 0, movedFace);
+    const oldActiveFace = widget.get('activeFace');
+    let activeFace = oldActiveFace;
+    if(oldActiveFace == from)
+      activeFace = to;
+    else if(from < oldActiveFace && oldActiveFace <= to)
+      activeFace--;
+    else if(to <= oldActiveFace && oldActiveFace < from)
+      activeFace++;
+    setFaces(faces, activeFace);
+  }
+
+  // target: where the buttons are rendered; row: the face row (drag target),
+  // defaults to target for callers that render the controls into the row itself
+  renderFaceOrderControls(target, index, count, moveFace, row=null) {
+    row = row || target;
+    const controls = div(target, 'faceOrderControls');
+    const handle = document.createElement('button');
+    handle.setAttribute('icon', 'drag_indicator');
+    handle.title = 'Drag to reorder this face';
+    handle.draggable = true;
+    controls.appendChild(handle);
+
+    const up = document.createElement('button');
+    up.setAttribute('icon', 'arrow_upward');
+    up.title = 'Move this face up';
+    up.disabled = index == 0;
+    up.onclick = _=>moveFace(index, index - 1);
+    controls.appendChild(up);
+
+    const down = document.createElement('button');
+    down.setAttribute('icon', 'arrow_downward');
+    down.title = 'Move this face down';
+    down.disabled = index == count - 1;
+    down.onclick = _=>moveFace(index, index + 1);
+    controls.appendChild(down);
+
+    handle.ondragstart = e=>{
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', String(index));
+      row.classList.add('dragging');
+    };
+    handle.ondragend = _=>row.classList.remove('dragging');
+    row.ondragover = e=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      row.classList.add('dragOver');
+    };
+    row.ondragleave = _=>row.classList.remove('dragOver');
+    row.ondrop = e=>{
+      e.preventDefault();
+      row.classList.remove('dragOver');
+      moveFace(+e.dataTransfer.getData('text/plain'), index);
+    };
+  }
+
   renderForDice(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
@@ -5455,9 +5763,10 @@ class PropertiesModule extends SidebarModule {
     for(const property of [ 'faces', 'shape3d', 'pipSymbols' ])
       this.addPropertyListener(widget, property, _=>dicePreviews.forEach(update => update()));
 
+    this.renderDiceFaceEditor(widget);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'faces', 'pipSymbols', 'shape3d' ]);
+    this.renderOtherPropertiesSection(widget, [ 'faces', 'pipSymbols', 'shape3d', 'activeFace', 'color', 'pipColor', 'borderColor' ]);
   }
 
   renderForHolder(widget) {

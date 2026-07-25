@@ -1044,3 +1044,98 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   justify-content: center;
   margin: 6px 0 10px;
 }
+
+/* dice per-face editor */
+.editorModule .diceAddFace {
+  margin: 4px 0;
+}
+
+.editorModule .diceFacesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .diceFaceRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+}
+
+.editorModule .diceFaceRow.dragging {
+  opacity: 0.5;
+}
+
+.editorModule .diceFaceRow.dragOver {
+  outline: 2px dashed var(--VTTblue);
+}
+
+.editorModule .diceFacePreview {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorModule .diceFacePreview .widget {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.editorModule .diceFaceControls {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.editorModule .diceFaceControls .propertyInput > label {
+  width: auto;
+  min-width: auto;
+}
+
+.editorModule .faceRowActions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editorModule .faceOrderControls {
+  display: flex;
+  gap: 2px;
+}
+
+.editorModule .faceOrderControls button {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.editorModule .faceOrderControls [icon=drag_indicator] {
+  cursor: grab;
+}
+
+.editorModule .faceOrderControls [icon=drag_indicator]:active {
+  cursor: grabbing;
+}
+
+.editorModule .diceColorLocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 8px;
+}
+
+.editorModule .diceColorLock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

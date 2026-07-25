@@ -46,7 +46,10 @@ const renderIconChip = new Function('div', 'html', 'mapAssetURLs', 'toNotoMonoch
 );
 
 const testWidgets = new Map();
-const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `;
+// buildDiceFace (properties.js) calls replaceExclusiveProperties (propertyInputs.js) -
+// both files are concatenated into one bundle in the browser, so evaluate them
+// together here too instead of propertiesSource alone
+const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + propertiesSource + `;
   return {
     cssTextFromValue,
     cssStringRoundTrips,
@@ -66,7 +69,13 @@ const cssHelpers = new Function('SidebarModule', 'widgets', propertiesSource + `
     dicePreviewRotation,
     dicePreviewActiveFace,
     textSymbolClass,
-    textValueFromSymbol
+    textValueFromSymbol,
+    diceFaces: PropertiesModule.prototype.diceFaces,
+    diceUsesPips: PropertiesModule.prototype.diceUsesPips,
+    diceFaceType: PropertiesModule.prototype.diceFaceType,
+    diceFaceValue: PropertiesModule.prototype.diceFaceValue,
+    buildDiceFace: PropertiesModule.prototype.buildDiceFace,
+    reorderFaces: PropertiesModule.prototype.reorderFaces
   };
 `)(class {}, testWidgets);
 
@@ -193,6 +202,76 @@ describe('css helpers', () => {
     const module = { sizeRatioLocks: new WeakMap() };
     expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: {} })).toBe(true);
     expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: { lockSizeRatio: false } })).toBe(false);
+  });
+});
+
+describe('dice face editor helpers', () => {
+  function diceModule(pipSymbols = null) {
+    return { diceUsesPips: cssHelpers.diceUsesPips };
+  }
+  function diceWidget(pipSymbols = null) {
+    return { get: property => property == 'pipSymbols' ? pipSymbols : undefined };
+  }
+
+  test('diceFaces normalizes a pip-string face list and deep-clones array faces', () => {
+    const stringWidget = { get: () => 'HT' };
+    expect(cssHelpers.diceFaces.call(null, stringWidget)).toEqual([ 'H', 'T' ]);
+
+    const face = { pips: 3 };
+    const arrayWidget = { get: () => [ face ] };
+    const faces = cssHelpers.diceFaces.call(null, arrayWidget);
+    expect(faces).toEqual([ { pips: 3 } ]);
+    expect(faces[0]).not.toBe(face); // deep clone, editing it must not mutate widget state
+  });
+
+  test('diceFaceType infers the editor type from a face value', () => {
+    const module = diceModule();
+    const widget = diceWidget();
+    expect(cssHelpers.diceFaceType.call(module, widget, 3)).toBe('pips');
+    expect(cssHelpers.diceFaceType.call(module, widget, 'A')).toBe('text');
+    expect(cssHelpers.diceFaceType.call(module, widget, { icon: 'skull' })).toBe('icon');
+    expect(cssHelpers.diceFaceType.call(module, widget, { image: '/i/x.svg' })).toBe('image');
+    expect(cssHelpers.diceFaceType.call(module, widget, '/assets/x.svg')).toBe('image');
+    expect(cssHelpers.diceFaceType.call(module, widget, { text: 'Ace' })).toBe('text');
+  });
+
+  test('diceFaceType respects pipSymbols:false by treating numeric faces as text', () => {
+    const module = diceModule(false);
+    const widget = diceWidget(false);
+    expect(cssHelpers.diceFaceType.call(module, widget, 3)).toBe('text');
+  });
+
+  test('diceFaceValue reads the value matching the given type, falling back sensibly', () => {
+    expect(cssHelpers.diceFaceValue(null, 3, 'pips')).toBe(3);
+    expect(cssHelpers.diceFaceValue(null, 'A', 'text')).toBe('A');
+    expect(cssHelpers.diceFaceValue(null, { value: 5 }, 'pips')).toBe(5);
+    expect(cssHelpers.diceFaceValue(null, {}, 'pips')).toBe(1);
+  });
+
+  test('buildDiceFace replaces the exclusive content key and keeps other keys like color', () => {
+    expect(cssHelpers.buildDiceFace.call(null, 'text', 'Ace', { pips: 3, color: '#fff' })).toEqual({ color: '#fff', text: 'Ace' });
+    expect(cssHelpers.buildDiceFace.call(null, 'pips', '', null)).toEqual({ pips: 0 });
+    expect(cssHelpers.buildDiceFace.call(null, 'icon', '', { icon: 'skull' })).toEqual({ icon: null });
+  });
+
+  test('reorderFaces keeps activeFace pointing at the same face after a move', () => {
+    const widget = { get: () => 1 }; // activeFace = 1 (face "b")
+    let result = null;
+    const faces = [ 'a', 'b', 'c' ];
+    cssHelpers.reorderFaces.call(null, widget, faces, 0, 2, (newFaces, activeFace) => { result = { newFaces, activeFace }; });
+    expect(result.newFaces).toEqual([ 'b', 'c', 'a' ]);
+    expect(result.activeFace).toBe(0); // "b" moved from index 1 to index 0
+  });
+
+  test('reorderFaces ignores out-of-range or no-op moves', () => {
+    const widget = { get: () => 0 };
+    const faces = [ 'a', 'b' ];
+    let called = false;
+    const setFaces = () => { called = true; };
+    cssHelpers.reorderFaces.call(null, widget, faces, 0, 0, setFaces);
+    cssHelpers.reorderFaces.call(null, widget, faces, -1, 1, setFaces);
+    cssHelpers.reorderFaces.call(null, widget, faces, 0, 5, setFaces);
+    expect(called).toBe(false);
   });
 });
 
