@@ -31,6 +31,7 @@
     <button id="editButton" class="toolbarButton toolbarTab"><span class="tooltip">Edit Mode</span></button>
     <div class="spacer"></div>
     <div class="divider"></div>
+    <button id="feedbackButton" class="toolbarButton"><span class="tooltip">Feedback</span></button>
     <div id="optionsAnchor"><div id="options" class="hidden"><button id="muteButton" class="toolbarButton"></button><input id="volume" type="range" min="0" max="100" value="30"></div></div>
     <button id="optionsButton" class="toolbarButton"><span class="tooltip">Sound</span></button>
     <button id="lightsButton" class="toolbarButton"><span class="tooltip">Lights</span></button>
@@ -578,6 +579,27 @@
         <pre id="clientErrorStack"></pre>
       </details>
       <p><button>Submit and Reload</button></p>
+    </div>
+
+    <div id="feedbackOverlay" class="overlay">
+      <div class="titleWithCloseButton">
+        <h1>Feedback</h1>
+        <button icon="close"></button>
+      </div>
+      <div>
+        <div icon="feedback">
+          <p>Found a bug or have a suggestion? Let us know!</p>
+          <p><textarea style="height: 150px; width: 100%"></textarea></p>
+          <p class="feedbackError" style="display: none"></p>
+          <p class="feedbackThanks" style="display: none">Thank you! Your feedback has been sent.</p>
+          <p><input type="checkbox" id="feedbackIncludeState" checked> <label for="feedbackIncludeState">Include a snapshot of this room (URL, full page contents, game state, and player names)</label></p>
+          <p class="feedbackPrivacyNote">Your message and your browser info are always sent to help us fix things. Uncheck the box above if you'd rather not also share the room snapshot.</p>
+          <div class="buttons">
+            <button icon="close"></button>
+            <button icon="check"></button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="connectionLostOverlay" class="overlay" style="display:none;">

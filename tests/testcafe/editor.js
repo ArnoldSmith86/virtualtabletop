@@ -228,3 +228,22 @@ test('Create game using edit mode', async t => {
     .click('#w_bldn');
   await compareState(t, 'a8da89943cf6f6fbc9b77ddaab41dc06');
 });
+
+test('Send feedback', async t => {
+  await t.resizeWindow(1280, 800);
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await t
+    .click('#statesButton')
+    .click('#feedbackButton')
+    .expect(Selector('#feedbackOverlay').visible).ok()
+    .expect(Selector('#statesButton').hasClass('active')).notOk()
+    .typeText('#feedbackOverlay textarea', 'TestCafe feedback test', { replace: true })
+    .click('#feedbackOverlay button[icon=check]')
+    .expect(Selector('#feedbackOverlay .feedbackThanks').visible).ok()
+    // after the thanks message, the previously open overlay and its active tab come back
+    .expect(Selector('#statesOverlay').visible).ok({ timeout: 5000 })
+    .expect(Selector('#feedbackOverlay').visible).notOk()
+    .expect(Selector('#statesButton').hasClass('active')).ok();
+});
