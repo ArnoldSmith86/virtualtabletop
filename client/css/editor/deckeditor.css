@@ -1046,13 +1046,20 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 /* Property rows: a small red trash to delete the property. The glyph size lives on ::before (button[icon]
-   hardcodes 24px), so override it there or the icon stays large and rows crowd together. */
-.deckEditorDeleteProperty {
+   hardcodes 24px), so override it there or the icon stays large and rows crowd together. The #deckEditorSidebar
+   prefix is needed so the square 21px sizing wins over layout.css's `button[icon]:empty { padding: 5px }`
+   (otherwise the button is a couple pixels taller than the field it sits next to). 21px matches the field's
+   outer height so the trash and picker line up with the value field instead of sitting a little lower. */
+#deckEditorSidebar .deckEditorDeleteProperty {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  padding: 1px 2px;
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
   background: var(--VTTred, #c0392b);
   color: #fff;
 }
@@ -1077,13 +1084,18 @@ body.deckEditorPanning #deckEditorMain * {
 }
 
 /* The row's picker toggle: just a symbol, sized and positioned like the trash it sits next to (no chip
-   preview of the current image/icon, so a row never spans more than one line). */
-.deckEditorAssetPickerButton {
+   preview of the current image/icon, so a row never spans more than one line). Its 21px square (see the trash
+   note above) leaves ~3px between it and both the value field and the trash. */
+#deckEditorSidebar .deckEditorAssetPickerButton {
   position: absolute;
   right: 24px;
   top: 50%;
   transform: translateY(-50%);
-  padding: 1px 2px;
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
   background: var(--VTTblue);
   color: #fff;
 }

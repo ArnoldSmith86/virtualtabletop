@@ -2440,7 +2440,7 @@ class DeckEditor {
       picker.closePicker();
     };
     const button = document.createElement('button');
-    button.setAttribute('icon', 'category'); // same symbol as a basic widget's Appearance "Icon/Symbol" row
+    button.setAttribute('icon', kind == 'icon' ? 'add_reaction' : 'image'); // match the tree list's type symbol
     button.className = 'deckEditorAssetPickerButton';
     button.title = kind == 'icon' ? 'Choose icon' : 'Choose image';
     button.onclick = _=>picker.togglePicker();
