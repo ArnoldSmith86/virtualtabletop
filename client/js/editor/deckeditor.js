@@ -2422,31 +2422,34 @@ class DeckEditor {
     return null;
   }
 
-  // Adds a small preview/picker button to a property row (reusing the Edit Widgets tab's IconInput/ImageInput)
-  // and an expanding picker section directly below it, matching the basic-widget Content pickers. Unlike those,
-  // picking a value here immediately closes the picker (rows keep editing other fields right after). The
-  // picker's own CSS is scoped under ".editorModule" (the sidebar-module system this deck editor doesn't use),
-  // so both new elements carry that class plus an override rule making them visible here too.
+  // Adds a small icon-only picker button to a property row (reusing the Edit Widgets tab's IconInput/ImageInput
+  // picker content) and an expanding picker section directly below it, matching the basic-widget Content
+  // pickers. Unlike those, the button is just a symbol - no chip preview of the current image/icon, kept the
+  // same size as the row's trash button so the row stays on one line - and picking a value here immediately
+  // closes the picker (rows keep editing other fields right after). The picker's own CSS is scoped under
+  // ".editorModule" (the sidebar-module system this deck editor doesn't use), so the picker section carries
+  // that class plus an override rule making it visible here too.
   addAssetPickerToRow(row, target, kind, getValue, setValue) {
-    const wrap = div(row.dom, 'deckEditorAssetPickerWrap editorModule');
     const pickerHost = div(target, 'deckEditorPickerRow editorModule');
     row.dom.classList.add('hasAssetPicker');
     const inputClass = kind == 'icon' ? IconInput : ImageInput;
-    const picker = new inputClass({ addPropertyListener: (w, p, cb)=>cb(w) }, {}, null, {
-      getValue,
-      listenTo: [],
-      clearable: false,
-      pickerTarget: pickerHost
-    });
+    const picker = new inputClass({}, {}, null, { getValue, listenTo: [], clearable: false });
     picker.setValue = value=>{
       setValue(value);
       const field = row.dom.querySelector('input, textarea');
       if(field)
         field.value = value === null || value === undefined ? '' : value;
       picker.closePicker();
-      picker.updatePreview();
     };
-    picker.render(wrap);
+    const button = document.createElement('button');
+    button.setAttribute('icon', 'category'); // same symbol as a basic widget's Appearance "Icon/Symbol" row
+    button.className = 'deckEditorAssetPickerButton';
+    button.title = kind == 'icon' ? 'Choose icon' : 'Choose image';
+    button.onclick = _=>picker.togglePicker();
+    row.dom.append(button);
+    picker.previewButton = button; // openPicker/closePicker toggle .open on this
+    picker.pickerDOM = div(pickerHost, 'propertyPicker');
+    picker.pickerDOM.style.display = 'none';
     return picker;
   }
 
