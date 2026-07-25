@@ -1034,6 +1034,24 @@ body.deckEditorPanning #deckEditorMain * {
 #deckEditorSidebar .deckEditorProperties .genericInput {
   position: relative;
   padding-right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* sidebarModules.css gives every genericInput field a fixed/minimum 200px width, which no longer fits next
+   to a 100px label plus the picker/trash buttons' reserved padding - the field wrapped to its own line
+   (see the reported layout bug). Let it flex to fill the row instead, one line, like the number rows. */
+#deckEditorSidebar .deckEditorProperties .genericInput input:not([type=checkbox]),
+#deckEditorSidebar .deckEditorProperties .genericInput textarea,
+#deckEditorSidebar .deckEditorProperties .genericInput select {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+}
+
+#deckEditorSidebar .deckEditorProperties .genericInput label {
+  flex-shrink: 0;
 }
 
 /* Property rows: a small red trash to delete the property. The glyph size lives on ::before (button[icon]
