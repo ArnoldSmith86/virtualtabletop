@@ -62,6 +62,14 @@ async function inputHandler(name, e) {
 
   if(target && target.id) {
     let widget = widgets.get(unescapeID(target.id.slice(2)));
+    // A widget can be replaced while an input event is still in flight (for
+    // example, immediately after its ID is renamed in the properties editor).
+    // The saved mouse target then refers to a removed DOM node, not a widget.
+    if(!widget) {
+      if(name == 'mouseup')
+        mouseTarget = null;
+      return;
+    }
     batchStart();
     if(!edit && (!jeEnabled || !e.ctrlKey) && widget.passthroughMouse) {
       if(name == 'mousedown' || name == 'touchstart') {
