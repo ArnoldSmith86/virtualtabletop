@@ -313,6 +313,15 @@ describe('property input helpers', () => {
     expect(inputHelpers.searchIconIndex('icon')).toHaveLength(100);
     expect(inputHelpers.searchImageIndex('icon')).toHaveLength(100);
   });
+
+  test('icon basic-options scale field clamps to its advertised 0.1-5 range', () => {
+    expect(inputHelpers.numericInputValue('100', 0.1, 5)).toBe(5);
+    expect(inputHelpers.numericInputValue('-1', 0.1, 5)).toBe(0.1);
+    expect(inputHelpers.numericInputValue('0', 0.1, 5)).toBe(0.1);
+    expect(inputHelpers.numericInputValue('2.5', 0.1, 5)).toBe(2.5);
+    expect(inputHelpers.numericInputValue('', 0.1, 5)).toBe(null);
+    expect(inputHelpers.numericInputValue('abc', 0.1, 5)).toBe(null);
+  });
 });
 
 describe('icon value helpers', () => {

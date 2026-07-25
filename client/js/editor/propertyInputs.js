@@ -1053,8 +1053,11 @@ class IconInput extends PickerInput {
     scaleInput.placeholder = '1';
     scaleInput.value = scaleValue !== undefined && scaleValue !== null ? scaleValue : '';
     scaleInput.oninput = _=>{
-      const parsed = scaleInput.value === '' ? null : Number.parseFloat(scaleInput.value);
-      this.setValue(iconWithOption(this.getValue(), 'scale', Number.isFinite(parsed) ? parsed : null));
+      this.setValue(iconWithOption(this.getValue(), 'scale', numericInputValue(scaleInput.value, 0.1, 5)));
+    };
+    scaleInput.onchange = _=>{
+      const clamped = numericInputValue(scaleInput.value, 0.1, 5);
+      scaleInput.value = clamped === null ? '' : clamped;
     };
     scaleWrap.appendChild(scaleInput);
     const clearScale = document.createElement('button');

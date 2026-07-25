@@ -4118,8 +4118,14 @@ class PropertiesModule extends SidebarModule {
               rawProperty.split(',').map(part => part.trim()).filter(part => part) : rawProperty;
             const current = widget.get('svgReplaces');
             const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
-            if(newSelector != selector)
+            if(newSelector != selector) {
+              if(Object.prototype.hasOwnProperty.call(newMap, newSelector)) {
+                // renaming onto an existing token would silently overwrite it - refuse and revert
+                rebuild();
+                return;
+              }
               delete newMap[selector];
+            }
             newMap[newSelector] = newProperty;
             this.inputValueUpdated(widget, 'svgReplaces', newMap);
             if(widget.applyDeltaToDOM)
@@ -4192,6 +4198,15 @@ class PropertiesModule extends SidebarModule {
         })), colorsHost);
       };
       refreshColors();
+
+      // resync on undo / remote updates - without this the rows can go stale
+      // while the panel is open and re-editing a stale row against a newer map
+      this.addPropertyListener(widget, 'svgReplaces', () => {
+        if(!body.contains(document.activeElement)) {
+          rebuild();
+          refreshColors();
+        }
+      });
     }, null, `${widget.id}:svgReplacesEditor`);
     propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.svgReplaces));
   }
