@@ -1108,6 +1108,39 @@ body.deckEditorPanning #deckEditorMain * {
   background: var(--VTTblueDark);
 }
 
+/* Room for both the color-swatch button and the trash on the far right of a row (same slot as the asset
+   picker's - a row never has both a color and an asset picker). */
+#deckEditorSidebar .deckEditorProperties .genericInput.hasColorPicker {
+  padding-right: 48px;
+}
+
+/* The color-swatch button: sized and positioned like the trash it sits next to (21px square, see the trash
+   note above), filled with the property's current color via --swatchColor. A color-named property with no
+   color yet shows a neutral checkerboard so the picker is still reachable. */
+#deckEditorSidebar .deckEditorColorPickerButton {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  background: var(--swatchColor, transparent);
+  border: 1px solid var(--backgroundHighlightColor2, #888);
+}
+/* checkerboard behind/for a transparent or not-yet-a-color swatch */
+#deckEditorSidebar .deckEditorColorPickerButton.emptyColor {
+  background-image: linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%),
+                    linear-gradient(45deg, #999 25%, #ccc 25%, #ccc 75%, #999 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+}
+#deckEditorSidebar .deckEditorColorPickerButton.open {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+}
+
 #deckEditorShowAll.active {
   background: var(--VTTblueDark);
   color: #fff;
