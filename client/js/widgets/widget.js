@@ -2032,7 +2032,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SWAPHANDS') {
-        setDefaults(a, { interval: 1, direction: 'forward', source: 'all' });
+        setDefaults(a, { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
         if(['forward', 'backward', 'random'].indexOf(a.direction) == -1) {
           problems.push(`Warning: direction ${a.direction} interpreted as forward.`);
           a.direction = 'forward'
@@ -2066,11 +2066,22 @@ export class Widget extends StateManaged {
                 },
                 []
               );
-              moves.push({
-                func: "MOVE",
-                collection: contents,
-                to: target.get('id'),
-              });
+              if(a.keepOrder) {
+                // a MOVE collection is processed in widget creation order, so move
+                // the cards one by one to have them arrive in the order of the hand
+                for(const id of contents)
+                  moves.push({
+                    func: "MOVE",
+                    collection: [ id ],
+                    to: target.get('id'),
+                  });
+              } else {
+                moves.push({
+                  func: "MOVE",
+                  collection: contents,
+                  to: target.get('id'),
+                });
+              }
             }
           }
           if(jeRoutineLogging) {
