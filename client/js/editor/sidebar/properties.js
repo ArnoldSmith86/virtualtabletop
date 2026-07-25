@@ -4074,7 +4074,12 @@ class PropertiesModule extends SidebarModule {
 
     let refreshColors = () => {};
 
-    const section = this.renderCollapsibleSection('SVG replacements', false, body => {
+    // collapsed by default for widgets that don't use it yet, so first-time
+    // users editing a plain widget aren't confronted with advanced SVG jargon
+    const existingMap = widget.get('svgReplaces');
+    const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
+    const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
+      div(body, 'svgReplacesHelp', 'Map a token in your SVG file (like #000) to a widget property that supplies its value.');
       const list = div(body, 'svgReplacesList');
 
       const rebuild = () => {

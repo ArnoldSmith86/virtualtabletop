@@ -1022,14 +1022,16 @@ class IconInput extends PickerInput {
     colorWrap.appendChild(colorLabel);
     const defaultColor = typeof this.widget.getDefaultIconColor == 'function' ? this.widget.getDefaultIconColor() : null;
     const colorValue = iconOption(value, 'color');
+    const colorIsSet = propertyInputValueSet(colorValue);
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
-    colorPicker.title = 'Icon color';
-    colorPicker.value = toHex(propertyInputValueSet(colorValue) ? colorValue : (defaultColor || '#000000'));
+    colorPicker.title = colorIsSet ? 'Icon color' : 'Icon color (using widget default)';
+    colorPicker.value = toHex(colorIsSet ? colorValue : (defaultColor || '#000000'));
     colorPicker.onchange = colorPicker.oninput = _=>this.setValue(iconWithOption(this.getValue(), 'color', colorPicker.value));
+    colorWrap.classList.toggle('usingDefault', !colorIsSet);
     colorWrap.appendChild(colorPicker);
     const clearColor = document.createElement('button');
-    clearColor.setAttribute('icon', 'delete');
+    clearColor.setAttribute('icon', 'undo');
     clearColor.title = 'Use the widget\'s default color';
     clearColor.onclick = _=>this.setValue(iconWithOption(this.getValue(), 'color', null));
     colorWrap.appendChild(clearColor);
@@ -1056,7 +1058,7 @@ class IconInput extends PickerInput {
     };
     scaleWrap.appendChild(scaleInput);
     const clearScale = document.createElement('button');
-    clearScale.setAttribute('icon', 'delete');
+    clearScale.setAttribute('icon', 'undo');
     clearScale.title = 'Reset to scale 1';
     clearScale.onclick = _=>{
       scaleInput.value = '';

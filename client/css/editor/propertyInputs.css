@@ -59,6 +59,12 @@
   min-height: 4em;
 }
 
+/* a tall multiline field dwarfs its label - top-align instead of centering
+   the label in the middle of a lot of empty vertical space */
+.editorModule .propertyInput.textInput.multiline {
+  align-items: flex-start;
+}
+
 .editorModule .numberInput input[type=number] {
   width: 70px;
 }
@@ -451,6 +457,18 @@
   height: 24px;
   padding: 0;
   margin: 0;
+}
+
+/* dim the swatch while it's showing the inherited default rather than an
+   explicitly set color, so the two states aren't visually identical */
+.editorModule .iconBasicOption.usingDefault input[type=color] {
+  opacity: 0.5;
+}
+
+.editorModule .svgReplacesHelp {
+  color: var(--textDimColor1, #777);
+  font-size: 12px;
+  margin-bottom: 6px;
 }
 
 .editorModule .svgReplacesList {
