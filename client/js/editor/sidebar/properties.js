@@ -116,9 +116,9 @@ function inheritModeFromSelection(mode, properties = []) {
   return selected;
 }
 
-// SVG replacements map an SVG token to a widget property. Expose only the
-// conventional color properties, so arbitrary replacement properties remain
-// in the generic editor.
+// SVG replacements map a color found in an SVG to a widget property. Expose
+// only the conventional color properties, so arbitrary replacement
+// properties remain in the generic editor.
 function svgReplaceColorProperties(svgReplaces) {
   if(!isObjectLike(svgReplaces))
     return [];
@@ -130,6 +130,30 @@ function svgReplaceColorLabel(property) {
   if(property == 'color')
     return 'Color';
   return property.replace(/([a-z])([A-Z0-9])/g, '$1 $2').replace(/^./, char => char.toUpperCase());
+}
+
+// Colors actually present in an uploaded SVG (same extraction the JSON
+// editor's "Show colors in SVG image" button uses), so the svgReplaces
+// editor can suggest real colors instead of a made-up default.
+const svgImageColorsCache = {};
+async function fetchSvgColors(image) {
+  if(typeof image != 'string' || !image)
+    return [];
+  if(svgImageColorsCache[image])
+    return svgImageColorsCache[image];
+  try {
+    const response = await fetch(mapAssetURLs(image));
+    if(!response.ok)
+      return [];
+    const text = await response.text();
+    if(!/<svg/i.test(text))
+      return [];
+    const colors = [...new Set(Array.from(text.matchAll(/#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b|currentColor/g), match => match[0]))];
+    svgImageColorsCache[image] = colors;
+    return colors;
+  } catch(e) {
+    return [];
+  }
 }
 
 function dicePreviewRotation(faceCount) {
@@ -365,7 +389,7 @@ const editorPropertyHints = {
   image: 'An image shown on the widget, filling its area. Uploaded images become game assets.',
   text: 'Text shown on the widget.',
   html: 'HTML content shown instead of the widget text, icon and image.',
-  svgReplaces: 'Maps a token found inside an uploaded SVG image (like #000 or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be recolored per widget.',
+  svgReplaces: 'Maps a color found inside an uploaded SVG image (like #000 or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be recolored per widget.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
@@ -4213,7 +4237,7 @@ class PropertiesModule extends SidebarModule {
 
   // Curated editor for the raw svgReplaces map (only widget types built on
   // ImageWidget/Dice/Timer support it - see their addDefaults). Each entry
-  // maps a token found in an uploaded SVG (e.g. "#000" or "#borderColor") to
+  // maps a color found in an uploaded SVG (e.g. "#000" or "#borderColor") to
   // the widget property whose value replaces it - see getSvgReplaces()/getImage()
   // in imagewidget.js and the equivalent logic in dice.js/timer.js. Entries
   // that point at a *Color-style property also get an actual color picker
@@ -4223,13 +4247,14 @@ class PropertiesModule extends SidebarModule {
       return;
 
     let refreshColors = () => {};
+    let renderSwatches = () => {};
 
     // collapsed by default for widgets that don't use it yet, so first-time
     // users editing a plain widget aren't confronted with advanced SVG jargon
     const existingMap = widget.get('svgReplaces');
     const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
     const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
-      div(body, 'svgReplacesHelp', 'Map a token in your SVG file (like #000) to a widget property that supplies its value.');
+      div(body, 'svgReplacesHelp', 'Map a color in your SVG file (like #000) to a widget property that supplies its value.');
 
       // widget types with an image property (ImageWidget-based) can point at
       // any file, not just an SVG - close the loop for a newcomer who lands
@@ -4253,15 +4278,15 @@ class PropertiesModule extends SidebarModule {
         const map = widget.get('svgReplaces');
         const rows = isObjectLike(map) ? Object.entries(map) : [];
         if(!rows.length)
-          div(list, 'propertyPickerEmpty', 'No SVG token replacements yet.');
+          div(list, 'propertyPickerEmpty', 'No SVG color replacements yet.');
         for(const [ selector, property ] of rows) {
           const row = div(list, 'svgReplaceRow');
 
           const selectorInput = document.createElement('input');
           selectorInput.type = 'text';
           selectorInput.value = selector;
-          selectorInput.placeholder = '#token or #color in the SVG';
-          selectorInput.title = 'The token inside the SVG file that gets replaced, e.g. #000 or a custom token like #borderColor.';
+          selectorInput.placeholder = '#color in the SVG';
+          selectorInput.title = 'The color inside the SVG file that gets replaced, e.g. #000 or a custom name like #borderColor.';
 
           const arrow = document.createElement('span');
           arrow.className = 'svgReplaceArrow';
@@ -4271,7 +4296,7 @@ class PropertiesModule extends SidebarModule {
           propertyInput.type = 'text';
           propertyInput.value = Array.isArray(property) ? property.join(', ') : (property || '');
           propertyInput.placeholder = 'widget property, e.g. color';
-          propertyInput.title = 'The widget property whose value is substituted for the token. A comma separated list applies a gradient (see the wiki).';
+          propertyInput.title = 'The widget property whose value is substituted for the color. A comma separated list applies a gradient (see the wiki).';
 
           const commit = () => {
             const newSelector = selectorInput.value.trim();
@@ -4286,7 +4311,7 @@ class PropertiesModule extends SidebarModule {
             const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
             if(newSelector != selector) {
               if(Object.prototype.hasOwnProperty.call(newMap, newSelector)) {
-                // renaming onto an existing token would silently overwrite it - refuse and revert
+                // renaming onto an existing color would silently overwrite it - refuse and revert
                 rebuild();
                 return;
               }
@@ -4298,6 +4323,7 @@ class PropertiesModule extends SidebarModule {
               widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
             rebuild();
             refreshColors();
+            renderSwatches();
           };
           selectorInput.onchange = commit;
           propertyInput.onchange = commit;
@@ -4314,6 +4340,7 @@ class PropertiesModule extends SidebarModule {
               widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
             rebuild();
             refreshColors();
+            renderSwatches();
           };
 
           row.appendChild(selectorInput);
@@ -4324,30 +4351,76 @@ class PropertiesModule extends SidebarModule {
       };
       rebuild();
 
+      // suggests the colors actually found in the uploaded SVG (same
+      // extraction as the JSON editor's "Show colors in SVG image" button),
+      // so adding a replacement doesn't start from a guessed #000 - clicking
+      // a swatch adds a replacement keyed by that real color
+      const addReplacementFor = selector => {
+        const current = widget.get('svgReplaces');
+        const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
+        const existingProperties = new Set(Object.values(newMap).flat());
+        let property = 'newColor';
+        let j = 1;
+        while(existingProperties.has(property))
+          property = `newColor${++j}`;
+        newMap[selector] = property;
+        this.inputValueUpdated(widget, 'svgReplaces', newMap);
+        if(widget.applyDeltaToDOM)
+          widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
+        rebuild();
+        refreshColors();
+        renderSwatches();
+      };
+
+      let svgColors = [];
+      const svgColorsHost = div(body, 'svgColorsList');
+      renderSwatches = () => {
+        svgColorsHost.innerHTML = '';
+        const map = widget.get('svgReplaces');
+        const usedColors = new Set(isObjectLike(map) ? Object.keys(map) : []);
+        const suggestions = svgColors.filter(color => !usedColors.has(color));
+        if(!suggestions.length)
+          return;
+        div(svgColorsHost, 'svgColorsLabel', 'Colors found in the SVG - click to add a replacement:');
+        for(const color of suggestions) {
+          const swatch = document.createElement('button');
+          swatch.className = 'svgColorSwatch';
+          swatch.type = 'button';
+          swatch.textContent = color;
+          swatch.style.backgroundColor = color == 'currentColor' ? 'black' : color;
+          swatch.style.color = color == 'currentColor' ? 'white' : contrastAnyColor(color, 1);
+          swatch.onclick = () => addReplacementFor(color);
+          svgColorsHost.appendChild(swatch);
+        }
+      };
+      const loadSvgColors = () => {
+        fetchSvgColors(widget.get('image')).then(colors => {
+          if(!svgColorsHost.isConnected)
+            return;
+          svgColors = colors;
+          renderSwatches();
+        });
+      };
+      loadSvgColors();
+      if(widget.defaults.image !== undefined)
+        this.addPropertyListener(widget, 'image', loadSvgColors);
+
       const addButton = document.createElement('button');
       addButton.setAttribute('icon', 'add');
       addButton.textContent = 'Add replacement';
       addButton.onclick = () => {
         const current = widget.get('svgReplaces');
         const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
-        let token = '#000';
-        // fallback tokens use a non-color-looking name (#token2, ...) rather
-        // than #0002, which reads as a 4-digit hex color and muddies the
-        // "token" concept for a newcomer
-        let i = 1;
-        while(newMap[token] !== undefined)
-          token = `#token${++i}`;
-        const existingProperties = new Set(Object.values(newMap).flat());
-        let property = 'newColor';
-        let j = 1;
-        while(existingProperties.has(property))
-          property = `newColor${++j}`;
-        newMap[token] = property;
-        this.inputValueUpdated(widget, 'svgReplaces', newMap);
-        if(widget.applyDeltaToDOM)
-          widget.applyDeltaToDOM({ svgReplaces: widget.get('svgReplaces') });
-        rebuild();
-        refreshColors();
+        const unused = svgColors.find(color => newMap[color] === undefined);
+        let selector = unused || '#000';
+        if(!unused) {
+          // fallback colors use a non-color-looking name (#color2, ...) rather
+          // than #0002, which reads as a 4-digit hex color that isn't really there
+          let i = 1;
+          while(newMap[selector] !== undefined)
+            selector = `#color${++i}`;
+        }
+        addReplacementFor(selector);
       };
       body.appendChild(addButton);
 
@@ -4374,6 +4447,7 @@ class PropertiesModule extends SidebarModule {
         if(!body.contains(document.activeElement)) {
           rebuild();
           refreshColors();
+          renderSwatches();
         }
       });
     }, null, `${widget.id}:svgReplacesEditor`);

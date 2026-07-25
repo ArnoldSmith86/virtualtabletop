@@ -519,6 +519,29 @@
   min-width: 0;
 }
 
+.editorModule .svgColorsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.editorModule .svgColorsLabel {
+  color: var(--textDimColor1, #777);
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.editorModule .svgColorSwatch {
+  width: 100%;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+}
+
 /* a picker showing the applying default (no explicit value) is dimmed */
 .editorModule .propertyPreviewButton.usingDefault .propertyValueChip,
 .editorModule .propertyPickerValueText.usingDefault {
