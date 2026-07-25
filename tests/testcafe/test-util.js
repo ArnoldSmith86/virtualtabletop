@@ -9,7 +9,7 @@ fs.mkdirSync(referenceDir, { recursive: true });
 let server = null;
 
 export function setupTestEnvironment() {
-  server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : 'http://localhost:8272';
+  server = process.env.REFERENCE ? `https://test.virtualtabletop.io/PR-${process.env.REFERENCE}` : (process.env.VTT_TEST_SERVER || 'http://localhost:8272');
   fixture('virtualtabletop.io').page(`${server}/testcafe-testing`).beforeEach(_=>setRoomState()).after(_=>setRoomState());
 }
 
@@ -49,6 +49,25 @@ export async function setLegacyMode(name, value) {
 export async function getState() {
   const response = await fetch(`${server}/state/testcafe-testing/false`);
   return await response.text();
+}
+
+export async function getWidgets() {
+  return JSON.parse(await getState());
+}
+
+// polls getWidgets() with backoff until predicate(widgets) returns a truthy value (returned as-is),
+// for asserting on routine edits that reach the server asynchronously
+export async function waitForWidgets(predicate) {
+  let widgets = null;
+  let found = null;
+  for(let wait=50; wait<1000; wait*=2) {
+    widgets = await getWidgets();
+    found = predicate(widgets);
+    if(found)
+      return found;
+    await new Promise(resolve => setTimeout(resolve, wait));
+  }
+  return predicate(widgets);
 }
 
 export async function compareState(t, md5) {
