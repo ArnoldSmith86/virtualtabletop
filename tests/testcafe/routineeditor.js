@@ -101,6 +101,7 @@ async function setFullOperationJSON(t, opSelector, jsonText) {
 async function readJsonEditorWidget(t) {
   await t.click('#editorSidebar [icon=data_object]');
   const raw = await Selector('#jeText').textContent;
+  // the JSON editor renders indentation with U+00A0 (non-breaking space); swap to ASCII before parsing
   return JSON.parse(raw.replace(/ /g, ' '));
 }
 

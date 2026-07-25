@@ -56,18 +56,20 @@ export async function getWidgets() {
 }
 
 // polls getWidgets() with backoff until predicate(widgets) returns a truthy value (returned as-is),
-// for asserting on routine edits that reach the server asynchronously
+// for asserting on routine edits that reach the server asynchronously. Re-fetches once more after
+// the final sleep and throws on timeout so a stuck test fails legibly instead of dereferencing null.
 export async function waitForWidgets(predicate) {
-  let widgets = null;
   let found = null;
   for(let wait=50; wait<1000; wait*=2) {
-    widgets = await getWidgets();
-    found = predicate(widgets);
+    found = predicate(await getWidgets());
     if(found)
       return found;
     await new Promise(resolve => setTimeout(resolve, wait));
   }
-  return predicate(widgets);
+  found = predicate(await getWidgets());
+  if(!found)
+    throw new Error('waitForWidgets: predicate never became truthy within the timeout');
+  return found;
 }
 
 export async function compareState(t, md5) {
