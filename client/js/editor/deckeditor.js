@@ -827,6 +827,7 @@ class DeckEditor {
     this.resetHistory();
 
     $('body').classList.add('deckEditorActive');
+    $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
     // If a sidebar module (e.g. the deck's text Properties panel this editor is opened from) is open, close it
     // so the visual editor owns the full width instead of sharing the screen with the panel it replaces.
     const activeModuleButton = $('#editorSidebar button.active');
@@ -886,6 +887,7 @@ class DeckEditor {
     this.panY = 0;
     this.resetHistory();
     $('body').classList.add('deckEditorActive');
+    $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
     const activeModuleButton = $('#editorSidebar button.active');
     if(activeModuleButton)
       activeModuleButton.click();
@@ -938,6 +940,7 @@ class DeckEditor {
     await this.flushPendingCommits();
     this.selectedObject = null;
     $('body').classList.remove('deckEditorActive');
+    $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
     $('#deckEditorDragToolbar').classList.remove('active');
     this.syncToolbarButton();
   }
@@ -969,6 +972,7 @@ class DeckEditor {
     this.history = [];
     this.historyIndex = -1;
     $('body').classList.remove('deckEditorActive');
+    $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
     $('#deckEditorDragToolbar').classList.remove('active');
     this.syncToolbarButton();
   }
@@ -2111,6 +2115,33 @@ class DeckEditor {
     return this.deleteFace();
   }
 
+  // Writes a new "value" for an image/icon face object: into the bound card type's property when the object's
+  // value is dynamic, otherwise into the shared template. Shared by the sidebar's upload button and the left
+  // tree's thumbnail-click picker.
+  async applyObjectValue(object, value, actionLabel) {
+    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
+    const boundTo = object.dynamicProperties && object.dynamicProperties.value;
+    if(boundTo && this.cardType !== null) {
+      this.cardTypes[this.cardType][boundTo] = value;
+      this.refreshMainCardFaces();
+      await this.commit('cardTypes', `${getPlayerDetails().playerName} ${actionLabel} for card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
+    } else {
+      object.value = value;
+      this.refreshMainCardFaces();
+      await this.commit('faceTemplates', `${getPlayerDetails().playerName} ${actionLabel} for a face object of deck ${this.deckID} in deck editor`);
+    }
+    this.renderSidebar();
+  }
+
+  // Opens the full-screen symbol picker overlay (the same one the top bar's Add-image/Add-icon buttons and
+  // the JSON Editor use) for an existing image/icon face object, e.g. from clicking its tree thumbnail.
+  async openObjectPicker(object, type) {
+    const symbol = await pickSymbol(type == 'icon' ? 'all' : 'images');
+    if(!symbol || (type == 'image' && !symbol.url))
+      return;
+    await this.applyObjectValue(object, type == 'icon' ? symbol.symbol : symbol.url, type == 'icon' ? 'picked an icon' : 'picked an image');
+  }
+
   // Renders a small live preview of a face object by cloning its rendered node from the main card (so text,
   // icons, images and color boxes all look right); falls back to a swatch/label when the card can't render.
   // Upload button for image objects. When the value is bound per card type it uploads into that card type's
@@ -2120,21 +2151,10 @@ class DeckEditor {
     const upload = document.createElement('button');
     upload.setAttribute('icon', 'upload');
     upload.innerText = 'Upload image';
-    upload.onclick = _=>uploadAsset().then(async asset=>{
+    upload.onclick = _=>uploadAsset().then(asset=>{
       if(!asset)
         return;
-      await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-      const boundTo = object.dynamicProperties && object.dynamicProperties.value;
-      if(boundTo && this.cardType !== null) {
-        this.cardTypes[this.cardType][boundTo] = asset;
-        this.refreshMainCardFaces();
-        await this.commit('cardTypes', `${getPlayerDetails().playerName} uploaded an image for card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
-      } else {
-        object.value = asset;
-        this.refreshMainCardFaces();
-        await this.commit('faceTemplates', `${getPlayerDetails().playerName} uploaded an image for a face object of deck ${this.deckID} in deck editor`);
-      }
-      this.renderSidebar();
+      return this.applyObjectValue(object, asset, 'uploaded an image');
     });
     bar.append(upload);
   }
@@ -2151,6 +2171,18 @@ class DeckEditor {
     if(type == 'text') {
       this.renderPreviewTextField(box, object, index, faceIndex);
       return;
+    }
+
+    // Clicking an image/icon thumbnail opens the full symbol picker directly (selecting the object too), so
+    // a new value can be chosen without first opening the sidebar's own picker.
+    if(type == 'image' || type == 'icon') {
+      box.classList.add('deckEditorObjectPreviewPickable');
+      box.title = `Click to pick a new ${type}`;
+      box.onclick = e=>{
+        e.stopPropagation();
+        this.selectObject(index, faceIndex);
+        this.openObjectPicker(object, type);
+      };
     }
 
     const bw = 44, bh = 60;

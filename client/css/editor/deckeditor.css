@@ -408,14 +408,13 @@ body.deckEditorActive #enlarged {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* The shared symbol picker normally lives in the room overlays. Host it above the fullscreen deck editor
-   while adding an image or icon, so it remains visible instead of opening behind the editor. */
-body.deckEditorActive #symbolPickerOverlay {
-  position: fixed;
-  top: var(--editToolbarHeight);
-  right: var(--editSidebarWidth);
-  bottom: 0;
-  left: 0;
+/* The shared symbol picker normally lives in the room overlays. While the deck editor is open it's reparented
+   into #deckEditorMainCol (see open()/close()) so it stays constrained to the main card view instead of
+   covering the top bar, left tree, bottom strip or right sidebar. #deckEditorMainCol is already
+   position: relative, so this positions it to fill exactly that column. */
+#deckEditorMainCol #symbolPickerOverlay {
+  position: absolute;
+  inset: 0;
   width: auto;
   height: auto;
   z-index: 20;
@@ -762,6 +761,15 @@ body.deckEditorActive #symbolPickerOverlay {
 .deckEditorObjectPreviewInner {
   position: relative;
   pointer-events: none;
+}
+
+/* Image/icon thumbnails open the full symbol picker directly on click. */
+.deckEditorObjectPreviewPickable {
+  cursor: pointer;
+}
+.deckEditorObjectPreviewPickable:hover {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
 }
 
 .deckEditorObjectPreviewInner .cardFaceObject {
