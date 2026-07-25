@@ -4386,10 +4386,13 @@ class PropertiesModule extends SidebarModule {
       propertyInfoButton(toggleRow, html(editorPropertyHints.html));
 
       if(widget.get('html') !== null) {
+        // no nullIfEmpty here: the toggle above, not an emptied field, decides
+        // between HTML mode and text/icon/image - otherwise clearing the
+        // textarea would set html to null and kick the user out of HTML mode
+        // mid-edit
         const htmlInput = new TextInput(this, widget, 'HTML', {
           property: 'html',
           multiline: true,
-          nullIfEmpty: true,
           hint: editorPropertyHints.html
         });
         htmlInput.render(container);

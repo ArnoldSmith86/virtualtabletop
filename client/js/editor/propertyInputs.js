@@ -1022,13 +1022,25 @@ class IconInput extends PickerInput {
     colorPicker.type = 'color';
     colorPicker.title = colorIsSet ? 'Icon color' : 'Icon color (using widget default)';
     colorPicker.value = toHex(colorIsSet ? colorValue : (defaultColor || '#000000'));
-    colorPicker.onchange = colorPicker.oninput = _=>this.setValue(iconWithOption(this.getValue(), 'color', colorPicker.value));
+    colorPicker.onchange = colorPicker.oninput = _=>{
+      // the focus guard in the properties module skips the re-render while
+      // focus stays in this block (e.g. right after clicking the clear
+      // button below), so keep the default-indicator in sync here too
+      colorWrap.classList.remove('usingDefault');
+      colorPicker.title = 'Icon color';
+      this.setValue(iconWithOption(this.getValue(), 'color', colorPicker.value));
+    };
     colorWrap.classList.toggle('usingDefault', !colorIsSet);
     colorWrap.appendChild(colorPicker);
     const clearColor = document.createElement('button');
     clearColor.setAttribute('icon', 'undo');
     clearColor.title = 'Use the widget\'s default color';
-    clearColor.onclick = _=>this.setValue(iconWithOption(this.getValue(), 'color', null));
+    clearColor.onclick = _=>{
+      colorPicker.value = toHex(defaultColor || '#000000');
+      colorWrap.classList.add('usingDefault');
+      colorPicker.title = 'Icon color (using widget default)';
+      this.setValue(iconWithOption(this.getValue(), 'color', null));
+    };
     colorWrap.appendChild(clearColor);
 
     const scaleWrap = div(row, 'iconBasicOption');
