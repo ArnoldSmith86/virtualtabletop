@@ -153,6 +153,12 @@ function dicePreviewActiveFace(faces) {
 
 const textSymbolClasses = [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ];
 
+// session-only memory of the last typed HTML per widget, so toggling "Use
+// custom HTML" off and back on restores it instead of always starting blank
+// (the underlying html property is still set to null on toggle-off, so a
+// first-time user exploring the checkbox doesn't lose their typing)
+const lastHtmlByWidgetId = new Map();
+
 function textSymbolClass(symbol) {
   return symbol && textSymbolClasses.includes(symbol.type) ? symbol.type : 'symbols';
 }
@@ -902,6 +908,11 @@ class PropertiesModule extends SidebarModule {
 
     const header = div(this.moduleDOM, 'widgetHeader');
     div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
+    // say which widgets, so a stray rubber-band/shift-click pickup is easy to
+    // spot before editing - only the type header said "how many" before
+    const ids = selection.map(w=>w.id);
+    const shownIds = ids.slice(0, 8);
+    div(header, 'widgetHeaderMultiIds', html(shownIds.join(', ') + (ids.length > shownIds.length ? ` +${ids.length - shownIds.length} more` : '')));
 
     if(types.includes('pile')) {
       div(this.moduleDOM, '', `
@@ -973,8 +984,11 @@ class PropertiesModule extends SidebarModule {
         continue;
       const button = document.createElement('button');
       button.setAttribute('icon', icon);
-      button.title = toolbarButton.tooltip || '';
       button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+      // explain a disabled distribute button (needs 3+ widgets) rather than
+      // just leaving it gray with no hint why
+      button.title = (toolbarButton.tooltip || '') + (button.disabled && toolbarButton.minimumSelection > 1 ?
+        ` (needs ${toolbarButton.minimumSelection}+ widgets)` : '');
       button.onclick = _=>toolbarButton.onClick();
       bar.appendChild(button);
     }
@@ -4216,6 +4230,22 @@ class PropertiesModule extends SidebarModule {
     const hasReplaces = isObjectLike(existingMap) && Object.keys(existingMap).length > 0;
     const section = this.renderCollapsibleSection('SVG replacements', !hasReplaces, body => {
       div(body, 'svgReplacesHelp', 'Map a token in your SVG file (like #000) to a widget property that supplies its value.');
+
+      // widget types with an image property (ImageWidget-based) can point at
+      // any file, not just an SVG - close the loop for a newcomer who lands
+      // here without one selected, so the section connects to something
+      // visible on the widget instead of reading as unexplained jargon
+      if(widget.defaults.image !== undefined) {
+        const noSvgHint = div(body, 'svgReplacesHelp', 'This only affects an uploaded SVG image - choose one under Content → Image first.');
+        const updateHint = () => {
+          const image = widget.get('image');
+          const isSvg = typeof image == 'string' && /\.svg(\?|#|$)/i.test(image);
+          noSvgHint.style.display = isSvg ? 'none' : '';
+        };
+        this.addPropertyListener(widget, 'image', updateHint);
+        updateHint();
+      }
+
       const list = div(body, 'svgReplacesList');
 
       const rebuild = () => {
@@ -4301,9 +4331,12 @@ class PropertiesModule extends SidebarModule {
         const current = widget.get('svgReplaces');
         const newMap = isObjectLike(current) ? Object.assign({}, current) : {};
         let token = '#000';
+        // fallback tokens use a non-color-looking name (#token2, ...) rather
+        // than #0002, which reads as a 4-digit hex color and muddies the
+        // "token" concept for a newcomer
         let i = 1;
         while(newMap[token] !== undefined)
-          token = `#000${++i}`;
+          token = `#token${++i}`;
         const existingProperties = new Set(Object.values(newMap).flat());
         let property = 'newColor';
         let j = 1;
@@ -4510,11 +4543,16 @@ class PropertiesModule extends SidebarModule {
       toggleLabel.htmlFor = toggleCheckbox.id;
       toggleLabel.textContent = 'Use custom HTML instead of text/icon/image';
       toggleCheckbox.onchange = () => {
-        // switching on starts from an empty (rather than null) field so the
-        // textarea below appears immediately; switching off drops back to
-        // the regular text/icon/image content, leaving those properties as
-        // they were
-        this.inputValueUpdated(widget, 'html', toggleCheckbox.checked ? '' : null);
+        // switching off drops back to the regular text/icon/image content,
+        // leaving those properties as they were; switching back on this
+        // session restores what was last typed (stashed below) instead of
+        // always starting blank, so exploring the checkbox is non-destructive
+        if(!toggleCheckbox.checked) {
+          const current = widget.get('html');
+          if(typeof current == 'string' && current !== '')
+            lastHtmlByWidgetId.set(widget.id, current);
+        }
+        this.inputValueUpdated(widget, 'html', toggleCheckbox.checked ? (lastHtmlByWidgetId.get(widget.id) || '') : null);
         rebuild();
       };
       toggleRow.appendChild(toggleCheckbox);
@@ -4633,7 +4671,7 @@ class PropertiesModule extends SidebarModule {
       const value = iconInput.getValue();
       if(!iconSupportsBasicOptions(value))
         return;
-      div(iconOptionsBlock, 'propertyPickerSectionTitle', 'Icon color & scale');
+      div(iconOptionsBlock, 'appearanceSubTitle', 'Icon color & scale');
       iconInput.renderIconOptionControls(iconOptionsBlock, value);
     };
     this.addPropertyListener(widget, 'icon', renderIconOptions);
@@ -5378,10 +5416,10 @@ class PropertiesModule extends SidebarModule {
     };
     this.moduleDOM.appendChild(addFace);
 
-    const facesContainer = div(this.moduleDOM, 'diceFacesEditor');
-
     // locked = the property lives on the dice widget (same for all faces);
-    // unlocked = each face gets its own value in the faces array
+    // unlocked = each face gets its own value in the faces array. Shown
+    // above the face rows (rather than below) so the cause (a lock toggle)
+    // sits before its effect (a swatch appearing on every row).
     this.addAppearanceSubTitle('Face colors');
     const lockRow = div(this.moduleDOM, 'diceColorLocks');
     const colorDefs = [
@@ -5420,7 +5458,9 @@ class PropertiesModule extends SidebarModule {
         hint: `When on, ${def.label.toLowerCase()} is stored once on the dice. Turn it off to choose a different value on every face.`
       }).render(def.wrap);
       if(locks[def.key])
-        new ColorInput(this, widget, def.label, { property: def.key }).render(def.wrap);
+        // null label: the checkbox above already names the property, so the
+        // swatch alone (no repeated "Background") is enough
+        new ColorInput(this, widget, null, { property: def.key }).render(def.wrap);
     };
     for(const def of colorDefs) {
       // default locked unless a face already defines a per-face value
@@ -5428,6 +5468,8 @@ class PropertiesModule extends SidebarModule {
       def.wrap = div(lockRow, 'diceColorLock');
       renderLockRow(def);
     }
+
+    const facesContainer = div(this.moduleDOM, 'diceFacesEditor');
 
     const rebuild = ()=>{
       const scrollTop = this.moduleDOM.scrollTop;

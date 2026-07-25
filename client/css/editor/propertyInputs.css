@@ -466,12 +466,32 @@
   opacity: 0.5;
 }
 
+/* the reset buttons revert to a default rather than perform a primary
+   action, so they shouldn't compete in weight with the value controls they
+   reset (full-size solid-blue buttons made them look like the main action) */
+.editorModule .iconBasicOption button[icon] {
+  background: transparent;
+  color: var(--textDimColor1, #777);
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.editorModule .iconBasicOption button[icon]::before {
+  margin: 0;
+}
+
+.editorModule .iconBasicOption button[icon]:hover {
+  background: var(--backgroundHighlightColor1);
+  color: var(--VTTblue);
+}
+
 .editorModule .iconInlineOptions:not(:empty) {
   margin-top: 4px;
 }
 
-.editorModule .iconInlineOptions .propertyPickerSectionTitle {
-  margin-bottom: 4px;
+.editorModule .iconInlineOptions .appearanceSubTitle {
+  margin: 4px 0;
 }
 
 .editorModule .svgReplacesHelp {
@@ -904,6 +924,12 @@
   overflow-wrap: anywhere;
 }
 
+.editorModule .widgetHeader .widgetHeaderMultiIds {
+  color: var(--textDimColor1, #777);
+  font-size: 0.8em;
+  overflow-wrap: anywhere;
+}
+
 /* Keep the ID in the header, but make its rename affordance discoverable
    without making it look like a regular properties-row field. */
 .editorModule .widgetHeader .widgetHeaderIdInput {
@@ -1032,7 +1058,20 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  background: repeating-linear-gradient(45deg, var(--backgroundHighlightColor1) 0 6px, transparent 6px 12px);
+  background: repeating-linear-gradient(45deg, #00000026 0 6px, transparent 6px 12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editorModule .propertyMultiChip::after {
+  content: 'mixed';
+  font-size: 9px;
+  line-height: 1;
+  padding: 1px 2px;
+  border-radius: 2px;
+  background: #ffffffcc;
+  color: #444;
 }
 
 /* align / distribute / layer-order buttons shown above Position when several
@@ -1129,8 +1168,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 .editorModule .diceColorLocks {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 4px;
   margin: 4px 0 8px;
 }
 

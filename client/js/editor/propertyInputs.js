@@ -94,11 +94,12 @@ class MultiWidget {
   }
 
   get state() {
-    // only properties present on every selected widget, with the common value
-    // or the MULTI_DIFFERENT sentinel
-    let keys = Object.keys(this.widgets[0].state);
-    for(const widget of this.widgets.slice(1))
-      keys = keys.filter(key=>key in widget.state);
+    // union of properties present on any selected widget - a property set on
+    // only some of the selection (e.g. one widget has an icon, the other
+    // doesn't) must still resolve to MULTI_DIFFERENT rather than silently
+    // disappearing, or pickers would show the plain "not set" state instead
+    // of the "multiple values" chip
+    const keys = [ ...new Set(this.widgets.flatMap(w=>Object.keys(w.state))) ];
     const merged = {};
     for(const key of keys) {
       const values = this.widgets.map(w=>w.state[key]);
@@ -218,29 +219,47 @@ function renderIconChip(value, target) {
   // them (see generateSymbolsDiv); preview the first symbol's name, which uses
   // the same string formats below, instead of crashing on .match
   let icon = value;
+  let first = null;
   if(value && typeof value == 'object') {
     chip.title = JSON.stringify(value);
-    const first = Array.isArray(value) ? value[0] : value;
-    icon = first && typeof first == 'object' ? first.name : first;
+    first = Array.isArray(value) ? null : value; // combos have no single glyph to color/scale
+    icon = Array.isArray(value) ? value[0] : value;
+    icon = icon && typeof icon == 'object' ? icon.name : icon;
   } else {
     chip.title = value;
   }
   if(typeof icon != 'string')
     return chip; // nothing renderable (e.g. an empty or malformed icon object)
+  // the object form's color/scale (see iconWithOption) apply to a single
+  // chosen glyph - not previewing them made a red icon's preview look black,
+  // as if the color picker had no effect (auto-review 2/4, finding "Icon
+  // preview contradicts the chosen color"). Applied to font-based glyphs
+  // (the common case); game-icons.net image glyphs are recolored via an
+  // async SVG fetch elsewhere (see getSVG/symbols.js) and are left as-is
+  // here to keep this preview cheap and synchronous.
+  const iconColor = iconOption(first, 'color');
+  const iconScale = iconOption(first, 'scale');
+  let glyph = null;
   if(icon.match(/^\/assets\/|^https?:\/\//)) {
     chip.innerHTML = `<img src="${html(mapAssetURLs(icon))}">`;
   } else if(icon.match(/\//)) {
     chip.innerHTML = `<img src="${html(`i/game-icons.net/${icon}.svg`)}">`;
   } else if(icon.match(/^\[/)) {
-    div(chip, 'symbols', html(icon));
+    glyph = div(chip, 'symbols', html(icon));
   } else if(icon.match(/^[a-z0-9].*_NOFILL$/)) {
-    div(chip, 'material-symbols-nofill', html(icon.replace(/_NOFILL$/, '')));
+    glyph = div(chip, 'material-symbols-nofill', html(icon.replace(/_NOFILL$/, '')));
   } else if(icon.match(/^[a-z0-9]/)) {
-    div(chip, 'material-symbols', html(icon));
+    glyph = div(chip, 'material-symbols', html(icon));
   } else if(icon.match(/^\(.*\)$/)) {
-    div(chip, 'emoji-monochrome', html(toNotoMonochrome(icon.replace(/^\((.*)\)$/, '$1'))));
+    glyph = div(chip, 'emoji-monochrome', html(toNotoMonochrome(icon.replace(/^\((.*)\)$/, '$1'))));
   } else {
     div(chip, 'emojiColorChip', html(icon)); // raw emoji: native color rendering
+  }
+  if(glyph) {
+    if(iconColor)
+      glyph.style.color = iconColor;
+    if(iconScale)
+      glyph.style.transform = `scale(${numericInputValue(String(iconScale), 0.1, 5) || 1})`;
   }
   return chip;
 }

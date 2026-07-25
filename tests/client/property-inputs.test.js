@@ -36,7 +36,7 @@ const renderIconChip = new Function('div', 'html', 'mapAssetURLs', 'toNotoMonoch
   return renderIconChip;
 `)(
   (parent, className, innerHTML) => {
-    const el = { className: className || '', title: '', innerHTML: innerHTML || '', children: [] };
+    const el = { className: className || '', title: '', innerHTML: innerHTML || '', children: [], style: {} };
     if(parent && parent.children) parent.children.push(el);
     return el;
   },
@@ -347,6 +347,19 @@ describe('property input helpers', () => {
     expect(stringChip.children[0].className).toBe('material-symbols');
   });
 
+  test('renderIconChip previews the icon object\'s color and scale', () => {
+    const target = { children: [] };
+    const coloredChip = renderIconChip({ name: 'skip_next', color: '#ff0000', scale: 2 }, target);
+    expect(coloredChip.children[0].style.color).toBe('#ff0000');
+    expect(coloredChip.children[0].style.transform).toBe('scale(2)');
+    // unset color/scale leave the glyph unstyled
+    const plainChip = renderIconChip({ name: 'skip_next' }, target);
+    expect(plainChip.children[0].style.color).toBeUndefined();
+    // an array combo has no single glyph to color/scale, even if entries have one
+    const arrayChip = renderIconChip([ { name: 'skip_next', color: '#ff0000' } ], target);
+    expect(arrayChip.children[0].style.color).toBeUndefined();
+  });
+
   test('searchIconIndex preserves symbols.json order', () => {
     inputHelpers.setIconSearchIndex([
       { value: 'star',           keywords: 'star,favorite', image: false },
@@ -473,14 +486,25 @@ describe('multi-selection helpers', () => {
     expect(b.state.color).toBe('green');
   });
 
-  test('MultiWidget.state merges only properties shared by every widget, with a sentinel for disagreements', () => {
+  test('MultiWidget.state merges the union of every widget\'s properties, with a sentinel for disagreements', () => {
     const a = makeWidget('a', { color: 'red', width: 10, onlyOnA: 1 });
     const b = makeWidget('b', { color: 'red', width: 20 });
     const multi = new inputHelpers.MultiWidget([ a, b ]);
     const state = multi.state;
-    expect(state).not.toHaveProperty('onlyOnA');
     expect(state.color).toBe('red');
     expect(inputHelpers.propertyInputIsMulti(state.width)).toBe(true);
+    // a property set on only some of the selection (e.g. an icon picked on
+    // only one widget) must still resolve to the sentinel instead of
+    // disappearing - an absent value differs from the value present on the
+    // other widget, so pickers show "multiple values" rather than "not set"
+    expect(inputHelpers.propertyInputIsMulti(state.onlyOnA)).toBe(true);
+  });
+
+  test('MultiWidget.state treats a property unset on every widget as absent, not multi', () => {
+    const a = makeWidget('a', { color: 'red' });
+    const b = makeWidget('b', { color: 'red' });
+    const multi = new inputHelpers.MultiWidget([ a, b ]);
+    expect(multi.state).not.toHaveProperty('icon');
   });
 
   test('MultiWidget.id joins the selected widget ids', () => {
