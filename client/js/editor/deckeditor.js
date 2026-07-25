@@ -1903,10 +1903,13 @@ class DeckEditor {
     const tree = $('#deckEditorTree');
     if(tree) {
       // Preserve the deck-id field's focus/caret across the rebuild: selecting the deck re-renders the tree,
-      // which would otherwise blur the field mid-edit.
+      // which would otherwise blur the field mid-edit. Same for a text object's preview field: clicking it to
+      // select the object (see renderPreviewTextField) re-renders the tree before the click can place a caret.
       const focused = document.activeElement;
       const keepIdFocus = focused && focused.classList && focused.classList.contains('deckEditorTreeDeckId');
       const idCaret = keepIdFocus ? [ focused.selectionStart, focused.selectionEnd ] : null;
+      const keepPreviewFocus = focused && focused.classList && focused.classList.contains('deckEditorPreviewText');
+      const previewCaret = keepPreviewFocus ? [ focused.selectionStart, focused.selectionEnd ] : null;
       tree.innerHTML = '';
       for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
         const isCurrent = deck.id == this.deckID;
@@ -1961,6 +1964,14 @@ class DeckEditor {
         if(newInput) {
           newInput.focus();
           try { newInput.setSelectionRange(idCaret[0], idCaret[1]); } catch(e) {}
+        }
+      }
+      if(keepPreviewFocus) {
+        const focusedRow = $('.deckEditorObjectRow.selected', tree);
+        const newInput = focusedRow ? $('.deckEditorPreviewText', focusedRow) : null;
+        if(newInput) {
+          newInput.focus();
+          try { newInput.setSelectionRange(previewCaret[0], previewCaret[1]); } catch(e) {}
         }
       }
     }
@@ -2173,9 +2184,10 @@ class DeckEditor {
       return;
     }
 
-    // Clicking an image/icon thumbnail opens the full symbol picker directly (selecting the object too), so
-    // a new value can be chosen without first opening the sidebar's own picker.
-    if(type == 'image' || type == 'icon') {
+    // Clicking an icon thumbnail opens the full symbol picker directly (selecting the object too), so a new
+    // icon can be chosen without first opening the sidebar's own picker. Image thumbnails just select the
+    // object like any other row (the sidebar's own upload/picker button is used to change the image).
+    if(type == 'icon') {
       box.classList.add('deckEditorObjectPreviewPickable');
       box.title = `Click to pick a new ${type}`;
       box.onclick = e=>{
@@ -2235,9 +2247,14 @@ class DeckEditor {
     input.value = current === undefined || current === null ? '' : current;
     input.disabled = !editable;
     input.title = bound ? `Text for card type "${this.cardType}" (property "${bound}")` : 'Text on every card';
-    // Clicking/dragging inside the field must not start a row drag or re-select via the row handler.
+    // Clicking/dragging inside the field must not start a row drag, but should still select this field's
+    // face object (and switch to its face) if it isn't already the selection.
     input.onmousedown = e=>e.stopPropagation();
-    input.onclick = e=>e.stopPropagation();
+    input.onclick = e=>{
+      e.stopPropagation();
+      if(this.selectedObject !== index || this.face !== faceIndex)
+        this.selectObject(index, faceIndex);
+    };
     input.ondragstart = e=>{ e.preventDefault(); e.stopPropagation(); };
     input.oninput = _=>this.queueFieldEdit(async _=>{
       const value = input.value;
@@ -2662,6 +2679,16 @@ class DeckEditor {
         this.renderSidebar();
       };
     }
+
+    // Below the existing bindings and above the add-binding control: jump back to the card type's own
+    // properties, same as clicking empty space in the main card view.
+    const viewBar = div(container, 'buttonBar deckEditorViewCardTypeBar');
+    const viewBtn = document.createElement('button');
+    viewBtn.setAttribute('icon', 'pageview');
+    viewBtn.innerText = 'View card type properties';
+    viewBtn.title = 'Deselect this face object and show the card type\'s properties';
+    viewBtn.onclick = _=>this.selectObject(null);
+    viewBar.append(viewBtn);
 
     // Add-binding control laid out on the same grid as the rows above. Both sides are editable comboboxes
     // (input + datalist): pick an existing property or just type a new one in the same box - no separate field.
