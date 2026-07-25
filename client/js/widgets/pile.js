@@ -29,6 +29,75 @@ class Pile extends Widget {
     this.updateText();
   }
 
+  // The holder this pile lives in, if that holder uses layout 'multipleSpread'.
+  spreadHolder() {
+    const parent = this.get('parent');
+    if(widgets.has(parent) && widgets.get(parent).get('layout') == 'multipleSpread')
+      return widgets.get(parent);
+    return null;
+  }
+
+  // Spread this pile's children out into a fanned pile (rather than stacking them
+  // on top of each other) by the given per-card offsets, and resize the pile to
+  // their bounding box. Used by holders with layout 'multipleSpread', where each
+  // pile is a spread-out group whose fan is driven by the holder's stackOffset.
+  async arrangeAsSpread(offsetX, offsetY, gapIndex = -1) {
+    const children = this.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    let x = 0, y = 0, width = 1, height = 1, z = 1, i = 0;
+    for(const child of children) {
+      if(i === gapIndex) { // leave an empty single-card slot (for a drop shadow)
+        x += offsetX;
+        y += offsetY;
+      }
+      await child.setPosition(x, y, z++);
+      width  = Math.max(width,  x + child.get('width'));
+      height = Math.max(height, y + child.get('height'));
+      x += offsetX;
+      y += offsetY;
+      ++i;
+    }
+    if(gapIndex >= children.length) { // gap at the very end
+      width  += Math.abs(offsetX);
+      height += Math.abs(offsetY);
+    }
+    await this.set('width', width);
+    await this.set('height', height);
+  }
+
+  async reSpreadForHolder() {
+    const holder = this.spreadHolder();
+    if(holder && !this.isBeingRemoved && this.children().length)
+      await this.arrangeAsSpread(holder.get('stackOffsetX') || 0, holder.get('stackOffsetY') || 0);
+  }
+
+  // Undo a spread fan: stack the children back on top of each other (preserving
+  // their order) and shrink the pile back to card size. Used when a spread group
+  // is dropped into a holder that does not use layout multipleSpread. A pile
+  // whose children are already stacked is left completely untouched.
+  async collapse() {
+    const children = this.children().slice().sort((a, b)=>a.get('z') - b.get('z'));
+    if(!children.length || !children.some(c=>c.get('x') || c.get('y')))
+      return;
+    let z = 1;
+    for(const child of children)
+      await child.setPosition(0, 0, z++);
+    await this.set('width',  children[0].get('width'));
+    await this.set('height', children[0].get('height'));
+  }
+
+  async onChildAddAlign(child, oldParentID) {
+    if(this.spreadHolder())
+      return await this.reSpreadForHolder();
+    return await super.onChildAddAlign(child, oldParentID);
+  }
+
+  // Called by SORT/SHUFFLE via the card's parent (which is this pile). When the
+  // pile is a spread group re-fan it so the cards' positions and layering (z)
+  // follow the new order and stay readable.
+  async updateAfterShuffle() {
+    await this.reSpreadForHolder();
+  }
+
   applyChildAdd(child) {
     super.applyChildAdd(child);
     ++this.childCount;
@@ -251,6 +320,8 @@ class Pile extends Widget {
       await c.set('parent', p);
 
       await removeWidgetLocal(this.get('id'));
+    } else {
+      await this.reSpreadForHolder();
     }
 
     if(this.parent && this.parent.get('type') == 'holder')

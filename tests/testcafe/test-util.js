@@ -12,7 +12,14 @@ let server = null;
 // can hopefully be removed if Chrome changes this back. Keyed by the actual hash, valued by the expected hash.
 const knownHashDrifts = {
   'aa8d738dfc1eb7886540315e78e42aae': '1a6e301d6510998fa27abeb75bcf0371', // https://github.com/ArnoldSmith86/virtualtabletop/pull/2668
-  '7dbb198bba63663b41191432d8648492': 'bc511e7edd7e40b433f5620534775646'  // Chrome 150
+  '7dbb198bba63663b41191432d8648492': 'bc511e7edd7e40b433f5620534775646', // Chrome 150
+  // https://github.com/ArnoldSmith86/virtualtabletop/pull/3029 (v22 migrates holder alignChildren to layout)
+  '5e151d3a704eb32c01d3497922aca4bf': 'd5135c124c9dfeb68fe3881e825d1e6d', // Bhukhar
+  '18ac1f44ef048aa4277f35c5cb8b6cab': '92108a0e76fd295fee9881b6c7f8928b', // Mancala
+  '54782ce13792156381b5372dee123de5': '35e0017570f9ecd206a2317c1528be36', // Reversi
+  'aa65d7a7e7efc566266f173ec6681fca': '5290d9113f42a3c0e458a788b5a1ea99', // Reward
+  '0c67de326376d48d7b1e2af6e54f5731': '2625ca4661785ca9a75cdf93d6379427', // Rummy Tiles
+  '93339112620a206c54384fa2dd2a15cf': 'bb8636a3e2b6724d4f729bff546f354d'  // Functions - CALL
 };
 
 export function setupTestEnvironment() {

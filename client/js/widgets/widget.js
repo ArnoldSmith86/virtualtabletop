@@ -1615,10 +1615,40 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'MOVE') {
-        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT' });
+        setDefaults(a, { count: a.from ? 1 : 'all', face: null, fillTo: null, collection: 'DEFAULT', position: null });
         let count = a.fillTo || a.count;
         if(count === 'all')
           count = 999999;
+
+        // Place a just-moved card within its target holder according to the
+        // `position` parameter. z-order determines both the visual position in a
+        // stack and, after the holder re-sorts, the order in a spread/grid holder:
+        // 'pileBottom'/'groupStart' send it to the start, 'pileTop'/'groupEnd' to
+        // the end. Group-aware holders (layout 'multipleSpread') use the same
+        // ordering to place cards at the first vs. last group.
+        async function applyPosition(target, c) {
+          if(!a.position || target.get('type') != 'holder')
+            return;
+          if(a.position == 'pileBottom' || a.position == 'groupStart') {
+            // put c below all siblings, but renumber the whole holder to a compact
+            // 1..n z range (order preserved) so repeated moves into the same holder
+            // don't drift z steadily negative
+            const siblings = target.children().filter(w=>w!=c).sort((x, y)=>x.get('z') - y.get('z'));
+            await c.set('z', 1);
+            let z = 2;
+            for(const w of siblings)
+              await w.set('z', z++);
+          } else if(a.position == 'pileTop' || a.position == 'groupEnd') {
+            await c.bringToFront();
+          }
+        }
+
+        // The multipleSpread holder that will receive the moved cards (the target
+        // itself, or a seat's hand), so a whole MOVE batch ends up in one group.
+        function spreadMoveDest(target) {
+          const holder = target.get('type') == 'seat' && widgets.has(target.get('hand')) ? widgets.get(target.get('hand')) : target;
+          return holder && holder.get('type') == 'holder' && holder.get('layout') == 'multipleSpread' && holder.beginSpreadMove ? holder : null;
+        }
 
         async function applyMove(source, target, c) {
           let moved = 0;
@@ -1628,7 +1658,10 @@ export class Widget extends StateManaged {
           };
           if(source == target) {
             await applyFlip();
-            await c.bringToFront();
+            if(a.position)
+              await applyPosition(target, c);
+            else
+              await c.bringToFront();
             ++moved;
           } else if(c == target) {
             problems.push(`Skipping move of ${c.id} to itself.`);
@@ -1650,6 +1683,7 @@ export class Widget extends StateManaged {
                     delete c.targetPlayer;
                   }
                   await c.bringToFront();
+                  await applyPosition(targetHand, c);
                   if(targetHand.get('type') == 'holder')
                     await targetHand.updateAfterShuffle(); // this arranges the cards in the new owner's hand
                   ++moved;
@@ -1662,6 +1696,7 @@ export class Widget extends StateManaged {
             } else {
               await applyFlip();
               await c.moveToHolder(target);
+              await applyPosition(target, c);
               ++moved;
             }
             delete c.movedByButton;
@@ -1674,9 +1709,16 @@ export class Widget extends StateManaged {
           if(a.from) {
             if(this.isValidID(a.from, problems)) {
               await w(a.from, async source=>await w(a.to, async target=>{
+                const dest = spreadMoveDest(target);
+                if(dest)
+                  dest.beginSpreadMove(a.position);
                 for(const c of source.children().slice(0, count).reverse()) {
                   await applyMove(source, target, c);
                 }
+                if(dest)
+                  await dest.endSpreadMove();
+                else if(target.get('type') == 'holder' && (a.position || target.get('layout') == 'grid'))
+                  await target.updateAfterShuffle();
               }));
             } else {
               problems.push(`Source ${a.from} is invalid.`);
@@ -1684,9 +1726,14 @@ export class Widget extends StateManaged {
           } else if(collection = getCollection(a.collection)) {
             let offset = 0;
             await w(a.to, async target=>{
+              const dest = spreadMoveDest(target);
+              if(dest)
+                dest.beginSpreadMove(a.position);
               for(const c of collections[collection].slice(offset, offset+count))
                 offset += await applyMove(c.get('parent') && widgets.has(c.get('parent')) ? widgets.get(c.get('parent')) : null, target, c);
-              if(target.get('type') == 'holder')
+              if(dest)
+                await dest.endSpreadMove();
+              else if(target.get('type') == 'holder')
                 await target.updateAfterShuffle();
             });
           }
@@ -1998,7 +2045,7 @@ export class Widget extends StateManaged {
       }
 
       if(a.func == 'SORT') {
-        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true });
+        setDefaults(a, { key: 'value', reverse: false, collection: 'DEFAULT', rearrange: true, groupBy: null });
         let collection;
         let reverse = (a.reverse && !Array.isArray(a.reverse)) ? ' in reverse' : '';
         let key = asArray(a.key).map((k)=>{
@@ -2009,9 +2056,15 @@ export class Widget extends StateManaged {
         if(a.holder !== undefined) {
           if(this.isValidID(a.holder, problems)) {
             await w(a.holder, async holder=>{
-              await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
-              if(typeof holder.updateAfterShuffle == 'function')
-                await holder.updateAfterShuffle();
+              if(holder.get('layout') == 'multipleSpread' && a.groupBy && typeof holder.regroupBy == 'function') {
+                await holder.regroupBy(a.groupBy, a.key, a.reverse, a.locales, a.options);
+              } else if(holder.get('layout') == 'multipleSpread' && typeof holder.sortGroupContents == 'function') {
+                await holder.sortGroupContents(a.key, a.reverse, a.locales, a.options);
+              } else {
+                await sortWidgets(holder.children(), a.key, a.reverse, a.locales, a.options, true);
+                if(typeof holder.updateAfterShuffle == 'function')
+                  await holder.updateAfterShuffle();
+              }
             });
           }
           if(jeRoutineLogging)
@@ -2578,6 +2631,12 @@ export class Widget extends StateManaged {
       this.domElement.classList.remove('longtouch');
 
     await this.updatePiles();
+
+    // Once the drop (and any pile creation/merge) has settled, snap the groups of
+    // a multipleSpread holder back into their aligned rows (per owner).
+    const ancestor = widgets.has(this.get('_ancestor')) ? widgets.get(this.get('_ancestor')) : null;
+    if(ancestor && ancestor.get('layout') == 'multipleSpread' && ancestor.updateAfterShuffle)
+      await ancestor.updateAfterShuffle();
   }
 
   async hideShadowWidget() {
@@ -2971,6 +3030,14 @@ export class Widget extends StateManaged {
 
     const thisParent = this.get('parent');
     if(this.isBeingRemoved || this.get('dropShadowOwner') || thisParent && widgets.has(thisParent) && !widgets.get(thisParent).supportsPiles())
+      return;
+
+    // A multipleSpread holder manages its own grouping (join vs. insert) in
+    // Holder.placeInSpreadGroups, so the generic proximity-based pile merging must
+    // not fire for widgets inside such a holder — otherwise a wide group dropped
+    // between others would be merged into a neighbour instead of inserted.
+    const ancestor = widgets.has(this.get('_ancestor')) ? widgets.get(this.get('_ancestor')) : null;
+    if(ancestor && ancestor.get('layout') == 'multipleSpread')
       return;
 
     const thisX = this.get('x');
