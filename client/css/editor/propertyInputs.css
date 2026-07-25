@@ -1009,3 +1009,38 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   flex-wrap: wrap;
   gap: 4px;
 }
+
+/* Multi-selection editing: inputs whose selected widgets disagree on a
+   property are dimmed with a dashed outline, matching the "using default"
+   treatment used elsewhere so the two muted states read consistently. */
+.editorModule .propertyInput.multiDiffers > label {
+  opacity: 0.7;
+}
+
+.editorModule .propertyInput.multiDiffers input,
+.editorModule .propertyInput.multiDiffers select,
+.editorModule .propertyInput.multiDiffers .propertyPreviewButton {
+  outline: 1px dashed var(--textDimColor1, #777);
+  outline-offset: 1px;
+}
+
+.editorModule .propertyInput.multiDiffers input:focus {
+  outline-style: solid;
+}
+
+.editorModule .propertyMultiChip {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: repeating-linear-gradient(45deg, var(--backgroundHighlightColor1) 0 6px, transparent 6px 12px);
+}
+
+/* align / distribute / layer-order buttons shown above Position when several
+   widgets are selected */
+.editorModule .arrangeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin: 6px 0 10px;
+}

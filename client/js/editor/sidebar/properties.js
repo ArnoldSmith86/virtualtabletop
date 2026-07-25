@@ -823,16 +823,29 @@ class PropertiesModule extends SidebarModule {
   addPropertyListener(widget, property, updater) {
     updater(widget);
 
-    if(!this.inputUpdaters[widget.id])
-      this.inputUpdaters[widget.id] = {};
-    if(!this.inputUpdaters[widget.id][property])
-      this.inputUpdaters[widget.id][property] = [];
-
-    this.inputUpdaters[widget.id][property].push(v=>updater(widget));
+    // for a multi-selection, re-run the updater when any of the selected
+    // widgets changes this property
+    const ids = widget.isMulti ? widget.widgets.map(w=>w.id) : [ widget.id ];
+    for(const id of ids) {
+      if(!this.inputUpdaters[id])
+        this.inputUpdaters[id] = {};
+      if(!this.inputUpdaters[id][property])
+        this.inputUpdaters[id][property] = [];
+      this.inputUpdaters[id][property].push(v=>updater(widget));
+    }
   }
 
   inputValueUpdated(widget, property, value) {
-    widget.set(property, typeof value === 'undefined' ? null : value);
+    const newValue = typeof value === 'undefined' ? null : value;
+    if(widget.isMulti) {
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${widget.widgets.length} widgets in editor`);
+      for(const w of widget.widgets)
+        w.set(property, newValue);
+      batchEnd();
+      return;
+    }
+    widget.set(property, newValue);
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -854,9 +867,13 @@ class PropertiesModule extends SidebarModule {
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
 
-    for(const widget of newSelection) {
+    for(const widget of newSelection)
       this.inputUpdaters[widget.id] = {};
 
+    if(newSelection.length > 1) {
+      this.renderForMulti(newSelection);
+    } else if(newSelection.length == 1) {
+      const widget = newSelection[0];
       switch(widget.get('type')) {
         case 'button':     this.renderForButton(widget);     break;
         case 'canvas':     this.renderForCanvas(widget);     break;
@@ -875,10 +892,94 @@ class PropertiesModule extends SidebarModule {
           this.renderForBasic(widget);
           break;
       }
+    } else {
+      this.addDeck();
+    }
+  }
+
+  // Merged editor for a multi-widget selection.
+  renderForMulti(selection) {
+    const facade = new MultiWidget(selection);
+    const types = [ ...new Set(selection.map(w=>w.get('type') || 'basic')) ];
+
+    const header = div(this.moduleDOM, 'widgetHeader');
+    div(header, 'widgetHeaderType', `${selection.length} widgets selected`);
+
+    if(types.includes('pile')) {
+      div(this.moduleDOM, '', `
+        <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
+      `);
+      return;
     }
 
-    if(!newSelection.length)
-      this.addDeck();
+    this.renderBasicSection(facade, { arrangeButtons: true });
+
+    if(types.length == 1) {
+      const type = types[0];
+      if(type == 'basic')
+        this.renderBasicContentSection(facade, false);
+      else
+        this.renderContentSection(facade);
+      this.renderMultiAppearanceSection(facade, type);
+      this.renderBehaviorSection(facade);
+    } else {
+      div(this.moduleDOM, '', `
+        <p>The selected widgets have different types. Only the common properties above can be edited together; select a single widget to edit its type-specific properties.</p>
+      `);
+    }
+  }
+
+  // Appearance for a multi-selection: same colors/hover/style inputs, but no
+  // SVG replacements or raw CSS editor (those act on a single source widget
+  // and merging raw css strings across differing widgets risks losing data).
+  renderMultiAppearanceSection(facade, type) {
+    const sections = editorTypeSections[type] || {};
+    const colors = sections.colors || [];
+    const hover = sections.hover || [];
+    const misc = sections.appearance || [];
+    if(!colors.length && !hover.length && !misc.length)
+      return;
+    this.addSubHeader('Appearance');
+    if(colors.length) {
+      this.addAppearanceSubTitle('Colors');
+      this.renderColorRow(facade, colors);
+    }
+    if(hover.length) {
+      this.addAppearanceSubTitle('Hover');
+      this.renderColorRow(facade, hover);
+    }
+    if((colors.length || hover.length) && misc.length)
+      this.addAppearanceSubTitle('Style');
+    if(misc.length) {
+      this.renderInputs(facade, misc);
+      if(misc.some(def => def.property == 'borderRadius')) {
+        this.renderBorderWidthInput(facade);
+        this.renderBorderStyleInput(facade);
+      }
+    }
+  }
+
+  // Align / distribute / layer-order buttons, forwarding to the existing
+  // toolbar button instances so the arranging logic is not duplicated.
+  renderArrangeButtons() {
+    const icons = [
+      'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
+      'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom',
+      'horizontal_distribute', 'vertical_distribute', 'auto_awesome_motion'
+    ];
+    const available = (typeof toolbarButtons !== 'undefined' && Array.isArray(toolbarButtons)) ? toolbarButtons : [];
+    const bar = div(this.moduleDOM, 'arrangeButtons');
+    for(const icon of icons) {
+      const toolbarButton = available.find(b=>b.icon == icon);
+      if(!toolbarButton)
+        continue;
+      const button = document.createElement('button');
+      button.setAttribute('icon', icon);
+      button.title = toolbarButton.tooltip || '';
+      button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+      button.onclick = _=>toolbarButton.onClick();
+      bar.appendChild(button);
+    }
   }
 
   addDeck() {
@@ -2318,6 +2419,12 @@ class PropertiesModule extends SidebarModule {
     };
 
     const updateInputs = value => {
+      if(propertyInputIsMulti(value)) {
+        numberInput.placeholder = '— multiple —';
+        if(document.activeElement !== numberInput)
+          numberInput.value = '';
+        return;
+      }
       const normalized = normalizeValue(value);
       if(normalized === null)
         return;
@@ -2576,12 +2683,15 @@ class PropertiesModule extends SidebarModule {
 
     select.onchange = () => this.inputValueUpdated(widget, 'layer', +select.value);
     this.addPropertyListener(widget, 'layer', w=>{
-      const layerValue = Number(w.get('layer'));
+      const raw = w.get('layer');
+      if(propertyInputIsMulti(raw))
+        return;
+      const layerValue = Number(raw);
       if(layerValue < baseMin)
         addLayerOption(layerValue, true);
       else if(layerValue > baseMax)
         addLayerOption(layerValue);
-      select.value = String(w.get('layer'));
+      select.value = String(raw);
     });
     wrap.appendChild(select);
   const lockParentInfo = this.renderInfoIcon('Widgets on higher layers will always be displayed on top of widgets on lower layers.');
@@ -2604,7 +2714,8 @@ class PropertiesModule extends SidebarModule {
     input.step = 1;
     input.style = 'width: 60px; border: 1px solid #ccc; border-radius: 4px; text-align: right;';
     
-    input.value = widget.get('rotation') || 0;
+    input.value = propertyInputIsMulti(widget.get('rotation')) ? '' : (widget.get('rotation') || 0);
+    input.placeholder = propertyInputIsMulti(widget.get('rotation')) ? '— multiple —' : '';
     wrap.appendChild(input);
 
     const unit = document.createElement('span');
@@ -2613,10 +2724,13 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(unit);
 
     input.oninput = () => this.inputValueUpdated(widget, 'rotation', +input.value);
-    
+
     this.addPropertyListener(widget, 'rotation', w => {
+      const raw = w.get('rotation');
+      const multi = propertyInputIsMulti(raw);
+      input.placeholder = multi ? '— multiple —' : '';
       if (document.activeElement !== input)
-        input.value = w.get('rotation') || 0;
+        input.value = multi ? '' : (raw || 0);
     });
   }
 
@@ -2769,19 +2883,26 @@ class PropertiesModule extends SidebarModule {
     const newParent = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
     if(parentID && !newParent)
       return `There is no widget with ID "${parentID}".`;
-    if(newParent == widget)
-      return 'A widget cannot be its own parent.';
-    if(newParent && newParent.isDescendantOf(widget))
-      return `Widget ${newParent.id} is inside ${widget.id}, so using it as the parent would create a loop.`;
 
-    const global = { x: widget.get('_absoluteX'), y: widget.get('_absoluteY') };
-    const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
+    const targets = widget.isMulti ? widget.widgets : [ widget ];
+    for(const target of targets) {
+      if(newParent == target)
+        return 'A widget cannot be its own parent.';
+      if(newParent && newParent.isDescendantOf(target))
+        return `Widget ${newParent.id} is inside ${target.id}, so using it as the parent would create a loop.`;
+    }
 
     batchStart();
     try {
-      setDeltaCause(`${getPlayerDetails().playerName} changed parent of widget ${widget.id} in editor`);
-      await widget.set('parent', newParent ? newParent.id : null);
-      await widget.setPosition(Math.round(local.x * 1024) / 1024, Math.round(local.y * 1024) / 1024, widget.get('z'));
+      setDeltaCause(widget.isMulti
+        ? `${getPlayerDetails().playerName} changed parent of ${targets.length} widgets in editor`
+        : `${getPlayerDetails().playerName} changed parent of widget ${widget.id} in editor`);
+      for(const target of targets) {
+        const global = { x: target.get('_absoluteX'), y: target.get('_absoluteY') };
+        const local = newParent ? newParent.coordLocalFromCoordGlobal(global) : global;
+        await target.set('parent', newParent ? newParent.id : null);
+        await target.setPosition(Math.round(local.x * 1024) / 1024, Math.round(local.y * 1024) / 1024, target.get('z'));
+      }
     } finally {
       batchEnd();
     }
@@ -2802,7 +2923,8 @@ class PropertiesModule extends SidebarModule {
     const input = document.createElement('input');
     input.type = 'text';
     input.style.width = '140px';
-    input.value = widget.get('parent') || '';
+    input.value = propertyInputIsMulti(widget.get('parent')) ? '' : (widget.get('parent') || '');
+    input.placeholder = propertyInputIsMulti(widget.get('parent')) ? '— multiple —' : '';
     wrap.appendChild(input);
 
     const error = document.createElement('div');
@@ -2832,7 +2954,10 @@ class PropertiesModule extends SidebarModule {
     const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a parent widget',
       pickerKey: 'parent',
-      getSelectedIDs: () => widget.get('parent') ? [ widget.get('parent') ] : [],
+      getSelectedIDs: () => {
+        const parent = widget.get('parent');
+        return propertyInputValueSet(parent) && !propertyInputIsMulti(parent) ? [ parent ] : [];
+      },
       apply: parentID => apply(parentID),
       onClear: () => apply(null),
       clearLabel: 'No parent',
@@ -2855,8 +2980,11 @@ class PropertiesModule extends SidebarModule {
     };
 
     this.addPropertyListener(widget, 'parent', w => {
+      const raw = w.get('parent');
+      const multi = propertyInputIsMulti(raw);
+      input.placeholder = multi ? '— multiple —' : '';
       if(document.activeElement !== input)
-        input.value = w.get('parent') || '';
+        input.value = multi ? '' : (raw || '');
       popoutControls.refresh();
     });
 
@@ -3146,8 +3274,10 @@ class PropertiesModule extends SidebarModule {
     return wrap;
   }
 
-  renderBasicSection(widget) {
+  renderBasicSection(widget, options = {}) {
     this.addSubHeader('Basic');
+    if(options.arrangeButtons)
+      this.renderArrangeButtons();
 
     // position and size are usually changed with the drag toolbar, so they
     // start collapsed and only get expanded for active tweaking
@@ -3162,7 +3292,10 @@ class PropertiesModule extends SidebarModule {
       this.renderRotationInput(widget, body);
     }, null, `${widget.id}:position`, {
       renderSummary: summary => {
-        const update = w => summary.textContent = `${w.get('x')}, ${w.get('y')}`;
+        const update = w => {
+          const x = w.get('x'), y = w.get('y');
+          summary.textContent = `${propertyInputIsMulti(x) ? '—' : x}, ${propertyInputIsMulti(y) ? '—' : y}`;
+        };
         this.addPropertyListener(widget, 'x', update);
         this.addPropertyListener(widget, 'y', update);
       }
@@ -3177,7 +3310,10 @@ class PropertiesModule extends SidebarModule {
       this.renderSizeRatioLock(widget, body);
     }, null, `${widget.id}:size`, {
       renderSummary: summary => {
-        const update = w => summary.textContent = `${w.get('width')} × ${w.get('height')}`;
+        const update = w => {
+          const width = w.get('width'), height = w.get('height');
+          summary.textContent = `${propertyInputIsMulti(width) ? '—' : width} × ${propertyInputIsMulti(height) ? '—' : height}`;
+        };
         this.addPropertyListener(widget, 'width', update);
         this.addPropertyListener(widget, 'height', update);
       }
@@ -3847,6 +3983,8 @@ class PropertiesModule extends SidebarModule {
     new NumberInput(this, widget, 'Border width', Object.assign({}, cssOptions, {
       getValue: () => {
         const value = cssOptions.getValue();
+        if(propertyInputIsMulti(value))
+          return value;
         const width = Number.parseFloat(value);
         return Number.isFinite(width) ? width : null;
       },
@@ -4461,10 +4599,12 @@ class PropertiesModule extends SidebarModule {
     textRow.appendChild(symbolButton);
 
     const update = () => {
-      if(document.activeElement !== textInput) {
-        const value = widget.get('text');
-        textInput.value = value === null || value === undefined ? '' : value;
-      }
+      const value = widget.get('text');
+      const multi = propertyInputIsMulti(value);
+      textRow.classList.toggle('multiDiffers', multi);
+      textInput.placeholder = multi ? '— multiple —' : '';
+      if(document.activeElement !== textInput)
+        textInput.value = (multi || value === null || value === undefined) ? '' : value;
       modeSelect.value = currentSymbolClass() ? 'symbol' : 'text';
       symbolButton.style.display = currentSymbolClass() ? '' : 'none';
     };
@@ -5868,7 +6008,12 @@ class PropertiesModule extends SidebarModule {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.id = `${property}_${widget.id}`;
-    input.checked = !!widget.get(property);
+    const updateChecked = w => {
+      const value = w.get(property);
+      input.indeterminate = propertyInputIsMulti(value);
+      input.checked = propertyInputIsMulti(value) ? false : !!value;
+    };
+    updateChecked(widget);
     const label = document.createElement('label');
     label.htmlFor = input.id;
     label.textContent = title || property;
@@ -5876,13 +6021,7 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(label);
 
     input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
-    this.addPropertyListener(widget, property, w => { input.checked = !!w.get(property); });
-
-    if (!this.inputUpdaters[widget.id])
-      this.inputUpdaters[widget.id] = {};
-    if (!this.inputUpdaters[widget.id][property])
-      this.inputUpdaters[widget.id][property] = [];
-    this.inputUpdaters[widget.id][property].push(() => { if (document.activeElement !== input) input.checked = !!widget.get(property); });
+    this.addPropertyListener(widget, property, updateChecked);
   }
 
   renderSelectionButton(widget, title, property, value, css='css', cssClass='default', icon=null, tooltip='') {

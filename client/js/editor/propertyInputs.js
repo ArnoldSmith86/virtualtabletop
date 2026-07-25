@@ -57,6 +57,69 @@ function numericInputValue(rawValue, min, max) {
   return value;
 }
 
+// Sentinel returned by a MultiWidget's get()/state when the selected widgets
+// disagree on a property. Inputs show a muted "multiple values" state but can
+// still set every widget to one common value.
+const MULTI_DIFFERENT = { multiDiffers: true };
+
+function propertyInputIsMulti(value) {
+  return value === MULTI_DIFFERENT;
+}
+
+function replaceExclusiveProperties(source, properties, property, value) {
+  const result = typeof source == 'object' && source !== null ? JSON.parse(JSON.stringify(source)) : {};
+  for(const key of properties)
+    delete result[key];
+  result[property] = value;
+  return result;
+}
+
+// Facade over several widgets so the same PropertyInput classes can edit a
+// whole selection at once.
+class MultiWidget {
+  constructor(widgets) {
+    this.widgets = widgets;
+    this.isMulti = true;
+    this.id = widgets.map(w=>w.id).join(',');
+  }
+
+  get(property) {
+    const values = this.widgets.map(w=>w.get(property));
+    return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+  }
+
+  set(property, value) {
+    for(const widget of this.widgets)
+      widget.set(property, value);
+  }
+
+  get state() {
+    // only properties present on every selected widget, with the common value
+    // or the MULTI_DIFFERENT sentinel
+    let keys = Object.keys(this.widgets[0].state);
+    for(const widget of this.widgets.slice(1))
+      keys = keys.filter(key=>key in widget.state);
+    const merged = {};
+    for(const key of keys) {
+      const values = this.widgets.map(w=>w.state[key]);
+      merged[key] = values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+    }
+    return merged;
+  }
+
+  // defaults/domElement are read by cssValueOptions/propertyOrCssOptions and
+  // typeSectionProperties() - the first selected widget stands in for the
+  // whole selection (their type-defined defaults/rendering are identical
+  // since renderForMulti only curates same-type sections)
+  get defaults() {
+    return this.widgets[0].defaults;
+  }
+
+  get domElement() {
+    return this.widgets[0].domElement;
+  }
+}
+
 // Walks the state of all widgets and calls callback(key, value, path, object)
 // for every string value.
 function forEachStringInGameState(callback) {
@@ -431,8 +494,11 @@ class TextInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || '');
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : value;
+      this.input.value = (value === null || multi) ? '' : value;
   }
 }
 
@@ -486,14 +552,17 @@ class NumberInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder !== undefined ? this.options.placeholder : '');
     const numeric = typeof value == 'number' ? value : +value || 0;
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : numeric;
+      this.input.value = (value === null || multi) ? '' : numeric;
     if(this.slider && document.activeElement !== this.slider) {
       // when unset, rest the slider at the numeric placeholder (the shown
       // default) instead of dropping it to its minimum
       const placeholder = this.options.placeholder !== undefined && this.options.placeholder !== '' ? +this.options.placeholder : NaN;
-      this.slider.value = value === null && Number.isFinite(placeholder) ? placeholder : numeric;
+      this.slider.value = (value === null || multi) && Number.isFinite(placeholder) ? placeholder : numeric;
     }
   }
 }
@@ -513,9 +582,11 @@ class NumberOrTextInput extends PropertyInput {
   }
 
   update(value) {
-    this.input.placeholder = this.options.placeholder || 'e.g. 8, 8px, 50%';
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.placeholder = multi ? '— multiple —' : (this.options.placeholder || 'e.g. 8, 8px, 50%');
     if(document.activeElement !== this.input)
-      this.input.value = value === null ? '' : value;
+      this.input.value = (value === null || multi) ? '' : value;
   }
 }
 
@@ -540,7 +611,10 @@ class CheckboxInput extends PropertyInput {
   }
 
   update(value) {
-    const boolValue = value === null ? !!this.options.default : !!value;
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    this.input.indeterminate = multi;
+    const boolValue = (value === null || multi) ? !!this.options.default : !!value;
     this.input.checked = this.options.invert ? !boolValue : boolValue;
   }
 }
@@ -564,6 +638,19 @@ class SelectInput extends PropertyInput {
   }
 
   update(value) {
+    const multi = propertyInputIsMulti(value);
+    this.dom.classList.toggle('multiDiffers', multi);
+    if(multi) {
+      if(!this.customOption) {
+        this.customOption = document.createElement('option');
+        this.select.appendChild(this.customOption);
+      }
+      this.customOption.value = 'multi';
+      this.customOption.disabled = true;
+      this.customOption.textContent = '— multiple —';
+      this.select.value = 'multi';
+      return;
+    }
     const jsonValue = JSON.stringify(value);
     if(this.options.choices.some(choice=>JSON.stringify(choice.value) == jsonValue)) {
       if(this.customOption) {
@@ -667,17 +754,23 @@ class PickerInput extends PropertyInput {
   }
 
   getEffectiveValue() {
-    if(this.options.getEffective)
-      return this.options.getEffective();
-    if(this.options.getValue)
-      return this.options.getValue();
-    const value = this.widget.get(this.options.property);
+    const value = this.options.getEffective ? this.options.getEffective()
+      : this.options.getValue ? this.options.getValue()
+      : this.widget.get(this.options.property);
+    if(propertyInputIsMulti(value))
+      return null;
     return value === undefined ? null : value;
   }
 
   previewValue() {
     const raw = this.getValue();
+    if(propertyInputIsMulti(raw))
+      return null;
     return propertyInputValueSet(raw) ? raw : this.getEffectiveValue();
+  }
+
+  isMultiValue() {
+    return propertyInputIsMulti(this.getValue());
   }
 
   update(value) {
@@ -694,8 +787,17 @@ class PickerInput extends PropertyInput {
 
   updatePreview() {
     const rawValue = this.getValue();
-    const previewValue = this.previewValue();
+    const multi = propertyInputIsMulti(rawValue);
+    this.dom.classList.toggle('multiDiffers', multi);
     this.previewButton.innerHTML = '';
+    if(multi) {
+      div(this.previewButton, 'propertyValueChip propertyMultiChip');
+      this.previewButton.classList.remove('usingDefault', 'emptyValue');
+      this.previewButton.title = 'Multiple values';
+      this.previewButton.setAttribute('aria-label', 'Edit value');
+      return;
+    }
+    const previewValue = this.previewValue();
     this.renderChip(this.previewButton, previewValue);
     const isEmpty = !propertyInputValueSet(previewValue);
     const emptyLabel = this.emptyLabel();
@@ -766,6 +868,17 @@ class PickerInput extends PropertyInput {
   }
 
   renderSummary(target, value) {
+    if(propertyInputIsMulti(value)) {
+      div(target, 'propertyValueChip propertyMultiChip');
+      this.renderSummaryControls(target, null);
+      div(target, 'propertyPickerValueText', '<i>multiple values — pick one to apply to all</i>');
+      const close = document.createElement('button');
+      close.setAttribute('icon', 'close');
+      close.title = 'Close';
+      close.onclick = _=>this.closePicker();
+      target.appendChild(close);
+      return;
+    }
     const isSet = propertyInputValueSet(value);
     this.renderChip(target, this.previewValue());
     this.renderSummaryControls(target, value);
@@ -895,6 +1008,13 @@ class ColorInput extends PickerInput {
   // would detach the native color input while its dialog is open, so later
   // picks in the still-open dialog would be lost.
   refreshPicker(value) {
+    if(propertyInputIsMulti(value)) {
+      if(this.summaryDOM) {
+        this.summaryDOM.innerHTML = '';
+        this.renderSummary(this.summaryDOM, value);
+      }
+      return;
+    }
     if(this.summaryDOM) {
       const shown = propertyInputValueSet(value) ? value : this.getEffectiveValue();
       const chip = this.summaryDOM.querySelector('.propertyValueChip');
@@ -1282,6 +1402,33 @@ function computedCssValue(element, key) {
 }
 
 function cssValueOptions(module, widget, key, cssProperty='css', cssClass='default', extraOptions={}) {
+  // a css string/object is per-widget, so a multi-selection reads/writes
+  // through each selected widget's own options instead of merging blobs
+  // (which would clobber unrelated declarations on the other widgets)
+  if(widget.isMulti) {
+    const perWidget = widget.widgets.map(w=>cssValueOptions(module, w, key, cssProperty, cssClass, extraOptions));
+    return Object.assign({
+      getValue: _=>{
+        const values = perWidget.map(o=>o.getValue());
+        return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+      },
+      getEffective: _=>{
+        const values = perWidget.map(o=>o.getEffective());
+        return values.every(v=>JSON.stringify(v) === JSON.stringify(values[0])) ? values[0] : MULTI_DIFFERENT;
+      },
+      setValue: v=>{
+        batchStart();
+        try {
+          for(const o of perWidget)
+            o.setValue(v);
+        } finally {
+          batchEnd();
+        }
+      },
+      listenTo: [ cssProperty ]
+    }, extraOptions);
+  }
+
   let warned = false;
   // element the declaration actually renders on, used to preview the effective
   // default when nothing is explicitly set

@@ -22,7 +22,11 @@ const inputHelpers = new Function(inputsSource + `;
     iconName,
     iconOption,
     iconWithOption,
-    iconSupportsBasicOptions
+    iconSupportsBasicOptions,
+    MULTI_DIFFERENT,
+    propertyInputIsMulti,
+    MultiWidget,
+    replaceExclusiveProperties
   };
 `)();
 
@@ -357,5 +361,58 @@ describe('icon value helpers', () => {
     expect(inputHelpers.iconSupportsBasicOptions('')).toBe(false);
     expect(inputHelpers.iconSupportsBasicOptions({ name: null })).toBe(false);
     expect(inputHelpers.iconSupportsBasicOptions([ 'a', 'b' ])).toBe(false);
+  });
+});
+
+describe('multi-selection helpers', () => {
+  function makeWidget(id, state) {
+    return {
+      id,
+      state,
+      defaults: { width: 1 },
+      domElement: null,
+      get(property) { return this.state[property]; },
+      set(property, value) { this.state[property] = value; }
+    };
+  }
+
+  test('MultiWidget.get returns the common value or the MULTI_DIFFERENT sentinel', () => {
+    const a = makeWidget('a', { color: 'red', text: 'hi' });
+    const b = makeWidget('b', { color: 'red', text: 'bye' });
+    const multi = new inputHelpers.MultiWidget([ a, b ]);
+    expect(multi.get('color')).toBe('red');
+    expect(inputHelpers.propertyInputIsMulti(multi.get('text'))).toBe(true);
+    expect(multi.get('text')).toBe(inputHelpers.MULTI_DIFFERENT);
+  });
+
+  test('MultiWidget.set writes the value to every selected widget', () => {
+    const a = makeWidget('a', { color: 'red' });
+    const b = makeWidget('b', { color: 'blue' });
+    const multi = new inputHelpers.MultiWidget([ a, b ]);
+    multi.set('color', 'green');
+    expect(a.state.color).toBe('green');
+    expect(b.state.color).toBe('green');
+  });
+
+  test('MultiWidget.state merges only properties shared by every widget, with a sentinel for disagreements', () => {
+    const a = makeWidget('a', { color: 'red', width: 10, onlyOnA: 1 });
+    const b = makeWidget('b', { color: 'red', width: 20 });
+    const multi = new inputHelpers.MultiWidget([ a, b ]);
+    const state = multi.state;
+    expect(state).not.toHaveProperty('onlyOnA');
+    expect(state.color).toBe('red');
+    expect(inputHelpers.propertyInputIsMulti(state.width)).toBe(true);
+  });
+
+  test('MultiWidget.id joins the selected widget ids', () => {
+    const multi = new inputHelpers.MultiWidget([ makeWidget('a', {}), makeWidget('b', {}) ]);
+    expect(multi.id).toBe('a,b');
+    expect(multi.isMulti).toBe(true);
+  });
+
+  test('replaceExclusiveProperties drops the old exclusive keys and sets the new one', () => {
+    expect(inputHelpers.replaceExclusiveProperties({ pips: 3, color: '#fff' }, [ 'pips', 'text', 'icon', 'image' ], 'text', 'hi'))
+      .toEqual({ color: '#fff', text: 'hi' });
+    expect(inputHelpers.replaceExclusiveProperties(null, [ 'pips' ], 'pips', 2)).toEqual({ pips: 2 });
   });
 });
