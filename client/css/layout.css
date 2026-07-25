@@ -817,6 +817,14 @@ body.zoom2x .movable.widget, body.zoom2x .canvas.widget, body.zoom2x.edit #roomA
   cursor: default;
 }
 
+body.zoom2x.edit.spacePanActive #roomArea {
+  cursor: grab;
+}
+
+body.zoom2x.edit.spacePanActive.panning #roomArea {
+  cursor: grabbing;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
