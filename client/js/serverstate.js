@@ -167,12 +167,16 @@ async function updateWidgetId(widget, oldID) {
   const children = Widget.prototype.children.call(widgets.get(oldID)); // use Widget.children even for holders so it doesn't filter
   const cards = widgetFilter(w=>w.get('deck')==oldID);
 
+  // a rename is a remove+re-add of the same state under a new id, not a real
+  // removal - let onChildRemove/onChildAdd tell it apart from an actual detach
+  widgets.get(oldID).isBeingRenamed = true;
+
   for(const child of children)
     sendPropertyUpdate(child.get('id'), 'parent', null);
   for(const card of cards)
     sendPropertyUpdate(card.get('id'), 'deck', null);
   await removeWidgetLocal(oldID, true);
-  
+
   const id = await addWidgetLocal(widget);
 
   // Restore children

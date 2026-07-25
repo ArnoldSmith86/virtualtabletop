@@ -333,6 +333,7 @@ const editorTypeNames = {
   dice: 'Dice',
   holder: 'Holder',
   label: 'Label',
+  line: 'Line',
   pile: 'Pile',
   scoreboard: 'Scoreboard',
   seat: 'Seat',
@@ -3052,21 +3053,15 @@ class PropertiesModule extends SidebarModule {
     ]);
   }
 
-  renderTypeHeader(widget) {
-    const type = widget.get('type') || 'basic';
-    // type in the header's accent color, id in the plain text color so the two
-    // are easy to tell apart
-    const header = div(this.moduleDOM, 'widgetHeader');
-    div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
-    const idArea = div(header, 'widgetHeaderId');
-    idArea.append('Widget id: ');
+  // Underlined, in-place rename affordance shared by the widget type header
+  // and any other place that needs to rename a widget by id (e.g. line stops).
+  createWidgetIdInput(widget, options = {}) {
     const idInput = document.createElement('input');
     idInput.type = 'text';
-    idInput.className = 'widgetHeaderIdInput';
+    idInput.className = options.className || 'widgetHeaderIdInput';
     idInput.value = widget.id;
-    idInput.title = 'Rename widget';
-    idInput.setAttribute('aria-label', 'Widget id');
-    idArea.appendChild(idInput);
+    idInput.title = options.title || 'Rename widget';
+    idInput.setAttribute('aria-label', options.ariaLabel || 'Widget id');
 
     idInput.onchange = async () => {
       const oldID = widget.id;
@@ -3094,8 +3089,8 @@ class PropertiesModule extends SidebarModule {
         state.id = newID;
         await updateWidgetId(state, oldID);
         const renamedWidget = widgets.get(newID);
-        if(renamedWidget)
-          setSelection([ renamedWidget ]);
+        if(renamedWidget && options.onRenamed)
+          options.onRenamed(renamedWidget);
       } catch(error) {
         alert(`Could not rename widget: ${error}`);
         idInput.value = oldID;
@@ -3111,6 +3106,22 @@ class PropertiesModule extends SidebarModule {
         idInput.blur();
       }
     };
+
+    return idInput;
+  }
+
+  renderTypeHeader(widget) {
+    const type = widget.get('type') || 'basic';
+    // type in the header's accent color, id in the plain text color so the two
+    // are easy to tell apart
+    const header = div(this.moduleDOM, 'widgetHeader');
+    div(header, 'widgetHeaderType', `Widget type: ${html(editorTypeNames[type] || type)}`);
+    const idArea = div(header, 'widgetHeaderId');
+    idArea.append('Widget id: ');
+    const idInput = this.createWidgetIdInput(widget, {
+      onRenamed: renamedWidget => setSelection([ renamedWidget ])
+    });
+    idArea.appendChild(idInput);
   }
 
   // A block whose body can be folded away by clicking the header.
@@ -5283,7 +5294,8 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderForLine(widget) {
-    this.addHeader(`Line ${widget.id}`);
+    this.renderTypeHeader(widget);
+    this.renderBasicSection(widget);
 
     const addButton = (text, className, icon)=>{
       const button = document.createElement('button');
@@ -5295,7 +5307,7 @@ class PropertiesModule extends SidebarModule {
       return button;
     };
 
-    this.addSubHeader('Shape');
+    this.addSubHeader('Appearance');
     const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
     const shapePresets = [
       { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
@@ -5348,6 +5360,93 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
     this.addPropertyListener(widget, 'controlEnd', updateShapeButtons);
 
+    const colorWrap = div(this.moduleDOM, 'genericInput lineAppearanceColor');
+    const colorLabel = document.createElement('label');
+    colorLabel.innerText = 'Line color';
+    const color = document.createElement('input');
+    color.type = 'color';
+    color.className = 'lineColorPicker';
+    color.title = 'Line color';
+    colorWrap.appendChild(colorLabel);
+    colorWrap.appendChild(color);
+    const updateLineColor = ()=>{
+      const value = String(widget.get('lineColor') || '');
+      if(/^#[0-9a-f]{6}$/i.test(value))
+        color.value = value;
+    };
+    this.addPropertyListener(widget, 'lineColor', updateLineColor);
+    color.onchange = _=>widget.set('lineColor', color.value);
+
+    const widthWrap = div(this.moduleDOM, 'genericInput lineAppearanceWidth');
+    const widthLabel = document.createElement('label');
+    widthLabel.innerText = 'Line width';
+    const width = document.createElement('input');
+    width.type = 'number';
+    width.min = 0;
+    width.max = 25;
+    width.step = 'any';
+    width.className = 'lineWidthValue';
+    width.title = 'Line width in pixels';
+    const widthRange = document.createElement('input');
+    widthRange.type = 'range';
+    widthRange.min = 0;
+    widthRange.max = 25;
+    widthRange.step = 1;
+    widthRange.className = 'lineWidthRange';
+    widthRange.title = width.title;
+    const updateLineWidth = ()=>{
+      const value = Math.max(0, Math.min(25, +widget.get('lineWidth') || 0));
+      width.value = value;
+      widthRange.value = value;
+    };
+    this.addPropertyListener(widget, 'lineWidth', updateLineWidth);
+    const saveLineWidth = ()=>{
+      const value = Math.max(0, Math.min(25, +width.value || 0));
+      width.value = value;
+      widthRange.value = value;
+      widget.set('lineWidth', value);
+    };
+    width.onchange = saveLineWidth;
+    width.oninput = _=>widthRange.value = Math.max(0, Math.min(25, +width.value || 0));
+    widthRange.oninput = _=>{
+      width.value = widthRange.value;
+      saveLineWidth();
+    };
+    widthWrap.appendChild(widthLabel);
+    widthWrap.appendChild(width);
+    widthWrap.appendChild(document.createTextNode(' px'));
+    widthWrap.appendChild(widthRange);
+
+    const dashPresets = [
+      { name: 'Solid', value: null },
+      { name: 'Dotted', value: '2 10' },
+      { name: 'Short dashes', value: '8 8' },
+      { name: 'Dashed', value: '16 10' },
+      { name: 'Long dashes', value: '28 12' },
+      { name: 'Dash-dot', value: '20 8 3 8' }
+    ];
+    const dashLabel = document.createElement('label');
+    dashLabel.className = 'lineDashLabel';
+    dashLabel.innerText = 'Line style';
+    this.moduleDOM.appendChild(dashLabel);
+    const dashWrap = div(this.moduleDOM, 'lineDashPresets');
+    const dashButtons = dashPresets.map(preset=>{
+      const button = document.createElement('button');
+      button.className = 'lineDashPreset';
+      button.title = preset.name;
+      button.setAttribute('aria-label', preset.name);
+      const dash = preset.value ? ` stroke-dasharray="${preset.value}"` : '';
+      button.innerHTML = `<svg viewBox="0 0 80 16" aria-hidden="true"><path d="M 4 8 L 76 8"${dash}/></svg><span>${preset.name}</span>`;
+      button.onclick = _=>widget.set('lineDash', preset.value);
+      dashWrap.appendChild(button);
+      return button;
+    });
+    const updateDashButtons = ()=>{
+      const current = widget.get('lineDash') || null;
+      dashPresets.forEach((preset, i)=>dashButtons[i].classList.toggle('selected', preset.value === current));
+    };
+    this.addPropertyListener(widget, 'lineDash', updateDashButtons);
+
     this.addSubHeader('Stops');
 
     const addLineToggle = (text, className, title)=>{
@@ -5388,7 +5487,7 @@ class PropertiesModule extends SidebarModule {
 
     const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
 
-    // New stops inheritFrom the chosen widget so restyling one restyles them all.
+    // New stops inherit from the chosen widget so restyling one restyles them all.
     // Any widget can be entered by id; the chooser lists this line's stops for
     // the common case of matching another stop already on the track.
     const inheritWrap = div(this.moduleDOM, 'genericInput lineInheritWrap');
@@ -5431,6 +5530,15 @@ class PropertiesModule extends SidebarModule {
     inheritWrap.appendChild(document.createTextNode(' (or choose stop: '));
     inheritWrap.appendChild(inheritSelect);
     inheritWrap.appendChild(document.createTextNode(')'));
+    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritWrap, widget, {
+      title: 'Choose a widget for new stops to inherit from',
+      pickerKey: 'lineInheritStop',
+      getSelectedIDs: ()=>inheritID.value ? [ inheritID.value ] : [],
+      apply: id=>{
+        inheritID.value = id;
+        refreshInheritOptions();
+      }
+    });
 
     const removeStop = async stop=>{
       batchStart();
@@ -5448,9 +5556,10 @@ class PropertiesModule extends SidebarModule {
     // connections are positioned; the position sticks through reshaping
     const stopList = div(this.moduleDOM, 'lineStopList');
     // Keep creation controls with the list they affect, after the existing
-    // stops rather than above them.
-    this.moduleDOM.appendChild(addStopButton);
+    // stops rather than above them: the inherit-from info directly below the
+    // list, then the Add Stop button as the final action of the section.
     this.moduleDOM.appendChild(inheritWrap);
+    this.moduleDOM.appendChild(addStopButton);
     const stopPreview = stop=>{
       const preview = document.createElement('div');
       preview.className = 'lineStopPreview';
@@ -5521,8 +5630,17 @@ class PropertiesModule extends SidebarModule {
       stops.forEach((stop, i)=>{
         const row = div(stopList, 'genericInput');
         const label = document.createElement('label');
-        label.innerText = `Stop ${i+1} (${stop.get('id')})`;
         label.style = 'display:inline-block;width:145px';
+        label.append(`Stop ${i+1} (`);
+        // renaming re-adds the same stop state under the new id, so it must not
+        // be treated like removing+adding a stop (see Line.onChildAdd/onChildRemove)
+        const idInput = this.createWidgetIdInput(stop, {
+          className: 'lineStopIdInput',
+          title: 'Rename this stop',
+          ariaLabel: `Stop ${i+1} id`
+        });
+        label.appendChild(idInput);
+        label.append(')');
         const position = document.createElement('input');
         position.type = 'number';
         position.min = 0;
@@ -5606,8 +5724,9 @@ class PropertiesModule extends SidebarModule {
     // Connecting an end point glues it onto another widget at a chosen percentage.
     // Line.applyConnections converts through global coordinates so targets under
     // transformed parents stay in the correct frame.
+    this.addSubHeader('Connect points');
     for(const end of [ 'Start', 'End' ]) {
-      this.addSubHeader(`Connect ${end.toLowerCase()} point`);
+      this.addAppearanceSubTitle(`${end} point`);
       const wrapper = div(this.moduleDOM, 'genericInput');
       const select = document.createElement('select');
       select.className = `lineConnect${end}`;
@@ -5701,106 +5820,30 @@ class PropertiesModule extends SidebarModule {
         saveConnection();
       };
 
+      const connectPopoutControls = this.renderWidgetSelectPopout(wrapper, widget, {
+        title: `Connect ${end.toLowerCase()} point to`,
+        pickerKey: 'connect'+end,
+        getSelectedIDs: ()=>{
+          const connection = widget.get('connect'+end);
+          return connection && connection.line ? [ connection.line ] : [];
+        },
+        apply: id=>{
+          target.value = id;
+          select.value = [ ...select.options ].some(option=>option.value == id) ? id : '';
+          setDefaultPositionForTarget();
+        },
+        onClear: ()=>widget.set('connect'+end, null),
+        clearLabel: 'Disconnect'
+      });
+      this.addPropertyListener(widget, 'connect'+end, ()=>connectPopoutControls.refresh());
     }
 
-    const renderLineProperty = property=>{
-      const input = this.addInput(property, widget.get(property), value=>this.inputValueUpdated(widget, property, value));
-      if(!this.inputUpdaters[widget.id][property])
-        this.inputUpdaters[widget.id][property] = [];
-      this.inputUpdaters[widget.id][property].push(input.setValue);
-    };
-
-    this.addSubHeader('Appearance');
-    const colorWrap = div(this.moduleDOM, 'genericInput lineAppearanceColor');
-    const colorLabel = document.createElement('label');
-    colorLabel.innerText = 'Line color';
-    const color = document.createElement('input');
-    color.type = 'color';
-    color.className = 'lineColorPicker';
-    color.title = 'Line color';
-    colorWrap.appendChild(colorLabel);
-    colorWrap.appendChild(color);
-    const updateLineColor = ()=>{
-      const value = String(widget.get('lineColor') || '');
-      if(/^#[0-9a-f]{6}$/i.test(value))
-        color.value = value;
-    };
-    this.addPropertyListener(widget, 'lineColor', updateLineColor);
-    color.onchange = _=>widget.set('lineColor', color.value);
-
-    const widthWrap = div(this.moduleDOM, 'genericInput lineAppearanceWidth');
-    const widthLabel = document.createElement('label');
-    widthLabel.innerText = 'Line width';
-    const width = document.createElement('input');
-    width.type = 'number';
-    width.min = 0;
-    width.max = 25;
-    width.step = 'any';
-    width.className = 'lineWidthValue';
-    width.title = 'Line width in pixels';
-    const widthRange = document.createElement('input');
-    widthRange.type = 'range';
-    widthRange.min = 0;
-    widthRange.max = 25;
-    widthRange.step = 1;
-    widthRange.className = 'lineWidthRange';
-    widthRange.title = width.title;
-    const updateLineWidth = ()=>{
-      const value = Math.max(0, Math.min(25, +widget.get('lineWidth') || 0));
-      width.value = value;
-      widthRange.value = value;
-    };
-    this.addPropertyListener(widget, 'lineWidth', updateLineWidth);
-    const saveLineWidth = ()=>{
-      const value = Math.max(0, Math.min(25, +width.value || 0));
-      width.value = value;
-      widthRange.value = value;
-      widget.set('lineWidth', value);
-    };
-    width.onchange = saveLineWidth;
-    width.oninput = _=>widthRange.value = Math.max(0, Math.min(25, +width.value || 0));
-    widthRange.oninput = _=>{
-      width.value = widthRange.value;
-      saveLineWidth();
-    };
-    widthWrap.appendChild(widthLabel);
-    widthWrap.appendChild(width);
-    widthWrap.appendChild(document.createTextNode(' px'));
-    widthWrap.appendChild(widthRange);
-
-    const dashPresets = [
-      { name: 'Solid', value: null },
-      { name: 'Dotted', value: '2 10' },
-      { name: 'Short dashes', value: '8 8' },
-      { name: 'Dashed', value: '16 10' },
-      { name: 'Long dashes', value: '28 12' },
-      { name: 'Dash-dot', value: '20 8 3 8' }
-    ];
-    const dashLabel = document.createElement('label');
-    dashLabel.className = 'lineDashLabel';
-    dashLabel.innerText = 'Line style';
-    this.moduleDOM.appendChild(dashLabel);
-    const dashWrap = div(this.moduleDOM, 'lineDashPresets');
-    const dashButtons = dashPresets.map(preset=>{
-      const button = document.createElement('button');
-      button.className = 'lineDashPreset';
-      button.title = preset.name;
-      button.setAttribute('aria-label', preset.name);
-      const dash = preset.value ? ` stroke-dasharray="${preset.value}"` : '';
-      button.innerHTML = `<svg viewBox="0 0 80 16" aria-hidden="true"><path d="M 4 8 L 76 8"${dash}/></svg><span>${preset.name}</span>`;
-      button.onclick = _=>widget.set('lineDash', preset.value);
-      dashWrap.appendChild(button);
-      return button;
-    });
-    const updateDashButtons = ()=>{
-      const current = widget.get('lineDash') || null;
-      dashPresets.forEach((preset, i)=>dashButtons[i].classList.toggle('selected', preset.value === current));
-    };
-    this.addPropertyListener(widget, 'lineDash', updateDashButtons);
-
-    this.addSubHeader('Line properties');
-    renderLineProperty('x');
-    this.renderGenericProperties(widget, [ 'x', 'connectStart', 'connectEnd', 'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops', 'lineColor', 'lineDash', 'lineWidth' ]);
+    this.renderOtherPropertiesSection(widget, [
+      'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
+      'lineColor', 'lineDash', 'lineWidth',
+      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
+      'connectStart', 'connectEnd'
+    ]);
   }
 
   renderForSpinner(widget) {

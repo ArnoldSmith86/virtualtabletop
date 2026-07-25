@@ -536,6 +536,27 @@
   width: 42px;
   min-width: 42px;
 }
+/* same dashed-underline rename affordance as the widget header id, sized for
+   the narrower stop-list row */
+.editorModule .lineStopList input.lineStopIdInput {
+  color: inherit;
+  font: inherit;
+  width: 60px;
+  min-width: 40px;
+  padding: 0 2px;
+  border: 0;
+  border-bottom: 1px dashed currentColor;
+  border-radius: 2px;
+  background: transparent;
+}
+.editorModule .lineStopList input.lineStopIdInput:hover {
+  background: var(--backgroundHighlightColor1);
+}
+.editorModule .lineStopList input.lineStopIdInput:focus {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: 1px;
+  background: var(--backgroundColor);
+}
 .editorModule .lineStopPreview {
   position: relative;
   flex: 0 0 52px;

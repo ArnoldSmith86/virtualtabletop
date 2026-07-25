@@ -386,6 +386,10 @@ export class Line extends Widget {
 
   async onChildAdd(child, oldParentID) {
     await super.onChildAdd(child, oldParentID);
+    // a rename re-adds the same stop under a new id; it carries no positioning
+    // change, so skip the layout pass a real add/remove would trigger
+    if(child.isBeingRenamed)
+      return;
     if(child.get('linePosition') !== null) {
       if(this.get('autoSpaceStops'))
         await this.distributeAttachedWidgetsEvenly();
@@ -395,6 +399,8 @@ export class Line extends Widget {
   }
 
   async onChildRemove(child) {
+    if(child.isBeingRenamed)
+      return await super.onChildRemove(child);
     await this.restoreStopRotation(child);
     await super.onChildRemove(child);
     if(child.get('linePosition') !== null) {

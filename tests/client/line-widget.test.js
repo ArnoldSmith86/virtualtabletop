@@ -156,6 +156,28 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test('renaming a stop (isBeingRenamed) does not redistribute or touch rotation', async () => {
+    const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true });
+    const stops = [ 'rename-a', 'rename-b', 'rename-c' ].map((id, i) => {
+      const stop = new Widget(id);
+      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20, linePosition: i / 2 }, stop);
+      return stop;
+    });
+    await line.distributeAttachedWidgetsEvenly();
+    const before = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), linePosition: stop.get('linePosition'), rotation: stop.get('rotation') }));
+
+    stops[1].isBeingRenamed = true;
+    await line.onChildRemove(stops[1]);
+    await line.onChildAdd(stops[1], line.id);
+
+    const after = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), linePosition: stop.get('linePosition'), rotation: stop.get('rotation') }));
+    expect(after).toEqual(before);
+
+    for(const stop of stops)
+      removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   describe('normalizeGeometry re-fits the box while keeping the path in place', () => {
     let line;
     beforeAll(async () => {

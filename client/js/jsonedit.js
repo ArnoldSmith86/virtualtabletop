@@ -3958,7 +3958,16 @@ function jeInitEventListeners() {
 
     // Adding hitTest makes foreign elements temporarily hittable.
     document.body.classList.add('hitTest');
-    let hoveredWidgets = document.elementsFromPoint(e.clientX, e.clientY).map(el => widgets.get(unescapeID(el.id.slice(2)))).filter(w => w != null);
+    let hoveredWidgets = [ ...new Set(document.elementsFromPoint(e.clientX, e.clientY).map(el => {
+      const widget = widgets.get(unescapeID(el.id.slice(2)));
+      if(widget)
+        return widget;
+      // a line's own box is pointer-events:none - only its unnamed hit path
+      // and (while selected) its handles are hittable, so trace those back to
+      // the line widget that owns them
+      const lineElement = el.closest && el.closest('.widget.line');
+      return lineElement ? widgets.get(unescapeID(lineElement.id.slice(2))) : null;
+    })) ].filter(w => w != null);
     document.body.classList.remove('hitTest');
 
     hoveredWidgets.sort(function(w1,w2) {
