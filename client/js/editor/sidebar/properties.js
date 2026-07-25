@@ -1878,9 +1878,7 @@ class PropertiesModule extends SidebarModule {
     const card = new Card();
     card.state.deck = deck.id;
     card.deck = deck;
-    const cardTypes = this.cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
-
-    this.cardTypeCards = [];
+    const cardTypes = deck.get('cardTypes');
 
     for(const cardType in cardTypes) {
       if(onlyCardType !== null && onlyCardType != cardType)
@@ -1892,26 +1890,13 @@ class PropertiesModule extends SidebarModule {
           <button icon=add></button>
         </div>
         <div class=renderedWidget></div>
-        <button icon=create>Edit</button>
-        <div class=cardTypeProperties>
-          <div></div>
-          <div class=buttonBar>
-            <button icon=close class=red>Discard changes</button>
-            <button icon=check class=green>Apply changes</button>
-          </div>
-        </div>
       `);
-      $('[icon=create]', cardTypeDiv).onclick = _=>this.renderCardTypes_editProperties(deck, cardType, cardTypeDiv);
-
-      this.cardTypeCards[cardType] = [];
 
       const cardClone = new Card();
       const newState = {...card.state};
       newState.activeFace = card.getFaceCount()>1?1:0;
       newState.cardType = cardType;
       cardClone.renderReadonlyCopyRaw(newState, $('.renderedWidget', cardTypeDiv));
-
-      this.cardTypeCards[cardType] = cardClone;
 
       let cardCount = widgetFilter(w => w.get('deck') == deck.id && w.get('cardType') == cardType).length;
       const input = this.addInput('Card Count', cardCount, v=>updateCount(0, v), $('.cardCountDiv', cardTypeDiv), 'number');
@@ -1935,58 +1920,6 @@ class PropertiesModule extends SidebarModule {
       $('.cardCountDiv', cardTypeDiv).insertBefore($('input', input.dom), $('[icon=add]', cardTypeDiv));
       input.dom.remove();
     }
-  }
-
-  renderCardTypes_editProperties(deck, cardType, cardTypeDiv) {
-    $('.cardTypeProperties > div', cardTypeDiv).innerHTML = '';
-    cardTypeDiv.classList.add('cardCountDivEditing');
-
-    const cardTypeProperties = JSON.parse(JSON.stringify(deck.get('cardTypes')))[cardType];
-
-    const addPropertyInput = (property, value)=>{
-      this.addInput(property, value, v=>{
-        if(typeof v === undefined)
-          delete cardTypeProperties[property];
-        else
-          cardTypeProperties[property] = v;
-        this.renderCardTypes_updateCardVisualization(deck, cardType, { [property]: v });
-      }, $('.cardTypeProperties > div', cardTypeDiv));
-    };
-
-    for(const [ property, value ] of Object.entries(cardTypeProperties))
-      addPropertyInput(property, value);
-
-    for(const face of deck.get('faceTemplates'))
-      for(const object of face.objects || [])
-        for(const prop of Object.values(object.dynamicProperties || {}))
-          if(typeof cardTypeProperties[prop] === 'undefined' && [ 'cardType', 'id' ].indexOf(prop) == -1)
-            addPropertyInput(prop, cardTypeProperties[prop]);
-
-    $('[icon=check]', cardTypeDiv).onclick = async _=>{
-      cardTypeDiv.classList.remove('cardCountDivEditing');
-
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} updated card types of deck ${deck.id} in editor`);
-      const cardTypes = JSON.parse(JSON.stringify(deck.get('cardTypes')));
-      cardTypes[cardType] = cardTypeProperties;
-      await deck.set('cardTypes', cardTypes);
-      batchEnd();
-    };
-
-    $('[icon=close]', cardTypeDiv).onclick = _=>{
-      cardTypeDiv.classList.remove('cardCountDivEditing');
-      this.renderCardTypes_updateCardVisualization(deck, cardType, deck.get('cardTypes')[cardType]);
-    };
-  }
-
-  renderCardTypes_updateCardVisualization(deck, cardType, changes) {
-      const oCard = this.cardTypeCards[cardType];
-      oCard.domElement.innerHTML = '';
-      Object.assign(oCard.state, changes);
-      oCard.createFaces(deck.get('faceTemplates'));
-      for (let i = 0; i < oCard.domElement.children.length; ++i) {
-          oCard.domElement.children[i].classList.toggle('active', i == oCard.get('activeFace'));
-      }
   }
 
   basicPropertyExcludeList(extra = []) {
@@ -4844,15 +4777,10 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     this.addSubHeader(`Card type`);
     this.renderCardTypes(widgets.get(widget.get('deck')), widget.get('cardType'));
-    const deckButtons = div(this.moduleDOM, '', `
-      <p>Open the deck of this card to edit what card types exist and how the cards look like.</p>
-      <div class=buttonBar>
-        <button icon=style>Open deck</button>
-        <button icon=edit>Open deck editor</button>
-      </div>
+    const deckButtons = div(this.moduleDOM, 'cardDeckButton', `
+      <button icon=style>Edit Cards and Deck</button>
     `);
-    $('[icon=style]', deckButtons).onclick = _=>setSelection([ widgets.get(widget.get('deck')) ]);
-    $('[icon=edit]', deckButtons).onclick = _=>deckEditor.open(widget.get('deck'));
+    $('button', deckButtons).onclick = _=>deckEditor.openAtCardType(widget.get('deck'), widget.get('cardType'));
     this.renderAppearanceSection(widget);
     this.renderOtherPropertiesSection(widget, [ 'deck', 'cardType', 'z' ]);
   }

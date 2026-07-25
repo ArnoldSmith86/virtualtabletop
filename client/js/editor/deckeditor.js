@@ -836,6 +836,17 @@ class DeckEditor {
     this.syncToolbarButton();
   }
 
+  // Entry point for the "Edit Cards and Deck" button on a card's Properties panel: open the card's deck with
+  // that card type shown in the strip and Face 1 selected in the tree, overriding any remembered selection.
+  async openAtCardType(deckID, cardType) {
+    await this.open(deckID);
+    if(this.deckID != deckID)
+      return; // open() bails out early if the widget isn't a deck
+    if(cardType !== undefined && cardType !== null && this.cardTypes && this.cardTypes[cardType] !== undefined)
+      this.cardType = cardType;
+    this.selectFaceNode(Math.min(1, Math.max(0, this.faceTemplates.length - 1)));
+  }
+
   // Entry point for the toolbar toggle button: open the most relevant deck (a selected deck, a selected
   // card's deck, or the last deck in the game) since the button carries no per-deck context of its own.
   async openBestDeck() {
