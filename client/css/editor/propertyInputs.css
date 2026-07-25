@@ -465,6 +465,14 @@
   opacity: 0.5;
 }
 
+.editorModule .iconInlineOptions:not(:empty) {
+  margin-top: 4px;
+}
+
+.editorModule .iconInlineOptions .propertyPickerSectionTitle {
+  margin-bottom: 4px;
+}
+
 .editorModule .svgReplacesHelp {
   color: var(--textDimColor1, #777);
   font-size: 12px;

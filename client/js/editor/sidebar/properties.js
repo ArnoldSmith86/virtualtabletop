@@ -4478,7 +4478,25 @@ class PropertiesModule extends SidebarModule {
     const iconTitle = div(iconBlock, 'contentMediaTitle');
     iconTitle.textContent = 'Icon';
     propertyInfoButton(iconTitle, html(editorPropertyHints.icon));
-    new IconInput(this, widget, null, { property: 'icon', pickerGroup }).render(iconBlock);
+    const iconInput = new IconInput(this, widget, null, { property: 'icon', pickerGroup });
+    iconInput.render(iconBlock);
+
+    // color/scale controls stay visible here (rather than only inside the
+    // picker popout) so they don't disappear once you click away or reselect
+    // the widget - https://discord.com/channels/770758631146782780/1530345502212882535/1530388340141064363
+    const iconOptionsBlock = div(iconBlock, 'iconInlineOptions');
+    const renderIconOptions = () => {
+      if(iconOptionsBlock.contains(document.activeElement))
+        return;
+      iconOptionsBlock.innerHTML = '';
+      const value = iconInput.getValue();
+      if(!iconSupportsBasicOptions(value))
+        return;
+      div(iconOptionsBlock, 'propertyPickerSectionTitle', 'Icon color & scale');
+      iconInput.renderIconOptionControls(iconOptionsBlock, value);
+    };
+    this.addPropertyListener(widget, 'icon', renderIconOptions);
+    renderIconOptions();
 
     const imageBlock = div(mediaRow, 'contentMediaBlock');
     const imageTitle = div(imageBlock, 'contentMediaTitle');

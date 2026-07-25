@@ -21,7 +21,8 @@ const inputHelpers = new Function(inputsSource + `;
     iconObjectValue,
     iconName,
     iconOption,
-    iconWithOption
+    iconWithOption,
+    iconSupportsBasicOptions
   };
 `)();
 
@@ -347,5 +348,14 @@ describe('icon value helpers', () => {
 
   test('iconWithOption on a null value creates a plain string once a name is set', () => {
     expect(inputHelpers.iconWithOption(null, 'name', 'skull')).toBe('skull');
+  });
+
+  test('iconSupportsBasicOptions requires a chosen single icon, not a combo or unset value', () => {
+    expect(inputHelpers.iconSupportsBasicOptions('skull')).toBe(true);
+    expect(inputHelpers.iconSupportsBasicOptions({ name: 'skull', color: '#f00' })).toBe(true);
+    expect(inputHelpers.iconSupportsBasicOptions(null)).toBe(false);
+    expect(inputHelpers.iconSupportsBasicOptions('')).toBe(false);
+    expect(inputHelpers.iconSupportsBasicOptions({ name: null })).toBe(false);
+    expect(inputHelpers.iconSupportsBasicOptions([ 'a', 'b' ])).toBe(false);
   });
 });

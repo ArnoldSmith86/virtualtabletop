@@ -956,6 +956,13 @@ function iconWithOption(value, key, optionValue) {
   return keys.length ? object : (object.name || null);
 }
 
+// color/scale attach to a single chosen glyph - a multi-icon combo (array) or
+// an unset icon has nothing to attach them to (and doing so anyway would
+// create a bogus { name: null, ... } icon value)
+function iconSupportsBasicOptions(value) {
+  return !Array.isArray(value) && !!iconName(value);
+}
+
 class IconInput extends PickerInput {
   cssClass() {
     return 'pickerInput iconInput';
@@ -994,27 +1001,15 @@ class IconInput extends PickerInput {
     return this.options.emptyLabel || 'Choose icon';
   }
 
-  // Basic inline options (color, scale) for the icon actually selected -
-  // stored on the icon value itself (as its object form) rather than as
-  // separate widget properties, since the underlying icon rendering already
-  // supports that form (see generateSymbolsDiv).
-  renderBasicOptions(target, value) {
-    if(Array.isArray(value))
-      return; // multi-icon combos are edited elsewhere, not as basic options
-    const section = div(target, 'propertyPickerSection iconBasicOptions');
-    this.renderBasicOptionsContent(section, value);
-  }
-
-  renderBasicOptionsContent(section, value) {
-    div(section, 'propertyPickerSectionTitle', 'Basic options');
-    // color/scale apply to a specific icon - without one chosen yet there is
-    // nothing to attach them to (and doing so anyway would create a bogus
-    // { name: null, ... } icon value), so ask for an icon first
-    if(!iconName(value)) {
-      div(section, 'propertyPickerEmpty', 'Choose an icon below to set its color and scale.');
-      return;
-    }
-    const row = div(section, 'iconBasicOptionsRow');
+  // Inline options (color, scale) for the icon actually selected - stored on
+  // the icon value itself (as its object form) rather than as separate widget
+  // properties, since the underlying icon rendering already supports that
+  // form (see generateSymbolsDiv). Rendered persistently in the Content
+  // section (properties.js) rather than inside the transient picker popout,
+  // so they stay visible after picking an icon instead of disappearing once
+  // the popout closes or the widget is reselected.
+  renderIconOptionControls(target, value) {
+    const row = div(target, 'iconBasicOptionsRow');
 
     const colorWrap = div(row, 'iconBasicOption');
     const colorLabel = document.createElement('label');
@@ -1070,22 +1065,7 @@ class IconInput extends PickerInput {
     scaleWrap.appendChild(clearScale);
   }
 
-  // basic options live in their own section so refreshPicker (called on every
-  // remote/undo update while the picker is open) can update them without
-  // losing focus on the search input further down
-  refreshPicker(value) {
-    super.refreshPicker(value);
-    if(this.pickerDOM) {
-      const section = this.pickerDOM.querySelector('.iconBasicOptions');
-      if(section && !section.contains(document.activeElement)) {
-        section.innerHTML = '';
-        this.renderBasicOptionsContent(section, value);
-      }
-    }
-  }
-
   renderPickerContent(target, value) {
-    this.renderBasicOptions(target, value);
     this.addChipList(target, 'Used in this game', usedGameIcons(), value, renderIconChip);
 
     const searchSection = div(target, 'propertyPickerSection');
