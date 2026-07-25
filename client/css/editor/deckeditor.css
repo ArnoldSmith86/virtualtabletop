@@ -1046,6 +1046,24 @@ body.deckEditorPanning #deckEditorMain * {
   margin: 0;
 }
 
+/* Room for both the asset-picker button and the trash on the far right of a row. */
+#deckEditorSidebar .deckEditorProperties .genericInput.hasAssetPicker {
+  padding-right: 48px;
+}
+
+/* These two reuse the Edit Widgets tab's IconInput/ImageInput picker (propertyInputs.css), which is scoped
+   under ".editorModule" — the deck editor's sidebar isn't one, so restore the visibility that bare
+   ".editorModule { display: none }" rule (meant for hidden/inactive sidebar modules) turns off here. */
+.deckEditorAssetPickerWrap.editorModule {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.deckEditorPickerRow.editorModule {
+  display: block;
+  margin: -4px 0 8px;
+}
+
 #deckEditorShowAll.active {
   background: var(--VTTblueDark);
   color: #fff;

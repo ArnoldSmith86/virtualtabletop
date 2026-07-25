@@ -1679,13 +1679,18 @@ class DeckEditor {
         // Known object properties get a fixed field type (number or text) with no type selector; the value's
         // JS type decides for anything custom.
         const fieldType = this.objectFieldType(property);
-        const row = this.addTypedInput(property, object[property], v=>this.queueFieldEdit(async _=>{
+        const onValueChanged = v=>this.queueFieldEdit(async _=>{
           await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
           object[property] = v;
           this.refreshMainCardFaces();
           this.updateDragToolbar();
           this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
-        }), objectProps, fieldType, true);
+        });
+        const row = this.addTypedInput(property, object[property], onValueChanged, objectProps, fieldType, true);
+        // The object's own value is an image/icon: a picker button opens the same chip picker the Edit
+        // Widgets tab uses for a basic widget's Content section, right below this row.
+        if(property == 'value' && (object.type == 'image' || object.type == 'icon'))
+          this.addAssetPickerToRow(row, objectProps, object.type, ()=>object[property], onValueChanged);
         // Per-row "make different per card type" (split) button removed; that binding is created from the
         // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
         this.addPropertyDeleteButton(row, property, async _=>{
@@ -1750,12 +1755,17 @@ class DeckEditor {
         for(const property of Object.values(object.dynamicProperties || {}))
           boundProperties.add(property);
     const addTypeInput = property=>{
-      const row = this.addTypedInput(property, typeProperties[property], v=>this.queueFieldEdit(async _=>{
+      const onValueChanged = v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardTypes', typeFieldArgs(property)[1]);
         typeProperties[property] = v;
         this.refreshMainCardFaces();
         this.scheduleCommit('cardTypes', ...typeFieldArgs(property));
-      }), typeProps);
+      });
+      const row = this.addTypedInput(property, typeProperties[property], onValueChanged, typeProps);
+      // A custom asset value, or a property bound to an image/icon face object's "value", gets a picker too.
+      const boundKind = this.assetPickerKindForCardTypeProperty(property);
+      if(boundKind || this.isAssetValue(typeProperties[property]))
+        this.addAssetPickerToRow(row, typeProps, boundKind || 'image', ()=>typeProperties[property], onValueChanged);
       if(!boundProperties.has(property))
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
@@ -2365,6 +2375,49 @@ class DeckEditor {
     return { dom: wrapper };
   }
 
+  // A property's value looks like an uploaded custom asset (e.g. "/assets/-647970708_494").
+  isAssetValue(value) {
+    return typeof value == 'string' && /^\/assets\/[0-9_-]+$/.test(value);
+  }
+
+  // Whether a card type property is used as the "value" of an image/icon face object bound to it — such a
+  // property is effectively an image/icon value even when it doesn't currently hold an asset path.
+  assetPickerKindForCardTypeProperty(property) {
+    for(const face of this.faceTemplates)
+      for(const object of face.objects || [])
+        if(object.dynamicProperties && object.dynamicProperties.value == property && (object.type == 'image' || object.type == 'icon'))
+          return object.type;
+    return null;
+  }
+
+  // Adds a small preview/picker button to a property row (reusing the Edit Widgets tab's IconInput/ImageInput)
+  // and an expanding picker section directly below it, matching the basic-widget Content pickers. Unlike those,
+  // picking a value here immediately closes the picker (rows keep editing other fields right after). The
+  // picker's own CSS is scoped under ".editorModule" (the sidebar-module system this deck editor doesn't use),
+  // so both new elements carry that class plus an override rule making them visible here too.
+  addAssetPickerToRow(row, target, kind, getValue, setValue) {
+    const wrap = div(row.dom, 'deckEditorAssetPickerWrap editorModule');
+    const pickerHost = div(target, 'deckEditorPickerRow editorModule');
+    row.dom.classList.add('hasAssetPicker');
+    const inputClass = kind == 'icon' ? IconInput : ImageInput;
+    const picker = new inputClass({ addPropertyListener: (w, p, cb)=>cb(w) }, {}, null, {
+      getValue,
+      listenTo: [],
+      clearable: false,
+      pickerTarget: pickerHost
+    });
+    picker.setValue = value=>{
+      setValue(value);
+      const field = row.dom.querySelector('input, textarea');
+      if(field)
+        field.value = value === null || value === undefined ? '' : value;
+      picker.closePicker();
+      picker.updatePreview();
+    };
+    picker.render(wrap);
+    return picker;
+  }
+
   // The "Click a face object…" hint, shown below the card view (bottom-center) whenever a card type is being
   // edited but no object is selected. Blank in every other state.
   renderObjectHint() {
@@ -2389,11 +2442,14 @@ class DeckEditor {
     const defaultsProps = div(sidebar, 'deckEditorProperties');
     const addDefaultsInput = property=>{
       const forced = (property == 'width' || property == 'height') ? 'number' : undefined;
-      const row = this.addTypedInput(property, this.cardDefaults[property], v=>this.queueFieldEdit(async _=>{
+      const onValueChanged = v=>this.queueFieldEdit(async _=>{
         await this.flushPendingCommitForOtherField('cardDefaults', defaultsFieldArgs(property)[1]);
         this.cardDefaults[property] = v;
         this.scheduleCommit('cardDefaults', ...defaultsFieldArgs(property));
-      }), defaultsProps, forced);
+      });
+      const row = this.addTypedInput(property, this.cardDefaults[property], onValueChanged, defaultsProps, forced);
+      if(this.isAssetValue(this.cardDefaults[property]))
+        this.addAssetPickerToRow(row, defaultsProps, 'image', ()=>this.cardDefaults[property], onValueChanged);
       if(this.cardDefaults[property] !== undefined) {
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
