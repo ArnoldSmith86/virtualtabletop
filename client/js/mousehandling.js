@@ -87,18 +87,9 @@ async function inputHandler(name, e) {
         moveTarget: widget
       };
       const ms = mouseStatus[target.id];
-      let movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-      while (ms.moveTarget && !movable) {
-        let parent = ms.moveTarget.get('parent');
-        if(parent && widgets.has(parent)) {
-          ms.moveTarget = widgets.get(parent);
-          movable = ms.moveTarget.get(editMovable ? 'movableInEdit' : 'movable');
-        } else {
-          ms.moveTarget = null;
-          movable = false;
-        }
-      }
-      if (movable) {
+      const movableProperty = editMovable ? 'movableInEdit' : 'movable';
+      ms.moveTarget = ms.moveTarget.ancestors().find(w=>w.get(movableProperty));
+      if (ms.moveTarget) {
         ms.localAnchor = ms.moveTarget.coordLocalFromCoordClient({x: coords.clientX, y: coords.clientY});
       }
     } else if(name == 'mouseup' || (name == 'touchend' || name == 'touchcancel') && mouseStatus[target.id]) {

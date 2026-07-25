@@ -567,14 +567,14 @@ function removeWidget(widgetID) {
   dropTargets.delete(widgetID);
 }
 
-async function removeWidgetLocal(widgetID, keepChildren) {
+export async function removeWidgetLocal(widgetID, keepChildren) {
   function getWidgetsToRemove(widgetID) {
+    widgets.get(widgetID).inRemovalQueue = true;
     const children = [];
     if(!keepChildren)
       for(const [ childWidgetID, childWidget ] of widgets)
         if(!childWidget.inRemovalQueue && (childWidget.get('parent') == widgetID || childWidget.get('deck') == widgetID))
           children.push(...getWidgetsToRemove(childWidgetID));
-    widgets.get(widgetID).inRemovalQueue = true;
     children.push(widgets.get(widgetID));
     return children;
   }

@@ -36,7 +36,7 @@ function compareDropTarget(widget, t, exclude){
   return false;
 }
 
-function getValidDropTargets(widget) {
+export function getValidDropTargets(widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
@@ -50,18 +50,8 @@ function getValidDropTargets(widget) {
 
     let isValid = compareDropTarget(widget, t);
 
-    let tt = t;
-    while(isValid) {
-      if(widget == tt) {
-        isValid = false;
-        break;
-      }
-
-      if(tt.get('parent'))
-        tt = widgets.get(tt.get('parent'));
-      else
-        break;
-    }
+    if(isValid && t.ancestors().includes(widget))
+      isValid = false;
 
     if (jeEnabled && getComputedStyle(t.domElement).getPropertyValue('--foreign') == 'true')
       continue;
