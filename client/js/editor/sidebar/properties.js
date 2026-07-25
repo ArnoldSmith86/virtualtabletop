@@ -5456,7 +5456,23 @@ class PropertiesModule extends SidebarModule {
   }
 
   diceUsesPips(widget) {
+    // mirror the engine (Dice.pipSymbols()): an unset pipSymbols means pip
+    // symbols only for flat dice and 3D d6 shapes, so e.g. a 3D d4 with
+    // numeric faces is "Number/text" in the editor, not "Pips"
+    if(typeof widget.pipSymbols == 'function')
+      return !!widget.pipSymbols();
     return widget.get('pipSymbols') !== false;
+  }
+
+  // color properties that can either be shared by all faces (stored on the
+  // dice) or set per face; rendered as the same compact icon swatches as the
+  // Appearance color row of a basic widget
+  diceFaceColorDefs() {
+    return [
+      { key: 'color',       label: 'Background', labelIcon: 'format_color_fill' },
+      { key: 'pipColor',    label: 'Pips/icon',  labelIcon: 'format_color_text' },
+      { key: 'borderColor', label: 'Border',     labelIcon: 'border_color' }
+    ];
   }
 
   // Normalize a face entry to a { type, ... } shape for editing.
@@ -5519,16 +5535,29 @@ class PropertiesModule extends SidebarModule {
     // above the face rows (rather than below) so the cause (a lock toggle)
     // sits before its effect (a swatch appearing on every row).
     this.addAppearanceSubTitle('Face colors');
-    const lockRow = div(this.moduleDOM, 'diceColorLocks');
-    const colorDefs = [
-      { key: 'color',       label: 'Background' },
-      { key: 'pipColor',    label: 'Pips/icon' },
-      { key: 'borderColor', label: 'Border' }
-    ];
+    const colorDefs = this.diceFaceColorDefs();
     const locks = {};
-    const renderLockRow = def=>{
-      def.wrap.innerHTML = '';
-      new CheckboxInput(this, widget, `${def.label} same for all faces`, {
+    for(const def of colorDefs)
+      // default locked unless a face already defines a per-face value
+      locks[def.key] = !this.diceFaces(widget).some(f=>isObjectLike(f) && f[def.key] !== undefined);
+
+    const sharedColors = div(this.moduleDOM, 'diceSharedColors');
+    const renderSharedColors = _=>{
+      sharedColors.innerHTML = '';
+      const shared = colorDefs.filter(def=>locks[def.key]);
+      if(shared.length)
+        this.renderColorRow(widget, shared.map(def=>({ kind: 'color', label: def.label, labelIcon: def.labelIcon, property: def.key })), sharedColors);
+      else
+        div(sharedColors, 'diceFaceHint', 'Every face has its own colors below.');
+    };
+    renderSharedColors();
+
+    const lockRow = div(this.moduleDOM, 'diceColorLocks');
+    const lockTitle = div(lockRow, 'propSetTitle', 'Same for all faces');
+    propertyInfoButton(lockTitle, 'A color that is on is stored once on the dice. Turn it off to give every face its own value below.');
+    const lockChecks = div(lockRow, 'diceColorLockChecks');
+    for(const def of colorDefs) {
+      new CheckboxInput(this, widget, def.label, {
         getValue: _=>locks[def.key],
         setValue: v=>{
           const scrollTop = this.moduleDOM.scrollTop;
@@ -5538,7 +5567,7 @@ class PropertiesModule extends SidebarModule {
             const faces = this.diceFaces(widget);
             let moved = null;
             for(const f of faces)
-              if(typeof f == 'object' && f !== null && f[def.key] !== undefined) {
+              if(isObjectLike(f) && f[def.key] !== undefined) {
                 moved = moved === null ? f[def.key] : moved;
                 delete f[def.key];
               }
@@ -5548,23 +5577,12 @@ class PropertiesModule extends SidebarModule {
             widget.set('faces', faces);
             batchEnd();
           }
-          renderLockRow(def);
+          renderSharedColors();
           rebuild();
           this.moduleDOM.scrollTop = scrollTop;
         },
-        listenTo: [ def.key ],
-        hint: `When on, ${def.label.toLowerCase()} is stored once on the dice. Turn it off to choose a different value on every face.`
-      }).render(def.wrap);
-      if(locks[def.key])
-        // null label: the checkbox above already names the property, so the
-        // swatch alone (no repeated "Background") is enough
-        new ColorInput(this, widget, null, { property: def.key }).render(def.wrap);
-    };
-    for(const def of colorDefs) {
-      // default locked unless a face already defines a per-face value
-      locks[def.key] = !this.diceFaces(widget).some(f=>typeof f == 'object' && f !== null && f[def.key] !== undefined);
-      def.wrap = div(lockRow, 'diceColorLock');
-      renderLockRow(def);
+        listenTo: [ def.key ]
+      }).render(lockChecks);
     }
 
     const facesContainer = div(this.moduleDOM, 'diceFacesEditor');
@@ -5597,31 +5615,60 @@ class PropertiesModule extends SidebarModule {
   renderDiceFacePreview(widget, index, target) {
     const preview = div(target, 'diceFacePreview');
     preview.dataset.face = index;
-    const dice = new Dice();
-    dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, { id: generateUniqueWidgetID(), activeFace: index }), preview);
+    this.drawDiceFacePreview(widget, preview);
     return preview;
   }
 
+  // A face row previews the flat face rather than the 3D body so it stays
+  // readable at thumbnail size, scaled down to fit the box because dice can be
+  // any size. pipSymbols is passed explicitly so the flat preview keeps the
+  // pip/number rendering the 3D shape would use.
+  drawDiceFacePreview(widget, preview) {
+    preview.innerHTML = '';
+    const dice = new Dice();
+    dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
+      activeFace: +preview.dataset.face,
+      shape3d: false,
+      pipSymbols: this.diceUsesPips(widget)
+    }), preview);
+
+    const rendered = preview.children[0];
+    if(!rendered)
+      return;
+    const fit = _=>{
+      rendered.style.transformOrigin = 'top left';
+      rendered.style.transform = '';
+      const box = preview.getBoundingClientRect();
+      const rect = getBoundingClientRectWithAbsoluteChildren(rendered);
+      const size = Math.max(rect.width, rect.height);
+      if(!size || !box.width)
+        return;
+      rendered.style.transform = `scale(${Math.min(1, Math.min(box.width, box.height) / size)})`;
+      centerElementInClientRect(rendered, box);
+    };
+    fit();
+    // the widget only has its final size after the browser laid it out
+    requestAnimationFrame(fit);
+  }
+
   refreshDiceFacePreviews(widget, facesContainer) {
-    for(const preview of $a('.diceFacePreview', facesContainer)) {
-      preview.innerHTML = '';
-      const dice = new Dice();
-      dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, { id: generateUniqueWidgetID(), activeFace: +preview.dataset.face }), preview);
-    }
+    for(const preview of $a('.diceFacePreview', facesContainer))
+      this.drawDiceFacePreview(widget, preview);
   }
 
   renderDiceFaceRow(widget, index, locks, container) {
     const row = div(container, 'diceFaceRow');
     row.dataset.face = index;
-    this.renderDiceFacePreview(widget, index, row);
+    const main = div(row, 'diceFaceMain');
+    this.renderDiceFacePreview(widget, index, main);
 
-    const controls = div(row, 'diceFaceControls');
+    const controls = div(main, 'diceFaceControls');
 
     // reorder and delete live in a column on the right side of the row
-    const actions = div(row, 'faceRowActions');
+    const actions = div(main, 'faceRowActions');
     this.renderFaceOrderControls(actions, index, this.diceFaces(widget).length, (from, to)=>{
       this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setDiceFaces(widget, faces, activeFace));
-    }, row);
+    });
     const type = this.diceFaceType(widget, this.diceFaces(widget)[index]);
 
     new SelectInput(this, widget, 'Type', {
@@ -5667,11 +5714,16 @@ class PropertiesModule extends SidebarModule {
     else if(type == 'image')
       new ImageInput(this, widget, 'Image', { listenTo: [ 'faces' ], getValue: getFaceValue, setValue: setFaceValue }).render(controls);
 
-    // per-face colors for whichever properties are unlocked
-    for(const def of [ { key: 'color', label: 'Background' }, { key: 'pipColor', label: 'Pips/icon' }, { key: 'borderColor', label: 'Border' } ]) {
-      if(locks[def.key])
-        continue;
+    // per-face colors for whichever properties are unlocked, as the same
+    // compact icon swatches as the Appearance color row; their pickers open
+    // below the row so opening one does not reshuffle the controls
+    const perFaceColors = this.diceFaceColorDefs().filter(def=>!locks[def.key]);
+    const colorRow = perFaceColors.length ? div(controls, 'colorFlexRow') : null;
+    const pickerGroup = perFaceColors.length ? { target: div(row, 'diceFacePickers'), current: null } : null;
+    for(const def of perFaceColors) {
       new ColorInput(this, widget, def.label, {
+        labelIcon: def.labelIcon,
+        pickerGroup,
         listenTo: [ 'faces' ],
         getValue: _=>{
           const face = this.diceFaces(widget)[index];
@@ -5685,7 +5737,7 @@ class PropertiesModule extends SidebarModule {
           else faces[index][def.key] = v;
           this.setDiceFaces(widget, faces);
         }
-      }).render(controls);
+      }).render(colorRow);
     }
 
     const remove = document.createElement('button');
@@ -5716,16 +5768,10 @@ class PropertiesModule extends SidebarModule {
     setFaces(faces, activeFace);
   }
 
-  // target: where the buttons are rendered; row: the face row (drag target),
-  // defaults to target for callers that render the controls into the row itself
-  renderFaceOrderControls(target, index, count, moveFace, row=null) {
-    row = row || target;
+  // up/down buttons stacked in the actions column of a face row - no drag
+  // handle, so the row keeps as much width as possible for its values
+  renderFaceOrderControls(target, index, count, moveFace) {
     const controls = div(target, 'faceOrderControls');
-    const handle = document.createElement('button');
-    handle.setAttribute('icon', 'drag_indicator');
-    handle.title = 'Drag to reorder this face';
-    handle.draggable = true;
-    controls.appendChild(handle);
 
     const up = document.createElement('button');
     up.setAttribute('icon', 'arrow_upward');
@@ -5740,24 +5786,6 @@ class PropertiesModule extends SidebarModule {
     down.disabled = index == count - 1;
     down.onclick = _=>moveFace(index, index + 1);
     controls.appendChild(down);
-
-    handle.ondragstart = e=>{
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', String(index));
-      row.classList.add('dragging');
-    };
-    handle.ondragend = _=>row.classList.remove('dragging');
-    row.ondragover = e=>{
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      row.classList.add('dragOver');
-    };
-    row.ondragleave = _=>row.classList.remove('dragOver');
-    row.ondrop = e=>{
-      e.preventDefault();
-      row.classList.remove('dragOver');
-      moveFace(+e.dataTransfer.getData('text/plain'), index);
-    };
   }
 
   renderForDice(widget) {

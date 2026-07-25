@@ -243,6 +243,17 @@ describe('dice face editor helpers', () => {
     expect(cssHelpers.diceFaceType.call(module, widget, 3)).toBe('text');
   });
 
+  test('diceFaceType follows the engine when pipSymbols is unset (3D d4 shows numbers)', () => {
+    const module = diceModule();
+    // the engine's Dice.pipSymbols() decides this for an unset pipSymbols -
+    // e.g. a 3D d4 renders numbers, so its faces must not be edited as pips
+    const d4 = { get: property => property == 'pipSymbols' ? null : undefined, pipSymbols: () => false };
+    const d6 = { get: property => property == 'pipSymbols' ? null : undefined, pipSymbols: () => true };
+    expect(cssHelpers.diceUsesPips.call(module, d4)).toBe(false);
+    expect(cssHelpers.diceFaceType.call(module, d4, 3)).toBe('text');
+    expect(cssHelpers.diceFaceType.call(module, d6, 3)).toBe('pips');
+  });
+
   test('diceFaceValue reads the value matching the given type, falling back sensibly', () => {
     expect(cssHelpers.diceFaceValue(null, 3, 'pips')).toBe(3);
     expect(cssHelpers.diceFaceValue(null, 'A', 'text')).toBe('A');

@@ -947,9 +947,11 @@
   overflow-wrap: anywhere;
 }
 
+/* same text color as the single-widget id above, just a little smaller
+   because a selection can list several ids */
 .editorModule .widgetHeader .widgetHeaderMultiIds {
-  color: var(--textDimColor1, #777);
-  font-size: 0.8em;
+  color: var(--textColor);
+  font-size: 0.9em;
   overflow-wrap: anywhere;
 }
 
@@ -1120,20 +1122,15 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 .editorModule .diceFaceRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   padding: 4px;
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 6px;
 }
 
-.editorModule .diceFaceRow.dragging {
-  opacity: 0.5;
-}
-
-.editorModule .diceFaceRow.dragOver {
-  outline: 2px dashed var(--VTTblue);
+.editorModule .diceFaceMain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .editorModule .diceFacePreview {
@@ -1163,6 +1160,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   min-width: auto;
 }
 
+/* per-face color pickers open below the row instead of inside it */
+.editorModule .diceFacePickers:not(:empty) {
+  margin-top: 4px;
+}
+
 .editorModule .faceRowActions {
   flex: 0 0 auto;
   display: flex;
@@ -1170,34 +1172,45 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   gap: 4px;
 }
 
+/* up/down stacked so the row keeps its width for the values in the middle */
+.editorModule .diceFaceRow .faceOrderControls {
+  flex-direction: column;
+}
+
 .editorModule .faceOrderControls {
   display: flex;
   gap: 2px;
 }
 
-.editorModule .faceOrderControls button {
-  padding: 0;
-  width: 20px;
-  height: 20px;
+/* same 24px glyph as the neighboring delete button, centered in its button */
+.editorModule .faceOrderControls button[icon] {
+  padding: 2px 5px;
+  justify-content: center;
 }
 
-.editorModule .faceOrderControls [icon=drag_indicator] {
-  cursor: grab;
-}
-
-.editorModule .faceOrderControls [icon=drag_indicator]:active {
-  cursor: grabbing;
-}
-
+.editorModule .diceSharedColors,
 .editorModule .diceColorLocks {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 4px 0 8px;
+  margin: 4px 0;
 }
 
-.editorModule .diceColorLock {
+.editorModule .diceColorLockChecks {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.editorModule .diceColorLockChecks .propertyInput {
+  margin: 2px 0;
+  padding-right: 0;
+  gap: 4px;
+}
+
+.editorModule .diceColorLockChecks .propertyInput > label {
+  width: auto;
+  min-width: 0;
+}
+
+.editorModule .diceFaceHint {
+  font-size: 0.9em;
+  opacity: 0.8;
 }
