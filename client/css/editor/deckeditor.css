@@ -763,15 +763,6 @@ body.deckEditorActive #enlarged {
   pointer-events: none;
 }
 
-/* Image/icon thumbnails open the full symbol picker directly on click. */
-.deckEditorObjectPreviewPickable {
-  cursor: pointer;
-}
-.deckEditorObjectPreviewPickable:hover {
-  outline: 2px solid var(--VTTblue);
-  outline-offset: -2px;
-}
-
 .deckEditorObjectPreviewInner .cardFaceObject {
   position: absolute;
 }

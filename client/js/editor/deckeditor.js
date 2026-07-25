@@ -2144,15 +2144,6 @@ class DeckEditor {
     this.renderSidebar();
   }
 
-  // Opens the full-screen symbol picker overlay (the same one the top bar's Add-image/Add-icon buttons and
-  // the JSON Editor use) for an existing image/icon face object, e.g. from clicking its tree thumbnail.
-  async openObjectPicker(object, type) {
-    const symbol = await pickSymbol(type == 'icon' ? 'all' : 'images');
-    if(!symbol || (type == 'image' && !symbol.url))
-      return;
-    await this.applyObjectValue(object, type == 'icon' ? symbol.symbol : symbol.url, type == 'icon' ? 'picked an icon' : 'picked an image');
-  }
-
   // Renders a small live preview of a face object by cloning its rendered node from the main card (so text,
   // icons, images and color boxes all look right); falls back to a swatch/label when the card can't render.
   // Upload button for image objects. When the value is bound per card type it uploads into that card type's
@@ -2184,18 +2175,8 @@ class DeckEditor {
       return;
     }
 
-    // Clicking an icon thumbnail opens the full symbol picker directly (selecting the object too), so a new
-    // icon can be chosen without first opening the sidebar's own picker. Image thumbnails just select the
-    // object like any other row (the sidebar's own upload/picker button is used to change the image).
-    if(type == 'icon') {
-      box.classList.add('deckEditorObjectPreviewPickable');
-      box.title = `Click to pick a new ${type}`;
-      box.onclick = e=>{
-        e.stopPropagation();
-        this.selectObject(index, faceIndex);
-        this.openObjectPicker(object, type);
-      };
-    }
+    // Image/icon thumbnails just select the object like any other row; the value is changed from the right
+    // sidebar (its upload button for images, its asset picker on the value row for images/icons).
 
     const bw = 44, bh = 60;
     let node = null;
