@@ -42,6 +42,61 @@ test('Pan in edit mode while holding Space', async t => {
   await t.expect(result).eql({ panDelta: -50, selectionActive: false, widgetMoved: false });
 });
 
+test('Renaming a widget keeps its color controls clear and it movable', async t => {
+  await setRoomState({
+    old: { id: 'old', type: 'basic', x: 200, y: 200, movable: true, movableInEdit: true }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await ClientFunction(() => {
+    window.renamedWidgetErrors = [];
+    window.addEventListener('error', event => window.renamedWidgetErrors.push(String(event.error || event.message)));
+  })();
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click('#w_old')
+    .expect(Selector('.colorFlexRow label.iconOnly').count).eql(4)
+    .expect(Selector('[aria-label="Widget id"]').exists).ok()
+    .typeText('[aria-label="Widget id"]', 'new', { replace: true })
+    .pressKey('enter')
+    .expect(Selector('#w_new').exists).ok();
+
+  const colorControlTitles = await ClientFunction(() =>
+    Array.from(document.querySelectorAll('.colorFlexRow .colorInput')).map(input => ({
+      label: input.querySelector('label').getAttribute('title'),
+      swatch: input.querySelector('.propertyPreviewButton').getAttribute('title'),
+      info: !!input.querySelector('.info-button')
+    }))
+  )();
+  await t.expect(colorControlTitles).eql([
+    { label: null, swatch: null, info: false },
+    { label: null, swatch: null, info: false },
+    { label: null, swatch: null, info: false },
+    { label: null, swatch: null, info: false }
+  ]);
+
+  const result = await ClientFunction(() => {
+    const widget = document.querySelector('#w_new');
+    widget.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 2, buttons: 2, clientX: 250, clientY: 250 }));
+    return new Promise(resolve => setTimeout(() => {
+      document.body.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, button: 2, buttons: 2, clientX: 290, clientY: 280 }));
+      setTimeout(() => {
+        widget.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, button: 2, clientX: 290, clientY: 280 }));
+        setTimeout(() => resolve({
+          x: widgets.get('new') && widgets.get('new').get('x'),
+          y: widgets.get('new') && widgets.get('new').get('y'),
+          errors: window.renamedWidgetErrors
+        }), 50);
+      }, 50);
+    }, 50));
+  })();
+
+  await t.expect(result.errors).eql([]);
+  await t.expect(result.x).notEql(200);
+  await t.expect(result.y).notEql(200);
+});
+
 test('Space does not interrupt an active edit-mode widget drag', async t => {
   await t.resizeWindow(1280, 800);
   await setRoomState({

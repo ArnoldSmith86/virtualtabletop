@@ -4032,7 +4032,7 @@ function jeInitEventListeners() {
       }
     }
 
-    const functionKey = e.key.match(/F([0-9]+)/);
+    const functionKey = e.key && e.key.match(/F([0-9]+)/);
     if(functionKey && jeWidgetLayers[+functionKey[1]]) {
       e.preventDefault();
       if(e.ctrlKey) {
