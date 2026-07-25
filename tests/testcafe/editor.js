@@ -256,5 +256,9 @@ test('Line widget in edit mode', async t => {
     .drag(endHandle, 90, 60)
     .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
     .click('#editorToolbar > div > [icon=delete_forever]');
-  await compareState(t, 'd460dc9f8789e8f9f26b9b169454e189');
+  // hash updated after the Edit Widgets template restructure (#3021 review pass):
+  // the panel now renders a different number of inputs before "Add stop" is
+  // clicked, which shifts the seeded rand() stream and changes the generated
+  // stop id. The rest of the resulting state is byte-identical.
+  await compareState(t, '4a478a6d031324b3bd4d922ef97f97f5');
 });
