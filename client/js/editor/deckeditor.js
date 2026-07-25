@@ -1696,8 +1696,8 @@ class DeckEditor {
         if(property == 'value' && (object.type == 'image' || object.type == 'icon'))
           this.addAssetPickerToRow(row, objectProps, object.type, ()=>object[property], onValueChanged);
         // A color-named property (color, strokeColor, …) or a color-looking value gets a swatch + color picker.
-        else if(this.shouldOfferColorPicker(property, object[property]))
-          this.addColorPickerToRow(row, objectProps, ()=>object[property], onValueChanged);
+        else
+          this.addColorPickerToRow(row, objectProps, property, onValueChanged);
         // Per-row "make different per card type" (split) button removed; that binding is created from the
         // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
         this.addPropertyDeleteButton(row, property, async _=>{
@@ -1773,8 +1773,8 @@ class DeckEditor {
       const boundKind = this.assetPickerKindForCardTypeProperty(property);
       if(boundKind || this.isAssetValue(typeProperties[property]))
         this.addAssetPickerToRow(row, typeProps, boundKind || 'image', ()=>typeProperties[property], onValueChanged);
-      else if(this.shouldOfferColorPicker(property, typeProperties[property]))
-        this.addColorPickerToRow(row, typeProps, ()=>typeProperties[property], onValueChanged);
+      else
+        this.addColorPickerToRow(row, typeProps, property, onValueChanged);
       if(!boundProperties.has(property))
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
@@ -1879,13 +1879,12 @@ class DeckEditor {
         this.refreshMainCardFaces();
         this.scheduleCommit('faceTemplates', ...fieldArgs(property));
       }), faceProps);
-      if(this.shouldOfferColorPicker(property, faceProperties[property]))
-        this.addColorPickerToRow(row, faceProps, ()=>faceProperties[property], value=>this.queueFieldEdit(async _=>{
-          await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
-          setFaceProperty(property, value);
-          this.refreshMainCardFaces();
-          this.scheduleCommit('faceTemplates', ...fieldArgs(property));
-        }));
+      this.addColorPickerToRow(row, faceProps, property, value=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('faceTemplates', fieldArgs(property)[1]);
+        setFaceProperty(property, value);
+        this.refreshMainCardFaces();
+        this.scheduleCommit('faceTemplates', ...fieldArgs(property));
+      }));
       this.addPropertyDeleteButton(row, property, _=>deleteFaceProperty(property));
     }
 
@@ -2477,42 +2476,85 @@ class DeckEditor {
 
   // Adds a small color-swatch button to a property row — between the value field and the trash, the same size as
   // the trash — plus an expanding color picker below it that reuses the Edit Widgets tab's ColorInput (the same
-  // picker basic widgets get in their Appearance section). The swatch is painted with the property's current
-  // color; a color-named property whose value isn't a color yet (e.g. empty) shows a neutral checkerboard.
-  // Unlike the asset picker, picking here keeps the picker open (like the Appearance pickers) until it's closed
-  // with the picker's own close (X) button. Same ".editorModule" scoping note as addAssetPickerToRow applies.
-  addColorPickerToRow(row, target, getValue, setValue) {
+  // picker basic widgets get in their Appearance section). The swatch shows the row's current color behind a
+  // palette symbol (tinted by contrastAnyColor so it stays readable on any color) and is only offered while
+  // shouldOfferColorPicker() says so — that is re-evaluated on every keystroke, so typing a color into a
+  // property that isn't named after one makes the button appear right away and dragging the value away from a
+  // color makes it disappear again. Unlike the asset picker, picking here keeps the picker open (like the
+  // Appearance pickers) until it's closed with the picker's own close (X) button. Same ".editorModule" scoping
+  // note as addAssetPickerToRow applies.
+  addColorPickerToRow(row, target, property, setValue) {
+    const field = row.dom.querySelector('input[type=text]');
+    if(!field) // only plain text rows can hold a color (number/checkbox/JSON rows can't)
+      return null;
     const pickerHost = div(target, 'deckEditorPickerRow editorModule');
-    row.dom.classList.add('hasColorPicker');
     const button = document.createElement('button');
     button.className = 'deckEditorColorPickerButton';
+    button.setAttribute('icon', 'palette');
     button.title = 'Pick color';
-    const paintSwatch = value=>{
-      if(this.isColorValue(value)) {
-        button.style.setProperty('--swatchColor', String(value).trim());
-        button.classList.remove('emptyColor');
-      } else {
-        button.style.removeProperty('--swatchColor');
-        button.classList.add('emptyColor');
+    // The picker reads the field instead of the model so it opens on what is currently typed, even while the
+    // edit that writes it through is still queued.
+    const picker = new ColorInput({}, {}, null, { getValue: _=>field.value, listenTo: [] });
+    const updateSwatch = _=>{
+      const offer = this.shouldOfferColorPicker(property, field.value);
+      button.style.display = offer ? '' : 'none';
+      row.dom.classList.toggle('hasColorPicker', offer);
+      if(offer) {
+        const color = this.parseColor(field.value);
+        if(color)
+          button.style.setProperty('--swatchColor', color);
+        else
+          button.style.removeProperty('--swatchColor');
+        button.style.color = contrastAnyColor(this.swatchBackdrop(color), 1);
+      } else if(picker.pickerOpen()) {
+        picker.closePicker();
       }
     };
-    paintSwatch(getValue());
-    const picker = new ColorInput({}, {}, null, { getValue, listenTo: [] });
     picker.setValue = value=>{
       setValue(value);
-      const field = row.dom.querySelector('input, textarea');
-      if(field)
-        field.value = value === null || value === undefined ? '' : value;
-      paintSwatch(value);
+      field.value = value === null || value === undefined ? '' : value;
+      updateSwatch();
       if(picker.pickerOpen())
         picker.refreshPicker(value);
     };
+    field.addEventListener('input', updateSwatch); // addTypedInput owns field.oninput, so don't overwrite it
     button.onclick = _=>picker.togglePicker();
     row.dom.append(button);
     picker.previewButton = button; // openPicker/closePicker toggle .open on this
     picker.pickerDOM = div(pickerHost, 'propertyPicker');
     picker.pickerDOM.style.display = 'none';
+    updateSwatch();
     return picker;
+  }
+
+  // The browser's own reading of a CSS color string, or null if it can't parse it as one. Probing with two
+  // different starting values tells an unparsable value (fillStyle stays untouched) apart from a real black.
+  parseColor(value) {
+    if(typeof value != 'string' || !value.trim())
+      return null;
+    const ctx = document.createElement('canvas').getContext('2d');
+    for(const probe of [ '#000000', '#ffffff' ]) {
+      ctx.fillStyle = probe;
+      ctx.fillStyle = value.trim();
+      if(ctx.fillStyle != probe)
+        return ctx.fillStyle;
+    }
+    return null;
+  }
+
+  // What a swatch color actually looks like: a translucent (or missing) color lets the swatch's checkerboard
+  // through, so composite it over that gray before asking contrastAnyColor() for a readable symbol color.
+  swatchBackdrop(color) {
+    const checkerboard = '#b3b3b3'; // between the checkerboard's two grays
+    if(!color)
+      return checkerboard;
+    const ctx = document.createElement('canvas').getContext('2d');
+    ctx.fillStyle = checkerboard;
+    ctx.fillRect(0, 0, 1, 1);
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1, 1);
+    const [ r, g, b ] = ctx.getImageData(0, 0, 1, 1).data;
+    return `rgb(${r},${g},${b})`;
   }
 
   // The "Click a face object…" hint, shown below the card view (bottom-center) whenever a card type is being
@@ -2547,8 +2589,8 @@ class DeckEditor {
       const row = this.addTypedInput(property, this.cardDefaults[property], onValueChanged, defaultsProps, forced);
       if(this.isAssetValue(this.cardDefaults[property]))
         this.addAssetPickerToRow(row, defaultsProps, 'image', ()=>this.cardDefaults[property], onValueChanged);
-      else if(this.shouldOfferColorPicker(property, this.cardDefaults[property]))
-        this.addColorPickerToRow(row, defaultsProps, ()=>this.cardDefaults[property], onValueChanged);
+      else
+        this.addColorPickerToRow(row, defaultsProps, property, onValueChanged);
       if(this.cardDefaults[property] !== undefined) {
         this.addPropertyDeleteButton(row, property, async _=>{
           await this.flushPendingCommits();
