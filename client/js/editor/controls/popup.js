@@ -280,7 +280,7 @@ class RoutinePopup extends Popup {
         You can use [VAR], [var] or [COUNT] to put values into variables, then use [var] or [VAR] to do calculations.
         Then you can use the variable here.
       `);
-      for(const variable of this.variables.sort())
+      for(const variable of [ ...this.variables ].sort())
         button(variablesContent, variable, _=>this.setNewValue(`\$\{${variable}\}`));
 
       const [ predefinedVariablesTitle, predefinedVariablesContent ] = this.addAccordionSection('Predefined Variables');
@@ -514,10 +514,18 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
   setNewValue(value) {
     // widget ids arrive as an array and belong to the first (holder-like) parameter;
     // collection names are strings and belong to the second parameter if there is one
-    if(Array.isArray(value))
-      this.notifyChangeListeners({ [this.parameterNames[0]]: value });
-    else
+    if(Array.isArray(value)) {
+      const holderParameter = this.parameterNames[0];
+      const collectionParameter = this.parameterNames[1];
+      // clear the sibling collection (mirror of setNewCollectionValue) so a leftover
+      // value can't re-surface as the source if the holder is later cleared
+      if(collectionParameter === undefined)
+        this.notifyChangeListeners({ [holderParameter]: value });
+      else
+        this.notifyChangeListeners({ [holderParameter]: value, [collectionParameter]: undefined });
+    } else {
       this.setNewCollectionValue(value);
+    }
   }
 
   show() {

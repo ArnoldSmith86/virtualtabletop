@@ -195,6 +195,29 @@ body.edit.darkMode .routine-editor-parameter-missing {
   color: var(--VTTblue);
 }
 
+/* drag-and-drop reordering: a grip to grab, Ctrl-click to select several cards */
+.routine-editor-operation-buttons .routine-editor-drag-handle {
+  cursor: grab;
+}
+
+.routine-editor-operation-selected {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -1px;
+}
+
+.routine-editor-operation-dragging {
+  opacity: 0.4;
+}
+
+/* a blue line at the edge of the card the dragged operations would land next to */
+.routine-editor-drop-before {
+  box-shadow: 0 -3px 0 -1px var(--VTTblue);
+}
+
+.routine-editor-drop-after {
+  box-shadow: 0 3px 0 -1px var(--VTTblue);
+}
+
 .routine-editor-empty,
 .events-editor-empty {
   color: gray;

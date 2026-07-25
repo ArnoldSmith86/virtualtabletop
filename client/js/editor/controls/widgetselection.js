@@ -66,6 +66,8 @@ class WidgetSelection {
       $('.end', selectionDiv).style.display = 'block';
     });
     $('.start button:nth-child(2)', selectionDiv).addEventListener('click', _=>{
+      // empty the current picks now so "Select" with no room picks applies nothing
+      this.updateWidgets([]);
       startCustomSelection([], customSelection=>this.updateWidgets(this.resolveAll(customSelection)));
       $('.start', selectionDiv).style.display = 'none';
       $('.end', selectionDiv).style.display = 'block';

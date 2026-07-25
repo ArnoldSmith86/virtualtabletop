@@ -370,6 +370,12 @@ class RoutineEditor {
     // set for nested routines: hoists an operation out of this block into the parent
     this.onHoist = options.onHoist || null;
     this.changeListeners = [];
+    // indices (into this level's routine) of the operations Ctrl-selected for a
+    // multi-drag; reset whenever the routine changes structurally (see setRoutine)
+    this.selectedIndices = new Set();
+    // drag-and-drop reordering lives on the stable container so it survives the
+    // per-operation DOM swaps the sentence/list view toggle does
+    this.setupDragAndDrop();
     // the caller clones at the widget-state boundary; nested editors share references
     this.setRoutine(routine);
   }
@@ -401,6 +407,8 @@ class RoutineEditor {
   setRoutine(routine) {
     this.routine = routine;
     this.operations = [];
+    // a structural change invalidates the transient Ctrl-selection (index based)
+    this.selectedIndices = new Set();
     let variables = [ ...this.variables ];
     let collections = [ ...this.collections ];
     for(const [ index, operation ] of this.routine.entries()) {
@@ -435,9 +443,21 @@ class RoutineEditor {
     this.domElement.innerHTML = '';
     for(const [ index, operation ] of this.operations.entries()) {
       const operationDOM = operation.render();
+      if(this.selectedIndices.has(index))
+        operationDOM.classList.add('routine-editor-operation-selected');
 
       const buttonsDOM = document.createElement('span');
       buttonsDOM.className = 'routine-editor-operation-buttons';
+
+      // a grip that starts a drag; Ctrl-clicking cards selects several to move at once
+      const dragHandle = document.createElement('span');
+      dragHandle.className = 'material-symbols routine-editor-drag-handle';
+      dragHandle.textContent = 'drag_indicator';
+      dragHandle.title = 'Drag to reorder (Ctrl+click operations to move several at once)';
+      dragHandle.draggable = true;
+      dragHandle.addEventListener('dragstart', e=>this.onOperationDragStart(e, dragHandle));
+      dragHandle.addEventListener('dragend', _=>this.onOperationDragEnd());
+      buttonsDOM.append(dragHandle);
       const operationButton = (icon, title, onClick, glyphClass='material-symbols')=>{
         const buttonDOM = document.createElement('span');
         buttonDOM.className = glyphClass;
@@ -513,6 +533,138 @@ class RoutineEditor {
     addButton.className = 'routine-editor-add-operation';
 
     return this.domElement;
+  }
+
+  // the operation cards that belong to THIS routine level (nested editors keep
+  // their own cards in their own container), in routine order
+  directChildCards() {
+    return [ ...this.domElement.children ].filter(c=>c.classList && c.classList.contains('routine-editor-operation'));
+  }
+
+  // the direct-child operation card the event happened in, or null
+  cardFromEvent(e) {
+    let el = e.target;
+    while(el && el.parentElement !== this.domElement)
+      el = el.parentElement;
+    return el && el.classList && el.classList.contains('routine-editor-operation') ? el : null;
+  }
+
+  setupDragAndDrop() {
+    // Ctrl/Cmd-click a card to add it to the multi-selection (chips and buttons
+    // stopPropagation their own clicks, so this only fires on the card body)
+    this.domElement.addEventListener('click', e=>{
+      if(!(e.ctrlKey || e.metaKey))
+        return;
+      const card = this.cardFromEvent(e);
+      // a click inside a nested card bubbles up here too - let that level own it
+      if(!card || e.target.closest('.routine-editor-operation') !== card)
+        return;
+      e.preventDefault();
+      const index = this.directChildCards().indexOf(card);
+      if(this.selectedIndices.has(index))
+        this.selectedIndices.delete(index);
+      else
+        this.selectedIndices.add(index);
+      card.classList.toggle('routine-editor-operation-selected', this.selectedIndices.has(index));
+    });
+
+    this.domElement.addEventListener('dragover', e=>{
+      const target = this.dropTargetFromEvent(e);
+      if(!target)
+        return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      this.showDropIndicator(target.card, target.after);
+    });
+    this.domElement.addEventListener('drop', e=>{
+      const target = this.dropTargetFromEvent(e);
+      this.clearDropIndicator();
+      if(!target)
+        return;
+      e.preventDefault();
+      this.performDrag(target.index, target.after);
+    });
+    this.domElement.addEventListener('dragleave', e=>{
+      if(e.target === this.domElement)
+        this.clearDropIndicator();
+    });
+  }
+
+  onOperationDragStart(e, handle) {
+    const card = handle.closest('.routine-editor-operation');
+    const cards = this.directChildCards();
+    const index = cards.indexOf(card);
+    if(index < 0)
+      return;
+    // dragging a selected card moves the whole selection; an unselected one moves alone
+    this.dragIndices = (this.selectedIndices.has(index) ? [ ...this.selectedIndices ] : [ index ]).sort((a, b)=>a-b);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', 'routine-operation'); // Firefox needs data to start a drag
+    try { e.dataTransfer.setDragImage(card, 12, 12); } catch(err) {}
+    this.draggingCards = this.dragIndices.map(i=>cards[i]).filter(Boolean);
+    for(const c of this.draggingCards)
+      c.classList.add('routine-editor-operation-dragging');
+  }
+
+  onOperationDragEnd() {
+    for(const c of this.draggingCards || [])
+      c.classList.remove('routine-editor-operation-dragging');
+    this.draggingCards = null;
+    this.dragIndices = null;
+    this.clearDropIndicator();
+  }
+
+  // where a drop would land: the hovered card, its index and whether it goes after
+  // it; null while no drag of this editor's own operations is in progress
+  dropTargetFromEvent(e) {
+    if(!this.dragIndices)
+      return null;
+    const card = this.cardFromEvent(e);
+    if(!card)
+      return null;
+    const index = this.directChildCards().indexOf(card);
+    const rect = card.getBoundingClientRect();
+    return { card, index, after: e.clientY > rect.top + rect.height/2 };
+  }
+
+  showDropIndicator(card, after) {
+    if(this.dropCard === card && this.dropAfter === after)
+      return;
+    this.clearDropIndicator();
+    card.classList.add(after ? 'routine-editor-drop-after' : 'routine-editor-drop-before');
+    this.dropCard = card;
+    this.dropAfter = after;
+  }
+
+  clearDropIndicator() {
+    if(this.dropCard) {
+      this.dropCard.classList.remove('routine-editor-drop-before', 'routine-editor-drop-after');
+      this.dropCard = null;
+      this.dropAfter = undefined;
+    }
+  }
+
+  // move the operations at this.dragIndices to before/after targetIndex, working
+  // by index so duplicate primitive operations (comments, var statements) stay put
+  performDrag(targetIndex, after) {
+    const moveSet = new Set(this.dragIndices);
+    if(moveSet.has(targetIndex))
+      return; // dropped onto one of the operations being moved: nothing to do
+    const moving = this.dragIndices.map(i=>this.routine[i]);
+    const result = [];
+    for(let i = 0; i < this.routine.length; i++) {
+      if(moveSet.has(i))
+        continue;
+      if(i === targetIndex && !after)
+        result.push(...moving);
+      result.push(this.routine[i]);
+      if(i === targetIndex && after)
+        result.push(...moving);
+    }
+    // keep the array reference: nested editors and change listeners hold onto it
+    this.routine.length = 0;
+    this.routine.push(...result);
+    this.routineChanged();
   }
 }
 

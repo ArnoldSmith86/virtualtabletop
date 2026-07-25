@@ -17,6 +17,7 @@ beforeAll(() => {
     return d;
   };
   window.customSelectionCallback = null;
+  window.startCustomSelection = () => {};
   window.endCustomSelection = () => {};
 
   const editorDiv = document.createElement('div');
@@ -292,6 +293,71 @@ describe('routine editor state handling', () => {
     expect(notified[1].func).toBe('FLIP');
   });
 
+  test('every operation gets a drag handle for reordering', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, { func: 'SHUFFLE' } ]);
+    const handles = editor.domElement.querySelectorAll('.routine-editor-drag-handle');
+    expect(handles).toHaveLength(2);
+    expect(handles[0].draggable).toBe(true);
+  });
+
+  test('dragging an operation reorders the routine in place', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'SHUFFLE' }, { func: 'DELETE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    editor.dragIndices = [ 0 ]; // grab FLIP
+    editor.performDrag(2, true); // drop after DELETE
+    expect(notified.map(o => o.func)).toEqual([ 'SHUFFLE', 'DELETE', 'FLIP' ]);
+    expect(editor.routine).toBe(routine); // the array reference is preserved
+  });
+
+  test('a multi-selection drags several operations together and keeps their order', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'SHUFFLE' }, { func: 'DELETE' }, { func: 'ROTATE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    editor.dragIndices = [ 0, 2 ]; // FLIP and DELETE
+    editor.performDrag(3, true); // drop after ROTATE
+    expect(notified.map(o => o.func)).toEqual([ 'SHUFFLE', 'ROTATE', 'FLIP', 'DELETE' ]);
+  });
+
+  test('dropping onto one of the dragged operations changes nothing', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'SHUFFLE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    editor.dragIndices = [ 0 ];
+    editor.performDrag(0, false);
+    expect(notified).toBeNull();
+  });
+
+  test('reordering distinguishes duplicate primitive operations by index', () => {
+    const routine = [ '// one', '// one', { func: 'FLIP' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    editor.dragIndices = [ 2 ]; // FLIP
+    editor.performDrag(0, false); // before the first comment
+    expect(notified).toEqual([ { func: 'FLIP' }, '// one', '// one' ]);
+  });
+
+  test('Ctrl-clicking a card toggles it in and out of the selection', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, { func: 'SHUFFLE' } ]);
+    const card = editor.directChildCards()[1];
+    card.dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
+    expect(editor.selectedIndices.has(1)).toBe(true);
+    expect(card.classList.contains('routine-editor-operation-selected')).toBe(true);
+    card.dispatchEvent(new MouseEvent('click', { ctrlKey: true, bubbles: true }));
+    expect(editor.selectedIndices.has(1)).toBe(false);
+  });
+
+  test('a routine change clears the transient Ctrl-selection', () => {
+    const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, { func: 'SHUFFLE' } ]);
+    editor.selectedIndices.add(1);
+    editor.routineChanged();
+    expect(editor.selectedIndices.size).toBe(0);
+  });
+
   test('IF and FOREACH blocks show tailored empty hints', () => {
     const ifEditor = new RoutineEditor({ state: {} }, [ { func: 'IF', operand1: 1, thenRoutine: [] } ]);
     expect(ifEditor.domElement.textContent).toContain('Add operations to run when the condition is true');
@@ -538,6 +604,16 @@ describe('widget picker resolution', () => {
     const selection = new WidgetSelection([], () => {});
     expect(selection.resolveAll(widgetsPicked)).toBe(widgetsPicked);
   });
+
+  test('"Start Fresh" empties the current selection right away', () => {
+    const widget = { id: 'w1', get: p => ({ type: 'holder' })[p] };
+    const selection = new WidgetSelection([ widget ], () => {});
+    selection.render();
+    expect(selection.widgets).toHaveLength(1);
+    selection.domElement.querySelector('.start button:nth-child(2)').dispatchEvent(new Event('click'));
+    expect(selection.widgets).toHaveLength(0);
+    expect(selection.domElement.querySelectorAll('table tr[data-widget-id]')).toHaveLength(0);
+  });
 });
 
 describe('popup closing', () => {
@@ -632,6 +708,9 @@ describe('popup parameter routing', () => {
     popup.registerChangeListener(v => value = v);
     popup.setNewValue([ 'h1' ]);
     expect(value.from).toEqual([ 'h1' ]);
+    // picking a holder also clears the sibling collection so it can't re-surface
+    expect('collection' in value).toBe(true);
+    expect(value.collection).toBeUndefined();
   });
 
   test('FOREACH source popup clears competing parameters', () => {
