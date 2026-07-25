@@ -1052,26 +1052,38 @@ class IconInput extends PickerInput {
     // getDefaultIconScale() (applied separately as the whole symbol wrapper's
     // transform), so that isn't the right fallback to show here.
     const scaleValue = iconOption(value, 'scale');
+    const scaleIsSet = scaleValue !== undefined && scaleValue !== null;
     const scaleInput = document.createElement('input');
     scaleInput.type = 'number';
     scaleInput.step = '0.05';
     scaleInput.min = '0.1';
     scaleInput.max = '5';
-    scaleInput.placeholder = '1';
-    scaleInput.value = scaleValue !== undefined && scaleValue !== null ? scaleValue : '';
+    // always show a real number (never leave it empty) so stepping with the
+    // up/down arrows starts from the displayed value (1 by default) instead
+    // of from the browser's own zero-based default, which used to clamp the
+    // very first step up to the min (0.1) rather than 1.05
+    scaleInput.title = scaleIsSet ? 'Icon scale' : 'Icon scale (using default 1)';
+    scaleInput.value = scaleIsSet ? scaleValue : 1;
+    scaleWrap.classList.toggle('usingDefault', !scaleIsSet);
     scaleInput.oninput = _=>{
+      // the focus guard in the properties module skips the re-render while
+      // focus stays in this block, so keep the default-indicator in sync here
+      scaleWrap.classList.remove('usingDefault');
+      scaleInput.title = 'Icon scale';
       this.setValue(iconWithOption(this.getValue(), 'scale', numericInputValue(scaleInput.value, 0.1, 5)));
     };
     scaleInput.onchange = _=>{
       const clamped = numericInputValue(scaleInput.value, 0.1, 5);
-      scaleInput.value = clamped === null ? '' : clamped;
+      scaleInput.value = clamped === null ? 1 : clamped;
     };
     scaleWrap.appendChild(scaleInput);
     const clearScale = document.createElement('button');
     clearScale.setAttribute('icon', 'undo');
     clearScale.title = 'Reset to scale 1';
     clearScale.onclick = _=>{
-      scaleInput.value = '';
+      scaleInput.value = 1;
+      scaleWrap.classList.add('usingDefault');
+      scaleInput.title = 'Icon scale (using default 1)';
       this.setValue(iconWithOption(this.getValue(), 'scale', null));
     };
     scaleWrap.appendChild(clearScale);

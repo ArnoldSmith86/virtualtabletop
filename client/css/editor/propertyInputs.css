@@ -459,9 +459,10 @@
   margin: 0;
 }
 
-/* dim the swatch while it's showing the inherited default rather than an
-   explicitly set color, so the two states aren't visually identical */
-.editorModule .iconBasicOption.usingDefault input[type=color] {
+/* dim the swatch/field while it's showing the inherited default rather than
+   an explicitly set value, so the two states aren't visually identical */
+.editorModule .iconBasicOption.usingDefault input[type=color],
+.editorModule .iconBasicOption.usingDefault input[type=number] {
   opacity: 0.5;
 }
 
