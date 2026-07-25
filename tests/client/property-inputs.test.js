@@ -23,6 +23,7 @@ const inputHelpers = new Function(inputsSource + `;
     iconOption,
     iconWithOption,
     iconSupportsBasicOptions,
+    iconValueForChip,
     MULTI_DIFFERENT,
     propertyInputIsMulti,
     MultiWidget,
@@ -70,6 +71,7 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     dicePreviewActiveFace,
     textSymbolClass,
     textValueFromSymbol,
+    classesWithSymbolClass,
     diceFaces: PropertiesModule.prototype.diceFaces,
     diceUsesPips: PropertiesModule.prototype.diceUsesPips,
     diceFaceType: PropertiesModule.prototype.diceFaceType,
@@ -453,6 +455,32 @@ describe('icon value helpers', () => {
     expect(inputHelpers.iconSupportsBasicOptions('')).toBe(false);
     expect(inputHelpers.iconSupportsBasicOptions({ name: null })).toBe(false);
     expect(inputHelpers.iconSupportsBasicOptions([ 'a', 'b' ])).toBe(false);
+  });
+
+  test('iconValueForChip merges into the current value like iconWithOption', () => {
+    expect(inputHelpers.iconValueForChip(null, 'star')).toBe('star');
+    expect(inputHelpers.iconValueForChip({ name: 'old', color: '#f00' }, 'star')).toEqual({ name: 'star', color: '#f00' });
+  });
+
+  test('iconValueForChip treats the multi-selection sentinel as unset, not as a real icon value', () => {
+    const result = inputHelpers.iconValueForChip(inputHelpers.MULTI_DIFFERENT, 'star');
+    expect(result).toBe('star');
+    expect(JSON.stringify(result)).not.toMatch(/multiDiffers/);
+  });
+});
+
+describe('classesWithSymbolClass', () => {
+  test('adds a symbol class while keeping unrelated classes', () => {
+    expect(cssHelpers.classesWithSymbolClass('foo symbols', 'material-symbols')).toBe('foo material-symbols');
+  });
+
+  test('removes the symbol class when switching back to text mode', () => {
+    expect(cssHelpers.classesWithSymbolClass('foo symbols', null)).toBe('foo');
+  });
+
+  test('handles a null/empty starting value', () => {
+    expect(cssHelpers.classesWithSymbolClass(null, 'symbols')).toBe('symbols');
+    expect(cssHelpers.classesWithSymbolClass('symbols', null)).toBe(null);
   });
 });
 

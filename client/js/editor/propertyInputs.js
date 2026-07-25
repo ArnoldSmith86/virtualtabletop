@@ -683,6 +683,7 @@ class SelectInput extends PropertyInput {
         this.select.appendChild(this.customOption);
       }
       this.customOption.value = jsonValue;
+      this.customOption.disabled = false;
       this.customOption.textContent = `custom: ${jsonValue}`;
     }
     this.select.value = jsonValue;
@@ -1102,6 +1103,13 @@ function iconSupportsBasicOptions(value) {
   return !Array.isArray(value) && !!iconName(value);
 }
 
+// clicking a chip merges the new name into the current value - but a
+// multi-selection sentinel (differing icons) must count as "unset", or the
+// internal { multiDiffers: true } marker would be saved into every widget
+function iconValueForChip(currentValue, chipValue) {
+  return iconWithOption(propertyInputIsMulti(currentValue) ? null : currentValue, 'name', chipValue);
+}
+
 class IconInput extends PickerInput {
   cssClass() {
     return 'pickerInput iconInput';
@@ -1133,7 +1141,7 @@ class IconInput extends PickerInput {
   }
 
   valueForChip(chipValue) {
-    return iconWithOption(this.getValue(), 'name', chipValue);
+    return iconValueForChip(this.getValue(), chipValue);
   }
 
   emptyLabel() {

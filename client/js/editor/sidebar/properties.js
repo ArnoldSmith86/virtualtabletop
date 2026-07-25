@@ -177,6 +177,16 @@ function dicePreviewActiveFace(faces) {
 
 const textSymbolClasses = [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ];
 
+// swap the text-symbol class in a widget's classes string, keeping every
+// unrelated class; null symbolClass switches back to plain text mode
+function classesWithSymbolClass(classesValue, symbolClass) {
+  const classes = String(classesValue || '').split(/\s+/)
+    .filter(className => className && !textSymbolClasses.includes(className));
+  if(symbolClass)
+    classes.push(symbolClass);
+  return classes.length ? classes.join(' ') : null;
+}
+
 // session-only memory of the last typed HTML per widget, so toggling "Use
 // custom HTML" off and back on restores it instead of always starting blank
 // (the underlying html property is still set to null on toggle-off, so a
@@ -874,6 +884,22 @@ class PropertiesModule extends SidebarModule {
       return;
     }
     widget.set(property, newValue);
+  }
+
+  // like inputValueUpdated, but computes the new value from each widget's own
+  // current value - needed when the edit is a transformation (e.g. adding a
+  // class) rather than one common value, so a multi-selection never sees the
+  // MULTI_DIFFERENT sentinel and each widget keeps its unrelated parts
+  inputValueTransformed(widget, property, transform) {
+    if(widget.isMulti) {
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${widget.widgets.length} widgets in editor`);
+      for(const w of widget.widgets)
+        w.set(property, transform(w.get(property)));
+      batchEnd();
+      return;
+    }
+    widget.set(property, transform(widget.get(property)));
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -4664,15 +4690,13 @@ class PropertiesModule extends SidebarModule {
   // side blocks - the "classic" basic-widget content editor, also reused
   // in the custom-HTML toggle above and by widget types without HTML support.
   renderBasicContentInputs(widget, target) {
-    const currentSymbolClass = () => String(widget.get('classes') || '').split(/\s+/)
-      .find(className => textSymbolClasses.includes(className)) || null;
-    const setSymbolClass = symbolClass => {
-      const classes = String(widget.get('classes') || '').split(/\s+/)
-        .filter(className => className && !textSymbolClasses.includes(className));
-      if(symbolClass)
-        classes.push(symbolClass);
-      this.inputValueUpdated(widget, 'classes', classes.length ? classes.join(' ') : null);
+    const currentSymbolClass = () => {
+      const value = widget.get('classes');
+      return String(propertyInputIsMulti(value) ? '' : (value || '')).split(/\s+/)
+        .find(className => textSymbolClasses.includes(className)) || null;
     };
+    const setSymbolClass = symbolClass =>
+      this.inputValueTransformed(widget, 'classes', current => classesWithSymbolClass(current, symbolClass));
 
     const textRow = div(target, 'propertyInput');
     const textLabel = document.createElement('label');
