@@ -68,6 +68,13 @@ body.edit .widget.line.selectedInEdit .lineHandle {
   pointer-events: auto;
 }
 
+/* while a picker waits for a widget to be clicked in the room, the handles must
+   not swallow that click: they sit exactly on top of the end stops, and the
+   line they belong to is the one doing the picking, so it is never the target */
+body.editorWidgetPicking .widget.line.selectedInEdit .lineHandle {
+  pointer-events: none;
+}
+
 .widget.line .lineHandle.control {
   border-radius: 4px;
   background: #b45309;

@@ -575,6 +575,9 @@ class PropertiesModule extends SidebarModule {
     this.widgetPicker = null;
     this.collapsibleStates = {};
     this.sizeRatioLocks = new WeakMap();
+    // per line: the widget new stops inherit from. Kept outside the panel because
+    // picking a widget in the room re-selects the line and re-renders the panel.
+    this.lineStopInheritIDs = {};
   }
 
   startWidgetPicker(targetWidgetID, onPick, options = {}) {
@@ -5282,6 +5285,27 @@ class PropertiesModule extends SidebarModule {
     return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
   }
 
+  // The id for a stop about to be added at linePosition, derived from the stops
+  // already on the line by incrementing a trailing number the way the JSON
+  // editor does when it duplicates a widget. The two end stops are numbered
+  // separately from the intermediate ones, so inserting a stop in the middle
+  // never continues the end stops' series (and the other way round).
+  lineNextStopID(line, linePosition) {
+    const stops = line.attachedWidgets();
+    const index = stops.filter(stop=>(+stop.get('linePosition') || 0) <= linePosition).length;
+    const isEndStop = index == 0 || index == stops.length;
+    const group = stops.filter((stop, i)=>(i == 0 || i == stops.length-1) == isEndStop);
+    const source = group.length ? group[group.length-1].id : null;
+    const match = source && source.match(/^(.*?)([0-9]+)([^0-9]*)$/);
+    const head = match ? match[1] : source || `${line.id}${isEndStop ? 'S' : 'M'}`;
+    const tail = match ? match[3] : '';
+    let number = match ? parseInt(match[2]) : 0;
+    let id = source || `${head}${number}${tail}`;
+    while(widgets.has(id))
+      id = `${head}${++number}${tail}`;
+    return id;
+  }
+
   // move everything sitting on a stop back to the room so removing the stop doesn't delete it
   async lineReleaseStopChildren(stop) {
     for(const child of [ ...Widget.prototype.children.call(stop) ]) {
@@ -5296,16 +5320,6 @@ class PropertiesModule extends SidebarModule {
   renderForLine(widget) {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
-
-    const addButton = (text, className, icon)=>{
-      const button = document.createElement('button');
-      button.innerText = text;
-      button.className = className;
-      if(icon)
-        button.setAttribute('icon', icon);
-      this.moduleDOM.appendChild(button);
-      return button;
-    };
 
     this.addSubHeader('Appearance');
     const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
@@ -5485,60 +5499,41 @@ class PropertiesModule extends SidebarModule {
       renderStops();
     };
 
-    const addStopButton = addButton('Add stop', 'lineAddStop', 'add');
-
     // New stops inherit from the chosen widget so restyling one restyles them all.
-    // Any widget can be entered by id; the chooser lists this line's stops for
-    // the common case of matching another stop already on the track.
-    const inheritWrap = div(this.moduleDOM, 'genericInput lineInheritWrap');
+    // Any widget can be entered by id or picked in the room; the chosen id lives
+    // in the module because picking re-selects the line and rebuilds this panel.
+    const inheritStore = this.lineStopInheritIDs;
+    const inheritRow = div(this.moduleDOM, 'propertyInput lineInheritRow');
     const inheritLabel = document.createElement('label');
-    inheritLabel.innerText = 'New stops inherit from';
-    inheritLabel.style = 'display:inline-block;width:170px';
+    inheritLabel.innerText = 'New stop inherit from:';
     const inheritID = document.createElement('input');
     inheritID.type = 'text';
     inheritID.className = 'lineInheritID';
     inheritID.placeholder = 'widget id';
-    inheritID.title = 'Type any widget id for the new stops to inherit from';
-    const inheritSelect = document.createElement('select');
-    inheritSelect.className = 'lineInheritStop';
-    inheritSelect.title = 'Stops on this line available to inherit from';
+    inheritID.title = 'New stops inherit their appearance from this widget';
     const inheritTarget = ()=>String(inheritID.value || '').trim();
-    const refreshInheritOptions = ()=>{
-      inheritSelect.innerHTML = '';
-      const none = document.createElement('option');
-      none.value = '';
-      none.innerText = 'choose a stop';
-      inheritSelect.appendChild(none);
-      widget.attachedWidgets().forEach((stop, index)=>{
-        const option = document.createElement('option');
-        option.value = stop.get('id');
-        option.innerText = `Stop ${index+1} (${stop.get('id')})`;
-        inheritSelect.appendChild(option);
-      });
-      inheritSelect.value = [ ...inheritSelect.options ].some(o=>o.value === inheritID.value) ? inheritID.value : '';
-    };
-    inheritSelect.onchange = ()=>{
-      inheritID.value = inheritSelect.value;
-    };
-    inheritID.oninput = refreshInheritOptions;
     const firstAttachedWidget = widget.attachedWidgets()[0];
-    inheritID.value = firstAttachedWidget ? firstAttachedWidget.id : '';
-    refreshInheritOptions();
-    inheritWrap.appendChild(inheritLabel);
-    inheritWrap.appendChild(document.createTextNode('Widget id '));
-    inheritWrap.appendChild(inheritID);
-    inheritWrap.appendChild(document.createTextNode(' (or choose stop: '));
-    inheritWrap.appendChild(inheritSelect);
-    inheritWrap.appendChild(document.createTextNode(')'));
-    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritWrap, widget, {
+    if(inheritStore[widget.id] === undefined)
+      inheritStore[widget.id] = firstAttachedWidget ? firstAttachedWidget.id : '';
+    inheritID.value = inheritStore[widget.id];
+    inheritID.oninput = _=>inheritStore[widget.id] = inheritTarget();
+    inheritRow.appendChild(inheritLabel);
+    inheritRow.appendChild(inheritID);
+    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritRow, widget, {
       title: 'Choose a widget for new stops to inherit from',
       pickerKey: 'lineInheritStop',
-      getSelectedIDs: ()=>inheritID.value ? [ inheritID.value ] : [],
+      getSelectedIDs: ()=>inheritTarget() ? [ inheritTarget() ] : [],
       apply: id=>{
         inheritID.value = id;
-        refreshInheritOptions();
+        inheritStore[widget.id] = id;
       }
     });
+    const addStopButton = document.createElement('button');
+    addStopButton.className = 'lineAddStop';
+    addStopButton.setAttribute('icon', 'add');
+    addStopButton.innerText = 'Add Stop';
+    // the popout opens on its own row below, so the button has to precede it
+    inheritRow.insertBefore(addStopButton, inheritPopoutControls.popout);
 
     const removeStop = async stop=>{
       batchStart();
@@ -5555,11 +5550,9 @@ class PropertiesModule extends SidebarModule {
     // button, so a designer can place and remove a *specific* stop the same way
     // connections are positioned; the position sticks through reshaping
     const stopList = div(this.moduleDOM, 'lineStopList');
-    // Keep creation controls with the list they affect, after the existing
-    // stops rather than above them: the inherit-from info directly below the
-    // list, then the Add Stop button as the final action of the section.
-    this.moduleDOM.appendChild(inheritWrap);
-    this.moduleDOM.appendChild(addStopButton);
+    // Keep the creation row with the list it affects, after the existing stops
+    // rather than above them.
+    this.moduleDOM.appendChild(inheritRow);
     const stopPreview = stop=>{
       const preview = document.createElement('div');
       preview.className = 'lineStopPreview';
@@ -5630,7 +5623,6 @@ class PropertiesModule extends SidebarModule {
       stops.forEach((stop, i)=>{
         const row = div(stopList, 'genericInput');
         const label = document.createElement('label');
-        label.style = 'display:inline-block;width:145px';
         label.append(`Stop ${i+1} (`);
         // renaming re-adds the same stop state under the new id, so it must not
         // be treated like removing+adding a stop (see Line.onChildAdd/onChildRemove)
@@ -5657,7 +5649,7 @@ class PropertiesModule extends SidebarModule {
         };
         const remove = document.createElement('button');
         remove.className = 'lineRemoveStop';
-        remove.setAttribute('icon', 'remove');
+        remove.setAttribute('icon', 'delete');
         remove.title = 'Remove this stop';
         remove.onclick = _=>removeStop(stop);
         const order = document.createElement('div');
@@ -5686,10 +5678,8 @@ class PropertiesModule extends SidebarModule {
     // rebuild the list when the number of stops changes (add/remove/reparent)
     this.addDeltaListener(delta=>{
       const stops = widget.attachedWidgets();
-      if(stopList.childElementCount != stops.length || stops.some(stop=>delta[stop.id] && Object.keys(delta[stop.id]).some(property=>![ 'x', 'y', 'rotation' ].includes(property)))) {
+      if(stopList.childElementCount != stops.length || stops.some(stop=>delta[stop.id] && Object.keys(delta[stop.id]).some(property=>![ 'x', 'y', 'rotation' ].includes(property))))
         renderStops();
-        refreshInheritOptions();
-      }
     });
 
     addStopButton.onclick = async _=>{
@@ -5711,6 +5701,7 @@ class PropertiesModule extends SidebarModule {
       // Give manually positioned lines a sensible initial location. Automatic
       // spacing immediately recalculates every stop after it is added.
       template.linePosition = widget.nextStopPosition();
+      template.id = this.lineNextStopID(widget, template.linePosition);
       await addWidgetLocal(template);
       if(widget.get('autoSpaceStops'))
         await widget.distributeAttachedWidgetsEvenly();
@@ -5718,7 +5709,6 @@ class PropertiesModule extends SidebarModule {
         await widget.updateAttachedWidgets();
       batchEnd();
       renderStops();
-      refreshInheritOptions();
     };
 
     // Connecting an end point glues it onto another widget at a chosen percentage.
@@ -5726,26 +5716,25 @@ class PropertiesModule extends SidebarModule {
     // transformed parents stay in the correct frame.
     this.addSubHeader('Connect points');
     for(const end of [ 'Start', 'End' ]) {
-      this.addAppearanceSubTitle(`${end} point`);
-      const wrapper = div(this.moduleDOM, 'genericInput');
-      const select = document.createElement('select');
-      select.className = `lineConnect${end}`;
-      select.title = 'Line widgets available for connection';
-      const noneOption = document.createElement('option');
-      noneOption.value = '';
-      noneOption.innerText = 'not connected';
-      select.appendChild(noneOption);
-      for(const line of widgetFilter(w=>w.get('type') == 'line' && w != widget)) {
-        const option = document.createElement('option');
-        option.value = line.get('id');
-        option.innerText = line.get('id');
-        select.appendChild(option);
-      }
+      // first row: the target id, picked the same way as any other widget
+      // reference, with the end point's name as its (blue) label
+      const wrapper = div(this.moduleDOM, 'propertyInput lineConnectRow');
+      const label = document.createElement('label');
+      const endName = document.createElement('span');
+      endName.className = 'appearanceSubTitle';
+      endName.innerText = `${end} point`;
+      label.appendChild(endName);
+      label.append(' id:');
+      wrapper.appendChild(label);
       const target = document.createElement('input');
       target.type = 'text';
       target.className = `lineConnect${end}ID`;
       target.placeholder = 'widget id';
       target.title = 'Type any widget id to connect to it';
+      wrapper.appendChild(target);
+
+      // second row: where on the target the end point sits
+      const detailRow = div(this.moduleDOM, 'propertyInput lineConnectDetails');
       const position = document.createElement('input');
       position.type = 'number';
       position.min = 0;
@@ -5759,37 +5748,20 @@ class PropertiesModule extends SidebarModule {
       offset.step = 'any';
       offset.className = `lineConnect${end}Offset`;
       offset.title = 'Perpendicular offset from the other line in pixels; positive is to its left from start to end';
-      const offsetRange = document.createElement('input');
-      offsetRange.type = 'range';
-      offsetRange.min = -25;
-      offsetRange.max = 25;
-      offsetRange.step = 1;
-      offsetRange.className = 'lineConnectOffsetRange';
-      offsetRange.title = offset.title;
-      wrapper.appendChild(document.createTextNode('Widget id '));
-      wrapper.appendChild(target);
-      wrapper.appendChild(document.createTextNode(' (or choose line: '));
-      wrapper.appendChild(select);
-      wrapper.appendChild(document.createTextNode(') '));
-      wrapper.appendChild(document.createElement('br'));
-      wrapper.appendChild(document.createTextNode('Connect at '));
-      wrapper.appendChild(position);
-      wrapper.appendChild(document.createTextNode('%'));
-      wrapper.appendChild(document.createTextNode('. Offset '));
-      wrapper.appendChild(offset);
-      wrapper.appendChild(document.createTextNode(' px '));
-      wrapper.appendChild(offsetRange);
+      detailRow.appendChild(document.createTextNode('Connect at '));
+      detailRow.appendChild(position);
+      detailRow.appendChild(document.createTextNode('%'));
+      detailRow.appendChild(document.createTextNode(', offset '));
+      detailRow.appendChild(offset);
+      detailRow.appendChild(document.createTextNode(' px'));
 
       this.addPropertyListener(widget, 'connect'+end, widget=>{
         const connection = widget.get('connect'+end);
         target.value = connection && connection.line ? connection.line : '';
-        select.value = connection && [ ...select.options ].some(option=>option.value == connection.line) ? connection.line : '';
         position.value = connection ? Math.round((connection.position !== undefined ? connection.position : (end == 'Start' ? 0 : 1))*100) : (end == 'Start' ? 0 : 100);
         offset.value = connection ? (+connection.offset || 0) : 0;
-        offsetRange.value = Math.max(-25, Math.min(25, +offset.value || 0));
         position.disabled = !connection;
         offset.disabled = !connection;
-        offsetRange.disabled = !connection;
       });
       const saveConnection = ()=>{
         widget.set('connect'+end, target.value ? {
@@ -5805,20 +5777,8 @@ class PropertiesModule extends SidebarModule {
         position.value = targetWidget && targetWidget.get('type') != 'line' ? 50 : (end == 'Start' ? 0 : 100);
         saveConnection();
       };
-      select.onchange = _=>{
-        target.value = select.value;
-        setDefaultPositionForTarget();
-      };
-      target.onchange = _=>{
-        select.value = [ ...select.options ].some(option=>option.value == target.value) ? target.value : '';
-        setDefaultPositionForTarget();
-      };
+      target.onchange = setDefaultPositionForTarget;
       position.onchange = offset.onchange = saveConnection;
-      offset.oninput = _=>offsetRange.value = Math.max(-25, Math.min(25, +offset.value || 0));
-      offsetRange.oninput = _=>{
-        offset.value = offsetRange.value;
-        saveConnection();
-      };
 
       const connectPopoutControls = this.renderWidgetSelectPopout(wrapper, widget, {
         title: `Connect ${end.toLowerCase()} point to`,
@@ -5829,7 +5789,6 @@ class PropertiesModule extends SidebarModule {
         },
         apply: id=>{
           target.value = id;
-          select.value = [ ...select.options ].some(option=>option.value == id) ? id : '';
           setDefaultPositionForTarget();
         },
         onClear: ()=>widget.set('connect'+end, null),

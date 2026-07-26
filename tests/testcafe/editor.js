@@ -245,8 +245,13 @@ test('Line widget in edit mode', async t => {
   await t
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
-    .click('#editorModules .lineConnectStart')
-    .click(Selector('#editorModules .lineConnectStart option').withAttribute('value', lineID));
+    .typeText('#editorModules .lineConnectStartID', lineID)
+    .pressKey('tab');
+  const connectedLine = await ClientFunction(() => {
+    const connection = widgets.get(document.querySelector('.widget.line.selectedInEdit').id.slice(2)).get('connectStart');
+    return connection && connection.line;
+  })();
+  await t.expect(connectedLine).eql(lineID);
 
   // dragging a handle moves it by browser-dependent pixels, so verify it in the
   // DOM and delete the dragged line again to keep the compared state stable
@@ -256,9 +261,7 @@ test('Line widget in edit mode', async t => {
     .drag(endHandle, 90, 60)
     .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
     .click('#editorToolbar > div > [icon=delete_forever]');
-  // hash updated after the Edit Widgets template restructure (#3021 review pass):
-  // the panel now renders a different number of inputs before "Add stop" is
-  // clicked, which shifts the seeded rand() stream and changes the generated
-  // stop id. The rest of the resulting state is byte-identical.
-  await compareState(t, '4a478a6d031324b3bd4d922ef97f97f5');
+  // the added stop's id is derived from the existing stops instead of being
+  // random, so the compared state no longer depends on the seeded rand() stream
+  await compareState(t, 'e833ae92160cf150b939202f74fe466e');
 });
