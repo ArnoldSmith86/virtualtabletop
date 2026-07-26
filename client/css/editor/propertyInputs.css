@@ -839,6 +839,18 @@
   background: var(--backgroundColor);
 }
 
+/* shortcut back to the line a widget is attached to, centered below the id */
+.editorModule .widgetHeader .widgetHeaderLine {
+  margin-top: 5px;
+}
+
+.editorModule .widgetHeader button.widgetHeaderLineButton {
+  display: inline-flex;
+  align-items: center;
+  max-width: 90%;
+  overflow-wrap: anywhere;
+}
+
 /* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
 .editorModule .obscurePropertyContainer {
   position: relative;

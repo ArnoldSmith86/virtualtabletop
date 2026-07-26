@@ -178,6 +178,30 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  test.each([ true, false ])('swapStops exchanges two neighbours (autoSpaceStops: %s)', async autoSpaceStops => {
+    const line = createLine({ id: 'swap-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, rotateStops: false, autoSpaceStops });
+    const stops = [ 'swap-a', 'swap-b', 'swap-c' ].map((id, i) => {
+      const stop = new Widget(id);
+      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20, linePosition: i / 2 }, stop);
+      return stop;
+    });
+    const positions = () => line.attachedWidgets().map(stop => stop.get('linePosition'));
+    const before = positions();
+
+    await line.swapStops(0, 1);
+    expect(line.attachedWidgets().map(stop => stop.id)).toEqual([ 'swap-b', 'swap-a', 'swap-c' ]);
+    // the stops trade places, the positions along the line stay where they were
+    expect(positions()).toEqual(before);
+
+    // out of range: no neighbour to swap with, so nothing changes
+    await line.swapStops(2, 1);
+    expect(line.attachedWidgets().map(stop => stop.id)).toEqual([ 'swap-b', 'swap-a', 'swap-c' ]);
+
+    for(const stop of stops)
+      removeWidget(stop.id);
+    removeWidget(line.id);
+  });
+
   describe('normalizeGeometry re-fits the box while keeping the path in place', () => {
     let line;
     beforeAll(async () => {

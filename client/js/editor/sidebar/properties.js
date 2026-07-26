@@ -3136,6 +3136,20 @@ class PropertiesModule extends SidebarModule {
       onRenamed: renamedWidget => setSelection([ renamedWidget ])
     });
     idArea.appendChild(idInput);
+
+    // A line covered with stops is hard to click, so a widget attached to one
+    // gets a direct way back to the line it belongs to.
+    const parentID = widget.get('parent');
+    const parent = parentID && widgets.has(parentID) ? widgets.get(parentID) : null;
+    if(parent && parent.get('type') == 'line') {
+      const lineButton = document.createElement('button');
+      lineButton.className = 'widgetHeaderLineButton';
+      lineButton.setAttribute('icon', 'polyline');
+      lineButton.innerText = `Edit line ${parent.id}`;
+      lineButton.title = 'Select the line this widget is attached to';
+      lineButton.onclick = _=>setSelection([ parent ]);
+      div(header, 'widgetHeaderLine').appendChild(lineButton);
+    }
   }
 
   // A block whose body can be folded away by clicking the header.
@@ -5603,19 +5617,9 @@ class PropertiesModule extends SidebarModule {
     };
     const moveStop = async (index, direction)=>{
       const stops = widget.attachedWidgets();
-      const otherIndex = index+direction;
-      if(otherIndex < 0 || otherIndex >= stops.length)
+      if(!stops[index] || !stops[index+direction])
         return;
-      const position = stops[index].get('linePosition');
-      const otherPosition = stops[otherIndex].get('linePosition');
-      await lineEdit(`moved stop ${stops[index].id} ${direction < 0 ? 'up' : 'down'} on line ${widget.id}`, async _=>{
-        await stops[index].set('linePosition', otherPosition);
-        await stops[otherIndex].set('linePosition', position);
-        if(widget.get('autoSpaceStops'))
-          await widget.distributeAttachedWidgetsEvenly();
-        else
-          await widget.updateAttachedWidgets();
-      });
+      await lineEdit(`moved stop ${stops[index].id} ${direction < 0 ? 'up' : 'down'} on line ${widget.id}`, _=>widget.swapStops(index, direction));
       renderStops();
     };
     const renderStops = ()=>{
@@ -5645,7 +5649,10 @@ class PropertiesModule extends SidebarModule {
         position.max = 100;
         position.className = 'lineStopPosition';
         position.value = Math.round((+stop.get('linePosition') || 0)*100);
-        position.title = 'Position along the line in percent';
+        // with even distribution on, the line owns the positions - a typed value
+        // would be spaced away again right after, so don't offer the field
+        position.disabled = !!widget.get('autoSpaceStops');
+        position.title = position.disabled ? 'Positions are set by "Distribute evenly"' : 'Position along the line in percent';
         position.onchange = _=>lineEdit(`moved stop ${stop.id} on line ${widget.id}`, async _=>{
           await stop.set('linePosition', Math.max(0, Math.min(100, +position.value || 0))/100);
           await widget.updateAttachedWidgets();

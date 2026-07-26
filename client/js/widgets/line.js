@@ -236,6 +236,29 @@ export class Line extends Widget {
     await this.positionAttachedWidgets();
   }
 
+  // Swap a stop with its neighbour in the chain. Both linePosition changes have
+  // to land before any layout pass runs: in between the two stops share one
+  // position, and re-spacing from that tied state sorts them back into their
+  // old order, silently undoing the swap.
+  async swapStops(index, direction) {
+    const stops = this.attachedWidgets();
+    const otherIndex = index+direction;
+    if(!stops[index] || !stops[otherIndex])
+      return;
+    this.updatingAttachedWidgets = true;
+    try {
+      const position = stops[index].get('linePosition');
+      await stops[index].set('linePosition', stops[otherIndex].get('linePosition'));
+      await stops[otherIndex].set('linePosition', position);
+    } finally {
+      this.updatingAttachedWidgets = false;
+    }
+    if(this.get('autoSpaceStops'))
+      await this.distributeAttachedWidgetsEvenly();
+    else
+      await this.updateAttachedWidgets();
+  }
+
   widgetLengthOnLine(widget, position) {
     const scale = Math.max(0, +widget.get('scale') || 0);
     const width = Math.max(0, +widget.get('width') || 0) * scale;
