@@ -476,9 +476,10 @@ class PropertyInput {
         label.dataset.label = this.labelText;
         label.classList.add('iconOnly');
       } else {
+        // no title: the label column wraps instead of truncating, so a native
+        // tooltip would only repeat what is already on screen - and cover the
+        // popup of the (i) button sitting inside the same label
         label.textContent = this.labelText;
-        if(this.showLabelTitle())
-          label.title = this.labelText;
       }
       if(this.options.hint)
         propertyInfoButton(label, html(this.options.hint));
@@ -494,10 +495,6 @@ class PropertyInput {
 
   cssClass() {
     return '';
-  }
-
-  showLabelTitle() {
-    return true;
   }
 
   renderControl(target) {
@@ -986,10 +983,6 @@ class ColorInput extends PickerInput {
 
   previewTitle() {
     return null;
-  }
-
-  showLabelTitle() {
-    return false;
   }
 
   renderChip(target, value) {

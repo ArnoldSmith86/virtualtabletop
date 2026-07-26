@@ -211,9 +211,11 @@ describe('css declaration rows', () => {
       expect(cssHelpers.cssValueIsColor(value)).toBe(false);
   });
 
-  test('value completion knows the keyword properties and always offers the global keywords', () => {
-    expect(cssHelpers.cssValueSuggestions('display')).toEqual(expect.arrayContaining([ 'flex', 'none', 'inherit' ]));
-    expect(cssHelpers.cssValueSuggestions('some-unknown-property')).toEqual([ 'inherit', 'initial', 'unset' ]);
+  test('value completion knows the keyword properties and offers nothing else', () => {
+    expect(cssHelpers.cssValueSuggestions('display')).toEqual(expect.arrayContaining([ 'flex', 'none' ]));
+    // inherit/initial/unset are valid everywhere but useless as a suggestion
+    expect(cssHelpers.cssValueSuggestions('display')).not.toEqual(expect.arrayContaining([ 'inherit' ]));
+    expect(cssHelpers.cssValueSuggestions('some-unknown-property')).toEqual([]);
   });
 
   test('property completion adds the css variables of the widget type', () => {
@@ -348,16 +350,17 @@ describe('css helpers', () => {
   test('the collapsed links header names the links that are set', () => {
     const summaryOf = state => cssHelpers.associatedWidgetsSummary.call(cssHelpers, { get: property => state[property] });
     expect(summaryOf({})).toBe('none');
-    expect(summaryOf({ parent: 'holder1' })).toBe('parent holder1');
-    expect(summaryOf({ parent: 'holder1', fixedParent: true })).toBe('parent holder1 (locked)');
-    expect(summaryOf({ linkedToSeat: 'seat1' })).toBe('seat seat1');
-    expect(summaryOf({ linkedToSeat: [ 'seat1', 'seat2' ] })).toBe('seat seat1, seat2');
+    expect(summaryOf({ parent: 'holder1' })).toBe('parent (holder1)');
+    // whether the parent is locked is an editing detail, not one of the links
+    expect(summaryOf({ parent: 'holder1', fixedParent: true })).toBe('parent (holder1)');
+    expect(summaryOf({ linkedToSeat: 'seat1' })).toBe('seat (seat1)');
+    expect(summaryOf({ linkedToSeat: [ 'seat1', 'seat2' ] })).toBe('seat (seat1, seat2)');
     // more than two seats would make the header too long to read at a glance
     expect(summaryOf({ onlyVisibleForSeat: [ 'a', 'b', 'c' ] })).toBe('visible for 3 seats');
-    expect(summaryOf({ inheritFrom: 'source' })).toBe('inherits from source');
+    expect(summaryOf({ inheritFrom: 'source' })).toBe('inherits from (source)');
     expect(summaryOf({ inheritFrom: { a: '*', b: '*' } })).toBe('inherits from 2 widgets');
     expect(summaryOf({ parent: 'holder1', linkedToSeat: 'seat1', inheritFrom: { a: '*' } }))
-      .toBe('parent holder1 · seat seat1 · inherits from a');
+      .toBe('parent (holder1) · seat (seat1) · inherits from (a)');
     // a multi-selection that disagrees says so instead of showing one widget's value
     expect(summaryOf({ parent: cssHelpers.MULTI_DIFFERENT, linkedToSeat: cssHelpers.MULTI_DIFFERENT, inheritFrom: cssHelpers.MULTI_DIFFERENT }))
       .toBe('parent — · seat — · inherits —');

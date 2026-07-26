@@ -13,6 +13,8 @@ body {
   --textHighlightColor7: darkcyan;
 
   --textDimColor1: #ccc;
+  /* the property name of a css declaration row, devtools style */
+  --cssDeclarationNameColor: var(--VTTblue);
 
   color-scheme: light;
   --gridSize: 25px;
@@ -35,6 +37,8 @@ body.edit.darkMode {
   --textHighlightColor7: #40e0d0;
 
   --textDimColor1: #606060;
+  /* the blue of light mode is barely readable on the dark input background */
+  --cssDeclarationNameColor: #8ab4f8;
 
   color-scheme: dark;
 }
@@ -113,6 +117,11 @@ body.gridLines33 #topSurface {
    behind them only make the cells easy to compare against a board image. */
 .gridPreviewOverlay {
   --gridPreviewDots: radial-gradient(circle at center, var(--gridPreviewColor) 0 2.5px, #fff9 2.5px 4px, transparent 4px);
+  /* the overlay is drawn inside the scaled room, so a 1px line ends up thinner
+     than one device pixel and the rasterizer drops some of the lines entirely
+     instead of only dimming them - one device pixel is the thinnest that keeps
+     every line of the lattice */
+  --gridPreviewLineWidth: calc(1px / (var(--scale, 1) * var(--zoom, 1)));
   position: absolute;
   left: 0;
   top: 0;
@@ -122,10 +131,10 @@ body.gridLines33 #topSurface {
   z-index: 2000000;
   background-image:
     var(--gridPreviewDots),
-    repeating-linear-gradient(to right, var(--gridPreviewLine) 0 1px, transparent 1px var(--gridPreviewX)),
-    repeating-linear-gradient(to bottom, var(--gridPreviewLine) 0 1px, transparent 1px var(--gridPreviewY));
+    repeating-linear-gradient(to right, var(--gridPreviewLine) 0 var(--gridPreviewLineWidth), transparent var(--gridPreviewLineWidth) var(--gridPreviewX)),
+    repeating-linear-gradient(to bottom, var(--gridPreviewLine) 0 var(--gridPreviewLineWidth), transparent var(--gridPreviewLineWidth) var(--gridPreviewY));
   background-size: var(--gridPreviewX) var(--gridPreviewY), auto, auto;
-  outline: 1px dashed var(--gridPreviewLine);
+  outline: var(--gridPreviewLineWidth) dashed var(--gridPreviewLine);
 }
 
 /* several lattices at once (a hex grid) only agree on their snap points */

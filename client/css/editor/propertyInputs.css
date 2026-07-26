@@ -723,7 +723,7 @@
 
 .editorModule .cssDeclarationRow input.cssDeclarationName {
   flex: 4 1 0;
-  color: var(--VTTblue);
+  color: var(--cssDeclarationNameColor);
 }
 
 .editorModule .cssDeclarationRow input.cssDeclarationValue {
@@ -1333,7 +1333,8 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 }
 
 /* up/down stacked so the row keeps its width for the values in the middle */
-.editorModule .diceFaceRow .faceOrderControls {
+.editorModule .diceFaceRow .faceOrderControls,
+.editorModule .faceRow .faceOrderControls {
   flex-direction: column;
 }
 
@@ -1630,6 +1631,14 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 /* the pile handle position picker while "Fixed position" ignores it */
 .editorModule .gridAnchors.disabled {
   opacity: 0.4;
+}
+
+/* the switch that adds the min/max limits sits between the X/Y rows of "More
+   options" - its label reads as a heading unless it takes their size */
+.editorModule .gridLimitToggle .propertyInput > label {
+  font-size: 13px;
+  width: auto;
+  min-width: 0;
 }
 
 .editorModule .gridExtraRow {

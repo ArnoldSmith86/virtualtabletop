@@ -735,8 +735,11 @@ const cssPropertyTargets = {
   valueCSS: 'Spinner value'
 };
 
+// only the values that are actually useful for a property: the css-wide
+// keywords (inherit/initial/unset) apply everywhere but are hardly ever what
+// a game wants, so a property without its own list offers nothing
 function cssValueSuggestions(name) {
-  return (commonCssValues[String(name || '').trim()] || []).concat([ 'inherit', 'initial', 'unset' ]);
+  return commonCssValues[String(name || '').trim()] || [];
 }
 
 /* end helper functions */
@@ -4085,7 +4088,8 @@ class PropertiesModule extends SidebarModule {
 
     this.renderCollapsibleSection('More options', true, body=>{
       const offset = div(body, 'propertyInlineRow numberPairRow');
-      div(offset, 'numberPairLabel', 'Offset');
+      const offsetLabel = div(offset, 'numberPairLabel', 'Offset');
+      propertyInfoButton(offsetLabel, 'Shifts the whole lattice by this many pixels, so the first snap point does not have to sit in the top left corner of the parent.');
       this.renderGridNumber(widget, index, 'offsetX', 'X', offset, { placeholder: '0' });
       this.renderGridNumber(widget, index, 'offsetY', 'Y', offset, { placeholder: '0' });
 
@@ -4190,7 +4194,9 @@ class PropertiesModule extends SidebarModule {
         rebuildLimits();
       },
       hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids. A 0 counts as "no limit" on that side.'
-    }).render(target);
+      // its own host so the label can take the size of the numberPairLabels of
+      // the X/Y rows around it instead of reading as a heading between them
+    }).render(div(target, 'gridLimitToggle'));
     target.appendChild(host);
   }
 
@@ -4786,7 +4792,7 @@ class PropertiesModule extends SidebarModule {
         const update = w => {
           summary.textContent = this.associatedWidgetsSummary(w);
         };
-        for(const property of [ 'parent', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ])
+        for(const property of [ 'parent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ])
           this.addPropertyListener(widget, property, update);
       }
     });
@@ -4796,11 +4802,13 @@ class PropertiesModule extends SidebarModule {
   associatedWidgetsSummary(widget) {
     const parts = [];
 
+    // widget ids are in parentheses so they stay tellable apart from the words
+    // around them: parent (w1) · seat (seat1)
     const parent = widget.get('parent');
     if(propertyInputIsMulti(parent))
       parts.push('parent —');
     else if(this.isOnDemandPropertyValueSet(parent))
-      parts.push(`parent ${parent}${widget.get('fixedParent') === true ? ' (locked)' : ''}`);
+      parts.push(`parent (${parent})`);
 
     const seatSummary = (property, label) => {
       const value = widget.get(property);
@@ -4809,7 +4817,7 @@ class PropertiesModule extends SidebarModule {
       const seats = this.seatReferenceToArray(value);
       if(!seats.length)
         return null;
-      return `${label} ${seats.length > 2 ? `${seats.length} seats` : seats.join(', ')}`;
+      return `${label} ${seats.length > 2 ? `${seats.length} seats` : `(${seats.join(', ')})`}`;
     };
     for(const [ property, label ] of [ [ 'linkedToSeat', 'seat' ], [ 'onlyVisibleForSeat', 'visible for' ] ]) {
       const seats = seatSummary(property, label);
@@ -4823,7 +4831,7 @@ class PropertiesModule extends SidebarModule {
     } else {
       const sources = Object.keys(this.normalizeInheritFromObject(inheritFrom));
       if(sources.length == 1)
-        parts.push(`inherits from ${sources[0]}`);
+        parts.push(`inherits from (${sources[0]})`);
       else if(sources.length)
         parts.push(`inherits from ${sources.length} widgets`);
     }
