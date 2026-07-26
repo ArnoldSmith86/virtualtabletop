@@ -10605,7 +10605,7 @@
       "1": {
         "rank": "1",
         "roman": "I",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 1,
@@ -10614,7 +10614,7 @@
       "2": {
         "rank": "2",
         "roman": "II",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 2,
@@ -10623,7 +10623,7 @@
       "3": {
         "rank": "3",
         "roman": "III",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 3,
@@ -10632,7 +10632,7 @@
       "4": {
         "rank": "4",
         "roman": "IV",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 4,
@@ -10641,7 +10641,7 @@
       "5": {
         "rank": "5",
         "roman": "V",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 5,
@@ -10650,7 +10650,7 @@
       "6": {
         "rank": "6",
         "roman": "VI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 6,
@@ -10659,7 +10659,7 @@
       "7": {
         "rank": "7",
         "roman": "VII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 7,
@@ -10668,7 +10668,7 @@
       "8": {
         "rank": "8",
         "roman": "VIII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 8,
@@ -10677,7 +10677,7 @@
       "9": {
         "rank": "9",
         "roman": "IX",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 9,
@@ -10686,7 +10686,7 @@
       "10": {
         "rank": "10",
         "roman": "X",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 10,
@@ -10695,7 +10695,7 @@
       "11": {
         "rank": "11",
         "roman": "XI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 11,
@@ -10704,7 +10704,7 @@
       "12": {
         "rank": "12",
         "roman": "XII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 12,
@@ -10713,7 +10713,7 @@
       "13": {
         "rank": "13",
         "roman": "XIII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 13,
@@ -10722,7 +10722,7 @@
       "14": {
         "rank": "14",
         "roman": "XIV",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 14,
@@ -10731,7 +10731,7 @@
       "15": {
         "rank": "15",
         "roman": "XV",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 15,
@@ -10740,7 +10740,7 @@
       "16": {
         "rank": "16",
         "roman": "XVI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 16,
@@ -10749,7 +10749,7 @@
       "17": {
         "rank": "17",
         "roman": "XVII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 17,
@@ -10758,7 +10758,7 @@
       "18": {
         "rank": "18",
         "roman": "XVIII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 18,
@@ -10767,7 +10767,7 @@
       "19": {
         "rank": "19",
         "roman": "XIX",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 19,
@@ -10776,7 +10776,7 @@
       "20": {
         "rank": "20",
         "roman": "XX",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 20,
@@ -10785,7 +10785,7 @@
       "21": {
         "rank": "21",
         "roman": "XXI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "suitColor": "purple",
         "sortDefault": 21,
@@ -10794,7 +10794,7 @@
       "22": {
         "roman": "S",
         "suitColor": "purple",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 0,
         "rank": "S",
         "sortDefault": 22,
@@ -11727,7 +11727,7 @@
       "i/icons/diamonds.svg",
       "i/icons/spades.svg",
       "i/icons/hearts.svg",
-      "/assets/-374765193_624",
+      "/i/icons/star.svg",
       ""
     ],
     "deckSuitsText": [
@@ -11765,7 +11765,7 @@
         "deckSuitColor": "#e50932"
       },
       {
-        "image": "/assets/-374765193_624",
+        "image": "/i/icons/star.svg",
         "deckSuitColor": "purple"
       }
     ]
@@ -29681,7 +29681,7 @@
         "deckSuitColor": "#e50932"
       },
       {
-        "image": "/assets/-374765193_624",
+        "image": "/i/icons/star.svg",
         "deckSuitColor": "purple"
       }
     ],
@@ -29708,7 +29708,7 @@
       "i/icons/diamonds.svg",
       "i/icons/spades.svg",
       "i/icons/hearts.svg",
-      "/assets/-374765193_624",
+      "/i/icons/star.svg",
       ""
     ],
     "2deckSuitsText": [
@@ -29795,7 +29795,7 @@
         "deckSuitColor": "#e50932"
       },
       {
-        "image": "/assets/-374765193_624",
+        "image": "/i/icons/star.svg",
         "deckSuitColor": "purple"
       }
     ],
@@ -29822,7 +29822,7 @@
       "i/icons/diamonds.svg",
       "i/icons/spades.svg",
       "i/icons/hearts.svg",
-      "/assets/-374765193_624",
+      "/i/icons/star.svg",
       ""
     ],
     "7deckSuitsText": [
@@ -30744,7 +30744,7 @@
       "1": {
         "rank": "1",
         "roman": "I",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 1,
@@ -30753,7 +30753,7 @@
       "2": {
         "rank": "2",
         "roman": "II",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 2,
@@ -30762,7 +30762,7 @@
       "3": {
         "rank": "3",
         "roman": "III",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 3,
@@ -30771,7 +30771,7 @@
       "4": {
         "rank": "4",
         "roman": "IV",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 4,
@@ -30780,7 +30780,7 @@
       "5": {
         "rank": "5",
         "roman": "V",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 5,
@@ -30789,7 +30789,7 @@
       "6": {
         "rank": "6",
         "roman": "VI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 6,
@@ -30798,7 +30798,7 @@
       "7": {
         "rank": "7",
         "roman": "VII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 7,
@@ -30807,7 +30807,7 @@
       "8": {
         "rank": "8",
         "roman": "VIII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 8,
@@ -30816,7 +30816,7 @@
       "9": {
         "rank": "9",
         "roman": "IX",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 9,
@@ -30825,7 +30825,7 @@
       "10": {
         "rank": "10",
         "roman": "X",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 10,
@@ -30834,7 +30834,7 @@
       "11": {
         "rank": "11",
         "roman": "XI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 11,
@@ -30843,7 +30843,7 @@
       "12": {
         "rank": "12",
         "roman": "XII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 12,
@@ -30852,7 +30852,7 @@
       "13": {
         "rank": "13",
         "roman": "XIII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 13,
@@ -30861,7 +30861,7 @@
       "14": {
         "rank": "14",
         "roman": "XIV",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 14,
@@ -30870,7 +30870,7 @@
       "15": {
         "rank": "15",
         "roman": "XV",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 15,
@@ -30879,7 +30879,7 @@
       "16": {
         "rank": "16",
         "roman": "XVI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 16,
@@ -30888,7 +30888,7 @@
       "17": {
         "rank": "17",
         "roman": "XVII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 17,
@@ -30897,7 +30897,7 @@
       "18": {
         "rank": "18",
         "roman": "XVIII",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 18,
@@ -30906,7 +30906,7 @@
       "19": {
         "rank": "19",
         "roman": "XIX",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 19,
@@ -30915,7 +30915,7 @@
       "20": {
         "rank": "20",
         "roman": "XX",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 20,
@@ -30924,7 +30924,7 @@
       "21": {
         "rank": "21",
         "roman": "XXI",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "suitColor": "purple",
         "sortDefault": 21,
@@ -30933,7 +30933,7 @@
       "22": {
         "roman": "S",
         "suitColor": "purple",
-        "suitImage": "/assets/-374765193_624",
+        "suitImage": "/i/icons/star.svg",
         "suit": 5,
         "rank": "S",
         "sortDefault": 22,
@@ -32152,7 +32152,7 @@
         "deckSuitColor": "#e50932"
       },
       {
-        "image": "/assets/-374765193_624",
+        "image": "/i/icons/star.svg",
         "deckSuitColor": "purple"
       }
     ],
@@ -32179,7 +32179,7 @@
       "i/icons/diamonds.svg",
       "i/icons/spades.svg",
       "i/icons/hearts.svg",
-      "/assets/-374765193_624",
+      "/i/icons/star.svg",
       ""
     ],
     "deckSuitsText": [
@@ -34567,7 +34567,7 @@
     "x": 4,
     "width": 50,
     "height": 50,
-    "image": "/assets/-374765193_624",
+    "image": "/i/icons/star.svg",
     "svgReplaces": {
       "currentColor": "itemColor"
     },
