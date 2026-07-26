@@ -2066,22 +2066,19 @@ export class Widget extends StateManaged {
                 },
                 []
               );
+              let collection = contents;
               if(a.keepOrder) {
-                // a MOVE collection is processed in widget creation order, so move
-                // the cards one by one to have them arrive in the order of the hand
-                for(const id of contents)
-                  moves.push({
-                    func: "MOVE",
-                    collection: [ id ],
-                    to: target.get('id'),
-                  });
-              } else {
-                moves.push({
-                  func: "MOVE",
-                  collection: contents,
-                  to: target.get('id'),
-                });
+                // an array of IDs is turned into a collection by widgetFilter, which
+                // returns the widgets in creation order - pass a collection that is
+                // already sorted like the hand instead so the order is kept
+                collection = `$swaphands_${i}`;
+                collections[collection] = contents.map(id=>widgets.get(id));
               }
+              moves.push({
+                func: "MOVE",
+                collection: collection,
+                to: target.get('id'),
+              });
             }
           }
           if(jeRoutineLogging) {
