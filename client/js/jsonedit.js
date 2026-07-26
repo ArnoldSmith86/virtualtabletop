@@ -3044,9 +3044,49 @@ let jeRoutineResult = '';
 let jeLoggingHTML = '';
 let jeLoggingDepth = 0;
 let jeHTMLStack = [];
+let jeLoggingRunningInterval = null;
+let jeLoggingStartTime = 0;
+
+// Substituted with the total runtime once the routine returns - the placeholder of an earlier
+// routine is always replaced already, so replacing the first occurrence hits the current one.
+const jeLoggingTimePlaceholder = '<!--routine runtime-->';
 
 function jeLoggingJSON(obj) {
   return html(JSON.stringify(obj, null, '  ').split('\n').slice(1, -1).join('\n'));
+}
+
+// The finished log is only rendered once the routine returns. Until then, show which routine is
+// running and for how long so that a slow or hanging routine doesn't look like nothing happened.
+function jeLoggingShowRunning(widget, property) {
+  jeLoggingHideRunning();
+  const log = $('#jeLog');
+  if(!log)
+    return;
+
+  const startTime = +new Date();
+  const entry = document.createElement('div');
+  entry.className = 'jeLog jeLogRunning';
+  entry.innerHTML = `
+    <span class="jeLogWidget">${html(widget.get('id'))}</span>
+    <span class="jeLogProperty">${typeof property == 'string' ? html(property) : '--custom--'}</span>
+    <span class="jeLogTime">running…</span>
+  `;
+  log.appendChild(entry);
+
+  const time = $('.jeLogTime', entry);
+  jeLoggingRunningInterval = setInterval(function() {
+    if(!time.isConnected)
+      jeLoggingHideRunning();
+    else
+      time.textContent = `running… ${((+new Date() - startTime)/1000).toFixed(1)}s`;
+  }, 100);
+}
+
+function jeLoggingHideRunning() {
+  if(jeLoggingRunningInterval) {
+    clearInterval(jeLoggingRunningInterval);
+    jeLoggingRunningInterval = null;
+  }
 }
 
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
@@ -3054,15 +3094,22 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
+      if(!jeLoggingDepth && $('#jeLog'))
+        $('#jeLog').innerHTML = '';
     }
     jeLoggingHTML += `
       <div class="jeLog">
         <div class="jeExpander ${jeLoggingDepth ? '' : 'jeExpander-down'}">
           <span class="jeLogWidget">${widget.get('id')}</span>
           <span class="jeLogProperty">${typeof property == 'string' ? property : '--custom--'}</span>
+          <span class="jeLogTime">${jeLoggingDepth ? '' : jeLoggingTimePlaceholder}</span>
         </div>
         <div class="jeLogNested ${jeLoggingDepth ? '' : 'active'}">
     `;
+  }
+  if(!jeLoggingDepth) {
+    jeLoggingStartTime = +new Date();
+    jeLoggingShowRunning(widget, property);
   }
   ++jeLoggingDepth;
 }
@@ -3071,6 +3118,8 @@ export function jeLoggingRoutineEnd(variables, collections) {
   if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
+    jeLoggingHideRunning();
+    jeLoggingHTML = jeLoggingHTML.replace(jeLoggingTimePlaceholder, `(${+new Date() - jeLoggingStartTime}ms)`);
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
 
     // Make it so clicking on the arrows expands the subtree
