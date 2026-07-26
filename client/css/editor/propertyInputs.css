@@ -1215,6 +1215,196 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   opacity: 0.8;
 }
 
+/* per-face editor of basic widgets */
+.editorModule .facesActiveNote {
+  font-size: 0.9em;
+  margin: 4px 10px 4px 0;
+  padding: 3px 6px;
+  border-left: 3px solid var(--VTTblue);
+  background: var(--backgroundHighlightColor1);
+}
+
+.editorModule .facesHint {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin: 4px 10px 4px 0;
+}
+
+.editorModule .facesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 10px 6px 0;
+}
+
+.editorModule .facesAddFace {
+  margin: 4px 0;
+}
+
+.editorModule .faceRow {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+  border-left-width: 3px;
+}
+
+/* the face the widget currently shows on the table */
+.editorModule .faceRow.activeFace {
+  border-left-color: var(--VTTblue);
+}
+
+.editorModule .faceRowHead {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.editorModule .faceRowToggle {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.editorModule .faceRowToggle:focus-visible {
+  outline: 2px solid var(--VTTblue);
+  outline-offset: -2px;
+}
+
+.editorModule .facePreview {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorModule .facePreview .widget {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.editorModule .faceRowInfo {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.editorModule .faceRowTitle {
+  font-weight: bold;
+}
+
+/* only the face the widget currently shows gets the tag */
+.editorModule .faceActiveTag {
+  display: none;
+  font-size: 0.75em;
+  font-weight: normal;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.editorModule .faceRow.activeFace .faceActiveTag {
+  display: inline-block;
+}
+
+.editorModule .faceRowSummary {
+  font-size: 0.85em;
+  opacity: 0.8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.editorModule .faceRow .collapseArrow::before {
+  content: 'chevron_right';
+}
+
+.editorModule .faceRow.expanded .collapseArrow::before {
+  content: 'expand_more';
+}
+
+/* scoped to .faceRow: the dice face rows share the .faceRowActions class */
+.editorModule .faceRow .faceRowActions {
+  gap: 2px;
+  padding: 4px 4px 4px 0;
+}
+
+.editorModule .faceRow .faceRowActions button[icon] {
+  padding: 2px 5px;
+  justify-content: center;
+}
+
+.editorModule .faceShowButton.active {
+  color: var(--VTTblue);
+}
+
+.editorModule .faceRowBody {
+  padding: 0 6px 6px;
+}
+
+.editorModule .faceDuplicate {
+  margin-bottom: 4px;
+}
+
+.editorModule .facePropertyRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* a textarea is taller than its remove button, so keep them top aligned */
+.editorModule .facePropertyRow.structured {
+  align-items: flex-start;
+}
+
+/* the property inputs share the row with their remove button */
+.editorModule .facePropertyRow > .propertyInput,
+.editorModule .facePropertyRow > .facePropertyStructured {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.editorModule .facePropertyStructured > label {
+  display: block;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+.editorModule .facePropertyStructured > textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 0.85em;
+}
+
+.editorModule .facePropertyRemove {
+  flex: 0 0 auto;
+  padding: 2px 4px;
+}
+
+.editorModule .facePropertyRow.structured .facePropertyRemove {
+  margin-top: 18px;
+}
+
+.editorModule .faceAddPropertyRow {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.editorModule .faceAddPropertyRow > input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 /* snap grid editor */
 .editorModule .gridHelp,
 .editorModule .gridSizeNote {

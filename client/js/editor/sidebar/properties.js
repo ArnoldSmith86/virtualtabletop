@@ -228,6 +228,171 @@ function dicePreviewActiveFace(faces) {
   return Number.isFinite(values[highestIndex]) ? highestIndex : faces.length - 1;
 }
 
+// --- basic widget face helpers ---
+
+// A face of a basic widget is a set of property overrides applied while that
+// face is shown, so it can hold *any* widget property. These are just the ones
+// the "change another property" dropdown offers on top of what the widget and
+// its other faces already use.
+const faceSuggestedProperties = [
+  'image', 'icon', 'text', 'color', 'css', 'classes', 'html',
+  'borderRadius', 'rotation', 'scale', 'width', 'height', 'movable', 'clickRoutine'
+];
+
+// properties that identify the widget or that the engine strips from a face
+// (see BasicWidget.applyDeltaToDOM), so putting them into one does nothing
+const faceForbiddenProperties = [ 'id', 'type', 'parent', 'faces', 'activeFace' ];
+
+// a face preview renders one fixed face at the origin (renderReadonlyCopyRaw
+// zeroes position and transform), so these cannot change how it looks
+const facePreviewIndependentProperties = [ 'faces', 'activeFace', 'x', 'y', 'z', 'rotation', 'scale' ];
+
+// Legal in a face, but a trap to pick from a list: while such a face is shown
+// the widget's own value is overridden, so e.g. dragging it snaps back to the
+// face's x/y. They stay typeable for the games that do use them.
+const faceUnsuggestedProperties = [ 'x', 'y', 'z', 'owner', 'dragging', 'inheritFrom', 'deck', 'cardType', 'linkedToSeat', 'onlyVisibleForSeat' ];
+
+// Starting value for a property added to a face, for the few properties whose
+// widget default is null or absent - everything else starts from the widget's
+// own value (see faceNewPropertyValue).
+const faceNewPropertyValues = {
+  icon: null, html: '', borderRadius: 0, clickRoutine: []
+};
+
+function faceObject(face) {
+  return isObjectLike(face) ? face : {};
+}
+
+function faceList(value) {
+  return Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : [];
+}
+
+// Which curated input a face property gets. Colors, icons and images keep
+// their pickers; for everything else the editor has no opinion about the
+// property name, so the shape of the current value decides.
+function facePropertyKind(property, value) {
+  if(/Routine$/.test(property))
+    return 'json';
+  if(isObjectLike(value))
+    return /css$/i.test(property) && !hasNestedCSSClasses(value) ? 'css' : 'json';
+  if(Array.isArray(value))
+    return 'json';
+  if(typeof value == 'boolean')
+    return 'checkbox';
+  if(property == 'icon')
+    return 'icon';
+  if(property == 'image')
+    return 'image';
+  if(/color$/i.test(property))
+    return 'color';
+  if(/css$/i.test(property))
+    return 'css';
+  if(typeof value == 'number')
+    return 'number';
+  return 'text';
+}
+
+// value shown next to a property name in the one line summary of a collapsed
+// face row - only for values that are short enough to say something
+function faceValueSummary(value) {
+  if(value === null || typeof value == 'object')
+    return null;
+  const text = String(value);
+  if(text === '' || text.length > 18 || /^\/(?:assets|i)\//.test(text))
+    return null;
+  return text;
+}
+
+function faceSummary(face) {
+  const entries = Object.entries(faceObject(face));
+  if(!entries.length)
+    return 'shows the widget unchanged';
+  return entries.map(([ property, value ]) => {
+    const summary = faceValueSummary(value);
+    return summary === null ? property : `${property}: ${summary}`;
+  }).join(' · ');
+}
+
+// StateManaged.get() does not numify activeFace and a routine can put a string
+// in it, so normalize before comparing it with a face index
+function activeFaceIndex(widget) {
+  const value = Number(widget.get('activeFace'));
+  return Number.isInteger(value) && value >= 0 ? value : 0;
+}
+
+// The widget's own value for a property. BasicWidget.get() resolves everything
+// except faces/activeFace through the shown face's overrides, so an input that
+// writes the widget's property has to read it this way - otherwise it shows a
+// value it does not write to as soon as the shown face overrides it.
+function widgetOwnValue(widget, property) {
+  if(widget.isMulti || !isObjectLike(widget.state))
+    return widget.get(property);
+  if(widget.state[property] !== undefined)
+    return widget.state[property];
+  const defaultValue = typeof widget.getDefaultValue == 'function' ? widget.getDefaultValue(property) : undefined;
+  return defaultValue !== undefined ? defaultValue : null;
+}
+
+// where an index ends up after the entry at "from" was moved to "to"
+function indexAfterReorder(index, from, to) {
+  if(index == from)
+    return to;
+  if(from < index && index <= to)
+    return index - 1;
+  if(to <= index && index < from)
+    return index + 1;
+  return index;
+}
+
+// What a rendered widget copy actually covers: its own box unioned with its
+// (possibly absolutely positioned) children. Either one alone can be the
+// smaller: a 3D dice sticks out of its box, while a widget whose face only
+// sets a short html snippet has a child much smaller than its box.
+function previewContentRect(element) {
+  const own = element.getBoundingClientRect();
+  const children = getBoundingClientRectWithAbsoluteChildren(element);
+  const left = Math.min(own.left, children.left);
+  const top = Math.min(own.top, children.top);
+  const right = Math.max(own.right, children.right);
+  const bottom = Math.max(own.bottom, children.bottom);
+  return { left, top, right, bottom, width: right - left, height: bottom - top };
+}
+
+// Scale a rendered widget copy down so it fits its preview box and center it
+// there - previews have a fixed size but widgets can be any size.
+function scalePreviewToFit(preview, rendered) {
+  if(!rendered)
+    return;
+  const fit = _=>{
+    rendered.style.transformOrigin = 'top left';
+    rendered.style.transform = '';
+    const box = preview.getBoundingClientRect();
+    const rect = previewContentRect(rendered);
+    const size = Math.max(rect.width, rect.height);
+    if(!size || !box.width)
+      return;
+    rendered.style.transform = `scale(${Math.min(1, Math.min(box.width, box.height) / size)})`;
+
+    // measure again, the rects above are the unscaled ones
+    const scaled = previewContentRect(rendered);
+    const x = box.left + box.width / 2 - (scaled.left + scaled.width / 2);
+    const y = box.top + box.height / 2 - (scaled.top + scaled.height / 2);
+    rendered.style.transform = `translate(${x}px, ${y}px) ${rendered.style.transform}`;
+  };
+  fit();
+  // the widget only has its final size after the browser laid it out
+  requestAnimationFrame(fit);
+}
+
+// which face of a basic widget the editor currently has open, kept across
+// re-renders so reselecting the widget returns to the face you were editing
+const expandedFaceByWidgetId = new Map();
+
+// id shared by all throwaway face preview copies, so the per-id bookkeeping
+// the Widget constructor does (stylesheets, inheritance) is reused instead of
+// accumulating one dead entry per redraw. It must not look like a real widget.
+const facePreviewWidgetID = 'editorFacePreview';
+
 const textSymbolClasses = [ 'symbols', 'material-symbols', 'material-symbols-nofill', 'emoji-monochrome' ];
 
 // swap the text-symbol class in a widget's classes string, keeping every
@@ -923,8 +1088,36 @@ class PropertiesModule extends SidebarModule {
         this.inputUpdaters[id] = {};
       if(!this.inputUpdaters[id][property])
         this.inputUpdaters[id][property] = [];
-      this.inputUpdaters[id][property].push(v=>updater(widget));
+      const listener = v=>updater(widget);
+      this.inputUpdaters[id][property].push(listener);
+      if(this.collectedListeners)
+        this.collectedListeners.push([ this.inputUpdaters[id][property], listener ]);
     }
+  }
+
+  // Render a block that replaces its own DOM whenever something changes, e.g.
+  // the face list. Property listeners are only dropped when the selection
+  // changes, so without this the listeners of every discarded generation keep
+  // firing on every delta for as long as the widget stays selected.
+  renderRebuildable(renderBody) {
+    let listeners = [];
+    const rebuild = _=>{
+      for(const [ list, listener ] of listeners) {
+        const index = list.indexOf(listener);
+        if(index != -1)
+          list.splice(index, 1);
+      }
+      listeners = [];
+
+      const outerListeners = this.collectedListeners;
+      this.collectedListeners = listeners;
+      try {
+        renderBody(rebuild);
+      } finally {
+        this.collectedListeners = outerListeners;
+      }
+    };
+    rebuild();
   }
 
   inputValueUpdated(widget, property, value) {
@@ -945,15 +1138,18 @@ class PropertiesModule extends SidebarModule {
   // class) rather than one common value, so a multi-selection never sees the
   // MULTI_DIFFERENT sentinel and each widget keeps its unrelated parts
   inputValueTransformed(widget, property, transform) {
+    // widgetOwnValue, not get(): a basic widget resolves get() through its
+    // shown face, so transforming that value into the widget's own property
+    // would copy the face's value over the widget's
     if(widget.isMulti) {
       batchStart();
       setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${widget.widgets.length} widgets in editor`);
       for(const w of widget.widgets)
-        w.set(property, transform(w.get(property)));
+        w.set(property, transform(widgetOwnValue(w, property)));
       batchEnd();
       return;
     }
-    widget.set(property, transform(widget.get(property)));
+    widget.set(property, transform(widgetOwnValue(widget, property)));
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -969,11 +1165,13 @@ class PropertiesModule extends SidebarModule {
 
   onClose() {
     this.clearGridPreview();
+    this.clearFaceRowRefresh();
   }
 
   onEditorClose() {
     super.onEditorClose();
     this.clearGridPreview();
+    this.clearFaceRowRefresh();
   }
 
   onSelectionChangedWhileActive(newSelection) {
@@ -982,6 +1180,7 @@ class PropertiesModule extends SidebarModule {
 
     // the board preview belongs to the widget that was being edited
     this.clearGridPreview();
+    this.clearFaceRowRefresh();
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -4614,7 +4813,7 @@ class PropertiesModule extends SidebarModule {
       let newCss;
       if(hasNestedCSSClasses(value)) {
         if(value[className] !== undefined)
-          return;
+          return false;
         newCss = Object.assign({}, value, { [className]: {} });
       } else {
         newCss = { [className]: {} };
@@ -4650,30 +4849,12 @@ class PropertiesModule extends SidebarModule {
       const dropdownSuggestions = [ ...new Set([ ...commonCssSelectors, ...(cssSelectorSuggestions[type] || []), ...classSuggestions ]) ]
         .filter(selector => !isPresent(selector));
 
-      const addRow = div(container, 'cssAddClassRow');
-      const nameInput = document.createElement('input');
-      nameInput.placeholder = 'new class/selector, e.g. ":hover"';
-      addRow.appendChild(nameInput);
-      if(dropdownSuggestions.length) {
-        const listID = `cssSelectors_${widget.id}_${property}_${rand().toString(36).substring(3, 9)}`;
-        const datalist = document.createElement('datalist');
-        datalist.id = listID;
-        for(const selector of dropdownSuggestions) {
-          const option = document.createElement('option');
-          option.value = selector;
-          datalist.appendChild(option);
-        }
-        addRow.appendChild(datalist);
-        nameInput.setAttribute('list', listID);
-      }
-      const addButton = document.createElement('button');
-      addButton.setAttribute('icon', 'add');
-      addButton.title = 'Add a class/selector section';
-      addButton.onclick = () => {
-        if(nameInput.value.trim())
-          addClass(nameInput.value.trim());
-      };
-      addRow.appendChild(addButton);
+      this.renderSuggestionAddRow(container, 'cssAddClassRow', {
+        placeholder: 'new class/selector, e.g. ":hover"',
+        title: 'Add a class/selector section',
+        suggestions: dropdownSuggestions,
+        onAdd: addClass
+      });
     };
 
     rebuild();
@@ -4681,6 +4862,48 @@ class PropertiesModule extends SidebarModule {
       if(!container.contains(document.activeElement))
         rebuild();
     });
+  }
+
+  // Free text field with a datalist of suggestions plus an add button - so the
+  // field has a picker but still accepts a name the editor never heard of.
+  // onAdd returning false keeps the typed text (the name was rejected).
+  renderSuggestionAddRow(target, className, options) {
+    const row = div(target, className);
+
+    const input = document.createElement('input');
+    input.placeholder = options.placeholder;
+    row.appendChild(input);
+
+    if(options.suggestions.length) {
+      const listID = `suggestions_${rand().toString(36).substring(3, 12)}`;
+      const datalist = document.createElement('datalist');
+      datalist.id = listID;
+      for(const suggestion of options.suggestions) {
+        const option = document.createElement('option');
+        option.value = suggestion;
+        datalist.appendChild(option);
+      }
+      row.appendChild(datalist);
+      input.setAttribute('list', listID);
+    }
+
+    const submit = _=>{
+      const value = input.value.trim();
+      if(value && options.onAdd(value) !== false)
+        input.value = '';
+    };
+    input.onkeydown = event=>{
+      if(event.key == 'Enter')
+        submit();
+    };
+
+    const add = document.createElement('button');
+    add.setAttribute('icon', 'add');
+    add.title = options.title;
+    add.onclick = submit;
+    row.appendChild(add);
+
+    return row;
   }
 
   // color inputs of one subsection side by side; their pickers open below
@@ -5044,9 +5267,13 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
     this.renderBasicContentSection(widget, true);
+    this.renderFacesEditor(widget);
     this.renderAppearanceSection(widget);
     this.renderBehaviorSection(widget);
-    this.renderOtherPropertiesSection(widget, [ 'html' ]);
+    // the face editor only curates these when it can actually edit them, so a
+    // widget with a broken faces value keeps its generic inputs
+    const curatedByFaceEditor = Array.isArray(widget.get('faces')) ? [ 'faces', 'activeFace', 'faceCycle' ] : [];
+    this.renderOtherPropertiesSection(widget, [ 'html' ].concat(curatedByFaceEditor));
   }
 
   // Content section of basic widgets: text with a text/symbol mode dropdown,
@@ -5121,8 +5348,13 @@ class PropertiesModule extends SidebarModule {
   // side blocks - the "classic" basic-widget content editor, also reused
   // in the custom-HTML toggle above and by widget types without HTML support.
   renderBasicContentInputs(widget, target) {
+    // these inputs write the widget's own properties, so they have to read
+    // them too - a basic widget resolves get() through its shown face, and
+    // transforming the face's classes into the widget would lose both
+    const ownValue = property => widgetOwnValue(widget, property);
+
     const currentSymbolClass = () => {
-      const value = widget.get('classes');
+      const value = ownValue('classes');
       return String(propertyInputIsMulti(value) ? '' : (value || '')).split(/\s+/)
         .find(className => textSymbolClasses.includes(className)) || null;
     };
@@ -5164,7 +5396,7 @@ class PropertiesModule extends SidebarModule {
     textRow.appendChild(symbolButton);
 
     const update = () => {
-      const value = widget.get('text');
+      const value = ownValue('text');
       const multi = propertyInputIsMulti(value);
       textRow.classList.toggle('multiDiffers', multi);
       textInput.placeholder = multi ? '— multiple —' : '';
@@ -5186,7 +5418,7 @@ class PropertiesModule extends SidebarModule {
     const iconTitle = div(iconBlock, 'contentMediaTitle');
     iconTitle.textContent = 'Icon';
     propertyInfoButton(iconTitle, html(editorPropertyHints.icon));
-    const iconInput = new IconInput(this, widget, null, { property: 'icon', pickerGroup });
+    const iconInput = new IconInput(this, widget, null, { property: 'icon', pickerGroup, getValue: _=>ownValue('icon') });
     iconInput.render(iconBlock);
 
     // color/scale controls stay visible here (rather than only inside the
@@ -5210,7 +5442,429 @@ class PropertiesModule extends SidebarModule {
     const imageTitle = div(imageBlock, 'contentMediaTitle');
     imageTitle.textContent = 'Image';
     propertyInfoButton(imageTitle, html(editorPropertyHints.image));
-    new ImageInput(this, widget, null, { property: 'image', pickerGroup }).render(imageBlock);
+    new ImageInput(this, widget, null, { property: 'image', pickerGroup, getValue: _=>ownValue('image') }).render(imageBlock);
+  }
+
+  // --- basic widget face editor ---
+  //
+  // Unlike a dice face (one value) a face here is a free set of property
+  // overrides, so the list shows one preview row per face and only the face
+  // you open gets its properties - and with them the color/icon/image
+  // pickers - rendered, keeping the list readable and the pickers unambiguous.
+
+  // read-only view of the face list
+  basicFaces(widget) {
+    const faces = widget.get('faces');
+    return Array.isArray(faces) ? faces : [];
+  }
+
+  // copy to mutate before writing it back: widget.set() compares by JSON, so
+  // editing the live state array in place would make the write a no-op
+  editableFaces(widget) {
+    return faceList(this.basicFaces(widget));
+  }
+
+  // shared by the dice and the basic widget face editors: write the face list
+  // and keep activeFace pointing at a face that still exists
+  setFacesProperty(widget, faces, activeFace = null) {
+    const removedFaces = this.basicFaces(widget).length > faces.length;
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} edited faces of ${widget.get('type') || 'basic'} ${widget.id} in editor`);
+    widget.set('faces', faces);
+    if(activeFace !== null)
+      widget.set('activeFace', activeFace);
+    // only clean up after ourselves: an activeFace that was already past the
+    // end before this edit is the game's business, not the editor's
+    else if(removedFaces && activeFaceIndex(widget) >= faces.length)
+      widget.set('activeFace', Math.max(0, faces.length - 1));
+    batchEnd();
+  }
+
+  setFaceProperty(widget, index, property, value) {
+    const faces = this.editableFaces(widget);
+    // the row may be from before someone else removed faces from the widget
+    if(index < 0 || index >= faces.length)
+      return;
+    if(!isObjectLike(faces[index]))
+      faces[index] = {};
+    faces[index][property] = value;
+    this.setFacesProperty(widget, faces);
+  }
+
+  removeFaceProperty(widget, index, property) {
+    const faces = this.editableFaces(widget);
+    if(index < 0 || index >= faces.length)
+      return;
+    if(isObjectLike(faces[index]))
+      delete faces[index][property];
+    this.setFacesProperty(widget, faces);
+  }
+
+  // start a new face property from what the widget itself shows, so it is a
+  // copy you tweak rather than an empty field that blanks the widget
+  faceNewPropertyValue(widget, property) {
+    const base = widgetOwnValue(widget, property);
+    const value = base !== undefined && base !== null ? base : faceNewPropertyValues[property];
+    return value === undefined ? '' : JSON.parse(JSON.stringify(value));
+  }
+
+  renderFacesEditor(widget) {
+    this.addSubHeader('Faces');
+    div(this.moduleDOM, 'facesHint', 'A face is a set of properties that override the widget\'s own ones while that face is shown. Clicking the widget flips to the next face.');
+
+    // the engine only reads a list of faces; refuse to edit (and so overwrite)
+    // anything else that ended up in the property
+    if(!Array.isArray(widget.get('faces'))) {
+      div(this.moduleDOM, 'facesHint', 'The faces property of this widget is not a list, so this widget has no faces. Fix it in the JSON editor to edit them here.');
+      return;
+    }
+
+    // the sections above show and write the widget's own properties, but the
+    // shown face wins over them on the table - say so instead of leaving the
+    // discrepancy to be discovered
+    const note = div(this.moduleDOM, 'facesActiveNote');
+
+    const cycleHost = div(this.moduleDOM, 'facesCycle');
+    new SelectInput(this, widget, 'On click', {
+      // the widget's own faceCycle, not the one a shown face may override it
+      // with - that one is edited as a property of that face
+      listenTo: [ 'faceCycle' ],
+      getValue: _=>widgetOwnValue(widget, 'faceCycle'),
+      setValue: value=>this.inputValueUpdated(widget, 'faceCycle', value),
+      hint: 'Which face clicking the widget flips to.',
+      choices: [
+        { value: 'forward',  text: 'show the next face' },
+        { value: 'backward', text: 'show the previous face' },
+        { value: 'random',   text: 'show a random face' }
+      ]
+    }).render(cycleHost);
+
+    const list = div(this.moduleDOM, 'facesEditor');
+
+    const addFace = document.createElement('button');
+    addFace.setAttribute('icon', 'add');
+    addFace.className = 'green facesAddFace';
+    addFace.textContent = 'Add face';
+    addFace.onclick = _=>{
+      const faces = this.editableFaces(widget);
+      faces.push({});
+      expandedFaceByWidgetId.set(widget.id, faces.length - 1);
+      this.setFacesProperty(widget, faces);
+    };
+    this.moduleDOM.appendChild(addFace);
+
+    // rebuilding drops focus, so only do it when the shape of the faces
+    // changed (a face or a property added, removed or reordered) - editing a
+    // value keeps the rows and lets the inputs update themselves
+    const signature = _=>JSON.stringify(this.basicFaces(widget).map(face=>Object.keys(faceObject(face))).concat([ expandedFaceByWidgetId.get(widget.id) ]));
+    let lastSignature = null;
+    let rebuild = _=>{};
+
+    // the rows register the property listeners of their inputs, so they are
+    // built through renderRebuildable - it drops the ones of the generation it
+    // replaces instead of leaving them to fire on every later delta
+    this.renderRebuildable(rebuildRows=>{
+      rebuild = rebuildRows;
+      const scrollTop = this.moduleDOM.scrollTop;
+      lastSignature = signature();
+      this.clearFaceRowRefresh();
+      list.innerHTML = '';
+      const faces = this.basicFaces(widget);
+      // pointless with one face, but never hide a value the widget actually has
+      cycleHost.style.display = faces.length > 1 || widget.state.faceCycle !== undefined ? '' : 'none';
+      if(!faces.length)
+        div(list, 'facesHint', 'This widget has no faces at all. Add one to give it properties of its own.');
+      else if(faces.length == 1 && !Object.keys(faceObject(faces[0])).length)
+        div(list, 'facesHint', 'This widget has a single face. Add a second one to make it flip - between a front and a back image, for example.');
+      else
+        faces.forEach((face, index)=>this.renderFaceRow(widget, index, list, rebuildRows));
+      this.updateActiveFaceMarkers(widget, list, note);
+      this.moduleDOM.scrollTop = scrollTop;
+    });
+
+    this.addPropertyListener(widget, 'faces', _=>{
+      if(signature() !== lastSignature)
+        rebuild();
+      else
+        this.scheduleFaceRowRefresh(widget, list);
+    });
+    this.addPropertyListener(widget, 'activeFace', _=>this.updateActiveFaceMarkers(widget, list, note));
+    // a face preview is the whole widget, so most other properties change it
+    // too - except the ones each preview overrides for itself
+    this.addDeltaListener(state=>{
+      if(state && state[widget.id] && Object.keys(state[widget.id]).some(property=>facePreviewIndependentProperties.indexOf(property) == -1))
+        this.scheduleFaceRowRefresh(widget, list);
+    });
+  }
+
+  renderFaceRow(widget, index, container, rebuild) {
+    const faces = this.basicFaces(widget);
+    const face = faceObject(faces[index]);
+    const expanded = expandedFaceByWidgetId.get(widget.id) === index;
+
+    const row = div(container, `faceRow${expanded ? ' expanded' : ''}`);
+    row.dataset.face = index;
+
+    const head = div(row, 'faceRowHead');
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'faceRowToggle';
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.title = expanded ? 'Close this face' : 'Edit the properties of this face';
+    toggle.onclick = _=>{
+      expandedFaceByWidgetId.set(widget.id, expanded ? -1 : index);
+      rebuild();
+    };
+    head.appendChild(toggle);
+
+    this.renderFacePreview(widget, index, toggle);
+    const info = div(toggle, 'faceRowInfo');
+    div(info, 'faceRowTitle', `${html(`Face ${index + 1}`)}<span class=faceActiveTag>shown</span>`);
+    div(info, 'faceRowSummary', html(faceSummary(face)));
+    const arrow = document.createElement('span');
+    arrow.className = 'collapseArrow';
+    toggle.appendChild(arrow);
+
+    const actions = div(head, 'faceRowActions');
+
+    const show = document.createElement('button');
+    show.className = 'faceShowButton';
+    show.setAttribute('icon', 'visibility');
+    show.onclick = _=>widget.set('activeFace', index);
+    actions.appendChild(show);
+
+    this.renderFaceOrderControls(actions, index, faces.length, (from, to)=>{
+      // inside the callback: reorderFaces refuses moves it cannot make, and
+      // then the open face has not moved either
+      this.reorderFaces(widget, this.editableFaces(widget), from, to, (newFaces, activeFace)=>{
+        if(expandedFaceByWidgetId.has(widget.id))
+          expandedFaceByWidgetId.set(widget.id, indexAfterReorder(expandedFaceByWidgetId.get(widget.id), from, to));
+        this.setFacesProperty(widget, newFaces, activeFace);
+      });
+    });
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.className = 'red';
+    // the engine flips through faces modulo their count, so keep at least one
+    remove.disabled = faces.length < 2;
+    remove.title = remove.disabled ? 'A widget needs at least one face' : 'Remove this face';
+    remove.onclick = _=>{
+      expandedFaceByWidgetId.set(widget.id, -1);
+      this.removeFace(widget, this.editableFaces(widget), index, (newFaces, activeFace)=>this.setFacesProperty(widget, newFaces, activeFace));
+    };
+    actions.appendChild(remove);
+
+    if(expanded)
+      this.renderFaceBody(widget, index, row);
+  }
+
+  renderFaceBody(widget, index, row) {
+    const body = div(row, 'faceRowBody');
+    const face = faceObject(this.basicFaces(widget)[index]);
+
+    const duplicate = document.createElement('button');
+    duplicate.setAttribute('icon', 'content_copy');
+    duplicate.className = 'faceDuplicate';
+    duplicate.textContent = 'Duplicate face';
+    duplicate.onclick = _=>{
+      const faces = this.editableFaces(widget);
+      faces.splice(index + 1, 0, JSON.parse(JSON.stringify(faceObject(faces[index]))));
+      expandedFaceByWidgetId.set(widget.id, index + 1);
+      this.setFacesProperty(widget, faces);
+    };
+    body.appendChild(duplicate);
+
+    if(!Object.keys(face).length)
+      div(body, 'facesHint', 'This face changes nothing yet. Add the properties it should override below.');
+
+    const rows = div(body, 'facePropertyRows');
+    // pickers open below the properties so opening one never moves the rows
+    const pickerGroup = { target: div(body, 'contentMediaPickers'), current: null };
+    for(const property of Object.keys(face))
+      this.renderFaceProperty(widget, index, property, rows, pickerGroup);
+
+    this.renderFaceAddProperty(widget, index, body);
+  }
+
+  renderFaceProperty(widget, index, property, target, pickerGroup) {
+    const value = faceObject(this.basicFaces(widget)[index])[property];
+    const kind = facePropertyKind(property, value);
+    const row = div(target, `facePropertyRow${kind == 'json' || kind == 'css' ? ' structured' : ''}`);
+
+    const options = {
+      listenTo: [ 'faces' ],
+      pickerGroup,
+      hint: editorPropertyHints[property],
+      getValue: _=>{
+        const current = faceObject(this.basicFaces(widget)[index])[property];
+        return current === undefined ? null : current;
+      },
+      setValue: newValue=>this.setFaceProperty(widget, index, property, newValue)
+    };
+
+    if(kind == 'json' || kind == 'css')
+      this.renderFaceStructuredProperty(widget, kind, property, row, options);
+    else if(kind == 'color')
+      new ColorInput(this, widget, property, options).render(row);
+    else if(kind == 'icon')
+      new IconInput(this, widget, property, options).render(row);
+    else if(kind == 'image')
+      new ImageInput(this, widget, property, options).render(row);
+    else if(kind == 'checkbox')
+      new CheckboxInput(this, widget, property, options).render(row);
+    else if(kind == 'number')
+      new NumberInput(this, widget, property, options).render(row);
+    else
+      new TextInput(this, widget, property, Object.assign({ multiline: property == 'html' || (typeof value == 'string' && value.indexOf('\n') != -1) }, options)).render(row);
+
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'close');
+    remove.className = 'facePropertyRemove';
+    remove.title = `Stop changing ${property} on this face (the widget's own value applies again)`;
+    remove.onclick = _=>this.removeFaceProperty(widget, index, property);
+    row.appendChild(remove);
+  }
+
+  // Routines, other structured values and the css of a face get a textarea:
+  // they are the face properties that can be long, and a single line input
+  // would make a per-face clickRoutine unusable.
+  renderFaceStructuredProperty(widget, kind, property, target, options) {
+    const wrap = div(target, 'facePropertyStructured');
+    const label = document.createElement('label');
+    label.textContent = property;
+    if(options.hint)
+      propertyInfoButton(label, html(options.hint));
+    wrap.appendChild(label);
+
+    const textarea = document.createElement('textarea');
+    textarea.placeholder = kind == 'css' ? 'property: value;' : 'JSON';
+    textarea.oninput = _=>{
+      if(kind == 'css') {
+        // keep the stored shape: a face css object stays an object, a plain
+        // declaration string stays a string
+        const text = textarea.value;
+        if(isObjectLike(options.getValue())) {
+          if(text.trim() && !cssStringRoundTrips(text)) {
+            textarea.classList.add('inputError');
+            return;
+          }
+          textarea.classList.remove('inputError');
+          options.setValue(cssStringToObject(text));
+        } else {
+          options.setValue(text);
+        }
+        return;
+      }
+      try {
+        const parsed = JSON.parse(textarea.value);
+        textarea.classList.remove('inputError');
+        options.setValue(parsed);
+      } catch(e) {
+        textarea.classList.add('inputError');
+      }
+    };
+    wrap.appendChild(textarea);
+
+    this.addPropertyListener(widget, 'faces', _=>{
+      if(document.activeElement === textarea)
+        return;
+      const value = options.getValue();
+      textarea.value = kind == 'css' ? cssTextFromValue(value) : JSON.stringify(value, null, 2);
+      textarea.rows = Math.max(2, Math.min(14, textarea.value.split('\n').length));
+      textarea.classList.remove('inputError');
+    });
+  }
+
+  renderFaceAddProperty(widget, index, target) {
+    const faces = this.basicFaces(widget);
+    const face = faceObject(faces[index]);
+    // what the widget and the other faces already use first: overriding one of
+    // those is what a face is normally for
+    const suggestions = [ ...new Set([
+      ...faces.flatMap((other, otherIndex)=>otherIndex == index ? [] : Object.keys(faceObject(other))),
+      ...Object.keys(widget.state),
+      ...faceSuggestedProperties
+    ]) ].filter(property=>face[property] === undefined && faceForbiddenProperties.indexOf(property) == -1);
+
+    this.renderSuggestionAddRow(target, 'faceAddPropertyRow', {
+      placeholder: 'property to change, e.g. image',
+      title: 'Change another property on this face',
+      suggestions,
+      onAdd: property=>{
+        if(faceForbiddenProperties.indexOf(property) != -1 || face[property] !== undefined)
+          return false;
+        this.setFaceProperty(widget, index, property, this.faceNewPropertyValue(widget, property));
+      }
+    });
+  }
+
+  renderFacePreview(widget, index, target) {
+    const preview = div(target, 'facePreview');
+    preview.dataset.face = index;
+    this.drawFacePreview(widget, preview);
+    return preview;
+  }
+
+  // The whole widget as that face would show it. Like the dice face previews
+  // this builds the copy by hand rather than through renderReadonlyCopy: a
+  // unique id per copy would burn one seeded random per redraw (breaking
+  // reproducible rooms) and leave every redraw's copy behind in the global
+  // registries keyed by widget id.
+  drawFacePreview(widget, preview) {
+    preview.innerHTML = '';
+    const copy = new widget.constructor(facePreviewWidgetID);
+    copy.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
+      activeFace: +preview.dataset.face,
+      // the copy is not on the table, and a truthy dropTarget would register
+      // it as one for real drags (StateManaged.applyDeltaToDOM)
+      dropTarget: null
+    }), preview);
+    copy.inheritFromUnregister();
+    copy.globalUpdateListenersUnregister();
+    scalePreviewToFit(preview, copy.domElement);
+  }
+
+  // A widget can have a lot of faces, so coalesce the redraws that typing in
+  // one of their inputs would otherwise trigger per keystroke. Both the
+  // preview and the summary of a row are derived from the face list.
+  scheduleFaceRowRefresh(widget, list) {
+    this.clearFaceRowRefresh();
+    this.faceRowRefreshTimer = setTimeout(_=>{
+      this.faceRowRefreshTimer = null;
+      if(!list.isConnected)
+        return;
+      const faces = this.basicFaces(widget);
+      for(const row of $a('.faceRow', list)) {
+        $('.faceRowSummary', row).textContent = faceSummary(faces[+row.dataset.face]);
+        this.drawFacePreview(widget, $('.facePreview', row));
+      }
+    }, 150);
+  }
+
+  clearFaceRowRefresh() {
+    if(this.faceRowRefreshTimer)
+      clearTimeout(this.faceRowRefreshTimer);
+    this.faceRowRefreshTimer = null;
+  }
+
+  updateActiveFaceMarkers(widget, list, note) {
+    const activeFace = widget.get('activeFace');
+    for(const row of $a('.faceRow', list)) {
+      const isActive = +row.dataset.face === activeFace;
+      row.classList.toggle('activeFace', isActive);
+      const show = $('.faceShowButton', row);
+      show.classList.toggle('active', isActive);
+      show.disabled = isActive;
+      show.title = isActive ? 'This face is currently shown' : 'Show this face on the table';
+    }
+
+    const overridden = Object.keys(faceObject(this.basicFaces(widget)[activeFace]));
+    note.style.display = overridden.length ? '' : 'none';
+    note.innerHTML = overridden.length
+      ? html(`Face ${activeFace + 1} is shown, so its ${overridden.join(', ')} ${overridden.length == 1 ? 'overrides' : 'override'} what the sections above set.`)
+      : '';
   }
 
   renderForButton(widget) {
@@ -5936,17 +6590,6 @@ class PropertiesModule extends SidebarModule {
     return replaceExclusiveProperties(existingFace, [ 'value', 'pips', 'text', 'icon', 'image' ], property, value);
   }
 
-  setDiceFaces(widget, faces, activeFace=null) {
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} edited faces of dice ${widget.id} in editor`);
-    widget.set('faces', faces);
-    if(activeFace !== null)
-      widget.set('activeFace', activeFace);
-    else if(widget.get('activeFace') >= faces.length)
-      widget.set('activeFace', Math.max(0, faces.length - 1));
-    batchEnd();
-  }
-
   renderDiceFaceEditor(widget) {
     this.addSubHeader('Faces');
 
@@ -5957,7 +6600,7 @@ class PropertiesModule extends SidebarModule {
     addFace.onclick = _=>{
       const faces = this.diceFaces(widget);
       faces.push({ pips: Math.min(faces.length + 1, 6) });
-      this.setDiceFaces(widget, faces);
+      this.setFacesProperty(widget, faces);
     };
     this.moduleDOM.appendChild(addFace);
 
@@ -6063,23 +6706,7 @@ class PropertiesModule extends SidebarModule {
       pipSymbols: this.diceUsesPips(widget)
     }), preview);
 
-    const rendered = preview.children[0];
-    if(!rendered)
-      return;
-    const fit = _=>{
-      rendered.style.transformOrigin = 'top left';
-      rendered.style.transform = '';
-      const box = preview.getBoundingClientRect();
-      const rect = getBoundingClientRectWithAbsoluteChildren(rendered);
-      const size = Math.max(rect.width, rect.height);
-      if(!size || !box.width)
-        return;
-      rendered.style.transform = `scale(${Math.min(1, Math.min(box.width, box.height) / size)})`;
-      centerElementInClientRect(rendered, box);
-    };
-    fit();
-    // the widget only has its final size after the browser laid it out
-    requestAnimationFrame(fit);
+    scalePreviewToFit(preview, preview.children[0]);
   }
 
   refreshDiceFacePreviews(widget, facesContainer) {
@@ -6098,7 +6725,7 @@ class PropertiesModule extends SidebarModule {
     // reorder and delete live in a column on the right side of the row
     const actions = div(main, 'faceRowActions');
     this.renderFaceOrderControls(actions, index, this.diceFaces(widget).length, (from, to)=>{
-      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setDiceFaces(widget, faces, activeFace));
+      this.reorderFaces(widget, this.diceFaces(widget), from, to, (faces, activeFace)=>this.setFacesProperty(widget, faces, activeFace));
     });
     const type = this.diceFaceType(widget, this.diceFaces(widget)[index]);
 
@@ -6114,7 +6741,7 @@ class PropertiesModule extends SidebarModule {
         if(newType == 'pips') value = String(+oldValue).match(/^\d+$/) ? +oldValue : index + 1;
         else if(newType == 'text') value = oldValue == null ? '' : String(oldValue);
         faces[index] = this.buildDiceFace(newType, value, faces[index]);
-        this.setDiceFaces(widget, faces);
+        this.setFacesProperty(widget, faces);
       },
       choices: [
         { value: 'pips',  text: 'Pips' },
@@ -6128,7 +6755,7 @@ class PropertiesModule extends SidebarModule {
       const faces = this.diceFaces(widget);
       const t = this.diceFaceType(widget, faces[index]);
       faces[index] = this.buildDiceFace(t, value, faces[index]);
-      this.setDiceFaces(widget, faces);
+      this.setFacesProperty(widget, faces);
     };
     const getFaceValue = _=>{
       const faces = this.diceFaces(widget);
@@ -6166,7 +6793,7 @@ class PropertiesModule extends SidebarModule {
             faces[index] = this.buildDiceFace(this.diceFaceType(widget, faces[index]), this.diceFaceValue(widget, faces[index], this.diceFaceType(widget, faces[index])), faces[index]);
           if(v == null) delete faces[index][def.key];
           else faces[index][def.key] = v;
-          this.setDiceFaces(widget, faces);
+          this.setFacesProperty(widget, faces);
         }
       }).render(colorRow);
     }
@@ -6175,12 +6802,18 @@ class PropertiesModule extends SidebarModule {
     remove.setAttribute('icon', 'delete');
     remove.className = 'red diceRemoveFace';
     remove.title = 'Remove this face';
-    remove.onclick = _=>{
-      const faces = this.diceFaces(widget);
-      faces.splice(index, 1);
-      this.setDiceFaces(widget, faces);
-    };
+    remove.onclick = _=>this.removeFace(widget, this.diceFaces(widget), index, (faces, activeFace)=>this.setFacesProperty(widget, faces, activeFace));
     actions.appendChild(remove);
+  }
+
+  // Remove one face and keep the widget showing the same one: every face
+  // after the removed one moves down an index.
+  removeFace(widget, faces, index, setFaces) {
+    if(!Number.isInteger(index) || index < 0 || index >= faces.length)
+      return;
+    faces.splice(index, 1);
+    const activeFace = activeFaceIndex(widget);
+    setFaces(faces, Math.min(activeFace > index ? activeFace - 1 : activeFace, Math.max(0, faces.length - 1)));
   }
 
   reorderFaces(widget, faces, from, to, setFaces) {
@@ -6188,15 +6821,7 @@ class PropertiesModule extends SidebarModule {
       return;
     const [ movedFace ] = faces.splice(from, 1);
     faces.splice(to, 0, movedFace);
-    const oldActiveFace = widget.get('activeFace');
-    let activeFace = oldActiveFace;
-    if(oldActiveFace == from)
-      activeFace = to;
-    else if(from < oldActiveFace && oldActiveFace <= to)
-      activeFace--;
-    else if(to <= oldActiveFace && oldActiveFace < from)
-      activeFace++;
-    setFaces(faces, activeFace);
+    setFaces(faces, indexAfterReorder(activeFaceIndex(widget), from, to));
   }
 
   // up/down buttons stacked in the actions column of a face row - no drag

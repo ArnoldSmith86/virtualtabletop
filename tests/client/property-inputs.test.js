@@ -83,7 +83,14 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     diceFaceType: PropertiesModule.prototype.diceFaceType,
     diceFaceValue: PropertiesModule.prototype.diceFaceValue,
     buildDiceFace: PropertiesModule.prototype.buildDiceFace,
-    reorderFaces: PropertiesModule.prototype.reorderFaces
+    reorderFaces: PropertiesModule.prototype.reorderFaces,
+    facePropertyKind,
+    faceSummary,
+    indexAfterReorder,
+    activeFaceIndex,
+    widgetOwnValue,
+    faceNewPropertyValue: PropertiesModule.prototype.faceNewPropertyValue,
+    removeFace: PropertiesModule.prototype.removeFace
   };
 `)(class {}, testWidgets);
 
@@ -330,6 +337,103 @@ describe('dice face editor helpers', () => {
     cssHelpers.reorderFaces.call(null, widget, faces, -1, 1, setFaces);
     cssHelpers.reorderFaces.call(null, widget, faces, 0, 5, setFaces);
     expect(called).toBe(false);
+  });
+
+  test('indexAfterReorder follows an index through a move', () => {
+    expect(cssHelpers.indexAfterReorder(1, 1, 0)).toBe(0); // the moved one
+    expect(cssHelpers.indexAfterReorder(0, 0, 2)).toBe(2);
+    expect(cssHelpers.indexAfterReorder(1, 0, 2)).toBe(0); // shifted down
+    expect(cssHelpers.indexAfterReorder(1, 2, 0)).toBe(2); // shifted up
+    expect(cssHelpers.indexAfterReorder(3, 0, 2)).toBe(3); // untouched
+  });
+});
+
+// enough of a StateManaged widget for the pure helpers: own state, defaults
+// and the get() that resolves between them
+function fakeWidget(state, defaults = {}) {
+  const widget = {
+    state,
+    defaults,
+    getDefaultValue: property => defaults[property],
+    get: property => widget.state[property] !== undefined ? widget.state[property] : defaults[property]
+  };
+  return widget;
+}
+
+describe('basic widget faces', () => {
+  test('face properties pick their input from their name and value shape', () => {
+    expect(cssHelpers.facePropertyKind('icon', null)).toBe('icon');
+    expect(cssHelpers.facePropertyKind('image', '/assets/1')).toBe('image');
+    expect(cssHelpers.facePropertyKind('color', '#fff')).toBe('color');
+    expect(cssHelpers.facePropertyKind('borderColor', '#fff')).toBe('color');
+    expect(cssHelpers.facePropertyKind('text', 'a')).toBe('text');
+    expect(cssHelpers.facePropertyKind('movable', false)).toBe('checkbox');
+    expect(cssHelpers.facePropertyKind('rotation', 90)).toBe('number');
+    expect(cssHelpers.facePropertyKind('css', 'color: red')).toBe('css');
+    expect(cssHelpers.facePropertyKind('css', { color: 'red' })).toBe('css');
+    expect(cssHelpers.facePropertyKind('faceCSS', { color: 'red' })).toBe('css');
+    // nested class objects are not declarations, so they stay JSON
+    expect(cssHelpers.facePropertyKind('css', { ':hover': { color: 'red' } })).toBe('json');
+    expect(cssHelpers.facePropertyKind('clickRoutine', [])).toBe('json');
+    expect(cssHelpers.facePropertyKind('clickRoutine', null)).toBe('json');
+    expect(cssHelpers.facePropertyKind('grid', [ { x: 10 } ])).toBe('json');
+  });
+
+  test('the face summary lists properties and only short values', () => {
+    expect(cssHelpers.faceSummary({})).toBe('shows the widget unchanged');
+    expect(cssHelpers.faceSummary(5)).toBe('shows the widget unchanged');
+    expect(cssHelpers.faceSummary({ text: 'back', color: '#cc4422' })).toBe('text: back · color: #cc4422');
+    expect(cssHelpers.faceSummary({ image: '/assets/1675039910_1323' })).toBe('image');
+    expect(cssHelpers.faceSummary({ css: { color: 'red' }, clickRoutine: [] })).toBe('css · clickRoutine');
+  });
+
+  test('a new face property starts from the value the widget itself shows', () => {
+    const widget = fakeWidget({ text: 'hello', rotation: 45 }, { color: 'black', image: '' });
+    const value = property => cssHelpers.faceNewPropertyValue.call(null, widget, property);
+    expect(value('text')).toBe('hello');
+    expect(value('rotation')).toBe(45);
+    expect(value('color')).toBe('black');
+    expect(value('image')).toBe('');
+    expect(value('clickRoutine')).toEqual([]); // neither set: falls back to the table
+    expect(value('somethingCustom')).toBe('');
+  });
+
+  test('the curated inputs read the widget\'s own value, not the shown face\'s', () => {
+    // BasicWidget.get() resolves through the active face - a widget of its own
+    // "hello" showing a face that overrides text with "back"
+    const widget = fakeWidget({ text: 'hello' }, { color: 'black' });
+    widget.get = property => property == 'text' ? 'back' : widget.state[property];
+    expect(widget.get('text')).toBe('back');
+    expect(cssHelpers.widgetOwnValue(widget, 'text')).toBe('hello');
+    expect(cssHelpers.widgetOwnValue(widget, 'color')).toBe('black'); // from the defaults
+    expect(cssHelpers.widgetOwnValue(widget, 'unset')).toBe(null);
+    // a multi-selection has no single widget state to read
+    expect(cssHelpers.widgetOwnValue({ isMulti: true, get: _=>'multi' }, 'text')).toBe('multi');
+  });
+
+  test('activeFace is normalized before it is compared with a face index', () => {
+    expect(cssHelpers.activeFaceIndex({ get: _=>2 })).toBe(2);
+    expect(cssHelpers.activeFaceIndex({ get: _=>'1' })).toBe(1);
+    expect(cssHelpers.activeFaceIndex({ get: _=>null })).toBe(0);
+    expect(cssHelpers.activeFaceIndex({ get: _=>'nonsense' })).toBe(0);
+    expect(cssHelpers.activeFaceIndex({ get: _=>-1 })).toBe(0);
+  });
+
+  test('removing a face keeps the widget showing the same face', () => {
+    const removeFace = (faces, activeFace, index) => {
+      let result = null;
+      cssHelpers.removeFace.call(null, { get: _=>activeFace }, faces.slice(), index, (newFaces, newActive) => {
+        result = { faces: newFaces, activeFace: newActive };
+      });
+      return result;
+    };
+    // removing a face before the shown one shifts it down
+    expect(removeFace([ 'a', 'b', 'c' ], 1, 0)).toEqual({ faces: [ 'b', 'c' ], activeFace: 0 });
+    // removing one after it leaves it alone
+    expect(removeFace([ 'a', 'b', 'c' ], 1, 2)).toEqual({ faces: [ 'a', 'b' ], activeFace: 1 });
+    // removing the shown one falls back to a face that exists
+    expect(removeFace([ 'a', 'b' ], 1, 1)).toEqual({ faces: [ 'a' ], activeFace: 0 });
+    expect(removeFace([ 'a', 'b' ], 0, 5)).toBe(null); // out of range: no change
   });
 });
 
