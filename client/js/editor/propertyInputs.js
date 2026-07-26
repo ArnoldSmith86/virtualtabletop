@@ -821,7 +821,7 @@ class PickerInput extends PropertyInput {
     if(multi) {
       div(this.previewButton, 'propertyValueChip propertyMultiChip');
       this.previewButton.classList.remove('usingDefault', 'emptyValue');
-      this.previewButton.title = 'Multiple values';
+      this.previewButton.title = 'The selected widgets have different values - picking one applies it to all of them';
       this.previewButton.setAttribute('aria-label', 'Edit value');
       return;
     }

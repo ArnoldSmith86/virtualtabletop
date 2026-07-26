@@ -1392,6 +1392,10 @@ class PropertiesModule extends SidebarModule {
     const ids = selection.map(w=>w.id);
     const shownIds = ids.slice(0, 8);
     div(header, 'widgetHeaderMultiIds', html(shownIds.join(', ') + (ids.length > shownIds.length ? ` +${ids.length - shownIds.length} more` : '')));
+    // the "— multiple —" placeholder and the striped chip are the only two
+    // things in the editor that mean "these widgets disagree" - say so once
+    // here instead of leaving it to be inferred from the striping
+    div(header, 'multiSelectionHint', '<i>— multiple —</i> and striped <i>mixed</i> chips mark what these widgets disagree on. Anything you set applies to all of them.');
 
     this.renderBasicSection(facade, { arrangeButtons: true });
 
@@ -1443,26 +1447,34 @@ class PropertiesModule extends SidebarModule {
   // Align / distribute / layer-order buttons, forwarding to the existing
   // toolbar button instances so the arranging logic is not duplicated.
   renderArrangeButtons() {
-    const icons = [
-      'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
-      'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom',
-      'horizontal_distribute', 'vertical_distribute', 'auto_awesome_motion'
+    // aligning, distributing and re-stacking are three different operations -
+    // kept in separate groups so the row doesn't read as nine unrelated icons
+    const groups = [
+      [ 'align_horizontal_left', 'align_horizontal_center', 'align_horizontal_right',
+        'align_vertical_top', 'align_vertical_center', 'align_vertical_bottom' ],
+      [ 'horizontal_distribute', 'vertical_distribute' ],
+      [ 'auto_awesome_motion' ]
     ];
     const available = (typeof toolbarButtons !== 'undefined' && Array.isArray(toolbarButtons)) ? toolbarButtons : [];
     const bar = div(this.moduleDOM, 'arrangeButtons');
-    for(const icon of icons) {
-      const toolbarButton = available.find(b=>b.icon == icon);
-      if(!toolbarButton)
-        continue;
-      const button = document.createElement('button');
-      button.setAttribute('icon', icon);
-      button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
-      // explain a disabled distribute button (needs 3+ widgets) rather than
-      // just leaving it gray with no hint why
-      button.title = (toolbarButton.tooltip || '') + (button.disabled && toolbarButton.minimumSelection > 1 ?
-        ` (needs ${toolbarButton.minimumSelection}+ widgets)` : '');
-      button.onclick = _=>toolbarButton.onClick();
-      bar.appendChild(button);
+    for(const group of groups) {
+      const groupDOM = div(null, 'arrangeGroup');
+      for(const icon of group) {
+        const toolbarButton = available.find(b=>b.icon == icon);
+        if(!toolbarButton)
+          continue;
+        const button = document.createElement('button');
+        button.setAttribute('icon', icon);
+        button.disabled = selectedWidgets.length < (toolbarButton.minimumSelection || 1);
+        // explain a disabled distribute button (needs 3+ widgets) rather than
+        // just leaving it gray with no hint why
+        button.title = (toolbarButton.tooltip || '') + (button.disabled && toolbarButton.minimumSelection > 1 ?
+          ` (needs ${toolbarButton.minimumSelection}+ widgets)` : '');
+        button.onclick = _=>toolbarButton.onClick();
+        groupDOM.appendChild(button);
+      }
+      if(groupDOM.children.length)
+        bar.appendChild(groupDOM);
     }
   }
 
