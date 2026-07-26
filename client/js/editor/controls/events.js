@@ -59,7 +59,7 @@ function describeEventProperty(property) {
   return {
     property,
     label: property.replace(/Routine$/, ''),
-    description: 'Custom event. It does not fire on its own: run it from any routine using the CALL function with this name as the routine parameter.'
+    description: 'Custom routine. It does not run on its own: call it from any routine using the CALL function with this name as the routine parameter.'
   };
 }
 
@@ -98,7 +98,7 @@ class AddEventPopup extends Popup {
 
   show() {
     super.show();
-    this.setTitle('Add Event');
+    this.setTitle('Add Routine');
 
     let available = predefinedEvents.filter(e=>this.existingProperties.indexOf(e.property) == -1);
     // enter/leave events mostly matter for holders, so list them last elsewhere
@@ -107,7 +107,7 @@ class AddEventPopup extends Popup {
       available = [ ...available.filter(e=>!holderish(e)), ...available.filter(holderish) ];
     }
     if(available.length) {
-      const [ , predefinedContent ] = this.addAccordionSection('Predefined Events');
+      const [ , predefinedContent ] = this.addAccordionSection('Predefined Routines');
       for(const event of available) {
         const entry = div(predefinedContent, 'add-event-entry');
         button(entry, event.label, _=>{
@@ -118,8 +118,8 @@ class AddEventPopup extends Popup {
       }
     }
 
-    const [ , customContent ] = this.addAccordionSection('Custom Event');
-    div(customContent, 'add-event-description').textContent = 'Custom events are run from other routines using the CALL function. You can also use names like fooChangeRoutine or fooGlobalUpdateRoutine to react to changes of the property foo.';
+    const [ , customContent ] = this.addAccordionSection('Custom Routine');
+    div(customContent, 'add-event-description').textContent = 'Custom routines are run from other routines using the CALL function. You can also use names like fooChangeRoutine or fooGlobalUpdateRoutine to react to changes of the property foo.';
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.placeholder = 'dealCardsRoutine';
@@ -213,7 +213,7 @@ class EventsEditor {
   render() {
     this.domElement.innerHTML = '';
 
-    div(this.domElement, 'events-editor-group').textContent = 'Events';
+    div(this.domElement, 'events-editor-group').textContent = 'Routines';
 
     for(const property of this.eventProperties()) {
       const event = describeEventProperty(property);
@@ -252,7 +252,7 @@ class EventsEditor {
       const removeButton = document.createElement('span');
       removeButton.className = 'material-symbols events-editor-remove';
       removeButton.textContent = 'delete';
-      removeButton.title = 'Remove this event handler';
+      removeButton.title = 'Remove this routine';
       removeButton.addEventListener('click', e=>{
         e.stopPropagation();
         if(confirm(`Remove ${property} and all its operations?`)) {
@@ -286,11 +286,11 @@ class EventsEditor {
     if(!this.eventProperties().length) {
       const emptyHint = document.createElement('div');
       emptyHint.className = 'events-editor-empty';
-      emptyHint.textContent = 'This widget does not react to any events yet.';
+      emptyHint.textContent = 'This widget has no routines yet.';
       this.domElement.append(emptyHint);
     }
 
-    const addButton = button(this.domElement, 'Add Event', _=>{
+    const addButton = button(this.domElement, 'Add Routine', _=>{
       const widgetType = typeof this.widget.get == 'function' ? this.widget.get('type') : this.widget.state.type;
       const popup = new AddEventPopup(addButton, this.eventProperties(), property=>{
         this.expandedEvents[property] = true;

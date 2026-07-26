@@ -783,6 +783,11 @@ class PropertiesModule extends SidebarModule {
           this.renderForBasic(widget);
           break;
       }
+
+      // every widget can have routines, so the section is always the last one -
+      // piles are the exception because they are temporary and not editable
+      if(widget.get('type') != 'pile')
+        this.renderEvents(widget);
     }
 
     if(!newSelection.length)
@@ -3931,18 +3936,6 @@ class PropertiesModule extends SidebarModule {
     this.renderBasicSection(widget);
     this.renderBasicContentSection(widget);
     this.renderAppearanceSection(widget);
-    this.addSubHeader('Behavior');
-    div(this.moduleDOM, '', `
-      <p>What the button does when clicked is defined by its <b>clickRoutine</b> which you can edit in the JSON editor.</p>
-      <div class=buttonBar>
-        <button icon=data_object>Open in JSON editor</button>
-      </div>
-    `);
-    $('[icon=data_object]', this.moduleDOM).onclick = _=>{
-      const jsonModuleButton = $('#editorSidebar button[icon=data_object]');
-      if(jsonModuleButton)
-        jsonModuleButton.click();
-    };
     this.renderOtherPropertiesSection(widget);
   }
 
@@ -4893,7 +4886,6 @@ class PropertiesModule extends SidebarModule {
 
       this.inputUpdaters[widget.id][property].push(input.setValue);
     }
-    this.renderEvents(widget);
   }
 
     renderObscureProperties(widget, specs) {

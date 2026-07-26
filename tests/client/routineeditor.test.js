@@ -107,7 +107,7 @@ describe('operation rendering', () => {
     expect(dom.querySelector('[data-parameter="face"]')).toBeNull(); // face at its default stays hidden
     const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
-    expect(dom.firstChild).toBe(toggle); // the arrow sits at the start of the operation
+    expect(dom.querySelector('.routine-editor-operation-body').firstChild).toBe(toggle); // the arrow sits at the start of the operation
     toggle.dispatchEvent(new Event('click'));
     expect(editor.domElement.classList.contains('list-view')).toBe(true);
     const rows = editor.domElement.querySelectorAll('.routine-editor-parameter-row');
@@ -124,7 +124,7 @@ describe('operation rendering', () => {
     const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
     toggle.dispatchEvent(new Event('click'));
-    const names = [...editor.domElement.querySelectorAll(':scope > .routine-editor-parameter-row .routine-editor-parameter-name')].map(e => e.textContent);
+    const names = [...editor.domElement.querySelectorAll(':scope > .routine-editor-operation-header > .routine-editor-operation-body > .routine-editor-parameter-row .routine-editor-parameter-name')].map(e => e.textContent);
     expect(names).toEqual([ 'condition', 'operand1', 'relation', 'operand2' ]);
     expect(editor.domElement.querySelector('.routine-editor')).not.toBeNull(); // nested routines stay visible
   });
@@ -305,8 +305,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 0 ]; // grab FLIP
-    editor.performDrag(2, true); // drop after DELETE
+    editor.performDrag(2, true, { editor, indices: [ 0 ] }); // grab FLIP, drop after DELETE
     expect(notified.map(o => o.func)).toEqual([ 'SHUFFLE', 'DELETE', 'FLIP' ]);
     expect(editor.routine).toBe(routine); // the array reference is preserved
   });
@@ -316,8 +315,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 0, 2 ]; // FLIP and DELETE
-    editor.performDrag(3, true); // drop after ROTATE
+    editor.performDrag(3, true, { editor, indices: [ 0, 2 ] }); // FLIP and DELETE, dropped after ROTATE
     expect(notified.map(o => o.func)).toEqual([ 'SHUFFLE', 'ROTATE', 'FLIP', 'DELETE' ]);
   });
 
@@ -326,8 +324,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 0 ];
-    editor.performDrag(0, false);
+    editor.performDrag(0, false, { editor, indices: [ 0 ] });
     expect(notified).toBeNull();
   });
 
@@ -336,9 +333,38 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 2 ]; // FLIP
-    editor.performDrag(0, false); // before the first comment
+    editor.performDrag(0, false, { editor, indices: [ 2 ] }); // FLIP before the first comment
     expect(notified).toEqual([ { func: 'FLIP' }, '// one', '// one' ]);
+  });
+
+  test('dragging an operation into an IF block moves it inside the block', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'IF', operand1: 1, thenRoutine: [] } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    const block = editor.operations[1].subroutineEditors.thenRoutine;
+    block.performDrag(-1, true, { editor, indices: [ 0 ] }); // drop into the empty block
+    expect(notified).toEqual([ { func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] } ]);
+    expect(editor.routine).toBe(routine); // the array reference is preserved
+  });
+
+  test('dragging an operation out of a FOREACH block moves it into the parent routine', () => {
+    const routine = [ { func: 'FOREACH', loopRoutine: [ { func: 'FLIP' } ] }, { func: 'SHUFFLE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    const block = editor.operations[0].subroutineEditors.loopRoutine;
+    editor.performDrag(1, true, { editor: block, indices: [ 0 ] }); // drop after SHUFFLE
+    expect(notified).toEqual([ { func: 'FOREACH', loopRoutine: [] }, { func: 'SHUFFLE' }, { func: 'FLIP' } ]);
+  });
+
+  test('a block nested inside the dragged operation refuses the drop', () => {
+    const routine = [ { func: 'IF', operand1: 1, thenRoutine: [] }, { func: 'FLIP' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    const block = editor.operations[0].subroutineEditors.thenRoutine;
+    editor.beginDrag(editor.directChildCards()[0].querySelector('.routine-editor-drag-handle'));
+    expect(block.acceptsActiveDrag()).toBe(false); // the IF cannot go into its own block
+    expect(editor.acceptsActiveDrag()).toBe(true);
   });
 
   test('Ctrl-clicking a card toggles it in and out of the selection', () => {
