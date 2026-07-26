@@ -684,6 +684,108 @@
   font-size: 12px;
 }
 
+/* devtools style declaration rows: [x] property : value [delete] */
+.editorModule .cssDeclarationRow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 1px 0;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationName,
+.editorModule .cssDeclarationRow input.cssDeclarationValue {
+  font-family: monospace;
+  font-size: 12px;
+  min-width: 0;
+  padding: 1px 3px;
+  height: 22px;
+  box-sizing: border-box;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationName {
+  flex: 4 1 0;
+  color: var(--VTTblue);
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationValue {
+  flex: 5 1 0;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationToggle {
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.editorModule .cssDeclarationRow .cssDeclarationColon {
+  opacity: 0.6;
+}
+
+.editorModule .cssDeclarationRow input.cssDeclarationSwatch {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--backgroundHighlightColor1);
+  background: none;
+}
+
+.editorModule .cssDeclarationRow button {
+  min-width: 22px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  flex: 0 0 auto;
+  justify-content: center;
+}
+
+.editorModule .cssDeclarationRow button::before {
+  margin: 0;
+  font-size: 14px;
+}
+
+.editorModule .cssDeclarationRow.disabled input.cssDeclarationName,
+.editorModule .cssDeclarationRow.disabled input.cssDeclarationValue {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+/* what the browser will not apply - the engine rewrites custom properties and
+   ${PROPERTY ...} values, those are never marked */
+.editorModule .cssDeclarationWarning {
+  flex: 0 0 auto;
+  font-size: 15px;
+  color: #cc7722;
+  cursor: help;
+}
+
+.editorModule .cssDeclarationRow.invalidDeclaration input.cssDeclarationName,
+.editorModule .cssDeclarationRow.invalidDeclaration input.cssDeclarationValue {
+  color: #cc7722;
+}
+
+.editorModule .cssDeclarationFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+
+.editorModule .cssDeclarationFooter button {
+  font-size: 11px;
+  padding: 1px 6px;
+  min-width: 0;
+}
+
+.editorModule .cssDeclarationNote {
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.8;
+  text-align: left;
+}
+
 .editorModule .cssEditor .cssAddClassRow {
   display: flex;
   align-items: center;

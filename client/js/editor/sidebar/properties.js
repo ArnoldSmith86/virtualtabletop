@@ -561,6 +561,113 @@ function parseFontSize(fontSize) {
   return { value: value ? +value : null, unit: unit || null };
 }
 
+// --- css declaration list (the devtools style rows of the CSS editor) ---
+
+// One row per declaration, in the order the value has them
+function cssDeclarationList(value) {
+  if(value === null || value === undefined || value === '')
+    return [];
+  if(typeof value === 'string')
+    return Object.entries(cssStringToObject(value)).map(([ name, declarationValue ])=>({ name, value: declarationValue }));
+  if(isObjectLike(value))
+    return Object.entries(value).map(([ name, declarationValue ])=>({ name, value: declarationValue === null || declarationValue === undefined ? '' : String(declarationValue) }));
+  return [];
+}
+
+// Declarations switched off with their checkbox are kept out of the widget but
+// remembered for the editing session, at the position they were switched off.
+function cssDeclarationsWithDisabled(declarations, disabled) {
+  const merged = declarations.map(declaration=>({ name: declaration.name, value: declaration.value, disabled: false }));
+  for(const entry of (disabled || []).slice().sort((a, b)=>a.index-b.index))
+    merged.splice(Math.max(0, Math.min(entry.index, merged.length)), 0, { name: entry.name, value: entry.value, disabled: true });
+  return merged;
+}
+
+// Value written back for a list of rows. Strings stay strings so a css written
+// by hand does not turn into an object just from looking at it, but anything
+// the declaration parser would lose becomes the object form.
+function cssValueFromDeclarations(declarations, previousValue) {
+  const entries = declarations.filter(declaration=>String(declaration.name).trim() !== '');
+  if(!entries.length)
+    return null;
+  const splittable = !entries.some(declaration=>/[;:]/.test(String(declaration.value)) || /[;:{}]/.test(String(declaration.name)));
+  if(typeof previousValue === 'string' && splittable)
+    return entries.map(declaration=>`${String(declaration.name).trim()}: ${String(declaration.value).trim()};`).join(' ');
+  const out = {};
+  for(const declaration of entries)
+    out[String(declaration.name).trim()] = String(declaration.value).trim();
+  return out;
+}
+
+const cssNamedColors = [
+  'transparent', 'currentcolor', 'black', 'silver', 'gray', 'grey', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'magenta',
+  'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'cyan', 'orange', 'pink', 'brown', 'gold', 'beige',
+  'ivory', 'khaki', 'indigo', 'violet', 'salmon', 'tan', 'turquoise', 'wheat', 'crimson', 'coral', 'lavender'
+];
+
+// whether a declaration value is a plain color, so the row gets a swatch
+function cssValueIsColor(value) {
+  const text = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
+  if(!text)
+    return false;
+  if(text.match(/^#[0-9a-f]{3,8}$/))
+    return true;
+  if(text.match(/^(rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color)\([^()]*\)$/))
+    return true;
+  return cssNamedColors.indexOf(text) != -1;
+}
+
+// Declarations the browser does not understand are marked, like devtools does.
+// Custom properties, interpolated widget properties and asset URLs are not
+// judged - the engine rewrites those before they reach the browser.
+function cssDeclarationIsValid(name, value) {
+  const property = String(name || '').trim();
+  const declarationValue = String(value === null || value === undefined ? '' : value).trim();
+  if(!property || !declarationValue || property.startsWith('--') || declarationValue.includes('${') || declarationValue.includes('/assets/'))
+    return true;
+  if(typeof CSS === 'undefined' || typeof CSS.supports != 'function')
+    return true;
+  return CSS.supports(property, declarationValue);
+}
+
+// property names offered in the declaration rows
+const commonCssProperties = [
+  'align-items', 'background', 'background-color', 'background-image', 'background-position', 'background-repeat', 'background-size',
+  'border', 'border-color', 'border-radius', 'border-style', 'border-width', 'box-shadow', 'box-sizing', 'color', 'cursor',
+  'display', 'filter', 'flex-direction', 'font-family', 'font-size', 'font-style', 'font-weight', 'gap', 'height',
+  'justify-content', 'letter-spacing', 'line-height', 'margin', 'opacity', 'outline', 'overflow', 'padding', 'pointer-events',
+  'position', 'text-align', 'text-decoration', 'text-shadow', 'text-transform', 'transform', 'transition', 'vertical-align',
+  'visibility', 'white-space', 'width', 'word-break', 'writing-mode', 'z-index'
+];
+
+// values offered for the properties where a handful of keywords covers most uses
+const commonCssValues = {
+  'align-items': [ 'center', 'flex-start', 'flex-end', 'stretch', 'baseline' ],
+  'background-repeat': [ 'no-repeat', 'repeat', 'repeat-x', 'repeat-y' ],
+  'background-size': [ 'contain', 'cover', '100% 100%', 'auto' ],
+  'border-style': [ 'none', 'solid', 'dashed', 'dotted', 'double' ],
+  'box-sizing': [ 'border-box', 'content-box' ],
+  'cursor': [ 'pointer', 'default', 'grab', 'not-allowed' ],
+  'display': [ 'block', 'flex', 'grid', 'inline-block', 'none' ],
+  'flex-direction': [ 'row', 'column', 'row-reverse', 'column-reverse' ],
+  'font-style': [ 'normal', 'italic' ],
+  'font-weight': [ 'normal', 'bold', '300', '600', '900' ],
+  'justify-content': [ 'center', 'flex-start', 'flex-end', 'space-between', 'space-around' ],
+  'overflow': [ 'hidden', 'visible', 'auto', 'scroll' ],
+  'pointer-events': [ 'none', 'auto' ],
+  'position': [ 'absolute', 'relative', 'static' ],
+  'text-align': [ 'left', 'center', 'right', 'justify' ],
+  'text-decoration': [ 'none', 'underline', 'line-through' ],
+  'text-transform': [ 'none', 'uppercase', 'lowercase', 'capitalize' ],
+  'visibility': [ 'visible', 'hidden' ],
+  'white-space': [ 'normal', 'nowrap', 'pre-wrap' ],
+  'writing-mode': [ 'horizontal-tb', 'vertical-rl' ]
+};
+
+function cssValueSuggestions(name) {
+  return (commonCssValues[String(name || '').trim()] || []).concat([ 'inherit', 'initial', 'unset' ]);
+}
+
 /* end helper functions */
 
 // Selectors offered in the CSS editor's "add class/selector" dropdown. The
@@ -844,6 +951,12 @@ class PropertiesModule extends SidebarModule {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
     this.collapsibleStates = {};
+    // CSS editor: sections switched to text editing, and the declarations
+    // switched off with their checkbox (kept for the editing session only, so
+    // turning one off never leaves anything unusable behind in the game)
+    this.cssTextModes = new Set();
+    this.cssDisabledDeclarations = new Map();
+    this.cssPendingFocus = null;
     this.sizeRatioLocks = new WeakMap();
   }
 
@@ -4759,31 +4872,13 @@ class PropertiesModule extends SidebarModule {
       // the "default" class is the widget itself - show a friendlier label
       const displayName = className == 'default' ? 'Base widget' : className;
       this.renderCollapsibleSection(displayName, false, body => {
-        const textarea = document.createElement('textarea');
-        textarea.value = cssTextFromValue(classValue);
-        textarea.placeholder = 'property: value;';
-        textarea.oninput = () => {
-          const text = textarea.value;
-          if(wholeProperty) {
-            this.inputValueUpdated(widget, property, text.trim() === '' ? null : text);
-          } else {
-            // class values have to be objects so the engine (and this editor)
-            // recognizes the nested form; refuse text the declaration parser
-            // would destroy (e.g. data URIs)
-            if(text.trim() && !cssStringRoundTrips(text)) {
-              textarea.classList.add('inputError');
-              return;
-            }
-            textarea.classList.remove('inputError');
-            const css = widget.get(property);
-            const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
-            newCss[className] = cssStringToObject(text);
-            this.inputValueUpdated(widget, property, newCss);
-          }
-          if(widget.applyDeltaToDOM)
-            widget.applyDeltaToDOM({ [property]: widget.get(property) });
-        };
-        body.appendChild(textarea);
+        // text the declaration rows cannot split without losing data (data
+        // URIs and the like) stays a textarea, and so does a section the user
+        // switched to text mode
+        if(this.cssTextModes.has(stateKey) || (typeof classValue === 'string' && classValue.trim() && !cssStringRoundTrips(classValue)))
+          this.renderCssTextarea(widget, property, className, wholeProperty, classValue, body, rebuild);
+        else
+          this.renderCssDeclarationList(widget, property, className, wholeProperty, body, rebuild);
       }, section, stateKey);
 
       if(className == 'default')
@@ -4868,6 +4963,253 @@ class PropertiesModule extends SidebarModule {
       if(!container.contains(document.activeElement))
         rebuild();
     });
+  }
+
+  // The declarations of one class/selector as plain text: the fallback for
+  // values the rows cannot represent, and a way to rewrite or paste a whole
+  // block at once.
+  renderCssTextarea(widget, property, className, wholeProperty, classValue, target, rebuild) {
+    const stateKey = `${widget.id}:${property}:${className}`;
+    const textarea = document.createElement('textarea');
+    textarea.value = cssTextFromValue(classValue);
+    textarea.placeholder = 'property: value;';
+    textarea.oninput = () => {
+      const text = textarea.value;
+      if(wholeProperty) {
+        this.inputValueUpdated(widget, property, text.trim() === '' ? null : text);
+      } else {
+        // class values have to be objects so the engine (and this editor)
+        // recognizes the nested form; refuse text the declaration parser
+        // would destroy (e.g. data URIs)
+        if(text.trim() && !cssStringRoundTrips(text)) {
+          textarea.classList.add('inputError');
+          return;
+        }
+        textarea.classList.remove('inputError');
+        const css = widget.get(property);
+        const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
+        newCss[className] = cssStringToObject(text);
+        this.inputValueUpdated(widget, property, newCss);
+      }
+      if(widget.applyDeltaToDOM)
+        widget.applyDeltaToDOM({ [property]: widget.get(property) });
+    };
+    target.appendChild(textarea);
+
+    const footer = div(target, 'cssDeclarationFooter');
+    if(this.cssTextModes.has(stateKey)) {
+      const list = document.createElement('button');
+      list.setAttribute('icon', 'format_list_bulleted');
+      list.textContent = 'Edit as a list';
+      list.title = 'Back to one row per declaration';
+      list.onclick = _=>{
+        this.cssTextModes.delete(stateKey);
+        rebuild();
+      };
+      footer.appendChild(list);
+    } else {
+      div(footer, 'cssDeclarationNote', 'This contains a value that cannot be split into rows, so it is edited as text.');
+    }
+  }
+
+  // The declarations of one class/selector as devtools-like rows: a checkbox
+  // that turns a declaration off without losing it, the property name and the
+  // value with completion for both, a swatch for colors and a marker for what
+  // the browser does not understand.
+  renderCssDeclarationList(widget, property, className, wholeProperty, target, rebuild) {
+    const stateKey = `${widget.id}:${property}:${className}`;
+    const classValueOf = _=>{
+      const value = widget.get(property);
+      return wholeProperty ? value : (isObjectLike(value) ? value[className] : undefined);
+    };
+
+    const writeClassValue = newValue => {
+      if(wholeProperty) {
+        this.inputValueUpdated(widget, property, newValue);
+      } else {
+        const css = widget.get(property);
+        const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
+        newCss[className] = isObjectLike(newValue) ? newValue : cssStringToObject(String(newValue || ''));
+        this.inputValueUpdated(widget, property, newCss);
+      }
+      if(widget.applyDeltaToDOM)
+        widget.applyDeltaToDOM({ [property]: widget.get(property) });
+    };
+
+    const declarations = cssDeclarationsWithDisabled(cssDeclarationList(classValueOf()), this.cssDisabledDeclarations.get(stateKey));
+
+    const commit = _=>{
+      const off = declarations
+        .map((declaration, index)=>({ name: declaration.name, value: declaration.value, index, disabled: declaration.disabled }))
+        .filter(declaration=>declaration.disabled);
+      if(off.length)
+        this.cssDisabledDeclarations.set(stateKey, off.map(({ name, value, index })=>({ name, value, index })));
+      else
+        this.cssDisabledDeclarations.delete(stateKey);
+      writeClassValue(cssValueFromDeclarations(declarations.filter(declaration=>!declaration.disabled), classValueOf()));
+    };
+
+    const nameListID = `cssProperties_${rand().toString(36).substring(3, 12)}`;
+    const nameList = document.createElement('datalist');
+    nameList.id = nameListID;
+    for(const suggestion of this.cssPropertySuggestions(widget)) {
+      const option = document.createElement('option');
+      option.value = suggestion;
+      nameList.appendChild(option);
+    }
+    target.appendChild(nameList);
+
+    let addRow = null;
+    const list = div(target, 'cssDeclarationList');
+    declarations.forEach((declaration, index) => {
+      const row = div(list, `cssDeclarationRow${declaration.disabled ? ' disabled' : ''}`);
+
+      const toggle = document.createElement('input');
+      toggle.type = 'checkbox';
+      toggle.className = 'cssDeclarationToggle';
+      toggle.checked = !declaration.disabled;
+      toggle.title = 'Turn this declaration off without deleting it';
+      toggle.onchange = _=>{
+        declaration.disabled = !toggle.checked;
+        commit();
+        rebuild();
+      };
+      row.appendChild(toggle);
+
+      const name = document.createElement('input');
+      name.className = 'cssDeclarationName';
+      name.value = declaration.name;
+      name.placeholder = 'property';
+      name.setAttribute('list', nameListID);
+      row.appendChild(name);
+
+      div(row, 'cssDeclarationColon', ':');
+
+      const value = document.createElement('input');
+      value.className = 'cssDeclarationValue';
+      value.value = declaration.value;
+      value.placeholder = 'value';
+      const valueListID = `cssValues_${rand().toString(36).substring(3, 12)}`;
+      const valueList = document.createElement('datalist');
+      valueList.id = valueListID;
+      for(const suggestion of cssValueSuggestions(declaration.name)) {
+        const option = document.createElement('option');
+        option.value = suggestion;
+        valueList.appendChild(option);
+      }
+      row.appendChild(valueList);
+      value.setAttribute('list', valueListID);
+
+      const warning = document.createElement('span');
+      warning.className = 'cssDeclarationWarning material-symbols';
+      warning.textContent = 'warning';
+      warning.title = 'The browser does not understand this declaration, so it has no effect.';
+      const markValidity = _=>{
+        const valid = cssDeclarationIsValid(declaration.name, declaration.value);
+        row.classList.toggle('invalidDeclaration', !valid);
+        warning.style.display = valid ? 'none' : '';
+      };
+      markValidity();
+
+      name.oninput = _=>{
+        // a pasted block of declarations is split up instead of becoming one
+        // unusable property name, like it would be in devtools
+        if(name.value.includes(':')) {
+          const pasted = cssDeclarationList(name.value);
+          if(pasted.length) {
+            declarations.splice(index, 1, ...pasted.map(entry=>({ name: entry.name, value: entry.value, disabled: false })));
+            commit();
+            rebuild();
+            return;
+          }
+        }
+        declaration.name = name.value;
+        markValidity();
+        commit();
+      };
+      value.oninput = _=>{
+        declaration.value = value.value;
+        markValidity();
+        commit();
+      };
+      // Enter moves on to the next declaration, like devtools does
+      value.onkeydown = event=>{
+        if(event.key == 'Enter' && addRow)
+          $('input', addRow).focus();
+      };
+
+      if(cssValueIsColor(declaration.value)) {
+        const swatch = document.createElement('input');
+        swatch.type = 'color';
+        swatch.className = 'cssDeclarationSwatch';
+        swatch.value = typeof toHex == 'function' ? toHex(declaration.value) : '#000000';
+        swatch.title = declaration.value;
+        swatch.oninput = _=>{
+          declaration.value = swatch.value;
+          value.value = swatch.value;
+          commit();
+        };
+        row.appendChild(swatch);
+      }
+
+      row.appendChild(value);
+      row.appendChild(warning);
+
+      const remove = document.createElement('button');
+      remove.setAttribute('icon', 'delete');
+      remove.title = `Remove ${declaration.name || 'this declaration'}`;
+      remove.onclick = _=>{
+        declarations.splice(index, 1);
+        commit();
+        rebuild();
+      };
+      row.appendChild(remove);
+
+      if(this.cssPendingFocus == `${stateKey}:${index}`) {
+        this.cssPendingFocus = null;
+        setTimeout(_=>value.focus(), 0);
+      }
+    });
+
+    addRow = this.renderSuggestionAddRow(target, 'cssDeclarationAddRow', {
+      placeholder: 'property, e.g. "font-size"',
+      title: 'Add a declaration',
+      suggestions: this.cssPropertySuggestions(widget).filter(suggestion=>!declarations.some(declaration=>declaration.name == suggestion)),
+      onAdd: text => {
+        const added = text.includes(':') ? cssDeclarationList(text) : [ { name: text, value: '' } ];
+        if(!added.length)
+          return false;
+        declarations.push(...added.map(entry=>({ name: entry.name, value: entry.value, disabled: false })));
+        // the name is set, so continue in the value of the first new row
+        this.cssPendingFocus = `${stateKey}:${declarations.length - added.length}`;
+        commit();
+        rebuild();
+      }
+    });
+    addRow.classList.add('cssAddClassRow');
+
+    const footer = div(target, 'cssDeclarationFooter');
+    const text = document.createElement('button');
+    text.setAttribute('icon', 'edit_note');
+    text.textContent = 'Edit as text';
+    text.title = 'Edit all declarations of this section in one text field';
+    text.onclick = _=>{
+      this.cssTextModes.add(stateKey);
+      rebuild();
+    };
+    footer.appendChild(text);
+  }
+
+  // css property names offered in the declaration rows: the common ones plus
+  // the custom properties this widget type is styled with
+  cssPropertySuggestions(widget) {
+    const sections = this.typeSections(widget);
+    const custom = [];
+    for(const group of [ 'content', 'colors', 'hover', 'appearance', 'behavior' ])
+      for(const def of sections[group] || [])
+        if(def.propertyOrCss)
+          custom.push(def.propertyOrCss);
+    return [ ...new Set(custom.concat(commonCssProperties)) ];
   }
 
   // Free text field with a datalist of suggestions plus an add button - so the

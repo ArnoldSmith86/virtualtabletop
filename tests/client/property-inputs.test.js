@@ -57,6 +57,13 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     cssStringToObject,
     parsePropertyFromCSS,
     mergePropertyFromCSS,
+    cssDeclarationList,
+    cssDeclarationsWithDisabled,
+    cssValueFromDeclarations,
+    cssValueIsColor,
+    cssValueSuggestions,
+    cssPropertySuggestions: PropertiesModule.prototype.cssPropertySuggestions,
+    typeSections: PropertiesModule.prototype.typeSections,
     parseFontSize,
     formatTimerMs,
     parseTimerInput,
@@ -93,6 +100,71 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     removeFace: PropertiesModule.prototype.removeFace
   };
 `)(class {}, testWidgets);
+
+describe('css declaration rows', () => {
+  test('declarations are listed in order from both the string and the object form', () => {
+    expect(cssHelpers.cssDeclarationList('color: red; font-size: 20px')).toEqual([
+      { name: 'color', value: 'red' },
+      { name: 'font-size', value: '20px' }
+    ]);
+    expect(cssHelpers.cssDeclarationList({ background: '#fff', 'z-index': 3 })).toEqual([
+      { name: 'background', value: '#fff' },
+      { name: 'z-index', value: '3' }
+    ]);
+    expect(cssHelpers.cssDeclarationList(null)).toEqual([]);
+    expect(cssHelpers.cssDeclarationList('')).toEqual([]);
+  });
+
+  test('switched off declarations come back at the position they were switched off at', () => {
+    const declarations = [ { name: 'font-size', value: '20px' }, { name: 'color', value: 'red' } ];
+    expect(cssHelpers.cssDeclarationsWithDisabled(declarations, [ { name: 'background', value: '#fff', index: 0 } ])).toEqual([
+      { name: 'background', value: '#fff', disabled: true },
+      { name: 'font-size', value: '20px', disabled: false },
+      { name: 'color', value: 'red', disabled: false }
+    ]);
+    // an index beyond the list (the rest was deleted meanwhile) lands at the end
+    expect(cssHelpers.cssDeclarationsWithDisabled([], [ { name: 'color', value: 'red', index: 7 } ])).toEqual([
+      { name: 'color', value: 'red', disabled: true }
+    ]);
+    expect(cssHelpers.cssDeclarationsWithDisabled(declarations, undefined).every(d => d.disabled === false)).toBe(true);
+  });
+
+  test('a css written as a string stays a string, but only while it can be split', () => {
+    expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], 'color: blue;')).toBe('color: red;');
+    expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], { color: 'blue' })).toEqual({ color: 'red' });
+    expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], null)).toEqual({ color: 'red' });
+    // a value with a ":" or ";" in it would not survive the string form
+    expect(cssHelpers.cssValueFromDeclarations([ { name: 'background-image', value: 'url(data:image/svg+xml;base64,AAA)' } ], 'color: blue;'))
+      .toEqual({ 'background-image': 'url(data:image/svg+xml;base64,AAA)' });
+  });
+
+  test('rows without a property name are dropped, an empty list clears the value', () => {
+    expect(cssHelpers.cssValueFromDeclarations([ { name: '  ', value: 'red' }, { name: 'color', value: ' blue ' } ], null)).toEqual({ color: 'blue' });
+    expect(cssHelpers.cssValueFromDeclarations([], { color: 'red' })).toBe(null);
+    expect(cssHelpers.cssValueFromDeclarations([ { name: '', value: '' } ], 'color: red;')).toBe(null);
+  });
+
+  test('plain colors get a swatch, everything else does not', () => {
+    for(const value of [ '#fff', '#ff8800', '#ff880080', 'rgba(0,0,0,0.5)', 'hsl(20 50% 50%)', 'red', 'TRANSPARENT', ' white ' ])
+      expect(cssHelpers.cssValueIsColor(value)).toBe(true);
+    for(const value of [ '', null, '20px', '1px solid red', 'url(/assets/x)', 'var(--wcMain)', '${PROPERTY color}' ])
+      expect(cssHelpers.cssValueIsColor(value)).toBe(false);
+  });
+
+  test('value completion knows the keyword properties and always offers the global keywords', () => {
+    expect(cssHelpers.cssValueSuggestions('display')).toEqual(expect.arrayContaining([ 'flex', 'none', 'inherit' ]));
+    expect(cssHelpers.cssValueSuggestions('some-unknown-property')).toEqual([ 'inherit', 'initial', 'unset' ]);
+  });
+
+  test('property completion adds the css variables of the widget type', () => {
+    const suggestions = cssHelpers.cssPropertySuggestions.call(
+      { typeSections: cssHelpers.typeSections },
+      { get: _=>'button' }
+    );
+    expect(suggestions).toEqual(expect.arrayContaining([ '--wcMain', '--wcFontOH', 'font-size' ]));
+    expect(new Set(suggestions).size).toBe(suggestions.length);
+  });
+});
 
 describe('css helpers', () => {
   test('basic properties exclude the generic inputs from other property sections', () => {
