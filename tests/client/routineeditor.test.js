@@ -22,6 +22,7 @@ beforeAll(() => {
   window.endCustomSelection = () => {};
   window.widgets = new Map();
   window.setSelection = () => {};
+  window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
 
   const editorDiv = document.createElement('div');
   editorDiv.id = 'editor';
@@ -647,8 +648,10 @@ describe('number popups with text values', () => {
 describe('the shared widget picker', () => {
   function room(...definitions) {
     widgets.clear();
-    for(const [ id, type, parent ] of definitions)
-      widgets.set(id, { id, get: p => ({ type, parent: parent || null })[p] });
+    for(const [ id, type, parent ] of definitions) {
+      const state = { id, type, parent: parent || null };
+      widgets.set(id, { id, state, get: p => state[p] });
+    }
     return id => widgets.get(id);
   }
 
@@ -767,6 +770,142 @@ describe('the shared widget picker', () => {
     entries[1].onclick();
     [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'Use these widgets').dispatchEvent(new Event('click'));
     expect(value).toEqual({ from: [ 'h1', 'h2' ] });
+    popup.hide();
+  });
+});
+
+describe('widget type presets', () => {
+  function room(...definitions) {
+    widgets.clear();
+    for(const [ id, type ] of definitions) {
+      const state = { id, type, parent: 'theTable' };
+      widgets.set(id, { id, state, get: p => state[p] });
+    }
+  }
+
+  // opens the popup a chip opens, the way the routine editor does
+  function showPopup(operation, parameterNames) {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails(widgets.get('target'), operation, [], []);
+    const popup = editor.createPopup(parameterNames);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, widgets.get('target'), [], []);
+    popup.show();
+    return popup;
+  }
+
+  const pickedTypes = popup => [...popup.domElement.querySelectorAll('.widgetPickerEntry')].map(e => e.querySelector('.widgetPickerType').textContent);
+
+  afterEach(() => {
+    stopWidgetPicker();
+    widgets.clear();
+  });
+
+  test('parameters that name one kind of widget preset that type', () => {
+    const presets = {};
+    for(const func in routineOperationMetadata)
+      for(const parameter in routineOperationMetadata[func].parameters)
+        if(routineOperationMetadata[func].parameters[parameter].widgetType)
+          presets[`${func}.${parameter}`] = routineOperationMetadata[func].parameters[parameter].widgetType;
+    expect(presets).toEqual({
+      'CANVAS.collection': 'canvas',
+      'COUNT.holder': 'holder',
+      'FLIP.holder': 'holder',
+      'LABEL.label': 'label',
+      'MOVE.from': 'holder', 'MOVE.to': 'holder',
+      'MOVEXY.from': 'holder',
+      'RECALL.holder': 'holder',
+      'ROTATE.holder': 'holder',
+      'SCORE.seats': 'seat',
+      'SHUFFLE.holder': 'holder',
+      'SORT.holder': 'holder',
+      'SWAPHANDS.source': 'seat',
+      'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
+      'TURN.turn': 'seat', 'TURN.source': 'seat'
+    });
+  });
+
+  test('the preset filters the picker list and can be changed to any type', () => {
+    room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'l1', 'label' ]);
+    const popup = showPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]); // the {holder,collection} chip
+    expect(pickedTypes(popup)).toEqual([ 'holder' ]);
+    const typeSelect = popup.domElement.querySelector('select');
+    expect(typeSelect.value).toBe('holder');
+    typeSelect.value = '';
+    typeSelect.onchange();
+    expect(pickedTypes(popup).sort()).toEqual([ 'button', 'holder', 'label' ]);
+    popup.hide();
+  });
+
+  test('collection-only and widget-only parameters get their preset as well', () => {
+    room([ 'target', 'button' ], [ 'l1', 'label' ], [ 't1', 'timer' ]);
+    const timer = showPopup({ func: 'TIMER' }, [ 'collection' ]); // no timer set: the chip is the collection
+    expect(pickedTypes(timer)).toEqual([ 'timer' ]);
+    timer.hide();
+    const label = showPopup({ func: 'LABEL' }, [ 'label' ]);
+    expect(pickedTypes(label)).toEqual([ 'label' ]);
+    label.hide();
+  });
+
+  test('TURN offers the seats for its turn parameter', () => {
+    room([ 'target', 'button' ], [ 's1', 'seat' ], [ 'h1', 'holder' ]);
+    const popup = showPopup({ func: 'TURN', turnCycle: 'seat' }, [ 'turn' ]);
+    expect(popup).toBeInstanceOf(RoutineNumberPopup);
+    expect(pickedTypes(popup)).toEqual([ 'seat' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.domElement.querySelector('.widgetPickerEntry').onclick();
+    expect(value).toEqual({ turn: 's1' });
+    popup.hide();
+  });
+});
+
+describe('variables in widget parameters', () => {
+  function showWidgetPopup(operation, parameterNames) {
+    widgets.clear();
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const editor = editorForOperation(operation);
+    const widget = { id: 'button1', state: { id: 'button1', parent: 'holder1' }, get: p => widget.state[p] };
+    editor.setOperationDetails(widget, operation, [ 'myHolder' ], []);
+    const popup = editor.createPopup(parameterNames);
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, widget, [ 'myHolder' ], []);
+    popup.show();
+    return popup;
+  }
+
+  const buttonNamed = (popup, text) => [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == text);
+
+  test('a widget parameter offers variables and widget properties', () => {
+    const popup = showWidgetPopup({ func: 'MOVE', from: [ 'h1' ] }, [ 'to' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    expect(buttonNamed(popup, 'myHolder')).toBeDefined();
+    buttonNamed(popup, 'parent').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ to: '${PROPERTY parent}' });
+    popup.hide();
+  });
+
+  test('a variable used for a holder goes to the holder parameter, not the collection', () => {
+    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    buttonNamed(popup, 'parent').dispatchEvent(new Event('click'));
+    expect(value.holder).toBe('${PROPERTY parent}');
+    expect('collection' in value).toBe(true);
+    expect(value.collection).toBeUndefined();
+    popup.hide();
+  });
+
+  test('a collection name still goes to the collection parameter', () => {
+    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.setNewCollectionValue('DEFAULT');
+    expect(value).toEqual({ holder: undefined, collection: 'DEFAULT' });
     popup.hide();
   });
 });
