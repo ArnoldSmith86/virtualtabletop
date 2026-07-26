@@ -22,6 +22,12 @@
 // deprecated holds the explanation for a parameter the engine still supports but
 // that should not be used in new games: its chip gets an orange "!" info button
 // in both the sentence and the list view.
+//
+// ignored names the parameters the engine skips because of how another one is
+// set. They get a red "!" in the list view and are kept out of the summary: a
+// template should not word them into the sentence in the mode that ignores them
+// (that is what the template functions are for), and they are never appended as
+// an extra chip either.
 const routineOperationMetadata = {
   AUDIO: {
     template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
@@ -48,7 +54,7 @@ const routineOperationMetadata = {
     definesCollection: _=>[ 'result' ]
   },
   CANVAS: {
-    template: '{func}: {mode} on {collection}[ using value {value}][ and color {color}]',
+    template: v=>`{func}: {mode} on ${v('canvas') != null ? '{canvas}' : '{collection}'}[ using value {value}][ and color {color}]`,
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       collection: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas' },
@@ -112,7 +118,13 @@ const routineOperationMetadata = {
     }
   },
   FLIP: {
-    template: v=>v('faceCycle') == 'random' ? '{func} {count} widgets from {holder,collection} a {faceCycle} face' : '{func} {count} widgets from {holder,collection}; cycle {faceCycle} by {face}',
+    template: v=>{
+      if(v('face') != null)
+        return '{func} {count} widgets from {holder,collection} to face {face}';
+      if(v('faceCycle') == 'random')
+        return '{func} {count} widgets from {holder,collection} a {faceCycle} face';
+      return '{func} {count} widgets from {holder,collection}; cycle {faceCycle}';
+    },
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
       holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
@@ -990,12 +1002,16 @@ class RoutineOperationEditor {
   }
 
   // parameters the handwritten template does not mention still get a chip in an
-  // optional segment so every option the operation supports stays editable
+  // optional segment so every option the operation supports stays editable -
+  // except the ones the engine currently ignores, because appending them to the
+  // summary would suggest they have an effect (the list view still shows them,
+  // with the red "!" that explains why they are ignored)
   withExtraParameters(template) {
     const referenced = (template.match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m=>m.slice(1, -1).split(','));
+    const ignored = this.ignoredParameters();
     let result = template;
     for(const name in this.metadata.parameters)
-      if(referenced.indexOf(name) == -1)
+      if(referenced.indexOf(name) == -1 && !Object.prototype.hasOwnProperty.call(ignored, name))
         result += `[, ${name} {${name}}]`;
     return result;
   }

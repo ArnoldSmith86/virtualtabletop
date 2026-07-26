@@ -80,8 +80,12 @@ describe('routine operation metadata', () => {
       const editor = editorForOperation({ func });
       editor.setOperationDetails({ state: {} }, { func }, [], []);
       const referenced = (editor.getTemplate().match(/\{([a-zA-Z0-9,]+)\}/g) || []).flatMap(m => m.slice(1, -1).split(','));
+      const ignored = editor.ignoredParameters();
       for (const name in routineOperationMetadata[func].parameters)
-        expect(referenced).toContain(name);
+        if (name in ignored)
+          expect(referenced).not.toContain(name); // ignored parameters stay out of the summary, the list view still offers them
+        else
+          expect(referenced).toContain(name);
     }
   });
 
@@ -148,6 +152,22 @@ describe('operation rendering', () => {
     const countRow = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('count'));
     expect(countRow.classList.contains('routine-editor-parameter-ignored')).toBe(true);
     expect(countRow.querySelector('.routine-editor-parameter-ignored-warning').title).toMatch(/fill up to/);
+  });
+
+  test('the sentence leaves out parameters the engine ignores', () => {
+    // FLIP flips to the given face, so the cycle direction has no effect
+    const flip = renderOperation({ func: 'FLIP', holder: 'h1', face: 1, faceCycle: 'backward' }).dom;
+    expect(flip.textContent).toContain('to face');
+    expect(flip.querySelector('[data-parameter="faceCycle"]')).toBeNull();
+
+    // the deprecated canvas parameter replaces collection
+    const canvas = renderOperation({ func: 'CANVAS', canvas: 'c1', collection: 'stuff' }).dom;
+    expect(canvas.querySelector('[data-parameter="canvas"]').textContent).toBe('c1');
+    expect(canvas.querySelector('[data-parameter="collection"]')).toBeNull();
+
+    // an explicitly set count is ignored while MOVE fills up to a number
+    const move = renderOperation({ func: 'MOVE', from: 'h1', to: 'h2', fillTo: 3, count: 2 }).dom;
+    expect(move.querySelector('[data-parameter="count"]')).toBeNull();
   });
 
   test('the deprecated CANVAS canvas parameter is editable in both views', () => {
@@ -238,7 +258,10 @@ describe('operation rendering', () => {
       return editor.getTemplate();
     };
     expect(template({ func: 'FLIP', faceCycle: 'random' })).toContain('a {faceCycle} face');
-    expect(template({ func: 'FLIP' })).toContain('cycle {faceCycle} by {face}');
+    expect(template({ func: 'FLIP' })).toContain('cycle {faceCycle}');
+    expect(template({ func: 'FLIP', face: 1 })).toContain('to face {face}');
+    expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('on {canvas}');
+    expect(template({ func: 'CANVAS' })).toContain('on {collection}');
     expect(template({ func: 'MOVE', fillTo: 3 })).toContain('fill up to {fillTo}');
     expect(template({ func: 'SELECT', mode: 'add' })).toContain('{mode} to {collection}');
     expect(template({ func: 'SELECT' })).toContain('{mode} as {collection}');
