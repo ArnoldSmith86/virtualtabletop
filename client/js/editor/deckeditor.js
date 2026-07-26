@@ -202,6 +202,7 @@ class DeckEditor {
     this.deckSymbolSelected = false; // the deck-widget strip entry is selected -> the sidebar edits card defaults
     this.sidebarTab = 'defaults'; // which property scope the right sidebar shows: defaults | cardType | face | object
     this.addSectionOpen = false; // the left-sidebar "+" expander revealing the add-object controls
+    this.treeObjectPreviews = []; // the tree rows' preview boxes, so they can follow the card (refreshTreePreviews)
     this.treeLevel = 'face'; // which tree level the unified add/copy/delete toolbar acts on: deck | face | object
 
     // Remember where the user left off per deck (tree node + card type) so leaving and returning restores it,
@@ -328,8 +329,10 @@ class DeckEditor {
     $('#deckEditorTreeCopy').onclick = _=>this.treeCopy();
     $('#deckEditorTreeDelete').onclick = _=>this.treeDelete();
 
+    // Only a click on the card itself (its empty area) drops the object selection. Clicking the space AROUND
+    // the card does nothing, so missing the card can't silently switch the sidebar from Object to Face.
     $('#deckEditorMain').onmousedown = e=>{
-      if(e.target.id == 'deckEditorMain' || e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
+      if(e.target.classList.contains('deckEditorCard') || e.target.classList.contains('cardFace'))
         this.selectObject(null);
     };
 
@@ -1372,6 +1375,20 @@ class DeckEditor {
       card.domElement.children[face].classList.toggle('active', face == this.face);
 
     this.attachObjectHandlers();
+    this.refreshTreePreviews();
+  }
+
+  // The tree's object previews are clones of the card's rendered objects, so they follow every card refresh -
+  // typing in the right sidebar updates them right away, like the card type strip at the bottom. Only the
+  // preview boxes are rebuilt (not the whole tree), and a box the user is typing in is left alone.
+  refreshTreePreviews() {
+    for(const preview of this.treeObjectPreviews) {
+      if(!preview.box.isConnected || preview.box.contains(document.activeElement))
+        continue;
+      preview.box.className = 'deckEditorObjectPreview'; // a text preview adds its own class to the box
+      preview.box.innerHTML = '';
+      this.renderObjectPreview(preview.box, preview.index, preview.face);
+    }
   }
 
   attachObjectHandlers() {
@@ -1725,21 +1742,21 @@ class DeckEditor {
     }
   }
 
-  // The four property scopes the sidebar can edit, outside in: the deck's card defaults, the selected card
-  // type, the shown face and the selected face object. Each one is a tab, and only the active tab's sections
-  // are rendered - so a tab is one focused list instead of the stack of unrelated bands this used to be.
+  // The four property scopes the sidebar can edit, in the order the tree presents them: the deck's card
+  // defaults, the shown face, the selected card type and the selected face object. Each one is a tab, and only
+  // the active tab's sections are rendered - so a tab is one focused list instead of a stack of unrelated bands.
   // The scope also picks the color: blue = shared by every card, amber = differs per card type.
   sidebarTabs(object) {
     const face = this.faceTemplates[this.face];
     return [
       { id: 'defaults', label: 'All Cards', icon: 'style', scope: 'deckEditorScopeEveryCard', available: true,
         title: 'The properties every card of this deck starts with' },
-      { id: 'cardType', label: 'Card Type', icon: 'label', scope: 'deckEditorScopeThisType', available: this.cardType !== null,
-        title: this.cardType === null ? 'Select a card type in the strip below to edit its properties'
-                                      : `The properties of card type "${this.cardType}" alone` },
       { id: 'face', label: 'Face', icon: 'crop_portrait', scope: 'deckEditorScopeEveryCard', available: !!face,
         title: face ? `Settings of ${this.faceLabel(this.face).toLowerCase()}, on every card of this deck`
                     : 'This deck does not have any faces yet' },
+      { id: 'cardType', label: 'Card Type', icon: 'label', scope: 'deckEditorScopeThisType', available: this.cardType !== null,
+        title: this.cardType === null ? 'Select a card type in the strip below to edit its properties'
+                                      : `The properties of card type "${this.cardType}" alone` },
       { id: 'object', label: 'Object', icon: 'category', scope: 'deckEditorScopeEveryCard', available: !!object,
         title: object ? `Face object ${this.selectedObject+1} of ${this.faceLabel(this.face).toLowerCase()}`
                       : 'Click a face object on the card or in the list to the left to edit it' }
@@ -1970,6 +1987,7 @@ class DeckEditor {
       const keepPreviewFocus = focused && focused.classList && focused.classList.contains('deckEditorPreviewText');
       const previewCaret = keepPreviewFocus ? [ focused.selectionStart, focused.selectionEnd ] : null;
       tree.innerHTML = '';
+      this.treeObjectPreviews = []; // filled by renderTreeObjectRow, refreshed on every card refresh
       for(const deck of widgetFilter(w=>w.get('type') == 'deck')) {
         const isCurrent = deck.id == this.deckID;
         // A branch is expanded when it's the current deck/face or the user opened it; single click expands +
@@ -2044,7 +2062,9 @@ class DeckEditor {
     row.classList.toggle('selected', objSel && this.activeArea == 'tree');
     row.classList.toggle('selectedInactive', objSel && this.activeArea != 'tree');
     row.title = `Face object ${index+1} (${object.type || 'text'})`;
-    this.renderObjectPreview($('.deckEditorObjectPreview', row), index, face);
+    const previewBox = $('.deckEditorObjectPreview', row);
+    this.treeObjectPreviews.push({ box: previewBox, index, face });
+    this.renderObjectPreview(previewBox, index, face);
     row.onclick = _=>this.selectObject(index, face);
     // Drag-and-drop reordering, only within the current face (objects of other expanded faces are read-only here).
     row.draggable = face === this.face;
@@ -2873,13 +2893,18 @@ class DeckEditor {
       return;
     if(!Array.isArray(face.objects))
       face.objects = [];
-    face.objects.push(objectTemplate);
+    // A face object selected in the tree is where the new one goes right after (like copying an object); with
+    // the face itself selected there is no such anchor, so it is appended at the bottom of the list.
+    const insertAt = this.treeLevel == 'object' && this.selectedObject !== null
+      ? Math.min(this.selectedObject+1, face.objects.length)
+      : face.objects.length;
+    face.objects.splice(insertAt, 0, objectTemplate);
     if(this.mainCard)
       this.refreshMainCardFaces();
     else
       this.renderMain(); // the "no faces yet" empty state was showing before this
     await this.commit('faceTemplates', cause || `${getPlayerDetails().playerName} added a ${objectTemplate.type || 'basic'} object to deck ${this.deckID} in deck editor`, actionId);
-    this.selectObject(face.objects.length-1);
+    this.selectObject(insertAt);
   }
 
   async deleteSelectedObject() {

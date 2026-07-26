@@ -910,7 +910,6 @@ body.deckEditorPanning #deckEditorMain * {
   background: transparent;
   color: var(--textColor);
   border-bottom: 3px solid transparent;
-  opacity: 0.7;
   cursor: pointer;
 }
 
@@ -923,20 +922,23 @@ body.deckEditorPanning #deckEditorMain * {
 .deckEditorTab:hover:not(:disabled) {
   background: var(--deckEditorScopeTint);
   border-bottom-color: var(--deckEditorScopeColor);
-  opacity: 1;
 }
 
 .deckEditorTab.active, .deckEditorTab.active:hover {
   background: var(--deckEditorScopeColor);
   border-bottom-color: var(--deckEditorScopeColor);
   color: #fff;
-  opacity: 1;
 }
 
+/* An unavailable scope has to read as unavailable, but it also has to stay readable. The global button:disabled
+   rule paints the label light grey (which suits the grey fill it comes with, but not this transparent tab), and
+   0.3 opacity on top of that left it nearly invisible in both themes. Keep the theme's text color and dim it
+   just enough to stand apart from the selectable tabs, which are drawn at full strength. */
 .deckEditorTab:disabled {
   background: transparent;
   border-bottom-color: transparent;
-  opacity: 0.3;
+  color: var(--textColor);
+  opacity: 0.55;
   cursor: default;
 }
 
