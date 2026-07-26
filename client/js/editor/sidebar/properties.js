@@ -630,6 +630,8 @@ const editorPropertyHints = {
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
+  pileSnapRange: 'How close in pixels another card or pile has to be dropped for it to join this pile.',
+  handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
   childrenPerOwner: 'Keep a separate set of held widgets for each player.',
   dropOffsetX: 'Horizontal starting position for widgets aligned inside the holder.',
   dropOffsetY: 'Vertical starting position for widgets aligned inside the holder.',
@@ -741,6 +743,17 @@ const editorTypeSections = {
     ]
   },
   label: {},
+  pile: {
+    behavior: [
+      { label: 'Snap range', property: 'pileSnapRange', kind: 'number', min: 0, step: 1 },
+      { label: 'Stack cards on top of each other', property: 'alignChildren', kind: 'checkbox',
+        hint: 'Put every card of the pile in the same spot. Without it, cards keep the offset they were dropped with.' },
+      { label: 'Cards follow the pile layer', property: 'inheritChildZ', kind: 'checkbox',
+        hint: 'Keep the cards of the pile directly above it in the stacking order, so nothing slips in between.' }
+    ],
+    // the handle is styled through handleCSS, the pile box through css
+    cssProperties: [ 'css', 'handleCSS' ]
+  },
   scoreboard: {
     // most scoreboard properties are curated in renderForScoreboard; only the
     // border radius stays in the generic appearance/style block
@@ -1227,13 +1240,6 @@ class PropertiesModule extends SidebarModule {
     const ids = selection.map(w=>w.id);
     const shownIds = ids.slice(0, 8);
     div(header, 'widgetHeaderMultiIds', html(shownIds.join(', ') + (ids.length > shownIds.length ? ` +${ids.length - shownIds.length} more` : '')));
-
-    if(types.includes('pile')) {
-      div(this.moduleDOM, '', `
-        <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
-      `);
-      return;
-    }
 
     this.renderBasicSection(facade, { arrangeButtons: true });
 
@@ -6044,18 +6050,165 @@ class PropertiesModule extends SidebarModule {
 
   renderForPile(widget) {
     this.renderTypeHeader(widget);
-    div(this.moduleDOM, '', `
-      <p>Piles are temporary containers created automatically when cards overlap. Customize their cards and pile behavior on the cards' <b>deck</b>; pile properties cannot be edited here.</p>
-    `);
+    this.renderBasicSection(widget);
+
+    this.addSubHeader('Handle');
+    div(this.moduleDOM, 'pileHelp', 'The badge on the pile: it counts the cards and drags the whole stack. The pile itself is invisible - what you see on the table are its cards.');
+
+    new TextInput(this, widget, 'Text', {
+      property: 'text',
+      nullIfEmpty: true,
+      placeholder: 'number of cards',
+      hint: 'Text shown on the handle. Empty means the number of cards in the pile, which is what most piles want.'
+    }).render(this.moduleDOM);
+
+    this.renderPileHandlePosition(widget);
+    this.renderPileHandleSize(widget);
+
+    this.addAppearanceSubTitle('Colors');
+    const handleColors = div(this.moduleDOM, 'colorFlexRow');
+    const handlePickers = div(this.moduleDOM, 'contentMediaPickers');
+    const handleGroup = { target: handlePickers, current: null };
+    for(const color of [
+      { label: 'Text', key: 'color', labelIcon: 'format_color_text' },
+      { label: 'Background', key: 'background', labelIcon: 'format_color_fill' },
+      { label: 'Border', key: 'border-color', labelIcon: 'border_color' }
+    ])
+      new ColorInput(this, widget, color.label, cssValueOptions(this, widget, color.key, 'handleCSS', 'default', {
+        pickerGroup: handleGroup,
+        labelIcon: color.labelIcon,
+        effectiveSelector: '.handle'
+      })).render(handleColors);
+
+    this.renderAppearanceSection(widget);
+    this.renderBehaviorSection(widget);
+    this.renderPileTemplateSection(widget);
+
+    this.renderOtherPropertiesSection(widget, [ 'text', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition' ]);
+  }
+
+  // handlePosition is a free string the pile matches "bottom"/"middle" (y) and
+  // "right"/"center" (x) in, plus "static" for "never flip at the board edge"
+  renderPileHandlePosition(widget) {
+    const rows = [ 'top', 'middle', 'bottom' ];
+    const columns = [ 'left', 'center', 'right' ];
+    const positionOf = value => {
+      const text = String(value);
+      return {
+        row: text.match(/middle/) ? 'middle' : (text.match(/bottom/) ? 'bottom' : 'top'),
+        column: text.match(/center/) ? 'center' : (text.match(/right/) ? 'right' : 'left')
+      };
+    };
+
+    const row = div(this.moduleDOM, 'propertyInput gridAnchorRow');
+    const label = document.createElement('label');
+    label.textContent = 'Position';
+    propertyInfoButton(label, 'Corner of the pile the handle sits in. Close to the edge of the board the pile flips the handle to the opposite side so it stays reachable - "Fixed position" turns that off.');
+    row.appendChild(label);
+
+    const anchors = div(row, 'gridAnchors');
+    const buttons = [];
+    for(const anchorRow of rows)
+      for(const anchorColumn of columns) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gridAnchor';
+        button.title = `${anchorRow} ${anchorColumn}`.replace(/^./, character=>character.toUpperCase());
+        button.onclick = _=>this.inputValueUpdated(widget, 'handlePosition', `${anchorRow} ${anchorColumn}`);
+        anchors.appendChild(button);
+        buttons.push({ button, row: anchorRow, column: anchorColumn });
+      }
+
+    this.addPropertyListener(widget, 'handlePosition', w=>{
+      const value = w.get('handlePosition');
+      const isStatic = String(value) == 'static';
+      const active = positionOf(value);
+      for(const anchor of buttons)
+        anchor.button.classList.toggle('active', !isStatic && anchor.row == active.row && anchor.column == active.column);
+      anchors.classList.toggle('disabled', isStatic);
+    });
+
+    new CheckboxInput(this, widget, 'Fixed position', {
+      listenTo: [ 'handlePosition' ],
+      getValue: _=>String(widget.get('handlePosition')) == 'static',
+      // "static" drops the flipping and with it the position, so going back
+      // needs a corner again - keep the last one of this editing session
+      setValue: value=>{
+        if(value)
+          this.lastPileHandlePosition = String(widget.get('handlePosition'));
+        this.inputValueUpdated(widget, 'handlePosition', value ? 'static' : (this.lastPileHandlePosition || 'top right'));
+      },
+      hint: 'Always keep the handle in the top left corner instead of moving it inward when the pile is at the edge of the board.'
+    }).render(this.moduleDOM);
+  }
+
+  // handleSize is either "auto" (40px, halved on small piles) or a pixel number
+  renderPileHandleSize(widget) {
+    const sizeRow = div(this.moduleDOM, 'propertyInlineRow');
+    new CheckboxInput(this, widget, 'Automatic size', {
+      listenTo: [ 'handleSize' ],
+      getValue: _=>widget.get('handleSize') == 'auto',
+      setValue: value=>this.inputValueUpdated(widget, 'handleSize', value ? 'auto' : 40),
+      hint: 'Use a 40 pixel handle, halved on piles smaller than 50 pixels.'
+    }).render(sizeRow);
+
+    const sizeInput = new NumberInput(this, widget, 'Size (px)', {
+      listenTo: [ 'handleSize' ],
+      min: 1,
+      step: 1,
+      nullIfEmpty: true,
+      getValue: _=>{
+        const size = widget.get('handleSize');
+        return size == 'auto' ? null : size;
+      },
+      setValue: value=>this.inputValueUpdated(widget, 'handleSize', value === null || value === '' ? 'auto' : value)
+    });
+    sizeInput.render(sizeRow);
+    this.addPropertyListener(widget, 'handleSize', w=>sizeInput.dom.style.display = w.get('handleSize') == 'auto' ? 'none' : '');
+
+    new NumberInput(this, widget, 'Corner offset', {
+      property: 'handleOffset',
+      step: 1,
+      hint: 'How far the handle sticks out over the corner of the pile, in pixels.'
+    }).render(this.moduleDOM);
+  }
+
+  // Automatically created piles are built from the cards' onPileCreation, which
+  // for a deck lives in its cardDefaults - so the pile in front of you is a
+  // preview of a template that is edited somewhere else entirely.
+  renderPileTemplateSection(widget) {
     const card = widget.children().find(child => child.get('type') == 'card');
     const deck = card && widgets.get(card.get('deck'));
-    if(deck) {
-      const open = document.createElement('button');
-      open.setAttribute('icon', 'style');
-      open.textContent = 'Open deck properties';
-      open.onclick = _=>setSelection([ deck ]);
-      this.moduleDOM.appendChild(open);
-    }
+
+    this.addSubHeader('Pile template');
+    div(this.moduleDOM, 'pileHelp', deck
+      ? 'Piles come and go with the cards in them: this one disappears as soon as it holds a single card. New piles are built from the pile template of the cards\' deck, so store the settings above there to keep them.'
+      : 'Piles come and go with the cards in them: a pile that holds a single card disappears. New piles are built from the "onPileCreation" template of the cards that form them.');
+    if(!deck)
+      return;
+
+    const templateProperties = [ 'text', 'css', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition', 'pileSnapRange', 'alignChildren', 'inheritChildZ', 'borderRadius', 'classes' ];
+    const save = document.createElement('button');
+    save.setAttribute('icon', 'content_copy');
+    save.textContent = `Save as the pile template of ${deck.id}`;
+    save.title = 'Copy the pile settings above into the deck, so every pile made from its cards looks like this one.';
+    save.onclick = _=>{
+      const template = {};
+      for(const property of templateProperties)
+        if(widget.state[property] !== undefined)
+          template[property] = JSON.parse(JSON.stringify(widget.state[property]));
+      const cardDefaults = Object.assign({}, deck.get('cardDefaults'), { onPileCreation: template });
+      this.inputValueUpdated(deck, 'cardDefaults', cardDefaults);
+      save.textContent = `Saved to ${deck.id}`;
+      setTimeout(_=>save.textContent = `Save as the pile template of ${deck.id}`, 2000);
+    };
+    this.moduleDOM.appendChild(save);
+
+    const open = document.createElement('button');
+    open.setAttribute('icon', 'style');
+    open.textContent = 'Open deck properties';
+    open.onclick = _=>setSelection([ deck ]);
+    this.moduleDOM.appendChild(open);
   }
 
   renderForScoreboard(widget) {

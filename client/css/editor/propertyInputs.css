@@ -1407,6 +1407,7 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 /* snap grid editor */
 .editorModule .gridHelp,
+.editorModule .pileHelp,
 .editorModule .gridSizeNote {
   font-size: 0.9em;
   opacity: 0.8;
@@ -1454,6 +1455,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
 
 .editorModule .gridAnchor.active {
   background: var(--VTTblue);
+}
+
+/* the pile handle position picker while "Fixed position" ignores it */
+.editorModule .gridAnchors.disabled {
+  opacity: 0.4;
 }
 
 .editorModule .gridExtraRow {
