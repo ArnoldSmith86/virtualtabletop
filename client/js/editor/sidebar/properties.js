@@ -1084,7 +1084,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
-    const id = 'genericInput' + rand().toString(36).substring(3, 12);
+    const id = editorDomID('genericInput');
     let currentValue = null;
     let inputDOM = null;
 
@@ -4480,7 +4480,7 @@ class PropertiesModule extends SidebarModule {
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.id = `inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}_${rand().toString(36).substring(3, 7)}`;
+      checkbox.id = editorDomID(`inheritProp_${targetWidget.id}_${sourceWidget.id}_${prop}`);
       checkbox.dataset.property = prop;
 
       const isReadOnlyAllMode = modeValue === 'all';
@@ -5049,7 +5049,7 @@ class PropertiesModule extends SidebarModule {
       writeClassValue(cssValueFromDeclarations(declarations.filter(declaration=>!declaration.disabled), classValueOf()));
     };
 
-    const nameListID = `cssProperties_${rand().toString(36).substring(3, 12)}`;
+    const nameListID = editorDomID('cssProperties');
     const nameList = document.createElement('datalist');
     nameList.id = nameListID;
     for(const suggestion of this.cssPropertySuggestions(widget)) {
@@ -5089,7 +5089,7 @@ class PropertiesModule extends SidebarModule {
       value.className = 'cssDeclarationValue';
       value.value = declaration.value;
       value.placeholder = 'value';
-      const valueListID = `cssValues_${rand().toString(36).substring(3, 12)}`;
+      const valueListID = editorDomID('cssValues');
       const valueList = document.createElement('datalist');
       valueList.id = valueListID;
       for(const suggestion of cssValueSuggestions(declaration.name)) {
@@ -5223,7 +5223,7 @@ class PropertiesModule extends SidebarModule {
     row.appendChild(input);
 
     if(options.suggestions.length) {
-      const listID = `suggestions_${rand().toString(36).substring(3, 12)}`;
+      const listID = editorDomID('suggestions');
       const datalist = document.createElement('datalist');
       datalist.id = listID;
       for(const suggestion of options.suggestions) {

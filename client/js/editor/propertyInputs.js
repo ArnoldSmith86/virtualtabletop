@@ -42,6 +42,14 @@ function propertyInputValueSet(value) {
   return value !== undefined && value !== null && value !== '';
 }
 
+// Unique ids for the DOM elements the editor generates. Deliberately not
+// rand(): that advances the seeded random the game state depends on, so
+// rendering an input would change the next dice roll.
+let editorDomIDCounter = 0;
+function editorDomID(prefix) {
+  return `${prefix}_${++editorDomIDCounter}`;
+}
+
 function numericInputValue(rawValue, min, max) {
   if(rawValue === '' || rawValue === null || rawValue === undefined)
     return null;
@@ -619,7 +627,7 @@ class CheckboxInput extends PropertyInput {
     this.input = document.createElement('input');
     this.input.type = 'checkbox';
     this.input.className = 'switchbox';
-    this.input.id = `propertyCheckbox_${rand().toString(36).substring(3, 12)}`;
+    this.input.id = editorDomID('propertyCheckbox');
     this.input.onchange = _=>this.setValue(this.options.invert ? !this.input.checked : this.input.checked);
     target.appendChild(this.input);
 
