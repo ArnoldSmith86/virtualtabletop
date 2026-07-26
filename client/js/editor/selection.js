@@ -188,6 +188,13 @@ export async function editClick(widget) {
 }
 
 export function editorReceiveDelta(delta) {
+  // a widget can disappear while it is selected - a pile removes itself as soon
+  // as it holds a single card. Its sidebar inputs would keep writing to the
+  // dead id, and the server re-creates an unknown id as a typeless widget that
+  // then ends up in the saved game, so drop it from the selection first.
+  if(selectedWidgets.some(w=>widgets.get(w.id) !== w))
+    setSelection(selectedWidgets.filter(w=>widgets.get(w.id) === w));
+
   for(const module of sidebarModules)
     module.onDeltaReceived(delta);
 }

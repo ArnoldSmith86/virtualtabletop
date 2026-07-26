@@ -137,10 +137,31 @@ describe('css declaration rows', () => {
     ]);
   });
 
+  test('a declaration that only has its name yet is a row, not a value', () => {
+    const declarations = [ { name: 'color', value: 'red' } ];
+    // pending rows come back at their position, like the switched off ones,
+    // and are enabled - they just have nothing to write yet
+    expect(cssHelpers.cssDeclarationsWithDisabled(declarations, undefined, [ { name: 'font-size', value: '', index: 1 } ])).toEqual([
+      { name: 'color', value: 'red', disabled: false },
+      { name: 'font-size', value: '', disabled: false }
+    ]);
+    // one that got a value meanwhile is not shown twice
+    expect(cssHelpers.cssDeclarationsWithDisabled(declarations, undefined, [ { name: 'color', value: '', index: 0 } ])).toEqual([
+      { name: 'color', value: 'red', disabled: false }
+    ]);
+    // and neither is one that is also in the switched off list
+    expect(cssHelpers.cssDeclarationsWithDisabled([], [ { name: 'color', value: 'red', index: 0 } ], [ { name: 'color', value: '', index: 1 } ])).toEqual([
+      { name: 'color', value: 'red', disabled: true }
+    ]);
+  });
+
   test('a color the color input cannot express keeps its alpha', () => {
     for(const value of [ '#ff880080', '#f008', 'rgba(0,0,0,0.5)', 'hsla(20,50%,50%,0.2)', 'rgb(0 0 0 / 50%)', 'transparent', 'currentcolor' ])
       expect(cssHelpers.cssColorHasAlpha(value)).toBe(true);
-    for(const value of [ '#fff', '#ff8800', 'rgb(0,0,0)', 'red', '' ])
+    // the modern color spaces write their alpha behind a slash, too
+    for(const value of [ 'oklch(0.7 0.1 200 / 50%)', 'lab(50% 40 59.5 / .5)', 'hwb(12 50% 0% / 0.2)', 'color(display-p3 1 0 0 / 50%)' ])
+      expect(cssHelpers.cssColorHasAlpha(value)).toBe(true);
+    for(const value of [ '#fff', '#ff8800', 'rgb(0,0,0)', 'red', '', 'oklch(0.7 0.1 200)' ])
       expect(cssHelpers.cssColorHasAlpha(value)).toBe(false);
   });
 
@@ -163,9 +184,12 @@ describe('css declaration rows', () => {
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], null)).toEqual({ color: 'red' });
     // "" is the default of the css properties, not a css written as a string
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], '')).toEqual({ color: 'red' });
-    // a value with a ":" or ";" in it would not survive the string form
+    // a value with a ";" in it would not survive the string form
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'background-image', value: 'url(data:image/svg+xml;base64,AAA)' } ], 'color: blue;'))
       .toEqual({ 'background-image': 'url(data:image/svg+xml;base64,AAA)' });
+    // a ":" does survive it - the parser splits at the first one
+    expect(cssHelpers.cssValueFromDeclarations([ { name: 'background-image', value: 'url(https://example.com/x.png)' } ], 'color: blue;'))
+      .toBe('background-image: url(https://example.com/x.png);');
   });
 
   test('rows without a property name are dropped, an empty list clears the value', () => {

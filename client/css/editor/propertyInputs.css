@@ -1569,6 +1569,11 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   margin-bottom: 4px;
 }
 
+.editorModule .pileHelp.warning {
+  opacity: 1;
+  color: #cc7722;
+}
+
 .editorModule .gridEntry {
   border: 1px solid var(--backgroundHighlightColor1);
   border-radius: 6px;

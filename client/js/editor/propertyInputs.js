@@ -445,7 +445,10 @@ class PropertyInput {
   getValue() {
     if(this.options.getValue)
       return this.options.getValue();
-    const value = this.widget.get(this.options.property);
+    // widgetOwnValue, not get(): setValue writes the widget's own property, and
+    // a basic widget resolves get() through its shown face - so reading get()
+    // would show a face's value in an input that overwrites the widget's
+    const value = widgetOwnValue(this.widget, this.options.property);
     return value === undefined ? null : value;
   }
 

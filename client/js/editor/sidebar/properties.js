@@ -320,6 +320,13 @@ function activeFaceIndex(widget) {
   return Number.isInteger(value) && value >= 0 ? value : 0;
 }
 
+// Whether a widget is still part of the room. A widget can remove itself while
+// it is being edited (a pile does as soon as it holds one card) - writing to it
+// afterwards would make the server re-create it as a typeless widget.
+function widgetStillExists(widget) {
+  return !!widget && !widget.isBeingRemoved && widgets.get(widget.id) === widget;
+}
+
 // The widget's own value for a property. BasicWidget.get() resolves everything
 // except faces/activeFace through the shown face's overrides, so an input that
 // writes the widget's property has to read it this way - otherwise it shows a
@@ -574,16 +581,23 @@ function cssDeclarationList(value) {
   return [];
 }
 
-// Declarations switched off with their checkbox are kept out of the widget but
-// remembered while it stays selected, at the position they were switched off.
-// One that is set again in the meantime (by a color picker, another player or
-// an undo) is dropped rather than shown twice.
-function cssDeclarationsWithDisabled(declarations, disabled) {
+// Rows that are not part of the widget's value: the ones switched off with
+// their checkbox, and the ones that have a name but no value yet - an empty
+// declaration is invalid css, so it stays a row here instead of being written
+// into the game. Both are remembered while the widget stays selected, at the
+// position they were left in. One that is set again in the meantime (by a color
+// picker, another player or an undo) is dropped rather than shown twice.
+function cssDeclarationsWithDisabled(declarations, disabled, pending) {
   const merged = declarations.map(declaration=>({ name: declaration.name, value: declaration.value, disabled: false }));
   const present = new Set(merged.map(declaration=>String(declaration.name).trim()));
-  for(const entry of (disabled || []).slice().sort((a, b)=>a.index-b.index))
-    if(!present.has(String(entry.name).trim()))
-      merged.splice(Math.max(0, Math.min(entry.index, merged.length)), 0, { name: entry.name, value: entry.value, disabled: true });
+  const extra = (disabled || []).map(entry=>Object.assign({ disabled: true }, entry))
+    .concat((pending || []).map(entry=>Object.assign({ disabled: false }, entry)));
+  for(const entry of extra.sort((a, b)=>a.index-b.index)) {
+    if(present.has(String(entry.name).trim()))
+      continue;
+    present.add(String(entry.name).trim());
+    merged.splice(Math.max(0, Math.min(entry.index, merged.length)), 0, { name: entry.name, value: entry.value, disabled: entry.disabled });
+  }
   return merged;
 }
 
@@ -594,7 +608,9 @@ function cssValueFromDeclarations(declarations, previousValue) {
   const entries = declarations.filter(declaration=>String(declaration.name).trim() !== '');
   if(!entries.length)
     return null;
-  const splittable = !entries.some(declaration=>/[;:]/.test(String(declaration.value)) || /[;:{}]/.test(String(declaration.name)));
+  // cssStringToObject splits a declaration at its first ":", so a value may
+  // well contain one (a url) - only a ";" in it really breaks the string form
+  const splittable = !entries.some(declaration=>/;/.test(String(declaration.value)) || /[;:{}]/.test(String(declaration.name)));
   // an empty string is the default of the css properties, not a css written as
   // a string - the first declaration of a widget gets the object form the rest
   // of the editor writes
@@ -630,9 +646,31 @@ function cssColorHasAlpha(value) {
   const text = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
   if(text.match(/^#([0-9a-f]{4}|[0-9a-f]{8})$/))
     return true;
-  if(text.match(/^(rgba|hsla)\(/) || text.match(/^(rgb|hsl)\([^()]*\/[^()]*\)$/))
+  if(text.match(/^(rgba|hsla)\(/))
+    return true;
+  // the modern syntax puts the alpha behind a slash, in every color function
+  if(text.match(/^[a-z]+\([^()]*\/[^()]*\)$/))
     return true;
   return text == 'transparent' || text == 'currentcolor';
+}
+
+// The hex an <input type="color"> would have to show this color as, or null
+// when the browser cannot reduce it to one - toHex answers black both for a
+// black color and for everything it fails to parse (a modern color space like
+// oklch, for instance), and editing such a row would silently turn it black.
+function cssColorHexValue(value) {
+  if(typeof toHex != 'function' || typeof document == 'undefined')
+    return null;
+  const hex = toHex(value);
+  if(hex != '#000000')
+    return hex;
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#ffffff';
+  context.fillStyle = value;
+  const isBlack = context.fillStyle == '#000000';
+  canvas.remove();
+  return isBlack ? hex : null;
 }
 
 // Declarations the browser does not understand are marked, like devtools does.
@@ -770,7 +808,7 @@ const editorPropertyHints = {
   dropShadow: 'Show a visual shadow while a movable widget is over this holder.',
   alignChildren: 'Snap dropped widgets to the holder offsets instead of leaving them where they were dropped.',
   preventPiles: 'Keep cards in this holder separate instead of combining overlapping cards into piles.',
-  pileSnapRange: 'How close in pixels another card or pile has to be dropped for it to join this pile.',
+  pileSnapRange: 'How close in pixels this pile has to be dropped to another pile or card to combine with it. A card dropped onto this pile uses its own snap range instead, which comes from the pile template of its deck.',
   handleCSS: 'Custom CSS declarations for the handle badge of the pile.',
   childrenPerOwner: 'Keep a separate set of held widgets for each player.',
   dropOffsetX: 'Horizontal starting position for widgets aligned inside the holder.',
@@ -989,6 +1027,9 @@ class PropertiesModule extends SidebarModule {
     // turning one off never leaves anything unusable behind in the game)
     this.cssTextModes = new Set();
     this.cssDisabledDeclarations = new Map();
+    // declarations that have a name but no value yet - not valid css, so they
+    // are rows here rather than junk in the game state
+    this.cssPendingDeclarations = new Map();
     this.cssPendingFocus = null;
     // per pile: the corner its handle had before it was pinned to the top left
     this.lastPileHandlePosition = new Map();
@@ -1284,14 +1325,18 @@ class PropertiesModule extends SidebarModule {
   inputValueUpdated(widget, property, value) {
     const newValue = typeof value === 'undefined' ? null : value;
     if(widget.isMulti) {
+      const targets = widget.widgets.filter(widgetStillExists);
+      if(!targets.length)
+        return;
       batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${widget.widgets.length} widgets in editor`);
-      for(const w of widget.widgets)
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${targets.length} widgets in editor`);
+      for(const w of targets)
         w.set(property, newValue);
       batchEnd();
       return;
     }
-    widget.set(property, newValue);
+    if(widgetStillExists(widget))
+      widget.set(property, newValue);
   }
 
   // like inputValueUpdated, but computes the new value from each widget's own
@@ -1303,14 +1348,18 @@ class PropertiesModule extends SidebarModule {
     // shown face, so transforming that value into the widget's own property
     // would copy the face's value over the widget's
     if(widget.isMulti) {
+      const targets = widget.widgets.filter(widgetStillExists);
+      if(!targets.length)
+        return;
       batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${widget.widgets.length} widgets in editor`);
-      for(const w of widget.widgets)
+      setDeltaCause(`${getPlayerDetails().playerName} set ${property} on ${targets.length} widgets in editor`);
+      for(const w of targets)
         w.set(property, transform(widgetOwnValue(w, property)));
       batchEnd();
       return;
     }
-    widget.set(property, transform(widgetOwnValue(widget, property)));
+    if(widgetStillExists(widget))
+      widget.set(property, transform(widgetOwnValue(widget, property)));
   }
 
   onDeltaReceivedWhileActive(delta) {
@@ -1342,9 +1391,11 @@ class PropertiesModule extends SidebarModule {
     // the board preview belongs to the widget that was being edited
     this.clearGridPreview();
     this.clearFaceRowRefresh();
-    // switched off css declarations only live as long as their widget is
-    // selected - they are not in the game state, so nothing may outlive it
+    // switched off and half typed css declarations only live as long as their
+    // widget is selected - they are not in the game state, so nothing may
+    // outlive it
     this.cssDisabledDeclarations.clear();
+    this.cssPendingDeclarations.clear();
     this.cssPendingFocus = null;
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
@@ -3864,7 +3915,11 @@ class PropertiesModule extends SidebarModule {
       const list = div(body, 'gridEntries');
       const actions = div(body, 'gridActions');
 
-      const rebuild = _=>{
+      // renderRebuildable: every generation of the entry list registers its own
+      // grid listeners, which have to go when the next one replaces the DOM
+      let rebuildEntries = _=>{};
+      this.renderRebuildable(rebuild=>{
+        rebuildEntries = rebuild;
         list.innerHTML = '';
         actions.innerHTML = '';
         const entries = gridEntryList(widget.get('grid'));
@@ -3874,13 +3929,12 @@ class PropertiesModule extends SidebarModule {
         entries.forEach((entry, index)=>this.renderGridEntry(widget, index, entries.length, list, rebuild));
         this.renderGridAddButtons(widget, actions, entries, rebuild);
         updatePreview();
-      };
-      rebuild();
+      });
 
       // resync on undo / remote updates while the section stays open
       this.addPropertyListener(widget, 'grid', _=>{
         if(!body.contains(document.activeElement))
-          rebuild();
+          rebuildEntries();
       });
       for(const property of [ 'width', 'height', 'parent' ])
         this.addPropertyListener(widget, property, _=>updatePreview());
@@ -4067,7 +4121,11 @@ class PropertiesModule extends SidebarModule {
     const limitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
     const host = div(target, 'gridLimits');
 
-    const rebuildLimits = _=>{
+    // renderRebuildable: the four inputs listen to grid, so the ones of a
+    // discarded generation have to stop listening with it
+    let rebuildLimits = _=>{};
+    this.renderRebuildable(rebuild=>{
+      rebuildLimits = rebuild;
       host.innerHTML = '';
       if(!limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null))
         return;
@@ -4079,7 +4137,7 @@ class PropertiesModule extends SidebarModule {
       div(y, 'numberPairLabel', 'Y from/to');
       this.renderGridNumber(widget, index, 'minY', 'min', y);
       this.renderGridNumber(widget, index, 'maxY', 'max', y);
-    };
+    });
 
     new CheckboxInput(this, widget, 'Only in part of the parent', {
       listenTo: [ 'grid' ],
@@ -4093,10 +4151,9 @@ class PropertiesModule extends SidebarModule {
         } : { minX: null, maxX: null, minY: null, maxY: null });
         rebuildLimits();
       },
-      hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids.'
+      hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids. A 0 counts as "no limit" on that side.'
     }).render(target);
     target.appendChild(host);
-    rebuildLimits();
   }
 
   // Anything in a grid entry that snapToGrid() does not use as geometry is
@@ -4184,17 +4241,23 @@ class PropertiesModule extends SidebarModule {
       const stepX = +entry.x, stepY = +entry.y;
       if(!(stepX > 0) || !(stepY > 0))
         return;
-      const left = Number.isFinite(+entry.minX) ? +entry.minX : 0;
-      const top = Number.isFinite(+entry.minY) ? +entry.minY : 0;
+      // snapToGrid reads the limits as "grid.minX || -99999", so a 0 (or a
+      // missing value) is no limit at all - the overlay has to agree with that
+      // or the dots and the actual snapping disagree
+      const limitOf = value=>Number.isFinite(+value) && +value != 0 ? +value : null;
+      const minX = limitOf(entry.minX), maxX = limitOf(entry.maxX);
+      const minY = limitOf(entry.minY), maxY = limitOf(entry.maxY);
+      const left = minX !== null ? minX : 0;
+      const top = minY !== null ? minY : 0;
       // the cell lines only describe real cells for a single lattice - two of
       // them (a hex grid) would just draw a rectangular mesh over each other
       const overlay = div(container, `gridPreviewOverlay${entries.length > 1 ? ' dotsOnly' : ''}`);
       overlay.style.left = `${left}px`;
       overlay.style.top = `${top}px`;
-      if(Number.isFinite(+entry.maxX))
-        overlay.style.width = `${Math.max(0, +entry.maxX - left)}px`;
-      if(Number.isFinite(+entry.maxY))
-        overlay.style.height = `${Math.max(0, +entry.maxY - top)}px`;
+      if(maxX !== null)
+        overlay.style.width = `${Math.max(0, maxX - left)}px`;
+      if(maxY !== null)
+        overlay.style.height = `${Math.max(0, maxY - top)}px`;
       overlay.style.setProperty('--gridPreviewX', `${stepX}px`);
       overlay.style.setProperty('--gridPreviewY', `${stepY}px`);
       // a second grid (the staggered half of a hex grid) gets its own color so
@@ -4965,12 +5028,17 @@ class PropertiesModule extends SidebarModule {
         deleteButton.style.padding = '0';
         deleteButton.onclick = e => {
           e.stopPropagation();
-          const css = widget.get(property);
+          const css = widgetOwnValue(widget, property);
           const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
           delete newCss[className];
           const keys = Object.keys(newCss);
           // unwrap the nested form when only the default class remains
           const newValue = keys.length == 0 ? null : (keys.length == 1 && keys[0] == 'default' ? newCss.default : newCss);
+          // the switched off and half typed declarations of this section go
+          // with it - adding the same selector again would otherwise start out
+          // with their ghosts
+          this.cssDisabledDeclarations.delete(stateKey);
+          this.cssPendingDeclarations.delete(stateKey);
           this.inputValueUpdated(widget, property, typeof newValue === 'string' && newValue.trim() === '' ? null : newValue);
           if(widget.applyDeltaToDOM)
             widget.applyDeltaToDOM({ [property]: widget.get(property) });
@@ -4981,7 +5049,7 @@ class PropertiesModule extends SidebarModule {
     };
 
     const addClass = className => {
-      const value = widget.get(property);
+      const value = widgetOwnValue(widget, property);
       let newCss;
       if(hasNestedCSSClasses(value)) {
         if(value[className] !== undefined)
@@ -5003,7 +5071,10 @@ class PropertiesModule extends SidebarModule {
 
     const rebuild = () => {
       container.innerHTML = '';
-      const value = widget.get(property);
+      // widgetOwnValue, not get(): a basic widget resolves get() through its
+      // shown face, so a face overriding css would be rendered - and written
+      // back - as the widget's own declarations
+      const value = widgetOwnValue(widget, property);
       if(hasNestedCSSClasses(value)) {
         for(const [ className, classValue ] of Object.entries(value))
           renderClassSection(className, classValue, false);
@@ -5057,7 +5128,7 @@ class PropertiesModule extends SidebarModule {
           return;
         }
         textarea.classList.remove('inputError');
-        const css = widget.get(property);
+        const css = widgetOwnValue(widget, property);
         const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
         newCss[className] = cssStringToObject(text);
         this.inputValueUpdated(widget, property, newCss);
@@ -5090,7 +5161,7 @@ class PropertiesModule extends SidebarModule {
   renderCssDeclarationList(widget, property, className, wholeProperty, target, rebuild) {
     const stateKey = `${widget.id}:${property}:${className}`;
     const classValueOf = _=>{
-      const value = widget.get(property);
+      const value = widgetOwnValue(widget, property);
       return wholeProperty ? value : (isObjectLike(value) ? value[className] : undefined);
     };
 
@@ -5098,7 +5169,7 @@ class PropertiesModule extends SidebarModule {
       if(wholeProperty) {
         this.inputValueUpdated(widget, property, newValue);
       } else {
-        const css = widget.get(property);
+        const css = widgetOwnValue(widget, property);
         const newCss = isObjectLike(css) ? Object.assign({}, css) : {};
         newCss[className] = isObjectLike(newValue) ? newValue : cssStringToObject(String(newValue || ''));
         this.inputValueUpdated(widget, property, newCss);
@@ -5107,17 +5178,26 @@ class PropertiesModule extends SidebarModule {
         widget.applyDeltaToDOM({ [property]: widget.get(property) });
     };
 
-    const declarations = cssDeclarationsWithDisabled(cssDeclarationList(classValueOf()), this.cssDisabledDeclarations.get(stateKey));
+    const declarations = cssDeclarationsWithDisabled(cssDeclarationList(classValueOf()), this.cssDisabledDeclarations.get(stateKey), this.cssPendingDeclarations.get(stateKey));
+
+    const isEmptyValue = declaration=>String(declaration.value === null || declaration.value === undefined ? '' : declaration.value).trim() === '';
+    const remember = (map, filter)=>{
+      const kept = declarations
+        .map((declaration, index)=>({ name: declaration.name, value: declaration.value, index, disabled: declaration.disabled }))
+        .filter(filter);
+      if(kept.length)
+        map.set(stateKey, kept.map(({ name, value, index })=>({ name, value, index })));
+      else
+        map.delete(stateKey);
+    };
 
     const commit = _=>{
-      const off = declarations
-        .map((declaration, index)=>({ name: declaration.name, value: declaration.value, index, disabled: declaration.disabled }))
-        .filter(declaration=>declaration.disabled);
-      if(off.length)
-        this.cssDisabledDeclarations.set(stateKey, off.map(({ name, value, index })=>({ name, value, index })));
-      else
-        this.cssDisabledDeclarations.delete(stateKey);
-      writeClassValue(cssValueFromDeclarations(declarations.filter(declaration=>!declaration.disabled), classValueOf()));
+      remember(this.cssDisabledDeclarations, declaration=>declaration.disabled);
+      // a declaration without a value is invalid css, so a row that only has
+      // its name yet is kept here instead of writing "font-size: ;" into the
+      // game state - it becomes real as soon as it has a value
+      remember(this.cssPendingDeclarations, declaration=>!declaration.disabled && String(declaration.name).trim() !== '' && isEmptyValue(declaration));
+      writeClassValue(cssValueFromDeclarations(declarations.filter(declaration=>!declaration.disabled && !isEmptyValue(declaration)), classValueOf()));
     };
 
     const propertyNames = this.cssPropertySuggestions(widget);
@@ -5225,7 +5305,21 @@ class PropertiesModule extends SidebarModule {
         if(!pasted.length)
           return;
         event.preventDefault();
-        declarations.splice(index, 1, ...pasted.map(entry=>({ name: entry.name, value: entry.value, disabled: false })));
+        // a css value cannot hold the same property twice, so a pasted
+        // declaration another row already has updates that row instead of
+        // becoming a duplicate that cssValueFromDeclarations would drop
+        const added = [];
+        for(const entry of pasted) {
+          const entryName = String(entry.name).trim();
+          const existing = declarations.find((declaration, position)=>position != index && !declaration.disabled && String(declaration.name).trim() == entryName)
+            || added.find(declaration=>String(declaration.name).trim() == entryName);
+          if(existing)
+            existing.value = entry.value;
+          else
+            added.push({ name: entry.name, value: entry.value, disabled: false });
+        }
+        // nothing new means the paste only updated other rows - keep this one
+        declarations.splice(index, added.length ? 1 : 0, ...added);
         this.cssPendingFocus = `${stateKey}:${pasted[pasted.length-1].name}`;
         commit();
         rebuild();
@@ -5242,17 +5336,20 @@ class PropertiesModule extends SidebarModule {
       };
 
       if(cssValueIsColor(declaration.value)) {
-        if(cssColorHasAlpha(declaration.value)) {
-          // an <input type="color"> has no alpha channel and would silently
-          // make the color opaque, so this one only shows what is set
+        const hasAlpha = cssColorHasAlpha(declaration.value);
+        const hex = hasAlpha ? null : cssColorHexValue(declaration.value);
+        if(hex === null) {
+          // an <input type="color"> is a plain opaque hex: it has no alpha
+          // channel and knows no modern color space, so it would silently
+          // flatten those values - this one only shows what is set
           const swatch = div(row, 'cssDeclarationSwatch readOnly');
           swatch.style.backgroundImage = `linear-gradient(${declaration.value}, ${declaration.value})`;
-          swatch.title = `${declaration.value} - colors with transparency are edited in the value field`;
+          swatch.title = `${declaration.value} - ${hasAlpha ? 'colors with transparency are' : 'this color is'} edited in the value field`;
         } else {
           const swatch = document.createElement('input');
           swatch.type = 'color';
           swatch.className = 'cssDeclarationSwatch';
-          swatch.value = typeof toHex == 'function' ? toHex(declaration.value) : '#000000';
+          swatch.value = hex;
           swatch.title = declaration.value;
           swatch.oninput = _=>{
             declaration.value = swatch.value;
@@ -5761,6 +5858,11 @@ class PropertiesModule extends SidebarModule {
 
     const container = div(this.moduleDOM, 'basicContentBody');
 
+    // widgetOwnValue, not get(): a basic widget resolves get() through its
+    // shown face, so a face setting html would switch this section into HTML
+    // mode and write the face's html onto the widget on the first keystroke
+    const ownHTML = _=>widgetOwnValue(widget, 'html');
+
     const rebuild = () => {
       container.innerHTML = '';
 
@@ -5768,7 +5870,7 @@ class PropertiesModule extends SidebarModule {
       const toggleCheckbox = document.createElement('input');
       toggleCheckbox.type = 'checkbox';
       toggleCheckbox.id = `htmlToggle_${widget.id}`;
-      toggleCheckbox.checked = widget.get('html') !== null;
+      toggleCheckbox.checked = ownHTML() !== null;
       const toggleLabel = document.createElement('label');
       toggleLabel.htmlFor = toggleCheckbox.id;
       toggleLabel.textContent = 'Use custom HTML instead of text/icon/image';
@@ -5778,7 +5880,7 @@ class PropertiesModule extends SidebarModule {
         // session restores what was last typed (stashed below) instead of
         // always starting blank, so exploring the checkbox is non-destructive
         if(!toggleCheckbox.checked) {
-          const current = widget.get('html');
+          const current = ownHTML();
           if(typeof current == 'string' && current !== '')
             lastHtmlByWidgetId.set(widget.id, current);
         }
@@ -5789,7 +5891,7 @@ class PropertiesModule extends SidebarModule {
       toggleRow.appendChild(toggleLabel);
       propertyInfoButton(toggleRow, html(editorPropertyHints.html));
 
-      if(widget.get('html') !== null) {
+      if(ownHTML() !== null) {
         // no nullIfEmpty here: the toggle above, not an emptied field, decides
         // between HTML mode and text/icon/image - otherwise clearing the
         // textarea would set html to null and kick the user out of HTML mode
@@ -5809,7 +5911,7 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'html', () => {
       // only rebuild on a mode switch (null <-> non-null); typing in the
       // textarea itself is handled by TextInput's own listener
-      const usingHTML = widget.get('html') !== null;
+      const usingHTML = ownHTML() !== null;
       if(usingHTML != (container.querySelector('.textInput.multiline') !== null))
         rebuild();
     });
@@ -6322,7 +6424,9 @@ class PropertiesModule extends SidebarModule {
   }
 
   updateActiveFaceMarkers(widget, list, note) {
-    const activeFace = widget.get('activeFace');
+    // activeFaceIndex, not get(): a routine can leave a string in activeFace,
+    // which would match no row and count up like "Face 11"
+    const activeFace = activeFaceIndex(widget);
     for(const row of $a('.faceRow', list)) {
       const isActive = +row.dataset.face === activeFace;
       row.classList.toggle('activeFace', isActive);
@@ -6631,44 +6735,77 @@ class PropertiesModule extends SidebarModule {
   // for a deck lives in its cardDefaults - so the pile in front of you is a
   // preview of a template that is edited somewhere else entirely.
   renderPileTemplateSection(widget) {
-    const card = widget.children().find(child => child.get('type') == 'card');
-    const deck = card && widgets.get(card.get('deck'));
+    const cards = widget.children().filter(child => child.get('type') == 'card');
+    // a pile can hold cards of more than one deck, and updatePiles only lets
+    // cards form a pile when their templates are identical - so every deck
+    // involved has to get the same template, or saving would stop the cards of
+    // these decks from piling together at all
+    const decks = [ ...new Set(cards.map(card => card.get('deck'))) ]
+      .map(deckID => widgets.get(deckID))
+      .filter(deck => deck && deck.get('type') == 'deck');
 
     this.addSubHeader('Pile template');
-    div(this.moduleDOM, 'pileHelp', deck
+    div(this.moduleDOM, 'pileHelp', decks.length
       ? 'Piles come and go with the cards in them: this one disappears as soon as it holds a single card. New piles are built from the pile template of the cards\' deck, so store the settings above there to keep them.'
       : 'Piles come and go with the cards in them: a pile that holds a single card disappears. New piles are built from the "onPileCreation" template of the cards that form them.');
-    if(!deck)
+    if(!decks.length)
       return;
 
+    const deckNames = decks.map(deck => deck.id).join(', ');
+    if(decks.length > 1)
+      div(this.moduleDOM, 'pileHelp', `This pile holds cards of ${decks.length} decks (${deckNames}). Cards only pile up when their templates are identical, so saving writes the same template to all of them.`);
+
+    // cardDefaults is the last place a card looks for a property: a deck that
+    // sets onPileCreation in a card type or face template would ignore what is
+    // saved here (Deck.cardPropertyGet)
+    const overriddenDecks = decks.filter(deck => {
+      const cardTypes = deck.get('cardTypes') || {};
+      const faceTemplates = deck.get('faceTemplates') || [];
+      return Object.values(cardTypes).some(cardType => isObjectLike(cardType) && cardType.onPileCreation !== undefined)
+        || faceTemplates.some(face => isObjectLike(face) && isObjectLike(face.properties) && face.properties.onPileCreation !== undefined);
+    });
+    if(overriddenDecks.length)
+      div(this.moduleDOM, 'pileHelp warning', `${overriddenDecks.map(deck => deck.id).join(', ')} sets "onPileCreation" in a card type or face template. That wins over the deck-wide template below, so those cards keep building their piles the way they do now.`);
+
     const templateProperties = [ 'text', 'css', 'handleCSS', 'handleSize', 'handleOffset', 'handlePosition', 'pileSnapRange', 'alignChildren', 'inheritChildZ', 'borderRadius', 'classes' ];
+    const buttonText = `Save as the pile template of ${deckNames}`;
     const save = document.createElement('button');
     save.setAttribute('icon', 'content_copy');
-    save.textContent = `Save as the pile template of ${deck.id}`;
-    save.title = 'Copy the pile settings above into the deck, so every pile made from its cards looks like this one.';
+    save.textContent = buttonText;
+    save.title = `Copy the pile settings above into ${decks.length > 1 ? 'these decks' : 'the deck'}, so every pile made from ${decks.length > 1 ? 'their' : 'its'} cards looks like this one.`;
     save.onclick = _=>{
-      const cardDefaultsNow = deck.get('cardDefaults') || {};
-      // only the settings this editor curates are replaced - whatever else the
-      // template sets on a new pile (a clickRoutine, movable, ...) stays
-      const template = Object.assign({}, isObjectLike(cardDefaultsNow.onPileCreation) ? cardDefaultsNow.onPileCreation : {});
-      for(const property of templateProperties) {
-        if(widget.state[property] !== undefined)
-          template[property] = JSON.parse(JSON.stringify(widget.state[property]));
-        else
-          delete template[property];
+      batchStart();
+      for(const deck of decks) {
+        const cardDefaultsNow = deck.get('cardDefaults') || {};
+        // only the settings this editor curates are replaced - whatever else
+        // the template sets on a new pile (a clickRoutine, movable, ...) stays
+        const template = Object.assign({}, isObjectLike(cardDefaultsNow.onPileCreation) ? cardDefaultsNow.onPileCreation : {});
+        for(const property of templateProperties) {
+          // what the pile shows, not what is in its state: a pile that has no
+          // handlePosition of its own still looks like the default one, so the
+          // template has to drop the property instead of keeping an old value
+          const value = widget.get(property);
+          const defaultValue = widget.getDefaultValue(property);
+          if(JSON.stringify(value === undefined ? null : value) === JSON.stringify(defaultValue === undefined ? null : defaultValue))
+            delete template[property];
+          else
+            template[property] = JSON.parse(JSON.stringify(value));
+        }
+        this.inputValueUpdated(deck, 'cardDefaults', Object.assign({}, cardDefaultsNow, { onPileCreation: template }));
       }
-      const cardDefaults = Object.assign({}, cardDefaultsNow, { onPileCreation: template });
-      this.inputValueUpdated(deck, 'cardDefaults', cardDefaults);
-      save.textContent = `Saved to ${deck.id}`;
-      setTimeout(_=>save.textContent = `Save as the pile template of ${deck.id}`, 2000);
+      batchEnd();
+      save.textContent = `Saved to ${deckNames}`;
+      setTimeout(_=>save.textContent = buttonText, 2000);
     };
     this.moduleDOM.appendChild(save);
 
-    const open = document.createElement('button');
-    open.setAttribute('icon', 'style');
-    open.textContent = 'Open deck properties';
-    open.onclick = _=>setSelection([ deck ]);
-    this.moduleDOM.appendChild(open);
+    for(const deck of decks) {
+      const open = document.createElement('button');
+      open.setAttribute('icon', 'style');
+      open.textContent = decks.length > 1 ? `Open ${deck.id}` : 'Open deck properties';
+      open.onclick = _=>setSelection([ deck ]);
+      this.moduleDOM.appendChild(open);
+    }
   }
 
   renderForScoreboard(widget) {
@@ -7309,15 +7446,22 @@ class PropertiesModule extends SidebarModule {
   // A face row previews the flat face rather than the 3D body so it stays
   // readable at thumbnail size, scaled down to fit the box because dice can be
   // any size. pipSymbols is passed explicitly so the flat preview keeps the
-  // pip/number rendering the 3D shape would use.
+  // pip/number rendering the 3D shape would use. Like drawFacePreview, the copy
+  // is built by hand and unregistered again so a redraw per keystroke does not
+  // leave a phantom widget behind in the global registries.
   drawDiceFacePreview(widget, preview) {
     preview.innerHTML = '';
-    const dice = new Dice();
+    const dice = new Dice(facePreviewWidgetID);
     dice.renderReadonlyCopyRaw(Object.assign({}, widget.state, {
       activeFace: +preview.dataset.face,
       shape3d: false,
-      pipSymbols: this.diceUsesPips(widget)
+      pipSymbols: this.diceUsesPips(widget),
+      // the copy is not on the table, and a truthy dropTarget would register
+      // it as one for real drags (StateManaged.applyDeltaToDOM)
+      dropTarget: null
     }), preview);
+    dice.inheritFromUnregister();
+    dice.globalUpdateListenersUnregister();
 
     scalePreviewToFit(preview, preview.children[0]);
   }

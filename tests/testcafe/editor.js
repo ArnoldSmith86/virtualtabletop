@@ -179,6 +179,14 @@ test('A pile is edited through its handle, css through declaration rows', async 
     .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css') || null))()).eql('null')
     .click(Selector('#editorModules .cssDeclarationToggle').nth(0))
     .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
+
+  // a pile removes itself as soon as it holds a single card - the editor has to
+  // drop it from the selection, or the next keystroke in one of its inputs
+  // writes to a dead widget id and the server re-creates it as a ghost widget
+  await ClientFunction(() => widgets.get('card2').set('parent', null))();
+  await t
+    .expect(ClientFunction(() => widgets.has('pile'))()).eql(false)
+    .expect(Selector('#editorModules .widgetHeaderType').exists).notOk();
 });
 
 test('Create game using edit mode', async t => {
