@@ -2051,6 +2051,7 @@ export class Widget extends StateManaged {
             }
           }
           let moves = [];
+          let shadowedCollections = {};
           for (let i = 0; i < c.length; i++) {
             let source = c[i];
             let target = c[(i + a.interval) % c.length];
@@ -2067,8 +2068,11 @@ export class Widget extends StateManaged {
                 []
               );
               // the collection is named after the seat it comes from so that the
-              // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log
+              // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log.
+              // a collection of the surrounding routine that happens to use the same
+              // name is put back once the moves are done
               const collection = `hand of ${source.get('id')}`;
+              shadowedCollections[collection] = collections[collection];
               // an array of IDs is turned into a collection by widgetFilter, which
               // returns the widgets in creation order - keepOrder uses a collection
               // that is already sorted like the hand instead so the order is kept
@@ -2085,8 +2089,12 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging)
             jeLoggingRoutineOperationStart("Moves", "Moves");
           await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
-          for(const move of moves)
-            delete collections[move.collection];
+          for(const [ name, shadowed ] of Object.entries(shadowedCollections)) {
+            if(shadowed === undefined)
+              delete collections[name];
+            else
+              collections[name] = shadowed;
+          }
           if(jeRoutineLogging)
             jeLoggingRoutineOperationEnd([], variables, collections, false);
           if(jeRoutineLogging)
