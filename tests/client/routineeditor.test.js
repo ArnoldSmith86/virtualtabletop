@@ -160,7 +160,7 @@ describe('operation rendering', () => {
 
   test('a deprecated parameter gets a warning info button in both views', () => {
     for(const dom of [ renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom, renderInListView({ func: 'CANVAS', canvas: 'c1' }) ]) {
-      const warning = dom.querySelector('.routine-editor-parameter-deprecated-warning');
+      const warning = dom.querySelector('.routine-editor-parameter-warning.deprecated');
       expect(warning).not.toBeNull();
       expect(warning.previousSibling.dataset.parameter).toBe('canvas');
       warning.dispatchEvent(new Event('click'));
@@ -176,6 +176,39 @@ describe('operation rendering', () => {
     canvas.setOperationDetails({ state: {} }, { func: 'CANVAS', canvas: 'c1' }, [], []);
     expect(canvas.ignoredParameters().collection).toMatch(/deprecated canvas/);
     expect(editorForOperation({ func: 'CANVAS' }).ignoredParameters().collection).toBeUndefined();
+  });
+
+  test('the list view shows custom properties the operation does not support', () => {
+    const rendered = renderInListView({ func: 'FLIP', typo: 3, holder: 'h1' });
+    const row = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('typo'));
+    expect(row).not.toBeNull();
+    expect(row.classList.contains('routine-editor-parameter-unsupported')).toBe(true);
+    expect(row.querySelector('[data-parameter="typo"]').textContent).toBe('3');
+    const warning = row.querySelector('.routine-editor-parameter-warning.unsupported');
+    expect(warning).not.toBeNull();
+    warning.dispatchEvent(new Event('click'));
+    const popup = document.querySelector('.inline-popup');
+    expect(popup.textContent).toContain('FLIP does not support the property typo');
+    popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+  });
+
+  test('nested routines are not reported as unsupported properties', () => {
+    const properties = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.unsupportedProperties();
+    };
+    expect(properties({ func: 'IF', thenRoutine: [], elseRoutine: [] })).toEqual([]);
+    expect(properties({ func: 'FOREACH', loopRoutine: [] })).toEqual([]);
+    expect(properties({ func: 'FOREACH', loopRoutine: [], typo: 1 })).toEqual([ 'typo' ]);
+    expect(properties('// a comment')).toEqual([]);
+    expect(properties({ func: 'NOSUCHOPERATION', whatever: 1 })).toEqual([]);
+  });
+
+  test('a custom property opens as JSON so its shape survives editing', () => {
+    const editor = editorForOperation({ func: 'FLIP', typo: { a: 1 } });
+    editor.setOperationDetails({ state: {} }, { func: 'FLIP', typo: { a: 1 } }, [], []);
+    expect(editor.createPopup([ 'typo' ]) instanceof RoutineJSONPopup).toBe(true);
   });
 
   test('IF ignores the operands when a custom condition is set', () => {

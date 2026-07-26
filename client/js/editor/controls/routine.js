@@ -895,6 +895,10 @@ class RoutineOperationEditor {
     const pickerOptions = { widgetType: typedSpec && typedSpec.widgetType };
     if(parameterNames[0] == 'func')
       return new RoutineOperationPopup();
+    // a custom property has no declared type, so edit it as raw JSON - that also
+    // keeps the "use default" button, which is the way to remove it again
+    if(!spec && this.unsupportedProperties().indexOf(parameterNames[0]) != -1)
+      return new RoutineJSONPopup();
     if(parameterNames.length > 1 && spec && spec.type == 'collection')
       return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
     switch(spec && spec.type) {
@@ -1039,7 +1043,7 @@ class RoutineOperationEditor {
     else
       this.renderSentenceView(body);
 
-    this.renderDeprecationWarnings(body);
+    this.renderParameterWarnings(body);
 
     if(this.isExpandable())
       ($('.routine-editor-parameter-row', body) || body).prepend(this.renderViewToggle());
@@ -1112,6 +1116,10 @@ class RoutineOperationEditor {
       const isIgnored = Object.prototype.hasOwnProperty.call(ignored, name);
       html += `<div class="routine-editor-parameter-row${isIgnored ? ' routine-editor-parameter-ignored' : ''}"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
     }
+    // custom properties the operation does not know about are listed last: the
+    // engine ignores them, but hiding them makes a typo impossible to spot
+    for(const name of this.unsupportedProperties())
+      html += `<div class="routine-editor-parameter-row routine-editor-parameter-unsupported"><span class="routine-editor-parameter-name">${escapeHTML(name)}</span>${this.renderParameterChip(name)}</div>`;
     dom.innerHTML = html;
     // a red "!" at the end of every ignored line explains why it has no effect
     for(const row of $a('.routine-editor-parameter-row.routine-editor-parameter-ignored', dom)) {
@@ -1124,20 +1132,48 @@ class RoutineOperationEditor {
     }
   }
 
-  // an orange "!" behind every chip that stands for a deprecated parameter -
-  // in both views, because a deprecated parameter that is set must not be
-  // hidden behind the sentence/list toggle
-  renderDeprecationWarnings(dom) {
+  // a clickable "!" behind every chip whose parameter needs a word of warning:
+  // orange for a deprecated one (in both views, because a deprecated parameter
+  // that is set must not be hidden behind the sentence/list toggle) and red for
+  // a custom property the operation does not support at all
+  renderParameterWarnings(dom) {
     for(const span of $a('span[data-parameter]', dom)) {
-      const spec = this.parameterSpec(this.resolveParameter(span.dataset.parameter));
-      if(!spec || !spec.deprecated)
-        continue;
-      const warning = infoButton(null, spec.deprecated);
-      warning.classList.add('routine-editor-parameter-deprecated-warning');
-      $('.material-symbols', warning).textContent = 'warning';
-      warning.title = 'deprecated - click for details';
-      span.after(warning);
+      const name = span.dataset.parameter;
+      const spec = this.parameterSpec(this.resolveParameter(name));
+      if(spec && spec.deprecated)
+        span.after(this.parameterWarningButton('deprecated', 'warning', spec.deprecated));
+      else if(!spec && this.unsupportedProperties().indexOf(name) != -1)
+        span.after(this.parameterWarningButton('unsupported', 'error', `
+          <pre>
+          ${escapeHTML(this.func)} does not support the property ${escapeHTML(name)}.
+
+          The engine ignores it - it is most likely a typo or a leftover from an older
+          version of the game. Click the value and use "use default" to remove it.
+          </pre>
+        `));
     }
+  }
+
+  parameterWarningButton(kind, icon, infoHTML) {
+    const warning = infoButton(null, infoHTML);
+    warning.classList.add('routine-editor-parameter-warning', kind);
+    $('.material-symbols', warning).textContent = icon;
+    warning.title = `${kind} - click for details`;
+    return warning;
+  }
+
+  // nested routines are rendered by the operation editor itself, so they are
+  // neither parameters nor unsupported custom properties
+  subroutineProperties() {
+    return [];
+  }
+
+  // properties of the operation JSON that its func does not declare
+  unsupportedProperties() {
+    if(!this.operation || typeof this.operation != 'object')
+      return [];
+    const known = [ 'func', ...Object.keys(this.metadata.parameters), ...this.subroutineProperties() ];
+    return Object.keys(this.operation).filter(name=>known.indexOf(name) == -1);
   }
 
   // operations with parameters can expand from the sentence to the list view
@@ -1226,6 +1262,10 @@ class IfRoutineOperationEditor extends RoutineOperationEditor {
     return {};
   }
 
+  subroutineProperties() {
+    return [ 'thenRoutine', 'elseRoutine' ];
+  }
+
   render() {
     super.render();
     this.renderSubroutine(this.domElement, 'thenRoutine', { emptyHint: 'Add operations to run when the condition is true' });
@@ -1255,6 +1295,10 @@ class ForeachRoutineOperationEditor extends RoutineOperationEditor {
     if(parameterNames.length > 1)
       return new RoutineForeachSourcePopup();
     return super.createPopup(parameterNames);
+  }
+
+  subroutineProperties() {
+    return [ 'loopRoutine' ];
   }
 
   render() {
@@ -1353,6 +1397,11 @@ class UnknownRoutineOperationEditor extends RoutineOperationEditor {
 
   getDisplayedValue(property) {
     return JSON.stringify(this.operation);
+  }
+
+  // the whole operation is unknown, so singling out properties makes no sense
+  unsupportedProperties() {
+    return [];
   }
 
   onNewValue(values) {

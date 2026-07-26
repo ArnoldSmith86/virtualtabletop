@@ -133,19 +133,34 @@ body.edit.darkMode .routine-editor-parameter-widget {
   vertical-align: middle;
 }
 
-/* deprecated parameters stay editable but carry an info button explaining
-   what to use instead - shown in the sentence view as well as in the list */
-.routine-editor-parameter-deprecated-warning {
+/* deprecated and unsupported parameters stay editable but carry an info button
+   explaining the problem - in the sentence view as well as in the list */
+.routine-editor-parameter-warning {
   display: inline-block;
-  color: orange;
   font-size: 15px;
   cursor: pointer;
   vertical-align: middle;
   margin-left: 2px;
 }
 
-.routine-editor-parameter-deprecated-warning:hover {
+.routine-editor-parameter-warning.deprecated {
+  color: orange;
+}
+
+.routine-editor-parameter-warning.unsupported {
   color: var(--textHighlightColor3);
+}
+
+.routine-editor-parameter-warning:hover {
+  color: var(--VTTblue);
+}
+
+/* a custom property the operation does not know about: shown so it can be
+   found and removed, struck through because the engine ignores it */
+.routine-editor-parameter-unsupported .routine-editor-parameter-name,
+.routine-editor-parameter-unsupported .routine-editor-operation-parameter {
+  text-decoration: line-through;
+  opacity: 0.7;
 }
 
 /* the raw-JSON button next to the summary of an expanded operation */
