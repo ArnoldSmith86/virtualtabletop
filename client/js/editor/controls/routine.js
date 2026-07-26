@@ -13,6 +13,11 @@
 // Parameter types decide which popup opens: number, enum (with values),
 // string, json, widgets (pick widgets in the room), collection (pick widgets
 // or a collection name).
+//
+// widgetType presets the picker's type filter for parameters that almost always
+// name a widget of one type (SHUFFLE holder is a holder, TIMER timer a timer).
+// It is only the initial value of the filter dropdown - the type can be changed
+// to any other one (or to "any type") in the picker.
 const routineOperationMetadata = {
   AUDIO: {
     template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
@@ -42,7 +47,7 @@ const routineOperationMetadata = {
     template: '{func}: {mode} on {collection}[ using value {value}][ and color {color}]',
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
-      collection: { type: 'collection', default: 'DEFAULT' },
+      collection: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas' },
       value: { type: 'number', default: 1 },
       color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
@@ -74,7 +79,7 @@ const routineOperationMetadata = {
     template: '{func} widgets[ owned by {owner}] in {holder,collection} and store as {variable}',
     parameters: {
       owner: { type: 'string', default: null, display: { 'null': 'anyone' } },
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       variable: { type: 'string', default: 'COUNT' }
     },
@@ -96,7 +101,7 @@ const routineOperationMetadata = {
     template: v=>v('faceCycle') == 'random' ? '{func} {count} widgets from {holder,collection} a {faceCycle} face' : '{func} {count} widgets from {holder,collection}; cycle {faceCycle} by {face}',
     parameters: {
       count: { type: 'number', default: 'all', special: [ 'all' ] },
-      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'next' } },
       faceCycle: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
@@ -145,7 +150,7 @@ const routineOperationMetadata = {
   LABEL: {
     template: v=>v('label') != null ? '{func}: {mode} {value} to {label}' : '{func}: {mode} {value} to labels in {collection}',
     parameters: {
-      label: { type: 'widgets', default: null },
+      label: { type: 'widgets', default: null, widgetType: 'label' },
       collection: { type: 'collection', default: 'DEFAULT' },
       value: { type: 'string', default: 0 },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'append' ], default: 'set' }
@@ -156,9 +161,9 @@ const routineOperationMetadata = {
     parameters: {
       fillTo: { type: 'number', default: null },
       count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
-      from: { type: 'widgets', default: null, display: { 'null': '?' } },
+      from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
-      to: { type: 'widgets', default: null, display: { 'null': '?' } },
+      to: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } }
     },
     ignored: v=>v('fillTo') != null ? { count: 'ignored because "fill up to" is set' } : {}
@@ -167,7 +172,7 @@ const routineOperationMetadata = {
     template: '{func} {count} widgets from {from} to ({x}, {y})[; flip to face {face}]',
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
-      from: { type: 'widgets', default: null, display: { 'null': '?' } },
+      from: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 },
       face: { type: 'number', default: null, special: [ null ], display: { 'null': 'unchanged' } },
@@ -178,7 +183,7 @@ const routineOperationMetadata = {
   RECALL: {
     template: '{func} cards that belong to {holder}[; include cards in hands {owned}][, only cards in holders {inHolder}][, excluding {excludeCollection}]',
     parameters: {
-      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       owned: { type: 'enum', values: [ true, false ], default: true },
       inHolder: { type: 'enum', values: [ true, false ], default: true },
       excludeCollection: { type: 'collection', default: null },
@@ -195,7 +200,7 @@ const routineOperationMetadata = {
     template: v=>v('mode') == 'set' ? '{func} {count} widgets in {holder,collection}; {mode} to {angle} degrees' : '{func} {count} widgets in {holder,collection}; {mode} {angle} degrees',
     parameters: {
       count: { type: 'number', default: 1, special: [ 'all' ] },
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       angle: { type: 'number', default: 90, special: [ 45, 60, 90, 135, 180 ] },
       mode: { type: 'enum', values: [ 'set', 'add' ], default: 'add' }
@@ -205,7 +210,7 @@ const routineOperationMetadata = {
     template: '{func}: get {property} in {seats}[; for round {round}][; use as {mode}][ with multiplier {value}]',
     parameters: {
       property: { type: 'string', default: 'score' },
-      seats: { type: 'widgets', default: null, display: { 'null': 'every seat' } },
+      seats: { type: 'widgets', default: null, display: { 'null': 'every seat' }, widgetType: 'seat' },
       round: { type: 'number', default: null, special: [ null ], display: { 'null': 'new round' } },
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec' ], default: 'set' },
       value: { type: 'number', default: null, special: [ null ] }
@@ -247,7 +252,7 @@ const routineOperationMetadata = {
       return '{func} {holder,collection}'; // true random
     },
     parameters: {
-      holder: { type: 'widgets', default: null, display: { 'null': '?' } },
+      holder: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
       modeValue: { type: 'number', default: 1 }
@@ -256,7 +261,7 @@ const routineOperationMetadata = {
   SORT: {
     template: '{func} {holder,collection} by {key}[; reverse {reverse}]',
     parameters: {
-      holder: { type: 'widgets', default: null },
+      holder: { type: 'widgets', default: null, widgetType: 'holder' },
       collection: { type: 'collection', default: 'DEFAULT' },
       key: { type: 'json', default: 'value' },
       reverse: { type: 'enum', values: [ true, false ], default: false },
@@ -268,7 +273,7 @@ const routineOperationMetadata = {
   SWAPHANDS: {
     template: '{func} hands among players in {source}[, interval {interval}][, direction {direction}]',
     parameters: {
-      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' } },
+      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' }, widgetType: 'seat' },
       interval: { type: 'number', default: 1 },
       direction: { type: 'enum', values: [ 'forward', 'backward', 'random' ], default: 'forward' }
     }
@@ -284,8 +289,8 @@ const routineOperationMetadata = {
       return `{func}: {mode} ${target}`; // pause/start/toggle/reset ignore the value
     },
     parameters: {
-      timer: { type: 'widgets', default: null },
-      collection: { type: 'collection', default: 'DEFAULT' },
+      timer: { type: 'widgets', default: null, widgetType: 'timer' },
+      collection: { type: 'collection', default: 'DEFAULT', widgetType: 'timer' },
       mode: { type: 'enum', values: [ 'pause', 'start', 'toggle', 'set', 'dec', 'inc', 'reset' ], default: 'toggle' },
       value: { type: 'number', default: 0, special: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' },
       seconds: { type: 'number', default: 0 }
@@ -309,9 +314,9 @@ const routineOperationMetadata = {
       return '{func} {turnCycle} by {turn}'; // forward / backward
     },
     parameters: {
-      turn: { type: 'number', default: 1, special: [ 'first', 'last' ], textHint: 'id of a seat (used with turnCycle seat)' },
+      turn: { type: 'number', default: 1, special: [ 'first', 'last' ], textHint: 'id of a seat (used with turnCycle seat)', widgetType: 'seat' },
       turnCycle: { type: 'enum', values: [ 'forward', 'backward', 'random', 'position', 'seat' ], default: 'forward' },
-      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' } },
+      source: { type: 'collection', default: 'all', display: { 'all': 'all seats' }, widgetType: 'seat' },
       collection: { type: 'collection', default: 'TURN' }
     },
     definesCollection: 'collection'
@@ -870,15 +875,19 @@ class RoutineOperationEditor {
 
   createPopup(parameterNames) {
     const spec = this.parameterSpec(parameterNames[parameterNames.length-1]);
+    // a chip can stand for alternative parameters ({holder,collection}), so the
+    // type preset of any of them applies to the picker the chip opens
+    const typedSpec = parameterNames.map(name=>this.parameterSpec(name)).find(s=>s && s.widgetType);
+    const pickerOptions = { widgetType: typedSpec && typedSpec.widgetType };
     if(parameterNames[0] == 'func')
       return new RoutineOperationPopup();
     if(parameterNames.length > 1 && spec && spec.type == 'collection')
-      return new RoutineHoldersOrCollectionSourcePopup();
+      return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
     switch(spec && spec.type) {
-      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint });
+      case 'number':     return new RoutineNumberPopup({ specialValues: spec.special, textHint: spec.textHint, widgetType: pickerOptions.widgetType });
       case 'enum':       return new RoutineEnumPopup({ values: spec.values });
-      case 'widgets':    return new RoutineWidgetIDPopup();
-      case 'collection': return new RoutineHoldersOrCollectionSourcePopup();
+      case 'widgets':    return new RoutineWidgetIDPopup(pickerOptions);
+      case 'collection': return new RoutineHoldersOrCollectionSourcePopup(pickerOptions);
       case 'json':       return new RoutineJSONPopup();
       case 'color':      return new RoutineColorPopup();
       case 'icon':       return new RoutineIconPopup();
