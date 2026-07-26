@@ -595,7 +595,10 @@ function cssValueFromDeclarations(declarations, previousValue) {
   if(!entries.length)
     return null;
   const splittable = !entries.some(declaration=>/[;:]/.test(String(declaration.value)) || /[;:{}]/.test(String(declaration.name)));
-  if(typeof previousValue === 'string' && splittable)
+  // an empty string is the default of the css properties, not a css written as
+  // a string - the first declaration of a widget gets the object form the rest
+  // of the editor writes
+  if(typeof previousValue === 'string' && previousValue.trim() && splittable)
     return entries.map(declaration=>`${String(declaration.name).trim()}: ${String(declaration.value).trim()};`).join(' ');
   const out = {};
   for(const declaration of entries)

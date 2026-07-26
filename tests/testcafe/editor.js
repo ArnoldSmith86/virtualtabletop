@@ -143,6 +143,44 @@ test('Space does not interrupt an active edit-mode widget drag', async t => {
   await t.expect(result).eql({ panDelta: 0, spacePanArmed: false, spacePanActive: false, wasDraggingBeforeSpace: true, widgetDragging: null, widgetMoved: true });
 });
 
+test('A pile is edited through its handle, css through declaration rows', async t => {
+  await setRoomState({
+    deck:  { id: 'deck', type: 'deck', cardTypes: { a: {} }, faceTemplates: [ { objects: [] } ] },
+    pile:  { id: 'pile', type: 'pile', x: 300, y: 200, width: 103, height: 160 },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' },
+    card2: { id: 'card2', type: 'card', deck: 'deck', cardType: 'a', parent: 'pile' }
+  });
+  await ClientFunction(prepareClient)();
+  await setName(t);
+
+  // the handle is the only part of a pile the cards do not cover
+  await t
+    .click('#editButton')
+    .click('#editorSidebar [icon=tune]')
+    .click(Selector('#w_pile .handle'))
+    .expect(Selector('.widgetHeaderType').innerText).contains('Pile')
+    .typeText('.textInput input', 'chips', { replace: true })
+    .expect(ClientFunction(() => widgets.get('pile').get('text'))()).eql('chips');
+
+  // the handle colors are written into handleCSS, not into css
+  await t
+    .click(Selector('#editorModules .collapsibleHeader').withText('CSS'))
+    .click(Selector('#editorModules .cssDeclarationAddRow input'))
+    .typeText(Selector('#editorModules .cssDeclarationAddRow input'), 'opacity')
+    .pressKey('enter')
+    .typeText(Selector('#editorModules .cssDeclarationValue').nth(0), '0.5')
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
+
+  // switching a declaration off takes it out of the widget, switching it back
+  // on restores it
+  await t
+    .click(Selector('#editorModules .cssDeclarationToggle').nth(0))
+    // unset css falls back to the default of the property, an empty string
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css') || null))()).eql('null')
+    .click(Selector('#editorModules .cssDeclarationToggle').nth(0))
+    .expect(ClientFunction(() => JSON.stringify(widgets.get('pile').get('css')))()).eql('{"opacity":"0.5"}');
+});
+
 test('Create game using edit mode', async t => {
   console.log("USERAGENT: " + t.browser.userAgent);
   await t.resizeWindow(1280, 800);

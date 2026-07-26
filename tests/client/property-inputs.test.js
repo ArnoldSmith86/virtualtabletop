@@ -161,6 +161,8 @@ describe('css declaration rows', () => {
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], 'color: blue;')).toBe('color: red;');
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], { color: 'blue' })).toEqual({ color: 'red' });
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], null)).toEqual({ color: 'red' });
+    // "" is the default of the css properties, not a css written as a string
+    expect(cssHelpers.cssValueFromDeclarations([ { name: 'color', value: 'red' } ], '')).toEqual({ color: 'red' });
     // a value with a ":" or ";" in it would not survive the string form
     expect(cssHelpers.cssValueFromDeclarations([ { name: 'background-image', value: 'url(data:image/svg+xml;base64,AAA)' } ], 'color: blue;'))
       .toEqual({ 'background-image': 'url(data:image/svg+xml;base64,AAA)' });
