@@ -575,11 +575,15 @@ function cssDeclarationList(value) {
 }
 
 // Declarations switched off with their checkbox are kept out of the widget but
-// remembered for the editing session, at the position they were switched off.
+// remembered while it stays selected, at the position they were switched off.
+// One that is set again in the meantime (by a color picker, another player or
+// an undo) is dropped rather than shown twice.
 function cssDeclarationsWithDisabled(declarations, disabled) {
   const merged = declarations.map(declaration=>({ name: declaration.name, value: declaration.value, disabled: false }));
+  const present = new Set(merged.map(declaration=>String(declaration.name).trim()));
   for(const entry of (disabled || []).slice().sort((a, b)=>a.index-b.index))
-    merged.splice(Math.max(0, Math.min(entry.index, merged.length)), 0, { name: entry.name, value: entry.value, disabled: true });
+    if(!present.has(String(entry.name).trim()))
+      merged.splice(Math.max(0, Math.min(entry.index, merged.length)), 0, { name: entry.name, value: entry.value, disabled: true });
   return merged;
 }
 
@@ -617,14 +621,30 @@ function cssValueIsColor(value) {
   return cssNamedColors.indexOf(text) != -1;
 }
 
-// Declarations the browser does not understand are marked, like devtools does.
-// Custom properties, interpolated widget properties and asset URLs are not
-// judged - the engine rewrites those before they reach the browser.
-function cssDeclarationIsValid(name, value) {
-  const property = String(name || '').trim();
-  const declarationValue = String(value === null || value === undefined ? '' : value).trim();
-  if(!property || !declarationValue || property.startsWith('--') || declarationValue.includes('${') || declarationValue.includes('/assets/'))
+// colors an <input type="color"> cannot represent, so the row shows them
+// instead of offering to edit (and silently flatten) them
+function cssColorHasAlpha(value) {
+  const text = String(value === null || value === undefined ? '' : value).trim().toLowerCase();
+  if(text.match(/^#([0-9a-f]{4}|[0-9a-f]{8})$/))
     return true;
+  if(text.match(/^(rgba|hsla)\(/) || text.match(/^(rgb|hsl)\([^()]*\/[^()]*\)$/))
+    return true;
+  return text == 'transparent' || text == 'currentcolor';
+}
+
+// Declarations the browser does not understand are marked, like devtools does.
+// Custom properties and asset URLs are not judged; ${PROPERTY ...} only counts
+// as valid in the css property, the only one the engine interpolates
+// (cssReplaceProperties in widget.js) - handleCSS and friends reach the DOM
+// as they are.
+function cssDeclarationIsValid(name, value, interpolates) {
+  const property = String(name || '').trim();
+  // !important is part of a declaration, not of the value CSS.supports() takes
+  const declarationValue = String(value === null || value === undefined ? '' : value).trim().replace(/\s*!\s*important$/i, '');
+  if(!property || !declarationValue || property.startsWith('--') || declarationValue.includes('/assets/'))
+    return true;
+  if(declarationValue.includes('${'))
+    return !!interpolates;
   if(typeof CSS === 'undefined' || typeof CSS.supports != 'function')
     return true;
   return CSS.supports(property, declarationValue);
@@ -957,6 +977,8 @@ class PropertiesModule extends SidebarModule {
     this.cssTextModes = new Set();
     this.cssDisabledDeclarations = new Map();
     this.cssPendingFocus = null;
+    // per pile: the corner its handle had before it was pinned to the top left
+    this.lastPileHandlePosition = new Map();
     this.sizeRatioLocks = new WeakMap();
   }
 
@@ -1307,6 +1329,10 @@ class PropertiesModule extends SidebarModule {
     // the board preview belongs to the widget that was being edited
     this.clearGridPreview();
     this.clearFaceRowRefresh();
+    // switched off css declarations only live as long as their widget is
+    // selected - they are not in the game state, so nothing may outlive it
+    this.cssDisabledDeclarations.clear();
+    this.cssPendingFocus = null;
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -3961,32 +3987,51 @@ class PropertiesModule extends SidebarModule {
 
   // 3x3 picker for alignX/alignY: which point of the widget lands on the grid.
   renderGridAnchor(widget, index, target) {
+    const positions = [ 0, 0.5, 1 ];
+    return this.renderAnchorPicker(target, {
+      label: 'Snap point',
+      hint: 'The point of the widget box that lands on a grid line. Top left is what the engine uses unless you change it; "More options" can set a value between these nine.',
+      onPick: (row, column)=>this.updateGridEntry(widget, index, { alignX: positions[column] || null, alignY: positions[row] || null }),
+      listen: update=>this.addPropertyListener(widget, 'grid', _=>update({
+        row: positions.indexOf(+this.gridEntryValue(widget, index, 'alignY') || 0),
+        column: positions.indexOf(+this.gridEntryValue(widget, index, 'alignX') || 0)
+      }))
+    });
+  }
+
+  // Nine buttons in a 3x3 grid, one of them active. options.listen gets an
+  // update function taking { row, column } (or null for "none of them") and is
+  // expected to call it whenever the underlying property changes.
+  renderAnchorPicker(target, options) {
+    const rowNames = [ 'top', 'middle', 'bottom' ];
+    const columnNames = [ 'left', 'center', 'right' ];
+
     const row = div(target, 'propertyInput gridAnchorRow');
     const label = document.createElement('label');
-    label.textContent = 'Snap point';
-    propertyInfoButton(label, 'The point of the widget box that lands on a grid line. Top left is what the engine uses unless you change it; "More options" can set a value between these nine.');
+    label.textContent = options.label;
+    if(options.hint)
+      propertyInfoButton(label, options.hint);
     row.appendChild(label);
 
     const anchors = div(row, 'gridAnchors');
     const buttons = [];
-    const names = { 0: 'top', 0.5: 'middle', 1: 'bottom' };
-    const namesX = { 0: 'left', 0.5: 'center', 1: 'right' };
-    for(const alignY of [ 0, 0.5, 1 ])
-      for(const alignX of [ 0, 0.5, 1 ]) {
+    for(let anchorRow = 0; anchorRow < 3; ++anchorRow)
+      for(let anchorColumn = 0; anchorColumn < 3; ++anchorColumn) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'gridAnchor';
-        button.title = `${names[alignY]} ${namesX[alignX]}`.replace(/^./, character=>character.toUpperCase());
-        button.onclick = _=>this.updateGridEntry(widget, index, { alignX: alignX || null, alignY: alignY || null });
+        button.title = `${rowNames[anchorRow]} ${columnNames[anchorColumn]}`.replace(/^./, character=>character.toUpperCase());
+        button.onclick = _=>options.onPick(anchorRow, anchorColumn);
         anchors.appendChild(button);
-        buttons.push({ button, alignX, alignY });
+        buttons.push({ button, row: anchorRow, column: anchorColumn });
       }
 
-    this.addPropertyListener(widget, 'grid', _=>{
-      const alignX = +this.gridEntryValue(widget, index, 'alignX') || 0;
-      const alignY = +this.gridEntryValue(widget, index, 'alignY') || 0;
-      for(const anchor of buttons)
-        anchor.button.classList.toggle('active', anchor.alignX == alignX && anchor.alignY == alignY);
+    options.listen(active=>{
+      for(const anchor of buttons) {
+        anchor.button.classList.toggle('active', !!active && anchor.row == active.row && anchor.column == active.column);
+        anchor.button.disabled = !!options.disabledWithoutActive && !active;
+      }
+      anchors.classList.toggle('disabled', !!options.disabledWithoutActive && !active);
     });
     return row;
   }
@@ -5049,10 +5094,11 @@ class PropertiesModule extends SidebarModule {
       writeClassValue(cssValueFromDeclarations(declarations.filter(declaration=>!declaration.disabled), classValueOf()));
     };
 
+    const propertyNames = this.cssPropertySuggestions(widget);
     const nameListID = editorDomID('cssProperties');
     const nameList = document.createElement('datalist');
     nameList.id = nameListID;
-    for(const suggestion of this.cssPropertySuggestions(widget)) {
+    for(const suggestion of propertyNames) {
       const option = document.createElement('option');
       option.value = suggestion;
       nameList.appendChild(option);
@@ -5060,6 +5106,9 @@ class PropertiesModule extends SidebarModule {
     target.appendChild(nameList);
 
     let addRow = null;
+    // a css value cannot hold the same property twice, so a name that is
+    // already in the list continues in the row that has it
+    const rowByName = new Map();
     const list = div(target, 'cssDeclarationList');
     declarations.forEach((declaration, index) => {
       const row = div(list, `cssDeclarationRow${declaration.disabled ? ' disabled' : ''}`);
@@ -5068,7 +5117,7 @@ class PropertiesModule extends SidebarModule {
       toggle.type = 'checkbox';
       toggle.className = 'cssDeclarationToggle';
       toggle.checked = !declaration.disabled;
-      toggle.title = 'Turn this declaration off without deleting it';
+      toggle.title = 'Turn this declaration off. It stays in this list while the widget is selected.';
       toggle.onchange = _=>{
         declaration.disabled = !toggle.checked;
         commit();
@@ -5089,43 +5138,71 @@ class PropertiesModule extends SidebarModule {
       value.className = 'cssDeclarationValue';
       value.value = declaration.value;
       value.placeholder = 'value';
-      const valueListID = editorDomID('cssValues');
-      const valueList = document.createElement('datalist');
-      valueList.id = valueListID;
-      for(const suggestion of cssValueSuggestions(declaration.name)) {
-        const option = document.createElement('option');
-        option.value = suggestion;
-        valueList.appendChild(option);
-      }
-      row.appendChild(valueList);
-      value.setAttribute('list', valueListID);
+      // the value suggestions depend on the property name, so they are built
+      // for the row that is actually being edited instead of for all of them
+      value.onfocus = _=>{
+        const suggestions = cssValueSuggestions(declaration.name);
+        if(value.getAttribute('list') || !suggestions.length)
+          return;
+        const valueList = document.createElement('datalist');
+        valueList.id = editorDomID('cssValues');
+        for(const suggestion of suggestions) {
+          const option = document.createElement('option');
+          option.value = suggestion;
+          valueList.appendChild(option);
+        }
+        row.appendChild(valueList);
+        value.setAttribute('list', valueList.id);
+      };
 
       const warning = document.createElement('span');
       warning.className = 'cssDeclarationWarning material-symbols';
       warning.textContent = 'warning';
       warning.title = 'The browser does not understand this declaration, so it has no effect.';
       const markValidity = _=>{
-        const valid = cssDeclarationIsValid(declaration.name, declaration.value);
+        const valid = cssDeclarationIsValid(declaration.name, declaration.value, property == 'css');
         row.classList.toggle('invalidDeclaration', !valid);
         warning.style.display = valid ? 'none' : '';
       };
       markValidity();
 
-      name.oninput = _=>{
-        // a pasted block of declarations is split up instead of becoming one
-        // unusable property name, like it would be in devtools
-        if(name.value.includes(':')) {
-          const pasted = cssDeclarationList(name.value);
-          if(pasted.length) {
-            declarations.splice(index, 1, ...pasted.map(entry=>({ name: entry.name, value: entry.value, disabled: false })));
-            commit();
-            rebuild();
-            return;
-          }
+      if(!declaration.disabled)
+        rowByName.set(String(declaration.name).trim(), value);
+
+      // committing the name per keystroke would write every prefix of it into
+      // the game state, so it waits for Enter or leaving the field
+      name.onchange = _=>{
+        const newName = name.value.trim();
+        // renaming onto another row would silently drop that row's value
+        if(newName && newName != String(declaration.name).trim() && rowByName.has(newName)) {
+          alert(`This section already sets "${newName}".`);
+          name.value = declaration.name;
+          return;
         }
+        rowByName.delete(String(declaration.name).trim());
         declaration.name = name.value;
+        rowByName.set(newName, value);
         markValidity();
         commit();
+      };
+      name.onkeydown = event=>{
+        if(event.key == 'Enter')
+          value.focus();
+      };
+      // a pasted block of declarations is split up instead of becoming one
+      // unusable property name, like it would be in devtools
+      name.onpaste = event=>{
+        const pastedText = (event.clipboardData || window.clipboardData).getData('text');
+        if(!pastedText || !pastedText.includes(':'))
+          return;
+        const pasted = cssDeclarationList(pastedText);
+        if(!pasted.length)
+          return;
+        event.preventDefault();
+        declarations.splice(index, 1, ...pasted.map(entry=>({ name: entry.name, value: entry.value, disabled: false })));
+        this.cssPendingFocus = `${stateKey}:${pasted[pasted.length-1].name}`;
+        commit();
+        rebuild();
       };
       value.oninput = _=>{
         declaration.value = value.value;
@@ -5139,17 +5216,25 @@ class PropertiesModule extends SidebarModule {
       };
 
       if(cssValueIsColor(declaration.value)) {
-        const swatch = document.createElement('input');
-        swatch.type = 'color';
-        swatch.className = 'cssDeclarationSwatch';
-        swatch.value = typeof toHex == 'function' ? toHex(declaration.value) : '#000000';
-        swatch.title = declaration.value;
-        swatch.oninput = _=>{
-          declaration.value = swatch.value;
-          value.value = swatch.value;
-          commit();
-        };
-        row.appendChild(swatch);
+        if(cssColorHasAlpha(declaration.value)) {
+          // an <input type="color"> has no alpha channel and would silently
+          // make the color opaque, so this one only shows what is set
+          const swatch = div(row, 'cssDeclarationSwatch readOnly');
+          swatch.style.backgroundImage = `linear-gradient(${declaration.value}, ${declaration.value})`;
+          swatch.title = `${declaration.value} - colors with transparency are edited in the value field`;
+        } else {
+          const swatch = document.createElement('input');
+          swatch.type = 'color';
+          swatch.className = 'cssDeclarationSwatch';
+          swatch.value = typeof toHex == 'function' ? toHex(declaration.value) : '#000000';
+          swatch.title = declaration.value;
+          swatch.oninput = _=>{
+            declaration.value = swatch.value;
+            value.value = swatch.value;
+            commit();
+          };
+          row.appendChild(swatch);
+        }
       }
 
       row.appendChild(value);
@@ -5165,7 +5250,7 @@ class PropertiesModule extends SidebarModule {
       };
       row.appendChild(remove);
 
-      if(this.cssPendingFocus == `${stateKey}:${index}`) {
+      if(this.cssPendingFocus == `${stateKey}:${declaration.name}`) {
         this.cssPendingFocus = null;
         setTimeout(_=>value.focus(), 0);
       }
@@ -5174,14 +5259,27 @@ class PropertiesModule extends SidebarModule {
     addRow = this.renderSuggestionAddRow(target, 'cssDeclarationAddRow', {
       placeholder: 'property, e.g. "font-size"',
       title: 'Add a declaration',
-      suggestions: this.cssPropertySuggestions(widget).filter(suggestion=>!declarations.some(declaration=>declaration.name == suggestion)),
+      suggestions: propertyNames.filter(suggestion=>!declarations.some(declaration=>declaration.name == suggestion)),
       onAdd: text => {
         const added = text.includes(':') ? cssDeclarationList(text) : [ { name: text, value: '' } ];
         if(!added.length)
           return false;
-        declarations.push(...added.map(entry=>({ name: entry.name, value: entry.value, disabled: false })));
-        // the name is set, so continue in the value of the first new row
-        this.cssPendingFocus = `${stateKey}:${declarations.length - added.length}`;
+        // a property that is already in the list is not added a second time -
+        // it would overwrite the existing row without saying so
+        let focusName = null;
+        for(const entry of added) {
+          const existing = declarations.find(declaration=>!declaration.disabled && String(declaration.name).trim() == String(entry.name).trim());
+          if(existing) {
+            if(entry.value)
+              existing.value = entry.value;
+          } else {
+            declarations.push({ name: entry.name, value: entry.value, disabled: false });
+          }
+          if(focusName === null)
+            focusName = entry.name;
+        }
+        // the name is set, so continue in the value of that row
+        this.cssPendingFocus = `${stateKey}:${focusName}`;
         commit();
         rebuild();
       }
@@ -6411,10 +6509,11 @@ class PropertiesModule extends SidebarModule {
     const handleColors = div(this.moduleDOM, 'colorFlexRow');
     const handlePickers = div(this.moduleDOM, 'contentMediaPickers');
     const handleGroup = { target: handlePickers, current: null };
+    // no border color: the handle has no border to color, so it would need a
+    // width and a style as well - those are one CSS section below
     for(const color of [
       { label: 'Text', key: 'color', labelIcon: 'format_color_text' },
-      { label: 'Background', key: 'background', labelIcon: 'format_color_fill' },
-      { label: 'Border', key: 'border-color', labelIcon: 'border_color' }
+      { label: 'Background', key: 'background', labelIcon: 'format_color_fill' }
     ])
       new ColorInput(this, widget, color.label, cssValueOptions(this, widget, color.key, 'handleCSS', 'default', {
         pickerGroup: handleGroup,
@@ -6430,57 +6529,40 @@ class PropertiesModule extends SidebarModule {
   }
 
   // handlePosition is a free string the pile matches "bottom"/"middle" (y) and
-  // "right"/"center" (x) in, plus "static" for "never flip at the board edge"
+  // "right"/"center" (x) in, plus "static", which pins the handle to the top
+  // left corner and never moves it
   renderPileHandlePosition(widget) {
     const rows = [ 'top', 'middle', 'bottom' ];
     const columns = [ 'left', 'center', 'right' ];
     const positionOf = value => {
       const text = String(value);
+      if(text == 'static')
+        return null;
       return {
-        row: text.match(/middle/) ? 'middle' : (text.match(/bottom/) ? 'bottom' : 'top'),
-        column: text.match(/center/) ? 'center' : (text.match(/right/) ? 'right' : 'left')
+        row: text.match(/middle/) ? 1 : (text.match(/bottom/) ? 2 : 0),
+        column: text.match(/center/) ? 1 : (text.match(/right/) ? 2 : 0)
       };
     };
 
-    const row = div(this.moduleDOM, 'propertyInput gridAnchorRow');
-    const label = document.createElement('label');
-    label.textContent = 'Position';
-    propertyInfoButton(label, 'Corner of the pile the handle sits in. Close to the edge of the board the pile flips the handle to the opposite side so it stays reachable - "Fixed position" turns that off.');
-    row.appendChild(label);
-
-    const anchors = div(row, 'gridAnchors');
-    const buttons = [];
-    for(const anchorRow of rows)
-      for(const anchorColumn of columns) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'gridAnchor';
-        button.title = `${anchorRow} ${anchorColumn}`.replace(/^./, character=>character.toUpperCase());
-        button.onclick = _=>this.inputValueUpdated(widget, 'handlePosition', `${anchorRow} ${anchorColumn}`);
-        anchors.appendChild(button);
-        buttons.push({ button, row: anchorRow, column: anchorColumn });
-      }
-
-    this.addPropertyListener(widget, 'handlePosition', w=>{
-      const value = w.get('handlePosition');
-      const isStatic = String(value) == 'static';
-      const active = positionOf(value);
-      for(const anchor of buttons)
-        anchor.button.classList.toggle('active', !isStatic && anchor.row == active.row && anchor.column == active.column);
-      anchors.classList.toggle('disabled', isStatic);
+    this.renderAnchorPicker(this.moduleDOM, {
+      label: 'Position',
+      hint: 'Corner of the pile the handle sits in. Close to the edge of the board the pile flips the handle to the opposite side so it stays reachable.',
+      disabledWithoutActive: true,
+      onPick: (row, column)=>this.inputValueUpdated(widget, 'handlePosition', `${rows[row]} ${columns[column]}`),
+      listen: update=>this.addPropertyListener(widget, 'handlePosition', w=>update(positionOf(w.get('handlePosition'))))
     });
 
-    new CheckboxInput(this, widget, 'Fixed position', {
+    new CheckboxInput(this, widget, 'Fixed in the top left corner', {
       listenTo: [ 'handlePosition' ],
       getValue: _=>String(widget.get('handlePosition')) == 'static',
-      // "static" drops the flipping and with it the position, so going back
-      // needs a corner again - keep the last one of this editing session
+      // "static" drops the position along with the flipping, so going back
+      // needs a corner again - remember this widget's last one
       setValue: value=>{
         if(value)
-          this.lastPileHandlePosition = String(widget.get('handlePosition'));
-        this.inputValueUpdated(widget, 'handlePosition', value ? 'static' : (this.lastPileHandlePosition || 'top right'));
+          this.lastPileHandlePosition.set(widget.id, String(widget.get('handlePosition')));
+        this.inputValueUpdated(widget, 'handlePosition', value ? 'static' : (this.lastPileHandlePosition.get(widget.id) || 'top right'));
       },
-      hint: 'Always keep the handle in the top left corner instead of moving it inward when the pile is at the edge of the board.'
+      hint: 'Pin the handle to the top left corner of the pile: it stays there even at the edge of the board, where the handle would otherwise move inward to stay reachable.'
     }).render(this.moduleDOM);
   }
 
@@ -6494,16 +6576,17 @@ class PropertiesModule extends SidebarModule {
       hint: 'Use a 40 pixel handle, halved on piles smaller than 50 pixels.'
     }).render(sizeRow);
 
+    // no nullIfEmpty: clearing the field would switch back to the automatic
+    // size and hide the input the user is typing in
     const sizeInput = new NumberInput(this, widget, 'Size (px)', {
       listenTo: [ 'handleSize' ],
       min: 1,
       step: 1,
-      nullIfEmpty: true,
       getValue: _=>{
         const size = widget.get('handleSize');
         return size == 'auto' ? null : size;
       },
-      setValue: value=>this.inputValueUpdated(widget, 'handleSize', value === null || value === '' ? 'auto' : value)
+      setValue: value=>this.inputValueUpdated(widget, 'handleSize', value)
     });
     sizeInput.render(sizeRow);
     this.addPropertyListener(widget, 'handleSize', w=>sizeInput.dom.style.display = w.get('handleSize') == 'auto' ? 'none' : '');
@@ -6511,6 +6594,9 @@ class PropertiesModule extends SidebarModule {
     new NumberInput(this, widget, 'Corner offset', {
       property: 'handleOffset',
       step: 1,
+      // the pile builds "--phPosition:-<offset>px", so a negative offset is
+      // not a css value at all and the handle loses its position
+      min: 0,
       hint: 'How far the handle sticks out over the corner of the pile, in pixels.'
     }).render(this.moduleDOM);
   }
@@ -6535,11 +6621,17 @@ class PropertiesModule extends SidebarModule {
     save.textContent = `Save as the pile template of ${deck.id}`;
     save.title = 'Copy the pile settings above into the deck, so every pile made from its cards looks like this one.';
     save.onclick = _=>{
-      const template = {};
-      for(const property of templateProperties)
+      const cardDefaultsNow = deck.get('cardDefaults') || {};
+      // only the settings this editor curates are replaced - whatever else the
+      // template sets on a new pile (a clickRoutine, movable, ...) stays
+      const template = Object.assign({}, isObjectLike(cardDefaultsNow.onPileCreation) ? cardDefaultsNow.onPileCreation : {});
+      for(const property of templateProperties) {
         if(widget.state[property] !== undefined)
           template[property] = JSON.parse(JSON.stringify(widget.state[property]));
-      const cardDefaults = Object.assign({}, deck.get('cardDefaults'), { onPileCreation: template });
+        else
+          delete template[property];
+      }
+      const cardDefaults = Object.assign({}, cardDefaultsNow, { onPileCreation: template });
       this.inputValueUpdated(deck, 'cardDefaults', cardDefaults);
       save.textContent = `Saved to ${deck.id}`;
       setTimeout(_=>save.textContent = `Save as the pile template of ${deck.id}`, 2000);

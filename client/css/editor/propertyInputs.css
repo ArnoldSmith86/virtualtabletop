@@ -724,13 +724,22 @@
   opacity: 0.6;
 }
 
-.editorModule .cssDeclarationRow input.cssDeclarationSwatch {
+.editorModule .cssDeclarationRow .cssDeclarationSwatch {
   flex: 0 0 auto;
   width: 20px;
   height: 20px;
   padding: 0;
   border: 1px solid var(--backgroundHighlightColor1);
   background: none;
+  box-sizing: border-box;
+}
+
+/* a color with transparency: shown over white (the row sets the color itself
+   as a background image), but not editable through the color input, which
+   would drop its alpha channel */
+.editorModule .cssDeclarationRow .cssDeclarationSwatch.readOnly {
+  cursor: help;
+  background-color: #fff;
 }
 
 .editorModule .cssDeclarationRow button {

@@ -61,6 +61,8 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     cssDeclarationsWithDisabled,
     cssValueFromDeclarations,
     cssValueIsColor,
+    cssColorHasAlpha,
+    cssDeclarationIsValid,
     cssValueSuggestions,
     cssPropertySuggestions: PropertiesModule.prototype.cssPropertySuggestions,
     typeSections: PropertiesModule.prototype.typeSections,
@@ -127,6 +129,32 @@ describe('css declaration rows', () => {
       { name: 'color', value: 'red', disabled: true }
     ]);
     expect(cssHelpers.cssDeclarationsWithDisabled(declarations, undefined).every(d => d.disabled === false)).toBe(true);
+    // a declaration set again meanwhile (color picker, other player, undo) is
+    // not shown a second time as a switched off ghost
+    expect(cssHelpers.cssDeclarationsWithDisabled(declarations, [ { name: 'color', value: 'blue', index: 0 } ])).toEqual([
+      { name: 'font-size', value: '20px', disabled: false },
+      { name: 'color', value: 'red', disabled: false }
+    ]);
+  });
+
+  test('a color the color input cannot express keeps its alpha', () => {
+    for(const value of [ '#ff880080', '#f008', 'rgba(0,0,0,0.5)', 'hsla(20,50%,50%,0.2)', 'rgb(0 0 0 / 50%)', 'transparent', 'currentcolor' ])
+      expect(cssHelpers.cssColorHasAlpha(value)).toBe(true);
+    for(const value of [ '#fff', '#ff8800', 'rgb(0,0,0)', 'red', '' ])
+      expect(cssHelpers.cssColorHasAlpha(value)).toBe(false);
+  });
+
+  test('!important, custom properties and asset urls are not flagged as unsupported', () => {
+    expect(cssHelpers.cssDeclarationIsValid('color', 'red !important', true)).toBe(true);
+    expect(cssHelpers.cssDeclarationIsValid('--wcMain', 'whatever it wants', true)).toBe(true);
+    expect(cssHelpers.cssDeclarationIsValid('background-image', 'url(/assets/-1234_567)', true)).toBe(true);
+    expect(cssHelpers.cssDeclarationIsValid('color', '', true)).toBe(true);
+  });
+
+  test('interpolated widget properties only count as valid in the css property', () => {
+    // css goes through cssReplaceProperties, handleCSS and friends do not
+    expect(cssHelpers.cssDeclarationIsValid('color', '${PROPERTY textColor}', true)).toBe(true);
+    expect(cssHelpers.cssDeclarationIsValid('color', '${PROPERTY textColor}', false)).toBe(false);
   });
 
   test('a css written as a string stays a string, but only while it can be split', () => {
