@@ -2088,6 +2088,10 @@ export class Widget extends StateManaged {
           if(jeRoutineLogging) {
           jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationSummary(`hands ${a.direction} by ${a.interval}${a.keepOrder ? ', keeping the card order' : ''}`);
+        } else if(jeRoutineLogging) {
+          jeLoggingRoutineOperationSummary('less than two seats with a player, nothing to swap');
         }
       }
 
