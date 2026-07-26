@@ -18,6 +18,10 @@
 // name a widget of one type (SHUFFLE holder is a holder, TIMER timer a timer).
 // It is only the initial value of the filter dropdown - the type can be changed
 // to any other one (or to "any type") in the picker.
+//
+// deprecated holds the explanation for a parameter the engine still supports but
+// that should not be used in new games: its chip gets an orange "!" info button
+// in both the sentence and the list view.
 const routineOperationMetadata = {
   AUDIO: {
     template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
@@ -48,11 +52,21 @@ const routineOperationMetadata = {
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       collection: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas' },
+      canvas: { type: 'widgets', default: null, widgetType: 'canvas', deprecated: `
+        <pre>
+        canvas is deprecated - please use collection instead.
+
+        It still works so old games keep running, but it silently replaces whatever collection says.
+        As collection also accepts a list of widget ids, everything canvas can do can be expressed
+        with collection - and only collection works with the collections earlier operations define.
+        </pre>
+      ` },
       value: { type: 'number', default: 1 },
       color: { type: 'color', default: '#1F5CA6' },
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 }
-    }
+    },
+    ignored: v=>v('canvas') != null ? { collection: 'ignored because the deprecated canvas parameter replaces it' } : {}
   },
   CLICK: {
     template: '{func} widgets in {collection}[ {count} time(s)][, mode {mode}]',
@@ -1025,6 +1039,8 @@ class RoutineOperationEditor {
     else
       this.renderSentenceView(body);
 
+    this.renderDeprecationWarnings(body);
+
     if(this.isExpandable())
       ($('.routine-editor-parameter-row', body) || body).prepend(this.renderViewToggle());
 
@@ -1105,6 +1121,22 @@ class RoutineOperationEditor {
       warning.textContent = 'error';
       warning.title = ignored[name];
       row.append(warning);
+    }
+  }
+
+  // an orange "!" behind every chip that stands for a deprecated parameter -
+  // in both views, because a deprecated parameter that is set must not be
+  // hidden behind the sentence/list toggle
+  renderDeprecationWarnings(dom) {
+    for(const span of $a('span[data-parameter]', dom)) {
+      const spec = this.parameterSpec(this.resolveParameter(span.dataset.parameter));
+      if(!spec || !spec.deprecated)
+        continue;
+      const warning = infoButton(null, spec.deprecated);
+      warning.classList.add('routine-editor-parameter-deprecated-warning');
+      $('.material-symbols', warning).textContent = 'warning';
+      warning.title = 'deprecated - click for details';
+      span.after(warning);
     }
   }
 

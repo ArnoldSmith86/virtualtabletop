@@ -150,6 +150,34 @@ describe('operation rendering', () => {
     expect(countRow.querySelector('.routine-editor-parameter-ignored-warning').title).toMatch(/fill up to/);
   });
 
+  test('the deprecated CANVAS canvas parameter is editable in both views', () => {
+    const sentence = renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom;
+    expect(sentence.querySelector('[data-parameter="canvas"]')).not.toBeNull();
+    const list = renderInListView({ func: 'CANVAS' });
+    const canvasRow = [...list.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('canvas'));
+    expect(canvasRow).not.toBeNull(); // available even when the operation does not set it
+  });
+
+  test('a deprecated parameter gets a warning info button in both views', () => {
+    for(const dom of [ renderOperation({ func: 'CANVAS', canvas: 'c1' }).dom, renderInListView({ func: 'CANVAS', canvas: 'c1' }) ]) {
+      const warning = dom.querySelector('.routine-editor-parameter-deprecated-warning');
+      expect(warning).not.toBeNull();
+      expect(warning.previousSibling.dataset.parameter).toBe('canvas');
+      warning.dispatchEvent(new Event('click'));
+      const popup = document.querySelector('.inline-popup');
+      expect(popup.textContent).toMatch(/deprecated/);
+      expect(popup.textContent).toMatch(/collection/);
+      popup.querySelector('.popup-close').dispatchEvent(new Event('click'));
+    }
+  });
+
+  test('CANVAS marks collection as ignored while canvas is set', () => {
+    const canvas = editorForOperation({ func: 'CANVAS', canvas: 'c1' });
+    canvas.setOperationDetails({ state: {} }, { func: 'CANVAS', canvas: 'c1' }, [], []);
+    expect(canvas.ignoredParameters().collection).toMatch(/deprecated canvas/);
+    expect(editorForOperation({ func: 'CANVAS' }).ignoredParameters().collection).toBeUndefined();
+  });
+
   test('IF ignores the operands when a custom condition is set', () => {
     const ifOp = editorForOperation({ func: 'IF', condition: '${x}', operand1: 1 });
     ifOp.setOperationDetails({ state: {} }, { func: 'IF', condition: '${x}', operand1: 1 }, [], []);
@@ -810,7 +838,7 @@ describe('widget type presets', () => {
         if(routineOperationMetadata[func].parameters[parameter].widgetType)
           presets[`${func}.${parameter}`] = routineOperationMetadata[func].parameters[parameter].widgetType;
     expect(presets).toEqual({
-      'CANVAS.collection': 'canvas',
+      'CANVAS.collection': 'canvas', 'CANVAS.canvas': 'canvas',
       'COUNT.holder': 'holder',
       'FLIP.holder': 'holder',
       'LABEL.label': 'label',

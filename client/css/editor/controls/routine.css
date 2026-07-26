@@ -133,6 +133,21 @@ body.edit.darkMode .routine-editor-parameter-widget {
   vertical-align: middle;
 }
 
+/* deprecated parameters stay editable but carry an info button explaining
+   what to use instead - shown in the sentence view as well as in the list */
+.routine-editor-parameter-deprecated-warning {
+  display: inline-block;
+  color: orange;
+  font-size: 15px;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.routine-editor-parameter-deprecated-warning:hover {
+  color: var(--textHighlightColor3);
+}
+
 /* the raw-JSON button next to the summary of an expanded operation */
 .routine-editor-operation-json {
   flex-shrink: 0;

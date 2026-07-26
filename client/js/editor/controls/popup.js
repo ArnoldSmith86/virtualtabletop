@@ -826,6 +826,7 @@ function infoButton(appendTo, infoHTML, tutorialName=null, videoFilename=null) {
       commonInfoButton(highlight, highlight.dataset.topic);
     popup.moveIntoView();
   });
+  return dom;
 }
 
 function commonInfoButton(appendTo, topicName) {
