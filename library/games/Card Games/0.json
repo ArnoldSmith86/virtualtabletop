@@ -3638,7 +3638,7 @@
       },
       "C 2J": {
         "rank": "J",
-        "rankImage": "/assets/-1936516067_36132",
+        "rankImage": "/i/cards-default/JC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
@@ -3660,7 +3660,7 @@
       },
       "C 3Q": {
         "rank": "Q",
-        "rankImage": "/assets/-359721987_40577",
+        "rankImage": "/i/cards-default/QC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
@@ -3682,7 +3682,7 @@
       },
       "C 4K": {
         "rank": "K",
-        "rankImage": "/assets/-604240792_36033",
+        "rankImage": "/i/cards-default/KC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
@@ -3941,7 +3941,7 @@
       },
       "D 2J": {
         "rank": "J",
-        "rankImage": "/assets/-696466837_31225",
+        "rankImage": "/i/cards-default/JD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "redOrBlack": "red",
         "suitColor": "#e50932",
@@ -3964,7 +3964,7 @@
       },
       "D 3Q": {
         "rank": "Q",
-        "rankImage": "/assets/-132931377_41422",
+        "rankImage": "/i/cards-default/QD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
@@ -3987,7 +3987,7 @@
       },
       "D 4K": {
         "rank": "K",
-        "rankImage": "/assets/-862690059_30988",
+        "rankImage": "/i/cards-default/KD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
@@ -4238,7 +4238,7 @@
       },
       "S 2J": {
         "rank": "J",
-        "rankImage": "/assets/2115758924_42014",
+        "rankImage": "/i/cards-default/JS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
@@ -4260,7 +4260,7 @@
       },
       "S 3Q": {
         "rank": "Q",
-        "rankImage": "/assets/1085111785_36695",
+        "rankImage": "/i/cards-default/QS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
@@ -4282,7 +4282,7 @@
       },
       "S 4K": {
         "rank": "K",
-        "rankImage": "/assets/-1882019559_61400",
+        "rankImage": "/i/cards-default/KS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
@@ -4541,7 +4541,7 @@
       },
       "H 2J": {
         "rank": "J",
-        "rankImage": "/assets/-560751544_37381",
+        "rankImage": "/i/cards-default/JH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
@@ -4564,7 +4564,7 @@
       },
       "H 3Q": {
         "rank": "Q",
-        "rankImage": "/assets/-1553973424_45799",
+        "rankImage": "/i/cards-default/QH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
@@ -4587,7 +4587,7 @@
       },
       "H 4K": {
         "rank": "K",
-        "rankImage": "/assets/-511606639_49182",
+        "rankImage": "/i/cards-default/KH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
@@ -10802,7 +10802,7 @@
       },
       "KS": {
         "rank": "K",
-        "rankImage": "/assets/-1882019559_61400",
+        "rankImage": "/i/cards-default/KS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "suit": 3,
         "sortDefault": 8,
@@ -10810,7 +10810,7 @@
       },
       "QS": {
         "rank": "Q",
-        "rankImage": "/assets/1085111785_36695",
+        "rankImage": "/i/cards-default/QS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "suit": 3,
         "sortDefault": 7,
@@ -10827,7 +10827,7 @@
       },
       "JS": {
         "rank": "J",
-        "rankImage": "/assets/2115758924_42014",
+        "rankImage": "/i/cards-default/JS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "suit": 3,
         "sortDefault": 5,
@@ -10897,7 +10897,7 @@
       },
       "KC": {
         "rank": "K",
-        "rankImage": "/assets/-604240792_36033",
+        "rankImage": "/i/cards-default/KC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "suit": 1,
         "sortDefault": 8,
@@ -10905,7 +10905,7 @@
       },
       "QC": {
         "rank": "Q",
-        "rankImage": "/assets/-359721987_40577",
+        "rankImage": "/i/cards-default/QC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "suit": 1,
         "sortDefault": 7,
@@ -10922,7 +10922,7 @@
       },
       "JC": {
         "rank": "J",
-        "rankImage": "/assets/-1936516067_36132",
+        "rankImage": "/i/cards-default/JC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "suit": 1,
         "sortDefault": 5,
@@ -11001,7 +11001,7 @@
       },
       "KH": {
         "rank": "K",
-        "rankImage": "/assets/-511606639_49182",
+        "rankImage": "/i/cards-default/KH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suit": 4,
         "suitColor": "#e50932",
@@ -11010,7 +11010,7 @@
       },
       "QH": {
         "rank": "Q",
-        "rankImage": "/assets/-1553973424_45799",
+        "rankImage": "/i/cards-default/QH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suit": 4,
         "suitColor": "#e50932",
@@ -11029,7 +11029,7 @@
       },
       "JH": {
         "rank": "J",
-        "rankImage": "/assets/-560751544_37381",
+        "rankImage": "/i/cards-default/JH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suit": 4,
         "suitColor": "#e50932",
@@ -11080,7 +11080,7 @@
       },
       "KD": {
         "rank": "K",
-        "rankImage": "/assets/-862690059_30988",
+        "rankImage": "/i/cards-default/KD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suit": 2,
         "suitColor": "#e50932",
@@ -11089,7 +11089,7 @@
       },
       "QD": {
         "rank": "Q",
-        "rankImage": "/assets/-132931377_41422",
+        "rankImage": "/i/cards-default/QD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suit": 2,
         "suitColor": "#e50932",
@@ -11109,7 +11109,7 @@
       "JD": {
         "rank": "J",
         "suitColor": "#e50932",
-        "rankImage": "/assets/-696466837_31225",
+        "rankImage": "/i/cards-default/JD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suit": 2,
         "sortDefault": 5,
@@ -31066,7 +31066,7 @@
       },
       "JC": {
         "rank": "J",
-        "rankImage": "/assets/-1936516067_36132",
+        "rankImage": "/i/cards-default/JC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "suit": 1,
         "sortDefault": 11,
@@ -31083,7 +31083,7 @@
       },
       "QC": {
         "rank": "Q",
-        "rankImage": "/assets/-359721987_40577",
+        "rankImage": "/i/cards-default/QC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "suit": 1,
         "sortDefault": 13,
@@ -31091,7 +31091,7 @@
       },
       "KC": {
         "rank": "K",
-        "rankImage": "/assets/-604240792_36033",
+        "rankImage": "/i/cards-default/KC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "suit": 1,
         "sortDefault": 14,
@@ -31224,7 +31224,7 @@
       },
       "JS": {
         "rank": "J",
-        "rankImage": "/assets/2115758924_42014",
+        "rankImage": "/i/cards-default/JS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "suit": 3,
         "sortDefault": 11,
@@ -31241,7 +31241,7 @@
       },
       "QS": {
         "rank": "Q",
-        "rankImage": "/assets/1085111785_36695",
+        "rankImage": "/i/cards-default/QS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "suit": 3,
         "sortDefault": 13,
@@ -31249,7 +31249,7 @@
       },
       "KS": {
         "rank": "K",
-        "rankImage": "/assets/-1882019559_61400",
+        "rankImage": "/i/cards-default/KS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "suit": 3,
         "sortDefault": 14,
@@ -31392,7 +31392,7 @@
       },
       "JH": {
         "rank": "J",
-        "rankImage": "/assets/-560751544_37381",
+        "rankImage": "/i/cards-default/JH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suit": 4,
         "suitColor": "#e50932",
@@ -31411,7 +31411,7 @@
       },
       "QH": {
         "rank": "Q",
-        "rankImage": "/assets/-1553973424_45799",
+        "rankImage": "/i/cards-default/QH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suit": 4,
         "suitColor": "#e50932",
@@ -31420,7 +31420,7 @@
       },
       "KH": {
         "rank": "K",
-        "rankImage": "/assets/-511606639_49182",
+        "rankImage": "/i/cards-default/KH-face.svg",
         "suitImage": "i/icons/hearts.svg",
         "suit": 4,
         "suitColor": "#e50932",
@@ -31565,7 +31565,7 @@
       "JD": {
         "rank": "J",
         "suitColor": "#e50932",
-        "rankImage": "/assets/-696466837_31225",
+        "rankImage": "/i/cards-default/JD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suit": 2,
         "sortDefault": 11,
@@ -31583,7 +31583,7 @@
       },
       "QD": {
         "rank": "Q",
-        "rankImage": "/assets/-132931377_41422",
+        "rankImage": "/i/cards-default/QD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suit": 2,
         "suitColor": "#e50932",
@@ -31592,7 +31592,7 @@
       },
       "KD": {
         "rank": "K",
-        "rankImage": "/assets/-862690059_30988",
+        "rankImage": "/i/cards-default/KD-face.svg",
         "suitImage": "i/icons/diamonds.svg",
         "suit": 2,
         "suitColor": "#e50932",
@@ -46503,7 +46503,7 @@
       },
       "C 04": {
         "rank": "J",
-        "rankImage": "/assets/-1936516067_36132",
+        "rankImage": "/i/cards-default/JC-face.svg",
         "suitImage": "i/icons/clubs.svg",
         "redOrBlack": "black",
         "suit": 1,
@@ -46513,7 +46513,7 @@
       "C 05": {
         "rank": "K",
         "suitImage": "i/icons/clubs.svg",
-        "rankImage": "/assets/-604240792_36033",
+        "rankImage": "/i/cards-default/KC-face.svg",
         "redOrBlack": "black",
         "suit": 1,
         "order": 5,
@@ -46548,7 +46548,7 @@
       "C 08": {
         "rank": "Q",
         "suitImage": "i/icons/clubs.svg",
-        "rankImage": "/assets/-359721987_40577",
+        "rankImage": "/i/cards-default/QC-face.svg",
         "redOrBlack": "black",
         "suit": 1,
         "order": 2,
@@ -46629,7 +46629,7 @@
       "D 05": {
         "rank": "J",
         "suitImage": "i/icons/diamonds.svg",
-        "rankImage": "/assets/-696466837_31225",
+        "rankImage": "/i/cards-default/JD-face.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 2,
@@ -46639,7 +46639,7 @@
       "D 06": {
         "rank": "K",
         "suitImage": "i/icons/diamonds.svg",
-        "rankImage": "/assets/-862690059_30988",
+        "rankImage": "/i/cards-default/KD-face.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 2,
@@ -46659,7 +46659,7 @@
       "D 08": {
         "rank": "Q",
         "suitImage": "i/icons/diamonds.svg",
-        "rankImage": "/assets/-132931377_41422",
+        "rankImage": "/i/cards-default/QD-face.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 2,
@@ -46721,7 +46721,7 @@
       },
       "S 04": {
         "rank": "J",
-        "rankImage": "/assets/2115758924_42014",
+        "rankImage": "/i/cards-default/JS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
@@ -46730,7 +46730,7 @@
       },
       "S 05": {
         "rank": "Q",
-        "rankImage": "/assets/1085111785_36695",
+        "rankImage": "/i/cards-default/QS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
@@ -46739,7 +46739,7 @@
       },
       "S 06": {
         "rank": "K",
-        "rankImage": "/assets/-1882019559_61400",
+        "rankImage": "/i/cards-default/KS-face.svg",
         "suitImage": "i/icons/spades.svg",
         "redOrBlack": "black",
         "suit": 3,
@@ -46828,7 +46828,7 @@
       "H 05": {
         "rank": "J",
         "suitImage": "i/icons/hearts.svg",
-        "rankImage": "/assets/-560751544_37381",
+        "rankImage": "/i/cards-default/JH-face.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
@@ -46838,7 +46838,7 @@
       "H 06": {
         "rank": "K",
         "suitImage": "i/icons/hearts.svg",
-        "rankImage": "/assets/-511606639_49182",
+        "rankImage": "/i/cards-default/KH-face.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
@@ -46858,7 +46858,7 @@
       "H 08": {
         "rank": "Q",
         "suitImage": "i/icons/hearts.svg",
-        "rankImage": "/assets/-1553973424_45799",
+        "rankImage": "/i/cards-default/QH-face.svg",
         "suitColor": "#e50932",
         "redOrBlack": "red",
         "suit": 4,
