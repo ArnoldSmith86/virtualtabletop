@@ -687,6 +687,16 @@ const commonCssValues = {
   'writing-mode': [ 'horizontal-tb', 'vertical-rl' ]
 };
 
+// what the css-like properties of a widget style, used as the header of their
+// declaration list instead of "Base widget"
+const cssPropertyTargets = {
+  backgroundCSS: 'Spinner background',
+  faceCSS: 'Dice faces',
+  handleCSS: 'Pile handle',
+  spinnerCSS: 'Spinning part',
+  valueCSS: 'Spinner value'
+};
+
 function cssValueSuggestions(name) {
   return (commonCssValues[String(name || '').trim()] || []).concat([ 'inherit', 'initial', 'unset' ]);
 }
@@ -4917,8 +4927,9 @@ class PropertiesModule extends SidebarModule {
     const renderClassSection = (className, classValue, wholeProperty) => {
       const section = div(container, 'cssClassSection');
       const stateKey = `${widget.id}:${property}:${className}`;
-      // the "default" class is the widget itself - show a friendlier label
-      const displayName = className == 'default' ? 'Base widget' : className;
+      // the "default" class is the widget itself (or, for the css properties
+      // of a sub-element, that element) - show a friendlier label
+      const displayName = className == 'default' ? (cssPropertyTargets[property] || 'Base widget') : className;
       this.renderCollapsibleSection(displayName, false, body => {
         // text the declaration rows cannot split without losing data (data
         // URIs and the like) stays a textarea, and so does a section the user
