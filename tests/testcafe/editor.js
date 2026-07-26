@@ -595,14 +595,6 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     button.click();
     return true;
   }, { dependencies: { findRow } });
-  // The deck symbol is the first strip entry; selecting it shows the card defaults in the sidebar.
-  const selectDeckTile = ClientFunction(() => {
-    const tile = document.querySelector('#deckEditorStrip .deckEditorDeckTile');
-    if(!tile)
-      return false;
-    tile.click();
-    return true;
-  });
   // Entire-face properties (border/radius/enlarge/custom) are rows only while present; add one via the section's
   // "add property" control (the first .deckEditorAddProperty). border/radius are forced to numbers on the face.
   const addFaceProperty = ClientFunction(name => {
@@ -652,8 +644,8 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   await t.expect(addFaceProperty('radius')).ok(); // radius is a row only once added
   await t.expect(setNumberField('Entire face properties', 'radius', 8)).ok();
   await t.wait(700); // let the debounced faceTemplates commit fire
-  // edit the card defaults, which live behind the deck symbol in the strip
-  await t.expect(selectDeckTile()).ok();
+  // edit the card defaults, which live on the "All Cards" tab
+  await t.click(sidebarTab('defaults'));
   await t.expect(setField('Card defaults', 'width', 120)).ok();
   await t.wait(700); // let the debounced cardDefaults commit fire
   await t.expect(clickRowButton('Card defaults', 'width', '.deckEditorDeleteProperty')).ok();

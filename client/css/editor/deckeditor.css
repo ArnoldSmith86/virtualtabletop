@@ -1050,16 +1050,22 @@ body.deckEditorPanning #deckEditorMain * {
   font-size: 16px;
 }
 
-/* Both buttons of the dynamic block lead to (or create) card-type data, so they carry its accent rather than
-   the plain blue used for everything that acts on the face object itself. */
-.deckEditorViewCardTypeBar button,
+/* The dynamic block's button creates card-type data, so it carries that accent rather than the plain blue
+   used for everything that acts on the face object itself. */
 .deckEditorAddBindingButton {
   background: var(--deckEditorScopeColor);
 }
 
-.deckEditorViewCardTypeBar button:hover,
 .deckEditorAddBindingButton:hover {
   background: var(--deckEditorScopeColorDark);
+}
+
+/* Shown instead of the column headers while the object has no bindings at all. */
+.deckEditorNoDynamicProperties {
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.75;
+  margin: 6px 5px 10px;
 }
 
 /* Shared style for the small notes under section headers (Dynamic properties intro, HTML-object hint). */
@@ -1159,9 +1165,14 @@ body.deckEditorPanning #deckEditorMain * {
   margin: 0;
 }
 
-/* Room for both the asset-picker button and the trash on the far right of a row. */
+/* Room for the asset-picker button and the trash on the far right of a row - plus the upload button on image
+   rows, which carry all three. */
 #deckEditorSidebar .deckEditorProperties .genericInput.hasAssetPicker {
   padding-right: 48px;
+}
+
+#deckEditorSidebar .deckEditorProperties .genericInput.hasAssetPicker.hasUploadButton {
+  padding-right: 72px;
 }
 
 /* Reuses the Edit Widgets tab's IconInput/ImageInput picker content (propertyInputs.css), which is scoped
@@ -1188,6 +1199,24 @@ body.deckEditorPanning #deckEditorMain * {
   background: var(--VTTblue);
   color: #fff;
 }
+
+/* The upload twin of the picker button, one slot further left, so a picture can be uploaded into the row
+   wherever an existing one can be chosen. */
+#deckEditorSidebar .deckEditorUploadButton {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  box-sizing: border-box;
+  justify-content: center;
+  background: var(--VTTblue);
+  color: #fff;
+}
+
+.deckEditorUploadButton[icon]::before,
 .deckEditorAssetPickerButton[icon]::before {
   font-size: 13px;
   width: 13px;
@@ -1206,7 +1235,9 @@ body.deckEditorPanning #deckEditorMain * {
 /* The color-swatch button: sized and positioned like the trash it sits next to (21px square, see the trash
    note above), showing the property's current color (--swatchColor, painted as a flat layer so a translucent
    or not-yet-set color lets the checkerboard below it through) behind a palette symbol marking it as the
-   color picker. The symbol's color is set inline by contrastAnyColor() so it stays readable on any swatch. */
+   color picker. The symbol's color is set inline by contrastAnyColor() so it stays readable on any swatch.
+   background-repeat has to be spelled out: buttons inherit "no-repeat" from the general button styling, which
+   left the two checkerboard tiles sitting alone in the top left corner instead of covering the button. */
 #deckEditorSidebar .deckEditorColorPickerButton {
   position: absolute;
   right: 24px;
@@ -1223,6 +1254,7 @@ body.deckEditorPanning #deckEditorMain * {
                     linear-gradient(45deg, #999 25%, #ccc 25%, #ccc 75%, #999 75%);
   background-size: auto, 8px 8px, 8px 8px;
   background-position: 0 0, 0 0, 4px 4px;
+  background-repeat: no-repeat, repeat, repeat;
   border: 1px solid var(--backgroundHighlightColor2, #888);
 }
 .deckEditorColorPickerButton[icon]::before {
@@ -1244,7 +1276,8 @@ body.deckEditorPanning #deckEditorMain * {
   width: 60px;
 }
 
-/* The strip header keeps the card-type toolbar (add/copy/delete) inline, right after the "CARD TYPES" label. */
+/* The strip header keeps the card-type toolbar (add/copy/delete) inline, right after the "CARD TYPES" label,
+   then a divider and the "CARD COUNT" group with the ± All buttons. */
 #deckEditorStripHeader {
   display: flex;
   flex-direction: row;
@@ -1289,8 +1322,50 @@ body.deckEditorPanning #deckEditorMain * {
   cursor: default;
 }
 
+/* Separates the "CARD TYPES" group from the "CARD COUNT" one in the strip header. */
+.deckEditorStripHeaderDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 1px 0;
+  background: var(--backgroundHighlightColor1);
+  flex-shrink: 0;
+}
+
+/* "± All" changes the number of cards of every card type at once. Same blue as the card-type toolbar next to
+   it, but auto-width since these two carry an "All" label besides their glyph. */
+#deckEditorCountAllToolbar {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+#deckEditorCountAllToolbar button {
+  height: 24px;
+  padding: 0 6px 0 2px;
+  background: var(--VTTblue);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+#deckEditorCountAllToolbar button::before {
+  font-size: 18px;
+  width: auto;
+  margin: 0;
+}
+
+#deckEditorCountAllToolbar button:hover:not(:disabled) {
+  background: var(--VTTblueDark);
+}
+
+#deckEditorCountAllToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 /* Match the left sidebar's "FACE OBJECTS" header font/size/colour. */
-#deckEditorStripLabel {
+#deckEditorStripLabel,
+#deckEditorCountAllLabel {
   font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
@@ -1390,11 +1465,6 @@ body.deckEditorPanning #deckEditorMain * {
   font-weight: bold;
 }
 
-.deckEditorStripAllCount button {
-  font-size: 10px;
-  gap: 1px;
-}
-
 .deckEditorStripCard .renderedCard {
   position: relative;
   pointer-events: none;
@@ -1411,65 +1481,6 @@ body.deckEditorPanning #deckEditorMain * {
 .deckEditorAddCardType button {
   width: 60px;
   height: 90px;
-}
-
-/* The first strip entry is the deck itself: a VTTblue card carrying the "Edit all card defaults" label and a
-   white circular deck-widget glyph (a card icon over the live card count) that opens the card defaults. It
-   keeps the standard strip-card padding and a blank label below so its total height matches the card tiles. */
-
-/* Sized inline in renderStrip() to match the card tiles; contents scale down to fit that small card. */
-.deckEditorDeckCardFace {
-  box-sizing: border-box;
-  background: var(--VTTblue);
-  border-radius: 5px;
-  box-shadow: 0 0 6px #0005;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 4px;
-  overflow: hidden;
-  color: #fff;
-}
-
-.deckEditorStripCard .deckEditorDeckLabel {
-  font-size: 8px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.1;
-  max-width: none;
-  white-space: normal;
-  overflow: visible;
-}
-
-.deckEditorDeckGlyph {
-  position: relative;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-/* Match the edit-mode deck widget: the VTT-Symbols [cards] glyph above the live count. */
-.deckEditorDeckGlyph::before {
-  content: '[cards]';
-  color: var(--VTTblue);
-  font-family: 'VTT-Symbols';
-  font-size: 22px;
-  line-height: 1;
-}
-
-.deckEditorDeckCount {
-  color: var(--VTTblue);
-  font-weight: bold;
-  font-size: 11px;
-  line-height: 1;
 }
 
 /* Whole-face number fields (border/radius/enlarge): a plain label + number input, no type dropdown. */

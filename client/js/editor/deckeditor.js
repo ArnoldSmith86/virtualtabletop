@@ -318,6 +318,10 @@ class DeckEditor {
     $('#deckEditorStripCopy').onclick = _=>{ if(this.cardType !== null) this.addCardType(this.cardType); };
     $('#deckEditorStripDelete').onclick = _=>{ if(this.cardType !== null) this.deleteCardType(); };
 
+    // "Card count" group of the same header: "- All" / "+ All" change every card type's count together.
+    $('#deckEditorCountAllRemove').onclick = _=>this.changeAllCardCounts(-1);
+    $('#deckEditorCountAllAdd').onclick = _=>this.changeAllCardCounts(1);
+
     // Unified tree toolbar: add / copy / delete act on whatever level is selected in the tree (deck, face or
     // object). Show areas lives here too and is only enabled while an object is selected.
     $('#deckEditorTreeAdd').onclick = _=>this.treeAdd();
@@ -1502,64 +1506,30 @@ class DeckEditor {
     toolbar.style.right = newRight + 'px';
   }
 
+  // Adds/removes one card of every card type at once ("± All" in the strip header).
+  async changeAllCardCounts(delta) {
+    if(!this.deck())
+      return;
+    for(const type of Object.keys(this.cardTypes)) {
+      const count = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card' && w.get('cardType') == type).length;
+      await setCardCount(this.deck(), type, Math.max(0, count + delta));
+    }
+    this.renderStrip();
+  }
+
   renderStrip() {
     const strip = $('#deckEditorStrip');
-    const prevScroll = strip.scrollLeft; // keep the selected card type in view instead of snapping to the start
+    const prevScroll = strip.scrollLeft; // rebuilding the tiles must not snap the strip back to the start
     strip.innerHTML = '';
     if(!this.deck())
       return;
 
-    // The card-type toolbar's copy/delete need a selected card type.
+    // The card-type toolbar's copy/delete need a selected card type; "± All" needs at least one card type.
     $('#deckEditorStripCopy').disabled = this.cardType === null;
     $('#deckEditorStripDelete').disabled = this.cardType === null;
-
-    // First entry: the deck itself. A VTTblue card the same size/shape as the card tiles, carrying its label
-    // and a white deck-widget glyph with the live total card count; selecting it edits the card defaults.
-    const totalCards = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card').length;
-    const deckTile = div(strip, 'deckEditorStripCard deckEditorDeckTile', `
-      <div class=deckEditorDeckCardFace>
-        <span class=deckEditorDeckLabel>Edit all card defaults</span>
-        <div class=deckEditorDeckGlyph><span class=deckEditorDeckCount>${totalCards}</span></div>
-      </div>
-      <span class=deckEditorDeckBlankLabel>&nbsp;</span>
-    `);
-    // Size the deck tile to exactly match a real card tile: render a reference card (the current/first card
-    // type on the current face) to read its actual dimensions, then apply the same 120x90 fit used below.
-    let refW = (this.cardDefaults && +this.cardDefaults.width) || 103;
-    let refH = (this.cardDefaults && +this.cardDefaults.height) || 160;
-    const refType = this.cardType !== null ? this.cardType : Object.keys(this.cardTypes)[0];
-    if(refType !== undefined && this.faceTemplates.length) {
-      try {
-        const probe = this.renderCard(refType, this.face, document.createElement('div'));
-        refW = probe.get('width');
-        refH = probe.get('height');
-      } catch(e) {}
-    }
-    const dscale = Math.min(120 / refW, 90 / refH);
-    $('.deckEditorDeckCardFace', deckTile).style.width  = refW * dscale + 'px';
-    $('.deckEditorDeckCardFace', deckTile).style.height = refH * dscale + 'px';
-    deckTile.classList.toggle('selected', this.deckSymbolSelected && this.activeArea == 'strip');
-    deckTile.classList.toggle('selectedInactive', this.deckSymbolSelected && this.activeArea != 'strip');
-    deckTile.title = 'Edit the properties every card of this deck defaults to.';
-    deckTile.onclick = _=>{
-      this.deckSymbolSelected = true;
-      this.activeArea = 'strip';
-      this.selectedObject = null;
-      this.sidebarTab = 'defaults';
-      this.render();
-    };
-    // "- All" / "+ All" under the deck tile change every card type's count together.
-    const allRow = div(deckTile, 'deckEditorStripCount deckEditorStripAllCount', `<button icon=remove title="One fewer card of every type">All</button><button icon=add title="One more card of every type">All</button>`);
-    allRow.onmousedown = e=>e.stopPropagation();
-    const changeAll = async delta=>{
-      for(const type of Object.keys(this.cardTypes)) {
-        const c = widgetFilter(w=>w.get('deck') == this.deckID && w.get('type') == 'card' && w.get('cardType') == type).length;
-        await setCardCount(this.deck(), type, Math.max(0, c + delta));
-      }
-      this.renderStrip();
-    };
-    $('[icon=remove]', allRow).onclick = e=>{ e.stopPropagation(); changeAll(-1); };
-    $('[icon=add]',    allRow).onclick = e=>{ e.stopPropagation(); changeAll(1); };
+    const hasCardTypes = Object.keys(this.cardTypes).length > 0;
+    $('#deckEditorCountAllRemove').disabled = !hasCardTypes;
+    $('#deckEditorCountAllAdd').disabled = !hasCardTypes;
 
     // One entry per card type, always rendered on the actually-selected face so the strip is a reliable visual
     // indicator of which face is being worked on (even when that face looks the same on every card type).
@@ -1618,11 +1588,15 @@ class DeckEditor {
       $('[icon=remove]', countRow).onclick = async e=>{ e.stopPropagation(); await setCardCount(this.deck(), cardType, Math.max(0, count-1)); this.renderStrip(); };
       $('[icon=add]',    countRow).onclick = async e=>{ e.stopPropagation(); await setCardCount(this.deck(), cardType, count+1); this.renderStrip(); };
     }
-    // Restore the scroll position, then make sure the selected tile is actually visible.
+    // Restore the scroll position, then make sure a NEWLY selected tile is actually visible. Re-renders that
+    // don't change the selection (card counts going up/down, "± All") must leave the strip scrolled where the
+    // user left it instead of jumping back to the selected tile.
     strip.scrollLeft = prevScroll;
+    const selectionKey = this.deckSymbolSelected ? '\0deck' : String(this.cardType);
     const selectedTile = $('.deckEditorStripCard.selected', strip);
-    if(selectedTile && selectedTile.scrollIntoView)
+    if(selectedTile && selectedTile.scrollIntoView && this.stripScrolledTo !== selectionKey)
       selectedTile.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    this.stripScrolledTo = selectionKey;
   }
 
   renderSidebar() {
@@ -1659,7 +1633,7 @@ class DeckEditor {
     // One tab per property scope, so only one kind of property is on screen at a time (see sidebarTabs).
     const tabs = this.sidebarTabs(object);
     if(this.deckSymbolSelected)
-      this.sidebarTab = 'defaults'; // the deck symbol in the strip *is* the card-defaults scope
+      this.sidebarTab = 'defaults'; // editing the deck itself *is* the card-defaults scope
     if(!tabs.some(t=>t.id == this.sidebarTab && t.available))
       this.sidebarTab = [ 'face', 'cardType', 'defaults' ].find(id=>tabs.some(t=>t.id == id && t.available)) || 'defaults';
     this.renderSidebarTabs(sidebar, tabs);
@@ -1690,10 +1664,6 @@ class DeckEditor {
       // Note below (not part of) the header, in the same style as the Dynamic properties note.
       if(object.type == 'html')
         div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
-
-      // For image objects the upload button sits right under the header (its most useful spot).
-      if(object.type == 'image')
-        this.renderUploadImageButton(sidebar, object);
 
       // One cause/actionId per edited field: a typing burst on one property of one object stays one
       // breadcrumb/undo step, but edits to another property or object become their own step.
@@ -1796,8 +1766,8 @@ class DeckEditor {
     }
   }
 
-  // Switching to the card-defaults tab is the same thing as picking the deck symbol in the strip (and back),
-  // so both stay in sync and the card view keeps matching the tab.
+  // The card-defaults tab edits the deck itself rather than one of its card types, so switching to it also
+  // drops the card-type-level selection - which keeps the card view matching the tab.
   setSidebarTab(id) {
     this.sidebarTab = id;
     this.deckSymbolSelected = id == 'defaults';
@@ -2216,41 +2186,8 @@ class DeckEditor {
     return this.deleteFace();
   }
 
-  // Writes a new "value" for an image/icon face object: into the bound card type's property when the object's
-  // value is dynamic, otherwise into the shared template. Shared by the sidebar's upload button and the left
-  // tree's thumbnail-click picker.
-  async applyObjectValue(object, value, actionLabel) {
-    await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    const boundTo = object.dynamicProperties && object.dynamicProperties.value;
-    if(boundTo && this.cardType !== null) {
-      this.cardTypes[this.cardType][boundTo] = value;
-      this.refreshMainCardFaces();
-      await this.commit('cardTypes', `${getPlayerDetails().playerName} ${actionLabel} for card type "${this.cardType}" of deck ${this.deckID} in deck editor`);
-    } else {
-      object.value = value;
-      this.refreshMainCardFaces();
-      await this.commit('faceTemplates', `${getPlayerDetails().playerName} ${actionLabel} for a face object of deck ${this.deckID} in deck editor`);
-    }
-    this.renderSidebar();
-  }
-
   // Renders a small live preview of a face object by cloning its rendered node from the main card (so text,
   // icons, images and color boxes all look right); falls back to a swatch/label when the card can't render.
-  // Upload button for image objects. When the value is bound per card type it uploads into that card type's
-  // property, otherwise into the shared template.
-  renderUploadImageButton(sidebar, object) {
-    const bar = div(sidebar, 'buttonBar deckEditorUploadBar');
-    const upload = document.createElement('button');
-    upload.setAttribute('icon', 'upload');
-    upload.innerText = 'Upload image';
-    upload.onclick = _=>uploadAsset().then(asset=>{
-      if(!asset)
-        return;
-      return this.applyObjectValue(object, asset, 'uploaded an image');
-    });
-    bar.append(upload);
-  }
-
   renderObjectPreview(box, index, faceIndex = this.face) {
     const face = this.faceTemplates[faceIndex];
     const object = face && Array.isArray(face.objects) ? face.objects[index] : null;
@@ -2500,10 +2437,15 @@ class DeckEditor {
     return typeof value == 'string' && /^\/assets\/[0-9_-]+$/.test(value);
   }
 
-  // A property value that looks like a CSS color the row's swatch/color picker can show (hex, rgb(a), hsl(a) or
-  // the transparent keyword).
+  // A property value that looks like a CSS color the row's swatch/color picker can show: hex, rgb(a), hsl(a),
+  // or one of the plain CSS color keywords (blue, tan, transparent, …). The keywords are not listed here -
+  // an all-letter value is handed to the browser's own color parser instead, which knows the whole list.
   isColorValue(value) {
-    return typeof value == 'string' && /^\s*(#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgba?\([^)]*\)|hsla?\([^)]*\)|transparent)\s*$/.test(value);
+    if(typeof value != 'string')
+      return false;
+    if(/^\s*(#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgba?\([^)]*\)|hsla?\([^)]*\))\s*$/.test(value))
+      return true;
+    return /^\s*[a-zA-Z]+\s*$/.test(value) && this.parseColor(value) !== null;
   }
 
   // Whether a property row should get the little color swatch + color picker: a color-named property
@@ -2529,6 +2471,8 @@ class DeckEditor {
   // closes the picker (rows keep editing other fields right after). The picker's own CSS is scoped under
   // ".editorModule" (the sidebar-module system this deck editor doesn't use), so the picker section carries
   // that class plus an override rule making it visible here too.
+  // Image rows get a second small button next to it that uploads a picture into the row instead of choosing
+  // an existing one — so uploading is offered wherever an image can be chosen.
   addAssetPickerToRow(row, target, kind, getValue, setValue) {
     const pickerHost = div(target, 'deckEditorPickerRow editorModule');
     row.dom.classList.add('hasAssetPicker');
@@ -2547,6 +2491,18 @@ class DeckEditor {
     button.title = kind == 'icon' ? 'Choose icon' : 'Choose image';
     button.onclick = _=>picker.togglePicker();
     row.dom.append(button);
+    if(kind == 'image') {
+      row.dom.classList.add('hasUploadButton');
+      const upload = document.createElement('button');
+      upload.setAttribute('icon', 'upload');
+      upload.className = 'deckEditorUploadButton';
+      upload.title = 'Upload image';
+      upload.onclick = _=>uploadAsset().then(asset=>{
+        if(asset)
+          picker.setValue(asset);
+      });
+      row.dom.append(upload);
+    }
     picker.previewButton = button; // openPicker/closePicker toggle .open on this
     picker.pickerDOM = div(pickerHost, 'propertyPicker');
     picker.pickerDOM.style.display = 'none';
@@ -2611,7 +2567,7 @@ class DeckEditor {
   parseColor(value) {
     if(typeof value != 'string' || !value.trim())
       return null;
-    const ctx = document.createElement('canvas').getContext('2d');
+    const ctx = this.colorProbeContext();
     for(const probe of [ '#000000', '#ffffff' ]) {
       ctx.fillStyle = probe;
       ctx.fillStyle = value.trim();
@@ -2627,13 +2583,24 @@ class DeckEditor {
     const checkerboard = '#b3b3b3'; // between the checkerboard's two grays
     if(!color)
       return checkerboard;
-    const ctx = document.createElement('canvas').getContext('2d');
+    const ctx = this.colorProbeContext();
     ctx.fillStyle = checkerboard;
     ctx.fillRect(0, 0, 1, 1);
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, 1, 1);
     const [ r, g, b ] = ctx.getImageData(0, 0, 1, 1).data;
     return `rgb(${r},${g},${b})`;
+  }
+
+  // One reusable 1x1 canvas for the two color helpers above: they run on every keystroke in every text row,
+  // so a fresh canvas per call would be pure churn.
+  colorProbeContext() {
+    if(!this.colorProbe) {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      this.colorProbe = canvas.getContext('2d', { willReadFrequently: true });
+    }
+    return this.colorProbe;
   }
 
   // The "Click a face object…" hint, shown below the card view (bottom-center) whenever a card type is being
@@ -2792,11 +2759,14 @@ class DeckEditor {
     const container = div(sidebar, 'deckEditorDynamicProperties deckEditorScopeThisType');
     div(container, 'deckEditorSectionNote').textContent = 'These specify a different face object for each card type.';
 
-    // Column headers, laid out with the same flex structure as the binding rows so they line up above them.
-    div(container, 'deckEditorDynamicProperty deckEditorDynamicPropertyHeaders', '<span class=deckEditorBindingObjectProp>Object property</span><span class=deckEditorBindingLink></span><span class=deckEditorBindingTypeProp>Card property</span><span class=deckEditorBindingDeleteSpacer></span>');
-
     // The already-active bindings: each row is a live "object property ← card type property" with a red trash.
+    // They get column headers (laid out with the same flex structure as the rows so they line up above them);
+    // without any binding those headers would label an empty space, so say what that space means instead.
     const bindings = Object.entries(object.dynamicProperties || {});
+    if(bindings.length)
+      div(container, 'deckEditorDynamicProperty deckEditorDynamicPropertyHeaders', '<span class=deckEditorBindingObjectProp>Object property</span><span class=deckEditorBindingLink></span><span class=deckEditorBindingTypeProp>Card property</span><span class=deckEditorBindingDeleteSpacer></span>');
+    else
+      div(container, 'deckEditorNoDynamicProperties').textContent = 'This object does not have dynamic properties.';
     for(const [ objectProperty, typeProperty ] of bindings) {
       // Both sides are editable text fields with a link icon between them ("value ⛓ rank"): the left is the
       // object property that gets filled, the right is the card type property it reads from.
@@ -2848,16 +2818,6 @@ class DeckEditor {
         this.renderSidebar();
       };
     }
-
-    // Below the existing bindings and above the add-binding control: jump to where the values on the right of
-    // those rows actually live. Switching tabs keeps the face object selected, so the Object tab goes back.
-    const viewBar = div(container, 'buttonBar deckEditorViewCardTypeBar');
-    const viewBtn = document.createElement('button');
-    viewBtn.setAttribute('icon', 'pageview');
-    viewBtn.innerText = 'View card type properties';
-    viewBtn.title = 'Show the card type\'s own properties (the Card Type tab)';
-    viewBtn.onclick = _=>this.setSidebarTab('cardType');
-    viewBar.append(viewBtn);
 
     // Add-binding control laid out on the same grid as the rows above. Both sides are editable comboboxes
     // (input + datalist): pick an existing property or just type a new one in the same box - no separate field.
