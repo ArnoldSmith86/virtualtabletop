@@ -200,6 +200,7 @@ class DeckEditor {
                               // active one gets a solid outline, the other's selection a dashed one
     this.addMode = 'static'; // 'static' = same on every card, 'dynamic' = different per card type
     this.deckSymbolSelected = false; // the deck-widget strip entry is selected -> the sidebar edits card defaults
+    this.sidebarTab = 'defaults'; // which property scope the right sidebar shows: defaults | cardType | face | object
     this.addSectionOpen = false; // the left-sidebar "+" expander revealing the add-object controls
     this.treeLevel = 'face'; // which tree level the unified add/copy/delete toolbar acts on: deck | face | object
 
@@ -905,7 +906,8 @@ class DeckEditor {
       selectedObject: this.selectedObject,
       cardType: this.cardType,
       deckSymbolSelected: this.deckSymbolSelected,
-      activeArea: this.activeArea
+      activeArea: this.activeArea,
+      sidebarTab: this.sidebarTab
     };
   }
 
@@ -922,8 +924,10 @@ class DeckEditor {
       this.treeLevel = 'face';
       this.deckSymbolSelected = true;
       this.activeArea = 'strip';
+      this.sidebarTab = 'defaults';
       return;
     }
+    this.sidebarTab = mem.sidebarTab || 'defaults';
     this.face = mem.face != null && mem.face < this.faceTemplates.length
       ? mem.face : Math.max(0, this.faceTemplates.length - 1);
     this.deckSymbolSelected = !!mem.deckSymbolSelected;
@@ -1431,6 +1435,9 @@ class DeckEditor {
   selectObject(index, face) {
     if(index !== null)
       this.activeArea = 'tree';
+    // Follow the selection with the sidebar tab: picking an object shows its properties, dropping the
+    // selection falls back to the face the object lives on.
+    this.sidebarTab = index !== null ? 'object' : 'face';
     // Clicking an object of another (expanded) face makes that face current first.
     if(index !== null && face !== undefined && face !== this.face) {
       if(this.deckID)
@@ -1538,6 +1545,7 @@ class DeckEditor {
       this.deckSymbolSelected = true;
       this.activeArea = 'strip';
       this.selectedObject = null;
+      this.sidebarTab = 'defaults';
       this.render();
     };
     // "- All" / "+ All" under the deck tile change every card type's count together.
@@ -1579,6 +1587,7 @@ class DeckEditor {
         this.activeArea = 'strip';
         this.deckSymbolSelected = false;
         this.selectedObject = null;
+        this.sidebarTab = 'cardType';
         if(this.treeLevel == 'object')
           this.treeLevel = 'face';
         this.render();
@@ -1647,15 +1656,37 @@ class DeckEditor {
 
     const object = this.selectedObjectTemplate();
 
-    // State A: the deck symbol is selected in the strip — show only the card defaults.
-    if(this.deckSymbolSelected && !object) {
+    // One tab per property scope, so only one kind of property is on screen at a time (see sidebarTabs).
+    const tabs = this.sidebarTabs(object);
+    if(this.deckSymbolSelected)
+      this.sidebarTab = 'defaults'; // the deck symbol in the strip *is* the card-defaults scope
+    if(!tabs.some(t=>t.id == this.sidebarTab && t.available))
+      this.sidebarTab = [ 'face', 'cardType', 'defaults' ].find(id=>tabs.some(t=>t.id == id && t.available)) || 'defaults';
+    this.renderSidebarTabs(sidebar, tabs);
+
+    if(this.sidebarTab == 'defaults') {
       this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
       this.renderObjectHint();
       return;
     }
 
+    if(this.sidebarTab == 'face') {
+      this.renderEntireFaceSection(sidebar, addPropertyRow);
+      this.renderObjectHint();
+      return;
+    }
+
+    if(this.sidebarTab == 'cardType') {
+      this.renderCardTypeSection(sidebar, addHeader, addPropertyRow);
+      this.renderObjectHint();
+      return;
+    }
+
+    // The object tab is only reachable with a face object selected (the clamp above falls back otherwise).
     if(object) {
-      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard');
+      // The caption spells out what the rows below do, so the contrast with the amber "different per card
+      // type" Dynamic properties section further down is stated, not just colored.
+      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Same on every card type');
       // Note below (not part of) the header, in the same style as the Dynamic properties note.
       if(object.type == 'html')
         div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
@@ -1721,21 +1752,68 @@ class DeckEditor {
 
       // No "Delete object" button here — objects are deleted from the left face-object list (or Delete key).
       this.renderObjectHint();
-      return;
     }
+  }
 
-    // State C: a card type is selected but no face object — whole-face settings and (below) the card type's
-    // own properties. The face-object list lives in the always-visible left sidebar; the card defaults live
-    // behind the deck symbol only.
-    if(this.faceTemplates[this.face])
-      this.renderEntireFaceSection(sidebar, addPropertyRow);
+  // The four property scopes the sidebar can edit, outside in: the deck's card defaults, the selected card
+  // type, the shown face and the selected face object. Each one is a tab, and only the active tab's sections
+  // are rendered - so a tab is one focused list instead of the stack of unrelated bands this used to be.
+  // The scope also picks the color: blue = shared by every card, amber = differs per card type.
+  sidebarTabs(object) {
+    const face = this.faceTemplates[this.face];
+    return [
+      { id: 'defaults', label: 'All Cards', icon: 'style', scope: 'deckEditorScopeEveryCard', available: true,
+        title: 'The properties every card of this deck starts with' },
+      { id: 'cardType', label: 'Card Type', icon: 'label', scope: 'deckEditorScopeThisType', available: this.cardType !== null,
+        title: this.cardType === null ? 'Select a card type in the strip below to edit its properties'
+                                      : `The properties of card type "${this.cardType}" alone` },
+      { id: 'face', label: 'Face', icon: 'crop_portrait', scope: 'deckEditorScopeEveryCard', available: !!face,
+        title: face ? `Settings of ${this.faceLabel(this.face).toLowerCase()}, on every card of this deck`
+                    : 'This deck does not have any faces yet' },
+      { id: 'object', label: 'Object', icon: 'category', scope: 'deckEditorScopeEveryCard', available: !!object,
+        title: object ? `Face object ${this.selectedObject+1} of ${this.faceLabel(this.face).toLowerCase()}`
+                      : 'Click a face object on the card or in the list to the left to edit it' }
+    ];
+  }
 
-    this.renderObjectHint();
+  renderSidebarTabs(sidebar, tabs) {
+    // A <nav> (not a div) so the test selector `.deckEditorProperties:first-of-type` keeps matching the first
+    // properties div of the panel below.
+    const nav = document.createElement('nav');
+    nav.id = 'deckEditorTabs';
+    sidebar.append(nav);
+    for(const tab of tabs) {
+      const button = document.createElement('button');
+      button.id = `deckEditorTab_${tab.id}`;
+      button.className = `deckEditorTab ${tab.scope}`;
+      button.setAttribute('icon', tab.icon);
+      button.textContent = tab.label;
+      button.title = tab.title;
+      button.classList.toggle('active', this.sidebarTab == tab.id);
+      button.disabled = !tab.available;
+      button.onclick = _=>this.setSidebarTab(tab.id);
+      nav.append(button);
+    }
+  }
 
+  // Switching to the card-defaults tab is the same thing as picking the deck symbol in the strip (and back),
+  // so both stay in sync and the card view keeps matching the tab.
+  setSidebarTab(id) {
+    this.sidebarTab = id;
+    this.deckSymbolSelected = id == 'defaults';
+    if(this.deckSymbolSelected) {
+      this.selectedObject = null;
+      if(this.treeLevel == 'object')
+        this.treeLevel = 'face';
+    }
+    this.render();
+  }
+
+  // The selected card type's own properties: its name plus everything only cards of this type carry.
+  renderCardTypeSection(sidebar, addHeader, addPropertyRow) {
     if(this.cardType === null)
       return;
-
-    addHeader('Card type properties', 'deckEditorScopeThisType');
+    addHeader('Card type properties', 'deckEditorScopeThisType', 'Only for this card type');
 
     const nameRow = div(sidebar, 'deckEditorCardTypeName', `<label>Name</label><input value="${html(String(this.cardType))}">`);
     $('input', nameRow).onchange = e=>{
@@ -1802,15 +1880,15 @@ class DeckEditor {
 
   }
 
-  // The "Entire face" band: whole-face settings (on every card of the deck). border/radius are plain numbers
+  // The "Entire face" section: whole-face settings (on every card of the deck). border/radius are plain numbers
   // (0 = absent); "enlarge" is stored under the face template's "properties" object so it reaches the card.
   renderEntireFaceSection(sidebar, addPropertyRow) {
     const face = this.faceTemplates[this.face];
     if(!face)
       return;
     const header = document.createElement('header');
-    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
-    header.innerHTML = '<h2>Entire face properties</h2>';
+    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard';
+    header.innerHTML = `<h2>Entire face properties</h2><p>${html(this.faceLabel(this.face))} of every card</p>`;
     sidebar.append(header);
 
     const faceProps = div(sidebar, 'deckEditorProperties');
@@ -2066,6 +2144,7 @@ class DeckEditor {
     this.treeLevel = 'face';
     this.activeArea = 'tree';
     this.deckSymbolSelected = false;
+    this.sidebarTab = 'face';
     this.addSectionOpen = false;
     if(this.deckID && this.face !== face)
       this.expandedFaces.add(`${this.deckID}:${this.face}`); // keep the previously-current face's branch open
@@ -2570,8 +2649,8 @@ class DeckEditor {
 
   renderCardDefaults(sidebar, addHeader, addPropertyRow) {
     const header = document.createElement('header');
-    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
-    header.innerHTML = '<h2>Card defaults</h2>';
+    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard';
+    header.innerHTML = '<h2>Card defaults</h2><p>Every card of this deck</p>';
     sidebar.append(header);
 
     const defaultsFieldArgs = property=>[
@@ -2703,13 +2782,14 @@ class DeckEditor {
   }
 
   renderDynamicProperties(sidebar, object) {
-    // A proper VTTblue section header (matches the other sidebar bands).
+    // Amber, like the Card type tab and the "Card Type" add mode: what these rows fill in comes from the card
+    // type, so they are the one part of the object that differs per card - the properties above are not.
     const header = document.createElement('header');
-    header.className = 'deckEditorSidebarHeader deckEditorScopeEveryCard deckEditorBand';
-    header.innerHTML = '<h2>Dynamic properties</h2>';
+    header.className = 'deckEditorSidebarHeader deckEditorScopeThisType';
+    header.innerHTML = '<h2>Dynamic properties</h2><p>Different per card type</p>';
     sidebar.append(header);
 
-    const container = div(sidebar, 'deckEditorDynamicProperties');
+    const container = div(sidebar, 'deckEditorDynamicProperties deckEditorScopeThisType');
     div(container, 'deckEditorSectionNote').textContent = 'These specify a different face object for each card type.';
 
     // Column headers, laid out with the same flex structure as the binding rows so they line up above them.
@@ -2769,14 +2849,14 @@ class DeckEditor {
       };
     }
 
-    // Below the existing bindings and above the add-binding control: jump back to the card type's own
-    // properties, same as clicking empty space in the main card view.
+    // Below the existing bindings and above the add-binding control: jump to where the values on the right of
+    // those rows actually live. Switching tabs keeps the face object selected, so the Object tab goes back.
     const viewBar = div(container, 'buttonBar deckEditorViewCardTypeBar');
     const viewBtn = document.createElement('button');
     viewBtn.setAttribute('icon', 'pageview');
     viewBtn.innerText = 'View card type properties';
-    viewBtn.title = 'Deselect this face object and show the card type\'s properties';
-    viewBtn.onclick = _=>this.selectObject(null);
+    viewBtn.title = 'Show the card type\'s own properties (the Card Type tab)';
+    viewBtn.onclick = _=>this.setSidebarTab('cardType');
     viewBar.append(viewBtn);
 
     // Add-binding control laid out on the same grid as the rows above. Both sides are editable comboboxes

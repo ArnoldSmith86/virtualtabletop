@@ -867,35 +867,102 @@ body.deckEditorPanning #deckEditorMain * {
   box-sizing: border-box;
 }
 
-/* The sidebar's two sections edit different scopes: the face object is part of the shared face template
-   (edits affect every card of the deck), the card type section only affects one card type. Reuse the
-   blue/amber accent language of the topbar's add groups so the distinction carries through. */
+/* Every section of the sidebar edits exactly one scope, and the scope picks the color, reusing the blue/amber
+   accent language of the left toolbar's add-mode group: blue = shared by every card of the deck, amber = only
+   this card type. The scope class carries that color as variables, so the tab button, the section header and
+   the dynamic-properties box below can all read the same pair. */
+#deckEditorSidebar, .deckEditorScopeEveryCard {
+  --deckEditorScopeColor: var(--VTTblue);
+  --deckEditorScopeColorDark: var(--VTTblueDark);
+  --deckEditorScopeTint: rgba(120, 190, 255, 0.18);
+}
+
+.deckEditorScopeThisType {
+  --deckEditorScopeColor: #b26a00;
+  --deckEditorScopeColorDark: #8a5200;
+  --deckEditorScopeTint: rgba(255, 193, 7, 0.22);
+}
+
+/* The tab bar at the top of the sidebar: one tab per scope, pinned while the panel below it scrolls. Only the
+   active tab is filled - an unavailable scope (no card type / face / object selected yet) is greyed out. */
+#deckEditorTabs {
+  position: sticky;
+  top: -10px; /* cancels the sidebar's own top padding so the bar sits flush against its top edge */
+  z-index: 2;
+  display: flex;
+  gap: 2px;
+  margin: -10px -10px 4px;
+  padding: 8px 8px 0;
+  background: var(--backgroundColor);
+  border-bottom: 1px solid var(--backgroundHighlightColor1);
+}
+
+.deckEditorTab {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  padding: 6px 3px;
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0;
+  white-space: nowrap; /* four tabs in 380px: the labels have to stay on one line to keep the bar even */
+  border-radius: 6px 6px 0 0;
+  background: transparent;
+  color: var(--textColor);
+  border-bottom: 3px solid transparent;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.deckEditorTab[icon]::before {
+  font-size: 14px;
+  width: 14px;
+  margin-right: 3px;
+}
+
+.deckEditorTab:hover:not(:disabled) {
+  background: var(--deckEditorScopeTint);
+  border-bottom-color: var(--deckEditorScopeColor);
+  opacity: 1;
+}
+
+.deckEditorTab.active, .deckEditorTab.active:hover {
+  background: var(--deckEditorScopeColor);
+  border-bottom-color: var(--deckEditorScopeColor);
+  color: #fff;
+  opacity: 1;
+}
+
+.deckEditorTab:disabled {
+  background: transparent;
+  border-bottom-color: transparent;
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Section headers are labels, not buttons: a tinted band with a solid bar in the scope color instead of the
+   solid fill the (clickable) buttons around them use, so "filled blue" keeps meaning "you can click this". */
 .deckEditorSidebarHeader {
-  margin: 10px 0 5px 0;
+  margin: 12px 0 5px 0;
   padding: 4px 8px;
-  border-radius: 6px;
+  border-radius: 0 6px 6px 0;
+  border-left: 4px solid var(--deckEditorScopeColor);
+  background: var(--deckEditorScopeTint);
+  cursor: default;
 }
 
 .deckEditorSidebarHeader h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .deckEditorSidebarHeader p {
-  margin: 2px 0 0 0;
+  margin: 1px 0 0 0;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.3px;
   font-weight: bold;
-  opacity: 0.8;
-}
-
-.deckEditorScopeEveryCard {
-  background: rgba(120, 190, 255, 0.15);
-}
-
-.deckEditorScopeThisType {
-  background: rgba(255, 193, 7, 0.18);
+  opacity: 0.75;
 }
 
 #deckEditorSidebar .genericInput {
@@ -921,6 +988,16 @@ body.deckEditorPanning #deckEditorMain * {
   font-size: 14px;
 }
 
+/* The whole dynamic-properties block is boxed in its scope color, so on the Object tab the per-card-type rows
+   read as a distinct region instead of just more rows below the object's own (identical-on-every-card) ones. */
+.deckEditorDynamicProperties {
+  margin-top: -5px; /* cancels the header's bottom margin so header and box read as one titled block */
+  border-left: 4px solid var(--deckEditorScopeColor);
+  border-radius: 0 0 6px 0;
+  background: var(--deckEditorScopeTint);
+  padding: 4px 8px 8px;
+}
+
 /* Active bindings: "<object property> ← <card type property>" rows, each with a red trash. */
 .deckEditorDynamicProperty {
   display: flex;
@@ -930,7 +1007,7 @@ body.deckEditorPanning #deckEditorMain * {
   margin: 3px 0;
   padding: 3px 5px;
   border-radius: 4px;
-  background: var(--backgroundHighlightColor1);
+  background: var(--backgroundColor);
 }
 
 .deckEditorBindingText {
@@ -969,8 +1046,20 @@ body.deckEditorPanning #deckEditorMain * {
   flex-shrink: 0;
   width: 16px;
   text-align: center;
-  opacity: 0.7;
+  color: var(--deckEditorScopeColor);
   font-size: 16px;
+}
+
+/* Both buttons of the dynamic block lead to (or create) card-type data, so they carry its accent rather than
+   the plain blue used for everything that acts on the face object itself. */
+.deckEditorViewCardTypeBar button,
+.deckEditorAddBindingButton {
+  background: var(--deckEditorScopeColor);
+}
+
+.deckEditorViewCardTypeBar button:hover,
+.deckEditorAddBindingButton:hover {
+  background: var(--deckEditorScopeColorDark);
 }
 
 /* Shared style for the small notes under section headers (Dynamic properties intro, HTML-object hint). */
@@ -1381,17 +1470,6 @@ body.deckEditorPanning #deckEditorMain * {
   font-weight: bold;
   font-size: 11px;
   line-height: 1;
-}
-
-/* The "Entire face" / "Face objects" bands: solid VTTblue with white text. */
-.deckEditorSidebarHeader.deckEditorBand {
-  background: var(--VTTblue);
-  box-shadow: none;
-  color: #fff;
-}
-
-.deckEditorSidebarHeader.deckEditorBand h2 {
-  color: #fff;
 }
 
 /* Whole-face number fields (border/radius/enlarge): a plain label + number input, no type dropdown. */

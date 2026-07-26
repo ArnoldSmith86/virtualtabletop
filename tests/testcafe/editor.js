@@ -631,7 +631,24 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .typeText('.deckEditorAddBinding .objectProperty', 'color')
     .typeText('.deckEditorAddBinding .typeProperty', 'color')
     .click('.deckEditorAddBindingButton');
-  await t.pressKey('esc'); // deselect the object -> the "Entire face properties" and "Face objects" bands appear
+  await t.pressKey('esc'); // deselect the object -> the sidebar falls back to the object's face
+  // The sidebar's tab bar follows the selection and switches the scope being edited: Escape just dropped the
+  // face object, so Face is showing and Object is unavailable until an object is selected again.
+  const sidebarTab = id => Selector(`#deckEditorTab_${id}`);
+  const sidebarHeaders = ClientFunction(() => {
+    const titles = [];
+    const headers = document.querySelectorAll('#deckEditorSidebar header h2');
+    for(let i = 0; i < headers.length; ++i)
+      titles.push(headers[i].textContent);
+    return titles;
+  });
+  await t
+    .expect(sidebarTab('face').hasClass('active')).ok()
+    .expect(sidebarTab('object').hasAttribute('disabled')).ok()
+    .expect(sidebarHeaders()).eql([ 'Entire face properties' ])
+    .click(sidebarTab('cardType'))
+    .expect(sidebarHeaders()).eql([ 'Card type properties' ])
+    .click(sidebarTab('face'));
   await t.expect(addFaceProperty('radius')).ok(); // radius is a row only once added
   await t.expect(setNumberField('Entire face properties', 'radius', 8)).ok();
   await t.wait(700); // let the debounced faceTemplates commit fire
