@@ -2050,8 +2050,9 @@ export class Widget extends StateManaged {
               [c[i], c[rand]] = [c[rand], c[i]];
             }
           }
+          // all hands are collected before anything is moved so that a hand does not
+          // pick up the widgets an earlier seat just passed to it
           let moves = [];
-          let shadowedCollections = {};
           for (let i = 0; i < c.length; i++) {
             let source = c[i];
             let target = c[(i + a.interval) % c.length];
@@ -2061,44 +2062,49 @@ export class Widget extends StateManaged {
               let contents = widgets.get(hand).children().reduce(
                 function (collect, w) {
                   if (!perOwner || w.get('owner') == source.get('player')) {
-                    collect.unshift(w.get('id'));
+                    collect.unshift(w);
                   }
                   return collect
                 },
                 []
               );
+              moves.push({ source, contents, to: target.get('id') });
+            }
+          }
+          if(moves.length) {
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationStart("Moves", "Moves");
+            for(const move of moves) {
               // the collection is named after the seat it comes from so that the
               // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log.
               // a collection of the surrounding routine that happens to use the same
-              // name is put back once the moves are done
-              const collection = `hand of ${source.get('id')}`;
-              shadowedCollections[collection] = collections[collection];
-              // an array of IDs is turned into a collection by widgetFilter, which
-              // returns the widgets in creation order - keepOrder uses a collection
-              // that is already sorted like the hand instead so the order is kept
+              // name is shadowed only while its MOVE runs and then put back
+              const collection = `hand of ${move.source.get('id')}`;
+              const shadowed = collections[collection];
+              // the widgets are looked up right before their own MOVE so that one which
+              // a routine of an earlier MOVE removed is left alone, exactly like when
+              // the generated MOVE still received a list of IDs. keepOrder keeps the
+              // order of the hand, the default is the creation order because that is
+              // the order widgetFilter - and with it MOVE - used all along
               collections[collection] = a.keepOrder
-                ? contents.map(id=>widgets.get(id))
-                : widgetFilter(w=>contents.indexOf(w.get('id')) != -1);
-              moves.push({
-                func: "MOVE",
-                collection: collection,
-                to: target.get('id'),
-              });
+                ? move.contents.filter(w=>!w.isBeingRemoved)
+                : widgetFilter(w=>move.contents.indexOf(w) != -1);
+              try {
+                await this.evaluateRoutine([ { func: 'MOVE', collection, to: move.to } ], variables, collections, (depth || 0) + 1, true);
+              } finally {
+                if(shadowed === undefined)
+                  delete collections[collection];
+                else
+                  collections[collection] = shadowed;
+              }
             }
+            if(jeRoutineLogging)
+              jeLoggingRoutineOperationEnd([], variables, collections, false);
           }
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationStart("Moves", "Moves");
-          await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
-          for(const [ name, shadowed ] of Object.entries(shadowedCollections)) {
-            if(shadowed === undefined)
-              delete collections[name];
-            else
-              collections[name] = shadowed;
+          if(jeRoutineLogging) {
+            const how = a.direction == 'random' ? `hands in a random seat order by ${a.interval}` : `hands ${a.direction} by ${a.interval}`;
+            jeLoggingRoutineOperationSummary(moves.length ? `${how}${a.keepOrder ? ', keeping the card order' : ''}` : 'no seat with a player has a valid hand, nothing to swap');
           }
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationEnd([], variables, collections, false);
-          if(jeRoutineLogging)
-            jeLoggingRoutineOperationSummary(`hands ${a.direction} by ${a.interval}${a.keepOrder ? ', keeping the card order' : ''}`);
         } else if(jeRoutineLogging) {
           jeLoggingRoutineOperationSummary('less than two seats with a player, nothing to swap');
         }

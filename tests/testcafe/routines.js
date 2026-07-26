@@ -23,6 +23,31 @@ function swapHandsRoom(clickRoutine) {
   return state;
 }
 
+// three seats, and the middle hand removes the only card of the last hand as soon as
+// it receives one - so the last hand would pass on a card that no longer exists.
+// the witness is marked by the first hand's enterRoutine, so it stays unmarked as
+// long as nothing arrives there
+function removeOnEnterRoom() {
+  const state = {
+    deck: { id: 'deck', type: 'deck', cardTypes: { plain: {} }, x: 50, y: 400 },
+    witness: { id: 'witness', type: 'basic', x: 1000, y: 400 },
+    swap: { id: 'swap', type: 'button', text: 'swap', x: 800, y: 400, clickRoutine: [
+      { func: 'SWAPHANDS' },
+      { func: 'SELECT', property: 'id', value: 'card1' },
+      { func: 'SET', property: 'marked', value: true }
+    ] },
+    card1: { id: 'card1', type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand1' },
+    doomed: { id: 'doomed', type: 'card', deck: 'deck', cardType: 'plain', parent: 'hand3' }
+  };
+  for(const index of [ 1, 2, 3 ]) {
+    state[`hand${index}`] = { id: `hand${index}`, type: 'holder', x: 50, y: 200*index, width: 700, height: 180 };
+    state[`seat${index}`] = { id: `seat${index}`, type: 'seat', index, player: `Player ${index}`, hand: `hand${index}`, x: 800, y: 200*index };
+  }
+  state.hand1.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'witness' }, { func: 'SET', property: 'marked', value: true } ];
+  state.hand2.enterRoutine = [ { func: 'SELECT', property: 'id', value: 'doomed' }, { func: 'DELETE' } ];
+  return state;
+}
+
 async function expectEventually(t, get, expected) {
   let actual = null;
   for(let wait=50; wait<1000; wait*=2) {
@@ -40,7 +65,11 @@ async function cardsInHand(hand) {
 }
 
 async function markedWidgets() {
-  return Object.values(JSON.parse(await getState())).filter(w=>w.marked).map(w=>w.id);
+  return Object.values(JSON.parse(await getState())).filter(w=>w.marked).map(w=>w.id).sort();
+}
+
+async function widgetExists(id) {
+  return Object.keys(JSON.parse(await getState())).indexOf(id) != -1;
 }
 
 async function clickSwap(t, clickRoutine) {
@@ -71,5 +100,17 @@ test('SWAPHANDS leaves a collection of the surrounding routine intact', async t 
     { func: 'SET', collection: 'hand of seat1', property: 'marked', value: true }
   ]);
   await expectEventually(t, ()=>cardsInHand('hand2'), creationOrder);
+  await expectEventually(t, markedWidgets, [ 'card1' ]);
+});
+
+test('SWAPHANDS does not pass on a card that a routine of an earlier move removed', async t => {
+  await setRoomState(removeOnEnterRoom());
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await expectEventually(t, ()=>cardsInHand('hand3'), [ 'doomed' ]);
+  await t.click('#w_swap');
+  await expectEventually(t, ()=>cardsInHand('hand2'), [ 'card1' ]);
+  await expectEventually(t, ()=>widgetExists('doomed'), false);
+  await expectEventually(t, ()=>cardsInHand('hand1'), []);
   await expectEventually(t, markedWidgets, [ 'card1' ]);
 });
