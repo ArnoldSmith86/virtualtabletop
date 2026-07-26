@@ -51,6 +51,22 @@ body.edit.darkMode #editorSidebar button.active {
   right: calc(var(--editSidebarWidth) - 2px);
 }
 
+#editorSidebar button[icon=tune],
+#editorSidebar button[icon=settings] {
+  text-align: left;
+  line-height: 0.8;
+}
+
+#editorSidebar button[icon=tune]::before,
+#editorSidebar button[icon=settings]::before {
+  margin-left: 0;
+}
+
+#editorSidebar button.active[icon=tune]::before,
+#editorSidebar button.active[icon=settings]::before {
+  left: 0;
+}
+
 #editorModules {
   display: none;
   position: absolute;
