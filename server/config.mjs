@@ -48,12 +48,18 @@ class Config {
       }
     }
 
+    if(!this.legacyAssets)
+      this.legacyAssets = JSON.parse(fs.readFileSync(path.resolve() + '/server/legacyassets.json'));
+
     if(!asset.match(/^[0-9_-]+$/))
       return null;
     if(this.publicLibraryAssets[asset])
       return this.publicLibraryAssets[asset];
     if(fs.existsSync(this.directory('assets') + '/' + asset))
       return this.directory('assets') + '/' + asset;
+    // images that used to be shipped as public library assets and are now bundled with the engine
+    if(this.legacyAssets[asset])
+      return path.resolve() + '/assets/' + this.legacyAssets[asset];
     return null;
   }
 }
