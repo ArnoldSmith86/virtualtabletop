@@ -216,6 +216,8 @@ const predefinedCollectionDescriptions = {
   thisButton: 'the widget that contains the routine (not necessarily a button)'
 };
 
+const routineWidgetPickerKey = 'routineWidgets';
+
 class RoutinePopup extends Popup {
   constructor(source) {
     super(source);
@@ -224,6 +226,10 @@ class RoutinePopup extends Popup {
   hide() {
     if(openRoutinePopup === this)
       openRoutinePopup = null;
+    // a popup that offers the widget picker starts in-room picks, so end them
+    // when it goes away; other popups (e.g. info popups) must not interfere
+    if(isWidgetPickerActive(null, routineWidgetPickerKey))
+      stopWidgetPicker();
     super.hide();
   }
 
@@ -232,6 +238,13 @@ class RoutinePopup extends Popup {
   }
 
   onClick(e) {
+  }
+
+  onOutsideClick(e) {
+    // clicking widgets in the room is how the widget picker works
+    if(isWidgetPickerActive(null, routineWidgetPickerKey))
+      return;
+    super.onOutsideClick(e);
   }
 
   setNewCollectionValue(value) {
@@ -440,6 +453,23 @@ class RoutineNumberPopup extends RoutinePopup {
       valueContent.append(text);
     }
 
+    // a few number parameters name a widget instead (TURN turn takes a seat id),
+    // so offer the picker for those as well
+    if(this.options.widgetType) {
+      const [ widgetTitle, widgetContent ] = this.addAccordionSection('Widgets');
+      infoButton(widgetTitle, 'Use the id of a widget instead of a number: search it by id or pick it in the room.');
+      // the properties module's picker CSS is scoped to .editorModule
+      const host = div(widgetContent, 'editorModule');
+      renderWidgetSelectPopout(host, this.widget, {
+        pickerKey: routineWidgetPickerKey,
+        inline: true,
+        allowSelf: true,
+        typeFilter: this.options.widgetType,
+        getSelectedIDs: _=>typeof currentValue == 'string' ? [ currentValue ] : [],
+        apply: widgetID=>this.setNewValue(widgetID)
+      });
+    }
+
     super.show(true, false);
   }
 }
@@ -460,43 +490,52 @@ class RoutineEnumPopup extends RoutinePopup {
 }
 
 class RoutineWidgetIDPopup extends RoutinePopup {
-  constructor() {
+  constructor(options={}) {
     super();
-  }
-
-  hide() {
-    // this popup starts widget selections, so end them when it goes away;
-    // other popups (e.g. info popups) must not interfere with a running selection
-    endCustomSelection();
-    super.hide();
+    this.options = options;
+    this.workingIDs = [];
   }
 
   show(showCollections=false) {
     // the picker is the primary input here, so it comes first and open
-    const [ title, content ] = this.addAccordionSection('Holders')
-    // seed the picker with the widgets the parameter already holds so using it
-    // without changes keeps the current value instead of clearing it
+    const [ title, content ] = this.addAccordionSection('Widgets');
+    infoButton(title, `
+      Search widgets by their id, filter them by type or pick them in the room, then apply the selection.
+      The type filter also applies to picking in the room: with the type set to holder, a click on a card selects the holder it lies on.
+    `);
+    // seed the picker with the widgets the parameter already holds so applying
+    // it without changes keeps the current value instead of clearing it
     const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
     const currentIDs = Array.isArray(currentValue) ? currentValue : (typeof currentValue == 'string' ? [ currentValue ] : []);
-    this.holderSelection = new WidgetSelection(currentIDs.filter(id=>widgets.has(id)).map(id=>widgets.get(id)), pickedWidgets=>{
-      this.setNewValue(pickedWidgets.map(w=>w.id));
-    }, pickedWidget=>{
-      // holders are usually covered by their cards or piles, so a click on one
-      // of those almost always means the holder underneath
-      let resolved = pickedWidget;
-      while(resolved && [ 'card', 'pile' ].indexOf(resolved.get('type')) != -1 && widgets.has(resolved.get('parent')))
-        resolved = widgets.get(resolved.get('parent'));
-      return resolved;
+    // a collection name looks like a widget id but is none, so only keep ids
+    // that exist - applying the picker must not turn a collection into widgets
+    this.workingIDs = currentIDs.filter(id=>typeof id == 'string' && widgets.has(id));
+
+    // the properties module's picker CSS is scoped to .editorModule, so render
+    // into a matching wrapper to inherit its sizing
+    const host = div(content, 'editorModule');
+    renderWidgetSelectPopout(host, this.widget, {
+      pickerKey: routineWidgetPickerKey,
+      inline: true,
+      multiple: true,
+      allowSelf: true, // a routine regularly acts on the widget it belongs to
+      resolveCovering: true, // holders are usually covered by their cards
+      typeFilter: this.options.widgetType, // preset from the parameter, changeable in the picker
+      getSelectedIDs: _=>this.workingIDs,
+      apply: widgetIDs=>this.workingIDs = widgetIDs,
+      onClear: _=>this.workingIDs = [],
+      clearLabel: 'Select none'
     });
-    this.holderSelection.render();
-    content.appendChild(this.holderSelection.domElement);
-    super.show(false, showCollections);
+    button(content, 'Use these widgets', _=>this.setNewValue([ ...this.workingIDs ]));
+    // a widget parameter takes a widget id, which a variable or widget property
+    // can provide as well - e.g. ${PROPERTY parent} for the holder a button sits on
+    super.show(true, showCollections);
   }
 }
 
 class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
-  constructor() {
-    super();
+  constructor(options={}) {
+    super(options);
   }
 
   setNewCollectionValue(value) {
@@ -513,8 +552,9 @@ class RoutineHoldersOrCollectionSourcePopup extends RoutineWidgetIDPopup {
 
   setNewValue(value) {
     // widget ids arrive as an array and belong to the first (holder-like) parameter;
+    // a variable or widget property resolves to a widget id, so it goes there too;
     // collection names are strings and belong to the second parameter if there is one
-    if(Array.isArray(value)) {
+    if(Array.isArray(value) || typeof value == 'string' && value.match(/\$\{[^}]+\}/)) {
       const holderParameter = this.parameterNames[0];
       const collectionParameter = this.parameterNames[1];
       // clear the sibling collection (mirror of setNewCollectionValue) so a leftover

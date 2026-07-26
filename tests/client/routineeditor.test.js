@@ -16,9 +16,13 @@ beforeAll(() => {
     if (parent) parent.append(d);
     return d;
   };
+  window.html = string => String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   window.customSelectionCallback = null;
   window.startCustomSelection = () => {};
   window.endCustomSelection = () => {};
+  window.widgets = new Map();
+  window.setSelection = () => {};
+  window.editorTypeNames = { basic: 'Widget', button: 'Button', canvas: 'Canvas', card: 'Card', holder: 'Holder', label: 'Label', seat: 'Seat', timer: 'Timer' };
 
   const editorDiv = document.createElement('div');
   editorDiv.id = 'editor';
@@ -36,8 +40,10 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup', 'RoutineNumberPopup',
-    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup'
+    'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup',
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
+    'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
+    'handleWidgetPickerSelection'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -107,7 +113,7 @@ describe('operation rendering', () => {
     expect(dom.querySelector('[data-parameter="face"]')).toBeNull(); // face at its default stays hidden
     const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
-    expect(dom.firstChild).toBe(toggle); // the arrow sits at the start of the operation
+    expect(dom.querySelector('.routine-editor-operation-body').firstChild).toBe(toggle); // the arrow sits at the start of the operation
     toggle.dispatchEvent(new Event('click'));
     expect(editor.domElement.classList.contains('list-view')).toBe(true);
     const rows = editor.domElement.querySelectorAll('.routine-editor-parameter-row');
@@ -124,7 +130,7 @@ describe('operation rendering', () => {
     const toggle = dom.querySelector('.routine-editor-view-toggle');
     expect(toggle).not.toBeNull();
     toggle.dispatchEvent(new Event('click'));
-    const names = [...editor.domElement.querySelectorAll(':scope > .routine-editor-parameter-row .routine-editor-parameter-name')].map(e => e.textContent);
+    const names = [...editor.domElement.querySelectorAll(':scope > .routine-editor-operation-header > .routine-editor-operation-body > .routine-editor-parameter-row .routine-editor-parameter-name')].map(e => e.textContent);
     expect(names).toEqual([ 'condition', 'operand1', 'relation', 'operand2' ]);
     expect(editor.domElement.querySelector('.routine-editor')).not.toBeNull(); // nested routines stay visible
   });
@@ -305,8 +311,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 0 ]; // grab FLIP
-    editor.performDrag(2, true); // drop after DELETE
+    editor.performDrag(2, true, { editor, indices: [ 0 ] }); // grab FLIP, drop after DELETE
     expect(notified.map(o => o.func)).toEqual([ 'SHUFFLE', 'DELETE', 'FLIP' ]);
     expect(editor.routine).toBe(routine); // the array reference is preserved
   });
@@ -316,8 +321,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 0, 2 ]; // FLIP and DELETE
-    editor.performDrag(3, true); // drop after ROTATE
+    editor.performDrag(3, true, { editor, indices: [ 0, 2 ] }); // FLIP and DELETE, dropped after ROTATE
     expect(notified.map(o => o.func)).toEqual([ 'SHUFFLE', 'ROTATE', 'FLIP', 'DELETE' ]);
   });
 
@@ -326,8 +330,7 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 0 ];
-    editor.performDrag(0, false);
+    editor.performDrag(0, false, { editor, indices: [ 0 ] });
     expect(notified).toBeNull();
   });
 
@@ -336,9 +339,61 @@ describe('routine editor state handling', () => {
     const editor = new RoutineEditor({ state: {} }, routine);
     let notified = null;
     editor.registerChangeListener(v => notified = v);
-    editor.dragIndices = [ 2 ]; // FLIP
-    editor.performDrag(0, false); // before the first comment
+    editor.performDrag(0, false, { editor, indices: [ 2 ] }); // FLIP before the first comment
     expect(notified).toEqual([ { func: 'FLIP' }, '// one', '// one' ]);
+  });
+
+  test('dragging an operation into an IF block moves it inside the block', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'IF', operand1: 1, thenRoutine: [] } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    const block = editor.operations[1].subroutineEditors.thenRoutine;
+    block.performDrag(-1, true, { editor, indices: [ 0 ] }); // drop into the empty block
+    expect(notified).toEqual([ { func: 'IF', operand1: 1, thenRoutine: [ { func: 'FLIP' } ] } ]);
+    expect(editor.routine).toBe(routine); // the array reference is preserved
+  });
+
+  test('dragging into a block the operation does not have yet attaches the block', () => {
+    // a freshly added IF/FOREACH has no thenRoutine/loopRoutine key at all
+    for (const [ operation, property ] of [ [ { func: 'IF', operand1: 1 }, 'thenRoutine' ], [ { func: 'FOREACH' }, 'loopRoutine' ] ]) {
+      const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, operation ]);
+      let notified = null;
+      editor.registerChangeListener(v => notified = v);
+      const block = editor.operations[1].subroutineEditors[property];
+      block.performDrag(-1, true, { editor, indices: [ 0 ] });
+      expect(notified).toHaveLength(1);
+      expect(notified[0][property]).toEqual([ { func: 'FLIP' } ]);
+    }
+  });
+
+  test('dragging into an ELSE block moves the operation there', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'IF', operand1: 1, thenRoutine: [], elseRoutine: [] } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    const block = editor.operations[1].subroutineEditors.elseRoutine;
+    block.performDrag(-1, true, { editor, indices: [ 0 ] });
+    expect(notified).toEqual([ { func: 'IF', operand1: 1, thenRoutine: [], elseRoutine: [ { func: 'FLIP' } ] } ]);
+  });
+
+  test('dragging an operation out of a FOREACH block moves it into the parent routine', () => {
+    const routine = [ { func: 'FOREACH', loopRoutine: [ { func: 'FLIP' } ] }, { func: 'SHUFFLE' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    const block = editor.operations[0].subroutineEditors.loopRoutine;
+    editor.performDrag(1, true, { editor: block, indices: [ 0 ] }); // drop after SHUFFLE
+    expect(notified).toEqual([ { func: 'FOREACH', loopRoutine: [] }, { func: 'SHUFFLE' }, { func: 'FLIP' } ]);
+  });
+
+  test('a block nested inside the dragged operation refuses the drop', () => {
+    const routine = [ { func: 'IF', operand1: 1, thenRoutine: [] }, { func: 'FLIP' } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    const block = editor.operations[0].subroutineEditors.thenRoutine;
+    editor.beginDrag(editor.directChildCards()[0].querySelector('.routine-editor-drag-handle'));
+    expect(block.acceptsActiveDrag()).toBe(false); // the IF cannot go into its own block
+    expect(editor.acceptsActiveDrag()).toBe(true);
   });
 
   test('Ctrl-clicking a card toggles it in and out of the selection', () => {
@@ -590,29 +645,268 @@ describe('number popups with text values', () => {
   });
 });
 
-describe('widget picker resolution', () => {
-  test('picked widgets run through the resolver and are deduplicated', () => {
-    const holder = { id: 'h1', get: p => ({ type: 'holder', parent: null })[p] };
-    const cardA = { id: 'c1', get: p => ({ type: 'card', parent: 'h1' })[p] };
-    const cardB = { id: 'c2', get: p => ({ type: 'card', parent: 'h1' })[p] };
-    const selection = new WidgetSelection([], () => {}, w => w.get('type') == 'card' ? holder : w);
-    expect(selection.resolveAll([ cardA, cardB, holder ])).toEqual([ holder ]);
+describe('the shared widget picker', () => {
+  function room(...definitions) {
+    widgets.clear();
+    for(const [ id, type, parent ] of definitions) {
+      const state = { id, type, parent: parent || null };
+      widgets.set(id, { id, state, get: p => state[p] });
+    }
+    return id => widgets.get(id);
+  }
+
+  // renders the popout the properties sidebar and the routine editor share and
+  // starts its in-room pick mode
+  function pickInRoom(options) {
+    const wrap = document.createElement('div');
+    document.getElementById('editor').append(wrap);
+    const controls = renderWidgetSelectPopout(wrap, widgets.get('target'), Object.assign({ inline: true }, options));
+    controls.popout.querySelector('button[icon=colorize]').onclick();
+    return controls;
+  }
+
+  afterEach(() => {
+    stopWidgetPicker();
+    widgets.clear();
   });
 
-  test('without a resolver the picked widgets pass through unchanged', () => {
-    const widgetsPicked = [ { id: 'a' }, { id: 'b' } ];
-    const selection = new WidgetSelection([], () => {});
-    expect(selection.resolveAll(widgetsPicked)).toBe(widgetsPicked);
+  test('the type filter also applies to picking in the room', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'c1', 'card', 'h1' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    // the card covers the holder, so a click on it means the holder underneath
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toBe('h1');
   });
 
-  test('"Start Fresh" empties the current selection right away', () => {
-    const widget = { id: 'w1', get: p => ({ type: 'holder' })[p] };
-    const selection = new WidgetSelection([ widget ], () => {});
-    selection.render();
-    expect(selection.widgets).toHaveLength(1);
-    selection.domElement.querySelector('.start button:nth-child(2)').dispatchEvent(new Event('click'));
-    expect(selection.widgets).toHaveLength(0);
-    expect(selection.domElement.querySelectorAll('table tr[data-widget-id]')).toHaveLength(0);
+  test('a click that resolves to nothing matching is ignored', () => {
+    const get = room([ 'target', 'button' ], [ 'l1', 'label' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    handleWidgetPickerSelection([ get('l1') ]);
+    expect(picked).toBeNull();
+    expect(isWidgetPickerActive()).toBe(true); // still waiting for a matching click
+  });
+
+  test('without a type filter only resolveCovering pickers look past cards and piles', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'p1', 'pile', 'h1' ], [ 'c1', 'card', 'p1' ], [ 'c2', 'card' ]);
+    let picked = null;
+    pickInRoom({ apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c1') ]); // the plain picker takes what was clicked
+    expect(picked).toBe('c1');
+
+    stopWidgetPicker();
+    pickInRoom({ resolveCovering: true, apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toBe('h1');
+
+    stopWidgetPicker();
+    pickInRoom({ resolveCovering: true, apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c2') ]); // a card on the table stays itself
+    expect(picked).toBe('c2');
+  });
+
+  test('a broken parent chain does not send the resolver in circles', () => {
+    const get = room([ 'target', 'button' ], [ 'c1', 'card', 'c2' ], [ 'c2', 'card', 'c1' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toBeNull();
+  });
+
+  test('picking several widgets keeps the pick mode running and collects them', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'h2', 'holder' ], [ 'c1', 'card', 'h2' ]);
+    let picked = [];
+    pickInRoom({ multiple: true, resolveCovering: true, getSelectedIDs: () => picked, apply: ids => picked = ids });
+    handleWidgetPickerSelection([ get('h1') ]);
+    expect(isWidgetPickerActive()).toBe(true);
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toEqual([ 'h1', 'h2' ]);
+  });
+
+  test('the widget the picker belongs to is only listed when allowed, never picked in the room', () => {
+    room([ 'target', 'holder' ], [ 'h1', 'holder' ]);
+    let picked = null;
+    const ids = controls => [...controls.popout.querySelectorAll('.widgetPickerEntry')].map(e => e.textContent.replace('holder', ''));
+
+    expect(ids(pickInRoom({ apply: id => picked = id }))).toEqual([ 'h1' ]);
+    stopWidgetPicker();
+    expect(ids(pickInRoom({ allowSelf: true, apply: id => picked = id }))).toEqual([ 'h1', 'target' ]);
+
+    // the target is selected again after every pick, so clicking it in the room
+    // cannot be told apart from that restore
+    handleWidgetPickerSelection([ widgets.get('target') ]);
+    expect(picked).toBeNull();
+  });
+
+  test('a collection name is not mistaken for a widget id', () => {
+    room([ 'target', 'holder' ], [ 'h1', 'holder' ]);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineHoldersOrCollectionSourcePopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'SELECT', collection: 'myCards' }, [ 'collection' ], widgets.get('target'), [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+    expect([...popup.domElement.querySelectorAll('.widgetPickerEntry.selected')]).toHaveLength(0);
+    popup.hide();
+  });
+
+  test('the routine popup uses the shared picker and applies the selection', () => {
+    room([ 'target', 'holder' ], [ 'h1', 'holder' ], [ 'h2', 'holder' ]);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineWidgetIDPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'MOVE', from: [ 'h1' ] }, [ 'from' ], widgets.get('target'), [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+
+    const entries = [...popup.domElement.querySelectorAll('.widgetPickerEntry')];
+    expect(entries.map(e => e.textContent.replace('holder', ''))).toEqual([ 'h1', 'h2', 'target' ]);
+    expect(entries[0].classList.contains('selected')).toBe(true); // seeded with the current value
+    entries[1].onclick();
+    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'Use these widgets').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ from: [ 'h1', 'h2' ] });
+    popup.hide();
+  });
+});
+
+describe('widget type presets', () => {
+  function room(...definitions) {
+    widgets.clear();
+    for(const [ id, type ] of definitions) {
+      const state = { id, type, parent: 'theTable' };
+      widgets.set(id, { id, state, get: p => state[p] });
+    }
+  }
+
+  // opens the popup a chip opens, the way the routine editor does
+  function showPopup(operation, parameterNames) {
+    const editor = editorForOperation(operation);
+    editor.setOperationDetails(widgets.get('target'), operation, [], []);
+    const popup = editor.createPopup(parameterNames);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, widgets.get('target'), [], []);
+    popup.show();
+    return popup;
+  }
+
+  const pickedTypes = popup => [...popup.domElement.querySelectorAll('.widgetPickerEntry')].map(e => e.querySelector('.widgetPickerType').textContent);
+
+  afterEach(() => {
+    stopWidgetPicker();
+    widgets.clear();
+  });
+
+  test('parameters that name one kind of widget preset that type', () => {
+    const presets = {};
+    for(const func in routineOperationMetadata)
+      for(const parameter in routineOperationMetadata[func].parameters)
+        if(routineOperationMetadata[func].parameters[parameter].widgetType)
+          presets[`${func}.${parameter}`] = routineOperationMetadata[func].parameters[parameter].widgetType;
+    expect(presets).toEqual({
+      'CANVAS.collection': 'canvas',
+      'COUNT.holder': 'holder',
+      'FLIP.holder': 'holder',
+      'LABEL.label': 'label',
+      'MOVE.from': 'holder', 'MOVE.to': 'holder',
+      'MOVEXY.from': 'holder',
+      'RECALL.holder': 'holder',
+      'ROTATE.holder': 'holder',
+      'SCORE.seats': 'seat',
+      'SHUFFLE.holder': 'holder',
+      'SORT.holder': 'holder',
+      'SWAPHANDS.source': 'seat',
+      'TIMER.timer': 'timer', 'TIMER.collection': 'timer',
+      'TURN.turn': 'seat', 'TURN.source': 'seat'
+    });
+  });
+
+  test('the preset filters the picker list and can be changed to any type', () => {
+    room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'l1', 'label' ]);
+    const popup = showPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]); // the {holder,collection} chip
+    expect(pickedTypes(popup)).toEqual([ 'holder' ]);
+    const typeSelect = popup.domElement.querySelector('select');
+    expect(typeSelect.value).toBe('holder');
+    typeSelect.value = '';
+    typeSelect.onchange();
+    expect(pickedTypes(popup).sort()).toEqual([ 'button', 'holder', 'label' ]);
+    popup.hide();
+  });
+
+  test('collection-only and widget-only parameters get their preset as well', () => {
+    room([ 'target', 'button' ], [ 'l1', 'label' ], [ 't1', 'timer' ]);
+    const timer = showPopup({ func: 'TIMER' }, [ 'collection' ]); // no timer set: the chip is the collection
+    expect(pickedTypes(timer)).toEqual([ 'timer' ]);
+    timer.hide();
+    const label = showPopup({ func: 'LABEL' }, [ 'label' ]);
+    expect(pickedTypes(label)).toEqual([ 'label' ]);
+    label.hide();
+  });
+
+  test('TURN offers the seats for its turn parameter', () => {
+    room([ 'target', 'button' ], [ 's1', 'seat' ], [ 'h1', 'holder' ]);
+    const popup = showPopup({ func: 'TURN', turnCycle: 'seat' }, [ 'turn' ]);
+    expect(popup).toBeInstanceOf(RoutineNumberPopup);
+    expect(pickedTypes(popup)).toEqual([ 'seat' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.domElement.querySelector('.widgetPickerEntry').onclick();
+    expect(value).toEqual({ turn: 's1' });
+    popup.hide();
+  });
+});
+
+describe('variables in widget parameters', () => {
+  function showWidgetPopup(operation, parameterNames) {
+    widgets.clear();
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const editor = editorForOperation(operation);
+    const widget = { id: 'button1', state: { id: 'button1', parent: 'holder1' }, get: p => widget.state[p] };
+    editor.setOperationDetails(widget, operation, [ 'myHolder' ], []);
+    const popup = editor.createPopup(parameterNames);
+    popup.setSource(source);
+    popup.setOperationDetails(operation, parameterNames, widget, [ 'myHolder' ], []);
+    popup.show();
+    return popup;
+  }
+
+  const buttonNamed = (popup, text) => [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == text);
+
+  test('a widget parameter offers variables and widget properties', () => {
+    const popup = showWidgetPopup({ func: 'MOVE', from: [ 'h1' ] }, [ 'to' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    expect(buttonNamed(popup, 'myHolder')).toBeDefined();
+    buttonNamed(popup, 'parent').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ to: '${PROPERTY parent}' });
+    popup.hide();
+  });
+
+  test('a variable used for a holder goes to the holder parameter, not the collection', () => {
+    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    buttonNamed(popup, 'parent').dispatchEvent(new Event('click'));
+    expect(value.holder).toBe('${PROPERTY parent}');
+    expect('collection' in value).toBe(true);
+    expect(value.collection).toBeUndefined();
+    popup.hide();
+  });
+
+  test('a collection name still goes to the collection parameter', () => {
+    const popup = showWidgetPopup({ func: 'SHUFFLE' }, [ 'holder', 'collection' ]);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.setNewCollectionValue('DEFAULT');
+    expect(value).toEqual({ holder: undefined, collection: 'DEFAULT' });
+    popup.hide();
   });
 });
 

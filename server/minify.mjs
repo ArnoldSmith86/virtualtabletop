@@ -127,6 +127,7 @@ export default async function minifyHTML() {
     'client/js/editor/dragbuttons/resize.js',
     'client/js/editor/sidebarModule.js',
     'client/js/editor/propertyInputs.js',
+    'client/js/editor/controls/widgetselection.js',
     'client/js/editor/sidebar/properties.js',
     'client/js/editor/sidebar/undo.js',
     'client/js/editor/sidebar/json.js',
@@ -137,7 +138,6 @@ export default async function minifyHTML() {
 
     'client/js/editor/controls/routine.js',
     'client/js/editor/controls/popup.js',
-    'client/js/editor/controls/widgetselection.js',
     'client/js/editor/controls/events.js',
 
     'client/js/editmode.js',
