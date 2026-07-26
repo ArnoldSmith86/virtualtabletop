@@ -2066,14 +2066,15 @@ export class Widget extends StateManaged {
                 },
                 []
               );
-              let collection = contents;
-              if(a.keepOrder) {
-                // an array of IDs is turned into a collection by widgetFilter, which
-                // returns the widgets in creation order - pass a collection that is
-                // already sorted like the hand instead so the order is kept
-                collection = `$swaphands_${i}`;
-                collections[collection] = contents.map(id=>widgets.get(id));
-              }
+              // the collection is named after the seat it comes from so that the
+              // generated MOVE reads like "from 'hand of seat1' to 'seat2'" in the log
+              const collection = `hand of ${source.get('id')}`;
+              // an array of IDs is turned into a collection by widgetFilter, which
+              // returns the widgets in creation order - keepOrder uses a collection
+              // that is already sorted like the hand instead so the order is kept
+              collections[collection] = a.keepOrder
+                ? contents.map(id=>widgets.get(id))
+                : widgetFilter(w=>contents.indexOf(w.get('id')) != -1);
               moves.push({
                 func: "MOVE",
                 collection: collection,
@@ -2081,13 +2082,13 @@ export class Widget extends StateManaged {
               });
             }
           }
-          if(jeRoutineLogging) {
+          if(jeRoutineLogging)
             jeLoggingRoutineOperationStart("Moves", "Moves");
-          }
           await this.evaluateRoutine(moves, variables, collections, (depth || 0) + 1, true);
-          if(jeRoutineLogging) {
-          jeLoggingRoutineOperationEnd([], variables, collections, false);
-          }
+          for(const move of moves)
+            delete collections[move.collection];
+          if(jeRoutineLogging)
+            jeLoggingRoutineOperationEnd([], variables, collections, false);
           if(jeRoutineLogging)
             jeLoggingRoutineOperationSummary(`hands ${a.direction} by ${a.interval}${a.keepOrder ? ', keeping the card order' : ''}`);
         } else if(jeRoutineLogging) {
