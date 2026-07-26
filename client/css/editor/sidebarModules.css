@@ -459,10 +459,20 @@
   box-shadow: inset 0 0 0 2px #fff;
 }
 
+/* line color and line width share one row below the style buttons */
+.editorModule .lineAppearanceRow {
+  gap: 4px 12px;
+}
+.editorModule .lineAppearanceRow > .genericInput {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .editorModule .lineAppearanceColor > label,
 .editorModule .lineAppearanceWidth > label {
   display: inline-block;
-  width: 110px;
+  width: auto;
+  white-space: nowrap;
 }
 .editorModule .lineAppearanceColor input.lineColorPicker {
   width: 48px;
@@ -474,14 +484,6 @@
 .editorModule .lineAppearanceWidth input.lineWidthValue {
   width: 52px;
   min-width: 52px;
-}
-.editorModule .lineAppearanceWidth input.lineWidthRange {
-  width: 85px;
-  min-width: 85px;
-}
-.editorModule .lineDashLabel {
-  display: block;
-  margin-top: 8px;
 }
 .editorModule .lineDashPresets {
   display: grid;
@@ -522,8 +524,9 @@
 .editorModule .lineStopList .genericInput {
   display: flex;
   align-items: center;
-  /* the id field needs room for longer ids, so in a narrow sidebar the row
-     wraps instead of squeezing it down to a few characters */
+  /* the row is built from three groups (name + id, preview + position, the
+     buttons) so a narrow sidebar wraps them as units instead of tearing e.g.
+     the percentage away from its % sign */
   flex-wrap: wrap;
   gap: 5px;
   margin-bottom: 7px;
@@ -531,8 +534,18 @@
   border: 1px solid #777;
   border-radius: 6px;
 }
-.editorModule .lineStopList .genericInput > label {
+.editorModule .lineStopList .lineStopGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.editorModule .lineStopList .lineStopIdGroup {
   flex: 1 1 auto;
+  min-width: 0;
+}
+.editorModule .lineStopList .genericInput > .lineStopGroup > label {
   min-width: 0;
   white-space: nowrap;
 }
@@ -545,8 +558,8 @@
 .editorModule .lineStopList input.lineStopIdInput {
   color: inherit;
   font: inherit;
-  width: 92px;
-  min-width: 60px;
+  width: 75px;
+  min-width: 75px;
   padding: 0 2px;
   border: 0;
   border-bottom: 1px dashed currentColor;
@@ -599,8 +612,18 @@
   flex: 1 1 80px;
   min-width: 60px;
 }
+/* the "Connect at ... offset ..." row belongs to the end point above it, so it
+   is indented; each half stays together when the sidebar gets narrow */
 .editorModule .lineConnectDetails {
   margin-top: 0;
+  padding-left: 10px;
+}
+.editorModule .lineConnectGroup {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
 }
 .editorModule .lineToggleRow {
   display: flex;
@@ -647,20 +670,14 @@
 .editorModule .lineToggle input:checked + .lineToggleSlider::before {
   transform: translateX(22px);
 }
-/* deleting a stop is destructive, so it gets a red trash icon instead of a
-   button that looks like the neutral reordering ones next to it */
-.editorModule .lineStopList .genericInput button.lineRemoveStop {
+/* deleting a stop is destructive, so it gets the shared red icon-button look
+   (white glyph on dark red, darker on hover) from button[icon].red */
+.editorModule .lineStopList button.lineRemoveStop {
   display: inline-flex;
   flex: 0 0 auto;
   margin-left: 3px;
   padding: 3px;
   vertical-align: middle;
-  color: #ff6b6b;
-  background: transparent;
-}
-.editorModule .lineStopList .genericInput button.lineRemoveStop:hover {
-  color: #fff;
-  background: darkred;
 }
 .editorModule .lineStopOrder {
   display: flex;

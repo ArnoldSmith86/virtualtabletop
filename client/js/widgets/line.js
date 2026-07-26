@@ -264,24 +264,18 @@ export class Line extends Widget {
     return legacyValue === null ? !!this.get('rotateStops') : !!legacyValue;
   }
 
-  // the midpoint of the largest empty span along the line, so "Add stop" drops the
-  // new one into open space without disturbing the others. The start (0) and end (1)
-  // of the line count as boundaries so the gaps before the first / after the last
-  // stop are considered too, not just the gaps between stops.
+  // where "Add stop" puts the new stop: right before the last one, so adding
+  // several in a row extends the chain in order instead of dropping each one
+  // into whatever gap happens to be widest at the time
   nextStopPosition() {
     const positions = this.attachedWidgets().map(w=>+w.get('linePosition') || 0);
     if(positions.length == 0)
       return 0;
-    const bounds = [ 0, ...positions, 1 ];
-    let bestGap = -1, bestPos = 0.5;
-    for(let i = 1; i < bounds.length; ++i) {
-      const gap = bounds[i] - bounds[i-1];
-      if(gap > bestGap) {
-        bestGap = gap;
-        bestPos = (bounds[i] + bounds[i-1])/2;
-      }
-    }
-    return Math.round(bestPos*1000)/1000;
+    const last = positions[positions.length-1];
+    const previous = positions.length > 1 ? positions[positions.length-2] : 0;
+    // if the last stop sits at the very start of the line there is no room
+    // before it, so the new stop goes after it instead
+    return Math.round((last > previous ? (previous+last)/2 : (last+1)/2)*1000)/1000;
   }
 
   connectedLines() {
@@ -538,6 +532,13 @@ export class Line extends Widget {
     }
   }
 
+  // one readable history entry per drag: every move of the same handle shares
+  // this cause, so the deltas merge into a single entry
+  handleDragCause(property) {
+    const names = { lineStart: 'start point', lineEnd: 'end point', controlStart: 'start curve handle', controlEnd: 'end curve handle' };
+    return `${playerName} moved the ${names[property]} of line ${this.id} in editor`;
+  }
+
   addHandleDragging(handle, property) {
     const startDragging = eDown => {
       eDown.preventDefault();
@@ -549,7 +550,7 @@ export class Line extends Widget {
         const coords = eMove.touches ? eMove.touches[0] : eMove;
         const local = this.coordLocalFromCoordClient({ x: coords.clientX, y: coords.clientY });
         batchStart();
-        setDeltaCause(`${playerName} moved ${property} of ${this.id} in editor`);
+        setDeltaCause(this.handleDragCause(property));
         await this.set(property, { x: Math.round(local.x), y: Math.round(local.y) });
         batchEnd();
       };
@@ -561,7 +562,7 @@ export class Line extends Widget {
         // only wrap the hit box tightly around the path once the drag ends, instead of on
         // every move - resizing/repositioning it mid-drag caused a visible stretching effect
         batchStart();
-        setDeltaCause(`${playerName} moved ${property} of ${this.id} in editor`);
+        setDeltaCause(this.handleDragCause(property));
         await this.normalizeGeometry();
         batchEnd();
       };

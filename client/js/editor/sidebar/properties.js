@@ -573,6 +573,7 @@ class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
     this.widgetPicker = null;
+    this.renderedSelectionIDs = null;
     this.collapsibleStates = {};
     this.sizeRatioLocks = new WeakMap();
     // per line: the widget new stops inherit from. Kept outside the panel because
@@ -853,6 +854,13 @@ class PropertiesModule extends SidebarModule {
     if(this.handleWidgetPickerSelection(newSelection))
       return;
 
+    // Re-rendering the very same widgets must not scroll the panel back to the
+    // top: picking a widget in the room re-selects the target, which lands here
+    // and would otherwise make the sidebar jump.
+    const selectionIDs = newSelection.map(widget=>widget.id).join(' ');
+    const keepScrollTop = selectionIDs === this.renderedSelectionIDs ? this.moduleDOM.scrollTop : null;
+    this.renderedSelectionIDs = selectionIDs;
+
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -883,6 +891,9 @@ class PropertiesModule extends SidebarModule {
 
     if(!newSelection.length)
       this.addDeck();
+
+    if(keepScrollTop !== null)
+      this.moduleDOM.scrollTop = keepScrollTop;
   }
 
   addDeck() {
@@ -5321,7 +5332,22 @@ class PropertiesModule extends SidebarModule {
     this.renderTypeHeader(widget);
     this.renderBasicSection(widget);
 
+    // Every edit below goes through this so the history gets exactly one entry
+    // that says what happened: batching keeps the follow-up updates (stop
+    // spacing, connected lines, box re-fit) inside the same delta and the cause
+    // merges deltas that a single interaction splits up.
+    const lineEdit = async (cause, change)=>{
+      batchStart();
+      setDeltaCause(`${getPlayerDetails().playerName} ${cause} in editor`);
+      try {
+        await change();
+      } finally {
+        batchEnd();
+      }
+    };
+
     this.addSubHeader('Appearance');
+    this.addAppearanceSubTitle('Line shape');
     const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
     const shapePresets = [
       { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
@@ -5352,14 +5378,12 @@ class PropertiesModule extends SidebarModule {
       button.setAttribute('aria-label', preset.name);
       button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;
       shapeWrap.appendChild(button);
-      button.onclick = async _=>{
+      button.onclick = _=>lineEdit(`set the shape of line ${widget.id} to ${preset.name.toLowerCase()}`, async _=>{
         const controls = presetControls(preset);
-        batchStart();
         await widget.set('controlStart', controls ? controls.start : null);
         await widget.set('controlEnd', controls ? controls.end : null);
         await widget.normalizeGeometry();
-        batchEnd();
-      };
+      });
       return button;
     });
     const updateShapeButtons = widget=>{
@@ -5374,7 +5398,36 @@ class PropertiesModule extends SidebarModule {
     this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
     this.addPropertyListener(widget, 'controlEnd', updateShapeButtons);
 
-    const colorWrap = div(this.moduleDOM, 'genericInput lineAppearanceColor');
+    const dashPresets = [
+      { name: 'Solid', value: null },
+      { name: 'Dotted', value: '2 10' },
+      { name: 'Short dashes', value: '8 8' },
+      { name: 'Dashed', value: '16 10' },
+      { name: 'Long dashes', value: '28 12' },
+      { name: 'Dash-dot', value: '20 8 3 8' }
+    ];
+    this.addAppearanceSubTitle('Line style');
+    const dashWrap = div(this.moduleDOM, 'lineDashPresets');
+    const dashButtons = dashPresets.map(preset=>{
+      const button = document.createElement('button');
+      button.className = 'lineDashPreset';
+      button.title = preset.name;
+      button.setAttribute('aria-label', preset.name);
+      const dash = preset.value ? ` stroke-dasharray="${preset.value}"` : '';
+      button.innerHTML = `<svg viewBox="0 0 80 16" aria-hidden="true"><path d="M 4 8 L 76 8"${dash}/></svg><span>${preset.name}</span>`;
+      button.onclick = _=>lineEdit(`set the style of line ${widget.id} to ${preset.name.toLowerCase()}`, _=>widget.set('lineDash', preset.value));
+      dashWrap.appendChild(button);
+      return button;
+    });
+    const updateDashButtons = ()=>{
+      const current = widget.get('lineDash') || null;
+      dashPresets.forEach((preset, i)=>dashButtons[i].classList.toggle('selected', preset.value === current));
+    };
+    this.addPropertyListener(widget, 'lineDash', updateDashButtons);
+
+    // color and width share one row below the style buttons
+    const appearanceRow = div(this.moduleDOM, 'propertyInlineRow lineAppearanceRow');
+    const colorWrap = div(appearanceRow, 'genericInput lineAppearanceColor');
     const colorLabel = document.createElement('label');
     colorLabel.innerText = 'Line color';
     const color = document.createElement('input');
@@ -5389,9 +5442,9 @@ class PropertiesModule extends SidebarModule {
         color.value = value;
     };
     this.addPropertyListener(widget, 'lineColor', updateLineColor);
-    color.onchange = _=>widget.set('lineColor', color.value);
+    color.onchange = _=>lineEdit(`changed the color of line ${widget.id}`, _=>widget.set('lineColor', color.value));
 
-    const widthWrap = div(this.moduleDOM, 'genericInput lineAppearanceWidth');
+    const widthWrap = div(appearanceRow, 'genericInput lineAppearanceWidth');
     const widthLabel = document.createElement('label');
     widthLabel.innerText = 'Line width';
     const width = document.createElement('input');
@@ -5401,65 +5454,15 @@ class PropertiesModule extends SidebarModule {
     width.step = 'any';
     width.className = 'lineWidthValue';
     width.title = 'Line width in pixels';
-    const widthRange = document.createElement('input');
-    widthRange.type = 'range';
-    widthRange.min = 0;
-    widthRange.max = 25;
-    widthRange.step = 1;
-    widthRange.className = 'lineWidthRange';
-    widthRange.title = width.title;
-    const updateLineWidth = ()=>{
-      const value = Math.max(0, Math.min(25, +widget.get('lineWidth') || 0));
-      width.value = value;
-      widthRange.value = value;
-    };
-    this.addPropertyListener(widget, 'lineWidth', updateLineWidth);
-    const saveLineWidth = ()=>{
+    this.addPropertyListener(widget, 'lineWidth', ()=>width.value = Math.max(0, Math.min(25, +widget.get('lineWidth') || 0)));
+    width.onchange = _=>{
       const value = Math.max(0, Math.min(25, +width.value || 0));
       width.value = value;
-      widthRange.value = value;
-      widget.set('lineWidth', value);
-    };
-    width.onchange = saveLineWidth;
-    width.oninput = _=>widthRange.value = Math.max(0, Math.min(25, +width.value || 0));
-    widthRange.oninput = _=>{
-      width.value = widthRange.value;
-      saveLineWidth();
+      lineEdit(`changed the width of line ${widget.id}`, _=>widget.set('lineWidth', value));
     };
     widthWrap.appendChild(widthLabel);
     widthWrap.appendChild(width);
     widthWrap.appendChild(document.createTextNode(' px'));
-    widthWrap.appendChild(widthRange);
-
-    const dashPresets = [
-      { name: 'Solid', value: null },
-      { name: 'Dotted', value: '2 10' },
-      { name: 'Short dashes', value: '8 8' },
-      { name: 'Dashed', value: '16 10' },
-      { name: 'Long dashes', value: '28 12' },
-      { name: 'Dash-dot', value: '20 8 3 8' }
-    ];
-    const dashLabel = document.createElement('label');
-    dashLabel.className = 'lineDashLabel';
-    dashLabel.innerText = 'Line style';
-    this.moduleDOM.appendChild(dashLabel);
-    const dashWrap = div(this.moduleDOM, 'lineDashPresets');
-    const dashButtons = dashPresets.map(preset=>{
-      const button = document.createElement('button');
-      button.className = 'lineDashPreset';
-      button.title = preset.name;
-      button.setAttribute('aria-label', preset.name);
-      const dash = preset.value ? ` stroke-dasharray="${preset.value}"` : '';
-      button.innerHTML = `<svg viewBox="0 0 80 16" aria-hidden="true"><path d="M 4 8 L 76 8"${dash}/></svg><span>${preset.name}</span>`;
-      button.onclick = _=>widget.set('lineDash', preset.value);
-      dashWrap.appendChild(button);
-      return button;
-    });
-    const updateDashButtons = ()=>{
-      const current = widget.get('lineDash') || null;
-      dashPresets.forEach((preset, i)=>dashButtons[i].classList.toggle('selected', preset.value === current));
-    };
-    this.addPropertyListener(widget, 'lineDash', updateDashButtons);
 
     this.addSubHeader('Stops');
 
@@ -5485,17 +5488,17 @@ class PropertiesModule extends SidebarModule {
     const updateRotateStops = ()=>rotateStops.checked = widget.shouldRotateStops();
     this.addPropertyListener(widget, 'rotateStops', updateRotateStops);
     this.addPropertyListener(widget, 'rotateAttachedWidgets', updateRotateStops);
-    rotateStops.onchange = async _=>{
+    rotateStops.onchange = _=>lineEdit(`${rotateStops.checked ? 'enabled' : 'disabled'} automatic stop rotation on line ${widget.id}`, async _=>{
       // Remove the previous property when changing the setting in the tuner,
       // so old line JSON cannot override the new rotateStops value.
       await widget.set('rotateAttachedWidgets', null);
       await widget.set('rotateStops', rotateStops.checked);
-    };
+    });
 
     const autoSpaceStops = addLineToggle('Distribute evenly', 'lineAutoSpaceStops', 'Automatically distribute stops when line geometry changes');
     this.addPropertyListener(widget, 'autoSpaceStops', ()=>autoSpaceStops.checked = !!widget.get('autoSpaceStops'));
     autoSpaceStops.onchange = async _=>{
-      await widget.set('autoSpaceStops', autoSpaceStops.checked);
+      await lineEdit(`${autoSpaceStops.checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', autoSpaceStops.checked));
       renderStops();
     };
 
@@ -5536,13 +5539,12 @@ class PropertiesModule extends SidebarModule {
     inheritRow.insertBefore(addStopButton, inheritPopoutControls.popout);
 
     const removeStop = async stop=>{
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} removed a stop from line ${widget.id} in editor`);
-      // release its contents to the room first so cards/tokens on the stop aren't deleted
-      await this.lineReleaseStopChildren(stop);
-      await removeWidgetLocal(stop.get('id'));
-      await widget.updateAttachedWidgets();
-      batchEnd();
+      await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
+        // release its contents to the room first so cards/tokens on the stop aren't deleted
+        await this.lineReleaseStopChildren(stop);
+        await removeWidgetLocal(stop.get('id'));
+        await widget.updateAttachedWidgets();
+      });
       renderStops();
     };
 
@@ -5606,22 +5608,26 @@ class PropertiesModule extends SidebarModule {
         return;
       const position = stops[index].get('linePosition');
       const otherPosition = stops[otherIndex].get('linePosition');
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} reordered stops on line ${widget.id} in editor`);
-      await stops[index].set('linePosition', otherPosition);
-      await stops[otherIndex].set('linePosition', position);
-      if(widget.get('autoSpaceStops'))
-        await widget.distributeAttachedWidgetsEvenly();
-      else
-        await widget.updateAttachedWidgets();
-      batchEnd();
+      await lineEdit(`moved stop ${stops[index].id} ${direction < 0 ? 'up' : 'down'} on line ${widget.id}`, async _=>{
+        await stops[index].set('linePosition', otherPosition);
+        await stops[otherIndex].set('linePosition', position);
+        if(widget.get('autoSpaceStops'))
+          await widget.distributeAttachedWidgetsEvenly();
+        else
+          await widget.updateAttachedWidgets();
+      });
       renderStops();
     };
     const renderStops = ()=>{
       stopList.innerHTML = '';
       const stops = widget.attachedWidgets();
       stops.forEach((stop, i)=>{
+        // three flex groups (name+id, preview+position, buttons) so a narrow
+        // sidebar wraps them as units instead of breaking them apart
         const row = div(stopList, 'genericInput');
+        const idGroup = div(row, 'lineStopGroup lineStopIdGroup');
+        const positionGroup = div(row, 'lineStopGroup lineStopPositionGroup');
+        const buttonGroup = div(row, 'lineStopGroup lineStopButtonGroup');
         const label = document.createElement('label');
         label.append(`Stop ${i+1} (`);
         // renaming re-adds the same stop state under the new id, so it must not
@@ -5640,15 +5646,13 @@ class PropertiesModule extends SidebarModule {
         position.className = 'lineStopPosition';
         position.value = Math.round((+stop.get('linePosition') || 0)*100);
         position.title = 'Position along the line in percent';
-        position.onchange = async _=>{
-          batchStart();
-          setDeltaCause(`${getPlayerDetails().playerName} moved a stop on line ${widget.id} in editor`);
+        position.onchange = _=>lineEdit(`moved stop ${stop.id} on line ${widget.id}`, async _=>{
           await stop.set('linePosition', Math.max(0, Math.min(100, +position.value || 0))/100);
           await widget.updateAttachedWidgets();
-          batchEnd();
-        };
+        });
+        // destructive, so it gets the shared red icon-button look
         const remove = document.createElement('button');
-        remove.className = 'lineRemoveStop';
+        remove.className = 'lineRemoveStop red';
         remove.setAttribute('icon', 'delete');
         remove.title = 'Remove this stop';
         remove.onclick = _=>removeStop(stop);
@@ -5666,12 +5670,12 @@ class PropertiesModule extends SidebarModule {
         down.onclick = _=>moveStop(i, 1);
         order.appendChild(up);
         order.appendChild(down);
-        row.appendChild(label);
-        row.appendChild(stopPreview(stop));
-        row.appendChild(position);
-        row.appendChild(document.createTextNode(' %'));
-        row.appendChild(order);
-        row.appendChild(remove);
+        idGroup.appendChild(label);
+        positionGroup.appendChild(stopPreview(stop));
+        positionGroup.appendChild(position);
+        positionGroup.appendChild(document.createTextNode('%'));
+        buttonGroup.appendChild(order);
+        buttonGroup.appendChild(remove);
       });
     };
     renderStops();
@@ -5683,8 +5687,6 @@ class PropertiesModule extends SidebarModule {
     });
 
     addStopButton.onclick = async _=>{
-      batchStart();
-      setDeltaCause(`${getPlayerDetails().playerName} added a stop to line ${widget.id} in editor`);
       const inheritID = inheritTarget();
       const target = widgets.has(inheritID) ? widgets.get(inheritID) : null;
       let template;
@@ -5702,12 +5704,13 @@ class PropertiesModule extends SidebarModule {
       // spacing immediately recalculates every stop after it is added.
       template.linePosition = widget.nextStopPosition();
       template.id = this.lineNextStopID(widget, template.linePosition);
-      await addWidgetLocal(template);
-      if(widget.get('autoSpaceStops'))
-        await widget.distributeAttachedWidgetsEvenly();
-      else
-        await widget.updateAttachedWidgets();
-      batchEnd();
+      await lineEdit(`added stop ${template.id} to line ${widget.id}`, async _=>{
+        await addWidgetLocal(template);
+        if(widget.get('autoSpaceStops'))
+          await widget.distributeAttachedWidgetsEvenly();
+        else
+          await widget.updateAttachedWidgets();
+      });
       renderStops();
     };
 
@@ -5733,8 +5736,12 @@ class PropertiesModule extends SidebarModule {
       target.title = 'Type any widget id to connect to it';
       wrapper.appendChild(target);
 
-      // second row: where on the target the end point sits
+      // second row: where on the target the end point sits. Indented and split
+      // into two flex groups so it reads as a sub-part of the end point above
+      // and wraps as a unit in a narrow sidebar.
       const detailRow = div(this.moduleDOM, 'propertyInput lineConnectDetails');
+      const positionGroup = div(detailRow, 'lineConnectGroup');
+      const offsetGroup = div(detailRow, 'lineConnectGroup');
       const position = document.createElement('input');
       position.type = 'number';
       position.min = 0;
@@ -5748,12 +5755,12 @@ class PropertiesModule extends SidebarModule {
       offset.step = 'any';
       offset.className = `lineConnect${end}Offset`;
       offset.title = 'Perpendicular offset from the other line in pixels; positive is to its left from start to end';
-      detailRow.appendChild(document.createTextNode('Connect at '));
-      detailRow.appendChild(position);
-      detailRow.appendChild(document.createTextNode('%'));
-      detailRow.appendChild(document.createTextNode(', offset '));
-      detailRow.appendChild(offset);
-      detailRow.appendChild(document.createTextNode(' px'));
+      positionGroup.appendChild(document.createTextNode('Connect at'));
+      positionGroup.appendChild(position);
+      positionGroup.appendChild(document.createTextNode('%'));
+      offsetGroup.appendChild(document.createTextNode('offset'));
+      offsetGroup.appendChild(offset);
+      offsetGroup.appendChild(document.createTextNode('px'));
 
       this.addPropertyListener(widget, 'connect'+end, widget=>{
         const connection = widget.get('connect'+end);
@@ -5763,13 +5770,11 @@ class PropertiesModule extends SidebarModule {
         position.disabled = !connection;
         offset.disabled = !connection;
       });
-      const saveConnection = ()=>{
-        widget.set('connect'+end, target.value ? {
-          line: target.value,
-          position: Math.max(0, Math.min(100, +position.value || 0))/100,
-          offset: +offset.value || 0
-        } : null);
-      };
+      const saveConnection = ()=>lineEdit(`connected the ${end.toLowerCase()} point of line ${widget.id}`, _=>widget.set('connect'+end, target.value ? {
+        line: target.value,
+        position: Math.max(0, Math.min(100, +position.value || 0))/100,
+        offset: +offset.value || 0
+      } : null));
       const setDefaultPositionForTarget = _=>{
         const targetWidget = widgets.get(target.value);
         // A newly chosen non-line widget starts at its midpoint. Line targets
@@ -5791,7 +5796,7 @@ class PropertiesModule extends SidebarModule {
           target.value = id;
           setDefaultPositionForTarget();
         },
-        onClear: ()=>widget.set('connect'+end, null),
+        onClear: ()=>lineEdit(`disconnected the ${end.toLowerCase()} point of line ${widget.id}`, _=>widget.set('connect'+end, null)),
         clearLabel: 'Disconnect'
       });
       this.addPropertyListener(widget, 'connect'+end, ()=>connectPopoutControls.refresh());
