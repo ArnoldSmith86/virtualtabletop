@@ -2957,6 +2957,9 @@ class PropertiesModule extends SidebarModule {
       wrap.appendChild(rangeInput);
     }
 
+    if(options.infoText)
+      wrap.appendChild(this.renderInfoIcon(options.infoText, { size: '18px' }));
+
     const clampForRange = value => Math.max(min, Math.min(max, value));
     const normalizeValue = value => {
       if(value === '' || value === null || value === undefined)
@@ -3801,6 +3804,7 @@ class PropertiesModule extends SidebarModule {
     arrow.className = 'collapseArrow';
     header.appendChild(arrow);
     const heading = document.createElement('span');
+    heading.className = 'collapsibleTitle';
     heading.textContent = title;
     header.appendChild(heading);
     if(options.renderSummary) {
@@ -3868,13 +3872,47 @@ class PropertiesModule extends SidebarModule {
 
     this.renderGridSection(widget);
 
-    this.renderCollapsibleSection('Generic', true, body=>{
-      this.renderCheckbox(widget, 'Clickable', 'clickable', body);
-      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, step: 1, slider: false });
-      this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body);
-    }, null, `${widget.id}:generic`);
+    this.renderCollapsibleSection('Interaction & display', true, body=>{
+      this.renderCheckbox(widget, 'Clickable', 'clickable', body, {
+        infoText: 'Whether the widget reacts to being clicked at all: with this off its click routine does not run and clicking it does not flip to the next face. Dragging it still works.'
+      });
+      this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, {
+        min: 0,
+        step: 1,
+        slider: false,
+        infoText: 'Show a bigger copy of the widget while the mouse is over it (or on right click), scaled by this factor. 0 turns it off.'
+      });
+      this.renderCheckbox(widget, 'Ignore zoom', 'ignoreZoom', body, {
+        infoText: 'Keep the widget at its own size while the rest of the room is zoomed in or out.'
+      });
+    }, null, `${widget.id}:generic`, {
+      renderSummary: summary => {
+        const update = w => summary.textContent = this.interactionSummary(w);
+        for(const property of [ 'clickable', 'enlarge', 'ignoreZoom' ])
+          this.addPropertyListener(widget, property, update);
+      }
+    });
 
     this.renderAssociatedWidgetsSection(widget);
+  }
+
+  // one line for the collapsed header, naming only what deviates from the
+  // plain default (an untouched widget gets no summary at all)
+  interactionSummary(widget) {
+    const parts = [];
+    const add = (property, label, describe) => {
+      const value = widget.get(property);
+      if(propertyInputIsMulti(value))
+        parts.push(`${label} —`);
+      else if(describe(value))
+        parts.push(describe(value));
+    };
+
+    add('clickable', 'clickable', value=>value ? null : 'not clickable');
+    add('enlarge', 'enlarge', value=>value ? `enlarge ×${value}` : null);
+    add('ignoreZoom', 'ignore zoom', value=>value ? 'ignores zoom' : null);
+
+    return parts.join(' · ');
   }
 
   // --- snap grid ---
@@ -4743,7 +4781,54 @@ class PropertiesModule extends SidebarModule {
 
     this.renderCollapsibleSection("Widget's links", !hasLinks, body => {
       this.renderAssociatedWidgetsSectionBody(widget, body);
-    }, null, `${widget.id}:links`);
+    }, null, `${widget.id}:links`, {
+      renderSummary: summary => {
+        const update = w => {
+          summary.textContent = this.associatedWidgetsSummary(w);
+        };
+        for(const property of [ 'parent', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ])
+          this.addPropertyListener(widget, property, update);
+      }
+    });
+  }
+
+  // one line naming the links that are set, for the collapsed section header
+  associatedWidgetsSummary(widget) {
+    const parts = [];
+
+    const parent = widget.get('parent');
+    if(propertyInputIsMulti(parent))
+      parts.push('parent —');
+    else if(this.isOnDemandPropertyValueSet(parent))
+      parts.push(`parent ${parent}${widget.get('fixedParent') === true ? ' (locked)' : ''}`);
+
+    const seatSummary = (property, label) => {
+      const value = widget.get(property);
+      if(propertyInputIsMulti(value))
+        return `${label} —`;
+      const seats = this.seatReferenceToArray(value);
+      if(!seats.length)
+        return null;
+      return `${label} ${seats.length > 2 ? `${seats.length} seats` : seats.join(', ')}`;
+    };
+    for(const [ property, label ] of [ [ 'linkedToSeat', 'seat' ], [ 'onlyVisibleForSeat', 'visible for' ] ]) {
+      const seats = seatSummary(property, label);
+      if(seats)
+        parts.push(seats);
+    }
+
+    const inheritFrom = widget.get('inheritFrom');
+    if(propertyInputIsMulti(inheritFrom)) {
+      parts.push('inherits —');
+    } else {
+      const sources = Object.keys(this.normalizeInheritFromObject(inheritFrom));
+      if(sources.length == 1)
+        parts.push(`inherits from ${sources[0]}`);
+      else if(sources.length)
+        parts.push(`inherits from ${sources.length} widgets`);
+    }
+
+    return parts.length ? parts.join(' · ') : 'none';
   }
 
   renderAssociatedWidgetsSectionBody(widget, target) {
@@ -8293,7 +8378,7 @@ class PropertiesModule extends SidebarModule {
     return wrapper;
   }
 
-  renderCheckbox(widget, title, property, target = null) {
+  renderCheckbox(widget, title, property, target = null, options = {}) {
     const wrap = div(target || this.moduleDOM);
     const input = document.createElement('input');
     input.type = 'checkbox';
@@ -8309,9 +8394,15 @@ class PropertiesModule extends SidebarModule {
     label.textContent = title || property;
     wrap.appendChild(input);
     wrap.appendChild(label);
+    if(options.infoText) {
+      const infoIcon = this.renderInfoIcon(options.infoText, { size: '18px' });
+      infoIcon.style.marginLeft = '4px';
+      wrap.appendChild(infoIcon);
+    }
 
     input.onchange = () => this.inputValueUpdated(widget, property, input.checked);
     this.addPropertyListener(widget, property, updateChecked);
+    return wrap;
   }
 
   renderSelectionButton(widget, title, property, value, css='css', cssClass='default', icon=null, tooltip='') {

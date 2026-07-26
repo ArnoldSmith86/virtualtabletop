@@ -622,9 +622,19 @@
   outline-offset: -2px;
 }
 
+.editorModule .collapsibleTitle {
+  flex: 0 0 auto;
+}
+
 .editorModule .collapsibleSummary {
   color: var(--textColor);
   font-weight: normal;
+  /* a link or grid summary can get long - keep the header one line high */
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .editorModule .collapseArrow::before {

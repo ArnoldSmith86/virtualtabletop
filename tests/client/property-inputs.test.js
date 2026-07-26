@@ -74,6 +74,12 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     isSizeRatioLockEnabled: PropertiesModule.prototype.isSizeRatioLockEnabled,
     inheritSourceWouldCreateCycle: PropertiesModule.prototype.inheritSourceWouldCreateCycle,
     normalizeInheritFromObject: PropertiesModule.prototype.normalizeInheritFromObject,
+    MULTI_DIFFERENT,
+    isOnDemandPropertyValueSet: PropertiesModule.prototype.isOnDemandPropertyValueSet,
+    normalizeSeatReference: PropertiesModule.prototype.normalizeSeatReference,
+    seatReferenceToArray: PropertiesModule.prototype.seatReferenceToArray,
+    associatedWidgetsSummary: PropertiesModule.prototype.associatedWidgetsSummary,
+    interactionSummary: PropertiesModule.prototype.interactionSummary,
     basicPropertyExcludeList: PropertiesModule.prototype.basicPropertyExcludeList,
     svgReplaceColorProperties,
     dicePreviewRotation,
@@ -337,6 +343,32 @@ describe('css helpers', () => {
     expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'source')).toBe(true);
     expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'indirect')).toBe(true);
     expect(cssHelpers.inheritSourceWouldCreateCycle.call(module, target, 'missing')).toBe(false);
+  });
+
+  test('the collapsed links header names the links that are set', () => {
+    const summaryOf = state => cssHelpers.associatedWidgetsSummary.call(cssHelpers, { get: property => state[property] });
+    expect(summaryOf({})).toBe('none');
+    expect(summaryOf({ parent: 'holder1' })).toBe('parent holder1');
+    expect(summaryOf({ parent: 'holder1', fixedParent: true })).toBe('parent holder1 (locked)');
+    expect(summaryOf({ linkedToSeat: 'seat1' })).toBe('seat seat1');
+    expect(summaryOf({ linkedToSeat: [ 'seat1', 'seat2' ] })).toBe('seat seat1, seat2');
+    // more than two seats would make the header too long to read at a glance
+    expect(summaryOf({ onlyVisibleForSeat: [ 'a', 'b', 'c' ] })).toBe('visible for 3 seats');
+    expect(summaryOf({ inheritFrom: 'source' })).toBe('inherits from source');
+    expect(summaryOf({ inheritFrom: { a: '*', b: '*' } })).toBe('inherits from 2 widgets');
+    expect(summaryOf({ parent: 'holder1', linkedToSeat: 'seat1', inheritFrom: { a: '*' } }))
+      .toBe('parent holder1 · seat seat1 · inherits from a');
+    // a multi-selection that disagrees says so instead of showing one widget's value
+    expect(summaryOf({ parent: cssHelpers.MULTI_DIFFERENT, linkedToSeat: cssHelpers.MULTI_DIFFERENT, inheritFrom: cssHelpers.MULTI_DIFFERENT }))
+      .toBe('parent — · seat — · inherits —');
+  });
+
+  test('the collapsed interaction header only names what deviates from the default', () => {
+    const summaryOf = state => cssHelpers.interactionSummary.call(cssHelpers, { get: property => state[property] });
+    expect(summaryOf({ clickable: true, enlarge: 0, ignoreZoom: false })).toBe('');
+    expect(summaryOf({ clickable: false })).toBe('not clickable');
+    expect(summaryOf({ clickable: true, enlarge: 2, ignoreZoom: true })).toBe('enlarge ×2 · ignores zoom');
+    expect(summaryOf({ clickable: cssHelpers.MULTI_DIFFERENT, enlarge: cssHelpers.MULTI_DIFFERENT })).toBe('clickable — · enlarge —');
   });
 
   test('the size-ratio lock stays local while honoring a legacy false value', () => {
