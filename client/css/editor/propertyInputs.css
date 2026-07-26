@@ -1214,3 +1214,67 @@ body.editorWidgetPicking, body.editorWidgetPicking .widget {
   font-size: 0.9em;
   opacity: 0.8;
 }
+
+/* snap grid editor */
+.editorModule .gridHelp,
+.editorModule .gridSizeNote {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.editorModule .gridEntry {
+  border: 1px solid var(--backgroundHighlightColor1);
+  border-radius: 6px;
+  padding: 4px;
+  margin: 4px 0;
+}
+
+.editorModule .gridEntryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editorModule .gridEntryTitle {
+  font-weight: bold;
+}
+
+.editorModule .gridActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* which point of the widget box lands on a grid line */
+.editorModule .gridAnchors {
+  display: grid;
+  grid-template-columns: repeat(3, 14px);
+  gap: 2px;
+}
+
+.editorModule .gridAnchor {
+  width: 14px;
+  height: 14px;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--backgroundHighlightColor1);
+  background: var(--backgroundColor);
+}
+
+.editorModule .gridAnchor.active {
+  background: var(--VTTblue);
+}
+
+.editorModule .gridExtraRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 3px 0;
+}
+
+.editorModule .gridExtraRow input {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+}

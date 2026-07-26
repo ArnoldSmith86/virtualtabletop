@@ -156,6 +156,59 @@ async function fetchSvgColors(image) {
   }
 }
 
+// --- snap grid helpers ---
+
+// The grid property is an array of snap definitions; anything that isn't an
+// object (or the whole property not being an array) is not a usable entry.
+function gridEntryList(value) {
+  return Array.isArray(value) ? value.filter(isObjectLike) : [];
+}
+
+// The keys snapToGrid() consumes itself - everything else in an entry is
+// copied onto the widget when it snaps to that grid.
+const gridGeometryKeys = [ 'x', 'y', 'offsetX', 'offsetY', 'alignX', 'alignY', 'minX', 'maxX', 'minY', 'maxY' ];
+
+function gridExtraProperties(entry) {
+  return Object.keys(entry || {}).filter(key => gridGeometryKeys.indexOf(key) == -1);
+}
+
+// A grid of the widget's own DOM box, i.e. widgets end up edge to edge.
+function squareGridForSize(width, height) {
+  return [ { x: width, y: height } ];
+}
+
+// Same math as the JSON editor's "calculated hex grid" button: two staggered
+// grids so every other row/column sits half a hex further along.
+function hexGridForSize(width, height, hexType) {
+  const isFlat = hexType === 'flat';
+  const long = isFlat ? height : width;
+  const short = parseFloat((long * Math.sqrt(3) / 2).toFixed(2));
+  const xHex = isFlat ? long * 1.5 : short;
+  const yHex = isFlat ? short : long * 1.5;
+  return [
+    { x: xHex, y: yHex, offsetX: isFlat ? long * 0.75 : short / 2, offsetY: isFlat ? short / 2 : long * 0.75 },
+    { x: xHex, y: yHex, offsetX: 0, offsetY: 0 }
+  ];
+}
+
+// Parse a value typed for an extra snap-point property: JSON when it looks
+// like JSON (numbers, true, objects), a plain string otherwise - so both
+// "rotation: 90" and "image: foo.svg" do the obvious thing.
+function gridExtraValue(raw) {
+  const text = String(raw).trim();
+  if(text === '')
+    return '';
+  try {
+    return JSON.parse(text);
+  } catch(e) {
+    return raw;
+  }
+}
+
+function gridExtraText(value) {
+  return typeof value == 'string' ? value : JSON.stringify(value);
+}
+
 function dicePreviewRotation(faceCount) {
   if(faceCount == 4)
     return 'rotateZ(105deg) rotateX(110deg) rotateY(0deg)';
@@ -402,6 +455,7 @@ const editorPropertyHints = {
   svgReplaces: 'Maps a color found inside an uploaded SVG image (like #000 or a custom name) to a widget property whose current value is substituted for it, so a single SVG asset can be recolored per widget.',
   css: 'Custom CSS declarations for the widget. Use classes/selectors to style parts of the widget or states like ":hover".',
   parent: 'The ID of the widget that contains this one. Changing it here preserves the widget\'s position on the table.',
+  grid: 'Snap positions this widget jumps to when it is dropped. Each grid repeats every "spacing" pixels of the widget\'s box, starting at its offset; with several grids the closest point of any of them wins.',
   resolution: 'The number of drawing pixels across the canvas. Higher values preserve more detail but use more state.',
   lineWidth: 'The brush width used for new canvas strokes.',
   activeColor: 'The zero-based colorMap entry used for new canvas strokes.',
@@ -913,10 +967,21 @@ class PropertiesModule extends SidebarModule {
       updater(delta.s);
   }
 
+  onClose() {
+    this.clearGridPreview();
+  }
+
+  onEditorClose() {
+    super.onEditorClose();
+    this.clearGridPreview();
+  }
+
   onSelectionChangedWhileActive(newSelection) {
     if(this.handleWidgetPickerSelection(newSelection))
       return;
 
+    // the board preview belongs to the widget that was being edited
+    this.clearGridPreview();
     this.moduleDOM.innerHTML = '';
     this.inputUpdaters = {};
     this.globalInputUpdaters = [];
@@ -2212,7 +2277,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   basicPropertyExcludeList(extra = []) {
-    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom' ].concat(extra);
+    return [ 'x', 'y', 'z', 'layer', 'rotation', 'movable', 'movableInEdit', 'width', 'height', 'clickable', 'enlarge', 'ignoreZoom', 'fixedParent', 'linkedToSeat', 'onlyVisibleForSeat', 'inheritFrom', 'grid' ].concat(extra);
   }
 
   isSizeRatioLockEnabled(widget) {
@@ -3381,6 +3446,8 @@ class PropertiesModule extends SidebarModule {
       }
     });
 
+    this.renderGridSection(widget);
+
     this.renderCollapsibleSection('Generic', true, body=>{
       this.renderCheckbox(widget, 'Clickable', 'clickable', body);
       this.renderNumberWithSlider(widget, 'enlarge', 'Enlarge', body, { min: 0, step: 1, slider: false });
@@ -3388,6 +3455,370 @@ class PropertiesModule extends SidebarModule {
     }, null, `${widget.id}:generic`);
 
     this.renderAssociatedWidgetsSection(widget);
+  }
+
+  // --- snap grid ---
+
+  // Curated editor for the "grid" property: the list of snap definitions the
+  // widget uses after it was dragged (snapToGrid() in widget.js). All of it is
+  // measured in the widget's DOM box, which frequently looks nothing like the
+  // shape drawn on the board - so the section spells that box out, offers
+  // ready-made square/hex grids computed from it, and can draw the resulting
+  // lattice onto the board while you edit.
+  renderGridSection(widget) {
+    // a grid is a per-widget array; merging arrays across a selection has no
+    // safe common value, so this stays single-widget (like css/svgReplaces)
+    if(widget.isMulti)
+      return;
+
+    let updatePreview = _=>{};
+    const section = this.renderCollapsibleSection('Snap grid', true, body=>{
+      div(body, 'gridHelp', 'Dropping this widget moves it to the nearest point of the grids below. Distances are measured on the widget\'s box, which is often bigger than the shape you see.');
+
+      const sizeNote = div(body, 'gridSizeNote');
+      const updateSizeNote = w=>sizeNote.textContent = `Widget box: ${w.get('width')} × ${w.get('height')} px`;
+      this.addPropertyListener(widget, 'width', updateSizeNote);
+      this.addPropertyListener(widget, 'height', updateSizeNote);
+
+      const previewToggle = new CheckboxInput(this, widget, 'Show on board', {
+        // not a widget property - listening to grid just gives the checkbox
+        // its initial render (addPropertyListener runs its updater at once)
+        listenTo: [ 'grid' ],
+        getValue: _=>this.gridPreviewEnabled !== false,
+        setValue: value=>{
+          this.gridPreviewEnabled = value;
+          updatePreview();
+        },
+        hint: 'Marks every position this widget can land on with a dot, drawn into the widget\'s parent.'
+      }).render(body);
+
+      const list = div(body, 'gridEntries');
+      const actions = div(body, 'gridActions');
+
+      const rebuild = _=>{
+        list.innerHTML = '';
+        actions.innerHTML = '';
+        const entries = gridEntryList(widget.get('grid'));
+        previewToggle.style.display = entries.length ? '' : 'none';
+        if(!entries.length)
+          div(list, 'propertyPickerEmpty', 'This widget does not snap to a grid yet.');
+        entries.forEach((entry, index)=>this.renderGridEntry(widget, index, entries.length, list, rebuild));
+        this.renderGridAddButtons(widget, actions, entries, rebuild);
+        updatePreview();
+      };
+      rebuild();
+
+      // resync on undo / remote updates while the section stays open
+      this.addPropertyListener(widget, 'grid', _=>{
+        if(!body.contains(document.activeElement))
+          rebuild();
+      });
+      for(const property of [ 'width', 'height', 'parent' ])
+        this.addPropertyListener(widget, property, _=>updatePreview());
+    }, null, `${widget.id}:grid`, {
+      renderSummary: summary=>{
+        this.addPropertyListener(widget, 'grid', w=>{
+          const entries = gridEntryList(w.get('grid'));
+          summary.textContent = !entries.length ? 'off' :
+            entries.length == 1 ? `${entries[0].x} × ${entries[0].y}` : `${entries.length} grids`;
+        });
+      }
+    });
+    propertyInfoButton($('.collapsibleHeader', section), html(editorPropertyHints.grid));
+
+    // the body is rendered even while the section is collapsed, so the board
+    // preview follows the header rather than appearing on every selection
+    updatePreview = _=>this.updateGridPreview(widget, this.gridPreviewEnabled !== false && !section.classList.contains('collapsed'));
+    $('.collapsibleHeader', section).addEventListener('click', _=>updatePreview());
+    updatePreview();
+  }
+
+  setGridEntries(widget, entries) {
+    this.inputValueUpdated(widget, 'grid', entries);
+  }
+
+  // Change keys of one entry, leaving the other entries untouched. A null
+  // value removes the key so it falls back to the engine default.
+  updateGridEntry(widget, index, change) {
+    const entries = gridEntryList(widget.get('grid')).map(entry=>Object.assign({}, entry));
+    if(!entries[index])
+      return;
+    for(const key in change) {
+      if(change[key] === null)
+        delete entries[index][key];
+      else
+        entries[index][key] = change[key];
+    }
+    this.setGridEntries(widget, entries);
+  }
+
+  gridEntryValue(widget, index, key) {
+    const entry = gridEntryList(widget.get('grid'))[index];
+    const value = entry ? entry[key] : undefined;
+    return value === undefined ? null : value;
+  }
+
+  // A number input bound to one key of one grid entry.
+  renderGridNumber(widget, index, key, label, target, options = {}) {
+    return new NumberInput(this, widget, label, Object.assign({
+      listenTo: [ 'grid' ],
+      nullIfEmpty: true,
+      getValue: _=>this.gridEntryValue(widget, index, key),
+      setValue: value=>this.updateGridEntry(widget, index, { [key]: value })
+    }, options)).render(target);
+  }
+
+  renderGridAddButtons(widget, target, entries, rebuild) {
+    const width = +widget.get('width') || 100;
+    const height = +widget.get('height') || 100;
+    const add = (label, title, newEntries)=>{
+      const button = document.createElement('button');
+      button.setAttribute('icon', 'add');
+      button.textContent = label;
+      button.title = title;
+      button.onclick = _=>{
+        this.setGridEntries(widget, entries.concat(newEntries()));
+        rebuild();
+      };
+      target.appendChild(button);
+    };
+
+    if(entries.length) {
+      add('Add another grid', 'All grids are tried together - the widget snaps to whichever point is closest.', _=>squareGridForSize(width, height));
+      return;
+    }
+    // same two starting points the JSON editor offers, but computed and named
+    // from the widget's current box instead of typed by hand
+    add(`Square grid (${width} × ${height})`, 'One snap point per widget box, so widgets end up edge to edge.', _=>squareGridForSize(width, height));
+    const isFlat = widget.get('hexType') === 'flat';
+    add(`Hex grid (${isFlat ? 'flat top' : 'pointy top'})`, `Two staggered grids that place ${isFlat ? 'flat' : 'pointy'} topped hexagons side by side, calculated from the widget box.`, _=>hexGridForSize(width, height, widget.get('hexType')));
+  }
+
+  renderGridEntry(widget, index, count, target, rebuild) {
+    const wrap = div(target, 'gridEntry');
+
+    const head = div(wrap, 'gridEntryHead');
+    div(head, 'gridEntryTitle', count > 1 ? `Grid ${index + 1}` : 'Grid');
+    const remove = document.createElement('button');
+    remove.setAttribute('icon', 'delete');
+    remove.title = 'Remove this grid';
+    remove.onclick = _=>{
+      this.setGridEntries(widget, gridEntryList(widget.get('grid')).filter((entry, i)=>i != index));
+      rebuild();
+    };
+    head.appendChild(remove);
+
+    const spacing = div(wrap, 'propertyInlineRow numberPairRow');
+    div(spacing, 'numberPairLabel', 'Spacing');
+    // x/y are the only required keys of an entry, so they never clear to null.
+    // step stays "any" because a calculated grid (hex) has fractional spacing.
+    this.renderGridNumber(widget, index, 'x', 'X', spacing, { min: 1, nullIfEmpty: false });
+    this.renderGridNumber(widget, index, 'y', 'Y', spacing, { min: 1, nullIfEmpty: false });
+    const useBox = document.createElement('button');
+    useBox.setAttribute('icon', 'fit_screen');
+    useBox.title = 'Use the widget box as the spacing';
+    useBox.onclick = _=>this.updateGridEntry(widget, index, { x: +widget.get('width') || 100, y: +widget.get('height') || 100 });
+    spacing.appendChild(useBox);
+
+    this.renderGridAnchor(widget, index, wrap);
+
+    this.renderCollapsibleSection('More options', true, body=>{
+      const offset = div(body, 'propertyInlineRow numberPairRow');
+      div(offset, 'numberPairLabel', 'Offset');
+      this.renderGridNumber(widget, index, 'offsetX', 'X', offset, { placeholder: '0' });
+      this.renderGridNumber(widget, index, 'offsetY', 'Y', offset, { placeholder: '0' });
+
+      // the same alignX/alignY the 3x3 picker above sets, for the rare grid
+      // that wants a snap point between the nine positions it offers
+      const align = div(body, 'propertyInlineRow numberPairRow');
+      const alignLabel = div(align, 'numberPairLabel', 'Exact snap point');
+      propertyInfoButton(alignLabel, 'The same setting as the snap point picker, as a fraction of the widget box: 0 is the left/top edge, 0.5 the middle, 1 the right/bottom edge.');
+      this.renderGridNumber(widget, index, 'alignX', 'X', align, { min: 0, max: 1, placeholder: '0' });
+      this.renderGridNumber(widget, index, 'alignY', 'Y', align, { min: 0, max: 1, placeholder: '0' });
+
+      this.renderGridLimits(widget, index, body);
+      this.renderGridExtraProperties(widget, index, body);
+    }, wrap, `${widget.id}:grid:${index}`);
+  }
+
+  // 3x3 picker for alignX/alignY: which point of the widget lands on the grid.
+  renderGridAnchor(widget, index, target) {
+    const row = div(target, 'propertyInput gridAnchorRow');
+    const label = document.createElement('label');
+    label.textContent = 'Snap point';
+    propertyInfoButton(label, 'The point of the widget box that lands on a grid line. Top left is what the engine uses unless you change it; "More options" can set a value between these nine.');
+    row.appendChild(label);
+
+    const anchors = div(row, 'gridAnchors');
+    const buttons = [];
+    const names = { 0: 'top', 0.5: 'middle', 1: 'bottom' };
+    const namesX = { 0: 'left', 0.5: 'center', 1: 'right' };
+    for(const alignY of [ 0, 0.5, 1 ])
+      for(const alignX of [ 0, 0.5, 1 ]) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'gridAnchor';
+        button.title = `${names[alignY]} ${namesX[alignX]}`.replace(/^./, character=>character.toUpperCase());
+        button.onclick = _=>this.updateGridEntry(widget, index, { alignX: alignX || null, alignY: alignY || null });
+        anchors.appendChild(button);
+        buttons.push({ button, alignX, alignY });
+      }
+
+    this.addPropertyListener(widget, 'grid', _=>{
+      const alignX = +this.gridEntryValue(widget, index, 'alignX') || 0;
+      const alignY = +this.gridEntryValue(widget, index, 'alignY') || 0;
+      for(const anchor of buttons)
+        anchor.button.classList.toggle('active', anchor.alignX == alignX && anchor.alignY == alignY);
+    });
+    return row;
+  }
+
+  // min/max limit the area in which a grid applies; they are only meaningful
+  // as a set, so one checkbox adds or drops all four at once
+  renderGridLimits(widget, index, target) {
+    const limitKeys = [ 'minX', 'maxX', 'minY', 'maxY' ];
+    const host = div(target, 'gridLimits');
+
+    const rebuildLimits = _=>{
+      host.innerHTML = '';
+      if(!limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null))
+        return;
+      const x = div(host, 'propertyInlineRow numberPairRow');
+      div(x, 'numberPairLabel', 'X from/to');
+      this.renderGridNumber(widget, index, 'minX', 'min', x);
+      this.renderGridNumber(widget, index, 'maxX', 'max', x);
+      const y = div(host, 'propertyInlineRow numberPairRow');
+      div(y, 'numberPairLabel', 'Y from/to');
+      this.renderGridNumber(widget, index, 'minY', 'min', y);
+      this.renderGridNumber(widget, index, 'maxY', 'max', y);
+    };
+
+    new CheckboxInput(this, widget, 'Only in part of the parent', {
+      listenTo: [ 'grid' ],
+      getValue: _=>limitKeys.some(key=>this.gridEntryValue(widget, index, key) !== null),
+      setValue: value=>{
+        const parent = widgets.get(widget.get('parent'));
+        this.updateGridEntry(widget, index, value ? {
+          minX: 0, minY: 0,
+          maxX: parent ? +parent.get('width') || 1600 : 1600,
+          maxY: parent ? +parent.get('height') || 1000 : 1000
+        } : { minX: null, maxX: null, minY: null, maxY: null });
+        rebuildLimits();
+      },
+      hint: 'Restricts this grid to widget positions inside the given rectangle, so different areas can use different grids.'
+    }).render(target);
+    target.appendChild(host);
+    rebuildLimits();
+  }
+
+  // Anything in a grid entry that snapToGrid() does not use as geometry is
+  // copied onto the widget when it snaps there - e.g. a rotation per space.
+  renderGridExtraProperties(widget, index, target) {
+    const title = div(target, 'propSetTitle', 'Also set when snapped here');
+    propertyInfoButton(title, 'Widget properties applied to the widget when it snaps to this grid, for example a rotation or an image per space.');
+    const host = div(target, 'gridExtras');
+
+    const rebuildExtras = _=>{
+      host.innerHTML = '';
+      const entry = gridEntryList(widget.get('grid'))[index] || {};
+      for(const key of gridExtraProperties(entry)) {
+        const row = div(host, 'gridExtraRow');
+
+        const name = document.createElement('input');
+        name.type = 'text';
+        name.value = key;
+        name.placeholder = 'property';
+        const value = document.createElement('input');
+        value.type = 'text';
+        value.value = gridExtraText(entry[key]);
+        value.placeholder = 'value';
+
+        const commit = _=>{
+          const newKey = name.value.trim();
+          if(!newKey || (newKey != key && gridExtraProperties(gridEntryList(widget.get('grid'))[index] || {}).indexOf(newKey) != -1)) {
+            rebuildExtras();
+            return;
+          }
+          const change = { [newKey]: gridExtraValue(value.value) };
+          if(newKey != key)
+            change[key] = null;
+          this.updateGridEntry(widget, index, change);
+          rebuildExtras();
+        };
+        name.onchange = commit;
+        value.onchange = commit;
+
+        const remove = document.createElement('button');
+        remove.setAttribute('icon', 'delete');
+        remove.title = `Remove ${key}`;
+        remove.onclick = _=>{
+          this.updateGridEntry(widget, index, { [key]: null });
+          rebuildExtras();
+        };
+
+        row.appendChild(name);
+        row.appendChild(value);
+        row.appendChild(remove);
+      }
+    };
+    rebuildExtras();
+
+    const add = document.createElement('button');
+    add.setAttribute('icon', 'add');
+    add.textContent = 'Add property';
+    add.onclick = _=>{
+      const used = gridExtraProperties(gridEntryList(widget.get('grid'))[index] || {});
+      let key = [ 'rotation', 'image', 'color' ].find(candidate=>used.indexOf(candidate) == -1);
+      for(let i = 2; !key; ++i)
+        if(used.indexOf(`property${i}`) == -1)
+          key = `property${i}`;
+      this.updateGridEntry(widget, index, { [key]: key == 'rotation' ? 0 : '' });
+      rebuildExtras();
+    };
+    target.appendChild(add);
+  }
+
+  clearGridPreview() {
+    for(const overlay of $a('.gridPreviewOverlay'))
+      overlay.remove();
+  }
+
+  // Draws every grid entry into the widget's parent, i.e. the coordinate space
+  // snapToGrid() works in, so the dots land exactly where the widget will.
+  updateGridPreview(widget, show) {
+    this.clearGridPreview();
+    const container = widget.domElement && widget.domElement.parentNode;
+    if(!show || !container)
+      return;
+
+    const entries = gridEntryList(widget.get('grid'));
+    entries.forEach((entry, index)=>{
+      const stepX = +entry.x, stepY = +entry.y;
+      if(!(stepX > 0) || !(stepY > 0))
+        return;
+      const left = Number.isFinite(+entry.minX) ? +entry.minX : 0;
+      const top = Number.isFinite(+entry.minY) ? +entry.minY : 0;
+      // the cell lines only describe real cells for a single lattice - two of
+      // them (a hex grid) would just draw a rectangular mesh over each other
+      const overlay = div(container, `gridPreviewOverlay${entries.length > 1 ? ' dotsOnly' : ''}`);
+      overlay.style.left = `${left}px`;
+      overlay.style.top = `${top}px`;
+      if(Number.isFinite(+entry.maxX))
+        overlay.style.width = `${Math.max(0, +entry.maxX - left)}px`;
+      if(Number.isFinite(+entry.maxY))
+        overlay.style.height = `${Math.max(0, +entry.maxY - top)}px`;
+      overlay.style.setProperty('--gridPreviewX', `${stepX}px`);
+      overlay.style.setProperty('--gridPreviewY', `${stepY}px`);
+      // a second grid (the staggered half of a hex grid) gets its own color so
+      // the two lattices stay tellable apart
+      overlay.style.setProperty('--gridPreviewColor', index % 2 ? '#e08a00' : '#1f5ca6');
+      overlay.style.setProperty('--gridPreviewLine', index % 2 ? '#e08a0059' : '#1f5ca659');
+      // the dot layer is a tile per grid step with the dot in its middle, so it
+      // has to start half a step before the lattice point the lines start at
+      const lineX = (+entry.offsetX || 0) - left, lineY = (+entry.offsetY || 0) - top;
+      overlay.style.backgroundPosition =
+        `${lineX - stepX / 2}px ${lineY - stepY / 2}px, ${lineX}px ${lineY}px, ${lineX}px ${lineY}px`;
+    });
   }
 
   renderInheritFromButton(widget, target = null, options = {}) {

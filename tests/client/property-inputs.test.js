@@ -72,6 +72,12 @@ const cssHelpers = new Function('SidebarModule', 'widgets', inputsSource + prope
     textSymbolClass,
     textValueFromSymbol,
     classesWithSymbolClass,
+    gridEntryList,
+    gridExtraProperties,
+    gridExtraValue,
+    gridExtraText,
+    squareGridForSize,
+    hexGridForSize,
     diceFaces: PropertiesModule.prototype.diceFaces,
     diceUsesPips: PropertiesModule.prototype.diceUsesPips,
     diceFaceType: PropertiesModule.prototype.diceFaceType,
@@ -204,6 +210,45 @@ describe('css helpers', () => {
     const module = { sizeRatioLocks: new WeakMap() };
     expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: {} })).toBe(true);
     expect(cssHelpers.isSizeRatioLockEnabled.call(module, { state: { lockSizeRatio: false } })).toBe(false);
+  });
+});
+
+describe('snap grid helpers', () => {
+  test('only object entries of an array count as grids', () => {
+    expect(cssHelpers.gridEntryList([ { x: 10, y: 10 }, null, 5 ])).toEqual([ { x: 10, y: 10 } ]);
+    expect(cssHelpers.gridEntryList(null)).toEqual([]);
+    expect(cssHelpers.gridEntryList({ x: 10 })).toEqual([]);
+  });
+
+  test('everything that is not grid geometry is a property applied on snapping', () => {
+    expect(cssHelpers.gridExtraProperties({ x: 1, y: 2, offsetX: 3, alignY: 1, minX: 0, maxY: 9, rotation: 90, image: 'a.svg' }))
+      .toEqual([ 'rotation', 'image' ]);
+    expect(cssHelpers.gridExtraProperties(undefined)).toEqual([]);
+  });
+
+  test('typed snap-point values become numbers/booleans when they look like JSON', () => {
+    expect(cssHelpers.gridExtraValue('90')).toBe(90);
+    expect(cssHelpers.gridExtraValue(' true ')).toBe(true);
+    expect(cssHelpers.gridExtraValue('cards/back.svg')).toBe('cards/back.svg');
+    expect(cssHelpers.gridExtraValue('')).toBe('');
+    expect(cssHelpers.gridExtraText('a.svg')).toBe('a.svg');
+    expect(cssHelpers.gridExtraText(90)).toBe('90');
+  });
+
+  test('a square grid is the widget box', () => {
+    expect(cssHelpers.squareGridForSize(103, 60)).toEqual([ { x: 103, y: 60 } ]);
+  });
+
+  test('the hex grid matches the JSON editor calculation for both hex types', () => {
+    // pointy hexes: long side is the width, the second grid is staggered by half
+    expect(cssHelpers.hexGridForSize(60, 60, 'point')).toEqual([
+      { x: 51.96, y: 90, offsetX: 25.98, offsetY: 45 },
+      { x: 51.96, y: 90, offsetX: 0, offsetY: 0 }
+    ]);
+    expect(cssHelpers.hexGridForSize(60, 60, 'flat')).toEqual([
+      { x: 90, y: 51.96, offsetX: 45, offsetY: 25.98 },
+      { x: 90, y: 51.96, offsetX: 0, offsetY: 0 }
+    ]);
   });
 });
 
