@@ -348,6 +348,29 @@ describe('routine editor state handling', () => {
     expect(editor.routine).toBe(routine); // the array reference is preserved
   });
 
+  test('dragging into a block the operation does not have yet attaches the block', () => {
+    // a freshly added IF/FOREACH has no thenRoutine/loopRoutine key at all
+    for (const [ operation, property ] of [ [ { func: 'IF', operand1: 1 }, 'thenRoutine' ], [ { func: 'FOREACH' }, 'loopRoutine' ] ]) {
+      const editor = new RoutineEditor({ state: {} }, [ { func: 'FLIP' }, operation ]);
+      let notified = null;
+      editor.registerChangeListener(v => notified = v);
+      const block = editor.operations[1].subroutineEditors[property];
+      block.performDrag(-1, true, { editor, indices: [ 0 ] });
+      expect(notified).toHaveLength(1);
+      expect(notified[0][property]).toEqual([ { func: 'FLIP' } ]);
+    }
+  });
+
+  test('dragging into an ELSE block moves the operation there', () => {
+    const routine = [ { func: 'FLIP' }, { func: 'IF', operand1: 1, thenRoutine: [], elseRoutine: [] } ];
+    const editor = new RoutineEditor({ state: {} }, routine);
+    let notified = null;
+    editor.registerChangeListener(v => notified = v);
+    const block = editor.operations[1].subroutineEditors.elseRoutine;
+    block.performDrag(-1, true, { editor, indices: [ 0 ] });
+    expect(notified).toEqual([ { func: 'IF', operand1: 1, thenRoutine: [], elseRoutine: [ { func: 'FLIP' } ] } ]);
+  });
+
   test('dragging an operation out of a FOREACH block moves it into the parent routine', () => {
     const routine = [ { func: 'FOREACH', loopRoutine: [ { func: 'FLIP' } ] }, { func: 'SHUFFLE' } ];
     const editor = new RoutineEditor({ state: {} }, routine);

@@ -764,6 +764,7 @@ class PropertiesModule extends SidebarModule {
 
     for(const widget of newSelection) {
       this.inputUpdaters[widget.id] = {};
+      this.otherPropertiesHeader = null;
 
       switch(widget.get('type')) {
         case 'button':     this.renderForButton(widget);     break;
@@ -784,8 +785,8 @@ class PropertiesModule extends SidebarModule {
           break;
       }
 
-      // every widget can have routines, so the section is always the last one -
-      // piles are the exception because they are temporary and not editable
+      // every widget can have routines, so the section is always there - piles are
+      // the exception because they are temporary and not editable
       if(widget.get('type') != 'pile')
         this.renderEvents(widget);
     }
@@ -3661,6 +3662,8 @@ class PropertiesModule extends SidebarModule {
     if(!remaining.length)
       return;
     this.addSubHeader('Other properties');
+    // where the Automations section goes: in front of the raw property list
+    this.otherPropertiesHeader = this.moduleDOM.lastChild;
     this.renderGenericProperties(widget, exclude);
   }
 
@@ -4860,15 +4863,19 @@ class PropertiesModule extends SidebarModule {
   }
 
   renderEvents(widget) {
-    this.addSubHeader('Automations');
+    const section = document.createElement('div');
+    this.addSubHeader('Automations', section);
     const eventsEditor = new EventsEditor(widget, (property, value)=>this.inputValueUpdated(widget, property, value));
-    // a delta listener instead of per-property listeners so event handlers added
+    // a delta listener instead of per-property listeners so routines added
     // by other players (properties that did not exist on selection) show up too
     this.addDeltaListener(deltaS=>{
       if(deltaS[widget.id] && Object.keys(deltaS[widget.id]).some(p=>p.match(/Routine$/) || [ 'onEnter', 'onLeave', 'resetProperties' ].indexOf(p) != -1))
         eventsEditor.onPropertyChange();
     });
-    this.moduleDOM.append(eventsEditor.domElement);
+    section.append(eventsEditor.domElement);
+    // the curated sections come first, then the routines, then the raw list of
+    // whatever properties are left (which the type editor may not render at all)
+    this.moduleDOM.insertBefore(section, this.otherPropertiesHeader);
   }
 
   renderGenericProperties(widget, exclude) {
@@ -4876,9 +4883,9 @@ class PropertiesModule extends SidebarModule {
       if([ 'id', 'type', 'parent' ].concat(exclude).indexOf(property) != -1)
         continue;
       if(property.match(/Routine$/) && Array.isArray(widget.state[property]))
-        continue; // edited in the Automations section below
+        continue; // edited in the Automations section above
       if(property == 'resetProperties' || (widget.get('type') == 'holder' && [ 'onEnter', 'onLeave' ].indexOf(property) != -1))
-        continue; // edited in the Automations section below
+        continue; // edited in the Automations section above
 
       const input = this.addInput(property, widget.state[property], v=>this.inputValueUpdated(widget, property, v))
       if(!this.inputUpdaters[widget.id][property])

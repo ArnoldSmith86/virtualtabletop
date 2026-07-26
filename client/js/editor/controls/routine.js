@@ -458,6 +458,10 @@ class RoutineEditor {
     this.emptyHint = options.emptyHint || 'No operations yet.';
     // set for nested routines: hoists an operation out of this block into the parent
     this.onHoist = options.onHoist || null;
+    // set for nested routines: writes this level's array back into its operation.
+    // An empty block is not part of the operation JSON (see renderSubroutine), so
+    // operations dropped into one would land in an array nothing else can see.
+    this.attachRoutine = options.attachRoutine || null;
     // the routine editor one level up, so a cross-level drag can re-render (and
     // save) from the top instead of from a level that no longer owns the operation
     this.parentEditor = options.parentEditor || null;
@@ -831,6 +835,8 @@ class RoutineEditor {
     for(const i of [ ...drag.indices ].sort((a, b)=>b-a))
       source.routine.splice(i, 1);
     this.routine.splice(targetIndex < 0 ? this.routine.length : targetIndex + (after ? 1 : 0), 0, ...moving);
+    if(this.attachRoutine)
+      this.attachRoutine();
     source.selectedIndices = new Set();
     // two levels changed, so only the outermost editor can re-render consistently
     this.rootEditor().routineChanged();
@@ -1125,7 +1131,12 @@ class RoutineOperationEditor {
     const routine = Array.isArray(this.operation[property]) ? this.operation[property] : [];
     // hoisting out of a nested block means removing from here and asking the
     // parent routine (via the container editor) to re-insert after the container
-    options = { ...options, onHoist: op=>this.hoistIntoParent && this.hoistIntoParent(op), parentEditor: this.routineEditor };
+    options = {
+      ...options,
+      onHoist: op=>this.hoistIntoParent && this.hoistIntoParent(op),
+      parentEditor: this.routineEditor,
+      attachRoutine: _=>{ this.operation[property] = routine; }
+    };
     const routineEditor = new RoutineEditor(this.widget, routine, this.variables, this.collections, options);
     routineEditor.registerChangeListener(v=>{
       this.operation[property] = v;

@@ -12,7 +12,7 @@ const predefinedEvents = [
   {
     property: 'changeRoutine',
     label: 'property changed',
-    description: 'Runs whenever any property of this widget changes. The routine receives the variables property, oldValue and value. Use a property-specific event like fooChangeRoutine to only react to changes of the property foo.'
+    description: 'Runs whenever any property of this widget changes. The routine receives the variables property, oldValue and value. Use a property-specific routine like fooChangeRoutine to only react to changes of the property foo.'
   },
   {
     property: 'enterRoutine',
@@ -32,7 +32,7 @@ const predefinedEvents = [
   {
     property: 'globalUpdateRoutine',
     label: 'any widget changed',
-    description: 'Runs when any property of any widget changes. The routine receives the variables widgetID, property, oldValue and value plus the collection widget. Use a property-specific event like fooGlobalUpdateRoutine to only react to changes of the property foo.'
+    description: 'Runs when any property of any widget changes. The routine receives the variables widgetID, property, oldValue and value plus the collection widget. Use a property-specific routine like fooGlobalUpdateRoutine to only react to changes of the property foo.'
   }
 ];
 
