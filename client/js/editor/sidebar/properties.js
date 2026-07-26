@@ -481,131 +481,7 @@ const editorTypeSections = {
 class PropertiesModule extends SidebarModule {
   constructor() {
     super('tune', 'Edit Widgets', 'Edit widget properties.');
-    this.widgetPicker = null;
     this.collapsibleStates = {};
-  }
-
-  startWidgetPicker(targetWidgetID, onPick, options = {}) {
-    const pendingWidgetIDs = Array.isArray(options.pendingWidgetIDs) ?
-      [...new Set(options.pendingWidgetIDs.filter(v => typeof v === 'string' && v.trim() !== ''))] : [];
-
-    this.widgetPicker = {
-      targetWidgetID,
-      onPick,
-      pickerKey: options.pickerKey || null,
-      filter: typeof options.filter === 'function' ? options.filter : null,
-      allowMultiple: !!options.allowMultiple,
-      toggleSelection: options.toggleSelection !== false,
-      pendingWidgetIDs,
-      onPendingChanged: typeof options.onPendingChanged === 'function' ? options.onPendingChanged : null
-    };
-
-    if(this.widgetPicker.onPendingChanged)
-      this.widgetPicker.onPendingChanged([ ...this.widgetPicker.pendingWidgetIDs ]);
-
-    $('body').classList.add('editorWidgetPicking');
-  }
-
-  stopWidgetPicker() {
-    this.widgetPicker = null;
-    $('body').classList.remove('editorWidgetPicking');
-  }
-
-  getWidgetPicker(targetWidgetID = null, pickerKey = null) {
-    if(!this.widgetPicker)
-      return null;
-
-    if(targetWidgetID !== null && this.widgetPicker.targetWidgetID != targetWidgetID)
-      return null;
-
-    if(pickerKey !== null && this.widgetPicker.pickerKey !== pickerKey)
-      return null;
-
-    return this.widgetPicker;
-  }
-
-  isWidgetPickerActive(targetWidgetID = null, pickerKey = null) {
-    return !!this.getWidgetPicker(targetWidgetID, pickerKey);
-  }
-
-  confirmWidgetPicker() {
-    const picker = this.getWidgetPicker();
-    if(!picker || !picker.allowMultiple)
-      return false;
-
-    const targetWidget = widgets.get(picker.targetWidgetID);
-    if(!targetWidget) {
-      this.stopWidgetPicker();
-      return false;
-    }
-
-    const pickedWidgets = picker.pendingWidgetIDs
-      .map(widgetID => widgets.get(widgetID))
-      .filter(pickedWidget => pickedWidget && pickedWidget.id != targetWidget.id);
-
-    this.stopWidgetPicker();
-    picker.onPick(targetWidget, pickedWidgets);
-    setSelection([ targetWidget ]);
-    return true;
-  }
-
-  handleWidgetPickerSelection(newSelection) {
-    const picker = this.getWidgetPicker();
-    if(!picker)
-      return false;
-
-    const targetWidget = widgets.get(picker.targetWidgetID);
-
-    if(!targetWidget) {
-      this.stopWidgetPicker();
-      return false;
-    }
-
-    const keepTargetSelection = () => {
-      if(newSelection.length != 1 || newSelection[0].id != targetWidget.id)
-        setSelection([ targetWidget ]);
-    };
-
-    const pickedWidgets = newSelection.filter(pickedWidget => {
-      if(!pickedWidget || pickedWidget.id == targetWidget.id)
-        return false;
-      return !picker.filter || picker.filter(pickedWidget);
-    });
-
-    if(picker.allowMultiple) {
-      if(pickedWidgets.length) {
-        if(pickedWidgets.length == 1) {
-          const pickedWidgetID = pickedWidgets[0].id;
-          const existingIndex = picker.pendingWidgetIDs.indexOf(pickedWidgetID);
-          if(existingIndex == -1)
-            picker.pendingWidgetIDs.push(pickedWidgetID);
-          else if(picker.toggleSelection)
-            picker.pendingWidgetIDs.splice(existingIndex, 1);
-        } else {
-          for(const pickedWidget of pickedWidgets)
-            if(picker.pendingWidgetIDs.indexOf(pickedWidget.id) == -1)
-              picker.pendingWidgetIDs.push(pickedWidget.id);
-        }
-
-        if(picker.onPendingChanged)
-          picker.onPendingChanged([ ...picker.pendingWidgetIDs ]);
-      }
-
-      keepTargetSelection();
-      return true;
-    }
-
-    const pickedWidget = pickedWidgets.length == 1 ? pickedWidgets[0] : null;
-
-    if(pickedWidget && pickedWidget.id != targetWidget.id) {
-      this.stopWidgetPicker();
-      picker.onPick(targetWidget, pickedWidget);
-      setSelection([ targetWidget ]);
-      return true;
-    }
-
-    keepTargetSelection();
-    return true;
   }
 
   addInput(labelText, value, onValueChanged, target, type='auto') {
@@ -743,6 +619,11 @@ class PropertiesModule extends SidebarModule {
     widget.set(property, typeof value === 'undefined' ? null : value);
   }
 
+  onClose() {
+    // this module drives the widget picker, so a pick cannot outlive it
+    stopWidgetPicker();
+  }
+
   onDeltaReceivedWhileActive(delta) {
     for(const widgetID in delta.s)
       if(delta.s[widgetID] && this.inputUpdaters[widgetID])
@@ -755,7 +636,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   onSelectionChangedWhileActive(newSelection) {
-    if(this.handleWidgetPickerSelection(newSelection))
+    if(handleWidgetPickerSelection(newSelection))
       return;
 
     this.moduleDOM.innerHTML = '';
@@ -2372,146 +2253,6 @@ class PropertiesModule extends SidebarModule {
     });
   }
 
-  // Inline popout (styled like the icon/image pickers) to select widgets by
-  // searching their ID, filtered by type, or by clicking them in the room.
-  // options:
-  //   pickerKey      - key for the in-room widget picker
-  //   typeFilter     - presets the type filter (e.g. 'seat' for seat inputs)
-  //   multiple       - toggle entries in a list of IDs instead of picking one
-  //   getSelectedIDs - returns the currently selected widget IDs
-  //   apply          - called with the picked ID (single) or array of IDs (multiple)
-  //   onClear        - when given, adds a button that removes the value
-  //   clearLabel     - label of that button
-  //   excludeIDs     - returns additional widget IDs to hide from the list
-  renderWidgetSelectPopout(wrap, widget, options = {}) {
-    const expandButton = document.createElement('button');
-    expandButton.className = 'propertyExpandButton';
-    expandButton.setAttribute('icon', 'expand_more');
-    expandButton.title = 'Select a widget';
-    wrap.appendChild(expandButton);
-
-    const popout = div(wrap, 'propertyPicker widgetSelectPopout');
-    popout.style.display = 'none';
-
-    const selectedIDs = _=>options.getSelectedIDs ? options.getSelectedIDs() : [];
-    const excludedIDs = _=>[ widget.id ].concat(options.excludeIDs ? options.excludeIDs() : []);
-
-    let typeFilter = options.typeFilter || '';
-    let searchTerm = '';
-
-    const renderPopout = _=>{
-      popout.innerHTML = '';
-
-      if(options.title)
-        div(popout, 'propertyPickerSectionTitle', html(options.title));
-
-      const buttonBar = div(popout, 'propertyPickerSection');
-      const pickButton = document.createElement('button');
-      pickButton.setAttribute('icon', 'colorize');
-      pickButton.title = 'Click this button and then the widget on the table';
-      buttonBar.appendChild(pickButton);
-
-      const updatePickButton = _=>{
-        const isSelecting = this.isWidgetPickerActive(widget.id, options.pickerKey);
-        pickButton.textContent = isSelecting ? 'click a widget...' : 'Pick in the room';
-        pickButton.classList.toggle('selected', isSelecting);
-      };
-      updatePickButton();
-
-      pickButton.onclick = _=>{
-        if(this.isWidgetPickerActive(widget.id, options.pickerKey)) {
-          this.stopWidgetPicker();
-        } else {
-          this.startWidgetPicker(widget.id, (targetWidget, pickedWidget)=>{
-            if(options.multiple)
-              options.apply([...new Set(selectedIDs().concat(pickedWidget.id))]);
-            else
-              options.apply(pickedWidget.id);
-          }, {
-            pickerKey: options.pickerKey,
-            filter: pickedWidget=>excludedIDs().indexOf(pickedWidget.id) == -1 && (!typeFilter || (pickedWidget.get('type') || 'basic') == typeFilter)
-          });
-        }
-        updatePickButton();
-      };
-
-      if(options.onClear) {
-        const clearButton = document.createElement('button');
-        clearButton.setAttribute('icon', 'link_off');
-        clearButton.textContent = options.clearLabel || 'Clear';
-        clearButton.onclick = _=>options.onClear();
-        buttonBar.appendChild(clearButton);
-      }
-
-      const searchSection = div(popout, 'propertyPickerSection');
-      div(searchSection, 'propertyPickerSectionTitle', 'Search widgets');
-
-      const typeSelect = document.createElement('select');
-      typeSelect.innerHTML = '<option value="">any type</option>' + Object.keys(editorTypeNames).map(type=>`<option value="${type}">${editorTypeNames[type]}</option>`).join('');
-      typeSelect.value = typeFilter;
-      searchSection.appendChild(typeSelect);
-
-      const search = document.createElement('input');
-      search.placeholder = 'Search by ID...';
-      search.value = searchTerm;
-      searchSection.appendChild(search);
-
-      const list = div(searchSection, 'widgetPickerList');
-
-      const showEntries = _=>{
-        list.innerHTML = '';
-        const term = searchTerm.trim().toLowerCase();
-        const current = selectedIDs();
-        const matches = [...widgets.values()]
-          .filter(w=>excludedIDs().indexOf(w.id) == -1)
-          .filter(w=>!typeFilter || (w.get('type') || 'basic') == typeFilter)
-          .filter(w=>!term || w.id.toLowerCase().includes(term))
-          .sort((a, b)=>a.id.localeCompare(b.id));
-        for(const match of matches.slice(0, 50)) {
-          const entry = div(list, 'widgetPickerEntry', `<span>${html(match.id)}</span><span class=widgetPickerType>${html(match.get('type') || 'basic')}</span>`);
-          entry.classList.toggle('selected', current.indexOf(match.id) != -1);
-          entry.onclick = _=>{
-            if(options.multiple) {
-              const now = selectedIDs();
-              options.apply(now.indexOf(match.id) == -1 ? now.concat(match.id) : now.filter(id=>id != match.id));
-              entry.classList.toggle('selected');
-            } else {
-              options.apply(match.id);
-              toggle(false);
-            }
-          };
-        }
-        if(!matches.length)
-          div(list, 'propertyPickerEmpty', 'No matching widgets.');
-        else if(matches.length > 50)
-          div(list, 'propertyPickerEmpty', `${matches.length - 50} more - refine the search.`);
-      };
-
-      typeSelect.onchange = _=>{ typeFilter = typeSelect.value; showEntries(); };
-      search.oninput = _=>{ searchTerm = search.value; showEntries(); };
-      showEntries();
-    };
-
-    const toggle = open=>{
-      popout.style.display = open ? '' : 'none';
-      expandButton.classList.toggle('open', open);
-      if(open)
-        renderPopout();
-      else if(this.isWidgetPickerActive(widget.id, options.pickerKey))
-        this.stopWidgetPicker();
-    };
-    expandButton.onclick = _=>toggle(popout.style.display == 'none');
-
-    return {
-      expandButton,
-      popout,
-      refresh: _=>{
-        if(popout.style.display != 'none' && !popout.contains(document.activeElement))
-          renderPopout();
-      }
-    };
-  }
-
   // Sets the parent while preserving the widget's position on the table.
   // Returns an error message or null on success.
   async setWidgetParent(widget, parentID) {
@@ -2578,7 +2319,7 @@ class PropertiesModule extends SidebarModule {
       lockParentButton.classList.toggle('selected', isParentLocked);
     };
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a parent widget',
       pickerKey: 'parent',
       getSelectedIDs: () => widget.get('parent') ? [ widget.get('parent') ] : [],
@@ -2637,7 +2378,7 @@ class PropertiesModule extends SidebarModule {
 
     if(options.enablePicker) {
       // widget selection popout with the type filter preset to seats
-      popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+      popoutControls = renderWidgetSelectPopout(wrap, widget, {
         title: 'Choose seats',
         pickerKey,
         typeFilter: 'seat',
@@ -2715,7 +2456,7 @@ class PropertiesModule extends SidebarModule {
     wrap.appendChild(input);
 
     const pickerKey = 'onlyVisibleForSeat';
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose which seats can see this widget',
       pickerKey,
       typeFilter: 'seat',
@@ -3261,7 +3002,7 @@ class PropertiesModule extends SidebarModule {
     label.textContent = '+ Add widget';
     wrap.appendChild(label);
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose a widget to inherit properties from',
       pickerKey: 'inheritFrom',
       apply: pickedWidgetID => {
@@ -4265,7 +4006,7 @@ class PropertiesModule extends SidebarModule {
     input.onchange = () => this.inputValueUpdated(widget, 'hand', input.value.trim() || null);
     wrap.appendChild(input);
 
-    const popoutControls = this.renderWidgetSelectPopout(wrap, widget, {
+    const popoutControls = renderWidgetSelectPopout(wrap, widget, {
       title: 'Choose the holder used as this seat\'s hand',
       pickerKey: 'hand',
       typeFilter: 'holder',

@@ -459,37 +459,59 @@ class RoutineEnumPopup extends RoutinePopup {
   }
 }
 
+const routineWidgetPickerKey = 'routineWidgets';
+
 class RoutineWidgetIDPopup extends RoutinePopup {
   constructor() {
     super();
+    this.workingIDs = [];
   }
 
   hide() {
-    // this popup starts widget selections, so end them when it goes away;
-    // other popups (e.g. info popups) must not interfere with a running selection
-    endCustomSelection();
+    // this popup starts in-room picks, so end them when it goes away; other
+    // popups (e.g. info popups) must not interfere with a running pick
+    if(isWidgetPickerActive(null, routineWidgetPickerKey))
+      stopWidgetPicker();
     super.hide();
+  }
+
+  onOutsideClick(e) {
+    // clicking widgets in the room is how this popup's picker works
+    if(isWidgetPickerActive(null, routineWidgetPickerKey))
+      return;
+    super.onOutsideClick(e);
   }
 
   show(showCollections=false) {
     // the picker is the primary input here, so it comes first and open
-    const [ title, content ] = this.addAccordionSection('Holders')
-    // seed the picker with the widgets the parameter already holds so using it
-    // without changes keeps the current value instead of clearing it
+    const [ title, content ] = this.addAccordionSection('Widgets');
+    infoButton(title, `
+      Search widgets by their id, filter them by type or pick them in the room, then apply the selection.
+      The type filter also applies to picking in the room: with the type set to holder, a click on a card selects the holder it lies on.
+    `);
+    // seed the picker with the widgets the parameter already holds so applying
+    // it without changes keeps the current value instead of clearing it
     const currentValue = this.operation && typeof this.operation == 'object' ? this.operation[this.parameterNames[0]] : null;
     const currentIDs = Array.isArray(currentValue) ? currentValue : (typeof currentValue == 'string' ? [ currentValue ] : []);
-    this.holderSelection = new WidgetSelection(currentIDs.filter(id=>widgets.has(id)).map(id=>widgets.get(id)), pickedWidgets=>{
-      this.setNewValue(pickedWidgets.map(w=>w.id));
-    }, pickedWidget=>{
-      // holders are usually covered by their cards or piles, so a click on one
-      // of those almost always means the holder underneath
-      let resolved = pickedWidget;
-      while(resolved && [ 'card', 'pile' ].indexOf(resolved.get('type')) != -1 && widgets.has(resolved.get('parent')))
-        resolved = widgets.get(resolved.get('parent'));
-      return resolved;
+    // a collection name looks like a widget id but is none, so only keep ids
+    // that exist - applying the picker must not turn a collection into widgets
+    this.workingIDs = currentIDs.filter(id=>typeof id == 'string' && widgets.has(id));
+
+    // the properties module's picker CSS is scoped to .editorModule, so render
+    // into a matching wrapper to inherit its sizing
+    const host = div(content, 'editorModule');
+    renderWidgetSelectPopout(host, this.widget, {
+      pickerKey: routineWidgetPickerKey,
+      inline: true,
+      multiple: true,
+      allowSelf: true, // a routine regularly acts on the widget it belongs to
+      resolveCovering: true, // holders are usually covered by their cards
+      getSelectedIDs: _=>this.workingIDs,
+      apply: widgetIDs=>this.workingIDs = widgetIDs,
+      onClear: _=>this.workingIDs = [],
+      clearLabel: 'Select none'
     });
-    this.holderSelection.render();
-    content.appendChild(this.holderSelection.domElement);
+    button(content, 'Use these widgets', _=>this.setNewValue([ ...this.workingIDs ]));
     super.show(false, showCollections);
   }
 }

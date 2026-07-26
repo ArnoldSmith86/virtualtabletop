@@ -16,9 +16,12 @@ beforeAll(() => {
     if (parent) parent.append(d);
     return d;
   };
+  window.html = string => String(string).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   window.customSelectionCallback = null;
   window.startCustomSelection = () => {};
   window.endCustomSelection = () => {};
+  window.widgets = new Map();
+  window.setSelection = () => {};
 
   const editorDiv = document.createElement('div');
   editorDiv.id = 'editor';
@@ -36,8 +39,10 @@ beforeAll(() => {
     'VarStringRoutineOperationEditor', 'CommentRoutineOperationEditor', 'UnknownRoutineOperationEditor',
     'editorForOperation', 'routineOperationExamples', 'routineOperationMetadata', 'simpleRoutineOperationExamples',
     'RoutineHoldersOrCollectionSourcePopup', 'RoutineForeachSourcePopup', 'newRoutineValues', 'escapeHTML',
-    'EventsEditor', 'InfoPopup', 'WidgetSelection', 'RoutineStringPopup', 'RoutineNumberPopup',
-    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup'
+    'EventsEditor', 'InfoPopup', 'RoutineStringPopup', 'RoutineNumberPopup',
+    'RoutineColorPopup', 'RoutineIconPopup', 'RoutineJSONPopup', 'RoutineWidgetIDPopup',
+    'renderWidgetSelectPopout', 'startWidgetPicker', 'stopWidgetPicker', 'isWidgetPickerActive',
+    'handleWidgetPickerSelection'
   ];
   // eval in test scope so the plain-script class declarations see the jsdom globals
   eval(code + '\n' + exposed.map(x => `globalThis['${x}'] = ${x};`).join('\n'));
@@ -639,29 +644,130 @@ describe('number popups with text values', () => {
   });
 });
 
-describe('widget picker resolution', () => {
-  test('picked widgets run through the resolver and are deduplicated', () => {
-    const holder = { id: 'h1', get: p => ({ type: 'holder', parent: null })[p] };
-    const cardA = { id: 'c1', get: p => ({ type: 'card', parent: 'h1' })[p] };
-    const cardB = { id: 'c2', get: p => ({ type: 'card', parent: 'h1' })[p] };
-    const selection = new WidgetSelection([], () => {}, w => w.get('type') == 'card' ? holder : w);
-    expect(selection.resolveAll([ cardA, cardB, holder ])).toEqual([ holder ]);
+describe('the shared widget picker', () => {
+  function room(...definitions) {
+    widgets.clear();
+    for(const [ id, type, parent ] of definitions)
+      widgets.set(id, { id, get: p => ({ type, parent: parent || null })[p] });
+    return id => widgets.get(id);
+  }
+
+  // renders the popout the properties sidebar and the routine editor share and
+  // starts its in-room pick mode
+  function pickInRoom(options) {
+    const wrap = document.createElement('div');
+    document.getElementById('editor').append(wrap);
+    const controls = renderWidgetSelectPopout(wrap, widgets.get('target'), Object.assign({ inline: true }, options));
+    controls.popout.querySelector('button[icon=colorize]').onclick();
+    return controls;
+  }
+
+  afterEach(() => {
+    stopWidgetPicker();
+    widgets.clear();
   });
 
-  test('without a resolver the picked widgets pass through unchanged', () => {
-    const widgetsPicked = [ { id: 'a' }, { id: 'b' } ];
-    const selection = new WidgetSelection([], () => {});
-    expect(selection.resolveAll(widgetsPicked)).toBe(widgetsPicked);
+  test('the type filter also applies to picking in the room', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'c1', 'card', 'h1' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    // the card covers the holder, so a click on it means the holder underneath
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toBe('h1');
   });
 
-  test('"Start Fresh" empties the current selection right away', () => {
-    const widget = { id: 'w1', get: p => ({ type: 'holder' })[p] };
-    const selection = new WidgetSelection([ widget ], () => {});
-    selection.render();
-    expect(selection.widgets).toHaveLength(1);
-    selection.domElement.querySelector('.start button:nth-child(2)').dispatchEvent(new Event('click'));
-    expect(selection.widgets).toHaveLength(0);
-    expect(selection.domElement.querySelectorAll('table tr[data-widget-id]')).toHaveLength(0);
+  test('a click that resolves to nothing matching is ignored', () => {
+    const get = room([ 'target', 'button' ], [ 'l1', 'label' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    handleWidgetPickerSelection([ get('l1') ]);
+    expect(picked).toBeNull();
+    expect(isWidgetPickerActive()).toBe(true); // still waiting for a matching click
+  });
+
+  test('without a type filter only resolveCovering pickers look past cards and piles', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'p1', 'pile', 'h1' ], [ 'c1', 'card', 'p1' ], [ 'c2', 'card' ]);
+    let picked = null;
+    pickInRoom({ apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c1') ]); // the plain picker takes what was clicked
+    expect(picked).toBe('c1');
+
+    stopWidgetPicker();
+    pickInRoom({ resolveCovering: true, apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toBe('h1');
+
+    stopWidgetPicker();
+    pickInRoom({ resolveCovering: true, apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c2') ]); // a card on the table stays itself
+    expect(picked).toBe('c2');
+  });
+
+  test('a broken parent chain does not send the resolver in circles', () => {
+    const get = room([ 'target', 'button' ], [ 'c1', 'card', 'c2' ], [ 'c2', 'card', 'c1' ]);
+    let picked = null;
+    pickInRoom({ typeFilter: 'holder', apply: id => picked = id });
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toBeNull();
+  });
+
+  test('picking several widgets keeps the pick mode running and collects them', () => {
+    const get = room([ 'target', 'button' ], [ 'h1', 'holder' ], [ 'h2', 'holder' ], [ 'c1', 'card', 'h2' ]);
+    let picked = [];
+    pickInRoom({ multiple: true, resolveCovering: true, getSelectedIDs: () => picked, apply: ids => picked = ids });
+    handleWidgetPickerSelection([ get('h1') ]);
+    expect(isWidgetPickerActive()).toBe(true);
+    handleWidgetPickerSelection([ get('c1') ]);
+    expect(picked).toEqual([ 'h1', 'h2' ]);
+  });
+
+  test('the widget the picker belongs to is only listed when allowed, never picked in the room', () => {
+    room([ 'target', 'holder' ], [ 'h1', 'holder' ]);
+    let picked = null;
+    const ids = controls => [...controls.popout.querySelectorAll('.widgetPickerEntry')].map(e => e.textContent.replace('holder', ''));
+
+    expect(ids(pickInRoom({ apply: id => picked = id }))).toEqual([ 'h1' ]);
+    stopWidgetPicker();
+    expect(ids(pickInRoom({ allowSelf: true, apply: id => picked = id }))).toEqual([ 'h1', 'target' ]);
+
+    // the target is selected again after every pick, so clicking it in the room
+    // cannot be told apart from that restore
+    handleWidgetPickerSelection([ widgets.get('target') ]);
+    expect(picked).toBeNull();
+  });
+
+  test('a collection name is not mistaken for a widget id', () => {
+    room([ 'target', 'holder' ], [ 'h1', 'holder' ]);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineHoldersOrCollectionSourcePopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'SELECT', collection: 'myCards' }, [ 'collection' ], widgets.get('target'), [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+    expect([...popup.domElement.querySelectorAll('.widgetPickerEntry.selected')]).toHaveLength(0);
+    popup.hide();
+  });
+
+  test('the routine popup uses the shared picker and applies the selection', () => {
+    room([ 'target', 'holder' ], [ 'h1', 'holder' ], [ 'h2', 'holder' ]);
+    const source = document.createElement('span');
+    document.getElementById('editor').append(source);
+    const popup = new RoutineWidgetIDPopup();
+    popup.setSource(source);
+    popup.setOperationDetails({ func: 'MOVE', from: [ 'h1' ] }, [ 'from' ], widgets.get('target'), [], []);
+    let value = null;
+    popup.registerChangeListener(v => value = v);
+    popup.show();
+
+    const entries = [...popup.domElement.querySelectorAll('.widgetPickerEntry')];
+    expect(entries.map(e => e.textContent.replace('holder', ''))).toEqual([ 'h1', 'h2', 'target' ]);
+    expect(entries[0].classList.contains('selected')).toBe(true); // seeded with the current value
+    entries[1].onclick();
+    [...popup.domElement.querySelectorAll('button')].find(b => b.textContent == 'Use these widgets').dispatchEvent(new Event('click'));
+    expect(value).toEqual({ from: [ 'h1', 'h2' ] });
+    popup.hide();
   });
 });
 
