@@ -278,7 +278,7 @@ function generateLineStop(id, lineID, index, x, y) {
     width: 40,
     height: 40,
     borderRadius: 20,
-    dropTarget: { type: null },
+    dropTarget: [],
     dropOffsetX: 2,
     dropOffsetY: 2
   };

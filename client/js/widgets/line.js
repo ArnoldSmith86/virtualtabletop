@@ -18,7 +18,7 @@ export class Line extends Widget {
       lineEnd: { x: 400, y: 30 },
       controlStart: null,
       controlEnd: null,
-      lineWidth: 10,
+      lineWidth: 5,
       lineColor: '#666666',
       lineDash: null,
 
@@ -35,7 +35,7 @@ export class Line extends Widget {
       // a stop when it is dropped onto the path - during play as well as in
       // edit mode - and comes off the list again when it is dragged away. The
       // default takes the plain widgets stops usually are, an empty list none.
-      dropTarget: { type: null },
+      dropTarget: [],
 
       // properties applied to a widget when it enters / leaves the line
       onEnter: {},
