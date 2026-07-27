@@ -170,7 +170,7 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
-  test('renaming a stop (isBeingRenamed) does not redistribute or touch rotation', async () => {
+  test('renaming a stop keeps a single entry in place, at its own position', async () => {
     const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true,
       stops: [ 'rename-a', 'rename-b', 'rename-c' ].map((widget, i) => ({ widget, position: i / 2 })) });
     const stops = [ 'rename-a', 'rename-b', 'rename-c' ].map(id => {
@@ -179,17 +179,23 @@ describe('Line widget geometry', () => {
       return stop;
     });
     await line.distributeAttachedWidgetsEvenly();
-    const before = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), position: line.stopPosition(stop), rotation: stop.get('rotation') }));
+    const before = line.stopList();
 
+    // what serverstate's updateWidgetId does: flag the old object, detach and
+    // remove it, add a brand-new instance under the new id, then rename the
+    // entry. The new instance carries no flag, so the stop list must not be
+    // rebuilt from the re-add - only the id in the existing entry changes.
     stops[1].isBeingRenamed = true;
     await line.onChildRemove(stops[1]);
-    await line.onChildAdd(stops[1], line.id);
+    const state = { ...stops[1].state, id: 'rename-b2' };
+    removeWidget('rename-b');
+    addWidget(state, new Widget('rename-b2'));
+    await line.renameStop('rename-b', 'rename-b2');
 
-    const after = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), position: line.stopPosition(stop), rotation: stop.get('rotation') }));
-    expect(after).toEqual(before);
+    expect(line.stopList()).toEqual(before.map(entry => entry.widget == 'rename-b' ? { ...entry, widget: 'rename-b2' } : entry));
 
-    for(const stop of stops)
-      removeWidget(stop.id);
+    for(const id of [ 'rename-a', 'rename-b2', 'rename-c' ])
+      removeWidget(id);
     removeWidget(line.id);
   });
 
@@ -589,6 +595,36 @@ describe('dragging a widget onto a line to make it a stop', () => {
     expect(line.stopList()).toEqual([]);
     expect(token.get('parent')).toBe(null);
     expect(token.get('classes')).toBe('offTheLine');
+  });
+
+  test('dragging a rotated stop off leaves it where it was dropped, unrotated', async () => {
+    const diagonal = createLine({ id: 'off-line', x: 0, y: 0, width: 400, height: 300, autoSpaceStops: false,
+      lineStart: { x: 0, y: 0 }, lineEnd: { x: 400, y: 300 }, dropTarget: { type: null },
+      stops: [ { widget: 'off-stop', position: 0.5 } ] });
+    // landscape, so the line rotates it to its tangent while it rides on it
+    const stop = new Widget('off-stop');
+    addWidget({ id: 'off-stop', parent: 'off-line', width: 80, height: 30 }, stop);
+    await diagonal.layoutStops();
+    expect(Math.round(stop.get('rotation'))).toBe(37);
+    expect(stop.get('lineOriginalRotation')).toEqual({ value: 0, explicit: false });
+
+    // the drag put it down in the room, well off the path
+    await stop.set('x', 600);
+    await stop.set('y', 20);
+    stop.currentParent = diagonal;
+    await stop.checkParent(true);
+
+    expect(diagonal.stopList()).toEqual([]);
+    expect(stop.get('parent')).toBe(null);
+    // it stays where it was dropped instead of being pulled back onto the path
+    expect(stop.get('x')).toBe(600);
+    expect(stop.get('y')).toBe(20);
+    // and it gets its own rotation back, without keeping the bookkeeping
+    expect(stop.get('rotation')).toBe(0);
+    expect(stop.get('lineOriginalRotation')).toBeNull();
+
+    removeWidget('off-stop');
+    removeWidget('off-line');
   });
 
   test('a widget that cannot change parent rides on the line instead', async () => {

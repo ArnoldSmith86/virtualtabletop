@@ -650,11 +650,14 @@ export class Line extends Widget {
   async onChildRemove(child) {
     if(child.isBeingRenamed)
       return await super.onChildRemove(child);
-    const wasStop = this.stopList().some(entry=>entry.widget == child.id);
+    // Take it off the list before anything else: while it is still listed, the
+    // re-space that dropping a stop triggers would pull the departing widget
+    // back onto the path and rotate it to the tangent it is leaving behind.
+    // removeStop re-spaces the remaining stops itself and is idempotent with
+    // the call in dispenseCard.
+    await this.removeStop(child.id);
     await this.restoreStopRotation(child);
     await super.onChildRemove(child);
-    if(wasStop)
-      await this.layoutStops();
   }
 
   async onStopPropertyChange() {

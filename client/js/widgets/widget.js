@@ -7,12 +7,24 @@ import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
-// Every line that carries the given widget as a stop. A stop is listed in the
-// line's stops property, so it can be any widget in the room - being a child of
-// the line is the common shape, not a requirement.
-function linesWithStop(widgetID) {
-  return widgetFilter(w=>w.get('type') == 'line' && w.stopList().some(entry=>entry.widget == widgetID));
+// A stop is listed in the line's stops property, so it can be any widget in the
+// room - being a child of the line is the common shape, not a requirement. This
+// reads the raw property instead of stopList() because it runs for every line
+// in the room and only needs to know whether the id is listed.
+function lineListsStop(line, widgetID) {
+  const stops = line.get('stops');
+  return Array.isArray(stops) && stops.some(entry=>entry && entry.widget == widgetID);
 }
+
+// Every line that carries the given widget as a stop.
+function linesWithStop(widgetID) {
+  return widgetFilter(w=>w.get('type') == 'line' && lineListsStop(w, widgetID));
+}
+
+// Only lines care about another widget's geometry: an endpoint connected to it
+// has to follow, and a line carrying it as a stop has to re-space.
+const lineRelevantProperties = new Set([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ]);
+const stopLayoutProperties = new Set([ 'width', 'height', 'rotation', 'scale' ]);
 
 const readOnlyProperties = new Set([
   '_absoluteRotation',
@@ -2737,16 +2749,24 @@ export class Widget extends StateManaged {
         await this.updatePiles();
     }
 
-    const affectedWidgets = this.widgetsInheritingProperty(property);
-    for(const widget of affectedWidgets) {
-      if([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ].includes(property))
-        await widget.updateConnectedLineEndpoints();
+    // x and y alone are written twice per mousemove of every drag, so bail out
+    // before the inheritance walk for everything a line cannot react to - and
+    // once more for the games (the vast majority) that contain no line at all
+    if(!lineRelevantProperties.has(property))
+      return;
+    const lines = widgetFilter(w=>w.get('type') == 'line');
+    if(!lines.length)
+      return;
+
+    for(const widget of this.widgetsInheritingProperty(property)) {
+      await widget.updateConnectedLineEndpoints(lines);
 
       // a stop is listed in a line's stops property and does not have to be a
       // child of it, so ask every line that lists it to re-space
-      if([ 'width', 'height', 'rotation', 'scale' ].includes(property))
-        for(const line of linesWithStop(widget.id))
-          await line.onStopPropertyChange(widget);
+      if(stopLayoutProperties.has(property))
+        for(const line of lines)
+          if(lineListsStop(line, widget.id))
+            await line.onStopPropertyChange(widget);
     }
   }
 
@@ -2766,7 +2786,12 @@ export class Widget extends StateManaged {
 
   // Connections are expressed against a target's global transform. A change
   // to this widget can therefore move endpoints connected to it or any child.
-  async updateConnectedLineEndpoints() {
+  // Collecting the descendants is the expensive half, so only do it once it is
+  // known that some line is connected to anything at all.
+  async updateConnectedLineEndpoints(lines) {
+    const connected = (lines || widgetFilter(w=>w.get('type') == 'line')).filter(line=>line.get('connectStart') || line.get('connectEnd'));
+    if(!connected.length)
+      return;
     const targetIDs = new Set([ this.id ]);
     let added = true;
     while(added) {
@@ -2778,8 +2803,9 @@ export class Widget extends StateManaged {
         }
       }
     }
-    for(const line of widgetFilter(w=>w.get('type') == 'line' && [ w.get('connectStart'), w.get('connectEnd') ].some(connection=>connection && targetIDs.has(connection.line))))
-      await line.applyConnections();
+    for(const line of connected)
+      if([ line.get('connectStart'), line.get('connectEnd') ].some(connection=>connection && targetIDs.has(connection.line)))
+        await line.applyConnections();
   }
 
   readOnlyProperties() {
