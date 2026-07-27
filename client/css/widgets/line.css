@@ -75,6 +75,21 @@ body.editorWidgetPicking .widget.line.selectedInEdit .lineHandle {
   pointer-events: none;
 }
 
+/* the two end points sit exactly where the stops at position 0 and 1 are, so
+   their handles are hollow rings instead of discs: the stop below stays visible
+   and the clip path takes the middle out of the element, which is what makes
+   the stop clickable through the hole (hit testing follows the clip path) */
+.widget.line .lineHandle.end {
+  left: -15px;
+  top: -15px;
+  width: 30px;
+  height: 30px;
+  background: none;
+  border: 5px solid #1f5ca6;
+  box-shadow: 0 0 0 1px #ffffffdd, 0 0 4px #00000088;
+  clip-path: path(evenodd, 'M -3 -3 H 33 V 33 H -3 Z M 15 5 A 10 10 0 1 0 15 25 A 10 10 0 1 0 15 5 Z');
+}
+
 .widget.line .lineHandle.control {
   border-radius: 4px;
   background: #b45309;

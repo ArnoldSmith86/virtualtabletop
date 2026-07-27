@@ -11,6 +11,12 @@
   padding-left: 20px;
 }
 
+/* the blue info icon would disappear on the blue section header */
+.editorModule h2 .info-button {
+  margin-left: 6px;
+  color: white;
+}
+
 .editorModule .buttonBar {
   text-align: right;
 }
@@ -427,6 +433,16 @@
   color:#fff;
 }
 
+/* open line vs closed shape is a mode, not a curve preset, so it gets the
+   sidebar's segmented control above the presets - and the presets below stay
+   in place (greyed out for a closed shape) instead of the grid reflowing */
+.editorModule .lineShapeSwitch {
+  margin: 6px 0;
+}
+.editorModule .lineShapeSwitch button {
+  flex: 1 1 50%;
+  height: 30px;
+}
 .editorModule .lineShapePresets {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -440,8 +456,16 @@
   background: #3b3b3b;
   color: white;
 }
-.editorModule button.lineShapePreset:hover {
+/* the glyphs are drawn with currentColor, so the text color has to darken with
+   the background or the icon all but disappears on hover */
+.editorModule button.lineShapePreset:hover:not(:disabled) {
   background: #bbb;
+  color: #222;
+}
+.editorModule button.lineShapePreset:disabled {
+  background: #3b3b3b;
+  opacity: .35;
+  cursor: default;
 }
 .editorModule button.lineShapePreset svg {
   display: block;
@@ -483,6 +507,7 @@
 }
 .editorModule button.lineDashPreset:hover {
   background: #bbb;
+  color: #222;
 }
 .editorModule button.lineDashPreset svg {
   display: block;
@@ -508,9 +533,9 @@
 .editorModule .lineStopList .genericInput {
   display: flex;
   align-items: center;
-  /* the row is built from three groups (name + id, preview + position, the
-     buttons) so a narrow sidebar wraps them as units instead of tearing e.g.
-     the percentage away from its % sign */
+  /* the row reads left to right as picture, name, position, buttons and is
+     built from groups so a narrow sidebar wraps them as units instead of
+     tearing e.g. the percentage away from its % sign */
   flex-wrap: wrap;
   gap: 5px;
   margin-bottom: 7px;
@@ -530,6 +555,9 @@
   min-width: 0;
 }
 .editorModule .lineStopList .genericInput > .lineStopGroup > label {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
   min-width: 0;
   white-space: nowrap;
 }
@@ -537,13 +565,23 @@
   width: 42px;
   min-width: 42px;
 }
-/* same dashed-underline rename affordance as the widget header id, sized for
-   the narrower stop-list row */
+/* clicking the picture or the "Stop n" caption selects the stop in the room */
+.editorModule .lineStopList .lineStopSelect {
+  cursor: pointer;
+}
+.editorModule .lineStopList .lineStopSelect:hover {
+  text-decoration: underline;
+}
+/* same dashed-underline rename affordance as the widget header id; it starts at
+   the width of a generated stop id but grows into the row's free space so a
+   hand-given name like PiccadillyCircus stays readable */
 .editorModule .lineStopList input.lineStopIdInput {
   color: inherit;
   font: inherit;
+  flex: 1 1 75px;
   width: 75px;
   min-width: 75px;
+  max-width: 190px;
   padding: 0 2px;
   border: 0;
   border-bottom: 1px dashed currentColor;
@@ -608,6 +646,13 @@
   align-items: center;
   gap: 4px;
   white-space: nowrap;
+}
+/* one italic line that explains a state of the section above it - the same look
+   the drop target editor uses for its empty state */
+.editorModule .lineHint {
+  margin: -2px 0 6px;
+  font-style: italic;
+  opacity: .7;
 }
 .editorModule .lineToggleRow {
   display: flex;
@@ -732,14 +777,18 @@
   flex-direction: column;
   gap: 2px;
 }
+/* the two arrows stack, so each one keeps the sidebar's ~24px target size */
 .editorModule .lineStopOrder button {
   width: 26px;
   min-width: 26px;
-  height: 18px;
-  min-height: 18px;
+  height: 24px;
+  min-height: 24px;
   padding: 0;
-  font-size: 10px;
-  line-height: 16px;
+  font-size: 11px;
+  line-height: 22px;
+}
+.editorModule .lineStopOrder button:disabled {
+  opacity: .4;
 }
 /* the three ways to add a stop live behind one button: it opens the menu below
    it, and picking an entry there swaps the menu for that option's own row */

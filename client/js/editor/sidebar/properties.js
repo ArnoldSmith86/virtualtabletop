@@ -5505,11 +5505,16 @@ class PropertiesModule extends SidebarModule {
     let matches = readMatches();
 
     const container = div(this.moduleDOM, 'dropTargetEditor');
-    const label = document.createElement('label');
-    label.textContent = options.label || 'Valid widgets:';
-    if(options.hint)
-      propertyInfoButton(label, html(options.hint));
-    container.appendChild(label);
+    // an empty label leaves it out entirely, for a caller whose section header
+    // already names the property
+    const labelText = options.label === undefined ? 'Valid widgets:' : options.label;
+    if(labelText) {
+      const label = document.createElement('label');
+      label.textContent = labelText;
+      if(options.hint)
+        propertyInfoButton(label, html(options.hint));
+      container.appendChild(label);
+    }
     const list = div(container, 'dropTargetMatches');
 
     const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
@@ -5546,11 +5551,13 @@ class PropertiesModule extends SidebarModule {
       };
       row.appendChild(property);
       row.appendChild(value);
-      iconButton(row, 'delete', 'Remove this condition', _=>{
+      // only the outer button (removing a whole match) gets the red trash look,
+      // so the two nesting levels cannot be told apart by indentation alone
+      iconButton(row, 'close', 'Remove this condition', _=>{
         match.conditions.splice(match.conditions.indexOf(condition), 1);
         render();
         save();
-      }, 'dropTargetRemoveCondition red');
+      }, 'dropTargetRemoveCondition');
     };
 
     const renderMatch = (match, index)=>{
@@ -5654,12 +5661,37 @@ class PropertiesModule extends SidebarModule {
 
     this.addSubHeader('Appearance');
     this.addAppearanceSubTitle('Line shape');
+
+    // An open line and a closed shape are two modes, not two curves: a closed
+    // shape has no Bezier control points and no start/end point to connect.
+    // The mode is its own segmented control so the curve presets below can stay
+    // where they are (greyed out) instead of the grid reflowing under the click.
+    const shapeSwitch = div(this.moduleDOM, 'segmented-control lineShapeSwitch');
+    const shapeModes = [
+      { value: 'line',    label: 'Open line',    title: 'A path from a start point to an end point' },
+      { value: 'ellipse', label: 'Closed shape', title: 'A circle or oval through the two points, without start and end' }
+    ];
+    const shapeModeButtons = shapeModes.map(mode=>{
+      const button = document.createElement('button');
+      button.className = 'sidebarButton lineShapeMode';
+      button.innerText = mode.label;
+      button.title = mode.title;
+      button.onclick = _=>lineEdit(`turned line ${widget.id} into ${mode.value == 'ellipse' ? 'a closed shape' : 'an open line'}`, async _=>{
+        if(mode.value == 'ellipse') {
+          await widget.set('controlStart', null);
+          await widget.set('controlEnd', null);
+          await widget.set('lineShape', 'ellipse');
+          return;
+        }
+        await widget.set('lineShape', 'line');
+        await widget.normalizeGeometry();
+      });
+      shapeSwitch.appendChild(button);
+      return button;
+    });
+
     const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
     const shapePresets = [
-      // a closed shape: the two points become the corners of its bounding box.
-      // It comes first because it is the one preset that *hides* the curves
-      // below, so picking a line shape only ever adds buttons underneath.
-      { name: 'Circle / oval', path: 'M 40 4 A 36 16 0 1 1 39.9 4 Z', shape: 'ellipse' },
       { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
       { name: 'Shallow curve', path: 'M 4 30 C 24 8, 56 8, 76 30', controls: [ .33, .22, .67, .22 ] },
       { name: 'Deep curve', path: 'M 4 34 C 20 0, 60 0, 76 34', controls: [ .25, .42, .75, .42 ] },
@@ -5683,18 +5715,12 @@ class PropertiesModule extends SidebarModule {
     };
     const shapeButtons = shapePresets.map(preset=>{
       const button = document.createElement('button');
-      button.className = `lineShapePreset${preset.shape == 'ellipse' ? '' : preset.controls ? ' lineShapeCurved' : ' lineShapeStraight'}`;
+      button.className = 'lineShapePreset';
       button.title = preset.name;
       button.setAttribute('aria-label', preset.name);
       button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;
       shapeWrap.appendChild(button);
       button.onclick = _=>lineEdit(`set the shape of line ${widget.id} to ${preset.name.toLowerCase()}`, async _=>{
-        if(preset.shape == 'ellipse') {
-          await widget.set('controlStart', null);
-          await widget.set('controlEnd', null);
-          await widget.set('lineShape', 'ellipse');
-          return;
-        }
         await widget.set('lineShape', 'line');
         const controls = presetControls(preset);
         await widget.set('controlStart', controls ? controls.start : null);
@@ -5707,14 +5733,15 @@ class PropertiesModule extends SidebarModule {
       const c1 = widget.pointProperty('controlStart');
       const c2 = widget.pointProperty('controlEnd');
       const ellipse = widget.isEllipse();
+      shapeModes.forEach((mode, i)=>shapeModeButtons[i].classList.toggle('active', ellipse == (mode.value == 'ellipse')));
       shapePresets.forEach((preset, i)=>{
         const controls = presetControls(preset);
-        const selected = preset.shape == 'ellipse' ? ellipse : ellipse ? false : controls ? c1 && c2 && c1.x == controls.start.x && c1.y == controls.start.y && c2.x == controls.end.x && c2.y == controls.end.y : !c1 && !c2;
+        const selected = ellipse ? false : controls ? c1 && c2 && c1.x == controls.start.x && c1.y == controls.start.y && c2.x == controls.end.x && c2.y == controls.end.y : !c1 && !c2;
         shapeButtons[i].classList.toggle('selected', !!selected);
-        // a closed shape has no Bezier control points, so the curve presets
-        // (and everything about its non-existent end points) do not apply
-        if(preset.controls)
-          shapeButtons[i].style.display = ellipse ? 'none' : '';
+        // a closed shape has no Bezier control points, so the curve presets do
+        // not apply - they stay in place, greyed out, so nothing jumps around
+        shapeButtons[i].disabled = ellipse;
+        shapeButtons[i].title = ellipse ? `${preset.name} - a closed shape has no curve control points` : preset.name;
       });
     };
     this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
@@ -5786,7 +5813,7 @@ class PropertiesModule extends SidebarModule {
       return input;
     };
 
-    const rotateStops = addLineToggle('Automatically rotate stops', 'lineRotateStops', 'Automatically rotate landscape stops to follow the line');
+    const rotateStops = addLineToggle('Turn stops to follow the line', 'lineRotateStops', 'Landscape stops are rotated so they stay aligned with the line under them');
     const updateRotateStops = ()=>rotateStops.checked = widget.shouldRotateStops();
     this.addPropertyListener(widget, 'rotateStops', updateRotateStops);
     this.addPropertyListener(widget, 'rotateAttachedWidgets', updateRotateStops);
@@ -5798,9 +5825,16 @@ class PropertiesModule extends SidebarModule {
     });
 
     const autoSpaceStops = addLineToggle('Distribute evenly', 'lineAutoSpaceStops', 'Automatically distribute stops when line geometry changes');
-    this.addPropertyListener(widget, 'autoSpaceStops', ()=>autoSpaceStops.checked = !!widget.get('autoSpaceStops'));
+    // say once, for the whole list, why the percentage fields below are greyed
+    const autoSpaceHint = div(this.moduleDOM, 'lineHint', 'Positions are set automatically - turn this off to place stops by hand.');
+    const updateAutoSpaceHint = ()=>autoSpaceHint.style.display = widget.get('autoSpaceStops') ? '' : 'none';
+    this.addPropertyListener(widget, 'autoSpaceStops', ()=>{
+      autoSpaceStops.checked = !!widget.get('autoSpaceStops');
+      updateAutoSpaceHint();
+    });
     autoSpaceStops.onchange = async _=>{
       await lineEdit(`${autoSpaceStops.checked ? 'enabled' : 'disabled'} even stop distribution on line ${widget.id}`, _=>widget.set('autoSpaceStops', autoSpaceStops.checked));
+      updateAutoSpaceHint();
       renderStops();
     };
 
@@ -5880,14 +5914,25 @@ class PropertiesModule extends SidebarModule {
       stopList.innerHTML = '';
       const stops = widget.attachedWidgets();
       stops.forEach((stop, i)=>{
-        // three flex groups (name+id, preview+position, buttons) so a narrow
-        // sidebar wraps them as units instead of breaking them apart
+        // the row reads picture, name, position, buttons; the groups keep those
+        // parts together when a narrow sidebar has to wrap the row
         const row = div(stopList, 'genericInput');
+        row.appendChild(stopPreview(stop));
         const idGroup = div(row, 'lineStopGroup lineStopIdGroup');
         const positionGroup = div(row, 'lineStopGroup lineStopPositionGroup');
         const buttonGroup = div(row, 'lineStopGroup lineStopButtonGroup');
         const label = document.createElement('label');
-        label.append(`Stop ${i+1} (`);
+        // the picture is the obvious "select this stop" control, so its caption
+        // selects the stop as well - the id field next to it stays editable
+        const caption = document.createElement('span');
+        caption.className = 'lineStopSelect';
+        caption.innerText = `Stop ${i+1}`;
+        caption.title = `Select ${stop.get('id')} in the room`;
+        caption.onclick = _=>setSelection([ stop ]);
+        label.appendChild(caption);
+        // the label lays its parts out as a flex row, which collapses a plain
+        // space between two of them away - hence the non-breaking one
+        label.append(' (');
         // renaming re-adds the same stop state under the new id, so it must not
         // be treated like removing+adding a stop (see Line.onChildAdd/onChildRemove)
         const idInput = this.createWidgetIdInput(stop, {
@@ -5929,7 +5974,6 @@ class PropertiesModule extends SidebarModule {
         order.appendChild(up);
         order.appendChild(down);
         idGroup.appendChild(label);
-        positionGroup.appendChild(stopPreview(stop));
         positionGroup.appendChild(position);
         positionGroup.appendChild(document.createTextNode('%'));
         buttonGroup.appendChild(order);
@@ -5969,8 +6013,10 @@ class PropertiesModule extends SidebarModule {
       addMenu.classList.add('open');
       addStopButton.classList.add('open');
     };
+    // pressing it again while one of the options is open goes back to the menu
+    // (the same thing the back arrow does); only the menu itself closes
     addStopButton.onclick = _=>{
-      if(addStopButton.classList.contains('open'))
+      if(addMenu.classList.contains('open'))
         closeAddStop();
       else
         openAddStopMenu();
@@ -5997,7 +6043,7 @@ class PropertiesModule extends SidebarModule {
     // be typed or picked in the room; the chosen id lives in the module because
     // picking re-selects the line and rebuilds this panel.
     const inheritStore = this.lineStopInheritIDs;
-    const inheritRow = addStopOption('inherit', 'lineInheritRow', 'Copy of:');
+    const inheritRow = addStopOption('inherit', 'lineInheritRow', 'Inherit from:');
     const inheritID = document.createElement('input');
     inheritID.type = 'text';
     inheritID.className = 'lineInheritID';
@@ -6077,9 +6123,9 @@ class PropertiesModule extends SidebarModule {
 
     // the two picker options are nothing but their popout, so open it right away
     const addStopModes = [
-      { mode: 'inherit',  icon: 'content_copy', label: 'Copy and inherit from', hint: 'A new widget that inherits its appearance from an existing one' },
-      { mode: 'existing', icon: 'my_location',  label: 'Existing widget',       hint: 'Put a widget that is already in the room onto the line' },
-      { mode: 'library',  icon: 'library_add',  label: 'New widget',            hint: 'Place a saved widget from the widget library onto the line' }
+      { mode: 'inherit',  icon: 'content_copy', label: 'Copy an existing widget',      hint: 'A new stop that keeps the look of the widget you pick - restyle that one and every stop follows' },
+      { mode: 'existing', icon: 'my_location',  label: 'Use a widget from the room',   hint: 'Put a widget that is already in the room onto the line' },
+      { mode: 'library',  icon: 'library_add',  label: 'Pick from the widget library', hint: 'Place a saved widget from the widget library onto the line' }
     ];
     const openControls = { existing: existingControls, library: libraryControls };
     for(const entry of addStopModes) {
@@ -6101,15 +6147,22 @@ class PropertiesModule extends SidebarModule {
     // Connecting an end point glues it onto another widget at a chosen percentage.
     // Line.applyConnections converts through global coordinates so targets under
     // transformed parents stay in the correct frame.
-    // A closed shape has no start or end point, so it gets no connect section
+    // A closed shape has no start or end point, so its rows are replaced by one
+    // line that says so - the header stays put so nothing below it jumps
     // (other lines can still connect *to* it, its perimeter is a path).
     const connectSection = div(this.moduleDOM, 'lineConnectSection');
     this.addSubHeader('Connect points', connectSection);
-    this.addPropertyListener(widget, 'lineShape', ()=>connectSection.style.display = widget.isEllipse() ? 'none' : '');
+    const connectClosedHint = div(connectSection, 'lineHint', 'A closed shape has no start or end point.');
+    const connectRows = div(connectSection, 'lineConnectRows');
+    this.addPropertyListener(widget, 'lineShape', ()=>{
+      const ellipse = widget.isEllipse();
+      connectRows.style.display = ellipse ? 'none' : '';
+      connectClosedHint.style.display = ellipse ? '' : 'none';
+    });
     for(const end of [ 'Start', 'End' ]) {
       // first row: the target id, picked the same way as any other widget
       // reference, with the end point's name as its (blue) label
-      const wrapper = div(connectSection, 'propertyInput lineConnectRow');
+      const wrapper = div(connectRows, 'propertyInput lineConnectRow');
       const label = document.createElement('label');
       const endName = document.createElement('span');
       endName.className = 'appearanceSubTitle';
@@ -6127,7 +6180,7 @@ class PropertiesModule extends SidebarModule {
       // second row: where on the target the end point sits. Indented and split
       // into two flex groups so it reads as a sub-part of the end point above
       // and wraps as a unit in a narrow sidebar.
-      const detailRow = div(connectSection, 'propertyInput lineConnectDetails');
+      const detailRow = div(connectRows, 'propertyInput lineConnectDetails');
       const positionGroup = div(detailRow, 'lineConnectGroup');
       const offsetGroup = div(detailRow, 'lineConnectGroup');
       const position = document.createElement('input');
@@ -6149,6 +6202,8 @@ class PropertiesModule extends SidebarModule {
       offsetGroup.appendChild(document.createTextNode('offset'));
       offsetGroup.appendChild(offset);
       offsetGroup.appendChild(document.createTextNode('px'));
+      // the most jargon-heavy row in the panel, so it says what it means
+      propertyInfoButton(offsetGroup, html(`Where on the widget above the ${end.toLowerCase()} point sits: 0&nbsp;% is the start of its path, 100&nbsp;% the end, 50&nbsp;% the middle. The offset then moves the point sideways off that path, in pixels - positive is to its left looking from start to end.`));
 
       this.addPropertyListener(widget, 'connect'+end, widget=>{
         const connection = widget.get('connect'+end);
@@ -6191,13 +6246,13 @@ class PropertiesModule extends SidebarModule {
     }
 
     // What a line takes in - a widget dropped on the path becomes a stop of it,
-    // matched the same way a holder matches its dropTarget.
-    this.addSubHeader('Target widgets');
+    // matched the same way a holder matches its dropTarget. One name for it:
+    // the section header carries the hint so the label does not repeat it.
+    propertyInfoButton(this.addSubHeader('Valid widgets'), html('Which widgets become a stop when they are dropped onto the line'));
     this.renderDropTargetEditor(widget, {
       edit: lineEdit,
-      label: 'Valid widgets:',
-      hint: 'Which widgets become a stop when they are dropped onto the line',
-      emptyText: 'Nothing can be dropped onto this line.'
+      label: '',
+      emptyText: 'Nothing can be dropped onto the line itself - add a match to let widgets become stops.'
     });
 
     this.renderOtherPropertiesSection(widget, [

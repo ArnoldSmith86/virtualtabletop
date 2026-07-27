@@ -281,10 +281,13 @@ test('Line widget in edit mode', async t => {
 
   // dragging a handle moves it by browser-dependent pixels, so verify it in the
   // DOM and delete the dragged line again to keep the compared state stable
+  // an end point handle is a ring with a hole in the middle (so the stop below
+  // it stays clickable), so the drag grabs its left edge instead of its centre
   const endHandle = Selector('.widget.line.selectedInEdit .lineHandle').nth(1);
   const transformBefore = await endHandle.getStyleProperty('transform');
+  const handleRect = await endHandle.boundingClientRect;
   await t
-    .drag(endHandle, 90, 60)
+    .drag(endHandle, 90, 60, { offsetX: 1, offsetY: Math.round(handleRect.height/2) })
     .expect(endHandle.getStyleProperty('transform')).notEql(transformBefore)
     .click('#editorToolbar > div > [icon=delete_forever]');
   // the added stop's id is derived from the existing stops instead of being

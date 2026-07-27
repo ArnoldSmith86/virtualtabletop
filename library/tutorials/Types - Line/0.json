@@ -59,7 +59,7 @@
   "text1": {
     "id": "text1",
     "x": 10,
-    "y": 351,
+    "y": 400,
     "width": 360,
     "z": 185,
     "movable": false,
@@ -67,13 +67,13 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The line above is the basic line added to the room. The line contains 2 stop points (the white circles) which are holders that by default will hold anything (such as the red cube). The line itself does not act as a holder by default, but you can change the <b>dropTarget</b> and add widgets as stops. Look in the JSON Editor and you will see two line-specific properties: <b>lineEnd</b> and <b>lineStart</b>, but these are relative to the line's x/y position. If you select the line in Edit Mode, you will see 2 blue circles. Use your mouse to drag those around to resize the line. Changing <b>width</b> or <b>height</b> directly will not give the expected results.",
+    "html": "The line above is the basic line added to the room. The line contains 2 stop points (the white circles) which are holders that by default will hold anything (such as the red cube). The line itself does not act as a holder by default, but you can change the <b>dropTarget</b> (the <b>Valid widgets</b> section of the &quotEdit Widgets&quot tab) and add widgets as stops. Look in the JSON Editor and you will see two line-specific properties: <b>lineEnd</b> and <b>lineStart</b>, but these are relative to the line's x/y position. If you select the line in Edit Mode, you will see 2 blue rings: the <b>start point</b> and the <b>end point</b>. Use your mouse to drag those around to resize the line. Changing <b>width</b> or <b>height</b> directly will not give the expected results. The <b>Open line / Closed shape</b> switch in the same tab turns a line into a circle or oval.",
     "layer": -3
   },
   "text2": {
     "id": "text2",
     "x": 437,
-    "y": 351,
+    "y": 400,
     "width": 300,
     "z": 121,
     "movable": false,
@@ -81,7 +81,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "The line above contains several new properties all easily added through the &quotEdit Widgets&quot tab. <b>lineColor</b> and <b>lineWidth</b> are self-explanatory. <b>lineDash</b> follows the syntax for CSS stroke-dasharray where the first number is the length of the dash and the second number is the space between dashes (in pixels). <b>controlEnd</b> and <b>controlStart</b> are represented by the small orange squares connected by lines (only visible in edit mode) used to change the shape of the curve.<br><br>The line above also has <b>dropTarget</b> set for any widget, so you can move the cubes onto the line.",
+    "html": "The line above contains several new properties all easily added through the &quotEdit Widgets&quot tab. <b>lineColor</b> is the color of the path and <b>lineWidth</b> its thickness in pixels (<b>Line color</b>, <b>Line width</b>). <b>lineDash</b> (<b>Line style</b>) follows the syntax for CSS stroke-dasharray: the first number is the length of the dash, the second the space between dashes (in pixels). <b>controlEnd</b> and <b>controlStart</b> are the small orange squares connected by lines (only visible in edit mode) used to change the shape of the curve; the <b>Line shape</b> buttons set them to a ready-made curve.<br><br>This line also has <b>dropTarget</b> set for any widget, so you can move the cubes onto it.",
     "layer": -3
   },
   "text3": {
@@ -95,7 +95,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "This line has a width of 0 so it is invisible. However, the holders that are attached to it follow the curve of the line. By default the stops are evenly spaced (<b>autoSpaceStops</b>: true) and will rotate (<b>rotateStops</b>: true) to follow the curve of the line. Move the end points, control points, and add and delete stops to see this in action. The line lists its attached stops in its <b>stops</b> property. You can manually add stops in the JSON Editor, by dragging and droppinig to a line with a widget that matches the line's <b>dropTarget</b> like the dashed blue one to the left, or use the &quotEdit Widgets&quot tab. Stops sometimes also get a <b>lineOriginalRotation</b> property which should be ignored as it is automatically mangaged as the line moves or changes shape.",
+    "html": "This line has a width of 0 so it is invisible - only the four holders above show where it runs. They still follow its curve. By default the stops are evenly spaced (<b>autoSpaceStops</b>: true, <b>Distribute evenly</b>) and rotate (<b>rotateStops</b>: true, <b>Turn stops to follow the line</b>) to follow it. Move the end points, control points, and add and delete stops to see this in action. The line lists its attached stops in its <b>stops</b> property. You can add stops in the JSON Editor, by dropping a widget that matches the line's <b>dropTarget</b> onto it (like the dashed blue one to the left), or with <b>Add stop</b> in the &quotEdit Widgets&quot tab. Stops sometimes also get a <b>lineOriginalRotation</b> property which should be ignored as it is automatically managed as the line moves or changes shape.",
     "layer": -3
   },
   "text4": {
@@ -109,7 +109,7 @@
     "css": {
       "font-size": "22px"
     },
-    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> to connect to basic widgets (the black circles). You can drag the circles around to see how the lines move together. The red line holders auto rotate to follow the shape of the line. The landscape-oriented orange line holders do rotate, but not necessarily in a predictable way (more or less they try to stay perpendicular). The green line uses specific spacing and not automatic spacing between the holders.",
+    "html": "These lines use <b>connectEnd</b> and <b>connectStart</b> (<b>Connect points</b>) to attach their ends to basic widgets - the black circles. Drag those around to see the lines move together. The rotation rule is simple: a stop wider than it is tall (the red line's holders) is turned to the direction the line runs in there; a portrait or square one keeps its own rotation. The orange line turns that off with <b>rotateStops</b>: false. The green line uses specific spacing instead of automatic spacing.",
     "layer": -3
   },
   "line2": {
@@ -699,7 +699,7 @@
     "type": "line",
     "id": "line1",
     "x": 55,
-    "y": 290,
+    "y": 340,
     "width": 230,
     "height": 30,
     "lineStart": {

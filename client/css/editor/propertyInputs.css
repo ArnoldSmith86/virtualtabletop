@@ -849,6 +849,9 @@
   align-items: center;
   max-width: 90%;
   overflow-wrap: anywhere;
+  /* the label carries a widget id and ids are case sensitive, so the shared
+     button uppercasing would show "TDO6" for the line called tdo6 */
+  text-transform: none;
 }
 
 /* trash icon to remove a whole Widget's-links entry (parent/seat/inheritFrom) */
