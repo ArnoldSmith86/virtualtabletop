@@ -31,16 +31,55 @@ body.deckEditorActive #deckEditor {
   display: flex;
 }
 
-/* The room's selection rectangle and drag toolbar belong to the hidden playing surface. */
-body.deckEditorActive #editorSelection,
-body.deckEditorActive #editorDragToolbar {
+/* The room's selection rectangle and drag toolbar belong to the hidden playing surface - unless the "Card
+   view" toggle is off, which puts that surface back on screen (see below). */
+body.deckEditorActive:not(.deckEditorRoomVisible) #editorSelection,
+body.deckEditorActive:not(.deckEditorRoomVisible) #editorDragToolbar {
   display: none;
 }
 
 /* Cards with an "enlarge" face property would pop up the fixed hover-enlarge overlay when the mouse passes
    over the edit card, floating a huge copy over the editor. Suppress it while the deck editor is open. */
-body.deckEditorActive #enlarged {
+body.deckEditorActive:not(.deckEditorRoomVisible) #enlarged {
   display: none !important;
+}
+
+/* "Card view" toggled off: the card stage becomes a window onto the room's play area behind the editor, so a
+   deck can be compared with the running game. Only the stage goes transparent and lets the mouse through -
+   the tree, history row, property sidebar and card-type strip keep their own background and stay usable. */
+body.deckEditorRoomVisible #deckEditor,
+body.deckEditorRoomVisible #deckEditorBody,
+body.deckEditorRoomVisible #deckEditorRight,
+body.deckEditorRoomVisible #deckEditorContent,
+body.deckEditorRoomVisible #deckEditorMainCol {
+  background: transparent;
+  pointer-events: none;
+}
+
+body.deckEditorRoomVisible #deckEditorLeftSidebar,
+body.deckEditorRoomVisible #deckEditorSidebar,
+body.deckEditorRoomVisible #deckEditorStripHeader,
+body.deckEditorRoomVisible #deckEditorStrip {
+  background: var(--backgroundColor);
+}
+
+body.deckEditorRoomVisible #deckEditorHistory,
+body.deckEditorRoomVisible #deckEditorLeftSidebar,
+body.deckEditorRoomVisible #deckEditorSidebar,
+body.deckEditorRoomVisible #deckEditorStripHeader,
+body.deckEditorRoomVisible #deckEditorStrip,
+body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
+  pointer-events: auto;
+}
+
+/* The card is hidden rather than removed, so it keeps its layout box and the fitted scale survives the toggle. */
+body.deckEditorRoomVisible #deckEditorMain,
+body.deckEditorRoomVisible #deckEditorObjectHint {
+  visibility: hidden;
+}
+
+body.deckEditorRoomVisible #deckEditorMainCol > .overlay {
+  visibility: visible;
 }
 
 
@@ -384,17 +423,22 @@ body.deckEditorActive #enlarged {
 
 /* The delete button is a red trash can (same treatment as the card-type delete above the strip). */
 #deckEditorTreeDelete:not(:disabled),
-#deckEditorStripDelete:not(:disabled) {
+#deckEditorStripDelete:not(:disabled),
+.deckEditorSidebarToolbar button[icon=delete_forever]:not(:disabled) {
   background: var(--VTTred, #c0392b);
 }
 
 #deckEditorTreeDelete:hover:not(:disabled),
-#deckEditorStripDelete:hover:not(:disabled) {
+#deckEditorStripDelete:hover:not(:disabled),
+.deckEditorSidebarToolbar button[icon=delete_forever]:hover:not(:disabled) {
   background: #922b21;
 }
 
-/* Show areas sits in the same toolbar; it lights up when active. */
-#deckEditorShowAll.active:not(:disabled) {
+/* Show areas sits in the same toolbar; it lights up when active. The "Card view" toggle in the history row
+   and the Object tab's "+" (while its add submenu is open) use the same pressed look. */
+#deckEditorShowAll.active:not(:disabled),
+#deckEditorCardView.active:not(:disabled),
+.deckEditorSidebarToolbar button.active:not(:disabled) {
   background: var(--VTTblueDark);
   box-shadow: inset 0 0 0 2px #fff6;
 }
@@ -666,6 +710,38 @@ body.deckEditorActive #enlarged {
 #deckEditorNewDeckPanel:not(:empty) {
   border-top: 1px solid #0002;
   padding-top: 16px;
+}
+
+/* Card sizes for a new empty deck: a wrapping row of radio chips, the first (the size decks have always been
+   created at) preselected. */
+.deckEditorNewDeckSizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-bottom: 12px;
+}
+
+.deckEditorNewDeckSizesLabel {
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  opacity: 0.7;
+  width: 100%;
+}
+
+.deckEditorNewDeckSizes label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.deckEditorNewDeckSizes label span {
+  opacity: 0.6;
+  font-size: 11px;
 }
 
 .deckEditorNewDeckId {
@@ -940,6 +1016,36 @@ body.deckEditorPanning #deckEditorMain * {
   color: var(--textColor);
   opacity: 0.55;
   cursor: default;
+}
+
+/* Add / copy / delete for whatever the active tab edits, above its first header - the same three buttons the
+   left tree toolbar carries, so the structure can be changed without crossing the screen. */
+.deckEditorSidebarToolbar {
+  display: flex;
+  gap: 3px;
+  margin: 6px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deckEditorSidebarToolbar button {
+  padding: 3px 9px;
+  margin: 0;
+}
+
+.deckEditorSidebarToolbar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Holds the shared "Add to: All Cards / Card Type" submenu while the Object tab's "+" has it open. */
+.deckEditorSidebarAddHost:not(:empty) {
+  display: block;
+  margin-top: 4px;
+}
+
+.deckEditorSidebarAddHost #deckEditorAddSection {
+  margin: 0;
 }
 
 /* Section headers are labels, not buttons: a tinted band with a solid bar in the scope color instead of the
@@ -1548,7 +1654,7 @@ body.gridLines33 .deckEditorGrid {
   z-index: 12;
 }
 
-body.deckEditorActive #deckEditorDragToolbar.active {
+body.deckEditorActive:not(.deckEditorRoomVisible) #deckEditorDragToolbar.active {
   display: flex;
 }
 

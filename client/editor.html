@@ -261,18 +261,22 @@
           <button id="deckEditorShowAll" icon="highlight_alt" title="Outline all face objects on the card so you can see every area at once."></button>
           <button id="deckEditorExport" icon="save" title="Save, print, or export decks"></button>
         </div>
-        <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
-          <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type).">
-            <span class="deckEditorAddModeTitle">Add to:</span>
-            <div class="deckEditorAddModeRadios">
-              <label><input type="radio" name="deckEditorAddMode" value="static" checked>All Cards</label>
-              <label><input type="radio" name="deckEditorAddMode" value="dynamic">Card Type</label>
+        <!-- The add-object submenu is one node that moves between this host and the one the Object tab of the
+             right sidebar renders, so both "+" buttons share its mode and type buttons. -->
+        <div id="deckEditorAddSectionHost">
+          <div class="deckEditorAddGroup deckEditorAddGroupStatic" id="deckEditorAddSection">
+            <div id="deckEditorAddMode" title="Choose whether the buttons add an object that looks the same on every card (All Cards) or one that can differ per card type (Card Type).">
+              <span class="deckEditorAddModeTitle">Add to:</span>
+              <div class="deckEditorAddModeRadios">
+                <label><input type="radio" name="deckEditorAddMode" value="static" checked>All Cards</label>
+                <label><input type="radio" name="deckEditorAddMode" value="dynamic">Card Type</label>
+              </div>
             </div>
+            <button icon="format_size" id="deckEditorAddText">Text</button>
+            <button icon="image" id="deckEditorAddImage">Image</button>
+            <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
+            <button icon="palette" id="deckEditorAddColor" title="Adds a solid color box, e.g. as a background.">Color</button>
           </div>
-          <button icon="format_size" id="deckEditorAddText">Text</button>
-          <button icon="image" id="deckEditorAddImage">Image</button>
-          <button icon="add_reaction" id="deckEditorAddIcon">Icon</button>
-          <button icon="palette" id="deckEditorAddColor" title="Adds a solid color box, e.g. as a background.">Color</button>
         </div>
         <div id="deckEditorTree"></div>
       </div>
@@ -284,6 +288,8 @@
           <button icon="redo" id="deckEditorRedo" title="Redo the last undone change (Ctrl+Y).">Redo</button>
           <span id="deckEditorHistoryLabel">History:</span>
           <div id="deckEditorBreadcrumb" title="Your edits this session — click a step to jump back or forward to it."></div>
+          <span class="deckEditorHistoryDivider"></span>
+          <button icon="crop_portrait" id="deckEditorCardView" class="active">Card view</button>
         </div>
         <div id="deckEditorContent">
           <div id="deckEditorMainCol">

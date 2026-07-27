@@ -625,7 +625,8 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
     .click('.deckEditorAddBindingButton');
   await t.pressKey('esc'); // deselect the object -> the sidebar falls back to the object's face
   // The sidebar's tab bar follows the selection and switches the scope being edited: Escape just dropped the
-  // face object, so Face is showing and Object is unavailable until an object is selected again.
+  // face object, so Face is showing. Object stays selectable (it offers the add-object "+" even without a
+  // selection) and then only says that nothing is selected.
   const sidebarTab = id => Selector(`#deckEditorTab_${id}`);
   const sidebarHeaders = ClientFunction(() => {
     const titles = [];
@@ -636,8 +637,15 @@ test('Deck editor: create deck from scratch with color box, face and defaults', 
   });
   await t
     .expect(sidebarTab('face').hasClass('active')).ok()
-    .expect(sidebarTab('object').hasAttribute('disabled')).ok()
+    .expect(sidebarTab('object').hasAttribute('disabled')).notOk()
     .expect(sidebarHeaders()).eql([ 'Entire face properties' ])
+    .click(sidebarTab('object'))
+    .expect(sidebarHeaders()).eql([])
+    .expect(Selector('#deckEditorSidebar p.deckEditorSectionNote').exists).ok()
+    // add / copy / delete of the active scope are repeated at the top of the tab; without a selected object
+    // only the "+" is usable
+    .expect(Selector('#deckEditorSidebar .deckEditorSidebarToolbar button').nth(0).hasAttribute('disabled')).notOk()
+    .expect(Selector('#deckEditorSidebar .deckEditorSidebarToolbar button').nth(1).hasAttribute('disabled')).ok()
     .click(sidebarTab('cardType'))
     .expect(sidebarHeaders()).eql([ 'Card type properties' ])
     .click(sidebarTab('face'));
@@ -680,9 +688,23 @@ test('Deck editor: toolbar button toggles the editor and stays in sync with Esca
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(toolbarButton.hasClass('active')).notOk();
 
-  // reopen, then close with Escape -> the button must deactivate too
+  // reopen and turn "Card view" off: the card stage hides and the room shows through it, while the tree,
+  // property sidebar and card type strip stay on screen
   await t.click('#editorToolbar [icon=style]');
   await t.expect(Selector('body').hasClass('deckEditorActive')).ok();
+  await t.click('#deckEditorCardView');
+  await t
+    .expect(Selector('body').hasClass('deckEditorRoomVisible')).ok()
+    .expect(Selector('#deckEditorCardView').hasClass('active')).notOk()
+    .expect(Selector('#deckEditorMain').visible).notOk()
+    .expect(Selector('#deckEditorSidebar').visible).ok();
+  await t.click('#deckEditorCardView');
+  await t
+    .expect(Selector('body').hasClass('deckEditorRoomVisible')).notOk()
+    .expect(Selector('#deckEditorCardView').hasClass('active')).ok()
+    .expect(Selector('#deckEditorMain').visible).ok();
+
+  // close with Escape -> the button must deactivate too
   await t.pressKey('esc');
   await t.expect(Selector('body').hasClass('deckEditorActive')).notOk();
   await t.expect(toolbarButton.hasClass('active')).notOk();

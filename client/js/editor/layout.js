@@ -175,6 +175,12 @@ function hint(html) {
 }
 
 export function getAvailableRoomRectangle() {
+  // The deck editor's "Card view" toggle turns its card stage into a window onto the room, so while it is off
+  // the room is fitted into exactly that window instead of into the whole (mostly covered) play area.
+  if(deckEditor.isOpen() && deckEditor.roomVisible) {
+    const stage = $('#deckEditorMain').getBoundingClientRect();
+    return { top: stage.top, right: stage.right, left: stage.left, bottom: stage.bottom };
+  }
   return {
     top: window.innerWidth/window.innerHeight > 1 || window.innerWidth < 700 ? $('#editorToolbar').getBoundingClientRect().bottom : window.innerHeight/2,
     right: (window.innerWidth/window.innerHeight > 1 && ($('#editor.moduleActive') || $('body.draggingEditorSidebarModule')) ? $('#editorModules') : $('#editorSidebar')).offsetLeft,

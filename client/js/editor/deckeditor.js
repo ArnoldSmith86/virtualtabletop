@@ -201,7 +201,9 @@ class DeckEditor {
     this.addMode = 'static'; // 'static' = same on every card, 'dynamic' = different per card type
     this.deckSymbolSelected = false; // the deck-widget strip entry is selected -> the sidebar edits card defaults
     this.sidebarTab = 'defaults'; // which property scope the right sidebar shows: defaults | cardType | face | object
-    this.addSectionOpen = false; // the left-sidebar "+" expander revealing the add-object controls
+    this.addSectionOpen = false; // the "+" expander revealing the add-object controls
+    this.addSectionHost = 'tree'; // which "+" it is currently attached to: 'tree' (left) or 'sidebar' (Object tab)
+    this.roomVisible = false; // "Card view" toggled off: the card stage is a window onto the room's play area
     this.treeObjectPreviews = []; // the tree rows' preview boxes, so they can follow the card (refreshTreePreviews)
     this.treeLevel = 'face'; // which tree level the unified add/copy/delete toolbar acts on: deck | face | object
 
@@ -266,6 +268,8 @@ class DeckEditor {
       radio.onchange = _=>this.renderNewDeckPanel(radio.value);
     $('#deckEditorUndo').onclick = _=>this.undo();
     $('#deckEditorRedo').onclick = _=>this.redo();
+    $('#deckEditorCardView').onclick = _=>this.setRoomVisible(!this.roomVisible);
+    this.setRoomVisible(false); // sets the toggle's initial tooltip
     $('#deckEditorShowAll').onclick = _=>{
       this.showAllAreas = !this.showAllAreas;
       $('#deckEditorShowAll').classList.toggle('active', this.showAllAreas);
@@ -818,6 +822,7 @@ class DeckEditor {
     if(!deck || deck.get('type') != 'deck')
       return;
 
+    const wasOpen = this.isOpen();
     if(this.deckID !== null && this.deckID != deckID) {
       this.saveSelection(); // remember where the user left off in the deck we're switching away from
       await this.flushPendingCommits();
@@ -837,12 +842,17 @@ class DeckEditor {
     $('body').classList.add('deckEditorActive');
     $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
     // If a sidebar module (e.g. the deck's text Properties panel this editor is opened from) is open, close it
-    // so the visual editor owns the full width instead of sharing the screen with the panel it replaces.
-    const activeModuleButton = $('#editorSidebar button.active');
-    if(activeModuleButton)
-      activeModuleButton.click();
+    // so the visual editor owns the full width instead of sharing the screen with the panel it replaces. Only
+    // when the editor actually opens though: switching decks inside it must leave a panel the user opened
+    // afterwards (the JSON module in particular) alone.
+    if(!wasOpen) {
+      const activeModuleButton = $('#editorSidebar button.active');
+      if(activeModuleButton)
+        activeModuleButton.click();
+    }
     this.render();
     this.syncToolbarButton();
+    jeSelectDeckEditorDeck(deck); // an open JSON editor follows the deck being edited
   }
 
   // Entry point for the "Edit Cards and Deck" button on a card's Properties panel: open the card's deck with
@@ -881,6 +891,7 @@ class DeckEditor {
   // the user can create a deck with the "Add New Deck" button.
   async openEmpty() {
     this.initializeDOM();
+    const wasOpen = this.isOpen();
     if(this.deckID !== null)
       await this.flushPendingCommits();
     this.deckID = null;
@@ -896,9 +907,11 @@ class DeckEditor {
     this.resetHistory();
     $('body').classList.add('deckEditorActive');
     $('#deckEditorMainCol').append($('#symbolPickerOverlay')); // constrain the picker to the card view while open
-    const activeModuleButton = $('#editorSidebar button.active');
-    if(activeModuleButton)
-      activeModuleButton.click();
+    if(!wasOpen) {
+      const activeModuleButton = $('#editorSidebar button.active');
+      if(activeModuleButton)
+        activeModuleButton.click();
+    }
     this.render();
     this.syncToolbarButton();
   }
@@ -949,11 +962,31 @@ class DeckEditor {
   async close() {
     this.saveSelection(); // remember this deck's selection for the next time the editor opens
     await this.flushPendingCommits();
+    const deck = this.deck();
     this.selectedObject = null;
     $('body').classList.remove('deckEditorActive');
     $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
     $('#deckEditorDragToolbar').classList.remove('active');
+    this.setRoomVisible(false); // hand the whole play area back to the room
     this.syncToolbarButton();
+    // The deck that was on screen is what the user was working on, so leave the JSON editor on it.
+    jeSelectDeckEditorDeck(deck);
+  }
+
+  // The "Card view" toggle in the upper right of the history row. On (default): the card design fills the main
+  // area as always. Off: that area becomes a window onto the room's play area behind the editor, so the deck
+  // can be compared with the running game while the tree, card types and property sidebar stay usable.
+  setRoomVisible(roomVisible) {
+    this.roomVisible = !!roomVisible;
+    $('body').classList.toggle('deckEditorRoomVisible', this.roomVisible);
+    const button = $('#deckEditorCardView');
+    if(button) {
+      button.classList.toggle('active', !this.roomVisible);
+      button.title = this.roomVisible
+        ? 'Card view is off: this area shows the room instead. Click to design the card here again.'
+        : "Card view is on: the card fills this area. Click to show the room's play area here instead, so you can compare the deck with the game while still editing it.";
+    }
+    setScale(); // the room is fitted into whatever is visible of it, so this toggle changes its scale
   }
 
   // Keep the toolbar toggle button's pressed state in sync however the editor was opened/closed (button,
@@ -985,6 +1018,7 @@ class DeckEditor {
     $('body').classList.remove('deckEditorActive');
     $('#editor').append($('#symbolPickerOverlay')); // back to covering the whole editor for the JSON editor etc.
     $('#deckEditorDragToolbar').classList.remove('active');
+    this.setRoomVisible(false);
     this.syncToolbarButton();
   }
 
@@ -1618,6 +1652,12 @@ class DeckEditor {
 
   renderSidebar() {
     const sidebar = $('#deckEditorSidebar');
+    // The shared add-object submenu may be parked in the sidebar (Object tab): move it back out before the
+    // rebuild wipes it, renderSidebarToolbar puts it back if it still belongs here.
+    const addSection = $('#deckEditorAddSection');
+    if(addSection && sidebar.contains(addSection))
+      $('#deckEditorAddSectionHost').append(addSection);
+    this.sidebarAddButton = null;
     sidebar.innerHTML = '';
     const deck = this.deck();
     if(!deck)
@@ -1654,6 +1694,7 @@ class DeckEditor {
     if(!tabs.some(t=>t.id == this.sidebarTab && t.available))
       this.sidebarTab = [ 'face', 'cardType', 'defaults' ].find(id=>tabs.some(t=>t.id == id && t.available)) || 'defaults';
     this.renderSidebarTabs(sidebar, tabs);
+    this.renderSidebarToolbar(sidebar);
 
     if(this.sidebarTab == 'defaults') {
       this.renderCardDefaults(sidebar, addHeader, addPropertyRow);
@@ -1673,73 +1714,81 @@ class DeckEditor {
       return;
     }
 
-    // The object tab is only reachable with a face object selected (the clamp above falls back otherwise).
-    if(object) {
-      // The caption spells out what the rows below do, so the contrast with the amber "different per card
-      // type" Dynamic properties section further down is stated, not just colored.
-      addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Same on every card type');
-      // Note below (not part of) the header, in the same style as the Dynamic properties note.
-      if(object.type == 'html')
-        div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
-
-      // One cause/actionId per edited field: a typing burst on one property of one object stays one
-      // breadcrumb/undo step, but edits to another property or object become their own step.
-      const objectFieldArgs = property=>[
-        `${getPlayerDetails().playerName} updated "${property}" of face object ${this.selectedObject+1} on face ${this.face} of deck ${this.deckID} in deck editor`,
-        `field:faceTemplates:${this.face}:${this.selectedObject}:${property}`
-      ];
-      const objectProps = div(sidebar, 'deckEditorProperties deckEditorObjectProperties');
-      for(const property of Object.keys(object)) {
-        if(property == 'dynamicProperties')
-          continue;
-        // The object's structural "type" is a dropdown of the valid types (not a free-typed field that could
-        // be broken by a typo) and can't be deleted.
-        if(property == 'type') {
-          this.renderObjectTypeRow(objectProps, object);
-          continue;
-        }
-        // Known object properties get a fixed field type (number or text) with no type selector; the value's
-        // JS type decides for anything custom.
-        const fieldType = this.objectFieldType(property);
-        const onValueChanged = v=>this.queueFieldEdit(async _=>{
-          await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
-          object[property] = v;
-          this.refreshMainCardFaces();
-          this.updateDragToolbar();
-          this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
-        });
-        const row = this.addTypedInput(property, object[property], onValueChanged, objectProps, fieldType, true);
-        // The object's own value is an image/icon: a picker button opens the same chip picker the Edit
-        // Widgets tab uses for a basic widget's Content section, right below this row.
-        if(property == 'value' && (object.type == 'image' || object.type == 'icon'))
-          this.addAssetPickerToRow(row, objectProps, object.type, ()=>object[property], onValueChanged);
-        // A color-named property (color, strokeColor, …) or a color-looking value gets a swatch + color picker.
-        else
-          this.addColorPickerToRow(row, objectProps, property, onValueChanged);
-        // Per-row "make different per card type" (split) button removed; that binding is created from the
-        // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
-        this.addPropertyDeleteButton(row, property, async _=>{
-          await this.flushPendingCommits();
-          delete object[property];
-          this.refreshMainCardFaces();
-          await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted property "${property}" of a face object of deck ${this.deckID} in deck editor`);
-          this.renderSidebar();
-        });
-      }
-      addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
-        if(property == 'dynamicProperties' || object[property] !== undefined)
-          return;
-        await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
-        object[property] = this.initialValueForType(type);
-        this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
-        this.renderSidebar();
-      }));
-
-      this.renderDynamicProperties(sidebar, object);
-
-      // No "Delete object" button here — objects are deleted from the left face-object list (or Delete key).
+    // The object tab stays clickable without a selection, so a face object can be added straight from here.
+    if(!object) {
+      // A <p> (not a div) so the test selector `.deckEditorProperties:first-of-type` keeps matching.
+      const note = document.createElement('p');
+      note.className = 'deckEditorSectionNote';
+      note.textContent = 'No face object is selected. Add one with the + above, or click an object on the card or in the list to the left to edit it.';
+      sidebar.append(note);
       this.renderObjectHint();
+      return;
     }
+
+    // The caption spells out what the rows below do, so the contrast with the amber "different per card
+    // type" Dynamic properties section further down is stated, not just colored.
+    addHeader(`Face object ${this.selectedObject+1} (${object.type || 'text'})`, 'deckEditorScopeEveryCard', 'Same on every card type');
+    // Note below (not part of) the header, in the same style as the Dynamic properties note.
+    if(object.type == 'html')
+      div(sidebar, 'deckEditorSectionNote').textContent = 'The JSON Editor should be used for editing HTML face objects.';
+
+    // One cause/actionId per edited field: a typing burst on one property of one object stays one
+    // breadcrumb/undo step, but edits to another property or object become their own step.
+    const objectFieldArgs = property=>[
+      `${getPlayerDetails().playerName} updated "${property}" of face object ${this.selectedObject+1} on face ${this.face} of deck ${this.deckID} in deck editor`,
+      `field:faceTemplates:${this.face}:${this.selectedObject}:${property}`
+    ];
+    const objectProps = div(sidebar, 'deckEditorProperties deckEditorObjectProperties');
+    for(const property of Object.keys(object)) {
+      if(property == 'dynamicProperties')
+        continue;
+      // The object's structural "type" is a dropdown of the valid types (not a free-typed field that could
+      // be broken by a typo) and can't be deleted.
+      if(property == 'type') {
+        this.renderObjectTypeRow(objectProps, object);
+        continue;
+      }
+      // Known object properties get a fixed field type (number or text) with no type selector; the value's
+      // JS type decides for anything custom.
+      const fieldType = this.objectFieldType(property);
+      const onValueChanged = v=>this.queueFieldEdit(async _=>{
+        await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
+        object[property] = v;
+        this.refreshMainCardFaces();
+        this.updateDragToolbar();
+        this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
+      });
+      const row = this.addTypedInput(property, object[property], onValueChanged, objectProps, fieldType, true);
+      // The object's own value is an image/icon: a picker button opens the same chip picker the Edit
+      // Widgets tab uses for a basic widget's Content section, right below this row.
+      if(property == 'value' && (object.type == 'image' || object.type == 'icon'))
+        this.addAssetPickerToRow(row, objectProps, object.type, ()=>object[property], onValueChanged);
+      // A color-named property (color, strokeColor, …) or a color-looking value gets a swatch + color picker.
+      else
+        this.addColorPickerToRow(row, objectProps, property, onValueChanged);
+      // Per-row "make different per card type" (split) button removed; that binding is created from the
+      // Dynamic properties section's Link control below. Only the delete (trash) button stays on the row.
+      this.addPropertyDeleteButton(row, property, async _=>{
+        await this.flushPendingCommits();
+        delete object[property];
+        this.refreshMainCardFaces();
+        await this.commit('faceTemplates', `${getPlayerDetails().playerName} deleted property "${property}" of a face object of deck ${this.deckID} in deck editor`);
+        this.renderSidebar();
+      });
+    }
+    addPropertyRow(sidebar, (property, type)=>this.queueFieldEdit(async _=>{
+      if(property == 'dynamicProperties' || object[property] !== undefined)
+        return;
+      await this.flushPendingCommitForOtherField('faceTemplates', objectFieldArgs(property)[1]);
+      object[property] = this.initialValueForType(type);
+      this.scheduleCommit('faceTemplates', ...objectFieldArgs(property));
+      this.renderSidebar();
+    }));
+
+    this.renderDynamicProperties(sidebar, object);
+
+    // No "Delete object" button here — objects are deleted from the left face-object list (or Delete key).
+    this.renderObjectHint();
   }
 
   // The four property scopes the sidebar can edit, in the order the tree presents them: the deck's card
@@ -1757,10 +1806,93 @@ class DeckEditor {
       { id: 'cardType', label: 'Card Type', icon: 'label', scope: 'deckEditorScopeThisType', available: this.cardType !== null,
         title: this.cardType === null ? 'Select a card type in the strip below to edit its properties'
                                       : `The properties of card type "${this.cardType}" alone` },
-      { id: 'object', label: 'Object', icon: 'category', scope: 'deckEditorScopeEveryCard', available: !!object,
+      // Selecting an object is not required to open this tab: without one it still offers the + that adds a
+      // face object, so an empty face can be filled without going through the tree.
+      { id: 'object', label: 'Object', icon: 'category', scope: 'deckEditorScopeEveryCard', available: !!face,
         title: object ? `Face object ${this.selectedObject+1} of ${this.faceLabel(this.face).toLowerCase()}`
-                      : 'Click a face object on the card or in the list to the left to edit it' }
+                      : 'Add a face object, or click one on the card or in the list to the left to edit it' }
     ];
+  }
+
+  // The same add / copy / delete the left tree toolbar offers, repeated at the top of every tab and scoped to
+  // that tab: the deck, the shown face, the selected card type or the selected face object can be added,
+  // copied and deleted without leaving the sidebar. The Object tab's "+" reveals the very same "Add to: All
+  // Cards / Card Type" submenu the tree's "+" does - it is one node that moves here (see openAddSectionIn).
+  renderSidebarToolbar(sidebar) {
+    const hasDeck = !!this.deck();
+    const hasFace = !!this.faceTemplates[this.face];
+    const hasType = this.cardType !== null;
+    const hasObject = !!this.selectedObjectTemplate();
+    const actions = {
+      defaults: [
+        [ 'Add a new deck to the game', true, _=>this.openNewDeckOverlay() ],
+        [ 'Copy this deck', hasDeck, _=>this.copyDeck() ],
+        [ 'Delete this deck', hasDeck, _=>this.deleteDeck() ]
+      ],
+      face: [
+        [ 'Add a face to this deck', hasDeck, _=>this.addFace() ],
+        [ 'Copy the shown face', hasFace, _=>this.copyFace() ],
+        [ 'Delete the shown face', hasFace, _=>this.deleteFace() ]
+      ],
+      cardType: [
+        [ 'Add a blank card type', hasDeck, _=>this.addCardType() ],
+        [ 'Copy the selected card type', hasType, _=>this.addCardType(this.cardType) ],
+        [ 'Delete the selected card type', hasType, _=>this.deleteCardType() ]
+      ],
+      object: [
+        [ 'Add a face object to this face', hasFace, null ], // wired to the submenu below
+        [ 'Copy the selected face object', hasObject, _=>this.copySelectedObject() ],
+        [ 'Delete the selected face object', hasObject, _=>this.deleteSelectedObject() ]
+      ]
+    }[this.sidebarTab];
+    if(!actions)
+      return;
+
+    // A <menu> (not a div) so the test selector `.deckEditorProperties:first-of-type` keeps matching the first
+    // properties div of the panel below.
+    const bar = document.createElement('menu');
+    bar.className = 'deckEditorSidebarToolbar';
+    sidebar.append(bar);
+    const buttons = [ 'add', 'content_copy', 'delete_forever' ].map((icon, i)=>{
+      const [ title, enabled, run ] = actions[i];
+      const button = document.createElement('button');
+      button.setAttribute('icon', icon);
+      button.title = title;
+      button.disabled = !enabled;
+      if(run)
+        button.onclick = run;
+      bar.append(button);
+      return button;
+    });
+
+    if(this.sidebarTab == 'object') {
+      const host = document.createElement('aside');
+      host.className = 'deckEditorSidebarAddHost';
+      sidebar.append(host);
+      this.sidebarAddButton = buttons[0];
+      buttons[0].onclick = _=>this.openAddSectionIn(host, 'sidebar');
+      if(this.addSectionOpen && this.addSectionHost == 'sidebar')
+        host.append($('#deckEditorAddSection')); // it was open here before this rebuild: put it back
+    } else if(this.addSectionHost == 'sidebar') {
+      this.addSectionOpen = false; // the submenu belongs to the Object tab only
+      this.addSectionHost = 'tree';
+    }
+    this.updateAddSection();
+  }
+
+  // The add-object submenu is a single node that moves to whichever "+" opened it (the tree toolbar's or the
+  // Object tab's), so both share its "Add to:" mode and its type buttons. Clicking the "+" it is already
+  // attached to closes it again.
+  openAddSectionIn(host, where) {
+    this.lastTreeClickKey = null; // don't let the next tree click read as a double click
+    const section = $('#deckEditorAddSection');
+    if(!section || !host)
+      return;
+    this.addSectionOpen = !(this.addSectionOpen && this.addSectionHost == where);
+    this.addSectionHost = where;
+    if(this.addSectionOpen)
+      host.append(section);
+    this.updateAddSection();
   }
 
   renderSidebarTabs(sidebar, tabs) {
@@ -2086,14 +2218,17 @@ class DeckEditor {
     };
   }
 
-  // Shows/hides the "+"-revealed add-object controls (only meaningful at object/empty-face level).
+  // Shows/hides the "+"-revealed add-object controls (only meaningful at object/empty-face level) and marks
+  // the "+" they are currently attached to as pressed - the tree toolbar's or the Object tab's.
   updateAddSection() {
     const section = $('#deckEditorAddSection');
     if(section)
       section.classList.toggle('deckEditorAddSectionOpen', this.addSectionOpen);
     const addBtn = $('#deckEditorTreeAdd');
     if(addBtn)
-      addBtn.classList.toggle('active', this.addSectionOpen);
+      addBtn.classList.toggle('active', this.addSectionOpen && this.addSectionHost == 'tree');
+    if(this.sidebarAddButton)
+      this.sidebarAddButton.classList.toggle('active', this.addSectionOpen && this.addSectionHost == 'sidebar');
   }
 
   // Reflects the tree selection level in the unified toolbar (labels + which buttons are usable). Show areas
@@ -2184,8 +2319,7 @@ class DeckEditor {
     this.lastTreeClickKey = null; // structural change: don't let the next tree click read as a double click
     if(this.treeLevel == 'deck')
       return this.addFace();
-    this.addSectionOpen = !this.addSectionOpen;
-    this.updateAddSection();
+    this.openAddSectionIn($('#deckEditorAddSectionHost'), 'tree');
   }
 
   treeCopy() {
@@ -2967,13 +3101,13 @@ class DeckEditor {
     this.render();
   }
 
-  async addDeck(deckID) {
+  async addDeck(deckID, size) {
     if(deckID && widgets.has(deckID)) {
       alert(`A widget with the id "${deckID}" already exists. Please choose a different deck id.`);
       return;
     }
     await this.flushPendingCommits(); // don't absorb a pending typed edit into this action
-    await this.open(await createStarterDeck(deckID));
+    await this.open(await createStarterDeck(deckID, size));
     this.treeLevel = 'deck';
     this.render();
   }
@@ -3004,6 +3138,10 @@ class DeckEditor {
     panel.innerHTML = '';
     this.pendingNewDeck = mode != 'empty';
     if(mode == 'empty') {
+      // Card size first, then the (optional) deck id: the size decides what the starter faces and the holder
+      // are built at, and it is the harder one to change afterwards.
+      const sizes = div(panel, 'deckEditorNewDeckSizes', '<span class=deckEditorNewDeckSizesLabel>Card size</span>'
+        + deckEditorCardSizes.map((size, index)=>`<label title="${html(size.label)} cards are ${size.width} wide and ${size.height} high"><input type=radio name=deckEditorNewDeckSize value=${index}${index ? '' : ' checked'}><b>${html(size.label)}</b><span>${size.width} &times; ${size.height}</span></label>`).join(''));
       const idInput = document.createElement('input');
       idInput.type = 'text';
       idInput.className = 'deckEditorNewDeckId';
@@ -3016,8 +3154,9 @@ class DeckEditor {
           alert(`A widget with the id "${id}" already exists. Please choose a different deck id.`);
           return;
         }
+        const picked = $('input[name=deckEditorNewDeckSize]:checked', sizes);
         this.closeNewDeckOverlay();
-        this.addDeck(id || undefined);
+        this.addDeck(id || undefined, deckEditorCardSizes[picked ? +picked.value : 0]);
       };
     } else if(mode == 'library') {
       // Keep the deck editor open: the library overlay is moved into #editor (see initializeDOM) so it shows
@@ -3360,24 +3499,50 @@ class DeckEditor {
 
 const deckEditor = new DeckEditor();
 
+// Card sizes offered when creating an empty deck, in the order they are shown. The first is the size new
+// decks have always been created at and stays the default; the rest are the proportions that come up most
+// often across the public library (small cards, poker/tarot/large ratios, wide cards, square tiles/tokens).
+const deckEditorCardSizes = [
+  { label: 'Default',     width: 103, height: 160 },
+  { label: 'Small',       width:  59, height:  92 },
+  { label: 'Poker',       width: 100, height: 140 },
+  { label: 'Tarot',       width:  87, height: 150 },
+  { label: 'Large',       width: 120, height: 168 },
+  { label: 'Wide',        width: 262, height: 160 },
+  { label: 'Square tile', width: 100, height: 100 },
+  { label: 'Token',       width:  50, height:  50 }
+];
+
 // Creates a minimal deck to start designing from scratch (holder + deck with one card type, a colored back
 // and a white front, plus one card) and returns the deck's id. Shared by the toolbar button (when the game
 // has no deck yet) and the properties module's "Design a deck in the deck editor" option.
 // deckID: optional id for the deck widget itself (from the "Add New Deck" dialog); the holder and button
 // still get generated ids. Defaults to the holder id + 'D' when not given.
-async function createStarterDeck(deckID) {
+// size: one of deckEditorCardSizes; the cards, the holder and its button are all built at that size.
+async function createStarterDeck(deckID, size) {
   batchStart();
   const id = generateUniqueWidgetID();
   const dID = deckID || id+'D';
+  const cardWidth = size && size.width || 103;
+  const cardHeight = size && size.height || 160;
+  const holderWidth = cardWidth + 8;   // the holder has always been 8 larger than the card it holds
+  const holderHeight = cardHeight + 8;
   setDeltaCause(`${getPlayerDetails().playerName} created deck ${dID} for the deck editor`);
-  await addWidgetLocal({ type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } });
+  const holder = { type: 'holder', id, x: 748, y: 400, dropTarget: { type: 'card' } };
+  // Spelled out only when they differ from the holder's own defaults, so a default-sized starter deck is
+  // still exactly the deck this has always created.
+  if(holderWidth != 111 || holderHeight != 168) {
+    holder.width = holderWidth;
+    holder.height = holderHeight;
+  }
+  await addWidgetLocal(holder);
   // Recall & Shuffle button on the holder, matching the add-widget overlay's deck composite.
   await addWidgetLocal({
     id: id+'B',
     parent: id,
     fixedParent: true,
-    y: 171.36,
-    width: 111,
+    y: holderHeight + 3.36,
+    width: holderWidth,
     height: 40,
     type: 'button',
     text: 'Recall & Shuffle',
@@ -3394,11 +3559,11 @@ async function createStarterDeck(deckID) {
     parent: id,
     x: 12,
     y: 41,
-    cardDefaults: { width: 103, height: 160 },
+    cardDefaults: { width: cardWidth, height: cardHeight },
     cardTypes: { 'type 1': {} },
     faceTemplates: [
-      { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: VTTblue } ] },
-      { objects: [ { type: 'image', x: 0, y: 0, width: 103, height: 160, color: '#ffffff' } ] }
+      { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: VTTblue } ] },
+      { objects: [ { type: 'image', x: 0, y: 0, width: cardWidth, height: cardHeight, color: '#ffffff' } ] }
     ]
   });
   await addWidgetLocal({ type: 'card', deck: dID, cardType: 'type 1', parent: id, activeFace: 1 });
