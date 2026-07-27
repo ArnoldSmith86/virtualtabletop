@@ -490,6 +490,9 @@ body.aspectTooGood.hiddenToolbar {
       scrollbar-width: none;
       padding-top: 0;
       padding-bottom: 0;
+      /* every compaction level changes the size of the contents, so scroll anchoring would keep
+         adjusting scrollTop while the window is resized until the toolbar sits at its end */
+      overflow-anchor: none;
       /* scrolling comes to rest on a button instead of cutting one in half behind an arrow */
       scroll-snap-type: y proximity;
       scroll-padding: var(--toolbarArrowSize) 0;

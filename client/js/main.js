@@ -313,8 +313,6 @@ function updateToolbarScrolling() {
   positionToolbarTooltip();
 }
 
-const toolbarArrowSize = 24; // --toolbarArrowSize in layout.css
-
 // clicking one of the arrows scrolls by roughly one screen and returns true - the arrows are
 // pseudo elements, so whether a click on one is reported on the toolbar or on a button that
 // scrolled underneath it depends on the scroll position, which is why the caller catches the
@@ -328,8 +326,9 @@ function scrollToolbarByArrow(e) {
   const toolbar = $('#toolbar');
   const rect = toolbar.getBoundingClientRect();
   const horizontal = body.contains('horizontalToolbar');
-  const back = body.contains('toolbarScrollBack') && (horizontal ? e.clientX < rect.left + toolbarArrowSize : e.clientY < rect.top + toolbarArrowSize);
-  const forward = body.contains('toolbarScrollForward') && (horizontal ? e.clientX > rect.right - toolbarArrowSize : e.clientY > rect.bottom - toolbarArrowSize);
+  const arrow = parseFloat(getComputedStyle(toolbar).getPropertyValue('--toolbarArrowSize')) || 0;
+  const back = body.contains('toolbarScrollBack') && (horizontal ? e.clientX < rect.left + arrow : e.clientY < rect.top + arrow);
+  const forward = body.contains('toolbarScrollForward') && (horizontal ? e.clientX > rect.right - arrow : e.clientY > rect.bottom - arrow);
   if(back || forward)
     scrollToolbarBy((horizontal ? toolbar.clientWidth : toolbar.clientHeight) * (back ? -0.8 : 0.8), 'smooth');
   return back || forward;
@@ -338,7 +337,8 @@ function scrollToolbarByArrow(e) {
 function scrollToolbarByWheel(e) {
   if(!$('body').classList.contains('horizontalToolbar') || !$('body').classList.contains('toolbarOverflow') || e.deltaX)
     return;
-  scrollToolbarBy(e.deltaY * (e.deltaMode ? 16 : 1)); // some mice report lines instead of pixels
+  // deltaMode says whether the wheel reports pixels, lines or pages
+  scrollToolbarBy(e.deltaY * ([ 1, 16, $('#toolbar').clientWidth ][e.deltaMode] || 1));
   e.preventDefault();
 }
 

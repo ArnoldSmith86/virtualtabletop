@@ -95,6 +95,23 @@ test('The toolbar layout does not depend on the direction the window was resized
   await t.resizeWindow(1280, 800);
 });
 
+// the compaction levels change the size of the toolbar contents, which makes the browser's scroll
+// anchoring adjust the scroll position on every resize step - without turning that off, shrinking
+// the window walks the overflowing toolbar to its end and pushes the first buttons out of sight
+test('Resizing the window does not scroll the overflowing toolbar by itself', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+
+  for(const [ width, height ] of [ [ 420, 260 ], [ 420, 250 ], [ 420, 240 ], [ 420, 230 ], [ 420, 220 ] ]) {
+    const size = `${width}x${height}`;
+    await t.resizeWindow(width, height).wait(300);
+    await t.expect((await toolbarLayout()).overflow).ok(`${size}: the toolbar is expected to overflow`);
+    await t.expect((await toolbarState()).position).lte(2, `${size}: resizing the window scrolled the toolbar`);
+  }
+
+  await t.resizeWindow(1280, 800);
+});
+
 test('Clicking a toolbar scroll arrow scrolls instead of pressing the button underneath it', async t => {
   await setRoomState();
   await ClientFunction(prepareClient)();
