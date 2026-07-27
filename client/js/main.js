@@ -288,6 +288,32 @@ function updateToolbarScrolling() {
   toggleClass($('body'), 'toolbarScrollBack', position > 1);
   toggleClass($('body'), 'toolbarScrollForward', position + visible < content - 1);
   positionToolbarPopups();
+  positionToolbarTooltip();
+}
+
+// clicking one of the arrows (they are pseudo elements of the toolbar, so the click targets the
+// toolbar itself) scrolls by roughly one screen - a vertical mouse wheel does not scroll a
+// horizontally scrolling container, so that is translated in scrollToolbarByWheel below
+function scrollToolbarByArrow(e) {
+  const toolbar = $('#toolbar');
+  const rect = toolbar.getBoundingClientRect();
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const back = horizontal ? e.clientX < rect.left + 24 : e.clientY < rect.top + 24;
+  const forward = horizontal ? e.clientX > rect.right - 24 : e.clientY > rect.bottom - 24;
+  if(back || forward)
+    scrollToolbarBy((horizontal ? toolbar.clientWidth : toolbar.clientHeight) * (back ? -0.8 : 0.8), 'smooth');
+}
+
+function scrollToolbarByWheel(e) {
+  if(!$('body').classList.contains('horizontalToolbar') || !$('body').classList.contains('toolbarOverflow') || e.deltaX)
+    return;
+  scrollToolbarBy(e.deltaY * (e.deltaMode ? 16 : 1)); // some mice report lines instead of pixels
+  e.preventDefault();
+}
+
+function scrollToolbarBy(amount, behavior) {
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  $('#toolbar').scrollBy({ [horizontal ? 'left' : 'top']: amount, behavior });
 }
 
 // While the toolbar scrolls, it clips everything that reaches outside of it - so the sound and
@@ -298,19 +324,51 @@ function positionToolbarPopups() {
   const toolbarRect = $('#toolbar').getBoundingClientRect();
   for(const popup of [ $('#options'), $('#zoomControls') ]) {
     if(!overflow || popup.classList.contains('hidden')) {
-      popup.style.top = popup.style.left = popup.style.right = '';
+      resetToolbarFlyout(popup);
       continue;
     }
     const anchorRect = popup.parentNode.getBoundingClientRect();
-    popup.style.right = 'auto';
-    if(horizontal) {
-      popup.style.left = Math.min(Math.max(0, anchorRect.left + 32 - popup.offsetWidth), window.innerWidth - popup.offsetWidth) + 'px';
-      popup.style.top = (toolbarRect.top - popup.offsetHeight - 2) + 'px';
-    } else {
-      popup.style.left = (toolbarRect.right + 4) + 'px';
-      popup.style.top = Math.min(Math.max(0, anchorRect.top - 2), window.innerHeight - popup.offsetHeight) + 'px';
-    }
+    if(horizontal)
+      positionToolbarFlyout(popup, anchorRect.left + 32 - popup.offsetWidth, toolbarRect.top - popup.offsetHeight - 2);
+    else
+      positionToolbarFlyout(popup, toolbarRect.right + 4, anchorRect.top - 2);
   }
+}
+
+// the same for the tooltip of the button the mouse is on - the wide toolbar shows its tooltips
+// inside of the toolbar, so those are not clipped and stay where the CSS puts them
+let hoveredToolbarButton = null;
+let positionedTooltip = null;
+
+function positionToolbarTooltip() {
+  if(positionedTooltip)
+    resetToolbarFlyout(positionedTooltip);
+  positionedTooltip = null;
+
+  const body = $('body').classList;
+  if(!hoveredToolbarButton || !body.contains('toolbarOverflow') || body.contains('wideToolbar'))
+    return;
+  const tooltip = $('.tooltip', hoveredToolbarButton);
+  if(!tooltip)
+    return;
+
+  positionedTooltip = tooltip;
+  const toolbarRect = $('#toolbar').getBoundingClientRect();
+  const buttonRect = hoveredToolbarButton.getBoundingClientRect();
+  if(body.contains('horizontalToolbar'))
+    positionToolbarFlyout(tooltip, buttonRect.left + (buttonRect.width - tooltip.offsetWidth)/2, toolbarRect.top - tooltip.offsetHeight - 2);
+  else
+    positionToolbarFlyout(tooltip, toolbarRect.right + 4, buttonRect.top + (buttonRect.height - tooltip.offsetHeight)/2);
+}
+
+function positionToolbarFlyout(element, left, top) {
+  element.style.right = 'auto';
+  element.style.left = Math.max(0, Math.min(left, window.innerWidth - element.offsetWidth)) + 'px';
+  element.style.top = Math.max(0, Math.min(top, window.innerHeight - element.offsetHeight)) + 'px';
+}
+
+function resetToolbarFlyout(element) {
+  element.style.top = element.style.left = element.style.right = '';
 }
 
 function getScale() {
@@ -635,7 +693,22 @@ onLoad(function() {
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
 
   on('#toolbar', 'scroll', updateToolbarScrolling);
-  on('#toolbar', 'click', positionToolbarPopups);
+  on('#toolbar', 'click', function(e) {
+    if(e.target == this)
+      scrollToolbarByArrow(e);
+    positionToolbarPopups();
+  });
+  on('#toolbar', 'wheel', scrollToolbarByWheel);
+  on('#toolbar', 'mouseover', e=>{
+    hoveredToolbarButton = e.target.closest('.toolbarButton');
+    positionToolbarTooltip();
+  });
+  on('#toolbar', 'mouseleave', _=>{
+    hoveredToolbarButton = null;
+    positionToolbarTooltip();
+  });
+  // catches everything that resizes the toolbar without a setScale, especially it becoming visible again
+  new ResizeObserver(updateToolbarLayout).observe($('#toolbar'));
   document.fonts.ready.then(_=>updateToolbarLayout()); // the icon font changes the button sizes
 
   on('.toolbarButton', 'click', function(e) {

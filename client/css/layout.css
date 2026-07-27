@@ -488,14 +488,8 @@ body.aspectTooGood.hiddenToolbar {
       display: none;
     }
 
-    /* tooltips reach outside of the toolbar and would be clipped by the scroll container
-       (in the wide toolbar they are inside of it and stay visible) */
-    body.toolbarOverflow:not(.wideToolbar) .toolbarButton:hover .tooltip {
-      display: none;
-    }
-
-    /* the arrows hint that scrolling reveals more buttons - the negative margins keep them
-       from taking up space of their own */
+    /* the arrows hint that scrolling reveals more buttons and scroll on click - the negative
+       margins keep them from taking up space of their own */
     body.toolbarOverflow #toolbar::before,
     body.toolbarOverflow #toolbar::after {
       display: none;
@@ -507,7 +501,7 @@ body.aspectTooGood.hiddenToolbar {
       font-family: "Material Symbols";
       font-size: 24px;
       color: #fff;
-      pointer-events: none;
+      cursor: pointer;
     }
 
     body.toolbarOverflow #toolbar::before {
@@ -552,10 +546,14 @@ body.aspectTooGood.hiddenToolbar {
       display: flex;
     }
 
-    /* positioned by positionToolbarPopups in main.js so they are not clipped away */
+    /* popups and tooltips reach outside of the toolbar and would be clipped by the scroll
+       container - positionToolbarPopups and positionToolbarTooltip in main.js place them
+       relative to the viewport instead (the wide toolbar has its tooltips inside of it) */
     body.toolbarOverflow #options,
-    body.toolbarOverflow #zoomControls {
+    body.toolbarOverflow #zoomControls,
+    body.toolbarOverflow:not(.wideToolbar) .toolbarButton .tooltip {
       position: fixed;
+      bottom: auto;
     }
 
   /* sound settings */
