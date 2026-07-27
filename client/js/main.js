@@ -36,7 +36,7 @@ function compareDropTarget(widget, t, exclude){
   return false;
 }
 
-function getValidDropTargets(widget) {
+function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
@@ -52,7 +52,7 @@ function getValidDropTargets(widget) {
 
     let tt = t;
     while(isValid) {
-      if(widget == tt) {
+      if(widget == tt || dragged == tt) {
         isValid = false;
         break;
       }
