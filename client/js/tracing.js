@@ -25,6 +25,15 @@ function sendUserTraceEvent() {
   sendTraceEvent('user report', { starttime, description });
 }
 
+// what ends up in an error handler is not necessarily an Error object: the browser reports
+// script errors from other origins and problems like ResizeObserver loops without one, and
+// `throw 'oops'` or Promise.reject() hand over whatever value was used
+export function describeError(error, fallback) {
+  if(error && (error.message !== undefined || error.stack !== undefined))
+    return String(error.message) + '\n' + String(error.stack);
+  return fallback + (error === undefined || error === null ? '' : '\n' + String(error));
+}
+
 onLoad(function() {
   window.addEventListener('keydown', function(e) {
     if(!jeEnabled && e.key == 'F9') {
@@ -42,9 +51,13 @@ onLoad(function() {
 
   onMessage('tracing', _=>tracingEnabled=true);
 
-  const errorHandler = function(error) {
+  let errorReported = false;
+  const errorHandler = function(error, fallback) {
+    if(errorReported)
+      return; // the first error is the one that broke things - later ones are usually just fallout
+    errorReported = true;
     const details = {
-      error: String(error.message) + '\n' + String(error.stack),
+      error: describeError(error, fallback),
       undoProtocol,
       delta,
       mouseStatus: Object.fromEntries(Object.entries(mouseStatus).map(([id, ms]) => [id, {...ms, moveTarget: ms.moveTarget ? ms.moveTarget.get('id') : null}])),
@@ -91,14 +104,14 @@ onLoad(function() {
         else
           $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + text;
       } catch(e) {
-        $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + e.message + "\n" + e.stack;
+        $('#clientErrorOverlay textarea').value = "Submitting the error failed. Please report this on Discord or GitHub:\n\n" + details.error + "\n\n" + describeError(e, 'Unknown error');
       }
     });
   }
   window.onerror = function(msg, url, line, col, err) {
-    errorHandler(err);
+    errorHandler(err, `${msg}\n    at ${url}:${line}:${col}`);
   };
   window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
-    errorHandler(promiseRejectionEvent.reason);
+    errorHandler(promiseRejectionEvent.reason, 'Unhandled promise rejection');
   });
 });
