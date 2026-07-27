@@ -8,7 +8,7 @@
       "1": {
         "rank": "1",
         "roman": "I",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 15
@@ -16,7 +16,7 @@
       "2": {
         "rank": "2",
         "roman": "II",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 16
@@ -24,7 +24,7 @@
       "3": {
         "rank": "3",
         "roman": "III",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 17
@@ -32,7 +32,7 @@
       "4": {
         "rank": "4",
         "roman": "IV",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 18
@@ -40,7 +40,7 @@
       "5": {
         "rank": "5",
         "roman": "V",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 19
@@ -48,7 +48,7 @@
       "6": {
         "rank": "6",
         "roman": "VI",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 20
@@ -56,7 +56,7 @@
       "7": {
         "rank": "7",
         "roman": "VII",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 21
@@ -64,7 +64,7 @@
       "8": {
         "rank": "8",
         "roman": "VIII",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 22
@@ -72,7 +72,7 @@
       "9": {
         "rank": "9",
         "roman": "IX",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 23
@@ -80,7 +80,7 @@
       "10": {
         "rank": "10",
         "roman": "X",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 24
@@ -88,7 +88,7 @@
       "11": {
         "rank": "11",
         "roman": "XI",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 25
@@ -96,7 +96,7 @@
       "12": {
         "rank": "12",
         "roman": "XII",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 26
@@ -104,7 +104,7 @@
       "13": {
         "rank": "13",
         "roman": "XIII",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 27
@@ -112,7 +112,7 @@
       "14": {
         "rank": "14",
         "roman": "XIV",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 28
@@ -120,7 +120,7 @@
       "15": {
         "rank": "15",
         "roman": "XV",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 29
@@ -128,7 +128,7 @@
       "16": {
         "rank": "16",
         "roman": "XVI",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 30
@@ -136,7 +136,7 @@
       "17": {
         "rank": "17",
         "roman": "XVII",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 31
@@ -144,7 +144,7 @@
       "18": {
         "rank": "18",
         "roman": "XVIII",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 32
@@ -152,7 +152,7 @@
       "19": {
         "rank": "19",
         "roman": "XIX",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 33
@@ -160,7 +160,7 @@
       "20": {
         "rank": "20",
         "roman": "XX",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 34
@@ -168,7 +168,7 @@
       "21": {
         "rank": "21",
         "roman": "XXI",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "suitColor": "purple",
         "order": 35
@@ -176,7 +176,7 @@
       "22": {
         "roman": "S",
         "suitColor": "purple",
-        "suitImage": "/i/icons/star.svg",
+        "suitImage": "/assets/-374765193_624",
         "suit": 5,
         "rank": "S",
         "order": 36
