@@ -5310,14 +5310,14 @@ class PropertiesModule extends SidebarModule {
     return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
   }
 
-  // The id for a stop about to be added at linePosition, derived from the stops
+  // The id for a stop about to be added at a position, derived from the stops
   // already on the line by incrementing a trailing number the way the JSON
   // editor does when it duplicates a widget. The two end stops are numbered
   // separately from the intermediate ones, so inserting a stop in the middle
   // never continues the end stops' series (and the other way round).
-  lineNextStopID(line, linePosition) {
+  lineNextStopID(line, position) {
     const stops = line.attachedWidgets();
-    const index = stops.filter(stop=>(+stop.get('linePosition') || 0) <= linePosition).length;
+    const index = line.stopList().filter(entry=>entry.position <= position).length;
     const isEndStop = index == 0 || index == stops.length;
     const group = stops.filter((stop, i)=>(i == 0 || i == stops.length-1) == isEndStop);
     const source = group.length ? group[group.length-1].id : null;
@@ -5340,6 +5340,82 @@ class PropertiesModule extends SidebarModule {
       await child.set('x', x);
       await child.set('y', y);
     }
+  }
+
+  // Inline popout (styled like the widget select popout) listing the saved
+  // widgets of the Widgets sidebar - server library and local storage - so one
+  // of them can be dropped onto the line as a stop. Placing goes through the
+  // sidebar's own code, so id remapping, deck/inheritFrom ordering and
+  // editorAddToRoomRoutine behave exactly as they do there.
+  renderLibraryStopPicker(wrap, line, lineEdit, onPlaced) {
+    const expandButton = document.createElement('button');
+    expandButton.className = 'propertyExpandButton';
+    expandButton.setAttribute('icon', 'expand_more');
+    expandButton.title = 'Select a saved widget';
+    wrap.appendChild(expandButton);
+
+    const popout = div(wrap, 'propertyPicker widgetSelectPopout');
+    popout.style.display = 'none';
+
+    let entries = null;
+    let searchTerm = '';
+
+    const place = async entry=>{
+      await lineEdit(`added stop from the library to line ${line.id}`, _=>placeSavedWidget(entry.id, entry.source, null, { line }));
+      popout.style.display = 'none';
+      onPlaced();
+    };
+
+    const renderPopout = _=>{
+      popout.innerHTML = '';
+      div(popout, 'propertyPickerSectionTitle', 'Add a saved widget as a stop');
+
+      const searchSection = div(popout, 'propertyPickerSection');
+      const search = document.createElement('input');
+      search.placeholder = 'Search by name...';
+      search.value = searchTerm;
+      searchSection.appendChild(search);
+
+      const list = div(searchSection, 'widgetPickerList lineLibraryStopList');
+      const showEntries = _=>{
+        list.innerHTML = '';
+        if(entries === null) {
+          div(list, 'widgetPickerEntry', 'Loading...');
+          return;
+        }
+        const term = searchTerm.trim().toLowerCase();
+        const matches = entries.filter(entry=>!term || String(entry.name || entry.id).toLowerCase().includes(term));
+        if(!matches.length) {
+          div(list, 'widgetPickerEntry', entries.length ? 'No match.' : 'No saved widgets yet.');
+          return;
+        }
+        for(const entry of matches.slice(0, 50)) {
+          const element = div(list, 'widgetPickerEntry lineLibraryStopEntry', `<span class=lineLibraryStopPreview>${renderSavedWidgetPreviewHTML(entry.preview)}</span><span>${html(entry.name || entry.id)}</span><span class=widgetPickerType>${html(entry.source)}</span>`);
+          element.onclick = _=>place(entry);
+        }
+      };
+      showEntries();
+
+      search.oninput = _=>{
+        searchTerm = search.value;
+        showEntries();
+      };
+
+      if(entries === null) {
+        Promise.all([ 'server', 'local' ].map(source=>getSavedWidgets(source).then(data=>data.widgets.map(w=>({ ...w, source })), _=>[])))
+          .then(results=>{
+            entries = results[0].concat(results[1]);
+            showEntries();
+          });
+      }
+    };
+
+    expandButton.onclick = _=>{
+      const show = popout.style.display == 'none';
+      popout.style.display = show ? '' : 'none';
+      if(show)
+        renderPopout();
+    };
   }
 
   renderForLine(widget) {
@@ -5365,6 +5441,8 @@ class PropertiesModule extends SidebarModule {
     const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
     const shapePresets = [
       { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
+      // a closed shape: the two points become the corners of its bounding box
+      { name: 'Circle / oval', path: 'M 40 4 A 36 16 0 1 1 39.9 4 Z', shape: 'ellipse' },
       { name: 'Shallow curve', path: 'M 4 30 C 24 8, 56 8, 76 30', controls: [ .33, .22, .67, .22 ] },
       { name: 'Deep curve', path: 'M 4 34 C 20 0, 60 0, 76 34', controls: [ .25, .42, .75, .42 ] },
       { name: 'Reverse curve', path: 'M 4 10 C 24 32, 56 32, 76 10', controls: [ .33, -.22, .67, -.22 ] },
@@ -5372,7 +5450,7 @@ class PropertiesModule extends SidebarModule {
       { name: 'Reverse S curve', path: 'M 4 12 C 22 38, 58 2, 76 28', controls: [ .30, -.30, .70, .30 ] }
     ];
     const presetControls = preset=>{
-      if(!preset.controls)
+      if(!preset.controls || widget.isEllipse())
         return null;
       const s = widget.pointProperty('lineStart');
       const e = widget.pointProperty('lineEnd');
@@ -5387,12 +5465,19 @@ class PropertiesModule extends SidebarModule {
     };
     const shapeButtons = shapePresets.map((preset, index)=>{
       const button = document.createElement('button');
-      button.className = `lineShapePreset${index == 0 ? ' lineShapeStraight' : index == 1 ? ' lineShapeCurved' : ''}`;
+      button.className = `lineShapePreset${index == 0 ? ' lineShapeStraight' : preset.controls ? ' lineShapeCurved' : ''}`;
       button.title = preset.name;
       button.setAttribute('aria-label', preset.name);
       button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;
       shapeWrap.appendChild(button);
       button.onclick = _=>lineEdit(`set the shape of line ${widget.id} to ${preset.name.toLowerCase()}`, async _=>{
+        if(preset.shape == 'ellipse') {
+          await widget.set('controlStart', null);
+          await widget.set('controlEnd', null);
+          await widget.set('lineShape', 'ellipse');
+          return;
+        }
+        await widget.set('lineShape', 'line');
         const controls = presetControls(preset);
         await widget.set('controlStart', controls ? controls.start : null);
         await widget.set('controlEnd', controls ? controls.end : null);
@@ -5403,14 +5488,20 @@ class PropertiesModule extends SidebarModule {
     const updateShapeButtons = widget=>{
       const c1 = widget.pointProperty('controlStart');
       const c2 = widget.pointProperty('controlEnd');
+      const ellipse = widget.isEllipse();
       shapePresets.forEach((preset, i)=>{
         const controls = presetControls(preset);
-        const selected = controls ? c1 && c2 && c1.x == controls.start.x && c1.y == controls.start.y && c2.x == controls.end.x && c2.y == controls.end.y : !c1 && !c2;
+        const selected = preset.shape == 'ellipse' ? ellipse : ellipse ? false : controls ? c1 && c2 && c1.x == controls.start.x && c1.y == controls.start.y && c2.x == controls.end.x && c2.y == controls.end.y : !c1 && !c2;
         shapeButtons[i].classList.toggle('selected', !!selected);
+        // a closed shape has no Bezier control points, so the curve presets
+        // (and everything about its non-existent end points) do not apply
+        if(preset.controls)
+          shapeButtons[i].style.display = ellipse ? 'none' : '';
       });
     };
     this.addPropertyListener(widget, 'controlStart', updateShapeButtons);
     this.addPropertyListener(widget, 'controlEnd', updateShapeButtons);
+    this.addPropertyListener(widget, 'lineShape', updateShapeButtons);
 
     const dashPresets = [
       { name: 'Solid', value: null },
@@ -5533,10 +5624,15 @@ class PropertiesModule extends SidebarModule {
 
     const removeStop = async stop=>{
       await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
+        // A stop the line owns is deleted with it; a widget that only rides on
+        // the line (it lives elsewhere in the room) is just taken off the list.
+        if(stop.get('parent') != widget.id) {
+          await widget.removeStop(stop.id);
+          return;
+        }
         // release its contents to the room first so cards/tokens on the stop aren't deleted
         await this.lineReleaseStopChildren(stop);
         await removeWidgetLocal(stop.get('id'));
-        await widget.updateAttachedWidgets();
       });
       renderStops();
     };
@@ -5627,15 +5723,12 @@ class PropertiesModule extends SidebarModule {
         position.min = 0;
         position.max = 100;
         position.className = 'lineStopPosition';
-        position.value = Math.round((+stop.get('linePosition') || 0)*100);
+        position.value = Math.round(widget.stopPosition(stop)*100);
         // with even distribution on, the line owns the positions - a typed value
         // would be spaced away again right after, so don't offer the field
         position.disabled = !!widget.get('autoSpaceStops');
         position.title = position.disabled ? 'Positions are set by "Distribute evenly"' : 'Position along the line in percent';
-        position.onchange = _=>lineEdit(`moved stop ${stop.id} on line ${widget.id}`, async _=>{
-          await stop.set('linePosition', Math.max(0, Math.min(100, +position.value || 0))/100);
-          await widget.updateAttachedWidgets();
-        });
+        position.onchange = _=>lineEdit(`moved stop ${stop.id} on line ${widget.id}`, _=>widget.setStopPosition(stop.id, Math.max(0, Math.min(100, +position.value || 0))/100));
         // destructive, so it gets the shared red icon-button look
         const remove = document.createElement('button');
         remove.className = 'lineRemoveStop red';
@@ -5665,10 +5758,11 @@ class PropertiesModule extends SidebarModule {
       });
     };
     renderStops();
-    // rebuild the list when the number of stops changes (add/remove/reparent)
+    // rebuild the list when the chain itself changes (the line's stops property)
+    // or when a stop changes in a way the rows show
     this.addDeltaListener(delta=>{
       const stops = widget.attachedWidgets();
-      if(stopList.childElementCount != stops.length || stops.some(stop=>delta[stop.id] && Object.keys(delta[stop.id]).some(property=>![ 'x', 'y', 'rotation' ].includes(property))))
+      if((delta[widget.id] && delta[widget.id].stops !== undefined) || stopList.childElementCount != stops.length || stops.some(stop=>delta[stop.id] && Object.keys(delta[stop.id]).some(property=>![ 'x', 'y', 'rotation' ].includes(property))))
         renderStops();
     });
 
@@ -5688,26 +5782,53 @@ class PropertiesModule extends SidebarModule {
       template.movableInEdit = false;
       // Give manually positioned lines a sensible initial location. Automatic
       // spacing immediately recalculates every stop after it is added.
-      template.linePosition = widget.nextStopPosition();
-      template.id = this.lineNextStopID(widget, template.linePosition);
+      const position = widget.nextStopPosition();
+      template.id = this.lineNextStopID(widget, position);
       await lineEdit(`added stop ${template.id} to line ${widget.id}`, async _=>{
         await addWidgetLocal(template);
-        if(widget.get('autoSpaceStops'))
-          await widget.distributeAttachedWidgetsEvenly();
-        else
-          await widget.updateAttachedWidgets();
+        await widget.addStop(template.id, position);
       });
       renderStops();
     };
 
+    // Any widget already in the room can be made a stop by listing it - it does
+    // not have to be (or become) a child of the line.
+    const existingRow = div(this.moduleDOM, 'propertyInput lineExistingStopRow');
+    const existingLabel = document.createElement('label');
+    existingLabel.innerText = 'Add existing widget as stop:';
+    existingRow.appendChild(existingLabel);
+    this.renderWidgetSelectPopout(existingRow, widget, {
+      title: 'Choose a widget in the room to ride on this line',
+      pickerKey: 'lineExistingStop',
+      getSelectedIDs: ()=>[],
+      apply: async id=>{
+        if(!widgets.has(id) || id == widget.id || widget.stopList().some(entry=>entry.widget == id))
+          return;
+        await lineEdit(`added stop ${id} to line ${widget.id}`, _=>widget.addStop(id, widget.nextStopPosition()));
+        renderStops();
+      }
+    });
+
+    // ...and a saved widget from the library the Widgets sidebar shows can be
+    // placed straight onto the line as a stop
+    const libraryRow = div(this.moduleDOM, 'propertyInput lineLibraryStopRow');
+    const libraryLabel = document.createElement('label');
+    libraryLabel.innerText = 'Add stop from library:';
+    libraryRow.appendChild(libraryLabel);
+    this.renderLibraryStopPicker(libraryRow, widget, lineEdit, renderStops);
+
     // Connecting an end point glues it onto another widget at a chosen percentage.
     // Line.applyConnections converts through global coordinates so targets under
     // transformed parents stay in the correct frame.
-    this.addSubHeader('Connect points');
+    // A closed shape has no start or end point, so it gets no connect section
+    // (other lines can still connect *to* it, its perimeter is a path).
+    const connectSection = div(this.moduleDOM, 'lineConnectSection');
+    this.addSubHeader('Connect points', connectSection);
+    this.addPropertyListener(widget, 'lineShape', ()=>connectSection.style.display = widget.isEllipse() ? 'none' : '');
     for(const end of [ 'Start', 'End' ]) {
       // first row: the target id, picked the same way as any other widget
       // reference, with the end point's name as its (blue) label
-      const wrapper = div(this.moduleDOM, 'propertyInput lineConnectRow');
+      const wrapper = div(connectSection, 'propertyInput lineConnectRow');
       const label = document.createElement('label');
       const endName = document.createElement('span');
       endName.className = 'appearanceSubTitle';
@@ -5725,7 +5846,7 @@ class PropertiesModule extends SidebarModule {
       // second row: where on the target the end point sits. Indented and split
       // into two flex groups so it reads as a sub-part of the end point above
       // and wraps as a unit in a narrow sidebar.
-      const detailRow = div(this.moduleDOM, 'propertyInput lineConnectDetails');
+      const detailRow = div(connectSection, 'propertyInput lineConnectDetails');
       const positionGroup = div(detailRow, 'lineConnectGroup');
       const offsetGroup = div(detailRow, 'lineConnectGroup');
       const position = document.createElement('input');
@@ -5789,8 +5910,8 @@ class PropertiesModule extends SidebarModule {
     }
 
     this.renderOtherPropertiesSection(widget, [
-      'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
-      'lineColor', 'lineDash', 'lineWidth',
+      'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
+      'lineColor', 'lineDash', 'lineWidth', 'stops',
       'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
       'connectStart', 'connectEnd'
     ]);

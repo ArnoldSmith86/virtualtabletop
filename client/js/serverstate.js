@@ -213,6 +213,10 @@ async function updateWidgetId(widget, oldID) {
       await t.set('dropTarget', dropTarget);
   }
 
+  // Keep the stop lists of lines pointing at the renamed widget
+  for(const line of widgetFilter(w=>w.get('type') == 'line'))
+    await line.renameStop(oldID, id);
+
   // Update references in routines
   const updateParam = function(a, func, param) {
     if(a.func == func && Array.isArray(a[param])) {

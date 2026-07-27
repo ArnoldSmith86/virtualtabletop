@@ -104,7 +104,6 @@ const COMMON_PROPERTIES = {
     gameStartRoutine: 'routine',
     editorAddToRoomRoutine: 'routine',
     hotkey: 'string',
-    linePosition: 'number',
     lineOriginalRotation: 'object',
     animatePropertyChange: 'any',
     resetProperties: 'object',
@@ -139,7 +138,7 @@ const WIDGET_PROPERTIES = {
     },
     Line: {
         ...COMMON_PROPERTIES,
-        layer: 'any', movable: 'boolean', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', connectStart: 'any', connectEnd: 'any'
+        layer: 'any', movable: 'boolean', lineShape: v=>[ 'line', 'ellipse' ].includes(v) || 'lineShape must be "line" or "ellipse"', lineStart: 'object', lineEnd: 'object', controlStart: 'any', controlEnd: 'any', lineWidth: 'number', lineColor: 'any', lineDash: 'any', stops: v=>Array.isArray(v) && v.every(e=>e && typeof e === 'object' && typeof e.widget === 'string' && typeof e.position === 'number') || 'stops must be an array of { widget, position } objects', rotateStops: 'boolean', rotateAttachedWidgets: 'boolean', autoSpaceStops: 'boolean', connectStart: 'any', connectEnd: 'any'
     },
     Pile: {
         ...COMMON_PROPERTIES,

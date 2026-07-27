@@ -7,6 +7,13 @@ import { tracingEnabled } from '../tracing.js';
 import { toHex } from '../color.js';
 import { center, distance, overlap, getOffset, getElementTransform, getScreenTransform, getPointOnPlane, dehomogenize, getElementTransformRelativeTo, getTransformOrigin } from '../geometry.js';
 
+// Every line that carries the given widget as a stop. A stop is listed in the
+// line's stops property, so it can be any widget in the room - being a child of
+// the line is the common shape, not a requirement.
+function linesWithStop(widgetID) {
+  return widgetFilter(w=>w.get('type') == 'line' && w.stopList().some(entry=>entry.widget == widgetID));
+}
+
 const readOnlyProperties = new Set([
   '_absoluteRotation',
   '_absoluteScale',
@@ -121,9 +128,6 @@ export class Widget extends StateManaged {
       gameStartRoutine: null,
       hotkey: null,
 
-      // a numeric value here (0..1) turns any widget into a stop on its parent line;
-      // declared as a global default so the editor treats it as a known property
-      linePosition: null,
       // durable snapshot used while a line is automatically rotating this stop
       lineOriginalRotation: null,
 
@@ -2632,6 +2636,11 @@ export class Widget extends StateManaged {
 
   async onPropertyChange(property, oldValue, newValue) {
     if(property == 'parent') {
+      // deleting a stop takes it off the lines that list it; a rename is a
+      // remove + re-add of the same state, so it keeps its place instead
+      if(this.isBeingRemoved && !this.isBeingRenamed)
+        for(const line of linesWithStop(this.id))
+          await line.removeStop(this.id);
       if(oldValue) {
         const oldParent = widgets.get(oldValue);
         await oldParent.onChildRemove(this);
@@ -2653,8 +2662,11 @@ export class Widget extends StateManaged {
       if([ 'x', 'y', 'width', 'height', 'rotation', 'scale', 'parent' ].includes(property))
         await widget.updateConnectedLineEndpoints();
 
-      if([ 'linePosition', 'width', 'height', 'rotation', 'scale' ].includes(property) && widget.get('linePosition') !== null && widget.get('parent') && widgets.has(widget.get('parent')) && widgets.get(widget.get('parent')).get('type') == 'line')
-        await widgets.get(widget.get('parent')).onStopPropertyChange(widget);
+      // a stop is listed in a line's stops property and does not have to be a
+      // child of it, so ask every line that lists it to re-space
+      if([ 'width', 'height', 'rotation', 'scale' ].includes(property))
+        for(const line of linesWithStop(widget.id))
+          await line.onStopPropertyChange(widget);
     }
   }
 

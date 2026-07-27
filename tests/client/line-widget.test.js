@@ -108,11 +108,12 @@ describe('Line widget geometry', () => {
   });
 
   test('auto-rotation restores an explicit stop rotation after reload', async () => {
-    let line = createLine({ id: 'rotation-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, autoSpaceStops: false });
+    const rotationStops = [ { widget: 'rotation-stop', position: 0.5 }, { widget: 'rotation-follower', position: 0.75 } ];
+    let line = createLine({ id: 'rotation-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, autoSpaceStops: false, stops: rotationStops });
     let stop = new Widget('rotation-stop');
-    addWidget({ id: 'rotation-stop', type: 'basic', parent: line.id, linePosition: 0.5, width: 80, height: 20, rotation: 25 }, stop);
+    addWidget({ id: 'rotation-stop', type: 'basic', parent: line.id, width: 80, height: 20, rotation: 25 }, stop);
     let follower = new Widget('rotation-follower');
-    addWidget({ id: 'rotation-follower', type: 'basic', parent: line.id, inheritFrom: stop.id, linePosition: 0.75 }, follower);
+    addWidget({ id: 'rotation-follower', type: 'basic', parent: line.id, inheritFrom: stop.id }, follower);
 
     await line.updateAttachedWidgets();
     expect(Math.round(stop.get('rotation'))).toBe(45);
@@ -124,7 +125,7 @@ describe('Line widget geometry', () => {
     removeWidget(follower.id);
     removeWidget(stop.id);
     removeWidget(line.id);
-    line = createLine({ id: 'rotation-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, autoSpaceStops: false });
+    line = createLine({ id: 'rotation-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 100 }, autoSpaceStops: false, stops: rotationStops });
     stop = new Widget('rotation-stop');
     addWidget(savedStop, stop);
     follower = new Widget('rotation-follower');
@@ -141,13 +142,14 @@ describe('Line widget geometry', () => {
   });
 
   test('direct and inherited stop geometry changes reposition the stop', async () => {
-    const line = createLine({ id: 'stop-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false });
+    const line = createLine({ id: 'stop-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
+      stops: [ { widget: 'reactive-stop', position: 0.25 } ] });
     const source = new Widget('stop-source');
     addWidget({ id: 'stop-source', type: 'basic', width: 20, height: 20 }, source);
     const stop = new Widget('reactive-stop');
-    addWidget({ id: 'reactive-stop', type: 'basic', parent: line.id, inheritFrom: source.id, linePosition: 0.25 }, stop);
+    addWidget({ id: 'reactive-stop', type: 'basic', parent: line.id, inheritFrom: source.id }, stop);
 
-    await stop.set('linePosition', 0.75);
+    await line.setStopPosition(stop.id, 0.75);
     expect(stop.get('x')).toBe(65);
     await source.set('width', 40);
     expect(stop.get('x')).toBe(55);
@@ -158,20 +160,21 @@ describe('Line widget geometry', () => {
   });
 
   test('renaming a stop (isBeingRenamed) does not redistribute or touch rotation', async () => {
-    const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true });
-    const stops = [ 'rename-a', 'rename-b', 'rename-c' ].map((id, i) => {
+    const line = createLine({ id: 'rename-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, autoSpaceStops: true,
+      stops: [ 'rename-a', 'rename-b', 'rename-c' ].map((widget, i) => ({ widget, position: i / 2 })) });
+    const stops = [ 'rename-a', 'rename-b', 'rename-c' ].map(id => {
       const stop = new Widget(id);
-      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20, linePosition: i / 2 }, stop);
+      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20 }, stop);
       return stop;
     });
     await line.distributeAttachedWidgetsEvenly();
-    const before = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), linePosition: stop.get('linePosition'), rotation: stop.get('rotation') }));
+    const before = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), position: line.stopPosition(stop), rotation: stop.get('rotation') }));
 
     stops[1].isBeingRenamed = true;
     await line.onChildRemove(stops[1]);
     await line.onChildAdd(stops[1], line.id);
 
-    const after = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), linePosition: stop.get('linePosition'), rotation: stop.get('rotation') }));
+    const after = stops.map(stop => ({ x: stop.get('x'), y: stop.get('y'), position: line.stopPosition(stop), rotation: stop.get('rotation') }));
     expect(after).toEqual(before);
 
     for(const stop of stops)
@@ -180,13 +183,14 @@ describe('Line widget geometry', () => {
   });
 
   test.each([ true, false ])('swapStops exchanges two neighbours (autoSpaceStops: %s)', async autoSpaceStops => {
-    const line = createLine({ id: 'swap-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, rotateStops: false, autoSpaceStops });
-    const stops = [ 'swap-a', 'swap-b', 'swap-c' ].map((id, i) => {
+    const line = createLine({ id: 'swap-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 300, y: 0 }, rotateStops: false, autoSpaceStops,
+      stops: [ 'swap-a', 'swap-b', 'swap-c' ].map((widget, i) => ({ widget, position: i / 2 })) });
+    const stops = [ 'swap-a', 'swap-b', 'swap-c' ].map(id => {
       const stop = new Widget(id);
-      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20, linePosition: i / 2 }, stop);
+      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20 }, stop);
       return stop;
     });
-    const positions = () => line.attachedWidgets().map(stop => stop.get('linePosition'));
+    const positions = () => line.stopList().map(entry => entry.position);
     const before = positions();
 
     await line.swapStops(0, 1);
@@ -203,6 +207,49 @@ describe('Line widget geometry', () => {
     removeWidget(line.id);
   });
 
+  describe('the stops list', () => {
+    test('keeps the chain order and drops entries whose widget is gone', async () => {
+      const line = createLine({ id: 'list-line', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, autoSpaceStops: false,
+        stops: [ { widget: 'list-b', position: 0.8 }, { widget: 'list-ghost', position: 0.5 }, { widget: 'list-a', position: 0.2 } ] });
+      for(const id of [ 'list-a', 'list-b' ])
+        addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20 }, new Widget(id));
+
+      // list order, not position order, and the dangling entry is ignored
+      expect(line.attachedWidgets().map(stop => stop.id)).toEqual([ 'list-b', 'list-a' ]);
+      expect(line.stopPosition(widgets.get('list-a'))).toBe(0.2);
+
+      await line.addStop('list-a', 0.6);
+      expect(line.stopPosition(widgets.get('list-a'))).toBe(0.6);
+      expect(line.attachedWidgets().length).toBe(2); // moved, not duplicated
+
+      await line.removeStop('list-b');
+      expect(line.attachedWidgets().map(stop => stop.id)).toEqual([ 'list-a' ]);
+
+      removeWidget('list-a');
+      removeWidget('list-b');
+      removeWidget(line.id);
+    });
+
+    test('positions a stop that is not a child of the line in its own parent frame', async () => {
+      const line = createLine({ id: 'ext-line', x: 500, y: 300, lineStart: { x: 0, y: 0 }, lineEnd: { x: 100, y: 0 }, rotateStops: false, autoSpaceStops: false,
+        stops: [ { widget: 'ext-stop', position: 0.5 } ] });
+      const board = new Widget('ext-board');
+      addWidget({ id: 'ext-board', type: 'basic', x: 400, y: 200, width: 400, height: 400 }, board);
+      board.coordLocalFromCoordGlobal = coord => ({ x: coord.x - 400, y: coord.y - 200 });
+      const stop = new Widget('ext-stop');
+      addWidget({ id: 'ext-stop', type: 'basic', parent: 'ext-board', width: 20, height: 20 }, stop);
+
+      await line.updateAttachedWidgets();
+      // path midpoint is global (550, 300), so board-local (150, 100), minus half the stop
+      expect(stop.get('x')).toBe(140);
+      expect(stop.get('y')).toBe(90);
+      expect(line.hasExternalStops()).toBe(true);
+
+      removeWidget('ext-stop');
+      removeWidget('ext-board');
+      removeWidget(line.id);
+    });
+  });
   describe('normalizeGeometry re-fits the box while keeping the path in place', () => {
     let line;
     beforeAll(async () => {
@@ -227,6 +274,90 @@ describe('Line widget geometry', () => {
       expect(line.pointProperty('lineStart').y).toBeGreaterThanOrEqual(0);
     });
   });
+
+});
+
+describe('Line widget closed shapes', () => {
+  const ellipse = def => createLine({ lineShape: 'ellipse', lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 100 }, ...def });
+
+  test('samples the perimeter clockwise from 12 o\'clock', () => {
+    const line = ellipse({ id: 'ell', x: 0, y: 0 });
+    expect(line.isClosed()).toBe(true);
+    expect(line.isCurved()).toBe(false);
+    const top = line.pointAtPosition(0);
+    expect(near(top.x, 100)).toBe(true);
+    expect(near(top.y, 0)).toBe(true);
+    const right = line.pointAtPosition(0.25);
+    expect(near(right.x, 200, 1)).toBe(true);
+    expect(near(right.y, 50, 1)).toBe(true);
+    const bottom = line.pointAtPosition(0.5);
+    expect(near(bottom.x, 100, 1)).toBe(true);
+    expect(near(bottom.y, 100, 1)).toBe(true);
+    // a circle's perimeter, not the chord between the two corner points
+    expect(line.lineLength()).toBeGreaterThan(400);
+    removeWidget('ell');
+  });
+
+  test('positions wrap instead of clamping, so the tangent at the seam is real', () => {
+    const line = ellipse({ id: 'seam', x: 0, y: 0, lineEnd: { x: 200, y: 200 } });
+    expect(line.normalizePosition(1.25)).toBeCloseTo(0.25);
+    expect(line.normalizePosition(-0.25)).toBeCloseTo(0.75);
+    // at 12 o'clock a clockwise circle runs to the right: 0 degrees
+    expect(Math.abs(line.tangentAngleAtPosition(0))).toBeLessThan(5);
+    removeWidget('seam');
+  });
+
+  test('spreads stops all the way round with an equal gap', async () => {
+    const line = ellipse({ id: 'ring', x: 0, y: 0, lineEnd: { x: 200, y: 200 }, rotateStops: false,
+      stops: [ 'r0', 'r1', 'r2', 'r3' ].map((widget, i) => ({ widget, position: i / 8 })) });
+    for(const id of [ 'r0', 'r1', 'r2', 'r3' ])
+      addWidget({ id, type: 'basic', parent: line.id, width: 20, height: 20 }, new Widget(id));
+
+    await line.distributeAttachedWidgetsEvenly();
+    const positions = line.stopList().map(entry => entry.position);
+    // four stops on a loop sit a quarter apart - none of them is pinned to the seam
+    expect(positions[0]).toBe(0);
+    for(let i = 1; i < positions.length; ++i)
+      expect(near(positions[i] - positions[i-1], 0.25, 0.01)).toBe(true);
+
+    // the next stop goes into the gap that wraps past the seam
+    expect(near(line.nextStopPosition(), 0.875, 0.01)).toBe(true);
+
+    for(const id of [ 'r0', 'r1', 'r2', 'r3' ])
+      removeWidget(id);
+    removeWidget(line.id);
+  });
+
+  test('resizing the widget box stretches the ellipse into it', async () => {
+    const line = ellipse({ id: 'resize', x: 0, y: 0, width: 220, height: 120, lineWidth: 10 });
+    await line.set('width', 420);
+    const box = line.ellipseBox();
+    // pad is lineWidth/2 + 10 = 15 on every side
+    expect(box.rx).toBe((420 - 30) / 2);
+    expect(box.ry).toBe((120 - 30) / 2);
+    removeWidget('resize');
+  });
+
+  test('has no end points to connect, but can still be connected to', async () => {
+    const target = ellipse({ id: 'ring-target', x: 100, y: 100, lineEnd: { x: 200, y: 200 } });
+    const line = ellipse({ id: 'ring-dep', x: 0, y: 0, connectStart: { line: 'ring-target', position: 0 } });
+    const before = line.pointProperty('lineStart');
+    await line.applyConnections();
+    expect(line.pointProperty('lineStart')).toEqual(before);
+
+    // the other way round works: a plain line glues onto the ring's perimeter
+    const dep = createLine({ id: 'plain-dep', x: 0, y: 0, lineStart: { x: 0, y: 0 }, lineEnd: { x: 50, y: 50 },
+      connectStart: { line: 'ring-target', position: 0 } });
+    await dep.applyConnections();
+    const global = dep.coordGlobalFromCoordLocal(dep.pointProperty('lineStart'));
+    const targetTop = target.coordGlobalFromCoordLocal(target.pointAtPosition(0));
+    expect(Math.round(global.x)).toBe(Math.round(targetTop.x));
+    expect(Math.round(global.y)).toBe(Math.round(targetTop.y));
+
+    for(const id of [ 'ring-target', 'ring-dep', 'plain-dep' ])
+      removeWidget(id);
+  });
+
 });
 
 describe('Line widget connections', () => {
@@ -339,9 +470,10 @@ describe('Line widget connections', () => {
   test('an end point ignores a target that sits inside the line itself', async () => {
     const line = createLine({ id: 'dep', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
       lineStart: { x: 0, y: 20 }, lineEnd: { x: 200, y: 20 },
+      stops: [ { widget: 'stop', position: 0 } ],
       connectStart: { line: 'piece', position: 0.5 } });
     const stop = new Widget('stop');
-    addWidget({ id: 'stop', type: 'basic', parent: line.id, linePosition: 0, width: 40, height: 40 }, stop);
+    addWidget({ id: 'stop', type: 'basic', parent: line.id, width: 40, height: 40 }, stop);
     // a piece dropped into that stop moves along with the line, so gluing the
     // end point to it would chase its own tail and send the line off the surface
     const piece = new Widget('piece');

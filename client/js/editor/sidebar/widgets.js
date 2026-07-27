@@ -50,6 +50,270 @@ function deepReplace(obj, idMap) {
   }
 }
 
+// The saved widget library, shared by the Widgets sidebar and by anything else
+// that offers to place one of them (e.g. adding a stop to a line).
+async function getSavedWidgets(source) {
+  let data;
+  if (source === 'server') {
+    const response = await fetch(`${config.urlPrefix}/api/widgets`);
+    data = await response.json();
+  } else {
+    const rawData = localStorage.getItem('customWidgets');
+    if (!rawData) return { widgets: [], groups: [] };
+    try {
+      data = JSON.parse(rawData);
+    } catch (e) {
+      return { widgets: [], groups: [] };
+    }
+  }
+
+  if (Array.isArray(data)) {
+    return { widgets: data, groups: [] };
+  }
+
+  if (typeof data === 'object' && data !== null) {
+    const widgets = Array.isArray(data.widgets) ? data.widgets : [];
+    const groups = Array.isArray(data.groups) ? data.groups : [];
+    return { widgets, groups };
+  }
+
+  return { widgets: [], groups: [] };
+}
+
+// Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
+function renderSavedWidgetPreviewHTML(preview) {
+  if (!preview) return '';
+  if (typeof preview === 'string' && preview.startsWith('symbol:')) {
+    const rawName = preview.slice('symbol:'.length);
+    const alias = { heading: 'title' };
+    const symbolName = alias[rawName] || rawName;
+    const safe = html(symbolName || 'help');
+    return `<i class="material-symbols" style="font-size: 64px; line-height: 1; color: #333;">${safe}</i>`;
+  }
+  return `<img src="${preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;" draggable="false">`;
+}
+
+// The line a room drop landed on, if any. Only the drawn path and the widgets
+// riding on a line accept pointer events, so walking up from the drop target
+// finds the line exactly when the drop was aimed at one.
+function lineUnderElement(element) {
+  for(let node = element; node; node = node.parentElement)
+    if(node.classList && node.classList.contains('line'))
+      for(const line of widgetFilter(w=>w.get('type') == 'line'))
+        if(line.domElement === node)
+          return line;
+  return null;
+}
+
+let highlightedLineDropTarget = null;
+function highlightLineDropTarget(line) {
+  if(highlightedLineDropTarget === line)
+    return;
+  if(highlightedLineDropTarget)
+    highlightedLineDropTarget.domElement.classList.remove('lineDropTarget');
+  highlightedLineDropTarget = line;
+  if(line)
+    line.domElement.classList.add('lineDropTarget');
+}
+
+// Place a saved widget in the room. options.line makes it a stop on that line
+// (at the point of the path the coords are closest to) instead of a loose
+// widget - used both by dropping onto a line and by the line's own stop picker.
+async function placeSavedWidget(widgetId, source, coords, options = {}) {
+  const { widgets: allWidgets } = await getSavedWidgets(source);
+  const widgetData = allWidgets.find(w => w.id === widgetId);
+
+  if (!widgetData) {
+    console.error(`Widget with id ${widgetId} not found in ${source}.`);
+    return [];
+  }
+
+  const widgetDataCopy = JSON.parse(JSON.stringify(widgetData));
+  const line = options.line;
+  const newWidgetIds = await placeSavedWidgetFromBuffer(widgetDataCopy, coords, line ? {
+    rootProperties: { parent: line.id, fixedParent: true, movableInEdit: false }
+  } : {});
+  if (line) {
+    const position = coords ? line.positionAtPoint(line.coordLocalFromCoordGlobal(coords)) : line.nextStopPosition();
+    for (const id of newWidgetIds)
+      await line.addStop(id, position);
+  }
+
+  const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
+  for (const widget of newWidgets) {
+    if (widget.get('editorAddToRoomRoutine')) {
+      await widget.evaluateRoutine('editorAddToRoomRoutine');
+      if (widgets.has(widget.id)) {
+        widget.set('editorAddToRoomRoutine');
+      }
+    }
+  }
+  const existingNewWidgets = newWidgets.filter(w => widgets.has(w.id));
+  if (existingNewWidgets.length > 0) {
+    setSelection(existingNewWidgets);
+  }
+  return newWidgetIds;
+}
+
+// options.rootProperties is merged into every root widget of the buffer after
+// the ids have been remapped, so a caller can place the new widget somewhere
+// specific (e.g. as a stop on a line) without duplicating any of this.
+async function placeSavedWidgetFromBuffer(widgetData, coords, options = {}) {
+    const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
+    const idMap = {};
+
+    const newIds = new Set();
+    for (const widget of widgetBuffer) {
+      let newId = widget.id;
+      // If the widget ID already exists, find a new one.
+      if (widgets.has(newId) || newIds.has(newId)) {
+        // Find the base name by removing any trailing number and optional underscore
+        const baseName = widget.id.replace(/_?\d+$/, '');
+        let i = 0;
+
+        // Find the highest existing number for this baseName among ALL widgets (in room and being added)
+        for (const existingId of [...widgets.keys(), ...newIds]) {
+            if (existingId.startsWith(baseName)) {
+                const numStr = existingId.substring(baseName.length);
+                if (/^\d+$/.test(numStr)) {
+                    i = Math.max(i, parseInt(numStr, 10));
+                }
+            }
+        }
+        
+        do {
+          i++;
+          newId = `${baseName}${i}`;
+        } while (widgets.has(newId) || newIds.has(newId));
+      }
+      idMap[widget.id] = newId;
+      newIds.add(newId);
+    }
+    for (const widget of widgetBuffer) {
+      // Update the widget's own ID first.
+      widget.id = idMap[widget.id];
+      // Then, update all references within the widget.
+      deepReplace(widget, idMap);
+    }
+    batchStart();
+    setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
+
+    const newRootWidgetIds = [];
+    const rootWidgets = widgetBuffer.filter(state => !state.parent || !widgetBuffer.some(w => w.id === state.parent));
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (coords && rootWidgets.length > 0) {
+        const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
+        const absolutePositions = new Map();
+
+        function calculateAbsolutePosition(widgetId) {
+          if (absolutePositions.has(widgetId)) {
+            return absolutePositions.get(widgetId);
+          }
+
+          const widget = widgetMap.get(widgetId);
+          if (!widget) {
+            return { x: 0, y: 0 };
+          }
+
+          if (!widget.parent || !widgetMap.has(widget.parent)) {
+            const pos = { x: widget.x || 0, y: widget.y || 0 };
+            absolutePositions.set(widgetId, pos);
+            return pos;
+          }
+
+          const parentPos = calculateAbsolutePosition(widget.parent);
+          const pos = {
+            x: parentPos.x + (widget.x || 0),
+            y: parentPos.y + (widget.y || 0)
+          };
+          absolutePositions.set(widgetId, pos);
+          return pos;
+        }
+
+        for (const widget of widgetBuffer) {
+          calculateAbsolutePosition(widget.id);
+        }
+
+        let minX = Infinity;
+        let minY = Infinity;
+
+        for (const pos of absolutePositions.values()) {
+          minX = Math.min(minX, pos.x);
+          minY = Math.min(minY, pos.y);
+        }
+        offsetX = coords.x - minX;
+        offsetY = coords.y - minY;
+    }
+
+    const widgetStates = new Map(widgetBuffer.map(w => [w.id, w]));
+    const sortedWidgets = [];
+    const visited = new Set();
+
+    function topologicalSort(widgetId) {
+        if (visited.has(widgetId)) {
+            return;
+        }
+        const state = widgetStates.get(widgetId);
+        if (!state) return;
+
+        // Recurse for parent dependency
+        if (state.parent && widgetStates.has(state.parent)) {
+            topologicalSort(state.parent);
+        }
+
+        // Recurse for deck dependency
+        if (state.deck && widgetStates.has(state.deck)) {
+            topologicalSort(state.deck);
+        }
+
+        // Recurse for inheritFrom dependencies
+        if (state.inheritFrom) {
+            for (const idToInheritFrom of Object.keys(state.inheritFrom)) {
+                if (widgetStates.has(idToInheritFrom)) {
+                    topologicalSort(idToInheritFrom);
+                }
+            }
+        }
+
+        if (!visited.has(widgetId)) {
+            sortedWidgets.push(state);
+            visited.add(widgetId);
+        }
+    }
+
+    for (const state of widgetBuffer) {
+        topologicalSort(state.id);
+    }
+
+    for (const state of sortedWidgets) {
+        const isRoot = rootWidgets.some(w => w.id === state.id);
+
+        if (isRoot) {
+            if (coords) {
+                state.x = Math.round(((state.x || 0) + offsetX) * 2) / 2;
+                state.y = Math.round(((state.y || 0) + offsetY) * 2) / 2;
+            }
+            delete state.parent;
+            Object.assign(state, options.rootProperties || {});
+        }
+
+        if (state.type === 'card' && state.deck && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
+            console.error(`Widget ${state.id} references a deck ${state.deck} that is not in the buffer and is not already in the room. It will not be loaded.`);
+            continue;
+        }
+
+        const newId = await addWidgetLocal(state);
+        if (isRoot) {
+            newRootWidgetIds.push(newId);
+        }
+    }
+
+    batchEnd();
+    return newRootWidgetIds;
+}
+
 class WidgetsModule extends SidebarModule {
   constructor() {
     super('widgets', 'Widgets', 'Manage widgets.');
@@ -61,20 +325,14 @@ class WidgetsModule extends SidebarModule {
     $('#roomArea').addEventListener('dragover', e => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
+      // show which line a drop would attach the widget to as a stop
+      highlightLineDropTarget(lineUnderElement(e.target));
     });
+    $('#roomArea').addEventListener('dragleave', e => highlightLineDropTarget(null));
     }
 
-  // Render preview markup from a URL or a Material Symbol reference like "symbol:heading"
   renderPreviewHTML(preview) {
-    if (!preview) return '';
-    if (typeof preview === 'string' && preview.startsWith('symbol:')) {
-      const rawName = preview.slice('symbol:'.length);
-      const alias = { heading: 'title' };
-      const symbolName = alias[rawName] || rawName;
-      const safe = html(symbolName || 'help');
-      return `<i class="material-symbols" style="font-size: 64px; line-height: 1; color: #333;">${safe}</i>`;
-    }
-    return `<img src="${preview}" style="max-width: 100%; max-height: 100%; object-fit: contain;" draggable="false">`;
+    return renderSavedWidgetPreviewHTML(preview);
   }
 
   renderModule(target) {
@@ -134,31 +392,7 @@ class WidgetsModule extends SidebarModule {
   }
 
   async getWidgets(source) {
-    let data;
-    if (source === 'server') {
-      const response = await fetch(`${config.urlPrefix}/api/widgets`);
-      data = await response.json();
-    } else {
-      const rawData = localStorage.getItem('customWidgets');
-      if (!rawData) return { widgets: [], groups: [] };
-      try {
-        data = JSON.parse(rawData);
-      } catch (e) {
-        return { widgets: [], groups: [] };
-      }
-    }
-
-    if (Array.isArray(data)) {
-      return { widgets: data, groups: [] };
-    }
-
-    if (typeof data === 'object' && data !== null) {
-      const widgets = Array.isArray(data.widgets) ? data.widgets : [];
-      const groups = Array.isArray(data.groups) ? data.groups : [];
-      return { widgets, groups };
-    }
-
-    return { widgets: [], groups: [] };
+    return await getSavedWidgets(source);
   }
 
   async createWidget(widgetData, target) {
@@ -1235,160 +1469,10 @@ class WidgetsModule extends SidebarModule {
     showOverlay('editJSONoverlay');
   }
 
-  async placeWidgetFromBuffer(widgetData, coords) {
-    const widgetBuffer = JSON.parse(JSON.stringify(widgetData.widgets));
-    const idMap = {};
-
-    const newIds = new Set();
-    for (const widget of widgetBuffer) {
-      let newId = widget.id;
-      // If the widget ID already exists, find a new one.
-      if (widgets.has(newId) || newIds.has(newId)) {
-        // Find the base name by removing any trailing number and optional underscore
-        const baseName = widget.id.replace(/_?\d+$/, '');
-        let i = 0;
-
-        // Find the highest existing number for this baseName among ALL widgets (in room and being added)
-        for (const existingId of [...widgets.keys(), ...newIds]) {
-            if (existingId.startsWith(baseName)) {
-                const numStr = existingId.substring(baseName.length);
-                if (/^\d+$/.test(numStr)) {
-                    i = Math.max(i, parseInt(numStr, 10));
-                }
-            }
-        }
-        
-        do {
-          i++;
-          newId = `${baseName}${i}`;
-        } while (widgets.has(newId) || newIds.has(newId));
-      }
-      idMap[widget.id] = newId;
-      newIds.add(newId);
-    }
-    for (const widget of widgetBuffer) {
-      // Update the widget's own ID first.
-      widget.id = idMap[widget.id];
-      // Then, update all references within the widget.
-      deepReplace(widget, idMap);
-    }
-    batchStart();
-    setDeltaCause(`${getPlayerDetails().playerName} loaded widgets from the widget buffer in editor`);
-
-    const newRootWidgetIds = [];
-    const rootWidgets = widgetBuffer.filter(state => !state.parent || !widgetBuffer.some(w => w.id === state.parent));
-    let offsetX = 0;
-    let offsetY = 0;
-
-    if (coords && rootWidgets.length > 0) {
-        const widgetMap = new Map(widgetBuffer.map(s => [s.id, s]));
-        const absolutePositions = new Map();
-
-        function calculateAbsolutePosition(widgetId) {
-          if (absolutePositions.has(widgetId)) {
-            return absolutePositions.get(widgetId);
-          }
-
-          const widget = widgetMap.get(widgetId);
-          if (!widget) {
-            return { x: 0, y: 0 };
-          }
-
-          if (!widget.parent || !widgetMap.has(widget.parent)) {
-            const pos = { x: widget.x || 0, y: widget.y || 0 };
-            absolutePositions.set(widgetId, pos);
-            return pos;
-          }
-
-          const parentPos = calculateAbsolutePosition(widget.parent);
-          const pos = {
-            x: parentPos.x + (widget.x || 0),
-            y: parentPos.y + (widget.y || 0)
-          };
-          absolutePositions.set(widgetId, pos);
-          return pos;
-        }
-
-        for (const widget of widgetBuffer) {
-          calculateAbsolutePosition(widget.id);
-        }
-
-        let minX = Infinity;
-        let minY = Infinity;
-
-        for (const pos of absolutePositions.values()) {
-          minX = Math.min(minX, pos.x);
-          minY = Math.min(minY, pos.y);
-        }
-        offsetX = coords.x - minX;
-        offsetY = coords.y - minY;
-    }
-
-    const widgetStates = new Map(widgetBuffer.map(w => [w.id, w]));
-    const sortedWidgets = [];
-    const visited = new Set();
-
-    function topologicalSort(widgetId) {
-        if (visited.has(widgetId)) {
-            return;
-        }
-        const state = widgetStates.get(widgetId);
-        if (!state) return;
-
-        // Recurse for parent dependency
-        if (state.parent && widgetStates.has(state.parent)) {
-            topologicalSort(state.parent);
-        }
-
-        // Recurse for deck dependency
-        if (state.deck && widgetStates.has(state.deck)) {
-            topologicalSort(state.deck);
-        }
-
-        // Recurse for inheritFrom dependencies
-        if (state.inheritFrom) {
-            for (const idToInheritFrom of Object.keys(state.inheritFrom)) {
-                if (widgetStates.has(idToInheritFrom)) {
-                    topologicalSort(idToInheritFrom);
-                }
-            }
-        }
-
-        if (!visited.has(widgetId)) {
-            sortedWidgets.push(state);
-            visited.add(widgetId);
-        }
-    }
-
-    for (const state of widgetBuffer) {
-        topologicalSort(state.id);
-    }
-
-    for (const state of sortedWidgets) {
-        const isRoot = rootWidgets.some(w => w.id === state.id);
-
-        if (isRoot) {
-            if (coords) {
-                state.x = Math.round(((state.x || 0) + offsetX) * 2) / 2;
-                state.y = Math.round(((state.y || 0) + offsetY) * 2) / 2;
-            }
-            delete state.parent;
-        }
-
-        if (state.type === 'card' && state.deck && !widgetBuffer.some(w => w.id === state.deck) && !widgets.has(state.deck)) {
-            console.error(`Widget ${state.id} references a deck ${state.deck} that is not in the buffer and is not already in the room. It will not be loaded.`);
-            continue;
-        }
-
-        const newId = await addWidgetLocal(state);
-        if (isRoot) {
-            newRootWidgetIds.push(newId);
-        }
-    }
-
-    batchEnd();
-    return newRootWidgetIds;
+  async placeWidgetFromBuffer(widgetData, coords, options = {}) {
+    return await placeSavedWidgetFromBuffer(widgetData, coords, options);
   }
+
 
   async onRoomAreaDrop(e) {
     e.preventDefault();
@@ -1398,38 +1482,19 @@ class WidgetsModule extends SidebarModule {
     try {
       const { id, source } = JSON.parse(data);
       const coords = eventCoords('drop', e);
-      await this.placeWidget(id, source, coords);
+      const line = lineUnderElement(e.target);
+      highlightLineDropTarget(null);
+      await this.placeWidget(id, source, coords, { line });
     } catch (error) {
       console.error('Failed to parse widget data on drop:', error);
     }
   }
-  
-  async placeWidget(widgetId, source, coords) {
-    const { widgets: allWidgets } = await this.getWidgets(source);
-    const widgetData = allWidgets.find(w => w.id === widgetId);
-  
-    if (widgetData) {
-      const widgetDataCopy = JSON.parse(JSON.stringify(widgetData));
-  
-      const newWidgetIds = await this.placeWidgetFromBuffer(widgetDataCopy, coords);
-      const newWidgets = newWidgetIds.map(id => widgets.get(id)).filter(Boolean);
-      for (const widget of newWidgets) {
-        if (widget.get('editorAddToRoomRoutine')) {
-          await widget.evaluateRoutine('editorAddToRoomRoutine');
-          if (widgets.has(widget.id)) {
-            widget.set('editorAddToRoomRoutine');
-          }
-        }
-      }
-      const existingNewWidgets = newWidgets.filter(w => widgets.has(w.id));
-      if (existingNewWidgets.length > 0) {
-        setSelection(existingNewWidgets);
-      }
-    } else {
-      console.error(`Widget with id ${widgetId} not found in ${source}.`);
-    }
+
+  async placeWidget(widgetId, source, coords, options = {}) {
+    await placeSavedWidget(widgetId, source, coords, options);
   }
-  
+
+
   async button_loadWidgetFromBuffer(widgetData) {
     this.placeWidgetFromBuffer(widgetData);
   }
