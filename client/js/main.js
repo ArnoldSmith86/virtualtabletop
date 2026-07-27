@@ -36,7 +36,7 @@ function compareDropTarget(widget, t, exclude){
   return false;
 }
 
-function getValidDropTargets(widget) {
+function getValidDropTargets(widget, dragged = widget) {
   const targets = [];
   for(const [ _, t ] of dropTargets) {
     if(!t.isVisible())
@@ -52,7 +52,7 @@ function getValidDropTargets(widget) {
 
     let tt = t;
     while(isValid) {
-      if(widget == tt) {
+      if(widget == tt || dragged == tt) {
         isValid = false;
         break;
       }
@@ -504,7 +504,7 @@ async function loadEditMode() {
       addWidgetLocal, updateWidgetId, removeWidgetLocal,
       loadJSZip, waitForJSZip,
       generateUniqueWidgetID, unescapeID, regexEscape, setScale, getScale, getRoomRectangle, getMaxZ, getZoomLevel,
-      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, selectFile, triggerDownload,
+      uploadAsset, _uploadAsset, mapAssetURLs, pickSymbol, toNotoMonochrome, skipForNotoMonochrome, selectFile, triggerDownload,
       config, getPlayerDetails, roomID, getDeltaID, widgets, widgetFilter, isOverlayActive,
       html, formField,
       Widget, BasicWidget, Button, Canvas, Card, Deck, Dice, Holder, Label, Pile, Scoreboard, Seat, Spinner, Timer,

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": 17,
+    "version": 21,
     "info": {
       "name": "righto",
       "image": "/assets/886670728_13414",
@@ -10,20 +10,27 @@
       "mode": "coop",
       "time": "5-15",
       "attribution": "<div>The implementation and assets, including the library image, were created by Mitchell Stolycia.</div><div><br></div><div>Everything is released to the public domain under CC0.</div>",
-      "lastUpdate": 1749403434751,
+      "lastUpdate": 1784335693602,
       "showName": false,
       "skill": "",
-      "description": "- righto definition:\nan informal, british exclamation used to express agreement\n- synonyms:\nindeed · all right · okey dokey\n- example:\n\"we think these cards are in the correct order\"\n\"righto, let's flip 'em\"",
+      "description": "- definition:\nan informal, british exclamation used to express agreement\n- synonyms:\nindeed · all right · okey dokey\n- example:\n\"we think these cards are in the correct order\"\n\"righto, let's flip 'em\"",
       "similarImage": "",
       "similarName": "ito",
       "similarDesigner": "326",
       "similarAwards": "",
-      "ruleText": "<div><ol><li>All players will be dealt a card between 1 and 100.</li><li>A category is chosen between the players. For example: \"Celebrities: least famous to most famous\", with 100 being the most famous.</li><li>Write a clue on your card in line with the number on your card.</li><ul><li>You cannot include numbers, values or quantities in your clue.</li></ul><li>Players then play their cards number side up in any order. There is no turn order.</li><ul><li>Cards can only be played directly to the left, right or in between previously played cards, clue side up (number side down).</li></ul><li>During and after playing cards, feel free to rearrange any cards. Openly discuss where you think any cards should be, and come to a joint agreement. You can and should talk about your own cards as well as others'.</li><li>Once the table has agreed, flip the cards over to their numbered side.</li><li>If the cards are in ascending order, you collectively win as a table. Otherwise, play another round.</li></ol><div>Think you know your way around <i>righto</i>? For a more difficult game, deal more cards to each player with the&nbsp;<i>Deal an extra card&nbsp;</i>button.</div></div>",
-      "helpText": "<div>Once all players have sat down by clicking on a seat, press <i>New round</i> to start a new round.</div><div><br></div><div>Feeling extra confident? Righto, play with extra cards in hand by clicking the <i>Deal an extra card</i> button.</div><div><br></div><div><b>Choosing a category:</b></div><div><ul><li>Click on <i>Click to change category</i> and write your category.</li><ul><li>Using \"<b>to</b>\" or a&nbsp;<b>forward slash </b>\"<b>/</b>\" will split your category and overwrite the \"0\" and \"101\" scale.</li><li>Using a <b>colon </b>\"<b>:</b>\" to precede your scale within a category will format the scale similarly.</li><ul><li><i>Example: \"The Beatles: Worst to Best\", will result in the \"0\" and \"101\" being overwritten with \"0 Worst\" and \"101 Best\" respectively.</i></li></ul><li>The ends of the scale can also be manually changed by clicking on them.</li></ul><li>Category cards are not used in this implementation. Come up with your own!</li></ul></div><div><b>To play a card:</b></div><div><ol><li>Click&nbsp;<i>Write clue card</i>&nbsp;to write your answer on your cards.</li><li>Drag your card to an open slot on the table.</li><li>If playing with multiple cards per player, repeat steps 1 and 2 for each card.</li><ul><li>Note: All cards in your hand will get written on every time <i>Write clue card</i> is used, so play your cards one at a time.</li></ul></ol><b>To rearrange cards:</b></div><blockquote><div>Click on the appropriate ⇆ button.</div></blockquote><div><b>Flipping cards:</b></div><blockquote><div>Click on the lock button in the top right to allow the flipping of cards when clicking on them.</div></blockquote><blockquote><div><ul><li>Red/locked will prevent cards from flipping.</li><li>Green/unlocked will allow cards to be flipped.</li></ul></div></blockquote>",
+      "ruleText": "<div><ol><li>All players will be dealt a card between 1 and 100.</li><li>A category is chosen between the players. For example: \"Celebrities: least famous to most famous\", with 100 being the most famous.</li><li>Write a clue on your card in line with the number on your card.</li><ul><li>You cannot include numbers, values or quantities in your clue.</li></ul><li>Players then play their cards number side up in any order. There is no turn order.</li><ul><li>Cards can only be played directly to the left, right, or in between previously played cards, clue side up (number side down).</li></ul><li>During and after playing cards, feel free to rearrange any cards. Openly discuss where you think any cards should be, and come to a joint agreement. You can and should talk about your own cards as well as others'.</li><li>Once the table has agreed, flip the cards over to their numbered side.</li><li>If the cards are in ascending order, you all collectively win. Otherwise, play another round.</li></ol><div>Think you know your way around <i>righto</i>? For a more difficult game, deal more cards to each player with the&nbsp;<i>Deal an extra card&nbsp;</i>button.</div></div>",
+      "helpText": "<div>Once all players have sat down by clicking on a seat, press <i>New round</i> to start a new round.</div><div><br></div><div>Feeling extra confident? Righto, play with extra cards in hand by clicking the <i>Deal an extra card</i> button.</div><div><br></div><div><b>Choosing a category:</b><br><ul><li>Click on <i>Click to change category</i> and write your category.</li><ul><li>The <i>Category&nbsp;</i>section lets you change the category name, while the <i>0 end of scale</i> and <i>101 end of scale</i> sections let you change their respective annotations.</li><ul><li><i><b>Example</b>:<br>Category: Songs by The Beatles<br>0 end of scale: Worst<br>101 end of scale: Best</i></li></ul><li>The ends of the scale can also be manually changed by clicking on them.</li></ul><li>Category cards are not used in this implementation. Come up with your own!</li></ul></div><div><b>To play a card:</b></div><div><ol><li>Click&nbsp;<i>Write clue card</i>&nbsp;to write your answer on your cards.</li><li>Drag your card to an open slot on the table.</li><li>If playing with multiple cards per player, repeat steps 1 and 2 for each card.</li><ul><li>Note: All cards in your hand will be overwritten every time <i>Write clue card</i> is used, so play your cards one at a time.</li></ul></ol><b>To rearrange cards:</b></div><blockquote><div>Click on the appropriate ⇆ button.</div></blockquote><div><b>Flipping cards:</b></div><blockquote><div>Click on the lock button in the top right to allow the flipping of cards when clicking on them.</div></blockquote><blockquote><div><ul><li>Red/locked will prevent cards from flipping.</li><li>Green/unlocked will allow cards to be flipped.</li></ul></div></blockquote>",
+      "usesAIImagery": false,
       "players": "2-18",
       "language": "en-GB",
       "variant": "righto",
       "variantImage": "/assets/886670728_13414"
+    },
+    "gameSettings": {
+      "legacyModes": {
+        "convertNumericVarParametersToNumbers": true,
+        "useOneAsDefaultForVarParameters": true
+      }
     }
   },
   "deckHolderB": {
@@ -770,7 +777,6 @@
             "y": 2,
             "fontSize": 20,
             "textAlign": "center",
-            "verticleAlign": "center",
             "width": 160,
             "dynamicProperties": {
               "value": "text"
@@ -812,7 +818,7 @@
     "type": "card",
     "cardType": "1",
     "id": "ojmw",
-    "z": 22436,
+    "z": 23008,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -821,7 +827,7 @@
     "type": "card",
     "cardType": "2",
     "id": "mttj",
-    "z": 22389,
+    "z": 23053,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -830,7 +836,7 @@
     "type": "card",
     "cardType": "3",
     "id": "lur3",
-    "z": 22384,
+    "z": 22978,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -839,7 +845,7 @@
     "type": "card",
     "cardType": "4",
     "id": "97oi",
-    "z": 22409,
+    "z": 23054,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -848,7 +854,7 @@
     "type": "card",
     "cardType": "5",
     "id": "5s9w",
-    "z": 22432,
+    "z": 23060,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -857,7 +863,7 @@
     "type": "card",
     "cardType": "6",
     "id": "nvmv",
-    "z": 22438,
+    "z": 23001,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -866,7 +872,7 @@
     "type": "card",
     "cardType": "7",
     "id": "h48l",
-    "z": 22437,
+    "z": 23041,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -875,7 +881,7 @@
     "type": "card",
     "cardType": "8",
     "id": "htjr",
-    "z": 22383,
+    "z": 23028,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -884,7 +890,7 @@
     "type": "card",
     "cardType": "9",
     "id": "dfs1",
-    "z": 22421,
+    "z": 23027,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -893,7 +899,7 @@
     "type": "card",
     "cardType": "10",
     "id": "je6w",
-    "z": 22397,
+    "z": 23016,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -902,7 +908,7 @@
     "type": "card",
     "cardType": "11",
     "id": "m6kx",
-    "z": 22387,
+    "z": 23007,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -911,7 +917,7 @@
     "type": "card",
     "cardType": "12",
     "id": "cr4a",
-    "z": 22375,
+    "z": 23066,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -920,7 +926,7 @@
     "type": "card",
     "cardType": "13",
     "id": "mwoh",
-    "z": 22400,
+    "z": 23011,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -929,7 +935,7 @@
     "type": "card",
     "cardType": "14",
     "id": "x1js",
-    "z": 22408,
+    "z": 23071,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -938,7 +944,7 @@
     "type": "card",
     "cardType": "15",
     "id": "ix6i",
-    "z": 22380,
+    "z": 23012,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -947,7 +953,7 @@
     "type": "card",
     "cardType": "16",
     "id": "ba6q",
-    "z": 22446,
+    "z": 23062,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -956,7 +962,7 @@
     "type": "card",
     "cardType": "17",
     "id": "dkqi",
-    "z": 22405,
+    "z": 23052,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -965,7 +971,7 @@
     "type": "card",
     "cardType": "18",
     "id": "fcgp",
-    "z": 22395,
+    "z": 23067,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -974,7 +980,7 @@
     "type": "card",
     "cardType": "19",
     "id": "agly",
-    "z": 22391,
+    "z": 23005,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -983,7 +989,7 @@
     "type": "card",
     "cardType": "20",
     "id": "3g7p",
-    "z": 22453,
+    "z": 22984,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -992,7 +998,7 @@
     "type": "card",
     "cardType": "21",
     "id": "o20k",
-    "z": 22379,
+    "z": 23010,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1001,7 +1007,7 @@
     "type": "card",
     "cardType": "22",
     "id": "97k5",
-    "z": 22390,
+    "z": 23002,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1010,7 +1016,7 @@
     "type": "card",
     "cardType": "23",
     "id": "0v0m",
-    "z": 22434,
+    "z": 23031,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1019,7 +1025,7 @@
     "type": "card",
     "cardType": "24",
     "id": "ios4",
-    "z": 22386,
+    "z": 23050,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1028,7 +1034,7 @@
     "type": "card",
     "cardType": "25",
     "id": "jqtz",
-    "z": 22441,
+    "z": 23045,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1037,7 +1043,7 @@
     "type": "card",
     "cardType": "26",
     "id": "zr0v",
-    "z": 22450,
+    "z": 23068,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1046,7 +1052,7 @@
     "type": "card",
     "cardType": "27",
     "id": "0ogj",
-    "z": 22415,
+    "z": 22996,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1055,7 +1061,7 @@
     "type": "card",
     "cardType": "28",
     "id": "8co2",
-    "z": 22385,
+    "z": 22989,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1064,7 +1070,7 @@
     "type": "card",
     "cardType": "29",
     "id": "c2c7",
-    "z": 22378,
+    "z": 23047,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1073,7 +1079,7 @@
     "type": "card",
     "cardType": "30",
     "id": "p8rz",
-    "z": 22457,
+    "z": 23042,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1082,7 +1088,7 @@
     "type": "card",
     "cardType": "31",
     "id": "apkr",
-    "z": 22428,
+    "z": 23057,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1091,7 +1097,7 @@
     "type": "card",
     "cardType": "32",
     "id": "d2wf",
-    "z": 22454,
+    "z": 23070,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1100,7 +1106,7 @@
     "type": "card",
     "cardType": "33",
     "id": "3e5j",
-    "z": 22427,
+    "z": 23019,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1109,7 +1115,7 @@
     "type": "card",
     "cardType": "34",
     "id": "45wi",
-    "z": 22364,
+    "z": 23063,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1118,7 +1124,7 @@
     "type": "card",
     "cardType": "35",
     "id": "nrs4",
-    "z": 22388,
+    "z": 23048,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1127,7 +1133,7 @@
     "type": "card",
     "cardType": "36",
     "id": "wufg",
-    "z": 22440,
+    "z": 22982,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1136,7 +1142,7 @@
     "type": "card",
     "cardType": "37",
     "id": "nkq7",
-    "z": 22443,
+    "z": 23077,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1145,7 +1151,7 @@
     "type": "card",
     "cardType": "38",
     "id": "qngc",
-    "z": 22417,
+    "z": 23076,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1154,7 +1160,7 @@
     "type": "card",
     "cardType": "39",
     "id": "pyse",
-    "z": 22433,
+    "z": 23013,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1163,7 +1169,7 @@
     "type": "card",
     "cardType": "40",
     "id": "vynl",
-    "z": 22373,
+    "z": 23074,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1172,7 +1178,7 @@
     "type": "card",
     "cardType": "41",
     "id": "ggsc",
-    "z": 22425,
+    "z": 22987,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1181,7 +1187,7 @@
     "type": "card",
     "cardType": "42",
     "id": "hhwc",
-    "z": 22392,
+    "z": 22986,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1190,7 +1196,7 @@
     "type": "card",
     "cardType": "43",
     "id": "mndb",
-    "z": 22451,
+    "z": 22999,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1199,7 +1205,7 @@
     "type": "card",
     "cardType": "44",
     "id": "wxmq",
-    "z": 22369,
+    "z": 23072,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1208,7 +1214,7 @@
     "type": "card",
     "cardType": "45",
     "id": "176y",
-    "z": 22416,
+    "z": 23056,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1217,7 +1223,7 @@
     "type": "card",
     "cardType": "46",
     "id": "lmix",
-    "z": 22442,
+    "z": 22992,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1226,7 +1232,7 @@
     "type": "card",
     "cardType": "47",
     "id": "bv3a",
-    "z": 22381,
+    "z": 23064,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1235,7 +1241,7 @@
     "type": "card",
     "cardType": "48",
     "id": "c1wy",
-    "z": 22423,
+    "z": 23030,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1244,7 +1250,7 @@
     "type": "card",
     "cardType": "49",
     "id": "2sa7",
-    "z": 22376,
+    "z": 23018,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1253,7 +1259,7 @@
     "type": "card",
     "cardType": "50",
     "id": "mi0q",
-    "z": 22367,
+    "z": 23015,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1262,7 +1268,7 @@
     "type": "card",
     "cardType": "51",
     "id": "02ak",
-    "z": 22455,
+    "z": 23075,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1271,7 +1277,7 @@
     "type": "card",
     "cardType": "52",
     "id": "1un2",
-    "z": 22429,
+    "z": 23025,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1280,7 +1286,7 @@
     "type": "card",
     "cardType": "53",
     "id": "vuo0",
-    "z": 22363,
+    "z": 22998,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1289,7 +1295,7 @@
     "type": "card",
     "cardType": "54",
     "id": "jv6j",
-    "z": 22439,
+    "z": 23039,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1298,7 +1304,7 @@
     "type": "card",
     "cardType": "55",
     "id": "0awn",
-    "z": 22431,
+    "z": 22979,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1307,7 +1313,7 @@
     "type": "card",
     "cardType": "56",
     "id": "tihq",
-    "z": 22402,
+    "z": 23004,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1316,7 +1322,7 @@
     "type": "card",
     "cardType": "57",
     "id": "3m4o",
-    "z": 22459,
+    "z": 23043,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1325,7 +1331,7 @@
     "type": "card",
     "cardType": "58",
     "id": "uhem",
-    "z": 22399,
+    "z": 23034,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1334,7 +1340,7 @@
     "type": "card",
     "cardType": "59",
     "id": "kj4f",
-    "z": 22403,
+    "z": 22993,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1343,7 +1349,7 @@
     "type": "card",
     "cardType": "60",
     "id": "j2mg",
-    "z": 22418,
+    "z": 23046,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1352,7 +1358,7 @@
     "type": "card",
     "cardType": "61",
     "id": "p8pl",
-    "z": 22420,
+    "z": 23044,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1361,7 +1367,7 @@
     "type": "card",
     "cardType": "62",
     "id": "oyqz",
-    "z": 22396,
+    "z": 23069,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1370,7 +1376,7 @@
     "type": "card",
     "cardType": "63",
     "id": "hi4a",
-    "z": 22365,
+    "z": 22981,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1379,7 +1385,7 @@
     "type": "card",
     "cardType": "64",
     "id": "6fse",
-    "z": 22448,
+    "z": 23065,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1388,7 +1394,7 @@
     "type": "card",
     "cardType": "65",
     "id": "rkhu",
-    "z": 22412,
+    "z": 22997,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1397,7 +1403,7 @@
     "type": "card",
     "cardType": "66",
     "id": "ptfd",
-    "z": 22424,
+    "z": 22988,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1406,7 +1412,7 @@
     "type": "card",
     "cardType": "67",
     "id": "49sa",
-    "z": 22422,
+    "z": 22991,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1415,7 +1421,7 @@
     "type": "card",
     "cardType": "68",
     "id": "faeb",
-    "z": 22404,
+    "z": 22990,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1424,7 +1430,7 @@
     "type": "card",
     "cardType": "69",
     "id": "q08f",
-    "z": 22414,
+    "z": 23058,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1433,7 +1439,7 @@
     "type": "card",
     "cardType": "70",
     "id": "98ro",
-    "z": 22371,
+    "z": 23032,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1442,7 +1448,7 @@
     "type": "card",
     "cardType": "71",
     "id": "hea1",
-    "z": 22398,
+    "z": 22980,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1451,7 +1457,7 @@
     "type": "card",
     "cardType": "72",
     "id": "h0nv",
-    "z": 22370,
+    "z": 23051,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1460,7 +1466,7 @@
     "type": "card",
     "cardType": "73",
     "id": "ujjp",
-    "z": 22444,
+    "z": 23017,
     "dropLimit": 1,
     "hoverParent": "deckHolder",
     "parent": "85xe"
@@ -1470,7 +1476,7 @@
     "type": "card",
     "cardType": "74",
     "id": "ogve",
-    "z": 22461,
+    "z": 23003,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1479,7 +1485,7 @@
     "type": "card",
     "cardType": "75",
     "id": "cvz0",
-    "z": 22393,
+    "z": 22994,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1488,7 +1494,7 @@
     "type": "card",
     "cardType": "76",
     "id": "8gdb",
-    "z": 22460,
+    "z": 23040,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1497,7 +1503,7 @@
     "type": "card",
     "cardType": "77",
     "id": "hviy",
-    "z": 22401,
+    "z": 23037,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1506,7 +1512,7 @@
     "type": "card",
     "cardType": "78",
     "id": "w5y6",
-    "z": 22456,
+    "z": 23000,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1515,7 +1521,7 @@
     "type": "card",
     "cardType": "79",
     "id": "bf7m",
-    "z": 22447,
+    "z": 22995,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1524,7 +1530,7 @@
     "type": "card",
     "cardType": "80",
     "id": "8wu2",
-    "z": 22406,
+    "z": 23055,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1533,7 +1539,7 @@
     "type": "card",
     "cardType": "81",
     "id": "1itv",
-    "z": 22452,
+    "z": 23036,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1542,7 +1548,7 @@
     "type": "card",
     "cardType": "82",
     "id": "mg2a",
-    "z": 22407,
+    "z": 23006,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1551,7 +1557,7 @@
     "type": "card",
     "cardType": "83",
     "id": "jq34",
-    "z": 22377,
+    "z": 22983,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1560,7 +1566,7 @@
     "type": "card",
     "cardType": "84",
     "id": "pf9n",
-    "z": 22411,
+    "z": 23023,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1569,7 +1575,7 @@
     "type": "card",
     "cardType": "85",
     "id": "k44v",
-    "z": 22410,
+    "z": 23049,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1578,7 +1584,7 @@
     "type": "card",
     "cardType": "86",
     "id": "hd8f",
-    "z": 22430,
+    "z": 23035,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1587,7 +1593,7 @@
     "type": "card",
     "cardType": "87",
     "id": "i173",
-    "z": 22394,
+    "z": 23024,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1596,7 +1602,7 @@
     "type": "card",
     "cardType": "88",
     "id": "gxdr",
-    "z": 22374,
+    "z": 23029,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1605,7 +1611,7 @@
     "type": "card",
     "cardType": "89",
     "id": "m6ze",
-    "z": 22458,
+    "z": 23026,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1614,7 +1620,7 @@
     "type": "card",
     "cardType": "90",
     "id": "ax9k",
-    "z": 22368,
+    "z": 23014,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1623,7 +1629,7 @@
     "type": "card",
     "cardType": "91",
     "id": "djyg",
-    "z": 22462,
+    "z": 23022,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1632,7 +1638,7 @@
     "type": "card",
     "cardType": "92",
     "id": "63yy",
-    "z": 22445,
+    "z": 23009,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1641,7 +1647,7 @@
     "type": "card",
     "cardType": "93",
     "id": "82rx",
-    "z": 22413,
+    "z": 23073,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1650,7 +1656,7 @@
     "type": "card",
     "cardType": "94",
     "id": "vh9j",
-    "z": 22426,
+    "z": 23020,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1659,16 +1665,17 @@
     "type": "card",
     "cardType": "95",
     "id": "3rk7",
-    "z": 22372,
-    "parent": "85xe",
-    "dropLimit": 1
+    "z": 22985,
+    "dropLimit": 1,
+    "color": "#aaffc3",
+    "parent": "85xe"
   },
   "1dl4": {
     "deck": "cardDeck",
     "type": "card",
     "cardType": "96",
     "id": "1dl4",
-    "z": 22449,
+    "z": 23033,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1677,7 +1684,7 @@
     "type": "card",
     "cardType": "97",
     "id": "im65",
-    "z": 22435,
+    "z": 23038,
     "parent": "85xe",
     "dropLimit": 1
   },
@@ -1686,7 +1693,7 @@
     "type": "card",
     "cardType": "98",
     "id": "2n49",
-    "z": 22382,
+    "z": 23021,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1695,7 +1702,7 @@
     "type": "card",
     "cardType": "99",
     "id": "ak1v",
-    "z": 22366,
+    "z": 23059,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1704,7 +1711,7 @@
     "type": "card",
     "cardType": "100",
     "id": "qeyb",
-    "z": 22419,
+    "z": 23061,
     "dropLimit": 1,
     "parent": "85xe"
   },
@@ -1719,7 +1726,8 @@
         "func": "INPUT",
         "fields": [
           {
-            "type": "string"
+            "type": "string",
+            "variable": "clue"
           }
         ]
       },
@@ -1750,7 +1758,7 @@
       {
         "func": "SET",
         "property": "text",
-        "value": "${undefined}"
+        "value": "${clue}"
       }
     ],
     "dropLimit": 1,
@@ -2511,92 +2519,107 @@
       "display": "flex",
       "font-size": "30px"
     },
-    "text": "Click to change category",
     "clickRoutine": [
+      {
+        "func": "SET",
+        "collection": "thisButton",
+        "property": "text",
+        "value": "${playerName} is choosing a category"
+      },
+      {
+        "func": "DELAY"
+      },
       {
         "func": "INPUT",
         "fields": [
           {
-            "type": "string"
+            "type": "string",
+            "label": "Category",
+            "variable": "cat",
+            "value": "${PROPERTY cat}"
+          },
+          {
+            "type": "string",
+            "label": "0 end of scale",
+            "variable": "cat1",
+            "value": "${PROPERTY cat1}"
+          },
+          {
+            "type": "string",
+            "label": "101 end of scale",
+            "variable": "cat2",
+            "value": "${PROPERTY cat2}"
           }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "source": "thisButton"
+        ],
+        "cancelButtonIcon": null,
+        "cancelButtonText": null,
+        "block": true
       },
       {
         "func": "SET",
         "property": "text",
-        "value": "${undefined}"
-      },
-      "var cat = ${undefined}",
-      "var include = ${cat} includes ' to '",
-      {
-        "func": "IF",
-        "operand1": "${include}",
-        "relation": "==",
-        "operand2": false,
-        "thenRoutine": [
-          "var include = ${cat} includes '/'"
-        ]
+        "collection": "thisButton",
+        "value": "${cat}"
       },
       {
+        "func": "SELECT",
+        "property": "id",
+        "value": "l1"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "0\n${cat1}"
+      },
+      {
+        "func": "SELECT",
+        "property": "id",
+        "value": "l2"
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "101\n${cat2}"
+      },
+      {
+        "func": "SET",
+        "property": "cat",
+        "collection": "thisButton",
+        "value": "${cat}"
+      },
+      {
+        "func": "SET",
+        "property": "cat1",
+        "collection": "thisButton",
+        "value": "${cat1}"
+      },
+      {
+        "func": "SET",
+        "property": "cat2",
+        "collection": "thisButton",
+        "value": "${cat2}"
+      },
+      {
         "func": "IF",
-        "operand1": "${include}",
+        "operand1": "${cat}",
         "relation": "==",
-        "operand2": true,
+        "operand2": "",
         "thenRoutine": [
-          "var include = ${cat} includes ':'",
-          {
-            "func": "IF",
-            "operand1": "${include}",
-            "relation": "==",
-            "operand2": true,
-            "thenRoutine": [
-              "var cat = ${cat} replace ': ' ':'",
-              "var cat = ${cat} split ':'",
-              "var cat = pop ${cat}",
-              "var cat =  ${cat} replace ' to ' ',' ",
-              "var cat =  ${cat} replace '/' ',' ",
-              "var cat = ${cat} split ','",
-              "var cat1 = shift ${cat}",
-              "var cat2 = pop ${cat}"
-            ],
-            "elseRoutine": [
-              "var cat =  ${cat} replace ' to ' ',' ",
-              "var cat =  ${cat} replace '/' ',' ",
-              "var cat = ${cat} split ','",
-              "var cat1 = shift ${cat}",
-              "var cat2 = pop ${cat}"
-            ]
-          },
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "l1"
-          },
           {
             "func": "SET",
             "property": "text",
-            "value": "0\n${cat1}"
-          },
-          {
-            "func": "SELECT",
-            "property": "id",
-            "value": "l2"
-          },
-          {
-            "func": "SET",
-            "property": "text",
-            "value": "101\n${cat2}"
+            "collection": "thisButton",
+            "value": "Click to change category"
           }
         ]
       }
     ],
     "movable": false,
     "pText": "Click to change category",
-    "layer": -10
+    "layer": -10,
+    "cat1": "Worst",
+    "cat2": "Best",
+    "text": "Click to change category"
   },
   "l1": {
     "type": "basic",
@@ -2616,21 +2639,69 @@
     "dropLimit": 1,
     "clickRoutine": [
       {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "string"
-          }
+        "func": "GET",
+        "property": "cat1",
+        "collection": [
+          "l0"
         ]
       },
       {
-        "func": "SELECT",
-        "source": "thisButton"
+        "func": "GET",
+        "property": "cat2",
+        "collection": [
+          "l0"
+        ]
+      },
+      {
+        "func": "INPUT",
+        "fields": [
+          {
+            "type": "string",
+            "label": "0 end of scale",
+            "variable": "cat1",
+            "value": "${cat1}"
+          },
+          {
+            "type": "string",
+            "label": "101 end of scale",
+            "variable": "cat2",
+            "value": "${cat2}"
+          }
+        ],
+        "cancelButtonIcon": null,
+        "cancelButtonText": null
       },
       {
         "func": "SET",
         "property": "text",
-        "value": "0\n${undefined}"
+        "value": "0\n${cat1}",
+        "collection": [
+          "l1"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "text",
+        "value": "101\n${cat2}",
+        "collection": [
+          "l2"
+        ]
+      },
+      {
+        "func": "SET",
+        "property": "cat1",
+        "collection": [
+          "l0"
+        ],
+        "value": "${cat1}"
+      },
+      {
+        "func": "SET",
+        "property": "cat2",
+        "collection": [
+          "l0"
+        ],
+        "value": "${cat2}"
       }
     ],
     "movable": false,
@@ -2654,29 +2725,11 @@
       "font-size": "20px"
     },
     "dropLimit": 1,
-    "clickRoutine": [
-      {
-        "func": "INPUT",
-        "fields": [
-          {
-            "type": "string"
-          }
-        ]
-      },
-      {
-        "func": "SELECT",
-        "source": "thisButton"
-      },
-      {
-        "func": "SET",
-        "property": "text",
-        "value": "101\n${undefined}"
-      }
-    ],
     "movable": false,
     "pText": "101",
     "text": "101",
-    "layer": -10
+    "layer": -10,
+    "inheritFrom": "l1"
   },
   "lock": {
     "id": "lock",
