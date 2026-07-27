@@ -5593,9 +5593,9 @@ class PropertiesModule extends SidebarModule {
     // dropTarget between the default (the plain widgets stops usually are) and
     // an empty list, which matches nothing. A more specific dropTarget can be
     // written in the property list below, the same way a holder's is.
-    const acceptStops = addLineToggle('Drag widgets in to add stops', 'lineAcceptStops', 'Let a widget dragged onto the line become a stop of it - during play as well as in edit mode');
-    this.addPropertyListener(widget, 'dropTarget', ()=>acceptStops.checked = asArray(widget.get('dropTarget')).filter(t=>t).length > 0);
-    acceptStops.onchange = _=>lineEdit(`${acceptStops.checked ? 'enabled' : 'disabled'} dragging stops onto line ${widget.id}`, _=>widget.set('dropTarget', acceptStops.checked ? { type: null } : []));
+    const takeDrops = addLineToggle('Drag widgets in to add stops', 'lineTakeDrops', 'Let a widget dragged onto the line become a stop of it - during play as well as in edit mode');
+    this.addPropertyListener(widget, 'dropTarget', ()=>takeDrops.checked = asArray(widget.get('dropTarget')).filter(t=>t).length > 0);
+    takeDrops.onchange = _=>lineEdit(`${takeDrops.checked ? 'enabled' : 'disabled'} dragging stops onto line ${widget.id}`, _=>widget.set('dropTarget', takeDrops.checked ? { type: null } : []));
 
     const removeStop = async stop=>{
       await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
