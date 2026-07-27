@@ -239,6 +239,56 @@ describe('operation rendering', () => {
     expect(bothSet.face).toBeUndefined();
   });
 
+  test('parameters the mode of the operation does not read are marked as ignored', () => {
+    const ignoredFor = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.ignoredParameters();
+    };
+    // { operation: [ names that have no effect, names that do ] }
+    const cases = [
+      [ { func: 'AUDIO', silence: true }, [ 'source', 'maxVolume', 'length', 'count' ], [ 'player' ] ],
+      [ { func: 'CANVAS', mode: 'reset' }, [ 'x', 'y', 'color', 'value' ], [] ],
+      [ { func: 'CANVAS', mode: 'setPixel' }, [ 'color' ], [ 'x', 'y', 'value' ] ],
+      [ { func: 'CANVAS', mode: 'change' }, [ 'x', 'y' ], [ 'color', 'value' ] ],
+      [ { func: 'CANVAS', mode: 'inc' }, [ 'x', 'y', 'color' ], [ 'value' ] ],
+      [ { func: 'FOREACH', in: { a: 1 }, range: 3, collection: 'stuff' }, [ 'range', 'collection' ], [ 'in' ] ],
+      [ { func: 'FOREACH', range: 3, collection: 'stuff' }, [ 'collection' ], [ 'range' ] ],
+      [ { func: 'GET', aggregation: 'sum' }, [ 'skipMissing' ], [ 'property' ] ],
+      [ { func: 'GET', aggregation: 'array' }, [], [ 'skipMissing' ] ],
+      [ { func: 'SET', relation: '!' }, [ 'value' ], [ 'property' ] ],
+      [ { func: 'SHUFFLE', mode: 'reverse' }, [ 'modeValue' ], [] ],
+      [ { func: 'SHUFFLE', mode: 'seeded' }, [], [ 'modeValue' ] ],
+      [ { func: 'SORT', holder: 'h1' }, [ 'rearrange' ], [ 'key' ] ],
+      [ { func: 'SORT', collection: 'stuff' }, [], [ 'rearrange' ] ],
+      [ { func: 'TURN', turnCycle: 'random' }, [ 'turn' ], [ 'source' ] ]
+    ];
+    for(const [ operation, ignored, used ] of cases) {
+      const result = ignoredFor(operation);
+      for(const name of ignored)
+        expect([ operation.func, name, result[name] ]).toEqual([ operation.func, name, expect.stringContaining('ignored because') ]);
+      for(const name of used)
+        expect([ operation.func, name, result[name] ]).toEqual([ operation.func, name, undefined ]);
+    }
+  });
+
+  test('a 0 that means "unset" is marked as ignored, an unset parameter is not', () => {
+    const ignoredFor = operation => {
+      const editor = editorForOperation(operation);
+      editor.setOperationDetails({ state: {} }, operation, [], []);
+      return editor.ignoredParameters();
+    };
+    // the engine reads these with `a.x || fallback`, so 0 does exactly nothing
+    const zeroMeansUnset = { CANVAS: 'count', MOVE: 'fillTo', MOVEXY: 'z', TIMER: 'seconds' };
+    for(const func in zeroMeansUnset) {
+      const name = zeroMeansUnset[func];
+      const operation = func == 'TIMER' ? { func, mode: 'set' } : { func };
+      expect(ignoredFor(Object.assign({}, operation, { [name]: 0 }))[name]).toMatch(/0/);
+      expect(ignoredFor(Object.assign({}, operation, { [name]: 2 }))[name]).toBeUndefined();
+      expect(ignoredFor(operation)[name]).toBeUndefined(); // not set at all is not a mistake
+    }
+  });
+
   test('the list view shows custom properties the operation does not support', () => {
     const rendered = renderInListView({ func: 'FLIP', typo: 3, holder: 'h1' });
     const row = [...rendered.querySelectorAll('.routine-editor-parameter-row')].find(r => r.textContent.startsWith('typo'));
@@ -303,6 +353,10 @@ describe('operation rendering', () => {
     expect(template({ func: 'FLIP', face: 1 })).toContain('to face {face}');
     expect(template({ func: 'CANVAS', canvas: 'c1' })).toContain('on {canvas}');
     expect(template({ func: 'CANVAS' })).toContain('on {collection}');
+    expect(template({ func: 'CANVAS', mode: 'setPixel' })).toContain('({x}, {y})');
+    expect(template({ func: 'CANVAS', mode: 'change' })).toContain('to {color}');
+    expect(template({ func: 'AUDIO', silence: true })).toContain('stop all sounds');
+    expect(template({ func: 'SET', relation: '!' })).toContain('the {relation} of its current value');
     expect(template({ func: 'MOVE', fillTo: 3 })).toContain('fill up to {fillTo}');
     expect(template({ func: 'SELECT', mode: 'add' })).toContain('{mode} to {collection}');
     expect(template({ func: 'SELECT' })).toContain('{mode} as {collection}');

@@ -24,7 +24,10 @@
 // in both the sentence and the list view.
 //
 // ignored names the parameters the engine skips because of how another one is
-// set. They get a red "!" in the list view and are kept out of the summary: a
+// set - or because their value means the same as leaving them unset (a MOVEXY z
+// of 0 keeps the current z). It receives an accessor for the effective values and
+// one telling whether the operation sets the parameter at all. The named
+// parameters get a red "!" in the list view and are kept out of the summary: a
 // template should not word them into the sentence in the mode that ignores them
 // (that is what the template functions are for), and they are never appended as
 // an extra chip either.
@@ -40,7 +43,7 @@ function collectionReplacedBy(parameter) {
 
 const routineOperationMetadata = {
   AUDIO: {
-    template: '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
+    template: v=>v('silence') ? '{func}: stop all sounds[ for {player}]' : '{func}: play {source} at volume {maxVolume}[ to {player}][; {count} time(s)]',
     parameters: {
       source: { type: 'string', default: '' },
       maxVolume: { type: 'number', default: 1.0 },
@@ -49,7 +52,12 @@ const routineOperationMetadata = {
       silence: { type: 'enum', values: [ true, false ], default: false },
       count: { type: 'number', default: 1, special: [ 'loop' ] }
     },
-    ignored: v=>v('length') != null ? { count: 'ignored because a length is set' } : {}
+    ignored: v=>{
+      // silence only resets the audio context, it never plays anything
+      if(v('silence'))
+        return { source: 'ignored because silence stops the audio instead of playing it', maxVolume: 'ignored because silence stops the audio instead of playing it', length: 'ignored because silence stops the audio instead of playing it', count: 'ignored because silence stops the audio instead of playing it' };
+      return v('length') != null ? { count: 'ignored because a length is set' } : {};
+    }
   },
   CALL: {
     template: '{func} routine {routine} on {widget}[ and store result as {variable}][; arguments {arguments}]',
@@ -65,7 +73,16 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   CANVAS: {
-    template: v=>`{func}: {mode} on ${v('canvas') != null ? '{canvas}' : '{collection}'}[ using value {value}][ and color {color}]`,
+    template: v=>{
+      const target = v('canvas') != null ? '{canvas}' : '{collection}';
+      if(v('mode') == 'setPixel')
+        return `{func}: {mode} ({x}, {y}) on ${target} to value {value}`;
+      if(v('mode') == 'change')
+        return `{func}: {mode} color index {value} on ${target} to {color}`;
+      if(v('mode') == 'reset')
+        return `{func}: {mode} on ${target}`;
+      return `{func}: {mode} on ${target} using value {value}`; // set/inc/dec
+    },
     parameters: {
       mode: { type: 'enum', values: [ 'set', 'inc', 'dec', 'change', 'reset', 'setPixel' ], default: 'reset' },
       collection: { type: 'collection', default: 'DEFAULT', widgetType: 'canvas' },
@@ -84,7 +101,18 @@ const routineOperationMetadata = {
       x: { type: 'number', default: 0 },
       y: { type: 'number', default: 0 }
     },
-    ignored: v=>v('canvas') != null ? { collection: 'ignored because the deprecated canvas parameter replaces it' } : {}
+    ignored: (v, isSet)=>{
+      const ignored = v('canvas') != null ? { collection: 'ignored because the deprecated canvas parameter replaces it' } : {};
+      if(v('mode') != 'setPixel')
+        ignored.x = ignored.y = 'ignored because only mode setPixel uses coordinates';
+      if(v('mode') != 'change')
+        ignored.color = 'ignored because only mode change sets a color';
+      if(v('mode') == 'reset')
+        ignored.value = 'ignored because reset clears the canvas regardless of the value';
+      if(isSet('count') && !v('count'))
+        ignored.count = 'ignored because 0 means all widgets, just like leaving it unset';
+      return ignored;
+    }
   },
   CLICK: {
     template: '{func} widgets in {collection}[ {count} time(s)][, mode {mode}]',
@@ -160,6 +188,14 @@ const routineOperationMetadata = {
       'in': { type: 'json', default: null },
       range: { type: 'json', default: null },
       collection: { type: 'collection', default: 'DEFAULT' }
+    },
+    // the engine takes the first source that is set: in, then range, then collection
+    ignored: v=>{
+      if(v('in'))
+        return { range: 'ignored because in is set', collection: 'ignored because in is set' };
+      if(v('range'))
+        return { collection: 'ignored because range is set' };
+      return {};
     }
   },
   GET: {
@@ -171,7 +207,9 @@ const routineOperationMetadata = {
       variable: { type: 'string', default: operation=>typeof operation.property == 'string' ? operation.property : 'id' },
       skipMissing: { type: 'enum', values: [ true, false ], default: false }
     },
-    definesVariable: 'variable'
+    definesVariable: 'variable',
+    // missing values count as 0 in a sum, and an all-missing collection sums to 0 either way
+    ignored: v=>v('aggregation') == 'sum' ? { skipMissing: 'ignored because missing values do not change a sum' } : {}
   },
   IF: {
     template: '{func} {operand1} {relation} {operand2}', // overridden by IfRoutineOperationEditor
@@ -206,7 +244,7 @@ const routineOperationMetadata = {
     ignored: collectionReplacedBy('label')
   },
   MOVE: {
-    template: v=>v('fillTo') != null ? '{func} widgets from {from,collection} to {to}; fill up to {fillTo}[; flip them to face {face}]' : '{func} {count} widgets from {from,collection} to {to}[; flip them to face {face}]',
+    template: v=>v('fillTo') ? '{func} widgets from {from,collection} to {to}; fill up to {fillTo}[; flip them to face {face}]' : '{func} {count} widgets from {from,collection} to {to}[; flip them to face {face}]',
     parameters: {
       fillTo: { type: 'number', default: null },
       count: { type: 'number', default: operation=>operation.from ? 1 : 'all', special: [ 'all' ] },
@@ -215,10 +253,12 @@ const routineOperationMetadata = {
       to: { type: 'widgets', default: null, display: { 'null': '?' }, widgetType: 'holder' },
       face: { type: 'number', default: null, display: { 'null': 'unchanged' } }
     },
-    ignored: v=>{
+    ignored: (v, isSet)=>{
       const ignored = collectionReplacedBy('from')(v);
-      if(v('fillTo') != null)
+      if(v('fillTo'))
         ignored.count = 'ignored because "fill up to" is set';
+      else if(isSet('fillTo'))
+        ignored.fillTo = 'ignored because 0 means the same as leaving it unset';
       return ignored;
     }
   },
@@ -233,7 +273,8 @@ const routineOperationMetadata = {
       face: { type: 'number', default: null, display: { 'null': 'unchanged' } },
       snapToGrid: { type: 'enum', values: [ true, false ], default: true },
       resetOwner: { type: 'enum', values: [ true, false ], default: true }
-    }
+    },
+    ignored: (v, isSet)=>isSet('z') && !v('z') ? { z: 'ignored because 0 keeps the current z, just like leaving it unset' } : {}
   },
   RECALL: {
     template: '{func} cards that belong to {holder}[; include cards in hands {owned}][, only cards in holders {inHolder}][, excluding {excludeCollection}]',
@@ -289,13 +330,15 @@ const routineOperationMetadata = {
     definesCollection: 'collection'
   },
   SET: {
-    template: '{func} property {property} {relation} {value} for all widgets in {collection}',
+    template: v=>v('relation') == '!' ? '{func} property {property} to the {relation} of its current value for all widgets in {collection}' : '{func} property {property} {relation} {value} for all widgets in {collection}',
     parameters: {
       property: { type: 'string', default: 'parent' },
       collection: { type: 'collection', default: 'DEFAULT' },
       relation: { type: 'enum', values: [ '=', '+', '-', '*', '/', '!' ], default: '=' },
       value: { type: 'json', default: null }
-    }
+    },
+    // ! is the one relation that takes a single operand (the current value)
+    ignored: v=>v('relation') == '!' ? { value: 'ignored because ! only negates the current value' } : {}
   },
   SHUFFLE: {
     template: v=>{
@@ -313,7 +356,13 @@ const routineOperationMetadata = {
       mode: { type: 'enum', values: [ 'true random', 'overhand', 'riffle', 'reverse', 'seeded' ], default: 'true random' },
       modeValue: { type: 'number', default: 1 }
     },
-    ignored: collectionReplacedBy('holder')
+    ignored: v=>{
+      const ignored = collectionReplacedBy('holder')(v);
+      // modeValue is the seed for seeded and the number of iterations for riffle/overhand
+      if([ 'seeded', 'riffle', 'overhand' ].indexOf(v('mode')) == -1)
+        ignored.modeValue = `ignored because mode ${v('mode')} takes no value`;
+      return ignored;
+    }
   },
   SORT: {
     template: '{func} {holder,collection} by {key}[; reverse {reverse}]',
@@ -326,7 +375,13 @@ const routineOperationMetadata = {
       locales: { type: 'json', default: null },
       options: { type: 'json', default: null }
     },
-    ignored: collectionReplacedBy('holder')
+    ignored: v=>{
+      const ignored = collectionReplacedBy('holder')(v);
+      // sorting a holder always rearranges its children
+      if(v('holder') != null)
+        ignored.rearrange = 'ignored because sorting a holder always rearranges it';
+      return ignored;
+    }
   },
   SWAPHANDS: {
     template: '{func} hands among players in {source}[, interval {interval}][, direction {direction}]',
@@ -353,13 +408,15 @@ const routineOperationMetadata = {
       value: { type: 'number', default: 0, special: [ 'start', 'end' ], textHint: 'name of a timer property to read the time from' },
       seconds: { type: 'number', default: 0 }
     },
-    ignored: v=>{
+    ignored: (v, isSet)=>{
       const ignored = collectionReplacedBy('timer')(v);
       if([ 'pause', 'start', 'toggle', 'reset' ].indexOf(v('mode')) != -1) {
         ignored.value = 'ignored for this mode';
         ignored.seconds = 'ignored for this mode';
       } else if(v('seconds')) {
         ignored.value = 'ignored because seconds is set';
+      } else if(isSet('seconds')) {
+        ignored.seconds = 'ignored because 0 seconds falls back to value';
       }
       return ignored;
     }
@@ -380,7 +437,9 @@ const routineOperationMetadata = {
       source: { type: 'collection', default: 'all', display: { 'all': 'all seats' }, widgetType: 'seat' },
       collection: { type: 'collection', default: 'TURN' }
     },
-    definesCollection: 'collection'
+    definesCollection: 'collection',
+    // random shuffles the seats before picking, so every value picks a random one
+    ignored: v=>v('turnCycle') == 'random' ? { turn: 'ignored because a random seat is picked regardless of the value' } : {}
   },
   UPLOAD: {
     template: '{func} a file and store as {variable}',
@@ -1023,16 +1082,23 @@ class RoutineOperationEditor {
 
   // the value the parameter effectively has: the explicitly set one or its default
   parameterValue(name) {
-    if(this.operation && typeof this.operation == 'object' && typeof this.operation[name] != 'undefined')
+    if(this.parameterIsSet(name))
       return this.operation[name];
     return this.getDefaults()[name];
+  }
+
+  // whether the operation names the parameter itself instead of falling back to
+  // its default - the difference matters for values that mean "unset" (a MOVEXY
+  // z of 0 keeps the current z, so it deserves the ignored warning)
+  parameterIsSet(name) {
+    return Boolean(this.operation) && typeof this.operation == 'object' && typeof this.operation[name] != 'undefined';
   }
 
   // { parameterName: reason } for parameters the engine currently ignores because
   // of how other parameters are set (e.g. MOVE count when fillTo is set)
   ignoredParameters() {
     if(typeof this.metadata.ignored == 'function')
-      return this.metadata.ignored(name=>this.parameterValue(name)) || {};
+      return this.metadata.ignored(name=>this.parameterValue(name), name=>this.parameterIsSet(name)) || {};
     return {};
   }
 
@@ -1151,7 +1217,7 @@ class RoutineOperationEditor {
       const optional = segment.charAt(0) == '[';
       const text = optional ? segment.slice(1, -1) : segment;
       const explicitlySet = (text.match(/\{([a-zA-Z0-9,]+)\}/g) || []).some(spec=>
-        spec.slice(1, -1).split(',').some(p=>this.operation && typeof this.operation == 'object' && typeof this.operation[p] != 'undefined'));
+        spec.slice(1, -1).split(',').some(p=>this.parameterIsSet(p)));
       if(optional && !explicitlySet)
         continue;
       html += text.replace(/\{([a-zA-Z0-9,]+)\}/g, (_, spec)=>this.renderParameterChip(spec));
