@@ -1389,7 +1389,7 @@ function jeAddCommands() {
   jeAddRoutineOperationCommands('SET', { collection: 'DEFAULT', property: 'parent', relation: '=', value: null });
   jeAddRoutineOperationCommands('SHUFFLE', { holder: null, collection: 'DEFAULT', mode: 'true random', modeValue: 1 });
   jeAddRoutineOperationCommands('SORT', { key: 'value', reverse: false, rearrange: false, locales: null, options: null, holder: null, collection: 'DEFAULT' });
-  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all' });
+  jeAddRoutineOperationCommands('SWAPHANDS', { interval: 1, direction: 'forward', source: 'all', keepOrder: false });
   jeAddRoutineOperationCommands('TIMER', { value: 0, seconds: 0, mode: 'toggle', timer: null, collection: 'DEFAULT' });
   jeAddRoutineOperationCommands('TURN', { turn: 1, turnCycle: 'forward', source: 'all', collection: 'TURN' });
   jeAddRoutineOperationCommands('UPLOAD', { variable: 'uploadedFileName', fileTypes: [ '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.json', '.mp3', '.wav', '.ogg', '.m4a' ] });
@@ -3050,7 +3050,7 @@ function jeLoggingJSON(obj) {
 }
 
 export function jeLoggingRoutineStart(widget, property, initialVariables, initialCollections, byReference) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) {
     if(jeRoutineResetOnNextLog) {
       jeLoggingHTML = '';
       jeRoutineResetOnNextLog = false;
@@ -3068,7 +3068,7 @@ export function jeLoggingRoutineStart(widget, property, initialVariables, initia
 }
 
 export function jeLoggingRoutineEnd(variables, collections) {
-  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
+  if( jeHTMLStack.length == 0 || ['CALL', 'CLICK', 'IF', 'loopRoutine', 'Moves'].indexOf( jeHTMLStack[0][3] ) == -1 ) jeLoggingHTML += '</div></div>';
   --jeLoggingDepth;
   if(!jeLoggingDepth) {
     $('#jeLog').innerHTML = jeLoggingHTML + '</div></div>';
