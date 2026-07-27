@@ -5421,14 +5421,20 @@ class PropertiesModule extends SidebarModule {
     return { expandButton, popout };
   }
 
-  // One row for the line's dropTarget: a dropdown for the whole match plus, for
-  // "Another property", the property and its value next to it. Every entry
-  // writes a single-object dropTarget, which is what the shapes below mean:
-  //   nothing         []                a line that takes no drops (the default)
-  //   anything        {}                every widget matches an empty match
-  //   <widget type>   { type: 'card' }  a basic widget has no type, so it is null
-  //   <property>      { classes: 'x' }  any other single property/value pair
-  renderLineDropTargetRow(widget, lineEdit) {
+  // The full dropTarget of a widget that takes drops in: a list of matches
+  // (a widget is accepted when it matches ANY of them) with a list of
+  // property/value conditions each (it matches one when it has ALL of them).
+  // That is exactly the array/object shape the engine reads, so every
+  // dropTarget can be built and edited here instead of in the JSON editor:
+  //   []                              nothing is accepted
+  //   {}                              every widget matches an empty match
+  //   { type: 'card' }                only cards
+  //   { type: 'card', deck: 'd1' }    only cards of deck d1
+  //   [ { deck: 'd1' }, { deck: 'd2' } ]  cards of either deck
+  // Nothing here is line specific - holders can render the same editor once
+  // their "Target widgets" section moves over from the deck buttons.
+  // options: edit (wraps the change for the history), label, hint, emptyText
+  renderDropTargetEditor(widget, options={}) {
     const types = [
       { value: null,         label: 'Basic widgets' },
       { value: 'card',       label: 'Cards' },
@@ -5445,102 +5451,187 @@ class PropertiesModule extends SidebarModule {
       { value: 'timer',      label: 'Timers' }
     ];
     const typeMode = type=>`type:${type === null ? '' : type}`;
+    const edit = options.edit || ((cause, change)=>change());
 
-    const row = div(this.moduleDOM, 'propertyInput lineDropTargetRow');
-    const label = document.createElement('label');
-    label.textContent = 'Takes in:';
-    propertyInfoButton(label, html('Which widgets become a stop when they are dropped onto the line - during play as well as in edit mode. Matches with several entries or several properties are written in the JSON editor.'));
-    row.appendChild(label);
-
-    const select = document.createElement('select');
-    select.className = 'lineDropTargetMode';
-    const addOption = (value, text, group)=>{
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = text;
-      (group || select).appendChild(option);
-      return option;
+    // true/false are what the matched widget properties actually hold, so they
+    // are entered as booleans instead of being quoted into strings
+    const conditionValue = raw=>{
+      const text = String(raw).trim();
+      if(text == 'true')
+        return true;
+      if(text == 'false')
+        return false;
+      return propertyInputNumberOrText(raw);
     };
-    addOption('none', 'Nothing');
-    addOption('all', 'Any widget');
-    const typeGroup = document.createElement('optgroup');
-    typeGroup.label = 'Only';
-    select.appendChild(typeGroup);
-    for(const type of types)
-      addOption(typeMode(type.value), type.label, typeGroup);
-    addOption('custom', 'Another property...');
-    // a dropTarget this row cannot express stays as it is until something else
-    // is picked, so opening the editor on it never silently rewrites it
-    const complexOption = addOption('complex', 'Several matches (JSON editor)');
-    complexOption.disabled = true;
-    row.appendChild(select);
+    const conditionText = value=>value === null || value === undefined ? '' : String(value);
 
-    const customGroup = div(row, 'lineDropTargetCustom');
-    const property = document.createElement('input');
-    property.type = 'text';
-    property.className = 'lineDropTargetProperty';
-    property.placeholder = 'property';
-    property.title = 'The widget property to match, e.g. classes';
-    const value = document.createElement('input');
-    value.type = 'text';
-    value.className = 'lineDropTargetValue';
-    value.placeholder = 'value';
-    value.title = 'The value that property has to have';
-    customGroup.appendChild(property);
-    customGroup.appendChild(value);
-
-    // the current dropTarget as this row shows it
-    const currentMatch = ()=>{
+    // The rows as an editable model: a match the rows cannot express (an entry
+    // that is not an object) is kept verbatim so opening the editor on it never
+    // rewrites it, and a condition whose property is still empty lives here
+    // until it is named - it would match every widget otherwise.
+    const readMatches = ()=>{
       const dropTarget = widget.get('dropTarget');
       const entries = dropTarget === null || dropTarget === undefined ? [] : asArray(dropTarget);
-      if(!entries.length)
-        return { mode: 'none' };
-      if(entries.length > 1 || !entries[0] || typeof entries[0] != 'object')
-        return { mode: 'complex' };
-      const keys = Object.keys(entries[0]);
-      if(!keys.length)
-        return { mode: 'all' };
-      if(keys.length > 1)
-        return { mode: 'complex' };
-      const match = entries[0][keys[0]];
-      if(keys[0] == 'type' && types.some(type=>type.value === (match === undefined ? null : match)))
-        return { mode: typeMode(match === undefined ? null : match) };
-      return { mode: 'custom', property: keys[0], value: match };
+      return entries.map(entry=>{
+        if(!entry || typeof entry != 'object' || Array.isArray(entry))
+          return { unsupported: entry };
+        const match = { hasType: false, type: null, conditions: [] };
+        for(const [ property, value ] of Object.entries(entry)) {
+          if(property == 'type' && !match.hasType && types.some(t=>t.value === value)) {
+            match.hasType = true;
+            match.type = value;
+          } else {
+            match.conditions.push({ property, value });
+          }
+        }
+        return match;
+      });
+    };
+    const toDropTarget = matches=>{
+      const entries = matches.map(match=>{
+        if('unsupported' in match)
+          return match.unsupported;
+        const entry = {};
+        if(match.hasType)
+          entry.type = match.type;
+        for(const condition of match.conditions)
+          if(String(condition.property).trim())
+            entry[String(condition.property).trim()] = condition.value;
+        return entry;
+      });
+      return entries.length == 1 ? entries[0] : entries;
     };
 
-    const update = ()=>{
-      const current = currentMatch();
-      complexOption.hidden = current.mode != 'complex';
-      select.value = current.mode;
-      customGroup.classList.toggle('open', current.mode == 'custom');
-      if(current.mode == 'custom' && document.activeElement != property && document.activeElement != value) {
-        property.value = current.property;
-        value.value = current.value === null || current.value === undefined ? '' : current.value;
-      }
-    };
-    this.addPropertyListener(widget, 'dropTarget', update);
+    let matches = readMatches();
 
-    const write = dropTarget=>lineEdit(`changed what line ${widget.id} takes in`, _=>widget.set('dropTarget', dropTarget));
-    const writeCustom = ()=>{
-      // an unnamed property would match every widget, which is what "Any
-      // widget" is for - so wait until there is one instead
-      if(property.value.trim())
-        write({ [property.value.trim()]: propertyInputNumberOrText(value.value) });
+    const container = div(this.moduleDOM, 'dropTargetEditor');
+    const label = document.createElement('label');
+    label.textContent = options.label || 'Valid widgets:';
+    if(options.hint)
+      propertyInfoButton(label, html(options.hint));
+    container.appendChild(label);
+    const list = div(container, 'dropTargetMatches');
+
+    const save = _=>edit(`changed which widgets ${widget.id} accepts`, _=>widget.set('dropTarget', toDropTarget(matches)));
+
+    const iconButton = (parent, icon, title, onclick, className)=>{
+      const button = document.createElement('button');
+      button.className = className;
+      button.setAttribute('icon', icon);
+      button.title = title;
+      button.onclick = onclick;
+      parent.appendChild(button);
+      return button;
     };
-    select.onchange = _=>{
-      if(select.value == 'none')
-        return write([]);
-      if(select.value == 'all')
-        return write({});
-      if(select.value == 'custom') {
-        customGroup.classList.add('open');
-        property.focus();
-        return writeCustom();
+
+    const renderCondition = (match, condition, conditions) => {
+      const row = div(conditions, 'dropTargetCondition');
+      row.appendChild(document.createTextNode('and'));
+      const property = document.createElement('input');
+      property.type = 'text';
+      property.className = 'dropTargetProperty';
+      property.placeholder = 'property';
+      property.title = 'The widget property to match, e.g. classes';
+      property.value = condition.property;
+      const value = document.createElement('input');
+      value.type = 'text';
+      value.className = 'dropTargetValue';
+      value.placeholder = 'value';
+      value.title = 'The value that property has to have';
+      value.value = conditionText(condition.value);
+      property.onchange = value.onchange = _=>{
+        condition.property = property.value;
+        condition.value = conditionValue(value.value);
+        save();
+      };
+      row.appendChild(property);
+      row.appendChild(value);
+      iconButton(row, 'delete', 'Remove this condition', _=>{
+        match.conditions.splice(match.conditions.indexOf(condition), 1);
+        render();
+        save();
+      }, 'dropTargetRemoveCondition red');
+    };
+
+    const renderMatch = (match, index)=>{
+      if(index)
+        div(list, 'dropTargetOr', 'or');
+      const matchDOM = div(list, 'dropTargetMatch');
+      const header = div(matchDOM, 'dropTargetMatchHeader');
+
+      if('unsupported' in match) {
+        // keep it visible (and untouched) so a hand written dropTarget entry
+        // this editor does not understand cannot silently disappear
+        div(header, 'dropTargetUnsupported', 'Custom match (JSON editor)');
+      } else {
+        const select = document.createElement('select');
+        select.className = 'dropTargetType';
+        const addOption = (value, text, group)=>{
+          const option = document.createElement('option');
+          option.value = value;
+          option.textContent = text;
+          (group || select).appendChild(option);
+        };
+        addOption('any', 'Any widget');
+        const typeGroup = document.createElement('optgroup');
+        typeGroup.label = 'Only';
+        select.appendChild(typeGroup);
+        for(const type of types)
+          addOption(typeMode(type.value), type.label, typeGroup);
+        select.value = match.hasType ? typeMode(match.type) : 'any';
+        select.onchange = _=>{
+          match.hasType = select.value != 'any';
+          match.type = match.hasType && select.value != 'type:' ? select.value.slice('type:'.length) : null;
+          save();
+        };
+        header.appendChild(select);
+        iconButton(header, 'add', 'Also require a property of the dropped widget', _=>{
+          match.conditions.push({ property: '', value: '' });
+          render();
+        }, 'dropTargetAddCondition');
       }
-      const type = select.value.slice('type:'.length);
-      write({ type: type === '' ? null : type });
+
+      iconButton(header, 'delete', 'Remove this match', _=>{
+        matches.splice(matches.indexOf(match), 1);
+        render();
+        save();
+      }, 'dropTargetRemoveMatch red');
+
+      if(!('unsupported' in match)) {
+        const conditions = div(matchDOM, 'dropTargetConditions');
+        for(const condition of match.conditions)
+          renderCondition(match, condition, conditions);
+      }
     };
-    property.onchange = value.onchange = writeCustom;
+
+    const render = ()=>{
+      list.innerHTML = '';
+      matches.forEach(renderMatch);
+      if(!matches.length)
+        div(list, 'dropTargetEmpty', options.emptyText || 'Nothing is accepted.');
+      const add = document.createElement('button');
+      add.className = 'dropTargetAddMatch';
+      add.setAttribute('icon', 'add');
+      add.innerText = matches.length ? 'Add another match' : 'Add a match';
+      add.onclick = _=>{
+        matches.push({ hasType: false, type: null, conditions: [] });
+        render();
+        save();
+      };
+      list.appendChild(add);
+    };
+    render();
+
+    // Only rebuild when the property changed somewhere else (undo, the JSON
+    // editor, a routine) - rebuilding on our own writes would throw away the
+    // condition row that is still being typed into.
+    this.addPropertyListener(widget, 'dropTarget', _=>{
+      const dropTarget = widget.get('dropTarget');
+      if(JSON.stringify(dropTarget === null || dropTarget === undefined ? [] : dropTarget) == JSON.stringify(toDropTarget(matches)))
+        return;
+      matches = readMatches();
+      render();
+    });
   }
 
   renderForLine(widget) {
@@ -5565,9 +5656,11 @@ class PropertiesModule extends SidebarModule {
     this.addAppearanceSubTitle('Line shape');
     const shapeWrap = div(this.moduleDOM, 'lineShapePresets');
     const shapePresets = [
-      { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
-      // a closed shape: the two points become the corners of its bounding box
+      // a closed shape: the two points become the corners of its bounding box.
+      // It comes first because it is the one preset that *hides* the curves
+      // below, so picking a line shape only ever adds buttons underneath.
       { name: 'Circle / oval', path: 'M 40 4 A 36 16 0 1 1 39.9 4 Z', shape: 'ellipse' },
+      { name: 'Straight', path: 'M 4 20 L 76 20', controls: null },
       { name: 'Shallow curve', path: 'M 4 30 C 24 8, 56 8, 76 30', controls: [ .33, .22, .67, .22 ] },
       { name: 'Deep curve', path: 'M 4 34 C 20 0, 60 0, 76 34', controls: [ .25, .42, .75, .42 ] },
       { name: 'Reverse curve', path: 'M 4 10 C 24 32, 56 32, 76 10', controls: [ .33, -.22, .67, -.22 ] },
@@ -5588,9 +5681,9 @@ class PropertiesModule extends SidebarModule {
         end: { x: Math.round(s.x+dx*f2+normal.x*length*n2), y: Math.round(s.y+dy*f2+normal.y*length*n2) }
       };
     };
-    const shapeButtons = shapePresets.map((preset, index)=>{
+    const shapeButtons = shapePresets.map(preset=>{
       const button = document.createElement('button');
-      button.className = `lineShapePreset${index == 0 ? ' lineShapeStraight' : preset.controls ? ' lineShapeCurved' : ''}`;
+      button.className = `lineShapePreset${preset.shape == 'ellipse' ? '' : preset.controls ? ' lineShapeCurved' : ' lineShapeStraight'}`;
       button.title = preset.name;
       button.setAttribute('aria-label', preset.name);
       button.innerHTML = `<svg viewBox="0 0 80 40" aria-hidden="true"><path d="${preset.path}"/></svg>`;
@@ -6098,13 +6191,14 @@ class PropertiesModule extends SidebarModule {
     }
 
     // What a line takes in - a widget dropped on the path becomes a stop of it,
-    // the same match a holder does with its dropTarget. One line covers the
-    // shapes that are actually useful here: everything, nothing, one widget
-    // type or one property/value pair. A dropTarget with several entries or
-    // keys is only shown (and stays untouched) until it is picked over here;
-    // building one is the JSON editor's job.
+    // matched the same way a holder matches its dropTarget.
     this.addSubHeader('Target widgets');
-    this.renderLineDropTargetRow(widget, lineEdit);
+    this.renderDropTargetEditor(widget, {
+      edit: lineEdit,
+      label: 'Valid widgets:',
+      hint: 'Which widgets become a stop when they are dropped onto the line',
+      emptyText: 'Nothing can be dropped onto this line.'
+    });
 
     this.renderOtherPropertiesSection(widget, [
       'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',

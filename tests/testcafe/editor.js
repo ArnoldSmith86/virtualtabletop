@@ -247,13 +247,26 @@ test('Line widget in edit mode', async t => {
     .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
 
-  // "Takes in" writes the line's dropTarget - one entry per widget type, plus
-  // all / nothing / a free property-value pair
+  // "Valid widgets" writes the line's dropTarget: each match is a widget type
+  // plus any number of property/value conditions, several matches are an array
   await t
-    .click('#editorModules .lineDropTargetMode')
-    .click(Selector('#editorModules .lineDropTargetMode option').withAttribute('value', 'type:card'));
+    .click('#editorModules .dropTargetAddMatch')
+    .click('#editorModules .dropTargetType')
+    .click(Selector('#editorModules .dropTargetType option').withAttribute('value', 'type:card'));
   const dropTarget = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
   await t.expect(dropTarget).eql('{"type":"card"}');
+
+  // a second match, narrowed down with a condition, and true stays a boolean
+  await t
+    .click('#editorModules .dropTargetAddMatch')
+    .click(Selector('#editorModules .dropTargetAddCondition').nth(1))
+    .typeText(Selector('#editorModules .dropTargetProperty').nth(0), 'movable')
+    .typeText(Selector('#editorModules .dropTargetValue').nth(0), 'true')
+    .pressKey('tab');
+  const dropTargets = await ClientFunction(id => JSON.stringify(widgets.get(id).get('dropTarget')))(lineID);
+  await t.expect(dropTargets).eql('[{"type":"card"},{"movable":true}]');
+
+  await t.click(Selector('#editorModules .dropTargetRemoveMatch').nth(1));
 
   await t
     .click('#editorToolbar > div > [icon=add]')

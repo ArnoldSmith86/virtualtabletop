@@ -654,25 +654,69 @@
 .editorModule .lineToggle input:checked + .lineToggleSlider::before {
   transform: translateX(22px);
 }
-/* what the line takes in: the match dropdown and, for "Another property", its
-   property/value pair stay on the one row and only wrap when it gets too narrow */
-.editorModule .lineDropTargetRow > select {
-  flex: 1 1 120px;
-  min-width: 100px;
-  max-width: 100%;
+/* dropTarget editor: one indented block per match, its widget type on the
+   header row and the extra property/value conditions indented below it, with
+   an "or" between the blocks to show that any one of them is enough */
+.editorModule .dropTargetEditor {
+  margin: 4px 0;
+  padding-right: 6px;
 }
-.editorModule .lineDropTargetCustom {
-  display: none;
-  flex: 1 1 140px;
+.editorModule .dropTargetEditor > label {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+.editorModule .dropTargetEditor > label .info-button {
+  margin-left: 4px;
+}
+.editorModule .dropTargetMatches {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.editorModule .dropTargetMatch {
+  border-left: 2px solid var(--VTTblueDark);
+  padding: 4px 0 4px 6px;
+  background: #ffffff0d;
+}
+.editorModule .dropTargetMatchHeader,
+.editorModule .dropTargetCondition {
+  display: flex;
+  align-items: center;
   gap: 4px;
   min-width: 0;
 }
-.editorModule .lineDropTargetCustom.open {
-  display: flex;
+.editorModule .dropTargetCondition {
+  margin-top: 4px;
+  padding-left: 10px;
 }
-.editorModule .propertyInput.lineDropTargetRow .lineDropTargetCustom input[type=text] {
+.editorModule .dropTargetMatchHeader > select {
+  flex: 1 1 100px;
+  min-width: 80px;
+  max-width: 100%;
+}
+.editorModule .dropTargetCondition input[type=text] {
   flex: 1 1 60px;
   min-width: 50px;
+}
+.editorModule .dropTargetEditor button[icon] {
+  flex: 0 0 auto;
+  padding: 3px;
+  min-width: 0;
+}
+.editorModule .dropTargetOr,
+.editorModule .dropTargetEmpty,
+.editorModule .dropTargetUnsupported {
+  font-style: italic;
+  opacity: .7;
+}
+.editorModule .dropTargetUnsupported {
+  flex: 1 1 auto;
+}
+.editorModule button.dropTargetAddMatch {
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 4px 8px 4px 4px;
 }
 /* deleting a stop is destructive, so it gets the shared red icon-button look
    (white glyph on dark red, darker on hover) from button[icon].red */
