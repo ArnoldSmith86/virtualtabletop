@@ -35,6 +35,13 @@ const scrollToolbarToEnd = ClientFunction(() => {
   toolbar.scrollTop = toolbar.scrollHeight;
 });
 
+// everything that decides the layout - toolbarScrollBack/Forward are left out on purpose, they
+// only reflect the current scroll position
+const toolbarClasses = ClientFunction(() => {
+  const layoutClasses = /^(toolbarCompact\d|toolbarOverflow|wideToolbar|horizontalToolbar|aspectTooGood)$/;
+  return document.body.className.split(/\s+/).filter(c => c.match(layoutClasses)).sort().join(' ');
+});
+
 const toolbarState = ClientFunction(() => {
   const toolbar = document.querySelector('#toolbar');
   const overlays = [];
@@ -61,6 +68,28 @@ test('The toolbar keeps all buttons reachable at every window size', async t => 
     } else {
       await t.expect(layout.outside).eql('', `${size}: buttons reach outside of the toolbar`);
     }
+  }
+
+  await t.resizeWindow(1280, 800);
+});
+
+// the layout is measured, so it has to be a function of the window size alone - if the state of a
+// previous pass (like the scroll arrows taking space of their own) influenced the measurement, the
+// same window size would end up with different layouts depending on how it was reached
+test('The toolbar layout does not depend on the direction the window was resized in', async t => {
+  await setRoomState();
+  await ClientFunction(prepareClient)();
+
+  const widths = [ 360, 380, 400, 420, 440 ];
+  const growing = {};
+  await t.resizeWindow(340, 300).wait(300);
+  for(const width of widths) {
+    await t.resizeWindow(width, 300).wait(300);
+    growing[width] = await toolbarClasses();
+  }
+  for(const width of [ ...widths ].reverse()) {
+    await t.resizeWindow(width, 300).wait(300);
+    await t.expect(await toolbarClasses()).eql(growing[width], `${width}x300: the layout differs between growing and shrinking the window`);
   }
 
   await t.resizeWindow(1280, 800);

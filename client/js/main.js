@@ -249,6 +249,11 @@ function updateToolbarLayout() {
   if(!toolbar.getClientRects().length)
     return; // hidden in edit mode, in the JSON editor or through the hideToolbar URL property
 
+  // the scroll arrows are flex items that take space away from the buttons, so measuring while
+  // they are still there would make the result depend on the previous state - and with that on
+  // the direction the window was resized in
+  toggleClass($('body'), 'toolbarOverflow', false);
+
   let fits = false;
   for(let level = 0; level <= toolbarCompactionLevels && !fits; ++level) {
     for(let i = 1; i <= toolbarCompactionLevels; ++i)
