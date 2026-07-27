@@ -5307,7 +5307,7 @@ class PropertiesModule extends SidebarModule {
   }
 
   lineStopDefaults() {
-    return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: [], dropOffsetX: 2, dropOffsetY: 2 };
+    return { type: 'holder', width: 40, height: 40, borderRadius: 20, dropTarget: { type: null }, dropOffsetX: 2, dropOffsetY: 2 };
   }
 
   // The id for a stop about to be added at a position, derived from the stops

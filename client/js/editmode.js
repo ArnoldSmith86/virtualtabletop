@@ -263,7 +263,9 @@ function generateCounterWidgets(id, x, y) {
 
 // A stop is a widget listed in the line's stops property; the first one carries
 // the shared appearance and the others inherit it, so restyling that one
-// restyles every stop on the line at once.
+// restyles every stop on the line at once. The stop is a holder that takes the
+// plain widgets pawns usually are, so a new line can be played on right away -
+// unlike the line itself, which takes nothing until it is given a dropTarget.
 function generateLineStop(id, lineID, index, x, y) {
   if(index)
     return { type: 'holder', id, parent: lineID, fixedParent: true, movableInEdit: false, inheritFrom: `${lineID}S0`, x, y };
@@ -278,7 +280,7 @@ function generateLineStop(id, lineID, index, x, y) {
     width: 40,
     height: 40,
     borderRadius: 20,
-    dropTarget: [],
+    dropTarget: { type: null },
     dropOffsetX: 2,
     dropOffsetY: 2
   };
