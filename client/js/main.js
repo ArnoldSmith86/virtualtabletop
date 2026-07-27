@@ -1,4 +1,4 @@
-import { $, $a, onLoad, selectFile, asArray } from './domhelpers.js';
+import { $, $a, onLoad, selectFile, asArray, toggleClass } from './domhelpers.js';
 import { startWebSocket, toServer } from './connection.js';
 
 
@@ -231,10 +231,86 @@ function setScale() {
       $('body').classList.add('horizontalToolbar');
   }
   document.documentElement.style.setProperty('--scale', scale);
+  updateToolbarLayout();
   roomRectangle = $('#roomArea').getBoundingClientRect();
   if(edit)
     scaleHasChanged(scale);
   refreshIgnoreZoomWidgets();
+}
+
+// Each toolbar layout (wide, narrow, horizontal and the one for aspectTooGood) has multiple
+// compaction levels in the CSS. Instead of hardcoding a viewport size for each of them, the
+// lowest level that makes all buttons fit is used - and if not even the most compact level
+// fits, the toolbar becomes scrollable (with arrows hinting at the hidden buttons).
+const toolbarCompactionLevels = 4;
+
+function updateToolbarLayout() {
+  const toolbar = $('#toolbar');
+  if(!toolbar.getClientRects().length)
+    return; // hidden in edit mode, in the JSON editor or through the hideToolbar URL property
+
+  let fits = false;
+  for(let level = 0; level <= toolbarCompactionLevels && !fits; ++level) {
+    for(let i = 1; i <= toolbarCompactionLevels; ++i)
+      toggleClass($('body'), `toolbarCompact${i}`, i <= level);
+    fits = toolbarContentFits(toolbar);
+  }
+  toggleClass($('body'), 'toolbarOverflow', !fits);
+  updateToolbarScrolling();
+}
+
+function toolbarContentFits(toolbar) {
+  const px = value => parseFloat(value) || 0;
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const toolbarRect = toolbar.getBoundingClientRect();
+  const toolbarStyle = getComputedStyle(toolbar);
+
+  let contentEnd = 0;
+  for(const child of toolbar.children) {
+    if(!child.getClientRects().length)
+      continue;
+    const rect = child.getBoundingClientRect();
+    const style = getComputedStyle(child);
+    contentEnd = Math.max(contentEnd, horizontal ? rect.right + px(style.marginRight) : rect.bottom + px(style.marginBottom));
+  }
+  contentEnd += horizontal ? toolbar.scrollLeft : toolbar.scrollTop;
+
+  const available = horizontal ? toolbarRect.right - px(toolbarStyle.paddingRight) : toolbarRect.bottom - px(toolbarStyle.paddingBottom);
+  return contentEnd <= available + 0.5;
+}
+
+function updateToolbarScrolling() {
+  const toolbar = $('#toolbar');
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const position = horizontal ? toolbar.scrollLeft : toolbar.scrollTop;
+  const visible = horizontal ? toolbar.clientWidth : toolbar.clientHeight;
+  const content = horizontal ? toolbar.scrollWidth : toolbar.scrollHeight;
+  toggleClass($('body'), 'toolbarScrollBack', position > 1);
+  toggleClass($('body'), 'toolbarScrollForward', position + visible < content - 1);
+  positionToolbarPopups();
+}
+
+// While the toolbar scrolls, it clips everything that reaches outside of it - so the sound and
+// zoom popups are positioned relative to the viewport instead of relative to their button.
+function positionToolbarPopups() {
+  const overflow = $('body').classList.contains('toolbarOverflow');
+  const horizontal = $('body').classList.contains('horizontalToolbar');
+  const toolbarRect = $('#toolbar').getBoundingClientRect();
+  for(const popup of [ $('#options'), $('#zoomControls') ]) {
+    if(!overflow || popup.classList.contains('hidden')) {
+      popup.style.top = popup.style.left = popup.style.right = '';
+      continue;
+    }
+    const anchorRect = popup.parentNode.getBoundingClientRect();
+    popup.style.right = 'auto';
+    if(horizontal) {
+      popup.style.left = Math.min(Math.max(0, anchorRect.left + 32 - popup.offsetWidth), window.innerWidth - popup.offsetWidth) + 'px';
+      popup.style.top = (toolbarRect.top - popup.offsetHeight - 2) + 'px';
+    } else {
+      popup.style.left = (toolbarRect.right + 4) + 'px';
+      popup.style.top = Math.min(Math.max(0, anchorRect.top - 2), window.innerHeight - popup.offsetHeight) + 'px';
+    }
+  }
 }
 
 function getScale() {
@@ -557,6 +633,10 @@ onLoad(function() {
   on('#gridOverlay', 'click', e=>e.target.id=='gridOverlay'&&showOverlay());
 
   on('#toolbar > img', 'click', e=>$('#statesButton').click());
+
+  on('#toolbar', 'scroll', updateToolbarScrolling);
+  on('#toolbar', 'click', positionToolbarPopups);
+  document.fonts.ready.then(_=>updateToolbarLayout()); // the icon font changes the button sizes
 
   on('.toolbarButton', 'click', function(e) {
     if(isLoading) {
