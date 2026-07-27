@@ -31,6 +31,11 @@ export class Line extends Widget {
       rotateStops: true,
       autoSpaceStops: true,
 
+      // when enabled, a widget dragged onto the path in the room becomes a stop
+      // and a stop dragged off it is taken off the list again - during play as
+      // well as in edit mode
+      acceptStops: false,
+
       connectStart: null,
       connectEnd: null
     });
@@ -409,18 +414,45 @@ export class Line extends Widget {
     return Math.atan2(after.y-before.y, after.x-before.x) * 180 / Math.PI;
   }
 
-  // the position along the path closest to a point in this line's own frame,
-  // used when a widget is dropped onto the line to make it a stop
+  // The position along the path closest to a point in this line's own frame,
+  // used when a widget is dropped onto the line to make it a stop. The point is
+  // projected onto the segments between the samples rather than snapped to the
+  // nearest one, so a straight line - which is sampled by its two ends only -
+  // resolves to the actual position instead of to one of its ends.
   positionAtPoint(point) {
     const points = this.linePoints();
     const total = points[points.length-1].len;
     if(!total)
       return 0;
-    let best = points[0];
-    for(const p of points)
-      if(Math.hypot(p.x-point.x, p.y-point.y) < Math.hypot(best.x-point.x, best.y-point.y))
-        best = p;
+    let best = { len: 0, distance: Infinity };
+    for(let i = 1; i < points.length; ++i) {
+      const from = points[i-1], to = points[i];
+      const dx = to.x-from.x, dy = to.y-from.y;
+      const squared = dx*dx + dy*dy;
+      const f = squared ? Math.max(0, Math.min(1, ((point.x-from.x)*dx + (point.y-from.y)*dy)/squared)) : 0;
+      const distance = Math.hypot(from.x+dx*f-point.x, from.y+dy*f-point.y);
+      if(distance < best.distance)
+        best = { len: from.len + (to.len-from.len)*f, distance };
+    }
     return Math.round(best.len/total*1000)/1000;
+  }
+
+  // Where a widget dropped at the given global point would attach, or null when
+  // the line does not take dropped stops or the drop is not aimed at its path.
+  // The range grows with the line and the dropped widget so a big token snaps on
+  // as readily as a small one.
+  stopDropTarget(widget, coordGlobal) {
+    if(!this.get('acceptStops') || widget == this || widget.get('type') == 'line' || this.isDescendantOf(widget))
+      return null;
+    const range = Math.max(25, (+this.get('lineWidth') || 0)/2 + 10, Math.min(+widget.get('width') || 0, +widget.get('height') || 0)/2);
+    const point = this.coordLocalFromCoordGlobal(coordGlobal);
+    // cheap box reject so a room full of lines doesn't sample every path on every mouse move
+    if(point.x < -range || point.y < -range || point.x > +this.get('width')+range || point.y > +this.get('height')+range)
+      return null;
+    const position = this.positionAtPoint(point);
+    const onPath = this.pointAtPosition(position);
+    const distance = Math.hypot(onPath.x-point.x, onPath.y-point.y);
+    return distance <= range ? { line: this, position, distance } : null;
   }
 
   // Keep existing line definitions working while the property name changes.

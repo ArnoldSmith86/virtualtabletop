@@ -51,6 +51,13 @@ describe('Line widget geometry', () => {
       expect(line.pointAtPosition(-1)).toEqual({ x: 0, y: 0 });
       expect(line.pointAtPosition(2).x).toBe(100);
     });
+
+    test('positionAtPoint projects onto the path instead of snapping to a sample', () => {
+      // a straight line is sampled by its two ends only, so this has to project
+      expect(line.positionAtPoint({ x: 30, y: 12 })).toBe(0.3);
+      expect(line.positionAtPoint({ x: -50, y: 0 })).toBe(0);
+      expect(line.positionAtPoint({ x: 150, y: 0 })).toBe(1);
+    });
   });
 
   describe('linePoints / pointAtPosition on a curved (Bezier) line', () => {
@@ -499,5 +506,69 @@ describe('Line widget connections', () => {
     await expect(a.applyConnections()).resolves.toBeUndefined();
     await expect(b.applyConnections()).resolves.toBeUndefined();
     expect(globalThis.Line ?? Line).toBeTruthy();
+  });
+});
+
+describe('dragging a widget onto a line to make it a stop', () => {
+  let line, token;
+
+  beforeEach(() => {
+    line = createLine({ id: 'drop-line', x: 100, y: 100, width: 200, height: 40, autoSpaceStops: false,
+      lineStart: { x: 0, y: 0 }, lineEnd: { x: 200, y: 0 }, acceptStops: true });
+    token = new Widget('drop-token');
+    addWidget({ id: 'drop-token', type: 'basic', x: 130, y: 80, width: 40, height: 40 }, token);
+    token.coordGlobalFromCoordLocal = coord => ({ x: token.get('x') + coord.x, y: token.get('y') + coord.y });
+    // the candidate lines are collected once when the drag starts
+    token.stopDropLines = [ line ];
+  });
+
+  afterEach(() => {
+    removeWidget('drop-token');
+    removeWidget('drop-line');
+  });
+
+  test('a drop on the path reports the position it landed on', () => {
+    // the token's center is global (150, 100), a quarter along the path
+    const target = token.lineStopDropTarget();
+    expect(target.line).toBe(line);
+    expect(target.position).toBe(0.25);
+    expect(target.distance).toBe(0);
+  });
+
+  test('a drop away from the path is not a stop drop', async () => {
+    await token.set('y', 300);
+    expect(token.lineStopDropTarget()).toBeNull();
+  });
+
+  test('a line without acceptStops never takes a dropped widget', async () => {
+    await line.set('acceptStops', false);
+    expect(line.stopDropTarget(token, { x: 150, y: 100 })).toBeNull();
+    expect(token.lineStopDropTarget()).toBeNull();
+  });
+
+  test('a drop aimed at a holder wins over the line below it', () => {
+    token.hoverTarget = line; // any drop target is enough to rule the line out
+    expect(token.lineStopDropTarget()).toBeNull();
+    token.hoverTarget = null;
+  });
+
+  test('dropping attaches the widget and dragging it off detaches it again', async () => {
+    await token.applyLineStopDrop(token.lineStopDropTarget());
+    expect(line.stopList()).toEqual([ { widget: 'drop-token', position: 0.25 } ]);
+    // and it is snapped onto the path: center on the point, so half its size back
+    expect(token.get('x')).toBe(130);
+    expect(token.get('y')).toBe(80);
+
+    await token.set('y', 300);
+    await token.applyLineStopDrop(token.lineStopDropTarget());
+    expect(line.stopList()).toEqual([]);
+  });
+
+  test('a line that does not accept drops keeps its stops when one is dragged away', async () => {
+    await line.addStop('drop-token', 0.5);
+    await line.set('acceptStops', false);
+    await token.set('y', 300);
+    await token.applyLineStopDrop(token.lineStopDropTarget());
+    expect(line.stopList().length).toBe(1);
   });
 });

@@ -86,8 +86,9 @@ body.editorWidgetPicking .widget.line.selectedInEdit .lineHandle {
   background: #1f5ca6;
 }
 
-/* while a widget is dragged from the Widgets sidebar over a line, show that
-   dropping it there would attach it to the line as a stop */
-body.edit .widget.line.lineDropTarget .linePath {
+/* while a widget is dragged over a line - from the Widgets sidebar or across the
+   room - show that dropping it there would attach it to the line as a stop.
+   Dragging a widget in works during play too, so this is not edit-mode only. */
+.widget.line.lineDropTarget .linePath {
   filter: drop-shadow(0 0 6px #1f5ca6) drop-shadow(0 0 6px #1f5ca6);
 }

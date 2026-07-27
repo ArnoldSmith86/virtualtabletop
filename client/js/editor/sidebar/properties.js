@@ -5413,9 +5413,12 @@ class PropertiesModule extends SidebarModule {
     expandButton.onclick = _=>{
       const show = popout.style.display == 'none';
       popout.style.display = show ? '' : 'none';
+      expandButton.classList.toggle('open', show);
       if(show)
         renderPopout();
     };
+
+    return { expandButton, popout };
   }
 
   renderForLine(widget) {
@@ -5586,41 +5589,9 @@ class PropertiesModule extends SidebarModule {
       renderStops();
     };
 
-    // New stops inherit from the chosen widget so restyling one restyles them all.
-    // Any widget can be entered by id or picked in the room; the chosen id lives
-    // in the module because picking re-selects the line and rebuilds this panel.
-    const inheritStore = this.lineStopInheritIDs;
-    const inheritRow = div(this.moduleDOM, 'propertyInput lineInheritRow');
-    const inheritLabel = document.createElement('label');
-    inheritLabel.innerText = 'New stop inherit from:';
-    const inheritID = document.createElement('input');
-    inheritID.type = 'text';
-    inheritID.className = 'lineInheritID';
-    inheritID.placeholder = 'widget id';
-    inheritID.title = 'New stops inherit their appearance from this widget';
-    const inheritTarget = ()=>String(inheritID.value || '').trim();
-    const firstAttachedWidget = widget.attachedWidgets()[0];
-    if(inheritStore[widget.id] === undefined)
-      inheritStore[widget.id] = firstAttachedWidget ? firstAttachedWidget.id : '';
-    inheritID.value = inheritStore[widget.id];
-    inheritID.oninput = _=>inheritStore[widget.id] = inheritTarget();
-    inheritRow.appendChild(inheritLabel);
-    inheritRow.appendChild(inheritID);
-    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritRow, widget, {
-      title: 'Choose a widget for new stops to inherit from',
-      pickerKey: 'lineInheritStop',
-      getSelectedIDs: ()=>inheritTarget() ? [ inheritTarget() ] : [],
-      apply: id=>{
-        inheritID.value = id;
-        inheritStore[widget.id] = id;
-      }
-    });
-    const addStopButton = document.createElement('button');
-    addStopButton.className = 'lineAddStop';
-    addStopButton.setAttribute('icon', 'add');
-    addStopButton.innerText = 'Add Stop';
-    // the popout opens on its own row below, so the button has to precede it
-    inheritRow.insertBefore(addStopButton, inheritPopoutControls.popout);
+    const acceptStops = addLineToggle('Drag widgets in to add stops', 'lineAcceptStops', 'Let a widget dragged onto the line in the room become a stop - during play as well as in edit mode');
+    this.addPropertyListener(widget, 'acceptStops', ()=>acceptStops.checked = !!widget.get('acceptStops'));
+    acceptStops.onchange = _=>lineEdit(`${acceptStops.checked ? 'enabled' : 'disabled'} dragging stops onto line ${widget.id}`, _=>widget.set('acceptStops', acceptStops.checked));
 
     const removeStop = async stop=>{
       await lineEdit(`removed stop ${stop.id} from line ${widget.id}`, async _=>{
@@ -5641,9 +5612,6 @@ class PropertiesModule extends SidebarModule {
     // button, so a designer can place and remove a *specific* stop the same way
     // connections are positioned; the position sticks through reshaping
     const stopList = div(this.moduleDOM, 'lineStopList');
-    // Keep the creation row with the list it affects, after the existing stops
-    // rather than above them.
-    this.moduleDOM.appendChild(inheritRow);
     const stopPreview = stop=>{
       const preview = document.createElement('div');
       preview.className = 'lineStopPreview';
@@ -5766,7 +5734,87 @@ class PropertiesModule extends SidebarModule {
         renderStops();
     });
 
-    addStopButton.onclick = async _=>{
+    // There are three ways to add a stop, so they live behind one "Add stop"
+    // button: it opens a menu of the three, and picking one replaces the menu
+    // with just that option's controls until it is closed again.
+    const addSection = div(this.moduleDOM, 'lineAddStopSection');
+    const addStopButton = document.createElement('button');
+    addStopButton.className = 'lineAddStop';
+    addStopButton.setAttribute('icon', 'add');
+    addStopButton.innerText = 'Add stop';
+    addSection.appendChild(addStopButton);
+    const addMenu = div(addSection, 'lineAddStopMenu');
+    const addOptions = div(addSection, 'lineAddStopOptions');
+
+    const optionRows = {};
+    const closeAddStop = _=>{
+      addMenu.classList.remove('open');
+      addStopButton.classList.remove('open');
+      for(const row of Object.values(optionRows))
+        row.classList.remove('open');
+    };
+    const openAddStopMenu = _=>{
+      closeAddStop();
+      addMenu.classList.add('open');
+      addStopButton.classList.add('open');
+    };
+    addStopButton.onclick = _=>{
+      if(addStopButton.classList.contains('open'))
+        closeAddStop();
+      else
+        openAddStopMenu();
+    };
+
+    // the shared frame of an option: a back arrow to the menu plus its own label
+    const addStopOption = (mode, className, label)=>{
+      const row = div(addOptions, `propertyInput lineAddStopOption ${className}`);
+      const back = document.createElement('button');
+      back.className = 'lineAddStopBack';
+      back.setAttribute('icon', 'arrow_back');
+      back.title = 'Back to the list of options';
+      back.onclick = _=>openAddStopMenu();
+      row.appendChild(back);
+      const caption = document.createElement('label');
+      caption.innerText = label;
+      row.appendChild(caption);
+      optionRows[mode] = row;
+      return row;
+    };
+
+    // 1) a new widget of its own that inherits its appearance from an existing
+    // one, so restyling that one restyles every stop on the line. The source can
+    // be typed or picked in the room; the chosen id lives in the module because
+    // picking re-selects the line and rebuilds this panel.
+    const inheritStore = this.lineStopInheritIDs;
+    const inheritRow = addStopOption('inherit', 'lineInheritRow', 'Copy of:');
+    const inheritID = document.createElement('input');
+    inheritID.type = 'text';
+    inheritID.className = 'lineInheritID';
+    inheritID.placeholder = 'widget id';
+    inheritID.title = 'The new stop inherits its appearance from this widget';
+    const inheritTarget = ()=>String(inheritID.value || '').trim();
+    const firstAttachedWidget = widget.attachedWidgets()[0];
+    if(inheritStore[widget.id] === undefined)
+      inheritStore[widget.id] = firstAttachedWidget ? firstAttachedWidget.id : '';
+    inheritID.value = inheritStore[widget.id];
+    inheritID.oninput = _=>inheritStore[widget.id] = inheritTarget();
+    inheritRow.appendChild(inheritID);
+    const inheritPopoutControls = this.renderWidgetSelectPopout(inheritRow, widget, {
+      title: 'Choose a widget for the new stop to inherit from',
+      pickerKey: 'lineInheritStop',
+      getSelectedIDs: ()=>inheritTarget() ? [ inheritTarget() ] : [],
+      apply: id=>{
+        inheritID.value = id;
+        inheritStore[widget.id] = id;
+      }
+    });
+    const inheritAddButton = document.createElement('button');
+    inheritAddButton.className = 'lineAddStopConfirm';
+    inheritAddButton.setAttribute('icon', 'add');
+    inheritAddButton.innerText = 'Add';
+    // the popout opens on its own row below, so the button has to precede it
+    inheritRow.insertBefore(inheritAddButton, inheritPopoutControls.popout);
+    inheritAddButton.onclick = async _=>{
       const inheritID = inheritTarget();
       const target = widgets.has(inheritID) ? widgets.get(inheritID) : null;
       let template;
@@ -5788,16 +5836,14 @@ class PropertiesModule extends SidebarModule {
         await addWidgetLocal(template);
         await widget.addStop(template.id, position);
       });
+      closeAddStop();
       renderStops();
     };
 
-    // Any widget already in the room can be made a stop by listing it - it does
-    // not have to be (or become) a child of the line.
-    const existingRow = div(this.moduleDOM, 'propertyInput lineExistingStopRow');
-    const existingLabel = document.createElement('label');
-    existingLabel.innerText = 'Add existing widget as stop:';
-    existingRow.appendChild(existingLabel);
-    this.renderWidgetSelectPopout(existingRow, widget, {
+    // 2) any widget already in the room can be made a stop by listing it - it
+    // does not have to be (or become) a child of the line.
+    const existingRow = addStopOption('existing', 'lineExistingStopRow', 'In the room:');
+    const existingControls = this.renderWidgetSelectPopout(existingRow, widget, {
       title: 'Choose a widget in the room to ride on this line',
       pickerKey: 'lineExistingStop',
       getSelectedIDs: ()=>[],
@@ -5805,17 +5851,41 @@ class PropertiesModule extends SidebarModule {
         if(!widgets.has(id) || id == widget.id || widget.stopList().some(entry=>entry.widget == id))
           return;
         await lineEdit(`added stop ${id} to line ${widget.id}`, _=>widget.addStop(id, widget.nextStopPosition()));
+        closeAddStop();
         renderStops();
       }
     });
 
-    // ...and a saved widget from the library the Widgets sidebar shows can be
+    // 3) ...and a saved widget from the library the Widgets sidebar shows can be
     // placed straight onto the line as a stop
-    const libraryRow = div(this.moduleDOM, 'propertyInput lineLibraryStopRow');
-    const libraryLabel = document.createElement('label');
-    libraryLabel.innerText = 'Add stop from library:';
-    libraryRow.appendChild(libraryLabel);
-    this.renderLibraryStopPicker(libraryRow, widget, lineEdit, renderStops);
+    const libraryRow = addStopOption('library', 'lineLibraryStopRow', 'From the library:');
+    const libraryControls = this.renderLibraryStopPicker(libraryRow, widget, lineEdit, _=>{
+      closeAddStop();
+      renderStops();
+    });
+
+    // the two picker options are nothing but their popout, so open it right away
+    const addStopModes = [
+      { mode: 'inherit',  icon: 'content_copy', label: 'Copy and inherit from', hint: 'A new widget that inherits its appearance from an existing one' },
+      { mode: 'existing', icon: 'my_location',  label: 'Existing widget',       hint: 'Put a widget that is already in the room onto the line' },
+      { mode: 'library',  icon: 'library_add',  label: 'New widget',            hint: 'Place a saved widget from the widget library onto the line' }
+    ];
+    const openControls = { existing: existingControls, library: libraryControls };
+    for(const entry of addStopModes) {
+      const button = document.createElement('button');
+      button.className = 'lineAddStopMenuEntry';
+      button.setAttribute('icon', entry.icon);
+      button.innerHTML = `<span><span class=lineAddStopMenuLabel>${html(entry.label)}</span><span class=lineAddStopMenuHint>${html(entry.hint)}</span></span>`;
+      button.onclick = _=>{
+        closeAddStop();
+        optionRows[entry.mode].classList.add('open');
+        addStopButton.classList.add('open');
+        const controls = openControls[entry.mode];
+        if(controls && controls.popout.style.display == 'none')
+          controls.expandButton.click();
+      };
+      addMenu.appendChild(button);
+    }
 
     // Connecting an end point glues it onto another widget at a chosen percentage.
     // Line.applyConnections converts through global coordinates so targets under
@@ -5912,7 +5982,7 @@ class PropertiesModule extends SidebarModule {
     this.renderOtherPropertiesSection(widget, [
       'lineShape', 'lineStart', 'lineEnd', 'controlStart', 'controlEnd',
       'lineColor', 'lineDash', 'lineWidth', 'stops',
-      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops',
+      'rotateStops', 'rotateAttachedWidgets', 'autoSpaceStops', 'acceptStops',
       'connectStart', 'connectEnd'
     ]);
   }

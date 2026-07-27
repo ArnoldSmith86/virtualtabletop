@@ -2443,6 +2443,11 @@ export class Widget extends StateManaged {
     await this.bringToFront();
     await this.set('dragging', playerName);
 
+    // Lines that take a widget dropped onto their path as a stop. Collected once
+    // like the drop targets below, but not restricted to edit mode or to widgets
+    // that can change their parent: a stop keeps its place in the tree.
+    this.stopDropLines = this.get('type') == 'line' ? [] : widgetFilter(w=>w.get('type') == 'line' && w.get('acceptStops') && w.isVisible());
+
     if(!this.get('fixedParent') && this.get('movable')) {
       this.dropTargets = this.validDropTargets();
       this.currentParent = widgets.get(this.get('_ancestor'));
@@ -2558,6 +2563,46 @@ export class Widget extends StateManaged {
         }
       }
     }
+
+    this.highlightStopDropLine(this.lineStopDropTarget());
+  }
+
+  // The line this widget would attach to as a stop if it were dropped where it
+  // is now, or null. A real drop target wins: a widget dropped into a holder
+  // that happens to sit on a line goes into the holder.
+  lineStopDropTarget() {
+    if(this.hoverTarget || !this.stopDropLines || !this.stopDropLines.length)
+      return null;
+    const center = this.coordGlobalFromCoordLocal({ x: +this.get('width')/2, y: +this.get('height')/2 });
+    let best = null;
+    for(const line of this.stopDropLines) {
+      const target = widgets.has(line.id) ? line.stopDropTarget(this, center) : null;
+      if(target && (!best || target.distance < best.distance))
+        best = target;
+    }
+    return best;
+  }
+
+  // make it visible during the drag which line a drop would attach this widget to
+  highlightStopDropLine(target) {
+    const line = target && target.line || null;
+    if(this.stopDropHighlight == line)
+      return;
+    if(this.stopDropHighlight && this.stopDropHighlight.domElement)
+      this.stopDropHighlight.domElement.classList.remove('lineDropTarget');
+    this.stopDropHighlight = line;
+    if(line)
+      line.domElement.classList.add('lineDropTarget');
+  }
+
+  // Attach to (or detach from) a line that accepts dropped stops. Lines that do
+  // not have acceptStops set keep their stop lists, so a game can rely on them.
+  async applyLineStopDrop(target) {
+    for(const line of linesWithStop(this.id))
+      if(line != (target && target.line) && line.get('acceptStops'))
+        await line.removeStop(this.id);
+    if(target)
+      await target.line.addStop(this.id, target.position);
   }
 
   async moveEnd(coordGlobal, localAnchor) {
@@ -2566,6 +2611,12 @@ export class Widget extends StateManaged {
 
     await this.hideShadowWidget();
     await this.set('dragging', null);
+
+    // read where the drag ended before the drop into a holder below moves the widget
+    const stopDropTarget = this.lineStopDropTarget();
+    this.highlightStopDropLine(null);
+    delete this.stopDropLines;
+
     await this.set('hoverTarget', null);
 
     if(!this.get('fixedParent') && this.get('movable')) {
@@ -2582,6 +2633,8 @@ export class Widget extends StateManaged {
         this.hoverTarget.domElement.classList.remove('droptarget');
       }
     }
+
+    await this.applyLineStopDrop(stopDropTarget);
 
     this.hideEnlarged();
     if(this.domElement.classList.contains('longtouch'))

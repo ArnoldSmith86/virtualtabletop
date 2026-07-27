@@ -239,7 +239,11 @@ test('Line widget in edit mode', async t => {
     .click('#editorToolbar > div > [icon=add]')
     .click('#add-line')
     .click('#editorSidebar [icon=tune]')
+    // "Add stop" opens the menu of the three ways to add one; the first is a new
+    // widget inheriting from an existing stop, which the Add button then creates
     .click('#editorModules .lineAddStop')
+    .click(Selector('#editorModules .lineAddStopMenuEntry').nth(0))
+    .click('#editorModules .lineAddStopConfirm')
     .click(Selector('#editorModules .lineShapePreset').withAttribute('aria-label', 'Shallow curve'));
   const lineID = await ClientFunction(() => document.querySelector('.widget.line').id.slice(2))();
   await t
