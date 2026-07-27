@@ -64,6 +64,19 @@ function paramChip(opSelector, name) {
   return opBody(opSelector).find(`span[data-parameter="${name}"]`);
 }
 
+// the whole list-view line of a parameter, to assert whether it carries the
+// "the engine ignores this one right now" marking
+function paramRow(opSelector, name) {
+  return opBody(opSelector).find('.routine-editor-parameter-name').withExactText(name).parent('.routine-editor-parameter-row');
+}
+
+async function expectIgnored(t, opSelector, names, ignored) {
+  for(const name of names) {
+    await t.expect(paramRow(opSelector, name).hasClass('routine-editor-parameter-ignored')).eql(ignored, `${name} ignored=${ignored}`);
+    await t.expect(paramRow(opSelector, name).find('.routine-editor-parameter-ignored-warning').exists).eql(ignored);
+  }
+}
+
 function dragHandle(opSelector) {
   return opSelector.child('.routine-editor-operation-header').child('.routine-editor-operation-buttons').child('.routine-editor-drag-handle');
 }
@@ -126,6 +139,21 @@ async function expectRoutine(t, widgetID, expected) {
   const widgets = await getWidgets();
   await t.expect(widgets[widgetID].clickRoutine).eql(expected);
 }
+
+// the overlapping area of the top-most popup and the play area, in pixels
+const popupOverlapWithRoom = ClientFunction(() => {
+  const popups = document.querySelectorAll('.inline-popup');
+  const popup = popups[popups.length-1].getBoundingClientRect();
+  const room = document.querySelector('#roomArea').getBoundingClientRect();
+  return Math.max(0, Math.min(popup.right, room.right) - Math.max(popup.left, room.left))
+       * Math.max(0, Math.min(popup.bottom, room.bottom) - Math.max(popup.top, room.top));
+});
+
+const popupIsOnScreen = ClientFunction(() => {
+  const popups = document.querySelectorAll('.inline-popup');
+  const popup = popups[popups.length-1].getBoundingClientRect();
+  return popup.left >= 0 && popup.top >= 0 && popup.right <= window.innerWidth && popup.bottom <= window.innerHeight;
+});
 
 async function readJsonEditorWidget(t) {
   await t.click('#editorSidebar [icon=data_object]');
@@ -413,4 +441,120 @@ test('drag and drop: into a nested block, with a Ctrl+click multi-selection, and
   const nestedOperation = topOperations().nth(0).child('.routine-editor').child('.routine-editor-operation').nth(0);
   await t.dragToElement(dragHandle(nestedOperation), topRoutineEditor().child('.routine-editor-add-operation'));
   await expectRoutine(t, widgetID, [ { func: 'IF', thenRoutine: [ 'var b = 1', 'var c = 1' ] }, 'var a = 1' ]);
+});
+
+// expanding an operation rebuilds its card, which used to drop the selection
+// outline while the editor still counted the operation as selected - the next
+// drag then moved an operation the creator could not see was selected
+test('a Ctrl+selection survives expanding an operation and still drags as one', async t => {
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await openEditModeAndAddButton(t);
+  const widgetID = await openClickAutomation(t);
+
+  for(const func of [ 'DELAY', 'CLICK', 'SELECT', 'IF' ])
+    await addOperation(t, topRoutineEditor().child('.routine-editor-add-operation'), func);
+
+  await t.click(opBody(topOperations().nth(0)), { modifiers: { ctrl: true } });
+  await t.click(opBody(topOperations().nth(1)), { modifiers: { ctrl: true } });
+  await toListView(t, topOperations().nth(0)); // rebuilds the card of a selected operation
+  await t.expect(topRoutineEditor().child('.routine-editor-operation-selected').count).eql(2);
+
+  const blockAddOperation = topOperations().nth(3).child('.routine-editor').child('.routine-editor-add-operation');
+  await t.hover(blockAddOperation);
+  await t.dragToElement(dragHandle(topOperations().nth(0)), blockAddOperation);
+  await expectRoutine(t, widgetID, [
+    { func: 'SELECT' },
+    { func: 'IF', thenRoutine: [ { func: 'DELAY' }, { func: 'CLICK' } ] }
+  ]);
+});
+
+// the editor only knows the parameters it declares itself, so anything the engine
+// reads but the editor forgot is offered to the creator as a typo to delete
+test('parameters the engine reads are not flagged as unsupported', async t => {
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await openEditModeAndAddButton(t);
+  const widgetID = await openClickAutomation(t);
+
+  const operations = [
+    { func: 'MOVEXY', json: { func: 'MOVEXY', from: 'someHolder', z: 5 } },
+    { func: 'CALL', json: { func: 'CALL', routine: 'clickRoutine', collection: 'callResult' } },
+    { func: 'CANVAS', json: { func: 'CANVAS', mode: 'set', count: 3 } },
+    { func: 'INPUT', json: { func: 'INPUT', css: 'color: red', randomRotation: 10 } }
+  ];
+  for(const operation of operations) {
+    await addOperation(t, topRoutineEditor().child('.routine-editor-add-operation'), operation.func);
+    const op = topOperations().nth(-1);
+    await toListView(t, op);
+    await setFullOperationJSON(t, op, JSON.stringify(operation.json));
+    await t.expect(opBody(op).find('.routine-editor-parameter-unsupported').count).eql(0, `${operation.func} flags a parameter the engine reads`);
+    await t.expect(opBody(op).find('.routine-editor-parameter-warning.unsupported').count).eql(0);
+  }
+  await expectRoutine(t, widgetID, operations.map(o=>o.json));
+});
+
+// which parameters have an effect depends on the operation's mode, so switching
+// the mode has to move the "!" along - and the summary must not word an
+// ignored parameter into a sentence that suggests it does something
+test('the current mode decides which parameters are marked as ignored', async t => {
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await openEditModeAndAddButton(t);
+  const widgetID = await openClickAutomation(t);
+
+  await addOperation(t, topRoutineEditor().child('.routine-editor-add-operation'), 'CANVAS');
+  const op = topOperations().nth(-1);
+  await toListView(t, op);
+
+  // the default mode "reset" clears the canvas, so nothing but the target matters
+  await expectIgnored(t, op, [ 'value', 'color', 'x', 'y' ], true);
+  await expectIgnored(t, op, [ 'mode', 'collection', 'count' ], false);
+
+  // setPixel is the only mode that uses coordinates...
+  await setEnumParam(t, paramChip(op, 'mode'), 'setPixel');
+  await expectRoutine(t, widgetID, [ { func: 'CANVAS', mode: 'setPixel' } ]);
+  await expectIgnored(t, op, [ 'x', 'y', 'value' ], false);
+  await expectIgnored(t, op, [ 'color' ], true);
+
+  // ...and change is the only one that sets a color
+  await setEnumParam(t, paramChip(op, 'mode'), 'change');
+  await expectIgnored(t, op, [ 'color', 'value' ], false);
+  await expectIgnored(t, op, [ 'x', 'y' ], true);
+
+  // an ignored parameter stays out of the sentence view even when it is set
+  await setNumberValue(t, paramChip(op, 'x'), 4);
+  await expectRoutine(t, widgetID, [ { func: 'CANVAS', mode: 'change', x: 4 } ]);
+  await toListView(t, op); // back to the sentence view
+  await t.expect(paramChip(op, 'x').exists).notOk();
+  await t.expect(opBody(op).innerText).contains('change color index');
+});
+
+// the number popup used to offer "null" next to the numbers although "use default"
+// already clears a parameter, and a picker that wants a widget clicked in the room
+// must not be placed on top of the room
+test('the number popup offers 0 instead of null and widget pickers keep off the play area', async t => {
+  await ClientFunction(prepareClient)();
+  await setName(t);
+  await openEditModeAndAddButton(t);
+  const widgetID = await openClickAutomation(t);
+
+  await addOperation(t, topRoutineEditor().child('.routine-editor-add-operation'), 'MOVEXY');
+  const op = topOperations().nth(-1);
+  await toListView(t, op);
+
+  await t.click(paramChip(op, 'z'));
+  await t.expect(popup.find('button').withExactText('0').exists).ok();
+  await t.expect(popup.find('button').withExactText('null').exists).notOk();
+  await t.click(popup.find('button').withExactText('0'));
+  await expectRoutine(t, widgetID, [ { func: 'MOVEXY', z: 0 } ]);
+
+  // the widget picker offers "pick in the room", so it has to leave the room
+  // visible - on a portrait window, where the room is a wide strip below the
+  // editor, that means placing the popup above it instead of next to the chip
+  await t.resizeWindow(520, 900);
+  await t.click(paramChip(op, 'from'));
+  await t.expect(popup.find('button').withText('PICK IN THE ROOM').exists).ok();
+  await t.expect(await popupOverlapWithRoom()).eql(0);
+  await t.expect(await popupIsOnScreen()).ok();
 });
