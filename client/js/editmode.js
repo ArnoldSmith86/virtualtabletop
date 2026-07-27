@@ -354,6 +354,9 @@ function addPieceToAddWidgetOverlay(w, wi) {
         ]
       });
       const toAdd = {...wi};
+      const pieceName = (String(w.id).match(/^[A-Z][a-z]+/) || [])[0];
+      if(pieceName)
+        toAdd.id = generateUniqueWidgetID(pieceName.toLowerCase());
       toAdd.z = getMaxZ(w.get('layer')) + 1;
       toAdd.color = result.variables.color;
 
@@ -367,10 +370,12 @@ function addPieceToAddWidgetOverlay(w, wi) {
   $('#addOverlay').appendChild(w.domElement);
 }
 
-function addWidgetToAddWidgetOverlay(w, wi) {
+function addWidgetToAddWidgetOverlay(w, wi, idType) {
   w.applyInitialDelta(wi);
   w.domElement.addEventListener('click', async _=>{
     const toAdd = {...wi};
+    if(idType)
+      toAdd.id = generateUniqueWidgetID(idType);
     toAdd.z = getMaxZ(w.get('layer')) + 1;
     const id = await addWidgetLocal(toAdd);
     overlayDone(id);
@@ -397,13 +402,13 @@ function populateAddWidgetOverlay() {
   });
 
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-empty-deck', x, 340, false), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('deck');
     for(const w of generateCardDeckWidgets(id, x, 340, false))
       await addWidgetLocal(w);
     return id
   });
   addCompositeWidgetToAddWidgetOverlay(generateCardDeckWidgets('add-deck', x, 570, true), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('deck');
     for(const w of generateCardDeckWidgets(id, x, 570, true))
       await addWidgetLocal(w);
     return id
@@ -864,7 +869,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker2DSVG'), {
     x: 920,
@@ -891,10 +896,10 @@ function populateAddWidgetOverlay() {
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
 
-  });
+  }, 'dealer');
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-2D-chips', 916, 300, 2), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('chips');
     for(const w of generateChipPileWidgets(id, 916, 300, 2))
       await addWidgetLocal(w);
     return id
@@ -922,7 +927,7 @@ function populateAddWidgetOverlay() {
     borderColor: "#000000",
     borderWidth: 2,
     labelColor: "#00000022"
-  });
+  }, 'marker');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('DealerPoker3DSVG'), {
     x: 1010,
@@ -949,10 +954,10 @@ function populateAddWidgetOverlay() {
     borderWidth: 2,
     labelColor: "#ffffff",
     primaryColor: "#55bb66"
-  });
+  }, 'dealer');
 
   addCompositeWidgetToAddWidgetOverlay(generateChipPileWidgets('add-3D-chips', 1010, 309, 3), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('chips');
     for(const w of generateChipPileWidgets(id, 1010, 309, 3))
       await addWidgetLocal(w);
     return id
@@ -1153,7 +1158,7 @@ function populateAddWidgetOverlay() {
 
   // Add the composite timer widget
   addCompositeWidgetToAddWidgetOverlay(generateTimerWidgets('add-timer', 1005, 825), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('timer');
     for(const w of generateTimerWidgets(id, 1005, 825))
       await addWidgetLocal(w);
     return id
@@ -1161,7 +1166,7 @@ function populateAddWidgetOverlay() {
 
   // Add the composite counter widget
   addCompositeWidgetToAddWidgetOverlay(generateCounterWidgets('add-counter', 1058, 890), async function() {
-    const id = generateUniqueWidgetID();
+    const id = generateUniqueWidgetID('counter');
     for(const w of generateCounterWidgets(id, 1058, 890))
       await addWidgetLocal(w);
     return id
@@ -1192,7 +1197,7 @@ function populateAddWidgetOverlay() {
     borderRadius: "3px",
 
     css: { "border": "3px solid #666" }
-  });
+  }, 'separator');
 
   addWidgetToAddWidgetOverlay(new BasicWidget('LineHorizontal'), {
     x: 1535,
@@ -1202,7 +1207,7 @@ function populateAddWidgetOverlay() {
     borderRadius: "3px",
 
     css: { "border": "3px solid #666" }
-  });
+  }, 'separator');
 }
 // end of JSON generators
 
@@ -1442,6 +1447,7 @@ function uploadWidget(preset) {
     let id;
     if(asset && preset == 'board') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('board'),
         image: asset,
         movable: false,
         width: 1600,
@@ -1451,6 +1457,7 @@ function uploadWidget(preset) {
     }
     if(asset && preset == 'token') {
       id = await addWidgetLocal({
+        id: generateUniqueWidgetID('token'),
         image: asset
       });
     }
@@ -1651,6 +1658,7 @@ export function initializeEditMode(currentMetaData) {
   // This now adds an empty basic widget
   on('#addBasicWidget', 'click', async function() {
     const id = await addWidgetLocal({
+      id: generateUniqueWidgetID('basic'),
       text: "Basic widget"
     });
     overlayDone(id);
